@@ -1,7 +1,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% set widget_title = 'Edit Packaging Type' %}
-{% block section_title %}{{ widget_title }}{% endblock %}
+{% block section_title %}{{ widget_title | trans }}{% endblock %}
 
 {% block action %}
     {{ backActionButton('/product-packaging-unit-gui', 'Back to Packaging Types' | trans) }}

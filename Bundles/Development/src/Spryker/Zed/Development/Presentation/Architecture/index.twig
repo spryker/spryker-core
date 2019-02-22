@@ -13,9 +13,9 @@
                 <table class="table-condensed table-hover table-striped table-dependency">
                     <tr>
 
-                        <th>Namespace</th>
-                        <th>Module</th>
-                        <th>Application</th>
+                        <th>{{ 'Namespace' | trans }}</th>
+                        <th>{{ 'Module' | trans }}</th>
+                        <th>{{ 'Application' | trans }}</th>
                     </tr>
 
                     {% for bundle in bundles %}
@@ -26,7 +26,9 @@
                             <td>{{ bundle.application }}</td>
                             <td>
                                 <a class="btn btn-xs btn-default" href="{{ url('/development/architecture/check-bundle',
-                                {bundle: bundle.bundle, namespace: bundle.namespace, application: bundle.application, directory: bundle.directory}) }}">Check for violations</a>&nbsp;
+                                {bundle: bundle.bundle, namespace: bundle.namespace, application: bundle.application, directory: bundle.directory}) }}">
+                                    {{ 'Check for violations' | trans }}
+                                </a>&nbsp;
                             </td>
                         </tr>
 
