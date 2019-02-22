@@ -75,27 +75,27 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * @var string|null
      */
-    private $currentlyExtending;
+    protected $currentlyExtending;
 
     /**
      * @var string|null
      */
-    private $currentExtendingHash;
+    protected $currentExtendingHash;
 
     /**
      * @var array
      */
-    private $sharedServiceHashes = [];
+    protected $sharedServiceHashes = [];
 
     /**
      * @var \Symfony\Component\OptionsResolver\OptionsResolver|null
      */
-    private $configurationResolver;
+    protected $configurationResolver;
 
     /**
      * @var string[]
      */
-    private static $aliases = [];
+    protected static $aliases = [];
 
     /**
      * @param array $services
@@ -669,7 +669,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @return void
      */
-    private function extendLater(string $id, $service): void
+    protected function extendLater(string $id, $service): void
     {
         if (!isset($this->toBeExtended[$id])) {
             $this->toBeExtended[$id] = [];
@@ -684,7 +684,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @return void
      */
-    private function extendService(string $id, $service): void
+    protected function extendService(string $id, $service): void
     {
         if (isset($this->toBeExtended[$id])) {
             $this->currentlyExtending = $id;
