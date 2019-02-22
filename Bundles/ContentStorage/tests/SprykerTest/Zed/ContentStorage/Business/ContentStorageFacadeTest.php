@@ -56,7 +56,7 @@ class ContentStorageFacadeTest extends Unit
             ContentTransfer::CONTENT_TERM_KEY => 'test-term',
             ContentTransfer::LOCALIZED_CONTENTS => [
                 [
-                    LocalizedContentTransfer::PARAMETERS => ["M23222", "M23232"],
+                    LocalizedContentTransfer::PARAMETERS => '["M23222", "M23232"]',
                 ],
             ],
         ];
@@ -66,10 +66,12 @@ class ContentStorageFacadeTest extends Unit
         $contentStorageEntity = $this->getContentStorageEntity();
         $storageData = [
             ContentStorageConfig::TERM_KEY => $data[ContentTransfer::CONTENT_TERM_KEY],
-            ContentStorageConfig::CONTENT_KEY => $data[ContentTransfer::LOCALIZED_CONTENTS][0][LocalizedContentTransfer::PARAMETERS],
+            ContentStorageConfig::CONTENT_KEY => json_decode(
+                $data[ContentTransfer::LOCALIZED_CONTENTS][0][LocalizedContentTransfer::PARAMETERS]
+            ),
         ];
 
-        $this->assertContains(json_encode($storageData), json_encode($contentStorageEntity->getData()));
+        $this->assertEquals($storageData, $contentStorageEntity->getData());
     }
 
     /**
