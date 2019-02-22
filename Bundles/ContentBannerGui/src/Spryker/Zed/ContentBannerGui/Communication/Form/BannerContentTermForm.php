@@ -22,13 +22,13 @@ use Symfony\Component\Validator\Constraints\Url;
 class BannerContentTermForm extends AbstractType
 {
     public const FIELD_TITLE = 'title';
-    public const FIELD_SUB_TITLE = 'subtitle';
+    public const FIELD_SUBTITLE = 'subtitle';
     public const FIELD_IMAGE_URL = 'imageUrl';
     public const FIELD_CLICK_URL = 'clickUrl';
     public const FIELD_ALT_TEXT = 'altText';
 
     public const PLACEHOLDER_TITLE = 'Title';
-    public const PLACEHOLDER_SUB_TITLE = 'Sub Title';
+    public const PLACEHOLDER_SUBTITLE = 'Subtitle';
     public const PLACEHOLDER_IMAGE_URL = 'Image URL';
     public const PLACEHOLDER_CLICK_URL = 'Click URL';
     public const PLACEHOLDER_ALT_TEXT = 'Alt-text';
@@ -78,7 +78,7 @@ class BannerContentTermForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addTitleField($builder);
-        $this->addSubTitleField($builder);
+        $this->addSubtitleField($builder);
         $this->addImageUrlField($builder);
         $this->addClickUrlField($builder);
         $this->addAltTextField($builder);
@@ -112,11 +112,11 @@ class BannerContentTermForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSubTitleField(FormBuilderInterface $builder)
+    protected function addSubtitleField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_SUB_TITLE, TextType::class, [
+        $builder->add(static::FIELD_SUBTITLE, TextType::class, [
             'attr' => [
-                'placeholder' => static::PLACEHOLDER_SUB_TITLE,
+                'placeholder' => static::PLACEHOLDER_SUBTITLE,
             ],
             'label' => false,
             'constraints' => array_merge(
