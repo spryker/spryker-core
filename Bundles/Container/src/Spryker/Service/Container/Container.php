@@ -476,6 +476,10 @@ class Container implements ContainerInterface, ArrayAccess
      */
     protected function removeAlias(string $id): void
     {
+        foreach (array_keys(static::$aliases, $id) as $alias) {
+            unset(static::$aliases[$alias]);
+        }
+
         unset(static::$aliases[$id]);
     }
 
