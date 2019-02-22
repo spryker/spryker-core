@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
@@ -161,5 +162,31 @@ class CategoryEditDataProvider
             ->queryCategoryTemplate()
             ->find()
             ->toKeyValue('idCategoryTemplate', 'name');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function prepareLocalizedAttributes(CategoryTransfer $categoryTransfer): CategoryTransfer
+    {
+        $categoryLocaleIds = [];
+
+        foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            $categoryLocaleIds[] = $localizedAttribute->getLocale()->getIdLocale();
+        }
+
+        foreach ($this->localeFacade->getLocaleCollection() as $localTransfer) {
+            if (in_array($localTransfer->getIdLocale(), $categoryLocaleIds)) {
+                continue;
+            }
+
+            $categoryLocalizedAttributesTransfer = new CategoryLocalizedAttributesTransfer();
+            $categoryLocalizedAttributesTransfer->setLocale($localTransfer);
+            $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributesTransfer);
+        }
+
+        return $categoryTransfer;
     }
 }
