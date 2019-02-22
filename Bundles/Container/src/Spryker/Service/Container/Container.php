@@ -164,6 +164,8 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function has($id): bool
     {
+        $id = $this->getServiceIdentifier($id);
+
         return ($this->hasService($id) || $this->hasGlobalService($id));
     }
 

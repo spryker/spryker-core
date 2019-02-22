@@ -110,6 +110,18 @@ class ContainerAliasTest extends Unit
     /**
      * @return void
      */
+    public function testHasReturnsTrueForAnAliasedServiceIdentifierIfItExists(): void
+    {
+        $container = new Container();
+        $container->set(static::SERVICE, $this->createServiceClosure());
+        $container->configure(static::SERVICE, ['alias' => static::SERVICE_ALIAS]);
+
+        $this->assertTrue($container->has(static::SERVICE_ALIAS));
+    }
+
+    /**
+     * @return void
+     */
     public function testRemoveAServiceAlsoRemovesAllAliasesForTheService(): void
     {
         $container = new Container();
