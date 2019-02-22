@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Communication\Table;
 
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -28,6 +29,7 @@ class OrdersTable extends AbstractTable
     public const GRAND_TOTAL = 'GrandTotal';
     public const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
     public const NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+    protected const COL_ORDER_USER_FULL_NAME = 'CONCAT(' . SpySalesOrderTableMap::COL_FIRST_NAME . ', \' \', ' . SpySalesOrderTableMap::COL_LAST_NAME . ')';
 
     /**
      * @var \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface
@@ -114,7 +116,7 @@ class OrdersTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->buildQuery();
-        $queryResults = $this->runQuery($query, $config);
+        $queryResults = $this->runQuery($this->prepareQuery($query), $config);
 
         return $this->formatQueryData($queryResults);
     }
@@ -288,7 +290,7 @@ class OrdersTable extends AbstractTable
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getSearchableFields(): array
     {
@@ -297,7 +299,7 @@ class OrdersTable extends AbstractTable
             SpySalesOrderTableMap::COL_ORDER_REFERENCE,
             SpySalesOrderTableMap::COL_CREATED_AT,
             SpySalesOrderTableMap::COL_EMAIL,
-            [' ', SpySalesOrderTableMap::COL_FIRST_NAME, SpySalesOrderTableMap::COL_LAST_NAME],
+            static::COL_ORDER_USER_FULL_NAME,
         ];
     }
 
@@ -366,5 +368,24 @@ class OrdersTable extends AbstractTable
     public function buttonGeneratorCallable($url, $title, array $options)
     {
         return $this->generateButton($url, $title, $options);
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function prepareQuery(SpySalesOrderQuery $salesOrderQuery): SpySalesOrderQuery
+    {
+        $searchTerm = $this->getSearchTerm();
+        $searchValueLength = mb_strlen($searchTerm[self::PARAMETER_VALUE]);
+
+        if ($searchValueLength === false || $searchValueLength === 0) {
+            return $salesOrderQuery;
+        }
+
+        $salesOrderQuery->withColumn(static::COL_ORDER_USER_FULL_NAME, static::COL_ORDER_USER_FULL_NAME);
+
+        return $salesOrderQuery;
     }
 }

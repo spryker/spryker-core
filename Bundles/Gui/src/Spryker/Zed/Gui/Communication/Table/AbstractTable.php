@@ -100,11 +100,6 @@ abstract class AbstractTable
     protected $twig;
 
     /**
-     * @var string
-     */
-    protected $queryConditionFilter;
-
-    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
@@ -149,7 +144,6 @@ abstract class AbstractTable
             $config = $this->configure($config);
             $this->setConfiguration($config);
             $this->twig = $this->getTwig();
-            $this->queryConditionFilter = $this->getQueryConditionFilter();
 
             if ($this->tableIdentifier === null) {
                 $this->generateTableIdentifier();
@@ -666,24 +660,28 @@ abstract class AbstractTable
         if (mb_strlen($searchTerm[self::PARAMETER_VALUE]) > 0) {
             $query->setIdentifierQuoting(true);
 
-            $conditionParameter = $this->getConditionParameter($searchTerm);
-
             foreach ($config->getSearchable() as $value) {
-                if (empty($value)) {
-                    continue;
-                }
-
                 if (!$isFirst) {
                     $query->_or();
                 } else {
                     $isFirst = false;
                 }
 
-                if (!is_array($value)) {
-                    $value = [$value];
+                $filter = '';
+                $driverName = Propel::getConnection()->getAttribute(PDO::ATTR_DRIVER_NAME);
+                // @todo fix this in CD-412
+                if ($driverName === 'pgsql') {
+                    $filter = '::TEXT';
                 }
 
-                $query->where($this->generateCondition($value, $conditionParameter));
+                $conditionParameter = '%' . mb_strtolower($searchTerm[self::PARAMETER_VALUE]) . '%';
+                $condition = sprintf(
+                    'LOWER(%s%s) LIKE %s',
+                    $value,
+                    $filter,
+                    Propel::getConnection()->quote($conditionParameter)
+                );
+                $query->where($condition);
             }
 
             $this->filtered = $query->count();
@@ -1141,79 +1139,5 @@ abstract class AbstractTable
 
             $this->addQueryCondition($query, $searchColumns, $column);
         }
-    }
-
-    /**
-     * @param array $values
-     * @param string $conditionParameter
-     *
-     * @return string
-     */
-    protected function generateCondition(array $values, string $conditionParameter): string
-    {
-        return sprintf(
-            'LOWER(%s) LIKE %s',
-            $this->prepareQueryConditionalValue($values),
-            $conditionParameter
-        );
-    }
-
-    /**
-     * @param array $values
-     *
-     * @return string
-     */
-    protected function prepareQueryConditionalValue(array $values): string
-    {
-        if (count($values) === 1) {
-            return $this->generateQueryValue($values[0]);
-        }
-
-        $glue = array_shift($values);
-
-        foreach ($values as &$value) {
-            $value = $this->generateQueryValue($value);
-        }
-
-        return 'CONCAT_WS(\'' . $glue . '\', ' . implode(', ', $values) . ')';
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    protected function generateQueryValue(string $value): string
-    {
-        return sprintf('%s%s', $value, $this->queryConditionFilter);
-    }
-
-    /**
-     * @param array $searchTerm
-     *
-     * @return string
-     */
-    protected function getConditionParameter(array $searchTerm): string
-    {
-        $conditionParameter = '%' . mb_strtolower($searchTerm[self::PARAMETER_VALUE]) . '%';
-
-        return Propel::getConnection()->quote($conditionParameter);
-    }
-
-    /**
-     * @return string
-     */
-    public function getQueryConditionFilter(): string
-    {
-        if ($this->queryConditionFilter === null) {
-            $this->queryConditionFilter = '';
-            $driverName = Propel::getConnection()->getAttribute(PDO::ATTR_DRIVER_NAME);
-            // @todo fix this in CD-412
-            if ($driverName === 'pgsql') {
-                $this->queryConditionFilter = '::TEXT';
-            }
-        }
-
-        return $this->queryConditionFilter;
     }
 }
