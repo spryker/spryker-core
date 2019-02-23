@@ -62,7 +62,7 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
     {
         $quoteRequestVersionQuery = $this->getFactory()
             ->getQuoteRequestVersionPropelQuery()
-            ->leftJoinSpyQuoteRequest()
+            ->joinWithSpyQuoteRequest()
             ->orderByIdQuoteRequestVersion(Criteria::DESC);
 
         if ($quoteRequestVersionFilterTransfer->getQuoteRequest() && $quoteRequestVersionFilterTransfer->getQuoteRequest()->getIdQuoteRequest()) {

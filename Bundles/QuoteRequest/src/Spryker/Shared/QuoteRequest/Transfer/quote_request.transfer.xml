@@ -32,6 +32,7 @@
         <property name="createdAt" type="string" />
 
         <property name="latestVersion" type="QuoteRequestVersion" />
+        <property name="versionReferences" type="array" />
     </transfer>
 
     <transfer name="QuoteRequestVersion">

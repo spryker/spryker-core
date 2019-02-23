@@ -70,6 +70,7 @@ class QuoteRequestMapper
 
         $quoteRequestTransfer->setCompanyUser($this->getCompanyUserTransfer($quoteRequestEntity));
         $quoteRequestTransfer->setLatestVersion($this->findLatestQuoteRequestVersionTransfer($quoteRequestEntity));
+        $quoteRequestTransfer->setVersionReferences($this->getVersionReferences($quoteRequestEntity));
         $quoteRequestTransfer->setMetadata($this->decodeMetadata($quoteRequestEntity));
 
         return $quoteRequestTransfer;
@@ -117,6 +118,22 @@ class QuoteRequestMapper
         );
 
         return $latestQuoteRequestVersionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequest $quoteRequestEntity
+     *
+     * @return string[]
+     */
+    protected function getVersionReferences(SpyQuoteRequest $quoteRequestEntity): array
+    {
+        $versionReferences = [];
+
+        foreach ($quoteRequestEntity->getSpyQuoteRequestVersions() as $spyQuoteRequestVersion) {
+            $versionReferences[] = $spyQuoteRequestVersion->getVersionReference();
+        }
+
+        return $versionReferences;
     }
 
     /**

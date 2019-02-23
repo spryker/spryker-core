@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteRequestFacadeInterface
@@ -61,6 +63,20 @@ interface QuoteRequestFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
     public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves "Request for Quote" versions.
+     * - Filters by "Request for Quote" id when provided.
+     * - Filters by quote request version reference when provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer
+     */
+    public function getQuoteRequestVersionCollectionByFilter(QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer): QuoteRequestVersionCollectionTransfer;
 
     /**
      * Specification:
