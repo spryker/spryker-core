@@ -16,6 +16,9 @@ use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreC
  */
 class PreCheckStrategyResolver implements PreCheckStrategyResolverInterface
 {
+    public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
+    public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
+
     /**
      * @var array|\Closure[]
      */
@@ -30,14 +33,18 @@ class PreCheckStrategyResolver implements PreCheckStrategyResolverInterface
     }
 
     /**
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
      * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface
      */
-    public function resolve(): ShipmentCheckoutPreCheckInterface
+    public function resolve(iterable $itemTransfers): ShipmentCheckoutPreCheckInterface
     {
-        if (!defined('\Generated\Shared\Transfer\ItemTransfer::SHIPMENT')) {
-            $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 
-            return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
+                return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
+            }
         }
 
         $this->assertRequiredStrategyWithMultiShipmentContainerItems();

@@ -14,11 +14,10 @@ use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface;
  */
 interface OrderSaverStrategyResolverInterface
 {
-    public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
-    public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
-
     /**
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
      * @return \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface
      */
-    public function resolve(): ShipmentOrderSaverInterface;
+    public function resolve(iterable $itemTransfers): ShipmentOrderSaverInterface;
 }

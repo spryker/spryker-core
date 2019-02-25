@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -88,8 +87,9 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
             $orderTransfer = $this->orderHydratorStrategyResolver
                 ->resolveByOrderItemEntities($salesOrderEntity->getItems())
                 ->hydrateOrderTransferFromPersistenceByIdSalesOrder(
-                $salesOrderEntity->getIdSalesOrder()
-            );
+                    $salesOrderEntity->getIdSalesOrder()
+                );
+
             $orders->append($orderTransfer);
         }
 

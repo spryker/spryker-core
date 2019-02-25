@@ -232,7 +232,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     {
         $this->getFactory()
             ->createShipmentTaxCalculatorStrategyResolver()
-            ->resolve()
+            ->resolve($quoteTransfer->getItems())
             ->recalculate($quoteTransfer);
     }
 
@@ -269,7 +269,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     {
         $this->getFactory()
             ->createCheckoutShipmentOrderSaverStrategyResolver()
-            ->resolve()
+            ->resolve($quoteTransfer->getItems())
             ->saveOrderShipment($quoteTransfer, $saveOrderTransfer);
     }
 

@@ -14,18 +14,17 @@ use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
  */
 interface OrderHydratorStrategyResolverInterface
 {
-    public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
-    public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
-
     /**
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
      * @return \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface
      */
-    public function resolve(): OrderHydratorInterface;
+    public function resolve(iterable $itemTransfers): OrderHydratorInterface;
 
     /**
      * @param iterable|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntities
      *
      * @return \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface
      */
-    public function resolveByOrderItemEntities(iterable $salesOrderItemEntities);
+    public function resolveByOrderItemEntities(iterable $salesOrderItemEntities): OrderHydratorInterface;
 }

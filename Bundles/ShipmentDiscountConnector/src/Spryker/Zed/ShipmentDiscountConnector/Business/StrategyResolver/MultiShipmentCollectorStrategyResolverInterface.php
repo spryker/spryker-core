@@ -14,17 +14,11 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCol
  */
 interface MultiShipmentCollectorStrategyResolverInterface
 {
-    public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
-    public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
-
-    public const DISCOUNT_TYPE_CARRIER = 'DISCOUNT_TYPE_CARRIER';
-    public const DISCOUNT_TYPE_METHOD = 'DISCOUNT_TYPE_METHOD';
-    public const DISCOUNT_TYPE_PRICE = 'DISCOUNT_TYPE_PRICE';
-
     /**
      * @param string $type
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface
      */
-    public function resolveByType(string $type): ShipmentDiscountCollectorInterface;
+    public function resolveByTypeAndItems(string $type, iterable $itemTransfers): ShipmentDiscountCollectorInterface;
 }

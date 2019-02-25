@@ -16,13 +16,20 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCol
  */
 class MultiShipmentCollectorStrategyResolver implements MultiShipmentCollectorStrategyResolverInterface
 {
+    public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
+    public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
+
+    public const DISCOUNT_TYPE_CARRIER = 'DISCOUNT_TYPE_CARRIER';
+    public const DISCOUNT_TYPE_METHOD = 'DISCOUNT_TYPE_METHOD';
+    public const DISCOUNT_TYPE_PRICE = 'DISCOUNT_TYPE_PRICE';
+
     /**
-     * @var array|\Closure[]
+     * @var array
      */
     protected $strategyContainer;
 
     /**
-     * @param \Closure[] $strategyContainer
+     * @param array $strategyContainer
      */
     public function __construct(array $strategyContainer)
     {
@@ -31,15 +38,18 @@ class MultiShipmentCollectorStrategyResolver implements MultiShipmentCollectorSt
 
     /**
      * @param string $type
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface
      */
-    public function resolveByType(string $type): ShipmentDiscountCollectorInterface
+    public function resolveByTypeAndItems(string $type, iterable $itemTransfers): ShipmentDiscountCollectorInterface
     {
-        if (!defined('\Generated\Shared\Transfer\ItemTransfer::SHIPMENT')) {
-            $this->assertRequiredStrategyWithoutMultiShipmentContainerItems($type);
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                $this->assertRequiredStrategyWithoutMultiShipmentContainerItems($type);
 
-            return call_user_func($this->strategyContainer[$type][static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
+                return call_user_func($this->strategyContainer[$type][static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
+            }
         }
 
         $this->assertRequiredStrategyWithMultiShipmentContainerItems($type);

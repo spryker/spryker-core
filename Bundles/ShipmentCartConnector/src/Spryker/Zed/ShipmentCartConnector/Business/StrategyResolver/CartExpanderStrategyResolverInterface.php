@@ -14,11 +14,10 @@ use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterfac
  */
 interface CartExpanderStrategyResolverInterface
 {
-    public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
-    public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
-
     /**
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterface
      */
-    public function resolve(): ShipmentCartExpanderInterface;
+    public function resolve(iterable $itemTransfers): ShipmentCartExpanderInterface;
 }

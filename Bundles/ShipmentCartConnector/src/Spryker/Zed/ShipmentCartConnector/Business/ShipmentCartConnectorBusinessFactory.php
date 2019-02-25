@@ -133,7 +133,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function addShipmentCartExpanderWithoutMultipleShippingAddress(array $strategyContainer): array
     {
-        $strategyContainer[CartExpanderStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[CartExpanderStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createShipmentCartExpander();
         };
 
@@ -149,7 +149,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function addShipmentCartExpanderWithMultipleShippingAddress(array $strategyContainer): array
     {
-        $strategyContainer[CartExpanderStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[CartExpanderStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createShipmentCartExpanderWithMultiShippingAddress();
         };
 
@@ -180,7 +180,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function addShipmentCartValidatorWithoutMultipleShippingAddress(array $strategyContainer): array
     {
-        $strategyContainer[CartValidatorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[CartValidatorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createShipmentCartValidate();
         };
 
@@ -196,7 +196,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function addShipmentCartValidatorWithMultipleShippingAddress(array $strategyContainer): array
     {
-        $strategyContainer[CartValidatorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[CartValidatorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createShipmentCartValidatorWithMultiShippingAddress();
         };
 

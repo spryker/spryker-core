@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Sales\Business\StrategyResolver;
 
 use Closure;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
 
@@ -17,6 +16,8 @@ use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
  */
 class OrderHydratorStrategyResolver implements OrderHydratorStrategyResolverInterface
 {
+    public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
+    public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
     /**
      * @var array|\Closure[]
      */
@@ -35,7 +36,7 @@ class OrderHydratorStrategyResolver implements OrderHydratorStrategyResolverInte
      *
      * @return \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface
      */
-    public function resolveByOrderItemEntities(iterable $salesOrderItemEntities)
+    public function resolveByOrderItemEntities(iterable $salesOrderItemEntities): OrderHydratorInterface
     {
         foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
             if ($salesOrderItemEntity->getFkSalesShipment() === null) {
@@ -51,14 +52,18 @@ class OrderHydratorStrategyResolver implements OrderHydratorStrategyResolverInte
     }
 
     /**
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
      * @return \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface
      */
-    public function resolve(): OrderHydratorInterface
+    public function resolve(iterable $itemTransfers): OrderHydratorInterface
     {
-        if (!defined('\Generated\Shared\Transfer\ItemTransfer::SHIPMENT')) {
-            $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 
-            return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
+                return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
+            }
         }
 
         $this->assertRequiredStrategyWithMultiShipmentContainerItems();
