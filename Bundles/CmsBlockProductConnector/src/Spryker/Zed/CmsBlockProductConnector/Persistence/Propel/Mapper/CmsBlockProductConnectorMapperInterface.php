@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsBlockProductConnector\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 
-interface CmsBlockConnectorMapperInterface
+interface CmsBlockProductConnectorMapperInterface
 {
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity

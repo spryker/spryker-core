@@ -10,8 +10,8 @@ namespace Spryker\Zed\CmsBlockProductConnector\Persistence;
 use Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery;
 use Spryker\Zed\CmsBlockProductConnector\CmsBlockProductConnectorDependencyProvider;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface;
-use Spryker\Zed\CmsBlockProductConnector\Persistence\Propel\Mapper\CmsBlockConnectorMapper;
-use Spryker\Zed\CmsBlockProductConnector\Persistence\Propel\Mapper\CmsBlockConnectorMapperInterface;
+use Spryker\Zed\CmsBlockProductConnector\Persistence\Propel\Mapper\CmsBlockProductConnectorMapper;
+use Spryker\Zed\CmsBlockProductConnector\Persistence\Propel\Mapper\CmsBlockProductConnectorMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -24,7 +24,7 @@ class CmsBlockProductConnectorPersistenceFactory extends AbstractPersistenceFact
     /**
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
-    public function createCmsBlockProductConnectorQuery()
+    public function createCmsBlockProductConnectorQuery(): SpyCmsBlockProductConnectorQuery
     {
         return SpyCmsBlockProductConnectorQuery::create();
     }
@@ -38,10 +38,10 @@ class CmsBlockProductConnectorPersistenceFactory extends AbstractPersistenceFact
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockProductConnector\Persistence\Propel\Mapper\CmsBlockConnectorMapperInterface
+     * @return \Spryker\Zed\CmsBlockProductConnector\Persistence\Propel\Mapper\CmsBlockProductConnectorMapperInterface
      */
-    public function createCmsBlockConnectorMapper(): CmsBlockConnectorMapperInterface
+    public function createCmsBlockProductConnectorMapper(): CmsBlockProductConnectorMapperInterface
     {
-        return new CmsBlockConnectorMapper();
+        return new CmsBlockProductConnectorMapper();
     }
 }

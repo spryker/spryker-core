@@ -28,8 +28,8 @@ class CmsBlockProductConnectorRepository extends AbstractRepository implements C
      */
     public function getAssignedProductAbstracts(int $idLocale, int $idCmsBlock): array
     {
-        $abstractProductTransfers = [];
-        $abstractProductEntities = $this->getFactory()->getCmsBlockProductConnectorToProductAbstractQueryContainer()
+        $productAbstractTransfers = [];
+        $productAbstractEntities = $this->getFactory()->getCmsBlockProductConnectorToProductAbstractQueryContainer()
             ->queryProductAbstractWithName($idLocale)
             ->useSpyCmsBlockProductConnectorQuery()
                 ->filterByFkCmsBlock($idCmsBlock)
@@ -37,15 +37,15 @@ class CmsBlockProductConnectorRepository extends AbstractRepository implements C
             ->find();
 
         /**
-         * @var \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity
+         * @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
          */
-        foreach ($abstractProductEntities as $abstractProductEntity) {
-            $abstractProductTransfers[] = $this->getFactory()
-                ->createCmsBlockConnectorMapper()
-                ->mapProductAbstractEntityToProductAbstractTransfer($abstractProductEntity, new ProductAbstractTransfer());
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $productAbstractTransfers[] = $this->getFactory()
+                ->createCmsBlockProductConnectorMapper()
+                ->mapProductAbstractEntityToProductAbstractTransfer($productAbstractEntity, new ProductAbstractTransfer());
         }
 
-        return $abstractProductTransfers;
+        return $productAbstractTransfers;
     }
 
     /**

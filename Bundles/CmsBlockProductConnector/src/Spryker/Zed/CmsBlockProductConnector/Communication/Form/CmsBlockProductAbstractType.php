@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\Type\SelectType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,7 +26,7 @@ class CmsBlockProductAbstractType extends AbstractType
     public const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
     public const PLACEHOLDER_ID_PRODUCT_ABSTRACTS = 'Type three letters of name or sku for suggestions.';
 
-    public const OPTION_PRODUCT_ABSTRACT_ARRAY = 'option-product-abstracts';
+    public const OPTION_ASSIGNED_PRODUCT_ABSTRACTS = 'option-assigned-product-abstracts';
 
     protected const TEMPLATE_PATH = '@CmsBlockProductConnector/Form/cms-block-product-abstract-type.twig';
 
@@ -39,7 +38,7 @@ class CmsBlockProductAbstractType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addProductsAbstractField($builder, $options[static::OPTION_PRODUCT_ABSTRACT_ARRAY]);
+        $this->addProductsAbstractField($builder, $options[static::OPTION_ASSIGNED_PRODUCT_ABSTRACTS]);
         $builder->addEventListener(FormEvents::PRE_SUBMIT, $this->getProductSearchPreSubmitCallback());
     }
 
@@ -100,7 +99,7 @@ class CmsBlockProductAbstractType extends AbstractType
             }
             $form->add(
                 static::FIELD_ID_PRODUCT_ABSTRACTS,
-                SelectType::class,
+                ChoiceType::class,
                 [
                     'label' => 'Products',
                     'attr' => [

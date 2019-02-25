@@ -32,7 +32,7 @@ class CmsBlockProductDataProvider
     /**
      * @var \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRepositoryInterface
      */
-    protected $repository;
+    protected $cmsBlockProductConnectorRepository;
 
     /**
      * @param \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleInterface $localeFacade
@@ -43,7 +43,7 @@ class CmsBlockProductDataProvider
         CmsBlockProductConnectorRepositoryInterface $repository
     ) {
         $this->localeFacade = $localeFacade;
-        $this->repository = $repository;
+        $this->cmsBlockProductConnectorRepository = $repository;
     }
 
     /**
@@ -55,7 +55,7 @@ class CmsBlockProductDataProvider
     {
         return [
             'data_class' => CmsBlockTransfer::class,
-            CmsBlockProductAbstractType::OPTION_PRODUCT_ABSTRACT_ARRAY => $this->getAssignedProductAbstracts($cmsBlockTransfer),
+            CmsBlockProductAbstractType::OPTION_ASSIGNED_PRODUCT_ABSTRACTS => $this->getAssignedProductAbstracts($cmsBlockTransfer),
         ];
     }
 
@@ -69,7 +69,7 @@ class CmsBlockProductDataProvider
         $idProductAbstracts = [];
 
         if ($cmsBlockTransfer->getIdCmsBlock()) {
-            $idProductAbstracts = $this->repository->getAssignedProductAbstractIds($cmsBlockTransfer->getIdCmsBlock());
+            $idProductAbstracts = $this->cmsBlockProductConnectorRepository->getAssignedProductAbstractIds($cmsBlockTransfer->getIdCmsBlock());
         }
 
         $cmsBlockTransfer->setIdProductAbstracts($idProductAbstracts);
@@ -93,14 +93,13 @@ class CmsBlockProductDataProvider
         if ($cmsBlockTransfer->getIdCmsBlock() === null) {
             return $productAbstractOptions;
         }
-        $productAbstractTransfers = $this->repository->getAssignedProductAbstracts(
+        $productAbstractTransfers = $this->cmsBlockProductConnectorRepository->getAssignedProductAbstracts(
             $idLocale,
             $cmsBlockTransfer->getIdCmsBlock()
         );
 
         foreach ($productAbstractTransfers as $productAbstractTransfer) {
-            $label = $productAbstractTransfer->getName() .
-                ' (SKU: ' . $productAbstractTransfer->getSku() . ')';
+            $label = $productAbstractTransfer->getName() . ' (SKU: ' . $productAbstractTransfer->getSku() . ')';
 
             $productAbstractOptions[$label] = $productAbstractTransfer->getIdProductAbstract();
         }
