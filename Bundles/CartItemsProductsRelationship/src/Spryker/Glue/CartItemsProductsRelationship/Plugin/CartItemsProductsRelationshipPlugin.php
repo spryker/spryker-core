@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
  */
 class CartItemsProductsRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
-    protected const RESOURCE_TYPE = 'products';
+    protected const RESOURCE_TYPE = 'concrete-products';
 
     /**
      * {@inheritdoc}

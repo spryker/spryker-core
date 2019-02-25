@@ -12,7 +12,7 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
+    Communication:
         path: Communication
         class_name: ProductListSearchCommunicationTester
         modules:
@@ -24,3 +24,17 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+    Business:
+        path: Business
+        class_name: ProductListSearchBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Zed\ProductList\Helper\ProductListHelper
+                - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
