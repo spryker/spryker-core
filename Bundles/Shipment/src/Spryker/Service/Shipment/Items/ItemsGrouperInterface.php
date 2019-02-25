@@ -12,9 +12,9 @@ use ArrayObject;
 interface ItemsGrouperInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupByShipment(ArrayObject $itemTransfers): ArrayObject;
+    public function groupByShipment(iterable $itemTransfers): ArrayObject;
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business\StrategyResolver;
 
 use Closure;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
 
@@ -27,6 +28,26 @@ class OrderHydratorStrategyResolver implements OrderHydratorStrategyResolverInte
     public function __construct(array $strategyContainer)
     {
         $this->strategyContainer = $strategyContainer;
+    }
+
+    /**
+     * @param iterable|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntities
+     *
+     * @return \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface
+     */
+    public function resolveByOrderItemEntities(iterable $salesOrderItemEntities)
+    {
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+            if ($salesOrderItemEntity->getFkSalesShipment() === null) {
+                $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
+
+                return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
+            }
+        }
+
+        $this->assertRequiredStrategyWithMultiShipmentContainerItems();
+
+        return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITH_MULTI_SHIPMENT]);
     }
 
     /**

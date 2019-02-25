@@ -17,9 +17,9 @@ interface ShipmentServiceInterface
      *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfersCollection
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfersCollection
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
-    public function groupItemsByShipment(ArrayObject $itemTransfersCollection): ArrayObject;
+    public function groupItemsByShipment(iterable $itemTransfersCollection): ArrayObject;
 }

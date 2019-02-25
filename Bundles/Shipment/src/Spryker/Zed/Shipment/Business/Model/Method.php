@@ -128,6 +128,25 @@ class Method implements MethodInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     */
+    public function getAvailableShipmentMethods(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
+    {
+        $shipmentGroupCollectionTransfer = $this->getAvailableMethodsByShipment($quoteTransfer);
+
+        /** @var false|\Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer */
+        $shipmentGroupTransfer = current($shipmentGroupCollectionTransfer->getGroups());
+
+        if ($shipmentGroupTransfer === false) {
+            return new ShipmentMethodsTransfer();
+        }
+
+        return $shipmentGroupTransfer->getAvailableShipmentMethods();
+    }
+
+    /**
      * @deprecated Use MethodReader::getAvailableMethodsByShipment() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

@@ -171,7 +171,7 @@ class MethodReader extends Method
 
             foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
                 if ($shipmentMethodFilter instanceof ShipmentMethodFilterPluginInterface) {
-                    $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentGroupTransfer,$quoteTransfer);
+                    $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentGroupTransfer, $quoteTransfer);
                 } else {
                     /**
                      * @deprecated Will be removed in next major release.

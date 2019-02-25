@@ -21,4 +21,11 @@ interface OrderHydratorStrategyResolverInterface
      * @return \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface
      */
     public function resolve(): OrderHydratorInterface;
+
+    /**
+     * @param iterable|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntities
+     *
+     * @return \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface
+     */
+    public function resolveByOrderItemEntities(iterable $salesOrderItemEntities);
 }

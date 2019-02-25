@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**
@@ -26,15 +27,20 @@ class OrderReader implements OrderReaderInterface
     protected $orderHydrator;
 
     /**
+     * @var \Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface
+     */
+    protected $orderHydratorStrategyResolver;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface $orderHydrator
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
-        OrderHydratorInterface $orderHydrator
+        OrderHydratorStrategyResolverInterface $orderHydratorStrategyResolver
     ) {
         $this->queryContainer = $queryContainer;
-        $this->orderHydrator = $orderHydrator;
+        $this->orderHydratorStrategyResolver = $orderHydratorStrategyResolver;
     }
 
     /**
