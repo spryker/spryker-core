@@ -11,6 +11,7 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestFilterBuilder;
+use Generated\Shared\DataBuilder\QuoteRequestVersionFilterBuilder;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
@@ -247,5 +248,73 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($isValid);
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetQuoteRequestVersionCollectionByFilterRetrievesQuoteRequestVersions(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->tester->createQuoteRequest(
+            $this->tester->createQuoteRequestVersion($this->quoteTransfer),
+            $this->companyUserTransfer
+        );
+        $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterBuilder())->build()
+            ->setQuoteRequest($quoteRequestTransfer);
+
+        // Act
+        $quoteRequestCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer);
+
+        // Assert
+        $this->assertCount(1, $quoteRequestCollectionTransfer->getQuoteRequestVersions());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetQuoteRequestVersionCollectionByFilterRetrievesQuoteRequestVersionsByReference(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->tester->createQuoteRequest(
+            $this->tester->createQuoteRequestVersion($this->quoteTransfer),
+            $this->companyUserTransfer
+        );
+        $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterBuilder())->build()
+            ->setQuoteRequest($quoteRequestTransfer)
+            ->setQuoteRequestVersionReference($quoteRequestTransfer->getLatestVersion()->getVersionReference());
+
+        // Act
+        $quoteRequestCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer);
+
+        // Assert
+        $this->assertCount(1, $quoteRequestCollectionTransfer->getQuoteRequestVersions());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetQuoteRequestVersionCollectionByFilterRetrievesQuoteRequestVersionsByFakeReference(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->tester->createQuoteRequest(
+            $this->tester->createQuoteRequestVersion($this->quoteTransfer),
+            $this->companyUserTransfer
+        );
+        $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterBuilder())->build()
+            ->setQuoteRequest($quoteRequestTransfer)
+            ->setQuoteRequestVersionReference(static::FAKE_QUOTE_REQUEST_VERSION_REFERENCE);
+
+        // Act
+        $quoteRequestCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer);
+
+        // Assert
+        $this->assertCount(0, $quoteRequestCollectionTransfer->getQuoteRequestVersions());
     }
 }
