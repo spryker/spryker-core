@@ -89,6 +89,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
                 ->hydrateOrderTransferFromPersistenceByIdSalesOrder(
                     $salesOrderEntity->getIdSalesOrder()
                 );
+
             $orders->append($orderTransfer);
         }
 

@@ -36,7 +36,7 @@ class OrderHydratorStrategyResolver implements OrderHydratorStrategyResolverInte
      *
      * @return \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface
      */
-    public function resolveByOrderItemEntities(iterable $salesOrderItemEntities)
+    public function resolveByOrderItemEntities(iterable $salesOrderItemEntities): OrderHydratorInterface
     {
         foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
             if ($salesOrderItemEntity->getFkSalesShipment() === null) {
