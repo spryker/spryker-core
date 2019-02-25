@@ -29,9 +29,9 @@ class CsvReaderAdapter implements CsvReaderInterface
     /**
      * @param int $offset
      *
-     * @return \Spryker\Zed\Dataset\Dependency\Adapter\CsvReaderInterface
+     * @return $this
      */
-    public function setHeaderOffset(int $offset): CsvReaderInterface
+    public function setHeaderOffset(int $offset)
     {
         $this->reader->setHeaderOffset($offset);
 
