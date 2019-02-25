@@ -60,7 +60,7 @@ class SalesStub implements SalesStubInterface
     public function getFilteredCustomerOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
         /** @var \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer */
-        $orderListTransfer = $this->zedStub->call('/sales/gateway/get-customer-chunk-order-list', $orderListTransfer);
+        $orderListTransfer = $this->zedStub->call('/sales/gateway/get-filtered-customer-order-list', $orderListTransfer);
 
         return $orderListTransfer;
     }
