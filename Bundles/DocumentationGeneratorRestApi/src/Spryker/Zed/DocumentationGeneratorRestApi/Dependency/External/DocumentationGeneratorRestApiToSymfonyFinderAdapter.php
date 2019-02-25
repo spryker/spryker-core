@@ -35,9 +35,9 @@ class DocumentationGeneratorRestApiToSymfonyFinderAdapter implements Documentati
     /**
      * @param array|string $dirs
      *
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFinderInterface
+     * @return $this
      */
-    public function in($dirs): DocumentationGeneratorRestApiToFinderInterface
+    public function in($dirs)
     {
         $this->finder->in($dirs);
 
@@ -45,9 +45,9 @@ class DocumentationGeneratorRestApiToSymfonyFinderAdapter implements Documentati
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFinderInterface
+     * @return $this
      */
-    public function files(): DocumentationGeneratorRestApiToFinderInterface
+    public function files()
     {
         $this->finder->files();
 
@@ -57,9 +57,9 @@ class DocumentationGeneratorRestApiToSymfonyFinderAdapter implements Documentati
     /**
      * @param string $pattern
      *
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFinderInterface
+     * @return $this
      */
-    public function name(string $pattern): DocumentationGeneratorRestApiToFinderInterface
+    public function name(string $pattern)
     {
         $this->finder->name($pattern);
 

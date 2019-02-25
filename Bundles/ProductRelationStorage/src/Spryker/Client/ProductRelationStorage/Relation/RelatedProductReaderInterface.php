@@ -16,4 +16,11 @@ interface RelatedProductReaderInterface
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
     public function findRelatedProducts($idProductAbstract, $localeName);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findRelatedAbstractProductIds(int $idProductAbstract): array;
 }

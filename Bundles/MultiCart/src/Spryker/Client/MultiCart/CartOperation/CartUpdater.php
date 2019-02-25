@@ -103,7 +103,7 @@ class CartUpdater implements CartUpdaterInterface
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
         }
-        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+        $this->zedRequestClient->addResponseMessagesToMessenger();
 
         return $quoteResponseTransfer;
     }
