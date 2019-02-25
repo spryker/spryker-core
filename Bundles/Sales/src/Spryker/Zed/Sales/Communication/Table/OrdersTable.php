@@ -29,6 +29,7 @@ class OrdersTable extends AbstractTable
     public const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
     public const NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
     protected const COLUMN_SEPARATOR = ' ';
+    protected const FULL_NAME_SEARCHABLE_FIELD_PATTERN = 'CONCAT(%s,\'%s\',%s)';
 
     /**
      * @var \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface
@@ -375,7 +376,7 @@ class OrdersTable extends AbstractTable
     protected function getFullNameSearchableField(): string
     {
         return sprintf(
-            'CONCAT(%s,\'%s\',%s)',
+            static::FULL_NAME_SEARCHABLE_FIELD_PATTERN,
             SpySalesOrderTableMap::COL_FIRST_NAME,
             static::COLUMN_SEPARATOR,
             SpySalesOrderTableMap::COL_LAST_NAME
