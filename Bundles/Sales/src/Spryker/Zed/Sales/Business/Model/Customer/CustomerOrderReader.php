@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface;
+use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
@@ -23,9 +24,9 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface
+     * @var \Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface
      */
-    protected $orderHydrator;
+    protected $orderHydratorStrategyResolver;
 
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
@@ -34,16 +35,16 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface $orderHydrator
+     * @param \Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface $orderHydratorStrategyResolver
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface|null $omsFacade
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
-        OrderHydratorInterface $orderHydrator,
+        OrderHydratorStrategyResolverInterface $orderHydratorStrategyResolver,
         ?SalesToOmsInterface $omsFacade = null
     ) {
         $this->queryContainer = $queryContainer;
-        $this->orderHydrator = $orderHydrator;
+        $this->orderHydratorStrategyResolver = $orderHydratorStrategyResolver;
         $this->omsFacade = $omsFacade;
     }
 
@@ -84,7 +85,9 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
                 continue;
             }
 
-            $orderTransfer = $this->orderHydrator->hydrateOrderTransferFromPersistenceByIdSalesOrder(
+            $orderTransfer = $this->orderHydratorStrategyResolver
+                ->resolveByOrderItemEntities($salesOrderEntity->getItems())
+                ->hydrateOrderTransferFromPersistenceByIdSalesOrder(
                 $salesOrderEntity->getIdSalesOrder()
             );
             $orders->append($orderTransfer);

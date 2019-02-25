@@ -69,7 +69,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerOrderReader(
             $this->getQueryContainer(),
-            $this->createOrderHydratorStrategyResolver()->resolve(),
+            $this->createOrderHydratorStrategyResolver(),
             $this->getOmsFacade()
         );
     }
@@ -81,7 +81,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new PaginatedCustomerOrderReader(
             $this->getQueryContainer(),
-            $this->createOrderHydratorStrategyResolver()->resolve(),
+            $this->createOrderHydratorStrategyResolver(),
             $this->getOmsFacade()
         );
     }
