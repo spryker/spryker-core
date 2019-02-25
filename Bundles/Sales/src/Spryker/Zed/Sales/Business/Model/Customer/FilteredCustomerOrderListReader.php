@@ -20,15 +20,24 @@ class FilteredCustomerOrderListReader extends CustomerOrderReader
      */
     public function getOrders(OrderListTransfer $orderListTransfer, $idCustomer): OrderListTransfer
     {
-        $ordersQuery = $this->queryContainer->queryCustomerOrders(
-            $idCustomer,
-            $orderListTransfer->getFilter()
-        );
+        $orderListTransfer->requireIdCustomer();
+
+        $ordersQuery = $this->queryContainer->queryCustomerOrders($idCustomer);
+        $numberOfOrders = $ordersQuery->count();
+        if (!$numberOfOrders) {
+            return $orderListTransfer;
+        }
+
+        $filterTransfer = $orderListTransfer->getFilter();
+        if ($filterTransfer) {
+            $ordersQuery
+                ->setLimit($filterTransfer->getLimit())
+                ->setOffset($filterTransfer->getOffset());
+        }
 
         $orders = $this->hydrateOrderListCollectionTransferFromEntityCollection($ordersQuery->find());
-
         $orderListTransfer->setOrders($orders);
-        $orderListTransfer->setPagination((new PaginationTransfer())->setNbResults($ordersQuery->clear()->count()));
+        $orderListTransfer->setPagination((new PaginationTransfer())->setNbResults($numberOfOrders));
 
         return $orderListTransfer;
     }
