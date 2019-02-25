@@ -25,7 +25,7 @@ class ShipmentSaver implements ShipmentSaverInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverWithMultiShippingAddressInterface
+     * @var \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface
      */
     protected $shipmentOrderSaver;
 
@@ -35,10 +35,10 @@ class ShipmentSaver implements ShipmentSaverInterface
     protected $shipmentMethodExtender;
 
     /**
-     * @param \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface $shipmentOrderSaver
+     * @param \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface $shipmentOrderSaver
      * @param \Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface $shipmentMethodExtender
      */
-    public function __construct(ShipmentOrderSaverInterface $shipmentOrderSaver, ShipmentMethodExtenderInterface $shipmentMethodExtender)
+    public function __construct(MultiShipmentOrderSaverInterface $shipmentOrderSaver, ShipmentMethodExtenderInterface $shipmentMethodExtender)
     {
         $this->shipmentOrderSaver = $shipmentOrderSaver;
         $this->shipmentMethodExtender = $shipmentMethodExtender;
@@ -57,10 +57,8 @@ class ShipmentSaver implements ShipmentSaverInterface
         $expenseTransfer = $this->createShippingExpenseTransfer($shipmentGroupTransfer->getShipment(), $orderTransfer);
         $orderTransfer = $this->addShippingExpenseToOrderExpenses($expenseTransfer, $orderTransfer);
 
-        $shipmentGroupTransfer = $this->handleDatabaseTransaction(function () use ($orderTransfer, $shipmentGroupTransfer, $saveOrderTransfer) {
-            return $this->shipmentOrderSaver
-                ->processShipmentGroup($orderTransfer, $shipmentGroupTransfer, $saveOrderTransfer);
-        });
+        $shipmentGroupTransfer = $this->shipmentOrderSaver
+            ->saveOrderShipmentByShipmentGroup($orderTransfer, $shipmentGroupTransfer, $saveOrderTransfer);
 
         $shipmentGroupResponseTransfer = new ShipmentGroupResponseTransfer();
         $shipmentGroupResponseTransfer->setIsSuccessful(true);
@@ -172,7 +170,7 @@ class ShipmentSaver implements ShipmentSaverInterface
     }
 
     /**
-     * @deprecated For BC reasons the missing sum prices are mirrored from unit prices. Will be removed in next major release.
+     * @deprecated For BC reasons the missing sum prices are mirrored from unit prices. Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      *

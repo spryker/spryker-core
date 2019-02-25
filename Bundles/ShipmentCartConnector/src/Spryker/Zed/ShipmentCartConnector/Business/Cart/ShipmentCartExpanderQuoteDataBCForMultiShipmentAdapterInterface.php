@@ -10,12 +10,12 @@ namespace Spryker\Zed\ShipmentCartConnector\Business\Cart;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
 interface ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapterInterface
 {
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

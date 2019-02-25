@@ -50,7 +50,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\QuoteDataBCForMultiShipmentAdapterInterface
      */
@@ -60,7 +60,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release. Use $this->createShipmentCheckoutPreCheckWithMultipleShippingAddress() instead.
+     * @deprecated Exists for Backward Compatibility reasons only. Use $this->createShipmentCheckoutPreCheckWithMultipleShippingAddress() instead.
      *
      * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolverInterface
      */
@@ -75,7 +75,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $strategyContainer
      *
@@ -91,7 +91,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $strategyContainer
      *

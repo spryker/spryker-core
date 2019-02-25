@@ -10,12 +10,12 @@ namespace Spryker\Zed\Sales\Business\Order;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
 interface OrderHydratorOrderDataBCForMultiShipmentAdapterInterface
 {
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *

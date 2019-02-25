@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
-interface ShipmentOrderSaverWithMultiShippingAddressInterface extends ShipmentOrderSaverInterface
+interface MultiShipmentOrderSaverInterface extends ShipmentOrderSaverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -20,5 +20,5 @@ interface ShipmentOrderSaverWithMultiShippingAddressInterface extends ShipmentOr
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    public function processShipmentGroup(OrderTransfer $orderTransfer, ShipmentGroupTransfer $shipmentGroupTransfer, SaveOrderTransfer $saveOrderTransfer): ShipmentGroupTransfer;
+    public function saveOrderShipmentByShipmentGroup(OrderTransfer $orderTransfer, ShipmentGroupTransfer $shipmentGroupTransfer, SaveOrderTransfer $saveOrderTransfer): ShipmentGroupTransfer;
 }

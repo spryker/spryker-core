@@ -68,7 +68,7 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
     {
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         if (!defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT')) {
             $mailBuilder->setHtmlTemplate('oms/mail/order_confirmation.html.twig');
@@ -89,7 +89,7 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
     protected function setTextTemplate(MailBuilderInterface $mailBuilder)
     {
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         if (!defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT')) {
             $mailBuilder->setTextTemplate('oms/mail/order_confirmation.text.twig');

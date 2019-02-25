@@ -10,14 +10,11 @@ namespace Spryker\Zed\Shipment\Business;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
-use Spryker\Zed\Shipment\Business\Calculator\QuoteDataBCForMultiShipmentAdapter as ShipmentTaxRateCalculatorQuoteDataBCForMultiShipmentAdapter;
-use Spryker\Zed\Shipment\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface as ShipmentTaxRateCalculatorQuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\Shipment\Business\Calculator\ShipmentTaxRateCalculator as ShipmentTaxRateCalculatorWithItemShipmentTaxRate;
-use Spryker\Zed\Shipment\Business\Checkout\QuoteDataBCForMultiShipmentAdapter as ShipmentOrderSaverQuoteDataBCForMultiShipmentAdapter;
-use Spryker\Zed\Shipment\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface as ShipmentOrderSaverQuoteDataBCForMultiShipmentAdapterInterface;
+use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface;
-use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverWithMultiShippingAddress;
+use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
@@ -163,7 +160,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createCheckoutShipmentOrderSaverWithMultiShippingAddress() instead.
+     * @deprecated Use createCheckoutMultiShipmentOrderSaver() instead.
      *
      * @return \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface
      */
@@ -173,16 +170,15 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface
+     * @return \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface
      */
-    public function createCheckoutShipmentOrderSaverWithMultiShippingAddress(): ShipmentOrderSaverInterface
+    public function createCheckoutMultiShipmentOrderSaver(): MultiShipmentOrderSaverInterface
     {
-        return new ShipmentOrderSaverWithMultiShippingAddress(
+        return new MultiShipmentOrderSaver(
             $this->getEntityManager(),
             $this->getSalesFacade(),
             $this->getCustomerFacade(),
-            $this->getShipmentService(),
-            $this->createShipmentOrderSaverQuoteDataBCForMultiShipmentAdapter()
+            $this->getShipmentService()
         );
     }
 
@@ -203,8 +199,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentTaxRateCalculatorWithItemShipmentTaxRate(
             $this->getQueryContainer(),
-            $this->getTaxFacade(),
-            $this->createShipmentTaxRateCalculatorQuoteDataBCForMultiShipmentAdapter()
+            $this->getTaxFacade()
         );
     }
 
@@ -275,27 +270,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
-     *
-     * @return \Spryker\Zed\Shipment\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected function createShipmentTaxRateCalculatorQuoteDataBCForMultiShipmentAdapter(): ShipmentTaxRateCalculatorQuoteDataBCForMultiShipmentAdapterInterface
-    {
-        return new ShipmentTaxRateCalculatorQuoteDataBCForMultiShipmentAdapter();
-    }
-
-    /**
-     * @deprecated Will be removed in next major release.
-     *
-     * @return \Spryker\Zed\Shipment\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected function createShipmentOrderSaverQuoteDataBCForMultiShipmentAdapter(): ShipmentOrderSaverQuoteDataBCForMultiShipmentAdapterInterface
-    {
-        return new ShipmentOrderSaverQuoteDataBCForMultiShipmentAdapter();
-    }
-
-    /**
-     * @deprecated Will be removed in next major release. Use $this->createShipmentTaxCalculatorWithItemShipmentTaxRate() instead.
+     * @deprecated Exists for Backward Compatibility reasons only. Use $this->createShipmentTaxCalculatorWithItemShipmentTaxRate() instead.
      *
      * @return \Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface
      */
@@ -310,7 +285,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $strategyContainer
      *
@@ -326,7 +301,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $strategyContainer
      *
@@ -342,7 +317,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release. Use $this->createCheckoutShipmentOrderSaverWithMultiShippingAddress() instead.
+     * @deprecated Exists for Backward Compatibility reasons only. Use $this->createCheckoutMultiShipmentOrderSaver() instead.
      *
      * @return \Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface
      */
@@ -357,7 +332,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $strategyContainer
      *
@@ -373,7 +348,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $strategyContainer
      *
@@ -382,7 +357,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     protected function addCheckoutShipmentOrderSaverWithMultipleShippingAddress(array $strategyContainer): array
     {
         $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
-            return $this->createCheckoutShipmentOrderSaverWithMultiShippingAddress();
+            return $this->createCheckoutMultiShipmentOrderSaver();
         };
 
         return $strategyContainer;
@@ -428,7 +403,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentSaver(): ShipmentSaverInterface
     {
         return new ShipmentSaver(
-            $this->createCheckoutShipmentOrderSaverWithMultiShippingAddress(),
+            $this->createCheckoutMultiShipmentOrderSaver(),
             $this->createShipmentMethodExtender()
         );
     }

@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
 class ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter implements ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface
 {
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -49,7 +49,7 @@ class ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter implements Shipmen
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -67,7 +67,7 @@ class ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter implements Shipmen
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -79,7 +79,7 @@ class ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter implements Shipmen
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -91,7 +91,7 @@ class ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter implements Shipmen
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -103,7 +103,7 @@ class ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter implements Shipmen
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -120,7 +120,7 @@ class ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter implements Shipmen
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

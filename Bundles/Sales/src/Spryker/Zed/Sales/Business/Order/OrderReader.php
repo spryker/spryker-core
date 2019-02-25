@@ -52,7 +52,7 @@ class OrderReader extends OrderReaderWithoutMultiShippingAddress
         }
 
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $orderEntity = $this->orderDataBCForMultiShipmentAdapter->adapt($orderEntity);
 

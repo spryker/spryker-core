@@ -32,7 +32,7 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
     protected $priceFacade;
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @var \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface
      */
@@ -66,7 +66,7 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
         $quoteTransfer = $cartChangeTransfer->getQuote();
 
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 

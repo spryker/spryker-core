@@ -15,12 +15,12 @@ use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Spryker\Shared\Shipment\ShipmentConstants;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
 class OrderHydratorOrderDataBCForMultiShipmentAdapter implements OrderHydratorOrderDataBCForMultiShipmentAdapterInterface
 {
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
@@ -53,7 +53,7 @@ class OrderHydratorOrderDataBCForMultiShipmentAdapter implements OrderHydratorOr
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
@@ -74,7 +74,7 @@ class OrderHydratorOrderDataBCForMultiShipmentAdapter implements OrderHydratorOr
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
@@ -86,7 +86,7 @@ class OrderHydratorOrderDataBCForMultiShipmentAdapter implements OrderHydratorOr
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      *
@@ -106,7 +106,7 @@ class OrderHydratorOrderDataBCForMultiShipmentAdapter implements OrderHydratorOr
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      *
@@ -121,7 +121,7 @@ class OrderHydratorOrderDataBCForMultiShipmentAdapter implements OrderHydratorOr
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      *
@@ -137,7 +137,7 @@ class OrderHydratorOrderDataBCForMultiShipmentAdapter implements OrderHydratorOr
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
@@ -154,7 +154,7 @@ class OrderHydratorOrderDataBCForMultiShipmentAdapter implements OrderHydratorOr
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      * @param \Orm\Zed\Sales\Persistence\SpySalesExpense $orderExpenseEntity
@@ -171,7 +171,7 @@ class OrderHydratorOrderDataBCForMultiShipmentAdapter implements OrderHydratorOr
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity

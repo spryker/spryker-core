@@ -32,25 +32,15 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     protected $quoteShipmentExpenses;
 
     /**
-     * @deprecated Will be removed in next major release.
-     *
-     * @var \Spryker\Zed\Shipment\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected $quoteDataBCForMultiShipmentAdapter;
-
-    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $shipmentQueryContainer
      * @param \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface $taxFacade
-     * @param \Spryker\Zed\Shipment\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
      */
     public function __construct(
         ShipmentQueryContainerInterface $shipmentQueryContainer,
-        ShipmentToTaxInterface $taxFacade,
-        QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
+        ShipmentToTaxInterface $taxFacade
     ) {
         $this->shipmentQueryContainer = $shipmentQueryContainer;
         $this->taxFacade = $taxFacade;
-        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
     }
 
     /**
@@ -60,11 +50,6 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        /**
-         * @deprecated Will be removed in next major release.
-         */
-//        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
-
         $this->quoteShipmentExpenses = $this->getQuoteExpenses($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {

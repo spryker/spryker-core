@@ -251,7 +251,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @return \Spryker\Zed\Sales\Communication\Order\SalesOrderDataBCForMultiShipmentAdapterInterface
      */

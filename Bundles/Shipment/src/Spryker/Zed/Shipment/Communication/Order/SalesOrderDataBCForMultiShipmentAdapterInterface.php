@@ -10,12 +10,12 @@ namespace Spryker\Zed\Shipment\Communication\Order;
 use Generated\Shared\Transfer\OrderTransfer;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
 interface SalesOrderDataBCForMultiShipmentAdapterInterface
 {
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

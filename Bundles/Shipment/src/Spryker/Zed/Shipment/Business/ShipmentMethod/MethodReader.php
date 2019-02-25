@@ -174,7 +174,7 @@ class MethodReader extends Method
                     $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentGroupTransfer, $quoteTransfer);
                 } else {
                     /**
-                     * @deprecated Will be removed in next major release.
+                     * @deprecated Exists for Backward Compatibility reasons only.
                      */
                     $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentMethods, $quoteTransfer);
                 }
@@ -238,7 +238,7 @@ class MethodReader extends Method
                 $isAvailable = $availabilityPlugin->isAvailable($shipmentGroupTransfer, $quoteTransfer);
             } else {
                 /**
-                 * @deprecated Will be removed in next major release.
+                 * @deprecated Exists for Backward Compatibility reasons only.
                  */
                 $isAvailable = $availabilityPlugin->isAvailable($quoteTransfer);
             }
@@ -291,7 +291,7 @@ class MethodReader extends Method
             }
 
             /**
-             * @deprecated Will be removed in next major release.
+             * @deprecated Exists for Backward Compatibility reasons only.
              */
             return $pricePlugin->getPrice($quoteTransfer);
         }
@@ -374,7 +374,7 @@ class MethodReader extends Method
                 $deliveryTime = $deliveryTimePlugin->getTime($shipmentGroupTransfer, $quoteTransfer);
             } else {
                 /**
-                 * @deprecated Will be removed in next major release.
+                 * @deprecated Exists for Backward Compatibility reasons only.
                  */
                 $deliveryTime = $deliveryTimePlugin->getTime($quoteTransfer);
             }

@@ -34,7 +34,7 @@ class DetailController extends AbstractController
         $orderTransfer = $this->getFacade()->findOrderByIdSalesOrder($idSalesOrder);
 
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $orderTransfer = $this->getFactory()
             ->createSalesOrderDataBCForMultiShipmentAdapter()

@@ -17,7 +17,7 @@ use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConn
 class ShipmentCheckoutPreCheck extends ShipmentCheckoutPreCheckWithoutMultiShipment
 {
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @var \Spryker\Zed\Customer\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface
      */
@@ -47,7 +47,7 @@ class ShipmentCheckoutPreCheck extends ShipmentCheckoutPreCheckWithoutMultiShipm
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool {
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 

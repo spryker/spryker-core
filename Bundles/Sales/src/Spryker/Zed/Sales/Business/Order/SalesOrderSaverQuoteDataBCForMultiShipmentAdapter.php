@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
 class SalesOrderSaverQuoteDataBCForMultiShipmentAdapter implements SalesOrderSaverQuoteDataBCForMultiShipmentAdapterInterface
 {
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -50,7 +50,7 @@ class SalesOrderSaverQuoteDataBCForMultiShipmentAdapter implements SalesOrderSav
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -68,7 +68,7 @@ class SalesOrderSaverQuoteDataBCForMultiShipmentAdapter implements SalesOrderSav
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -80,7 +80,7 @@ class SalesOrderSaverQuoteDataBCForMultiShipmentAdapter implements SalesOrderSav
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -92,7 +92,7 @@ class SalesOrderSaverQuoteDataBCForMultiShipmentAdapter implements SalesOrderSav
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -104,7 +104,7 @@ class SalesOrderSaverQuoteDataBCForMultiShipmentAdapter implements SalesOrderSav
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -121,7 +121,7 @@ class SalesOrderSaverQuoteDataBCForMultiShipmentAdapter implements SalesOrderSav
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -138,7 +138,7 @@ class SalesOrderSaverQuoteDataBCForMultiShipmentAdapter implements SalesOrderSav
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
