@@ -57,11 +57,11 @@ class SalesClient extends AbstractClient implements SalesClientInterface
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getCustomerChunkOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer
+    public function getFilteredCustomerOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
         return $this->getFactory()
             ->createZedSalesStub()
-            ->getCustomerChunkOrderList($orderListTransfer);
+            ->getFilteredCustomerOrderList($orderListTransfer);
     }
 
     /**

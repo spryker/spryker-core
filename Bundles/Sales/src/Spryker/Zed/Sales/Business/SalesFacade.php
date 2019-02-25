@@ -138,11 +138,11 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getCustomerChunkOrderList(OrderListTransfer $orderListTransfer, int $idCustomer): OrderListTransfer
+    public function getFilteredCustomerOrderList(OrderListTransfer $orderListTransfer, int $idCustomer): OrderListTransfer
     {
         return $this->getFactory()
-            ->createCustomerOrderChunkReader()
-            ->getCustomerChunkOrderList($orderListTransfer, $idCustomer);
+            ->createFilteredCustomerOrderListReader()
+            ->getOrders($orderListTransfer, $idCustomer);
     }
 
     /**

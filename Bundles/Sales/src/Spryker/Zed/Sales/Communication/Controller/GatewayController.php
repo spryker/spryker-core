@@ -64,10 +64,10 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getCustomerChunkOrderListAction(OrderListTransfer $orderListTransfer): OrderListTransfer
+    public function getFilteredCustomerOrderListAction(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
         return $this->getFacade()
-            ->getCustomerChunkOrderList(
+            ->getFilteredCustomerOrderList(
                 $orderListTransfer,
                 $orderListTransfer->getIdCustomer()
             );

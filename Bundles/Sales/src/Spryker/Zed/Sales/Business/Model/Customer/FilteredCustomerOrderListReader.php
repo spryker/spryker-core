@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales\Business\Model\Customer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 
-class CustomerOrderChunkReader extends CustomerOrderReader implements CustomerOrderChunkReaderInterface
+class FilteredCustomerOrderListReader extends CustomerOrderReader implements CustomerOrderChunkReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
@@ -18,7 +18,7 @@ class CustomerOrderChunkReader extends CustomerOrderReader implements CustomerOr
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getCustomerChunkOrderList(OrderListTransfer $orderListTransfer, int $idCustomer): OrderListTransfer
+    public function getOrders(OrderListTransfer $orderListTransfer, int $idCustomer): OrderListTransfer
     {
         $ordersQuery = $this->queryContainer->queryCustomerOrders(
             $idCustomer,

@@ -111,11 +111,11 @@ class OrderReader implements OrderReaderInterface
             $orderListTransfer->setFilter($this->createFilterTransfer($restRequest));
         }
 
-        $orderListTransfer = $this->salesClient->getCustomerChunkOrderList($orderListTransfer);
-
+        $orderListTransfer = $this->salesClient->getFilteredCustomerOrderList($orderListTransfer);
+        $totalItems = $orderListTransfer->getPagination() ? $orderListTransfer->getPagination()->getNbResults() : 0;
         $response = $this
             ->restResourceBuilder
-            ->createRestResponse($orderListTransfer->getPagination()->getNbResults(), $restRequest->getPage()->getLimit());
+            ->createRestResponse($totalItems, $restRequest->getPage()->getLimit());
 
         foreach ($orderListTransfer->getOrders() as $orderTransfer) {
             $restOrdersAttributesTransfer = $this->orderResourceMapper->mapOrderTransferToRestOrdersAttributesTransfer($orderTransfer);

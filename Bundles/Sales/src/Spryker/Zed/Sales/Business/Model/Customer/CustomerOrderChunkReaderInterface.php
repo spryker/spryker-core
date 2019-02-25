@@ -17,5 +17,5 @@ interface CustomerOrderChunkReaderInterface
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getCustomerChunkOrderList(OrderListTransfer $orderListTransfer, int $idCustomer): OrderListTransfer;
+    public function getOrders(OrderListTransfer $orderListTransfer, int $idCustomer): OrderListTransfer;
 }

@@ -31,7 +31,7 @@ interface SalesStubInterface
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getCustomerChunkOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer;
+    public function getFilteredCustomerOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
