@@ -28,6 +28,7 @@ class OrdersTable extends AbstractTable
     public const GRAND_TOTAL = 'GrandTotal';
     public const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
     public const NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+    protected const COLUMN_SEPARATOR = ' ';
 
     /**
      * @var \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface
@@ -373,10 +374,11 @@ class OrdersTable extends AbstractTable
      */
     protected function getFullNameSearchableField(): string
     {
-        return 'CONCAT(' .
-            SpySalesOrderTableMap::COL_FIRST_NAME .
-            ', \' \', ' .
-            SpySalesOrderTableMap::COL_LAST_NAME .
-            ')';
+        return sprintf(
+            'CONCAT(%s,\'%s\',%s)',
+            SpySalesOrderTableMap::COL_FIRST_NAME,
+            static::COLUMN_SEPARATOR,
+            SpySalesOrderTableMap::COL_LAST_NAME
+        );
     }
 }
