@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Locale\Plugin\Locale;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\LocaleExtension\Dependency\Plugin\LocalePluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,9 +26,11 @@ class LocaleLocalePlugin extends AbstractPlugin implements LocalePluginInterface
      *
      * @api
      *
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleTransfer(): LocaleTransfer
+    public function getLocaleTransfer(ContainerInterface $container): LocaleTransfer
     {
         return $this->buildLocaleTransfer();
     }

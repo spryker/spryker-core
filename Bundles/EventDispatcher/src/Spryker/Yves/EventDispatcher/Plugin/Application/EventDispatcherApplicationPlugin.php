@@ -39,7 +39,7 @@ class EventDispatcherApplicationPlugin extends AbstractPlugin implements Applica
         $container->set(static::SERVICE_DISPATCHER, function (ContainerInterface $container) {
             $eventDispatcher = $this->getFactory()->createEventDispatcher();
 
-            $this->addSubscribers($eventDispatcher, $container);
+            $eventDispatcher = $this->extendEventDispatcher($eventDispatcher, $container);
 
             return $eventDispatcher;
         });
@@ -59,9 +59,9 @@ class EventDispatcherApplicationPlugin extends AbstractPlugin implements Applica
         $container->extend(static::SERVICE_DISPATCHER, function (SymfonyEventDispatcherInterface $existingEventDispatcher, ContainerInterface $container) {
             $eventDispatcher = $this->getFactory()->createEventDispatcher();
 
-            $this->copyExistingListeners($eventDispatcher, $existingEventDispatcher);
+            $eventDispatcher = $this->copyExistingListeners($eventDispatcher, $existingEventDispatcher);
 
-            $this->addSubscribers($eventDispatcher, $container);
+            $eventDispatcher = $this->extendEventDispatcher($eventDispatcher, $container);
 
             return $eventDispatcher;
         });
@@ -100,10 +100,10 @@ class EventDispatcherApplicationPlugin extends AbstractPlugin implements Applica
      *
      * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
      */
-    protected function addSubscribers(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
+    protected function extendEventDispatcher(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         foreach ($this->getFactory()->getEventDispatcherPlugins() as $eventDispatcherPlugin) {
-            $eventDispatcher->addSubscriber($eventDispatcherPlugin->getSubscriber($container));
+            $eventDispatcher = $eventDispatcherPlugin->extend($eventDispatcher, $container);
         }
 
         return $eventDispatcher;

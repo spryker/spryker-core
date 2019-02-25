@@ -18,12 +18,14 @@
   "require-dev": {
     "spryker/application": "*",
     "spryker/config": "*",
+    "spryker/event-dispatcher": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/config": "If you want to use the TwigServiceProvider.",
+    "spryker/event-dispatcher": "If you want to use EventDispatcher plugin.",
     "spryker/silex": "If you want to use the TwigServiceProvider."
   },
   "autoload": {

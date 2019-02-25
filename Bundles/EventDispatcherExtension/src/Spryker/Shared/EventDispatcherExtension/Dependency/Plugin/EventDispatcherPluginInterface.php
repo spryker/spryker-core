@@ -8,19 +8,20 @@
 namespace Spryker\Shared\EventDispatcherExtension\Dependency\Plugin;
 
 use Spryker\Service\Container\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 
 interface EventDispatcherPluginInterface
 {
     /**
      * Specification:
-     * - Returns Event Subscriber that will be added for Event Dispatcher.
+     * - Extends the EventDispatcher.
      *
      * @api
      *
+     * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
      */
-    public function getSubscriber(ContainerInterface $container): EventSubscriberInterface;
+    public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface;
 }

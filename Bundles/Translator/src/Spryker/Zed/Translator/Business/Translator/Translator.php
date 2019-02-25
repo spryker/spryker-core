@@ -12,10 +12,26 @@ use Symfony\Component\Translation\Translator as SymfonyTranslator;
 class Translator extends SymfonyTranslator implements TranslatorInterface
 {
     /**
+     * @var string
+     */
+    protected static $locale;
+
+    /**
+     * @param string $locale
+     *
      * @return void
      */
-    public function prepareTranslatorService(): void
+    public function setLocale($locale): void
     {
-        // TODO: Implement prepareTranslatorService() method.
+        $this->assertValidLocale($locale);
+        static::$locale = $locale;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return static::$locale;
     }
 }

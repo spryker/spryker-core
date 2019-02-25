@@ -13,6 +13,10 @@
     "spryker/testify": "*",
     "spryker/twig": "*"
   },
+  "suggest": {
+    "spryker/container": "If you want to use the TwigPluginInterface",
+    "spryker/twig": "If you want to use the TwigLoaderPluginInterface"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -27,9 +31,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/container": "If you want to use the TwigPluginInterface",
-    "spryker/twig": "If you want to use the TwigLoaderPluginInterface"
   }
 }

@@ -9,12 +9,13 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
-    "spryker/symfony": "^3.0.0",
+    "spryker/event-dispatcher": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/container": "If you want to use EventDispatcherExtensionPlugin",
-    "spryker/symfony": "If you want to use EventDispatcherExtensionPlugin"
+    "spryker/container": "If you want to use EventDispatcherPlugin.",
+    "spryker/event-dispatcher": "If you want to use EventDispatcherPlugin.",
+    "spryker/symfony": "If you want to use EventDispatcherPlugin."
   },
   "autoload": {
     "psr-4": {

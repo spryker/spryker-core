@@ -15,6 +15,9 @@
     "spryker/container": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/container": "If you want to use the EventDispatcherApplicationPlugin"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -34,8 +37,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/container": "If you want to use the EventDispatcherApplicationPlugin"
   }
 }

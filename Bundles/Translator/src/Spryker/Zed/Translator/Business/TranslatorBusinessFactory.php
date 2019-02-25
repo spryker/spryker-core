@@ -160,6 +160,8 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Translator\Business\Translator\TranslatorPreparatorInterface
      */
     public function createTranslatorPreparator(): TranslatorPreparatorInterface

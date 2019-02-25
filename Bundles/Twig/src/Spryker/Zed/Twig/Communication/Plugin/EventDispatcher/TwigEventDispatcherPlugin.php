@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Twig\Communication\Plugin\EventDispatcher;
 
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
@@ -21,15 +21,19 @@ class TwigEventDispatcherPlugin extends AbstractPlugin implements EventDispatche
 {
     /**
      * {@inheritdoc}
+     * - Adds TwigEventSubscriber.
      *
      * @api
      *
+     * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
      */
-    public function getSubscriber(ContainerInterface $container): EventSubscriberInterface
+    public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        return $this->getFactory()->createTwigEventSubscriber($container);
+        $eventDispatcher->addSubscriber($this->getFactory()->createTwigEventSubscriber($container));
+
+        return $eventDispatcher;
     }
 }

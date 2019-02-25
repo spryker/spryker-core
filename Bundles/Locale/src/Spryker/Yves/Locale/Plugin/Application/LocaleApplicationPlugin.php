@@ -19,7 +19,11 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
     protected const SERVICE_LOCALE = 'locale';
-    protected const FLAG_USE_LOCALE_LISTENER = 'FLAG_USE_LOCALE_LISTENER';
+
+    /**
+     * Added for BC reason only.
+     */
+    protected const BC_FEATURE_FLAG_LOCALE_LISTENER = 'BC_FEATURE_FLAG_LOCALE_LISTENER';
 
     /**
      * {@inheritdoc}
@@ -44,11 +48,11 @@ class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      */
     protected function addLocale(ContainerInterface $container): ContainerInterface
     {
+        $container->set(static::BC_FEATURE_FLAG_LOCALE_LISTENER, false);
         $container->set(static::SERVICE_LOCALE, function (ContainerInterface $container) {
-            $localeName = $this->getLocaleTransfer()->getLocaleName();
+            $localeName = $this->getLocaleTransfer($container)->getLocaleName();
             $this->getFactory()->getStore()->setCurrentLocale($localeName);
             ApplicationEnvironment::initializeLocale($localeName);
-            $container->set(static::FLAG_USE_LOCALE_LISTENER, false);
 
             return $localeName;
         });
@@ -57,10 +61,12 @@ class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     }
 
     /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected function getLocaleTransfer(): LocaleTransfer
+    protected function getLocaleTransfer(ContainerInterface $container): LocaleTransfer
     {
-        return $this->getFactory()->getLocalePlugin()->getLocaleTransfer();
+        return $this->getFactory()->getLocalePlugin()->getLocaleTransfer($container);
     }
 }

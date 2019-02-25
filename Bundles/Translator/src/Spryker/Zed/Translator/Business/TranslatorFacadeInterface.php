@@ -7,13 +7,17 @@
 
 namespace Spryker\Zed\Translator\Business;
 
-interface TranslatorFacadeInterface
+use Spryker\Shared\Translator\TranslatorInterface;
+
+interface TranslatorFacadeInterface extends TranslatorInterface
 {
     /**
      * Specification:
      *  - Extends Application with Translator instance.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return void
      */
@@ -38,4 +42,57 @@ interface TranslatorFacadeInterface
      * @return void
      */
     public function cleanTranslationCache(): void;
+
+    /**
+     * Specification:
+     * - Translates the given message.
+     *
+     * @api
+     *
+     * @param string $id
+     * @param array $parameters
+     * @param string|null $domain
+     * @param string|null $locale
+     *
+     * @return string
+     */
+    public function trans($id, array $parameters = [], $domain = null, $locale = null): string;
+
+    /**
+     * Specification:
+     * - Translates the given choice message by choosing a translation according to a number.
+     *
+     * @api
+     *
+     * @param string $id
+     * @param int $number
+     * @param array $parameters
+     * @param string|null $domain
+     * @param string|null $locale
+     *
+     * @return string
+     */
+    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null): string;
+
+    /**
+     * Specification:
+     * - Sets the current locale to Translator.
+     *
+     * @api
+     *
+     * @param string $locale
+     *
+     * @return void
+     */
+    public function setLocale($locale): void;
+
+    /**
+     * Specification:
+     * - Returns the current locale of Translator.
+     *
+     * @api
+     *
+     * @return string The locale
+     */
+    public function getLocale(): string;
 }

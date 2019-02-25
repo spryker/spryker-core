@@ -6,12 +6,14 @@
   "require": {
     "php": ">=7.1",
     "spryker/application-extension": "^1.0.0",
+    "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/config": "*",
     "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/symfony": "*",
@@ -19,9 +21,10 @@
   },
   "suggest": {
     "spryker/config": "If you want to use LocaleApplicationPlugin",
-    "spryker/container": "If you want to use Application plugins",
+    "spryker/container": "If you want to use LocalePlugin.",
+    "spryker/event-dispatcher": "If you want to use EventDispatcher plugin.",
     "spryker/installer": "If you want to use Installer plugins.",
-    "spryker/symfony": "If you want to use LocaleLocalePlugin"
+    "spryker/symfony": "If you want to use EventDispatcher plugin."
   },
   "autoload": {
     "psr-4": {

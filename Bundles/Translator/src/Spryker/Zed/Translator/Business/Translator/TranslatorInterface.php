@@ -30,9 +30,4 @@ interface TranslatorInterface extends SymfonyTranslatorInterface, TranslatorBagI
      * @return void
      */
     public function addResource($format, $resource, $locale, $domain = null);
-
-    /**
-     * @return void
-     */
-    public function prepareTranslatorService(): void;
 }
