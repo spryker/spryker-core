@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -19,12 +21,17 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     * @param int $idSalesOrder
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer|null $expenseTransfer
      *
      * @return int
      */
-    public function createSalesShipment(ShipmentTransfer $shipmentTransfer, int $idSalesOrder): int
-    {
+    public function createSalesShipment(
+        ShipmentTransfer $shipmentTransfer,
+        OrderTransfer $orderTransfer,
+        ?ExpenseTransfer $expenseTransfer = null
+    ): int {
+        
         $salesShipmentEntity = $this->getFactory()
             ->createSalesShipmentQuery()
             ->findOneByIdSalesShipment($shipmentTransfer->getIdSalesShipment());
@@ -35,7 +42,11 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
 
         $salesShipmentEntity = $this->getFactory()
             ->createShipmentMapper()
-            ->mapShipmentTransferToSalesOrderAddressEntity($shipmentTransfer, $idSalesOrder, $salesShipmentEntity);
+            ->mapShipmentTransferToSalesOrderAddressEntity($shipmentTransfer, $orderTransfer->getIdSalesOrder(), $salesShipmentEntity);
+
+        if ($expenseTransfer !== null && $expenseTransfer->getIdSalesExpense() !== null) {
+            $salesShipmentEntity->setFkSalesExpense($expenseTransfer->getIdSalesExpense());
+        }
 
         $salesShipmentEntity->save();
 

@@ -87,7 +87,6 @@ class EditController extends AbstractController
     {
         $shipmentGroupTransfer = new ShipmentGroupTransfer();
         $shipmentGroupTransfer = $this->addShipmentTransfer($shipmentGroupTransfer, $formData);
-        $shipmentGroupTransfer->getShipment()->setExpense(new ExpenseTransfer());
 
         return $shipmentGroupTransfer;
     }

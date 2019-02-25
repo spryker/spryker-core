@@ -201,7 +201,7 @@ class ShipmentFormCreate extends AbstractType
     protected function addOrderItemsForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add(static::FORM_SALES_ORDER_ITEMS, CollectionType::class, [
-                'entry_type' => ItemTransfer::class,
+                'entry_type' => ItemForm::class,
                 'entry_options' => [
                     'label' => false,
                     static::FIELD_SHIPMENT_SELECTED_ITEMS => $builder->getOption(static::FIELD_SHIPMENT_SELECTED_ITEMS),
