@@ -73,8 +73,10 @@ class SalesConfig extends AbstractBundleConfig
         /**
          * @deprecated Will be removed in next major release.
          */
-        if (!defined('\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer::FK_SALES_SHIPMENT')) {
-            return $this->isTestOrderWithoutMultiShippingAddress($quoteTransfer);
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                return $this->isTestOrderWithoutMultiShippingAddress($quoteTransfer);
+            }
         }
 
         return $this->isTestOrderWithMultiShippingAddress($quoteTransfer);

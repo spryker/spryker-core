@@ -14,11 +14,10 @@ use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
  */
 interface TaxRateCalculatorStrategyResolverInterface
 {
-    public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
-    public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
-
     /**
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
      * @return \Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface
      */
-    public function resolve(): CalculatorInterface;
+    public function resolve(iterable $itemTransfers): CalculatorInterface;
 }

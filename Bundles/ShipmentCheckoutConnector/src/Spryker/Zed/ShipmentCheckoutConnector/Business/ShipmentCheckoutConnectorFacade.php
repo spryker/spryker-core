@@ -30,7 +30,7 @@ class ShipmentCheckoutConnectorFacade extends AbstractFacade implements Shipment
     {
         return $this->getFactory()
             ->createShipmentCheckoutPreCheckStrategyResolver()
-            ->resolve()
+            ->resolve($quoteTransfer->getItems())
             ->checkShipment($quoteTransfer, $checkoutResponseTransfer);
     }
 }

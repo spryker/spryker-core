@@ -16,6 +16,9 @@ use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface;
  */
 class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
 {
+    public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
+    public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
+
     /**
      * @var array|\Closure[]
      */
@@ -30,14 +33,18 @@ class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
     }
 
     /**
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
      * @return \Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface
      */
-    public function resolve(): SalesOrderSaverInterface
+    public function resolve(iterable $itemTransfers): SalesOrderSaverInterface
     {
-        if (!defined('\Generated\Shared\Transfer\ItemTransfer::SHIPMENT')) {
-            $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 
-            return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
+                return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
+            }
         }
 
         $this->assertRequiredStrategyWithMultiShipmentContainerItems();

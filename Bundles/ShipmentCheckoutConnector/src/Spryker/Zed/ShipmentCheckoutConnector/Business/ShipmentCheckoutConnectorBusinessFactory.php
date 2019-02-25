@@ -83,7 +83,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function addShipmentCheckoutPreCheckWithoutMultipleShippingAddress(array $strategyContainer): array
     {
-        $strategyContainer[PreCheckStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[PreCheckStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createShipmentCheckoutPreCheck();
         };
 
@@ -99,7 +99,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function addShipmentCheckoutPreCheckWithMultipleShippingAddress(array $strategyContainer): array
     {
-        $strategyContainer[PreCheckStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[PreCheckStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createShipmentCheckoutPreCheckWithMultipleShippingAddress();
         };
 

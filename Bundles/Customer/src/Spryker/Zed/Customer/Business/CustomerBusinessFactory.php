@@ -292,7 +292,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     protected function addStrategyCustomerOrderSaverWithoutMultipleShippingAddress(array $strategyContainer): array
     {
-        $strategyContainer[OrderSaverStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createCheckoutCustomerOrderSaver();
         };
 
@@ -308,7 +308,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     protected function addStrategyCustomerOrderSaverWithMultipleShippingAddress(array $strategyContainer): array
     {
-        $strategyContainer[OrderSaverStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress();
         };
 

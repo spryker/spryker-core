@@ -241,10 +241,10 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function addShipmentDiscountCollectorForCarrier(array $strategyContainer): array
     {
-        $strategyContainer[MultiShipmentCollectorStrategyResolverInterface::DISCOUNT_TYPE_CARRIER][MultiShipmentCollectorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_CARRIER][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createCarrierDiscountCollector();
         };
-        $strategyContainer[MultiShipmentCollectorStrategyResolverInterface::DISCOUNT_TYPE_CARRIER][MultiShipmentCollectorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_CARRIER][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createCarrierDiscountCollectorWithMultiShipment();
         };
 
@@ -260,10 +260,10 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function addShipmentDiscountCollectorForMethod(array $strategyContainer): array
     {
-        $strategyContainer[MultiShipmentCollectorStrategyResolverInterface::DISCOUNT_TYPE_METHOD][MultiShipmentCollectorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_METHOD][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createMethodDiscountCollector();
         };
-        $strategyContainer[MultiShipmentCollectorStrategyResolverInterface::DISCOUNT_TYPE_METHOD][MultiShipmentCollectorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_METHOD][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createMethodDiscountCollectorWithMultiShipment();
         };
 
@@ -279,10 +279,10 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function addShipmentDiscountCollectorForPrice(array $strategyContainer): array
     {
-        $strategyContainer[MultiShipmentCollectorStrategyResolverInterface::DISCOUNT_TYPE_PRICE][MultiShipmentCollectorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_PRICE][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createShipmentPriceDiscountCollector();
         };
-        $strategyContainer[MultiShipmentCollectorStrategyResolverInterface::DISCOUNT_TYPE_PRICE][MultiShipmentCollectorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_PRICE][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createShipmentPriceDiscountCollectorWithMultiShipment();
         };
 
@@ -293,7 +293,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
      * @deprecated Will be removed in next major release. Use $this->createCarrierDiscountDecisionRuleWithMultiShipment(),
      * createCarrierDiscountDecisionRuleWithMultiShipment() or createCarrierDiscountDecisionRuleWithMultiShipment() instead.
      *
-     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentCollectorStrategyResolver
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentDecisionRuleStrategyResolverInterface
      */
     public function createShipmentDiscountDecisionRuleStrategyResolver(): MultiShipmentDecisionRuleStrategyResolverInterface
     {
@@ -315,10 +315,10 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function addShipmentDiscountDecisionRuleForCarrier(array $strategyContainer): array
     {
-        $strategyContainer[MultiShipmentCollectorStrategyResolverInterface::DISCOUNT_TYPE_CARRIER][MultiShipmentCollectorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_CARRIER][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createCarrierDiscountDecisionRule();
         };
-        $strategyContainer[MultiShipmentCollectorStrategyResolverInterface::DISCOUNT_TYPE_CARRIER][MultiShipmentCollectorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_CARRIER][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createCarrierDiscountDecisionRuleWithMultiShipment();
         };
 
@@ -334,10 +334,10 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function addShipmentDiscountDecisionRuleForMethod(array $strategyContainer): array
     {
-        $strategyContainer[MultiShipmentCollectorStrategyResolverInterface::DISCOUNT_TYPE_METHOD][MultiShipmentCollectorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_METHOD][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createCarrierDiscountDecisionRule();
         };
-        $strategyContainer[MultiShipmentCollectorStrategyResolverInterface::DISCOUNT_TYPE_METHOD][MultiShipmentCollectorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_METHOD][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createCarrierDiscountDecisionRuleWithMultiShipment();
         };
 
@@ -353,10 +353,10 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function addShipmentDiscountDecisionRuleForPrice(array $strategyContainer): array
     {
-        $strategyContainer[MultiShipmentCollectorStrategyResolverInterface::DISCOUNT_TYPE_PRICE][MultiShipmentCollectorStrategyResolverInterface::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+        $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_PRICE][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createCarrierDiscountDecisionRule();
         };
-        $strategyContainer[MultiShipmentCollectorStrategyResolverInterface::DISCOUNT_TYPE_PRICE][MultiShipmentCollectorStrategyResolverInterface::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+        $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_PRICE][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createCarrierDiscountDecisionRuleWithMultiShipment();
         };
 

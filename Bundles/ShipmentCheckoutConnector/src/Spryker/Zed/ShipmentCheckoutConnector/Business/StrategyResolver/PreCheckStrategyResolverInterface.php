@@ -14,11 +14,10 @@ use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreC
  */
 interface PreCheckStrategyResolverInterface
 {
-    public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
-    public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
-
     /**
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
      * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface
      */
-    public function resolve(): ShipmentCheckoutPreCheckInterface;
+    public function resolve(iterable $itemTransfers): ShipmentCheckoutPreCheckInterface;
 }
