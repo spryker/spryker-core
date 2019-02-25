@@ -23,6 +23,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
 {
     public const COL_MAX_TAX_RATE = 'MaxTaxRate';
     public const COL_ID_ABSTRACT_PRODUCT = 'IdProductAbstract';
+    public const COL_COUNTRY_CODE = 'COUNTRY_CODE';
 
     /**
      * @api
@@ -135,31 +136,32 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     /**
      * @api
      *
-     * @param int[] $idProductAbstracts
-     * @param string[] $countryIso2Codes
+     * @param int[] idProductAbstracts
+     * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
-    public function queryTaxSetByIdProductAbstractAndCountryIso2Codes(array $idProductAbstracts, array $countryIso2Codes): SpyTaxSetQuery
+    public function queryTaxSetByIdProductAbstractAndCountryIso2Codes(array $idProductAbstracts, array $countryIso2Code): SpyTaxSetQuery
     {
-        $allIdProductAbstracts = array_keys($countryIso2Codes);
-        return $this->getFactory()->createTaxSetQuery()
+        return $this->getFactory()
+            ->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
-                ->filterByIdProductAbstract($allIdProductAbstracts, Criteria::IN)
+                ->filterByIdProductAbstract($idProductAbstracts, Criteria::IN)
                 ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_ABSTRACT_PRODUCT)
                 ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->endUse()
             ->useSpyTaxSetTaxQuery()
                 ->useSpyTaxRateQuery()
                     ->useCountryQuery()
-                        ->filterByIso2Code($countryIso2Codes, Criteria::IN)
+                        ->filterByIso2Code($countryIso2Code, Criteria::IN)
+                        ->withColumn(SpyCountryTableMap::COL_ISO2_CODE, static::COL_COUNTRY_CODE)
                         ->groupBy(SpyCountryTableMap::COL_ISO2_CODE)
                     ->endUse()
                     ->_or()
-                    ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
+                    ->filterByFkCountry(null)
                 ->endUse()
                 ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
             ->endUse()
-            ->select([SpyCountryTableMap::COL_ISO2_CODE, static::COL_MAX_TAX_RATE, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT]);
+            ->select([static::COL_COUNTRY_CODE, static::COL_MAX_TAX_RATE, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT]);
     }
 }
