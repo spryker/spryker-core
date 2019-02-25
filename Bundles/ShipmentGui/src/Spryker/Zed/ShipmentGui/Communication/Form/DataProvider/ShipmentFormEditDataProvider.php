@@ -41,7 +41,7 @@ class ShipmentFormEditDataProvider extends BaseShipmentFormDataProvider
     protected function getFormData(ShipmentTransfer $shipmentTransfer): array
     {
         $data = [
-            ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS => $this->getShipmentAddressId($shipmentTransfer->getShippingAddress()),
+            ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS => $this->getShippingAddressId($shipmentTransfer->getShippingAddress()),
             ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD => $this->getShipmentMethodId($shipmentTransfer->getMethod()),
             ShipmentFormCreate::FIELD_REQUESTED_DELIVERY_DATE => $shipmentTransfer->getRequestedDeliveryDate(),
             ShipmentFormCreate::FORM_SHIPPING_ADDRESS => $this->getAddressFields($shipmentTransfer->getShippingAddress()),
@@ -69,7 +69,7 @@ class ShipmentFormEditDataProvider extends BaseShipmentFormDataProvider
      *
      * @return int|null
      */
-    protected function getShipmentAddressId(?AddressTransfer $addressTransfer = null): ?int
+    protected function getShippingAddressId(?AddressTransfer $addressTransfer = null): ?int
     {
         if ($addressTransfer === null) {
             return null;

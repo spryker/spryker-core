@@ -67,7 +67,7 @@ class ShipmentFormCreate extends AbstractType
     {
         $this
             ->addIdSalesShipmentField($builder)
-            ->addIdShipmentAddressField($builder, $options[static::OPTION_SHIPMENT_ADDRESS_CHOICES])
+            ->addIdShippingAddressField($builder, $options[static::OPTION_SHIPMENT_ADDRESS_CHOICES])
             ->addIdShipmentMethodField($builder, $options[static::OPTION_SHIPMENT_METHOD_CHOICES])
             ->addRequestedDeliveryDateField($builder)
             ->addShippingAddressForm($builder, $options)
@@ -92,7 +92,7 @@ class ShipmentFormCreate extends AbstractType
      *
      * @return $this
      */
-    protected function addIdShipmentAddressField(FormBuilderInterface $builder, array $options = [])
+    protected function addIdShippingAddressField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add(static::FIELD_ID_SHIPMENT_ADDRESS, ChoiceType::class, [
             'label' => 'Delivery Address',

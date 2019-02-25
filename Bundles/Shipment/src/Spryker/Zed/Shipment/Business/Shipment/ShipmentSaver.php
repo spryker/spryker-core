@@ -53,7 +53,7 @@ class ShipmentSaver implements ShipmentSaverInterface
     public function saveShipment(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupResponseTransfer
     {
         $saveOrderTransfer = $this->buildSaveOrderTransfer($orderTransfer);
-        $this->updateShipmentMethodForShipmentGroup($shipmentGroupTransfer, $orderTransfer);
+        $shipmentGroupTransfer = $this->updateShipmentMethodForShipmentGroup($shipmentGroupTransfer, $orderTransfer);
         $expenseTransfer = $this->createShippingExpenseTransfer($shipmentGroupTransfer->getShipment(), $orderTransfer);
         $orderTransfer = $this->addShippingExpenseToOrderExpenses($expenseTransfer, $orderTransfer);
 
@@ -94,7 +94,7 @@ class ShipmentSaver implements ShipmentSaverInterface
         $shipmentMethodTransfer = $shipmentTransfer->getMethod();
         $expenseTransfer = new ExpenseTransfer();
 
-        $expenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
+        $expenseTransfer->fromArray($shipmentMethodTransfer->modifiedToArray(), true);
         $expenseTransfer->setFkSalesOrder($orderTransfer->getIdSalesOrder());
         $expenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
         $this->setPrice(
@@ -194,7 +194,7 @@ class ShipmentSaver implements ShipmentSaverInterface
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
     protected function updateShipmentMethodForShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): void
     {
@@ -202,5 +202,7 @@ class ShipmentSaver implements ShipmentSaverInterface
         $shipmentGroupTransfer
             ->getShipment()
             ->setMethod($this->shipmentMethodExtender->extendShipmentMethodTransfer($shipmentMethodTransfer, $orderTransfer));
+
+        return $shipmentGroupTransfer;
     }
 }

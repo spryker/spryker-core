@@ -213,7 +213,7 @@ class QuoteDataBCForMultiShipmentAdapter implements QuoteDataBCForMultiShipmentA
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function getShipmentAddressTransferForBC(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): AddressTransfer
+    protected function getShippingAddressTransferForBC(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): AddressTransfer
     {
         if ($itemTransfer->getShipment()->getShippingAddress() !== null) {
             return $itemTransfer->getShipment()->getShippingAddress();
@@ -241,7 +241,7 @@ class QuoteDataBCForMultiShipmentAdapter implements QuoteDataBCForMultiShipmentA
 
         $shipmentMethodTransfer = $this->getShipmentMethodTransferForBC($itemTransfer, $quoteTransfer);
         $shipmentExpenseTransfer = $this->getShipmentExpenseTransferForBC($itemTransfer, $quoteExpenseTransfer);
-        $shippingAddressTransfer = $this->getShipmentAddressTransferForBC($itemTransfer, $quoteTransfer);
+        $shippingAddressTransfer = $this->getShippingAddressTransferForBC($itemTransfer, $quoteTransfer);
         $shipmentTransfer->setMethod($shipmentMethodTransfer)
             ->setExpense($shipmentExpenseTransfer)
             ->setShippingAddress($shippingAddressTransfer);

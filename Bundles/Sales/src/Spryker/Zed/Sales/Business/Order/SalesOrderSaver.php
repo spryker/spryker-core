@@ -13,14 +13,14 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface;
-use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver as SalesOrderSaverWithoutItemShipmentAddress;
+use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver as SalesOrderSaverWithoutItemShippingAddress;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
-class SalesOrderSaver extends SalesOrderSaverWithoutItemShipmentAddress
+class SalesOrderSaver extends SalesOrderSaverWithoutItemShippingAddress
 {
     /**
      * @deprecated Will be removed in next major release.

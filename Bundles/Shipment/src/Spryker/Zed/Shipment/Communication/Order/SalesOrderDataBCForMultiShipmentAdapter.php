@@ -45,7 +45,7 @@ class SalesOrderDataBCForMultiShipmentAdapter implements SalesOrderDataBCForMult
                 continue;
             }
 
-            $this->setItemTransferShipmentAndShipmentAddressForBC($itemTransfer, $orderTransfer);
+            $this->setItemTransferShipmentAndShippingAddressForBC($itemTransfer, $orderTransfer);
         }
 
         return $orderTransfer;
@@ -132,7 +132,7 @@ class SalesOrderDataBCForMultiShipmentAdapter implements SalesOrderDataBCForMult
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function getShipmentAddressTransferForBC(ItemTransfer $itemTransfer, OrderTransfer $orderTransfer): AddressTransfer
+    protected function getShippingAddressTransferForBC(ItemTransfer $itemTransfer, OrderTransfer $orderTransfer): AddressTransfer
     {
         if ($itemTransfer->getShipment()->getShippingAddress() !== null) {
             return $itemTransfer->getShipment()->getShippingAddress();
@@ -150,12 +150,12 @@ class SalesOrderDataBCForMultiShipmentAdapter implements SalesOrderDataBCForMult
      *
      * @return void
      */
-    protected function setItemTransferShipmentAndShipmentAddressForBC(ItemTransfer $itemTransfer, OrderTransfer $orderTransfer): void
+    protected function setItemTransferShipmentAndShippingAddressForBC(ItemTransfer $itemTransfer, OrderTransfer $orderTransfer): void
     {
         $shipmentTransfer = $this->getShipmentTransferForBC($itemTransfer, $orderTransfer);
         $itemTransfer->setShipment($shipmentTransfer);
 
-        $shippingAddressTransfer = $this->getShipmentAddressTransferForBC($itemTransfer, $orderTransfer);
+        $shippingAddressTransfer = $this->getShippingAddressTransferForBC($itemTransfer, $orderTransfer);
         $shipmentTransfer->setShippingAddress($shippingAddressTransfer);
     }
 }
