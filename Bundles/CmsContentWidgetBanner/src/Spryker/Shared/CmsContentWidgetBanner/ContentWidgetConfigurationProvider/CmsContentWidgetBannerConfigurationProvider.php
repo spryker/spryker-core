@@ -37,8 +37,8 @@ class CmsContentWidgetBannerConfigurationProvider implements CmsContentWidgetBan
      */
     public function getUsageInformation(): string
     {
-        return "{{ cms_banner({title: string, subTitle: string, imageUrl: string, clickUrl: string, altText: string}) }}. 
+        return "{{ cms_banner({title: string, subtitle: string, imageUrl: string, clickUrl: string, altText: string}) }}. 
             To use a different template 
-            {{ cms_banner({title: string, subTitle: string, imageUrl: string, clickUrl: string, altText: string}), 'default') }}.";
+            {{ cms_banner({title: string, subtitle: string, imageUrl: string, clickUrl: string, altText: string}), 'default') }}.";
     }
 }
