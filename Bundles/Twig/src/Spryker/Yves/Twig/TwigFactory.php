@@ -24,7 +24,7 @@ use Spryker\Yves\Twig\Model\TemplateNameExtractor\TemplateNameExtractor;
 class TwigFactory extends AbstractFactory
 {
     /**
-     * @return \Twig_LoaderInterface
+     * @return \Spryker\Shared\Twig\Loader\FilesystemLoaderInterface
      */
     public function createFilesystemLoader()
     {

@@ -12,8 +12,8 @@ use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
- * @method \Spryker\Zed\Twig\TwigConfig getConfig()
+ * @method \Spryker\Yves\Twig\TwigFactory getFactory()
+ * @method \Spryker\Yves\Twig\TwigConfig getConfig()
  */
 class FilesystemTwigLoaderPlugin extends AbstractPlugin implements TwigLoaderPluginInterface
 {

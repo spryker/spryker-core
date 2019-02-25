@@ -20,6 +20,7 @@ use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * TODO: Adjust this bootstrap class according to replacement ServiceProviders to Plugins and new application Container.
  */
 class ZedBootstrap
 {
