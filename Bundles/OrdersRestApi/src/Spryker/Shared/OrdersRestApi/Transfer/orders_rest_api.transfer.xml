@@ -130,12 +130,17 @@
     <transfer name="OrderList">
         <property name="idCustomer" type="int" />
         <property name="filter" type="Filter" />
+        <property name="Pagination" type="Pagination" />
         <property name="orders" type="Order[]" singular="order" />
     </transfer>
 
     <transfer name="Filter">
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="nbResults" type="int"/>
     </transfer>
 
 </transfers>

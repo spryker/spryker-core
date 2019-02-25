@@ -38,7 +38,8 @@ interface SalesClientInterface
 
     /**
      * Specification:
-     * - Returns chunk of sales orders for the given customer and filters.
+     *  - Returns a transfer with the filtered list of orders for the given customer id.
+     *  - Sets the total number of orders for the customer to the pagination transfer.
      *
      * @api
      *
