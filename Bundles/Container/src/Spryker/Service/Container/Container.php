@@ -466,7 +466,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function remove(string $id): void
     {
-        $this->removeAlias($id);
+        $this->removeAliases($id);
         $this->removeService($id);
         $this->removeGlobalService($id);
     }
@@ -476,13 +476,23 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @return void
      */
-    protected function removeAlias(string $id): void
+    protected function removeAliases(string $id): void
     {
-        foreach (array_keys(static::$aliases, $id) as $alias) {
+        foreach ($this->getAliasesForService($id) as $alias) {
             unset(static::$aliases[$alias]);
         }
 
         unset(static::$aliases[$id]);
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return array
+     */
+    protected function getAliasesForService(string $id): array
+    {
+        return array_keys(static::$aliases, $id);
     }
 
     /**
