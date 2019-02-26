@@ -64,8 +64,8 @@ class ShipmentMapper implements ShipmentMapperInterface
      */
     public function mapShipmentEntityToShipmentTransfer(ShipmentTransfer $shipmentTransfer, SpySalesShipment $salesShipmentEntity): ShipmentTransfer
     {
-        $shipmentTransfer->fromArray($salesShipmentEntity->toArray());
+        $shipmentTransfer->fromArray($salesShipmentEntity->toArray(), true);
 
-        return $salesShipmentEntity;
+        return $shipmentTransfer;
     }
 }
