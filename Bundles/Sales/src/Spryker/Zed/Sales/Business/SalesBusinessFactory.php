@@ -433,11 +433,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createSalesOrderSaver();
         };
-//        $strategyContainer = $this->addStrategySalesOrderSaverWithoutMultipleShippingAddress($strategyContainer);
         $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createSalesOrderSaverMultipleShippingAddress();
         };
-//        $strategyContainer = $this->addStrategySalesOrderSaverWithMultipleShippingAddress($strategyContainer);
 
         return new OrderSaverStrategyResolver($strategyContainer);
     }
