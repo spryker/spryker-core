@@ -151,6 +151,16 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function replaceQuoteAction(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFacade()->replaceQuote($quoteTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

@@ -66,6 +66,19 @@ interface PersistentCartClientInterface
     public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer;
 
     /**
+     * Specifiction:
+     * - Makes Zed request.
+     * - Replaces active customer cart.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function replaceCustomerCart(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
      * Specification:
      * - Prepends customer reference with anonymous prefix from configuration.
      *

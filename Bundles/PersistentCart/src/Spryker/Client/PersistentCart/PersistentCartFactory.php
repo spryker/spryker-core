@@ -8,6 +8,8 @@
 namespace Spryker\Client\PersistentCart;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\PersistentCart\CustomerCartReplacer\CustomerCartReplacer;
+use Spryker\Client\PersistentCart\CustomerCartReplacer\CustomerCartReplacerInterface;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToCustomerClientInterface;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientInterface;
@@ -27,6 +29,7 @@ use Spryker\Client\PersistentCart\QuoteWriter\QuoteUpdater;
 use Spryker\Client\PersistentCart\QuoteWriter\QuoteUpdaterInterface;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStub;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface;
+use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteReplacePluginInterface;
 
 /**
  * @method \Spryker\Client\PersistentCart\PersistentCartConfig getConfig()
@@ -55,6 +58,17 @@ class PersistentCartFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->createZedPersistentCartStub(),
             $this->createQuoteUpdatePluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\CustomerCartReplacer\CustomerCartReplacerInterface
+     */
+    public function createCustomerCartReplacer(): CustomerCartReplacerInterface
+    {
+        return new CustomerCartReplacer(
+            $this->getQuoteReplacePlugin(),
+            $this->getQuoteClient()
         );
     }
 
@@ -147,6 +161,14 @@ class PersistentCartFactory extends AbstractFactory
     protected function getChangeRequestExtendPlugins(): array
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_CHANGE_REQUEST_EXTEND);
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteReplacePluginInterface
+     */
+    protected function getQuoteReplacePlugin(): QuoteReplacePluginInterface
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGIN_QUOTE_REPLACE);
     }
 
     /**

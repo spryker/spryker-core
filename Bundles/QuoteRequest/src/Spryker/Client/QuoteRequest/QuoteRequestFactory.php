@@ -8,9 +8,13 @@
 namespace Spryker\Client\QuoteRequest;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface;
+use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
 use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestChecker;
 use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestCheckerInterface;
+use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverter;
+use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverterInterface;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStub;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface;
 
@@ -28,6 +32,17 @@ class QuoteRequestFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverterInterface
+     */
+    public function createQuoteRequestToQuoteConverter(): QuoteRequestToQuoteConverterInterface
+    {
+        return new QuoteRequestToQuoteConverter(
+            $this->getPersistentCartClient(),
+            $this->getQuoteClient()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface
      */
     public function createQuoteRequestStub(): QuoteRequestStubInterface
@@ -41,5 +56,21 @@ class QuoteRequestFactory extends AbstractFactory
     public function getZedRequestClient(): QuoteRequestToZedRequestClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface
+     */
+    public function getPersistentCartClient(): QuoteRequestToPersistentCartClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestDependencyProvider::CLIENT_PERSISTENT_CART);
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface
+     */
+    public function getQuoteClient(): QuoteRequestToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestDependencyProvider::CLIENT_QUOTE);
     }
 }

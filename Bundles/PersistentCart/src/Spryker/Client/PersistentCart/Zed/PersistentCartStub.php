@@ -213,6 +213,19 @@ class PersistentCartStub implements PersistentCartStubInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function replaceQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->zedRequestClient->call('/persistent-cart/gateway/replace-quote', $quoteTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

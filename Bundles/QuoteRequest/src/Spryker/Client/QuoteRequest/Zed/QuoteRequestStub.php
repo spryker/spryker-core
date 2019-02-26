@@ -109,4 +109,20 @@ class QuoteRequestStub implements QuoteRequestStubInterface
 
         return $quoteRequestResponseTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function orderByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
+        $quoteRequestResponseTransfer = $this->zedRequestClient->call(
+            '/quote-request/gateway/order-by-reference',
+            $quoteRequestFilterTransfer
+        );
+
+        return $quoteRequestResponseTransfer;
+    }
 }

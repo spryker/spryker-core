@@ -213,6 +213,18 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
+     * - Makes full replacement of the quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function replaceQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
      *  - Saves quote in database.
      *  - Call quote response extend plugins.
      *

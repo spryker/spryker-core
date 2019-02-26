@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface;
 
@@ -89,6 +90,20 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
         return $this->getZedStub()->cancelByReference($quoteRequestFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function convertToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteTransfer
+    {
+        return $this->getFactory()->createQuoteRequestToQuoteConverter()->convertToQuote($quoteRequestTransfer);
     }
 
     /**

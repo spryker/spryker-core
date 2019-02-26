@@ -197,6 +197,20 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function replaceQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()->createQuoteWriter()->replaceQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
