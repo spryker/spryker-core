@@ -34,7 +34,10 @@ class CategoryNodeStoragePublishListener extends AbstractPlugin implements Event
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $categoryNodeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+
+        $categoryNodeIds = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransferIds($eventTransfers);
 
         $this->getFacade()->publish($categoryNodeIds);
     }

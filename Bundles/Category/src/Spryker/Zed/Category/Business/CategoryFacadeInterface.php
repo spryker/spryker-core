@@ -516,4 +516,27 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
     public function findCategoryById(int $idCategory): ?CategoryTransfer;
+
+    /**
+     * Specification:
+     * - Retrieve category node path.
+     *
+     * @api
+     *
+     * @param int $idNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer): string;
+
+    /**
+     * Specification:
+     * - Retrieve url to category list.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCategoryListUrl(): string;
 }

@@ -16,6 +16,7 @@ use Spryker\Shared\Session\SessionConfig;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Yves\Session\Plugin\ServiceProvider\SessionServiceProvider;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -85,11 +86,17 @@ class SessionServiceProviderTest extends Unit
      */
     private function getApplicationMock()
     {
+        $sessionMock = $this->getMockBuilder(SessionInterface::class)->getMock();
+        $dispatcherMock = $this->getMockBuilder(EventDispatcher::class)->getMock();
         $applicationMockBuilder = $this->getMockBuilder(Application::class);
         $applicationMockBuilder->setMethods(['offsetGet']);
+        $valueMap = [
+            ['session', $sessionMock],
+            ['dispatcher', $dispatcherMock],
+        ];
 
         $applicationMock = $applicationMockBuilder->getMock();
-        $applicationMock->expects($this->once())->method('offsetGet')->with('session')->willReturn($this->getMockBuilder(SessionInterface::class)->getMock());
+        $applicationMock->method('offsetGet')->will($this->returnValueMap($valueMap));
 
         return $applicationMock;
     }
