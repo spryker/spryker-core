@@ -14,8 +14,8 @@ interface CompanyUserSavePreCheckPluginInterface
 {
     /**
      * Specification:
-     * - Executes checks before a company user saving process is started.
-     * - Cancels saving if any check failed.
+     * - Executes checks before the process of saving a company user has started.
+     * - Cancels the company user saving process if any check has failed.
      *
      * @api
      *
