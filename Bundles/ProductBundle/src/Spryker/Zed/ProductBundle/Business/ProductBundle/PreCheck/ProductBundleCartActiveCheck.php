@@ -9,14 +9,13 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterface
 {
-    protected const CART_PRE_CHECK_ACTIVE_FAILED = 'cart.pre.check.active.failed';
-    protected const TRANSLATION_PARAMETER_SKU = '%sku%';
+    protected const GLOSSARY_KEY_CART_PRE_CHECK_ACTIVE_FAILED = 'cart.pre.check.active.failed';
+    protected const GLOSSARY_PARAMETER_SKU = '%sku%';
 
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
@@ -38,38 +37,40 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
      */
     public function checkActiveItems(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
-        $cartPreCheckResponseTransfer = new CartPreCheckResponseTransfer();
+        $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())
+            ->setIsSuccess(true);
+
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $errorMessageTransfer = $this->checkBundledProductsActive($itemTransfer);
-            if ($errorMessageTransfer !== null) {
-                $cartPreCheckResponseTransfer->addMessage($errorMessageTransfer);
+            if (!$this->checkBundledProductsActive($itemTransfer->getSku())) {
+                $cartPreCheckResponseTransfer
+                    ->addMessage(
+                        $this->createItemIsNotActiveMessageTransfer($itemTransfer->getSku())
+                    )
+                    ->setIsSuccess(false);
+
+                return $cartPreCheckResponseTransfer;
             }
         }
-
-        $cartPreCheckResponseTransfer
-            ->setIsSuccess($cartPreCheckResponseTransfer->getMessages()->count() === 0);
 
         return $cartPreCheckResponseTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     * @return bool
      */
-    protected function checkBundledProductsActive(ItemTransfer $itemTransfer): ?MessageTransfer
+    protected function checkBundledProductsActive(string $sku): bool
     {
-        $productEntityTransfers = $this->productBundleRepository->findBundledProductsBySku(
-            $itemTransfer->getSku()
-        );
+        $productForBundleTransfers = $this->productBundleRepository->findBundledProductsBySku($sku);
 
-        foreach ($productEntityTransfers as $productEntityTransfer) {
-            if (!$productEntityTransfer->getIsActive()) {
-                return $this->createItemIsNotActiveMessageTransfer($itemTransfer->getSku());
+        foreach ($productForBundleTransfers as $productForBundleTransfer) {
+            if (!$productForBundleTransfer->getIsActive()) {
+                return false;
             }
         }
 
-        return null;
+        return true;
     }
 
     /**
@@ -80,9 +81,9 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
     protected function createItemIsNotActiveMessageTransfer(string $sku): MessageTransfer
     {
         return (new MessageTransfer())
-            ->setValue(static::CART_PRE_CHECK_ACTIVE_FAILED)
+            ->setValue(static::GLOSSARY_KEY_CART_PRE_CHECK_ACTIVE_FAILED)
             ->setParameters([
-                static::TRANSLATION_PARAMETER_SKU => $sku,
+                static::GLOSSARY_PARAMETER_SKU => $sku,
             ]);
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductBundle\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\TerminationAwareCartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -17,11 +18,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
  */
-class CartBundleActivePreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
+class CartBundleActivePreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface
 {
     /**
      * {@inheritdoc}
      * - Checks if bundled items in CartChangeTransfer are active.
+     * - Fails if any product in the bundle is not active.
      * - Sets error message if they were not.
      *
      * @api
@@ -33,5 +35,17 @@ class CartBundleActivePreCheckPlugin extends AbstractPlugin implements CartPreCh
     public function check(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->getFacade()->preCheckCartActive($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function terminateOnFailure()
+    {
+        return true;
     }
 }

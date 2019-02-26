@@ -12,7 +12,7 @@ interface ProductBundleRepositoryInterface
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
     public function findBundledProductsBySku(string $sku): array;
 }

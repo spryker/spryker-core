@@ -95,6 +95,7 @@ interface ProductBundleFacadeInterface
     /**
      * Specification:
      * - Checks if bundled items which being added to cart is active.
+     * - Checks if products in the bundle are active.
      * - Sets error message if they were not.
      *
      * @api

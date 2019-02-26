@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Persistence;
 
-use Generated\Shared\Transfer\SpyProductEntityTransfer;
+use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -18,7 +18,7 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
     public function findBundledProductsBySku(string $sku): array
     {
@@ -30,16 +30,18 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             ->endUse()
             ->find();
 
-        $productEntityTransferList = [];
+        $productForBundleTransfers = [];
 
-        /** @var \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle|\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle $productBundleEntity */
+        /** @var \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle $productBundleEntity */
         foreach ($productBundleEntities as $productBundleEntity) {
-            $productEntityTransfer = new SpyProductEntityTransfer();
-            $productEntityTransfer->fromArray($productBundleEntity->getSpyProductRelatedByFkBundledProduct()->toArray(), true);
-
-            $productEntityTransferList[] = $productEntityTransfer;
+            $productForBundleTransfers[] = $this->getFactory()
+                ->createProductBundleMapper()
+                ->mapProductBundleEntityToProductForBundleTransfer(
+                    $productBundleEntity,
+                    new ProductForBundleTransfer()
+                );
         }
 
-        return $productEntityTransferList;
+        return $productForBundleTransfers;
     }
 }

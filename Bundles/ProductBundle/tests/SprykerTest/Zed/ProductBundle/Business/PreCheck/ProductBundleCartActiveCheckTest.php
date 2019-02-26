@@ -8,11 +8,12 @@
 namespace SprykerTest\Zed\ProductBundle\Business\PreCheck;
 
 use Codeception\Test\Unit;
-use Codeception\Util\Stub;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\SpyProductEntityTransfer;
+use Generated\Shared\Transfer\ProductForBundleTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheck;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheckInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepository;
 
 /**
@@ -28,17 +29,17 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepository;
  */
 class ProductBundleCartActiveCheckTest extends Unit
 {
-    protected const INACTIVE_PRODUCT_SKU = 'inactive';
-    protected const ACTIVE_PRODUCT_SKU = 'active';
+    protected const PRODUCT_SKU_INACTIVE = 'inactive';
+    protected const PRODUCT_SKU_ACTIVE = 'active';
 
     /**
      * @return void
      */
-    public function testShouldReturnErrorMessageIfBundleProductIsNotActive()
+    public function testCheckActiveItemsShouldReturnErrorMessageIfBundleProductIsNotActive(): void
     {
-        $productBundleCartActiveCheckStub = $this->createProductBundleCartActiveCheckStub();
-        $cartPreCheckResponseTransfer = $productBundleCartActiveCheckStub->checkActiveItems(
-            $this->createCartChangeTransferWithProduct(static::INACTIVE_PRODUCT_SKU)
+        $productBundleCartActiveCheck = $this->createProductBundleCartActiveCheck(static::PRODUCT_SKU_INACTIVE);
+        $cartPreCheckResponseTransfer = $productBundleCartActiveCheck->checkActiveItems(
+            $this->createCartChangeTransferWithProduct(static::PRODUCT_SKU_INACTIVE)
         );
 
         $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
@@ -48,11 +49,11 @@ class ProductBundleCartActiveCheckTest extends Unit
     /**
      * @return void
      */
-    public function testShouldReturnNoMessagesIfBundleProductIsActive()
+    public function testCheckActiveItemsShouldReturnNoMessagesIfBundleProductIsActive(): void
     {
-        $productBundleCartActiveCheckStub = $this->createProductBundleCartActiveCheckStub();
-        $cartPreCheckResponseTransfer = $productBundleCartActiveCheckStub->checkActiveItems(
-            $this->createCartChangeTransferWithProduct(static::ACTIVE_PRODUCT_SKU)
+        $productBundleCartActiveCheck = $this->createProductBundleCartActiveCheck(static::PRODUCT_SKU_ACTIVE);
+        $cartPreCheckResponseTransfer = $productBundleCartActiveCheck->checkActiveItems(
+            $this->createCartChangeTransferWithProduct(static::PRODUCT_SKU_ACTIVE)
         );
 
         $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
@@ -76,38 +77,48 @@ class ProductBundleCartActiveCheckTest extends Unit
     }
 
     /**
+     * @param string $sku
+     *
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheckInterface
      */
-    protected function createProductBundleCartActiveCheckStub()
+    protected function createProductBundleCartActiveCheck(string $sku): ProductBundleCartActiveCheckInterface
     {
-        return Stub::construct(ProductBundleCartActiveCheck::class, [
-            $this->createProductRepositoryStub(),
-        ]);
-    }
+        $productBundleCartActiveCheck = new ProductBundleCartActiveCheck(
+            $this->createProductBundleRepositoryMock($sku)
+        );
 
-    /**
-     * @return \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
-     */
-    protected function createProductRepositoryStub()
-    {
-        return Stub::make(ProductBundleRepository::class, [
-            'findBundledProductsBySku' => function (string $sku): array {
-                return $this->getBundledProductBySku($sku);
-            },
-        ]);
+        return $productBundleCartActiveCheck;
     }
 
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createProductBundleRepositoryMock(string $sku): MockObject
+    {
+        $productBundleRepositoryMock = $this->getMockBuilder(ProductBundleRepository::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['findBundledProductsBySku'])
+            ->getMock();
+
+        $productBundleRepositoryMock->method('findBundledProductsBySku')
+            ->willReturn($this->getBundledProductBySku($sku));
+
+        return $productBundleRepositoryMock;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
     protected function getBundledProductBySku(string $sku): array
     {
-        $productEntityTransfer = new SpyProductEntityTransfer();
-        $productEntityTransfer->setSku($sku);
-        $productEntityTransfer->setIsActive($sku === static::ACTIVE_PRODUCT_SKU);
+        $productForBundleTransfer = new ProductForBundleTransfer();
+        $productForBundleTransfer->setSku($sku);
+        $productForBundleTransfer->setIsActive($sku === static::PRODUCT_SKU_ACTIVE);
 
-        return [$productEntityTransfer];
+        return [$productForBundleTransfer];
     }
 }
