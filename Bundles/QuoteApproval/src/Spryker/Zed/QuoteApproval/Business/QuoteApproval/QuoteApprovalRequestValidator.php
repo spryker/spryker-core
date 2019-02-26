@@ -106,7 +106,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
             return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_QUOTE_ALREADY_APPROVED);
         }
 
-        return $this->createSuccessfulValidationResponseTransfer()
+        return $this->createSuccessfullValidationResponseTransfer()
             ->setQuote($quoteTransfer);
     }
 
@@ -125,7 +125,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
             return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_DO_NOT_HAVE_PERMISSION_TO_CANCEL_APPROVAL_REQUEST);
         }
 
-        return $this->createSuccessfulValidationResponseTransfer()
+        return $this->createSuccessfullValidationResponseTransfer()
             ->setQuote($quoteTransfer);
     }
 
@@ -157,7 +157,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
             return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_YOU_CANT_APPROVE_QUOTE);
         }
 
-        return $this->createSuccessfulValidationResponseTransfer()
+        return $this->createSuccessfullValidationResponseTransfer()
             ->setQuote($quoteTransfer)
             ->setQuoteApproval($quoteApprovalTransfer);
     }
@@ -204,7 +204,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     /**
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */
-    protected function createSuccessfulValidationResponseTransfer(): QuoteApprovalResponseTransfer
+    protected function createSuccessfullValidationResponseTransfer(): QuoteApprovalResponseTransfer
     {
         $quoteApprovalResponseTransfer = new QuoteApprovalResponseTransfer();
         $quoteApprovalResponseTransfer->setIsSuccessful(true);
