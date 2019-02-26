@@ -46,7 +46,6 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
      */
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
         $customerTransfer = $quoteResponseTransfer->requireCustomer()
             ->getCustomer();
         $storeTransfer = $this->storeFacade->getCurrentStore();
