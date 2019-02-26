@@ -177,13 +177,13 @@ class CategoryEditDataProvider
             $categoryLocaleIds[] = $localizedAttribute->getLocale()->getIdLocale();
         }
 
-        foreach ($this->localeFacade->getLocaleCollection() as $localTransfer) {
-            if (in_array($localTransfer->getIdLocale(), $categoryLocaleIds)) {
+        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
+            if (in_array($localeTransfer->getIdLocale(), $categoryLocaleIds)) {
                 continue;
             }
 
             $categoryLocalizedAttributesTransfer = new CategoryLocalizedAttributesTransfer();
-            $categoryLocalizedAttributesTransfer->setLocale($localTransfer);
+            $categoryLocalizedAttributesTransfer->setLocale($localeTransfer);
             $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributesTransfer);
         }
 
