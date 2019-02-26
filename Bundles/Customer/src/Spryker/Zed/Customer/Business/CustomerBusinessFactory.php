@@ -259,7 +259,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @return \Spryker\Zed\Customer\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface
      */
@@ -269,7 +269,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     * @deprecated Exists for Backward Compatibility reasons only. Use $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
      *
      * @return \Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolverInterface
      */
@@ -284,7 +284,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $strategyContainer
      *
@@ -300,7 +300,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $strategyContainer
      *

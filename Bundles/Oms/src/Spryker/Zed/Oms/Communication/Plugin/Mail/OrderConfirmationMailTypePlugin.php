@@ -68,7 +68,7 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
     {
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $orderTransfer = $mailBuilder->getMailTransfer()->getOrder();
 
@@ -93,7 +93,7 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
     protected function setTextTemplate(MailBuilderInterface $mailBuilder)
     {
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $orderTransfer = $mailBuilder->getMailTransfer()->getOrder();
 

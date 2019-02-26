@@ -71,7 +71,7 @@ class SalesConfig extends AbstractBundleConfig
     public function isTestOrder(QuoteTransfer $quoteTransfer)
     {
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null) {
@@ -115,7 +115,7 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

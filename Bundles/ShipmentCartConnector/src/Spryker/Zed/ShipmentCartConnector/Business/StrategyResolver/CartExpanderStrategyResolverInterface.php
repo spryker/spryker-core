@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterface;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
 interface CartExpanderStrategyResolverInterface
 {

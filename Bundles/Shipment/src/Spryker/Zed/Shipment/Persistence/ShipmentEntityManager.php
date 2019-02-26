@@ -24,13 +24,13 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer|null $expenseTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    public function createSalesShipment(
+    public function createOrderShipment(
         ShipmentTransfer $shipmentTransfer,
         OrderTransfer $orderTransfer,
         ?ExpenseTransfer $expenseTransfer = null
-    ): int {
+    ): ShipmentTransfer {
         
         $salesShipmentEntity = $this->getFactory()
             ->createSalesShipmentQuery()
@@ -40,34 +40,33 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
             $salesShipmentEntity = new SpySalesShipment();
         }
 
-        $salesShipmentEntity = $this->getFactory()
-            ->createShipmentMapper()
-            ->mapShipmentTransferToSalesOrderAddressEntity($shipmentTransfer, $orderTransfer->getIdSalesOrder(), $salesShipmentEntity);
-
-        if ($expenseTransfer !== null && $expenseTransfer->getIdSalesExpense() !== null) {
-            $salesShipmentEntity->setFkSalesExpense($expenseTransfer->getIdSalesExpense());
-        }
+        $shipmentEntityMapper = $this->getFactory()->createShipmentMapper();
+        $salesShipmentEntity = $shipmentEntityMapper->mapShipmentTransferToShipmentEntity($salesShipmentEntity, $shipmentTransfer);
+        $salesShipmentEntity = $shipmentEntityMapper->mapOrderTransferToShipmentEntity($salesShipmentEntity, $orderTransfer);
+        $salesShipmentEntity = $shipmentEntityMapper->mapExpenseTransferToShipmentEntity($salesShipmentEntity, $expenseTransfer);
 
         $salesShipmentEntity->save();
 
-        return $salesShipmentEntity->getIdSalesShipment();
+        return $shipmentEntityMapper->mapShipmentEntityToShipmentTransfer($shipmentTransfer, $salesShipmentEntity);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $idSalesShipment
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function updateSalesOrderItemFkShipment(ItemTransfer $itemTransfer, int $idSalesShipment): void
+    public function updateOrderItemFkShipment(ItemTransfer $itemTransfer, ShipmentTransfer $shipmentTransfer): ItemTransfer
     {
         $orderItemEntity = $this->getFactory()
             ->createSalesOrderItemQuery()
             ->filterByIdSalesOrderItem($itemTransfer->getIdSalesOrderItem())
             ->findOneOrCreate();
 
-        $orderItemEntity->setFkSalesShipment($idSalesShipment);
+        $orderItemEntity->setFkSalesShipment($shipmentTransfer->getIdSalesShipment());
 
         $orderItemEntity->save();
+
+        return $itemTransfer;
     }
 }

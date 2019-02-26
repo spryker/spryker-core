@@ -19,7 +19,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverWithMultiShippingAddress instead.
+ * @deprecated Use \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver instead.
  */
 class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 {

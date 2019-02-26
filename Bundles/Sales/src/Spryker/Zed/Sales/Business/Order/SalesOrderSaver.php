@@ -23,7 +23,7 @@ use Spryker\Zed\Sales\SalesConfig;
 class SalesOrderSaver extends SalesOrderSaverWithoutItemShippingAddress
 {
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @var \Spryker\Zed\Sales\Business\Order\SalesOrderSaverQuoteDataBCForMultiShipmentAdapterInterface
      */
@@ -77,7 +77,7 @@ class SalesOrderSaver extends SalesOrderSaverWithoutItemShippingAddress
     public function saveOrderSales(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
 //        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 

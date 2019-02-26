@@ -22,19 +22,19 @@ interface ShipmentEntityManagerInterface
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer|null $expenseTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    public function createSalesShipment(
+    public function createOrderShipment(
         ShipmentTransfer $shipmentTransfer,
         OrderTransfer $orderTransfer,
         ?ExpenseTransfer $expenseTransfer = null
-    ): int;
+    ): ShipmentTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $idSalesShipment
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function updateSalesOrderItemFkShipment(ItemTransfer $itemTransfer, int $idSalesShipment): void;
+    public function updateOrderItemFkShipment(ItemTransfer $itemTransfer, ShipmentTransfer $shipmentTransfer): ItemTransfer;
 }

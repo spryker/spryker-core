@@ -15,12 +15,12 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 
 /**
- * @deprecated Will be removed in next major release.
+ * @deprecated Exists for Backward Compatibility reasons only.
  */
 class ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter implements ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapterInterface
 {
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -57,7 +57,7 @@ class ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter implements Shipment
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -78,7 +78,7 @@ class ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter implements Shipment
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -90,7 +90,7 @@ class ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter implements Shipment
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -102,7 +102,7 @@ class ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter implements Shipment
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -122,7 +122,7 @@ class ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter implements Shipment
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -137,7 +137,7 @@ class ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter implements Shipment
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -154,7 +154,7 @@ class ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter implements Shipment
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -171,7 +171,7 @@ class ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter implements Shipment
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer $quoteExpenseTransfer
@@ -188,7 +188,7 @@ class ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter implements Shipment
     }
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

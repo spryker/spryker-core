@@ -35,7 +35,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected $defaultTaxCountryIso2Code;
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @var \Spryker\Zed\TaxProductConnector\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface
      */
@@ -64,7 +64,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 

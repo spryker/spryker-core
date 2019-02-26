@@ -31,7 +31,7 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     protected $existingAddresses = [];
 
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @var \Spryker\Zed\Customer\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface
      */
@@ -64,7 +64,7 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     public function saveOrderCustomer(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 

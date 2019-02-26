@@ -32,7 +32,7 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 class OrderHydrator extends OrderHydratorWithoutMultiShipping
 {
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @var \Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapterInterface
      */
@@ -81,7 +81,7 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
         }
 
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $orderEntity = $this->orderDataBCForMultiShipmentAdapter->adapt($orderEntity);
 
@@ -111,7 +111,7 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
         }
 
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $orderEntity = $this->orderDataBCForMultiShipmentAdapter->adapt($orderEntity);
 

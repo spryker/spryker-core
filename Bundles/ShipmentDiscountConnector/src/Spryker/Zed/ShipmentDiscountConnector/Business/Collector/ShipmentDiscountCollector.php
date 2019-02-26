@@ -17,7 +17,7 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollect
 class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentCollector
 {
     /**
-     * @deprecated Will be removed in next major release.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @var \Spryker\Zed\TaxProductConnector\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface
      */
@@ -45,7 +45,7 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
 //        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 

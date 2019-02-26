@@ -28,7 +28,7 @@ class SalesController extends AbstractController
         $orderTransfer = $request->request->get('orderTransfer');
 
         /**
-         * @deprecated Will be removed in next major release.
+         * @deprecated Exists for Backward Compatibility reasons only.
          */
         $orderTransfer = $this->getFactory()
             ->createSalesOrderDataBCForMultiShipmentAdapter()
