@@ -43,4 +43,14 @@ class ProductStorageConstants
      * @api
      */
     public const PRODUCT_CONCRETE_RESOURCE_NAME = 'product_concrete';
+
+    /**
+     * Specification:
+     * - Enables/disables storage synchronization.
+     *
+     * @api
+     *
+     * @see \Spryker\Shared\Synchronization\SynchronizationConstants::STORAGE_SYNC_ENABLED
+     */
+    public const STORAGE_SYNC_ENABLED = 'SYNCHRONIZATION:STORAGE_SYNC_ENABLED';
 }

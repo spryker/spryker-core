@@ -50,4 +50,14 @@ class ProductPageSearchConstants
      * @api
      */
     public const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
+
+    /**
+     * Specification:
+     * - Enables/disables search synchronization.
+     *
+     * @api
+     *
+     * @see \Spryker\Shared\Synchronization\SynchronizationConstants::SEARCH_SYNC_ENABLED
+     */
+    public const SEARCH_SYNC_ENABLED = 'SYNCHRONIZATION:SEARCH_SYNC_ENABLED';
 }

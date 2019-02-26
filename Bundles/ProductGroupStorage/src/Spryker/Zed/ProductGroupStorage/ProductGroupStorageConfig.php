@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductGroupStorage;
 
-use Spryker\Shared\Synchronization\SynchronizationConstants;
+use Spryker\Shared\ProductGroupStorage\ProductGroupStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductGroupStorageConfig extends AbstractBundleConfig
@@ -17,7 +17,7 @@ class ProductGroupStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(SynchronizationConstants::STORAGE_SYNC_ENABLED, true);
+        return $this->get(ProductGroupStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 
     /**

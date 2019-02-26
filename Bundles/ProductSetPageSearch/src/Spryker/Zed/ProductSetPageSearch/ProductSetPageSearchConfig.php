@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductSetPageSearch;
 
-use Spryker\Shared\Synchronization\SynchronizationConstants;
+use Spryker\Shared\ProductSetPageSearch\ProductSetPageSearchConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductSetPageSearchConfig extends AbstractBundleConfig
@@ -17,7 +17,7 @@ class ProductSetPageSearchConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(SynchronizationConstants::SEARCH_SYNC_ENABLED, true);
+        return $this->get(ProductSetPageSearchConstants::SEARCH_SYNC_ENABLED, true);
     }
 
     /**

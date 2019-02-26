@@ -27,4 +27,14 @@ interface FileManagerStorageConstants
      * @api
      */
     public const FILE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.file.error';
+
+    /**
+     * Specification:
+     * - Enables/disables storage synchronization.
+     *
+     * @api
+     *
+     * @see \Spryker\Shared\Synchronization\SynchronizationConstants::STORAGE_SYNC_ENABLED
+     */
+    public const STORAGE_SYNC_ENABLED = 'SYNCHRONIZATION:STORAGE_SYNC_ENABLED';
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterStorage;
 
-use Spryker\Shared\Synchronization\SynchronizationConstants;
+use Spryker\Shared\ProductCategoryFilterStorage\ProductCategoryFilterStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductCategoryFilterStorageConfig extends AbstractBundleConfig
@@ -17,7 +17,7 @@ class ProductCategoryFilterStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(SynchronizationConstants::STORAGE_SYNC_ENABLED, true);
+        return $this->get(ProductCategoryFilterStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 
     /**

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CategoryStorage;
 
-use Spryker\Shared\Synchronization\SynchronizationConstants;
+use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CategoryStorageConfig extends AbstractBundleConfig
@@ -17,7 +17,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(SynchronizationConstants::STORAGE_SYNC_ENABLED, true);
+        return $this->get(CategoryStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 
     /**

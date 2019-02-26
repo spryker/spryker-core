@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductImageStorage;
 
-use Spryker\Shared\Synchronization\SynchronizationConstants;
+use Spryker\Shared\ProductImageStorage\ProductImageStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductImageStorageConfig extends AbstractBundleConfig
@@ -17,7 +17,7 @@ class ProductImageStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(SynchronizationConstants::STORAGE_SYNC_ENABLED, true);
+        return $this->get(ProductImageStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 
     /**

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityStorage;
 
-use Spryker\Shared\Synchronization\SynchronizationConstants;
+use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AvailabilityStorageConfig extends AbstractBundleConfig
@@ -17,7 +17,7 @@ class AvailabilityStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(SynchronizationConstants::STORAGE_SYNC_ENABLED, true);
+        return $this->get(AvailabilityStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 
     /**

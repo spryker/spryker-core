@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListStorage;
 
-use Spryker\Shared\Synchronization\SynchronizationConstants;
+use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ShoppingListStorageConfig extends AbstractBundleConfig
@@ -17,7 +17,7 @@ class ShoppingListStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(SynchronizationConstants::STORAGE_SYNC_ENABLED, true);
+        return $this->get(ShoppingListStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 
     /**
