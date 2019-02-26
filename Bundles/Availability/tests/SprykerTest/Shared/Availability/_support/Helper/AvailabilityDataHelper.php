@@ -34,10 +34,16 @@ class AvailabilityDataHelper extends Module
         $idAvailabilityAbstract = $availabilityFacade->saveProductAvailability($productConcreteTransfer->getSku(), static::QUANTITY);
         $idStore = $this->getStoreFacade()->getCurrentStore()->getIdStore();
 
-        return $this
+        $availabilityAbstractEntity = $this
             ->getAvailabilityQueryContainer()
             ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $idStore)
             ->findOneOrCreate();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($availabilityAbstractEntity) {
+            $this->cleanupAvailability($availabilityAbstractEntity);
+        });
+
+        return $availabilityAbstractEntity;
     }
 
     /**
@@ -62,5 +68,16 @@ class AvailabilityDataHelper extends Module
     protected function getStoreFacade(): StoreFacadeInterface
     {
         return $this->getLocator()->store()->facade();
+    }
+
+    /**
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract $availabilityAbstractEntity
+     *
+     * @return void
+     */
+    protected function cleanupAvailability(SpyAvailabilityAbstract $availabilityAbstractEntity): void
+    {
+        $availabilityAbstractEntity->getSpyAvailabilities()->delete();
+        $availabilityAbstractEntity->delete();
     }
 }
