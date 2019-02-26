@@ -117,7 +117,7 @@ class ProductManagerTest extends Unit
         $mockProductFacade = $this->getMockProductFacade();
 
         $mockProductFacade->expects($this->once())
-            ->method('getProductConcrete')
+            ->method('getRawProductConcreteBySku')
             ->will($this->returnValue($returnValue));
 
         $mockProductFacade->expects($this->once())
@@ -138,7 +138,14 @@ class ProductManagerTest extends Unit
     private function getMockProductFacade()
     {
         return $this->getMockBuilder(ProductCartConnectorToProductInterface::class)
-            ->setMethods(['getProductConcrete', 'getLocalizedProductConcreteName', 'hasProductAbstract', 'hasProductConcrete', 'isProductConcreteActive'])
+            ->setMethods([
+                'getProductConcrete',
+                'getLocalizedProductConcreteName',
+                'hasProductAbstract',
+                'hasProductConcrete',
+                'isProductConcreteActive',
+                'getRawProductConcreteBySku',
+            ])
             ->disableOriginalConstructor()
             ->getMock();
     }
