@@ -22,4 +22,3 @@ interface ProductSearchConfigStorageConstants
      */
     public const STORAGE_SYNC_ENABLED = 'SYNCHRONIZATION:STORAGE_SYNC_ENABLED';
 }
-
