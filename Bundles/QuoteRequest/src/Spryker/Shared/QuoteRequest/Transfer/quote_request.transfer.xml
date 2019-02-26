@@ -31,6 +31,8 @@
         <property name="validUntil" type="string" />
         <property name="createdAt" type="string" />
 
+        <property name="quoteInProgress" type="Quote" />
+
         <property name="latestVersion" type="QuoteRequestVersion" />
         <property name="versionReferences" type="string[]" />
     </transfer>

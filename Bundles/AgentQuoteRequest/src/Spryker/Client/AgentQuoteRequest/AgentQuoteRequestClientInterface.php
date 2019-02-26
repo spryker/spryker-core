@@ -49,6 +49,22 @@ interface AgentQuoteRequestClientInterface
 
     /**
      * Specification:
+     * - Makes Zed request.
+     * - Looks up one "Request for Quote" by provided quote request reference.
+     * - Expects "Request for Quote" status to be "waiting".
+     * - Sets status to "in-progress".
+     * - Copies latest version quote to quoteInProgress property.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function setQuoteRequestEditable(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
      * - Checks cancelable status from config.
      * - If "Request for Quote" cancelable - return true.
      *

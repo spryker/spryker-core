@@ -16,23 +16,32 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequest;
-use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion;
 use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceInterface;
+use Spryker\Zed\QuoteRequest\QuoteRequestConfig;
 
 class QuoteRequestMapper
 {
+    /**
+     * @var \Spryker\Zed\QuoteRequest\QuoteRequestConfig
+     */
+    protected $quoteRequestConfig;
+
     /**
      * @var \Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceInterface
      */
     protected $encodingService;
 
     /**
+     * @param \Spryker\Zed\QuoteRequest\QuoteRequestConfig $quoteRequestConfig
      * @param \Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceInterface $encodingService
      */
-    public function __construct(QuoteRequestToUtilEncodingServiceInterface $encodingService)
-    {
+    public function __construct(
+        QuoteRequestConfig $quoteRequestConfig,
+        QuoteRequestToUtilEncodingServiceInterface $encodingService
+    ) {
         $this->encodingService = $encodingService;
+        $this->quoteRequestConfig = $quoteRequestConfig;
     }
 
     /**
@@ -72,6 +81,9 @@ class QuoteRequestMapper
         $quoteRequestTransfer->setLatestVersion($this->findLatestQuoteRequestVersionTransfer($quoteRequestEntity));
         $quoteRequestTransfer->setVersionReferences($this->getVersionReferences($quoteRequestEntity));
         $quoteRequestTransfer->setMetadata($this->decodeMetadata($quoteRequestEntity));
+        $quoteRequestTransfer->setQuoteInProgress(
+            (new QuoteTransfer())->fromArray($this->decodeQuoteData($quoteRequestEntity->getQuoteInProgress()), true)
+        );
 
         return $quoteRequestTransfer;
     }
@@ -88,11 +100,13 @@ class QuoteRequestMapper
     ): SpyQuoteRequest {
         $data = $quoteRequestTransfer->modifiedToArray();
         unset($data['metadata']);
+        unset($data['quote_in_progress']);
 
         $quoteRequestEntity->fromArray($data);
 
         $quoteRequestEntity->setFkCompanyUser($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser());
         $quoteRequestEntity->setMetadata($this->encodeMetadata($quoteRequestTransfer));
+        $quoteRequestEntity->setQuoteInProgress($this->encodeQuoteData($quoteRequestTransfer->getQuoteInProgress()));
 
         return $quoteRequestEntity;
     }
@@ -114,7 +128,7 @@ class QuoteRequestMapper
             ->fromArray($quoteRequestVersionEntity->toArray(), true);
 
         $latestQuoteRequestVersionTransfer->setQuote(
-            (new QuoteTransfer())->fromArray($this->decodeQuoteData($quoteRequestVersionEntity), true)
+            (new QuoteTransfer())->fromArray($this->decodeQuoteData($quoteRequestVersionEntity->getQuote()), true)
         );
 
         return $latestQuoteRequestVersionTransfer;
@@ -180,12 +194,47 @@ class QuoteRequestMapper
     }
 
     /**
-     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion $quoteRequestVersion
+     * @param string|null $data
      *
      * @return array
      */
-    protected function decodeQuoteData(SpyQuoteRequestVersion $quoteRequestVersion): array
+    protected function decodeQuoteData(?string $data): array
     {
-        return $this->encodingService->decodeJson($quoteRequestVersion->getQuote(), true);
+        if (!$data) {
+            return [];
+        }
+
+        return $this->encodingService->decodeJson($data, true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string
+     */
+    protected function encodeQuoteData(QuoteTransfer $quoteTransfer): string
+    {
+        $quoteData = $this->filterDisallowedQuoteData($quoteTransfer);
+
+        return $this->encodingService->encodeJson($quoteData, JSON_OBJECT_AS_ARRAY);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function filterDisallowedQuoteData(QuoteTransfer $quoteTransfer): array
+    {
+        $data = [];
+        $quoteData = $quoteTransfer->modifiedToArray(true, true);
+
+        foreach ($this->quoteRequestConfig->getQuoteFieldsAllowedForSaving() as $dataKey) {
+            if (isset($quoteData[$dataKey])) {
+                $data[$dataKey] = $quoteData[$dataKey];
+            }
+        }
+
+        return $data;
     }
 }

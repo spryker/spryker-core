@@ -11,6 +11,7 @@
 
         <column name="quote_request_reference" type="VARCHAR" size="255" required="true"/>
         <column name="metadata" type="LONGVARCHAR" required="false"/>
+        <column name="quote_in_progress" type="LONGVARCHAR" required="false"/>
 
         <column name="valid_until" type="DATE" required="false"/>
         <column name="status" type="VARCHAR" size="255"/>
