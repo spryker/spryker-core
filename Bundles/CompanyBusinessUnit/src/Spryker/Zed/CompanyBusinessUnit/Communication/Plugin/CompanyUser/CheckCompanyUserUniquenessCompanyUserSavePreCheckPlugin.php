@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitConfig getConfig()
  */
-class CheckUniqueCompanyUserByBusinessUnitSavePreCheckPlugin extends AbstractPlugin implements CompanyUserSavePreCheckPluginInterface
+class CheckCompanyUserUniquenessCompanyUserSavePreCheckPlugin extends AbstractPlugin implements CompanyUserSavePreCheckPluginInterface
 {
     /**
      * {@inheritdoc}

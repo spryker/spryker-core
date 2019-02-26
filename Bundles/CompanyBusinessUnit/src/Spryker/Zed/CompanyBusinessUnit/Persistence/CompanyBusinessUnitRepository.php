@@ -230,15 +230,17 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
                 ->requireIdCustomer();
 
         $companyUserQuery = $this->getFactory()
-            ->createCompanyUserQuery();
+            ->createCompanyBusinessUnitQuery()
+            ->useCompanyUserQuery();
 
         if (!$companyUserQuery->getTableMap()->hasColumn(static::COL_FK_CUSTOMER)) {
             return false;
         }
 
         return $companyUserQuery
-            ->filterByFkCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit())
-            ->filterByFkCustomer($companyUserTransfer->getCustomer()->getIdCustomer())
+            ->filterByFkCustomer($companyUserTransfer->getFkCustomer())
+            ->endUse()
+            ->filterByIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit())
             ->exists();
     }
 }
