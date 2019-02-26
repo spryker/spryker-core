@@ -55,6 +55,7 @@ class ProductQuantityStorageEntityManager extends AbstractEntityManager implemen
                 $spyProductQuantityStorageEntity,
                 $productQuantityStorageEntity
             );
+        $spyProductQuantityStorageEntity->setIsSendingToQueue($isSendingToQueue);
 
         $spyProductQuantityStorageEntity->save();
     }
