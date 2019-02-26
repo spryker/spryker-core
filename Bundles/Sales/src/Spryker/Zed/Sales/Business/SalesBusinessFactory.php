@@ -430,42 +430,15 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         $strategyContainer = [];
 
-        $strategyContainer = $this->addStrategySalesOrderSaverWithoutMultipleShippingAddress($strategyContainer);
-        $strategyContainer = $this->addStrategySalesOrderSaverWithMultipleShippingAddress($strategyContainer);
-
-        return new OrderSaverStrategyResolver($strategyContainer);
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addStrategySalesOrderSaverWithoutMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createSalesOrderSaver();
         };
 
-        return $strategyContainer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addStrategySalesOrderSaverWithMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createSalesOrderSaverMultipleShippingAddress();
         };
 
-        return $strategyContainer;
+        return new OrderSaverStrategyResolver($strategyContainer);
     }
 
     /**
@@ -477,42 +450,15 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         $strategyContainer = [];
 
-        $strategyContainer = $this->addStrategyOrderHydratorWithoutMultipleShippingAddress($strategyContainer);
-        $strategyContainer = $this->addStrategyOrderHydratorWithMultipleShippingAddress($strategyContainer);
-
-        return new OrderHydratorStrategyResolver($strategyContainer);
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addStrategyOrderHydratorWithoutMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[OrderHydratorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createOrderHydrator();
         };
 
-        return $strategyContainer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addStrategyOrderHydratorWithMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[OrderHydratorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createOrderHydratorWithMultiShippingAddress();
         };
 
-        return $strategyContainer;
+        return new OrderHydratorStrategyResolver($strategyContainer);
     }
 
     /**

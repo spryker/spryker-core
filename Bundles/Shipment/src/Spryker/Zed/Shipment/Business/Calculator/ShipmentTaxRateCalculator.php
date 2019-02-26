@@ -66,7 +66,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array|\Generated\Shared\Transfer\ExpenseTransfer[]
+     * @return \Generated\Shared\Transfer\ExpenseTransfer[]
      */
     protected function getQuoteExpenses(QuoteTransfer $quoteTransfer): array
     {

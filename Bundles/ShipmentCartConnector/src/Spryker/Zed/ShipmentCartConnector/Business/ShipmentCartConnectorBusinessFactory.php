@@ -118,42 +118,15 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         $strategyContainer = [];
 
-        $strategyContainer = $this->addShipmentCartExpanderWithoutMultipleShippingAddress($strategyContainer);
-        $strategyContainer = $this->addShipmentCartExpanderWithMultipleShippingAddress($strategyContainer);
-
-        return new CartExpanderStrategyResolver($strategyContainer);
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addShipmentCartExpanderWithoutMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[CartExpanderStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createShipmentCartExpander();
         };
 
-        return $strategyContainer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addShipmentCartExpanderWithMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[CartExpanderStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createShipmentCartExpanderWithMultiShippingAddress();
         };
 
-        return $strategyContainer;
+        return new CartExpanderStrategyResolver($strategyContainer);
     }
 
     /**
@@ -165,41 +138,14 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         $strategyContainer = [];
 
-        $strategyContainer = $this->addShipmentCartValidatorWithoutMultipleShippingAddress($strategyContainer);
-        $strategyContainer = $this->addShipmentCartValidatorWithMultipleShippingAddress($strategyContainer);
-
-        return new CartValidatorStrategyResolver($strategyContainer);
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addShipmentCartValidatorWithoutMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[CartValidatorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createShipmentCartValidate();
         };
 
-        return $strategyContainer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addShipmentCartValidatorWithMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[CartValidatorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createShipmentCartValidatorWithMultiShippingAddress();
         };
 
-        return $strategyContainer;
+        return new CartValidatorStrategyResolver($strategyContainer);
     }
 }

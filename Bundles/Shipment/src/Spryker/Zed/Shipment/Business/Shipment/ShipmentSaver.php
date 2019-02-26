@@ -13,11 +13,10 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface;
+use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface;
 
 class ShipmentSaver implements ShipmentSaverInterface
@@ -194,7 +193,7 @@ class ShipmentSaver implements ShipmentSaverInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
-    protected function updateShipmentMethodForShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): void
+    protected function updateShipmentMethodForShipmentGroup(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupTransfer
     {
         $shipmentMethodTransfer = $shipmentGroupTransfer->getShipment()->getMethod();
         $shipmentGroupTransfer
