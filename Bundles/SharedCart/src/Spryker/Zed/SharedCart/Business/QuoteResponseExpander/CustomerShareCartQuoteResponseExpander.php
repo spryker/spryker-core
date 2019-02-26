@@ -46,6 +46,7 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
      */
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
+        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
         $customerTransfer = $quoteResponseTransfer->requireCustomer()
             ->getCustomer();
         $storeTransfer = $this->storeFacade->getCurrentStore();
@@ -103,11 +104,11 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
 
     /**
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $sharedQuoteCollectionTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
-    protected function populateSharedQuoteCollectionWithCustomer(QuoteCollectionTransfer $sharedQuoteCollectionTransfer, ?CustomerTransfer $customerTransfer): void
+    protected function populateSharedQuoteCollectionWithCustomer(QuoteCollectionTransfer $sharedQuoteCollectionTransfer, CustomerTransfer $customerTransfer): void
     {
         foreach ($sharedQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             $quoteTransfer->setCustomer($customerTransfer);
