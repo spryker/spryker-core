@@ -8,11 +8,9 @@
 namespace Spryker\Zed\Shipment\Communication\Order;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
 
 /**
  * @deprecated Exists for Backward Compatibility reasons only.
@@ -146,7 +144,6 @@ class SalesOrderDataBCForMultiShipmentAdapter implements SalesOrderDataBCForMult
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $orderExpenseTransfer
      *
      * @return void
      */

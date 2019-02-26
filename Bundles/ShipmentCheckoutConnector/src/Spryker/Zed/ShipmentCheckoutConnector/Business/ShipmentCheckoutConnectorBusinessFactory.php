@@ -68,41 +68,14 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     {
         $strategyContainer = [];
 
-        $strategyContainer = $this->addShipmentCheckoutPreCheckWithoutMultipleShippingAddress($strategyContainer);
-        $strategyContainer = $this->addShipmentCheckoutPreCheckWithMultipleShippingAddress($strategyContainer);
-
-        return new PreCheckStrategyResolver($strategyContainer);
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addShipmentCheckoutPreCheckWithoutMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[PreCheckStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createShipmentCheckoutPreCheck();
         };
 
-        return $strategyContainer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addShipmentCheckoutPreCheckWithMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[PreCheckStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createShipmentCheckoutPreCheckWithMultipleShippingAddress();
         };
 
-        return $strategyContainer;
+        return new PreCheckStrategyResolver($strategyContainer);
     }
 }

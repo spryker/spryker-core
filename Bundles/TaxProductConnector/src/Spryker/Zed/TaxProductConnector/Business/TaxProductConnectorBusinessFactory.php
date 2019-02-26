@@ -101,41 +101,14 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     {
         $strategyContainer = [];
 
-        $strategyContainer = $this->addStrategyProductItemTaxRateCalculatorWithoutMultipleShipmentTaxRate($strategyContainer);
-        $strategyContainer = $this->addStrategyProductItemTaxRateCalculatorWithMultipleShipmentTaxRate($strategyContainer);
-
-        return new ProductItemTaxRateCalculatorStrategyResolver($strategyContainer);
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param \Spryker\Zed\Tax\Business\Model\CalculatorInterface[]|\Closure[] $strategyContainer
-     *
-     * @return \Closure[]
-     */
-    protected function addStrategyProductItemTaxRateCalculatorWithoutMultipleShipmentTaxRate(array $strategyContainer): array
-    {
         $strategyContainer[ProductItemTaxRateCalculatorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createProductItemTaxRateCalculator();
         };
 
-        return $strategyContainer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param \Spryker\Zed\Tax\Business\Model\CalculatorInterface[]|\Closure[] $strategyContainer
-     *
-     * @return \Closure[]
-     */
-    protected function addStrategyProductItemTaxRateCalculatorWithMultipleShipmentTaxRate(array $strategyContainer): array
-    {
         $strategyContainer[ProductItemTaxRateCalculatorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createProductItemTaxRateCalculatorWithMultipleShipmentTaxRate();
         };
 
-        return $strategyContainer;
+        return new ProductItemTaxRateCalculatorStrategyResolver($strategyContainer);
     }
 }

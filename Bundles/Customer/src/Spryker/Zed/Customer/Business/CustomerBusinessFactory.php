@@ -277,41 +277,14 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     {
         $strategyContainer = [];
 
-        $strategyContainer = $this->addStrategyCustomerOrderSaverWithoutMultipleShippingAddress($strategyContainer);
-        $strategyContainer = $this->addStrategyCustomerOrderSaverWithMultipleShippingAddress($strategyContainer);
-
-        return new OrderSaverStrategyResolver($strategyContainer);
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addStrategyCustomerOrderSaverWithoutMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createCheckoutCustomerOrderSaver();
         };
 
-        return $strategyContainer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addStrategyCustomerOrderSaverWithMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createCheckoutCustomerOrderSaverWithMultiShippingAddress();
         };
 
-        return $strategyContainer;
+        return new OrderSaverStrategyResolver($strategyContainer);
     }
 }

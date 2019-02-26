@@ -31,7 +31,7 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
         OrderTransfer $orderTransfer,
         ?ExpenseTransfer $expenseTransfer = null
     ): ShipmentTransfer {
-        
+
         $salesShipmentEntity = $this->getFactory()
             ->createSalesShipmentQuery()
             ->findOneByIdSalesShipment($shipmentTransfer->getIdSalesShipment());

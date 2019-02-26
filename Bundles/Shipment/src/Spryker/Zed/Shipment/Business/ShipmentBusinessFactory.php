@@ -11,10 +11,9 @@ use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\Shipment\Business\Calculator\ShipmentTaxRateCalculator as ShipmentTaxRateCalculatorWithItemShipmentTaxRate;
+use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
-use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface;
-use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
@@ -278,42 +277,15 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         $strategyContainer = [];
 
-        $strategyContainer = $this->addStrategySalesOrderSaverWithoutMultipleShippingAddress($strategyContainer);
-        $strategyContainer = $this->addStrategySalesOrderSaverWithMultipleShippingAddress($strategyContainer);
-
-        return new TaxRateCalculatorStrategyResolver($strategyContainer);
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addStrategySalesOrderSaverWithoutMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[TaxRateCalculatorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createShipmentTaxCalculator();
         };
 
-        return $strategyContainer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addStrategySalesOrderSaverWithMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[TaxRateCalculatorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createShipmentTaxCalculatorWithItemShipmentTaxRate();
         };
 
-        return $strategyContainer;
+        return new TaxRateCalculatorStrategyResolver($strategyContainer);
     }
 
     /**
@@ -325,42 +297,15 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         $strategyContainer = [];
 
-        $strategyContainer = $this->addCheckoutShipmentOrderSaverWithoutMultipleShippingAddress($strategyContainer);
-        $strategyContainer = $this->addCheckoutShipmentOrderSaverWithMultipleShippingAddress($strategyContainer);
-
-        return new OrderSaverStrategyResolver($strategyContainer);
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addCheckoutShipmentOrderSaverWithoutMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
             return $this->createCheckoutShipmentOrderSaver();
         };
 
-        return $strategyContainer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param array $strategyContainer
-     *
-     * @return array
-     */
-    protected function addCheckoutShipmentOrderSaverWithMultipleShippingAddress(array $strategyContainer): array
-    {
         $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
             return $this->createCheckoutMultiShipmentOrderSaver();
         };
 
-        return $strategyContainer;
+        return new OrderSaverStrategyResolver($strategyContainer);
     }
 
     /**
