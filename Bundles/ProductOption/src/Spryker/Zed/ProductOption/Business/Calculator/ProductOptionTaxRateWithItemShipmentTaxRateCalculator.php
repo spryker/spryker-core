@@ -33,25 +33,15 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     protected $defaultTaxCountryIso2Code;
 
     /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @var \Spryker\Zed\ProductOption\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected $quoteDataBCForMultiShipmentAdapter;
-
-    /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface $taxFacade
-     * @param \Spryker\Zed\ProductOption\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
      */
     public function __construct(
         ProductOptionQueryContainerInterface $queryContainer,
-        ProductOptionToTaxFacadeInterface $taxFacade,
-        QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
+        ProductOptionToTaxFacadeInterface $taxFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->taxFacade = $taxFacade;
-        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
     }
 
     /**
@@ -64,7 +54,6 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
         /**
          * @deprecated Exists for Backward Compatibility reasons only.
          */
-        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 
         $countryIso2CodesByIdProductAbstracts = $this->getCountryIso2CodesByIdProductAbstracts($quoteTransfer->getItems());
         $idProductOptionValues = $this->getIdProductOptionValues($quoteTransfer->getItems());
@@ -209,11 +198,11 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
 
         foreach ($foundResults as $data) {
             $key = $this->getTaxGroupedKey(
-                $data[ProductOptionQueryContainer::COL_ID_PRODUCT_OPTION_VALUE],
-                $data[SpyCountryTableMap::COL_ISO2_CODE]
+                $data->getIdProductOptionValue(),
+                $data->getVirtualColumn(SpyCountryTableMap::COL_ISO2_CODE)
             );
 
-            $groupedResults[$key] = $data[ProductOptionQueryContainer::COL_MAX_TAX_RATE];
+            $groupedResults[$key] = $data->getVirtualColumn(ProductOptionQueryContainer::COL_MAX_TAX_RATE);
         }
 
         return $groupedResults;

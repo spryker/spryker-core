@@ -11,31 +11,10 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollector as ShipmentDiscountWithoutMultiShipmentCollector;
 
 class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentCollector
 {
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @var \Spryker\Zed\TaxProductConnector\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected $quoteDataBCForMultiShipmentAdapter;
-
-    /**
-     * @param \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule
-     * @param \Spryker\Zed\ShipmentDiscountConnector\Business\Collector\QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
-     */
-    public function __construct(
-        ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule,
-        QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
-    ) {
-        parent::__construct($carrierDiscountDecisionRule);
-
-//        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -44,11 +23,6 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
      */
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-//        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
-
         $discountableItems = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {

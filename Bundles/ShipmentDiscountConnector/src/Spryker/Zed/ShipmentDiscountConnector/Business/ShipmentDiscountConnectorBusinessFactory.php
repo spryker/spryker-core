@@ -8,8 +8,6 @@
 namespace Spryker\Zed\ShipmentDiscountConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\QuoteDataBCForMultiShipmentAdapter;
-use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\QuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollector as ShipmentDiscountCollectorWithMultiShipment;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Collector\ShipmentDiscountCollectorInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\CarrierDiscountDecisionRule as CarrierDiscountDecisionRuleWithMultiShipment;
@@ -60,8 +58,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createCarrierDiscountCollectorWithMultiShipment(): ShipmentDiscountCollectorInterface
     {
         return new ShipmentDiscountCollectorWithMultiShipment(
-            $this->createCarrierDiscountDecisionRuleWithMultiShipment(),
-            $this->createQuoteDataBCForMultiShipmentAdapter()
+            $this->createCarrierDiscountDecisionRuleWithMultiShipment()
         );
     }
 
@@ -107,8 +104,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createMethodDiscountCollectorWithMultiShipment(): ShipmentDiscountCollectorInterface
     {
         return new ShipmentDiscountCollectorWithMultiShipment(
-            $this->createMethodDiscountDecisionRuleWithMultiShipment(),
-            $this->createQuoteDataBCForMultiShipmentAdapter()
+            $this->createMethodDiscountDecisionRuleWithMultiShipment()
         );
     }
 
@@ -152,8 +148,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createShipmentPriceDiscountCollectorWithMultiShipment(): ShipmentDiscountCollectorInterface
     {
         return new ShipmentDiscountCollectorWithMultiShipment(
-            $this->createShipmentPriceDiscountDecisionRuleWithMultiShipment(),
-            $this->createQuoteDataBCForMultiShipmentAdapter()
+            $this->createShipmentPriceDiscountDecisionRuleWithMultiShipment()
         );
     }
 
@@ -203,16 +198,6 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     protected function getMoneyFacade()
     {
         return $this->getProvidedDependency(ShipmentDiscountConnectorDependencyProvider::FACADE_MONEY);
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Collector\QuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected function createQuoteDataBCForMultiShipmentAdapter(): QuoteDataBCForMultiShipmentAdapterInterface
-    {
-        return new QuoteDataBCForMultiShipmentAdapter();
     }
 
     /**

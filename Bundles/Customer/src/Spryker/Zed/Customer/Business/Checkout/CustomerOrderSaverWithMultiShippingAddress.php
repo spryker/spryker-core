@@ -10,7 +10,6 @@ namespace Spryker\Zed\Customer\Business\Checkout;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Customer\Business\Customer\AddressInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
 use Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface;
@@ -31,44 +30,18 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     protected $existingAddresses = [];
 
     /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @var \Spryker\Zed\Customer\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected $quoteDataBCForMultiShipmentAdapter;
-
-    /**
      * @param \Spryker\Zed\Customer\Business\Customer\CustomerInterface $customer
      * @param \Spryker\Zed\Customer\Business\Customer\AddressInterface $address
      * @param \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface $customerRepository
-     * @param \Spryker\Zed\Customer\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
      */
     public function __construct(
         CustomerInterface $customer,
         AddressInterface $address,
-        CustomerRepositoryInterface $customerRepository,
-        QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
+        CustomerRepositoryInterface $customerRepository
     ) {
         parent::__construct($customer, $address);
 
         $this->customerRepository = $customerRepository;
-        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     *
-     * @return void
-     */
-    public function saveOrderCustomer(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
-    {
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
-
-        parent::saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
     }
 
     /**

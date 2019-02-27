@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\TaxProductConnector\Business\Calculator;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Propel\Runtime\Collection\ArrayCollection;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
@@ -35,25 +33,15 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected $defaultTaxCountryIso2Code;
 
     /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @var \Spryker\Zed\TaxProductConnector\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected $quoteDataBCForMultiShipmentAdapter;
-
-    /**
      * @param \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface $taxQueryContainer
      * @param \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface $taxFacade
-     * @param \Spryker\Zed\TaxProductConnector\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
      */
     public function __construct(
         TaxProductConnectorQueryContainerInterface $taxQueryContainer,
-        TaxProductConnectorToTaxInterface $taxFacade,
-        QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
+        TaxProductConnectorToTaxInterface $taxFacade
     ) {
         $this->taxQueryContainer = $taxQueryContainer;
         $this->taxFacade = $taxFacade;
-        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
     }
 
     /**
@@ -63,11 +51,6 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
-
         $foundResults = $this->taxQueryContainer
             ->queryTaxSetByIdProductAbstractAndCountryIso2Codes(
                 $this->getIdProductAbstruct($quoteTransfer->getItems()),
@@ -116,7 +99,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ArrayCollection $taxRatesByCountryAndProduct
+     * @param iterable|\Propel\Runtime\Collection\ArrayCollection $taxRatesByCountryAndProduct
      *
      * @return array
      */

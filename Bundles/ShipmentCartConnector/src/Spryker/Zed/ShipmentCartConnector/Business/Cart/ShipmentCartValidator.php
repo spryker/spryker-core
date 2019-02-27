@@ -32,25 +32,15 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
     protected $priceFacade;
 
     /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @var \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected $quoteDataBCForMultiShipmentAdapter;
-
-    /**
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface $priceFacade
-     * @param \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
      */
     public function __construct(
         ShipmentCartConnectorToShipmentFacadeInterface $shipmentFacade,
-        ShipmentCartConnectorToPriceFacadeInterface $priceFacade,
-        ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
+        ShipmentCartConnectorToPriceFacadeInterface $priceFacade
     ) {
         $this->shipmentFacade = $shipmentFacade;
         $this->priceFacade = $priceFacade;
-        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
     }
 
     /**
@@ -64,11 +54,6 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
             ->setIsSuccess(true);
 
         $quoteTransfer = $cartChangeTransfer->getQuote();
-
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
 
         $availableShipmentMethods = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
 

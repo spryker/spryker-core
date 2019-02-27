@@ -9,52 +9,19 @@ namespace Spryker\Zed\Sales\Business\Order;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Generated\Shared\Transfer\SpySalesExpenseEntityTransfer;
-use Orm\Zed\Sales\Persistence\Map\SpySalesExpenseTableMap;
-use Orm\Zed\Sales\Persistence\Map\SpySalesShipmentTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator as OrderHydratorWithoutMultiShipping;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderHydrator extends OrderHydratorWithoutMultiShipping
 {
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @var \Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapterInterface
-     */
-    protected $orderDataBCForMultiShipmentAdapter;
-
-    /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param \Spryker\Zed\Sales\Business\Order\OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $orderDataBCForMultiShipmentAdapter
-     * @param \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[] $hydrateOrderPlugins
-     */
-    public function __construct(
-        SalesQueryContainerInterface $queryContainer,
-        SalesToOmsInterface $omsFacade,
-        OrderHydratorOrderDataBCForMultiShipmentAdapterInterface $orderDataBCForMultiShipmentAdapter,
-        array $hydrateOrderPlugins = []
-    ) {
-        parent::__construct($queryContainer, $omsFacade, $hydrateOrderPlugins);
-
-        $this->orderDataBCForMultiShipmentAdapter = $orderDataBCForMultiShipmentAdapter;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -80,11 +47,6 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
             ));
         }
 
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-        $orderEntity = $this->orderDataBCForMultiShipmentAdapter->adapt($orderEntity);
-
         return $orderEntity;
     }
 
@@ -109,11 +71,6 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
                 )
             );
         }
-
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-        $orderEntity = $this->orderDataBCForMultiShipmentAdapter->adapt($orderEntity);
 
         return $this->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
     }

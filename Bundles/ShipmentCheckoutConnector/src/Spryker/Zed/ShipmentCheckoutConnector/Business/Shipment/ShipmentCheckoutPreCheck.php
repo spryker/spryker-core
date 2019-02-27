@@ -12,30 +12,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentCheckoutPreCheck as ShipmentCheckoutPreCheckWithoutMultiShipment;
-use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentFacadeInterface;
 
 class ShipmentCheckoutPreCheck extends ShipmentCheckoutPreCheckWithoutMultiShipment
 {
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @var \Spryker\Zed\Customer\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected $quoteDataBCForMultiShipmentAdapter;
-
-    /**
-     * @param \Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentFacadeInterface $shipmentFacade
-     * @param \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
-     */
-    public function __construct(
-        ShipmentCheckoutConnectorToShipmentFacadeInterface $shipmentFacade,
-        QuoteDataBCForMultiShipmentAdapterInterface $quoteDataBCForMultiShipmentAdapter
-    ) {
-        parent::__construct($shipmentFacade);
-
-        $this->quoteDataBCForMultiShipmentAdapter = $quoteDataBCForMultiShipmentAdapter;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -46,11 +25,6 @@ class ShipmentCheckoutPreCheck extends ShipmentCheckoutPreCheckWithoutMultiShipm
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool {
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-        $quoteTransfer = $this->quoteDataBCForMultiShipmentAdapter->adapt($quoteTransfer);
-
         $availableShipmentMethods = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {

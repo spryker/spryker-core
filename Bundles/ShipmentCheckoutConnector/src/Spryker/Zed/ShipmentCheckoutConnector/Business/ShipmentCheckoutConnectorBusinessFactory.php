@@ -9,8 +9,6 @@ namespace Spryker\Zed\ShipmentCheckoutConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentCheckoutPreCheck;
-use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\QuoteDataBCForMultiShipmentAdapter;
-use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\QuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheck as ShipmentCheckoutPreCheckWithMultipleShippingAddress;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\StrategyResolver\PreCheckStrategyResolver;
@@ -36,8 +34,7 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     public function createShipmentCheckoutPreCheckWithMultipleShippingAddress(): ShipmentCheckoutPreCheckInterface
     {
         return new ShipmentCheckoutPreCheckWithMultipleShippingAddress(
-            $this->getShipmentFacade(),
-            $this->createQuoteDataBCForMultiShipmentAdapter()
+            $this->getShipmentFacade()
         );
     }
 
@@ -47,16 +44,6 @@ class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
     protected function getShipmentFacade()
     {
         return $this->getProvidedDependency(ShipmentCheckoutConnectorDependencyProvider::FACADE_SHIPMENT);
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\QuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected function createQuoteDataBCForMultiShipmentAdapter(): QuoteDataBCForMultiShipmentAdapterInterface
-    {
-        return new QuoteDataBCForMultiShipmentAdapter();
     }
 
     /**

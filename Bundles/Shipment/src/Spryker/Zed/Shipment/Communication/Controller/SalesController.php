@@ -27,13 +27,6 @@ class SalesController extends AbstractController
         /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
         $orderTransfer = $request->request->get('orderTransfer');
 
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-        $orderTransfer = $this->getFactory()
-            ->createSalesOrderDataBCForMultiShipmentAdapter()
-            ->adapt($orderTransfer);
-
         $shipmentGroups = $this->getFactory()->getShipmentService()->groupItemsByShipment($orderTransfer->getItems());
 
         return $this->viewResponse([

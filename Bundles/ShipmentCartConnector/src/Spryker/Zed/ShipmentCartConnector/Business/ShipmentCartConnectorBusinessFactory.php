@@ -10,12 +10,8 @@ namespace Spryker\Zed\ShipmentCartConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpander as ShipmentCartExpanderWithMultiShippingAddress;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterface;
-use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter;
-use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidator as ShipmentCartValidatorWithMultiShippingAddress;
 use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface;
-use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter;
-use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartExpander;
 use Spryker\Zed\ShipmentCartConnector\Business\Model\ShipmentCartValidator;
 use Spryker\Zed\ShipmentCartConnector\Business\StrategyResolver\CartExpanderStrategyResolver;
@@ -46,8 +42,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentCartExpanderWithMultiShippingAddress(
             $this->getShipmentFacade(),
-            $this->getPriceFacade(),
-            $this->createShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter()
+            $this->getPriceFacade()
         );
     }
 
@@ -68,8 +63,7 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentCartValidatorWithMultiShippingAddress(
             $this->getShipmentFacade(),
-            $this->getPriceFacade(),
-            $this->createShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter()
+            $this->getPriceFacade()
         );
     }
 
@@ -87,26 +81,6 @@ class ShipmentCartConnectorBusinessFactory extends AbstractBusinessFactory
     protected function getPriceFacade()
     {
         return $this->getProvidedDependency(ShipmentCartConnectorDependencyProvider::FACADE_PRICE);
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @return \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected function createShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter(): ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapterInterface
-    {
-        return new ShipmentCartExpanderQuoteDataBCForMultiShipmentAdapter();
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @return \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected function createShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter(): ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapterInterface
-    {
-        return new ShipmentCartValidatorQuoteDataBCForMultiShipmentAdapter();
     }
 
     /**

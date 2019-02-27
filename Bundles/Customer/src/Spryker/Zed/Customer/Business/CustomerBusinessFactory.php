@@ -11,8 +11,6 @@ use Spryker\Zed\Customer\Business\Anonymizer\CustomerAnonymizer;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverWithMultiShippingAddress;
-use Spryker\Zed\Customer\Business\Checkout\QuoteDataBCForMultiShipmentAdapter;
-use Spryker\Zed\Customer\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\CustomerReader;
@@ -153,8 +151,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         return new CustomerOrderSaverWithMultiShippingAddress(
             $this->createCustomer(),
             $this->createAddress(),
-            $this->getRepository(),
-            $this->createQuoteDataBCForMultiShipmentAdapter()
+            $this->getRepository()
         );
     }
 
@@ -256,16 +253,6 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         return new CustomerExpander(
             $this->getCustomerTransferExpanderPlugins()
         );
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @return \Spryker\Zed\Customer\Business\Checkout\QuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected function createQuoteDataBCForMultiShipmentAdapter(): QuoteDataBCForMultiShipmentAdapterInterface
-    {
-        return new QuoteDataBCForMultiShipmentAdapter();
     }
 
     /**

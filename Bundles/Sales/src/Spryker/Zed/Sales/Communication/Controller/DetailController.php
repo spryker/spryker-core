@@ -33,13 +33,6 @@ class DetailController extends AbstractController
 
         $orderTransfer = $this->getFacade()->findOrderByIdSalesOrder($idSalesOrder);
 
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-        $orderTransfer = $this->getFactory()
-            ->createSalesOrderDataBCForMultiShipmentAdapter()
-            ->adapt($orderTransfer);
-
         if ($orderTransfer === null) {
             $this->addErrorMessage(sprintf(
                 'Sales order #%d not found.',

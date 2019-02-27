@@ -11,8 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateWithItemShipmentTaxRateCalculator;
-use Spryker\Zed\ProductOption\Business\Calculator\QuoteDataBCForMultiShipmentAdapter;
-use Spryker\Zed\ProductOption\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupIdHydrator;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;
@@ -146,8 +144,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOptionTaxRateWithItemShipmentTaxRateCalculator(
             $this->getQueryContainer(),
-            $this->getTaxFacade(),
-            $this->createQuoteDataBCForMultiShipmentAdapter()
+            $this->getTaxFacade()
         );
     }
 
@@ -265,16 +262,6 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getPriceFacade()
         );
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @return \Spryker\Zed\ProductOption\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected function createQuoteDataBCForMultiShipmentAdapter(): QuoteDataBCForMultiShipmentAdapterInterface
-    {
-        return new QuoteDataBCForMultiShipmentAdapter();
     }
 
     /**

@@ -10,8 +10,6 @@ namespace Spryker\Zed\TaxProductConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 use Spryker\Zed\TaxProductConnector\Business\Calculator\ProductItemTaxRateCalculator as ProductItemTaxRateCalculatorWithMultipleShipmentTaxRate;
-use Spryker\Zed\TaxProductConnector\Business\Calculator\QuoteDataBCForMultiShipmentAdapter;
-use Spryker\Zed\TaxProductConnector\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface;
 use Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator;
 use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxReader;
 use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxReaderInterface;
@@ -61,8 +59,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductItemTaxRateCalculatorWithMultipleShipmentTaxRate(
             $this->getQueryContainer(),
-            $this->getTaxFacade(),
-            $this->createQuoteDataBCForMultiShipmentAdapter()
+            $this->getTaxFacade()
         );
     }
 
@@ -80,16 +77,6 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractTaxReader(): ProductAbstractTaxReaderInterface
     {
         return new ProductAbstractTaxReader($this->getRepository());
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @return \Spryker\Zed\TaxProductConnector\Business\Calculator\QuoteDataBCForMultiShipmentAdapterInterface
-     */
-    protected function createQuoteDataBCForMultiShipmentAdapter(): QuoteDataBCForMultiShipmentAdapterInterface
-    {
-        return new QuoteDataBCForMultiShipmentAdapter();
     }
 
     /**
