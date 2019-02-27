@@ -149,17 +149,16 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     *  - Returns a transfer with the filtered list of orders for the given customer id.
+     *  - Returns a transfer with the filtered list of orders for the given customer.
      *  - Sets the total number of orders for the customer to the pagination transfer.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getFilteredCustomerOrderList(OrderListTransfer $orderListTransfer, int $idCustomer): OrderListTransfer;
+    public function getFilteredCustomerOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer;
 
     /**
      * Specification:

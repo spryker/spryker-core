@@ -67,10 +67,7 @@ class GatewayController extends AbstractGatewayController
     public function getFilteredCustomerOrderListAction(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
         return $this->getFacade()
-            ->getFilteredCustomerOrderList(
-                $orderListTransfer,
-                $orderListTransfer->getIdCustomer()
-            );
+            ->getFilteredCustomerOrderList($orderListTransfer);
     }
 
     /**

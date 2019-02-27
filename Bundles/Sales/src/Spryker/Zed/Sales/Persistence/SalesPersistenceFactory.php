@@ -14,6 +14,8 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\OrderListTransferMapper;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\OrderListTransferMapperInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapperInterface;
 
@@ -81,5 +83,13 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesExpenseMapper(): SalesExpenseMapperInterface
     {
         return new SalesExpenseMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Persistence\Propel\Mapper\OrderListTransferMapperInterface
+     */
+    public function createOrderListTransferMapper(): OrderListTransferMapperInterface
+    {
+        return new OrderListTransferMapper();
     }
 }

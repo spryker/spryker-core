@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
+use Generated\Shared\Transfer\OrderListTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -32,5 +33,34 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->findOne();
 
         return $idSalesOrder;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getCustomerOrderListByCustomerReference(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        $orderListQuery = $this->getFactory()
+            ->createSalesOrderQuery()
+            ->filterByCustomerReference($orderListTransfer->getCustomerReference());
+        $numberOfOrders = $orderListQuery->count();
+        if (!$numberOfOrders) {
+            return $orderListTransfer;
+        }
+
+        $filterTransfer = $orderListTransfer->getFilter();
+        if ($orderListTransfer->getFilter()) {
+            $orderListQuery
+                ->setLimit($filterTransfer->getLimit())
+                ->setOffset($filterTransfer->getOffset());
+        }
+
+        $orderListTransfer = $this->getFactory()
+            ->createOrderListTransferMapper()
+            ->mapOrderListTransfer($orderListTransfer, $orderListQuery->find()->getArrayCopy(), $numberOfOrders);
+
+        return $orderListTransfer;
     }
 }

@@ -15,8 +15,8 @@ use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderOverviewInterface;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
-use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReaderInterface;
 use Spryker\Zed\Sales\Business\Model\Customer\FilteredCustomerOrderListReader;
+use Spryker\Zed\Sales\Business\Model\Customer\FilteredCustomerOrderListReaderInterface;
 use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderOverview;
 use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydrator;
@@ -68,13 +68,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReaderInterface
+     * @return \Spryker\Zed\Sales\Business\Model\Customer\FilteredCustomerOrderListReaderInterface
      */
-    public function createFilteredCustomerOrderListReader(): CustomerOrderReaderInterface
+    public function createFilteredCustomerOrderListReader(): FilteredCustomerOrderListReaderInterface
     {
         return new FilteredCustomerOrderListReader(
-            $this->getQueryContainer(),
-            $this->createOrderHydrator()
+            $this->getRepository(),
+            $this->createOrderHydrator(),
+            $this->getOmsFacade()
         );
     }
 

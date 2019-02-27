@@ -104,8 +104,8 @@ class OrderReader implements OrderReaderInterface
      */
     protected function getOrderListAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $customerId = $restRequest->getUser()->getSurrogateIdentifier();
-        $orderListTransfer = (new OrderListTransfer())->setIdCustomer((int)$customerId);
+        $customerReference = $restRequest->getUser()->getNaturalIdentifier();
+        $orderListTransfer = (new OrderListTransfer())->setCustomerReference($customerReference);
 
         if ($restRequest->getPage()) {
             $orderListTransfer->setFilter($this->createFilterTransfer($restRequest));

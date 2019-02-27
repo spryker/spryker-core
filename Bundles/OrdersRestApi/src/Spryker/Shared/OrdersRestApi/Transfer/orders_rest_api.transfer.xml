@@ -129,6 +129,7 @@
 
     <transfer name="OrderList">
         <property name="idCustomer" type="int" />
+        <property name="customerReference" type="string" />
         <property name="filter" type="Filter" />
         <property name="Pagination" type="Pagination" />
         <property name="orders" type="Order[]" singular="order" />

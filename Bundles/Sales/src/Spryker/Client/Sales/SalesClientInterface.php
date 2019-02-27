@@ -38,7 +38,7 @@ interface SalesClientInterface
 
     /**
      * Specification:
-     *  - Returns a transfer with the filtered list of orders for the given customer id.
+     *  - Returns a transfer with the filtered list of orders for the given customer.
      *  - Sets the total number of orders for the customer to the pagination transfer.
      *
      * @api
