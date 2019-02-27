@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeBridge;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge;
+use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToStoreFacadeBridge;
 
 /**
  * @method \Spryker\Zed\MultiCart\MultiCartConfig getConfig()
@@ -19,6 +20,7 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_QUOTE = 'QUERY_QUOTE';
     public const FACADE_MESSENGER = 'CLIENT_MESSENGER';
+    public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
 
     /**
@@ -30,6 +32,7 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addQuoteFacade($container);
         $container = $this->addMessengerFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -69,6 +72,20 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_MESSENGER] = function (Container $container) {
             return new MultiCartToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new MultiCartToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;

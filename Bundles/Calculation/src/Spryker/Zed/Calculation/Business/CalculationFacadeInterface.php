@@ -22,6 +22,7 @@ interface CalculationFacadeInterface
      *  - Maps Quote to CalculableObject
      *  - Run all calculator plugins
      *  - Maps CalculableObject to Quote
+     *  - Executes `QuotePostRecalculatePluginInterface` stack of plugins.
      *  - Return the updated quote
      *
      * @api
