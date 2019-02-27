@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductUrlTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
@@ -181,7 +182,7 @@ class UrlHandlingTest extends FacadeTestAbstract
         foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
             $urlTransfer = new UrlTransfer();
             $urlTransfer->setUrl($localizedUrlTransfer->getUrl());
-            $urlTransfer = $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
+            $urlTransfer = $this->findUrlCaseInsensitive($urlTransfer);
 
             $activeTouchEntity = $this->getProductUrlTouchEntry($urlTransfer->getIdUrl());
 
@@ -209,7 +210,7 @@ class UrlHandlingTest extends FacadeTestAbstract
         foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
             $urlTransfer = new UrlTransfer();
             $urlTransfer->setUrl($localizedUrlTransfer->getUrl());
-            $urlTransfer = $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
+            $urlTransfer = $this->findUrlCaseInsensitive($urlTransfer);
 
             $deletedTouchEntity = $this->getProductUrlTouchEntry($urlTransfer->getIdUrl());
 
@@ -226,7 +227,7 @@ class UrlHandlingTest extends FacadeTestAbstract
      *
      * @return void
      */
-    protected function assertProductUrl(ProductUrlTransfer $productUrl, LocalizedUrlTransfer $expectedUrl)
+    protected function assertProductUrl(ProductUrlTransfer $productUrl, LocalizedUrlTransfer $expectedUrl): void
     {
         $this->assertEquals($productUrl->getAbstractSku(), $productUrl->getAbstractSku());
 
@@ -250,5 +251,26 @@ class UrlHandlingTest extends FacadeTestAbstract
             ->filterByItemType('url')
             ->filterByItemId($idUrl)
             ->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     */
+    protected function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer
+    {
+        $urlEntity = (new SpyUrlQuery())
+            ->setIgnoreCase(true)
+            ->filterByUrl($urlTransfer->getUrl())
+            ->_or()
+            ->filterByIdUrl($urlTransfer->getIdUrl())
+            ->findOne();
+
+        if ($urlEntity !== null) {
+            return (new UrlTransfer())->fromArray($urlEntity->toArray());
+        }
+
+        return null;
     }
 }
