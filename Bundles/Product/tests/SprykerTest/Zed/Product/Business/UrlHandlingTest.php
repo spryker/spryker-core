@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Product\Business;
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Spryker\Shared\Url\UrlConfig;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
@@ -184,12 +185,7 @@ class UrlHandlingTest extends FacadeTestAbstract
             $urlTransfer->setUrl($localizedUrlTransfer->getUrl());
             $urlTransfer = $this->findUrlCaseInsensitive($urlTransfer);
 
-            $activeTouchEntity = $this->getProductUrlTouchEntry($urlTransfer->getIdUrl());
-
-            $this->assertNotNull($activeTouchEntity);
-            $this->assertEquals($urlTransfer->getIdUrl(), $activeTouchEntity->getItemId());
-            $this->assertEquals(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $activeTouchEntity->getItemEvent());
-            $this->assertEquals('url', $activeTouchEntity->getItemType());
+            $this->tester->assertTouchActive(UrlConfig::RESOURCE_TYPE_URL, $urlTransfer->getIdUrl());
         }
     }
 
@@ -212,12 +208,7 @@ class UrlHandlingTest extends FacadeTestAbstract
             $urlTransfer->setUrl($localizedUrlTransfer->getUrl());
             $urlTransfer = $this->findUrlCaseInsensitive($urlTransfer);
 
-            $deletedTouchEntity = $this->getProductUrlTouchEntry($urlTransfer->getIdUrl());
-
-            $this->assertNotNull($deletedTouchEntity);
-            $this->assertEquals($urlTransfer->getIdUrl(), $deletedTouchEntity->getItemId());
-            $this->assertEquals(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $deletedTouchEntity->getItemEvent());
-            $this->assertEquals('url', $deletedTouchEntity->getItemType());
+            $this->tester->assertTouchDeleted(UrlConfig::RESOURCE_TYPE_URL, $urlTransfer->getIdUrl());
         }
     }
 
@@ -241,19 +232,6 @@ class UrlHandlingTest extends FacadeTestAbstract
     }
 
     /**
-     * @param int $idUrl
-     *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouch|null
-     */
-    protected function getProductUrlTouchEntry($idUrl)
-    {
-        return SpyTouchQuery::create()
-            ->filterByItemType('url')
-            ->filterByItemId($idUrl)
-            ->findOne();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
@@ -267,10 +245,10 @@ class UrlHandlingTest extends FacadeTestAbstract
             ->filterByIdUrl($urlTransfer->getIdUrl())
             ->findOne();
 
-        if ($urlEntity !== null) {
-            return (new UrlTransfer())->fromArray($urlEntity->toArray());
+        if ($urlEntity === null) {
+            return null;
         }
 
-        return null;
+        return (new UrlTransfer())->fromArray($urlEntity->toArray());
     }
 }
