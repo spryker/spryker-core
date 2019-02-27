@@ -52,6 +52,8 @@ interface AgentQuoteRequestClientInterface
      * - Makes Zed request.
      * - Looks up one "Request for Quote" by provided quote request reference.
      * - Expects "Request for Quote" status to be "waiting".
+     * - Requires latest version inside QuoteRequestTransfer.
+     * - Requires quote inside QuoteRequestVersionTransfer.
      * - Sets status to "in-progress".
      * - Copies latest version quote to quoteInProgress property.
      *

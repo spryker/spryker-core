@@ -94,6 +94,10 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
                 ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
         }
 
+        $quoteRequestTransfer->requireLatestVersion()
+            ->getLatestVersion()
+            ->requireQuote();
+
         $quoteRequestTransfer->setStatus(SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS);
         $quoteRequestTransfer->setQuoteInProgress($quoteRequestTransfer->getLatestVersion()->getQuote());
 
