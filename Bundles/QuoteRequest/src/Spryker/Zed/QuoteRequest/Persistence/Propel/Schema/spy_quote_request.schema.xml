@@ -13,7 +13,7 @@
         <column name="metadata" type="LONGVARCHAR" required="false"/>
         <column name="quote_in_progress" type="LONGVARCHAR" required="false"/>
 
-        <column name="valid_until" type="DATE" required="false"/>
+        <column name="valid_until" type="TIMESTAMP" required="false"/>
         <column name="status" type="VARCHAR" size="255"/>
         <column name="is_hidden" type="BOOLEAN" default="false"/>
         <column name="uuid" required="false" type="VARCHAR" size="255"/>

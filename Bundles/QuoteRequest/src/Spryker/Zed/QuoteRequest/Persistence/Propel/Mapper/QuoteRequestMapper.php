@@ -81,9 +81,11 @@ class QuoteRequestMapper
         $quoteRequestTransfer->setLatestVersion($this->findLatestQuoteRequestVersionTransfer($quoteRequestEntity));
         $quoteRequestTransfer->setVersionReferences($this->getVersionReferences($quoteRequestEntity));
         $quoteRequestTransfer->setMetadata($this->decodeMetadata($quoteRequestEntity));
-        $quoteRequestTransfer->setQuoteInProgress(
-            (new QuoteTransfer())->fromArray($this->decodeQuoteData($quoteRequestEntity->getQuoteInProgress()), true)
-        );
+
+        if ($quoteRequestEntity->getQuoteInProgress()) {
+            $quoteTransfer = (new QuoteTransfer())->fromArray($this->decodeQuoteData($quoteRequestEntity->getQuoteInProgress()), true);
+            $quoteRequestTransfer->setQuoteInProgress($quoteTransfer);
+        }
 
         return $quoteRequestTransfer;
     }
@@ -106,7 +108,9 @@ class QuoteRequestMapper
 
         $quoteRequestEntity->setFkCompanyUser($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser());
         $quoteRequestEntity->setMetadata($this->encodeMetadata($quoteRequestTransfer));
-        $quoteRequestEntity->setQuoteInProgress($this->encodeQuoteData($quoteRequestTransfer->getQuoteInProgress()));
+        if ($quoteRequestTransfer->getQuoteInProgress()) {
+            $quoteRequestEntity->setQuoteInProgress($this->encodeQuoteData($quoteRequestTransfer->getQuoteInProgress()));
+        }
 
         return $quoteRequestEntity;
     }
@@ -194,16 +198,12 @@ class QuoteRequestMapper
     }
 
     /**
-     * @param string|null $data
+     * @param string $data
      *
      * @return array
      */
-    protected function decodeQuoteData(?string $data): array
+    protected function decodeQuoteData(string $data): array
     {
-        if (!$data) {
-            return [];
-        }
-
         return $this->encodingService->decodeJson($data, true);
     }
 
