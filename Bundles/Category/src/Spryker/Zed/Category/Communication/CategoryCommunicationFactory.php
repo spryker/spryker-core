@@ -102,9 +102,8 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryEditForm(CategoryTransfer $categoryTransfer): FormInterface
     {
-        $formFactory = $this->getFormFactory();
         $categoryCreateDataFormProvider = $this->createCategoryEditFormDataProvider();
-        $categoryCreateDataFormProvider->prepareLocalizedAttributes($categoryTransfer);
+        $formFactory = $this->getFormFactory();
 
         return $formFactory->create(
             CategoryType::class,

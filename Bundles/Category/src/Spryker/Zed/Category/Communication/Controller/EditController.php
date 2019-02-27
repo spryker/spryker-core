@@ -30,9 +30,8 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $this->getFacade()->syncCategoryTemplate();
-        $idCategory = $request->query->getInt(CategoryConstants::PARAM_ID_CATEGORY);
 
-        $categoryTransfer = $this->getFacade()->findCategoryById($idCategory);
+        $categoryTransfer = $this->getFactory()->createCategoryEditFormDataProvider()->getData();
 
         if ($categoryTransfer === null) {
             $this->addErrorMessage("Category with id %s doesn't exist", ['%s' => $request->get('id-category')]);

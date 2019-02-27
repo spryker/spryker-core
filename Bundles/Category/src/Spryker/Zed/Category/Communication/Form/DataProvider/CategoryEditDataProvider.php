@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\Communication\Form\CategoryType;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
@@ -65,7 +66,11 @@ class CategoryEditDataProvider
      */
     protected function buildCategoryTransfer()
     {
-        return $this->categoryFacade->read($this->getIdCategory());
+        $categoryTransfer = $this->categoryFacade->findCategoryById($this->getIdCategory());
+
+        $this->addMissedLocalizedAttributes($categoryTransfer);
+
+        return $categoryTransfer;
     }
 
     /**
@@ -150,7 +155,7 @@ class CategoryEditDataProvider
      */
     protected function getIdCategory()
     {
-        return Request::createFromGlobals()->query->getInt('id-category');
+        return Request::createFromGlobals()->query->getInt(CategoryConstants::PARAM_ID_CATEGORY);
     }
 
     /**
@@ -169,7 +174,7 @@ class CategoryEditDataProvider
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function prepareLocalizedAttributes(CategoryTransfer $categoryTransfer): CategoryTransfer
+    protected function addMissedLocalizedAttributes(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         $categoryLocaleIds = [];
 
