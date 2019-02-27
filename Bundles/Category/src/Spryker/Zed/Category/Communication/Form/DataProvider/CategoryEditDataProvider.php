@@ -9,6 +9,7 @@ namespace Spryker\Zed\Category\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Spryker\Shared\Category\CategoryConstants;
@@ -68,7 +69,9 @@ class CategoryEditDataProvider
     {
         $categoryTransfer = $this->categoryFacade->findCategoryById($this->getIdCategory());
 
-        $categoryTransfer = $this->addLocalizedAttributeTransfers($categoryTransfer);
+        if ($categoryTransfer !== null) {
+            $categoryTransfer = $this->addLocalizedAttributeTransfers($categoryTransfer);
+        }
 
         return $categoryTransfer;
     }
@@ -176,22 +179,43 @@ class CategoryEditDataProvider
      */
     protected function addLocalizedAttributeTransfers(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
-        $categoryLocaleIds = [];
-
-        foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            $categoryLocaleIds[] = $localizedAttribute->getLocale()->getIdLocale();
-        }
+        $categoryLocaleIds = $this->getCategoryLocaleIds($categoryTransfer);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             if (in_array($localeTransfer->getIdLocale(), $categoryLocaleIds)) {
                 continue;
             }
 
-            $categoryLocalizedAttributesTransfer = new CategoryLocalizedAttributesTransfer();
-            $categoryLocalizedAttributesTransfer->setLocale($localeTransfer);
+            $categoryLocalizedAttributesTransfer = $this->createEmptyCategoryLocalizedAttributesTransfer($localeTransfer);
             $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributesTransfer);
         }
 
         return $categoryTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
+     */
+    protected function createEmptyCategoryLocalizedAttributesTransfer(LocaleTransfer $localeTransfer): CategoryLocalizedAttributesTransfer
+    {
+        return (new CategoryLocalizedAttributesTransfer())->setLocale($localeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return array
+     */
+    protected function getCategoryLocaleIds(CategoryTransfer $categoryTransfer): array
+    {
+        $categoryLocaleIds = [];
+
+        foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            $categoryLocaleIds[] = $localizedAttribute->getLocale()->getIdLocale();
+        }
+
+        return $categoryLocaleIds;
     }
 }
