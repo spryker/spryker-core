@@ -59,7 +59,9 @@ class CategoryEditDataProvider
      */
     public function getData()
     {
-        return $this->buildCategoryTransfer();
+        $categoryTransfer = $this->buildCategoryTransfer();
+
+        return $this->addLocalizedAttributeTransfers($categoryTransfer);
     }
 
     /**
@@ -67,13 +69,7 @@ class CategoryEditDataProvider
      */
     protected function buildCategoryTransfer()
     {
-        $categoryTransfer = $this->categoryFacade->findCategoryById($this->getIdCategory());
-
-        if ($categoryTransfer !== null) {
-            $categoryTransfer = $this->addLocalizedAttributeTransfers($categoryTransfer);
-        }
-
-        return $categoryTransfer;
+        return $this->categoryFacade->read($this->getIdCategory());
     }
 
     /**
