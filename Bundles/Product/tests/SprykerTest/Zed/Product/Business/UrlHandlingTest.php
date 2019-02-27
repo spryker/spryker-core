@@ -10,10 +10,8 @@ namespace SprykerTest\Zed\Product\Business;
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Spryker\Shared\Url\UrlConfig;
-use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
-use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use Spryker\Shared\Url\UrlConfig;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
