@@ -31,11 +31,11 @@ class UrlRepository extends AbstractRepository implements UrlRepositoryInterface
             ->filterByIdUrl($urlTransfer->getIdUrl())
             ->findOne();
 
-        if ($urlEntity !== null) {
-            return (new UrlTransfer())->fromArray($urlEntity->toArray());
+        if ($urlEntity === null) {
+            return null;
         }
 
-        return null;
+        return (new UrlTransfer())->fromArray($urlEntity->toArray());
     }
 
     /**
