@@ -19,19 +19,19 @@ interface DocumentationGeneratorRestApiToFinderInterface extends IteratorAggrega
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFinderInterface
+     * @return $this
      */
-    public function in($dirs): self;
+    public function in($dirs);
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFinderInterface
+     * @return $this
      */
-    public function files(): self;
+    public function files();
 
     /**
      * @param string $pattern
      *
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFinderInterface
+     * @return $this
      */
-    public function name(string $pattern): self;
+    public function name(string $pattern);
 }

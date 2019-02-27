@@ -37,7 +37,7 @@ class ErrorHandlerFactory
      */
     public function createErrorHandler()
     {
-        $errorLogger = $this->createErrorLogger();
+        $errorLogger = ErrorLogger::getInstance();
         $errorRenderer = $this->createErrorRenderer();
 
         $errorHandler = new ErrorHandler($errorLogger, $errorRenderer);
