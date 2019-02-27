@@ -11,7 +11,7 @@ interface QuickOrderServiceInterface
 {
     /**
      * Specification:
-     * - rounds float value with precision and round mode defined in config.
+     * - rounds float value using precision and round mode defined in config.
      *
      * @api
      *
