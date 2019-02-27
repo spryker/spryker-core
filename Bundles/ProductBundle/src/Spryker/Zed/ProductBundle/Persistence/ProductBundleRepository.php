@@ -32,10 +32,10 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
 
         $productForBundleTransfers = [];
 
+        $productBundleMapper = $this->getFactory()->createProductBundleMapper();
         /** @var \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle $productBundleEntity */
         foreach ($productBundleEntities as $productBundleEntity) {
-            $productForBundleTransfers[] = $this->getFactory()
-                ->createProductBundleMapper()
+            $productForBundleTransfers[] = $productBundleMapper
                 ->mapProductBundleEntityToProductForBundleTransfer(
                     $productBundleEntity,
                     new ProductForBundleTransfer()

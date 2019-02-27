@@ -23,8 +23,8 @@ class CartBundleActivePreCheckPlugin extends AbstractPlugin implements CartPreCh
     /**
      * {@inheritdoc}
      * - Checks if bundled items in CartChangeTransfer are active.
-     * - Fails if any product in the bundle is not active.
-     * - Sets error message if they were not.
+     * - Sets CartPreCheckResponseTransfer::isSuccess to false if some of products are not active.
+     * - Sets error message if some of products are not active.
      *
      * @api
      *
