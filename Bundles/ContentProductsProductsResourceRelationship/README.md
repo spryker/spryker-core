@@ -2,7 +2,8 @@
 [![Build Status](https://travis-ci.org/spryker/content-products-products-resource-relationship.svg)](https://travis-ci.org/spryker/content-products-products-resource-relationship)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/content-products-products-resource-relationship/badge.svg)](https://coveralls.io/github/spryker/content-products-products-resource-relationship)
 
-{{ADD DESCRIPTION HERE}}
+ContentProductsProductsResourceRelationship module provides relationship between abstract products resources and content product resources.
+
 
 ## Installation
 

@@ -11,6 +11,9 @@ use Spryker\Glue\ContentProductsProductsResourceRelationship\Dependency\RestReso
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
+/**
+ * @method \Spryker\Glue\ContentProductsProductsResourceRelationship\ContentProductsProductsResourceRelationshipConfig getConfig()
+ */
 class ContentProductsProductsResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const RESOURCE_PRODUCTS = 'RESOURCE_PRODUCTS';

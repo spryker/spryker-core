@@ -53,7 +53,7 @@ class ContentProductsResourceRoutePlugin extends AbstractPlugin implements Resou
      */
     public function getController(): string
     {
-        return 'content-products-resource';
+        return ContentProductsRestApiConfig::CONTROLLER_CONTENT_PRODUCT;
     }
 
     /**

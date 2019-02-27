@@ -22,7 +22,6 @@ class ContentProductsProductsResourceRelationshipFactory extends AbstractFactory
         return new ContentProductsProductsResourceRelationshipExpander($this->getProductsResource());
     }
 
-
     /**
      * @return \Spryker\Glue\ContentProductsProductsResourceRelationship\Dependency\RestResource\ContentProductsProductsResourceRelationshipToProductsResApiInterface
      */

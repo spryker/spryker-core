@@ -18,6 +18,12 @@ class ContentProductsProductsResourceRelationshipPlugin extends AbstractPlugin i
 {
     protected const RELATIONSHIP_RESOURCE_TYPE = 'abstract-products';
 
+    /**
+     * @param array $resources
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()

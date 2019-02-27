@@ -42,6 +42,6 @@ class ContentProductsResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createContentProductReader()
-            ->getContentItemById($restRequest);
+            ->getContentProductById($restRequest);
     }
 }

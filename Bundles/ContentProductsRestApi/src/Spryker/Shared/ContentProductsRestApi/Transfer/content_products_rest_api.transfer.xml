@@ -7,6 +7,6 @@
         <property name="abstractProducts" type="RestContentAbstractProduct[]" />
     </transfer>
     <transfer name="RestContentAbstractProduct">
-        <property name="abstractSku" type="string" />
+        <property name="sku" type="string" />
     </transfer>
 </transfers>

@@ -1,9 +1,18 @@
 {
-  "name": "spryker/content-product-rest-api",
-  "description": "ContentProductRestApi module",
+  "name": "spryker/content-products-rest-api",
+  "description": "ContentProductsRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "spryker/content-storage": "^1.0.0",
+    "spryker/glue-application": "^1.8.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.22.0",
+    "spryker/symfony": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

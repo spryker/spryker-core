@@ -11,5 +11,4 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class ContentProductsProductsResourceRelationshipConfig extends AbstractBundleConfig
 {
-
 }

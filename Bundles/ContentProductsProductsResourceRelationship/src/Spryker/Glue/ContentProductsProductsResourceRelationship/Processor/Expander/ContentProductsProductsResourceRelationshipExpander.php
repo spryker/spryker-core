@@ -13,15 +13,12 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class ContentProductsProductsResourceRelationshipExpander implements ContentProductsProductsResourceRelationshipExpanderInterface
 {
-    /** @deprecated Will be removed in next major release. */
-    protected const KEY_PRODUCTS = 'products';
     protected const KEY_ABSTRACT_PRODUCTS = 'abstractProducts';
 
     /**
      * @var \Spryker\Glue\ContentProductsProductsResourceRelationship\Dependency\RestResource\ContentProductsProductsResourceRelationshipToProductsResApiInterface
      */
     protected $productsResource;
-
 
     /**
      * @param \Spryker\Glue\ContentProductsProductsResourceRelationship\Dependency\RestResource\ContentProductsProductsResourceRelationshipToProductsResApiInterface $productsResource
@@ -34,11 +31,12 @@ class ContentProductsProductsResourceRelationshipExpander implements ContentProd
     /**
      * @param array $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-
             $attributes = $resource->getAttributes();
 
             if ($attributes && $attributes->offsetGet(static::KEY_ABSTRACT_PRODUCTS)) {
@@ -46,10 +44,6 @@ class ContentProductsProductsResourceRelationshipExpander implements ContentProd
                 $this->addAbstractProductsToResource($products, $resource, $restRequest);
 
                 return;
-            }
-            if ($attributes && $attributes->offsetGet(static::KEY_PRODUCTS)) {
-                $products = $attributes->offsetGet(static::KEY_PRODUCTS)->getArrayCopy();
-                $this->addAbstractProductsToResource($products, $resource, $restRequest);
             }
         }
     }
@@ -63,9 +57,10 @@ class ContentProductsProductsResourceRelationshipExpander implements ContentProd
      */
     protected function addAbstractProductsToResource(array $products, RestResourceInterface $resource, RestRequestInterface $restRequest): void
     {
+        /** @var \Generated\Shared\Transfer\RestContentAbstractProductTransfer $product */
         foreach ($products as $product) {
-            if ($product->getAbstractSku()) {
-                $abstractProduct = $this->productsResource->findProductAbstractBySku($product->getAbstractSku(), $restRequest);
+            if ($product->getSku()) {
+                $abstractProduct = $this->productsResource->findProductAbstractBySku($product->getSku(), $restRequest);
                 if ($abstractProduct) {
                     $resource->addRelationship($abstractProduct);
                 }

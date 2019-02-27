@@ -1,3 +1,3 @@
-# ContentProductRestApi Changelog
+# ContentProducsRestApi Changelog
 
-[Release Changelog](https://github.com/spryker/content-product-rest-api/releases)
+[Release Changelog](https://github.com/spryker/content-products-rest-api/releases)

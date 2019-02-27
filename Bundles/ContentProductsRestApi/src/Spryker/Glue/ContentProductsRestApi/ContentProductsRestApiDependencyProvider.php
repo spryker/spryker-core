@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ContentProductRestApi;
+namespace Spryker\Glue\ContentProductsRestApi;
 
-use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientBridge;
-use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionClientBridge;
+use Spryker\Glue\ContentProductsRestApi\Dependency\Client\ContentProductsRestApiToContentStorageClient;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -17,11 +16,7 @@ use Spryker\Glue\Kernel\Container;
  */
 class ContentProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    /**
-     * @deprecated Will be removed in the next major.
-     */
-    public const CLIENT_SESSION = 'CLIENT_SESSION';
+    public const CLIENT_CONTENT_STORAGE = 'CLIENT_CONTENT_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -30,7 +25,7 @@ class ContentProductsRestApiDependencyProvider extends AbstractBundleDependencyP
      */
     public function provideDependencies(Container $container): Container
     {
-        $container = $this->addCustomerClient($container);
+        $container = $this->addContentStorageClient($container);
 
         return $container;
     }
@@ -40,13 +35,11 @@ class ContentProductsRestApiDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addCustomerClient(Container $container): Container
+    protected function addContentStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
-            return new CustomersRestApiToCustomerClientBridge($container->getLocator()->customer()->client());
+        $container[static::CLIENT_CONTENT_STORAGE] = function (Container $container) {
+            return new ContentProductsRestApiToContentStorageClient($container->getLocator()->contentStorage()->client());
         };
-
         return $container;
     }
-
 }
