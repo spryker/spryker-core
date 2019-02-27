@@ -47,26 +47,4 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
 
         return $productListCollectionTransfer;
     }
-
-    /**
-     * @param int $idMerchantRelationship
-     *
-     * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
-     */
-    public function findProductListCollectionByIdMerchantRelationship(int $idMerchantRelationship): ProductListCollectionTransfer
-    {
-        /** @var \Orm\Zed\ProductList\Persistence\SpyProductList[] $productListEntities */
-        $productListEntities = $this->getFactory()
-            ->getProductListQuery()
-            ->filterByFkMerchantRelationship($idMerchantRelationship)
-            ->find();
-
-        $merchantRelationshipProductListMapper = $this->getFactory()->createMerchantRelationshipProductListMapper();
-        $productListCollectionTransfer = $merchantRelationshipProductListMapper->mapProductListCollection(
-            $productListEntities,
-            new ProductListCollectionTransfer()
-        );
-
-        return $productListCollectionTransfer;
-    }
 }

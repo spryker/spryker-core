@@ -17,11 +17,4 @@ interface MerchantRelationshipProductListRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
      */
     public function getProductListCollectionByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): ProductListCollectionTransfer;
-
-    /**
-     * @param int $idMerchantRelationship
-     *
-     * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
-     */
-    public function findProductListCollectionByIdMerchantRelationship(int $idMerchantRelationship): ProductListCollectionTransfer;
 }

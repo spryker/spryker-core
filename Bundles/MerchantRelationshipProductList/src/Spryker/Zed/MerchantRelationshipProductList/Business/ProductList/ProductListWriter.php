@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductList\Business\ProductList;
 
-use Generated\Shared\Transfer\ProductListTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListEntityManagerInterface;
 
 class ProductListWriter implements ProductListWriterInterface
@@ -15,28 +15,28 @@ class ProductListWriter implements ProductListWriterInterface
     /**
      * @var \Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListEntityManagerInterface
      */
-    protected $entityManager;
+    protected $merchantRelationshipProductListEntityManager;
 
     /**
-     * @param \Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListEntityManagerInterface $merchantRelationshipProductListEntityManager
      */
-    public function __construct(MerchantRelationshipProductListEntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
+    public function __construct(
+        MerchantRelationshipProductListEntityManagerInterface $merchantRelationshipProductListEntityManager
+    ) {
+        $this->merchantRelationshipProductListEntityManager = $merchantRelationshipProductListEntityManager;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListTransfer
+     * @return void
      */
-    public function clearMerchantRelationshipFromProductList(ProductListTransfer $productListTransfer): ProductListTransfer
-    {
-        $productListTransfer->requireIdProductList();
+    public function clearMerchantRelationshipFromProductLists(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer
+    ): void {
+        $merchantRelationshipTransfer->requireIdMerchantRelationship();
 
-        $this->entityManager->clearMerchantRelationshipFromProductList($productListTransfer);
-        $productListTransfer->setFkMerchantRelationship(null);
-
-        return $productListTransfer;
+        $this->merchantRelationshipProductListEntityManager
+            ->clearMerchantRelationshipFromProductLists($merchantRelationshipTransfer);
     }
 }

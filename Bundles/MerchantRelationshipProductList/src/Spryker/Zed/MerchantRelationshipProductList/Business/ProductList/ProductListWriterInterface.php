@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductList\Business\ProductList;
 
-use Generated\Shared\Transfer\ProductListTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 interface ProductListWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListTransfer
+     * @return void
      */
-    public function clearMerchantRelationshipFromProductList(ProductListTransfer $productListTransfer): ProductListTransfer;
+    public function clearMerchantRelationshipFromProductLists(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer
+    ): void;
 }

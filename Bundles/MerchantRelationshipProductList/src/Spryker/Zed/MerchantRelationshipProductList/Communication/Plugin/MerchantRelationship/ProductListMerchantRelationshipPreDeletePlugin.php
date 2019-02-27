@@ -19,6 +19,9 @@ class ProductListMerchantRelationshipPreDeletePlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritdoc}
+     * - Finds product lists by merchant relationship.
+     * - Does nothing if the relationships are not found.
+     * - Removes merchant relationship from found product list.
      *
      * @api
      *
@@ -28,14 +31,6 @@ class ProductListMerchantRelationshipPreDeletePlugin extends AbstractPlugin impl
      */
     public function execute(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
     {
-        $productListCollection = $this->getFacade()->findProductListCollectionByMerchantRelationship($merchantRelationshipTransfer);
-
-        if (!$productListCollection->getProductLists()->count()) {
-            return;
-        }
-
-        foreach ($productListCollection->getProductLists() as $productListTransfer) {
-            $this->getFacade()->clearMerchantRelationshipFromProductList($productListTransfer);
-        }
+        $this->getFacade()->clearMerchantRelationshipFromProductLists($merchantRelationshipTransfer);
     }
 }
