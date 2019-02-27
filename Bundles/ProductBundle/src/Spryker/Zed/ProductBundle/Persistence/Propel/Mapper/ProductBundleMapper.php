@@ -8,17 +8,16 @@
 namespace Spryker\Zed\ProductBundle\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductForBundleTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductBundleMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $productBundleEntities
+     * @param \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $productBundleEntities
      *
      * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
     public function mapProductBundleEntitiesToProductForBundleTransfers(
-        ObjectCollection $productBundleEntities
+        array $productBundleEntities
     ): array {
         $productForBundleTransfers = [];
         /** @var \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle $productBundleEntity */
