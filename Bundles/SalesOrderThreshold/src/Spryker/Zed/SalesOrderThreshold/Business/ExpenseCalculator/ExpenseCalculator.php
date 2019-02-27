@@ -178,7 +178,7 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
             ->setUnitPriceToPayAggregation($expensePrice)
             ->setSumPriceToPayAggregation($expensePrice)
             ->setTaxRate($this->taxRateReader->getSalesOrderThresholdTaxRate())
-            ->setQuantity(1);
+            ->setQuantity(1.0);
 
         if ($priceMode === SalesOrderThresholdConfig::PRICE_MODE_NET) {
             $expenseTransfer->setUnitGrossPrice(0);
