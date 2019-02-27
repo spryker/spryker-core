@@ -61,16 +61,6 @@ class ProductSetToUrlBridge implements ProductSetToUrlInterface
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return bool
-     */
-    public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool
-    {
-        return $this->urlFacade->hasUrlCaseInsensitive($urlTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
      * @return void
      */
     public function activateUrl(UrlTransfer $urlTransfer)

@@ -46,13 +46,6 @@ interface ProductSetToUrlInterface
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return bool
-     */
-    public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool;
-
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
      * @return void
      */
     public function deactivateUrl(UrlTransfer $urlTransfer);
