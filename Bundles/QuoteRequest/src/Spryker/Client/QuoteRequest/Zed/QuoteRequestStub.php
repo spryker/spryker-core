@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
 
 class QuoteRequestStub implements QuoteRequestStubInterface
@@ -74,6 +76,22 @@ class QuoteRequestStub implements QuoteRequestStubInterface
         );
 
         return $quoteRequestCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer
+     */
+    public function getQuoteRequestVersionCollectionByFilter(QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer): QuoteRequestVersionCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer $quoteRequestVersionCollectionTransfer */
+        $quoteRequestVersionCollectionTransfer = $this->zedRequestClient->call(
+            '/quote-request/gateway/get-quote-request-version-collection-by-filter',
+            $quoteRequestVersionFilterTransfer
+        );
+
+        return $quoteRequestVersionCollectionTransfer;
     }
 
     /**
