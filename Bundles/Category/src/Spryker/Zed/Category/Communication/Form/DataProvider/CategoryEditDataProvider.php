@@ -68,7 +68,7 @@ class CategoryEditDataProvider
     {
         $categoryTransfer = $this->categoryFacade->findCategoryById($this->getIdCategory());
 
-        $this->addMissedLocalizedAttributes($categoryTransfer);
+        $categoryTransfer = $this->addLocalizedAttributeTransfers($categoryTransfer);
 
         return $categoryTransfer;
     }
