@@ -174,7 +174,7 @@ class CategoryEditDataProvider
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    protected function addMissedLocalizedAttributes(CategoryTransfer $categoryTransfer): CategoryTransfer
+    protected function addLocalizedAttributeTransfers(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         $categoryLocaleIds = [];
 
