@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\GlossaryStorage;
 
+use Spryker\Shared\GlossaryStorage\GlossaryStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class GlossaryStorageConfig extends AbstractBundleConfig
@@ -16,7 +17,7 @@ class GlossaryStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return true;
+        return $this->get(GlossaryStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 
     /**

@@ -35,4 +35,14 @@ class ProductGroupStorageConstants
      * @api
      */
     public const PRODUCT_GROUP_RESOURCE_NAME = 'product_abstract_group';
+
+    /**
+     * Specification:
+     * - Enables/disables storage synchronization.
+     *
+     * @api
+     *
+     * @see \Spryker\Shared\Synchronization\SynchronizationConstants::STORAGE_SYNC_ENABLED
+     */
+    public const STORAGE_SYNC_ENABLED = 'SYNCHRONIZATION:STORAGE_SYNC_ENABLED';
 }

@@ -49,4 +49,14 @@ interface PriceProductStorageConstants
      *  - Default Price Dimension name.
      */
     public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
+
+    /**
+     * Specification:
+     * - Enables/disables storage synchronization.
+     *
+     * @api
+     *
+     * @see \Spryker\Shared\Synchronization\SynchronizationConstants::STORAGE_SYNC_ENABLED
+     */
+    public const STORAGE_SYNC_ENABLED = 'SYNCHRONIZATION:STORAGE_SYNC_ENABLED';
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOptionStorage;
 
+use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductOptionStorageConfig extends AbstractBundleConfig
@@ -16,7 +17,7 @@ class ProductOptionStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return true;
+        return $this->get(ProductOptionStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 
     /**

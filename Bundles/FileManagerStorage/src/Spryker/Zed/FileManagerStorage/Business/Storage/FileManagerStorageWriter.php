@@ -40,18 +40,26 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     protected $localeFacade;
 
     /**
+     * @var bool
+     */
+    protected $isSendingToQueue;
+
+    /**
      * @param \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageEntityManagerInterface $entityManager
      * @param \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageRepositoryInterface $repository
      * @param \Spryker\Zed\FileManagerStorage\Dependency\Facade\FileManagerStorageToLocaleFacadeInterface $localeFacade
+     * @param bool $isSendingToQueue
      */
     public function __construct(
         FileManagerStorageEntityManagerInterface $entityManager,
         FileManagerStorageRepositoryInterface $repository,
-        FileManagerStorageToLocaleFacadeInterface $localeFacade
+        FileManagerStorageToLocaleFacadeInterface $localeFacade,
+        bool $isSendingToQueue = true
     ) {
         $this->entityManager = $entityManager;
         $this->repository = $repository;
         $this->localeFacade = $localeFacade;
+        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
@@ -110,6 +118,8 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     protected function executeUnpublishTransaction(ArrayObject $fileStorageTransfers)
     {
         foreach ($fileStorageTransfers as $fileStorageTransfer) {
+            $fileStorageTransfer->setIsSendingToQueue($this->isSendingToQueue);
+
             if ($this->entityManager->deleteFileStorage($fileStorageTransfer) === false) {
                 throw new FileStorageNotFoundException(sprintf('Target file storage entry with id %s not found', $fileStorageTransfer->getIdFileStorage()));
             }
@@ -159,6 +169,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
         $fileStorageTransfer->setData(
             $this->mapToFileStorageDataTransfer($fileTransfer, $localeTransfer)
         );
+        $fileStorageTransfer->setIsSendingToQueue($this->isSendingToQueue);
 
         $this->entityManager->saveFileStorage($fileStorageTransfer);
     }
@@ -181,6 +192,8 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
 
         $fileStorageDataTransfer = $this->mapToFileStorageDataTransfer($fileTransfer, $localeTransfer);
         $fileStorageTransfer->setData($fileStorageDataTransfer);
+        $fileStorageTransfer->setIsSendingToQueue($this->isSendingToQueue);
+
         $this->entityManager->saveFileStorage($fileStorageTransfer);
     }
 

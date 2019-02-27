@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductReviewSearch;
 
+use Spryker\Shared\ProductReviewSearch\ProductReviewSearchConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductReviewSearchConfig extends AbstractBundleConfig
@@ -16,7 +17,7 @@ class ProductReviewSearchConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return true;
+        return $this->get(ProductReviewSearchConstants::SEARCH_SYNC_ENABLED, true);
     }
 
     /**

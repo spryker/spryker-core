@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockStorage;
 
+use Spryker\Shared\CmsBlockStorage\CmsBlockStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsBlockStorageConfig extends AbstractBundleConfig
@@ -16,7 +17,7 @@ class CmsBlockStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return true;
+        return $this->get(CmsBlockStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 
     /**

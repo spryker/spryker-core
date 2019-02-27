@@ -35,4 +35,14 @@ class CategoryPageSearchConstants
      * @api
      */
     public const CATEGORY_NODE_RESOURCE_NAME = 'category_node';
+
+    /**
+     * Specification:
+     * - Enables/disables search synchronization.
+     *
+     * @api
+     *
+     * @see \Spryker\Shared\Synchronization\SynchronizationConstants::SEARCH_SYNC_ENABLED
+     */
+    public const SEARCH_SYNC_ENABLED = 'SYNCHRONIZATION:SEARCH_SYNC_ENABLED';
 }

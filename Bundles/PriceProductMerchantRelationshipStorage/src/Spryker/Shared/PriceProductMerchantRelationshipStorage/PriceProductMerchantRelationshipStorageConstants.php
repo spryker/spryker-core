@@ -48,4 +48,14 @@ class PriceProductMerchantRelationshipStorageConstants
      * @uses \Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT
      */
     public const COL_FK_COMPANY_BUSINESS_UNIT = 'spy_merchant_relationship_to_company_business_unit.fk_company_business_unit';
+
+    /**
+     * Specification:
+     * - Enables/disables storage synchronization.
+     *
+     * @api
+     *
+     * @see \Spryker\Shared\Synchronization\SynchronizationConstants::STORAGE_SYNC_ENABLED
+     */
+    public const STORAGE_SYNC_ENABLED = 'SYNCHRONIZATION:STORAGE_SYNC_ENABLED';
 }

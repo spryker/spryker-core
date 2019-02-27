@@ -26,7 +26,8 @@ class FileManagerStorageBusinessFactory extends AbstractBusinessFactory
         return new FileManagerStorageWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getConfig()->isSendingToQueue()
         );
     }
 

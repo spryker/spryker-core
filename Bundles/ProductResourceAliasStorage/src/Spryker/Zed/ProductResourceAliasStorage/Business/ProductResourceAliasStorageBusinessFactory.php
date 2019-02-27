@@ -28,7 +28,8 @@ class ProductResourceAliasStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAbstractStorageWriter(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getConfig()->isSendingToQueue()
         );
     }
 
@@ -39,7 +40,8 @@ class ProductResourceAliasStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductConcreteStorageWriter(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getConfig()->isSendingToQueue()
         );
     }
 }

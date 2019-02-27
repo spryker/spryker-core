@@ -35,4 +35,14 @@ class ProductSetStorageConstants
      * @api
      */
     public const PRODUCT_SET_RESOURCE_NAME = 'product_set';
+
+    /**
+     * Specification:
+     * - Enables/disables storage synchronization.
+     *
+     * @api
+     *
+     * @see \Spryker\Shared\Synchronization\SynchronizationConstants::STORAGE_SYNC_ENABLED
+     */
+    public const STORAGE_SYNC_ENABLED = 'SYNCHRONIZATION:STORAGE_SYNC_ENABLED';
 }

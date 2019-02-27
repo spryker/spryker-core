@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductSearchConfigStorage;
 
+use Spryker\Shared\ProductSearchConfigStorage\ProductSearchConfigStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductSearchConfigStorageConfig extends AbstractBundleConfig
@@ -16,7 +17,7 @@ class ProductSearchConfigStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return true;
+        return $this->get(ProductSearchConfigStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 
     /**

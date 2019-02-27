@@ -35,4 +35,14 @@ class CmsPageSearchConstants
      * @api
      */
     public const CMS_PAGE_RESOURCE_NAME = 'cms_page_search';
+
+    /**
+     * Specification:
+     * - Enables/disables search synchronization.
+     *
+     * @api
+     *
+     * @see \Spryker\Shared\Synchronization\SynchronizationConstants::SEARCH_SYNC_ENABLED
+     */
+    public const SEARCH_SYNC_ENABLED = 'SYNCHRONIZATION:SEARCH_SYNC_ENABLED';
 }

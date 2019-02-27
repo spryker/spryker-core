@@ -7,23 +7,24 @@
 
 namespace Spryker\Zed\ProductDiscontinuedStorage;
 
+use Spryker\Shared\ProductDiscontinuedStorage\ProductDiscontinuedStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductDiscontinuedStorageConfig extends AbstractBundleConfig
 {
-    /**
-     * @return bool
-     */
-    public function isSendingToQueue(): bool
-    {
-        return true;
-    }
-
     /**
      * @return string|null
      */
     public function getProductDiscontinuedSynchronizationPoolName(): ?string
     {
         return null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSendingToQueue(): bool
+    {
+        return $this->get(ProductDiscontinuedStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 }

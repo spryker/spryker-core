@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelStorage;
 
+use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductLabelStorageConfig extends AbstractBundleConfig
@@ -16,7 +17,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return true;
+        return $this->get(ProductLabelStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 
     /**

@@ -35,4 +35,14 @@ class CmsBlockStorageConstants
      * @api
      */
     public const CMS_BLOCK_RESOURCE_NAME = 'cms_block';
+
+    /**
+     * Specification:
+     * - Enables/disables storage synchronization.
+     *
+     * @api
+     *
+     * @see \Spryker\Shared\Synchronization\SynchronizationConstants::STORAGE_SYNC_ENABLED
+     */
+    public const STORAGE_SYNC_ENABLED = 'SYNCHRONIZATION:STORAGE_SYNC_ENABLED';
 }
