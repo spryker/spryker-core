@@ -56,8 +56,8 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
     {
         $existedOrderLines = new ArrayObject();
         foreach ($itemTransfers as $itemTransfer) {
-            $itemTransfer->requireSku();
-            if (isset($existedOrderLines[$itemTransfer->getSku()])) {
+            $itemTransfer->requireGroupKey();
+            if (isset($existedOrderLines[$itemTransfer->getGroupKey()])) {
                 $existedOrderLines = $this->changeQuantityOfUniqueItem($existedOrderLines, $itemTransfer);
                 continue;
             }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
@@ -63,8 +64,8 @@ class ShipmentMapper implements ShipmentMapperInterface
      */
     public function mapShipmentEntityToShipmentTransfer(ShipmentTransfer $shipmentTransfer, SpySalesShipment $salesShipmentEntity): ShipmentTransfer
     {
-        $shipmentTransfer->fromArray($salesShipmentEntity->toArray());
+        $shipmentTransfer->fromArray($salesShipmentEntity->toArray(), true);
 
-        return $salesShipmentEntity;
+        return $shipmentTransfer;
     }
 }
