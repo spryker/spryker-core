@@ -47,8 +47,6 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
                         $this->createItemIsNotActiveMessageTransfer($itemTransfer->getSku())
                     )
                     ->setIsSuccess(false);
-
-                return $cartPreCheckResponseTransfer;
             }
         }
 

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductBundle\Persistence;
 
-use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -30,17 +29,9 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             ->endUse()
             ->find();
 
-        $productForBundleTransfers = [];
-
-        $productBundleMapper = $this->getFactory()->createProductBundleMapper();
-        /** @var \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle $productBundleEntity */
-        foreach ($productBundleEntities as $productBundleEntity) {
-            $productForBundleTransfers[] = $productBundleMapper
-                ->mapProductBundleEntityToProductForBundleTransfer(
-                    $productBundleEntity,
-                    new ProductForBundleTransfer()
-                );
-        }
+        $productForBundleTransfers = $this->getFactory()
+            ->createProductBundleMapper()
+            ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities);
 
         return $productForBundleTransfers;
     }

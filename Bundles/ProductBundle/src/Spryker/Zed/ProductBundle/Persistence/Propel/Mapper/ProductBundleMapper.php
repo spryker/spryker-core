@@ -8,23 +8,27 @@
 namespace Spryker\Zed\ProductBundle\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductForBundleTransfer;
-use Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductBundleMapper
 {
     /**
-     * @param \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle $productBundleEntity
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer $productForBundleTransfer
+     * @param \Propel\Runtime\Collection\ObjectCollection $productBundleEntities
      *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-    public function mapProductBundleEntityToProductForBundleTransfer(
-        SpyProductBundle $productBundleEntity,
-        ProductForBundleTransfer $productForBundleTransfer
-    ): ProductForBundleTransfer {
-        return $productForBundleTransfer->fromArray(
-            $productBundleEntity->getSpyProductRelatedByFkBundledProduct()->toArray(),
-            true
-        );
+    public function mapProductBundleEntitiesToProductForBundleTransfers(
+        ObjectCollection $productBundleEntities
+    ): array {
+        $productForBundleTransfers = [];
+        /** @var \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle $productBundleEntity */
+        foreach ($productBundleEntities as $productBundleEntity) {
+            $productForBundleTransfers[] = (new ProductForBundleTransfer())->fromArray(
+                $productBundleEntity->getSpyProductRelatedByFkBundledProduct()->toArray(),
+                true
+            );
+        }
+
+        return $productForBundleTransfers;
     }
 }
