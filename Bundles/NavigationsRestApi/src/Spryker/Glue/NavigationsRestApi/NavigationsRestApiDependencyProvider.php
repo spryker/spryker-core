@@ -18,6 +18,8 @@ class NavigationsRestApiDependencyProvider extends AbstractBundleDependencyProvi
 {
     public const CLIENT_NAVIGATION_STORAGE = 'CLIENT_NAVIGATION_STORAGE';
 
+    public const PLUGINS_NAVIGATIONS_RESOURCE_EXPANDER = 'PLUGINS_NAVIGATIONS_RESOURCE_EXPANDER';
+
     /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
@@ -27,6 +29,7 @@ class NavigationsRestApiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = parent::provideDependencies($container);
         $container = $this->addNavigationStorageClient($container);
+        $container = $this->addNavigationsResourceExpanderPlugins($container);
 
         return $container;
     }
@@ -45,5 +48,27 @@ class NavigationsRestApiDependencyProvider extends AbstractBundleDependencyProvi
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    public function addNavigationsResourceExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_NAVIGATIONS_RESOURCE_EXPANDER] = function () {
+            return $this->getNavigationsResourceExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\NavigationsRestApiExtension\Dependency\Plugin\NavigationsResourceExpanderPluginInterface[]
+     */
+    protected function getNavigationsResourceExpanderPlugins(): array
+    {
+        return [];
     }
 }

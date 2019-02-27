@@ -37,18 +37,26 @@ class NavigationReader implements NavigationReaderInterface
     protected $restResourceBuilder;
 
     /**
+     * @var \Spryker\Glue\NavigationsRestApiExtension\Dependency\Plugin\NavigationsResourceExpanderPluginInterface[]
+     */
+    protected $navigationsResourceExpanderPlugins;
+
+    /**
      * @param \Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToNavigationStorageClientInterface $navigationStorageClient
      * @param \Spryker\Glue\NavigationsRestApi\Processor\Mapper\NavigationMapperInterface $navigationMapper
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\NavigationsRestApiExtension\Dependency\Plugin\NavigationsResourceExpanderPluginInterface[] $navigationsResourceExpanderPlugins
      */
     public function __construct(
         NavigationsRestApiToNavigationStorageClientInterface $navigationStorageClient,
         NavigationMapperInterface $navigationMapper,
-        RestResourceBuilderInterface $restResourceBuilder
+        RestResourceBuilderInterface $restResourceBuilder,
+        array $navigationsResourceExpanderPlugins
     ) {
         $this->navigationStorageClient = $navigationStorageClient;
         $this->navigationMapper = $navigationMapper;
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->navigationsResourceExpanderPlugins = $navigationsResourceExpanderPlugins;
     }
 
     /**
@@ -88,28 +96,48 @@ class NavigationReader implements NavigationReaderInterface
             return null;
         }
 
-        return $this->buildNavigationResource($navigationStorageTransfer);
+        return $this->buildNavigationResource($navigationStorageTransfer, $restRequest);
     }
 
     /**
      * @param \Generated\Shared\Transfer\NavigationStorageTransfer $navigationStorageTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     protected function buildNavigationResource(
-        NavigationStorageTransfer $navigationStorageTransfer
+        NavigationStorageTransfer $navigationStorageTransfer,
+        RestRequestInterface $restRequest
     ): RestResourceInterface {
         $restNavigationAttributesTransfer = $this->navigationMapper
             ->mapNavigationStorageTransferToRestNavigationAttributesTransfer(
                 $navigationStorageTransfer,
                 new RestNavigationAttributesTransfer()
             );
+        $restNavigationAttributesTransfer = $this->expandRestNavigationsAttributesTransfer($restNavigationAttributesTransfer, $restRequest);
 
         return $this->restResourceBuilder->createRestResource(
             NavigationsRestApiConfig::RESOURCE_NAVIGATIONS,
             $navigationStorageTransfer->getKey(),
             $restNavigationAttributesTransfer
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestNavigationAttributesTransfer $restNavigationAttributesTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\RestNavigationAttributesTransfer
+     */
+    protected function expandRestNavigationsAttributesTransfer(
+        RestNavigationAttributesTransfer $restNavigationAttributesTransfer,
+        RestRequestInterface $restRequest
+    ): RestNavigationAttributesTransfer {
+        foreach ($this->navigationsResourceExpanderPlugins as $navigationsResourceExpanderPlugin) {
+            $restNavigationAttributesTransfer = $navigationsResourceExpanderPlugin->expand($restNavigationAttributesTransfer, $restRequest);
+        }
+
+        return $restNavigationAttributesTransfer;
     }
 
     /**

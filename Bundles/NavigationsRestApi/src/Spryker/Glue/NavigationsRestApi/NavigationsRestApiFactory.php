@@ -24,7 +24,8 @@ class NavigationsRestApiFactory extends AbstractFactory
         return new NavigationReader(
             $this->getNavigationStorageClient(),
             $this->createNavigationMapper(),
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
+            $this->getNavigationsResourceExpanderPlugins()
         );
     }
 
@@ -42,5 +43,13 @@ class NavigationsRestApiFactory extends AbstractFactory
     public function getNavigationStorageClient(): NavigationsRestApiToNavigationStorageClientInterface
     {
         return $this->getProvidedDependency(NavigationsRestApiDependencyProvider::CLIENT_NAVIGATION_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\NavigationsRestApiExtension\Dependency\Plugin\NavigationsResourceExpanderPluginInterface[]
+     */
+    public function getNavigationsResourceExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(NavigationsRestApiDependencyProvider::PLUGINS_NAVIGATIONS_RESOURCE_EXPANDER);
     }
 }
