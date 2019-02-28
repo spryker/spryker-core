@@ -110,7 +110,7 @@ class OrderItemMatrix
      *
      * @return string
      */
-    protected function formatElement(array $gridInput, $idProcess, $idState)
+    protected function formatElement(array $gridInput, int $idProcess, int $idState): string
     {
         $grid = array_replace([
             'day' => 0,
