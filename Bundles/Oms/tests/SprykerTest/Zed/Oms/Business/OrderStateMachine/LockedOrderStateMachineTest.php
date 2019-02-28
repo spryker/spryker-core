@@ -34,7 +34,7 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
 class LockedOrderStateMachineTest extends Unit
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $stateMachineMock;
 
@@ -44,22 +44,22 @@ class LockedOrderStateMachineTest extends Unit
     protected $lockedStateMachine;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $omsQueryContainerMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $omsQueryMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $omsStateMachineLockMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $triggerLockerMock;
 
@@ -276,7 +276,7 @@ class LockedOrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createStateMachineMock()
     {
@@ -293,7 +293,7 @@ class LockedOrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Lock\TriggerLocker|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Oms\Business\Lock\TriggerLocker|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createTriggerLockerMock()
     {
@@ -306,7 +306,7 @@ class LockedOrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createOmsQueryContainerMock()
     {
@@ -318,7 +318,7 @@ class LockedOrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createOmsQueryMock()
     {
@@ -327,7 +327,7 @@ class LockedOrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createOmsStateMachineLockEntityMock()
     {

@@ -301,6 +301,7 @@ class CustomerForm extends AbstractType
             new NotBlank(),
             new Required(),
             new Email(),
+            new Length(['max' => 100]),
         ];
 
         $customerQuery = $this->getQueryContainer()->queryCustomers();
