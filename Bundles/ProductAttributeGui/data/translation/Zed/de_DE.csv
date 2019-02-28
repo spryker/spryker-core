@@ -1,0 +1,50 @@
+"1. General Information","1. Allgemeine Informationen"
+"2. Translations","2. Übersetzungen"
+Add,Hinzufügen
+"Add Attribute","Attribut hinzufügen"
+"Allow input any value other than predefined ones","Erlaubt die Eingabe eines anderen als der vordefinierten Werte"
+"Attribute ID",Attribut-ID
+"Attribute key",Attributschlüssel
+"Attribute Key",Attributschlüssel
+"Attribute list",Attributliste
+"Attribute name translation","Übersetzung Attributnamen"
+"Attributes and their values are used by the backoffice application. They are unique and cannot contain special characters.","Attribute und ihre Werte werden von der Backoffice Application verwendet. Sie sind einmalig und dürfen keine Sonderzeichen enthalten."
+Back,Zurück
+"Back to List","Zurück zu Liste"
+"Back to Product Abstract","Zurück zu Produktübersicht"
+"Back to Product List","Zurück zu Produktliste"
+"Create a Product Attribute","Produktattribut erstellen"
+"Create Product Attribute","Produktattribut erstellen"
+date,date
+datetime,datetime
+Edit,Bearbeiten
+"Edit Product","Produkt bearbeiten"
+"Edit Product Abstract","Abstraktes Produkt bearbeiten"
+float,float
+"General Information","Allgemeine Informationen"
+"Input type",Eingabe-Typ
+"Manage Attributes for Product","Attribute für das Produkt verwalten"
+"Manage Attributes for Product Abstract","Attribute für abstraktes Produkt verwalten"
+number,number
+"Predefined value translations","Vordefinierte Wertübersetzungen"
+"Predefined values","Vordefinierte Werte"
+"Product Abstract Attributes Management","Verwaltung der abstrakten Produktattribute"
+"Product abstract attributes saved","Attribute des abstrakten Produkts gespeichert"
+"Product attribute was created successfully.","Produktattribut wurde erfolgreich erstellt."
+"Product attribute was not created.","Produktattribut wurde nicht erstellt."
+"Product attribute was updated successfully.","Produktattribut wurde erfolgreich aktualisiert."
+"Product Attributes",Produktattribute
+"Product Attributes Management","Verwaltung der Produktattribute"
+"Product attributes saved","Produktattribute gespeichert"
+Save,Speichern
+select,select
+"Super attribute",Superattribute
+text,text
+textarea,textarea
+time,time
+"Translate predefined values","Voreingestellte Werte übersetzen"
+"Translation was updated successfully.","Übersetzung wurde erfolgreich aktualisiert."
+"Type first three letters of an existing attribute key for suggestions.","Geben Sie die ersten drei Buchstaben eines bestehenden Attributschlüssels ein, um Vorschläge zu erhalten."
+Values,Werte
+"View Attribute","Attribute ansehen"
+"You can add new values by pressing ""Enter"" after each element","Sie können neue Werte hinzufügen, indem Sie nach jedem Element ""Enter"" drücken"

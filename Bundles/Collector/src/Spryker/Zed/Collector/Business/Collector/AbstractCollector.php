@@ -327,14 +327,14 @@ abstract class AbstractCollector
         if (!($this->touchQueryContainer instanceof TouchQueryContainerInterface)) {
             throw new DependencyException(sprintf(
                 'touchQueryContainer does not implement TouchQueryContainerInterface in %s',
-                get_class($this)
+                static::class
             ));
         }
 
         if (!($this->queryBuilder instanceof AbstractCollectorQuery)) {
             throw new DependencyException(sprintf(
                 'queryBuilder does not implement AbstractCollectorQuery in %s',
-                get_class($this)
+                static::class
             ));
         }
     }

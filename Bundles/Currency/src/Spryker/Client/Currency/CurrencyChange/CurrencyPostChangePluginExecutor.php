@@ -43,7 +43,7 @@ class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecut
     {
         foreach ($this->currencyPostChangePlugins as $currencyPostChangePlugins) {
             if (!$currencyPostChangePlugins->execute($currency)) {
-                $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+                $this->zedRequestClient->addResponseMessagesToMessenger();
 
                 return false;
             }

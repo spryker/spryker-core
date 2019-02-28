@@ -18,6 +18,7 @@ interface CompanyUserFacadeInterface
 {
     /**
      * Specification:
+     * - Executes CompanyUserSavePreCheckPluginInterface check plugins before company user create.
      * - Creates a company user
      *
      * @api
@@ -30,6 +31,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Executes CompanyUserSavePreCheckPluginInterface check plugins before initial company user create.
      * - Creates an initial company user
      *
      * @api
@@ -42,6 +44,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Executes CompanyUserSavePreCheckPluginInterface check plugins before company user update.
      * - Updates a company user
      *
      * @api
@@ -93,7 +96,23 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves company users collection.
+     * - Retrieves active company users collection by customer reference.
+     * - Checks activity flag in a related company and company user.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getActiveCompanyUsersByCustomerReference(
+        CustomerTransfer $customerTransfer
+    ): CompanyUserCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves company user collection according provided filter.
+     * - Ignores company users with anonymised customers.
      *
      * @api
      *
@@ -182,4 +201,17 @@ interface CompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Executes CompanyUserPreDeletePluginInterface plugins before delete company user.
+     * - Deletes a company user.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }

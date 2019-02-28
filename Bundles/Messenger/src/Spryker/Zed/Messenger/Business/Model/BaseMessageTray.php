@@ -7,21 +7,19 @@
 
 namespace Spryker\Zed\Messenger\Business\Model;
 
-use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
-
 class BaseMessageTray
 {
     /**
-     * @var \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface
+     * @var \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[]
      */
-    protected $translationPlugin;
+    protected $translationPlugins;
 
     /**
-     * @param \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface $translationPlugin
+     * @param \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[] $translationPlugins
      */
-    public function __construct(TranslationPluginInterface $translationPlugin)
+    public function __construct(array $translationPlugins)
     {
-        $this->translationPlugin = $translationPlugin;
+        $this->translationPlugins = $translationPlugins;
     }
 
     /**
@@ -30,13 +28,19 @@ class BaseMessageTray
      *
      * @return string
      */
-    protected function translate($keyName, array $data = [])
+    protected function translate($keyName, array $data = []): string
     {
-        $translation = $keyName;
-        if ($this->translationPlugin->hasKey($keyName)) {
-            $translation = $this->translationPlugin->translate($keyName, $data);
+        foreach ($this->translationPlugins as $translationPlugin) {
+            if ($translationPlugin->hasKey($keyName)) {
+                return $translationPlugin->translate($keyName, $data);
+            }
         }
 
-        return $translation;
+        if ($this->translationPlugins) {
+            $translationPlugin = end($this->translationPlugins);
+            return $translationPlugin->translate($keyName, $data);
+        }
+
+        return $keyName;
     }
 }

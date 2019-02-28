@@ -19,9 +19,9 @@ interface RestResponseInterface
     /**
      * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $error
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     * @return $this
      */
-    public function addError(RestErrorMessageTransfer $error): self;
+    public function addError(RestErrorMessageTransfer $error);
 
     /**
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer[]
@@ -32,9 +32,9 @@ interface RestResponseInterface
      * @param string $name
      * @param string $uri
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     * @return $this
      */
-    public function addLink(string $name, string $uri): self;
+    public function addLink(string $name, string $uri);
 
     /**
      * @return array
@@ -44,9 +44,9 @@ interface RestResponseInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     * @return $this
      */
-    public function addResource(RestResourceInterface $restResource): self;
+    public function addResource(RestResourceInterface $restResource);
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
@@ -71,17 +71,17 @@ interface RestResponseInterface
     /**
      * @param int $status
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     * @return $this
      */
-    public function setStatus(int $status): self;
+    public function setStatus(int $status);
 
     /**
      * @param string $key
      * @param string $value
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     * @return $this
      */
-    public function addHeader(string $key, string $value): self;
+    public function addHeader(string $key, string $value);
 
     /**
      * @return array

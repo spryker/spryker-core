@@ -49,7 +49,7 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
     public function validate(Request $request): ?RestErrorMessageTransfer
     {
@@ -109,7 +109,7 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
 
         $availableMethods = $this->resourceRouteLoader->getAvailableMethods(
             $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_TYPE),
-            $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE),
+            $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ALL_RESOURCES),
             $request
         );
 
