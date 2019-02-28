@@ -36,6 +36,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
 
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
+    public const SERVICE_PRODUCT_PACKAGING_UNIT = 'SERVICE_PRODUCT_PACKAGING_UNIT';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     /**
@@ -57,6 +58,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addSalesQuantityFacade($container);
 
         $container = $this->addUtilTextService($container);
+        $container = $this->addProductPackagingUnitService($container);
 
         return $container;
     }
@@ -73,6 +75,18 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addSalesOrderItemPropelQuery($container);
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductPackagingUnitService(Container $container): Container
+    {
+        $container[static::SERVICE_PRODUCT_PACKAGING_UNIT] = function (Container $container) {
+            return $container->getLocator()->productPackagingUnit()->service();
+        };
     }
 
     /**

@@ -8,10 +8,24 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface;
 
 class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroupKeyGeneratorInterface
 {
     protected const AMOUNT_GROUP_KEY_FORMAT = '%s_amount_%s_sales_unit_id_%s';
+
+    /**
+     * @var \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface
+     */
+    protected $service;
+
+    /**
+     * @param \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface $service
+     */
+    public function __construct(ProductPackagingUnitServiceInterface $service)
+    {
+        $this->service = $service;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -29,7 +43,7 @@ class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroup
         return sprintf(
             static::AMOUNT_GROUP_KEY_FORMAT,
             $itemTransfer->getGroupKey(),
-            $amountPerQuantity,
+            $this->service->round($amountPerQuantity),
             $itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit()
         );
     }

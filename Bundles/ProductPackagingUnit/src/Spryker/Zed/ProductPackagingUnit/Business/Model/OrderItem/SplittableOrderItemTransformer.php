@@ -11,9 +11,23 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface;
 
 class SplittableOrderItemTransformer implements SplittableOrderItemTransformerInterface
 {
+    /**
+     * @var \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface
+     */
+    protected $service;
+
+    /**
+     * @param \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface $service
+     */
+    public function __construct(ProductPackagingUnitServiceInterface $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * @see \Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer
      *
@@ -43,8 +57,9 @@ class SplittableOrderItemTransformer implements SplittableOrderItemTransformerIn
     {
         $transformedItemTransfer = new ItemTransfer();
         $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
-        $transformedItemTransfer->setQuantity(1);
+        $transformedItemTransfer->setQuantity(1.0);
         $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
+        $amountPerQuantity = $this->service->round($amountPerQuantity);
         $transformedItemTransfer->setAmount((int)$amountPerQuantity);
         $transformedProductOptions = new ArrayObject();
 
@@ -67,7 +82,7 @@ class SplittableOrderItemTransformer implements SplittableOrderItemTransformerIn
 
         $transformedProductOptionTransfer->fromArray($productOptionTransfer->toArray(), true);
         $transformedProductOptionTransfer
-            ->setQuantity(1);
+            ->setQuantity(1.0);
 
         return $transformedProductOptionTransfer;
     }

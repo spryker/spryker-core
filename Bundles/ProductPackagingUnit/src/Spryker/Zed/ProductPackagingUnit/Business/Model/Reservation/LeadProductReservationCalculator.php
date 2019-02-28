@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
@@ -24,15 +25,23 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
     protected $productPackagingUnitRepository;
 
     /**
+     * @var \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface
+     */
+    protected $service;
+
+    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface $omsFacade
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
+     * @param \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface $service
      */
     public function __construct(
         ProductPackagingUnitToOmsFacadeInterface $omsFacade,
-        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
+        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository,
+        ProductPackagingUnitServiceInterface $service
     ) {
         $this->omsFacade = $omsFacade;
         $this->productPackagingUnitRepository = $productPackagingUnitRepository;
+        $this->service = $service;
     }
 
     /**
@@ -51,6 +60,8 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
         $sumReservedLeadProductQuantity = $this->omsFacade
             ->sumReservedProductQuantitiesForSku($leadProductSku, $storeTransfer);
 
-        return $sumReservedLeadProductAmount + $sumReservedLeadProductQuantity;
+        $reservedAmount = $sumReservedLeadProductAmount + $sumReservedLeadProductQuantity;
+
+        return $this->service->round($reservedAmount);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
+use Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheck;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheckInterface;
@@ -185,7 +186,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingUnitCartPreCheck(
             $this->getAvailabilityFacade(),
-            $this->createProductPackagingUnitReader()
+            $this->createProductPackagingUnitReader(),
+            $this->getProductPackagingUnitService()
         );
     }
 
@@ -195,7 +197,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitCheckoutPreCheck(): ProductPackagingUnitCheckoutPreCheckInterface
     {
         return new ProductPackagingUnitCheckoutPreCheck(
-            $this->getAvailabilityFacade()
+            $this->getAvailabilityFacade(),
+            $this->getProductPackagingUnitService()
         );
     }
 
@@ -204,7 +207,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductPackagingUnitCartOperation(): ProductPackagingUnitCartOperationInterface
     {
-        return new ProductPackagingUnitCartOperation();
+        return new ProductPackagingUnitCartOperation($this->getProductPackagingUnitService());
     }
 
     /**
@@ -319,7 +322,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new LeadProductReservationCalculator(
             $this->getOmsFacade(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getProductPackagingUnitService()
         );
     }
 
@@ -329,7 +333,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createPriceChangeExpander(): PriceChangeExpanderInterface
     {
         return new PriceChangeExpander(
-            $this->createProductPackagingUnitReader()
+            $this->createProductPackagingUnitReader(),
+            $this->getProductPackagingUnitService()
         );
     }
 
@@ -346,7 +351,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductPackagingUnitGroupKeyGenerator(): ProductPackagingUnitGroupKeyGeneratorInterface
     {
-        return new ProductPackagingUnitGroupKeyGenerator();
+        return new ProductPackagingUnitGroupKeyGenerator($this->getProductPackagingUnitService());
     }
 
     /**
@@ -404,7 +409,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createSplittableOrderItemTransformer(): SplittableOrderItemTransformerInterface
     {
-        return new SplittableOrderItemTransformer();
+        return new SplittableOrderItemTransformer($this->getProductPackagingUnitService());
     }
 
     /**
@@ -415,5 +420,13 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new ProductPackagingUnitItemQuantityValidator(
             $this->getSalesQuantityFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface
+     */
+    public function getProductPackagingUnitService(): ProductPackagingUnitServiceInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::SERVICE_PRODUCT_PACKAGING_UNIT);
     }
 }

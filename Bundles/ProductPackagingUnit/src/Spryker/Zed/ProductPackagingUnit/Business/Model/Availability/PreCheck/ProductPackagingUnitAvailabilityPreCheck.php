@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
 use Traversable;
 
@@ -20,12 +21,20 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
     protected $availabilityFacade;
 
     /**
+     * @var \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface
+     */
+    protected $service;
+
+    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
+     * @param \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface $service
      */
     public function __construct(
-        ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
+        ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade,
+        ProductPackagingUnitServiceInterface $service
     ) {
         $this->availabilityFacade = $availabilityFacade;
+        $this->service = $service;
     }
 
     /**
@@ -72,17 +81,17 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
             }
         }
 
-        return $quantity;
+        return $this->service->round($quantity);
     }
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function isProductSellableForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): bool
+    protected function isProductSellableForStore(string $sku, float $quantity, StoreTransfer $storeTransfer): bool
     {
         return $this->availabilityFacade
             ->isProductSellableForStore($sku, $quantity, $storeTransfer);

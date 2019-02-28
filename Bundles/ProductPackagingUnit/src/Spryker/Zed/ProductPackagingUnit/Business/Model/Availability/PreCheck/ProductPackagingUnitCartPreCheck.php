@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
 
@@ -25,14 +26,21 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
     protected $productPackagingUnitReader;
 
     /**
+     * @var \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface
+     */
+    protected $service;
+
+    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
+     * @param \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface $service
      */
     public function __construct(
         ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade,
-        ProductPackagingUnitReaderInterface $productPackagingUnitReader
+        ProductPackagingUnitReaderInterface $productPackagingUnitReader,
+        ProductPackagingUnitServiceInterface $service
     ) {
-        parent::__construct($availabilityFacade);
+        parent::__construct($availabilityFacade, $service);
         $this->productPackagingUnitReader = $productPackagingUnitReader;
     }
 

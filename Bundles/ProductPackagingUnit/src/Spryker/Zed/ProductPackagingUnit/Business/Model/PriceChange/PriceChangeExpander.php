@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 
 class PriceChangeExpander implements PriceChangeExpanderInterface
@@ -25,12 +26,20 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
     protected $productPackagingUnitReader;
 
     /**
+     * @var \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface
+     */
+    protected $service;
+
+    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
+     * @param \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface $service
      */
     public function __construct(
-        ProductPackagingUnitReaderInterface $productPackagingUnitReader
+        ProductPackagingUnitReaderInterface $productPackagingUnitReader,
+        ProductPackagingUnitServiceInterface $service
     ) {
         $this->productPackagingUnitReader = $productPackagingUnitReader;
+        $this->service = $service;
     }
 
     /**
@@ -71,6 +80,7 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
             ->getDefaultAmount();
 
         $amountPerQuantity = (int)($itemTransfer->getAmount() / $itemTransfer->getQuantity());
+        $amountPerQuantity = $this->service->round($amountPerQuantity);
 
         if ($amountPerQuantity === $defaultAmount) {
             return $itemTransfer;

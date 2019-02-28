@@ -21,19 +21,19 @@ interface ProductPackagingUnitToAvailabilityFacadeInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    public function isProductSellableForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): bool;
+    public function isProductSellableForStore(string $sku, float $quantity, StoreTransfer $storeTransfer): bool;
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function saveProductAvailabilityForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): int;
+    public function saveProductAvailabilityForStore(string $sku, float $quantity, StoreTransfer $storeTransfer): int;
 }
