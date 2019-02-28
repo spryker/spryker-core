@@ -1,9 +1,14 @@
 {
   "name": "spryker/merchant-relationship-extension",
+  "type": "library",
   "description": "MerchantRelationshipExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
@@ -19,9 +24,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
   }
 }
