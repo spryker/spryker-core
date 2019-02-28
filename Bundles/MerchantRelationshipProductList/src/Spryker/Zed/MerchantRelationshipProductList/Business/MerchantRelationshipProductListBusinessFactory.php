@@ -14,6 +14,8 @@ use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductList
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListReaderInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriter;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriterInterface;
+use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToProductListFacadeInterface;
+use Spryker\Zed\MerchantRelationshipProductList\MerchantRelationshipProductListDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductList\MerchantRelationshipProductListConfig getConfig()
@@ -43,6 +45,17 @@ class MerchantRelationshipProductListBusinessFactory extends AbstractBusinessFac
      */
     public function createProductListWriter(): ProductListWriterInterface
     {
-        return new ProductListWriter($this->getEntityManager());
+        return new ProductListWriter(
+            $this->getRepository(),
+            $this->getProductListFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToProductListFacadeInterface
+     */
+    public function getProductListFacade(): MerchantRelationshipProductListToProductListFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantRelationshipProductListDependencyProvider::FACADE_PRODUCT_LIST);
     }
 }

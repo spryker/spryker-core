@@ -37,5 +37,5 @@ interface MerchantRelationshipProductListFacadeInterface
      *
      * @return void
      */
-    public function clearMerchantRelationshipFromProductLists(MerchantRelationshipTransfer $merchantRelationshipTransfer): void;
+    public function deleteProductListsByMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): void;
 }

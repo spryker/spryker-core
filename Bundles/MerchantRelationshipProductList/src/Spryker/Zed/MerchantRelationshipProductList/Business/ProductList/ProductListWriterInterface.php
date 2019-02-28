@@ -16,7 +16,7 @@ interface ProductListWriterInterface
      *
      * @return void
      */
-    public function clearMerchantRelationshipFromProductLists(
+    public function deleteProductListsByMerchantRelationship(
         MerchantRelationshipTransfer $merchantRelationshipTransfer
     ): void;
 }

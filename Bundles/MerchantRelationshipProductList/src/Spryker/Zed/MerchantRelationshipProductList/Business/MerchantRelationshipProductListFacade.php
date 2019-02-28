@@ -43,10 +43,10 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
      *
      * @return void
      */
-    public function clearMerchantRelationshipFromProductLists(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
+    public function deleteProductListsByMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
     {
         $this->getFactory()
             ->createProductListWriter()
-            ->clearMerchantRelationshipFromProductLists($merchantRelationshipTransfer);
+            ->deleteProductListsByMerchantRelationship($merchantRelationshipTransfer);
     }
 }

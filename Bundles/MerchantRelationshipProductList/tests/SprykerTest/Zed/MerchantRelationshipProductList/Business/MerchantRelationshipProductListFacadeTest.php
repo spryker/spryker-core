@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantRelationshipProductList\Business;
 
 use Codeception\Test\Unit;
+use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 
 /**
  * Auto-generated group annotations
@@ -29,23 +30,17 @@ class MerchantRelationshipProductListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testClearMerchantRelationshipFromProductListWillClearProductListsRelationshipToMerchant(): void
+    public function testDeleteProductListsByMerchantRelationshipWillClearProductListsRelationshipToMerchant(): void
     {
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
         $productListTransfer = $this->tester->createProductListWithMerchantRelationship($merchantRelationshipTransfer);
 
         /** @var \Spryker\Zed\MerchantRelationshipProductList\Business\MerchantRelationshipProductListFacadeInterface $merchantRelationshipProductListFacade */
         $merchantRelationshipProductListFacade = $this->tester->getFacade();
-        $merchantRelationshipProductListFacade->clearMerchantRelationshipFromProductLists($merchantRelationshipTransfer);
+        $merchantRelationshipProductListFacade->deleteProductListsByMerchantRelationship($merchantRelationshipTransfer);
 
-        $actualProductListTransfer = $this->tester->getProductListFacade()->getProductListById($productListTransfer);
-
-        $this->assertNotEquals(
-            $merchantRelationshipTransfer->getIdMerchantRelationship(),
-            $actualProductListTransfer->getFkMerchantRelationship()
-        );
-        $this->assertNull($actualProductListTransfer->getFkMerchantRelationship());
-
-        $this->tester->getProductListFacade()->deleteProductList($productListTransfer);
+        $this->assertFalse(SpyProductListQuery::create()
+            ->filterByIdProductList($productListTransfer->getIdProductList())
+            ->exists());
     }
 }

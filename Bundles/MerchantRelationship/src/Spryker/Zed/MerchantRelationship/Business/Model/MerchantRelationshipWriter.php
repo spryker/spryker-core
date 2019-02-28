@@ -8,12 +8,15 @@
 namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGeneratorInterface;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface;
 
 class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface
      */
@@ -109,7 +112,9 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     {
         $merchantRelationTransfer->requireIdMerchantRelationship();
 
-        $this->executeMerchantRelationshipPreDeletePlugins($merchantRelationTransfer);
+        $this->getTransactionHandler()->handleTransaction(function () use ($merchantRelationTransfer) {
+            $this->executeMerchantRelationshipPreDeletePluginsTransaction($merchantRelationTransfer);
+        });
         $this->entityManager->deleteMerchantRelationshipById($merchantRelationTransfer->getIdMerchantRelationship());
     }
 
@@ -166,7 +171,7 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
      *
      * @return void
      */
-    protected function executeMerchantRelationshipPreDeletePlugins(MerchantRelationshipTransfer $merchantRelationTransfer): void
+    protected function executeMerchantRelationshipPreDeletePluginsTransaction(MerchantRelationshipTransfer $merchantRelationTransfer): void
     {
         foreach ($this->merchantRelationshipPreDeletePlugins as $merchantRelationshipPreDeletePlugin) {
             $merchantRelationshipPreDeletePlugin->execute($merchantRelationTransfer);
