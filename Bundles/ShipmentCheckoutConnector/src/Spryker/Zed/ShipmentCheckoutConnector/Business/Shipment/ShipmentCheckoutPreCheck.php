@@ -7,14 +7,30 @@
 
 namespace Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment;
 
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentCheckoutPreCheck as ShipmentCheckoutPreCheckWithoutMultiShipment;
+use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentFacadeInterface;
 
-class ShipmentCheckoutPreCheck extends ShipmentCheckoutPreCheckWithoutMultiShipment
+class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
 {
+    public const TRANSLATION_KEY_SHIPMENT_NOT_VALID = 'checkout.pre.check.shipment.failed';
+
+    /**
+     * @var \Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentFacadeInterface
+     */
+    protected $shipmentFacade;
+
+    /**
+     * @param \Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentFacadeInterface $shipmentFacade
+     */
+    public function __construct(ShipmentCheckoutConnectorToShipmentFacadeInterface $shipmentFacade)
+    {
+        $this->shipmentFacade = $shipmentFacade;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -27,26 +43,29 @@ class ShipmentCheckoutPreCheck extends ShipmentCheckoutPreCheckWithoutMultiShipm
     ): bool {
         $availableShipmentMethods = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
 
+        $checkShipmentStatus = true;
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null) {
+            $shipmentTransfer = $itemTransfer->getShipment();
+            if ($shipmentTransfer === null) {
                 continue;
             }
 
-            $idShipmentMethod = $itemTransfer->getShipment()->getMethod()->getIdShipmentMethod();
+            $idShipmentMethod = $shipmentTransfer->getMethod()->getIdShipmentMethod();
             $shipmentMethodTransfer = $this->filterAvailableMethodById($idShipmentMethod, $availableShipmentMethods);
 
             if ($idShipmentMethod === null || $shipmentMethodTransfer === null) {
-                $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
+                $checkoutErrorTransfer = $this->createCheckoutErrorTransfer($shipmentTransfer->getMethod());
 
                 $checkoutResponseTransfer
                     ->setIsSuccess(false)
                     ->addError($checkoutErrorTransfer);
 
-                return false;
+                $checkShipmentStatus = false;
+                continue;
             }
         }
 
-        return true;
+        return $checkShipmentStatus;
     }
 
     /**
@@ -66,5 +85,21 @@ class ShipmentCheckoutPreCheck extends ShipmentCheckoutPreCheckWithoutMultiShipm
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
+     */
+    protected function createCheckoutErrorTransfer(ShipmentMethodTransfer $shipmentMethodTransfer): CheckoutErrorTransfer
+    {
+        return (new CheckoutErrorTransfer())
+            ->addParameters([
+                '%method_name%' => $shipmentMethodTransfer->getName(),
+                '%carrier_name%' => $shipmentMethodTransfer->getCarrierName(),
+            ])
+            ->setErrorCode(ShipmentCheckoutConnectorConfig::ERROR_CODE_SHIPMENT_FAILED)
+            ->setMessage(static::TRANSLATION_KEY_SHIPMENT_NOT_VALID);
     }
 }

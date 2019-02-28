@@ -36,5 +36,5 @@ interface ShipmentEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function updateOrderItemFkShipment(ItemTransfer $itemTransfer, ShipmentTransfer $shipmentTransfer): ItemTransfer;
+    public function updateFkShipmentForOrderItem(ItemTransfer $itemTransfer, ShipmentTransfer $shipmentTransfer): ItemTransfer;
 }

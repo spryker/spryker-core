@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentCartConnector\Business\Cart;
 
+use ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -59,26 +60,30 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $shipmentTransfer = $itemTransfer->getShipment();
-            $skipValidation = (
-                $shipmentTransfer === null
-                || $shipmentTransfer->getMethod() === null
-                || $shipmentTransfer->getMethod()->getIdShipmentMethod() === null
-                || $this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) === false
-            );
-
-            if ($skipValidation) {
+            if ($shipmentTransfer === null) {
                 continue;
             }
 
-            $idShipmentMethod = $shipmentTransfer->getMethod()->getIdShipmentMethod();
-            $shipmentMethodTransfer = $this->filterAvailableMethodById($idShipmentMethod, $availableShipmentMethods);
+            $cartShipmentMethodTransfer = $shipmentTransfer->getMethod();
+
+            if ($cartShipmentMethodTransfer === null
+                || $cartShipmentMethodTransfer->getIdShipmentMethod() === null
+                || $this->isCurrencyChanged($shipmentTransfer, $quoteTransfer) === false
+            ) {
+                continue;
+            }
+
+            $shipmentMethodTransfer = $this->filterAvailableMethodById(
+                $cartShipmentMethodTransfer->getIdShipmentMethod(),
+                $availableShipmentMethods
+            );
 
             if ($shipmentMethodTransfer === null) {
                 $cartPreCheckResponseTransfer
                     ->setIsSuccess(false)
-                    ->addMessage($this->createMessage());
+                    ->addMessage($this->createMessage($cartShipmentMethodTransfer));
 
-                return $cartPreCheckResponseTransfer;
+                continue;
             }
         }
 
@@ -125,11 +130,17 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessage()
+    protected function createMessage(ShipmentMethodTransfer $shipmentMethodTransfer): MessageTransfer
     {
         return (new MessageTransfer())
+            ->addParameters([
+                '%method_name%' => $shipmentMethodTransfer->getName(),
+                '%carrier_name%' => $shipmentMethodTransfer->getCarrierName(),
+            ])
             ->setValue(static::CART_PRE_CHECK_SHIPMENT_FAILED_TRANSLATION_KEY);
     }
 }

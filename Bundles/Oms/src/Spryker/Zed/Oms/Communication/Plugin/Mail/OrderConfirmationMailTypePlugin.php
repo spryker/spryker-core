@@ -71,13 +71,10 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
          * @deprecated Exists for Backward Compatibility reasons only.
          */
         $orderTransfer = $mailBuilder->getMailTransfer()->getOrder();
+        if (!$this->isMultipleShipment($orderTransfer)) {
+            $mailBuilder->setHtmlTemplate('oms/mail/order_confirmation.html.twig');
 
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null) {
-                $mailBuilder->setHtmlTemplate('oms/mail/order_confirmation.html.twig');
-
-                return $this;
-            }
+            return $this;
         }
 
         $mailBuilder->setHtmlTemplate('oms/mail/order_confirmation_with_multi_shipment_address.html.twig');
@@ -96,13 +93,10 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
          * @deprecated Exists for Backward Compatibility reasons only.
          */
         $orderTransfer = $mailBuilder->getMailTransfer()->getOrder();
+        if (!$this->isMultipleShipment($orderTransfer)) {
+            $mailBuilder->setTextTemplate('oms/mail/order_confirmation.text.twig');
 
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null) {
-                $mailBuilder->setTextTemplate('oms/mail/order_confirmation.text.twig');
-
-                return $this;
-            }
+            return $this;
         }
 
         $mailBuilder->setTextTemplate('oms/mail/order_confirmation_with_multi_shipment_address.text.twig');
@@ -137,5 +131,23 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
         $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
 
         return $this;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    protected function isMultipleShipment(OrderTransfer $orderTransfer): bool
+    {
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

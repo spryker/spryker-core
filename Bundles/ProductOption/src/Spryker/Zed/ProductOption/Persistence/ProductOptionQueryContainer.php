@@ -485,6 +485,10 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                 ->endUse()
                 ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
             ->endUse()
-            ->select([SpyCountryTableMap::COL_ISO2_CODE, static::COL_MAX_TAX_RATE, SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE]);
+//            ->addSelectColumn(SpyCountryTableMap::COL_ISO2_CODE)
+//            ->addSelectColumn(static::COL_MAX_TAX_RATE)
+//            ->addSelectColumn(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE)
+            ->select([SpyCountryTableMap::COL_ISO2_CODE, static::COL_MAX_TAX_RATE, SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE])
+            ;
     }
 }

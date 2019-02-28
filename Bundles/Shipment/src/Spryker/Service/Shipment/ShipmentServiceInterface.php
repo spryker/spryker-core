@@ -8,6 +8,7 @@
 namespace Spryker\Service\Shipment;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ShipmentTransfer;
 
 interface ShipmentServiceInterface
 {
@@ -22,4 +23,16 @@ interface ShipmentServiceInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     public function groupItemsByShipment(iterable $itemTransfersCollection): ArrayObject;
+
+    /**
+     * Specification:
+     * - Returns hash based on shipping address, shipment method and requested delivery date.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return string
+     */
+    public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string;
 }

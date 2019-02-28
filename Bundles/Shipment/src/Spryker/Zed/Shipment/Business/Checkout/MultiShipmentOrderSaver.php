@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business\Checkout;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -111,7 +112,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     protected function saveOrderShipmentTransaction(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
-        $shipmentGroups = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+        $shipmentGroups = $this->shipmentService->groupItemsByShipment($saveOrderTransfer->getOrderItems());
         $orderTransfer = $this->addShipmentExpensesFromQuoteToOrder($quoteTransfer, $orderTransfer);
 
         foreach ($shipmentGroups as $shipmentGroupTransfer) {
@@ -139,7 +140,11 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
 
         $shipmentTransfer = $shipmentGroupTransfer->getShipment();
 
-        $expenseTransfer = $this->addShipmentExpenseToOrder($shipmentTransfer, $orderTransfer, $saveOrderTransfer);
+        $expenseTransfer = $this->findShipmentExpense($orderTransfer, $shipmentTransfer);
+        if ($expenseTransfer !== null) {
+            $expenseTransfer = $this->addShipmentExpenseToOrder($expenseTransfer, $orderTransfer, $saveOrderTransfer);
+        }
+
         $shipmentTransfer = $this->saveSalesOrderAddress($shipmentTransfer);
 
         $shipmentTransfer = $this->entityManager->createOrderShipment(
@@ -148,7 +153,8 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
             $expenseTransfer
         );
 
-        $saveOrderTransfer = $this->updateFkShipmentForOrderItems($saveOrderTransfer, $shipmentTransfer);
+        $itemTransfers = $this->updateFkShipmentForOrderItems($shipmentGroupTransfer->getItems(), $shipmentTransfer);
+        $shipmentGroupTransfer->setItems($itemTransfers);
 
         return $shipmentGroupTransfer;
     }
@@ -191,24 +197,19 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\ExpenseTransfer|null
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     protected function addShipmentExpenseToOrder(
-        ShipmentTransfer $shipmentTransfer,
+        ExpenseTransfer $expenseTransfer,
         OrderTransfer $orderTransfer,
         SaveOrderTransfer $saveOrderTransfer
-    ): ?ExpenseTransfer {
-        $expenseTransfer = $this->findShipmentExpense($orderTransfer, $shipmentTransfer);
-        if ($expenseTransfer === null) {
-            return null;
-        }
-
+    ): ExpenseTransfer {
         $expenseTransfer = $this->sanitizeExpenseSumPrices($expenseTransfer);
-        $expenseTransfer->setFkSalesOrder($orderTransfer->getIdSalesOrder());
+        $expenseTransfer->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
         $expenseTransfer = $this->createExpense($expenseTransfer);
 
@@ -252,21 +253,18 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
-     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function updateFkShipmentForOrderItems(
-        SaveOrderTransfer $saveOrderTransfer,
-        ShipmentTransfer $shipmentTransfer
-    ): SaveOrderTransfer {
-
-        foreach ($saveOrderTransfer->getOrderItems() as $itemTransfer) {
-            $this->entityManager->updateOrderItemFkShipment($itemTransfer, $shipmentTransfer);
+    protected function updateFkShipmentForOrderItems(iterable $itemTransfers, ShipmentTransfer $shipmentTransfer): ArrayObject
+    {
+        foreach ($itemTransfers as $itemTransfer) {
+            $this->entityManager->updateFkShipmentForOrderItem($itemTransfer, $shipmentTransfer);
         }
 
-        return $saveOrderTransfer;
+        return $itemTransfers;
     }
 
     /**
@@ -291,9 +289,9 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
      */
     protected function findShipmentExpense(OrderTransfer $salesOrderTransfer, ShipmentTransfer $shipmentTransfer): ?ExpenseTransfer
     {
-        $itemShipmentKey = $this->getItemShipmentKey($shipmentTransfer);
+        $itemShipmentKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
         foreach ($salesOrderTransfer->getExpenses() as $expenseTransfer) {
-            $expenseShipmentKey = $this->getItemShipmentKey($expenseTransfer->getShipment());
+            $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
             if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
                 && $expenseShipmentKey === $itemShipmentKey
             ) {
@@ -302,20 +300,5 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
         }
 
         return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return string
-     */
-    protected function getItemShipmentKey(ShipmentTransfer $shipmentTransfer): string
-    {
-        return md5(sprintf(
-            static::SHIPMENT_TRANSFER_KEY_PATTERN,
-            $shipmentTransfer->getMethod() ? $shipmentTransfer->getMethod()->getIdShipmentMethod() : '',
-            $shipmentTransfer->getShippingAddress() ? $shipmentTransfer->getShippingAddress()->serialize() : '',
-            $shipmentTransfer->getRequestedDeliveryDate()
-        ));
     }
 }

@@ -51,10 +51,6 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-
         $countryIso2CodesByIdProductAbstracts = $this->getCountryIso2CodesByIdProductAbstracts($quoteTransfer->getItems());
         $idProductOptionValues = $this->getIdProductOptionValues($quoteTransfer->getItems());
 
@@ -196,13 +192,19 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
             )
             ->find();
 
+        /**
+         * @todo Fix query find() to return objects collection.
+         */
         foreach ($foundResults as $data) {
             $key = $this->getTaxGroupedKey(
-                $data->getIdProductOptionValue(),
-                $data->getVirtualColumn(SpyCountryTableMap::COL_ISO2_CODE)
+                $data['idProductOptionValue'],
+                $data[SpyCountryTableMap::COL_ISO2_CODE]
+//                $data->getIdProductOptionValue(),
+//                $data->getVirtualColumn(SpyCountryTableMap::COL_ISO2_CODE)
             );
 
-            $groupedResults[$key] = $data->getVirtualColumn(ProductOptionQueryContainer::COL_MAX_TAX_RATE);
+//            $groupedResults[$key] = $data->getVirtualColumn(ProductOptionQueryContainer::COL_MAX_TAX_RATE);
+            $groupedResults[$key] = $data[ProductOptionQueryContainer::COL_MAX_TAX_RATE];
         }
 
         return $groupedResults;

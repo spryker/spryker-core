@@ -68,7 +68,7 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
             $shipmentMethodTransfer = $this->filterAvailableMethodById($idShipmentMethod, $availableShipmentMethods);
 
             if ($shipmentMethodTransfer === null) {
-                return $cartChangeTransfer;
+                continue;
             }
 
             $shipmentMethodTransfer->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());

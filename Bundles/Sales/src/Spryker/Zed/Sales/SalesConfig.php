@@ -73,10 +73,8 @@ class SalesConfig extends AbstractBundleConfig
         /**
          * @deprecated Exists for Backward Compatibility reasons only.
          */
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null) {
-                return $this->isTestOrderWithoutMultiShippingAddress($quoteTransfer);
-            }
+        if (!$this->isMultipleShipment($quoteTransfer)) {
+            return $this->isTestOrderWithoutMultiShippingAddress($quoteTransfer);
         }
 
         return $this->isTestOrderWithMultiShippingAddress($quoteTransfer);
@@ -112,6 +110,24 @@ class SalesConfig extends AbstractBundleConfig
     public function getSalesDetailExternalBlocksUrls()
     {
         return [];
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isMultipleShipment(QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

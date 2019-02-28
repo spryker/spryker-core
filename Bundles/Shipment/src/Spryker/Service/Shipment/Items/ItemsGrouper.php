@@ -28,7 +28,7 @@ class ItemsGrouper implements ItemsGrouperInterface
         foreach ($itemTransfers as $itemTransfer) {
             $this->assertRequiredShipment($itemTransfer);
 
-            $key = $this->getItemShipmentKey($itemTransfer->getShipment());
+            $key = $this->getShipmentHashKey($itemTransfer->getShipment());
             if (!isset($shipmentGroupTransfers[$key])) {
                 $shipmentGroupTransfers[$key] = (new ShipmentGroupTransfer())
                     ->setShipment($itemTransfer->getShipment())
@@ -42,6 +42,21 @@ class ItemsGrouper implements ItemsGrouperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return string
+     */
+    public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string
+    {
+        return md5(sprintf(
+            static::SHIPMENT_TRANSFER_KEY_PATTERN,
+            $shipmentTransfer->getMethod() ? $shipmentTransfer->getMethod()->getIdShipmentMethod() : '',
+            $shipmentTransfer->getShippingAddress() ? $shipmentTransfer->getShippingAddress()->serialize() : '',
+            $shipmentTransfer->getRequestedDeliveryDate()
+        ));
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
@@ -51,20 +66,5 @@ class ItemsGrouper implements ItemsGrouperInterface
         $itemTransfer->requireShipment();
         $itemTransfer->getShipment()->requireMethod();
         $itemTransfer->getShipment()->requireShippingAddress();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return string
-     */
-    protected function getItemShipmentKey(ShipmentTransfer $shipmentTransfer): string
-    {
-        return md5(sprintf(
-            static::SHIPMENT_TRANSFER_KEY_PATTERN,
-            $shipmentTransfer->getMethod()->getIdShipmentMethod(),
-            $shipmentTransfer->getShippingAddress()->serialize(),
-            $shipmentTransfer->getRequestedDeliveryDate()
-        ));
     }
 }

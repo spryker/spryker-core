@@ -8,6 +8,7 @@
 namespace Spryker\Service\Shipment;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Kernel\AbstractService;
 use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
 
@@ -16,11 +17,6 @@ use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
  */
 class ShipmentService extends AbstractService implements ShipmentServiceInterface
 {
-    /**
-     * @var \Spryker\Service\Shipment\Items\ItemsGrouperInterface
-     */
-    protected $itemsGrouper;
-
     /**
      * {@inheritdoc}
      *
@@ -32,18 +28,21 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
      */
     public function groupItemsByShipment(iterable $itemTransfers): ArrayObject
     {
-        return $this->getItemsGrouper()->groupByShipment($itemTransfers);
+        return $this->getFactory()->createItemsGrouper()->groupByShipment($itemTransfers);
     }
 
     /**
-     * @return \Spryker\Service\Shipment\Items\ItemsGrouperInterface
+     * Specification:
+     * - Returns hash based on shipping address, shipment method and requested delivery date.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return string
      */
-    protected function getItemsGrouper(): ItemsGrouperInterface
+    public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string
     {
-        if ($this->itemsGrouper === null) {
-            $this->itemsGrouper = $this->getFactory()->createItemsGrouper();
-        }
-
-        return $this->itemsGrouper;
+        return $this->getFactory()->createItemsGrouper()->getShipmentHashKey($shipmentTransfer);
     }
 }
