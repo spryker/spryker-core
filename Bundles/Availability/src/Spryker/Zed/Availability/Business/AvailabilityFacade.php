@@ -23,7 +23,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated use isProductSellableForStore() instead
+     * @deprecated Use isProductSellableForStore() instead.
      *
      * @param string $sku
      * @param int $quantity
@@ -76,7 +76,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated use calculateStockForProductWithStore() instead
+     * @deprecated Use calculateStockForProductWithStore() instead.
      *
      * @param string $sku
      *
@@ -145,7 +145,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated use updateAvailabilityForStore instead
+     * @deprecated Use updateAvailabilityForStore() instead.
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -232,7 +232,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated use saveProductAvailabilityForStore instead
+     * @deprecated Use saveProductAvailabilityForStore() instead.
      *
      * @param string $sku
      * @param int $quantity

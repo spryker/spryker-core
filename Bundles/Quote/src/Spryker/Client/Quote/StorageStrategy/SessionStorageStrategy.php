@@ -8,6 +8,8 @@
 namespace Spryker\Client\Quote\StorageStrategy;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface;
+use Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface;
 use Spryker\Client\Quote\Session\QuoteSessionInterface;
 use Spryker\Shared\Quote\QuoteConfig;
 
@@ -19,11 +21,28 @@ class SessionStorageStrategy implements StorageStrategyInterface
     protected $quoteSession;
 
     /**
-     * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
+     * @var \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface
      */
-    public function __construct(QuoteSessionInterface $quoteSession)
-    {
+    protected $quoteLockStatusValidator;
+
+    /**
+     * @var \Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface
+     */
+    protected $quoteEditStatusValidator;
+
+    /**
+     * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
+     * @param \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface $quoteLockStatusValidator
+     * @param \Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface $quoteEditStatusValidator
+     */
+    public function __construct(
+        QuoteSessionInterface $quoteSession,
+        QuoteLockStatusValidatorInterface $quoteLockStatusValidator,
+        QuoteEditStatusValidatorInterface $quoteEditStatusValidator
+    ) {
         $this->quoteSession = $quoteSession;
+        $this->quoteLockStatusValidator = $quoteLockStatusValidator;
+        $this->quoteEditStatusValidator = $quoteEditStatusValidator;
     }
 
     /**
@@ -66,5 +85,25 @@ class SessionStorageStrategy implements StorageStrategyInterface
     public function clearQuote()
     {
         $this->quoteSession->clearQuote();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteLockStatusValidator->isQuoteLocked($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->quoteEditStatusValidator->isQuoteEditable($quoteTransfer);
     }
 }

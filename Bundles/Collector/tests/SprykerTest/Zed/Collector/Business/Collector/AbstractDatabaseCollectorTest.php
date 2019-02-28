@@ -38,7 +38,7 @@ class AbstractDatabaseCollectorTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\Collector\Business\Collector\AbstractDatabaseCollector|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Collector\Business\Collector\AbstractDatabaseCollector|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $abstractDatabaseCollectorMock;
 
@@ -58,22 +58,22 @@ class AbstractDatabaseCollectorTest extends Unit
     protected $localeTransfer;
 
     /**
-     * @var \Spryker\Zed\Collector\Business\Exporter\Reader\Storage\RedisReader|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Collector\Business\Exporter\Reader\Storage\RedisReader|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $readerMock;
 
     /**
-     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\RedisWriter|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\RedisWriter|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $writerMock;
 
     /**
-     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\AbstractTouchUpdater|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\AbstractTouchUpdater|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $touchUpdaterMock;
 
     /**
-     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $touchQueryContainerMock;
 

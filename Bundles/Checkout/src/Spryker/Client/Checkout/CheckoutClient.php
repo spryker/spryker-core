@@ -8,6 +8,7 @@
 namespace Spryker\Client\Checkout;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -27,6 +28,22 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
     public function placeOrder(QuoteTransfer $quoteTransfer)
     {
         return $this->getZedStub()->placeOrder($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function isQuoteApplicableForCheckout(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteProceedCheckoutChecker()
+            ->isQuoteApplicableForCheckout($quoteTransfer);
     }
 
     /**

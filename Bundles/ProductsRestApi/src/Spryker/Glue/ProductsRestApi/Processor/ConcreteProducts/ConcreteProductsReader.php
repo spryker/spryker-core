@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts;
 
+use Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -21,6 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ConcreteProductsReader implements ConcreteProductsReaderInterface
 {
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+    protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
 
     /**
      * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface
@@ -43,21 +45,29 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     protected $concreteProductAttributeTranslationExpander;
 
     /**
+     * @var \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\ConcreteProductsResourceExpanderPluginInterface[]
+     */
+    protected $concreteProductsResourceExpanderPlugins;
+
+    /**
      * @param \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductsRestApi\Processor\Mapper\ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper
      * @param \Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\ConcreteProductAttributeTranslationExpanderInterface $concreteProductAttributeTranslationExpander
+     * @param \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\ConcreteProductsResourceExpanderPluginInterface[] $concreteProductsResourceExpanderPlugins
      */
     public function __construct(
         ProductsRestApiToProductStorageClientInterface $productStorageClient,
         RestResourceBuilderInterface $restResourceBuilder,
         ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper,
-        ConcreteProductAttributeTranslationExpanderInterface $concreteProductAttributeTranslationExpander
+        ConcreteProductAttributeTranslationExpanderInterface $concreteProductAttributeTranslationExpander,
+        array $concreteProductsResourceExpanderPlugins
     ) {
         $this->productStorageClient = $productStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->concreteProductsResourceMapper = $concreteProductsResourceMapper;
         $this->concreteProductAttributeTranslationExpander = $concreteProductAttributeTranslationExpander;
+        $this->concreteProductsResourceExpanderPlugins = $concreteProductsResourceExpanderPlugins;
     }
 
     /**
@@ -71,11 +81,11 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
 
         $resourceIdentifier = $restRequest->getResource()->getId();
 
-        if (empty($resourceIdentifier)) {
+        if (!$resourceIdentifier) {
             return $this->addConcreteSkuNotSpecifiedError($response);
         }
 
-        $restResource = $this->findOneByProductConcrete($resourceIdentifier, $restRequest);
+        $restResource = $this->findProductConcreteBySku($resourceIdentifier, $restRequest);
 
         if (!$restResource) {
             return $this->addConcreteProductNotFoundError($response);
@@ -93,8 +103,8 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     public function findProductConcretesByProductConcreteSkus(array $productConcreteSkus, RestRequestInterface $restRequest): array
     {
         $results = [];
-        foreach ($productConcreteSkus as $idResource) {
-            $productResource = $this->findOneByProductConcrete($idResource, $restRequest);
+        foreach ($productConcreteSkus as $productConcreteSku) {
+            $productResource = $this->findProductConcreteBySku($productConcreteSku, $restRequest);
             if (!$productResource) {
                 continue;
             }
@@ -105,12 +115,25 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     }
 
     /**
+     * @deprecated Use findProductConcreteBySku() instead.
+     *
      * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
     public function findOneByProductConcrete(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
+    {
+        return $this->findProductConcreteBySku($sku, $restRequest);
+    }
+
+    /**
+     * @param string $sku
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     */
+    public function findProductConcreteBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         $concreteProductData = $this->productStorageClient->findProductConcreteStorageDataByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
@@ -122,17 +145,78 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             return null;
         }
 
+        return $this->createRestResourceFromConcreteProductStorageData($concreteProductData, $restRequest);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     */
+    public function findProductConcreteById(int $idProductConcrete, RestRequestInterface $restRequest): ?RestResourceInterface
+    {
+        $concreteProductData = $this->productStorageClient->findProductConcreteStorageData(
+            $idProductConcrete,
+            $restRequest->getMetadata()->getLocale()
+        );
+
+        if (!$concreteProductData) {
+            return null;
+        }
+
+        return $this->createRestResourceFromConcreteProductStorageData($concreteProductData, $restRequest);
+    }
+
+    /**
+     * @param array $concreteProductData
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function createRestResourceFromConcreteProductStorageData(
+        array $concreteProductData,
+        RestRequestInterface $restRequest
+    ): RestResourceInterface {
         $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
             ->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData);
-
-        $restConcreteProductsAttributesTransfer = $this->concreteProductAttributeTranslationExpander
-            ->addProductAttributeTranslation($restConcreteProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
+        $restConcreteProductsAttributesTransfer = $this->expandRestConcreteProductsAttributesTransfer(
+            $restConcreteProductsAttributesTransfer,
+            $concreteProductData[static::KEY_ID_PRODUCT_CONCRETE],
+            $restRequest
+        );
 
         return $this->restResourceBuilder->createRestResource(
             ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            $sku,
+            $restConcreteProductsAttributesTransfer->getSku(),
             $restConcreteProductsAttributesTransfer
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer
+     * @param int $idProductConcrete
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer
+     */
+    protected function expandRestConcreteProductsAttributesTransfer(
+        ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer,
+        int $idProductConcrete,
+        RestRequestInterface $restRequest
+    ): ConcreteProductsRestAttributesTransfer {
+        $concreteProductsRestAttributesTransfer = $this->concreteProductAttributeTranslationExpander
+            ->addProductAttributeTranslation($concreteProductsRestAttributesTransfer, $restRequest->getMetadata()->getLocale());
+
+        foreach ($this->concreteProductsResourceExpanderPlugins as $concreteProductsResourceExpanderPlugin) {
+            $concreteProductsRestAttributesTransfer = $concreteProductsResourceExpanderPlugin->expand(
+                $concreteProductsRestAttributesTransfer,
+                $idProductConcrete,
+                $restRequest
+            );
+        }
+
+        return $concreteProductsRestAttributesTransfer;
     }
 
     /**

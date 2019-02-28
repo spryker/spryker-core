@@ -1,0 +1,44 @@
+{
+  "name": "spryker/translator",
+  "type": "library",
+  "description": "Translator module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/application-extension": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/messenger-extension": "^1.0.0",
+    "spryker/symfony": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/installer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/container": "If you want to use Translator service. . Minimum required version: 1.0.0",
+    "spryker/installer": "If you want to use Installer plugins. Minimum required version: 4.0.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
