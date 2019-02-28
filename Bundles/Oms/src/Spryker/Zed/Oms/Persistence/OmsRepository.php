@@ -17,17 +17,17 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 {
     /**
-     * @param array $keys
+     * @param array $processIds
      * @param array $stateBlackList
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
-    public function getMatrixOrderItems(array $keys, array $stateBlackList): array
+    public function getMatrixOrderItems(array $processIds, array $stateBlackList): array
     {
         $orderItemsMatrix = [];
 
         $orderItemsMatrixResult = $this->getFactory()->getOmsQueryContainer()
-            ->queryMatrixOrderItems($keys, $stateBlackList)
+            ->queryGroupedMatrixOrderItems($processIds, $stateBlackList)
             ->find();
 
         foreach ($orderItemsMatrixResult as $orderItemsMatrixRow) {

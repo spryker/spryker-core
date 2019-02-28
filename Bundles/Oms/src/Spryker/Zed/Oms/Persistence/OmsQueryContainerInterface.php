@@ -140,12 +140,24 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Use `queryGroupedMatrixOrderItems()` instead
+     *
      * @param array $processIds
      * @param array $stateBlacklist
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function queryMatrixOrderItems(array $processIds, array $stateBlacklist);
+
+    /**
+     * @api
+     *
+     * @param array $processIds
+     * @param array $stateBlacklist
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function queryGroupedMatrixOrderItems(array $processIds, array $stateBlacklist);
 
     /**
      * @api

@@ -10,10 +10,10 @@ namespace Spryker\Zed\Oms\Persistence;
 interface OmsRepositoryInterface
 {
     /**
-     * @param array $keys
+     * @param array $processIds
      * @param array $stateBlackList
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
-    public function getMatrixOrderItems(array $keys, array $stateBlackList): array;
+    public function getMatrixOrderItems(array $processIds, array $stateBlackList): array;
 }

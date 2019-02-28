@@ -285,12 +285,36 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     /**
      * @api
      *
+     * @deprecated Use `queryGroupedMatrixOrderItems()` instead
+     *
      * @param array $processIds
      * @param array $stateBlacklist
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function queryMatrixOrderItems(array $processIds, array $stateBlacklist)
+    {
+        $query = $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem()
+            ->filterByFkOmsOrderProcess($processIds, Criteria::IN);
+
+        if ($stateBlacklist) {
+            $query->filterByFkOmsOrderItemState($stateBlacklist, Criteria::NOT_IN);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param array $processIds
+     * @param array $stateBlacklist
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function queryGroupedMatrixOrderItems(array $processIds, array $stateBlacklist)
     {
         $query = $this->getFactory()
             ->getSalesQueryContainer()
