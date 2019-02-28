@@ -55,21 +55,25 @@ class CategoryEditDataProvider
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
-    public function getData()
+    public function getData(): ?CategoryTransfer
     {
-        $categoryTransfer = $this->buildCategoryTransfer();
-
-        return $this->addLocalizedAttributeTransfers($categoryTransfer);
+        return $this->buildCategoryTransfer();
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
-    protected function buildCategoryTransfer()
+    protected function buildCategoryTransfer(): ?CategoryTransfer
     {
-        return $this->categoryFacade->read($this->getIdCategory());
+        $categoryTransfer = $this->categoryFacade->findCategoryById($this->getIdCategory());
+
+        if ($categoryTransfer !== null) {
+            $categoryTransfer = $this->addLocalizedAttributeTransfers($categoryTransfer);
+        }
+
+        return $categoryTransfer;
     }
 
     /**
