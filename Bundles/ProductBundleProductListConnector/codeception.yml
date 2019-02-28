@@ -1,4 +1,8 @@
 namespace: ProductBundleProductListConnector
+
+include:
+    - tests/SprykerTest/Zed/ProductBundleProductListConnector
+
 actor: Tester
 paths:
     tests: tests

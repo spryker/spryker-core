@@ -17,10 +17,23 @@ class ProductBundleProductListConnectorConfig extends AbstractBundleConfig
     protected const PRODUCT_LIST_TYPE_BLACKLIST = 'blacklist';
 
     /**
+     * @uses \Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap::COL_TYPE_WHITELIST
+     */
+    protected const PRODUCT_LIST_TYPE_WHITELIST = 'whitelist';
+
+    /**
      * @return string
      */
     public function getProductListTypeBlacklist(): string
     {
         return static::PRODUCT_LIST_TYPE_BLACKLIST;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductListTypeWhitelist(): string
+    {
+        return static::PRODUCT_LIST_TYPE_WHITELIST;
     }
 }
