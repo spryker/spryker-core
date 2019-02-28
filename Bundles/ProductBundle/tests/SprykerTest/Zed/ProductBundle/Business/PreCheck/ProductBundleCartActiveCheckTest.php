@@ -67,13 +67,11 @@ class ProductBundleCartActiveCheckTest extends Unit
      */
     protected function createCartChangeTransferWithProduct(string $sku): CartChangeTransfer
     {
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($sku);
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($sku);
 
-        $cartChangeTransfer = new CartChangeTransfer();
-        $cartChangeTransfer->addItem($itemTransfer);
-
-        return $cartChangeTransfer;
+        return (new CartChangeTransfer())
+            ->addItem($itemTransfer);
     }
 
     /**
@@ -83,11 +81,9 @@ class ProductBundleCartActiveCheckTest extends Unit
      */
     protected function createProductBundleCartActiveCheck(string $sku): ProductBundleCartActiveCheckInterface
     {
-        $productBundleCartActiveCheck = new ProductBundleCartActiveCheck(
+        return new ProductBundleCartActiveCheck(
             $this->createProductBundleRepositoryMock($sku)
         );
-
-        return $productBundleCartActiveCheck;
     }
 
     /**
@@ -103,7 +99,7 @@ class ProductBundleCartActiveCheckTest extends Unit
             ->getMock();
 
         $productBundleRepositoryMock->method('findBundledProductsBySku')
-            ->willReturn($this->getBundledProductBySku($sku));
+            ->willReturn([$this->createProductForBundleTransfer($sku)]);
 
         return $productBundleRepositoryMock;
     }
@@ -111,14 +107,12 @@ class ProductBundleCartActiveCheckTest extends Unit
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer
      */
-    protected function getBundledProductBySku(string $sku): array
+    protected function createProductForBundleTransfer(string $sku): ProductForBundleTransfer
     {
-        $productForBundleTransfer = new ProductForBundleTransfer();
-        $productForBundleTransfer->setSku($sku);
-        $productForBundleTransfer->setIsActive($sku === static::PRODUCT_SKU_ACTIVE);
-
-        return [$productForBundleTransfer];
+        return (new ProductForBundleTransfer())
+            ->setSku($sku)
+            ->setIsActive($sku === static::PRODUCT_SKU_ACTIVE);
     }
 }

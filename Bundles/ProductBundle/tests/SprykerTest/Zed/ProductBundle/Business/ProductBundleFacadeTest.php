@@ -65,7 +65,7 @@ class ProductBundleFacadeTest extends Unit
 
         $productConcreteTransfer = $this->createProductBundle($bundlePrice);
 
-        $cartChangeTransfer = $this->getCartChangeTransfer();
+        $cartChangeTransfer = new CartChangeTransfer();
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode('EUR');
         $quoteTransfer = $this->createBaseQuoteTransfer();
@@ -115,7 +115,7 @@ class ProductBundleFacadeTest extends Unit
     {
         $productBundleFacade = $this->createProductBundleFacade();
 
-        $cartChangeTransfer = $this->getCartChangeTransfer();
+        $cartChangeTransfer = new CartChangeTransfer();
 
         $groupKeyBefore = 'test1';
         $itemTransfer = new ItemTransfer();
@@ -161,7 +161,7 @@ class ProductBundleFacadeTest extends Unit
 
         $productBundleFacade = $this->createProductBundleFacade();
 
-        $cartChangeTransfer = $this->getCartChangeTransfer();
+        $cartChangeTransfer = new CartChangeTransfer();
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku($productConcreteTransfer->getSku());
@@ -183,7 +183,7 @@ class ProductBundleFacadeTest extends Unit
 
         $productBundleFacade = $this->createProductBundleFacade();
 
-        $cartChangeTransfer = $this->getCartChangeTransfer();
+        $cartChangeTransfer = new CartChangeTransfer();
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku($productConcreteTransfer->getSku());
@@ -205,7 +205,7 @@ class ProductBundleFacadeTest extends Unit
 
         $productBundleFacade = $this->createProductBundleFacade();
 
-        $cartChangeTransfer = $this->getCartChangeTransfer();
+        $cartChangeTransfer = new CartChangeTransfer();
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku($productConcreteTransfer->getSku());
@@ -235,7 +235,7 @@ class ProductBundleFacadeTest extends Unit
 
         $productBundleFacade = $this->createProductBundleFacade();
 
-        $cartChangeTransfer = $this->getCartChangeTransfer();
+        $cartChangeTransfer = new CartChangeTransfer();
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(5);
@@ -582,13 +582,5 @@ class ProductBundleFacadeTest extends Unit
 
         return (new QuoteTransfer())
             ->setStore($storeTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    protected function getCartChangeTransfer(): CartChangeTransfer
-    {
-        return new CartChangeTransfer();
     }
 }
