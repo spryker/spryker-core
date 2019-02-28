@@ -1,9 +1,9 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Files list' } %}
     {% block widget_title -%}
         <div class="title-action">
-            <h5>Files list {{ fileDirectoryId }}</h5>
+            <h5>{{ 'Files list' | trans ~ ' ' ~ fileDirectoryId }}</h5>
             <a id="add-file-link" class="btn btn-sm btn-outline safe-submit btn-create" href="/file-manager-gui/add-file?file-directory-id=">
-                <i class="fa fa-plus"></i> Add File
+                <i class="fa fa-plus"></i> {{ 'Add File' | trans }}
             </a>
         </div>
     {%- endblock %}

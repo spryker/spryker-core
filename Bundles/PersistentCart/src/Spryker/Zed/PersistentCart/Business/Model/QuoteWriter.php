@@ -10,10 +10,13 @@ namespace Spryker\Zed\PersistentCart\Business\Model;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 
 class QuoteWriter implements QuoteWriterInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface
      */
@@ -86,6 +89,10 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
+        if (!$this->hasCustomerWritePermission($quoteUpdateRequestTransfer)) {
+            return (new QuoteResponseTransfer())->setIsSuccessful(false);
+        }
+
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $quoteUpdateRequestTransfer->getIdQuote(),
             $quoteUpdateRequestTransfer->getCustomer()
@@ -106,6 +113,10 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
+        if (!$this->hasCustomerWritePermission($quoteUpdateRequestTransfer)) {
+            return (new QuoteResponseTransfer())->setIsSuccessful(false);
+        }
+
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $quoteUpdateRequestTransfer->getIdQuote(),
             $quoteUpdateRequestTransfer->getCustomer()
@@ -117,5 +128,35 @@ class QuoteWriter implements QuoteWriterInterface
         $quoteTransfer->fromArray($quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->modifiedToArray(), true);
 
         return $this->quoteItemOperation->reloadItems($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return bool
+     */
+    protected function hasCustomerWritePermission(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): bool
+    {
+        $companyUserId = $this->findCompanyUserId($quoteUpdateRequestTransfer);
+
+        if (!$companyUserId) {
+            return true;
+        }
+
+        return $this->can('WriteSharedCartPermissionPlugin', $companyUserId, $quoteUpdateRequestTransfer->getIdQuote());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return int|null
+     */
+    protected function findCompanyUserId(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): ?int
+    {
+        $companyUserTransfer = $quoteUpdateRequestTransfer
+            ->getCustomer()
+            ->getCompanyUserTransfer();
+
+        return $companyUserTransfer ? $companyUserTransfer->getIdCompanyUser() : null;
     }
 }

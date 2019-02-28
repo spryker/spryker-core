@@ -45,7 +45,7 @@ class VersionPageController extends AbstractController
                 ->getCmsFacade()
                 ->publishWithVersion($idCmsPage);
 
-            $this->addSuccessMessage(sprintf('Page with version %d successfully published.', $cmsVersionTransfer->getVersion()));
+            $this->addSuccessMessage('Page with version %d successfully published.', ['%d' => $cmsVersionTransfer->getVersion()]);
         } catch (CannotActivatePageException $exception) {
             $this->addErrorMessage('Cannot publish the CMS page. Please fill in all placeholders for this page.');
 
@@ -162,7 +162,7 @@ class VersionPageController extends AbstractController
             return $redirectUrl;
         }
 
-        $this->addSuccessMessage(sprintf('Rollback applied successfully. Page with version %s published.', $cmsVersionTransfer->getVersion()));
+        $this->addSuccessMessage('Rollback applied successfully. Page with version %s published.', ['%s' => $cmsVersionTransfer->getVersion()]);
 
         return $redirectUrl;
     }
@@ -183,7 +183,7 @@ class VersionPageController extends AbstractController
             ->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
 
         if ($cmsTargetVersionTransfer === null) {
-            throw new NotFoundHttpException(sprintf('Cms page with version "%d" not found.', $version));
+            throw new NotFoundHttpException('Cms page with version "%d" not found.', [ '%d' => $version ]);
         }
 
         return $cmsVersionDataHelper->mapToCmsVersionDataTransfer($cmsTargetVersionTransfer);
