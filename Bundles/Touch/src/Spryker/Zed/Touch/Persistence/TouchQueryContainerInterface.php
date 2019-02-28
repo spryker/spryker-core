@@ -114,6 +114,11 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
     public function queryTouchStorageByTouchIds($touchIds);
 
     /**
+     * Specification:
+     * - Filters `SpyTouchQuery` by item type, item event and array of item ids.
+     *
+     * @api
+     *
      * @param string $itemType
      * @param string $itemEvent
      * @param array $itemIds

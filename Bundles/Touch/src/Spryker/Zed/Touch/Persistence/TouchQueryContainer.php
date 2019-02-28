@@ -222,6 +222,10 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $itemType
      * @param string $itemEvent
      * @param array $itemIds
