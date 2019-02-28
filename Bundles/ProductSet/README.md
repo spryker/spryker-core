@@ -7,7 +7,7 @@ ProductSet puts together multiple products to emphasize that a set of products c
 ## Installation
 
 ```
-composer require spryker/product-group
+composer require spryker/product-set
 ```
 
 ## Documentation
