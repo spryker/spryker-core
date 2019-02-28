@@ -81,7 +81,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
      */
     public function getProductAbstractPackagingStorageEntities(array $productAbstractIds): array
     {
