@@ -30,7 +30,7 @@ class MerchantRelationshipProductListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteProductListsByMerchantRelationshipWillClearProductListsRelationshipToMerchant(): void
+    public function testDeleteProductListsByMerchantRelationshipWillDeleteProductListsRelatedToMerchant(): void
     {
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
         $productListTransfer = $this->tester->createProductListWithMerchantRelationship($merchantRelationshipTransfer);
