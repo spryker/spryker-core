@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business;
 
+use Spryker\Service\Oms\OmsServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
 use Spryker\Zed\Oms\Business\Mail\MailHandler;
@@ -225,7 +226,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createActiveProcessFetcher(),
             $this->getQueryContainer(),
             $this->getReservationHandlerPlugins(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getOmsService()
         );
     }
 
@@ -349,5 +351,13 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new OrderStateMachineFlagReader(
             $this->createOrderStateMachineBuilder()
         );
+    }
+
+    /**
+     * @return \Spryker\Service\Oms\OmsServiceInterface
+     */
+    public function getOmsService(): OmsServiceInterface
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_OMS);
     }
 }

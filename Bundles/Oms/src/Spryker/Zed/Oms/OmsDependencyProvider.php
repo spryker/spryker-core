@@ -38,6 +38,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SALES = 'FACADE_SALES';
 
     public const FACADE_STORE = 'FACADE_STORE';
+    public const SERVICE_OMS = 'SERVICE_OMS';
     public const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
@@ -87,6 +88,21 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addStoreFacade($container);
         $container = $this->addReservationExportPlugins($container);
+        $container = $this->addOmsService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsService(Container $container): Container
+    {
+        $container[static::SERVICE_OMS] = function (Container $container) {
+            return $container->getLocator()->oms()->service();
+        };
 
         return $container;
     }

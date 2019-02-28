@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Service\Oms\OmsServiceInterface;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
@@ -34,21 +35,29 @@ class Reservation implements ReservationInterface
     protected $activeProcessFetcher;
 
     /**
+     * @var \Spryker\Service\Oms\OmsServiceInterface
+     */
+    protected $service;
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface $activeProcessFetcher
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[] $reservationHandlerPlugins
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Service\Oms\OmsServiceInterface $service
      */
     public function __construct(
         ActiveProcessFetcherInterface $activeProcessFetcher,
         OmsQueryContainerInterface $queryContainer,
         array $reservationHandlerPlugins,
-        OmsToStoreFacadeInterface $storeFacade
+        OmsToStoreFacadeInterface $storeFacade,
+        OmsServiceInterface $service
     ) {
         $this->activeProcessFetcher = $activeProcessFetcher;
         $this->queryContainer = $queryContainer;
         $this->reservationHandlerPlugins = $reservationHandlerPlugins;
         $this->storeFacade = $storeFacade;
+        $this->service = $service;
     }
 
     /**
@@ -109,7 +118,7 @@ class Reservation implements ReservationInterface
 
         $reservationQuantity += $this->getReservationsFromOtherStores($sku, $storeTransfer);
 
-        return $reservationQuantity;
+        return $this->service->round($reservationQuantity);
     }
 
     /**
@@ -131,7 +140,7 @@ class Reservation implements ReservationInterface
             }
             $reservationQuantity += $omsProductReservationStoreEntity->getReservationQuantity();
         }
-        return $reservationQuantity;
+        return $this->service->round($reservationQuantity);
     }
 
     /**
