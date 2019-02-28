@@ -139,7 +139,7 @@ class ConsoleTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     private function getPreRunPluginMock()
     {
@@ -150,7 +150,7 @@ class ConsoleTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     private function getPostRunPluginMock()
     {

@@ -31,6 +31,6 @@ class CliErrorRendererTest extends Unit
         $exception = new Exception('ExceptionMessage');
         $exceptionString = $errorRenderer->render($exception);
 
-        $this->assertInternalType('string', $exceptionString);
+        $this->assertIsString($exceptionString);
     }
 }

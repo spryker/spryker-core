@@ -131,7 +131,7 @@ class CmsPageSaverTest extends CmsMocks
      * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface|null $templateManagerMock
      * @param \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface|null $cmsPageStoreRelationWriterMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageSaver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageSaver
      */
     protected function createCmsPageSaverMock(
         ?UrlFacadeInterface $urlFacadeMock = null,
