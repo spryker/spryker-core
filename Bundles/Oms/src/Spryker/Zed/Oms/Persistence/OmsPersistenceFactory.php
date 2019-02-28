@@ -20,6 +20,7 @@ use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Oms\OmsConfig getConfig()
+ * @method \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface getRepository()
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
  */
 class OmsPersistenceFactory extends AbstractPersistenceFactory
@@ -86,6 +87,14 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     public function createOmsProductReservationExportedVersionQuery()
     {
         return SpyOmsProductReservationLastExportedVersionQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
+     */
+    public function getOmsQueryContainer(): OmsQueryContainerInterface
+    {
+        return $this->getQueryContainer();
     }
 
     /**

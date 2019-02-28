@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeInterface;
 use Spryker\Zed\Oms\OmsConfig;
-use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
 class OrderItemMatrix
 {
@@ -43,20 +42,28 @@ class OrderItemMatrix
     protected $utilSanitizeService;
 
     /**
+     * @var \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface
+     */
+    protected $omsRepository;
+
+    /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\OmsConfig $config
      * @param \Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeInterface $utilSanitizeService
+     * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
      */
     public function __construct(
         OmsQueryContainerInterface $queryContainer,
         OmsConfig $config,
-        OmsToUtilSanitizeInterface $utilSanitizeService
+        OmsToUtilSanitizeInterface $utilSanitizeService,
+        OmsRepositoryInterface $omsRepository
     ) {
         $this->queryContainer = $queryContainer;
         $this->config = $config;
 
         $this->processes = $this->getProcesses();
         $this->utilSanitizeService = $utilSanitizeService;
+        $this->omsRepository = $omsRepository;
     }
 
     /**
@@ -178,19 +185,7 @@ class OrderItemMatrix
      */
     protected function getOrderItemsMatrix(): array
     {
-        $orderItemsMatrix = [];
-        $orderItemsMatrixResult = $this->queryContainer
-            ->queryMatrixOrderItems(array_keys($this->processes), $this->getStateBlacklist())
-            ->find();
-
-        foreach ($orderItemsMatrixResult as $orderItemsMatrixRow) {
-            $idState = $orderItemsMatrixRow[SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE];
-            $idProcess = $orderItemsMatrixRow[SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS];
-
-            $orderItemsMatrix[$idState][$idProcess][$orderItemsMatrixRow[OmsQueryContainer::DATE_WINDOW]] = $orderItemsMatrixRow[OmsQueryContainer::ITEMS_COUNT];
-        }
-
-        return $orderItemsMatrix;
+        return $this->omsRepository->getMatrixOrderItems(array_keys($this->processes), $this->getStateBlacklist());
     }
 
     /**
