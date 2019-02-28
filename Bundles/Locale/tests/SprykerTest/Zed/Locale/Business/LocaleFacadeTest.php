@@ -63,7 +63,7 @@ class LocaleFacadeTest extends Unit
      */
     public function testAvailableLocalesToBeArrayType()
     {
-        $this->assertInternalType('array', $this->localeNames);
+        $this->assertIsArray($this->localeNames);
     }
 
     /**

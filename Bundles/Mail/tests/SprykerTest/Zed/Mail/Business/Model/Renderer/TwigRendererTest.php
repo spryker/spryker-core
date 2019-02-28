@@ -59,7 +59,7 @@ class TwigRendererTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface
      */
     protected function getTwigEnvironmentMock()
     {

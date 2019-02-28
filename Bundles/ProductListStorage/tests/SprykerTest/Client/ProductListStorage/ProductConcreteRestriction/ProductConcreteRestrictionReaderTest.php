@@ -139,7 +139,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
      * @param int[] $whiteListIds
      * @param int[] $blackListIds
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface;
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface;
      */
     protected function createCustomerClientMock(array $whiteListIds, array $blackListIds)
     {
@@ -160,7 +160,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
      * @param int[] $whiteListIds
      * @param int[] $blackListIds
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductListProductConcreteStorageReaderInterface $productListProductConcreteStorageReader;
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductListProductConcreteStorageReaderInterface $productListProductConcreteStorageReader;
      */
     protected function createProductListProductConcreteStorageReader(array $whiteListIds, array $blackListIds)
     {
