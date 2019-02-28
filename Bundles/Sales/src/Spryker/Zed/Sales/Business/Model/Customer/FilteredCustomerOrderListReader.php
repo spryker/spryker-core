@@ -68,7 +68,7 @@ class FilteredCustomerOrderListReader implements FilteredCustomerOrderListReader
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer[] $orderList
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[]
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
     protected function hydrateOrderListCollectionTransferFromEntityCollection(array $orderList): array
     {
