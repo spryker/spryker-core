@@ -371,6 +371,10 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $sessionQuoteTransfer = $this->getQuoteClient()->getQuote();
 
+        if (!$quoteTransfer) {
+            return $sessionQuoteTransfer;
+        }
+
         if ($quoteTransfer->getIdQuote() === $sessionQuoteTransfer->getIdQuote()) {
             $quoteTransfer = $sessionQuoteTransfer->fromArray(
                 $quoteTransfer->modifiedToArray(),
