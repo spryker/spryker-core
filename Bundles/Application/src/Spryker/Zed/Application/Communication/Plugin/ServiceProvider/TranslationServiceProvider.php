@@ -30,7 +30,9 @@ class TranslationServiceProvider extends AbstractPlugin implements ServiceProvid
     {
         $app['twig'] = $app->share(
             $app->extend('twig', function (Twig_Environment $twig) use ($app) {
-                $twig->addExtension(new TranslationExtension(new Translator($app['locale'])));
+                $translator = new Translator($app['locale']);
+                $app['translator'] = $translator;
+                $twig->addExtension(new TranslationExtension($translator));
 
                 return $twig;
             })

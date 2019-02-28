@@ -23,6 +23,14 @@ class CatFaceTransfer extends AbstractTransfer
 
     public const TYPED_ARRAY = 'typedArray';
 
+    public const TYPED_ASSOCIATIVE_STRING_ARRAY = 'typedAssociativeStringArray';
+
+    public const TYPED_ASSOCIATIVE_COLLECTION = 'typedAssociativeCollection';
+
+    public const TYPED_NOT_ASSOCIATIVE_STRING_ARRAY = 'typedNotAssociativeStringArray';
+
+    public const TYPED_NOT_ASSOCIATIVE_ARRAY = 'typedNotAssociativeArray';
+
     /**
      * @var string|null
      */
@@ -44,6 +52,26 @@ class CatFaceTransfer extends AbstractTransfer
     protected $typedArray = [];
 
     /**
+     * @var string[]
+     */
+    protected $typedAssociativeStringArray = [];
+
+    /**
+     * @var \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected $typedAssociativeCollection;
+
+    /**
+     * @var string[]
+     */
+    protected $typedNotAssociativeStringArray = [];
+
+    /**
+     * @var array
+     */
+    protected $typedNotAssociativeArray = [];
+
+    /**
      * @var array
      */
     protected $transferPropertyNameMap = [
@@ -56,6 +84,18 @@ class CatFaceTransfer extends AbstractTransfer
         'typed_array' => 'typedArray',
         'typedArray' => 'typedArray',
         'TypedArray' => 'typedArray',
+        'typed_associative_string_array' => 'typedAssociativeStringArray',
+        'typedAssociativeStringArray' => 'typedAssociativeStringArray',
+        'TypedAssociativeStringArray' => 'typedAssociativeStringArray',
+        'typed_associative_collection' => 'typedAssociativeCollection',
+        'typedAssociativeCollection' => 'typedAssociativeCollection',
+        'TypedAssociativeCollection' => 'typedAssociativeCollection',
+        'typed_not_associative_string_array' => 'typedNotAssociativeStringArray',
+        'typedNotAssociativeStringArray' => 'typedNotAssociativeStringArray',
+        'TypedNotAssociativeStringArray' => 'typedNotAssociativeStringArray',
+        'typed_not_associative_array' => 'typedNotAssociativeArray',
+        'typedNotAssociativeArray' => 'typedNotAssociativeArray',
+        'TypedNotAssociativeArray' => 'typedNotAssociativeArray',
     ];
 
     /**
@@ -68,6 +108,8 @@ class CatFaceTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
         ],
         self::ITEM => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
@@ -75,6 +117,8 @@ class CatFaceTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => true,
             'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
         ],
         self::ITEMS => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
@@ -82,6 +126,8 @@ class CatFaceTransfer extends AbstractTransfer
             'is_collection' => true,
             'is_transfer' => true,
             'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
         ],
         self::TYPED_ARRAY => [
             'type' => 'string[]',
@@ -89,6 +135,44 @@ class CatFaceTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
+        ],
+        self::TYPED_ASSOCIATIVE_STRING_ARRAY => [
+            'type' => 'string[]',
+            'name_underscore' => 'typed_associative_string_array',
+            'is_collection' => false,
+            'is_transfer' => false,
+            'rest_request_parameter' => 'no',
+            'is_associative' => true,
+            'is_nullable' => false,
+        ],
+        self::TYPED_ASSOCIATIVE_COLLECTION => [
+            'type' => 'Generated\Shared\Transfer\ItemTransfer',
+            'name_underscore' => 'typed_associative_collection',
+            'is_collection' => true,
+            'is_transfer' => true,
+            'rest_request_parameter' => 'no',
+            'is_associative' => true,
+            'is_nullable' => false,
+        ],
+        self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY => [
+            'type' => 'string[]',
+            'name_underscore' => 'typed_not_associative_string_array',
+            'is_collection' => false,
+            'is_transfer' => false,
+            'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
+        ],
+        self::TYPED_NOT_ASSOCIATIVE_ARRAY => [
+            'type' => 'array',
+            'name_underscore' => 'typed_not_associative_array',
+            'is_collection' => false,
+            'is_transfer' => false,
+            'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
         ],
     ];
 
@@ -270,6 +354,216 @@ class CatFaceTransfer extends AbstractTransfer
     public function requireTypedArray()
     {
         $this->assertPropertyIsSet(self::TYPED_ARRAY);
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param string[] $typedAssociativeStringArray
+     *
+     * @return $this
+     */
+    public function setTypedAssociativeStringArray($typedAssociativeStringArray)
+    {
+        $this->typedAssociativeStringArray = $typedAssociativeStringArray;
+        $this->modifiedProperties[self::TYPED_ASSOCIATIVE_STRING_ARRAY] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return string[]
+     */
+    public function getTypedAssociativeStringArray()
+    {
+        return $this->typedAssociativeStringArray;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param string|int $typedAssociativeStringArrayKey
+     * @param string $typedAssociativeStringArrayValue
+     *
+     * @return $this
+     */
+    public function addTypedAssociativeStringArray($typedAssociativeStringArrayKey, $typedAssociativeStringArrayValue)
+    {
+        $this->typedAssociativeStringArray[$typedAssociativeStringArrayKey] = $typedAssociativeStringArrayValue;
+        $this->modifiedProperties[self::TYPED_ASSOCIATIVE_STRING_ARRAY] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return $this
+     */
+    public function requireTypedAssociativeStringArray()
+    {
+        $this->assertPropertyIsSet(self::TYPED_ASSOCIATIVE_STRING_ARRAY);
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $typedAssociativeCollection
+     *
+     * @return $this
+     */
+    public function setTypedAssociativeCollection(ArrayObject $typedAssociativeCollection)
+    {
+        $this->typedAssociativeCollection = $typedAssociativeCollection;
+        $this->modifiedProperties[self::TYPED_ASSOCIATIVE_COLLECTION] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getTypedAssociativeCollection()
+    {
+        return $this->typedAssociativeCollection;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param string|int $typedAssociativeCollectionKey
+     * @param \Generated\Shared\Transfer\ItemTransfer $typedAssociativeCollectionValue
+     *
+     * @return $this
+     */
+    public function addTypedAssociativeCollection($typedAssociativeCollectionKey, ItemTransfer $typedAssociativeCollectionValue)
+    {
+        $this->typedAssociativeCollection[$typedAssociativeCollectionKey] = $typedAssociativeCollectionValue;
+        $this->modifiedProperties[self::TYPED_ASSOCIATIVE_COLLECTION] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return $this
+     */
+    public function requireTypedAssociativeCollection()
+    {
+        $this->assertCollectionPropertyIsSet(self::TYPED_ASSOCIATIVE_COLLECTION);
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param string[] $typedNotAssociativeStringArray
+     *
+     * @return $this
+     */
+    public function setTypedNotAssociativeStringArray($typedNotAssociativeStringArray)
+    {
+        $this->typedNotAssociativeStringArray = $typedNotAssociativeStringArray;
+        $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return string[]
+     */
+    public function getTypedNotAssociativeStringArray()
+    {
+        return $this->typedNotAssociativeStringArray;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param string $typedNotAssociativeStringArray
+     *
+     * @return $this
+     */
+    public function addTypedNotAssociativeStringArray($typedNotAssociativeStringArray)
+    {
+        $this->typedNotAssociativeStringArray[] = $typedNotAssociativeStringArray;
+        $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return $this
+     */
+    public function requireTypedNotAssociativeStringArray()
+    {
+        $this->assertPropertyIsSet(self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY);
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param array $typedNotAssociativeArray
+     *
+     * @return $this
+     */
+    public function setTypedNotAssociativeArray($typedNotAssociativeArray)
+    {
+        $this->typedNotAssociativeArray = $typedNotAssociativeArray;
+        $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_ARRAY] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return array
+     */
+    public function getTypedNotAssociativeArray()
+    {
+        return $this->typedNotAssociativeArray;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param mixed $typedNotAssociativeArray
+     *
+     * @return $this
+     */
+    public function addTypedNotAssociativeArray($typedNotAssociativeArray)
+    {
+        $this->typedNotAssociativeArray[] = $typedNotAssociativeArray;
+        $this->modifiedProperties[self::TYPED_NOT_ASSOCIATIVE_ARRAY] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return $this
+     */
+    public function requireTypedNotAssociativeArray()
+    {
+        $this->assertPropertyIsSet(self::TYPED_NOT_ASSOCIATIVE_ARRAY);
 
         return $this;
     }
