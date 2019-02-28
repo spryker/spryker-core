@@ -127,7 +127,7 @@ class StorageStrategyProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Quote\QuoteConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\QuoteConfig
      */
     protected function createQuoteConfigMock()
     {

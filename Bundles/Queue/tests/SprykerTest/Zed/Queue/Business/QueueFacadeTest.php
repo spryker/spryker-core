@@ -124,7 +124,7 @@ class QueueFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\PHPUnit\Framework\MockObject\MockBuilder
+     * @return \PHPUnit\Framework\MockObject\MockObject|\PHPUnit\Framework\MockObject\MockBuilder
      */
     protected function createQueueClientMock()
     {
