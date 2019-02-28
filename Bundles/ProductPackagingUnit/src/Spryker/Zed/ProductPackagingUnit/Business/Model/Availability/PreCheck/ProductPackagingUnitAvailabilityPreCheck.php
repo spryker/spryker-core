@@ -60,9 +60,9 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
      * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $leadProductSku
      *
-     * @return int
+     * @return float
      */
-    protected function getAccumulatedQuantityForLeadProduct(Traversable $items, string $leadProductSku): int
+    protected function getAccumulatedQuantityForLeadProduct(Traversable $items, string $leadProductSku): float
     {
         $quantity = 0;
 
