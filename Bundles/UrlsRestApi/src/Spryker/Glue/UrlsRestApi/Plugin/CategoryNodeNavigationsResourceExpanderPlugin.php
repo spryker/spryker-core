@@ -19,7 +19,7 @@ class CategoryNodeNavigationsResourceExpanderPlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritdoc}
-     *  - Expands navigations resource with category node data.
+     *  - Expands navigations resource with information about the assigned category.
      *
      * @api
      *

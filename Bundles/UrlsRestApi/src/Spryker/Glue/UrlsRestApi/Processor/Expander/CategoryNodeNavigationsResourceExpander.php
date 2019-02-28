@@ -49,7 +49,7 @@ class CategoryNodeNavigationsResourceExpander implements CategoryNodeNavigations
         foreach ($restNavigationNodeTransfers as $restNavigationNodeTransfer) {
             $utlStorageTransfer = $this->urlStorageClient->findUrlStorageTransferByUrl($restNavigationNodeTransfer->getUrl());
             if ($utlStorageTransfer) {
-                $restNavigationNodeTransfer->setNodeId($utlStorageTransfer->getFkResourceCategorynode());
+                $restNavigationNodeTransfer->setAssignedEntityId($utlStorageTransfer->getFkResourceCategorynode());
             }
 
             if ($restNavigationNodeTransfer->getChildren()->count() > 0) {
