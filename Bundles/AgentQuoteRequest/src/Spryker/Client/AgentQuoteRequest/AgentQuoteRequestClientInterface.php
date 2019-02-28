@@ -77,4 +77,17 @@ interface AgentQuoteRequestClientInterface
      * @return bool
      */
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * Specification:
+     * - Checks start editable status from config.
+     * - If "Request for Quote" in waiting status - return true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestCanStartEditable(QuoteRequestTransfer $quoteRequestTransfer): bool;
 }

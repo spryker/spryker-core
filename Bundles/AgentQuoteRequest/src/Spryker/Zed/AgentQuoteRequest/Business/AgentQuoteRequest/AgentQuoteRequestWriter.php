@@ -88,7 +88,7 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
                 ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS);
         }
 
-        if (!$this->isQuoteRequestEditable($quoteRequestTransfer)) {
+        if (!$this->isQuoteRequestCanStartEditable($quoteRequestTransfer)) {
             return $quoteRequestResponseTransfer
                 ->setIsSuccess(false)
                 ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
@@ -134,7 +134,7 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
      *
      * @return bool
      */
-    protected function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    protected function isQuoteRequestCanStartEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_WAITING;
     }

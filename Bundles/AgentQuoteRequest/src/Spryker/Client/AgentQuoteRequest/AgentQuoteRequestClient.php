@@ -79,6 +79,22 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestCanStartEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteRequestChecker()
+            ->isQuoteRequestCanStartEditable($quoteRequestTransfer);
+    }
+
+    /**
      * @return \Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStubInterface
      */
     protected function getZedStub(): AgentQuoteRequestStubInterface

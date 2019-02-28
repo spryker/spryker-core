@@ -38,7 +38,7 @@ interface QuoteRequestFacadeInterface
 
     /**
      * Specification:
-     * - Finds a company by QuoteRequestTransfer::idQuoteRequest in the transfer.
+     * - Finds a "Request for Quote" by QuoteRequestTransfer::idQuoteRequest in the transfer.
      * - Updates fields in a "Request for Quote" entity.
      *
      * @api
