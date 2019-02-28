@@ -38,8 +38,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SALES = 'FACADE_SALES';
 
     public const FACADE_STORE = 'FACADE_STORE';
-    public const SERVICE_OMS = 'SERVICE_OMS';
     public const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
+    public const SERVICE_OMS = 'SERVICE_OMS';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
 
