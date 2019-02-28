@@ -26,13 +26,13 @@ class ProductBundleMapper implements ProductBundleMapperInterface
         ObjectCollection $productBundleEntities,
         ProductBundleCollectionTransfer $productBundleCollectionTransfer
     ): ProductBundleCollectionTransfer {
-        $productBundleEntitiesByBundleIdArray = $this->getProductBundleEntitiesByBundleIdArray($productBundleEntities);
+        $productBundleEntitiesByBundleIdArray = $this->getProductBundleEntitiesGroupedByIdProductBundle($productBundleEntities);
 
         foreach ($productBundleEntitiesByBundleIdArray as $idProductBundle => $productBundleEntities) {
             $productBundleTransfer = new ProductBundleTransfer();
             $productBundleTransfer->setIdProductConcrete($idProductBundle);
-            $productForBundleTransfer = $this->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities, new ArrayObject());
-            $productBundleTransfer->setBundledProducts($productForBundleTransfer);
+            $productForBundleTransfers = $this->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities, new ArrayObject());
+            $productBundleTransfer->setBundledProducts($productForBundleTransfers);
             $productBundleCollectionTransfer->addProductBundle($productBundleTransfer);
         }
 
@@ -44,7 +44,7 @@ class ProductBundleMapper implements ProductBundleMapperInterface
      *
      * @return array
      */
-    protected function getProductBundleEntitiesByBundleIdArray(ObjectCollection $productBundleEntities): array
+    protected function getProductBundleEntitiesGroupedByIdProductBundle(ObjectCollection $productBundleEntities): array
     {
         $productBundleEntitiesByBundleIdArray = [];
 
@@ -80,8 +80,7 @@ class ProductBundleMapper implements ProductBundleMapperInterface
     protected function mapProductBundleEntityToProductForBundleTransfer(SpyProductBundle $productBundleEntity, ProductForBundleTransfer $productForBundleTransfer): ProductForBundleTransfer
     {
         $productForBundleTransfer->setIdProductConcrete($productBundleEntity->getFkBundledProduct());
-        $sku = $productBundleEntity->getSpyProductRelatedByFkBundledProduct()->getSku();
-        $productForBundleTransfer->setSku($sku);
+        $productForBundleTransfer->setSku($productBundleEntity->getSpyProductRelatedByFkBundledProduct()->getSku());
         $productForBundleTransfer->fromArray($productBundleEntity->toArray(), true);
 
         return $productForBundleTransfer;

@@ -24,7 +24,7 @@ interface ProductBundleReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
      */
-    public function findProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete): ProductBundleCollectionTransfer;
+    public function findProductBundleCollectionByAssignedIdProductConcrete(int $idProductConcrete): ProductBundleCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

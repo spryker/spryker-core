@@ -86,7 +86,7 @@ class ProductBundleReader implements ProductBundleReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
      */
-    public function findProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete): ProductBundleCollectionTransfer
+    public function findProductBundleCollectionByAssignedIdProductConcrete(int $idProductConcrete): ProductBundleCollectionTransfer
     {
         return $this->productBundleRepository
             ->findProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete);

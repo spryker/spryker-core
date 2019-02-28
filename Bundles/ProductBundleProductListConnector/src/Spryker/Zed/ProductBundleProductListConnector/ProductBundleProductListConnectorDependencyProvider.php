@@ -23,7 +23,7 @@ class ProductBundleProductListConnectorDependencyProvider extends AbstractBundle
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addFacadeProductBundle($container);
@@ -36,7 +36,7 @@ class ProductBundleProductListConnectorDependencyProvider extends AbstractBundle
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addFacadeProductBundle(Container $container)
+    protected function addFacadeProductBundle(Container $container): Container
     {
         $container[static::FACADE_PRODUCT_BUNDLE] = function (Container $container) {
             return new ProductBundleProductListConnectorToProductBundleFacadeBridge($container->getLocator()->productBundle()->facade());

@@ -49,20 +49,19 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
     protected function blacklistExpandByIdProduct(int $idProductConcrete, ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
     {
         $productIdsToSave = $productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds();
-        $productBundleCollection = $this->productBundleFacade->findProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete);
+        $productBundleCollectionTransfer = $this->productBundleFacade->findProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete);
 
-        if (!count($productBundleCollection->toArray())) {
+        if (!$productBundleCollectionTransfer->getProductBundles()->count()) {
             return $productListResponseTransfer;
         }
 
-        foreach ($productBundleCollection->getProductBundles() as $productBundle) {
+        foreach ($productBundleCollectionTransfer->getProductBundles() as $productBundle) {
             if (in_array($productBundle->getIdProductConcrete(), $productIdsToSave)) {
                 break;
             }
 
             $productIdsToSave[] = $productBundle->getIdProductConcrete();
             $messageTransfer = $this->createBlacklistMessageTransfer($productBundle->getIdProductConcrete(), $idProductConcrete);
-
             $productListResponseTransfer->addMessage($messageTransfer);
         }
 
