@@ -113,9 +113,8 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
         $merchantRelationTransfer->requireIdMerchantRelationship();
 
         $this->getTransactionHandler()->handleTransaction(function () use ($merchantRelationTransfer) {
-            $this->executeMerchantRelationshipPreDeletePluginsTransaction($merchantRelationTransfer);
+            $this->executeDeleteMerchantRelationshipByIdTransaction($merchantRelationTransfer);
         });
-        $this->entityManager->deleteMerchantRelationshipById($merchantRelationTransfer->getIdMerchantRelationship());
     }
 
     /**
@@ -171,7 +170,18 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
      *
      * @return void
      */
-    protected function executeMerchantRelationshipPreDeletePluginsTransaction(MerchantRelationshipTransfer $merchantRelationTransfer): void
+    protected function executeDeleteMerchantRelationshipByIdTransaction(MerchantRelationshipTransfer $merchantRelationTransfer): void
+    {
+        $this->executeMerchantRelationshipPreDeletePlugins($merchantRelationTransfer);
+        $this->entityManager->deleteMerchantRelationshipById($merchantRelationTransfer->getIdMerchantRelationship());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
+     *
+     * @return void
+     */
+    protected function executeMerchantRelationshipPreDeletePlugins(MerchantRelationshipTransfer $merchantRelationTransfer): void
     {
         foreach ($this->merchantRelationshipPreDeletePlugins as $merchantRelationshipPreDeletePlugin) {
             $merchantRelationshipPreDeletePlugin->execute($merchantRelationTransfer);
