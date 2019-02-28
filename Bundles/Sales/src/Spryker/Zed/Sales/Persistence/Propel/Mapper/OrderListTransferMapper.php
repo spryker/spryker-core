@@ -15,15 +15,15 @@ class OrderListTransferMapper
 {
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orderList
-     * @param int $nbResults
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orders
+     * @param int $ordersCount
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function mapPaginatedOrderListTransfer(OrderListTransfer $orderListTransfer, array $orderList, int $nbResults): OrderListTransfer
+    public function mapPaginatedOrderListTransfer(OrderListTransfer $orderListTransfer, array $orders, int $ordersCount): OrderListTransfer
     {
         return $orderListTransfer
-            ->setOrders(new ArrayObject($orderList))
-            ->setPagination((new PaginationTransfer())->setNbResults($nbResults));
+            ->setOrders(new ArrayObject($orders))
+            ->setPagination((new PaginationTransfer())->setNbResults($ordersCount));
     }
 }
