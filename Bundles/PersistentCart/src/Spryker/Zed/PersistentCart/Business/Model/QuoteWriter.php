@@ -119,9 +119,11 @@ class QuoteWriter implements QuoteWriterInterface
         }
 
         if (!$this->isQuoteOwner($quoteResponseTransfer->getQuoteTransfer()) && !$this->hasCustomerWritePermission($quoteUpdateRequestTransfer)) {
-            return (new QuoteResponseTransfer())
+            $quoteResponseTransfer = (new QuoteResponseTransfer())
                 ->setCustomer($quoteResponseTransfer->getCustomer())
                 ->setIsSuccessful(false);
+
+            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
         }
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
