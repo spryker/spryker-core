@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 
 class OrderListTransferMapper
@@ -22,8 +22,12 @@ class OrderListTransferMapper
      */
     public function mapPaginatedOrderListTransfer(OrderListTransfer $orderListTransfer, array $orders, int $ordersCount): OrderListTransfer
     {
-        return $orderListTransfer
-            ->setOrders(new ArrayObject($orders))
-            ->setPagination((new PaginationTransfer())->setNbResults($ordersCount));
+        foreach ($orders as $order) {
+            $orderListTransfer->addOrder(
+                (new OrderTransfer())->fromArray($order->toArray(), true)
+            );
+        }
+
+        return $orderListTransfer->setPagination((new PaginationTransfer())->setNbResults($ordersCount));
     }
 }
