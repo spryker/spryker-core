@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductList\Business\ProductList;
 
+use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface;
@@ -22,28 +23,36 @@ class ProductListWriter implements ProductListWriterInterface
     protected $productListEntityManager;
 
     /**
-     * @var array|\Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface[]
-     */
-    protected $productListPostSavers;
-
-    /**
      * @var \Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface
      */
     protected $productListKeyGenerator;
 
     /**
+     * @var array|\Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface[]
+     */
+    protected $productListPostSavers;
+
+    /**
+     * @var array|\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaverInterface[]
+     */
+    protected $productListPreSavers;
+
+    /**
      * @param \Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface $productListEntityManager
      * @param \Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface $productListKeyGenerator
      * @param \Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface[] $productListPostSavers
+     * @param \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaverInterface[] $productListPreSavers
      */
     public function __construct(
         ProductListEntityManagerInterface $productListEntityManager,
         ProductListKeyGeneratorInterface $productListKeyGenerator,
-        array $productListPostSavers = []
+        array $productListPostSavers = [],
+        array $productListPreSavers = []
     ) {
         $this->productListEntityManager = $productListEntityManager;
         $this->productListKeyGenerator = $productListKeyGenerator;
         $this->productListPostSavers = $productListPostSavers;
+        $this->productListPreSavers = $productListPreSavers;
     }
 
     /**
@@ -52,6 +61,18 @@ class ProductListWriter implements ProductListWriterInterface
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
     public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productListTransfer) {
+            return $this->executeSaveProductListTransaction($productListTransfer)->getProductList();
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function saveProductListWithResponse(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($productListTransfer) {
             return $this->executeSaveProductListTransaction($productListTransfer);
@@ -73,23 +94,33 @@ class ProductListWriter implements ProductListWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListTransfer
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
     protected function executeSaveProductListTransaction(
         ProductListTransfer $productListTransfer
-    ): ProductListTransfer {
+    ): ProductListResponseTransfer {
+        $productListResponseTransfer = new ProductListResponseTransfer();
+
         $productListTransfer->requireTitle();
         if (empty($productListTransfer->getKey())) {
             $productListTransfer->setKey($this->productListKeyGenerator->generateProductListKey($productListTransfer->getTitle()));
         }
 
-        $productListTransfer = $this->productListEntityManager->saveProductList($productListTransfer);
+        $productListResponseTransfer->setProductList($productListTransfer);
+
+        foreach ($this->productListPreSavers as $productListPreSaver) {
+            $productListResponseTransfer = $productListPreSaver->preSave($productListResponseTransfer);
+        }
+
+        $productListTransfer = $this->productListEntityManager->saveProductList($productListResponseTransfer->getProductList());
 
         foreach ($this->productListPostSavers as $productListPostSaver) {
             $productListTransfer = $productListPostSaver->postSave($productListTransfer);
         }
 
-        return $productListTransfer;
+        $productListResponseTransfer->setProductList($productListTransfer);
+
+        return $productListResponseTransfer;
     }
 
     /**

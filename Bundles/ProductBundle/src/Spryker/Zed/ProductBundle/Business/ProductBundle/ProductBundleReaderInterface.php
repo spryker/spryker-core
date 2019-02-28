@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
+use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductBundleReaderInterface
@@ -17,6 +18,13 @@ interface ProductBundleReaderInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
     public function findBundledProductsByIdProductConcrete($idProductConcrete);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
+     */
+    public function findProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete): ProductBundleCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductList\Business\ProductList;
 
+use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 
 interface ProductListWriterInterface
@@ -17,6 +18,13 @@ interface ProductListWriterInterface
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
     public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function saveProductListWithResponse(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer

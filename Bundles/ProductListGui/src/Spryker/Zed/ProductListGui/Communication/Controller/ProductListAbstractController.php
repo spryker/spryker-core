@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductListAggregateFormTransfer;
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
+use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListProductConcreteRelationFormType;
@@ -76,7 +77,28 @@ class ProductListAbstractController extends AbstractController
             )
         );
 
-        return $this->storeProductList($productListTransfer);
+        $productListResponseTransfer = $this->storeProductList($productListTransfer);
+
+        $this->addMessagesFromProductListResponseTransfer($productListResponseTransfer);
+
+        return $productListResponseTransfer->getProductList();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     *
+     * @return void
+     */
+    protected function addMessagesFromProductListResponseTransfer(ProductListResponseTransfer $productListResponseTransfer): void
+    {
+        foreach ($productListResponseTransfer->getMessages() as $messageTransfer) {
+            if ($productListResponseTransfer->getIsSuccess()) {
+                $this->addSuccessMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
+
+                continue;
+            }
+            $this->addErrorMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
+        }
     }
 
     /**
@@ -108,13 +130,13 @@ class ProductListAbstractController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListTransfer
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    protected function storeProductList(ProductListTransfer $productListTransfer): ProductListTransfer
+    protected function storeProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
         return $this->getFactory()
             ->getProductListFacade()
-            ->saveProductList($productListTransfer);
+            ->saveProductListWithResponse($productListTransfer);
     }
 
     /**

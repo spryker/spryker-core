@@ -8,12 +8,14 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 class ProductBundleReader implements ProductBundleReaderInterface
 {
@@ -33,18 +35,26 @@ class ProductBundleReader implements ProductBundleReaderInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
+     */
+    protected $productBundleRepository;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
-        ProductBundleToStoreFacadeInterface $storeFacade
+        ProductBundleToStoreFacadeInterface $storeFacade,
+        ProductBundleRepositoryInterface $productBundleRepository
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->availabilityQueryContainer = $availabilityQueryContainer;
         $this->storeFacade = $storeFacade;
+        $this->productBundleRepository = $productBundleRepository;
     }
 
     /**
@@ -69,6 +79,17 @@ class ProductBundleReader implements ProductBundleReaderInterface
         }
 
         return $bundledProductsTransferCollection;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
+     */
+    public function findProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete): ProductBundleCollectionTransfer
+    {
+        return $this->productBundleRepository
+            ->findProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete);
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductList\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -23,6 +24,7 @@ interface ProductListFacadeInterface
      * - Updates fields in a Product List entity if ProductListTransfer::idProductList is set.
      * - Updates relations to categories.
      * - Updates relations to concrete products.
+     * - Uses pre save plugins.
      *
      * @api
      *
@@ -31,6 +33,26 @@ interface ProductListFacadeInterface
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
     public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer;
+
+    /**
+     * Specification:
+     * - Creates a Product List entity if ProductListTransfer::idProductList is null.
+     * - Creates relations to categories.
+     * - Creates relations to concrete products.
+     * - Finds a Product List by ProductListTransfer::idProductList in the transfer.
+     * - Updates fields in a Product List entity if ProductListTransfer::idProductList is set.
+     * - Updates relations to categories.
+     * - Updates relations to concrete products.
+     * - Uses pre save plugins.
+     * - Returns ProductListResponseTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function saveProductListWithResponse(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 
     /**
      * Specification:

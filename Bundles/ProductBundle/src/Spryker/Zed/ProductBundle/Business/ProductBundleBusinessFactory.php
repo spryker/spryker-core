@@ -41,6 +41,7 @@ use Spryker\Zed\ProductBundle\ProductBundleDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
  * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface getRepository()
  */
 class ProductBundleBusinessFactory extends AbstractBusinessFactory
 {
@@ -64,7 +65,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleReader(
             $this->getQueryContainer(),
             $this->getAvailabilityQueryContainer(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getRepository()
         );
     }
 
