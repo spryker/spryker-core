@@ -202,7 +202,7 @@ class CategoryEditDataProvider
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return array
+     * @return int[]
      */
     protected function getCategoryLocaleIds(CategoryTransfer $categoryTransfer): array
     {
