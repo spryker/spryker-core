@@ -107,7 +107,9 @@ class OrderReader implements OrderReaderInterface
         $customerReference = $restRequest->getUser()->getNaturalIdentifier();
         $orderListTransfer = (new OrderListTransfer())->setCustomerReference($customerReference);
 
+        $limit = 0;
         if ($restRequest->getPage()) {
+            $limit = $restRequest->getPage()->getLimit();
             $orderListTransfer->setFilter($this->createFilterTransfer($restRequest));
         }
 
@@ -115,7 +117,7 @@ class OrderReader implements OrderReaderInterface
         $totalItems = $orderListTransfer->getPagination() ? $orderListTransfer->getPagination()->getNbResults() : 0;
         $response = $this
             ->restResourceBuilder
-            ->createRestResponse($totalItems, $restRequest->getPage()->getLimit());
+            ->createRestResponse($totalItems, $limit);
 
         foreach ($orderListTransfer->getOrders() as $orderTransfer) {
             $restOrdersAttributesTransfer = $this->orderResourceMapper->mapOrderTransferToRestOrdersAttributesTransfer($orderTransfer);

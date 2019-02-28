@@ -11,16 +11,16 @@ use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 
-class OrderListTransferMapper implements OrderListTransferMapperInterface
+class OrderListTransferMapper
 {
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param array $orderList
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orderList
      * @param int $nbResults
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function mapOrderListTransfer(OrderListTransfer $orderListTransfer, array $orderList, int $nbResults): OrderListTransfer
+    public function mapPaginatedOrderListTransfer(OrderListTransfer $orderListTransfer, array $orderList, int $nbResults): OrderListTransfer
     {
         return $orderListTransfer
             ->setOrders(new ArrayObject($orderList))

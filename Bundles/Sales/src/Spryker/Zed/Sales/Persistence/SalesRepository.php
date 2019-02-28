@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Propel\PropelFilterCriteria;
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesPersistenceFactory getFactory()
@@ -45,21 +46,21 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         $orderListQuery = $this->getFactory()
             ->createSalesOrderQuery()
             ->filterByCustomerReference($orderListTransfer->getCustomerReference());
-        $numberOfOrders = $orderListQuery->count();
-        if (!$numberOfOrders) {
+        $ordersCount = $orderListQuery->count();
+        if (!$ordersCount) {
             return $orderListTransfer;
         }
 
         $filterTransfer = $orderListTransfer->getFilter();
-        if ($orderListTransfer->getFilter()) {
-            $orderListQuery
-                ->setLimit($filterTransfer->getLimit())
-                ->setOffset($filterTransfer->getOffset());
+        if ($filterTransfer) {
+            $orderListQuery->mergeWith(
+                (new PropelFilterCriteria($filterTransfer))->toCriteria()
+            );
         }
 
         $orderListTransfer = $this->getFactory()
             ->createOrderListTransferMapper()
-            ->mapOrderListTransfer($orderListTransfer, $orderListQuery->find()->getArrayCopy(), $numberOfOrders);
+            ->mapPaginatedOrderListTransfer($orderListTransfer, $orderListQuery->find()->getArrayCopy(), $ordersCount);
 
         return $orderListTransfer;
     }

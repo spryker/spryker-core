@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Business\Model\Customer;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
@@ -60,32 +59,28 @@ class FilteredCustomerOrderListReader implements FilteredCustomerOrderListReader
             return $orderListTransfer;
         }
 
-        $orders = $this->hydrateOrderListCollectionTransferFromEntityCollection(new ObjectCollection($orderList));
-        $orderListTransfer->setOrders($orders);
+        $orders = $this->hydrateOrderListCollectionTransferFromEntityCollection($orderList->getArrayCopy());
+        $orderListTransfer->setOrders(new ArrayObject($orders));
 
         return $orderListTransfer;
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $orderCollection
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderList
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[]
      */
-    protected function hydrateOrderListCollectionTransferFromEntityCollection(ObjectCollection $orderCollection)
+    protected function hydrateOrderListCollectionTransferFromEntityCollection(array $orderList): array
     {
-        $orders = new ArrayObject();
-        foreach ($orderCollection as $salesOrderEntity) {
-            if ($salesOrderEntity->countItems() === 0) {
-                continue;
-            }
-
-            $idSalesOrder = $salesOrderEntity->getIdSalesOrder();
+        $orders = [];
+        foreach ($orderList as $order) {
+            $idSalesOrder = $order->getIdSalesOrder();
             if ($this->omsFacade->isOrderFlaggedExcludeFromCustomer($idSalesOrder)) {
                 continue;
             }
 
             $orderTransfer = $this->orderHydrator->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
-            $orders->append($orderTransfer);
+            $orders[] = $orderTransfer;
         }
 
         return $orders;
