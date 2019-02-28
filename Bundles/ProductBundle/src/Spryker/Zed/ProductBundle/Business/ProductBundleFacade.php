@@ -116,7 +116,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     public function preCheckCartActive(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         return $this->getFactory()
-            ->createProductBundleCartActivePreCheck()
+            ->createProductBundleCartActiveCheck()
             ->checkActiveItems($cartChangeTransfer);
     }
 

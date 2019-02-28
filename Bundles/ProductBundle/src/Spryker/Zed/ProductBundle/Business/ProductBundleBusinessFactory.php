@@ -155,7 +155,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheckInterface
      */
-    public function createProductBundleCartActivePreCheck(): ProductBundleCartActiveCheckInterface
+    public function createProductBundleCartActiveCheck(): ProductBundleCartActiveCheckInterface
     {
         return new ProductBundleCartActiveCheck(
             $this->getRepository()
