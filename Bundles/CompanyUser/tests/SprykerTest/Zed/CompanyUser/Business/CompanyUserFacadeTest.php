@@ -13,6 +13,7 @@ use Generated\Shared\DataBuilder\CompanyResponseBuilder;
 use Generated\Shared\DataBuilder\CompanyUserBuilder;
 use Generated\Shared\DataBuilder\CompanyUserCriteriaFilterBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use TypeError;
 
@@ -222,6 +223,49 @@ class CompanyUserFacadeTest extends Test
 
         // Act
         $companyUserCollectionTransfer = $this->getFacade()->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertCount(0, $companyUserCollectionTransfer->getCompanyUsers());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetActiveCompanyUsersByCustomerReferenceShouldReturnTransfer(): void
+    {
+        // Assign
+        $companyTransfer = $this->tester->haveCompany([CompanyUserTransfer::IS_ACTIVE => true]);
+        $customerTransfer = $this->tester->haveCustomer();
+        $this->tester->haveCompanyUser([
+            static::CUSTOMER_COLUMN_COMPANY_USER => $customerTransfer,
+            static::FK_COMPANY_COLUMN_COMPANY_USER => $companyTransfer->getIdCompany(),
+            static::IS_ACTIVE_COLUMN_COMPANY_USER => true,
+        ]);
+
+        // Act
+        $companyUserCollectionTransfer = $this->getFacade()->getActiveCompanyUsersByCustomerReference($customerTransfer);
+
+        // Assert
+        $this->assertInstanceOf(CompanyUserCollectionTransfer::class, $companyUserCollectionTransfer);
+        $this->assertCount(1, $companyUserCollectionTransfer->getCompanyUsers());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetActiveCompanyUsersByCustomerReferenceShouldNotReturnInactiveCompanyUsers(): void
+    {
+        // Assign
+        $companyTransfer = $this->tester->haveCompany([CompanyUserTransfer::IS_ACTIVE => true]);
+        $customerTransfer = $this->tester->haveCustomer();
+        $this->tester->haveCompanyUser([
+            static::CUSTOMER_COLUMN_COMPANY_USER => $customerTransfer,
+            static::FK_COMPANY_COLUMN_COMPANY_USER => $companyTransfer->getIdCompany(),
+            static::IS_ACTIVE_COLUMN_COMPANY_USER => false,
+        ]);
+
+        // Act
+        $companyUserCollectionTransfer = $this->getFacade()->getActiveCompanyUsersByCustomerReference($customerTransfer);
 
         // Assert
         $this->assertCount(0, $companyUserCollectionTransfer->getCompanyUsers());

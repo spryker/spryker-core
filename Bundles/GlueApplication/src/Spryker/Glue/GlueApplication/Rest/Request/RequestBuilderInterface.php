@@ -18,69 +18,69 @@ interface RequestBuilderInterface
      * @param string $field
      * @param string $value
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addFilter(string $resource, string $field, string $value): self;
+    public function addFilter(string $resource, string $field, string $value);
 
     /**
      * @param string $field
      * @param string $direction
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addSort(string $field, string $direction): self;
+    public function addSort(string $field, string $direction);
 
     /**
      * @param int $offset
      * @param int $limit
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addPage(int $offset, int $limit): self;
+    public function addPage(int $offset, int $limit);
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addMetadata(MetadataInterface $metadata): self;
+    public function addMetadata(MetadataInterface $metadata);
 
     /**
      * @param array $routeContext
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addRouteContext(array $routeContext): self;
+    public function addRouteContext(array $routeContext);
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addParentResource(RestResourceInterface $restResource): self;
+    public function addParentResource(RestResourceInterface $restResource);
 
     /**
      * @param string $key
      * @param string $include
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addInclude(string $key, string $include): self;
+    public function addInclude(string $key, string $include);
 
     /**
      * @param string $resourceName
      * @param array $fields
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addFields(string $resourceName, array $fields): self;
+    public function addFields(string $resourceName, array $fields);
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addHttpRequest(Request $httpRequest): self;
+    public function addHttpRequest(Request $httpRequest);
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
@@ -95,7 +95,7 @@ interface RequestBuilderInterface
     /**
      * @param bool $excludeRelationship
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function setExcludeRelationship(bool $excludeRelationship): self;
+    public function setExcludeRelationship(bool $excludeRelationship);
 }

@@ -18,6 +18,7 @@ interface CompanyUserFacadeInterface
 {
     /**
      * Specification:
+     * - Executes CompanyUserSavePreCheckPluginInterface check plugins before company user create.
      * - Creates a company user
      *
      * @api
@@ -30,6 +31,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Executes CompanyUserSavePreCheckPluginInterface check plugins before initial company user create.
      * - Creates an initial company user
      *
      * @api
@@ -42,6 +44,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Executes CompanyUserSavePreCheckPluginInterface check plugins before company user update.
      * - Updates a company user
      *
      * @api
@@ -90,6 +93,21 @@ interface CompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     public function findActiveCompanyUserByCustomerId(CustomerTransfer $customerTransfer): ?CompanyUserTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves active company users collection by customer reference.
+     * - Checks activity flag in a related company and company user.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getActiveCompanyUsersByCustomerReference(
+        CustomerTransfer $customerTransfer
+    ): CompanyUserCollectionTransfer;
 
     /**
      * Specification:

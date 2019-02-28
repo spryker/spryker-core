@@ -10,8 +10,7 @@ namespace SprykerTest\Zed\Product\Business;
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
-use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Spryker\Shared\Url\UrlConfig;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 /**
@@ -183,12 +182,7 @@ class UrlHandlingTest extends FacadeTestAbstract
             $urlTransfer->setUrl($localizedUrlTransfer->getUrl());
             $urlTransfer = $this->urlFacade->findUrl($urlTransfer);
 
-            $activeTouchEntity = $this->getProductUrlTouchEntry($urlTransfer->getIdUrl());
-
-            $this->assertNotNull($activeTouchEntity);
-            $this->assertEquals($urlTransfer->getIdUrl(), $activeTouchEntity->getItemId());
-            $this->assertEquals(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $activeTouchEntity->getItemEvent());
-            $this->assertEquals('url', $activeTouchEntity->getItemType());
+            $this->tester->assertTouchActive(UrlConfig::RESOURCE_TYPE_URL, $urlTransfer->getIdUrl());
         }
     }
 
@@ -211,12 +205,7 @@ class UrlHandlingTest extends FacadeTestAbstract
             $urlTransfer->setUrl($localizedUrlTransfer->getUrl());
             $urlTransfer = $this->urlFacade->findUrl($urlTransfer);
 
-            $deletedTouchEntity = $this->getProductUrlTouchEntry($urlTransfer->getIdUrl());
-
-            $this->assertNotNull($deletedTouchEntity);
-            $this->assertEquals($urlTransfer->getIdUrl(), $deletedTouchEntity->getItemId());
-            $this->assertEquals(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $deletedTouchEntity->getItemEvent());
-            $this->assertEquals('url', $deletedTouchEntity->getItemType());
+            $this->tester->assertTouchDeleted(UrlConfig::RESOURCE_TYPE_URL, $urlTransfer->getIdUrl());
         }
     }
 
@@ -237,18 +226,5 @@ class UrlHandlingTest extends FacadeTestAbstract
 
         $this->assertArrayHasKey($expectedUrl->getLocale()->getLocaleName(), $urls);
         $this->assertSame($expectedUrl->getUrl(), $urls[$expectedUrl->getLocale()->getLocaleName()]);
-    }
-
-    /**
-     * @param int $idUrl
-     *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouch|null
-     */
-    protected function getProductUrlTouchEntry($idUrl)
-    {
-        return SpyTouchQuery::create()
-            ->filterByItemType('url')
-            ->filterByItemId($idUrl)
-            ->findOne();
     }
 }

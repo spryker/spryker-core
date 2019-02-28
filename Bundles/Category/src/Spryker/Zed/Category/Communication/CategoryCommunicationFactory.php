@@ -17,6 +17,8 @@ use Spryker\Zed\Category\Communication\Form\DeleteType;
 use Spryker\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Spryker\Zed\Category\Communication\Table\RootNodeTable;
 use Spryker\Zed\Category\Communication\Table\UrlTable;
+use Spryker\Zed\Category\Communication\Tabs\CategoryFormTabs;
+use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -204,5 +206,23 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     public function getCategoryFormPlugins()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_FORM_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createCategoryFormTabs(): TabsInterface
+    {
+        return new CategoryFormTabs(
+            $this->getCategoryFormTabPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[]
+     */
+    protected function getCategoryFormTabPlugins(): array
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_FORM_TAB_EXPANDER);
     }
 }
