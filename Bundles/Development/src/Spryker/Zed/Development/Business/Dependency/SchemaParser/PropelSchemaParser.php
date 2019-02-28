@@ -49,9 +49,10 @@ class PropelSchemaParser implements PropelSchemaParserInterface
         $foreignReferenceColumnNames = [];
 
         $simpleXmlElement = simplexml_load_file($fileInfo->getPathname());
-        $foreignReferences = $simpleXmlElement->xpath('//table/foreign-key/reference');
+        $simpleXmlElement->registerXPathNamespace('database', 'spryker:schema-01');
+        $foreignReferences = $simpleXmlElement->xpath('//database:table/foreign-key/reference');
         foreach ($foreignReferences as $foreignReference) {
-            $parentNode = $foreignReference->xpath('parent::*')[0];
+            $parentNode = $foreignReference->xpath('database:parent::*')[0];
             $foreignTableName = (string)$parentNode['foreignTable'];
             $foreignReferenceName = (string)$foreignReference['foreign'];
             $foreignReferenceColumnNames[] = $foreignTableName . '.' . $foreignReferenceName;
@@ -160,12 +161,13 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     protected function getIdColumnNames(SplFileInfo $splFileInfo): array
     {
         $simpleXmlElement = simplexml_load_file($splFileInfo->getPathname());
+        $simpleXmlElement->registerXPathNamespace('database', 'spryker:schema-01');
 
         $idColumnNames = [];
 
-        foreach ($simpleXmlElement->xpath('//table') as $simpleXmlTableElement) {
+        foreach ($simpleXmlElement->xpath('//database:table') as $simpleXmlTableElement) {
             $tableName = (string)$simpleXmlTableElement['name'];
-            $idColumnSimpleXmlElements = $simpleXmlTableElement->xpath('//table[@name="' . $tableName . '"]/column[starts-with(@name, "id_")]');
+            $idColumnSimpleXmlElements = $simpleXmlTableElement->xpath('//database:table[@name="' . $tableName . '"]/column[starts-with(@name, "id_")]');
             if ($idColumnSimpleXmlElements === false) {
                 continue;
             }
@@ -186,13 +188,14 @@ class PropelSchemaParser implements PropelSchemaParserInterface
      */
     protected function getUniqueColumnNames(SplFileInfo $splFileInfo): array
     {
-        $simpleXmlElement = simplexml_load_file($splFileInfo->getPathname());
+        $simpleXmlElement = simplexml_load_file($splFileInfo->getPathname(), 'SimpleXmlElement', 0, 'spryker:schema-01');
+        $simpleXmlElement->registerXPathNamespace('database', 'spryker:schema-01');
 
         $uniqueColumnNames = [];
 
-        foreach ($simpleXmlElement->xpath('//table') as $simpleXmlTableElement) {
+        foreach ($simpleXmlElement->xpath('//database:table') as $simpleXmlTableElement) {
             $tableName = (string)$simpleXmlTableElement['name'];
-            $uniqueColumnSimpleXmlElements = $simpleXmlTableElement->xpath('//table[@name="' . $tableName . '"]/unique/unique-column');
+            $uniqueColumnSimpleXmlElements = $simpleXmlTableElement->xpath('//database:table[@name="' . $tableName . '"]/unique/unique-column');
             if ($uniqueColumnSimpleXmlElements === false) {
                 continue;
             }
