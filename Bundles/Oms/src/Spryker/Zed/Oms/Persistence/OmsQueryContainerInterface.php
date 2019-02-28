@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oms\Persistence;
 
 use DateTime;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface OmsQueryContainerInterface extends QueryContainerInterface
@@ -157,7 +158,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function queryGroupedMatrixOrderItems(array $processIds, array $stateBlacklist);
+    public function queryGroupedMatrixOrderItems(array $processIds, array $stateBlacklist): SpySalesOrderItemQuery;
 
     /**
      * @api

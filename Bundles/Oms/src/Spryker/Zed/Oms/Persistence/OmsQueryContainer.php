@@ -13,6 +13,7 @@ use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -314,7 +315,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function queryGroupedMatrixOrderItems(array $processIds, array $stateBlacklist)
+    public function queryGroupedMatrixOrderItems(array $processIds, array $stateBlacklist): SpySalesOrderItemQuery
     {
         $query = $this->getFactory()
             ->getSalesQueryContainer()
