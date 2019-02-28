@@ -20,7 +20,6 @@ class ProductBundleMapper
         array $productBundleEntities
     ): array {
         $productForBundleTransfers = [];
-        /** @var \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle $productBundleEntity */
         foreach ($productBundleEntities as $productBundleEntity) {
             $productForBundleTransfers[] = (new ProductForBundleTransfer())->fromArray(
                 $productBundleEntity->getSpyProductRelatedByFkBundledProduct()->toArray(),

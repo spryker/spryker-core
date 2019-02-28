@@ -29,10 +29,8 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             ->endUse()
             ->find();
 
-        $productForBundleTransfers = $this->getFactory()
+        return $this->getFactory()
             ->createProductBundleMapper()
             ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities->getArrayCopy());
-
-        return $productForBundleTransfers;
     }
 }
