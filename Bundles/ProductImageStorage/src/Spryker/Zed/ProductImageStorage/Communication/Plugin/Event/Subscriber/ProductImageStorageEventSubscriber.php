@@ -114,7 +114,7 @@ class ProductImageStorageEventSubscriber extends AbstractPlugin implements Event
      *
      * @return void
      */
-    protected function addProductAbstractImageCreateStorageListener(EventCollectionInterface $eventCollection)
+    protected function addProductAbstractImageCreateStorageListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_CREATE, new ProductAbstractImageStoragePublishListener());
     }
