@@ -90,7 +90,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
         $this->application = new TestifyBootstrap($this->config[static::CONFIG_KEY_SERVICE_PROVIDER]);
 
         if (!isset($this->application)) {
-            throw new ModuleConfigException(__CLASS__, 'Application instance was not received from bootstrap file');
+            throw new ModuleConfigException(self::class, 'Application instance was not received from bootstrap file');
         }
     }
 
@@ -103,7 +103,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|\PHPUnit_Framework_MockObject_Builder_InvocationMocker
+     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|\PHPUnit\Framework\MockObject\InvocationMocker
      */
     private function getTwigBundleConfigMock()
     {

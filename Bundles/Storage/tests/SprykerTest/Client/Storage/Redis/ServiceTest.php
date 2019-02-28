@@ -53,7 +53,7 @@ class ServiceTest extends Unit
     protected $redisService;
 
     /**
-     * @var \Predis\ClientInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Predis\ClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $clientMock;
 

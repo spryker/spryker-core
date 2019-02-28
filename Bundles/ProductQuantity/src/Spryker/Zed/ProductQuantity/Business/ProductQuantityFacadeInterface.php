@@ -62,6 +62,32 @@ interface ProductQuantityFacadeInterface
 
     /**
      * Specification:
+     * - Adjusts cart item quantity according to product quantity restrictions.
+     * - Adds notification messages about adjustment.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function normalizeCartChangeTransferItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Checks if cart change transfer has normalizable items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $normalizableFields
+     *
+     * @return bool
+     */
+    public function hasCartChangeTransferNormalizableItems(CartChangeTransfer $cartChangeTransfer, array $normalizableFields): bool;
+
+    /**
+     * Specification:
      * - Retrieves product quantity transfers according to given offset and limit.
      *
      * @api

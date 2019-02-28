@@ -689,4 +689,31 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
             ->createCategoryReader()
             ->findCategoryById($idCategory);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer): string
+    {
+        return $this->getRepository()->getCategoryNodePath($idNode, $localeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCategoryListUrl(): string
+    {
+        return $this->getFactory()->getConfig()->getDefaultRedirectUrl();
+    }
 }

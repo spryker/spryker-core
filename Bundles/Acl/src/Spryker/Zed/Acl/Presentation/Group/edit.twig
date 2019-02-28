@@ -1,8 +1,8 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% set page_title = 'Edit Group' %}
-{% block head_title page_title %}
-{% block section_title page_title %}
+{% block head_title page_title | trans %}
+{% block section_title page_title | trans %}
 
 {% block action %}
     {{ backActionButton('/acl/group', 'List Groups' | trans) }}

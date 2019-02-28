@@ -18,6 +18,12 @@ class DevelopmentConfig extends AbstractBundleConfig
     public const BUNDLE_PLACEHOLDER = '[BUNDLE]';
     protected const PHPSTAN_CONFIG_FILENAME = 'phpstan.neon';
 
+    protected const NAMESPACE_SPRYKER = 'Spryker';
+    protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+    protected const NAMESPACE_SPRYKER_ECO = 'SprykerEco';
+    protected const NAMESPACE_SPRYKER_SDK = 'SprykerSdk';
+    protected const NAMESPACE_SPRYKER_MERCHANT_PORTAL = 'SprykerMerchantPortal';
+
     public const APPLICATION_NAMESPACES = [
         'Orm',
     ];
@@ -30,6 +36,22 @@ class DevelopmentConfig extends AbstractBundleConfig
         'Zed',
         'Glue',
     ];
+
+    protected const INTERNAL_NAMESPACES_LIST = [
+        self::NAMESPACE_SPRYKER,
+        self::NAMESPACE_SPRYKER_SHOP,
+        self::NAMESPACE_SPRYKER_MERCHANT_PORTAL,
+    ];
+
+    protected const INTERNAL_NAMESPACES_TO_PATH_MAPPING = [
+        self::NAMESPACE_SPRYKER => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker/',
+        self::NAMESPACE_SPRYKER_SHOP => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-shop/',
+        self::NAMESPACE_SPRYKER_ECO => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-eco/',
+        self::NAMESPACE_SPRYKER_SDK => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-sdk/',
+        self::NAMESPACE_SPRYKER_MERCHANT_PORTAL => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-merchant-portal/',
+    ];
+
+    protected const INTERNAL_PACKAGE_DIRECTORIES = ['spryker', 'spryker-shop', 'spryker-merchant-portal'];
 
     /**
      * @return int
@@ -90,6 +112,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerModulePathBuilder::buildPath() instead.
+     *
      * Gets path to Spryker core modules.
      *
      * @return string
@@ -106,6 +130,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerSdkPathBuilder::buildPath() instead.
+     *
      * Gets path to SprykerSdk core modules.
      *
      * @return string
@@ -116,6 +142,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerShopModulePathBuilder::buildPath() instead.
+     *
      * Gets path to SprykerShop core modules.
      *
      * @return string
@@ -126,6 +154,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerEcoModulePathBuilder::buildPath() instead.
+     *
      * Gets path to SprykerEco core modules.
      *
      * @return string
@@ -461,5 +491,68 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getCodeSnifferLevel(): int
     {
         return 1;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getInternalNamespacesList(): array
+    {
+        return static::INTERNAL_NAMESPACES_LIST;
+    }
+
+    /**
+     * @param string $namespace
+     *
+     * @return string|null
+     */
+    public function getPathToInternalNamespace(string $namespace): ?string
+    {
+        if ($pathToSprykerRoot = $this->checkPathToSprykerRoot($namespace)) {
+            return $pathToSprykerRoot;
+        }
+
+        if (array_key_exists($namespace, $this->getPathsToInternalNamespace())) {
+            return static::INTERNAL_NAMESPACES_TO_PATH_MAPPING[$namespace];
+        }
+
+        return null;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getPathsToInternalNamespace(): array
+    {
+        $pathToSprykerRoot = $this->checkPathToSprykerRoot(static::NAMESPACE_SPRYKER);
+        $sprykerNamespacePath = $pathToSprykerRoot ? [static::NAMESPACE_SPRYKER => $pathToSprykerRoot] : [];
+
+        return $sprykerNamespacePath + static::INTERNAL_NAMESPACES_TO_PATH_MAPPING;
+    }
+
+    /**
+     * @param string $namespace
+     *
+     * @return string|null
+     */
+    protected function checkPathToSprykerRoot(string $namespace): ?string
+    {
+        if ($namespace === static::NAMESPACE_SPRYKER) {
+            // Check for deprecated environment config constant.
+            $path = $this->getConfig()->get(KernelConstants::SPRYKER_ROOT);
+            if ($path) {
+                return rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getInternalPackageDirectories(): array
+    {
+        return static::INTERNAL_PACKAGE_DIRECTORIES;
     }
 }

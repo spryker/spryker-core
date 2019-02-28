@@ -5,8 +5,6 @@
 
 'use strict';
 
-require('./main');
-
 $(document).ready(function() {
     var $productSetWeightsField = $('#reorder_product_sets_form_product_set_weights');
     var productSetWeights = getProductSetWeights();
