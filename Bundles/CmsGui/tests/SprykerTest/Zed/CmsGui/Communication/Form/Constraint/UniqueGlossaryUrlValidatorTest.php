@@ -108,7 +108,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
         $executionContextMock = $this->createExecutionContextMock();
 
         $executionContextMock
-            ->expects($this->once())
+            ->expects($this->never())
             ->method('buildViolation');
 
         $cmsPageAttributeTransfer->setIdCmsPage(123);
