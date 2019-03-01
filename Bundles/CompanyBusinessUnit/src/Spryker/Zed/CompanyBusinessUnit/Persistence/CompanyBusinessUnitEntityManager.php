@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyBusinessUnit\Persistence;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer;
-use Spryker\Zed\CompanyBusinessUnit\Persistence\Mapper\CompanyBusinessUnitMapperInterface;
+use Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\Mapper\CompanyBusinessUnitMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -84,7 +84,7 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Persistence\Mapper\CompanyBusinessUnitMapperInterface
+     * @return \Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\Mapper\CompanyBusinessUnitMapperInterface
      */
     protected function getMapper(): CompanyBusinessUnitMapperInterface
     {

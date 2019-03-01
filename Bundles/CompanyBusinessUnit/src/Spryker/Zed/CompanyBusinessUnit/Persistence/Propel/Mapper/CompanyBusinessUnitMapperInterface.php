@@ -5,10 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnit\Persistence\Mapper;
+namespace Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 
 interface CompanyBusinessUnitMapperInterface
 {
@@ -32,5 +33,16 @@ interface CompanyBusinessUnitMapperInterface
     public function mapEntityTransferToBusinessUnitTransfer(
         SpyCompanyBusinessUnitEntityTransfer $businessUnitEntityTransfer,
         CompanyBusinessUnitTransfer $businessUnitTransfer
+    ): CompanyBusinessUnitTransfer;
+
+    /**
+     * @param \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit $companyBusinessUnitEntity
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer(
+        SpyCompanyBusinessUnit $companyBusinessUnitEntity,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitTransfer;
 }
