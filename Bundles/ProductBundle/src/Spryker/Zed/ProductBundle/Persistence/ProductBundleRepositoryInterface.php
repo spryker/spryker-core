@@ -12,6 +12,13 @@ use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 interface ProductBundleRepositoryInterface
 {
     /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     */
+    public function findBundledProductsBySku(string $sku): array;
+
+    /**
      * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer

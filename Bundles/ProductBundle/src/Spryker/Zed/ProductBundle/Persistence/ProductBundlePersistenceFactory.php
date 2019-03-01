@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductBundle\Persistence;
 
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductBundle\Persistence\Mapper\ProductBundleMapper;
+use Spryker\Zed\ProductBundle\Persistence\Propel\Mapper\ProductBundleMapper;
 
 /**
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
@@ -27,7 +27,7 @@ class ProductBundlePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Persistence\Mapper\ProductBundleMapper
+     * @return \Spryker\Zed\ProductBundle\Persistence\Propel\Mapper\ProductBundleMapper
      */
     public function createProductBundleMapper(): ProductBundleMapper
     {
