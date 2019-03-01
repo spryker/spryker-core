@@ -28,7 +28,7 @@ class DiscontinueProductConcreteFormEditTabsExpanderPlugin implements ProductCon
         $tabItemTransfer = (new TabItemTransfer())
             ->setName('discontinue')
             ->setTitle('Discontinue')
-            ->setTemplate('@ProductDiscontinuedGui/view/product-discontinue/product-discontinue-tab.twig');
+            ->setTemplate('@ProductDiscontinuedGui/View/product-discontinue/product-discontinue-tab.twig');
 
         return $tabsViewTransfer->addTab($tabItemTransfer);
     }
