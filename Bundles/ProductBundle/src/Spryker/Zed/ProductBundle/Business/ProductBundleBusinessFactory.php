@@ -158,7 +158,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductBundleCartPricePreCheck(): ProductBundleCartPriceCheckerInterface
     {
         return new ProductBundleCartPriceChecker(
-            $this->getQueryContainer(),
+            $this->getRepository(),
             $this->getPriceProductFacade()
         );
     }
