@@ -17,7 +17,7 @@
         <property name="idQuoteRequest" type="int" />
         <property name="quoteRequestReference" type="string" />
         <property name="status" type="string" />
-        <property name="lastVersion" type="QuoteRequestVersion" />
+        <property name="latestVersion" type="QuoteRequestVersion" />
         <property name="quoteInProgress" type="Quote" />
     </transfer>
 

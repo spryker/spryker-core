@@ -45,4 +45,14 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
     {
         return $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_WAITING;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS;
+    }
 }

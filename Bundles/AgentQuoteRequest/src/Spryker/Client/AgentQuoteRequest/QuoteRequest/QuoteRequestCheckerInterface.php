@@ -24,4 +24,11 @@ interface QuoteRequestCheckerInterface
      * @return bool
      */
     public function isQuoteRequestCanStartEditable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool;
 }

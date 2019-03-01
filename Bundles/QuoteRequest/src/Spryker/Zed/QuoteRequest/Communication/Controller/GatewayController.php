@@ -69,4 +69,14 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->cancelByReference($quoteRequestFilterTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function sendQuoteRequestToCustomerAction(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getFacade()->sendQuoteRequestToCustomer($quoteRequestFilterTransfer);
+    }
 }
