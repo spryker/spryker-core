@@ -44,10 +44,9 @@ class ProductBundleMapper
         $productBundleEntitiesGroupedByIdProductBundle = [];
 
         foreach ($productBundleEntities as $productBundleEntity) {
-
             $productForBundleTransfer = $this->mapProductBundleEntityToProductForBundleTransfer($productBundleEntity, new ProductForBundleTransfer());
 
-            if (isset($productBundleEntitiesGroupedByProductBundle[$productBundleEntity->getFkProduct()])) {
+            if (isset($productBundleEntitiesGroupedByIdProductBundle[$productBundleEntity->getFkProduct()])) {
                 $productBundleTransfer = $productBundleEntitiesGroupedByIdProductBundle[$productBundleEntity->getFkProduct()];
                 $productBundleTransfer->addBundledProduct($productForBundleTransfer);
                 $productBundleEntitiesGroupedByIdProductBundle[$productBundleEntity->getFkProduct()] = $productBundleTransfer;

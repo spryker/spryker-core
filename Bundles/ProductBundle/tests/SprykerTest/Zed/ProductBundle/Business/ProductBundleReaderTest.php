@@ -19,6 +19,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 /**
  * Auto-generated group annotations
@@ -95,13 +96,15 @@ class ProductBundleReaderTest extends Unit
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface|null $productBundleQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface|null $productBundleToAvailabilityQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
+     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface|null $productBundleRepositoryMock
      *
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function createProductBundleReader(
         ?ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,
         ?ProductBundleToAvailabilityQueryContainerInterface $productBundleToAvailabilityQueryContainerMock = null,
-        ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
+        ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null,
+        ?ProductBundleRepositoryInterface $productBundleRepositoryMock = null
     ) {
 
         if ($productBundleQueryContainerMock === null) {
@@ -122,8 +125,12 @@ class ProductBundleReaderTest extends Unit
             $storeFacadeMock->method('getStoreByName')->willReturn($storeTransfer);
         }
 
+        if ($productBundleRepositoryMock === null) {
+            $productBundleRepositoryMock = $this->createProductBundleRepositoryMock();
+        }
+
         $productBundleReaderMock = $this->getMockBuilder(ProductBundleReader::class)
-            ->setConstructorArgs([$productBundleQueryContainerMock, $productBundleToAvailabilityQueryContainerMock, $storeFacadeMock ])
+            ->setConstructorArgs([$productBundleQueryContainerMock, $productBundleToAvailabilityQueryContainerMock, $storeFacadeMock, $productBundleRepositoryMock])
             ->setMethods(['findBundledProducts', 'findOrCreateProductBundleAvailabilityEntity'])
             ->getMock();
 
@@ -144,6 +151,14 @@ class ProductBundleReaderTest extends Unit
     protected function createAvailabilityQueryContainerMock()
     {
         return $this->getMockBuilder(ProductBundleToAvailabilityQueryContainerInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
+     */
+    protected function createProductBundleRepositoryMock()
+    {
+        return $this->getMockBuilder(ProductBundleRepositoryInterface::class)->getMock();
     }
 
     /**
