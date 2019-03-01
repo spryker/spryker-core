@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Url\Business\Url;
 
 use Generated\Shared\Transfer\UrlTransfer;
-use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
@@ -120,7 +119,7 @@ class UrlCreator extends AbstractUrlCreatorSubject implements UrlCreatorInterfac
      */
     protected function createEntityFromTransfer(UrlTransfer $urlTransfer)
     {
-        $urlEntity = new SpyUrl();
+        $urlEntity = $this->urlQueryContainer->queryUrl($urlTransfer->getUrl())->findOneOrCreate();
         $urlEntity->fromArray($urlTransfer->modifiedToArray());
 
         return $urlEntity;
