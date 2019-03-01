@@ -5,10 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUnitAddress\Persistence\Mapper;
+namespace Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer;
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress;
 
 interface CompanyUnitAddressMapperInterface
 {
@@ -33,4 +34,15 @@ interface CompanyUnitAddressMapperInterface
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         SpyCompanyUnitAddressEntityTransfer $unitAddressEntityTransfer
     ): SpyCompanyUnitAddressEntityTransfer;
+
+    /**
+     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress $companyUnitAddressEntity
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     */
+    public function mapCompanyUnitAddressEntityToCompanyUnitAddressTransfer(
+        SpyCompanyUnitAddress $companyUnitAddressEntity,
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): CompanyUnitAddressTransfer;
 }
