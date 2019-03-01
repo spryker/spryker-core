@@ -44,7 +44,7 @@ class CacheWarmerConsoleTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Twig\Communication\Console\CacheWarmerConsole
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Twig\Communication\Console\CacheWarmerConsole
      */
     protected function getCacheWarmerConsoleMock()
     {
@@ -58,7 +58,7 @@ class CacheWarmerConsoleTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\Business\AbstractFacade
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getFacadeMock()
     {

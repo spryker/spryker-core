@@ -110,7 +110,7 @@ class ItemLockTest extends StateMachineMocks
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLock
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLock
      */
     protected function createStateMachineItemLockEntityMock()
     {
@@ -120,7 +120,7 @@ class ItemLockTest extends StateMachineMocks
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
     protected function createStateMachineQueryMock()
     {

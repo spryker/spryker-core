@@ -131,7 +131,7 @@ class IdeAutoCompletionWriterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Development\DevelopmentConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\DevelopmentConfig
      */
     protected function getDevelopmentConfigMock()
     {

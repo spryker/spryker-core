@@ -29,7 +29,7 @@ class TransferFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
     private function getMessenger()
     {
