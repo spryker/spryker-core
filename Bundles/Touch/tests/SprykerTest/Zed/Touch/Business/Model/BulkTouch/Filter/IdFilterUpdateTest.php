@@ -26,7 +26,7 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 class IdFilterUpdateTest extends Unit
 {
     /**
-     * @var \Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterUpdate|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterUpdate|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $idFilterUpdate;
 

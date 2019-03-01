@@ -38,7 +38,7 @@ class GlueFragmentControllerResolverTest extends Unit
         $result = $controllerResolver->getController($request);
 
         $this->assertSame($expectedServiceName, $request->attributes->get('_controller'));
-        $this->assertInternalType('callable', $result);
+        $this->assertIsCallable($result);
     }
 
     /**
@@ -68,7 +68,7 @@ class GlueFragmentControllerResolverTest extends Unit
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Glue\Kernel\ControllerResolver\GlueFragmentControllerResolver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\Kernel\ControllerResolver\GlueFragmentControllerResolver
      */
     protected function getFragmentControllerProvider(Request $request)
     {
