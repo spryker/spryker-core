@@ -363,6 +363,25 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testFindProductBundleCollectionByAssignedIdProductConcreteShouldReturnPersistedBundledProducts()
+    {
+        $this->markTestIncomplete('Something with transactions');
+        $productConcreteBundleTransfer = $this->createProductBundle(self::BUNDLED_PRODUCT_PRICE_2);
+
+        $productBundleFacade = $this->createProductBundleFacade();
+        foreach ($productConcreteBundleTransfer->getProductBundle()->getBundledProducts() as $bundledProduct) {
+            $productBundleCollection = $productBundleFacade->findProductBundleCollectionByAssignedIdProductConcrete(
+                $bundledProduct->getIdProductConcrete()
+            );
+
+            $this->assertSame(1, $productBundleCollection->getProductBundles()->count());
+            $this->assertSame($productConcreteBundleTransfer->getProductBundle()->getIdProductConcrete(), $productBundleCollection->getProductBundles()->offsetGet(0)->getIdProductConcrete());
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function testAssignBundledProductsToProductConcreteShouldAssignPersistedBundledProducts()
     {
         $this->markTestIncomplete('Something with transactions');
