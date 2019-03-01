@@ -89,7 +89,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Check if bundled products of cart items has price for current store.
+     *  - Checks if bundled products of cart items has price for current store.
      *  - Sets error message if prices are not available.
      *
      * @api
