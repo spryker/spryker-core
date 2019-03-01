@@ -290,9 +290,9 @@ class OrdersTable extends AbstractTable
     }
 
     /**
-     * @return string[]
+     * @return array
      */
-    protected function getSearchableFields(): array
+    protected function getSearchableFields()
     {
         return [
             SpySalesOrderTableMap::COL_ID_SALES_ORDER,
