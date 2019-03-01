@@ -184,30 +184,35 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
      */
     protected function findTaxRatesByIdOptionValuesAndCountryIso2Codes(array $idProductOptionValues, array $countryIso2CodesByIdProductAbstracts): array
     {
-        $groupedResults = [];
-        $foundResults = $this->queryContainer
+        $taxSetCollection = $this->queryContainer
             ->queryTaxSetByIdProductOptionValueAndCountryIso2Codes(
                 $idProductOptionValues,
                 array_unique($countryIso2CodesByIdProductAbstracts)
             )
             ->find();
 
-        /**
-         * @todo Fix query find() to return objects collection.
-         */
-        foreach ($foundResults as $data) {
+        return $this->getGroupedTaxSetCollection($taxSetCollection);
+    }
+
+    /**
+     * @param iterable|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $taxSetCollection
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[]
+     */
+    protected function getGroupedTaxSetCollection(iterable $taxSetCollection): array
+    {
+        $groupedTaxSetCollection = [];
+
+        foreach ($taxSetCollection as $data) {
             $key = $this->getTaxGroupedKey(
-                $data['idProductOptionValue'],
-                $data[SpyCountryTableMap::COL_ISO2_CODE]
-//                $data->getIdProductOptionValue(),
-//                $data->getVirtualColumn(SpyCountryTableMap::COL_ISO2_CODE)
+                $data->getIdProductOptionValue(),
+                $data->getVirtualColumn(ProductOptionQueryContainer::COL_COUNTRY_ISO2_CODE)
             );
 
-//            $groupedResults[$key] = $data->getVirtualColumn(ProductOptionQueryContainer::COL_MAX_TAX_RATE);
-            $groupedResults[$key] = $data[ProductOptionQueryContainer::COL_MAX_TAX_RATE];
+            $groupedTaxSetCollection[$key] = $data->getVirtualColumn(ProductOptionQueryContainer::COL_MAX_TAX_RATE);
         }
 
-        return $groupedResults;
+        return $groupedTaxSetCollection;
     }
 
     /**
@@ -230,8 +235,8 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     {
         $shipmentTransfer = $itemTransfer->getShipment();
 
-        return $shipmentTransfer !== null &&
-            $shipmentTransfer->getShippingAddress() !== null &&
-            $shipmentTransfer->getShippingAddress()->getIso2Code() !== null;
+        return $shipmentTransfer !== null
+            && $shipmentTransfer->getShippingAddress() !== null
+            && $shipmentTransfer->getShippingAddress()->getIso2Code() !== null;
     }
 }
