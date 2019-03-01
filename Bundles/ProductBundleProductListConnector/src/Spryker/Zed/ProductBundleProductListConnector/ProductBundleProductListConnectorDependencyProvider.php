@@ -9,13 +9,17 @@ namespace Spryker\Zed\ProductBundleProductListConnector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToLocaleFacadeBridge;
 use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeBridge;
+use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductFacadeBridge;
 
 /**
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
  */
 class ProductBundleProductListConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_PRODUCT_BUNDLE = 'FACADE_PRODUCT_BUNDLE';
 
     /**
@@ -26,7 +30,37 @@ class ProductBundleProductListConnectorDependencyProvider extends AbstractBundle
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addFacadeLocale($container);
+        $container = $this->addFacadeProduct($container);
         $container = $this->addFacadeProductBundle($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFacadeLocale(Container $container): Container
+    {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
+            return new ProductBundleProductListConnectorToLocaleFacadeBridge($container->getLocator()->locale()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFacadeProduct(Container $container): Container
+    {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
+            return new ProductBundleProductListConnectorToProductFacadeBridge($container->getLocator()->product()->facade());
+        };
 
         return $container;
     }

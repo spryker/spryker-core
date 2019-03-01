@@ -11,9 +11,13 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\ProductListExpander;
 use Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\ProductListExpanderInterface;
 use Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\BlacklistProductListTypeExpander;
+use Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListMessageGenerator;
+use Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListMessageGeneratorInterface;
 use Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListTypeExpanderInterface;
 use Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\WhitelistProductListTypeExpander;
+use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToLocaleFacadeInterface;
 use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface;
+use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductFacadeInterface;
 use Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorDependencyProvider;
 
 /**
@@ -39,7 +43,8 @@ class ProductBundleProductListConnectorBusinessFactory extends AbstractBusinessF
     public function createBlacklistProductListTypeExpander(): ProductListTypeExpanderInterface
     {
         return new BlacklistProductListTypeExpander(
-            $this->getFacadeProductBundle()
+            $this->getFacadeProductBundle(),
+            $this->createProductListMessageGenerator()
         );
     }
 
@@ -49,8 +54,36 @@ class ProductBundleProductListConnectorBusinessFactory extends AbstractBusinessF
     public function createWhitelistProductListTypeExpander(): ProductListTypeExpanderInterface
     {
         return new WhitelistProductListTypeExpander(
-            $this->getFacadeProductBundle()
+            $this->getFacadeProductBundle(),
+            $this->createProductListMessageGenerator()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListMessageGeneratorInterface
+     */
+    public function createProductListMessageGenerator(): ProductListMessageGeneratorInterface
+    {
+        return new ProductListMessageGenerator(
+            $this->getFacadeProduct(),
+            $this->getFacadeLocale()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToLocaleFacadeInterface
+     */
+    public function getFacadeLocale(): ProductBundleProductListConnectorToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductBundleProductListConnectorDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductFacadeInterface
+     */
+    public function getFacadeProduct(): ProductBundleProductListConnectorToProductFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductBundleProductListConnectorDependencyProvider::FACADE_PRODUCT);
     }
 
     /**

@@ -118,7 +118,9 @@ class ProductListWriter implements ProductListWriterInterface
             $productListTransfer = $productListPostSaver->postSave($productListTransfer);
         }
 
-        $productListResponseTransfer->setProductList($productListTransfer);
+        $productListResponseTransfer
+            ->setProductList($productListTransfer)
+            ->setIsSuccess(true);
 
         return $productListResponseTransfer;
     }

@@ -7,23 +7,33 @@
 
 namespace Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface;
 
 class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterface
 {
+    protected const MESSAGE_VALUE = ' was added to the whitelist with follow products ';
+
     /**
      * @var \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface
      */
     protected $productBundleFacade;
 
     /**
-     * @param \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface $productBundleFacade
+     * @var \Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListMessageGeneratorInterface
      */
-    public function __construct(ProductBundleProductListConnectorToProductBundleFacadeInterface $productBundleFacade)
-    {
+    protected $productListMessageGenerator;
+
+    /**
+     * @param \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface $productBundleFacade
+     * @param \Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListMessageGeneratorInterface $productListMessageGenerator
+     */
+    public function __construct(
+        ProductBundleProductListConnectorToProductBundleFacadeInterface $productBundleFacade,
+        ProductListMessageGeneratorInterface $productListMessageGenerator
+    ) {
         $this->productBundleFacade = $productBundleFacade;
+        $this->productListMessageGenerator = $productListMessageGenerator;
     }
 
     /**
@@ -34,23 +44,23 @@ class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterfa
     public function expandProductBundle(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
     {
         foreach ($productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds() as $idProductConcrete) {
-            $productListResponseTransfer = $this->whitelistExpandByIdProductConcrete($idProductConcrete, $productListResponseTransfer);
+            $productListResponseTransfer = $this->whitelistExpandByIdProductConcreteBundle($idProductConcrete, $productListResponseTransfer);
         }
 
         return $productListResponseTransfer;
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProductConcreteBundle
      * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    protected function whitelistExpandByIdProductConcrete(int $idProductConcrete, ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
+    protected function whitelistExpandByIdProductConcreteBundle(int $idProductConcreteBundle, ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
     {
         $productIdsToSave = $productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds();
         $productIdsToAdd = [];
-        $bundledProducts = $this->productBundleFacade->findBundledProductsByIdProductConcrete($idProductConcrete);
+        $bundledProducts = $this->productBundleFacade->findBundledProductsByIdProductConcrete($idProductConcreteBundle);
 
         if (!$bundledProducts->count()) {
             return $productListResponseTransfer;
@@ -67,27 +77,13 @@ class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterfa
             return $productListResponseTransfer;
         }
 
-        $messageTransfer = $this->createWhitelistMessageTransfer($idProductConcrete, $productIdsToAdd);
-        $productListResponseTransfer->addMessage($messageTransfer);
+        $messageTransfer = $this->productListMessageGenerator
+            ->generateMessageTransfer(static::MESSAGE_VALUE, $idProductConcreteBundle, $productIdsToAdd);
         $productIdsToSave = array_merge($productIdsToSave, $productIdsToAdd);
+
+        $productListResponseTransfer->addMessage($messageTransfer);
         $productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->setProductIds($productIdsToSave);
 
         return $productListResponseTransfer;
-    }
-
-    /**
-     * @param int $idProductBundle
-     * @param int[] $idsProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer
-     */
-    protected function createWhitelistMessageTransfer(int $idProductBundle, array $idsProductConcrete): MessageTransfer
-    {
-        return (new MessageTransfer())
-            ->setValue('"id_product_bundle" ID was added to the whitelist with follow product IDs [ids_product_concrete]')
-            ->setParameters([
-                'id_product_bundle' => $idProductBundle,
-                'ids_product_concrete' => implode(', ', $idsProductConcrete),
-            ]);
     }
 }

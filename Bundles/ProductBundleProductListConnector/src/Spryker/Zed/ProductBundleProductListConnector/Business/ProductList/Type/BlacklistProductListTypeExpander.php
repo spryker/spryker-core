@@ -7,23 +7,33 @@
 
 namespace Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface;
 
 class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterface
 {
+    protected const MESSAGE_VALUE = ' was blacklisted due to blacklisting ';
+
     /**
      * @var \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface
      */
     protected $productBundleFacade;
 
     /**
-     * @param \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface $productBundleFacade
+     * @var \Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListMessageGeneratorInterface
      */
-    public function __construct(ProductBundleProductListConnectorToProductBundleFacadeInterface $productBundleFacade)
-    {
+    protected $productListMessageGenerator;
+
+    /**
+     * @param \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface $productBundleFacade
+     * @param \Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListMessageGeneratorInterface $productListMessageGenerator
+     */
+    public function __construct(
+        ProductBundleProductListConnectorToProductBundleFacadeInterface $productBundleFacade,
+        ProductListMessageGeneratorInterface $productListMessageGenerator
+    ) {
         $this->productBundleFacade = $productBundleFacade;
+        $this->productListMessageGenerator = $productListMessageGenerator;
     }
 
     /**
@@ -33,23 +43,23 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
      */
     public function expandProductBundle(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
     {
-        foreach ($productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds() as $idProductConcrete) {
-            $productListResponseTransfer = $this->blacklistExpandByIdProductConcrete($idProductConcrete, $productListResponseTransfer);
+        foreach ($productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds() as $idProductConcreteAssigned) {
+            $productListResponseTransfer = $this->blacklistExpandByIdProductConcrete($idProductConcreteAssigned, $productListResponseTransfer);
         }
 
         return $productListResponseTransfer;
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProductConcreteAssigned
      * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    protected function blacklistExpandByIdProductConcrete(int $idProductConcrete, ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
+    protected function blacklistExpandByIdProductConcrete(int $idProductConcreteAssigned, ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
     {
         $productIdsToSave = $productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds();
-        $productBundleCollectionTransfer = $this->productBundleFacade->findProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete);
+        $productBundleCollectionTransfer = $this->productBundleFacade->findProductBundleCollectionByAssignedIdProductConcrete($idProductConcreteAssigned);
 
         if (!$productBundleCollectionTransfer->getProductBundles()->count()) {
             return $productListResponseTransfer;
@@ -61,28 +71,13 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
             }
 
             $productIdsToSave[] = $productBundle->getIdProductConcrete();
-            $messageTransfer = $this->createBlacklistMessageTransfer($productBundle->getIdProductConcrete(), $idProductConcrete);
+            $messageTransfer = $this->productListMessageGenerator
+                ->generateMessageTransfer(static::MESSAGE_VALUE, $productBundle->getIdProductConcrete(), [$idProductConcreteAssigned]);
             $productListResponseTransfer->addMessage($messageTransfer);
         }
 
         $productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->setProductIds($productIdsToSave);
 
         return $productListResponseTransfer;
-    }
-
-    /**
-     * @param int $idProductBundle
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer
-     */
-    protected function createBlacklistMessageTransfer(int $idProductBundle, int $idProductConcrete): MessageTransfer
-    {
-        return (new MessageTransfer())
-            ->setValue('"id_product_bundle" ID was blacklisted due to blacklisting "id_product_concrete" ID')
-            ->setParameters([
-                'id_product_bundle' => $idProductBundle,
-                'id_product_concrete' => $idProductConcrete,
-            ]);
     }
 }
