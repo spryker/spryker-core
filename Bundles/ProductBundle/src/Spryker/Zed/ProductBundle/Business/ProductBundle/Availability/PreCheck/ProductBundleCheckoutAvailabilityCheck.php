@@ -196,9 +196,9 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     /**
      * @param \Generated\Shared\Transfer\CheckoutErrorTransfer $availabilityErrorMessage
      *
-     * @return string
+     * @return string|null
      */
-    protected function findAvailabilityErrorMessageSku(CheckoutErrorTransfer $availabilityErrorMessage): string
+    protected function findAvailabilityErrorMessageSku(CheckoutErrorTransfer $availabilityErrorMessage): ?string
     {
         $availabilityErrorMessageParameters = $availabilityErrorMessage->getParameters();
         $availabilityProductSkuParameter = $this->productBundleConfig->getAvailabilityProductSkuParameter();
