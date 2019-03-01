@@ -21,13 +21,13 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleImageCart
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundlePreReloadUpdater;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFinder;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFinderInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceChecker;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceCheckerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinder;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinderInterface;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PreCheck\ProductBundleCartPriceChecker;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PreCheck\ProductBundleCartPriceCheckerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Quote\QuoteItemsGrouper;
@@ -43,6 +43,7 @@ use Spryker\Zed\ProductBundle\ProductBundleDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
  * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface getRepository()
  */
 class ProductBundleBusinessFactory extends AbstractBusinessFactory
 {
@@ -152,7 +153,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PreCheck\ProductBundleCartPriceCheckerInterface
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceCheckerInterface
      */
     public function createProductBundleCartPricePreCheck(): ProductBundleCartPriceCheckerInterface
     {

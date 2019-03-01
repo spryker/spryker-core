@@ -13,8 +13,6 @@ use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @api
- *
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()

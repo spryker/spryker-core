@@ -5,26 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PreCheck;
+namespace Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Product\Persistence\SpyProduct;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface;
-use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInterface
 {
     public const CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY = 'cart.pre.check.price.failed';
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
+     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
      */
-    protected $productBundleQueryContainer;
+    protected $productBundleRepository;
 
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface
@@ -32,14 +32,14 @@ class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInte
     protected $priceProductFacade;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
+     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface $priceProductFacade
      */
     public function __construct(
-        ProductBundleQueryContainerInterface $productBundleQueryContainer,
+        ProductBundleRepositoryInterface $productBundleRepository,
         ProductBundleToPriceProductFacadeInterface $priceProductFacade
     ) {
-        $this->productBundleQueryContainer = $productBundleQueryContainer;
+        $this->productBundleRepository = $productBundleRepository;
         $this->priceProductFacade = $priceProductFacade;
     }
 
@@ -57,7 +57,8 @@ class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInte
                 continue;
             }
 
-            $itemTransfer->requireSku()->requireQuantity();
+            $itemTransfer->requireSku()
+                ->requireQuantity();
 
             $cartPreCheckResponseTransfer = $this->checkItemPrice($itemTransfer, $cartPreCheckResponseTransfer, $cartChangeTransfer);
         }
@@ -66,18 +67,17 @@ class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInte
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     * @param \Generated\Shared\Transfer\ProductForBundleTransfer $productForBundleTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
     protected function createPriceProductFilter(
-        SpyProduct $productEntity,
+        ProductForBundleTransfer $productForBundleTransfer,
         QuoteTransfer $quoteTransfer
     ): PriceProductFilterTransfer {
-
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setSku($productEntity->getSku())
+            ->setSku($productForBundleTransfer->getSku())
             ->setPriceMode($quoteTransfer->getPriceMode())
             ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
             ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName())
@@ -99,12 +99,10 @@ class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInte
         CartPreCheckResponseTransfer $cartPreCheckResponseTransfer,
         CartChangeTransfer $cartChangeTransfer
     ): CartPreCheckResponseTransfer {
-        $bundledProducts = $this->findBundledProducts($itemTransfer->getSku());
+        $bundledProducts = $this->productBundleRepository->findBundledProducts($itemTransfer->getSku())->getBundledProducts();
 
         foreach ($bundledProducts as $bundledProduct) {
-            $productEntity = $bundledProduct->getSpyProductRelatedByFkBundledProduct();
-
-            $priceProductFilterTransfer = $this->createPriceProductFilter($productEntity, $cartChangeTransfer->getQuote());
+            $priceProductFilterTransfer = $this->createPriceProductFilter($bundledProduct, $cartChangeTransfer->getQuote());
 
             if ($this->priceProductFacade->hasValidPriceFor($priceProductFilterTransfer)) {
                 continue;
@@ -112,33 +110,21 @@ class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInte
 
             return $cartPreCheckResponseTransfer
                 ->setIsSuccess(false)
-                ->addMessage($this->createMessage($productEntity));
+                ->addMessage($this->createMessage($bundledProduct));
         }
 
         return $cartPreCheckResponseTransfer;
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     * @param \Generated\Shared\Transfer\ProductForBundleTransfer $productForBundleTransfer
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessage(SpyProduct $productEntity)
+    protected function createMessage(ProductForBundleTransfer $productForBundleTransfer)
     {
         return (new MessageTransfer())
             ->setValue(static::CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY)
-            ->setParameters(['%sku%' => $productEntity->getSku()]);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    protected function findBundledProducts($sku)
-    {
-        return $this->productBundleQueryContainer
-            ->queryBundleProductBySku($sku)
-            ->find();
+            ->setParameters(['%sku%' => $productForBundleTransfer->getSku()]);
     }
 }

@@ -46,10 +46,6 @@ class ProductBundleToPriceProductFacadeBridge implements ProductBundleToPricePro
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public function getDefaultPriceTypeName(): string

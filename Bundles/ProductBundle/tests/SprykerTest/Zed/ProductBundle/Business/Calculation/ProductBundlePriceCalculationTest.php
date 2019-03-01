@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit_Framework_MockObject_MockObject;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation;
 
@@ -58,7 +58,7 @@ class ProductBundlePriceCalculationTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation
      */
     protected function createProductPriceCalculationMock()
     {
@@ -66,12 +66,13 @@ class ProductBundlePriceCalculationTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $productBundlePriceCalculationMock
+     * @param \PHPUnit_Framework_MockObject_MockObject $productBundlePriceCalculationMock
      *
      * @return void
      */
-    protected function setupFindOrderItemsByIdSalesOrder(MockObject $productBundlePriceCalculationMock)
-    {
+    protected function setupFindOrderItemsByIdSalesOrder(
+        PHPUnit_Framework_MockObject_MockObject $productBundlePriceCalculationMock
+    ) {
         $salesOrderItems = new ObjectCollection();
 
         $salesOrderItemEntity = new SpySalesOrderItem();
