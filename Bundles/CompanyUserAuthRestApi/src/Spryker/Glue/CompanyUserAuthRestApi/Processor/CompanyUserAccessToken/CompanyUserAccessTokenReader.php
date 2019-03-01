@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUserAuthRestApi\Processor\AccessToken;
+namespace Spryker\Glue\CompanyUserAuthRestApi\Processor\CompanyUserAccessToken;
 
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
@@ -20,7 +20,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class AccessTokenReader implements AccessTokenReaderInterface
+class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterface
 {
     /**
      * @var \Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientInterface
@@ -103,10 +103,8 @@ class AccessTokenReader implements AccessTokenReaderInterface
             ->setStatus(Response::HTTP_UNAUTHORIZED)
             ->setDetail(CompanyUserAuthRestApiConfig::RESPONSE_DETAIL_INVALID_LOGIN);
 
-        $response = $this->restResourceBuilder->createRestResponse();
-        $response->addError($restErrorTransfer);
-
-        return $response;
+        return $this->restResourceBuilder->createRestResponse()
+            ->addError($restErrorTransfer);
     }
 
     /**
@@ -119,16 +117,14 @@ class AccessTokenReader implements AccessTokenReaderInterface
         $restTokenAttributesTransfer = new RestTokenResponseAttributesTransfer();
         $restTokenAttributesTransfer->fromArray($oauthResponseTransfer->toArray(), true);
 
-        $accessTokenResource = $this->restResourceBuilder
+        $companyUserAccessTokenResource = $this->restResourceBuilder
             ->createRestResource(
                 CompanyUserAuthRestApiConfig::RESOURCE_COMPANY_USER_ACCESS_TOKENS,
                 null,
                 $restTokenAttributesTransfer
             );
 
-        $response = $this->restResourceBuilder->createRestResponse();
-        $response->addResource($accessTokenResource);
-
-        return $response;
+        return  $this->restResourceBuilder->createRestResponse()
+            ->addResource($companyUserAccessTokenResource);
     }
 }

@@ -74,4 +74,9 @@
         <property name="isConfidential" type="bool" />
     </transfer>
 
+    <transfer name="OauthGrantConfiguration">
+        <property name="identifier" type="string" />
+        <property name="fullyQualifiedClassName" type="string" />
+    </transfer>
+
 </transfers>

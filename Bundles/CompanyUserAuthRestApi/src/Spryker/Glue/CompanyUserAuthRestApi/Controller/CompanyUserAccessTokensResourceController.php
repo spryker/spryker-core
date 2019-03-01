@@ -45,7 +45,7 @@ class CompanyUserAccessTokensResourceController extends AbstractController
         RestCompanyUserAccessTokensAttributesTransfer $restCompanyUserAccessTokensAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()
-            ->createAccessTokenReader()
+            ->createCompanyUserAccessTokenReader()
             ->processAccessTokenRequest($restRequest, $restCompanyUserAccessTokensAttributesTransfer);
     }
 }

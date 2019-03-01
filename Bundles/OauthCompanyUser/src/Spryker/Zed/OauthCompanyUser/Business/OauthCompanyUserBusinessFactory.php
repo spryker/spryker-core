@@ -8,11 +8,15 @@
 namespace Spryker\Zed\OauthCompanyUser\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\OauthCompanyUser\Business\CompanyUser\CompanyUserProvider;
+use Spryker\Zed\OauthCompanyUser\Business\CompanyUser\CompanyUserProviderInterface;
 use Spryker\Zed\OauthCompanyUser\Business\Installer\OauthScopeInstaller;
 use Spryker\Zed\OauthCompanyUser\Business\Installer\OauthScopeInstallerInterface;
 use Spryker\Zed\OauthCompanyUser\Business\Scope\ScopeProvider;
 use Spryker\Zed\OauthCompanyUser\Business\Scope\ScopeProviderInterface;
+use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCompanyUserFacadeInterface;
 use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToOauthFacadeInterface;
+use Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodingServiceInterface;
 use Spryker\Zed\OauthCompanyUser\OauthCompanyUserDependencyProvider;
 
 /**
@@ -37,6 +41,33 @@ class OauthCompanyUserBusinessFactory extends AbstractBusinessFactory
             $this->getOauthFacade(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCompanyUser\Business\CompanyUser\CompanyUserProviderInterface
+     */
+    public function createCompanyUserProvider(): CompanyUserProviderInterface
+    {
+        return new CompanyUserProvider(
+            $this->getCompanyUserFacade(),
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCompanyUserFacadeInterface
+     */
+    public function getCompanyUserFacade(): OauthCompanyUserToCompanyUserFacadeInterface
+    {
+        return $this->getProvidedDependency(OauthCompanyUserDependencyProvider::FACADE_COMPANY_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): OauthCompanyUserToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(OauthCompanyUserDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**

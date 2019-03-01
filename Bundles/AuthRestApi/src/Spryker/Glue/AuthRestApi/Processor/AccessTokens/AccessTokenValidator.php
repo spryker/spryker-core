@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AccessTokenValidator implements AccessTokenValidatorInterface
 {
+    protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
+    const HEADER_AUTHORIZATION = 'Authorization';
+
     /**
      * @var \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface
      */
@@ -48,9 +51,9 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
      */
     public function validate(Request $request, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
-        $isProtected = $request->attributes->get('is-protected', false);
+        $isProtected = $request->attributes->get(static::REQUEST_ATTRIBUTE_IS_PROTECTED, false);
 
-        $authorizationToken = $request->headers->get('Authorization');
+        $authorizationToken = $request->headers->get(static::HEADER_AUTHORIZATION);
         if (!$authorizationToken && $isProtected === true) {
             return $this->createErrorMessageTransfer(
                 AuthRestApiConfig::RESPONSE_DETAIL_MISSING_ACCESS_TOKEN,

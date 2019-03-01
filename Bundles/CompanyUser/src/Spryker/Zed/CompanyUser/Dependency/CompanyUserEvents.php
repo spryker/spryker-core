@@ -43,7 +43,7 @@ interface CompanyUserEvents
 
     /**
      * Specification:
-     * - This event will be used for company_user entity delete.s
+     * - This event will be used for company_user entity delete.
      *
      * @api
      */

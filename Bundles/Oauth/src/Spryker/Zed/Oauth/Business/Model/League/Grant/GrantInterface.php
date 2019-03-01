@@ -7,15 +7,23 @@
 
 namespace Spryker\Zed\Oauth\Business\Model\League\Grant;
 
-use Generated\Shared\Transfer\OauthRequestTransfer;
-use Generated\Shared\Transfer\OauthResponseTransfer;
+use League\OAuth2\Server\Grant\GrantTypeInterface;
+use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
+use League\OAuth2\Server\Repositories\UserRepositoryInterface;
 
-interface GrantInterface
+interface GrantInterface extends GrantTypeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
+     * @param \League\OAuth2\Server\Repositories\UserRepositoryInterface $userRepository
      *
-     * @return \Generated\Shared\Transfer\OauthResponseTransfer
+     * @return void
      */
-    public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
+    public function setUserRepository(UserRepositoryInterface $userRepository);
+
+    /**
+     * @param \League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface $refreshTokenRepository
+     *
+     * @return void
+     */
+    public function setRefreshTokenRepository(RefreshTokenRepositoryInterface $refreshTokenRepository);
 }

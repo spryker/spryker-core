@@ -9,8 +9,8 @@ namespace Spryker\Glue\CompanyUserAuthRestApi;
 
 use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientInterface;
 use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserClientInterface;
-use Spryker\Glue\CompanyUserAuthRestApi\Processor\AccessToken\AccessTokenReader;
-use Spryker\Glue\CompanyUserAuthRestApi\Processor\AccessToken\AccessTokenReaderInterface;
+use Spryker\Glue\CompanyUserAuthRestApi\Processor\CompanyUserAccessToken\CompanyUserAccessTokenReader;
+use Spryker\Glue\CompanyUserAuthRestApi\Processor\CompanyUserAccessToken\CompanyUserAccessTokenReaderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -19,11 +19,11 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class CompanyUserAuthRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CompanyUserAuthRestApi\Processor\AccessToken\AccessTokenReaderInterface
+     * @return \Spryker\Glue\CompanyUserAuthRestApi\Processor\CompanyUserAccessToken\CompanyUserAccessTokenReaderInterface
      */
-    public function createAccessTokenReader(): AccessTokenReaderInterface
+    public function createCompanyUserAccessTokenReader(): CompanyUserAccessTokenReaderInterface
     {
-        return new AccessTokenReader(
+        return new CompanyUserAccessTokenReader(
             $this->getOauthClient(),
             $this->getOauthCompanyUserClient(),
             $this->getResourceBuilder()

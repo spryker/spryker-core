@@ -10,37 +10,40 @@ namespace Spryker\Zed\Oauth\Business\Model\League;
 use Generated\Shared\Transfer\OauthErrorTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantBuilderInterface;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantConfigurationLoaderInterface;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantExecutorInterface;
 
 class AccessGrantExecutor implements AccessGrantExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface[]
+     * @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantConfigurationLoaderInterface
      */
-    protected $grants;
+    protected $grantConfigurationLoader;
 
     /**
-     * @var \Spryker\Zed\Oauth\Business\Model\League\GrantTypeExecutorInterface
+     * @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantBuilderInterface
      */
-    protected $grantTypeExecutor;
+    protected $grantBuilder;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeProviderPluginInterface[]
+     * @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantExecutorInterface
      */
-    protected $grantTypeProviderPlugins;
+    protected $grantExecutor;
 
     /**
-     * @param array $grantTypes
-     * @param \Spryker\Zed\Oauth\Business\Model\League\GrantTypeExecutorInterface $grantTypeExecutor
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeProviderPluginInterface[] $grantTypeProviderPlugins
+     * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantConfigurationLoaderInterface $grantConfigurationLoader
+     * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantBuilderInterface $grantBuilder
+     * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantExecutorInterface $grantExecutor
      */
     public function __construct(
-        array $grantTypes,
-        GrantTypeExecutorInterface $grantTypeExecutor,
-        array $grantTypeProviderPlugins
+        GrantConfigurationLoaderInterface $grantConfigurationLoader,
+        GrantBuilderInterface $grantBuilder,
+        GrantExecutorInterface $grantExecutor
     ) {
-        $this->grants = $grantTypes;
-        $this->grantTypeExecutor = $grantTypeExecutor;
-        $this->setGrantTypeProviderPlugins($grantTypeProviderPlugins);
+        $this->grantConfigurationLoader = $grantConfigurationLoader;
+        $this->grantBuilder = $grantBuilder;
+        $this->grantExecutor = $grantExecutor;
     }
 
     /**
@@ -50,20 +53,16 @@ class AccessGrantExecutor implements AccessGrantExecutorInterface
      */
     public function executeByRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
-        if (isset($this->grants[$oauthRequestTransfer->getGrantType()])) {
-            $grantType = $this->grants[$oauthRequestTransfer->getGrantType()];
-            return $grantType->processAccessTokenRequest($oauthRequestTransfer);
+        $oauthGrantConfigurationTransfer = $this->grantConfigurationLoader
+            ->loadGrantConfigurationByGrantType($oauthRequestTransfer);
+
+        if (!$oauthGrantConfigurationTransfer) {
+            return $this->createErrorResponseTransfer($oauthRequestTransfer);
         }
 
-        if (isset($this->grantTypeProviderPlugins[$oauthRequestTransfer->getGrantType()])) {
-            $grantTypeProviderPlugin = $this->grantTypeProviderPlugins[$oauthRequestTransfer->getGrantType()];
-            return $this->grantTypeExecutor->processAccessTokenRequest(
-                $oauthRequestTransfer,
-                $grantTypeProviderPlugin->getGrantType()
-            );
-        }
+        $grant = $this->grantBuilder->buildGrant($oauthGrantConfigurationTransfer);
 
-        return $this->createErrorResponseTransfer($oauthRequestTransfer);
+        return $this->grantExecutor->processAccessTokenRequest($oauthRequestTransfer, $grant);
     }
 
     /**
@@ -76,20 +75,9 @@ class AccessGrantExecutor implements AccessGrantExecutorInterface
         $oauthResponseTransfer = new OauthResponseTransfer();
         $oauthErrorTransfer = new OauthErrorTransfer();
         $oauthErrorTransfer->setMessage(sprintf('Grant type "%s" not found', $oauthRequestTransfer->getGrantType()));
-        $oauthResponseTransfer->setError($oauthErrorTransfer);
+        $oauthResponseTransfer->setError($oauthErrorTransfer)
+            ->setIsValid(false);
 
         return $oauthResponseTransfer;
-    }
-
-    /**
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeProviderPluginInterface[] $grantTypeProviderPlugins
-     *
-     * @return void
-     */
-    protected function setGrantTypeProviderPlugins(array $grantTypeProviderPlugins): void
-    {
-        foreach ($grantTypeProviderPlugins as $grantTypeProviderPlugin) {
-            $this->grantTypeProviderPlugins[$grantTypeProviderPlugin->getGrantTypeName()] = $grantTypeProviderPlugin;
-        }
     }
 }

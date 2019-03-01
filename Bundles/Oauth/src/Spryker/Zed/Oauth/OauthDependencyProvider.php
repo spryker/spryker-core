@@ -17,7 +17,7 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_USER_PROVIDER = 'PLUGIN_USER_PROVIDER';
     public const PLUGIN_SCOPE_PROVIDER = 'PLUGIN_SCOPE_PROVIDER';
-    public const PLUGINS_GRANT_TYPE_PROVIDER = 'PLUGINS_GRANT_TYPE_PROVIDER';
+    public const PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER = 'PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,7 +28,7 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addUserProviderPlugins($container);
         $container = $this->addScopeProviderPlugins($container);
-        $container = $this->addGrantTypeProviderPlugins($container);
+        $container = $this->addGrantTypeConfigurationProviderPlugins($container);
 
         return $container;
     }
@@ -66,10 +66,10 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addGrantTypeProviderPlugins(Container $container): Container
+    protected function addGrantTypeConfigurationProviderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_GRANT_TYPE_PROVIDER] = function (Container $container) {
-            return $this->getGrantTypeProviderPlugins();
+        $container[static::PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER] = function (Container $container) {
+            return $this->getGrantTypeConfigurationProviderPlugins();
         };
 
         return $container;
@@ -92,9 +92,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeProviderPluginInterface[]
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantConfigurationProviderPluginInterface[]
      */
-    protected function getGrantTypeProviderPlugins(): array
+    protected function getGrantTypeConfigurationProviderPlugins(): array
     {
         return [];
     }

@@ -19,6 +19,7 @@
 
     <transfer name="CompanyUser">
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
     </transfer>
 
     <transfer name="Customer">
