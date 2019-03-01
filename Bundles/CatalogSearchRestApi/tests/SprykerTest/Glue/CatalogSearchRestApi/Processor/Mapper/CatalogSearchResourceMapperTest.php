@@ -127,15 +127,15 @@ class CatalogSearchResourceMapperTest extends Unit
         foreach ($this->restSearchAttributesTransfer->getValueFacets() as $valueFacet) {
             $this->assertArrayHasKey('parameterName', $valueFacet->getConfig());
             $this->assertArrayHasKey('isMultiValued', $valueFacet->getConfig());
-            $this->assertInternalType('string', $valueFacet->getConfig()->getParameterName());
-            $this->assertInternalType('boolean', $valueFacet->getConfig()->getIsMultiValued());
+            $this->assertIsString($valueFacet->getConfig()->getParameterName());
+            $this->assertIsBool($valueFacet->getConfig()->getIsMultiValued());
         }
 
         foreach ($this->restSearchAttributesTransfer->getRangeFacets() as $rangeFacet) {
             $this->assertArrayHasKey('parameterName', $rangeFacet->getConfig());
             $this->assertArrayHasKey('isMultiValued', $rangeFacet->getConfig());
-            $this->assertInternalType('string', $rangeFacet->getConfig()->getParameterName());
-            $this->assertInternalType('boolean', $rangeFacet->getConfig()->getIsMultiValued());
+            $this->assertIsString($rangeFacet->getConfig()->getParameterName());
+            $this->assertIsBool($rangeFacet->getConfig()->getIsMultiValued());
         }
     }
 

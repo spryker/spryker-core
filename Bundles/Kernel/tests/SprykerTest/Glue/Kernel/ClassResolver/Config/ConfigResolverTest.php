@@ -51,7 +51,7 @@ class ConfigResolverTest extends AbstractResolverTest
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Glue\Kernel\ClassResolver\Config\BundleConfigResolver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\Kernel\ClassResolver\Config\BundleConfigResolver
      */
     protected function getResolverMock(array $methods)
     {
