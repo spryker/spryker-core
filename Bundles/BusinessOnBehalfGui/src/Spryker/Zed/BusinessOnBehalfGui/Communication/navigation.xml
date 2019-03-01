@@ -28,6 +28,14 @@
                         <action>confirm-delete</action>
                         <visible>0</visible>
                     </confirm-delete-company-user-without-customer-anonymizing>
+                    <delete-confirm-company-user-without-customer-anonymizing>
+                        <label>Confirm Delete Company User</label>
+                        <title>Confirm Delete Company User</title>
+                        <bundle>business-on-behalf-gui</bundle>
+                        <controller>delete-company-user</controller>
+                        <action>delete-confirm</action>
+                        <visible>0</visible>
+                    </delete-confirm-company-user-without-customer-anonymizing>
                 </pages>
             </company-user-gui>
         </pages>
