@@ -52,7 +52,7 @@ EOF;
     /**
      * @var \Spryker\Glue\Testify\OpenApi3\Object\OpenApi|null
      */
-    private $schema;
+    protected $schema;
 
     /**
      * @inheritdoc

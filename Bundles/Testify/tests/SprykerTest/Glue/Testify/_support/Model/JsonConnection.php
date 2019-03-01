@@ -12,7 +12,7 @@ class JsonConnection extends AbstractConnection
     /**
      * @var array|null
      */
-    private $responseJson;
+    protected $responseJson;
 
     /**
      * @return array|null

@@ -15,7 +15,7 @@ class AssertionExtender extends Assertion implements StepDescriptionExtender
     /**
      * @var string
      */
-    private $stepDescription;
+    protected $stepDescription;
 
     /**
      * @return string

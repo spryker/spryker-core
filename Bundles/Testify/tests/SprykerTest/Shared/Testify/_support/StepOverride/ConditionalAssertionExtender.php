@@ -15,7 +15,7 @@ class ConditionalAssertionExtender extends ConditionalAssertion implements StepD
     /**
      * @var string
      */
-    private $stepDescription;
+    protected $stepDescription;
 
     /**
      * @return string

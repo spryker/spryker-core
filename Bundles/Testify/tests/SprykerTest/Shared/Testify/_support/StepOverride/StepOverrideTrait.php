@@ -12,7 +12,7 @@ trait StepOverrideTrait
     /**
      * @var \SprykerTest\Shared\Testify\StepOverride\StepOverrider|null
      */
-    private $stepOverrider;
+    protected $stepOverrider;
 
     /**
      * @param string $stepDescription

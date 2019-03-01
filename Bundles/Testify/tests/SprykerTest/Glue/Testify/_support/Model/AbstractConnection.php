@@ -12,37 +12,37 @@ abstract class AbstractConnection implements Connection
     /**
      * @var string
      */
-    private $requestUrl = '';
+    protected $requestUrl = '';
 
     /**
      * @var string
      */
-    private $requestMethod = '';
+    protected $requestMethod = '';
 
     /**
      * @var array
      */
-    private $requestParameters = [];
+    protected $requestParameters = [];
 
     /**
      * @var array
      */
-    private $requestFiles = [];
+    protected $requestFiles = [];
 
     /**
      * @var string
      */
-    private $responseBody = '';
+    protected $responseBody = '';
 
     /**
      * @var int
      */
-    private $responseCode = 0;
+    protected $responseCode = 0;
 
     /**
      * @var string
      */
-    private $responseContentType = 'application/json';
+    protected $responseContentType = 'application/json';
 
     /**
      * @inheritdoc

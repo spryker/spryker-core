@@ -18,22 +18,22 @@ class StepOverrider extends Scenario
     /**
      * @var \Codeception\Scenario
      */
-    private $scenario;
+    protected $scenario;
 
     /**
      * @var string
      */
-    private $stepDescription;
+    protected $stepDescription;
 
     /**
      * @var callable
      */
-    private $releaseHook;
+    protected $releaseHook;
 
     /**
      * @var string[]
      */
-    private $prepositions = [];
+    protected $prepositions = [];
 
     /**
      * @param \Codeception\Scenario $scenario
