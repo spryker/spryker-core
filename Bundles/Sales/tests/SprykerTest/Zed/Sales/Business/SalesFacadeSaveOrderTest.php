@@ -170,6 +170,28 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     private function getValidBaseQuoteTransfer()
     {
+        $quoteTransfer = $this->createValidQuoteWithoutItems();
+        $quoteTransfer->addItem($this->createItemWithIntQuantity());
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createValidBaseQuoteWithFloatQuantity(): QuoteTransfer
+    {
+        $quoteTransfer = $this->createValidQuoteWithoutItems();
+        $quoteTransfer->addItem($this->createItemWithFloatQuantity());
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createValidQuoteWithoutItems(): QuoteTransfer
+    {
         $country = new SpyCountry();
         $country->setIso2Code('ix');
         $country->save();
@@ -218,22 +240,40 @@ class SalesFacadeSaveOrderTest extends Unit
         $shipmentTransfer->setMethod(new ShipmentMethodTransfer());
         $quoteTransfer->setShipment($shipmentTransfer);
 
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer
-            ->setUnitPrice(1)
-            ->setUnitGrossPrice(1)
-            ->setSumGrossPrice(1)
-            ->setQuantity(1)
-            ->setName('test-name')
-            ->setSku('sku-test');
-        $quoteTransfer->addItem($itemTransfer);
-
         $paymentTransfer = new PaymentTransfer();
         $paymentTransfer->setPaymentSelection('dummyPaymentInvoice');
 
         $quoteTransfer->setPayment($paymentTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemWithIntQuantity(): ItemTransfer
+    {
+        return (new ItemTransfer())
+            ->setUnitPrice(1)
+            ->setUnitGrossPrice(1)
+            ->setSumGrossPrice(1)
+            ->setQuantity(1)
+            ->setName('test-name')
+            ->setSku('sku-test');
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemWithFloatQuantity(): ItemTransfer
+    {
+        return (new ItemTransfer())
+            ->setUnitPrice(1)
+            ->setUnitGrossPrice(1)
+            ->setSumGrossPrice(1)
+            ->setQuantity(1.5)
+            ->setName('test-name-float')
+            ->setSku('sku-test-float');
     }
 
     /**
@@ -261,9 +301,42 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return void
      */
+    public function testSaveOrderWithFloatQuantityCreatesShippingAddressAndAssignsItToOrder(): void
+    {
+        $quoteTransfer = $this->createValidBaseQuoteWithFloatQuantity();
+
+        $this->salesFacade->saveOrder($quoteTransfer, $this->getValidBaseResponseTransfer());
+        $addressEntity = SpySalesOrderAddressQuery::create()
+            ->filterByAddress1('address-1-2-test')
+            ->filterByFirstName('Max')
+            ->filterByLastName('Mustermann')
+            ->filterByCity('SpryHome')
+            ->findOne();
+
+        $this->assertSame(
+            $addressEntity->getIdSalesOrderAddress(),
+            $quoteTransfer->getShippingAddress()->getIdSalesOrderAddress()
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testSaveOrderAssignsSavedOrderId()
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
+        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+
+        $this->assertNotNull($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderWithFloatQuantityAssignsSavedOrderId(): void
+    {
+        $quoteTransfer = $this->createValidBaseQuoteWithFloatQuantity();
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
         $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
 
@@ -293,6 +366,24 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return void
      */
+    public function testSaveOrderWithFloatQuantityCreatesOrderAndSavesFieldsDeprecated(): void
+    {
+        $quoteTransfer = $this->createValidBaseQuoteWithFloatQuantity();
+        $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
+        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+
+        $orderEntity = SpySalesOrderQuery::create()
+            ->filterByPrimaryKey($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder())
+            ->findOne();
+
+        $this->assertSame('max@mustermann.de', $orderEntity->getEmail());
+        $this->assertSame('Max', $orderEntity->getFirstName());
+        $this->assertSame('Mustermann', $orderEntity->getLastName());
+    }
+
+    /**
+     * @return void
+     */
     public function testSaveOrderCreatesOrderAndSavesFields()
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
@@ -304,6 +395,24 @@ class SalesFacadeSaveOrderTest extends Unit
 
         $orderEntity = $orderQuery->findOne();
         $this->assertNotNull($orderEntity);
+
+        $this->assertSame('max@mustermann.de', $orderEntity->getEmail());
+        $this->assertSame('Max', $orderEntity->getFirstName());
+        $this->assertSame('Mustermann', $orderEntity->getLastName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderWithFloatQuantityCreatesOrderAndSavesFields(): void
+    {
+        $quoteTransfer = $this->createValidBaseQuoteWithFloatQuantity();
+        $saveOrderTransfer = $this->createSaveOrderTransfer();
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+
+        $orderEntity = SpySalesOrderQuery::create()
+            ->filterByPrimaryKey($saveOrderTransfer->getIdSalesOrder())
+            ->findOne();
 
         $this->assertSame('max@mustermann.de', $orderEntity->getEmail());
         $this->assertSame('Max', $orderEntity->getFirstName());
@@ -330,6 +439,29 @@ class SalesFacadeSaveOrderTest extends Unit
         $this->assertNotNull($orderEntity);
 
         $this->assertNotEquals($customerCreatedAt->format('Y-m-d'), $orderEntity->getCreatedAt('Y-m-d'), 'Dates are not expected to be equal.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderWithFloatQuantityWhenCustomerHaveCreatedAtSetShouldNotOverwriteOrderData(): void
+    {
+        $quoteTransfer = $this->createValidBaseQuoteWithFloatQuantity();
+        $customerCreatedAt = new DateTime('Yesterday');
+        $quoteTransfer->getCustomer()->setCreatedAt($customerCreatedAt);
+
+        $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
+        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+
+        $orderEntity = SpySalesOrderQuery::create()
+            ->filterByPrimaryKey($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder())
+            ->findOne();
+
+        $this->assertNotEquals(
+            $customerCreatedAt->format('Y-m-d'),
+            $orderEntity->getCreatedAt('Y-m-d'),
+            'Dates are not expected to be equal.'
+        );
     }
 
     /**
@@ -391,7 +523,7 @@ class SalesFacadeSaveOrderTest extends Unit
         $this->assertSame($initialState->getIdOmsOrderItemState(), $item1Entity->getFkOmsOrderItemState());
         $this->assertSame($item1->getSku(), $item1Entity->getSku());
         $this->assertSame($savedItems[1]->getUnitGrossPrice(), $item1Entity->getGrossPrice());
-        $this->assertSame(1, $item1Entity->getQuantity());
+        $this->assertSame(1.0, $item1Entity->getQuantity());
 
         $this->assertSame($savedItems[2]->getIdSalesOrderItem(), $item2Entity->getIdSalesOrderItem());
         $this->assertSame($item2->getName(), $item2Entity->getName());
@@ -399,7 +531,69 @@ class SalesFacadeSaveOrderTest extends Unit
         $this->assertSame($initialState->getIdOmsOrderItemState(), $item2Entity->getFkOmsOrderItemState());
         $this->assertSame($item2->getSku(), $item2Entity->getSku());
         $this->assertSame($savedItems[2]->getUnitGrossPrice(), $item2Entity->getGrossPrice());
-        $this->assertSame(1, $item2Entity->getQuantity());
+        $this->assertSame(1.0, $item2Entity->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderWithFloatQuantityCreatesAndFillsOrderItems(): void
+    {
+        $quoteTransfer = $this->createValidBaseQuoteWithFloatQuantity();
+        $omsConfig = new OmsConfig();
+
+        $initialState = SpyOmsOrderItemStateQuery::create()
+            ->filterByName($omsConfig->getInitialStatus())
+            ->findOneOrCreate();
+        $initialState->save();
+
+        $item1 = new ItemTransfer();
+        $item1->setName('item-test-1')
+            ->setSku('sku1')
+            ->setUnitPrice(130)
+            ->setUnitGrossPrice(120)
+            ->setSumGrossPrice(120)
+            ->setQuantity(1.5)
+            ->setTaxRate(19);
+
+        $item2 = new ItemTransfer();
+        $item2->setName('item-test-2')
+            ->setSku('sku2')
+            ->setUnitPrice(130)
+            ->setUnitGrossPrice(130)
+            ->setSumGrossPrice(130)
+            ->setQuantity(2.5)
+            ->setTaxRate(19);
+
+        $quoteTransfer->addItem($item1);
+        $quoteTransfer->addItem($item2);
+
+        $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
+        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+
+        $savedItems = $checkoutResponseTransfer->getSaveOrder()->getOrderItems();
+        $item1Entity = SpySalesOrderItemQuery::create()
+            ->filterByName('item-test-1')
+            ->findOne();
+        $item2Entity = SpySalesOrderItemQuery::create()
+            ->filterByName('item-test-2')
+            ->findOne();
+
+        $this->assertSame($savedItems[1]->getIdSalesOrderItem(), $item1Entity->getIdSalesOrderItem());
+        $this->assertSame($item1->getName(), $item1Entity->getName());
+        $this->assertSame($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder(), $item1Entity->getFkSalesOrder());
+        $this->assertSame($initialState->getIdOmsOrderItemState(), $item1Entity->getFkOmsOrderItemState());
+        $this->assertSame($item1->getSku(), $item1Entity->getSku());
+        $this->assertSame($savedItems[1]->getUnitGrossPrice(), $item1Entity->getGrossPrice());
+        $this->assertSame(1.5, $item1Entity->getQuantity());
+
+        $this->assertSame($savedItems[2]->getIdSalesOrderItem(), $item2Entity->getIdSalesOrderItem());
+        $this->assertSame($item2->getName(), $item2Entity->getName());
+        $this->assertSame($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder(), $item2Entity->getFkSalesOrder());
+        $this->assertSame($initialState->getIdOmsOrderItemState(), $item2Entity->getFkOmsOrderItemState());
+        $this->assertSame($item2->getSku(), $item2Entity->getSku());
+        $this->assertSame($savedItems[2]->getUnitGrossPrice(), $item2Entity->getGrossPrice());
+        $this->assertSame(2.5, $item2Entity->getQuantity());
     }
 
     /**
@@ -408,6 +602,17 @@ class SalesFacadeSaveOrderTest extends Unit
     public function testSaveOrderGeneratesOrderReference()
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
+        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+        $this->assertNotNull($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderWithFloatQuantityGeneratesOrderReference(): void
+    {
+        $quoteTransfer = $this->createValidBaseQuoteWithFloatQuantity();
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
         $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
         $this->assertNotNull($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
@@ -435,6 +640,23 @@ class SalesFacadeSaveOrderTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCreateSalesExpenseSavesExpenseWithFloatQuantity(): void
+    {
+        $quoteTransfer = $this->createValidBaseQuoteWithFloatQuantity();
+        $saveOrderTransfer = $this->createSaveOrderTransfer();
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+        $expenseTransfer = $this->createExpenseTransferWithFloatQuantity();
+        $expenseTransfer->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
+
+        $savedExpenseTeransfer = $this->salesFacade->createSalesExpense($expenseTransfer);
+        $expenseTransfer->setIdSalesExpense($savedExpenseTeransfer->getIdSalesExpense());
+
+        $this->assertEquals($savedExpenseTeransfer->toArray(), $expenseTransfer->toArray());
+    }
+
+    /**
      * @param int $expensePrice
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
@@ -454,6 +676,19 @@ class SalesFacadeSaveOrderTest extends Unit
             ->setSumGrossPrice(0)
             ->setUnitNetPrice($expensePrice)
             ->setSumNetPrice($expensePrice);
+
+        return $expenseTransfer;
+    }
+
+    /**
+     * @param int $expensePrice
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    protected function createExpenseTransferWithFloatQuantity(int $expensePrice = 100): ExpenseTransfer
+    {
+        $expenseTransfer = $this->createExpenseTransfer();
+        $expenseTransfer->setQuantity(1.5);
 
         return $expenseTransfer;
     }

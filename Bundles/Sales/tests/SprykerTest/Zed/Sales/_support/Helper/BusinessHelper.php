@@ -32,11 +32,9 @@ class BusinessHelper extends Module
      */
     public function create()
     {
-        $salesOrderAddressEntity = $this->createSalesOrderAddress();
         $omsStateEntity = $this->createOmsState();
         $omsProcessEntity = $this->createOmsProcess();
-        $salesOrderEntity = $this->createSpySalesOrderEntity($salesOrderAddressEntity);
-        $salesExpenseEntity = $this->createSalesExpense($salesOrderEntity);
+        $salesOrderEntity = $this->createOrderWithoutItems();
 
         $this->createOrderItem(
             $omsStateEntity,
@@ -55,6 +53,48 @@ class BusinessHelper extends Module
             800,
             19
         );
+
+        return $salesOrderEntity;
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    public function createOrderWithFloatStock(): SpySalesOrder
+    {
+        $omsStateEntity = $this->createOmsState();
+        $omsProcessEntity = $this->createOmsProcess();
+        $salesOrderEntity = $this->createOrderWithoutItems();
+
+        $this->createOrderItem(
+            $omsStateEntity,
+            $salesOrderEntity,
+            $omsProcessEntity,
+            1.5,
+            500,
+            19
+        );
+
+        $this->createOrderItem(
+            $omsStateEntity,
+            $salesOrderEntity,
+            $omsProcessEntity,
+            2.5,
+            800,
+            19
+        );
+
+        return $salesOrderEntity;
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    protected function createOrderWithoutItems(): SpySalesOrder
+    {
+        $salesOrderAddressEntity = $this->createSalesOrderAddress();
+        $salesOrderEntity = $this->createSpySalesOrderEntity($salesOrderAddressEntity);
+        $salesExpenseEntity = $this->createSalesExpense($salesOrderEntity);
 
         $this->createSpySalesShipment($salesOrderEntity->getIdSalesOrder(), $salesExpenseEntity->getIdSalesExpense());
         $this->createOrderTotals($salesOrderEntity->getIdSalesOrder());
