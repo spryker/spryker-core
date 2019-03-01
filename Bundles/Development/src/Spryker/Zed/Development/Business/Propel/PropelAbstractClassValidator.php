@@ -147,8 +147,16 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
             throw new Exception('Could not load xml file');
         }
 
-        $simpleXmlTableElements = $simpleXmlElement->xpath('//table');
-        if ($simpleXmlTableElements === false) {
+        if (!$this->hasNamespaceInSchema($simpleXmlElement)) {
+            $simpleXmlTableElements = $simpleXmlElement->xpath('//table');
+        }
+
+        if (empty($simpleXmlTableElements)) {
+            $simpleXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
+            $simpleXmlTableElements = $simpleXmlElement->xpath('//s:table');
+        }
+
+        if (empty($simpleXmlTableElements)) {
             throw new Exception('No table found in ');
         }
 
@@ -162,6 +170,16 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
         }
 
         return $this->abstractClassesForTableExists($simpleXmlTableElements, $module, $output);
+    }
+
+    /**
+     * @param \SimpleXMLElement $simpleXmlElement
+     *
+     * @return bool
+     */
+    protected function hasNamespaceInSchema(SimpleXMLElement $simpleXmlElement): bool
+    {
+        return !count($simpleXmlElement->xpath('//table'));
     }
 
     /**
