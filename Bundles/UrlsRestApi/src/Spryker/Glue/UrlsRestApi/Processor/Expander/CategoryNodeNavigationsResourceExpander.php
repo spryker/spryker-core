@@ -9,6 +9,7 @@ namespace Spryker\Glue\UrlsRestApi\Processor\Expander;
 
 use ArrayObject;
 use Generated\Shared\Transfer\RestNavigationAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\UrlsRestApi\Dependency\Client\UrlsRestApiToUrlStorageClientInterface;
 
 class CategoryNodeNavigationsResourceExpander implements CategoryNodeNavigationsResourceExpanderInterface
@@ -28,11 +29,14 @@ class CategoryNodeNavigationsResourceExpander implements CategoryNodeNavigations
 
     /**
      * @param \Generated\Shared\Transfer\RestNavigationAttributesTransfer $restNavigationAttributesTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\RestNavigationAttributesTransfer
      */
-    public function expand(RestNavigationAttributesTransfer $restNavigationAttributesTransfer): RestNavigationAttributesTransfer
-    {
+    public function expand(
+        RestNavigationAttributesTransfer $restNavigationAttributesTransfer,
+        RestRequestInterface $restRequest
+    ): RestNavigationAttributesTransfer {
         $nodes = $this->expandNavigationNodeTransfers($restNavigationAttributesTransfer->getNodes());
         $restNavigationAttributesTransfer->setNodes($nodes);
 
@@ -42,14 +46,14 @@ class CategoryNodeNavigationsResourceExpander implements CategoryNodeNavigations
     /**
      * @param \ArrayObject $restNavigationNodeTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\RestNavigationNodeTransfer[]
+     * @return \ArrayObject
      */
     protected function expandNavigationNodeTransfers(ArrayObject $restNavigationNodeTransfers): ArrayObject
     {
         foreach ($restNavigationNodeTransfers as $restNavigationNodeTransfer) {
-            $utlStorageTransfer = $this->urlStorageClient->findUrlStorageTransferByUrl($restNavigationNodeTransfer->getUrl());
-            if ($utlStorageTransfer) {
-                $restNavigationNodeTransfer->setAssignedEntityId($utlStorageTransfer->getFkResourceCategorynode());
+            $urlStorageTransfer = $this->urlStorageClient->findUrlStorageTransferByUrl($restNavigationNodeTransfer->getUrl());
+            if ($urlStorageTransfer) {
+                $restNavigationNodeTransfer->setAssignedEntityId($urlStorageTransfer->getFkResourceCategorynode());
             }
 
             if ($restNavigationNodeTransfer->getChildren()->count() > 0) {

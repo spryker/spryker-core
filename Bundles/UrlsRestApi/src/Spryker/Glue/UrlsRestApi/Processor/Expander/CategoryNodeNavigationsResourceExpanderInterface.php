@@ -8,13 +8,18 @@
 namespace Spryker\Glue\UrlsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\RestNavigationAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface CategoryNodeNavigationsResourceExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestNavigationAttributesTransfer $restNavigationAttributesTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\RestNavigationAttributesTransfer
      */
-    public function expand(RestNavigationAttributesTransfer $restNavigationAttributesTransfer): RestNavigationAttributesTransfer;
+    public function expand(
+        RestNavigationAttributesTransfer $restNavigationAttributesTransfer,
+        RestRequestInterface $restRequest
+    ): RestNavigationAttributesTransfer;
 }

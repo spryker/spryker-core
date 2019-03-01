@@ -34,6 +34,6 @@ class CategoryNodeNavigationsResourceExpanderPlugin extends AbstractPlugin imple
     ): RestNavigationAttributesTransfer {
         return $this->getFactory()
             ->createCategoryNodeNavigationResourceExpander()
-            ->expand($restNavigationAttributesTransfer);
+            ->expand($restNavigationAttributesTransfer, $restRequest);
     }
 }
