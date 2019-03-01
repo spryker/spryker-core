@@ -363,14 +363,14 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductBundleCollectionByAssignedIdProductConcreteShouldReturnPersistedBundledProducts()
+    public function testGetProductBundleCollectionByAssignedIdProductConcreteShouldReturnPersistedBundledProducts()
     {
         $this->markTestIncomplete('Something with transactions');
         $productConcreteBundleTransfer = $this->createProductBundle(self::BUNDLED_PRODUCT_PRICE_2);
 
         $productBundleFacade = $this->createProductBundleFacade();
         foreach ($productConcreteBundleTransfer->getProductBundle()->getBundledProducts() as $bundledProduct) {
-            $productBundleCollection = $productBundleFacade->findProductBundleCollectionByAssignedIdProductConcrete(
+            $productBundleCollection = $productBundleFacade->getProductBundleCollectionByAssignedIdProductConcrete(
                 $bundledProduct->getIdProductConcrete()
             );
 

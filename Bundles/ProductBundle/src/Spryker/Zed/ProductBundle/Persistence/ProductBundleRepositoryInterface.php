@@ -16,5 +16,5 @@ interface ProductBundleRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
      */
-    public function findProductBundleCollectionByAssignedIdProductConcrete(int $idProductConcrete): ProductBundleCollectionTransfer;
+    public function getProductBundleCollectionByAssignedIdProductConcrete(int $idProductConcrete): ProductBundleCollectionTransfer;
 }

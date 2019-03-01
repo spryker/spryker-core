@@ -264,11 +264,11 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
      */
-    public function findProductBundleCollectionByAssignedIdProductConcrete(int $idProductConcrete): ProductBundleCollectionTransfer
+    public function getProductBundleCollectionByAssignedIdProductConcrete(int $idProductConcrete): ProductBundleCollectionTransfer
     {
         return $this->getFactory()
             ->createProductBundleReader()
-            ->findProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete);
+            ->getProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete);
     }
 
     /**

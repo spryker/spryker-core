@@ -89,7 +89,7 @@ class BlacklistExpandProductBundleTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
         $productBundleProductListConnectorToProductBundleFacadeBridgeMock
-            ->method('findProductBundleCollectionByAssignedIdProductConcrete')
+            ->method('getProductBundleCollectionByAssignedIdProductConcrete')
             ->willReturn($productBundleCollection);
 
         return $productBundleProductListConnectorToProductBundleFacadeBridgeMock;

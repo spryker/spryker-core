@@ -29,9 +29,9 @@ class ProductBundleProductListConnectorToProductBundleFacadeBridge implements Pr
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
      */
-    public function findProductBundleCollectionByAssignedIdProductConcrete(int $idProductConcrete): ProductBundleCollectionTransfer
+    public function getProductBundleCollectionByAssignedIdProductConcrete(int $idProductConcrete): ProductBundleCollectionTransfer
     {
-        return $this->productBundleFacade->findProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete);
+        return $this->productBundleFacade->getProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete);
     }
 
     /**

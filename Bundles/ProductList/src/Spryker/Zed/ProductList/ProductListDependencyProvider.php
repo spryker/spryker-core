@@ -102,7 +102,7 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListPreSavePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_PRE_SAVE] = function (Container $container) {
+        $container[static::PLUGINS_PRODUCT_LIST_PRE_SAVE] = function (Container $container): array {
             return $this->getProductListPreSavePlugins();
         };
 

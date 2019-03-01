@@ -12,7 +12,7 @@ use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundl
 
 class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterface
 {
-    protected const MESSAGE_VALUE = ' was added to the whitelist with follow products ';
+    protected const MESSAGE_VALUE = 'was added to the whitelist with follow products';
 
     /**
      * @var \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface

@@ -12,7 +12,7 @@ use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundl
 
 class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterface
 {
-    protected const MESSAGE_VALUE = ' was blacklisted due to blacklisting ';
+    protected const MESSAGE_VALUE = 'was blacklisted due to blacklisting';
 
     /**
      * @var \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface
@@ -59,7 +59,7 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
     protected function blacklistExpandByIdProductConcrete(int $idProductConcreteAssigned, ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
     {
         $productIdsToSave = $productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds();
-        $productBundleCollectionTransfer = $this->productBundleFacade->findProductBundleCollectionByAssignedIdProductConcrete($idProductConcreteAssigned);
+        $productBundleCollectionTransfer = $this->productBundleFacade->getProductBundleCollectionByAssignedIdProductConcrete($idProductConcreteAssigned);
 
         if (!$productBundleCollectionTransfer->getProductBundles()->count()) {
             return $productListResponseTransfer;

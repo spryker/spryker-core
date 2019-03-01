@@ -14,7 +14,7 @@ use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundl
 
 class ProductListMessageGenerator implements ProductListMessageGeneratorInterface
 {
-    protected const SEPARATION_SIGN = ' + ';
+    protected const SEPARATION_SIGN = '+';
     protected const PRODUCT_BUNDLE_PARAMETER_NAME = 'product_bundle';
     protected const PRODUCTS_BUNDLED_PARAMETER_NAME = 'products_bundled';
 
@@ -71,7 +71,7 @@ class ProductListMessageGenerator implements ProductListMessageGeneratorInterfac
      */
     protected function generateValue(string $value): string
     {
-        return static::PRODUCT_BUNDLE_PARAMETER_NAME . $value . static::PRODUCTS_BUNDLED_PARAMETER_NAME . '.';
+        return sprintf('%s %s %s.', static::PRODUCT_BUNDLE_PARAMETER_NAME, $value, static::PRODUCTS_BUNDLED_PARAMETER_NAME);
     }
 
     /**
@@ -85,14 +85,14 @@ class ProductListMessageGenerator implements ProductListMessageGeneratorInterfac
         $productConcreteTransfer = $this->productFacade->findProductConcreteById($idProductConcrete);
         $productConcreteName = '';
 
-        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            if ($localizedAttribute->getLocale()->getIdLocale() === $currentLocale->getIdLocale()) {
-                $productConcreteName = $localizedAttribute->getName();
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributeTransfer) {
+            if ($localizedAttributeTransfer->getLocale()->getIdLocale() === $currentLocale->getIdLocale()) {
+                $productConcreteName = $localizedAttributeTransfer->getName();
 
                 break;
             }
         }
 
-        return $productConcreteName . static::SEPARATION_SIGN . $productConcreteTransfer->getSku();
+        return sprintf('"%s %s %s"', $productConcreteName, static::SEPARATION_SIGN, $productConcreteTransfer->getSku());
     }
 }

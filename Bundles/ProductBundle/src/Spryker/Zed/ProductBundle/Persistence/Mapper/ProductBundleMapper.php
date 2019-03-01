@@ -25,9 +25,9 @@ class ProductBundleMapper
         ObjectCollection $productBundleEntities,
         ProductBundleCollectionTransfer $productBundleCollectionTransfer
     ): ProductBundleCollectionTransfer {
-        $productBundleEntitiesGroupedByIdProductBundle = $this->getProductBundleEntitiesGroupedByIdProductBundle($productBundleEntities);
+        $productBundleTransfers = $this->mapProductBundleEntitiesToProductBundleTransfers($productBundleEntities);
 
-        foreach ($productBundleEntitiesGroupedByIdProductBundle as $idProductBundle => $productBundleTransfer) {
+        foreach ($productBundleTransfers as $productBundleTransfer) {
             $productBundleCollectionTransfer->addProductBundle($productBundleTransfer);
         }
 
@@ -39,17 +39,17 @@ class ProductBundleMapper
      *
      * @return \Generated\Shared\Transfer\ProductBundleTransfer[]
      */
-    protected function getProductBundleEntitiesGroupedByIdProductBundle(ObjectCollection $productBundleEntities): array
+    protected function mapProductBundleEntitiesToProductBundleTransfers(ObjectCollection $productBundleEntities): array
     {
-        $productBundleEntitiesGroupedByIdProductBundle = [];
+        $productBundleTransfersGroupedByIdProductBundle = [];
 
         foreach ($productBundleEntities as $productBundleEntity) {
             $productForBundleTransfer = $this->mapProductBundleEntityToProductForBundleTransfer($productBundleEntity, new ProductForBundleTransfer());
 
-            if (isset($productBundleEntitiesGroupedByIdProductBundle[$productBundleEntity->getFkProduct()])) {
-                $productBundleTransfer = $productBundleEntitiesGroupedByIdProductBundle[$productBundleEntity->getFkProduct()];
+            if (isset($productBundleTransfersGroupedByIdProductBundle[$productBundleEntity->getFkProduct()])) {
+                $productBundleTransfer = $productBundleTransfersGroupedByIdProductBundle[$productBundleEntity->getFkProduct()];
                 $productBundleTransfer->addBundledProduct($productForBundleTransfer);
-                $productBundleEntitiesGroupedByIdProductBundle[$productBundleEntity->getFkProduct()] = $productBundleTransfer;
+                $productBundleTransfersGroupedByIdProductBundle[$productBundleEntity->getFkProduct()] = $productBundleTransfer;
 
                 break;
             }
@@ -58,10 +58,10 @@ class ProductBundleMapper
                 ->setIdProductConcrete($productBundleEntity->getFkProduct())
                 ->addBundledProduct($productForBundleTransfer);
 
-            $productBundleEntitiesGroupedByIdProductBundle[$productBundleEntity->getFkProduct()] = $productBundleTransfer;
+            $productBundleTransfersGroupedByIdProductBundle[$productBundleEntity->getFkProduct()] = $productBundleTransfer;
         }
 
-        return $productBundleEntitiesGroupedByIdProductBundle;
+        return $productBundleTransfersGroupedByIdProductBundle;
     }
 
     /**
