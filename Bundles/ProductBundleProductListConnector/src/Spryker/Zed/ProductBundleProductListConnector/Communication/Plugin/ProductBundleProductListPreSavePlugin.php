@@ -15,7 +15,7 @@ use Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaveInterfa
  * @method \Spryker\Zed\ProductBundleProductListConnector\Business\ProductBundleProductListConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorConfig getConfig()
  */
-class ProductBundleProductListPreSaverPlugin extends AbstractPlugin implements ProductListPreSaveInterface
+class ProductBundleProductListPreSavePlugin extends AbstractPlugin implements ProductListPreSaveInterface
 {
     /**
      * {@inheritdoc}
