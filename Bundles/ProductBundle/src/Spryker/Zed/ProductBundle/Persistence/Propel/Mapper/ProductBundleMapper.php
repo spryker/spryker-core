@@ -8,8 +8,9 @@
 namespace Spryker\Zed\ProductBundle\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductBundleTransfer;
+use Generated\Shared\Transfer\ProductForBundleTransfer;
 
-class ProductBundleMapper implements ProductBundleMapperInterface
+class ProductBundleMapper
 {
     /**
      * @param array $bundledProducts
@@ -18,6 +19,14 @@ class ProductBundleMapper implements ProductBundleMapperInterface
      */
     public function mapProductBundleTransfer(array $bundledProducts): ProductBundleTransfer
     {
-        return (new ProductBundleTransfer())->fromArray($bundledProducts);
+        $productBundleTransfer = new ProductBundleTransfer();
+        foreach ($bundledProducts as $bundledProduct) {
+            $productBundleTransfer->addBundledProduct(
+                (new ProductForBundleTransfer())
+                    ->fromArray($bundledProduct->getSpyProductRelatedByFkBundledProduct()->toArray(), true)
+            );
+        }
+
+        return $productBundleTransfer;
     }
 }

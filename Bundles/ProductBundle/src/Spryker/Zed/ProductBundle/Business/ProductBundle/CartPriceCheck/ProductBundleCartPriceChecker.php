@@ -80,7 +80,6 @@ class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInte
             ->setSku($productForBundleTransfer->getSku())
             ->setPriceMode($quoteTransfer->getPriceMode())
             ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
-            ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName())
             ->setStoreName($quoteTransfer->getStore()->getName())
             ->setQuote($quoteTransfer);
 
@@ -103,7 +102,6 @@ class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInte
 
         foreach ($bundledProducts as $bundledProduct) {
             $priceProductFilterTransfer = $this->createPriceProductFilter($bundledProduct, $cartChangeTransfer->getQuote());
-
             if ($this->priceProductFacade->hasValidPriceFor($priceProductFilterTransfer)) {
                 continue;
             }
