@@ -47,6 +47,37 @@ class ProductListFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testSaveProductListWithResponseCreatesProductList(): void
+    {
+        // Assign
+        $productListTransfer = (new ProductListBuilder())->build();
+
+        // Act
+        $productListResponseTransfer = $this->getFacade()->saveProductListWithResponse($productListTransfer);
+
+        //Assert
+        $this->assertNotNull($productListResponseTransfer->getProductList());
+        $this->assertNotNull($productListResponseTransfer->getProductList()->getIdProductList());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveProductListWithResponseIsSuccessful(): void
+    {
+        // Assign
+        $productListTransfer = (new ProductListBuilder())->build();
+
+        // Act
+        $productListResponseTransfer = $this->getFacade()->saveProductListWithResponse($productListTransfer);
+
+        //Assert
+        $this->assertTrue($productListResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
     public function testSaveProductListCreatesProductListCategoryRelations(): void
     {
         // Assign
