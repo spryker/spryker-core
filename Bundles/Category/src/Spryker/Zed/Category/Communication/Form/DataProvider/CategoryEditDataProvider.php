@@ -12,13 +12,11 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\Communication\Form\CategoryType;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
-use Symfony\Component\HttpFoundation\Request;
 
 class CategoryEditDataProvider
 {
@@ -55,19 +53,23 @@ class CategoryEditDataProvider
     }
 
     /**
+     * @param int $categoryId
+     *
      * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
-    public function getData(): ?CategoryTransfer
+    public function getData(int $categoryId): ?CategoryTransfer
     {
-        return $this->buildCategoryTransfer();
+        return $this->buildCategoryTransfer($categoryId);
     }
 
     /**
+     * @param int $categoryId
+     *
      * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
-    protected function buildCategoryTransfer(): ?CategoryTransfer
+    protected function buildCategoryTransfer(int $categoryId): ?CategoryTransfer
     {
-        $categoryTransfer = $this->categoryFacade->findCategoryById($this->getIdCategory());
+        $categoryTransfer = $this->categoryFacade->findCategoryById($categoryId);
 
         if ($categoryTransfer !== null) {
             $categoryTransfer = $this->addLocalizedAttributeTransfers($categoryTransfer);
@@ -77,11 +79,13 @@ class CategoryEditDataProvider
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(CategoryTransfer $categoryTransfer)
     {
-        $parentCategories = $this->getCategoriesWithPaths();
+        $parentCategories = $this->getCategoriesWithPaths($categoryTransfer);
 
         return [
             static::DATA_CLASS => CategoryTransfer::class,
@@ -92,9 +96,11 @@ class CategoryEditDataProvider
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
      * @return array
      */
-    protected function getCategoriesWithPaths()
+    protected function getCategoriesWithPaths(CategoryTransfer $categoryTransfer)
     {
         $idLocale = $this->getIdLocale();
         /** @var \Orm\Zed\Category\Persistence\SpyCategory[] $categoryEntityList */
@@ -109,7 +115,7 @@ class CategoryEditDataProvider
         $categoryNodes = [];
 
         foreach ($categoryEntityList as $categoryEntity) {
-            if ($categoryEntity->getIdCategory() === $this->getIdCategory()) {
+            if ($categoryEntity->getIdCategory() === $categoryTransfer->getIdCategory()) {
                 continue;
             }
 
@@ -151,14 +157,6 @@ class CategoryEditDataProvider
     protected function getIdLocale()
     {
         return $this->localeFacade->getCurrentLocale()->getIdLocale();
-    }
-
-    /**
-     * @return int
-     */
-    protected function getIdCategory()
-    {
-        return Request::createFromGlobals()->query->getInt(CategoryConstants::PARAM_ID_CATEGORY);
     }
 
     /**

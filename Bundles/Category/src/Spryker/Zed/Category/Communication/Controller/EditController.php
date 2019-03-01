@@ -31,10 +31,10 @@ class EditController extends AbstractController
     {
         $this->getFacade()->syncCategoryTemplate();
 
-        $categoryTransfer = $this->getFactory()->createCategoryEditFormDataProvider()->getData();
+        $categoryTransfer = $this->getFactory()->createCategoryEditFormDataProvider()->getData($this->castId($request->get(CategoryConstants::PARAM_ID_CATEGORY)));
 
         if ($categoryTransfer === null) {
-            $this->addErrorMessage("Category with id %s doesn't exist", ['%s' => $request->get('id-category')]);
+            $this->addErrorMessage("Category with id %s doesn't exist", ['%s' => $request->get(CategoryConstants::PARAM_ID_CATEGORY)]);
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
