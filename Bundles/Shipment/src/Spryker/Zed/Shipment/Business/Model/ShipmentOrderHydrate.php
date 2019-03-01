@@ -10,8 +10,10 @@ namespace Spryker\Zed\Shipment\Business\Model;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
+use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
@@ -46,22 +48,27 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
             ->querySalesShipmentByIdSalesOrder($idSalesOrder)
             ->find();
 
-        $orderTransfer = $this->hydrateShipmentMethodToOrderTransfer($salesOrderShipments, $orderTransfer);
+        if ($salesOrderShipments->count() === 1) {
+            $orderTransfer = $this->hydrateShipmentMethodToOrderTransfer($salesOrderShipments, $orderTransfer);
+
+            return $this->setShipmentToOrderExpenses($salesOrderShipments, $orderTransfer);
+        }
+
+        $orderTransfer = $this->hydrateMultiShipmentMethodToOrderTransfer($salesOrderShipments, $orderTransfer);
 
         return $this->setShipmentToOrderExpenses($salesOrderShipments, $orderTransfer);
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderShipments
+     * @param iterable|\Orm\Zed\Sales\Persistence\SpySalesShipment[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderShipments
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function hydrateShipmentMethodToOrderTransfer(
-        ObjectCollection $salesOrderShipments,
+    protected function hydrateMultiShipmentMethodToOrderTransfer(
+        iterable $salesOrderShipments,
         OrderTransfer $orderTransfer
     ) {
-
         foreach ($salesOrderShipments as $salesShipmentEntity) {
             $shipmentMethodEntity = $this->shipmentQueryContainer
                 ->queryActiveMethods()
@@ -70,10 +77,87 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
             $shipmentMethodTransfer = new ShipmentMethodTransfer();
             $shipmentMethodTransfer = $this->hydrateShipmentMethodTransferFromShipmentMethod($shipmentMethodTransfer, $shipmentMethodEntity);
             $shipmentMethodTransfer = $this->hydrateShipmentMethodTransferFromSalesShipment($shipmentMethodTransfer, $salesShipmentEntity);
+
             $orderTransfer = $this->setShipmentMethodToItems($orderTransfer, $shipmentMethodTransfer);
 
             $orderTransfer->addShipmentMethod($shipmentMethodTransfer);
             $orderTransfer = $this->hydrateSalesShipmentToOrderItem($salesShipmentEntity, $orderTransfer);
+        }
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param iterable|\Orm\Zed\Sales\Persistence\SpySalesShipment[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderShipments
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function hydrateShipmentMethodToOrderTransfer(
+        iterable $salesOrderShipments,
+        OrderTransfer $orderTransfer
+    ) {
+        $shipmentTransfer = new ShipmentTransfer();
+        $shipmentTransfer->setShippingAddress($orderTransfer->getShippingAddress());
+        $salesShipmentEntity = $salesOrderShipments->getFirst();
+
+        $shipmentMethodEntity = $this->shipmentQueryContainer
+            ->queryActiveMethods()
+            ->findOneByName($salesShipmentEntity->getName());
+
+        $shipmentMethodTransfer = new ShipmentMethodTransfer();
+        $shipmentMethodTransfer = $this->hydrateShipmentMethodTransferFromShipmentMethod($shipmentMethodTransfer, $shipmentMethodEntity);
+        $shipmentMethodTransfer = $this->hydrateShipmentMethodTransferFromSalesShipment($shipmentMethodTransfer, $salesShipmentEntity);
+
+        $shipmentTransfer = $this->hydrateSalesShipmentToShipmentTransfer($salesShipmentEntity, $shipmentTransfer);
+        $orderTransfer = $this->addShipmentToOrderItems($orderTransfer, $shipmentTransfer);
+        $orderTransfer = $this->addShipmentMethodToOrderItems($orderTransfer, $shipmentMethodTransfer);
+        /**
+         * @todo set order->shipment to null.
+         */
+
+        $orderTransfer->addShipmentMethod($shipmentMethodTransfer);
+        $orderTransfer = $this->hydrateSalesShipmentToOrderItem($salesShipmentEntity, $orderTransfer);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment $salesShipmentEntity
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function hydrateSalesShipmentToShipmentTransfer(SpySalesShipment $salesShipmentEntity, ShipmentTransfer $shipmentTransfer): ShipmentTransfer
+    {
+        return $shipmentTransfer->fromArray($salesShipmentEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function addShipmentToOrderItems(OrderTransfer $orderTransfer, ShipmentTransfer $shipmentTransfer): OrderTransfer
+    {
+        foreach ($orderTransfer->getItems() as $item) {
+            $item->setShipment($shipmentTransfer);
+        }
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function addShipmentMethodToOrderItems(OrderTransfer $orderTransfer, ShipmentMethodTransfer $shipmentMethodTransfer): OrderTransfer
+    {
+        foreach ($orderTransfer->getItems() as $item) {
+            $item->getShipment()->setMethod($shipmentMethodTransfer);
         }
 
         return $orderTransfer;
@@ -179,5 +263,36 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     protected function hydrateShipmentMethodTransferFromSalesShipment(ShipmentMethodTransfer $shipmentMethodTransfer, SpySalesShipment $salesShipment): ShipmentMethodTransfer
     {
         return $shipmentMethodTransfer->fromArray($salesShipment->toArray(), true);
+    }
+
+
+    //---------
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderShipments
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function hydrateShipmentMethodToOrderTransfer2(
+        ObjectCollection $salesOrderShipments,
+        OrderTransfer $orderTransfer
+    ) {
+
+        foreach ($salesOrderShipments as $salesShipmentEntity) {
+            $idShipmentMethod = $this->shipmentQueryContainer
+                ->queryActiveMethods()
+                ->select(SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD)
+                ->findOneByName($salesShipmentEntity->getName());
+
+            $shipmentMethodTransfer = new ShipmentMethodTransfer();
+            $shipmentMethodTransfer->fromArray($salesShipmentEntity->toArray(), true);
+            if ($idShipmentMethod) {
+                $shipmentMethodTransfer->setIdShipmentMethod($idShipmentMethod);
+            }
+            $orderTransfer->addShipmentMethod($shipmentMethodTransfer);
+        }
+
+        return $orderTransfer;
     }
 }
