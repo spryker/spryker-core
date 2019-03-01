@@ -12,6 +12,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @deprecated Use Spryker\Zed\Uuid\Communication\Console\UuidGeneratorConsole instead.
+ *
  * @method \Spryker\Zed\ProductTaxSetsRestApi\Business\ProductTaxSetsRestApiFacade getFacade()
  * @method \Spryker\Zed\ProductTaxSetsRestApi\Communication\ProductTaxSetsRestApiCommunicationFactory getFactory()
  */

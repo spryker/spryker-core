@@ -26,9 +26,9 @@ interface RestResourceInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return $this
      */
-    public function addRelationship(RestResourceInterface $restResource): self;
+    public function addRelationship(RestResourceInterface $restResource);
 
     /**
      * @return array
@@ -47,9 +47,9 @@ interface RestResourceInterface
      * @param string $resourceUri
      * @param array $meta
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return $this
      */
-    public function addLink(string $name, string $resourceUri, array $meta = []): self;
+    public function addLink(string $name, string $resourceUri, array $meta = []);
 
     /**
      * @return array
@@ -84,4 +84,16 @@ interface RestResourceInterface
      * @return array
      */
     public function toArray($includeRelations = true): array;
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $payload
+     *
+     * @return $this
+     */
+    public function setPayload(?AbstractTransfer $payload);
+
+    /**
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
+     */
+    public function getPayload(): ?AbstractTransfer;
 }

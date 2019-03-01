@@ -5,7 +5,7 @@
           namespace="Orm\Zed\UrlStorage\Persistence"
           package="src.Orm.Zed.UrlStorage.Persistence">
 
-    <table name="spy_url_storage">
+    <table name="spy_url_storage" identifierQuoting="true">
         <column name="id_url_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="url" type="VARCHAR" required="true"/>
         <column name="fk_url" type="INTEGER" required="true"/>
@@ -26,7 +26,7 @@
         <behavior name="timestampable"/>
     </table>
 
-    <table name="spy_url_redirect_storage">
+    <table name="spy_url_redirect_storage" identifierQuoting="true">
         <column name="id_url_redirect_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_url_redirect" type="INTEGER" required="true"/>
         <index name="spy_url_redirect_storage-fk_url_redirect">

@@ -28,20 +28,22 @@ use Spryker\Zed\ProductApi\Business\ProductApiFacade;
 class ProductApiFacadeTest extends Unit
 {
     /**
-     * @var array
+     * @var \SprykerTest\Zed\ProductApi\ProductApiBusinessTester
      */
-    protected $jsonDataForPagination = [
-        "rules" => [
-            [
-                "id" => "spy_product_abstract.id_product_abstract",
-                "field" => "spy_product_abstract.id_product_abstract",
-                "type" => "number",
-                "input" => "text",
-                "operator" => "greater_or_equal",
-                "value" => "209",
-            ],
-        ],
-    ];
+    protected $tester;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected $productAbstractTransfer;
+
+    /**
+     * @return void
+     */
+    protected function _before(): void
+    {
+        $this->productAbstractTransfer = $this->tester->haveProductAbstract();
+    }
 
     /**
      * @return void
@@ -50,7 +52,7 @@ class ProductApiFacadeTest extends Unit
     {
         $productApiFacade = new ProductApiFacade();
 
-        $idProduct = 1;
+        $idProduct = $this->productAbstractTransfer->getIdProductAbstract();
 
         $resultTransfer = $productApiFacade->getProduct($idProduct);
 
@@ -90,9 +92,11 @@ class ProductApiFacadeTest extends Unit
     {
         $productApiFacade = new ProductApiFacade();
 
+        $jsonDataForPagination = $this->getJsonDataForPagination();
+
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiFilterTransfer = new ApiFilterTransfer();
-        $apiFilterTransfer->setCriteriaJson(json_encode($this->jsonDataForPagination));
+        $apiFilterTransfer->setCriteriaJson(json_encode($jsonDataForPagination));
         $apiFilterTransfer->setSort(['sku' => '-']);
         $apiFilterTransfer->setLimit(2);
         $apiFilterTransfer->setOffset(2);
@@ -178,7 +182,7 @@ class ProductApiFacadeTest extends Unit
         ];
         $apiDataTransfer->setData($data);
 
-        $idProduct = 1;
+        $idProduct = $this->productAbstractTransfer->getIdProductAbstract();
         $resultTransfer = $productApiFacade->updateProduct($idProduct, $apiDataTransfer);
 
         $this->assertInstanceOf(ApiItemTransfer::class, $resultTransfer);
@@ -198,10 +202,10 @@ class ProductApiFacadeTest extends Unit
     {
         $productApiFacade = new ProductApiFacade();
 
-        $idProductAbstract = 1;
+        $idProductAbstract = $this->productAbstractTransfer->getIdProductAbstract();
         $apiDataTransfer = new ApiDataTransfer();
         $apiDataTransfer->setData([
-            'id_product_abstract' => 1,
+            'id_product_abstract' => $this->productAbstractTransfer->getIdProductAbstract(),
             'sku' => 'sku' . time() . '-update',
             'attributes' => [],
             'product_concretes' => [],
@@ -211,5 +215,24 @@ class ProductApiFacadeTest extends Unit
         $resultTransfer = $productApiFacade->updateProduct($idProductAbstract, $apiDataTransfer);
 
         $this->assertInstanceOf(ApiItemTransfer::class, $resultTransfer);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getJsonDataForPagination(): array
+    {
+        return [
+            "rules" => [
+                [
+                    "id" => "spy_product_abstract.id_product_abstract",
+                    "field" => "spy_product_abstract.id_product_abstract",
+                    "type" => "number",
+                    "input" => "text",
+                    "operator" => "greater_or_equal",
+                    "value" => "209",
+                ],
+            ],
+        ];
     }
 }

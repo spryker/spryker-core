@@ -29,15 +29,13 @@ class ControllerServiceBuilder
         RouteNameResolverInterface $routeNameResolver
     ) {
         $serviceName = 'controller.service.' . str_replace('/', '.', trim($routeNameResolver->resolve(), '/'));
-        $service = function () use ($application, $controllerResolver, $bundleControllerAction) {
+        $application[$serviceName] = function () use ($application, $controllerResolver, $bundleControllerAction) {
             $controller = $controllerResolver->resolve($bundleControllerAction);
             $controller->setApplication($application);
             $controller->initialize();
 
             return $controller;
         };
-
-        $application[$serviceName] = $application->share($service);
 
         return $serviceName . ':' . $bundleControllerAction->getAction() . 'Action';
     }

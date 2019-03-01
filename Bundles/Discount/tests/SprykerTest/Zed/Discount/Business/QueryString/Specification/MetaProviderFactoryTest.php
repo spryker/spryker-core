@@ -96,7 +96,7 @@ class MetaProviderFactoryTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\DiscountBusinessFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\DiscountBusinessFactory
      */
     protected function createDiscountBusinessFactoryMock()
     {
@@ -104,7 +104,7 @@ class MetaProviderFactoryTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */
     protected function createComparatorOperatorsMock()
     {
@@ -114,7 +114,7 @@ class MetaProviderFactoryTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\LogicalComparators
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\LogicalComparators
      */
     protected function createLogicalComparatorsMock()
     {

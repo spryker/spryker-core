@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
 use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageEntityManagerInterface;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface;
+use Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig;
 
 class ProductAlternativePublisher implements ProductAlternativePublisherInterface
 {
@@ -25,15 +26,23 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
     protected $productAlternativeStorageEntityManager;
 
     /**
+     * @var \Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig
+     */
+    protected $productAlternativeStorageConfig;
+
+    /**
      * @param \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface $productAlternativeStorageRepository
      * @param \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageEntityManagerInterface $productAlternativeStorageEntityManager
+     * @param \Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig $productAlternativeStorageConfig
      */
     public function __construct(
         ProductAlternativeStorageRepositoryInterface $productAlternativeStorageRepository,
-        ProductAlternativeStorageEntityManagerInterface $productAlternativeStorageEntityManager
+        ProductAlternativeStorageEntityManagerInterface $productAlternativeStorageEntityManager,
+        ProductAlternativeStorageConfig $productAlternativeStorageConfig
     ) {
         $this->productAlternativeStorageRepository = $productAlternativeStorageRepository;
         $this->productAlternativeStorageEntityManager = $productAlternativeStorageEntityManager;
+        $this->productAlternativeStorageConfig = $productAlternativeStorageConfig;
     }
 
     /**
@@ -97,6 +106,7 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
             ->setSku($sku)
             ->setData($this->getStorageEntityData($abstractAlternatives, $concreteAlternatives));
 
+        $productAlternativeStorageEntity->setIsSendingToQueue($this->productAlternativeStorageConfig->isSendingToQueue());
         $this->productAlternativeStorageEntityManager->saveProductAlternativeStorageEntity($productAlternativeStorageEntity);
     }
 

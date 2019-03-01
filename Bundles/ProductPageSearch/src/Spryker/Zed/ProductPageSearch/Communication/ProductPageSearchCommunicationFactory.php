@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPageSearch\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceFacadeInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToPriceProductServiceInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
@@ -16,6 +17,8 @@ use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  */
 class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -84,6 +87,24 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface[]
+     */
+    public function getProductConcretePageMapExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
+     */
+    public function getConcreteProductPageMapExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToCategoryInterface
      */
     public function getCategoryFacade()
@@ -97,6 +118,14 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreFacade()
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface
+     */
+    public function getProductFacade(): ProductPageSearchToProductInterface
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_PRODUCT);
     }
 
     /**

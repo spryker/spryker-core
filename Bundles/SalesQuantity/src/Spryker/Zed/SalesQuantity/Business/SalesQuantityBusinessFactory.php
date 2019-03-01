@@ -18,6 +18,7 @@ use Spryker\Zed\SalesQuantity\SalesQuantityDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesQuantity\SalesQuantityConfig getConfig()
+ * @method \Spryker\Zed\SalesQuantity\Persistence\SalesQuantityRepositoryInterface getRepository()
  */
 class SalesQuantityBusinessFactory extends AbstractBusinessFactory
 {
@@ -35,11 +36,13 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
     public function createItemExpander()
     {
         return new ItemExpander(
-            $this->getProductFacade()
+            $this->getRepository()
         );
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeInterface
      */
     public function getProductFacade()

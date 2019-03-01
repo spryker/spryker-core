@@ -95,7 +95,7 @@ class SearchPreferencesController extends AbstractController
         $searchPreferencesFormData = $dataProvider->getData($idAttributeKey);
 
         if ($searchPreferencesFormData === []) {
-            $this->addErrorMessage(sprintf('Attribute with id %s doesn\'t exist', $idAttributeKey));
+            $this->addErrorMessage("Attribute with id %s doesn't exist", ['%s' => $idAttributeKey]);
 
             return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }

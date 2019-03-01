@@ -56,7 +56,7 @@ class ItemCollectionType extends AbstractType
      *
      * @return $this
      */
-    protected function addItemsField(FormBuilderInterface $builder, array $options): self
+    protected function addItemsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_ITEMS, CollectionType::class, [
             'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::ITEMS,

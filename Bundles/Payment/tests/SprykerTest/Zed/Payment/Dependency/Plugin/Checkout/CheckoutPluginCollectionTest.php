@@ -105,7 +105,7 @@ class CheckoutPluginCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface
      */
     private function getPluginMock()
     {

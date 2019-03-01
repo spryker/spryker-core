@@ -3,6 +3,7 @@ actor: Tester
 
 include:
     - tests/SprykerTest/Zed/ProductListStorage
+    - tests/SprykerTest/Client/ProductListStorage
 
 paths:
     tests: tests
@@ -13,7 +14,7 @@ paths:
 
 settings:
     bootstrap: _bootstrap.php
-    suite_class: \PHPUnit_Framework_TestSuite
+    suite_class: \PHPUnit\Framework\TestSuite
     colors: true
     memory_limit: 1024M
     log: true

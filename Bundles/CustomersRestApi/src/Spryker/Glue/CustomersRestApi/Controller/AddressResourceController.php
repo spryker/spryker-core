@@ -18,6 +18,35 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class AddressResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getResourceById": {
+     *          "summary": [
+     *              "Retrieves customer address by id."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "404": "Address not found."
+     *          }
+     *     },
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves list of all customer addresses."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "400": "Customer not found.",
+     *              "403": "Unauthorized request.",
+     *              "404": "Address not found."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -30,6 +59,22 @@ class AddressResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Creates customer address."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "403": "Unauthorized request.",
+     *              "404": "Customer not found."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestAddressAttributesTransfer $restAddressAttributesTransfer
      *
@@ -43,6 +88,22 @@ class AddressResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *     "patch": {
+     *          "summary": [
+     *              "Updates customer address."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "400": "Address id is not specified.",
+     *              "403": "Unauthorized request."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestAddressAttributesTransfer $restAddressAttributesTransfer
      *
@@ -56,6 +117,23 @@ class AddressResourceController extends AbstractController
     }
 
     /**
+     * @Glue({
+     *     "delete": {
+     *          "summary": [
+     *              "Deletes customer address."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "400": "Address id is not specified.",
+     *              "403": "Unauthorized request.",
+     *              "404": "Address not found."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

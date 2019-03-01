@@ -19,7 +19,7 @@ interface QuoteFacadeInterface
 {
     /**
      * Specification:
-     * - Create new quote entity if it does not exist.
+     * - Creates new quote entity if it does not exist.
      *
      * @api
      *
@@ -43,7 +43,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Find quote for customer.
+     * - Finds quote for customer.
      *
      * @api
      *
@@ -70,7 +70,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Find quote by id.
+     * - Finds quote by id.
      *
      * @api
      *
@@ -82,7 +82,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Remove quote from DB.
+     * - Removes quote from DB.
      *
      * @api
      *
@@ -94,7 +94,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Get quote storage strategy type.
+     * - Gets quote storage strategy type.
      *
      * @api
      *
@@ -104,7 +104,11 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Get quote collection filtered by criteria.
+     * - Gets quote collection filtered by criteria.
+     * - Filters by FilterTransfer when provided.
+     * - Filters by customer reference when provided.
+     * - Filters by store ID when provided.
+     * - Executes quote QuoteExpanderPluginInterface plugins.
      *
      * @api
      *
@@ -116,7 +120,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Map Quote Entity Transfer to quote transfer.
+     * - Maps Quote Entity Transfer to quote transfer.
      *
      * @api
      *
@@ -136,4 +140,56 @@ interface QuoteFacadeInterface
      * @return void
      */
     public function deleteExpiredGuestQuote(): void;
+
+    /**
+     * Specification:
+     * - Finds quote by uuid.
+     * - Requires uuid field to be set in QuoteTransfer.
+     * - Uuid is not a required field and could be missing.
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Locks quote by setting `isLocked` transfer property to true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     *  - Unlocks quote by setting `isLocked` transfer property to false.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Returns true if quote is locked.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
 }

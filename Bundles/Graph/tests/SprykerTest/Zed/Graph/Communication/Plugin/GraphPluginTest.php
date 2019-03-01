@@ -121,11 +121,11 @@ class GraphPluginTest extends Unit
      */
     public function testRender()
     {
-        $this->assertInternalType('string', $this->getPluginMock()->render('svg'));
+        $this->assertIsString($this->getPluginMock()->render('svg'));
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
     protected function getPluginMock()
     {
