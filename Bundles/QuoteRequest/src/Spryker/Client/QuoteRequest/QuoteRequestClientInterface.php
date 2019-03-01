@@ -115,7 +115,7 @@ interface QuoteRequestClientInterface
      * - Retrieves "Request for Quote" entity filtered by reference.
      * - Expects "Request for Quote" status to be "in-progress".
      * - Expects "Request for Quote" quoteInProgress property exists.
-     * - Expects "Request for Quote" validUntil property exists and grater that current time.
+     * - Expects "Request for Quote" validUntil property exists and greater than current time.
      * - Changes status from "in-progress" to "ready".
      * - Resets isHidden flag to false.
      * - Creates version from quoteInProgress property.
