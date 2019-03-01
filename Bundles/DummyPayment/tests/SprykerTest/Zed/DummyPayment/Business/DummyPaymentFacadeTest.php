@@ -39,7 +39,7 @@ class DummyPaymentFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\DummyPayment\Business\DummyPaymentBusinessFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DummyPayment\Business\DummyPaymentBusinessFactory
      */
     protected function getFactoryMock()
     {

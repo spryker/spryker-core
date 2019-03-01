@@ -54,7 +54,7 @@ class SessionServiceProviderTest extends Unit
         $sessionServiceProvider->register($application);
 
         $this->assertArrayHasKey('session.storage.options', $application);
-        $this->assertInternalType('array', $application['session.storage.options']);
+        $this->assertIsArray($application['session.storage.options']);
     }
 
     /**
@@ -82,7 +82,7 @@ class SessionServiceProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Silex\Application
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Silex\Application
      */
     private function getApplicationMock()
     {
