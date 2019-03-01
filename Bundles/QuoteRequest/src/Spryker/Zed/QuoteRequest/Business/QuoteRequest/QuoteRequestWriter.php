@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
+use DateTime;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
@@ -26,6 +27,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
 
     protected const ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
     protected const ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+    protected const ERROR_MESSAGE_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.validation.error.wrong_valid_until';
 
     /**
      * @var \Spryker\Zed\QuoteRequest\QuoteRequestConfig
@@ -174,6 +176,13 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             return $quoteRequestResponseTransfer
                 ->setIsSuccess(false)
                 ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
+        }
+
+        if (!$quoteRequestTransfer->getValidUntil()
+            || (new DateTime($quoteRequestTransfer->getValidUntil()) < new DateTime('now'))) {
+            return $quoteRequestResponseTransfer
+                ->setIsSuccess(false)
+                ->addError(static::ERROR_MESSAGE_WRONG_QUOTE_REQUEST_VALID_UNTIL);
         }
 
         $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_READY);

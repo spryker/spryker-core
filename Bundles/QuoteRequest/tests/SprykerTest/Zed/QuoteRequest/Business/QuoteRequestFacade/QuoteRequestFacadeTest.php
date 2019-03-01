@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\QuoteRequest\Business\QuoteRequestFacade;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use DateInterval;
+use DateTime;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestFilterBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestVersionFilterBuilder;
@@ -365,7 +367,8 @@ class QuoteRequestFacadeTest extends Unit
 
         $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_IN_PROGRESS)
             ->setIsHidden(true)
-            ->setQuoteInProgress($this->quoteTransfer);
+            ->setQuoteInProgress($this->quoteTransfer)
+            ->setValidUntil((new DateTime())->add(new DateInterval("PT1H")));
 
         $this->tester->getFacade()->update($quoteRequestTransfer);
 
