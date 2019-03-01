@@ -54,11 +54,8 @@ class ProductBundleMapper
                 break;
             }
 
-            $productRelatedByFkProduct = $productBundleEntity->getSpyProductRelatedByFkProduct();
-
             $productBundleTransfer = (new ProductBundleTransfer())
                 ->setIdProductConcrete($productBundleEntity->getFkProduct())
-                ->setSku($productRelatedByFkProduct->getSku())
                 ->addBundledProduct($productForBundleTransfer);
 
             $productBundleEntitiesGroupedByIdProductBundle[$productBundleEntity->getFkProduct()] = $productBundleTransfer;
