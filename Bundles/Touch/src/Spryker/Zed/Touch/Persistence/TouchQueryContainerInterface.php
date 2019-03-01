@@ -115,7 +115,7 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - Filters `SpyTouchQuery` by item type, item event and array of item ids.
+     * - Filters `SpyTouchQuery` by item type, item event and array of item ids and returns query object.
      *
      * @api
      *
