@@ -33,26 +33,26 @@ class ProductListWriter implements ProductListWriterInterface
     protected $productListPostSavers;
 
     /**
-     * @var array|\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaverInterface[]
+     * @var array|\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaveInterface[]
      */
-    protected $productListPreSavers;
+    protected $productListPreSavePlugins;
 
     /**
      * @param \Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface $productListEntityManager
      * @param \Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface $productListKeyGenerator
      * @param \Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface[] $productListPostSavers
-     * @param \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaverInterface[] $productListPreSavers
+     * @param \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaveInterface[] $productListPreSavePlugins
      */
     public function __construct(
         ProductListEntityManagerInterface $productListEntityManager,
         ProductListKeyGeneratorInterface $productListKeyGenerator,
         array $productListPostSavers = [],
-        array $productListPreSavers = []
+        array $productListPreSavePlugins = []
     ) {
         $this->productListEntityManager = $productListEntityManager;
         $this->productListKeyGenerator = $productListKeyGenerator;
         $this->productListPostSavers = $productListPostSavers;
-        $this->productListPreSavers = $productListPreSavers;
+        $this->productListPreSavePlugins = $productListPreSavePlugins;
     }
 
     /**
@@ -108,8 +108,8 @@ class ProductListWriter implements ProductListWriterInterface
 
         $productListResponseTransfer->setProductList($productListTransfer);
 
-        foreach ($this->productListPreSavers as $productListPreSaver) {
-            $productListResponseTransfer = $productListPreSaver->preSave($productListResponseTransfer);
+        foreach ($this->productListPreSavePlugins as $productListPreSavePlugin) {
+            $productListResponseTransfer = $productListPreSavePlugin->preSave($productListResponseTransfer);
         }
 
         $productListTransfer = $this->productListEntityManager->saveProductList($productListResponseTransfer->getProductList());

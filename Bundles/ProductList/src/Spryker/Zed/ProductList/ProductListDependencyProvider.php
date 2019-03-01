@@ -110,7 +110,7 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaverInterface[]
+     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaveInterface[]
      */
     protected function getProductListPreSavePlugins(): array
     {

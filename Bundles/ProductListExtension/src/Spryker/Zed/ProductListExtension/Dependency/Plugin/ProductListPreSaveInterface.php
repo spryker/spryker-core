@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductListExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 
-interface ProductListPreSaverInterface
+interface ProductListPreSaveInterface
 {
     /**
      * Specification:

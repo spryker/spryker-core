@@ -9,13 +9,13 @@ namespace Spryker\Zed\ProductBundleProductListConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaverInterface;
+use Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaveInterface;
 
 /**
  * @method \Spryker\Zed\ProductBundleProductListConnector\Business\ProductBundleProductListConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorConfig getConfig()
  */
-class ProductBundleProductListPreSaverPlugin extends AbstractPlugin implements ProductListPreSaverInterface
+class ProductBundleProductListPreSaverPlugin extends AbstractPlugin implements ProductListPreSaveInterface
 {
     /**
      * {@inheritdoc}

@@ -172,7 +172,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaverInterface[]
+     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaveInterface[]
      */
     public function getProductListPreSavePlugins(): array
     {

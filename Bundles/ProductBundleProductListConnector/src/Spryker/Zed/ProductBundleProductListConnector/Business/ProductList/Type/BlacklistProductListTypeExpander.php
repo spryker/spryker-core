@@ -34,7 +34,7 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
     public function expandProductBundle(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
     {
         foreach ($productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds() as $idProductConcrete) {
-            $productListResponseTransfer = $this->blacklistExpandByIdProduct($idProductConcrete, $productListResponseTransfer);
+            $productListResponseTransfer = $this->blacklistExpandByIdProductConcrete($idProductConcrete, $productListResponseTransfer);
         }
 
         return $productListResponseTransfer;
@@ -46,7 +46,7 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    protected function blacklistExpandByIdProduct(int $idProductConcrete, ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
+    protected function blacklistExpandByIdProductConcrete(int $idProductConcrete, ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
     {
         $productIdsToSave = $productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds();
         $productBundleCollectionTransfer = $this->productBundleFacade->findProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete);

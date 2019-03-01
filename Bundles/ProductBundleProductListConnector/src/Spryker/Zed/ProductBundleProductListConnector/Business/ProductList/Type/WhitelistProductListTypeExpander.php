@@ -34,7 +34,7 @@ class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterfa
     public function expandProductBundle(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
     {
         foreach ($productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds() as $idProductConcrete) {
-            $productListResponseTransfer = $this->whitelistExpandByIdProduct($idProductConcrete, $productListResponseTransfer);
+            $productListResponseTransfer = $this->whitelistExpandByIdProductConcrete($idProductConcrete, $productListResponseTransfer);
         }
 
         return $productListResponseTransfer;
@@ -46,7 +46,7 @@ class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterfa
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    protected function whitelistExpandByIdProduct(int $idProductConcrete, ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
+    protected function whitelistExpandByIdProductConcrete(int $idProductConcrete, ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
     {
         $productIdsToSave = $productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds();
         $productIdsToAdd = [];

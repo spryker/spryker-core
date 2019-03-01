@@ -26,13 +26,15 @@ class ProductBundleMapper implements ProductBundleMapperInterface
         ObjectCollection $productBundleEntities,
         ProductBundleCollectionTransfer $productBundleCollectionTransfer
     ): ProductBundleCollectionTransfer {
-        $productBundleEntitiesByBundleIdArray = $this->getProductBundleEntitiesGroupedByIdProductBundle($productBundleEntities);
+        $productBundleEntitiesGroupedByIdProductBundle = $this->getProductBundleEntitiesGroupedByIdProductBundle($productBundleEntities);
 
-        foreach ($productBundleEntitiesByBundleIdArray as $idProductBundle => $productBundleEntities) {
-            $productBundleTransfer = new ProductBundleTransfer();
-            $productBundleTransfer->setIdProductConcrete($idProductBundle);
+        foreach ($productBundleEntitiesGroupedByIdProductBundle as $idProductBundle => $productBundleEntities) {
             $productForBundleTransfers = $this->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities, new ArrayObject());
-            $productBundleTransfer->setBundledProducts($productForBundleTransfers);
+
+            $productBundleTransfer = (new ProductBundleTransfer())
+                ->setIdProductConcrete($idProductBundle)
+                ->setBundledProducts($productForBundleTransfers);
+
             $productBundleCollectionTransfer->addProductBundle($productBundleTransfer);
         }
 
@@ -46,13 +48,13 @@ class ProductBundleMapper implements ProductBundleMapperInterface
      */
     protected function getProductBundleEntitiesGroupedByIdProductBundle(ObjectCollection $productBundleEntities): array
     {
-        $productBundleEntitiesByBundleIdArray = [];
+        $productBundleEntitiesGroupedByIdProductBundle = [];
 
         foreach ($productBundleEntities as $productBundleEntity) {
-            $productBundleEntitiesByBundleIdArray[$productBundleEntity->getFkProduct()][] = $productBundleEntity;
+            $productBundleEntitiesGroupedByIdProductBundle[$productBundleEntity->getFkProduct()][] = $productBundleEntity;
         }
 
-        return $productBundleEntitiesByBundleIdArray;
+        return $productBundleEntitiesGroupedByIdProductBundle;
     }
 
     /**
