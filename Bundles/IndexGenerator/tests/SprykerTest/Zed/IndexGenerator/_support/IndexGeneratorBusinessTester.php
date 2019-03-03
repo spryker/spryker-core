@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\IndexGenerator;
 
 use Codeception\Actor;
+use Codeception\Configuration;
 use Codeception\Stub;
 use Spryker\Zed\IndexGenerator\Business\IndexGeneratorBusinessFactory;
 use Spryker\Zed\IndexGenerator\Business\IndexGeneratorFacade;
@@ -67,7 +68,7 @@ class IndexGeneratorBusinessTester extends Actor
                 return $this->getTargetDirectory();
             },
             'getPathToMergedSchemas' => function () use ($relativeSourceDirectory) {
-                return codecept_data_dir() . $relativeSourceDirectory;
+                return Configuration::dataDir() . $relativeSourceDirectory;
             },
         ]);
 
@@ -79,7 +80,7 @@ class IndexGeneratorBusinessTester extends Actor
      */
     protected function getTargetDirectory(): string
     {
-        return codecept_data_dir() . 'GeneratedSchemas';
+        return Configuration::dataDir() . 'GeneratedSchemas';
     }
 
     /**
@@ -114,7 +115,8 @@ class IndexGeneratorBusinessTester extends Actor
         $this->assertSchemaFileExists();
 
         $simpleXmlElement = simplexml_load_file($this->getPathToGeneratedSchema());
-        $indexColumns = $simpleXmlElement->xpath('//index/index-column');
+        $simpleXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
+        $indexColumns = $simpleXmlElement->xpath('//s:index/s:index-column');
 
         $this->assertTrue(count($indexColumns) > 0);
         $this->assertSame('fk_zip_zap', (string)$indexColumns[0]['name']);
