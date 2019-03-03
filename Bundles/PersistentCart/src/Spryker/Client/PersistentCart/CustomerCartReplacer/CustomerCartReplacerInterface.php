@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\PersistentCart\CustomerCartReplacer;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CustomerCartReplacerInterface
@@ -14,7 +15,7 @@ interface CustomerCartReplacerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function replace(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function replace(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

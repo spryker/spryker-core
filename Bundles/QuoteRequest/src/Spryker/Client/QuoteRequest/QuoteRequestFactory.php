@@ -38,7 +38,8 @@ class QuoteRequestFactory extends AbstractFactory
     {
         return new QuoteRequestToQuoteConverter(
             $this->getPersistentCartClient(),
-            $this->getQuoteClient()
+            $this->getQuoteClient(),
+            $this->createQuoteRequestChecker()
         );
     }
 

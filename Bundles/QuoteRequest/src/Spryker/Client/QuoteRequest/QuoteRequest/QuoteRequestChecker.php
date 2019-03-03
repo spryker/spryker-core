@@ -9,6 +9,7 @@ namespace Spryker\Client\QuoteRequest\QuoteRequest;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Client\QuoteRequest\QuoteRequestConfig;
+use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 
 class QuoteRequestChecker implements QuoteRequestCheckerInterface
 {
@@ -33,5 +34,15 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return in_array($quoteRequestTransfer->getStatus(), $this->quoteRequestConfig->getCancelableStatuses());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestConvertible(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_READY && $quoteRequestTransfer->getLatestVersion();
     }
 }

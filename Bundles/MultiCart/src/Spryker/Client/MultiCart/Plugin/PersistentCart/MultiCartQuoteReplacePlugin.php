@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\MultiCart\Plugin\PersistentCart;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteReplacePluginInterface;
@@ -19,12 +20,10 @@ class MultiCartQuoteReplacePlugin extends AbstractPlugin implements QuoteReplace
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function replace(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function replace(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getClient()
-            ->createQuote($quoteTransfer)
-            ->getQuoteTransfer();
+        return $this->getClient()->createQuote($quoteTransfer);
     }
 }

@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
 
 class QuoteRequestStub implements QuoteRequestStubInterface
@@ -111,18 +113,18 @@ class QuoteRequestStub implements QuoteRequestStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    public function orderByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    public function checkCheckoutQuoteRequest(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
-        $quoteRequestResponseTransfer = $this->zedRequestClient->call(
-            '/quote-request/gateway/order-by-reference',
-            $quoteRequestFilterTransfer
+        /** @var \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer */
+        $quoteValidationResponseTransfer = $this->zedRequestClient->call(
+            '/quote-request/gateway/check-checkout-quote-request',
+            $quoteTransfer
         );
 
-        return $quoteRequestResponseTransfer;
+        return $quoteValidationResponseTransfer;
     }
 }

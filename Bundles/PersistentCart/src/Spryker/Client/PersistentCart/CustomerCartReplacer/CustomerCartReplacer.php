@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\PersistentCart\CustomerCartReplacer;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface;
 use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteReplacePluginInterface;
@@ -14,9 +15,9 @@ use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteReplacePluginI
 class CustomerCartReplacer implements CustomerCartReplacerInterface
 {
     /**
-     * @uses Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
+     * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
      */
-    public const STORAGE_STRATEGY_DATABASE = 'database';
+    protected const STORAGE_STRATEGY_DATABASE = 'database';
 
     /**
      * @var \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface
@@ -41,23 +42,31 @@ class CustomerCartReplacer implements CustomerCartReplacerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function replace(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function replace(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         if ($this->quoteClient->getStorageStrategy() === static::STORAGE_STRATEGY_DATABASE) {
             $currentQuoteTransfer = $this->quoteClient->getQuote();
 
-            $quoteTransfer->setIdQuote($currentQuoteTransfer->getIdQuote());
-            $quoteTransfer->setCustomer($currentQuoteTransfer->getCustomer());
-            $quoteTransfer->setCustomerReference($currentQuoteTransfer->getCustomerReference());
-            $quoteTransfer->setStore($currentQuoteTransfer->getStore());
+            $quoteTransfer->setIdQuote($currentQuoteTransfer->getIdQuote())
+                ->setCustomer($currentQuoteTransfer->getCustomer())
+                ->setCustomerReference($currentQuoteTransfer->getCustomerReference())
+                ->setStore($currentQuoteTransfer->getStore());
 
-            $quoteTransfer = $this->quoteReplacePlugin->replace($quoteTransfer);
+            $quoteResponseTransfer = $this->quoteReplacePlugin->replace($quoteTransfer);
+
+            if (!$quoteResponseTransfer->getIsSuccessful()) {
+                return $quoteResponseTransfer;
+            }
+
+            $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         }
 
         $this->quoteClient->setQuote($quoteTransfer);
 
-        return $quoteTransfer;
+        return (new QuoteResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setQuoteTransfer($quoteTransfer);
     }
 }

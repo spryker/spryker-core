@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\QuoteRequest\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteRequestToPersistentCartClientInterface
@@ -14,7 +15,7 @@ interface QuoteRequestToPersistentCartClientInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function replaceCustomerCart(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function replaceCustomerCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

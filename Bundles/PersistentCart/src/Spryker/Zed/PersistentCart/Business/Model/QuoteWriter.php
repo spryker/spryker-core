@@ -109,12 +109,11 @@ class QuoteWriter implements QuoteWriterInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function replaceQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function replaceQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->quoteFacade->updateQuote($quoteTransfer)
-            ->getQuoteTransfer();
+        return $this->quoteFacade->updateQuote($quoteTransfer);
     }
 
     /**

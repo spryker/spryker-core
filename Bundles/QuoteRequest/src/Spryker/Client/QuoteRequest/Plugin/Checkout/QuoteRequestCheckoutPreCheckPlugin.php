@@ -7,13 +7,10 @@
 
 namespace Spryker\Client\QuoteRequest\Plugin\Checkout;
 
-use DateTime;
-use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Shared\QuoteRequest\QuoteRequestConfig;
 
 /**
  * @method \Spryker\Client\QuoteRequest\QuoteRequestClient getClient()
@@ -22,9 +19,13 @@ class QuoteRequestCheckoutPreCheckPlugin extends AbstractPlugin implements Check
 {
     /**
      * {@inheritdoc}
-     * - Returns true if quote does't have quote request version reference.
-     * - Returns true if related quote request is still valid.
-     * - Returns false othervise.
+     * - Validates quote request if quote request reference exists in quote.
+     * - Checks if quote request version exists in database.
+     * - Checks status from quote request.
+     * - Checks that the current version is the latest.
+     * - Checks valid until from quote request with current time.
+     * - Returns true if quote requests pass all checks.
+     * - Adds error message if not valid.
      *
      * @api
      *
@@ -34,28 +35,6 @@ class QuoteRequestCheckoutPreCheckPlugin extends AbstractPlugin implements Check
      */
     public function isValid(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
-        /**
-         * @todo Need to use QuoteRequestChecker::checkValidUntil and get rid of outdated QuoteRequestPreCheckPlugin
-         */
-        if (!$quoteTransfer->getQuoteRequestVersionReference()) {
-            return (new QuoteValidationResponseTransfer())
-                ->setIsSuccessful(true);
-        }
-
-        $quoteRequestVersionTransfers = $this->getClient()->getQuoteRequestVersionCollectionByFilter(
-            (new QuoteRequestVersionFilterTransfer())
-                ->setQuoteRequestVersionReference($quoteTransfer->getQuoteRequestVersionReference())
-        )
-            ->getQuoteRequestVersions()
-            ->getArrayCopy();
-
-        $quoteRequestVersionTransfer = array_shift($quoteRequestVersionTransfers);
-        $quoteRequest = $quoteRequestVersionTransfer->getQuoteRequest();
-
-        return (new QuoteValidationResponseTransfer())
-            ->setIsSuccessful(
-                new DateTime($quoteRequest->getValidUntil()) > new DateTime()
-                && $quoteRequest->getStatus() === QuoteRequestConfig::STATUS_READY
-            );
+        return $this->getClient()->checkCheckoutQuoteRequest($quoteTransfer);
     }
 }

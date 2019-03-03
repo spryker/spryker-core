@@ -13,7 +13,9 @@ use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 interface QuoteRequestClientInterface
 {
@@ -98,16 +100,37 @@ interface QuoteRequestClientInterface
 
     /**
      * Specification:
+     * - Makes Zed request.
+     * - Validates quote request if quote request reference exists in quote.
+     * - Checks if quote request version exists in database.
+     * - Checks status from quote request.
+     * - Checks that the current version is the latest.
+     * - Checks valid until from quote request with current time.
+     * - Returns true if quote requests pass all checks.
+     * - Adds error message if not valid.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function checkCheckoutQuoteRequest(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expects "Request for Quote" status to be "ready".
+     * - Expects the related latest version to be provided.
+     * - Replaces current customer quote by quote from latest quote request version.
      * - Locks quote.
-     * - Replace current customer quote by quote from quote request.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function convertToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteTransfer;
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
@@ -121,4 +144,18 @@ interface QuoteRequestClientInterface
      * @return bool
      */
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * Specification:
+     * - Checks convertible status from config.
+     * - Checks if quote request latest version exists.
+     * - If "Request for Quote" convertible - return true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestConvertible(QuoteRequestTransfer $quoteRequestTransfer): bool;
 }

@@ -7,13 +7,16 @@
 
 namespace Spryker\Client\QuoteRequest\QuoteRequest;
 
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface;
 
 class QuoteRequestToQuoteConverter implements QuoteRequestToQuoteConverterInterface
 {
+    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
+
     /**
      * @var \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface
      */
@@ -25,22 +28,38 @@ class QuoteRequestToQuoteConverter implements QuoteRequestToQuoteConverterInterf
     protected $quoteClient;
 
     /**
+     * @var \Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestCheckerInterface
+     */
+    protected $quoteRequestChecker;
+
+    /**
      * @param \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface $persistentCartClient
      * @param \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface $quoteClient
+     * @param \Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestCheckerInterface $quoteRequestChecker
      */
-    public function __construct(QuoteRequestToPersistentCartClientInterface $persistentCartClient, QuoteRequestToQuoteClientInterface $quoteClient)
-    {
+    public function __construct(
+        QuoteRequestToPersistentCartClientInterface $persistentCartClient,
+        QuoteRequestToQuoteClientInterface $quoteClient,
+        QuoteRequestCheckerInterface $quoteRequestChecker
+    ) {
         $this->persistentCartClient = $persistentCartClient;
         $this->quoteClient = $quoteClient;
+        $this->quoteRequestChecker = $quoteRequestChecker;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function convertToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteTransfer
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
+        if (!$this->quoteRequestChecker->isQuoteRequestConvertible($quoteRequestTransfer)) {
+            return (new QuoteResponseTransfer())
+                ->setIsSuccessful(false)
+                ->addError((new QuoteErrorTransfer())->setMessage(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS));
+        }
+
         $latestQuoteRequestVersionTransfer = $quoteRequestTransfer->getLatestVersion();
         $quoteTransfer = $latestQuoteRequestVersionTransfer->getQuote();
 
