@@ -68,12 +68,12 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     /**
      * @var \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected $productTransferAssigned;
+    protected $productConcreteTransferAssigned;
 
     /**
      * @var \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected $productTransferUnassigned;
+    protected $productConcreteTransferUnassigned;
 
     /**
      * @return void
@@ -103,8 +103,8 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     protected function prepareData(): void
     {
         $customerTransfer = $this->tester->haveCustomer();
-        $this->productTransferAssigned = $this->tester->haveProduct();
-        $this->productTransferUnassigned = $this->tester->haveProduct();
+        $this->productConcreteTransferAssigned = $this->tester->haveProduct();
+        $this->productConcreteTransferUnassigned = $this->tester->haveProduct();
         $companyTransfer = $this->tester->haveCompany();
 
         $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
@@ -126,14 +126,14 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
             ShoppingListItemTransfer::ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
             ShoppingListItemTransfer::QUANTITY => 1,
-            ShoppingListItemTransfer::SKU => $this->productTransferAssigned->getSku(),
+            ShoppingListItemTransfer::SKU => $this->productConcreteTransferAssigned->getSku(),
         ]);
 
         $this->shoppingListItemTransferUnassigned = $this->tester->haveShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
             ShoppingListItemTransfer::QUANTITY => 1,
-            ShoppingListItemTransfer::SKU => $this->productTransferUnassigned->getSku(),
+            ShoppingListItemTransfer::SKU => $this->productConcreteTransferUnassigned->getSku(),
         ]);
 
         // set createProductOptionGroupValue to Active ProductOptionGroup
@@ -159,11 +159,11 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         );
 
         // Assign Product Abstract to createProductOptionGroupValue with Active ProductOptionGroup
-        $this->getProductOptionFacade()->addProductAbstractToProductOptionGroup($this->productTransferAssigned->getAbstractSku(), $this->productOptionValueTransferActive->getFkProductOptionGroup());
+        $this->getProductOptionFacade()->addProductAbstractToProductOptionGroup($this->productConcreteTransferAssigned->getAbstractSku(), $this->productOptionValueTransferActive->getFkProductOptionGroup());
         // Assign Product Abstract to createProductOptionGroupValue with Active ProductOptionGroup
-        $this->getProductOptionFacade()->addProductAbstractToProductOptionGroup($this->productTransferAssigned->getAbstractSku(), $this->productOptionValueTransferActive2->getFkProductOptionGroup());
+        $this->getProductOptionFacade()->addProductAbstractToProductOptionGroup($this->productConcreteTransferAssigned->getAbstractSku(), $this->productOptionValueTransferActive2->getFkProductOptionGroup());
         // Assign Product Abstract to createProductOptionGroupValue with Inactive ProductOptionGroup
-        $this->getProductOptionFacade()->addProductAbstractToProductOptionGroup($this->productTransferAssigned->getAbstractSku(), $this->productOptionValueTransferInactive->getFkProductOptionGroup());
+        $this->getProductOptionFacade()->addProductAbstractToProductOptionGroup($this->productConcreteTransferAssigned->getAbstractSku(), $this->productOptionValueTransferInactive->getFkProductOptionGroup());
         /*
          * $this->shoppingListItemTransferUnassigned have $productTransfer2 that remains unassigned to any ProductOptionGroup
          */
@@ -547,7 +547,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         // Assert
         $this->assertEmpty($actualResult->getProductOptions());
 
-        $this->getProductOptionFacade()->addProductAbstractToProductOptionGroup($this->productTransferUnassigned->getAbstractSku(), $this->productOptionValueTransferActive->getFkProductOptionGroup());
+        $this->getProductOptionFacade()->addProductAbstractToProductOptionGroup($this->productConcreteTransferUnassigned->getAbstractSku(), $this->productOptionValueTransferActive->getFkProductOptionGroup());
 
         //Act
         $actualResult = $this->tester->getFacade()
