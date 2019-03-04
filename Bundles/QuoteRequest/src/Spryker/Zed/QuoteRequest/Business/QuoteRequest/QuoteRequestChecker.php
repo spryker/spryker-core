@@ -8,13 +8,13 @@
 namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
 use DateTime;
-use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 
@@ -41,28 +41,33 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     * @return bool
      */
-    public function checkValidUntil(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
+    public function checkValidUntil(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         if (!$quoteTransfer->getQuoteRequestVersionReference()) {
-            return (new QuoteValidationResponseTransfer())->setIsSuccessful(true);
+            return true;
         }
 
         $quoteRequestVersionTransfer = $this->findQuoteRequestVersion($quoteTransfer->getQuoteRequestVersionReference());
 
         if (!$quoteRequestVersionTransfer) {
-            return $this->getErrorQuoteValidationResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND);
+            $this->addCheckoutError($checkoutResponseTransfer, static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND);
+
+            return false;
         }
 
         $quoteRequestTransfer = $this->findQuoteRequest($quoteRequestVersionTransfer);
 
         if (!$quoteRequestTransfer) {
-            return $this->getErrorQuoteValidationResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND);
+            $this->addCheckoutError($checkoutResponseTransfer, static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND);
+
+            return false;
         }
 
-        return $this->isQuoteRequestValid($quoteRequestTransfer, $quoteRequestVersionTransfer);
+        return $this->isQuoteRequestValid($quoteRequestTransfer, $quoteRequestVersionTransfer, $checkoutResponseTransfer);
     }
 
     /**
@@ -108,38 +113,49 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     * @return bool
      */
     protected function isQuoteRequestValid(
         QuoteRequestTransfer $quoteRequestTransfer,
-        QuoteRequestVersionTransfer $quoteRequestVersionTransfer
-    ): QuoteValidationResponseTransfer {
+        QuoteRequestVersionTransfer $quoteRequestVersionTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool {
         if ($quoteRequestTransfer->getStatus() !== SharedQuoteRequestConfig::STATUS_READY) {
-            return $this->getErrorQuoteValidationResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS);
+            $this->addCheckoutError($checkoutResponseTransfer, static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS);
+
+            return false;
         }
 
         if ($quoteRequestTransfer->getLatestVersion()->getIdQuoteRequestVersion() !== $quoteRequestVersionTransfer->getIdQuoteRequestVersion()) {
-            return $this->getErrorQuoteValidationResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION);
+            $this->addCheckoutError($checkoutResponseTransfer, static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION);
+
+            return false;
         }
 
         if (!$quoteRequestTransfer->getValidUntil()
             || (new DateTime($quoteRequestTransfer->getValidUntil()) < new DateTime('now'))) {
-            return $this->getErrorQuoteValidationResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VALID_UNTIL);
+            $this->addCheckoutError($checkoutResponseTransfer, static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VALID_UNTIL);
+
+            return false;
         }
 
-        return (new QuoteValidationResponseTransfer())->setIsSuccessful(true);
+        return true;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param string $message
      *
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    protected function getErrorQuoteValidationResponse(string $message): QuoteValidationResponseTransfer
+    protected function addCheckoutError(CheckoutResponseTransfer $checkoutResponseTransfer, string $message): CheckoutResponseTransfer
     {
-        return (new QuoteValidationResponseTransfer())
-            ->setIsSuccessful(false)
-            ->addMessage((new MessageTransfer())->setValue($message));
+        $checkoutResponseTransfer
+            ->addError((new CheckoutErrorTransfer())->setMessage($message))
+            ->setIsSuccess(false);
+
+        return $checkoutResponseTransfer;
     }
 }

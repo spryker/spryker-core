@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
 
 class QuoteRequestStub implements QuoteRequestStubInterface
@@ -110,21 +108,5 @@ class QuoteRequestStub implements QuoteRequestStubInterface
         );
 
         return $quoteRequestResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
-     */
-    public function checkCheckoutQuoteRequest(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer */
-        $quoteValidationResponseTransfer = $this->zedRequestClient->call(
-            '/quote-request/gateway/check-checkout-quote-request',
-            $quoteTransfer
-        );
-
-        return $quoteValidationResponseTransfer;
     }
 }

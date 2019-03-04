@@ -14,8 +14,6 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 interface QuoteRequestClientInterface
 {
@@ -97,25 +95,6 @@ interface QuoteRequestClientInterface
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
-
-    /**
-     * Specification:
-     * - Makes Zed request.
-     * - Validates quote request if quote request reference exists in quote.
-     * - Checks if quote request version exists in database.
-     * - Checks status from quote request.
-     * - Checks that the current version is the latest.
-     * - Checks valid until from quote request with current time.
-     * - Returns true if quote requests pass all checks.
-     * - Adds error message if not valid.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
-     */
-    public function checkCheckoutQuoteRequest(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
 
     /**
      * Specification:

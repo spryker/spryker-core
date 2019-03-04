@@ -12,6 +12,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestFilterBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestVersionFilterBuilder;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig;
@@ -212,13 +213,15 @@ class QuoteRequestFacadeTest extends Unit
         $this->quoteTransfer->setQuoteRequestVersionReference(static::FAKE_QUOTE_REQUEST_VERSION_REFERENCE);
 
         // Act
-        $quoteValidationResponseTransfer = $this->tester
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $isValid = $this->tester
             ->getFacade()
-            ->checkCheckoutQuoteRequest($this->quoteTransfer);
+            ->checkCheckoutQuoteRequest($this->quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
-        $this->assertCount(1, $quoteValidationResponseTransfer->getMessages());
+        $this->assertFalse($isValid);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
     }
 
     /**
@@ -236,13 +239,15 @@ class QuoteRequestFacadeTest extends Unit
         );
 
         // Act
-        $quoteValidationResponseTransfer = $this->tester
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $isValid = $this->tester
             ->getFacade()
-            ->checkCheckoutQuoteRequest($this->quoteTransfer);
+            ->checkCheckoutQuoteRequest($this->quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
-        $this->assertCount(1, $quoteValidationResponseTransfer->getMessages());
+        $this->assertFalse($isValid);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
     }
 
     /**

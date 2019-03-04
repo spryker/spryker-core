@@ -13,6 +13,7 @@ use DateTime;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestVersionBuilder;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -102,12 +103,15 @@ class QuoteRequestCheckerTest extends Unit
             QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE => $quoteRequestVersionTransfer->getVersionReference(),
         ]))->build();
 
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
         // Act
-        $quoteValidationResponseTransfer = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer);
+        $isValid = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertTrue($quoteValidationResponseTransfer->getIsSuccessful());
-        $this->assertCount(0, $quoteValidationResponseTransfer->getMessages());
+        $this->assertTrue($isValid);
+        $this->assertNull($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(0, $checkoutResponseTransfer->getErrors());
     }
 
     /**
@@ -118,12 +122,13 @@ class QuoteRequestCheckerTest extends Unit
         // Arrange
 
         // Act
-        $quoteValidationResponseTransfer = $this->quoteRequestCheckerMock->checkValidUntil(
-            (new QuoteBuilder())->build()
+        $isValid = $this->quoteRequestCheckerMock->checkValidUntil(
+            (new QuoteBuilder())->build(),
+            new CheckoutResponseTransfer()
         );
 
         // Assert
-        $this->assertTrue($quoteValidationResponseTransfer->getIsSuccessful());
+        $this->assertTrue($isValid);
     }
 
     /**
@@ -140,15 +145,18 @@ class QuoteRequestCheckerTest extends Unit
             QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE => static::FAKE_ID_QUOTE_REQUEST_VERSION,
         ]))->build();
 
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
         // Act
-        $quoteValidationResponseTransfer = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer);
+        $isValid = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
-        $this->assertCount(1, $quoteValidationResponseTransfer->getMessages());
+        $this->assertFalse($isValid);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
             static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND,
-            $quoteValidationResponseTransfer->getMessages()[0]->getValue()
+            $checkoutResponseTransfer->getErrors()[0]->getMessage()
         );
     }
 
@@ -178,15 +186,18 @@ class QuoteRequestCheckerTest extends Unit
             QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE => static::FAKE_ID_QUOTE_REQUEST_VERSION,
         ]))->build();
 
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
         // Act
-        $quoteValidationResponseTransfer = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer);
+        $isValid = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
-        $this->assertCount(1, $quoteValidationResponseTransfer->getMessages());
+        $this->assertFalse($isValid);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
             static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_NOT_FOUND,
-            $quoteValidationResponseTransfer->getMessages()[0]->getValue()
+            $checkoutResponseTransfer->getErrors()[0]->getMessage()
         );
     }
 
@@ -218,15 +229,18 @@ class QuoteRequestCheckerTest extends Unit
             QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE => $quoteRequestVersionTransfer->getVersionReference(),
         ]))->build();
 
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
         // Act
-        $quoteValidationResponseTransfer = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer);
+        $isValid = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
-        $this->assertCount(1, $quoteValidationResponseTransfer->getMessages());
+        $this->assertFalse($isValid);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
             static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS,
-            $quoteValidationResponseTransfer->getMessages()[0]->getValue()
+            $checkoutResponseTransfer->getErrors()[0]->getMessage()
         );
     }
 
@@ -260,15 +274,18 @@ class QuoteRequestCheckerTest extends Unit
             QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE => $quoteRequestVersionTransfer->getVersionReference(),
         ]))->build();
 
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
         // Act
-        $quoteValidationResponseTransfer = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer);
+        $isValid = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
-        $this->assertCount(1, $quoteValidationResponseTransfer->getMessages());
+        $this->assertFalse($isValid);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
             static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION,
-            $quoteValidationResponseTransfer->getMessages()[0]->getValue()
+            $checkoutResponseTransfer->getErrors()[0]->getMessage()
         );
     }
 
@@ -301,15 +318,18 @@ class QuoteRequestCheckerTest extends Unit
             QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE => $quoteRequestVersionTransfer->getVersionReference(),
         ]))->build();
 
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
         // Act
-        $quoteValidationResponseTransfer = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer);
+        $isValid = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
-        $this->assertCount(1, $quoteValidationResponseTransfer->getMessages());
+        $this->assertFalse($isValid);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
             static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VALID_UNTIL,
-            $quoteValidationResponseTransfer->getMessages()[0]->getValue()
+            $checkoutResponseTransfer->getErrors()[0]->getMessage()
         );
     }
 
@@ -342,15 +362,18 @@ class QuoteRequestCheckerTest extends Unit
             QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE => $quoteRequestVersionTransfer->getVersionReference(),
         ]))->build();
 
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
         // Act
-        $quoteValidationResponseTransfer = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer);
+        $isValid = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
-        $this->assertCount(1, $quoteValidationResponseTransfer->getMessages());
+        $this->assertFalse($isValid);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
             static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VALID_UNTIL,
-            $quoteValidationResponseTransfer->getMessages()[0]->getValue()
+            $checkoutResponseTransfer->getErrors()[0]->getMessage()
         );
     }
 
