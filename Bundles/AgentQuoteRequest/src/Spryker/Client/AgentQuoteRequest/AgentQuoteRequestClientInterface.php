@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 interface AgentQuoteRequestClientInterface
 {
@@ -64,6 +65,22 @@ interface AgentQuoteRequestClientInterface
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     public function setQuoteRequestEditable(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expects "Request for Quote" status to be "in-progress".
+     * - Expects quoteInProgress property in QuoteRequestTransfer.
+     * - Sets quoteRequestReference to Quote transfer.
+     * - Replaces current customer quote by quoteInProgress from quote request.
+     * - Avoids database strategy.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function convertQuoteRequestToEditableQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

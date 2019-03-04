@@ -7,9 +7,12 @@
 
 namespace Spryker\Client\AgentQuoteRequest;
 
+use Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToQuoteClientInterface;
 use Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToZedRequestClientInterface;
 use Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestChecker;
 use Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestCheckerInterface;
+use Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestConverter;
+use Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestConverterInterface;
 use Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStub;
 use Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -28,6 +31,17 @@ class AgentQuoteRequestFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestConverterInterface
+     */
+    public function createQuoteRequestConverter(): QuoteRequestConverterInterface
+    {
+        return new QuoteRequestConverter(
+            $this->getQuoteClient(),
+            $this->createQuoteRequestChecker()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStubInterface
      */
     public function createAgentQuoteRequestStub(): AgentQuoteRequestStubInterface
@@ -41,5 +55,13 @@ class AgentQuoteRequestFactory extends AbstractFactory
     public function getZedRequestClient(): AgentQuoteRequestToZedRequestClientInterface
     {
         return $this->getProvidedDependency(AgentQuoteRequestDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToQuoteClientInterface
+     */
+    public function getQuoteClient(): AgentQuoteRequestToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(AgentQuoteRequestDependencyProvider::CLIENT_QUOTE);
     }
 }

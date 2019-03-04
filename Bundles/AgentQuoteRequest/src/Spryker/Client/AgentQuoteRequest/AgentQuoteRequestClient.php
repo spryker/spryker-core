@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStubInterface;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -60,6 +61,22 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
     public function setQuoteRequestEditable(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
         return $this->getZedStub()->setQuoteRequestEditable($quoteRequestFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function convertQuoteRequestToEditableQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestConverter()
+            ->convertQuoteRequestToEditableQuote($quoteRequestTransfer);
     }
 
     /**

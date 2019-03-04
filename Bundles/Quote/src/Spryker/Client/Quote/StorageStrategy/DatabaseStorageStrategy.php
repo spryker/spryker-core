@@ -43,24 +43,32 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     protected $quoteEditStatusValidator;
 
     /**
+     * @var array|\Spryker\Zed\QuoteExtension\Dependency\Plugin\AllowableDatabaseStrategyPluginInterface[]
+     */
+    protected $allowableDatabaseStrategyPlugins;
+
+    /**
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface $customerClient
      * @param \Spryker\Client\Quote\Zed\QuoteStubInterface $quoteStub
      * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
      * @param \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface $quoteLockStatusValidator
      * @param \Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface $quoteEditStatusValidator
+     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\AllowableDatabaseStrategyPluginInterface[] $allowableDatabaseStrategyPlugins
      */
     public function __construct(
         QuoteToCustomerClientInterface $customerClient,
         QuoteStubInterface $quoteStub,
         QuoteSessionInterface $quoteSession,
         QuoteLockStatusValidatorInterface $quoteLockStatusValidator,
-        QuoteEditStatusValidatorInterface $quoteEditStatusValidator
+        QuoteEditStatusValidatorInterface $quoteEditStatusValidator,
+        array $allowableDatabaseStrategyPlugins
     ) {
         $this->customerClient = $customerClient;
         $this->quoteStub = $quoteStub;
         $this->quoteSession = $quoteSession;
         $this->quoteLockStatusValidator = $quoteLockStatusValidator;
         $this->quoteEditStatusValidator = $quoteEditStatusValidator;
+        $this->allowableDatabaseStrategyPlugins = $allowableDatabaseStrategyPlugins;
     }
 
     /**
@@ -76,6 +84,14 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      */
     public function isAllowed()
     {
+        $quoteTransfer = $this->getQuote();
+
+        foreach ($this->allowableDatabaseStrategyPlugins as $allowableDatabaseStrategyPlugin) {
+            if (!$allowableDatabaseStrategyPlugin->isAllowed($quoteTransfer)) {
+                return false;
+            }
+        }
+
         return $this->customerClient->isLoggedIn();
     }
 

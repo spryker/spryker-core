@@ -26,6 +26,7 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const SERVICE_ZED = 'SERVICE_ZED';
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+    public const PLUGINS_ALLOWABLE_DATABASE_STRATEGY = 'PLUGINS_ALLOWABLE_DATABASE_STRATEGY';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -40,6 +41,7 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
         $container = $this->addCustomerClient($container);
         $container = $this->addZedSevice($container);
         $container = $this->addCurrencyClient($container);
+        $container = $this->addAllowableDatabaseStrategyPlugins($container);
 
         return $container;
     }
@@ -81,6 +83,20 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::QUOTE_TRANSFER_EXPANDER_PLUGINS] = function (Container $container) {
             return $this->getQuoteTransferExpanderPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addAllowableDatabaseStrategyPlugins(Container $container)
+    {
+        $container[static::PLUGINS_ALLOWABLE_DATABASE_STRATEGY] = function (Container $container) {
+            return $this->getAllowableDatabaseStrategyPlugins($container);
         };
 
         return $container;
@@ -134,6 +150,16 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
      * @return \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[]
      */
     protected function getQuoteTransferExpanderPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\AllowableDatabaseStrategyPluginInterface[]
+     */
+    protected function getAllowableDatabaseStrategyPlugins(Container $container)
     {
         return [];
     }

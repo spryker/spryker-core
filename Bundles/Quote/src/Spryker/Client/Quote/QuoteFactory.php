@@ -89,7 +89,8 @@ class QuoteFactory extends AbstractFactory
             $this->createZedQuoteStub(),
             $this->createSession(),
             $this->createQuoteLockStatusValidator(),
-            $this->createQuoteEditStatusValidator()
+            $this->createQuoteEditStatusValidator(),
+            $this->getAllowableDatabaseStrategyPlugins()
         );
     }
 
@@ -143,6 +144,14 @@ class QuoteFactory extends AbstractFactory
     protected function getQuoteTransferExpanderPlugins()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::QUOTE_TRANSFER_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\AllowableDatabaseStrategyPluginInterface[]
+     */
+    protected function getAllowableDatabaseStrategyPlugins()
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_ALLOWABLE_DATABASE_STRATEGY);
     }
 
     /**
