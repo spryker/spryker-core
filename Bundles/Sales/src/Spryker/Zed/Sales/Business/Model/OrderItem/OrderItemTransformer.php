@@ -28,7 +28,7 @@ class OrderItemTransformer implements OrderItemTransformerInterface
             $transformedItemTransfer = new ItemTransfer();
             $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
             $transformedItemTransfer->setQuantity(min($quantity, 1));
-            $quantity-= 1.0;
+            $quantity -= 1.0;
 
             $transformedProductOptions = new ArrayObject();
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {

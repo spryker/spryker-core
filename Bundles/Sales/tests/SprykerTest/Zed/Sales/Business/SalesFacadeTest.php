@@ -79,34 +79,6 @@ class SalesFacadeTest extends Unit
         $this->assertSame(1, $orderTransfer->getTotalOrderCount());
     }
 
-    public function testGetOrderWithFloatQuantityByIdSalesOrderShouldReturnOrderTransferWithOrderDataAndTotals(): void
-    {
-        $productTransfer = $this->tester->haveProduct();
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
-        $salesOrderEntity = $this->tester->createOrderWithFloatStock();
-        $salesFacade = $this->tester->getFacade();
-
-        $orderTransfer = $salesFacade->getOrderByIdSalesOrder($salesOrderEntity->getIdSalesOrder());
-
-        $this->assertInstanceOf(OrderTransfer::class, $orderTransfer);
-        $this->assertInstanceOf(TotalsTransfer::class, $orderTransfer->getTotals());
-        $this->assertCount(2, $orderTransfer->getItems());
-
-        $itemTransfer = $orderTransfer->getItems()[0];
-        $this->assertEquals(static::DEFAULT_ITEM_STATE, $itemTransfer->getState()->getName());
-        $this->assertEquals(static::DEFAULT_OMS_PROCESS_NAME, $itemTransfer->getProcess());
-
-        $itemTransfer = $orderTransfer->getItems()[1];
-        $this->assertEquals(static::DEFAULT_ITEM_STATE, $itemTransfer->getState()->getName());
-        $this->assertEquals(static::DEFAULT_OMS_PROCESS_NAME, $itemTransfer->getProcess());
-
-        $this->assertInstanceOf(AddressTransfer::class, $orderTransfer->getBillingAddress());
-        $this->assertInstanceOf(AddressTransfer::class, $orderTransfer->getShippingAddress());
-        $this->assertCount(1, $orderTransfer->getExpenses());
-
-        $this->assertSame(1, $orderTransfer->getTotalOrderCount());
-    }
-
     /**
      * @return void
      */
@@ -130,23 +102,6 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetOrderWithFloatQuantityByIdSalesOrderWhenGuestCustomerShouldNotCountOrders(): void
-    {
-        $productTransfer = $this->tester->haveProduct();
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
-
-        $salesOrderEntity = $this->tester->createOrderWithFloatStock();
-        $salesOrderEntity->setCustomerReference(null);
-        $salesOrderEntity->save();
-
-        $orderTransfer = $this->tester->getFacade()->getOrderByIdSalesOrder($salesOrderEntity->getIdSalesOrder());
-
-        $this->assertSame(0, $orderTransfer->getTotalOrderCount());
-    }
-
-    /**
-     * @return void
-     */
     public function testCustomerOrderShouldReturnListOfCustomerPlacedOrders()
     {
         $salesOrderEntity = $this->tester->create();
@@ -160,18 +115,6 @@ class SalesFacadeTest extends Unit
         $orderListTransfer = $salesFacade->getCustomerOrders($orderListTransfer, $salesOrderEntity->getFkCustomer());
 
         $this->assertInstanceOf(OrderListTransfer::class, $orderListTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCustomerOrderWithFloatQuantityShouldReturnListOfCustomerPlacedOrders(): void
-    {
-        $salesOrderEntity = $this->tester->createOrderWithFloatStock();
-        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
-        $orderListTransfer = new OrderListTransfer();
-        $orderListTransfer = $this->tester->getFacade()->getCustomerOrders($orderListTransfer, $salesOrderEntity->getFkCustomer());
-        $this->assertCount(1, $orderListTransfer->getOrders());
     }
 
     /**
@@ -224,19 +167,6 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCustomerOrderWithFloatQuantityByOrderReference(): void
-    {
-        $orderEntity = $this->tester->createOrderWithFloatStock();
-        $orderTransfer = $this->tester->getFacade()->getCustomerOrderByOrderReference(
-            $this->createOrderTransferWithParams(static::ORDER_SEARCH_PARAMS)
-        );
-
-        $this->assertSame($orderEntity->getIdSalesOrder(), $orderTransfer->getIdSalesOrder());
-    }
-
-    /**
-     * @return void
-     */
     public function testGetCustomerOrderByNonExistingOrderReference(): void
     {
         $salesFacade = $this->createSalesFacade();
@@ -246,18 +176,6 @@ class SalesFacadeTest extends Unit
         );
 
         $this->assertNull($order->getIdSalesOrder());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetCustomerOrderWithFloatQuantityByNonExistingOrderReference(): void
-    {
-        $orderTransfer = $this->tester->getFacade()->getCustomerOrderByOrderReference(
-            $this->createOrderTransferWithParams(static::ORDER_WRONG_SEARCH_PARAMS)
-        );
-
-        $this->assertNull($orderTransfer->getIdSalesOrder());
     }
 
     /**
