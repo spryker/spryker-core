@@ -31,7 +31,7 @@ class CartItemsMapperBaseTest extends Unit
     /**
      * @param string $jsonFileToLoad
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Product\ProductClientInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Product\ProductClientInterface
      */
     protected function buildProductClientMock($jsonFileToLoad)
     {
@@ -57,7 +57,7 @@ class CartItemsMapperBaseTest extends Unit
     /**
      * @param string $jsonFileToLoad
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Availability\AvailabilityClientInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Availability\AvailabilityClientInterface
      */
     protected function buildProductAvailabilityClientMock($jsonFileToLoad)
     {

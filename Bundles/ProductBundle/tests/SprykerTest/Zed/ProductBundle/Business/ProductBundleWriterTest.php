@@ -89,7 +89,7 @@ class ProductBundleWriterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle
      */
     protected function createProductBundleEntityMock()
     {
@@ -107,7 +107,7 @@ class ProductBundleWriterTest extends Unit
     /**
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface|null $productBundleStockWriterMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter
      */
     protected function createProductBundleWriterMock(?ProductBundleStockWriterInterface $productBundleStockWriterMock = null)
     {
@@ -133,7 +133,7 @@ class ProductBundleWriterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductBundleStockWriter()
     {
@@ -141,7 +141,7 @@ class ProductBundleWriterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface
      */
     protected function createProductFacadeMock()
     {
@@ -149,7 +149,7 @@ class ProductBundleWriterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
      */
     protected function createProductBundleQueryContainerMock()
     {
