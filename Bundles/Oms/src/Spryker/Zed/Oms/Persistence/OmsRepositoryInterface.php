@@ -10,8 +10,8 @@ namespace Spryker\Zed\Oms\Persistence;
 interface OmsRepositoryInterface
 {
     /**
-     * @param array $processIds
-     * @param array $stateBlackList
+     * @param int[] $processIds
+     * @param int[] $stateBlackList
      *
      * @return array
      */

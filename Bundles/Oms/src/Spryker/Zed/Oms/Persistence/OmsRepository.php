@@ -16,8 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 {
     /**
-     * @param array $processIds
-     * @param array $stateBlackList
+     * @param int[] $processIds
+     * @param int[] $stateBlackList
      *
      * @return array
      */

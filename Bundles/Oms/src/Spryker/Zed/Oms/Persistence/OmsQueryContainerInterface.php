@@ -153,8 +153,8 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param array $processIds
-     * @param array $stateBlacklist
+     * @param int[] $processIds
+     * @param int[] $stateBlacklist
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
