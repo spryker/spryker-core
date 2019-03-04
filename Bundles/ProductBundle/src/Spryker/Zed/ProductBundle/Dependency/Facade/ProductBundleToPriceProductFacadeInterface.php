@@ -31,15 +31,6 @@ interface ProductBundleToPriceProductFacadeInterface
      *
      * @api
      *
-     * @return string
-     */
-    public function getDefaultPriceTypeName(): string;
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @return bool

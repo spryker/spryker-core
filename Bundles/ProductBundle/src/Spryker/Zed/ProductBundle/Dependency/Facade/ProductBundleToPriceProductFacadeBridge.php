@@ -46,18 +46,6 @@ class ProductBundleToPriceProductFacadeBridge implements ProductBundleToPricePro
     }
 
     /**
-     * @return string
-     */
-    public function getDefaultPriceTypeName(): string
-    {
-        return $this->priceProductFacade->getDefaultPriceTypeName();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @return bool
