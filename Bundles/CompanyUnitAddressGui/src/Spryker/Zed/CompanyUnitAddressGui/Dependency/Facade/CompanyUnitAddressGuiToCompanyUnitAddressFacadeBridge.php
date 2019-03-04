@@ -69,4 +69,14 @@ class CompanyUnitAddressGuiToCompanyUnitAddressFacadeBridge implements CompanyUn
 
         return $this->companyUnitAddressFacade->getCompanyUnitAddressCollection($criteriaFilterTransfer);
     }
+
+    /**
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer
+    {
+        return $this->companyUnitAddressFacade->findCompanyUnitAddressById($idCompanyUnitAddress);
+    }
 }

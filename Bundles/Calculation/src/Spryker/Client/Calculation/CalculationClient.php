@@ -16,7 +16,11 @@ use Spryker\Client\Kernel\AbstractClient;
 class CalculationClient extends AbstractClient implements CalculationClientInterface
 {
     /**
-     * Recalculates the given quote and returns an updated one.
+     * Specification:
+     *  - Makes Zed request.
+     *  - Recalculates the given quote.
+     *  - Executes `QuotePostRecalculatePluginInterface` stack of plugins.
+     *  - Returns updated quote.
      *
      * @api
      *

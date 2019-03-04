@@ -34,26 +34,44 @@ class CategoryStorageListener extends AbstractPlugin implements EventBulkHandler
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_DELETE) {
-            $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
-        } else {
-            $categoryIds = $this->getValidCategoryIds($eventTransfers);
-        }
 
+        $categoryIds = $this->getCategoryIds($eventTransfers, $eventName);
         if (empty($categoryIds)) {
             return;
         }
 
-        $relatedCategoryIds = $this->getFacade()->getRelatedCategoryIds($categoryIds);
-        $productAbstractIds = $this->getQueryContainer()->queryProductAbstractIdsByCategoryIds($relatedCategoryIds)->find()->getData();
+        $relatedCategoryIds = $this->getFacade()
+            ->getRelatedCategoryIds($categoryIds);
+
+        $productAbstractIds = $this->getQueryContainer()
+            ->queryProductAbstractIdsByCategoryIds($relatedCategoryIds)
+            ->find()
+            ->getData();
 
         $this->getFacade()->publish($productAbstractIds);
     }
 
     /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param string $eventName
+     *
+     * @return int[]
+     */
+    protected function getCategoryIds(array $eventTransfers, $eventName): array
+    {
+        if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_DELETE) {
+            return $this->getFactory()
+                ->getEventBehaviorFacade()
+                ->getEventTransferIds($eventTransfers);
+        }
+
+        return $this->getValidCategoryIds($eventTransfers);
+    }
+
+    /**
      * @param array $eventTransfers
      *
-     * @return array
+     * @return int[]
      */
     protected function getValidCategoryIds(array $eventTransfers)
     {

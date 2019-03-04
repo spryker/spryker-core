@@ -94,25 +94,28 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
+     * @module Quote
+     *
      * @param \Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer[]
+     * @return int[]
      */
-    public function findQuotesBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): array
+    public function getIsDefaultFlagForSharedCartsBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): array
     {
-        /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $quoteQuery */
-        $quoteQuery = $this->getFactory()->createQuoteQuery()
-            ->joinWithSpyStore()
-            ->useSpyQuoteCompanyUserQuery()
-                ->filterByFkCompanyUser($sharedQuoteCriteriaFilterTransfer->getIdCompanyUser())
+        $sharedQuoteCriteriaFilterTransfer->requireIdCompanyUser();
+
+        $quoteQuery = $this->getFactory()->createQuoteCompanyUserQuery()
+            ->filterByFkCompanyUser($sharedQuoteCriteriaFilterTransfer->getIdCompanyUser())
+            ->useSpyQuoteQuery()
+                ->filterByFkStore($sharedQuoteCriteriaFilterTransfer->getIdStore())
             ->endUse()
-            ->addAsColumn('is_default', SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT);
+            ->select([
+                SpyQuoteCompanyUserTableMap::COL_FK_QUOTE,
+                SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT,
+            ]);
 
-        if ($sharedQuoteCriteriaFilterTransfer->getIdStore()) {
-            $quoteQuery->filterByFkStore($sharedQuoteCriteriaFilterTransfer->getIdStore());
-        }
-
-        return $this->buildQueryFromCriteria($quoteQuery)->find();
+        return $quoteQuery->find()
+            ->toKeyValue(SpyQuoteCompanyUserTableMap::COL_FK_QUOTE, SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT);
     }
 
     /**
@@ -143,9 +146,14 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     {
         $quotePermissionGroupQuery = $this->getFactory()
             ->createQuotePermissionGroupQuery();
-        $modifiedParams = $criteriaFilterTransfer->modifiedToArray();
-        if (isset($modifiedParams['is_default'])) {
-            $quotePermissionGroupQuery->filterByIsDefault($modifiedParams['is_default']);
+        $modifiedParams = $criteriaFilterTransfer->modifiedToArray(true, true);
+
+        if (isset($modifiedParams[QuotePermissionGroupCriteriaFilterTransfer::IS_DEFAULT])) {
+            $quotePermissionGroupQuery->filterByIsDefault($modifiedParams[QuotePermissionGroupCriteriaFilterTransfer::IS_DEFAULT]);
+        }
+
+        if (isset($modifiedParams[QuotePermissionGroupCriteriaFilterTransfer::NAME])) {
+            $quotePermissionGroupQuery->filterByName($modifiedParams[QuotePermissionGroupCriteriaFilterTransfer::NAME]);
         }
 
         $quotePermissionGroupEntityTransferList = $this->buildQueryFromCriteria($quotePermissionGroupQuery, $criteriaFilterTransfer->getFilter())->find();

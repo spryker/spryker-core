@@ -27,7 +27,7 @@ class TwigConfigTest extends Unit
     {
         $twigConfig = new TwigConfig();
 
-        $this->assertInternalType('array', $twigConfig->getTemplatePaths());
+        $this->assertIsArray($twigConfig->getTemplatePaths());
     }
 
     /**
@@ -36,7 +36,7 @@ class TwigConfigTest extends Unit
     public function testGetCacheFilePathReturnsString()
     {
         $twigConfig = new TwigConfig();
-        $this->assertInternalType('string', $twigConfig->getCacheFilePath());
+        $this->assertIsString($twigConfig->getCacheFilePath());
     }
 
     /**
@@ -45,6 +45,6 @@ class TwigConfigTest extends Unit
     public function testIsPathCacheEnabledReturnsBoolean()
     {
         $twigConfig = new TwigConfig();
-        $this->assertInternalType('bool', $twigConfig->isPathCacheEnabled());
+        $this->assertIsBool($twigConfig->isPathCacheEnabled());
     }
 }
