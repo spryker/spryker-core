@@ -13,7 +13,7 @@ interface OmsRepositoryInterface
      * @param array $processIds
      * @param array $stateBlackList
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array
      */
     public function getMatrixOrderItems(array $processIds, array $stateBlackList): array;
 }
