@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductBundle\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -22,13 +23,11 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 interface ProductBundleFacadeInterface
 {
     /**
-     *
      * Specification:
-     *
-     * - Takes all items to be added to cart and checks if any is bundle item
-     * - If bundle item then it is removed, and added to QuoteTransfer::bundleItems, the identifier assigned
+     * - Takes all items to be added to cart and checks if any is bundle item.
+     * - If bundle item then it is removed, and added to QuoteTransfer::bundleItems, the identifier assigned.
      * - Finds all bundled items from that bundle and puts into add to cart operation, assign bundle identifier they belong to.
-     * - The price amount is assigned, proportionaly split through items quantity = 1
+     * - The price amount is assigned, proportionally split through items quantity = 1.
      *
      * @api
      *
@@ -39,10 +38,8 @@ interface ProductBundleFacadeInterface
     public function expandBundleItems(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     *
      * Specification:
-     *
-     * - It will add images to product bundle
+     * - It will add images to product bundle.
      *
      * @api
      *
@@ -53,9 +50,7 @@ interface ProductBundleFacadeInterface
     public function expandBundleItemsWithImages(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     *
      * Specification:
-     *
      * - The group key is build to uniquely identify bundled items.
      *
      * @api
@@ -67,9 +62,7 @@ interface ProductBundleFacadeInterface
     public function expandBundleCartItemGroupKey(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     *
      * Specification:
-     *
      * - Updates QuoteTransfer::bundleItems to be in sync with current existing bundled items in cart.
      *
      * @api
@@ -81,12 +74,10 @@ interface ProductBundleFacadeInterface
     public function postSaveCartUpdateBundles(QuoteTransfer $quoteTransfer);
 
     /**
-     *
      * Specification:
-     *
      * - Checks if items which being added to cart is available, for bundle it checks bundled items.
-     * - Even if same item added separatelly from bundle availability is checked together.
-     * - Sets error message if not available
+     * - Even if same item added separately from bundle availability is checked together.
+     * - Sets error message if not available.
      *
      * @api
      *
@@ -97,12 +88,25 @@ interface ProductBundleFacadeInterface
     public function preCheckCartAvailability(CartChangeTransfer $cartChangeTransfer);
 
     /**
-     *
      * Specification:
+     * - Checks if bundled items which being added to cart is active.
+     * - Checks if products in the bundle are active.
+     * - Sets CartPreCheckResponseTransfer::isSuccess to false if some of products are not active.
+     * - Sets error message if some of products are not active.
      *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function preCheckCartActive(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
      * - Checks if items which being added to checkout is available, for bundle it checks bundled items.
-     * - Even if same item added separatelly from bundle availability is checked together.
-     * - Sets error message if not available
+     * - Even if same item added separately from bundle availability is checked together.
+     * - Sets error message if not available.
      *
      * @api
      *
@@ -114,9 +118,8 @@ interface ProductBundleFacadeInterface
     public function preCheckCheckoutAvailability(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
     /**
-     * * Specification:
-     *
-     *  - Calculates QuoteTransfer::bundleItems prices
+     * Specification:
+     *  - Calculates QuoteTransfer::bundleItems prices.
      *
      * @api
      *
@@ -128,10 +131,9 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *
-     * - Gets all items which belong to bundle
-     * - Updates bundle products with new availability, given sku belong
-     * - Touch abstract availability for bundle product
+     * - Gets all items which belong to bundle.
+     * - Updates bundle products with new availability, given sku belong.
+     * - Touch abstract availability for bundle product.
      *
      * @api
      *
@@ -143,10 +145,9 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *
-     * - Gets all items which belong to bundle
-     * - Updates bundle products with new stock, given sku belong
-     * - Touch abstract stock for bundle product
+     * - Gets all items which belong to bundle.
+     * - Updates bundle products with new stock, given sku belong.
+     * - Touch abstract stock for bundle product.
      *
      * @api
      *
@@ -157,12 +158,10 @@ interface ProductBundleFacadeInterface
     public function updateAffectedBundlesStock($concreteSku): void;
 
     /**
-     *
      * Specification:
-     *
-     *  - Calculated bundle availability based on bundled items
-     *  - Persists availability
-     *  - Touches availability abstract collector for bundle
+     *  - Calculated bundle availability based on bundled items.
+     *  - Persists availability.
+     *  - Touches availability abstract collector for bundle.
      *
      * @api
      *
@@ -174,7 +173,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     * - Persists bundled product to sales database tables, from QuoteTransfer
+     * - Persists bundled product to sales database tables, from QuoteTransfer.
      *
      * @api
      *
@@ -189,7 +188,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     * - Persists bundled product to sales database tables, from QuoteTransfer
+     * - Persists bundled product to sales database tables, from QuoteTransfer.
      *
      * @api
      *
@@ -201,11 +200,9 @@ interface ProductBundleFacadeInterface
     public function saveOrderBundleItems(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 
     /**
-     *
      * Specification:
-     *
-     * - Persists bundled products within ProductConcrete
-     * - Updates product bundle available stock
+     * - Persists bundled products within ProductConcrete.
+     * - Updates product bundle available stock.
      *
      * @api
      *
@@ -216,10 +213,8 @@ interface ProductBundleFacadeInterface
     public function saveBundledProducts(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
-     *
      * Specification:
-     *
-     * - Finds all bundled products to given concrete product
+     * - Finds all bundled products to given concrete product.
      *
      * @api
      *
@@ -230,11 +225,9 @@ interface ProductBundleFacadeInterface
     public function findBundledProductsByIdProductConcrete($idProductConcrete);
 
     /**
-     *
      * Specification:
-     *
-     * - Assigns bundled products to ProductConcreteTransfer::productBundle
-     * - Returns modified ProductConcreteTransfer
+     * - Assigns bundled products to ProductConcreteTransfer::productBundle.
+     * - Returns modified ProductConcreteTransfer.
      *
      * @api
      *
@@ -246,7 +239,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Hydrates OrderTransfer with product bundle data
+     *  - Hydrates OrderTransfer with product bundle data.
      *
      * @api
      *
@@ -270,7 +263,7 @@ interface ProductBundleFacadeInterface
     /**
      * Specification:
      *  - Filter bundle items after cart item reload operation is called.
-     *  - Bundled items are removed from cart
+     *  - Bundled items are removed from cart.
      *  - Bundle item are added as new add so new prices can be assigned.
      *
      * @api
@@ -283,7 +276,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Replace quote items with bundle if it is possible.
+     * - Replace quote items with bundle if it is possible.
      *
      * @api
      *
@@ -311,7 +304,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Checks price difference between quotes bundle items.
+     * - Checks price difference between quotes bundle items.
      *
      * @api
      *

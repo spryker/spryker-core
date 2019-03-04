@@ -219,6 +219,43 @@ class CompanyRoleFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testFindCompanyRoleByIdShouldReturnCorrectDataIfCompanyRoleExists(): void
+    {
+        // Prepare
+        $companyTransfer = $this->tester->haveCompany();
+        $existingCompanyRole = $this->tester->haveCompanyRole([
+            CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+
+        // Action
+        $resultCompanyRoleTransfer = $this->getFacade()->findCompanyRoleById(
+            (new CompanyRoleTransfer())
+                ->setIdCompanyRole($existingCompanyRole->getIdCompanyRole())
+        );
+
+        // Assert
+        $this->assertEquals($existingCompanyRole->getName(), $resultCompanyRoleTransfer->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCompanyRoleByIdShouldReturnNullIfCompanyRoleDoesNotExist(): void
+    {
+        // Prepare
+        $companyRoleFacade = $this->getFacade();
+        $notExistingCompanyRole = (new CompanyRoleTransfer())->setIdCompanyRole(-1);
+
+        // Action
+        $resultCompanyRole = $companyRoleFacade->findCompanyRoleById($notExistingCompanyRole);
+
+        // Assert
+        $this->assertNull($resultCompanyRole);
+    }
+
+    /**
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface
      */
     protected function getFacade()
