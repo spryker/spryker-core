@@ -97,7 +97,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption $orderItemOptionEntity
-     * @param int $orderItemQuantity
+     * @param float $orderItemQuantity
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
