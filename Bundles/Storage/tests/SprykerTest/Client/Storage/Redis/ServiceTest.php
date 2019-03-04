@@ -274,7 +274,7 @@ class ServiceTest extends Unit
     }
 
     /**
-     * @group YYY
+     * @return void
      */
     public function testGetMultiShouldReturnDataInTheSameOrderAsInput()
     {
