@@ -98,7 +98,7 @@ class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInte
         CartPreCheckResponseTransfer $cartPreCheckResponseTransfer,
         CartChangeTransfer $cartChangeTransfer
     ): CartPreCheckResponseTransfer {
-        $bundledProducts = $this->productBundleRepository->findBundledProducts($itemTransfer->getSku())->getBundledProducts();
+        $bundledProducts = $this->productBundleRepository->findBundledProductsBySku($itemTransfer->getSku());
 
         foreach ($bundledProducts as $bundledProduct) {
             $priceProductFilterTransfer = $this->createPriceProductFilter($bundledProduct, $cartChangeTransfer->getQuote());
