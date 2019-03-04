@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
@@ -187,4 +188,11 @@ interface ShoppingListRepositoryInterface
      * @return int[]
      */
     public function getBlacklistedShoppingListIdsByIdCompanyUser(int $idCompanyUser): array;
+
+    /**
+     * @param int $idShoppingListItem
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer;
 }

@@ -508,4 +508,14 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         return $filteredShoppingListCollectionTransfer;
     }
+
+    /**
+     * @param int $idShoppingListItem
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer
+    {
+        return $this->shoppingListRepository->getShoppingListItemById($idShoppingListItem);
+    }
 }

@@ -35,25 +35,15 @@ class ShoppingListProductOptionConnectorBusinessTester extends Actor
     use _generated\ShoppingListProductOptionConnectorBusinessTesterActions;
 
     /**
-     * @param string $sku
-     * @param bool $groupIsActive
+     * @param array $override
      *
      * @return \Generated\Shared\Transfer\ProductOptionValueTransfer
      */
-    public function createProductOptionGroupValueTransfer(string $sku, $groupIsActive = true): ProductOptionValueTransfer
+    public function createProductOptionGroupValueTransfer(array $override): ProductOptionValueTransfer
     {
         $productOptionGroupTransfer = $this->haveProductOptionGroupWithValues(
-            [
-                ProductOptionGroupTransfer::ACTIVE => $groupIsActive,
-            ],
-            [
-                [
-                    [ProductOptionValueTransfer::SKU => $sku],
-                    [
-                        [],
-                    ],
-                ],
-            ]
+            $this->getOverrideGroup($override),
+            $this->getOverrideValues($override)
         );
 
         $productOptionValueTransfer = $productOptionGroupTransfer->getProductOptionValues()->offsetGet(0);
@@ -88,5 +78,40 @@ class ShoppingListProductOptionConnectorBusinessTester extends Actor
 
         $this->getFacade()
             ->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return array
+     */
+    protected function getOverrideGroup(array $override): array
+    {
+        $isGroupActive = $override[ProductOptionGroupTransfer::ACTIVE] ?? true;
+
+        return [
+            ProductOptionGroupTransfer::ACTIVE => $isGroupActive,
+        ];
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return array
+     */
+    protected function getOverrideValues(array $override): array
+    {
+        $sku = $override[ProductOptionValueTransfer::SKU];
+
+        return [
+            [
+                [
+                    ProductOptionValueTransfer::SKU => $sku,
+                ],
+                [
+                    [],
+                ],
+            ],
+        ];
     }
 }

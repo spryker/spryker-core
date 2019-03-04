@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption;
@@ -136,11 +137,26 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         ]);
 
         // set createProductOptionGroupValue to Active ProductOptionGroup
-        $this->productOptionValueTransferActive = $this->tester->createProductOptionGroupValueTransfer('PO_Group_0_Value_1', true);
+        $this->productOptionValueTransferActive = $this->tester->createProductOptionGroupValueTransfer(
+            [
+                ProductOptionValueTransfer::SKU => 'PO_Group_0_Value_1',
+                ProductOptionGroupTransfer::ACTIVE => true,
+            ]
+        );
         // set createProductOptionGroupValue to Active ProductOptionGroup
-        $this->productOptionValueTransferActive2 = $this->tester->createProductOptionGroupValueTransfer('PO_Group_2_Value_1', true);
+        $this->productOptionValueTransferActive2 = $this->tester->createProductOptionGroupValueTransfer(
+            [
+                ProductOptionValueTransfer::SKU => 'PO_Group_2_Value_1',
+                ProductOptionGroupTransfer::ACTIVE => true,
+            ]
+        );
         // set createProductOptionGroupValue to Inactive ProductOptionGroup
-        $this->productOptionValueTransferInactive = $this->tester->createProductOptionGroupValueTransfer('PO_Group_3', false);
+        $this->productOptionValueTransferInactive = $this->tester->createProductOptionGroupValueTransfer(
+            [
+                ProductOptionValueTransfer::SKU => 'PO_Group_3',
+                ProductOptionGroupTransfer::ACTIVE => false,
+            ]
+        );
 
         // Assign Product Abstract to createProductOptionGroupValue with Active ProductOptionGroup
         $this->getProductOptionFacade()->addProductAbstractToProductOptionGroup($this->productTransferAssigned->getAbstractSku(), $this->productOptionValueTransferActive->getFkProductOptionGroup());
@@ -331,7 +347,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         $this->tester->getFacade()
             ->removeProductOptionValuesFromShoppingListItems(
                 (new ProductOptionGroupTransfer())
-                ->addProductOptionValuesToBeRemoved($this->productOptionValueTransferActive2->getIdProductOptionValue())
+                    ->addProductOptionValuesToBeRemoved($this->productOptionValueTransferActive2->getIdProductOptionValue())
             );
 
         $actualResult = $this->tester->getFacade()

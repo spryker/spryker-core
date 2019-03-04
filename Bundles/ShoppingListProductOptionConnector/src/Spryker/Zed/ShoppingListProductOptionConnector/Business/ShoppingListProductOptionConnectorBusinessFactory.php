@@ -19,6 +19,7 @@ use Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductO
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOption\ShoppingListProductOptionWriter;
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOption\ShoppingListProductOptionWriterInterface;
 use Spryker\Zed\ShoppingListProductOptionConnector\Dependency\Facade\ShoppingListProductOptionConnectorToProductOptionFacadeInterface;
+use Spryker\Zed\ShoppingListProductOptionConnector\Dependency\Facade\ShoppingListProductOptionConnectorToShoppingListFacadeBridge;
 use Spryker\Zed\ShoppingListProductOptionConnector\ShoppingListProductOptionConnectorDependencyProvider;
 
 /**
@@ -36,7 +37,8 @@ class ShoppingListProductOptionConnectorBusinessFactory extends AbstractBusiness
     {
         return new ShoppingListProductOptionReader(
             $this->getProductOptionFacade(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getShoppingListFacade()
         );
     }
 
@@ -83,6 +85,16 @@ class ShoppingListProductOptionConnectorBusinessFactory extends AbstractBusiness
     {
         return new ProductOptionValuesRemover(
             $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListProductOptionConnector\Dependency\Facade\ShoppingListProductOptionConnectorToShoppingListFacadeBridge
+     */
+    public function getShoppingListFacade(): ShoppingListProductOptionConnectorToShoppingListFacadeBridge
+    {
+        return $this->getProvidedDependency(
+            ShoppingListProductOptionConnectorDependencyProvider::FACADE_SHOPPING_LIST
         );
     }
 }

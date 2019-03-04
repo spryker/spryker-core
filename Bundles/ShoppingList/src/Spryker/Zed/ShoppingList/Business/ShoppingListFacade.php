@@ -374,4 +374,20 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
             ->createShoppingListShareDeleter()
             ->dismissShoppingListSharing($shoppingListDismissRequest);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idShoppingListItem
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer
+    {
+        return $this->getFactory()
+            ->createShoppingListReader()
+            ->getShoppingListItemById($idShoppingListItem);
+    }
 }
