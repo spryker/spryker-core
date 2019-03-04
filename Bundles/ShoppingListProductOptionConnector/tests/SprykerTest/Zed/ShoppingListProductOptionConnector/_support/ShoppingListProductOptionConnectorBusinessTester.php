@@ -86,7 +86,8 @@ class ShoppingListProductOptionConnectorBusinessTester extends Actor
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setIdShoppingListItem($idShoppingListItem);
 
-        $this->getFacade()
-            ->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+        /** @var \Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOptionConnectorFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade $facade */
+        $facade = $this->getFacade();
+        $facade->saveShoppingListItemProductOptions($shoppingListItemTransfer);
     }
 }

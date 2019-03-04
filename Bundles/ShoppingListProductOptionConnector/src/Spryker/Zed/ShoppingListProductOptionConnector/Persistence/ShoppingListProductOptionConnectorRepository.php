@@ -39,9 +39,8 @@ class ShoppingListProductOptionConnectorRepository extends AbstractRepository im
     public function getShoppingListItemProductAbstractSkuByIdShoppingListItem(int $idShoppingListItem): string
     {
         return $this->getFactory()
-            ->createSpyShoppingListProductOptionQuery()
-            ->filterByFkShoppingListItem($idShoppingListItem)
-            ->useSpyShoppingListItemQuery()
+            ->createSpyShoppingListItemQuery()
+            ->filterByIdShoppingListItem($idShoppingListItem)
             ->select([SpyShoppingListItemTableMap::COL_SKU])
             ->findOne();
     }

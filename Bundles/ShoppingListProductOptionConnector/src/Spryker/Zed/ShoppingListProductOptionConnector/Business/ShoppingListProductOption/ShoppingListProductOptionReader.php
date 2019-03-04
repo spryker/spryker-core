@@ -64,6 +64,6 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
         return (new ProductOptionCriteriaTransfer())
             ->setProductOptionIds($productOptionIds)
             ->setProductOptionGroupIsActive(true)
-            ->setProductConcreteSku($productConcreteSku);
+            ->setSku($productConcreteSku);
     }
 }
