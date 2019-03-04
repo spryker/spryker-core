@@ -91,7 +91,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @dataProvider calculateQuantityNormalizedSalesUnitValues
      *
-     * @param int $quantity
+     * @param float $quantity
      * @param float $conversion
      * @param int $precision
      * @param int $expectedResult
@@ -132,6 +132,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
             [13, 7, 100, 186],
             [13, 7, 10, 19],
             [13, 7, 1, 2],
+            [7.5, 1.25, 1000, 6000],
         ];
     }
 
