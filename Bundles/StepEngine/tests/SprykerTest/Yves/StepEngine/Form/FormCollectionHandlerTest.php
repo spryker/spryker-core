@@ -46,7 +46,7 @@ class FormCollectionHandlerTest extends Unit
     {
         $formCollectionHandler = new FormCollectionHandler([], $this->getFormFactoryMock(), $this->getDataProviderMock());
 
-        $this->assertInternalType('array', $formCollectionHandler->getForms($this->getDataTransferMock()));
+        $this->assertIsArray($formCollectionHandler->getForms($this->getDataTransferMock()));
     }
 
     /**
@@ -203,7 +203,7 @@ class FormCollectionHandlerTest extends Unit
      * @param array $formCollectionHandlerMethods
      * @param array $arguments
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
      */
     private function getFormCollectionHandlerMock(array $formCollectionHandlerMethods = [], array $arguments = [])
     {
@@ -219,7 +219,7 @@ class FormCollectionHandlerTest extends Unit
     /**
      * @param array $formFactoryMethods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Form\FormFactoryInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Form\FormFactoryInterface
      */
     private function getFormFactoryMock(array $formFactoryMethods = [])
     {
@@ -227,7 +227,7 @@ class FormCollectionHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
     private function getDataProviderMock()
     {
@@ -238,7 +238,7 @@ class FormCollectionHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     private function getDataTransferMock()
     {

@@ -97,4 +97,18 @@ interface CompanyUnitAddressFacadeInterface
     public function saveCompanyBusinessUnitAddresses(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): void;
+
+    /**
+     * Specification:
+     * - Finds a company unit address by id.
+     * - Returns null if unit adress does not exist.
+     * - Expands company business unit with extra data using plugins (CompanyUnitAddressHydratePluginInterface).
+     *
+     * @api
+     *
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer;
 }

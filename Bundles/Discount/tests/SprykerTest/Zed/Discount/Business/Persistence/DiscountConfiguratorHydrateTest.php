@@ -199,7 +199,7 @@ class DiscountConfiguratorHydrateTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected function createDiscountQueryContainerMock()
     {
@@ -207,7 +207,7 @@ class DiscountConfiguratorHydrateTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createDiscountQueryMock()
     {
@@ -215,7 +215,7 @@ class DiscountConfiguratorHydrateTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface
      */
     protected function createEntityMapperMock()
     {

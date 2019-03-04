@@ -73,4 +73,17 @@ interface CompanyFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
      */
     public function getCompanies(): CompanyCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds a company by id.
+     * - Returns null if company does not exist.
+     *
+     * @api
+     *
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer|null
+     */
+    public function findCompanyById(int $idCompany): ?CompanyTransfer;
 }
