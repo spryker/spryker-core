@@ -23,7 +23,7 @@ use Spryker\Service\QuickOrder\QuickOrderServiceInterface;
 class QuickOrderServiceTest extends Unit
 {
     /**
-     * @var \SprykerTest\Service\UtilEncoding\UtilEncodingServiceTester
+     * @var \SprykerTest\Service\QuickOrder\QuickOrderServiceTester
      */
     protected $tester;
 
