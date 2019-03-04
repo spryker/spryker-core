@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -20,24 +19,16 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
      * @param array $processIds
      * @param array $stateBlackList
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array
      */
     public function getMatrixOrderItems(array $processIds, array $stateBlackList): array
     {
-        $orderItemsMatrix = [];
-
         $orderItemsMatrixResult = $this->getFactory()->getOmsQueryContainer()
             ->queryGroupedMatrixOrderItems($processIds, $stateBlackList)
             ->find();
 
-        foreach ($orderItemsMatrixResult as $orderItemsMatrixRow) {
-            $idState = $orderItemsMatrixRow[SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE];
-            $idProcess = $orderItemsMatrixRow[SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS];
-
-            $orderItemsMatrix[$idState][$idProcess][$orderItemsMatrixRow[OmsQueryContainer::DATE_WINDOW]]
-                = $orderItemsMatrixRow[OmsQueryContainer::ITEMS_COUNT];
-        }
-
-        return $orderItemsMatrix;
+        return $this->getFactory()
+            ->createOrderItemMatrixMapper()
+            ->mapOrderItemMatrix($orderItemsMatrixResult->getArrayCopy());
     }
 }
