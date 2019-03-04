@@ -7,26 +7,26 @@
 
 namespace Spryker\Zed\ProductBundle\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 
 class ProductBundleMapper
 {
     /**
-     * @param array $bundledProducts
+     * @param \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $productBundleEntities
      *
-     * @return \Generated\Shared\Transfer\ProductBundleTransfer
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-    public function mapProductBundleTransfer(array $bundledProducts): ProductBundleTransfer
-    {
-        $productBundleTransfer = new ProductBundleTransfer();
-        foreach ($bundledProducts as $bundledProduct) {
-            $productBundleTransfer->addBundledProduct(
-                (new ProductForBundleTransfer())
-                    ->fromArray($bundledProduct->getSpyProductRelatedByFkBundledProduct()->toArray(), true)
+    public function mapProductBundleEntitiesToProductForBundleTransfers(
+        array $productBundleEntities
+    ): array {
+        $productForBundleTransfers = [];
+        foreach ($productBundleEntities as $productBundleEntity) {
+            $productForBundleTransfers[] = (new ProductForBundleTransfer())->fromArray(
+                $productBundleEntity->getSpyProductRelatedByFkBundledProduct()->toArray(),
+                true
             );
         }
 
-        return $productBundleTransfer;
+        return $productForBundleTransfers;
     }
 }

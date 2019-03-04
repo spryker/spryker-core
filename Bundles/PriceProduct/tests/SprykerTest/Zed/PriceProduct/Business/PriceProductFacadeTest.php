@@ -463,6 +463,30 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGroupPriceProductCollectionDoesNotOverwritePriceDataByNull(): void
+    {
+        // Assign
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $expectedPriceData = 'dummy price data';
+
+        $priceProductWithPriceData = $this->createPriceProduct('dummy currency 1', 'dummy price type 1', 100, 300);
+        $priceProductWithPriceData->getMoneyValue()->setPriceData($expectedPriceData);
+
+        $priceProductCollection = [];
+        $priceProductCollection[] = $priceProductWithPriceData;
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', 'dummy price type 2', 1100, 1300);
+
+        // Act
+        $actualResult = $priceProductFacade->groupPriceProductCollection($priceProductCollection);
+
+        // Assert
+        $this->assertEquals($expectedPriceData, $actualResult['dummy currency 1']['priceData']);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetPriceModeIdentifierForBothType()
     {
         $priceProductFacade = $this->getPriceProductFacade();

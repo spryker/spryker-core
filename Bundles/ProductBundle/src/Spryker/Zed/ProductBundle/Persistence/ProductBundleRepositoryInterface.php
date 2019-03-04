@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\ProductBundle\Persistence;
 
-use Generated\Shared\Transfer\ProductBundleTransfer;
-
 interface ProductBundleRepositoryInterface
 {
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\ProductBundleTransfer
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-    public function findBundledProducts(string $sku): ProductBundleTransfer;
+    public function findBundledProductsBySku(string $sku): array;
 }

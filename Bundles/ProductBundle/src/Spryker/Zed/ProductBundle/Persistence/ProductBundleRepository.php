@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductBundle\Persistence;
 
-use Generated\Shared\Transfer\ProductBundleTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -18,19 +17,20 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\ProductBundleTransfer
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-    public function findBundledProducts(string $sku): ProductBundleTransfer
+    public function findBundledProductsBySku(string $sku): array
     {
-        $bundledProducts = $this->getFactory()
+        $productBundleEntities = $this->getFactory()
             ->createProductBundleQuery()
+            ->joinWithSpyProductRelatedByFkProduct()
             ->useSpyProductRelatedByFkProductQuery()
-                ->filterBySku($sku)
+            ->filterBySku($sku)
             ->endUse()
             ->find();
 
         return $this->getFactory()
             ->createProductBundleMapper()
-            ->mapProductBundleTransfer($bundledProducts->getArrayCopy());
+            ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities->getArrayCopy());
     }
 }

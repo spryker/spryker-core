@@ -10,6 +10,7 @@ namespace Spryker\Zed\Url\Business\Url;
 use Generated\Shared\Transfer\UrlTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
+use Spryker\Zed\Url\Persistence\UrlRepositoryInterface;
 
 class UrlReader implements UrlReaderInterface
 {
@@ -19,11 +20,18 @@ class UrlReader implements UrlReaderInterface
     protected $urlQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $urlQueryContainer
+     * @var \Spryker\Zed\Url\Persistence\UrlRepositoryInterface
      */
-    public function __construct(UrlQueryContainerInterface $urlQueryContainer)
+    protected $urlRepository;
+
+    /**
+     * @param \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $urlQueryContainer
+     * @param \Spryker\Zed\Url\Persistence\UrlRepositoryInterface $urlRepository
+     */
+    public function __construct(UrlQueryContainerInterface $urlQueryContainer, UrlRepositoryInterface $urlRepository)
     {
         $this->urlQueryContainer = $urlQueryContainer;
+        $this->urlRepository = $urlRepository;
     }
 
     /**
@@ -48,6 +56,18 @@ class UrlReader implements UrlReaderInterface
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     */
+    public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer
+    {
+        $this->assertUrlSearchableParameters($urlTransfer);
+
+        return $this->urlRepository->findUrlCaseInsensitive($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
      * @return bool
      */
     public function hasUrl(UrlTransfer $urlTransfer)
@@ -64,11 +84,64 @@ class UrlReader implements UrlReaderInterface
      *
      * @return bool
      */
+    public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool
+    {
+        $this->assertUrlSearchableParameters($urlTransfer);
+
+        $ignoreUrlRedirects = ($urlTransfer->getFkResourceRedirect() === null);
+
+        return $this->urlRepository->hasUrlCaseInsensitive(
+            $urlTransfer,
+            $ignoreUrlRedirects
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
     public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer)
     {
         $urlCount = $this->queryUrlEntity($urlTransfer, false)->count();
 
         return $urlCount > 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
+    public function hasUrlOrRedirectedUrlCaseInsensitive(UrlTransfer $urlTransfer): bool
+    {
+        $this->assertUrlSearchableParameters($urlTransfer);
+
+        return $this->urlRepository->hasUrlCaseInsensitive(
+            $urlTransfer,
+            false
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @throws \Spryker\Zed\ProductStorage\Exception\InvalidArgumentException
+     *
+     * @return void
+     */
+    protected function assertUrlSearchableParameters(UrlTransfer $urlTransfer): void
+    {
+        if ($urlTransfer->getIdUrl() !== null || $urlTransfer->getUrl() !== null) {
+            return;
+        }
+
+        throw new InvalidArgumentException(sprintf(
+            'The provided UrlTransfer does not have any data to find URL entity: %s. Set "%s" or "%s" for the UrlTransfer.',
+            json_encode($urlTransfer->toArray()),
+            UrlTransfer::URL,
+            UrlTransfer::ID_URL
+        ));
     }
 
     /**
