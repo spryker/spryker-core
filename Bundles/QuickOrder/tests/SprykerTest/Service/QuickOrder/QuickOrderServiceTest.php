@@ -28,23 +28,29 @@ class QuickOrderServiceTest extends Unit
     protected $tester;
 
     /**
+     * @dataProvider roundProvider
+     *
+     * @param int $roundMode
+     * @param float $expected
+     *
      * @return void
      */
-    public function testShouldRoundToUpFraction(): void
+    public function testShouldRoundToUpFraction(int $roundMode, float $expected): void
     {
-        $service = $this->configureService(PHP_ROUND_HALF_UP);
+        $service = $this->configureService($roundMode);
 
-        $this->assertEquals(1.78, $service->round(1.775));
+        $this->assertEquals($expected, $service->round(1.775));
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function testShouldRoundToDownFraction(): void
+    public function roundProvider(): array
     {
-        $service = $this->configureService(PHP_ROUND_HALF_DOWN);
-
-        $this->assertEquals(1.77, $service->round(1.775));
+        return [
+            'half up mode' => [PHP_ROUND_HALF_UP, 1.78],
+            'half down mode' => [PHP_ROUND_HALF_DOWN, 1.77],
+        ];
     }
 
     /**
