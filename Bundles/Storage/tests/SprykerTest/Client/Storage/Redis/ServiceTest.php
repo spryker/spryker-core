@@ -272,4 +272,43 @@ class ServiceTest extends Unit
 
         return $request;
     }
+
+    /**
+     * @group YYY
+     */
+    public function testGetMultiShouldReturnDataInTheSameOrderAsInput()
+    {
+        $bufferedDataInjectedThroughTheAss = [
+            'a' => 'A',
+            'b' => 'B',
+            'c' => 'C',
+            'd' => 'D',
+            'e' => 'E',
+            'f' => 'F',
+        ];
+        StorageClient::$cachedKeys = [];
+        $redisService = $this->getMockBuilder(Service::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getMulti'])
+            ->getMock();
+        $redisService->method('getMulti')->willReturnCallback(function ($arguments) {
+            $result = [];
+            foreach ($arguments as $key) {
+                $result['kv:'.$key] = '_' . strtoupper($key);
+            }
+            return $result;
+        });
+        $storageClient = $this->getMockBuilder(StorageClient::class)
+            ->setMethods(['loadCacheKeysAndValues', 'getService'])
+            ->getMock();
+        $storageClient->method('getService')->willReturn($redisService);
+        $storageClientReflection = new \ReflectionClass($storageClient);
+        $bufferedValuesRef = $storageClientReflection->getProperty('bufferedValues');
+        $bufferedValuesRef->setAccessible(true);
+        $bufferedValuesRef->setValue($bufferedDataInjectedThroughTheAss);
+        /** @var StorageClient $storageClient */
+        $result = $storageClientReflection->getMethod('getMulti')->invoke($storageClient, ['z', 'c', 'b', 'd']);
+
+        $this->assertEquals(['kv:z' => '_Z', 'kv:c' => 'C', 'kv:b' => 'B', 'kv:d' => 'D'], $result);
+    }
 }
