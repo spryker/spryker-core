@@ -15,6 +15,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use PDO;
@@ -127,17 +128,11 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
      */
-    public function queryProductOptionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer)
+    public function queryProductOptionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): SpyProductOptionValueQuery
     {
         $productOptionCriteriaTransfer->requireProductOptionIds();
 
-        $productOptionValueQuery = $this->getFactory()->createProductOptionValueQuery();
-        $productOptionGroupQuery = $productOptionValueQuery->useSpyProductOptionGroupQuery();
-
-        $this->filterProductOptionGroupByActiveField($productOptionCriteriaTransfer, $productOptionGroupQuery);
-        $this->joinProductAbstractProductOptionGroupToProductOptionGroup($productOptionCriteriaTransfer, $productOptionGroupQuery);
-
-        $productOptionGroupQuery->endUse();
+        $productOptionValueQuery = $this->getProductOptionValueWithProductOptionGroupQuery($productOptionCriteriaTransfer);
 
         return $productOptionValueQuery->filterByIdProductOptionValue_In($productOptionCriteriaTransfer->getProductOptionIds());
     }
@@ -443,30 +438,13 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return void
      */
-    protected function filterProductOptionGroupByActiveField(
-        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer,
-        SpyProductOptionGroupQuery $productOptionGroupQuery
-    ): void {
-        $productOptionGroupIsActive = $productOptionCriteriaTransfer->getProductOptionGroupIsActive();
-
-        if ($productOptionGroupIsActive !== null) {
-            $productOptionGroupQuery->filterByActive($productOptionGroupIsActive);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
-     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery $productOptionGroupQuery
-     *
-     * @return void
-     */
     protected function joinProductAbstractProductOptionGroupToProductOptionGroup(
         ProductOptionCriteriaTransfer $productOptionCriteriaTransfer,
         SpyProductOptionGroupQuery $productOptionGroupQuery
     ): void {
-        $productConcreteSku = $productOptionCriteriaTransfer->getSku();
+        $productConcreteSku = $productOptionCriteriaTransfer->getProductConcreteSku();
 
-        if ($productConcreteSku === null) {
+        if (!$productConcreteSku) {
             return;
         }
 
@@ -480,5 +458,28 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                     ->endUse()
                 ->endUse();
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    protected function getProductOptionValueWithProductOptionGroupQuery(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): SpyProductOptionValueQuery
+    {
+        $productOptionValueQuery = $this->getFactory()->createProductOptionValueQuery();
+
+        $productOptionGroupQuery = $productOptionValueQuery->useSpyProductOptionGroupQuery();
+
+        $productOptionGroupIsActive = $productOptionCriteriaTransfer->getProductOptionGroupIsActive();
+
+        if ($productOptionGroupIsActive !== null) {
+            $productOptionGroupQuery->filterByActive($productOptionGroupIsActive);
+            $this->joinProductAbstractProductOptionGroupToProductOptionGroup($productOptionCriteriaTransfer, $productOptionGroupQuery);
+        }
+
+        $productOptionGroupQuery->endUse();
+
+        return $productOptionValueQuery;
     }
 }

@@ -824,7 +824,7 @@ class ProductOptionFacadeTest extends Unit
         $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())
             ->setProductOptionIds($expectedProductOptionIds)
             ->setProductOptionGroupIsActive(true)
-            ->setSku(null);
+            ->setProductConcreteSku(null);
 
         // Act
         $actualResult = $this->createProductOptionFacade()->getProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);
@@ -861,7 +861,7 @@ class ProductOptionFacadeTest extends Unit
         $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())
             ->setProductOptionIds($productOptionIds)
             ->setProductOptionGroupIsActive(true)
-            ->setSku($product->getSku());
+            ->setProductConcreteSku($product->getSku());
 
         // Act
         $actualResult = $this->createProductOptionFacade()->getProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);
@@ -893,7 +893,7 @@ class ProductOptionFacadeTest extends Unit
         $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())
             ->setProductOptionIds($productOptionIds)
             ->setProductOptionGroupIsActive(true)
-            ->setSku($product->getSku());
+            ->setProductConcreteSku($product->getSku());
 
         // Act
         $actualResult = $this->createProductOptionFacade()->getProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);
