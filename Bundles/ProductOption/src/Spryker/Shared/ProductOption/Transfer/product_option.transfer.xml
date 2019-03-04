@@ -9,7 +9,7 @@
         <property name="groupName" type="string" />
         <property name="value" type="string" />
         <property name="sku" type="string" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
         <property name="taxRate" type="float" />
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
         <property name="unitGrossPrice" type="int" />
