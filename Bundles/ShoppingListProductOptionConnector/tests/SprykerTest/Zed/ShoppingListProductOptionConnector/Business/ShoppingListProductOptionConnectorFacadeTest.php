@@ -48,7 +48,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     /**
      * @var \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    private $shoppingListItemTransferUnassigned;
+    protected $shoppingListItemTransferUnassigned;
 
     /**
      * @var \Generated\Shared\Transfer\ProductOptionValueTransfer
@@ -58,7 +58,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     /**
      * @var \Generated\Shared\Transfer\ProductOptionValueTransfer
      */
-    private $productOptionValueTransferActive2;
+    protected $productOptionValueTransferActive2;
 
     /**
      * @var \Generated\Shared\Transfer\ProductOptionValueTransfer
@@ -68,12 +68,12 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     /**
      * @var \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    private $productTransferAssigned;
+    protected $productTransferAssigned;
 
     /**
      * @var \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    private $productTransferUnassigned;
+    protected $productTransferUnassigned;
 
     /**
      * @return void

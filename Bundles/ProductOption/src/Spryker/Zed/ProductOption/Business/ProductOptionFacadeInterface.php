@@ -232,7 +232,7 @@ interface ProductOptionFacadeInterface
      * Specification:
      * - Retrieves product options by provided product option IDs.
      * - Filters by product options group active flag using ProductOptionCriteriaTransfer::ProductOptionGroupIsActive.
-     * - Filters by product options group assignment to products using ProductOptionCriteriaTransfer::sku.
+     * - Filters by product options group assignment to products using ProductOptionCriteriaTransfer::productConcreteSku.
      *
      * @api
      *
