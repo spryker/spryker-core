@@ -43,6 +43,6 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
      */
     public function isQuoteRequestConvertible(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_READY && $quoteRequestTransfer->getLatestVersion();
+        return $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_READY;
     }
 }

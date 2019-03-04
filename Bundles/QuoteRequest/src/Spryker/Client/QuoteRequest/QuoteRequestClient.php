@@ -103,7 +103,9 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      */
     public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getFactory()->createQuoteRequestToQuoteConverter()->convertQuoteRequestToQuote($quoteRequestTransfer);
+        return $this->getFactory()
+            ->createQuoteRequestToQuoteConverter()
+            ->convertQuoteRequestToQuote($quoteRequestTransfer);
     }
 
     /**
