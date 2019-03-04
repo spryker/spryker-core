@@ -12,7 +12,7 @@ use Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface;
 use Symfony\Component\Form\Extension\HttpFoundation\Type\FormTypeHttpFoundationExtension;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
 
-class HttpFoundationFormTypeExtension implements FormPluginInterface
+class HttpFoundationFormTypeExtensionPlugin implements FormPluginInterface
 {
     /**
      * {@inheritdoc}
