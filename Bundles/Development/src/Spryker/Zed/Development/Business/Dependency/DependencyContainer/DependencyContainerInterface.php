@@ -15,9 +15,9 @@ interface DependencyContainerInterface
     /**
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
-     * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
+     * @return $this
      */
-    public function initialize(ModuleTransfer $moduleTransfer): self;
+    public function initialize(ModuleTransfer $moduleTransfer);
 
     /**
      * @param string $module
@@ -25,9 +25,9 @@ interface DependencyContainerInterface
      * @param bool $isOptional
      * @param bool $isTest
      *
-     * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
+     * @return $this
      */
-    public function addDependency(string $module, string $type, bool $isOptional = false, bool $isTest = false): self;
+    public function addDependency(string $module, string $type, bool $isOptional = false, bool $isTest = false);
 
     /**
      * @return \Generated\Shared\Transfer\DependencyCollectionTransfer

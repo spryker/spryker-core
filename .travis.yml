@@ -1,10 +1,13 @@
 language: php
+
+git:
+  depth: 3
+
 php:
   - 7.1
 
 cache:
   directories:
-    - vendor
     - $HOME/.composer/cache
 
 env:
@@ -12,8 +15,11 @@ env:
     - APPLICATION_ENV=development
     - APPLICATION_STORE=DE
 
+before_install:
+  - phpenv config-rm xdebug.ini
+
 install:
-  - composer update --no-interaction --prefer-dist --no-autoloader
+  - composer install --no-interaction --prefer-dist --no-autoloader
 
 script:
   - vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p

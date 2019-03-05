@@ -35,7 +35,7 @@ abstract class CmsMocks extends Unit
     /**
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $propelConnectionMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected function createCmsQueryContainerMock(?ConnectionInterface $propelConnectionMock = null)
     {
@@ -53,7 +53,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Propel\Runtime\Connection\ConnectionInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Propel\Runtime\Connection\ConnectionInterface
      */
     protected function createPropelConnectionMock()
     {
@@ -61,7 +61,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface
      */
     protected function createTouchFacadeMock()
     {
@@ -70,7 +70,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Cms\Persistence\SpyCmsPage
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Cms\Persistence\SpyCmsPage
      */
     protected function createCmsPageEntityMock()
     {
@@ -80,7 +80,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
      */
     protected function createCmsPageLocalizedAttributesEntityMock()
     {
@@ -90,7 +90,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface
      */
     protected function createUrlFacadeMock()
     {
@@ -99,7 +99,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface
      */
     protected function createCmsPageUrlBuilderMock()
     {
@@ -108,7 +108,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface
      */
     protected function createCmsGlossarySaverMock()
     {
@@ -117,7 +117,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Template\TemplateManagerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Template\TemplateManagerInterface
      */
     protected function createTemplateManagerMock()
     {
@@ -128,7 +128,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\CmsConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\CmsConfig
      */
     protected function createCmsConfigMock()
     {
@@ -137,7 +137,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface
      */
     protected function createLocaleMock()
     {
@@ -146,7 +146,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping
      */
     protected function createGlossaryMappingEntityMock()
     {
@@ -156,7 +156,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Glossary\Persistence\SpyGlossaryKey
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Glossary\Persistence\SpyGlossaryKey
      */
     protected function createGlossaryKeyEntityMock()
     {
@@ -166,7 +166,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation
      */
     protected function createGlossaryTranslationEntityMock()
     {
@@ -176,7 +176,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface
      */
     protected function createGlossaryFacadeMock()
     {
@@ -185,7 +185,7 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface
      */
     protected function createCmsGlossaryKeyGeneratorMock()
     {

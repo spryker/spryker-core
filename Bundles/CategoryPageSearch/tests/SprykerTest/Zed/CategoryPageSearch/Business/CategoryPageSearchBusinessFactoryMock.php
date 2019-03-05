@@ -13,12 +13,12 @@ use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchI
 class CategoryPageSearchBusinessFactoryMock extends CategoryPageSearchBusinessFactory
 {
     /**
-     * @var \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $searchFacadeMock;
 
     /**
-     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface|\PHPUnit_Framework_MockObject_MockObject $searchFacadeMock
+     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface|\PHPUnit\Framework\MockObject\MockObject $searchFacadeMock
      */
     public function __construct(CategoryPageSearchToSearchInterface $searchFacadeMock)
     {

@@ -35,7 +35,7 @@ class FileContentTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\FileManager\FileManagerConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\FileManager\FileManagerConfig
      */
     protected function getConfigMock()
     {
