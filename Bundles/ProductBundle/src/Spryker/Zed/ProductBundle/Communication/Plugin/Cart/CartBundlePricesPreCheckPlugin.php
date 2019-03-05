@@ -22,8 +22,6 @@ class CartBundlePricesPreCheckPlugin extends AbstractPlugin implements CartPreCh
 {
     /**
      * {@inheritdoc}
-     *
-     * Specification:
      *  - Checks if bundled products of cart items has price for current store.
      *  - Sets error message if prices are not available.
      *

@@ -21,6 +21,8 @@ class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInte
 {
     public const CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY = 'cart.pre.check.price.failed';
 
+    protected const TRANSLATION_PARAMETER_SKU = '%sku%';
+
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
      */
@@ -119,10 +121,10 @@ class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInte
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessage(ProductForBundleTransfer $productForBundleTransfer)
+    protected function createMessage(ProductForBundleTransfer $productForBundleTransfer): MessageTransfer
     {
         return (new MessageTransfer())
             ->setValue(static::CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY)
-            ->setParameters(['%sku%' => $productForBundleTransfer->getSku()]);
+            ->setParameters([static::TRANSLATION_PARAMETER_SKU => $productForBundleTransfer->getSku()]);
     }
 }
