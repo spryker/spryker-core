@@ -17,4 +17,9 @@ interface AgentQuoteRequestToQuoteClientInterface
      * @return void
      */
     public function setQuote(QuoteTransfer $quoteTransfer);
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote();
 }

@@ -59,6 +59,13 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
         $quoteTransfer = $quoteRequestTransfer->getQuoteInProgress();
         $quoteTransfer->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
 
+        $currentQuoteTransfer = $this->quoteClient->getQuote();
+
+        $quoteTransfer
+            ->setCustomer($currentQuoteTransfer->getCustomer())
+            ->setCustomerReference($currentQuoteTransfer->getCustomerReference())
+            ->setStore($currentQuoteTransfer->getStore());
+
         $this->quoteClient->setQuote($quoteTransfer);
 
         return (new QuoteResponseTransfer())
