@@ -9,6 +9,7 @@ namespace SprykerTest\Client\Storage\Redis;
 
 use Codeception\Test\Unit;
 use Predis\ClientInterface;
+use ReflectionClass;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Client\Storage\StorageClient;
 use Spryker\Shared\Storage\StorageConstants;
@@ -294,7 +295,7 @@ class ServiceTest extends Unit
         $redisService->method('getMulti')->willReturnCallback(function ($arguments) {
             $result = [];
             foreach ($arguments as $key) {
-                $result['kv:'.$key] = '_' . strtoupper($key);
+                $result['kv:' . $key] = '_' . strtoupper($key);
             }
             return $result;
         });
@@ -302,11 +303,10 @@ class ServiceTest extends Unit
             ->setMethods(['loadCacheKeysAndValues', 'getService'])
             ->getMock();
         $storageClient->method('getService')->willReturn($redisService);
-        $storageClientReflection = new \ReflectionClass($storageClient);
+        $storageClientReflection = new ReflectionClass($storageClient);
         $bufferedValuesRef = $storageClientReflection->getProperty('bufferedValues');
         $bufferedValuesRef->setAccessible(true);
         $bufferedValuesRef->setValue($bufferedDataInjectedThroughTheAss);
-        /** @var StorageClient $storageClient */
         $result = $storageClientReflection->getMethod('getMulti')->invoke($storageClient, ['z', 'c', 'b', 'd']);
 
         $this->assertEquals(['kv:z' => '_Z', 'kv:c' => 'C', 'kv:b' => 'B', 'kv:d' => 'D'], $result);
