@@ -67,7 +67,7 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
         $shoppingListItemProductOptionIds = $this->shoppingListProductOptionRepository
             ->getShoppingListItemProductOptionIdsByIdShoppingListItem($idShoppingListItem);
 
-        $shoppingListItemTransfer = $this->shoppingListFacade->findShoppingListItemById($idShoppingListItem);
+        $shoppingListItemTransfer = $this->shoppingListFacade->getShoppingListItemById($idShoppingListItem);
         $shoppingListItemTransfer->requireSku();
 
         $productConcreteSku = $shoppingListItemTransfer->getSku();

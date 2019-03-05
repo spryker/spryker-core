@@ -312,7 +312,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Finds shopping list item by id.
+     *  - Returns shopping list item by id.
      *
      * @api
      *
@@ -320,5 +320,5 @@ interface ShoppingListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function findShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer;
+    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer;
 }

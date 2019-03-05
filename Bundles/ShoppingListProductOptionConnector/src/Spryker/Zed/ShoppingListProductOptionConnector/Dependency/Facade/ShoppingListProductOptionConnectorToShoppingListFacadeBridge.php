@@ -29,8 +29,8 @@ class ShoppingListProductOptionConnectorToShoppingListFacadeBridge implements Sh
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function findShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer
+    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer
     {
-        return $this->shoppingListFacade->findShoppingListItemById($idShoppingListItem);
+        return $this->shoppingListFacade->getShoppingListItemById($idShoppingListItem);
     }
 }

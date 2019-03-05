@@ -506,7 +506,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function findShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer
+    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer
     {
         $shoppingListItemTransfer = new ShoppingListItemTransfer();
 
