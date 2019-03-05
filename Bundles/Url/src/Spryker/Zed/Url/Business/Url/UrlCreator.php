@@ -105,8 +105,10 @@ class UrlCreator extends AbstractUrlCreatorSubject implements UrlCreatorInterfac
      */
     protected function persistUrlEntity(UrlTransfer $urlTransfer)
     {
-        $urlEntity = $this->createEntityFromTransfer($urlTransfer);
+        $urlEntity = $this->getUrlEntity($urlTransfer);
+        $urlEntity->fromArray($urlTransfer->modifiedToArray());
         $urlEntity->save();
+
         $urlTransfer->fromArray($urlEntity->toArray(), true);
 
         return $urlTransfer;
@@ -117,10 +119,10 @@ class UrlCreator extends AbstractUrlCreatorSubject implements UrlCreatorInterfac
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
-    protected function createEntityFromTransfer(UrlTransfer $urlTransfer)
+    protected function getUrlEntity(UrlTransfer $urlTransfer)
     {
+        $urlTransfer->requireUrl();
         $urlEntity = $this->urlQueryContainer->queryUrl($urlTransfer->getUrl())->findOneOrCreate();
-        $urlEntity->fromArray($urlTransfer->modifiedToArray());
 
         return $urlEntity;
     }
