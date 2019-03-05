@@ -79,13 +79,13 @@ class CategoryEditDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param int $categoryId
      *
      * @return array
      */
-    public function getOptions(CategoryTransfer $categoryTransfer)
+    public function getOptions(int $categoryId): array
     {
-        $parentCategories = $this->getCategoriesWithPaths($categoryTransfer);
+        $parentCategories = $this->getCategoriesWithPaths($categoryId);
 
         return [
             static::DATA_CLASS => CategoryTransfer::class,
@@ -96,11 +96,11 @@ class CategoryEditDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param int $categoryId
      *
      * @return array
      */
-    protected function getCategoriesWithPaths(CategoryTransfer $categoryTransfer)
+    protected function getCategoriesWithPaths(int $categoryId)
     {
         $idLocale = $this->getIdLocale();
         /** @var \Orm\Zed\Category\Persistence\SpyCategory[] $categoryEntityList */
@@ -115,7 +115,7 @@ class CategoryEditDataProvider
         $categoryNodes = [];
 
         foreach ($categoryEntityList as $categoryEntity) {
-            if ($categoryEntity->getIdCategory() === $categoryTransfer->getIdCategory()) {
+            if ($categoryEntity->getIdCategory() === $categoryId) {
                 continue;
             }
 
