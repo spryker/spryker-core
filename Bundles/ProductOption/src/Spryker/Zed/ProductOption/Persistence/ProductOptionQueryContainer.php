@@ -468,17 +468,19 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     protected function getProductOptionValueWithProductOptionGroupQuery(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): SpyProductOptionValueQuery
     {
         $productOptionValueQuery = $this->getFactory()->createProductOptionValueQuery();
-
-        $productOptionGroupQuery = $productOptionValueQuery->useSpyProductOptionGroupQuery();
-
         $productOptionGroupIsActive = $productOptionCriteriaTransfer->getProductOptionGroupIsActive();
 
         if ($productOptionGroupIsActive !== null) {
-            $productOptionGroupQuery->filterByActive($productOptionGroupIsActive);
-            $this->joinProductAbstractProductOptionGroupToProductOptionGroup($productOptionCriteriaTransfer, $productOptionGroupQuery);
-        }
+            $productOptionGroupQuery = $productOptionValueQuery->useSpyProductOptionGroupQuery();
 
-        $productOptionGroupQuery->endUse();
+            $productOptionGroupQuery->filterByActive($productOptionGroupIsActive);
+            $this->joinProductAbstractProductOptionGroupToProductOptionGroup(
+                $productOptionCriteriaTransfer,
+                $productOptionGroupQuery
+            );
+
+            $productOptionGroupQuery->endUse();
+        }
 
         return $productOptionValueQuery;
     }

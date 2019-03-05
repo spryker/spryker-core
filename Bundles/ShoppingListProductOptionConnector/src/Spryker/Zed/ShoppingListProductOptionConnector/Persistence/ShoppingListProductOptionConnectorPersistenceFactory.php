@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShoppingListProductOptionConnector\Persistence;
 
-use Orm\Zed\ShoppingList\Persistence\SpyShoppingListItemQuery;
 use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption;
 use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOptionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -33,13 +32,5 @@ class ShoppingListProductOptionConnectorPersistenceFactory extends AbstractPersi
     public function createSpyShoppingListProductOption(): SpyShoppingListProductOption
     {
         return new SpyShoppingListProductOption();
-    }
-
-    /**
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListItemQuery
-     */
-    public function createSpyShoppingListItemQuery(): SpyShoppingListItemQuery
-    {
-        return new SpyShoppingListItemQuery();
     }
 }

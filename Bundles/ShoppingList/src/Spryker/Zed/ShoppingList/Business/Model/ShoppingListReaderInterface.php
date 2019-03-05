@@ -71,5 +71,5 @@ interface ShoppingListReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer;
+    public function findShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer;
 }
