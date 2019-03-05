@@ -1,0 +1,17 @@
+{% block content %}
+    {% for localizedContentForm in contentForm.localizedContents %}
+        {% if localizedContentForm.vars.data.fkLocale == tab.name %}
+            {{ form_row(localizedContentForm.fk_locale) }}
+            {{ form_row(localizedContentForm.locale_name) }}
+            <div id="localized-content-block-{{ localizedContentForm.vars.name }}">
+                {% if localizedContentForm.parameters.vars.attr.template_path is defined %}
+                    {% include localizedContentForm.parameters.vars.attr.template_path with {'form': localizedContentForm.parameters} %}
+                {% else %}
+                    {{ form_widget(localizedContentForm.parameters) }}
+                {% endif %}
+                <input type="button" data-tab="#localized-content-block-{{ localizedContentForm.vars.name }}" class="btn btn-outline btn-view clear-fields" value="{{ 'Clear locale' | trans }}" />
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+{% do contentForm.localizedContents.setRendered %}

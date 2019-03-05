@@ -185,7 +185,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @param \Spryker\Client\Checkout\CheckoutClientInterface $checkoutClient
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\Checkout\Process\Steps\AbstractPlaceOrderStep
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Checkout\Process\Steps\AbstractPlaceOrderStep
      */
     protected function getAbstractPlaceOrderStep(CheckoutClientInterface $checkoutClient)
     {
@@ -198,7 +198,7 @@ class AbstractPlaceOrderStepTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Checkout\CheckoutClientInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Checkout\CheckoutClientInterface
      */
     private function getCheckoutClientMock()
     {

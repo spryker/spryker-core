@@ -7,31 +7,14 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder;
 
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
-
-class SprykerEcoPathBuilder implements PathBuilderInterface
+class SprykerEcoPathBuilder extends AbstractPathBuilder implements PathBuilderInterface
 {
-    /**
-     * @var string
-     */
-    protected $basePath;
+    protected const ORGANIZATION = 'SprykerEco';
 
-    /**
-     * @var array
-     */
-    protected $applications;
-
-    /**
-     * @param string $basePath
-     * @param array $applications
-     */
-    public function __construct($basePath, array $applications)
-    {
-        $this->basePath = $basePath;
-        $this->applications = $applications;
-    }
+    protected const LOOKUP_NAMESPACES = [
+        'src' => 'SprykerEco',
+        'tests' => 'SprykerEcoTest',
+    ];
 
     /**
      * @param string $module
@@ -43,30 +26,13 @@ class SprykerEcoPathBuilder implements PathBuilderInterface
         $filteredModule = $this->filterModule($module);
 
         $paths = [];
-        foreach ($this->applications as $application) {
-            $paths[] = sprintf('%s/%s/src/SprykerEco/%s/%s', $this->basePath, $filteredModule, $application, $module);
-            $paths[] = sprintf('%s/%s/tests/SprykerEcoTest/%s/%s', $this->basePath, $filteredModule, $application, $module);
+        $basePath = rtrim($this->config->getPathToInternalNamespace(static::ORGANIZATION), '/');
+        foreach ($this->config->getApplications() as $application) {
+            foreach (static::LOOKUP_NAMESPACES as $namespace) {
+                $paths[] = $this->getPath([$basePath, $filteredModule, $namespace, $application, $module]);
+            }
         }
 
         return $paths;
-    }
-
-    /**
-     * @param string $module
-     *
-     * @return string
-     */
-    protected function filterModule(string $module): string
-    {
-        if ($module === '*') {
-            return $module;
-        }
-
-        $filterChain = new FilterChain();
-        $filterChain
-            ->attach(new CamelCaseToDash())
-            ->attach(new StringToLower());
-
-        return $filterChain->filter($module);
     }
 }

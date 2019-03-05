@@ -204,7 +204,7 @@ class CompanyBusinessUnitForm extends AbstractType
      *
      * @return $this
      */
-    protected function addPluginForms(FormBuilderInterface $builder): AbstractType
+    protected function addPluginForms(FormBuilderInterface $builder)
     {
         foreach ($this->getFactory()->getCompanyBusinessUnitFormPlugins() as $formPlugin) {
             $formPlugin->buildForm($builder);

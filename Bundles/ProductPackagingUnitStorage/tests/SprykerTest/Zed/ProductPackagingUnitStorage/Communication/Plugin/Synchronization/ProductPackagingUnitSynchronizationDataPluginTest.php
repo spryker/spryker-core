@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageBusinessFactory;
 use Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacade;
-use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductPackagingUnitSynchronizationDataPlugin;
+use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductAbstractPackagingSynchronizationDataPlugin;
 use SprykerTest\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfigMock;
 
 /**
@@ -59,10 +59,10 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetDataWithIds(): void
+    public function testGetDataReturnsEmptyArrayWithInvalidIds(): void
     {
-        $productPackagingUnitSynchronizationDataPlugin = $this->getProductPackagingUnitSynchronizationDataPlugin();
-        $synchronizationDataTransfers = $productPackagingUnitSynchronizationDataPlugin->getData([
+        $productAbstractPackagingSynchronizationDataPlugin = $this->getProductAbstractPackagingSynchronizationDataPlugin();
+        $synchronizationDataTransfers = $productAbstractPackagingSynchronizationDataPlugin->getData([
             static::TEST_INVALID_ID,
         ]);
 
@@ -72,13 +72,13 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetDataWithoutIds(): void
+    public function testGetDataReturnsDataWithoutIds(): void
     {
         $this->tester->assertStorageDatabaseTableIsEmpty();
         $this->haveBoxProductPackagingUnit();
 
-        $productPackagingUnitSynchronizationDataPlugin = $this->getProductPackagingUnitSynchronizationDataPlugin();
-        $synchronizationDataTransfers = $productPackagingUnitSynchronizationDataPlugin->getData();
+        $productAbstractPackagingSynchronizationDataPlugin = $this->getProductAbstractPackagingSynchronizationDataPlugin();
+        $synchronizationDataTransfers = $productAbstractPackagingSynchronizationDataPlugin->getData();
 
         $this->assertNotEmpty($synchronizationDataTransfers);
     }
@@ -131,10 +131,10 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductPackagingUnitSynchronizationDataPlugin
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductAbstractPackagingSynchronizationDataPlugin
      */
-    protected function getProductPackagingUnitSynchronizationDataPlugin(): ProductPackagingUnitSynchronizationDataPlugin
+    protected function getProductAbstractPackagingSynchronizationDataPlugin(): ProductAbstractPackagingSynchronizationDataPlugin
     {
-        return new ProductPackagingUnitSynchronizationDataPlugin();
+        return new ProductAbstractPackagingSynchronizationDataPlugin();
     }
 }

@@ -38,22 +38,22 @@ class CmsBlockCollectorFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorFacadeInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $cmsBlockCollectorFacadeMock;
 
     /**
-     * @var \Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorBusinessFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $cmsBlockCollectorBusinessFactoryMock;
 
     /**
-     * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $collectorFacadeMock;
 
     /**
-     * @var \Spryker\Zed\CmsBlockCollector\Business\Collector\Storage\CmsBlockCollector|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\CmsBlockCollector\Business\Collector\Storage\CmsBlockCollector|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $cmsBlockCollector;
 

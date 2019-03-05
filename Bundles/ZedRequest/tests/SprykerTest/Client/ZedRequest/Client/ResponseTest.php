@@ -113,7 +113,7 @@ class ResponseTest extends Unit
         $response = $this->createFullResponse($transfer);
 
         $array = $response->toArray();
-        $this->assertInternalType('array', $array, 'toArray does not return array');
+        $this->assertIsArray($array, 'toArray does not return array');
 
         $newResponse = new Response($array);
 
