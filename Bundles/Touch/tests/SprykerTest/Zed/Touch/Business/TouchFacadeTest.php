@@ -60,6 +60,7 @@ class TouchFacadeTest extends Unit
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, self::ITEM_ID_3);
 
         $this->createTouchEntity(static::ITEM_EVENT_ACTIVE, static::UNIQUE_INDEX_ITEM_ID, static::UNIQUE_INDEX_ITEM_TYPE);
+        $this->createTouchEntity(static::ITEM_EVENT_INACTIVE, static::UNIQUE_INDEX_ITEM_ID, static::UNIQUE_INDEX_ITEM_TYPE);
         $this->createTouchEntity(static::ITEM_EVENT_DELETED, static::UNIQUE_INDEX_ITEM_ID, static::UNIQUE_INDEX_ITEM_TYPE);
     }
 
