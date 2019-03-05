@@ -464,6 +464,20 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @param string $sku
+     *
+     * @return float
+     */
+    public function getProductStockAmount($sku): float
+    {
+        $productId = $this->productFacade->findProductConcreteIdBySku($sku);
+
+        return $this->queryContainer
+            ->queryStockAmountByProducts($productId)
+            ->findOne();
+    }
+
+    /**
      * @param \Traversable|\Orm\Zed\Stock\Persistence\SpyStock[] $stockCollection
      *
      * @return string[]

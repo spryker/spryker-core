@@ -10,6 +10,7 @@ namespace Spryker\Zed\Stock\Persistence;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
+use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -18,6 +19,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class StockQueryContainer extends AbstractQueryContainer implements StockQueryContainerInterface
 {
+    public const FIELD_TOTAL_QUANTITY = 'totalQuantity';
+
     /**
      * @api
      *
@@ -255,5 +258,22 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
               ->useSpyProductQuery()
                   ->withColumn(SpyProductTableMap::COL_SKU, 'sku')
               ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function queryStockAmountByProducts($idProduct): SpyStockProductQuery
+    {
+        return $this->getFactory()
+            ->createStockProductQuery()
+            ->select([static::FIELD_TOTAL_QUANTITY])
+            ->filterByFkProduct($idProduct)
+            ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', static::FIELD_TOTAL_QUANTITY)
+            ->groupByFkProduct();
     }
 }
