@@ -27,10 +27,6 @@ interface ProductBundleToPriceProductFacadeInterface
     public function findPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer);
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @return bool
