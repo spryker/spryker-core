@@ -22,8 +22,20 @@ class NavigationsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAILS_NAVIGATION_NOT_FOUND = 'Navigation not found.';
     public const RESPONSE_DETAILS_NAVIGATION_ID_IS_NOT_SPECIFIED = 'Navigation id not specified.';
 
-    public const MAPPING_NAVIGATION_RESOURCE_TYPE_FIELD_NAMES = [
-        'category' => 'fkResourceCategorynode',
-        'cms_page' => 'fkResourcePage',
-    ];
+    /**
+     * This method provides mappings for navigation node type to url resource id field.
+     * It is used to define which field from \Generated\Shared\Transfer\UrlStorageTransfer contains node id value
+     * for node with node type from.
+     *
+     * example:
+     * [
+     *    'category' => 'fkResourceCategorynode',
+     * ]
+     *
+     * @return array
+     */
+    public function getNavigationTypeToUrlResourceIdFieldMapping(): array
+    {
+        return [];
+    }
 }

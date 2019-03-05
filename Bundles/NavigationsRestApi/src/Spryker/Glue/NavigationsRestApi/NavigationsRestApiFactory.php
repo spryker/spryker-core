@@ -17,6 +17,9 @@ use Spryker\Glue\NavigationsRestApi\Processor\Mapper\NavigationMapperInterface;
 use Spryker\Glue\NavigationsRestApi\Processor\Navigation\NavigationReader;
 use Spryker\Glue\NavigationsRestApi\Processor\Navigation\NavigationReaderInterface;
 
+/**
+ * @method \Spryker\Glue\NavigationsRestApi\NavigationsRestApiConfig getConfig()
+ */
 class NavigationsRestApiFactory extends AbstractFactory
 {
     /**
@@ -45,7 +48,10 @@ class NavigationsRestApiFactory extends AbstractFactory
      */
     public function createNavigationNodeExpander(): NavigationNodeExpanderInterface
     {
-        return new NavigationNodeExpander($this->getUrlStorageClient());
+        return new NavigationNodeExpander(
+            $this->getUrlStorageClient(),
+            $this->getConfig()
+        );
     }
 
     /**

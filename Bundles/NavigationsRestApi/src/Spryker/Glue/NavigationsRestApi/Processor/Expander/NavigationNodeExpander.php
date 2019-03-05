@@ -17,11 +17,20 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
     protected $urlStorageClient;
 
     /**
-     * @param \Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToUrlStorageClientInterface $urlStorageClient
+     * @var \Spryker\Glue\NavigationsRestApi\NavigationsRestApiConfig
      */
-    public function __construct(NavigationsRestApiToUrlStorageClientInterface $urlStorageClient)
-    {
+    protected $config;
+
+    /**
+     * @param \Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToUrlStorageClientInterface $urlStorageClient
+     * @param \Spryker\Glue\NavigationsRestApi\NavigationsRestApiConfig $config
+     */
+    public function __construct(
+        NavigationsRestApiToUrlStorageClientInterface $urlStorageClient,
+        NavigationsRestApiConfig $config
+    ) {
         $this->urlStorageClient = $urlStorageClient;
+        $this->config = $config;
     }
 
     /**
@@ -82,11 +91,11 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
      */
     protected function findNodeIdByNodeType(UrlStorageTransfer $urlStorageTransfer, string $nodeType): ?int
     {
-        if (!isset(NavigationsRestApiConfig::MAPPING_NAVIGATION_RESOURCE_TYPE_FIELD_NAMES[$nodeType])) {
+        if (!isset($this->config->getNavigationTypeToUrlResourceIdFieldMapping()[$nodeType])) {
             return null;
         }
 
-        return $urlStorageTransfer[NavigationsRestApiConfig::MAPPING_NAVIGATION_RESOURCE_TYPE_FIELD_NAMES[$nodeType]]
+        return $urlStorageTransfer[$this->config->getNavigationTypeToUrlResourceIdFieldMapping()[$nodeType]]
             ?? null;
     }
 }
