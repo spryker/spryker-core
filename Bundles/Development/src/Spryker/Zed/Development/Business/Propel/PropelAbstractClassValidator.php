@@ -179,7 +179,11 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
      */
     protected function hasNamespaceInSchema(SimpleXMLElement $simpleXmlElement): bool
     {
-        return !count($simpleXmlElement->xpath('//table'));
+        if (in_array('spryker:schema-01', $simpleXmlElement->getNamespaces())) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

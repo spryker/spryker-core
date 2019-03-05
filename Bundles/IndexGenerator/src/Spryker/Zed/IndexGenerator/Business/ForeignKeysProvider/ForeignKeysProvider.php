@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ForeignKeyFileTransfer;
 use Generated\Shared\Transfer\ForeignKeyTableTransfer;
 use SimpleXMLElement;
 use Spryker\Zed\IndexGenerator\Business\Exception\FailedToLoadXmlException;
-use Spryker\Zed\IndexGenerator\Business\Exception\IndexGeneratorException;
 use Spryker\Zed\IndexGenerator\Business\SchemaFinder\MergedSchemaFinderInterface;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -100,19 +99,15 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
     /**
      * @param \SimpleXMLElement $simpleXmlElement
      *
-     * @throws \Spryker\Zed\IndexGenerator\Business\Exception\IndexGeneratorException
-     *
      * @return bool
      */
     protected function hasNamespaceInSchema(SimpleXMLElement $simpleXmlElement): bool
     {
-        $result = $simpleXmlElement->xpath('//database');
-
-        if ($result === false) {
-            throw new IndexGeneratorException('Could not detect Namespace presence.');
+        if (in_array('spryker:schema-01', $simpleXmlElement->getNamespaces())) {
+            return true;
         }
 
-        return !count($result);
+        return false;
     }
 
     /**
