@@ -12,6 +12,16 @@ $(document).ready( function () {
             dataType: 'json',
             delay: 500,
             cache: true,
+            processResults: function (data) {
+                data.results = data.results.map(function(item) {
+                    return {
+                        id: item.sku,
+                        text: item.name + ' (SKU: ' + item.sku + ')'
+                    };
+                });
+
+                return data;
+            }
         },
         minimumInputLength: 3
     });

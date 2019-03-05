@@ -5,4 +5,7 @@
 
 'use strict';
 
-require('./modules/main');
+if (!window.CmsBlockProductConnector) {
+    require('./modules/main');
+    window.CmsBlockProductConnector = true;
+}

@@ -9,9 +9,8 @@ namespace Spryker\Zed\CmsBlockProductConnector\Communication\Formatter;
 
 class ProductListFormatter implements ProductListFormatterInterface
 {
-    protected const KEY_ID = 'id';
-    protected const KEY_TEXT = 'text';
-    protected const TEXT_FORMAT = '%s (SKU: %s)';
+    protected const KEY_SKU = 'sku';
+    protected const KEY_NAME = 'name';
 
     /**
      * @param array $suggestData
@@ -23,8 +22,8 @@ class ProductListFormatter implements ProductListFormatterInterface
         $preparedSuggestData = [];
         foreach ($suggestData as $sku => $name) {
             $preparedSuggestData[] = [
-                static::KEY_ID => $sku,
-                static::KEY_TEXT => sprintf(static::TEXT_FORMAT, $name, $sku),
+                static::KEY_SKU => $sku,
+                static::KEY_NAME => $name,
             ];
         }
 
