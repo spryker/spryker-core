@@ -87,6 +87,8 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container[static::SERVICE_PRODUCT_PACKAGING_UNIT] = function (Container $container) {
             return $container->getLocator()->productPackagingUnit()->service();
         };
+
+        return $container;
     }
 
     /**

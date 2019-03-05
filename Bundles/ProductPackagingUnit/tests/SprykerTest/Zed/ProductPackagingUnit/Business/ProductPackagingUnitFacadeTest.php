@@ -544,14 +544,14 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @dataProvider calculateAmountNormalizedSalesUnitValues
      *
      * @param int $amount
-     * @param int $quantity
+     * @param float $quantity
      * @param float $conversion
      * @param int $precision
      * @param int $expectedResult
      *
      * @return void
      */
-    public function testCalculateAmountNormalizedSalesUnitValueCalculatesCorrectValues(int $amount, int $quantity, float $conversion, int $precision, int $expectedResult): void
+    public function testCalculateAmountNormalizedSalesUnitValueCalculatesCorrectValues(int $amount, float $quantity, float $conversion, int $precision, int $expectedResult): void
     {
         // Assign
         $quoteTransfer = $this->tester->createQuoteTransferForValueCalculation($amount, $quantity, $conversion, $precision);
@@ -571,8 +571,11 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     {
         return [
             [7, 1, 1.25, 1000, 5600],
+            [7, 1.5, 1.25, 1000, 3200],
             [7, 1, 1.25, 100, 560],
+            [7, 1.5, 1.25, 100, 320],
             [7, 1, 1.25, 10, 56],
+            [7, 1.5, 1.25, 10, 32],
             [7, 1, 1.25, 1, 6],
             [10, 1, 5, 1, 2],
             [13, 1, 7, 1000, 1857],
@@ -588,7 +591,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @param bool $expectedIsSuccess
      * @param int $defaultAmount
      * @param int $quoteAmount
-     * @param int $quoteQuantity
+     * @param float $quoteQuantity
      * @param int|null $minRestriction
      * @param int|null $maxRestriction
      * @param int|null $intervalRestriction
@@ -600,7 +603,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         bool $expectedIsSuccess,
         int $defaultAmount,
         int $quoteAmount,
-        int $quoteQuantity,
+        float $quoteQuantity,
         ?int $minRestriction,
         ?int $maxRestriction,
         ?int $intervalRestriction,
@@ -671,13 +674,21 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     {
         return [
             [true, 1, 2, 1, 1, null, 1, true], // general rule
+            [true, 1, 2, 1.5, 1, null, 1, true],
             [true, 1, 7, 1, 7, null, 1, true], // min equals new amount
+            [true, 1.5, 7, 1.5, 1, null, 1.5, true],
             [true, 1, 5, 1, 5, 5,    1, true], // max equals new amount
+            [true, 1, 3, 1.5, 2, 3,    1, true],
             [true, 1, 7, 1, 0, null, 7, true], // interval matches new amount
+            [true, 1, 7, 1.5, 0, null, 4, true],
             [false, 1, 5, 1, 7, 7,    7, true], // min, max, interval matches new amount
+            [false, 1.5, 5, 1.5, 7, 7,    7, true],
             [false, 1, 5, 1, 8, null, 1, true], // min above new amount
+            [false, 1.5, 5, 1.5, 8, null, 1, true],
             [false, 1, 5, 1, 1, 3,    1, true], // max below new amount
+            [false, 1, 5, 1.5, 1, 2,    1, true],
             [false, 1, 5, 1, 1, null, 3, true], // interval does not match new amount
+            [false, 1, 5, 1.5, 1, null, 3, true],
         ];
     }
 

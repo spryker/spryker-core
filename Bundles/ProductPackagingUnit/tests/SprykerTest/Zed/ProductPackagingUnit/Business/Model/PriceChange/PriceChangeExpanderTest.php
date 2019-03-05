@@ -37,7 +37,8 @@ class PriceChangeExpanderTest extends Unit
      */
     public function testCustomAmountPriceIsCorrect(): void
     {
-        $priceChangeExpander = new PriceChangeExpander($this->getProductPackagingUnitReaderMock());
+        $service = $this->tester->getLocator()->productPackagingUnit()->service();
+        $priceChangeExpander = new PriceChangeExpander($this->getProductPackagingUnitReaderMock(), $service);
         $cartChangeTransfer = $priceChangeExpander->setCustomAmountPrice($this->tester->getCartChangeTransfer());
 
         foreach ($cartChangeTransfer->getItems() as $item) {
