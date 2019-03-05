@@ -14,6 +14,7 @@ use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Touch\Business\TouchFacade;
+use Spryker\Zed\Touch\Business\TouchFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -37,6 +38,14 @@ class TouchFacadeTest extends Unit
     public const ITEM_EVENT_INACTIVE = 'inactive';
     public const ITEM_EVENT_DELETED = 'deleted';
 
+    protected const UNIQUE_INDEX_ITEM_ID = 1;
+    protected const UNIQUE_INDEX_ITEM_TYPE = 'index.test.item';
+
+    /**
+     * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
+     */
+    protected $touchFacade;
+
     /**
      * @return void
      */
@@ -44,9 +53,14 @@ class TouchFacadeTest extends Unit
     {
         parent::setUp();
 
+        $this->touchFacade = $this->createTouchFacade();
+
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, self::ITEM_ID_1);
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, self::ITEM_ID_2);
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, self::ITEM_ID_3);
+
+        $this->createTouchEntity(static::ITEM_EVENT_ACTIVE, static::UNIQUE_INDEX_ITEM_ID, static::UNIQUE_INDEX_ITEM_TYPE);
+        $this->createTouchEntity(static::ITEM_EVENT_DELETED, static::UNIQUE_INDEX_ITEM_ID, static::UNIQUE_INDEX_ITEM_TYPE);
     }
 
     /**
@@ -81,8 +95,7 @@ class TouchFacadeTest extends Unit
      */
     public function testBulkTouchSetMethods($method, array $itemIds, $expectedAffectedRows, $expectedItemEvent)
     {
-        $touchFacade = new TouchFacade();
-        $affectedRows = $touchFacade->$method(self::ITEM_TYPE, $itemIds);
+        $affectedRows = $this->touchFacade->$method(self::ITEM_TYPE, $itemIds);
 
         $this->assertSame($expectedAffectedRows, $affectedRows);
 
@@ -114,10 +127,11 @@ class TouchFacadeTest extends Unit
     /**
      * @param string $itemEvent
      * @param int $itemId
+     * @param string $itemType
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouch
      */
-    protected function createTouchEntity($itemEvent, $itemId)
+    protected function createTouchEntity($itemEvent, $itemId, $itemType = self::ITEM_TYPE)
     {
         $date = new DateTime();
         $date->sub(new DateInterval('PT1M'));
@@ -125,7 +139,7 @@ class TouchFacadeTest extends Unit
         $touchEntity = new SpyTouch();
         $touchEntity->setItemEvent($itemEvent)
             ->setItemId($itemId)
-            ->setItemType(self::ITEM_TYPE)
+            ->setItemType($itemType)
             ->setTouched($date);
 
         $touchEntity->save();
@@ -148,5 +162,42 @@ class TouchFacadeTest extends Unit
             ->filterByItemEvent($itemEvent);
 
         return $touchQuery->findOne();
+    }
+
+    /**
+     * @return \Spryker\Zed\Touch\Business\TouchFacadeInterface
+     */
+    protected function createTouchFacade(): TouchFacadeInterface
+    {
+        return new TouchFacade();
+    }
+
+    /**
+     * @return array
+     */
+    public function bulkTouchSetUniqueIndexMethodsDataProvider(): array
+    {
+        return [
+            ['bulkTouchSetActive', [static::UNIQUE_INDEX_ITEM_ID]],
+            ['bulkTouchSetInActive', [static::UNIQUE_INDEX_ITEM_ID]],
+            ['bulkTouchSetDeleted', [static::UNIQUE_INDEX_ITEM_ID]],
+        ];
+    }
+
+    /**
+     * @dataProvider bulkTouchSetUniqueIndexMethodsDataProvider
+     *
+     * @param string $method
+     * @param array $itemIds
+     *
+     * @return void
+     */
+    public function testBulkTouchSetUniqueIndex(string $method, array $itemIds): void
+    {
+        //Act
+        $affectedRows = $this->touchFacade->$method(static::UNIQUE_INDEX_ITEM_TYPE, $itemIds);
+
+        //Assert
+        $this->assertSame(count($itemIds), $affectedRows);
     }
 }
