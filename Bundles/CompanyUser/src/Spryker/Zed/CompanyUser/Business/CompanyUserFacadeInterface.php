@@ -111,7 +111,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves company user collection according provided filter.
+     * - Retrieves user companies which can filtered by company ID, user ID and/or active flag.
      * - Ignores company users with anonymised customers.
      *
      * @api
@@ -214,4 +214,18 @@ interface CompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds company user by ID.
+     * - Executes CompanyUserHydrationPluginInterface plugins if company user exists.
+     * - Returns null if company user does not exist.
+     *
+     * @api
+     *
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer;
 }

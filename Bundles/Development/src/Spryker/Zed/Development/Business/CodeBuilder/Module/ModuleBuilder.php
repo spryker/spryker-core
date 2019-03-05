@@ -33,16 +33,17 @@ class ModuleBuilder
      * @var array
      */
     protected $files = [
+        '.coveralls.yml',
         '.gitattributes',
         '.gitignore',
-        '.coveralls.yml',
         '.travis.yml',
+        'CHANGELOG.md',
         'codecept.yml' => 'codeception.yml',
         'composer.json',
-        'phpstan.json',
-        'CHANGELOG.md',
-        'README.md',
         'LICENSE',
+        'phpstan.json',
+        'README.md',
+        'tooling.yml',
     ];
 
     /**

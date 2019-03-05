@@ -63,7 +63,7 @@ class DataContainerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface
      */
     private function getQuoteClientMock()
     {
