@@ -26,7 +26,6 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
 
     /**
      * {@inheritdoc}
-     * - Adds `form.resolved_type_factory` service.
      * - Adds `form.factory` service.
      * - Adds global `FORM_FACTORY` service as an alias for `form.factory`.
      *
@@ -38,13 +37,10 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::SERVICE_FORM_RESOLVED_TYPE_FACTORY, function (ContainerInterface $container) {
-            return new ResolvedFormTypeFactory();
-        });
-
         $container->set(static::SERVICE_FORM_FACTORY, function (ContainerInterface $container) {
-            $formFactoryBuilder = $this->getFactory()->createFormFactoryBuilder()
-                ->setResolvedTypeFactory($container->get('form.resolved_type_factory'));
+            $formFactoryBuilder = $this->getFactory()
+                ->createFormFactoryBuilder()
+                ->setResolvedTypeFactory(new ResolvedFormTypeFactory());
 
             $formFactoryBuilder = $this->extendForm($formFactoryBuilder, $container);
 
