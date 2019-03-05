@@ -89,21 +89,6 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     * - Checks if items which being added to checkout is available, for bundle it checks bundled items.
-     * - Even if same item added separatelly from bundle availability is checked together.
-     * - Sets error message if not available
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return bool
-     */
-    public function preCheckCheckoutAvailability(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
-
-    /**
-     * Specification:
      * - Checks if bundled items which being added to cart is active.
      * - Checks if products in the bundle are active.
      * - Sets CartPreCheckResponseTransfer::isSuccess to false if some of products are not active.
@@ -116,6 +101,21 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function preCheckCartActive(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks if items which being added to checkout is available, for bundle it checks bundled items.
+     * - Even if same item added separately from bundle availability is checked together.
+     * - Sets error message if not available.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function preCheckCheckoutAvailability(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
     /**
      * Specification:
