@@ -61,15 +61,13 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
     protected function processEntityDefinitionFile(SplFileInfo $fileInfo): ?ForeignKeyFileTransfer
     {
         $simpleXmlElement = $this->loadSimpleXmlElement($fileInfo);
-        $hasNamespace = $this->hasNamespaceInSchema($simpleXmlElement);
+        $foreignKeyFileTransfer = $this->createForeignKeyFileTransfer($simpleXmlElement, $fileInfo);
 
-        $foreignKeyFileTransfer = $this->createForeignKeyFileTransfer($simpleXmlElement, $fileInfo, $hasNamespace);
-
-        foreach ($this->getTableXmlElements($simpleXmlElement, $hasNamespace) as $tableXmlElement) {
+        foreach ($this->getTableXmlElements($simpleXmlElement) as $tableXmlElement) {
             if ($this->isTableExcluded($tableXmlElement)) {
                 continue;
             }
-            $foreignKeyTableTransfer = $this->processTableXmlElement($tableXmlElement, $hasNamespace);
+            $foreignKeyTableTransfer = $this->processTableXmlElement($tableXmlElement);
 
             if (count($foreignKeyTableTransfer->getColumns()) > 0) {
                 $foreignKeyFileTransfer->addForeignKeyTable($foreignKeyTableTransfer);
@@ -127,21 +125,20 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
 
     /**
      * @param \SimpleXMLElement $tableXmlElement
-     * @param bool $hasNamespace
      *
      * @return \Generated\Shared\Transfer\ForeignKeyTableTransfer
      */
-    protected function processTableXmlElement(SimpleXMLElement $tableXmlElement, bool $hasNamespace): ForeignKeyTableTransfer
+    protected function processTableXmlElement(SimpleXMLElement $tableXmlElement): ForeignKeyTableTransfer
     {
         $foreignKeyTableTransfer = new ForeignKeyTableTransfer();
         $foreignKeyTableTransfer->setTableName((string)$tableXmlElement['name']);
 
-        if (!$this->isIndexable($tableXmlElement, $hasNamespace)) {
+        if (!$this->isIndexable($tableXmlElement)) {
             return $foreignKeyTableTransfer;
         }
 
-        $foreignKeyColumnNames = $this->getForeignKeyColumnNames($tableXmlElement, $hasNamespace);
-        $indexedColumnNames = $this->getIndexedColumnNames($tableXmlElement, $hasNamespace);
+        $foreignKeyColumnNames = $this->getForeignKeyColumnNames($tableXmlElement);
+        $indexedColumnNames = $this->getIndexedColumnNames($tableXmlElement);
         foreach ($foreignKeyColumnNames as $foreignKeyColumnName) {
             if (in_array($foreignKeyColumnName, $indexedColumnNames, true)) {
                 continue;
@@ -154,12 +151,12 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
 
     /**
      * @param \SimpleXMLElement $tableXmlElement
-     * @param bool $hasNamespace
      *
      * @return bool
      */
-    protected function isIndexable(SimpleXMLElement $tableXmlElement, bool $hasNamespace): bool
+    protected function isIndexable(SimpleXMLElement $tableXmlElement): bool
     {
+        $hasNamespace = $this->hasNamespaceInSchema($tableXmlElement);
         if ($hasNamespace) {
             $tableXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
         }
@@ -168,13 +165,13 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
 
     /**
      * @param \SimpleXMLElement $tableXmlElement
-     * @param bool $hasNamespace
      *
      * @return array
      */
-    protected function getForeignKeyColumnNames(SimpleXMLElement $tableXmlElement, bool $hasNamespace): array
+    protected function getForeignKeyColumnNames(SimpleXMLElement $tableXmlElement): array
     {
         $foreignKeyColumnNames = [];
+        $hasNamespace = $this->hasNamespaceInSchema($tableXmlElement);
         if ($hasNamespace) {
             $tableXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
         }
@@ -193,17 +190,21 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
 
     /**
      * @param \SimpleXMLElement $tableXmlElement
-     * @param bool $hasNamespace
      *
      * @return array
      */
-    protected function getIndexedColumnNames(SimpleXMLElement $tableXmlElement, bool $hasNamespace): array
+    protected function getIndexedColumnNames(SimpleXMLElement $tableXmlElement): array
     {
         $indexedColumnNames = [];
+        $hasNamespace = $this->hasNamespaceInSchema($tableXmlElement);
         if ($hasNamespace) {
             $tableXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
         }
-        $indexColumnXmlElements = $tableXmlElement->xpath($hasNamespace ? 's:index/s:index-column | s:column[@primaryKey="true"]' : 'index/index-column | column[@primaryKey="true"]');
+        $indexColumnXmlElements = $tableXmlElement->xpath(
+            $hasNamespace
+            ? 's:index/s:index-column | s:column[@primaryKey="true"]'
+            : 'index/index-column | column[@primaryKey="true"]'
+        );
 
         if ($indexColumnXmlElements === false) {
             return $indexedColumnNames;
@@ -217,12 +218,12 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
 
     /**
      * @param \SimpleXMLElement $xmlElement
-     * @param bool $hasNamespace
      *
      * @return \SimpleXMLElement[]
      */
-    protected function getTableXmlElements(SimpleXMLElement $xmlElement, bool $hasNamespace): array
+    protected function getTableXmlElements(SimpleXMLElement $xmlElement): array
     {
+        $hasNamespace = $this->hasNamespaceInSchema($xmlElement);
         if ($hasNamespace) {
             $xmlElement->registerXPathNamespace('s', 'spryker:schema-01');
         }
@@ -232,14 +233,13 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
     /**
      * @param \SimpleXMLElement $xmlElement
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
-     * @param bool $hasNamespace
      *
      * @return \Generated\Shared\Transfer\ForeignKeyFileTransfer
      */
-    protected function createForeignKeyFileTransfer(SimpleXMLElement $xmlElement, SplFileInfo $fileInfo, bool $hasNamespace): ForeignKeyFileTransfer
+    protected function createForeignKeyFileTransfer(SimpleXMLElement $xmlElement, SplFileInfo $fileInfo): ForeignKeyFileTransfer
     {
         $foreignKeyFileTransfer = new ForeignKeyFileTransfer();
-
+        $hasNamespace = $this->hasNamespaceInSchema($xmlElement);
         if ($hasNamespace) {
             $xmlElement->registerXPathNamespace('s', 'spryker:schema-01');
         }
