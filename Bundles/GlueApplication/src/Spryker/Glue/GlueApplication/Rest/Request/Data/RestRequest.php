@@ -260,6 +260,8 @@ class RestRequest implements RestRequestInterface
     }
 
     /**
+     * @deprecated use setRestUser() instead.
+     *
      * @param string $surrogateIdentifier
      * @param string $naturalIdentifier
      * @param array $scopes

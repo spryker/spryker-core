@@ -65,11 +65,12 @@ class UserRepository implements UserRepositoryInterface
         ClientEntityInterface $clientEntity
     ): ?UserEntityInterface {
 
-        $oauthUserTransfer = new OauthUserTransfer();
-        $oauthUserTransfer->fromArray($request, true);
-        $oauthUserTransfer->setClientId($clientEntity->getIdentifier())
+        $oauthUserTransfer = (new OauthUserTransfer())
+            ->fromArray($request, true)
+            ->setClientId($clientEntity->getIdentifier())
             ->setGrantType($grantType)
             ->setClientName($clientEntity->getName());
+
         $oauthUserTransfer = $this->findUser($oauthUserTransfer);
 
         if ($oauthUserTransfer && $oauthUserTransfer->getIsSuccess() && $oauthUserTransfer->getUserIdentifier()) {

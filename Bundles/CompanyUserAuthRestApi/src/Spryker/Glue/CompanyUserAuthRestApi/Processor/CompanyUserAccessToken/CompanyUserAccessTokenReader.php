@@ -9,9 +9,9 @@ namespace Spryker\Glue\CompanyUserAuthRestApi\Processor\CompanyUserAccessToken;
 
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
+use Generated\Shared\Transfer\RestCompanyUserAccessTokenResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAccessTokensAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestTokenResponseAttributesTransfer;
 use Spryker\Glue\CompanyUserAuthRestApi\CompanyUserAuthRestApiConfig;
 use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientInterface;
 use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserClientInterface;
@@ -114,7 +114,7 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
      */
     protected function createResponse(OauthResponseTransfer $oauthResponseTransfer): RestResponseInterface
     {
-        $restTokenAttributesTransfer = new RestTokenResponseAttributesTransfer();
+        $restTokenAttributesTransfer = new RestCompanyUserAccessTokenResponseAttributesTransfer();
         $restTokenAttributesTransfer->fromArray($oauthResponseTransfer->toArray(), true);
 
         $companyUserAccessTokenResource = $this->restResourceBuilder

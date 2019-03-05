@@ -47,16 +47,16 @@ class GrantBuilder implements GrantBuilderInterface
     public function buildGrant(OauthGrantConfigurationTransfer $oauthGrantConfigurationTransfer): GrantInterface
     {
         $fullyQualifiedClassName = $oauthGrantConfigurationTransfer->getFullyQualifiedClassName();
-        $grant = new $fullyQualifiedClassName();
 
-        if (!($grant instanceof GrantInterface)) {
+        if (!class_exists($fullyQualifiedClassName) || !is_subclass_of($fullyQualifiedClassName, GrantInterface::class)) {
             throw new InvalidGrantException(sprintf(
                 'Provided grant must implement %s in order to use %s.',
                 $fullyQualifiedClassName,
                 static::class
             ));
         }
-
+        /** @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface $grant */
+        $grant = new $fullyQualifiedClassName();
         $grant->setUserRepository($this->repositoryBuilder->createUserRepository());
         $grant->setRefreshTokenRepository($this->repositoryBuilder->createRefreshTokenRepository());
         $grant->setRefreshTokenTTL(new DateInterval($this->oauthConfig->getRefreshTokenTTL()));

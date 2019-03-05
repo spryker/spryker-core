@@ -19,6 +19,9 @@ use Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig;
 
 class IdCompanyUserGrantType extends AbstractGrant implements GrantInterface
 {
+    protected const REQUEST_PARAMETER_CUSTOMER_REFERENCE = 'customer_reference';
+    protected const REQUEST_PARAMETER_ID_COMPANY_USER = 'id_company_user';
+
     /**
      * @var \Spryker\Zed\Oauth\Business\Model\League\Repositories\UserRepositoryInterface
      */
@@ -67,6 +70,16 @@ class IdCompanyUserGrantType extends AbstractGrant implements GrantInterface
      */
     protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $clientEntity)
     {
+        $idCompanyUser = $this->getRequestParameter(static::REQUEST_PARAMETER_ID_COMPANY_USER, $request);
+        if ($idCompanyUser === null) {
+            throw OAuthServerException::invalidRequest(static::REQUEST_PARAMETER_ID_COMPANY_USER);
+        }
+
+        $customerReference = $this->getRequestParameter(static::REQUEST_PARAMETER_CUSTOMER_REFERENCE, $request);
+        if ($customerReference === null) {
+            throw OAuthServerException::invalidRequest(static::REQUEST_PARAMETER_CUSTOMER_REFERENCE);
+        }
+
         $userEntity = $this->userRepository
             ->getUserEntityByRequest($request->getParsedBody(), $this->getIdentifier(), $clientEntity);
 
