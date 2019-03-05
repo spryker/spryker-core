@@ -25,6 +25,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    public const SERVICE_OFFER = 'SERVICE_OFFER';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PLUGINS_OFFER_HYDRATOR = 'PLUGINS_OFFER_HYDRATOR';
     public const PLUGINS_OFFER_DO_UPDATE = 'PLUGINS_OFFER_DO_UPDATE';
@@ -43,6 +44,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOfferHydratorPlugins($container);
         $container = $this->addOfferDoUpdatePlugins($container);
         $container = $this->addCartFacade($container);
+        $container = $this->addOfferService($container);
 
         return $container;
     }
@@ -68,6 +70,20 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container = $this->addServiceUtilEncoding($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOfferService(Container $container): Container
+    {
+        $container[static::SERVICE_OFFER] = function (Container $container) {
+            return $container->getLocator()->offer()->service();
+        };
 
         return $container;
     }

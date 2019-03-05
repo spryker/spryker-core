@@ -8,10 +8,10 @@
 namespace SprykerTest\Zed\Offer\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Offer\Business\OfferFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -31,12 +31,14 @@ class OfferFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @param \Spryker\Zed\Offer\Business\OfferFacadeInterface $offerFacade
-     *
      * @return void
      */
-    public function testAggregateOfferItemSubtotalShouldWorkWithFloatItemQuantity(OfferFacadeInterface $offerFacade)
+    public function testAggregateOfferItemSubtotalShouldWorkWithFloatItemQuantity()
     {
+        /**
+         * @var \Spryker\Zed\Offer\Business\OfferFacade $offerFacade
+         */
+        $offerFacade = $this->tester->getFacade();
         $quoteTransfer = new QuoteTransfer();
 
         $itemTransfer = new ItemTransfer();
@@ -46,7 +48,10 @@ class OfferFacadeTest extends Unit
 
         $quoteTransfer->addItem($itemTransfer);
 
-        $offerFacade->aggregateOfferItemSubtotal($quoteTransfer);
+        $calculableObjectTransfer = new CalculableObjectTransfer();
+        $calculableObjectTransfer->setItems($quoteTransfer->getItems());
+
+        $offerFacade->aggregateOfferItemSubtotal($calculableObjectTransfer);
 
         $aggregatedItemTransfer = $quoteTransfer->getItems()[0];
 
@@ -55,12 +60,14 @@ class OfferFacadeTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\Offer\Business\OfferFacadeInterface $offerFacade
-     *
      * @return void
      */
-    public function testHydrateOfferWithSavingAmountShluldWorkWithFloatItemQuantity(OfferFacadeInterface $offerFacade)
+    public function testHydrateOfferWithSavingAmountShluldWorkWithFloatItemQuantity()
     {
+        /**
+         * @var \Spryker\Zed\Offer\Business\OfferFacade $offerFacade
+         */
+        $offerFacade = $this->tester->getFacade();
         $offerTransfer = new OfferTransfer();
 
         $quoteTranfer = new QuoteTransfer();

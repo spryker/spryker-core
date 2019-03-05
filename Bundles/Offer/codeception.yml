@@ -3,6 +3,7 @@ actor: Tester
 
 include:
   - tests/SprykerTest/Zed/Offer
+  - tests/SprykerTest/Service/Offer
 
 paths:
     tests: tests
