@@ -15,16 +15,16 @@ interface ProductListGuiToProductListFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListTransfer
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer;
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function saveProductListWithResponse(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer

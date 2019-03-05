@@ -52,7 +52,7 @@ class ProductListAbstractController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer|null
      */
-    protected function handleProductListAggregateForm(
+    protected function findProductListTransfer(
         Request $request,
         FormInterface $aggregateForm
     ): ?ProductListTransfer {
@@ -77,11 +77,7 @@ class ProductListAbstractController extends AbstractController
             )
         );
 
-        $productListResponseTransfer = $this->storeProductList($productListTransfer);
-
-        $this->addMessagesFromProductListResponseTransfer($productListResponseTransfer);
-
-        return $productListResponseTransfer->getProductList();
+        return $productListTransfer;
     }
 
     /**
@@ -125,18 +121,6 @@ class ProductListAbstractController extends AbstractController
             ->importFromCsvFile($productsCsvFile, $productListProductConcreteRelationTransfer);
 
         return $productListProductConcreteRelationTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
-     */
-    protected function storeProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
-    {
-        return $this->getFactory()
-            ->getProductListFacade()
-            ->saveProductListWithResponse($productListTransfer);
     }
 
     /**

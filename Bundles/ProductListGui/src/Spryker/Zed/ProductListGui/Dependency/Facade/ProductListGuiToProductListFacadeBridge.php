@@ -48,11 +48,11 @@ class ProductListGuiToProductListFacadeBridge implements ProductListGuiToProduct
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListTransfer
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        return $this->productListFacade->saveProductList($productListTransfer);
+        return $this->productListFacade->createProductList($productListTransfer);
     }
 
     /**
@@ -60,8 +60,8 @@ class ProductListGuiToProductListFacadeBridge implements ProductListGuiToProduct
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function saveProductListWithResponse(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        return $this->productListFacade->saveProductListWithResponse($productListTransfer);
+        return $this->productListFacade->updateProductList($productListTransfer);
     }
 }
