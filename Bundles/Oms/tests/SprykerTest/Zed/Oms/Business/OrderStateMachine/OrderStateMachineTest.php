@@ -141,7 +141,7 @@ class OrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
     private function getQueryContainerMock()
     {
@@ -149,7 +149,7 @@ class OrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
      */
     private function getBuilderMock()
     {
@@ -157,7 +157,7 @@ class OrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Business\Util\TransitionLogInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Util\TransitionLogInterface
      */
     private function getTransitionLogMock()
     {
@@ -165,7 +165,7 @@ class OrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface
      */
     private function getTimeoutMock()
     {
@@ -173,7 +173,7 @@ class OrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
     private function getConditionMock()
     {
@@ -181,7 +181,7 @@ class OrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
      */
     private function getCommandMock()
     {
@@ -189,7 +189,7 @@ class OrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Business\Util\ReservationInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Util\ReservationInterface
      */
     private function getReservationMock()
     {

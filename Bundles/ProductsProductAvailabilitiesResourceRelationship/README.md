@@ -7,7 +7,7 @@ ProductsProductAvailabilitiesResourceRelationship module provides relationship b
 ## Installation
 
 ```
-composer require spryker/products-products-availability-resource-relationship
+composer require spryker/products-product-availabilities-resource-relationship
 ```
 
 ## Documentation

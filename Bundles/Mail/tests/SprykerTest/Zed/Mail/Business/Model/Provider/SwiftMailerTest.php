@@ -111,7 +111,7 @@ class SwiftMailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Renderer\RendererInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Renderer\RendererInterface
      */
     protected function getRendererMock()
     {
@@ -160,7 +160,7 @@ class SwiftMailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface
      */
     protected function getMailerMock()
     {

@@ -164,7 +164,7 @@ class MoneyPluginTest extends Unit
     {
         $moneyPlugin = new MoneyPlugin();
         $converted = $moneyPlugin->convertIntegerToDecimal(1000);
-        $this->assertInternalType('float', $converted);
+        $this->assertIsFloat($converted);
         $this->assertSame(10.00, $converted);
     }
 
@@ -175,7 +175,7 @@ class MoneyPluginTest extends Unit
     {
         $moneyPlugin = new MoneyPlugin();
         $converted = $moneyPlugin->convertDecimalToInteger(10.00);
-        $this->assertInternalType('int', $converted);
+        $this->assertIsInt($converted);
         $this->assertSame(1000, $converted);
     }
 }
