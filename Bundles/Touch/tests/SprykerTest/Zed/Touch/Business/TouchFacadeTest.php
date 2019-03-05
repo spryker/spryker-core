@@ -87,8 +87,7 @@ class TouchFacadeTest extends Unit
         $this->assertSame($expectedAffectedRows, $affectedRows);
 
         foreach ($itemIds as $itemId) {
-            $touchEntity = $this->getTouchEntityByItemId($itemId);
-            $this->assertSame($expectedItemEvent, $touchEntity->getItemEvent());
+            $this->assertNotNull($this->getTouchEntityByItemIdAndItemEvent($itemId, $expectedItemEvent));
         }
     }
 
@@ -136,15 +135,17 @@ class TouchFacadeTest extends Unit
 
     /**
      * @param int $itemId
+     * @param string $itemEvent
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouch|null
      */
-    protected function getTouchEntityByItemId($itemId)
+    protected function getTouchEntityByItemIdAndItemEvent(int $itemId, string $itemEvent): ?SpyTouch
     {
         $touchQuery = new SpyTouchQuery();
 
         $touchQuery->filterByItemType(self::ITEM_TYPE)
-            ->filterByItemId($itemId);
+            ->filterByItemId($itemId)
+            ->filterByItemEvent($itemEvent);
 
         return $touchQuery->findOne();
     }
