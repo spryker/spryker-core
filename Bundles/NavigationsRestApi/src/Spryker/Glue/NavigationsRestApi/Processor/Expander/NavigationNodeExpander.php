@@ -19,9 +19,8 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
     /**
      * @param \Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToUrlStorageClientInterface $urlStorageClient
      */
-    public function __construct(
-        NavigationsRestApiToUrlStorageClientInterface $urlStorageClient//,
-    ) {
+    public function __construct(NavigationsRestApiToUrlStorageClientInterface $urlStorageClient)
+    {
         $this->urlStorageClient = $urlStorageClient;
     }
 
