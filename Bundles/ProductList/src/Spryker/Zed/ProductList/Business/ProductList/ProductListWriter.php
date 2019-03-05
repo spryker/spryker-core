@@ -63,7 +63,7 @@ class ProductListWriter implements ProductListWriterInterface
     public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($productListTransfer) {
-            return $this->executeSaveProductListTransaction($productListTransfer)->getProductList();
+            return $this->executeSaveProductListTransaction($productListTransfer);
         });
     }
 
@@ -72,10 +72,22 @@ class ProductListWriter implements ProductListWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function saveProductListWithResponse(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($productListTransfer) {
-            return $this->executeSaveProductListTransaction($productListTransfer);
+            return $this->executeCreateProductListTransaction($productListTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productListTransfer) {
+            return $this->executeUpdateProductListTransaction($productListTransfer);
         });
     }
 
@@ -94,35 +106,84 @@ class ProductListWriter implements ProductListWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     * @return \Generated\Shared\Transfer\ProductListTransfer
      */
     protected function executeSaveProductListTransaction(
         ProductListTransfer $productListTransfer
-    ): ProductListResponseTransfer {
-        $productListResponseTransfer = new ProductListResponseTransfer();
-
-        $productListTransfer->requireTitle();
-        if (empty($productListTransfer->getKey())) {
-            $productListTransfer->setKey($this->productListKeyGenerator->generateProductListKey($productListTransfer->getTitle()));
+    ): ProductListTransfer {
+        if ($productListTransfer->getIdProductList()) {
+            return $this->executeUpdateProductListTransaction($productListTransfer)->getProductList();
         }
 
-        $productListResponseTransfer->setProductList($productListTransfer);
+        return $this->executeCreateProductListTransaction($productListTransfer)->getProductList();
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    protected function executeCreateProductListTransaction(
+        ProductListTransfer $productListTransfer
+    ): ProductListResponseTransfer {
+        $productListTransfer->requireTitle();
+        $productListTransfer->setKey($this->productListKeyGenerator->generateProductListKey($productListTransfer->getTitle()));
+        $productListResponseTransfer = (new ProductListResponseTransfer())->setProductList($productListTransfer);
+
+        $productListResponseTransfer = $this->executeProductListPreSavePlugins($productListResponseTransfer);
+        $productListTransfer = $this->productListEntityManager->createProductList($productListResponseTransfer->getProductList());
+        $productListTransfer = $this->executeProductListPostSavePlugins($productListTransfer);
+
+        return $productListResponseTransfer
+            ->setProductList($productListTransfer)
+            ->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    protected function executeUpdateProductListTransaction(
+        ProductListTransfer $productListTransfer
+    ): ProductListResponseTransfer {
+        $productListResponseTransfer = (new ProductListResponseTransfer())->setProductList($productListTransfer);
+
+        $productListResponseTransfer = $this->executeProductListPreSavePlugins($productListResponseTransfer);
+        $productListTransfer = $this->productListEntityManager->updateProductList($productListResponseTransfer->getProductList());
+        $productListTransfer = $this->executeProductListPostSavePlugins($productListTransfer);
+
+        return $productListResponseTransfer
+            ->setProductList($productListTransfer)
+            ->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    protected function executeProductListPreSavePlugins(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
+    {
         foreach ($this->productListPreSavePlugins as $productListPreSavePlugin) {
             $productListResponseTransfer = $productListPreSavePlugin->preSave($productListResponseTransfer);
         }
 
-        $productListTransfer = $this->productListEntityManager->saveProductList($productListResponseTransfer->getProductList());
+        return $productListResponseTransfer;
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    protected function executeProductListPostSavePlugins(ProductListTransfer $productListTransfer): ProductListTransfer
+    {
         foreach ($this->productListPostSavers as $productListPostSaver) {
             $productListTransfer = $productListPostSaver->postSave($productListTransfer);
         }
 
-        $productListResponseTransfer
-            ->setProductList($productListTransfer)
-            ->setIsSuccess(true);
-
-        return $productListResponseTransfer;
+        return $productListTransfer;
     }
 
     /**

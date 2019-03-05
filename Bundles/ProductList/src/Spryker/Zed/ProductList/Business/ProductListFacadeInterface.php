@@ -24,7 +24,7 @@ interface ProductListFacadeInterface
      * - Updates fields in a Product List entity if ProductListTransfer::idProductList is set.
      * - Updates relations to categories.
      * - Updates relations to concrete products.
-     * - Uses pre save plugins.
+     * - Executes ProductListPreSaveInterface plugin stack before save.
      *
      * @api
      *
@@ -36,15 +36,13 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     * - Creates a Product List entity if ProductListTransfer::idProductList is null.
+     * - Requires ProductListTransfer::title.
+     * - Creates a Product List entity.
      * - Creates relations to categories.
      * - Creates relations to concrete products.
-     * - Finds a Product List by ProductListTransfer::idProductList in the transfer.
-     * - Updates fields in a Product List entity if ProductListTransfer::idProductList is set.
-     * - Updates relations to categories.
-     * - Updates relations to concrete products.
-     * - Uses pre save plugins.
-     * - Returns ProductListResponseTransfer.
+     * - Executes ProductListPreSaveInterface plugin stack before save.
+     * - Returns MessageTransfers in messages property to notify about changes that have been made to Product List.
+     * - Returns true isSuccess property if saving was successful.
      *
      * @api
      *
@@ -52,7 +50,26 @@ interface ProductListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function saveProductListWithResponse(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires ProductListTransfer::idProductList.
+     * - Finds a Product List by ProductListTransfer::idProductList in the transfer.
+     * - Updates fields in a Product List entity if ProductListTransfer::idProductList is set.
+     * - Updates relations to categories.
+     * - Updates relations to concrete products.
+     * - Executes ProductListPreSaveInterface plugin stack before save.
+     * - Returns MessageTransfers in messages property to notify about changes that have been made to Product List.
+     * - Returns true isSuccess property if saving was successful.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 
     /**
      * Specification:

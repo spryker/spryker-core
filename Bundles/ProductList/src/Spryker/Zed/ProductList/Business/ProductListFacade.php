@@ -26,6 +26,8 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
+     * @deprecated Use createProductList() or updateProductList() instead.
+     *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
@@ -46,11 +48,27 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function saveProductListWithResponse(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
         return $this->getFactory()
             ->createProductListWriter()
-            ->saveProductListWithResponse($productListTransfer);
+            ->createProductList($productListTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductListWriter()
+            ->updateProductList($productListTransfer);
     }
 
     /**

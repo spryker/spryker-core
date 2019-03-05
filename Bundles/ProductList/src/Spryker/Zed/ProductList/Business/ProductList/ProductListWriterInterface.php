@@ -24,7 +24,14 @@ interface ProductListWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function saveProductListWithResponse(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
