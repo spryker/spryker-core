@@ -35,11 +35,13 @@ interface UrlFacadeInterface
     public function createUrl($urlTransfer, ?LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null);
 
     /**
+     * @api
+     *
+     * @deprecated Use UrlFacade::findUrlCaseInsensitive() instead, since URLs should be case insensitive.
+     *
      * Specification:
      * - Finds existing URL entity in database by the provided `id_url` or `url`.
      * - Returns UrlTransfer with the appropriate data from database if the entity is found, NULL otherwise.
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -49,10 +51,25 @@ interface UrlFacadeInterface
 
     /**
      * Specification:
-     * - Checks if URL entity exists in database by the provided `id_url` or `url`.
-     * - URL redirects are ignored unless the URL to be checked is a redirect as well (`fkResourceRedirect` is set).
+     * - Finds existing URL entity by case insensitive URL value.
+     * - Returns UrlTransfer with the appropriate data from database if the entity is found, NULL otherwise.
      *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     */
+    public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer;
+
+    /**
+     * @api
+     *
+     * @deprecated Use UrlFacade::hasUrlCaseInsensitive() instead, since URLs should be case insensitive.
+     *
+     * Specification:
+     * - Checks if URL entity exists in database by the provided `id_url` or `url`.
+     * - URL redirects are ignored unless the URL to be checked is a redirect as well (`fkResourceRedirect` is set).
      *
      * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
      *
@@ -62,7 +79,35 @@ interface UrlFacadeInterface
 
     /**
      * Specification:
+     * - Checks if URL entity exists in database by the provided `id_url` or case insensitive `url`.
+     * - URL redirects are ignored unless the URL to be checked is a redirect as well (`fkResourceRedirect` is set).
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
+    public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool;
+
+    /**
+     * @api
+     *
+     * @deprecated Use UrlFacade::hasUrlOrRedirectedUrlCaseInsensitive() instead, since URLs should be case insensitive.
+     *
+     * Specification:
      * - Checks if URL entity exists in database by the provided `id_url` or `url`.
+     * - Redirected URLs are also considered.
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
+    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer);
+
+    /**
+     * Specification:
+     * - Checks if URL entity exists in database by the provided `id_url` or case insensitive `url`.
      * - Redirected URLs are also considered.
      *
      * @api
@@ -71,7 +116,7 @@ interface UrlFacadeInterface
      *
      * @return bool
      */
-    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer);
+    public function hasUrlOrRedirectedUrlCaseInsensitive(UrlTransfer $urlTransfer): bool;
 
     /**
      * Specification:

@@ -31,9 +31,11 @@ class PermissionUpdater implements PermissionUpdaterInterface
     public function updateCompanyUserPermissions(): void
     {
         $customerTransfer = $this->customerClient->getCustomer();
-        $newCustomerTransfer = (new CustomerTransfer())->setIdCustomer($customerTransfer->getIdCustomer());
-        $updatedCustomerTransfer = $this->customerClient->getCustomerByEmail($newCustomerTransfer);
+        $newCustomerTransfer = (new CustomerTransfer())
+            ->setIdCustomer($customerTransfer->getIdCustomer())
+            ->setCompanyUserTransfer($customerTransfer->getCompanyUserTransfer());
 
+        $updatedCustomerTransfer = $this->customerClient->getCustomerByEmail($newCustomerTransfer);
         $this->customerClient->setCustomer($updatedCustomerTransfer);
     }
 }
