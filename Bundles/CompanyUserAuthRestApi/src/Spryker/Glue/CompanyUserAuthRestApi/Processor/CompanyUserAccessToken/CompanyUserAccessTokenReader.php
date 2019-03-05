@@ -124,7 +124,7 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
                 $restTokenAttributesTransfer
             );
 
-        return  $this->restResourceBuilder->createRestResponse()
+        return $this->restResourceBuilder->createRestResponse()
             ->addResource($companyUserAccessTokenResource);
     }
 }

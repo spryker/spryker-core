@@ -52,8 +52,8 @@ class IdCompanyUserGrantType extends AbstractGrant implements GrantInterface
         $refreshToken = $this->issueRefreshToken($accessToken);
 
         // Send events to emitter
-        $this->getEmitter()->emit(new RequestEvent(RequestEvent::ACCESS_TOKEN_ISSUED, $request));
-        $this->getEmitter()->emit(new RequestEvent(RequestEvent::REFRESH_TOKEN_ISSUED, $request));
+        $this->getEmitter()->emit($this->createRequestEvent(RequestEvent::ACCESS_TOKEN_ISSUED, $request));
+        $this->getEmitter()->emit($this->createRequestEvent(RequestEvent::REFRESH_TOKEN_ISSUED, $request));
 
         // Inject tokens into response
         $responseType->setAccessToken($accessToken);
@@ -84,7 +84,7 @@ class IdCompanyUserGrantType extends AbstractGrant implements GrantInterface
             ->getUserEntityByRequest($request->getParsedBody(), $this->getIdentifier(), $clientEntity);
 
         if ($userEntity === null) {
-            $this->getEmitter()->emit(new RequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));
+            $this->getEmitter()->emit($this->createRequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));
             throw OAuthServerException::invalidCredentials();
         }
         return $userEntity;
@@ -96,5 +96,16 @@ class IdCompanyUserGrantType extends AbstractGrant implements GrantInterface
     public function getIdentifier()
     {
         return OauthCompanyUserConfig::GRANT_TYPE_ID_COMPANY_USER;
+    }
+
+    /**
+     * @param string $requestEvent
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     *
+     * @return \League\OAuth2\Server\RequestEvent
+     */
+    protected function createRequestEvent(string $requestEvent, ServerRequestInterface $request): RequestEvent
+    {
+        return new RequestEvent($requestEvent, $request);
     }
 }

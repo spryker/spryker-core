@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AccessTokenValidator implements AccessTokenValidatorInterface
 {
     protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
-    const HEADER_AUTHORIZATION = 'Authorization';
+    protected const HEADER_AUTHORIZATION = 'Authorization';
 
     /**
      * @var \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface

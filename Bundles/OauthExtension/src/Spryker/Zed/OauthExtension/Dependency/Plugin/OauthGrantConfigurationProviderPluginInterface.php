@@ -20,5 +20,4 @@ interface OauthGrantConfigurationProviderPluginInterface
      * @return \Generated\Shared\Transfer\OauthGrantConfigurationTransfer
      */
     public function getGrantConfiguration(): OauthGrantConfigurationTransfer;
-
 }
