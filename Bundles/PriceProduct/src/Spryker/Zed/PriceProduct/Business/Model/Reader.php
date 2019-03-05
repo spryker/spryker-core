@@ -381,16 +381,16 @@ class Reader implements ReaderInterface
     protected function findProductPrice(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
     {
         $priceProductConcreteTransfers = $this->priceProductConcreteReader
-            ->findPricesForProductConcrete($sku, $priceProductCriteriaTransfer);
+            ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
         if ($this->productFacade->hasProductConcrete($sku)) {
             $sku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
         }
 
         $priceProductAbstractTransfers = $this->priceProductAbstractReader
-            ->findPricesForProductAbstract($sku, $priceProductCriteriaTransfer);
+            ->findProductAbstractPricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
-        if (empty($priceProductConcreteTransfers)) {
+        if (!$priceProductConcreteTransfers) {
             return $this->priceProductService
                 ->resolveProductPriceByPriceProductCriteria($priceProductAbstractTransfers, $priceProductCriteriaTransfer);
         }

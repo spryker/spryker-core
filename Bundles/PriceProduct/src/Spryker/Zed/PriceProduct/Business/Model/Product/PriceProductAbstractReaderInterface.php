@@ -50,7 +50,7 @@ interface PriceProductAbstractReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPricesForProductAbstract(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
+    public function findProductAbstractPricesBySkuAndCriteria(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
 
     /**
      * @param int $idProductAbstract

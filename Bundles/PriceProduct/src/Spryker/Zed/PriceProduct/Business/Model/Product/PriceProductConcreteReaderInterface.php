@@ -44,13 +44,14 @@ interface PriceProductConcreteReaderInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function findPriceForProductConcrete(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer;
+
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPricesForProductConcrete(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
+    public function findProductConcretePricesBySkuAndCriteria(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
 
     /**
      * @param string $sku
