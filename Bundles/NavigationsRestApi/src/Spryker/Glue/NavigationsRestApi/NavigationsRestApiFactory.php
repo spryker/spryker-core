@@ -9,6 +9,9 @@ namespace Spryker\Glue\NavigationsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToNavigationStorageClientInterface;
+use Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToUrlStorageClientInterface;
+use Spryker\Glue\NavigationsRestApi\Processor\Expander\NavigationNodeExpander;
+use Spryker\Glue\NavigationsRestApi\Processor\Expander\NavigationNodeExpanderInterface;
 use Spryker\Glue\NavigationsRestApi\Processor\Mapper\NavigationMapper;
 use Spryker\Glue\NavigationsRestApi\Processor\Mapper\NavigationMapperInterface;
 use Spryker\Glue\NavigationsRestApi\Processor\Navigation\NavigationReader;
@@ -25,7 +28,7 @@ class NavigationsRestApiFactory extends AbstractFactory
             $this->getNavigationStorageClient(),
             $this->createNavigationMapper(),
             $this->getResourceBuilder(),
-            $this->getNavigationsResourceExpanderPlugins()
+            $this->createNavigationNodeExpander()
         );
     }
 
@@ -38,6 +41,14 @@ class NavigationsRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\NavigationsRestApi\Processor\Expander\NavigationNodeExpanderInterface
+     */
+    public function createNavigationNodeExpander(): NavigationNodeExpanderInterface
+    {
+        return new NavigationNodeExpander($this->getUrlStorageClient());
+    }
+
+    /**
      * @return \Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToNavigationStorageClientInterface
      */
     public function getNavigationStorageClient(): NavigationsRestApiToNavigationStorageClientInterface
@@ -46,10 +57,10 @@ class NavigationsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\NavigationsRestApiExtension\Dependency\Plugin\NavigationsResourceExpanderPluginInterface[]
+     * @return \Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToUrlStorageClientInterface
      */
-    public function getNavigationsResourceExpanderPlugins(): array
+    public function getUrlStorageClient(): NavigationsRestApiToUrlStorageClientInterface
     {
-        return $this->getProvidedDependency(NavigationsRestApiDependencyProvider::PLUGINS_NAVIGATIONS_RESOURCE_EXPANDER);
+        return $this->getProvidedDependency(NavigationsRestApiDependencyProvider::CLIENT_URL_STORAGE);
     }
 }

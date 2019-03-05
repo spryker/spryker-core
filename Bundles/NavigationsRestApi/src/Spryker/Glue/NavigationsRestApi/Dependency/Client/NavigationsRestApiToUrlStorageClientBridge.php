@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\UrlsRestApi\Dependency\Client;
+namespace Spryker\Glue\NavigationsRestApi\Dependency\Client;
 
-class UrlsRestApiToUrlStorageClientBridge implements UrlsRestApiToUrlStorageClientInterface
+class NavigationsRestApiToUrlStorageClientBridge implements NavigationsRestApiToUrlStorageClientInterface
 {
     /**
      * @var \Spryker\Client\UrlStorage\UrlStorageClientInterface

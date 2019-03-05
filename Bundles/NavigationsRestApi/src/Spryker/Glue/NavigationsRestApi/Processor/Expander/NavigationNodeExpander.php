@@ -1,0 +1,93 @@
+<?php
+
+namespace Spryker\Glue\NavigationsRestApi\Processor\Expander;
+
+use ArrayObject;
+use Generated\Shared\Transfer\RestNavigationAttributesTransfer;
+use Generated\Shared\Transfer\RestNavigationNodeTransfer;
+use Generated\Shared\Transfer\UrlStorageTransfer;
+use Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToUrlStorageClientInterface;
+use Spryker\Glue\NavigationsRestApi\NavigationsRestApiConfig;
+
+class NavigationNodeExpander implements NavigationNodeExpanderInterface
+{
+    /**
+     * @var \Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToUrlStorageClientInterface
+     */
+    protected $urlStorageClient;
+
+    /**
+     * @param \Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToUrlStorageClientInterface $urlStorageClient
+     */
+    public function __construct(
+        NavigationsRestApiToUrlStorageClientInterface $urlStorageClient//,
+    ) {
+        $this->urlStorageClient = $urlStorageClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestNavigationAttributesTransfer $restNavigationAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestNavigationAttributesTransfer
+     */
+    public function expand(RestNavigationAttributesTransfer $restNavigationAttributesTransfer): RestNavigationAttributesTransfer
+    {
+        $nodes = $this->expandNavigationNodeTransfers($restNavigationAttributesTransfer->getNodes());
+        $restNavigationAttributesTransfer->setNodes($nodes);
+
+        return $restNavigationAttributesTransfer;
+    }
+
+    /**
+     * @param \ArrayObject $restNavigationNodeTransfers
+     *
+     * @return \ArrayObject
+     */
+    protected function expandNavigationNodeTransfers(ArrayObject $restNavigationNodeTransfers): ArrayObject
+    {
+        foreach ($restNavigationNodeTransfers as $restNavigationNodeTransfer) {
+            $urlStorageTransfer = $this->urlStorageClient->findUrlStorageTransferByUrl($restNavigationNodeTransfer->getUrl());
+            if ($urlStorageTransfer) {
+                $restNavigationNodeTransfer->setNodeId($this->findNodeId($restNavigationNodeTransfer));
+            }
+
+            if ($restNavigationNodeTransfer->getChildren()->count() > 0) {
+                $navigationNodeChildren = $this->expandNavigationNodeTransfers($restNavigationNodeTransfer->getChildren());
+                $restNavigationNodeTransfer->setChildren($navigationNodeChildren);
+            }
+        }
+
+        return $restNavigationNodeTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer $restNavigationNodeTransfer
+     *
+     * @return int|null
+     */
+    protected function findNodeId(RestNavigationNodeTransfer $restNavigationNodeTransfer): ?int
+    {
+        $urlStorageTransfer = $this->urlStorageClient->findUrlStorageTransferByUrl($restNavigationNodeTransfer->getUrl());
+        if ($urlStorageTransfer) {
+            return $this->findNodeIdByNodeType($urlStorageTransfer, $restNavigationNodeTransfer->getNodeType());
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
+     * @param string $nodeType
+     *
+     * @return int|null
+     */
+    protected function findNodeIdByNodeType(UrlStorageTransfer $urlStorageTransfer, string $nodeType): ?int
+    {
+        if (!isset(NavigationsRestApiConfig::MAPPING_NAVIGATION_RESOURCE_TYPE_FIELD_NAMES[$nodeType])) {
+            return null;
+        }
+
+        return $urlStorageTransfer[NavigationsRestApiConfig::MAPPING_NAVIGATION_RESOURCE_TYPE_FIELD_NAMES[$nodeType]]
+            ?? null;
+    }
+}

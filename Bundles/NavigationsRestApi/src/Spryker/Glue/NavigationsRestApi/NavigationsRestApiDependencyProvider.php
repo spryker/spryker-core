@@ -10,6 +10,7 @@ namespace Spryker\Glue\NavigationsRestApi;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToNavigationStorageClientBridge;
+use Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToUrlStorageClientBridge;
 
 /**
  * @method \Spryker\Glue\NavigationsRestApi\NavigationsRestApiConfig getConfig()
@@ -17,8 +18,7 @@ use Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToNaviga
 class NavigationsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_NAVIGATION_STORAGE = 'CLIENT_NAVIGATION_STORAGE';
-
-    public const PLUGINS_NAVIGATIONS_RESOURCE_EXPANDER = 'PLUGINS_NAVIGATIONS_RESOURCE_EXPANDER';
+    public const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -29,7 +29,7 @@ class NavigationsRestApiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = parent::provideDependencies($container);
         $container = $this->addNavigationStorageClient($container);
-        $container = $this->addNavigationsResourceExpanderPlugins($container);
+        $container = $this->addUrlStorageClient($container);
 
         return $container;
     }
@@ -55,20 +55,14 @@ class NavigationsRestApiDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    public function addNavigationsResourceExpanderPlugins(Container $container): Container
+    protected function addUrlStorageClient(Container $container): Container
     {
-        $container[static::PLUGINS_NAVIGATIONS_RESOURCE_EXPANDER] = function () {
-            return $this->getNavigationsResourceExpanderPlugins();
+        $container[static::CLIENT_URL_STORAGE] = function (Container $container) {
+            return new NavigationsRestApiToUrlStorageClientBridge(
+                $container->getLocator()->urlStorage()->client()
+            );
         };
 
         return $container;
-    }
-
-    /**
-     * @return \Spryker\Glue\NavigationsRestApiExtension\Dependency\Plugin\NavigationsResourceExpanderPluginInterface[]
-     */
-    protected function getNavigationsResourceExpanderPlugins(): array
-    {
-        return [];
     }
 }
