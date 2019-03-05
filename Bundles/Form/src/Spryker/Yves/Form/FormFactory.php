@@ -31,12 +31,4 @@ class FormFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(FormDependencyProvider::PLUGINS_FORM_EXTENSION);
     }
-
-    /**
-     * @return \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
-     */
-    public function getFormTypeExtensionPlugins(): array
-    {
-        return $this->getProvidedDependency(FormDependencyProvider::PLUGINS_FORM_TYPE_EXTENSION);
-    }
 }

@@ -44,7 +44,7 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
 
         $container->set(static::SERVICE_FORM_FACTORY, function (ContainerInterface $container) {
             $formFactoryBuilder = $this->getFactory()->createFormFactoryBuilder()
-                ->setResolvedTypeFactory($container->get('form.resolved_type_factory'));
+                ->setResolvedTypeFactory($container->get(static::SERVICE_FORM_RESOLVED_TYPE_FACTORY));
 
             $formFactoryBuilder = $this->extendForm($formFactoryBuilder, $container);
             $formFactoryBuilder = $this->extendTypes($formFactoryBuilder, $container);

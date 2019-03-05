@@ -8,11 +8,12 @@
 namespace Spryker\Shared\Form\Plugin\FormExtension;
 
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Form\DoubleSubmitProtection\DoubleSubmitProtectionExtension;
+use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\SessionStorage;
+use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInterface;
+use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface;
+use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator;
 use Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface;
-use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension;
-use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\SessionStorage;
-use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface;
-use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -45,9 +46,9 @@ class DoubleSubmitProtectionFormExtensionPlugin implements FormPluginInterface
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension
+     * @return \Spryker\Shared\Form\DoubleSubmitProtection\DoubleSubmitProtectionExtension
      */
-    protected function createDoubleSubmitProtectionExtension(ContainerInterface $container)
+    protected function createDoubleSubmitProtectionExtension(ContainerInterface $container): DoubleSubmitProtectionExtension
     {
         return new DoubleSubmitProtectionExtension(
             $this->createTokenGenerator(),
@@ -57,7 +58,7 @@ class DoubleSubmitProtectionFormExtensionPlugin implements FormPluginInterface
     }
 
     /**
-     * @return \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface
+     * @return \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface
      */
     protected function createTokenGenerator(): TokenGeneratorInterface
     {
@@ -67,9 +68,9 @@ class DoubleSubmitProtectionFormExtensionPlugin implements FormPluginInterface
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\SessionStorage
+     * @return \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\SessionStorage
      */
-    protected function createTokenStorage(ContainerInterface $container)
+    protected function createTokenStorage(ContainerInterface $container): StorageInterface
     {
         return new SessionStorage($container->get(static::SERVICE_SESSION));
     }
@@ -81,6 +82,6 @@ class DoubleSubmitProtectionFormExtensionPlugin implements FormPluginInterface
      */
     protected function getTranslatorService(ContainerInterface $container): ?TranslatorInterface
     {
-        return $container->get(static::SERVICE_TRANSLATOR) ?? null;
+        return $container->has(static::SERVICE_TRANSLATOR) ? $container->get(static::SERVICE_TRANSLATOR) : null;
     }
 }

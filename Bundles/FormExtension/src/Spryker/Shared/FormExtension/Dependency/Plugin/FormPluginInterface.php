@@ -15,7 +15,7 @@ interface FormPluginInterface
     /**
      * Specification:
      * - Extends form factory builder.
-     * - Can be for addiong form extensions, for types or form type extensions, for example.
+     * - Can be used for adding form extensions, for types or form type extensions.
      *
      * @api
      *

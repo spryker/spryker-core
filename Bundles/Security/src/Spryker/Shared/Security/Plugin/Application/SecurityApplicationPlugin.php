@@ -9,7 +9,6 @@ namespace Spryker\Shared\Security\Plugin\Application;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
-use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Csrf\TokenStorage\ClearableTokenStorageInterface;
@@ -17,7 +16,7 @@ use Symfony\Component\Security\Csrf\TokenStorage\NativeSessionTokenStorage;
 use Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
+class SecurityApplicationPlugin implements ApplicationPluginInterface
 {
     protected const SERVICE_CSRF_PROVIDER = 'form.csrf_provider';
 
@@ -25,6 +24,11 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected const SERVICE_TRANSLATOR = 'translator';
 
     /**
+     * {@inheritdoc}
+     * - Adds `form.csrf_provider` service.
+     *
+     * @api
+     *
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Spryker\Service\Container\ContainerInterface

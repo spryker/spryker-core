@@ -56,9 +56,9 @@ class ValidatorApplicationPlugin implements ApplicationPluginInterface
     protected function createValidatorBuilder(ContainerInterface $container): ValidatorBuilderInterface
     {
         $builder = Validation::createValidatorBuilder();
-        $builder->setTranslationDomain(static::TRANSLATION_DOMAIN);
         $builder->setMetadataFactory($this->createValidatorMappingMetadataFactory());
         if ($container->has(static::SERVICE_TRANSLATOR)) {
+            $builder->setTranslationDomain(static::TRANSLATION_DOMAIN);
             $builder->setTranslator($container->get(static::SERVICE_TRANSLATOR));
         }
 
