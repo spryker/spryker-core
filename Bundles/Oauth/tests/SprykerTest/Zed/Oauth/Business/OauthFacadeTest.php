@@ -11,12 +11,15 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthClientTransfer;
+use Generated\Shared\Transfer\OauthGrantConfigurationTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrant;
 use Spryker\Zed\Oauth\Business\OauthFacadeInterface;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
+use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantConfigurationProviderPluginInterface;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface;
 
 /**
@@ -51,6 +54,7 @@ class OauthFacadeTest extends Unit
     {
         $this->createTestClient();
         $this->setUserProviderPluginMock();
+        $this->setGrantConfigurationProviderPluginMock();
 
         $oauthRequestTransfer = $this->createOauthRequestTransfer();
         $oauthResponseTransfer = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
@@ -84,6 +88,7 @@ class OauthFacadeTest extends Unit
     {
         $this->createTestClient();
         $this->setUserProviderPluginMock();
+        $this->setGrantConfigurationProviderPluginMock();
 
         $oauthRequestTransfer = $this->createOauthRequestTransfer();
         $oauthResponseTransfer = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
@@ -240,6 +245,33 @@ class OauthFacadeTest extends Unit
             OauthDependencyProvider::PLUGIN_USER_PROVIDER,
             [
                 $userProviderPluginMock,
+            ]
+        );
+    }
+
+    /**
+     * @return void
+     */
+    protected function setGrantConfigurationProviderPluginMock(): void
+    {
+        $grantConfigurationProviderPluginMock = $this->getMockBuilder(OauthGrantConfigurationProviderPluginInterface::class)
+            ->setMethods(['getGrantConfiguration'])
+            ->getMock();
+
+        $grantConfigurationProviderPluginMock->method('getGrantConfiguration')->willReturnCallback(
+            function () {
+                $oauthGrantConfigurationTransfer = (new OauthGrantConfigurationTransfer())
+                    ->setIdentifier('password')
+                    ->setFullyQualifiedClassName(PasswordGrant::class);
+
+                return $oauthGrantConfigurationTransfer;
+            }
+        );
+
+        $this->tester->setDependency(
+            OauthDependencyProvider::PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER,
+            [
+                $grantConfigurationProviderPluginMock,
             ]
         );
     }
