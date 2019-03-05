@@ -47,13 +47,20 @@ class PropelSchemaParser implements PropelSchemaParserInterface
      */
     public function getForeignColumnNames(SplFileInfo $fileInfo): array
     {
+        $foreignReferenceColumnNames = [];
+
         $simpleXmlElement = simplexml_load_file($fileInfo->getPathname());
-
-        if (!$this->hasNamespaceInSchema($simpleXmlElement)) {
-            return $this->processGetForeignReferenceColumnNamesStale($simpleXmlElement);
+        $hasNamespace = $this->hasNamespaceInSchema($simpleXmlElement);
+        if ($hasNamespace) {
+            $simpleXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
         }
-
-        $foreignReferenceColumnNames = $this->processGetForeignReferenceColumnNamesWithNamespace($simpleXmlElement);
+        $foreignReferences = $simpleXmlElement->xpath($hasNamespace ? '//s:table/s:foreign-key/s:reference' : '//table/foreign-key/reference');
+        foreach ($foreignReferences as $foreignReference) {
+            $parentNode = $foreignReference->xpath('parent::*')[0];
+            $foreignTableName = (string)$parentNode['foreignTable'];
+            $foreignReferenceName = (string)$foreignReference['foreign'];
+            $foreignReferenceColumnNames[] = $foreignTableName . '.' . $foreignReferenceName;
+        }
 
         return $foreignReferenceColumnNames;
     }
@@ -159,11 +166,30 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     {
         $simpleXmlElement = simplexml_load_file($splFileInfo->getPathname());
 
-        if (!$this->hasNamespaceInSchema($simpleXmlElement)) {
-            return $this->processIdColumnNamesStale($simpleXmlElement);
+        $hasNamespace = $this->hasNamespaceInSchema($simpleXmlElement);
+        if ($hasNamespace) {
+            $simpleXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
         }
 
-        return $this->processIdColumnNamesWithNamespase($simpleXmlElement);
+        $idColumnNames = [];
+
+        foreach ($simpleXmlElement->xpath($hasNamespace ? '//s:table' : '//table') as $simpleXmlTableElement) {
+            $tableName = (string)$simpleXmlTableElement['name'];
+            if ($hasNamespace) {
+                $simpleXmlTableElement->registerXPathNamespace('s', 'spryker:schema-01');
+            }
+            $idColumnSimpleXmlElements = $simpleXmlTableElement->xpath($hasNamespace ? '//s:table[@name="' . $tableName . '"]/s:column[starts-with(@name, "id_")]' : '//table[@name="' . $tableName . '"]/column[starts-with(@name, "id_")]');
+            if ($idColumnSimpleXmlElements === false) {
+                continue;
+            }
+
+            foreach ($idColumnSimpleXmlElements as $idColumnSimpleXmlElement) {
+                $idColumnName = (string)$idColumnSimpleXmlElement['name'];
+                $idColumnNames[] = $tableName . '.' . $idColumnName;
+            }
+        }
+
+        return $idColumnNames;
     }
 
     /**
@@ -175,11 +201,30 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     {
         $simpleXmlElement = simplexml_load_file($splFileInfo->getPathname());
 
-        if (!$this->hasNamespaceInSchema($simpleXmlElement)) {
-            $this->processUniqueColumnNamesStale($simpleXmlElement);
+        $hasNamespace = $this->hasNamespaceInSchema($simpleXmlElement);
+        if ($hasNamespace) {
+            $simpleXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
         }
 
-        return $this->processUniqueColumnNamesWithNamespace($simpleXmlElement);
+        $uniqueColumnNames = [];
+
+        foreach ($simpleXmlElement->xpath($hasNamespace ? '//s:table' : '//table') as $simpleXmlTableElement) {
+            $tableName = (string)$simpleXmlTableElement['name'];
+            if ($hasNamespace) {
+                $simpleXmlTableElement->registerXPathNamespace('s', 'spryker:schema-01');
+            }
+            $uniqueColumnSimpleXmlElements = $simpleXmlTableElement->xpath($hasNamespace ? '//s:table[@name="' . $tableName . '"]/s:unique/s:unique-column' : '//table[@name="' . $tableName . '"]/unique/unique-column');
+            if ($uniqueColumnSimpleXmlElements === false) {
+                continue;
+            }
+
+            foreach ($uniqueColumnSimpleXmlElements as $uniqueColumnSimpleXmlElement) {
+                $uniqueColumnName = (string)$uniqueColumnSimpleXmlElement['name'];
+                $uniqueColumnNames[] = $tableName . '.' . $uniqueColumnName;
+            }
+        }
+
+        return $uniqueColumnNames;
     }
 
     /**
@@ -257,153 +302,10 @@ class PropelSchemaParser implements PropelSchemaParserInterface
      */
     protected function hasNamespaceInSchema(SimpleXMLElement $simpleXmlElement): bool
     {
-        return !count($simpleXmlElement->xpath('//table'));
-    }
-
-    /**
-     * @param \SimpleXMLElement $simpleXmlElement
-     *
-     * @return array
-     */
-    protected function processIdColumnNamesWithNamespase(SimpleXMLElement $simpleXmlElement): array
-    {
-        $simpleXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
-
-        $idColumnNames = [];
-
-        foreach ($simpleXmlElement->xpath('//s:table') as $simpleXmlTableElement) {
-            $tableName = (string)$simpleXmlTableElement['name'];
-            $simpleXmlTableElement->registerXPathNamespace('s', 'spryker:schema-01');
-            $idColumnSimpleXmlElements = $simpleXmlTableElement->xpath('//s:table[@name="' . $tableName . '"]/s:column[starts-with(@name, "id_")]');
-            if ($idColumnSimpleXmlElements === false) {
-                continue;
-            }
-
-            foreach ($idColumnSimpleXmlElements as $idColumnSimpleXmlElement) {
-                $idColumnName = (string)$idColumnSimpleXmlElement['name'];
-                $idColumnNames[] = $tableName . '.' . $idColumnName;
-            }
+        if (in_array('spryker:schema-01', $simpleXmlElement->getNamespaces())) {
+            return true;
         }
 
-        return $idColumnNames;
-    }
-
-    /**
-     * @param \SimpleXMLElement $simpleXmlElement
-     *
-     * @return array
-     */
-    protected function processIdColumnNamesStale(SimpleXMLElement $simpleXmlElement): array
-    {
-        $idColumnNames = [];
-
-        foreach ($simpleXmlElement->xpath('//table') as $simpleXmlTableElement) {
-            $tableName = (string)$simpleXmlTableElement['name'];
-            $idColumnSimpleXmlElements = $simpleXmlTableElement->xpath('//table[@name="' . $tableName . '"]/column[starts-with(@name, "id_")]');
-            if ($idColumnSimpleXmlElements === false) {
-                continue;
-            }
-
-            foreach ($idColumnSimpleXmlElements as $idColumnSimpleXmlElement) {
-                $idColumnName = (string)$idColumnSimpleXmlElement['name'];
-                $idColumnNames[] = $tableName . '.' . $idColumnName;
-            }
-        }
-
-        return $idColumnNames;
-    }
-
-    /**
-     * @param \SimpleXMLElement $simpleXmlElement
-     *
-     * @return array
-     */
-    protected function processUniqueColumnNamesWithNamespace(SimpleXMLElement $simpleXmlElement): array
-    {
-        $simpleXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
-
-        $uniqueColumnNames = [];
-
-        foreach ($simpleXmlElement->xpath('//s:table') as $simpleXmlTableElement) {
-            $tableName = (string)$simpleXmlTableElement['name'];
-            $simpleXmlTableElement->registerXPathNamespace('s', 'spryker:schema-01');
-            $uniqueColumnSimpleXmlElements = $simpleXmlTableElement->xpath('//s:table[@name="' . $tableName . '"]/s:unique/s:unique-column');
-            if ($uniqueColumnSimpleXmlElements === false) {
-                continue;
-            }
-
-            foreach ($uniqueColumnSimpleXmlElements as $uniqueColumnSimpleXmlElement) {
-                $uniqueColumnName = (string)$uniqueColumnSimpleXmlElement['name'];
-                $uniqueColumnNames[] = $tableName . '.' . $uniqueColumnName;
-            }
-        }
-
-        return $uniqueColumnNames;
-    }
-
-    /**
-     * @param \SimpleXMLElement $simpleXmlElement
-     *
-     * @return array
-     */
-    protected function processUniqueColumnNamesStale(SimpleXMLElement $simpleXmlElement): array
-    {
-        $uniqueColumnNames = [];
-
-        foreach ($simpleXmlElement->xpath('//table') as $simpleXmlTableElement) {
-            $tableName = (string)$simpleXmlTableElement['name'];
-            $uniqueColumnSimpleXmlElements = $simpleXmlTableElement->xpath('//table[@name="' . $tableName . '"]/unique/unique-column');
-            if ($uniqueColumnSimpleXmlElements === false) {
-                continue;
-            }
-
-            foreach ($uniqueColumnSimpleXmlElements as $uniqueColumnSimpleXmlElement) {
-                $uniqueColumnName = (string)$uniqueColumnSimpleXmlElement['name'];
-                $uniqueColumnNames[] = $tableName . '.' . $uniqueColumnName;
-            }
-        }
-
-        return $uniqueColumnNames;
-    }
-
-    /**
-     * @param \SimpleXMLElement $simpleXmlElement
-     *
-     * @return array
-     */
-    protected function processGetForeignReferenceColumnNamesWithNamespace(SimpleXMLElement $simpleXmlElement): array
-    {
-        $foreignReferenceColumnNames = [];
-
-        $simpleXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
-        $foreignReferences = $simpleXmlElement->xpath('//s:table/s:foreign-key/s:reference');
-        foreach ($foreignReferences as $foreignReference) {
-            $parentNode = $foreignReference->xpath('parent::*')[0];
-            $foreignTableName = (string)$parentNode['foreignTable'];
-            $foreignReferenceName = (string)$foreignReference['foreign'];
-            $foreignReferenceColumnNames[] = $foreignTableName . '.' . $foreignReferenceName;
-        }
-
-        return $foreignReferenceColumnNames;
-    }
-
-    /**
-     * @param \SimpleXMLElement $simpleXmlElement
-     *
-     * @return array
-     */
-    protected function processGetForeignReferenceColumnNamesStale(SimpleXMLElement $simpleXmlElement): array
-    {
-        $foreignReferenceColumnNames = [];
-
-        $foreignReferences = $simpleXmlElement->xpath('//table/foreign-key/reference');
-        foreach ($foreignReferences as $foreignReference) {
-            $parentNode = $foreignReference->xpath('parent::*')[0];
-            $foreignTableName = (string)$parentNode['foreignTable'];
-            $foreignReferenceName = (string)$foreignReference['foreign'];
-            $foreignReferenceColumnNames[] = $foreignTableName . '.' . $foreignReferenceName;
-        }
-
-        return $foreignReferenceColumnNames;
+        return false;
     }
 }
