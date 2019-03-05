@@ -24,10 +24,10 @@ interface ProductBundleFacadeInterface
 {
     /**
      * Specification:
-     *  - Takes all items to be added to cart and checks if any is bundle item.
-     *  - If bundle item then it is removed, and added to QuoteTransfer::bundleItems, the identifier assigned.
-     *  - Finds all bundled items from that bundle and puts into add to cart operation, assign bundle identifier they belong to.
-     *  - The price amount is assigned, proportionaly split through items quantity = 1.
+     * - Takes all items to be added to cart and checks if any is bundle item.
+     * - If bundle item then it is removed, and added to QuoteTransfer::bundleItems, the identifier assigned.
+     * - Finds all bundled items from that bundle and puts into add to cart operation, assign bundle identifier they belong to.
+     * - The price amount is assigned, proportionally split through items quantity = 1.
      *
      * @api
      *
@@ -39,7 +39,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - It will add images to product bundle.
+     * - It will add images to product bundle.
      *
      * @api
      *
@@ -51,7 +51,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - The group key is build to uniquely identify bundled items.
+     * - The group key is build to uniquely identify bundled items.
      *
      * @api
      *
@@ -63,7 +63,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Updates QuoteTransfer::bundleItems to be in sync with current existing bundled items in cart.
+     * - Updates QuoteTransfer::bundleItems to be in sync with current existing bundled items in cart.
      *
      * @api
      *
@@ -75,9 +75,9 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Checks if items which being added to cart is available, for bundle it checks bundled items.
-     *  - Even if same item added separatelly from bundle availability is checked together.
-     *  - Sets error message if not available.
+     * - Checks if items which being added to cart is available, for bundle it checks bundled items.
+     * - Even if same item added separately from bundle availability is checked together.
+     * - Sets error message if not available.
      *
      * @api
      *
@@ -144,9 +144,9 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Gets all items which belong to bundle.
-     *  - Updates bundle products with new availability, given sku belong.
-     *  - Touch abstract availability for bundle product.
+     * - Gets all items which belong to bundle.
+     * - Updates bundle products with new availability, given sku belong.
+     * - Touch abstract availability for bundle product.
      *
      * @api
      *
@@ -158,9 +158,9 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Gets all items which belong to bundle.
-     *  - Updates bundle products with new stock, given sku belong.
-     *  - Touch abstract stock for bundle product.
+     * - Gets all items which belong to bundle.
+     * - Updates bundle products with new stock, given sku belong.
+     * - Touch abstract stock for bundle product.
      *
      * @api
      *
@@ -186,7 +186,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Persists bundled product to sales database tables, from QuoteTransfer.
+     * - Persists bundled product to sales database tables, from QuoteTransfer.
      *
      * @api
      *
@@ -201,7 +201,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Persists bundled product to sales database tables, from QuoteTransfer.
+     * - Persists bundled product to sales database tables, from QuoteTransfer.
      *
      * @api
      *
@@ -214,8 +214,8 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Persists bundled products within ProductConcrete.
-     *  - Updates product bundle available stock.
+     * - Persists bundled products within ProductConcrete.
+     * - Updates product bundle available stock.
      *
      * @api
      *
@@ -227,7 +227,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Finds all bundled products to given concrete product.
+     * - Finds all bundled products to given concrete product.
      *
      * @api
      *
@@ -239,8 +239,8 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Assigns bundled products to ProductConcreteTransfer::productBundle.
-     *  - Returns modified ProductConcreteTransfer.
+     * - Assigns bundled products to ProductConcreteTransfer::productBundle.
+     * - Returns modified ProductConcreteTransfer.
      *
      * @api
      *
@@ -301,9 +301,9 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Find bundle item in quote.
-     *  - Clone item.
-     *  - Take sum of all bundle items of the same group.
+     * - Find bundle item in quote.
+     * - Clone item.
+     * - Take sum of all bundle items of the same group.
      *
      * @api
      *
@@ -317,7 +317,7 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     *  - Checks price difference between quotes bundle items.
+     * - Checks price difference between quotes bundle items.
      *
      * @api
      *

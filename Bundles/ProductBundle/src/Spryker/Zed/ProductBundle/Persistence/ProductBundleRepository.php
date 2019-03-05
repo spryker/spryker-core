@@ -25,7 +25,7 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             ->createProductBundleQuery()
             ->joinWithSpyProductRelatedByFkProduct()
             ->useSpyProductRelatedByFkProductQuery()
-            ->filterBySku($sku)
+                ->filterBySku($sku)
             ->endUse()
             ->find();
 
