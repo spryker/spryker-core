@@ -73,6 +73,40 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function setQuoteRequestEditable(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        $quoteRequestFilterTransfer->requireQuoteRequestReference();
+
+        $quoteRequestTransfer = $this->findQuoteRequest($quoteRequestFilterTransfer);
+        $quoteRequestResponseTransfer = new QuoteRequestResponseTransfer();
+
+        if (!$quoteRequestTransfer) {
+            return $quoteRequestResponseTransfer
+                ->setIsSuccess(false)
+                ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS);
+        }
+
+        if (!$this->isQuoteRequestCanStartEditable($quoteRequestTransfer)) {
+            return $quoteRequestResponseTransfer
+                ->setIsSuccess(false)
+                ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
+        }
+
+        $quoteRequestTransfer->requireLatestVersion()
+            ->getLatestVersion()
+            ->requireQuote();
+
+        $quoteRequestTransfer->setStatus(SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS);
+        $quoteRequestTransfer->setQuoteInProgress($quoteRequestTransfer->getLatestVersion()->getQuote());
+
+        return $this->quoteRequestFacade->update($quoteRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
     protected function findQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): ?QuoteRequestTransfer
@@ -93,5 +127,15 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
     protected function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return in_array($quoteRequestTransfer->getStatus(), $this->agentQuoteRequestConfig->getCancelableStatuses());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteRequestCanStartEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_WAITING;
     }
 }

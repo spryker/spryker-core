@@ -107,4 +107,42 @@ interface QuoteRequestClientInterface
      * @return bool
      */
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Expects quoter request reference to be provided.
+     * - Retrieves "Request for Quote" entity filtered by reference.
+     * - Expects "Request for Quote" status to be "in-progress".
+     * - Expects "Request for Quote" quoteInProgress property exists.
+     * - Expects "Request for Quote" validUntil property exists and greater than current time.
+     * - Changes status from "in-progress" to "ready".
+     * - Resets isHidden flag to false.
+     * - Creates version from quoteInProgress property.
+     * - Sets latest version.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function sendQuoteRequestToCustomer(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Retrieves "Request for Quote" entities filtered by company user.
+     * - Filters by quote request reference.
+     * - Excludes hidden "Request for Quote" entities.
+     * - Selects latestVersion based on latest version id.
+     *
+     * @api
+     *
+     * @param string $quoteRequestReference
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer;
 }

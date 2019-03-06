@@ -49,6 +49,24 @@ interface AgentQuoteRequestClientInterface
 
     /**
      * Specification:
+     * - Makes Zed request.
+     * - Looks up one "Request for Quote" by provided quote request reference.
+     * - Expects "Request for Quote" status to be "waiting".
+     * - Requires latest version inside QuoteRequestTransfer.
+     * - Requires quote inside QuoteRequestVersionTransfer.
+     * - Sets status to "in-progress".
+     * - Copies latest version quote to quoteInProgress property.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function setQuoteRequestEditable(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
      * - Checks cancelable status from config.
      * - If "Request for Quote" cancelable - return true.
      *
@@ -59,4 +77,30 @@ interface AgentQuoteRequestClientInterface
      * @return bool
      */
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * Specification:
+     * - Checks start editable status from config.
+     * - If "Request for Quote" in waiting status - return true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestCanStartEditable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * Specification:
+     * - Checks editable status from config.
+     * - If "Request for Quote" in in-progress status - return true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool;
 }

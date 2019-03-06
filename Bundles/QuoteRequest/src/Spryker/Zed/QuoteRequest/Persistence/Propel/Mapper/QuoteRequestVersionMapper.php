@@ -75,7 +75,7 @@ class QuoteRequestVersionMapper
             ->fromArray($quoteRequestVersion->toArray(), true);
 
         $quoteRequestVersionTransfer->setQuote(
-            (new QuoteTransfer())->fromArray($this->decodeQuoteData($quoteRequestVersion), true)
+            (new QuoteTransfer())->fromArray($this->decodeQuoteData($quoteRequestVersion->getQuote()), true)
         );
 
         $quoteRequestVersionTransfer->setQuoteRequest(
@@ -107,13 +107,13 @@ class QuoteRequestVersionMapper
     }
 
     /**
-     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion $quoteRequestVersion
+     * @param string $data
      *
      * @return array
      */
-    protected function decodeQuoteData(SpyQuoteRequestVersion $quoteRequestVersion): array
+    protected function decodeQuoteData(string $data): array
     {
-        return $this->encodingService->decodeJson($quoteRequestVersion->getQuote(), true);
+        return $this->encodingService->decodeJson($data, true);
     }
 
     /**

@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface;
@@ -419,8 +420,16 @@ class QuoteRequestWriterTest extends Unit
      */
     protected function createQuoteRequestToCalculationInterfaceMock(): QuoteRequestToCalculationInterface
     {
-        return $this->getMockBuilder(QuoteRequestToCalculationInterface::class)
+        $quoteRequestToCalculationInterfaceMock = $this->getMockBuilder(QuoteRequestToCalculationInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
+
+        $quoteRequestToCalculationInterfaceMock
+            ->method('recalculate')
+            ->willReturnCallback(function (QuoteTransfer $quoteTransfer) {
+                return $quoteTransfer;
+            });
+
+        return $quoteRequestToCalculationInterfaceMock;
     }
 }

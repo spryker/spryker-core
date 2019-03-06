@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\AgentQuoteRequest\AgentQuoteRequestConfig as SharedAgentQuoteRequestConfig;
 
 /**
@@ -145,6 +146,36 @@ class AgentQuoteRequestFacadeTest extends Unit
         $this->assertEquals(
             $currentQuoteRequestTransfer->getIdQuoteRequest(),
             $quoteRequestOverviewCollectionTransfer->getCurrentQuoteRequest()->getIdQuoteRequest()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetQuoteRequestEditableChangesQuoteRequestStatusToInProgress(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->tester->createQuoteRequest(
+            $this->tester->createQuoteRequestVersion($this->quoteTransfer),
+            $this->companyUserTransfer
+        );
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterBuilder())->build()
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
+
+        // Act
+        $quoteRequestResponseTransfer = $this->tester
+            ->getFacade()
+            ->setQuoteRequestEditable($quoteRequestFilterTransfer);
+
+        // Assert
+        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccess());
+        $this->assertEquals(
+            SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS,
+            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
+        );
+        $this->assertInstanceOf(
+            QuoteTransfer::class,
+            $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteInProgress()
         );
     }
 
