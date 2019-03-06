@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Communication\Formatter;
 
-interface ProductListFormatterInterface
+interface ProductCollectionFormatterInterface
 {
     /**
      * @param array $suggestData

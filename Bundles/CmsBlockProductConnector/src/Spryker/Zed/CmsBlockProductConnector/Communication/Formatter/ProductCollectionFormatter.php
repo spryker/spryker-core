@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Communication\Formatter;
 
-class ProductListFormatter implements ProductListFormatterInterface
+class ProductCollectionFormatter implements ProductCollectionFormatterInterface
 {
     protected const KEY_SKU = 'sku';
     protected const KEY_NAME = 'name';
