@@ -58,10 +58,6 @@ class TouchFacadeTest extends Unit
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, self::ITEM_ID_1);
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, self::ITEM_ID_2);
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, self::ITEM_ID_3);
-
-        $this->createTouchEntity(static::ITEM_EVENT_ACTIVE, static::UNIQUE_INDEX_ITEM_ID, static::UNIQUE_INDEX_ITEM_TYPE);
-        $this->createTouchEntity(static::ITEM_EVENT_INACTIVE, static::UNIQUE_INDEX_ITEM_ID, static::UNIQUE_INDEX_ITEM_TYPE);
-        $this->createTouchEntity(static::ITEM_EVENT_DELETED, static::UNIQUE_INDEX_ITEM_ID, static::UNIQUE_INDEX_ITEM_TYPE);
     }
 
     /**
@@ -195,6 +191,11 @@ class TouchFacadeTest extends Unit
      */
     public function testBulkTouchSetUniqueIndex(string $method, array $itemIds): void
     {
+        //Arrange
+        $this->createTouchEntity(static::ITEM_EVENT_ACTIVE, static::UNIQUE_INDEX_ITEM_ID, static::UNIQUE_INDEX_ITEM_TYPE);
+        $this->createTouchEntity(static::ITEM_EVENT_INACTIVE, static::UNIQUE_INDEX_ITEM_ID, static::UNIQUE_INDEX_ITEM_TYPE);
+        $this->createTouchEntity(static::ITEM_EVENT_DELETED, static::UNIQUE_INDEX_ITEM_ID, static::UNIQUE_INDEX_ITEM_TYPE);
+
         //Act
         $affectedRows = $this->touchFacade->$method(static::UNIQUE_INDEX_ITEM_TYPE, $itemIds);
 
