@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductBundleProductListConnector\Business\ProductList;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListTypeExpanderInterface;
-use Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorConfig;
 
 class ProductListExpander implements ProductListExpanderInterface
 {
@@ -25,11 +24,6 @@ class ProductListExpander implements ProductListExpanderInterface
     protected const PRODUCT_LIST_TYPE_WHITELIST = 'whitelist';
 
     /**
-     * @var \Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorConfig
-     */
-    protected $productBundleProductListConnectorConfig;
-
-    /**
      * @var \Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListTypeExpanderInterface
      */
     protected $blacklistProductListTypeExpander;
@@ -40,16 +34,13 @@ class ProductListExpander implements ProductListExpanderInterface
     protected $whitelistProductListTypeExpander;
 
     /**
-     * @param \Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorConfig $productBundleProductListConnectorConfig
      * @param \Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListTypeExpanderInterface $blacklistProductListTypeExpander
      * @param \Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListTypeExpanderInterface $whitelistProductListTypeExpander
      */
     public function __construct(
-        ProductBundleProductListConnectorConfig $productBundleProductListConnectorConfig,
         ProductListTypeExpanderInterface $blacklistProductListTypeExpander,
         ProductListTypeExpanderInterface $whitelistProductListTypeExpander
     ) {
-        $this->productBundleProductListConnectorConfig = $productBundleProductListConnectorConfig;
         $this->blacklistProductListTypeExpander = $blacklistProductListTypeExpander;
         $this->whitelistProductListTypeExpander = $whitelistProductListTypeExpander;
     }

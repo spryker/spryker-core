@@ -228,7 +228,8 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     * - Finds bundle product collection by criteria filter.
+     * - Gets bundle product collection by criteria filter.
+     * - Returns bundle product collection with all bundle products if Criteria Filter is empty.
      *
      * @api
      *

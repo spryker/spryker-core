@@ -28,7 +28,6 @@ class ProductBundleProductListConnectorBusinessFactory extends AbstractBusinessF
     public function createProductListExpander(): ProductListExpanderInterface
     {
         return new ProductListExpander(
-            $this->getConfig(),
             $this->createBlacklistProductListTypeExpander(),
             $this->createWhitelistProductListTypeExpander()
         );

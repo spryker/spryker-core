@@ -46,6 +46,7 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
         $productBundleQuery = $this->getFactory()
             ->createProductBundleQuery()
             ->joinWithSpyProductRelatedByFkBundledProduct();
+
         $productBundleQuery = $this->applyFilters($productBundleQuery, $productBundleCriteriaFilterTransfer);
 
         $productBundleEntities = $productBundleQuery->find();
