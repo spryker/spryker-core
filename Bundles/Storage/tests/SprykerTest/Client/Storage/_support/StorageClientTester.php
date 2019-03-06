@@ -8,6 +8,9 @@
 namespace SprykerTest\Client\Storage;
 
 use Codeception\Actor;
+use ReflectionClass;
+use Spryker\Client\Storage\Redis\Service;
+use Spryker\Client\Storage\StorageClient;
 
 /**
  * Inherited Methods
@@ -28,7 +31,16 @@ class StorageClientTester extends Actor
 {
     use _generated\StorageClientTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param $object
+     * @param $propertyName
+     * @param $value
+     */
+    public function setProtectedProperty($object, $propertyName, $value)
+    {
+        $storageClientReflection = new ReflectionClass($object);
+        $bufferedValuesReflection = $storageClientReflection->getProperty($propertyName);
+        $bufferedValuesReflection->setAccessible(true);
+        $bufferedValuesReflection->setValue($value);
+    }
 }
