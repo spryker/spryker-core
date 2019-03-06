@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
@@ -512,10 +513,22 @@ class ShoppingListReader implements ShoppingListReaderInterface
     /**
      * @param int $idShoppingListItem
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer
+    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemResponseTransfer
     {
-        return $this->shoppingListRepository->getShoppingListItemById($idShoppingListItem);
+        $hoppingListItemResponseTransfer = new ShoppingListItemResponseTransfer();
+        $hoppingListItemTransfer = $this->shoppingListRepository->findShoppingListItemById($idShoppingListItem);
+
+        if ($hoppingListItemTransfer === null) {
+            $hoppingListItemResponseTransfer->setIsSuccess(false);
+
+            return $hoppingListItemResponseTransfer;
+        }
+
+        $hoppingListItemResponseTransfer->setShoppingListItem($hoppingListItemTransfer);
+        $hoppingListItemResponseTransfer->setIsSuccess(true);
+
+        return $hoppingListItemResponseTransfer;
     }
 }

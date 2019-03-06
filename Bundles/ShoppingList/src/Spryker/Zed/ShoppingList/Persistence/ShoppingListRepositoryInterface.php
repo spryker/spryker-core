@@ -192,7 +192,7 @@ interface ShoppingListRepositoryInterface
     /**
      * @param int $idShoppingListItem
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|null
      */
-    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer;
+    public function findShoppingListItemById(int $idShoppingListItem): ?ShoppingListItemTransfer;
 }

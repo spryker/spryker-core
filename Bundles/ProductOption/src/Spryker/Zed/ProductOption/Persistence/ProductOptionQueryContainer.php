@@ -434,13 +434,13 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
-     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery $productOptionGroupQuery
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery $productOptionValueQuery
      *
      * @return void
      */
-    protected function joinProductAbstractProductOptionGroupToProductOptionGroup(
+    protected function filterProductOptionGroupByProductConcreteSku(
         ProductOptionCriteriaTransfer $productOptionCriteriaTransfer,
-        SpyProductOptionGroupQuery $productOptionGroupQuery
+        SpyProductOptionValueQuery $productOptionValueQuery
     ): void {
         $productConcreteSku = $productOptionCriteriaTransfer->getProductConcreteSku();
 
@@ -448,16 +448,16 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             return;
         }
 
-        if ($productConcreteSku) {
-            $productOptionGroupQuery
+        $productOptionValueQuery
+            ->useSpyProductOptionGroupQuery()
                 ->useSpyProductAbstractProductOptionGroupQuery(null, Criteria::LEFT_JOIN)
                     ->useSpyProductAbstractQuery()
                         ->useSpyProductQuery()
                             ->filterBySku($productConcreteSku)
                         ->endUse()
                     ->endUse()
-                ->endUse();
-        }
+                ->endUse()
+            ->endUse();
     }
 
     /**
@@ -468,20 +468,39 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     protected function getProductOptionValueWithProductOptionGroupQuery(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): SpyProductOptionValueQuery
     {
         $productOptionValueQuery = $this->getFactory()->createProductOptionValueQuery();
-        $productOptionGroupIsActive = $productOptionCriteriaTransfer->getProductOptionGroupIsActive();
 
-        if ($productOptionGroupIsActive !== null) {
-            $productOptionGroupQuery = $productOptionValueQuery->useSpyProductOptionGroupQuery();
+        $this->filterProductOptionGroupByActiveField(
+            $productOptionCriteriaTransfer,
+            $productOptionValueQuery
+        );
 
-            $productOptionGroupQuery->filterByActive($productOptionGroupIsActive);
-            $this->joinProductAbstractProductOptionGroupToProductOptionGroup(
-                $productOptionCriteriaTransfer,
-                $productOptionGroupQuery
-            );
-
-            $productOptionGroupQuery->endUse();
-        }
+        $this->filterProductOptionGroupByProductConcreteSku(
+            $productOptionCriteriaTransfer,
+            $productOptionValueQuery
+        );
 
         return $productOptionValueQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery $productOptionValueQuery
+     *
+     * @return void
+     */
+    protected function filterProductOptionGroupByActiveField(
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer,
+        SpyProductOptionValueQuery $productOptionValueQuery
+    ): void {
+        $productOptionGroupIsActive = $productOptionCriteriaTransfer->getProductOptionGroupIsActive();
+
+        if (!$productOptionGroupIsActive) {
+            return;
+        }
+
+        $productOptionValueQuery
+            ->useSpyProductOptionGroupQuery()
+                ->filterByActive($productOptionGroupIsActive)
+            ->endUse();
     }
 }

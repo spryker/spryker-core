@@ -64,17 +64,22 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
      */
     protected function getProductOptionCriteriaTransfer(int $idShoppingListItem): ProductOptionCriteriaTransfer
     {
+        $productOptionCriteriaTransfer = new ProductOptionCriteriaTransfer();
+
         $shoppingListItemProductOptionIds = $this->shoppingListProductOptionRepository
             ->getShoppingListItemProductOptionIdsByIdShoppingListItem($idShoppingListItem);
 
-        $shoppingListItemTransfer = $this->shoppingListFacade->getShoppingListItemById($idShoppingListItem);
-        $shoppingListItemTransfer->requireSku();
+        $productOptionCriteriaTransfer->setProductOptionIds($shoppingListItemProductOptionIds);
 
-        $productConcreteSku = $shoppingListItemTransfer->getSku();
+        $shoppingListItemResponseTransfer = $this->shoppingListFacade->getShoppingListItemById($idShoppingListItem);
 
-        return (new ProductOptionCriteriaTransfer())
-            ->setProductOptionIds($shoppingListItemProductOptionIds)
-            ->setProductOptionGroupIsActive(true)
-            ->setProductConcreteSku($productConcreteSku);
+        if ($shoppingListItemResponseTransfer->getIsSuccess()) {
+            $productConcreteSku = $shoppingListItemResponseTransfer->getShoppingListItem()->getSku();
+            $productOptionCriteriaTransfer->setProductConcreteSku($productConcreteSku);
+        }
+
+        $productOptionCriteriaTransfer->setProductOptionGroupIsActive(true);
+
+        return $productOptionCriteriaTransfer;
     }
 }

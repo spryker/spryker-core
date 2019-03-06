@@ -387,6 +387,9 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @module Customer
+     * @module CompanyUser
+     *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
@@ -395,6 +398,11 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     {
         $shoppingListsCompanyUsers = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
+                ->useSpyCompanyUserQuery()
+                    ->useCustomerQuery()
+                        ->filterByAnonymizedAt(null)
+                    ->endUse()
+                ->endUse()
             ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
             ->find();
 
@@ -481,7 +489,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
         return $this->getFactory()
             ->createShoppingListCompanyBusinessUnitBlacklistPropelQuery()
             ->useSpyShoppingListCompanyBusinessUnitQuery()
-            ->leftJoinSpyShoppingList()
+                ->leftJoinSpyShoppingList()
             ->endUse()
             ->select([SpyShoppingListTableMap::COL_ID_SHOPPING_LIST])
             ->findByFkCompanyUser($idCompanyUser)
@@ -504,12 +512,10 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param int $idShoppingListItem
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|null
      */
-    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer
+    public function findShoppingListItemById(int $idShoppingListItem): ?ShoppingListItemTransfer
     {
-        $shoppingListItemTransfer = new ShoppingListItemTransfer();
-
         $shoppingListItemQuery = $this->getFactory()
             ->createShoppingListItemQuery()
             ->filterByIdShoppingListItem($idShoppingListItem);
@@ -517,14 +523,14 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
         $shoppingListItemEntityTransfer = $this->buildQueryFromCriteria($shoppingListItemQuery)->findOne();
 
         if ($shoppingListItemEntityTransfer === null) {
-            return $shoppingListItemTransfer;
+            return null;
         }
 
         return $this->getFactory()
             ->createShoppingListItemMapper()
             ->mapItemTransfer(
                 $shoppingListItemEntityTransfer,
-                $shoppingListItemTransfer
+                new ShoppingListItemTransfer()
             );
     }
 }

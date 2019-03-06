@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListProductOptionConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 
 class ShoppingListProductOptionConnectorToShoppingListFacadeBridge implements ShoppingListProductOptionConnectorToShoppingListFacadeInterface
 {
@@ -27,9 +27,9 @@ class ShoppingListProductOptionConnectorToShoppingListFacadeBridge implements Sh
     /**
      * @param int $idShoppingListItem
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer
+    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemResponseTransfer
     {
         return $this->shoppingListFacade->getShoppingListItemById($idShoppingListItem);
     }

@@ -318,7 +318,7 @@ interface ShoppingListFacadeInterface
      *
      * @param int $idShoppingListItem
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemTransfer;
+    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemResponseTransfer;
 }
