@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business;
 
+use Spryker\Service\DiscountPromotion\DiscountPromotionServiceInterface;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\DiscountPromotionCollectorStrategy;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\PromotionAvailabilityCalculator;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionReader;
@@ -29,7 +30,8 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
         return new DiscountPromotionCollectorStrategy(
             $this->getProductFacade(),
             $this->getQueryContainer(),
-            $this->createPromotionAvailabilityCalculator()
+            $this->createPromotionAvailabilityCalculator(),
+            $this->getDiscountPromotionService()
         );
     }
 
@@ -38,7 +40,11 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
      */
     protected function createPromotionAvailabilityCalculator()
     {
-        return new PromotionAvailabilityCalculator($this->getAvailabilityFacade(), $this->getLocaleFacade());
+        return new PromotionAvailabilityCalculator(
+            $this->getAvailabilityFacade(),
+            $this->getLocaleFacade(),
+            $this->getDiscountPromotionService()
+        );
     }
 
     /**
@@ -87,5 +93,13 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Service\DiscountPromotion\DiscountPromotionServiceInterface
+     */
+    protected function getDiscountPromotionService(): DiscountPromotionServiceInterface
+    {
+        return $this->getProvidedDependency(DiscountPromotionDependencyProvider::SERVICE_DISCOUNT_PROMOTION);
     }
 }

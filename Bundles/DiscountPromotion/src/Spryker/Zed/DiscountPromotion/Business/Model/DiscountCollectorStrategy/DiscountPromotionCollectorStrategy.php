@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion;
+use Spryker\Service\DiscountPromotion\DiscountPromotionServiceInterface;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductInterface;
 use Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface;
 
@@ -36,19 +37,27 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
     protected $promotionAvailabilityCalculator;
 
     /**
+     * @var \Spryker\Service\DiscountPromotion\DiscountPromotionServiceInterface
+     */
+    protected $service;
+
+    /**
      * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductInterface $productFacade
      * @param \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer
      * @param \Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\PromotionAvailabilityCalculatorInterface $promotionAvailabilityCalculator
+     * @param \Spryker\Service\DiscountPromotion\DiscountPromotionServiceInterface $service
      */
     public function __construct(
         DiscountPromotionToProductInterface $productFacade,
         DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer,
-        PromotionAvailabilityCalculatorInterface $promotionAvailabilityCalculator
+        PromotionAvailabilityCalculatorInterface $promotionAvailabilityCalculator,
+        DiscountPromotionServiceInterface $service
     ) {
 
         $this->productFacade = $productFacade;
         $this->discountPromotionQueryContainer = $discountPromotionQueryContainer;
         $this->promotionAvailabilityCalculator = $promotionAvailabilityCalculator;
+        $this->service = $service;
     }
 
     /**
@@ -78,6 +87,8 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             $idProductAbstract,
             $discountPromotionEntity->getQuantity()
         );
+
+        $promotionMaximumQuantity = $this->service->round($promotionMaximumQuantity);
 
         if ($promotionMaximumQuantity === 0.0) {
             return [];

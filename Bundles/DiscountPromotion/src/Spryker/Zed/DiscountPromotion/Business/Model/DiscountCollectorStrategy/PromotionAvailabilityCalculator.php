@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy;
 
+use Spryker\Service\DiscountPromotion\DiscountPromotionServiceInterface;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface;
 
@@ -23,16 +24,24 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Service\DiscountPromotion\DiscountPromotionServiceInterface
+     */
+    protected $service;
+
+    /**
      * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface $localeFacade
+     * @param \Spryker\Service\DiscountPromotion\DiscountPromotionServiceInterface $service
      */
     public function __construct(
         DiscountPromotionToAvailabilityInterface $availabilityFacade,
-        DiscountPromotionToLocaleInterface $localeFacade
+        DiscountPromotionToLocaleInterface $localeFacade,
+        DiscountPromotionServiceInterface $service
     ) {
 
         $this->availabilityFacade = $availabilityFacade;
         $this->localeFacade = $localeFacade;
+        $this->service = $service;
     }
 
     /**
@@ -46,15 +55,17 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
         $productAbstractAvailabilityTransfer = $this->getProductAbstractAvailability($idProductAbstract);
 
         if ($productAbstractAvailabilityTransfer->getIsNeverOutOfStock()) {
-            return (float)$maxQuantity;
+            return $maxQuantity;
         }
 
-        if ($productAbstractAvailabilityTransfer->getAvailability() <= 0.0) {
+        $availability = $this->service->round($productAbstractAvailabilityTransfer->getAvailability());
+
+        if ($availability <= 0.0) {
             return 0.0;
         }
 
-        if ($maxQuantity > $productAbstractAvailabilityTransfer->getAvailability()) {
-            return (float)$productAbstractAvailabilityTransfer->getAvailability();
+        if ($maxQuantity > $availability) {
+            return $productAbstractAvailabilityTransfer->getAvailability();
         }
 
         return $maxQuantity;

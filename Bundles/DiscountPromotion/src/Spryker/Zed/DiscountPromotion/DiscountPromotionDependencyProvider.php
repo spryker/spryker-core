@@ -21,6 +21,7 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const SERVICE_DISCOUNT_PROMOTION = 'SERVICE_DISCOUNT_PROMOTION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,6 +33,21 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductFacade($container);
         $container = $this->addAvailabilityFacade($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addDiscountPromotionService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDiscountPromotionService(Container $container): Container
+    {
+        $container[static::SERVICE_DISCOUNT_PROMOTION] = function (Container $container) {
+            return $container->getLocator()->discountPromotion()->service();
+        };
 
         return $container;
     }
