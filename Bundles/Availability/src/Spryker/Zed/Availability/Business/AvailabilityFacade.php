@@ -26,7 +26,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * @deprecated use isProductSellableForStore() instead
      *
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return bool
      */
@@ -43,7 +43,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * @api
      *
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
@@ -235,7 +235,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * @deprecated use saveProductAvailabilityForStore instead
      *
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      *
      * @return int
      */
@@ -252,7 +252,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * @api
      *
      * @param string $sku
-     * @param float $quantity
+     * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
