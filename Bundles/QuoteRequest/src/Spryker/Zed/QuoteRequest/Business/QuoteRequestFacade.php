@@ -116,4 +116,20 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
             ->createQuoteRequestChecker()
             ->checkValidUntil($quoteTransfer, $checkoutResponseTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function sendQuoteRequestToCustomer(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestWriter()
+            ->sendQuoteRequestToCustomer($quoteRequestFilterTransfer);
+    }
 }

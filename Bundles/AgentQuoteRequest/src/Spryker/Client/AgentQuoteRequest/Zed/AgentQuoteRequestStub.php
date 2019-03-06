@@ -60,4 +60,20 @@ class AgentQuoteRequestStub implements AgentQuoteRequestStubInterface
 
         return $quoteRequestResponseTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function setQuoteRequestEditable(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
+        $quoteRequestResponseTransfer = $this->zedRequestClient->call(
+            '/agent-quote-request/gateway/set-quote-request-editable',
+            $quoteRequestFilterTransfer
+        );
+
+        return $quoteRequestResponseTransfer;
+    }
 }

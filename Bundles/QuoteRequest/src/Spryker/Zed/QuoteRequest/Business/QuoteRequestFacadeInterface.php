@@ -38,7 +38,7 @@ interface QuoteRequestFacadeInterface
 
     /**
      * Specification:
-     * - Finds a company by QuoteRequestTransfer::idQuoteRequest in the transfer.
+     * - Finds a "Request for Quote" by QuoteRequestTransfer::idQuoteRequest in the transfer.
      * - Updates fields in a "Request for Quote" entity.
      *
      * @api
@@ -111,4 +111,24 @@ interface QuoteRequestFacadeInterface
      * @return bool
      */
     public function checkCheckoutQuoteRequest(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+
+    /**
+     * Specification:
+     * - Expects quoter request reference to be provided.
+     * - Retrieves "Request for Quote" entity filtered by reference.
+     * - Expects "Request for Quote" status to be "in-progress".
+     * - Expects "Request for Quote" quoteInProgress property exists.
+     * - Expects "Request for Quote" validUntil property exists and greater than current time.
+     * - Changes status from "in-progress" to "ready".
+     * - Resets isHidden flag to false.
+     * - Creates version from quoteInProgress property.
+     * - Sets latest version.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function sendQuoteRequestToCustomer(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
 }

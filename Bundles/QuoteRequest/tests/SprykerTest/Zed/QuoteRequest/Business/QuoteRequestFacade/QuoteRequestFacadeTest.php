@@ -9,10 +9,14 @@ namespace SprykerTest\Zed\QuoteRequest\Business\QuoteRequestFacade;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use DateInterval;
+use DateTime;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestFilterBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestVersionFilterBuilder;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig;
@@ -148,6 +152,38 @@ class QuoteRequestFacadeTest extends Unit
 
         // Assert
         $this->assertCount(2, $quoteRequestCollectionTransfer->getQuoteRequests());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateUpdatesQuoteRequest(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->tester->createQuoteRequest(
+            $this->tester->createQuoteRequestVersion($this->quoteTransfer),
+            $this->companyUserTransfer
+        );
+
+        $quoteRequestTransfer = (new QuoteRequestBuilder([
+            QuoteRequestTransfer::ID_QUOTE_REQUEST => $quoteRequestTransfer->getIdQuoteRequest(),
+            QuoteRequestTransfer::COMPANY_USER => $quoteRequestTransfer->getCompanyUser(),
+            QuoteRequestTransfer::METADATA => [],
+            QuoteRequestTransfer::IS_HIDDEN => true,
+        ]))->build();
+
+        // Act
+        $quoteRequestResponseTransfer = $this->tester->getFacade()->update($quoteRequestTransfer);
+        $storedQuoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
+
+        // Assert
+        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccess());
+        $this->assertNull($storedQuoteRequestTransfer->getLatestVersion());
+        $this->assertEquals($quoteRequestTransfer->getCompanyUser(), $storedQuoteRequestTransfer->getCompanyUser());
+        $this->assertEquals($quoteRequestTransfer->getStatus(), $storedQuoteRequestTransfer->getStatus());
+        $this->assertEquals($quoteRequestTransfer->getIsHidden(), $storedQuoteRequestTransfer->getIsHidden());
+        $this->assertEquals($quoteRequestTransfer->getValidUntil(), $storedQuoteRequestTransfer->getValidUntil());
+        $this->assertEquals($quoteRequestTransfer->getMetadata(), $storedQuoteRequestTransfer->getMetadata());
     }
 
     /**
@@ -316,5 +352,41 @@ class QuoteRequestFacadeTest extends Unit
 
         // Assert
         $this->assertCount(0, $quoteRequestCollectionTransfer->getQuoteRequestVersions());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSendQuoteRequestToCustomerCreatesLatestVersionFromQuoteInProgress(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->tester->createQuoteRequest(
+            $this->tester->createQuoteRequestVersion($this->quoteTransfer),
+            $this->companyUserTransfer
+        );
+
+        $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_IN_PROGRESS)
+            ->setIsHidden(true)
+            ->setQuoteInProgress($this->quoteTransfer)
+            ->setValidUntil((new DateTime())->add(new DateInterval("PT1H")));
+
+        $this->tester->getFacade()->update($quoteRequestTransfer);
+
+        $quoteRequestVersionFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setWithHidden(true)
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
+
+        // Act
+        $quoteRequestResponseTransfer = $this->tester
+            ->getFacade()
+            ->sendQuoteRequestToCustomer($quoteRequestVersionFilterTransfer);
+
+        $quoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
+
+        // Assert
+        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccess());
+        $this->assertEquals(SharedQuoteRequestConfig::STATUS_READY, $quoteRequestTransfer->getStatus());
+        $this->assertFalse($quoteRequestTransfer->getIsHidden());
+        $this->assertEquals(2, $quoteRequestTransfer->getLatestVersion()->getVersion());
     }
 }
