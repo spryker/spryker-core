@@ -34,7 +34,7 @@
                 {% if product.stock|length > 0 %}
                     <td class="center">
                         {% for stock in product.stock %}
-                            {{ stock.stockType }} : {{ stock.quantity|number_format }} <br />
+                            {{ stock.stockType }} : {{ stock.quantity|number_format(2) }} <br />
                         {% endfor %}
                     </td>
                 {% else %}
