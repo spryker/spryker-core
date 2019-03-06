@@ -23,12 +23,12 @@ class ProductBundleProductListConnectorToProductFacadeBridge implements ProductB
     }
 
     /**
-     * @param int $idProduct
+     * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     * @return array
      */
-    public function findProductConcreteById($idProduct)
+    public function getProductConcreteSkusByConcreteIds(array $productIds): array
     {
-        return $this->productFacade->findProductConcreteById($idProduct);
+        return $this->productFacade->getProductConcreteSkusByConcreteIds($productIds);
     }
 }

@@ -8,13 +8,14 @@
 namespace Spryker\Zed\ProductBundleProductListConnector\Business\ProductList;
 
 use Generated\Shared\Transfer\ProductListResponseTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 
 interface ProductListExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function expandProductBundle(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer;
+    public function expandProductListWithProductBundle(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 }

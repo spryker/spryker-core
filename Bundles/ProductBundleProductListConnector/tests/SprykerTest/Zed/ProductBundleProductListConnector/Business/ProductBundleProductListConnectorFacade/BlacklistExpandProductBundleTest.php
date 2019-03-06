@@ -11,7 +11,7 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
-use Generated\Shared\Transfer\ProductListResponseTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeBridge;
 
@@ -39,15 +39,15 @@ class BlacklistExpandProductBundleTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductBundleBlacklistAddBundle(): void
+    public function testExpandProductListWithProductBundleBlacklistAddBundle(): void
     {
         $productBundleCollection = $this->createProductBundleCollectionTransfer(static::BUNDLE_PRODUCT_ID);
         $productBundleProductListConnectorToProductBundleFacadeBridgeMock = $this->getProductBundleProductListConnectorToProductBundleFacadeBridgeMock($productBundleCollection);
         $productBundleProductListConnectorFacade = $this->tester->getFacade($productBundleProductListConnectorToProductBundleFacadeBridgeMock);
 
-        $productListResponseTransfer = $this->createBlacklistProductListResponseTransfer([static::PRODUCT_ID_1]);
+        $productListTransfer = $this->createBlacklistProductListTransfer([static::PRODUCT_ID_1]);
 
-        $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductBundle($productListResponseTransfer);
+        $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductListWithProductBundle($productListTransfer);
 
         $expectedProductIds = [
             static::PRODUCT_ID_1,
@@ -60,14 +60,14 @@ class BlacklistExpandProductBundleTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductBundleBlacklistShouldNotAddBundle(): void
+    public function testExpandProductListWithProductBundleBlacklistShouldNotAddBundle(): void
     {
         $productBundleCollection = $this->createEmptyProductBundleCollectionTransfer();
         $productBundleProductListConnectorToProductBundleFacadeBridgeMock = $this->getProductBundleProductListConnectorToProductBundleFacadeBridgeMock($productBundleCollection);
         $productBundleProductListConnectorFacade = $this->tester->getFacade($productBundleProductListConnectorToProductBundleFacadeBridgeMock);
-        $productListResponseTransfer = $this->createBlacklistProductListResponseTransfer([static::PRODUCT_ID_1]);
+        $productListTransfer = $this->createBlacklistProductListTransfer([static::PRODUCT_ID_1]);
 
-        $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductBundle($productListResponseTransfer);
+        $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductListWithProductBundle($productListTransfer);
 
         $expectedProductIds = [
             static::PRODUCT_ID_1,
@@ -89,7 +89,7 @@ class BlacklistExpandProductBundleTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
         $productBundleProductListConnectorToProductBundleFacadeBridgeMock
-            ->method('getProductBundleCollectionByAssignedIdProductConcrete')
+            ->method('getProductBundleCollectionByCriteriaFilter')
             ->willReturn($productBundleCollection);
 
         return $productBundleProductListConnectorToProductBundleFacadeBridgeMock;
@@ -98,11 +98,11 @@ class BlacklistExpandProductBundleTest extends Unit
     /**
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     * @return \Generated\Shared\Transfer\ProductListTransfer
      */
-    protected function createBlacklistProductListResponseTransfer(array $productIds = []): ProductListResponseTransfer
+    protected function createBlacklistProductListTransfer(array $productIds = []): ProductListTransfer
     {
-        return $this->tester->createProductListResponseTransfer(
+        return $this->tester->createProductListTransfer(
             $productIds,
             $this->tester->createProductBundleProductListConnectorConfig()->getProductListTypeBlacklist()
         );

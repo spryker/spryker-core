@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductBundleProductListConnector\Business\ProductList;
 
 use Generated\Shared\Transfer\ProductListResponseTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListTypeExpanderInterface;
 use Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorConfig;
 
@@ -44,20 +45,23 @@ class ProductListExpander implements ProductListExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function expandProductBundle(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
+    public function expandProductListWithProductBundle(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        if (!$productListResponseTransfer->getProductList() || !$productListResponseTransfer->getProductList()->getType()) {
+        $productListResponseTransfer = (new ProductListResponseTransfer())
+            ->setProductList($productListTransfer);
+
+        if (!$productListTransfer || !$productListTransfer->getType()) {
             return $productListResponseTransfer;
         }
 
-        if ($productListResponseTransfer->getProductList()->getType() === $this->productBundleProductListConnectorConfig->getProductListTypeBlacklist()) {
-            return $this->blacklistProductListTypeExpander->expandProductBundle($productListResponseTransfer);
+        if ($productListTransfer->getType() === $this->productBundleProductListConnectorConfig->getProductListTypeBlacklist()) {
+            return $this->blacklistProductListTypeExpander->expandProductListWithProductBundle($productListResponseTransfer);
         }
 
-        return $this->whitelistProductListTypeExpander->expandProductBundle($productListResponseTransfer);
+        return $this->whitelistProductListTypeExpander->expandProductListWithProductBundle($productListResponseTransfer);
     }
 }

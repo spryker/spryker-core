@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductBundleProductListConnector;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
-use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Kernel\Container;
@@ -41,9 +40,9 @@ class ProductBundleProductListConnectorBusinessTester extends Actor
      * @param int[] $productIds
      * @param string $type
      *
-     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     * @return \Generated\Shared\Transfer\ProductListTransfer
      */
-    public function createProductListResponseTransfer(array $productIds, string $type): ProductListResponseTransfer
+    public function createProductListTransfer(array $productIds, string $type): ProductListTransfer
     {
         $productListProductConcreteRelationTransfer = new ProductListProductConcreteRelationTransfer();
         $productListProductConcreteRelationTransfer->setProductIds($productIds);
@@ -52,10 +51,7 @@ class ProductBundleProductListConnectorBusinessTester extends Actor
         $productListTransfer->setProductListProductConcreteRelation($productListProductConcreteRelationTransfer);
         $productListTransfer->setType($type);
 
-        $productListResponseTransfer = new ProductListResponseTransfer();
-        $productListResponseTransfer->setProductList($productListTransfer);
-
-        return $productListResponseTransfer;
+        return $productListTransfer;
     }
 
     /**

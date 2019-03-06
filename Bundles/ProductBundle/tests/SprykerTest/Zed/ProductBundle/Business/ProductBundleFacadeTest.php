@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
@@ -412,15 +413,15 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductBundleCollectionByAssignedIdProductConcreteShouldReturnPersistedBundledProducts()
+    public function testGetProductBundleCollectionByCriteriaFilterShouldReturnPersistedBundledProducts()
     {
         $this->markTestIncomplete('Something with transactions');
-        $productConcreteBundleTransfer = $this->createProductBundle(self::BUNDLED_PRODUCT_PRICE_2);
+        $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
 
         $productBundleFacade = $this->createProductBundleFacade();
         foreach ($productConcreteBundleTransfer->getProductBundle()->getBundledProducts() as $bundledProduct) {
-            $productBundleCollection = $productBundleFacade->getProductBundleCollectionByAssignedIdProductConcrete(
-                $bundledProduct->getIdProductConcrete()
+            $productBundleCollection = $productBundleFacade->getProductBundleCollectionByCriteriaFilter(
+                (new ProductBundleCriteriaFilterTransfer())->setIdBundledProduct($bundledProduct->getIdProductConcrete())
             );
 
             $this->assertSame(1, $productBundleCollection->getProductBundles()->count());

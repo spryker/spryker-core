@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductBundleProductListConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductListResponseTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaveInterface;
 
@@ -24,12 +25,12 @@ class ProductBundleProductListPreSavePlugin extends AbstractPlugin implements Pr
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function preSave(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
+    public function preSave(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        return $this->getFacade()->expandProductBundle($productListResponseTransfer);
+        return $this->getFacade()->expandProductListWithProductBundle($productListTransfer);
     }
 }

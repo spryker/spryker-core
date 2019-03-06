@@ -16,5 +16,5 @@ interface ProductListTypeExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function expandProductBundle(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer;
+    public function expandProductListWithProductBundle(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer;
 }

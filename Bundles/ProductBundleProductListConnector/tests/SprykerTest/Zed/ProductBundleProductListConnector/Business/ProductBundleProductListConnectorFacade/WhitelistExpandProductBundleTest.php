@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductBundleProductListConnector\Business\ProductBundlePr
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
-use Generated\Shared\Transfer\ProductListResponseTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeBridge;
 
@@ -38,15 +38,15 @@ class WhitelistExpandProductBundleTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductBundleWhitelistAddBundle(): void
+    public function testExpandProductListWithProductBundleWhitelistAddBundle(): void
     {
         $bundledProducts = (new ProductForBundleTransfer())->setIdProductConcrete(static::BUNDLE_PRODUCT_ID);
         $productBundleProductListConnectorToProductBundleFacadeBridgeMock = $this->getProductBundleProductListConnectorToProductBundleFacadeBridgeMock(new ArrayObject([$bundledProducts]));
         $productBundleProductListConnectorFacade = $this->tester->getFacade($productBundleProductListConnectorToProductBundleFacadeBridgeMock);
 
-        $productListResponseTransfer = $this->createWhitelistProductListResponseTransfer([static::PRODUCT_ID_1]);
+        $productListTransfer = $this->createWhitelistProductListTransfer([static::PRODUCT_ID_1]);
 
-        $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductBundle($productListResponseTransfer);
+        $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductListWithProductBundle($productListTransfer);
 
         $expectedProductIds = [
             static::PRODUCT_ID_1,
@@ -59,13 +59,13 @@ class WhitelistExpandProductBundleTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductBundleWhitelistShouldNotAddBundle(): void
+    public function testExpandProductListWithProductBundleWhitelistShouldNotAddBundle(): void
     {
         $productBundleProductListConnectorToProductBundleFacadeBridgeMock = $this->getProductBundleProductListConnectorToProductBundleFacadeBridgeMock(new ArrayObject());
         $productBundleProductListConnectorFacade = $this->tester->getFacade($productBundleProductListConnectorToProductBundleFacadeBridgeMock);
-        $productListResponseTransfer = $this->createWhitelistProductListResponseTransfer([static::PRODUCT_ID_1]);
+        $productListTransfer = $this->createWhitelistProductListTransfer([static::PRODUCT_ID_1]);
 
-        $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductBundle($productListResponseTransfer);
+        $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductListWithProductBundle($productListTransfer);
 
         $expectedProductIds = [
             static::PRODUCT_ID_1,
@@ -96,11 +96,11 @@ class WhitelistExpandProductBundleTest extends Unit
     /**
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     * @return \Generated\Shared\Transfer\ProductListTransfer
      */
-    protected function createWhitelistProductListResponseTransfer(array $productIds = []): ProductListResponseTransfer
+    protected function createWhitelistProductListTransfer(array $productIds = []): ProductListTransfer
     {
-        return $this->tester->createProductListResponseTransfer(
+        return $this->tester->createProductListTransfer(
             $productIds,
             $this->tester->createProductBundleProductListConnectorConfig()->getProductListTypeWhitelist()
         );

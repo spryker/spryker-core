@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
@@ -82,17 +83,6 @@ class ProductBundleReader implements ProductBundleReaderInterface
     }
 
     /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
-     */
-    public function getProductBundleCollectionByAssignedIdProductConcrete(int $idProductConcrete): ProductBundleCollectionTransfer
-    {
-        return $this->productBundleRepository
-            ->getProductBundleCollectionByAssignedIdProductConcrete($idProductConcrete);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -121,6 +111,72 @@ class ProductBundleReader implements ProductBundleReaderInterface
         $productConcreteTransfer->setProductBundle($productBundleTransfer);
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
+     */
+    public function getProductBundleCollectionByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): ProductBundleCollectionTransfer
+    {
+        $productForBundleTransfers = $this->productBundleRepository
+            ->getProductForBundleTransfersByCriteriaFilter($productBundleCriteriaFilterTransfer);
+
+        $productBundleTransfers = $this->groupProductForBundleTransfersByProductBundleTransfers($productForBundleTransfers);
+
+        return (new ProductBundleCollectionTransfer())
+            ->setProductBundles(new ArrayObject($productBundleTransfers));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleTransfer[]
+     */
+    protected function groupProductForBundleTransfersByProductBundleTransfers(array $productForBundleTransfers): array
+    {
+        $productBundleTransfersGroupedByIdProductBundle = [];
+
+        foreach ($productForBundleTransfers as $productForBundleTransfer) {
+            $idProductBundle = $productForBundleTransfer->getIdProductBundle();
+
+            if (isset($productBundleTransfersGroupedByIdProductBundle[$idProductBundle])) {
+                $productBundleTransfersGroupedByIdProductBundle[$idProductBundle] = $this->updateProductBundleTransfer(
+                    $productBundleTransfersGroupedByIdProductBundle[$idProductBundle],
+                    $productForBundleTransfer
+                );
+
+                continue;
+            }
+            $productBundleTransfersGroupedByIdProductBundle[$idProductBundle] = $this->createProductBundleTransfer($productForBundleTransfer);
+        }
+
+        return $productBundleTransfersGroupedByIdProductBundle;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductBundleTransfer $productBundleTransfer
+     * @param \Generated\Shared\Transfer\ProductForBundleTransfer $productForBundleTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleTransfer
+     */
+    protected function updateProductBundleTransfer(ProductBundleTransfer $productBundleTransfer, ProductForBundleTransfer $productForBundleTransfer): ProductBundleTransfer
+    {
+        return $productBundleTransfer
+            ->addBundledProduct($productForBundleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductForBundleTransfer $productForBundleTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleTransfer
+     */
+    protected function createProductBundleTransfer(ProductForBundleTransfer $productForBundleTransfer): ProductBundleTransfer
+    {
+        return (new ProductBundleTransfer())
+            ->setIdProductConcrete($productForBundleTransfer->getIdProductBundle())
+            ->addBundledProduct($productForBundleTransfer);
     }
 
     /**

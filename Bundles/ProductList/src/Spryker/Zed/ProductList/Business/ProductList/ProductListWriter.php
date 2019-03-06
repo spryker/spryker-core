@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductList\Business\ProductList;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -56,6 +57,8 @@ class ProductListWriter implements ProductListWriterInterface
     }
 
     /**
+     * @deprecated Use createProductList() or updateProductList() instead.
+     *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
@@ -166,7 +169,10 @@ class ProductListWriter implements ProductListWriterInterface
     protected function executeProductListPreSavePlugins(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
     {
         foreach ($this->productListPreSavePlugins as $productListPreSavePlugin) {
-            $productListResponseTransfer = $productListPreSavePlugin->preSave($productListResponseTransfer);
+            $preSavePluginProductListResponseTransfer = $productListPreSavePlugin->preSave($productListResponseTransfer->getProductList());
+            $messages = array_merge($productListResponseTransfer->getMessages()->getArrayCopy(), $preSavePluginProductListResponseTransfer->getMessages()->getArrayCopy());
+            $productListResponseTransfer->setProductList($preSavePluginProductListResponseTransfer->getProductList())
+                ->setMessages(new ArrayObject($messages));
         }
 
         return $productListResponseTransfer;

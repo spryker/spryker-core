@@ -13,8 +13,8 @@
     </transfer>
 
     <transfer name="ProductListResponse">
-        <property name="productList" type="ProductList" />
-        <property name="isSuccess" type="bool" />
+        <property name="productList" type="ProductList"/>
+        <property name="isSuccess" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 

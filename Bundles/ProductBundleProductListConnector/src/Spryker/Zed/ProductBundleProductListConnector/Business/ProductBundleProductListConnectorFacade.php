@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductBundleProductListConnector\Business;
 
 use Generated\Shared\Transfer\ProductListResponseTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -20,14 +21,14 @@ class ProductBundleProductListConnectorFacade extends AbstractFacade implements 
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function expandProductBundle(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
+    public function expandProductListWithProductBundle(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
         return $this->getFactory()
             ->createProductListExpander()
-            ->expandProductBundle($productListResponseTransfer);
+            ->expandProductListWithProductBundle($productListTransfer);
     }
 }

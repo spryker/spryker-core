@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade;
 interface ProductBundleProductListConnectorToProductFacadeInterface
 {
     /**
-     * @param int $idProduct
+     * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     * @return array
      */
-    public function findProductConcreteById($idProduct);
+    public function getProductConcreteSkusByConcreteIds(array $productIds): array;
 }

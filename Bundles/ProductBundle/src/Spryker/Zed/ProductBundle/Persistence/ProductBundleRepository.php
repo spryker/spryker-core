@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\ProductBundle\Persistence;
 
-use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
+use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -36,20 +37,36 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-    public function getProductBundleCollectionByAssignedIdProductConcrete(int $idProductConcrete): ProductBundleCollectionTransfer
+    public function getProductForBundleTransfersByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): array
     {
-        $productBundleEntities = $this->getFactory()
+        $productBundleQuery = $this->getFactory()
             ->createProductBundleQuery()
-            ->filterByFkBundledProduct($idProductConcrete)
-            ->joinWithSpyProductRelatedByFkBundledProduct()
-            ->find();
+            ->joinWithSpyProductRelatedByFkBundledProduct();
+        $productBundleQuery = $this->applyFilters($productBundleQuery, $productBundleCriteriaFilterTransfer);
+
+        $productBundleEntities = $productBundleQuery->find();
 
         return $this->getFactory()
             ->createProductBundleMapper()
-            ->mapProductBundleEntitiesToProductBundleCollectionTransfer($productBundleEntities, new ProductBundleCollectionTransfer());
+            ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities->getArrayCopy());
+    }
+
+    /**
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery $productBundleQuery
+     * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
+     */
+    protected function applyFilters(SpyProductBundleQuery $productBundleQuery, ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): SpyProductBundleQuery
+    {
+        if ($productBundleCriteriaFilterTransfer->getIdBundledProduct() !== null) {
+            $productBundleQuery->filterByFkBundledProduct($productBundleCriteriaFilterTransfer->getIdBundledProduct());
+        }
+
+        return $productBundleQuery;
     }
 }
