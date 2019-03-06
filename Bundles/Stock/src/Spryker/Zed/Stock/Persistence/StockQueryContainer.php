@@ -263,17 +263,18 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     /**
      * @api
      *
-     * @param int $idProduct
+     * @param string $sku
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
-    public function queryStockAmountByProducts($idProduct): SpyStockProductQuery
+    public function queryStockAmountByProducts(string $sku): SpyStockProductQuery
     {
         return $this->getFactory()
             ->createStockProductQuery()
             ->select([static::FIELD_TOTAL_QUANTITY])
-            ->filterByFkProduct($idProduct)
-            ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', static::FIELD_TOTAL_QUANTITY)
-            ->groupByFkProduct();
+            ->useSpyProductQuery()
+                ->filterBySku($sku)
+            ->endUse()
+            ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', static::FIELD_TOTAL_QUANTITY);
     }
 }

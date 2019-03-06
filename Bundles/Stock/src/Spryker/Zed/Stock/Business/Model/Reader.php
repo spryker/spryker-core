@@ -468,13 +468,16 @@ class Reader implements ReaderInterface
      *
      * @return float
      */
-    public function getProductStockAmount($sku): float
+    public function getProductStockAmount(string $sku): float
     {
-        $productId = $this->productFacade->findProductConcreteIdBySku($sku);
-
-        return $this->queryContainer
-            ->queryStockAmountByProducts($productId)
+        /**
+         * @var float $stockAmount
+         */
+        $stockAmount = $this->queryContainer
+            ->queryStockAmountByProducts($sku)
             ->findOne();
+
+        return $stockAmount;
     }
 
     /**

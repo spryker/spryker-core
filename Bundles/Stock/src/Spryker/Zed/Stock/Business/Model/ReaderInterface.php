@@ -156,5 +156,5 @@ interface ReaderInterface
      *
      * @return float
      */
-    public function getProductStockAmount($sku): float;
+    public function getProductStockAmount(string $sku): float;
 }
