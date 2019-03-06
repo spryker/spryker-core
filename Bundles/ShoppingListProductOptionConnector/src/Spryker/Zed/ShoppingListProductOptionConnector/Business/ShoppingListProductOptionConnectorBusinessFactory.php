@@ -37,8 +37,7 @@ class ShoppingListProductOptionConnectorBusinessFactory extends AbstractBusiness
     {
         return new ShoppingListProductOptionReader(
             $this->getProductOptionFacade(),
-            $this->getRepository(),
-            $this->getShoppingListFacade()
+            $this->getRepository()
         );
     }
 
@@ -85,16 +84,6 @@ class ShoppingListProductOptionConnectorBusinessFactory extends AbstractBusiness
     {
         return new ProductOptionValuesRemover(
             $this->getEntityManager()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ShoppingListProductOptionConnector\Dependency\Facade\ShoppingListProductOptionConnectorToShoppingListFacadeBridge
-     */
-    public function getShoppingListFacade(): ShoppingListProductOptionConnectorToShoppingListFacadeBridge
-    {
-        return $this->getProvidedDependency(
-            ShoppingListProductOptionConnectorDependencyProvider::FACADE_SHOPPING_LIST
         );
     }
 }
