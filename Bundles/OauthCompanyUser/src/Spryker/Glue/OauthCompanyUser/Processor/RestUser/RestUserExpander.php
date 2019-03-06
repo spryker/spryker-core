@@ -13,6 +13,8 @@ use Spryker\Glue\OauthCompanyUser\Dependency\Client\OauthCompanyUserToCompanyUse
 
 class RestUserExpander implements RestUserExpanderInterface
 {
+    protected const MAPPING_TYPE_UUID = 'uuid';
+
     /**
      * @var \Spryker\Glue\OauthCompanyUser\Dependency\Client\OauthCompanyUserToCompanyUserStorageClientInterface
      */
@@ -40,7 +42,7 @@ class RestUserExpander implements RestUserExpanderInterface
         }
 
         $companyUserStorageTransfer = $this->companyUserStorageClient
-            ->findCompanyUserByMapping('uuid', $uuidCompanyUser);
+            ->findCompanyUserByMapping(static::MAPPING_TYPE_UUID, $uuidCompanyUser);
 
         if ($companyUserStorageTransfer !== null) {
             $restUserTransfer->fromArray($companyUserStorageTransfer->toArray(), true);

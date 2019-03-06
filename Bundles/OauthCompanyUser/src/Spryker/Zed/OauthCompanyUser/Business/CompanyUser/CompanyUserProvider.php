@@ -50,16 +50,38 @@ class CompanyUserProvider implements CompanyUserProviderInterface
             return $oauthUserTransfer;
         }
 
-        $companyUserTransfer = (new CompanyUserTransfer())
-            ->setUuid($oauthUserTransfer->getIdCompanyUser());
-
-        $companyUserTransfer = $this->companyUserFacade->findActiveCompanyUserByUuid($companyUserTransfer);
+        $companyUserTransfer = $this->findActiveCompanyUser($oauthUserTransfer);
 
         if ($companyUserTransfer === null
             || $companyUserTransfer->getCustomer()->getCustomerReference() !== $oauthUserTransfer->getCustomerReference()) {
             return $oauthUserTransfer;
         }
 
+        return $this->prepareOauthUserTransfer($oauthUserTransfer, $companyUserTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    protected function findActiveCompanyUser(OauthUserTransfer $oauthUserTransfer)
+    {
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setUuid($oauthUserTransfer->getIdCompanyUser());
+
+        $companyUserTransfer = $this->companyUserFacade->findActiveCompanyUserByUuid($companyUserTransfer);
+        return $companyUserTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthUserTransfer
+     */
+    protected function prepareOauthUserTransfer(OauthUserTransfer $oauthUserTransfer, CompanyUserTransfer $companyUserTransfer): OauthUserTransfer
+    {
         $companyUserIdentifierTransfer = (new CompanyUserIdentifierTransfer())
             ->setCustomerReference($companyUserTransfer->getCustomer()->getCustomerReference())
             ->setIdCustomer($companyUserTransfer->getCustomer()->getIdCustomer())

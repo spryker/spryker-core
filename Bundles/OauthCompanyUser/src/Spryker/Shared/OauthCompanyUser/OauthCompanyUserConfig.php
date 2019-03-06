@@ -22,7 +22,7 @@ class OauthCompanyUserConfig extends AbstractBundleConfig
     }
 
     /**
-     * The client id as is store in spy_oauth_client database table
+     * The client id as is store in spy_oauth_client database table.
      *
      * @return string
      */

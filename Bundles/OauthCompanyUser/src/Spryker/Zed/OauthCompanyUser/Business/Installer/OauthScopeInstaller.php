@@ -40,7 +40,6 @@ class OauthScopeInstaller implements OauthScopeInstallerInterface
      */
     public function install(): void
     {
-
         $companyUserScopes = $this->oauthCompanyUserConfig->getCompanyUserScopes();
         $oauthScopesTransfers = $this->getScopesByIdentifiers($companyUserScopes);
 
