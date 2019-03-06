@@ -34,9 +34,9 @@ class SessionStorage implements StorageInterface
     /**
      * @param string $formName
      *
-     * @return mixed
+     * @return string
      */
-    public function getToken($formName)
+    public function getToken(string $formName): string
     {
         return $this->session->get($this->keyPrefix . $formName);
     }
@@ -46,7 +46,7 @@ class SessionStorage implements StorageInterface
      *
      * @return void
      */
-    public function deleteToken($formName)
+    public function deleteToken(string $formName): void
     {
         $this->session->remove($this->keyPrefix . $formName);
     }
@@ -57,7 +57,7 @@ class SessionStorage implements StorageInterface
      *
      * @return void
      */
-    public function setToken($formName, $token)
+    public function setToken(string $formName, string $token): void
     {
         $this->session->set($this->keyPrefix . $formName, $token);
     }

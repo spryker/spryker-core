@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Form\DoubleSubmitProtection;
+namespace Spryker\Shared\Form\DoubleSubmitProtection\Subscriber;
 
 use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInterface;
 use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface;
@@ -74,7 +74,7 @@ class FormEventSubscriber implements EventSubscriberInterface
         TokenGeneratorInterface $generator,
         StorageInterface $storage,
         $translator = null,
-        $translationDomain = null
+        ?string $translationDomain = null
     ) {
         $this->tokenGenerator = $generator;
         $this->tokenStorage = $storage;
@@ -87,7 +87,7 @@ class FormEventSubscriber implements EventSubscriberInterface
      *
      * @return void
      */
-    public function validateToken(FormEvent $event)
+    public function validateToken(FormEvent $event): void
     {
         $form = $event->getForm();
 
@@ -115,7 +115,7 @@ class FormEventSubscriber implements EventSubscriberInterface
     /**
      * @return string
      */
-    public function getErrorMessage()
+    public function getErrorMessage(): string
     {
         return $this->errorMessage;
     }
@@ -128,13 +128,14 @@ class FormEventSubscriber implements EventSubscriberInterface
     public function setErrorMessage($errorMessage)
     {
         $this->errorMessage = $errorMessage;
+
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getFieldName()
+    public function getFieldName(): string
     {
         return $this->fieldName;
     }
@@ -147,13 +148,14 @@ class FormEventSubscriber implements EventSubscriberInterface
     public function setFieldName($fieldName)
     {
         $this->fieldName = $fieldName;
+
         return $this;
     }
 
     /**
      * @return array
      */
-    public function getTranslationOptions()
+    public function getTranslationOptions(): array
     {
         return $this->translationOptions;
     }
@@ -166,6 +168,7 @@ class FormEventSubscriber implements EventSubscriberInterface
     public function setTranslationOptions($translationOptions)
     {
         $this->translationOptions = $translationOptions;
+
         return $this;
     }
 
@@ -175,20 +178,20 @@ class FormEventSubscriber implements EventSubscriberInterface
      *
      * @return bool
      */
-    protected function isTokenValid($data, $formName)
+    protected function isTokenValid($data, $formName): bool
     {
         $givenToken = $data[$this->fieldName];
         $expectedToken = $this->tokenStorage->getToken($formName);
 
-        return !empty($expectedToken) &&
-            !empty($givenToken) &&
+        return $expectedToken !== null &&
+            $givenToken !== null &&
             $this->tokenGenerator->checkTokenEquals($expectedToken, $givenToken);
     }
 
     /**
      * @return string
      */
-    protected function getTranslatedErrorMessage()
+    protected function getTranslatedErrorMessage(): string
     {
         $errorMessage = $this->errorMessage;
         if ($this->translator !== null) {

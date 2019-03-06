@@ -14,13 +14,13 @@ interface TokenGeneratorInterface
     /**
      * @return string
      */
-    public function generateToken();
+    public function generateToken(): string;
 
     /**
-     * @param mixed $expected
-     * @param mixed $actual
+     * @param string $expected
+     * @param string $actual
      *
      * @return bool
      */
-    public function checkTokenEquals($expected, $actual);
+    public function checkTokenEquals(string $expected, string $actual): bool;
 }

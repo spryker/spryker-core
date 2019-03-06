@@ -44,7 +44,7 @@ class DoubleSubmitProtectionExtension extends AbstractExtension
         TokenGeneratorInterface $tokenGenerator,
         StorageInterface $tokenStorage,
         $translator = null,
-        $translationDomain = null
+        ?string $translationDomain = null
     ) {
         $this->tokenGenerator = $tokenGenerator;
         $this->tokenStorage = $tokenStorage;
@@ -55,7 +55,7 @@ class DoubleSubmitProtectionExtension extends AbstractExtension
     /**
      * @return array
      */
-    protected function loadTypeExtensions()
+    protected function loadTypeExtensions(): array
     {
         return [
             new DoubleSubmitFormType(

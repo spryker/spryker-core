@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Gui\Plugin\FormExtension;
+namespace Spryker\Shared\Form\Plugin\FormExtension;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface;
-use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
+use Symfony\Component\Form\Extension\HttpFoundation\Type\FormTypeHttpFoundationExtension;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
 
-class NoValidateTypeFormExtensionPlugin implements FormPluginInterface
+class HttpFoundationFormPlugin implements FormPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Adds `novalidate` to the form type attributes.
+     * - Adds the basic Symfony HttpFoundation extension.
      *
      * @api
      *
@@ -28,7 +28,7 @@ class NoValidateTypeFormExtensionPlugin implements FormPluginInterface
     public function extend(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
     {
         $formFactoryBuilder->addTypeExtension(
-            new NoValidateTypeExtension()
+            new FormTypeHttpFoundationExtension()
         );
 
         return $formFactoryBuilder;

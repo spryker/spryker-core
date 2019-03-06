@@ -12,22 +12,22 @@ interface StorageInterface
     /**
      * @param string $formName
      *
-     * @return bool
+     * @return string
      */
-    public function getToken($formName);
+    public function getToken(string $formName): string;
 
     /**
      * @param string $formName
      *
      * @return void
      */
-    public function deleteToken($formName);
+    public function deleteToken(string $formName): void;
 
     /**
      * @param string $formName
      * @param string $token
      *
-     * @return string
+     * @return void
      */
-    public function setToken($formName, $token);
+    public function setToken(string $formName, string $token): void;
 }

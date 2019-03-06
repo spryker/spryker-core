@@ -5,16 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Gui\Communication\Form\Type\Extension;
+namespace Spryker\Shared\Gui\Form\Type\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
-/**
- * @deprecated Use `Spryker\Shared\Gui\Form\Type\Extension\NoValidateTypeExtension` instead.
- */
 class NoValidateTypeExtension extends AbstractTypeExtension
 {
     /**

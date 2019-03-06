@@ -17,7 +17,7 @@ use Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class DoubleSubmitProtectionFormExtensionPlugin implements FormPluginInterface
+class DoubleSubmitProtectionFormPlugin implements FormPluginInterface
 {
     protected const SERVICE_SESSION = 'session';
     protected const SERVICE_TRANSLATOR = 'translator';

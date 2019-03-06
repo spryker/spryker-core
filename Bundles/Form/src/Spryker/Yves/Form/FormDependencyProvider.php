@@ -15,16 +15,16 @@ use Spryker\Yves\Kernel\Container;
  */
 class FormDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PLUGINS_FORM_EXTENSION = 'PLUGINS_FORM_EXTENSION';
+    public const PLUGINS_FORM = 'PLUGINS_FORM';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
-        $container = $this->addFormExtensionPlugins($container);
+        $container = $this->addFormPlugins($container);
 
         return $container;
     }
@@ -34,10 +34,10 @@ class FormDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addFormExtensionPlugins(Container $container): Container
+    protected function addFormPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_FORM_EXTENSION, function (Container $container) {
-            return $this->getFormExtensionPlugins();
+        $container->set(static::PLUGINS_FORM, function (Container $container) {
+            return $this->getFormPlugins();
         });
 
         return $container;
@@ -46,7 +46,7 @@ class FormDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
      */
-    protected function getFormExtensionPlugins(): array
+    protected function getFormPlugins(): array
     {
         return [];
     }

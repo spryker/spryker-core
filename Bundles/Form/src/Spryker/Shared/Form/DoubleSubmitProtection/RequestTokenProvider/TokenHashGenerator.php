@@ -27,18 +27,18 @@ class TokenHashGenerator implements TokenGeneratorInterface
      *
      * @return string
      */
-    public function generateToken()
+    public function generateToken(): string
     {
         return hash($this->algorithm, microtime() . mt_rand());
     }
 
     /**
-     * @param mixed $expected
-     * @param mixed $actual
+     * @param string $expected
+     * @param string $actual
      *
      * @return bool
      */
-    public function checkTokenEquals($expected, $actual)
+    public function checkTokenEquals(string $expected, string $actual): bool
     {
         return hash_equals($expected, $actual);
     }

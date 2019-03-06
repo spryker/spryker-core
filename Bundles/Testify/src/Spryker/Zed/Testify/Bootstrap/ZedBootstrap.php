@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Testify\Bootstrap;
 
+use Silex\Provider\FormServiceProvider;
 use Silex\Provider\HttpFragmentServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\ValidatorServiceProvider;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
@@ -99,8 +101,10 @@ class ZedBootstrap
     private function getDefaultServiceProvider()
     {
         return [
+            new FormServiceProvider(),
             new HttpFragmentServiceProvider(),
             new ServiceControllerServiceProvider(),
+            new ValidatorServiceProvider(),
             new SessionServiceProvider(),
             new TwigServiceProvider(),
         ];

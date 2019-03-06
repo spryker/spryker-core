@@ -12,6 +12,7 @@ use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInter
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
 use Symfony\Component\Form\ResolvedFormTypeFactory;
+use Symfony\Component\Form\ResolvedFormTypeFactoryInterface;
 
 /**
  * @method \Spryker\Zed\Form\Communication\FormCommunicationFactory getFactory()
@@ -38,16 +39,12 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::SERVICE_FORM_RESOLVED_TYPE_FACTORY, function (ContainerInterface $container) {
-            return new ResolvedFormTypeFactory();
-        });
-
         $container->set(static::SERVICE_FORM_FACTORY, function (ContainerInterface $container) {
-            $formFactoryBuilder = $this->getFactory()->createFormFactoryBuilder()
-                ->setResolvedTypeFactory($container->get(static::SERVICE_FORM_RESOLVED_TYPE_FACTORY));
+            $formFactoryBuilder = $this->getFactory()
+                ->createFormFactoryBuilder()
+                ->setResolvedTypeFactory($this->createResolvedFormTypeFactory());
 
             $formFactoryBuilder = $this->extendForm($formFactoryBuilder, $container);
-            $formFactoryBuilder = $this->extendTypes($formFactoryBuilder, $container);
 
             return $formFactoryBuilder->getFormFactory();
         });
@@ -58,18 +55,11 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     }
 
     /**
-     * @param \Symfony\Component\Form\FormFactoryBuilderInterface $formFactoryBuilder
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\Form\FormFactoryBuilderInterface
+     * @return \Symfony\Component\Form\ResolvedFormTypeFactoryInterface
      */
-    protected function extendForm(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
+    protected function createResolvedFormTypeFactory(): ResolvedFormTypeFactoryInterface
     {
-        foreach ($this->getFactory()->getFormExtensionPlugins() as $formExtensionPlugin) {
-            $formFactoryBuilder = $formExtensionPlugin->extend($formFactoryBuilder, $container);
-        }
-
-        return $formFactoryBuilder;
+        return new ResolvedFormTypeFactory();
     }
 
     /**
@@ -78,9 +68,9 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      *
      * @return \Symfony\Component\Form\FormFactoryBuilderInterface
      */
-    protected function extendTypes(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
+    protected function extendForm(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
     {
-        foreach ($this->getFactory()->getFormTypeExtensionPlugins() as $formExtensionPlugin) {
+        foreach ($this->getFactory()->getFormPlugins() as $formExtensionPlugin) {
             $formFactoryBuilder = $formExtensionPlugin->extend($formFactoryBuilder, $container);
         }
 

@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Application;
 
+use Silex\Provider\FormServiceProvider;
 use Silex\Provider\HttpFragmentServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
+use Silex\Provider\ValidatorServiceProvider;
 use Spryker\Shared\Application\ServiceProvider\HeadersSecurityServiceProvider;
 use Spryker\Shared\Config\Environment;
 use Spryker\Shared\ErrorHandler\Plugin\ServiceProvider\WhoopsErrorHandlerServiceProvider;
@@ -80,6 +82,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
             new RoutingServiceProvider(),
             new MvcRoutingServiceProvider(),
             new SilexRoutingServiceProvider(),
+            new ValidatorServiceProvider(),
+            new FormServiceProvider(),
             new UrlGeneratorServiceProvider(),
             new HttpFragmentServiceProvider(),
             new HeaderServiceProvider(),

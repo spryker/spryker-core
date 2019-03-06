@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\Form\DoubleSubmitProtection\Type;
 
-use Spryker\Shared\Form\DoubleSubmitProtection\FormEventSubscriber;
 use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInterface;
 use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface;
+use Spryker\Shared\Form\DoubleSubmitProtection\Subscriber\FormEventSubscriber;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -62,7 +62,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
         TokenGeneratorInterface $tokenGenerator,
         StorageInterface $storage,
         ?TranslatorInterface $translator = null,
-        $translationDomain = null
+        ?string $translationDomain = null
     ) {
         $this->tokenGenerator = $tokenGenerator;
         $this->storage = $storage;
@@ -76,7 +76,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $eventSubscriber = $this->createFormEventSubscriber();
 
@@ -94,7 +94,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
      *
      * @return void
      */
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         if ($view->parent || !$form->isRoot()) {
             return;
@@ -121,28 +121,26 @@ class DoubleSubmitFormType extends AbstractTypeExtension
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            [
-                static::OPTION_KEY_ERROR_MESSAGE => static::DEFAULT_ERROR_MESSAGE,
-                static::OPTION_KEY_TOKEN_FIELD_NAME => static::DEFAULT_TOKEN_FIELD_NAME,
-            ]
-        );
+        $resolver->setDefaults([
+            static::OPTION_KEY_ERROR_MESSAGE => static::DEFAULT_ERROR_MESSAGE,
+            static::OPTION_KEY_TOKEN_FIELD_NAME => static::DEFAULT_TOKEN_FIELD_NAME,
+        ]);
     }
 
     /**
      * @return string
      */
-    public function getExtendedType()
+    public function getExtendedType(): string
     {
         return FormType::class;
     }
 
     /**
-     * @return \Spryker\Shared\Form\DoubleSubmitProtection\FormEventSubscriber
+     * @return \Spryker\Shared\Form\DoubleSubmitProtection\Subscriber\FormEventSubscriber
      */
-    protected function createFormEventSubscriber()
+    protected function createFormEventSubscriber(): FormEventSubscriber
     {
         return new FormEventSubscriber(
             $this->tokenGenerator,

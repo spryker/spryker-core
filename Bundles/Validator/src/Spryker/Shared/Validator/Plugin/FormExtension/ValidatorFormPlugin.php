@@ -12,7 +12,7 @@ use Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
 
-class ValidatorFormExtensionPlugin implements FormPluginInterface
+class ValidatorFormPlugin implements FormPluginInterface
 {
     protected const SERVICE_VALIDATOR = 'validator';
 

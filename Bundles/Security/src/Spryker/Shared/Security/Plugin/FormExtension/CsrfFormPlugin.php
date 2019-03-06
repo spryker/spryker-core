@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class CsrfFormExtensionPlugin implements FormPluginInterface
+class CsrfFormPlugin implements FormPluginInterface
 {
     protected const SERVICE_CSRF_PROVIDER = 'form.csrf_provider';
 
