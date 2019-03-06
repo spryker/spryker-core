@@ -25,7 +25,7 @@ class NavigationsRestApiConfig extends AbstractBundleConfig
     /**
      * This method provides mappings for navigation node type to url resource id field.
      * It is used to define which field from \Generated\Shared\Transfer\UrlStorageTransfer contains node id value
-     * for node with node type from.
+     * for node with specified node type.
      *
      * example:
      * [

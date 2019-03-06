@@ -56,7 +56,7 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
         foreach ($restNavigationNodeTransfers as $restNavigationNodeTransfer) {
             $urlStorageTransfer = $this->urlStorageClient->findUrlStorageTransferByUrl($restNavigationNodeTransfer->getUrl());
             if ($urlStorageTransfer) {
-                $restNavigationNodeTransfer->setNodeId($this->findNodeId($restNavigationNodeTransfer));
+                $restNavigationNodeTransfer->setResourceId($this->findResourceId($restNavigationNodeTransfer));
             }
 
             if ($restNavigationNodeTransfer->getChildren()->count() > 0) {
@@ -73,11 +73,11 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
      *
      * @return int|null
      */
-    protected function findNodeId(RestNavigationNodeTransfer $restNavigationNodeTransfer): ?int
+    protected function findResourceId(RestNavigationNodeTransfer $restNavigationNodeTransfer): ?int
     {
         $urlStorageTransfer = $this->urlStorageClient->findUrlStorageTransferByUrl($restNavigationNodeTransfer->getUrl());
         if ($urlStorageTransfer) {
-            return $this->findNodeIdByNodeType($urlStorageTransfer, $restNavigationNodeTransfer->getNodeType());
+            return $this->findResourceIdByNodeType($urlStorageTransfer, $restNavigationNodeTransfer->getNodeType());
         }
 
         return null;
@@ -89,7 +89,7 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
      *
      * @return int|null
      */
-    protected function findNodeIdByNodeType(UrlStorageTransfer $urlStorageTransfer, string $nodeType): ?int
+    protected function findResourceIdByNodeType(UrlStorageTransfer $urlStorageTransfer, string $nodeType): ?int
     {
         if (!isset($this->config->getNavigationTypeToUrlResourceIdFieldMapping()[$nodeType])) {
             return null;
