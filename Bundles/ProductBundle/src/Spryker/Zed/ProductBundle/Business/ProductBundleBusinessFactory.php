@@ -28,6 +28,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFin
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheck;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheckInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleGrouper;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleGrouperInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Quote\QuoteItemsGrouper;
@@ -68,6 +70,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getAvailabilityQueryContainer(),
             $this->getStoreFacade(),
+            $this->createProductBundleGrouper(),
             $this->getRepository()
         );
     }
@@ -84,6 +87,14 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getPriceFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleGrouperInterface
+     */
+    public function createProductBundleGrouper(): ProductBundleGrouperInterface
+    {
+        return new ProductBundleGrouper();
     }
 
     /**

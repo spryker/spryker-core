@@ -36,6 +36,11 @@ class ProductBundleReader implements ProductBundleReaderInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleGrouperInterface
+     */
+    protected $productBundleGrouper;
+
+    /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
      */
     protected $productBundleRepository;
@@ -44,17 +49,20 @@ class ProductBundleReader implements ProductBundleReaderInterface
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleGrouperInterface $productBundleGrouper
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
         ProductBundleToStoreFacadeInterface $storeFacade,
+        ProductBundleGrouperInterface $productBundleGrouper,
         ProductBundleRepositoryInterface $productBundleRepository
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->availabilityQueryContainer = $availabilityQueryContainer;
         $this->storeFacade = $storeFacade;
+        $this->productBundleGrouper = $productBundleGrouper;
         $this->productBundleRepository = $productBundleRepository;
     }
 
@@ -123,60 +131,11 @@ class ProductBundleReader implements ProductBundleReaderInterface
         $productForBundleTransfers = $this->productBundleRepository
             ->getProductForBundleTransfersByCriteriaFilter($productBundleCriteriaFilterTransfer);
 
-        $productBundleTransfers = $this->groupProductForBundleTransfersByProductBundleTransfers($productForBundleTransfers);
+        $productBundleTransfers = $this->productBundleGrouper
+            ->groupProductForBundleTransfersByProductBundleTransfers($productForBundleTransfers);
 
         return (new ProductBundleCollectionTransfer())
             ->setProductBundles(new ArrayObject($productBundleTransfers));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductBundleTransfer[]
-     */
-    protected function groupProductForBundleTransfersByProductBundleTransfers(array $productForBundleTransfers): array
-    {
-        $productBundleTransfersGroupedByIdProductBundle = [];
-
-        foreach ($productForBundleTransfers as $productForBundleTransfer) {
-            $idProductBundle = $productForBundleTransfer->getIdProductBundle();
-
-            if (isset($productBundleTransfersGroupedByIdProductBundle[$idProductBundle])) {
-                $productBundleTransfersGroupedByIdProductBundle[$idProductBundle] = $this->updateProductBundleTransfer(
-                    $productBundleTransfersGroupedByIdProductBundle[$idProductBundle],
-                    $productForBundleTransfer
-                );
-
-                continue;
-            }
-            $productBundleTransfersGroupedByIdProductBundle[$idProductBundle] = $this->createProductBundleTransfer($productForBundleTransfer);
-        }
-
-        return $productBundleTransfersGroupedByIdProductBundle;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductBundleTransfer $productBundleTransfer
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer $productForBundleTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductBundleTransfer
-     */
-    protected function updateProductBundleTransfer(ProductBundleTransfer $productBundleTransfer, ProductForBundleTransfer $productForBundleTransfer): ProductBundleTransfer
-    {
-        return $productBundleTransfer
-            ->addBundledProduct($productForBundleTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer $productForBundleTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductBundleTransfer
-     */
-    protected function createProductBundleTransfer(ProductForBundleTransfer $productForBundleTransfer): ProductBundleTransfer
-    {
-        return (new ProductBundleTransfer())
-            ->setIdProductConcrete($productForBundleTransfer->getIdProductBundle())
-            ->addBundledProduct($productForBundleTransfer);
     }
 
     /**

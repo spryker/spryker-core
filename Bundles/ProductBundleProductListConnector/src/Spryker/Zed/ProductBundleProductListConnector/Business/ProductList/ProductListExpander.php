@@ -15,6 +15,16 @@ use Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnec
 class ProductListExpander implements ProductListExpanderInterface
 {
     /**
+     * @uses \Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap::COL_TYPE_BLACKLIST
+     */
+    protected const PRODUCT_LIST_TYPE_BLACKLIST = 'blacklist';
+
+    /**
+     * @uses \Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap::COL_TYPE_WHITELIST
+     */
+    protected const PRODUCT_LIST_TYPE_WHITELIST = 'whitelist';
+
+    /**
      * @var \Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorConfig
      */
     protected $productBundleProductListConnectorConfig;
@@ -54,14 +64,18 @@ class ProductListExpander implements ProductListExpanderInterface
         $productListResponseTransfer = (new ProductListResponseTransfer())
             ->setProductList($productListTransfer);
 
-        if (!$productListTransfer || !$productListTransfer->getType()) {
+        if ($productListTransfer->getType() === null) {
             return $productListResponseTransfer;
         }
 
-        if ($productListTransfer->getType() === $this->productBundleProductListConnectorConfig->getProductListTypeBlacklist()) {
+        if ($productListTransfer->getType() === static::PRODUCT_LIST_TYPE_BLACKLIST) {
             return $this->blacklistProductListTypeExpander->expandProductListWithProductBundle($productListResponseTransfer);
         }
 
-        return $this->whitelistProductListTypeExpander->expandProductListWithProductBundle($productListResponseTransfer);
+        if ($productListTransfer->getType() === static::PRODUCT_LIST_TYPE_WHITELIST) {
+            return $this->whitelistProductListTypeExpander->expandProductListWithProductBundle($productListResponseTransfer);
+        }
+
+        return $productListResponseTransfer;
     }
 }

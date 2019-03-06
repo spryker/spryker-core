@@ -65,7 +65,7 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
         $productBundleCriteriaFilterTransfer = $this->createProductBundleCriteriaFilterTransfer($idProductConcreteBundled);
         $productBundleCollectionTransfer = $this->productBundleFacade->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
 
-        if (!$productBundleCollectionTransfer->getProductBundles()->count()) {
+        if (empty($productBundleCollectionTransfer->getProductBundles())) {
             return $productListResponseTransfer;
         }
 
