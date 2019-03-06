@@ -50,6 +50,9 @@ class ProductBundleFacadeTest extends Unit
     public const BUNDLED_PRODUCT_PRICE_2 = 100;
     public const ID_STORE = 1;
 
+    protected const INT_QUANTITY = 1;
+    protected const FLOAT_QUANTITY = 1.5;
+
     /**
      * @return void
      */
@@ -148,29 +151,17 @@ class ProductBundleFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider preCheckCartAvailabilityWhenBundleAvailableProvider
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
      * @return void
      */
-    public function testPreCheckCartAvailabilityWhenBundleAvailable()
+    public function testPreCheckCartAvailabilityWhenBundleAvailable(CartChangeTransfer $cartChangeTransfer)
     {
-        $productConcreteTransfer = $this->createProductBundle(self::BUNDLED_PRODUCT_PRICE_2, true);
+        $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, true);
 
         $productBundleFacade = $this->createProductBundleFacade();
-
-        $cartChangeTransfer = new CartChangeTransfer();
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($productConcreteTransfer->getSku());
-
-        $quoteTransfer = $this->createBaseQuoteTransfer();
-        $quoteTransfer->addItem($itemTransfer);
-
-        $cartChangeTransfer->setQuote($quoteTransfer);
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($productConcreteTransfer->getSku());
-        $itemTransfer->setQuantity(self::ID_STORE);
-
-        $cartChangeTransfer->addItem($itemTransfer);
 
         $cartChangeTransfer = $productBundleFacade->preCheckCartAvailability($cartChangeTransfer);
 
@@ -178,19 +169,84 @@ class ProductBundleFacadeTest extends Unit
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function testPreCheckCartAvailabilityWhenBundleUnavailable()
+    public function preCheckCartAvailabilityWhenBundleAvailableProvider(): array
     {
-        $productConcreteTransfer = $this->createProductBundle(self::BUNDLED_PRODUCT_PRICE_2);
+        return [
+            'int stock' => $this->preCheckCartAvailabilityWhenBundleAvailableData(static::INT_QUANTITY),
+            'float stock' => $this->preCheckCartAvailabilityWhenBundleAvailableData(static::FLOAT_QUANTITY),
+        ];
+    }
 
-        $productBundleFacade = $this->createProductBundleFacade();
-
+    /**
+     * @param float $quantity
+     *
+     * @return array
+     */
+    public function preCheckCartAvailabilityWhenBundleAvailableData(float $quantity): array
+    {
         $cartChangeTransfer = new CartChangeTransfer();
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(5);
-        $itemTransfer->setSku($productConcreteTransfer->getSku());
+        $itemTransfer->setSku(static::BUNDLE_SKU_3);
+
+        $quoteTransfer = $this->createBaseQuoteTransfer();
+        $quoteTransfer->addItem($itemTransfer);
+
+        $cartChangeTransfer->setQuote($quoteTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku(static::BUNDLE_SKU_3);
+        $itemTransfer->setQuantity($quantity);
+
+        $cartChangeTransfer->addItem($itemTransfer);
+
+        return [$cartChangeTransfer];
+    }
+
+    /**
+     * @dataProvider preCheckCartAvailabilityWhenBundleUnavailableProvider
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return void
+     */
+    public function testPreCheckCartAvailabilityWhenBundleUnavailable(CartChangeTransfer $cartChangeTransfer)
+    {
+        $this->createProductBundle(self::BUNDLED_PRODUCT_PRICE_2);
+
+        $productBundleFacade = $this->createProductBundleFacade();
+
+        $cartChangeTransfer = $productBundleFacade->preCheckCartAvailability($cartChangeTransfer);
+
+        $this->assertFalse($cartChangeTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return array
+     */
+    public function preCheckCartAvailabilityWhenBundleUnavailableProvider(): array
+    {
+        return [
+            'int stock' => $this->preCheckCartAvailabilityWhenBundleUnavailableData(5, 25),
+            'float stock' => $this->preCheckCartAvailabilityWhenBundleUnavailableData(5.5, 25.5),
+        ];
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return array
+     */
+    protected function preCheckCartAvailabilityWhenBundleUnavailableData(float $firstQuantity, float $secondQuantity): array
+    {
+        $cartChangeTransfer = new CartChangeTransfer();
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity($firstQuantity);
+        $itemTransfer->setSku(static::BUNDLE_SKU_3);
 
         $quoteTransfer = $this->createBaseQuoteTransfer();
         $quoteTransfer->addItem($itemTransfer);
@@ -199,13 +255,11 @@ class ProductBundleFacadeTest extends Unit
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku(self::SKU_BUNDLED_1);
-        $itemTransfer->setQuantity(25);
+        $itemTransfer->setQuantity($secondQuantity);
 
         $cartChangeTransfer->addItem($itemTransfer);
 
-        $cartChangeTransfer = $productBundleFacade->preCheckCartAvailability($cartChangeTransfer);
-
-        $this->assertFalse($cartChangeTransfer->getIsSuccess());
+        return [$cartChangeTransfer];
     }
 
     /**
@@ -285,13 +339,17 @@ class ProductBundleFacadeTest extends Unit
 
         $bundledProductAvailability = $availabilityQueryContainer->querySpyAvailabilityBySku(self::BUNDLE_SKU_3, self::ID_STORE)->findOne();
 
-        $this->assertSame(0, $bundledProductAvailability->getQuantity());
+        $this->assertSame(0.0, $bundledProductAvailability->getQuantity());
     }
 
     /**
+     * @dataProvider saveBundledProductsShouldAddProvidedConcreteToBundleProvider
+     *
+     * @param \Generated\Shared\Transfer\ProductForBundleTransfer $bundledProductTransfer
+     *
      * @return void
      */
-    public function testSaveBundledProductsShouldAddProvidedConcreteToBundle()
+    public function testSaveBundledProductsShouldAddProvidedConcreteToBundle(ProductForBundleTransfer $bundledProductTransfer)
     {
         $productConcreteBundleTransfer = $this->createProduct(self::BUNDLED_PRODUCT_PRICE_1, self::BUNDLE_SKU_3);
         $productConcreateToAssignTransfer = $this->createProduct(self::BUNDLED_PRODUCT_PRICE_1, self::SKU_BUNDLED_1);
@@ -300,10 +358,8 @@ class ProductBundleFacadeTest extends Unit
 
         $productBundleTransfer = new ProductBundleTransfer();
 
-        $bundledProductTransfer = new ProductForBundleTransfer();
         $bundledProductTransfer->setIdProductConcrete($productConcreateToAssignTransfer->getIdProductConcrete());
         $bundledProductTransfer->setIdProductBundle($productConcreteBundleTransfer->getIdProductConcrete());
-        $bundledProductTransfer->setQuantity(2);
 
         $productBundleTransfer->addBundledProduct($bundledProductTransfer);
 
@@ -320,6 +376,30 @@ class ProductBundleFacadeTest extends Unit
         $this->assertSame($bundledProductTransfer->getQuantity(), $bundledProductEntity->getQuantity());
         $this->assertSame($productConcreateToAssignTransfer->getIdProductConcrete(), $bundledProductEntity->getFkBundledProduct());
         $this->assertSame($productConcreteBundleTransfer->getIdProductConcrete(), $bundledProductEntity->getFkProduct());
+    }
+
+    /**
+     * @return array
+     */
+    public function saveBundledProductsShouldAddProvidedConcreteToBundleProvider(): array
+    {
+        return [
+            'int stock' => $this->saveBundledProductsShouldAddProvidedConcreteToBundleData(2.0),
+            'float stock' => $this->saveBundledProductsShouldAddProvidedConcreteToBundleData(2.5),
+        ];
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return array
+     */
+    public function saveBundledProductsShouldAddProvidedConcreteToBundleData(float $quantity): array
+    {
+        $bundledProductTransfer = new ProductForBundleTransfer();
+        $bundledProductTransfer->setQuantity($quantity);
+
+        return [$bundledProductTransfer];
     }
 
     /**

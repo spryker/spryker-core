@@ -40,6 +40,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_STOCK = 'stock query container';
     public const QUERY_CONTAINER_PRODUCT = 'product query container';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    public const SERVICE_PRODUCT_BUNDLE = 'SERVICE_PRODUCT_BUNDLE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -61,6 +62,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQueryContainerSales($container);
         $container = $this->addQueryContainerStock($container);
         $container = $this->addQueryContainerProduct($container);
+        $container = $this->addProductBundleService($container);
 
         return $container;
     }
@@ -82,6 +84,20 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductBundleService(Container $container): Container
+    {
+        $container[static::SERVICE_PRODUCT_BUNDLE] = function (Container $container) {
+            return $container->getLocator()->productBundle()->service();
+        };
+
         return $container;
     }
 

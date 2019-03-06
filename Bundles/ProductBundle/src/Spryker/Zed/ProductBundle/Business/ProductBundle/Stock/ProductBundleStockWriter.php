@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Service\ProductBundle\ProductBundleServiceInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
@@ -45,21 +46,29 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Service\ProductBundle\ProductBundleServiceInterface
+     */
+    protected $service;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface $stockQueryContainer
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandler
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Service\ProductBundle\ProductBundleServiceInterface $service
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToStockQueryContainerInterface $stockQueryContainer,
         ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandler,
-        ProductBundleToStoreFacadeInterface $storeFacade
+        ProductBundleToStoreFacadeInterface $storeFacade,
+        ProductBundleServiceInterface $service
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->stockQueryContainer = $stockQueryContainer;
         $this->productBundleAvailabilityHandler = $productBundleAvailabilityHandler;
         $this->storeFacade = $storeFacade;
+        $this->service = $service;
     }
 
     /**
@@ -196,7 +205,8 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                 $bundleItemQuantity = $bundledItemQuantity[$idProduct];
                 $isNeverOutOfStock = $productStockQuantity[static::IS_NEVER_OUT_OF_STOCK];
 
-                $itemStock = floor($productStockQuantity[static::QUANTITY] / $bundleItemQuantity);
+                $itemStock = $productStockQuantity[static::QUANTITY] / $bundleItemQuantity;
+                $itemStock = $this->service->round($itemStock);
 
                 if ($this->isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)) {
                     $bundleStock = $itemStock;

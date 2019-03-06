@@ -35,6 +35,11 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     public const ID_STORE = 1;
 
     /**
+     * @var \SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testUpdateAffectedBundlesAvailabilityShouldUpdateAffectedBundlesAvailability()
@@ -124,8 +129,16 @@ class ProductBundleAvailabilityHandlerTest extends Unit
             $storeFacadeMock->method('getStoreByName')->willReturn($storeTransfer);
         }
 
+        $service = $this->tester->getLocator()->productBundle()->service();
+
         return $this->getMockBuilder(ProductBundleAvailabilityHandler::class)
-            ->setConstructorArgs([$availabilityQueryContainerMock, $availabilityFacadeMock, $productBundleQueryContainerMock, $storeFacadeMock])
+            ->setConstructorArgs([
+                $availabilityQueryContainerMock,
+                $availabilityFacadeMock,
+                $productBundleQueryContainerMock,
+                $storeFacadeMock,
+                $service,
+            ])
             ->setMethods(['getBundleItemsByIdProduct', 'getBundlesUsingProductBySku', 'findBundleProductEntityBySku', 'findBundledItemAvailabilityEntityBySku'])
             ->getMock();
     }

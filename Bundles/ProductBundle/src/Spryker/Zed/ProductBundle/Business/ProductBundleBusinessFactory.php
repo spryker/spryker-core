@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business;
 
+use Spryker\Service\ProductBundle\ProductBundleServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCheckoutAvailabilityCheck;
@@ -171,7 +172,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getAvailabilityQueryContainer(),
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getProductBundleService()
         );
     }
 
@@ -195,7 +197,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getStockQueryContainer(),
             $this->createProductBundleAvailabilityHandler(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getProductBundleService()
         );
     }
 
@@ -360,5 +363,13 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     protected function getMessengerFacade()
     {
         return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Service\ProductBundle\ProductBundleServiceInterface
+     */
+    protected function getProductBundleService(): ProductBundleServiceInterface
+    {
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::SERVICE_PRODUCT_BUNDLE);
     }
 }

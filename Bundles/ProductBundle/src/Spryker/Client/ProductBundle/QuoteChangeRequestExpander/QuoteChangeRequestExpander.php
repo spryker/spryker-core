@@ -10,9 +10,23 @@ namespace Spryker\Client\ProductBundle\QuoteChangeRequestExpander;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Service\ProductBundle\ProductBundleServiceInterface;
 
 class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
 {
+    /**
+     * @var \Spryker\Service\ProductBundle\ProductBundleServiceInterface
+     */
+    protected $service;
+
+    /**
+     * @param \Spryker\Service\ProductBundle\ProductBundleServiceInterface $service
+     */
+    public function __construct(ProductBundleServiceInterface $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param array $params
@@ -47,7 +61,7 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
         if (!$numberOfBundlesToRemove) {
             $numberOfBundlesToRemove = $this->getBundledProductTotalQuantity($quoteTransfer, $groupKey);
         }
-        $numberOfBundlesToRemove = (int)$numberOfBundlesToRemove;
+        $numberOfBundlesToRemove = $this->service->convertToInt($numberOfBundlesToRemove);
         $bundledItems = [];
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($numberOfBundlesToRemove === 0) {

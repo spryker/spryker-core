@@ -15,6 +15,7 @@ use Spryker\Client\ProductBundle\QuoteItemFinder\BundleProductQuoteItemFinder;
 use Spryker\Client\ProductBundle\QuoteItemFinder\BundleProductQuoteItemFinderInterface;
 use Spryker\Client\ProductBundle\QuoteItemFinder\QuoteBundleItemsFinder;
 use Spryker\Client\ProductBundle\QuoteItemFinder\QuoteBundleItemsFinderInterface;
+use Spryker\Service\ProductBundle\ProductBundleServiceInterface;
 
 class ProductBundleFactory extends AbstractFactory
 {
@@ -31,7 +32,7 @@ class ProductBundleFactory extends AbstractFactory
      */
     public function createQuoteChangeRequestExpander(): QuoteChangeRequestExpanderInterface
     {
-        return new QuoteChangeRequestExpander();
+        return new QuoteChangeRequestExpander($this->getProductBundleService());
     }
 
     /**
@@ -48,5 +49,13 @@ class ProductBundleFactory extends AbstractFactory
     public function createQuoteBundleItemsFinder(): QuoteBundleItemsFinderInterface
     {
         return new QuoteBundleItemsFinder();
+    }
+
+    /**
+     * @return \Spryker\Service\ProductBundle\ProductBundleServiceInterface
+     */
+    public function getProductBundleService(): ProductBundleServiceInterface
+    {
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::SERVICE_PRODUCT_BUNDLE);
     }
 }

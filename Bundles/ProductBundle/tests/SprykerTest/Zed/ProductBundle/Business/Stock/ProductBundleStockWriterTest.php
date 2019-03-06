@@ -39,6 +39,11 @@ class ProductBundleStockWriterTest extends Unit
     public const ID_STORE = 1;
 
     /**
+     * @var \SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testUpdateStockShouldCalculatedStockBasedOnBundledProducts()
@@ -47,7 +52,7 @@ class ProductBundleStockWriterTest extends Unit
         $bundleQuantity = 2;
         $idRelatedProductId = 2;
         $relatedProductSku = 'sku-321';
-        $relatedProductStock = 10;
+        $relatedProductStock = 10.0;
 
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandlerMock();
         $productBundleAvailabilityHandlerMock->expects($this->once())->method('updateBundleAvailability');
@@ -103,10 +108,10 @@ class ProductBundleStockWriterTest extends Unit
         $this->assertCount(2, $stocks);
 
         $stockTransfer = $stocks[0];
-        $this->assertSame(0, $stockTransfer->getQuantity());
+        $this->assertSame(0.0, $stockTransfer->getQuantity());
 
         $stockTransfer = $stocks[1];
-        $this->assertSame(0, $stockTransfer->getQuantity());
+        $this->assertSame(0.0, $stockTransfer->getQuantity());
     }
 
     /**
@@ -149,8 +154,16 @@ class ProductBundleStockWriterTest extends Unit
 
         $productBundleQueryContainerMock->method('getConnection')->willReturn($connectionMock);
 
+        $service = $this->tester->getLocator()->productBundle()->service();
+
         return $this->getMockBuilder(ProductBundleStockWriter::class)
-            ->setConstructorArgs([$productBundleQueryContainerMock, $stockQueryContainerMock, $productBundleAvailabilityMock, $storeFacadeMock])
+            ->setConstructorArgs([
+                $productBundleQueryContainerMock,
+                $stockQueryContainerMock,
+                $productBundleAvailabilityMock,
+                $storeFacadeMock,
+                $service,
+            ])
             ->setMethods(['findProductStocks', 'findOrCreateProductStockEntity', 'findBundledItemsByIdBundleProduct', 'findProductBundleBySku'])
             ->getMock();
     }
