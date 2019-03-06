@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
@@ -507,30 +506,5 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->exists();
-    }
-
-    /**
-     * @param int $idShoppingListItem
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|null
-     */
-    public function findShoppingListItemById(int $idShoppingListItem): ?ShoppingListItemTransfer
-    {
-        $shoppingListItemQuery = $this->getFactory()
-            ->createShoppingListItemQuery()
-            ->filterByIdShoppingListItem($idShoppingListItem);
-
-        $shoppingListItemEntityTransfer = $this->buildQueryFromCriteria($shoppingListItemQuery)->findOne();
-
-        if ($shoppingListItemEntityTransfer === null) {
-            return null;
-        }
-
-        return $this->getFactory()
-            ->createShoppingListItemMapper()
-            ->mapItemTransfer(
-                $shoppingListItemEntityTransfer,
-                new ShoppingListItemTransfer()
-            );
     }
 }

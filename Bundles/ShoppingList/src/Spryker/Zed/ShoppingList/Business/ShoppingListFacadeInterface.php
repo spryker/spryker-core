@@ -309,16 +309,4 @@ interface ShoppingListFacadeInterface
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer;
-
-    /**
-     * Specification:
-     *  - Returns shopping list item by id.
-     *
-     * @api
-     *
-     * @param int $idShoppingListItem
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function getShoppingListItemById(int $idShoppingListItem): ShoppingListItemResponseTransfer;
 }
