@@ -50,36 +50,19 @@ use Spryker\Zed\Kernel\Container;
 class CalculationFacadeTest extends Unit
 {
     /**
+     * @dataProvider calculatePriceShouldSetDefaultStorePriceValuesProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return void
      */
-    public function testCalculatePriceShouldSetDefaultStorePriceValues()
+    public function testCalculatePriceShouldSetDefaultStorePriceValues(QuoteTransfer $quoteTransfer)
     {
         $calculationFacade = $this->createCalculationFacade(
             [
                 new PriceCalculatorPlugin(),
             ]
         );
-
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setPriceMode(CalculationPriceMode::PRICE_MODE_GROSS);
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(2);
-        $itemTransfer->setUnitGrossPrice(100);
-
-        $productOptionTransfer = new ProductOptionTransfer();
-        $productOptionTransfer->setQuantity(2);
-        $productOptionTransfer->setUnitGrossPrice(10);
-
-        $itemTransfer->addProductOption($productOptionTransfer);
-
-        $quoteTransfer->addItem($itemTransfer);
-
-        $expenseTransfer = new ExpenseTransfer();
-        $expenseTransfer->setUnitGrossPrice(100);
-        $expenseTransfer->setQuantity(1);
-
-        $quoteTransfer->addExpense($expenseTransfer);
 
         $calculationFacade->recalculateQuote($quoteTransfer);
 
@@ -103,6 +86,49 @@ class CalculationFacadeTest extends Unit
         $this->assertSame($calculatedExpenseTransfer->getUnitPrice(), $calculatedExpenseTransfer->getUnitGrossPrice());
         $this->assertNotEmpty($calculatedExpenseTransfer->getSumPrice(), 'Item sum price is not set.');
         $this->assertSame($calculatedExpenseTransfer->getSumPrice(), $calculatedExpenseTransfer->getSumGrossPrice());
+    }
+
+    /**
+     * @return array
+     */
+    public function calculatePriceShouldSetDefaultStorePriceValuesProvider(): array
+    {
+        return [
+            'int stock' => $this->calculatePriceShouldSetDefaultStorePriceValuesData(2, 1),
+            'float stock' => $this->calculatePriceShouldSetDefaultStorePriceValuesData(2.5, 1.5),
+        ];
+    }
+
+    /**
+     * @param float $productQuantity
+     * @param float $expenseQuantity
+     *
+     * @return array
+     */
+    protected function calculatePriceShouldSetDefaultStorePriceValuesData(float $productQuantity, float $expenseQuantity): array
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setPriceMode(CalculationPriceMode::PRICE_MODE_GROSS);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity($productQuantity);
+        $itemTransfer->setUnitGrossPrice(100);
+
+        $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setQuantity($productQuantity);
+        $productOptionTransfer->setUnitGrossPrice(10);
+
+        $itemTransfer->addProductOption($productOptionTransfer);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        $expenseTransfer = new ExpenseTransfer();
+        $expenseTransfer->setUnitGrossPrice(100);
+        $expenseTransfer->setQuantity($expenseQuantity);
+
+        $quoteTransfer->addExpense($expenseTransfer);
+
+        return [$quoteTransfer];
     }
 
     /**

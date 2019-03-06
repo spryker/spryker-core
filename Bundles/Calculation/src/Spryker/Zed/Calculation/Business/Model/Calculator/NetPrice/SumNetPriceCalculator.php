@@ -11,22 +11,22 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
-use Spryker\Zed\Calculation\Business\Model\Calculator\FloatRounderInterface;
 
 class SumNetPriceCalculator implements CalculatorInterface
 {
     /**
-     * @var \Spryker\Zed\Calculation\Business\Model\Calculator\FloatRounderInterface
+     * @var \Spryker\Service\Calculation\CalculationServiceInterface
      */
-    protected $floatRounder;
+    protected $service;
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\FloatRounderInterface $floatRounder
+     * @param \Spryker\Service\Calculation\CalculationServiceInterface $service
      */
-    public function __construct(FloatRounderInterface $floatRounder)
+    public function __construct(CalculationServiceInterface $service)
     {
-        $this->floatRounder = $floatRounder;
+        $this->service = $service;
     }
 
     /**
@@ -54,7 +54,7 @@ class SumNetPriceCalculator implements CalculatorInterface
                 continue;
             }
 
-            $sumNetPrice = $this->floatRounder->round(
+            $sumNetPrice = $this->service->convert(
                 $expenseTransfer->getUnitNetPrice() * $expenseTransfer->getQuantity()
             );
             $expenseTransfer->setSumNetPrice($sumNetPrice);

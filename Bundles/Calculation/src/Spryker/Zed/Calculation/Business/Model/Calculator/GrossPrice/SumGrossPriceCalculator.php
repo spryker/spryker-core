@@ -11,22 +11,22 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
-use Spryker\Zed\Calculation\Business\Model\Calculator\FloatRounderInterface;
 
 class SumGrossPriceCalculator implements CalculatorInterface
 {
     /**
-     * @var \Spryker\Zed\Calculation\Business\Model\Calculator\FloatRounderInterface
+     * @var \Spryker\Service\Calculation\CalculationServiceInterface
      */
-    protected $floatRounder;
+    protected $service;
 
     /**
-     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\FloatRounderInterface $floatRounder
+     * @param \Spryker\Service\Calculation\CalculationServiceInterface $service
      */
-    public function __construct(FloatRounderInterface $floatRounder)
+    public function __construct(CalculationServiceInterface $service)
     {
-        $this->floatRounder = $floatRounder;
+        $this->service = $service;
     }
 
     /**
@@ -53,7 +53,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
             if ($expenseTransfer->getIsOrdered() === true) {
                 continue;
             }
-            $sumGrossPrice = $this->floatRounder->round(
+            $sumGrossPrice = $this->service->convert(
                 $expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity()
             );
 
@@ -74,7 +74,9 @@ class SumGrossPriceCalculator implements CalculatorInterface
             return;
         }
 
-        $itemTransfer->setSumGrossPrice((int)($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity()));
+        $sumGrossPrice = $this->service->convert($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity());
+
+        $itemTransfer->setSumGrossPrice($sumGrossPrice);
     }
 
     /**
@@ -113,7 +115,11 @@ class SumGrossPriceCalculator implements CalculatorInterface
                     continue;
                 }
 
-                $productOptionTransfer->setSumGrossPrice($productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity());
+                $sumGrossPrice = $this->service->convert(
+                    $productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity()
+                );
+
+                $productOptionTransfer->setSumGrossPrice($sumGrossPrice);
             }
         }
     }
