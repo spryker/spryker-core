@@ -132,7 +132,10 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         $productOptionCriteriaTransfer->requireProductOptionIds();
 
-        $productOptionValueQuery = $this->getProductOptionValueWithProductOptionGroupQuery($productOptionCriteriaTransfer);
+        $productOptionValueQuery = $this->applyProductOptionCriteriaFilter(
+            $productOptionCriteriaTransfer,
+            $this->getFactory()->createProductOptionValueQuery()
+        );
 
         return $productOptionValueQuery->filterByIdProductOptionValue_In($productOptionCriteriaTransfer->getProductOptionIds());
     }
@@ -462,13 +465,14 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery $productOptionValueQuery
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
      */
-    protected function getProductOptionValueWithProductOptionGroupQuery(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): SpyProductOptionValueQuery
-    {
-        $productOptionValueQuery = $this->getFactory()->createProductOptionValueQuery();
-
+    protected function applyProductOptionCriteriaFilter(
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer,
+        SpyProductOptionValueQuery $productOptionValueQuery
+    ): SpyProductOptionValueQuery {
         $this->filterProductOptionGroupByActiveField(
             $productOptionCriteriaTransfer,
             $productOptionValueQuery
