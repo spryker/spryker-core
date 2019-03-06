@@ -478,10 +478,12 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             return $productOptionValueQuery;
         }
 
-        return $productOptionValueQuery
+        $productOptionValueQuery
             ->useSpyProductOptionGroupQuery()
                 ->filterByActive($productOptionGroupIsActive)
             ->endUse();
+
+        return $productOptionValueQuery;
     }
 
     /**
@@ -500,7 +502,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             return $productOptionValueQuery;
         }
 
-        return $productOptionValueQuery
+        $productOptionValueQuery
             ->useSpyProductOptionGroupQuery()
                 ->useSpyProductAbstractProductOptionGroupQuery(null, Criteria::LEFT_JOIN)
                     ->useSpyProductAbstractQuery()
@@ -510,5 +512,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                     ->endUse()
                 ->endUse()
             ->endUse();
+
+        return $productOptionValueQuery;
     }
 }
