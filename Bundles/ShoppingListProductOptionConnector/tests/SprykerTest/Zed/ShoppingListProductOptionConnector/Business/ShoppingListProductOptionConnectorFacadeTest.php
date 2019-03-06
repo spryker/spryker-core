@@ -590,7 +590,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
             );
 
         // Assert
-        $this->assertEmpty($actualResult->getProductOptions());
+        $this->assertEmpty($actualResult->getProductOptions()->getArrayCopy());
 
         $this->getProductOptionFacade()->toggleOptionActive($this->productOptionValueTransferInactive->getFkProductOptionGroup(), true);
 
