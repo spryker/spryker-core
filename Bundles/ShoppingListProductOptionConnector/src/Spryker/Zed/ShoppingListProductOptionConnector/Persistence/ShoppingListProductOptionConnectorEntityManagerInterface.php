@@ -25,9 +25,9 @@ interface ShoppingListProductOptionConnectorEntityManagerInterface
     public function removeShoppingListItemProductOptions(int $idShoppingListItem): void;
 
     /**
-     * @param int[] $idsProductOptionValue
+     * @param int[] $productOptionValueIds
      *
      * @return void
      */
-    public function removeProductOptionValuesFromShoppingListItems(array $idsProductOptionValue): void;
+    public function removeShoppingListItemProductOptionsByProductOptionValueIds(array $productOptionValueIds): void;
 }

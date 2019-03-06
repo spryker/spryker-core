@@ -20,4 +20,10 @@
         <property name="isSelected" type="bool"/>
     </transfer>
 
+    <transfer name="ProductOptionCriteria">
+        <property name="ProductOptionIds" type="array" />
+        <property name="productOptionGroupIsActive" type="bool" />
+        <property name="productConcreteSku" type="string" />
+    </transfer>
+
 </transfers>

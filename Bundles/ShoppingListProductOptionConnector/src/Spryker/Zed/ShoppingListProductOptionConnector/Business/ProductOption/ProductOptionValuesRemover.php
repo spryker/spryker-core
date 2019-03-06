@@ -30,16 +30,16 @@ class ProductOptionValuesRemover implements ProductOptionValuesRemoverInterface
      *
      * @return void
      */
-    public function removeProductOptionValuesFromShoppingListItems(ProductOptionGroupTransfer $productOptionGroupTransfer): void
+    public function deleteShoppingListItemProductOptionsByRemovedProductOptionValues(ProductOptionGroupTransfer $productOptionGroupTransfer): void
     {
-        $idsProductOptionValue = $productOptionGroupTransfer->getProductOptionValuesToBeRemoved();
-        $idsProductOptionValue = array_filter($idsProductOptionValue);
+        $productOptionValueIds = $productOptionGroupTransfer->getProductOptionValuesToBeRemoved();
+        $productOptionValueIds = array_filter($productOptionValueIds);
 
-        if (!$idsProductOptionValue) {
+        if (!$productOptionValueIds) {
             return;
         }
 
         $this->shoppingListProductOptionConnectorEntityManager
-            ->removeProductOptionValuesFromShoppingListItems($idsProductOptionValue);
+            ->removeShoppingListItemProductOptionsByProductOptionValueIds($productOptionValueIds);
     }
 }

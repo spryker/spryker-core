@@ -93,10 +93,10 @@ class ShoppingListProductOptionConnectorFacade extends AbstractFacade implements
      *
      * @return void
      */
-    public function removeProductOptionValuesFromShoppingListItems(ProductOptionGroupTransfer $productOptionGroupTransfer): void
+    public function deleteShoppingListItemProductOptionsByRemovedProductOptionValues(ProductOptionGroupTransfer $productOptionGroupTransfer): void
     {
         $this->getFactory()
             ->createProductOptionValuesRemover()
-            ->removeProductOptionValuesFromShoppingListItems($productOptionGroupTransfer);
+            ->deleteShoppingListItemProductOptionsByRemovedProductOptionValues($productOptionGroupTransfer);
     }
 }

@@ -46,15 +46,15 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
     }
 
     /**
-     * @param int[] $idsProductOptionValue
+     * @param int[] $productOptionValueIds
      *
      * @return void
      */
-    public function removeProductOptionValuesFromShoppingListItems(array $idsProductOptionValue): void
+    public function removeShoppingListItemProductOptionsByProductOptionValueIds(array $productOptionValueIds): void
     {
         $shoppingListProductOptionEntities = $this->getFactory()
             ->createSpyShoppingListProductOptionQuery()
-            ->filterByFkProductOptionValue_In($idsProductOptionValue)
+            ->filterByFkProductOptionValue_In($productOptionValueIds)
             ->find();
 
         $this->deleteEntitiesAndTriggerEvents($shoppingListProductOptionEntities);

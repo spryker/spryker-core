@@ -325,7 +325,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveProductOptionValuesFromShoppingListItemsRemovesMarkedForRemovalProductOptions(): void
+    public function testDeleteShoppingListItemProductOptionsByRemovedProductOptionValuesRemovesMarkedForRemovalProductOptions(): void
     {
         // Arrange
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
@@ -345,7 +345,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
 
         $this->tester->getFacade()
-            ->removeProductOptionValuesFromShoppingListItems(
+            ->deleteShoppingListItemProductOptionsByRemovedProductOptionValues(
                 (new ProductOptionGroupTransfer())
                     ->addProductOptionValuesToBeRemoved($this->productOptionValueTransferActive2->getIdProductOptionValue())
             );

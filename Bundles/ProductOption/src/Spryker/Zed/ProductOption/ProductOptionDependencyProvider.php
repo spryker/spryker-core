@@ -226,7 +226,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductOptionValuesPreRemovePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE] = function (Container $container): array {
+        $container[static::PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE] = function (Container $container) {
             return $this->getProductOptionValuesPreRemovePlugins();
         };
 
