@@ -95,8 +95,8 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
      */
     protected function addAllowableDatabaseStrategyPlugins(Container $container)
     {
-        $container[static::PLUGINS_ALLOWABLE_DATABASE_STRATEGY] = function (Container $container) {
-            return $this->getAllowableDatabaseStrategyPlugins($container);
+        $container[static::PLUGINS_ALLOWABLE_DATABASE_STRATEGY] = function () {
+            return $this->getAllowableDatabaseStrategyPlugins();
         };
 
         return $container;
@@ -155,11 +155,9 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\AllowableDatabaseStrategyPluginInterface[]
      */
-    protected function getAllowableDatabaseStrategyPlugins(Container $container)
+    protected function getAllowableDatabaseStrategyPlugins()
     {
         return [];
     }
