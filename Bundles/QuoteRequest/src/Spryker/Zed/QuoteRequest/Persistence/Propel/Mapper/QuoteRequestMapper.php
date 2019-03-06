@@ -81,11 +81,7 @@ class QuoteRequestMapper
         $quoteRequestTransfer->setLatestVersion($this->findLatestQuoteRequestVersionTransfer($quoteRequestEntity));
         $quoteRequestTransfer->setVersionReferences($this->getVersionReferences($quoteRequestEntity));
         $quoteRequestTransfer->setMetadata($this->decodeMetadata($quoteRequestEntity));
-
-        if ($quoteRequestEntity->getQuoteInProgress()) {
-            $quoteTransfer = (new QuoteTransfer())->fromArray($this->decodeQuoteData($quoteRequestEntity->getQuoteInProgress()), true);
-            $quoteRequestTransfer->setQuoteInProgress($quoteTransfer);
-        }
+        $quoteRequestTransfer->setQuoteInProgress($this->getQuote($quoteRequestEntity->getQuoteInProgress()));
 
         return $quoteRequestTransfer;
     }
@@ -122,6 +118,7 @@ class QuoteRequestMapper
      */
     protected function findLatestQuoteRequestVersionTransfer(SpyQuoteRequest $quoteRequestEntity): ?QuoteRequestVersionTransfer
     {
+        /** @var \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion|null $quoteRequestVersionEntity */
         $quoteRequestVersionEntity = $quoteRequestEntity->getSpyQuoteRequestVersions()->getLast();
 
         if (!$quoteRequestVersionEntity) {
@@ -132,10 +129,25 @@ class QuoteRequestMapper
             ->fromArray($quoteRequestVersionEntity->toArray(), true);
 
         $latestQuoteRequestVersionTransfer->setQuote(
-            (new QuoteTransfer())->fromArray($this->decodeQuoteData($quoteRequestVersionEntity->getQuote()), true)
+            $this->getQuote($quoteRequestVersionEntity->getQuote())
         );
 
         return $latestQuoteRequestVersionTransfer;
+    }
+
+    /**
+     * @param string|null $quote
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    protected function getQuote(?string $quote): ?QuoteTransfer
+    {
+        if (!$quote) {
+            return null;
+        }
+
+        return (new QuoteTransfer())
+            ->fromArray($this->decodeQuoteData($quote), true);
     }
 
     /**

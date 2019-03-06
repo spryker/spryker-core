@@ -20,19 +20,14 @@
 
     <transfer name="QuoteRequest">
         <property name="idQuoteRequest" type="int" />
-
         <property name="companyUser" type="CompanyUser" />
-
         <property name="quoteRequestReference" type="string" />
         <property name="metadata" type="array" />
         <property name="status" type="string" />
-
         <property name="isHidden" type="bool" />
         <property name="validUntil" type="string" />
         <property name="createdAt" type="string" />
-
         <property name="quoteInProgress" type="Quote" />
-
         <property name="latestVersion" type="QuoteRequestVersion" />
         <property name="versionReferences" type="string[]" />
     </transfer>
@@ -40,10 +35,8 @@
     <transfer name="QuoteRequestVersion">
         <property name="idQuoteRequestVersion" type="int" />
         <property name="fkQuoteRequest" type="int" />
-
         <property name="version" type="int" />
         <property name="versionReference" type="string" />
-
         <property name="quoteRequest" type="QuoteRequest" />
         <property name="quote" type="Quote" />
     </transfer>
