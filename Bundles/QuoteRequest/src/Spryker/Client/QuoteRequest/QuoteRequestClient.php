@@ -122,6 +122,23 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $quoteRequestReference
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestReader()
+            ->findQuoteRequest($quoteRequestReference, $idCompanyUser);
+    }
+
+    /**
      * @return \Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface
      */
     protected function getZedStub(): QuoteRequestStubInterface

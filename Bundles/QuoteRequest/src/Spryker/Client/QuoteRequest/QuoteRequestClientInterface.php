@@ -128,4 +128,21 @@ interface QuoteRequestClientInterface
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     public function sendQuoteRequestToCustomer(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Retrieves "Request for Quote" entities filtered by company user.
+     * - Filters by quote request reference.
+     * - Excludes hidden "Request for Quote" entities.
+     * - Selects latestVersion based on latest version id.
+     *
+     * @api
+     *
+     * @param string $quoteRequestReference
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer;
 }
