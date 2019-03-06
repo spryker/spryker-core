@@ -43,12 +43,11 @@ class WhitelistExpandProductBundleTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductListWithProductBundleWhitelistAddBundle(): void
+    public function testExpandProductListWithProductBundleWhitelistShouldAddBundle(): void
     {
         $bundledProducts = (new ProductForBundleTransfer())->setIdProductConcrete(static::BUNDLE_PRODUCT_ID);
         $productBundleProductListConnectorToProductBundleFacadeBridgeMock = $this->getProductBundleProductListConnectorToProductBundleFacadeBridgeMock(new ArrayObject([$bundledProducts]));
         $productBundleProductListConnectorFacade = $this->tester->getFacade($productBundleProductListConnectorToProductBundleFacadeBridgeMock);
-
         $productListTransfer = $this->createWhitelistProductListTransfer([static::PRODUCT_ID_1]);
 
         $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductListWithProductBundle($productListTransfer);
@@ -59,6 +58,21 @@ class WhitelistExpandProductBundleTest extends Unit
         ];
 
         $this->assertSame($expectedProductIds, $resultProductListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductListWithProductBundleWhitelistShouldAddOneMessage(): void
+    {
+        $bundledProducts = (new ProductForBundleTransfer())->setIdProductConcrete(static::BUNDLE_PRODUCT_ID);
+        $productBundleProductListConnectorToProductBundleFacadeBridgeMock = $this->getProductBundleProductListConnectorToProductBundleFacadeBridgeMock(new ArrayObject([$bundledProducts]));
+        $productBundleProductListConnectorFacade = $this->tester->getFacade($productBundleProductListConnectorToProductBundleFacadeBridgeMock);
+        $productListTransfer = $this->createWhitelistProductListTransfer([static::PRODUCT_ID_1]);
+
+        $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductListWithProductBundle($productListTransfer);
+
+        $this->assertCount(1, $resultProductListResponseTransfer->getMessages());
     }
 
     /**
@@ -77,6 +91,20 @@ class WhitelistExpandProductBundleTest extends Unit
         ];
 
         $this->assertSame($expectedProductIds, $resultProductListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductListWithProductBundleWhitelistShouldNotAddMessages(): void
+    {
+        $productBundleProductListConnectorToProductBundleFacadeBridgeMock = $this->getProductBundleProductListConnectorToProductBundleFacadeBridgeMock(new ArrayObject());
+        $productBundleProductListConnectorFacade = $this->tester->getFacade($productBundleProductListConnectorToProductBundleFacadeBridgeMock);
+        $productListTransfer = $this->createWhitelistProductListTransfer([static::PRODUCT_ID_1]);
+
+        $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductListWithProductBundle($productListTransfer);
+
+        $this->assertEmpty($resultProductListResponseTransfer->getMessages());
     }
 
     /**
