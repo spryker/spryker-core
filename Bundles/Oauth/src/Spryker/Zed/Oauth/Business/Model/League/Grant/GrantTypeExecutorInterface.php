@@ -5,17 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Oauth\Business\Model\League;
+namespace Spryker\Zed\Oauth\Business\Model\League\Grant;
 
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 
-interface AccessGrantExecutorInterface
+interface GrantTypeExecutorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
+     * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeInterface $grant
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function executeByRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
+    public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer, GrantTypeInterface $grant): OauthResponseTransfer;
 }

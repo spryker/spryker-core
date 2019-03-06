@@ -17,7 +17,7 @@ use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Spryker\Zed\Oauth\OauthConfig;
 
-class PasswordGrant extends AbstractGrant implements GrantInterface
+class PasswordGrantType extends AbstractGrant implements GrantTypeInterface
 {
     protected const REQUEST_PARAMETER_PASSWORD = 'password';
     protected const REQUEST_PARAMETER_SCOPE = 'scope';

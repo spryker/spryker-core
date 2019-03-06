@@ -8,18 +8,18 @@
 namespace Spryker\Zed\Oauth\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Oauth\Business\Model\League\AccessGrantExecutor;
-use Spryker\Zed\Oauth\Business\Model\League\AccessGrantExecutorInterface;
+use Spryker\Zed\Oauth\Business\Model\League\AccessTokenRequestExecutor;
+use Spryker\Zed\Oauth\Business\Model\League\AccessTokenRequestExecutorInterface;
 use Spryker\Zed\Oauth\Business\Model\League\AccessTokenValidator;
 use Spryker\Zed\Oauth\Business\Model\League\AccessTokenValidatorInterface;
 use Spryker\Zed\Oauth\Business\Model\League\AuthorizationServerBuilder;
 use Spryker\Zed\Oauth\Business\Model\League\AuthorizationServerBuilderInterface;
-use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantBuilder;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantBuilderInterface;
-use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantConfigurationLoader;
-use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantConfigurationLoaderInterface;
-use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantExecutor;
-use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantExecutorInterface;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeBuilder;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeConfigurationLoader;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeConfigurationLoaderInterface;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeExecutor;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeExecutorInterface;
 use Spryker\Zed\Oauth\Business\Model\League\RepositoryBuilder;
 use Spryker\Zed\Oauth\Business\Model\League\RepositoryBuilderInterface;
 use Spryker\Zed\Oauth\Business\Model\League\ResourceServerBuilder;
@@ -42,13 +42,13 @@ use Spryker\Zed\Oauth\OauthDependencyProvider;
 class OauthBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Oauth\Business\Model\League\AccessGrantExecutorInterface
+     * @return \Spryker\Zed\Oauth\Business\Model\League\AccessTokenRequestExecutorInterface
      */
-    public function createAccessGrantExecutor(): AccessGrantExecutorInterface
+    public function createAccessTokenRequestExecutor(): AccessTokenRequestExecutorInterface
     {
-        return new AccessGrantExecutor(
-            $this->createGrantConfigurationLoader(),
-            $this->createGrantBuilder(),
+        return new AccessTokenRequestExecutor(
+            $this->createGrantTypeConfigurationLoader(),
+            $this->createGrantTypeBuilder(),
             $this->createGrantTypeExecutor()
         );
     }
@@ -56,9 +56,9 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantBuilderInterface
      */
-    public function createGrantBuilder(): GrantBuilderInterface
+    public function createGrantTypeBuilder(): GrantBuilderInterface
     {
-        return new GrantBuilder(
+        return new GrantTypeBuilder(
             $this->createRepositoryBuilder(),
             $this->getConfig()
         );
@@ -118,23 +118,33 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantExecutorInterface
+     * @return \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeExecutorInterface
      */
-    public function createGrantTypeExecutor(): GrantExecutorInterface
+    public function createGrantTypeExecutor(): GrantTypeExecutorInterface
     {
-        return new GrantExecutor(
+        return new GrantTypeExecutor(
             $this->createAuthorizationServerBuilder()->build(),
             $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantConfigurationLoaderInterface
+     * @return \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeConfigurationLoaderInterface
      */
-    public function createGrantConfigurationLoader(): GrantConfigurationLoaderInterface
+    public function createGrantTypeConfigurationLoader(): GrantTypeConfigurationLoaderInterface
     {
-        return new GrantConfigurationLoader(
+        return new GrantTypeConfigurationLoader(
             $this->getGrantTypeConfigurationProviderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Business\Model\OauthScopeReaderInterface
+     */
+    public function createOauthScopeReader(): OauthScopeReaderInterface
+    {
+        return new OauthScopeReader(
+            $this->getRepository()
         );
     }
 
@@ -155,16 +165,6 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oauth\Business\Model\OauthScopeReaderInterface
-     */
-    public function createOauthScopeReader(): OauthScopeReaderInterface
-    {
-        return new OauthScopeReader(
-            $this->getRepository()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Oauth\Business\Model\OauthClientReaderInterface
      */
     public function createOauthClientReader(): OauthClientReaderInterface
@@ -175,7 +175,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantConfigurationProviderPluginInterface[]
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface[]
      */
     public function getGrantTypeConfigurationProviderPlugins(): array
     {

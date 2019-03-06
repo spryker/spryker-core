@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Oauth\Business\Model\League\Grant;
 
-use Generated\Shared\Transfer\OauthGrantConfigurationTransfer;
+use Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer;
 
 interface GrantBuilderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OauthGrantConfigurationTransfer $oauthGrantConfigurationTransfer
+     * @param \Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer $oauthGrantTypeConfigurationTransfer
      *
-     * @return \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface
+     * @return \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeInterface
      */
-    public function buildGrant(OauthGrantConfigurationTransfer $oauthGrantConfigurationTransfer): GrantInterface;
+    public function buildGrant(OauthGrantTypeConfigurationTransfer $oauthGrantTypeConfigurationTransfer): GrantTypeInterface;
 }

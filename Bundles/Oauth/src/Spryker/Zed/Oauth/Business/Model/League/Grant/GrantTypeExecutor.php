@@ -18,7 +18,7 @@ use League\OAuth2\Server\Exception\OAuthServerException;
 use Psr\Http\Message\ResponseInterface;
 use Spryker\Zed\Oauth\OauthConfig;
 
-class GrantExecutor implements GrantExecutorInterface
+class GrantTypeExecutor implements GrantTypeExecutorInterface
 {
     /**
      * @var \League\OAuth2\Server\AuthorizationServer
@@ -44,11 +44,11 @@ class GrantExecutor implements GrantExecutorInterface
 
     /**
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
-     * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface $grant
+     * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeInterface $grant
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer, GrantInterface $grant): OauthResponseTransfer
+    public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer, GrantTypeInterface $grant): OauthResponseTransfer
     {
         try {
             $accessTokenRequest = $this->createAccessTokenRequest($oauthRequestTransfer);

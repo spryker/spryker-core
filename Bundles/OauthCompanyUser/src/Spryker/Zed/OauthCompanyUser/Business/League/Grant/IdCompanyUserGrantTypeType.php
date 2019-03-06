@@ -14,10 +14,10 @@ use League\OAuth2\Server\Grant\AbstractGrant;
 use League\OAuth2\Server\RequestEvent;
 use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeInterface;
 use Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig;
 
-class IdCompanyUserGrantType extends AbstractGrant implements GrantInterface
+class IdCompanyUserGrantTypeType extends AbstractGrant implements GrantTypeInterface
 {
     protected const REQUEST_PARAMETER_CUSTOMER_REFERENCE = 'customer_reference';
     protected const REQUEST_PARAMETER_ID_COMPANY_USER = 'id_company_user';

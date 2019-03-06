@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Oauth\Business\Model\League\Grant;
 
-use League\OAuth2\Server\Grant\GrantTypeInterface;
+use League\OAuth2\Server\Grant\GrantTypeInterface as LeagueGrantTypeInterface;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\UserRepositoryInterface;
 
-interface GrantInterface extends GrantTypeInterface
+interface GrantTypeInterface extends LeagueGrantTypeInterface
 {
     /**
      * @param \League\OAuth2\Server\Repositories\UserRepositoryInterface $userRepository

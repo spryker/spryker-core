@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\Oauth\Business\Model\League\Grant;
 
-use Generated\Shared\Transfer\OauthGrantConfigurationTransfer;
+use Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 
-interface GrantConfigurationLoaderInterface
+interface GrantTypeConfigurationLoaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\OauthGrantConfigurationTransfer|null
+     * @return \Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer|null
      */
-    public function loadGrantConfigurationByGrantType(OauthRequestTransfer $oauthRequestTransfer): ?OauthGrantConfigurationTransfer;
+    public function loadGrantTypeConfigurationByGrantType(OauthRequestTransfer $oauthRequestTransfer): ?OauthGrantTypeConfigurationTransfer;
 }

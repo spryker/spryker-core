@@ -16,7 +16,7 @@ use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Spryker\Zed\Oauth\OauthConfig;
 
-class RefreshTokenGrant extends AbstractGrant implements GrantInterface
+class RefreshTokenGrantType extends AbstractGrant implements GrantTypeInterface
 {
     protected const KEY_ACCESS_TOKEN_ID = 'access_token_id';
     protected const KEY_CLIENT_ID = 'client_id';

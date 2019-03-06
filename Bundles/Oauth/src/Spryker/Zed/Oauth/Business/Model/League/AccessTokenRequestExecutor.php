@@ -11,39 +11,39 @@ use Generated\Shared\Transfer\OauthErrorTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantBuilderInterface;
-use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantConfigurationLoaderInterface;
-use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantExecutorInterface;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeConfigurationLoaderInterface;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeExecutorInterface;
 
-class AccessGrantExecutor implements AccessGrantExecutorInterface
+class AccessTokenRequestExecutor implements AccessTokenRequestExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantConfigurationLoaderInterface
+     * @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeConfigurationLoaderInterface
      */
-    protected $grantConfigurationLoader;
+    protected $grantTypeConfigurationLoader;
 
     /**
      * @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantBuilderInterface
      */
-    protected $grantBuilder;
+    protected $grantTypeBuilder;
 
     /**
-     * @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantExecutorInterface
+     * @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeExecutorInterface
      */
-    protected $grantExecutor;
+    protected $grantTypeExecutor;
 
     /**
-     * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantConfigurationLoaderInterface $grantConfigurationLoader
-     * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantBuilderInterface $grantBuilder
-     * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantExecutorInterface $grantExecutor
+     * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeConfigurationLoaderInterface $grantTypeConfigurationLoader
+     * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantBuilderInterface $grantTypeBuilder
+     * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeExecutorInterface $grantTypeExecutor
      */
     public function __construct(
-        GrantConfigurationLoaderInterface $grantConfigurationLoader,
-        GrantBuilderInterface $grantBuilder,
-        GrantExecutorInterface $grantExecutor
+        GrantTypeConfigurationLoaderInterface $grantTypeConfigurationLoader,
+        GrantBuilderInterface $grantTypeBuilder,
+        GrantTypeExecutorInterface $grantTypeExecutor
     ) {
-        $this->grantConfigurationLoader = $grantConfigurationLoader;
-        $this->grantBuilder = $grantBuilder;
-        $this->grantExecutor = $grantExecutor;
+        $this->grantTypeConfigurationLoader = $grantTypeConfigurationLoader;
+        $this->grantTypeBuilder = $grantTypeBuilder;
+        $this->grantTypeExecutor = $grantTypeExecutor;
     }
 
     /**
@@ -53,16 +53,16 @@ class AccessGrantExecutor implements AccessGrantExecutorInterface
      */
     public function executeByRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
-        $oauthGrantConfigurationTransfer = $this->grantConfigurationLoader
-            ->loadGrantConfigurationByGrantType($oauthRequestTransfer);
+        $oauthGrantTypeConfigurationTransfer = $this->grantTypeConfigurationLoader
+            ->loadGrantTypeConfigurationByGrantType($oauthRequestTransfer);
 
-        if (!$oauthGrantConfigurationTransfer) {
+        if (!$oauthGrantTypeConfigurationTransfer) {
             return $this->createErrorResponseTransfer($oauthRequestTransfer);
         }
 
-        $grant = $this->grantBuilder->buildGrant($oauthGrantConfigurationTransfer);
+        $grant = $this->grantTypeBuilder->buildGrant($oauthGrantTypeConfigurationTransfer);
 
-        return $this->grantExecutor->processAccessTokenRequest($oauthRequestTransfer, $grant);
+        return $this->grantTypeExecutor->processAccessTokenRequest($oauthRequestTransfer, $grant);
     }
 
     /**
