@@ -46,14 +46,18 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
      */
     public function convertQuoteRequestToEditableQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = (new QuoteResponseTransfer())->setIsSuccessful(false);
+        $quoteResponseTransfer = new QuoteResponseTransfer();
 
         if (!$this->quoteRequestChecker->isQuoteRequestEditable($quoteRequestTransfer)) {
-            return $quoteResponseTransfer->addError((new QuoteErrorTransfer())->setMessage(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS));
+            return $quoteResponseTransfer
+                ->setIsSuccessful(false)
+                ->addError((new QuoteErrorTransfer())->setMessage(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS));
         }
 
         if (!$quoteRequestTransfer->getQuoteInProgress()) {
-            return $quoteResponseTransfer->addError((new QuoteErrorTransfer())->setMessage(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND));
+            return $quoteResponseTransfer
+                ->setIsSuccessful(false)
+                ->addError((new QuoteErrorTransfer())->setMessage(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND));
         }
 
         $quoteTransfer = $quoteRequestTransfer->getQuoteInProgress();
@@ -68,7 +72,7 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
 
         $this->quoteClient->setQuote($quoteTransfer);
 
-        return (new QuoteResponseTransfer())
+        return $quoteResponseTransfer
             ->setIsSuccessful(true)
             ->setQuoteTransfer($quoteTransfer);
     }
