@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Grouper\ProductBundleGrouperInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
@@ -36,7 +37,7 @@ class ProductBundleReader implements ProductBundleReaderInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleGrouperInterface
+     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\Grouper\ProductBundleGrouperInterface
      */
     protected $productBundleGrouper;
 
@@ -49,7 +50,7 @@ class ProductBundleReader implements ProductBundleReaderInterface
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleGrouperInterface $productBundleGrouper
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Grouper\ProductBundleGrouperInterface $productBundleGrouper
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
      */
     public function __construct(

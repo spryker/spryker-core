@@ -22,14 +22,14 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundlePreReload
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFinder;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFinderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Grouper\ProductBundleGrouper;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Grouper\ProductBundleGrouperInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinder;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheck;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheckInterface;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleGrouper;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleGrouperInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Quote\QuoteItemsGrouper;
@@ -90,7 +90,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleGrouperInterface
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Grouper\ProductBundleGrouperInterface
      */
     public function createProductBundleGrouper(): ProductBundleGrouperInterface
     {

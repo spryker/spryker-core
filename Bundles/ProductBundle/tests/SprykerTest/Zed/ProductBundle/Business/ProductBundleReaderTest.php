@@ -15,7 +15,7 @@ use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleGrouperInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Grouper\ProductBundleGrouperInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
@@ -97,7 +97,7 @@ class ProductBundleReaderTest extends Unit
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface|null $productBundleQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface|null $productBundleToAvailabilityQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleGrouperInterface|null $productBundleGrouperMock
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Grouper\ProductBundleGrouperInterface|null $productBundleGrouperMock
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface|null $productBundleRepositoryMock
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
@@ -166,7 +166,7 @@ class ProductBundleReaderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleGrouperInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Grouper\ProductBundleGrouperInterface
      */
     protected function createProductBundleGrouperMock()
     {
