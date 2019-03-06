@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 var CmsGlossaryAutocomplete = require('./cms-glossary-autocomplete');
 require('../../sass/main.scss');
 require('../../img/cms-loader.gif');

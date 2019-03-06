@@ -554,7 +554,7 @@ class CustomerFacadeTest extends Unit
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transfer
      * @param bool $hasEmail
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Customer\Business\CustomerBusinessFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Customer\Business\CustomerBusinessFactory
      */
     protected function getFactory(?TransferInterface $transfer = null, $hasEmail = true)
     {
@@ -576,7 +576,7 @@ class CustomerFacadeTest extends Unit
      * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      * @param bool $hasEmail
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Customer\Business\Customer\Customer
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Customer\Business\Customer\Customer
      */
     private function getCustomerMock(?CustomerTransfer $customerTransfer = null, $hasEmail = true)
     {
@@ -598,7 +598,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Customer\Business\Customer\Address
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Customer\Business\Customer\Address
      */
     private function getAddressMock(?AddressTransfer $addressTransfer = null)
     {

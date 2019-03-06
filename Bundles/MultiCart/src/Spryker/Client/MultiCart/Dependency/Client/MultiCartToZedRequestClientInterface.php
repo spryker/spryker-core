@@ -24,4 +24,9 @@ interface MultiCartToZedRequestClientInterface
      * @return void
      */
     public function addFlashMessagesFromLastZedRequest();
+
+    /**
+     * @return void
+     */
+    public function addResponseMessagesToMessenger(): void;
 }
