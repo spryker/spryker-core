@@ -10,7 +10,6 @@ namespace Spryker\Zed\Queue\Business\Process;
 use Generated\Shared\Transfer\QueueProcessTransfer;
 use Orm\Zed\Queue\Persistence\SpyQueueProcess;
 use Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 class ProcessManager implements ProcessManagerInterface
@@ -39,24 +38,16 @@ class ProcessManager implements ProcessManagerInterface
      * @param string $command
      * @param string $queue
      *
-     * @throws \Symfony\Component\Process\Exception\ProcessFailedException
-     *
      * @return \Symfony\Component\Process\Process
      */
     public function triggerQueueProcess($command, $queue)
     {
         $process = $this->createProcess($command);
-        $process->start();
+        $process->mustRun();
 
         if ($process->isRunning()) {
             $queueProcessTransfer = $this->createQueueProcessTransfer($queue, $process->getPid());
             $this->saveProcess($queueProcessTransfer);
-
-            return $process;
-        }
-
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
         }
 
         return $process;
