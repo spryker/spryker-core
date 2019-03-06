@@ -131,11 +131,11 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    public function findQuoteRequest(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer
+    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer
     {
         return $this->getFactory()
             ->createQuoteRequestReader()
-            ->findQuoteRequest($quoteRequestReference, $idCompanyUser);
+            ->findCompanyUserQuoteRequestByReference($quoteRequestReference, $idCompanyUser);
     }
 
     /**
