@@ -279,7 +279,6 @@ class ServiceTest extends Unit
     }
 
     /**
-     * @group YYY
      * @return void
      */
     public function testGetMultiShouldReturnDataInTheSameOrderAsInput()
@@ -304,7 +303,6 @@ class ServiceTest extends Unit
             'kv:d' => 'D',
         ];
         $storageClient = $this->getStorageClientMock();
-
         $this->tester->setProtectedProperty($storageClient, 'bufferedValues', $bufferedData);
 
         // Act

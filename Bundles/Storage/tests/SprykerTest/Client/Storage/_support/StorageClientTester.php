@@ -9,8 +9,6 @@ namespace SprykerTest\Client\Storage;
 
 use Codeception\Actor;
 use ReflectionClass;
-use Spryker\Client\Storage\Redis\Service;
-use Spryker\Client\Storage\StorageClient;
 
 /**
  * Inherited Methods
@@ -32,9 +30,11 @@ class StorageClientTester extends Actor
     use _generated\StorageClientTesterActions;
 
     /**
-     * @param $object
-     * @param $propertyName
-     * @param $value
+     * @param object|string $object
+     * @param string $propertyName
+     * @param mixed $value
+     *
+     * @return void
      */
     public function setProtectedProperty($object, $propertyName, $value)
     {
