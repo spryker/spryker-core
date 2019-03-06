@@ -12,6 +12,9 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenPro
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\Type\DoubleSubmitFormType;
 use Symfony\Component\Form\AbstractExtension;
 
+/**
+ * @deprecated Use `Spryker\Shared\Form\DoubleSubmitProtection\DoubleSubmitProtectionExtension` instead.
+ */
 class DoubleSubmitProtectionExtension extends AbstractExtension
 {
     /**
