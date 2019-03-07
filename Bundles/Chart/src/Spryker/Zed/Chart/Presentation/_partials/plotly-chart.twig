@@ -5,13 +5,14 @@
         {% set layout = layout.toArray | merge(
             {
                 'title':layout.title | default(data.title) | trans,
-                'margin': {'l': 8 * maxLabeLength | default(1)}
+                'margin': {'l': 8 * maxLabeLength}
             }) %}
-        <div id="{{ chartDivId }}"></div>
+        <div id="{{ chartDivId }}" style="width: 100%;"></div>
+
         <script src="/assets/js/spryker-zed-chart-plotly-main.js"></script>
         <script>/*<![CDATA[*/
             document.addEventListener('DOMContentLoaded', function(event) {
-                ChartPlotly.newPlot('{{ chartDivId }}', {{ chartData | json_encode | raw }}, {{ layout | json_encode | raw }}, { displayModeBar: false });
+                ChartPlotly.newPlot('{{ chartDivId }}', {{ chartData | json_encode | raw }}, {{ layout | json_encode | raw }}, { displayModeBar: false, autorange: true, scrollZoom: true });
             });
         /*]]>*/</script>
     {% endif %}
