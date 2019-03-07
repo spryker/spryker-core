@@ -29,6 +29,11 @@ class SellableTest extends Unit
     public const SKU_PRODUCT = 'sku-123-321';
 
     /**
+     * @var \SprykerTest\Zed\Availability\AvailabilityBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testIsProductIsSellableWhenNeverOutOfStockShouldReturnIsSellable()
@@ -99,7 +104,12 @@ class SellableTest extends Unit
                 ->willReturn($this->createStoreTransfer());
         }
 
-        return new Sellable($omsFacadeMock, $stockFacadeMock, $storeFacade);
+        return new Sellable(
+            $omsFacadeMock,
+            $stockFacadeMock,
+            $storeFacade,
+            $this->tester->getLocator()->availability()->service()
+        );
     }
 
     /**

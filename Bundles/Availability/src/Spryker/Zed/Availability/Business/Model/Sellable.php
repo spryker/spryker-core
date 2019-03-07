@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Service\Availability\AvailabilityServiceInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
@@ -30,23 +31,31 @@ class Sellable implements SellableInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Service\Availability\AvailabilityServiceInterface
+     */
+    protected $service;
+
+    /**
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface $omsFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Service\Availability\AvailabilityServiceInterface $service
      */
     public function __construct(
         AvailabilityToOmsInterface $omsFacade,
         AvailabilityToStockInterface $stockFacade,
-        AvailabilityToStoreFacadeInterface $storeFacade
+        AvailabilityToStoreFacadeInterface $storeFacade,
+        AvailabilityServiceInterface $service
     ) {
         $this->omsFacade = $omsFacade;
         $this->stockFacade = $stockFacade;
         $this->storeFacade = $storeFacade;
+        $this->service = $service;
     }
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return bool
      */
@@ -71,7 +80,7 @@ class Sellable implements SellableInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
@@ -95,7 +104,7 @@ class Sellable implements SellableInterface
 
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
-        return $this->calculateIsProductSellable($stockProductTransfers[0]->getSku(), 1, $storeTransfer);
+        return $this->calculateIsProductSellable($stockProductTransfers[0]->getSku(), 1.0, $storeTransfer);
     }
 
     /**
@@ -111,7 +120,7 @@ class Sellable implements SellableInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
@@ -121,9 +130,10 @@ class Sellable implements SellableInterface
         if ($this->stockFacade->isNeverOutOfStockForStore($sku, $storeTransfer)) {
             return true;
         }
+
         $realStock = $this->calculateStock($sku, $storeTransfer);
 
-        return ($realStock >= $quantity);
+        return ($this->service->round($realStock) >= $this->service->round($quantity));
     }
 
     /**
@@ -137,6 +147,6 @@ class Sellable implements SellableInterface
         $physicalItems = $this->stockFacade->calculateProductStockForStore($sku, $storeTransfer);
         $reservedItems = $this->omsFacade->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
 
-        return $physicalItems - $reservedItems;
+        return $this->service->round($physicalItems - $reservedItems);
     }
 }

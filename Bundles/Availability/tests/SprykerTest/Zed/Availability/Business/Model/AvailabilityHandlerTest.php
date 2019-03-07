@@ -37,6 +37,11 @@ class AvailabilityHandlerTest extends Unit
     public const PRODUCT_SKU = 'sku-123-321';
 
     /**
+     * @var \SprykerTest\Zed\Availability\AvailabilityBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testUpdateAvailabilityShouldTouchWhenStockUpdated()
@@ -133,7 +138,8 @@ class AvailabilityHandlerTest extends Unit
             $touchFacade,
             $availabilityQueryContainer,
             $availabilityToProductFacade,
-            $availabilityToStoreFacade
+            $availabilityToStoreFacade,
+            $this->tester->getLocator()->availability()->service()
         );
     }
 

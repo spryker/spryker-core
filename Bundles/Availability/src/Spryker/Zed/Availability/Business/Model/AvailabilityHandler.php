@@ -10,6 +10,7 @@ namespace Spryker\Zed\Availability\Business\Model;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
+use Spryker\Service\Availability\AvailabilityServiceInterface;
 use Spryker\Shared\Availability\AvailabilityConfig;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
@@ -51,12 +52,18 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Service\Availability\AvailabilityServiceInterface
+     */
+    protected $service;
+
+    /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface $touchFacade
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface $productFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Service\Availability\AvailabilityServiceInterface $service
      */
     public function __construct(
         SellableInterface $sellable,
@@ -64,7 +71,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         AvailabilityToTouchInterface $touchFacade,
         AvailabilityQueryContainerInterface $queryContainer,
         AvailabilityToProductInterface $productFacade,
-        AvailabilityToStoreFacadeInterface $storeFacade
+        AvailabilityToStoreFacadeInterface $storeFacade,
+        AvailabilityServiceInterface $service
     ) {
         $this->sellable = $sellable;
         $this->stockFacade = $stockFacade;
@@ -72,6 +80,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $this->queryContainer = $queryContainer;
         $this->productFacade = $productFacade;
         $this->storeFacade = $storeFacade;
+        $this->service = $service;
     }
 
     /**
@@ -101,6 +110,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer)
     {
         $quantity = $this->sellable->calculateStockForProductWithStore($sku, $storeTransfer);
+        $quantity = $this->service->round($quantity);
         $quantityWithReservedItems = $this->getQuantity($quantity);
 
         $this->saveAndTouchAvailability($sku, $quantityWithReservedItems, $storeTransfer);
@@ -108,7 +118,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return int
      */
@@ -123,7 +133,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
@@ -197,11 +207,14 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             return true;
         }
 
-        if ($currentQuantity === 0 && $quantityWithReservedItems > $currentQuantity) {
+        $currentQuantity = $this->service->round($currentQuantity);
+        $quantityWithReservedItems = $this->service->round($quantityWithReservedItems);
+
+        if ($currentQuantity === 0.0 && $quantityWithReservedItems > $currentQuantity) {
             return true;
         }
 
-        if ($currentQuantity !== 0 && $quantityWithReservedItems === 0) {
+        if ($currentQuantity !== 0.0 && $quantityWithReservedItems === 0.0) {
             return true;
         }
 
@@ -236,7 +249,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function getQuantity($quantity)
     {
-        return $quantity > 0 ? $quantity : 0;
+        return $quantity > 0.0 ? $quantity : 0;
     }
 
     /**
@@ -270,13 +283,13 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $storeTransfer->getIdStore())
             ->findOne();
 
-        /** @var int|null $sumQuantity */
+        /** @var float|null $sumQuantity */
         $sumQuantity = $this->queryContainer
             ->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract, $storeTransfer->getIdStore())
             ->findOne();
 
         $availabilityAbstractEntity->setFkStore($storeTransfer->getIdStore());
-        $availabilityAbstractEntity->setQuantity((int)$sumQuantity);
+        $availabilityAbstractEntity->setQuantity($sumQuantity);
         $availabilityAbstractEntity->save();
     }
 

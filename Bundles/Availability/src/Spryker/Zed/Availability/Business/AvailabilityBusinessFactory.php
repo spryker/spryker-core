@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Availability\Business;
 
+use Spryker\Service\Availability\AvailabilityServiceInterface;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Availability\Business\Model\ProductReservationReader;
@@ -28,7 +29,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new Sellable(
             $this->getOmsFacade(),
             $this->getStockFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getAvailabilityService()
         );
     }
 
@@ -43,7 +45,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getQueryContainer(),
             $this->getProductFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getAvailabilityService()
         );
     }
 
@@ -55,7 +58,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new ProductReservationReader(
             $this->getQueryContainer(),
             $this->getStockFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getAvailabilityService()
         );
     }
 
@@ -96,7 +100,11 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductsAvailablePreCondition()
     {
-        return new ProductsAvailableCheckoutPreCondition($this->createSellableModel(), $this->getConfig());
+        return new ProductsAvailableCheckoutPreCondition(
+            $this->createSellableModel(),
+            $this->getConfig(),
+            $this->getAvailabilityService()
+        );
     }
 
     /**
@@ -105,5 +113,13 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade()
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Service\Availability\AvailabilityServiceInterface
+     */
+    public function getAvailabilityService(): AvailabilityServiceInterface
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::SERVICE_AVAILABILITY);
     }
 }

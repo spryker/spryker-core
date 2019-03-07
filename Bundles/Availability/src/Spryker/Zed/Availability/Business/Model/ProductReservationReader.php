@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Spryker\Service\Availability\AvailabilityServiceInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
@@ -34,18 +35,26 @@ class ProductReservationReader implements ProductReservationReaderInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Service\Availability\AvailabilityServiceInterface
+     */
+    protected $service;
+
+    /**
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $availabilityQueryContainer
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Service\Availability\AvailabilityServiceInterface $service
      */
     public function __construct(
         AvailabilityQueryContainerInterface $availabilityQueryContainer,
         AvailabilityToStockInterface $stockFacade,
-        AvailabilityToStoreFacadeInterface $storeFacade
+        AvailabilityToStoreFacadeInterface $storeFacade,
+        AvailabilityServiceInterface $service
     ) {
         $this->availabilityQueryContainer = $availabilityQueryContainer;
         $this->stockFacade = $stockFacade;
         $this->storeFacade = $storeFacade;
+        $this->service = $service;
     }
 
     /**
@@ -126,7 +135,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
     /**
      * @param string $reservationQuantity
      *
-     * @return int
+     * @return float
      */
     protected function calculateReservation($reservationQuantity)
     {
@@ -139,20 +148,20 @@ class ProductReservationReader implements ProductReservationReaderInterface
     /**
      * @param array $reservationItems
      *
-     * @return int
+     * @return float
      */
     protected function getReservationUniqueValue($reservationItems)
     {
-        $reservation = 0;
+        $reservation = 0.0;
         foreach ($reservationItems as $item) {
             $value = explode(':', $item);
 
             if (count($value) > 1) {
-                $reservation += (int)$value[1];
+                $reservation += $value[1];
             }
         }
 
-        return $reservation;
+        return $this->service->round($reservation);
     }
 
     /**

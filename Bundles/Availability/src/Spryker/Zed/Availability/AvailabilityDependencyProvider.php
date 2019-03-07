@@ -29,6 +29,8 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
+    public const SERVICE_AVAILABILITY = 'SERVICE_AVAILABILITY';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -41,6 +43,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTouchFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addAvailabilityService($container);
 
         return $container;
     }
@@ -66,6 +69,20 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             return new AvailabilityToStoreFacadeBridge($container->getLocator()->store()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addAvailabilityService(Container $container): Container
+    {
+        $container[static::SERVICE_AVAILABILITY] = function (Container $container) {
+            return $container->getLocator()->availability()->service();
         };
 
         return $container;
