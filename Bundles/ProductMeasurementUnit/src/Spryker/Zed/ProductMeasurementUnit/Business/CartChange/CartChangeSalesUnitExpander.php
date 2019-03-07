@@ -43,7 +43,6 @@ class CartChangeSalesUnitExpander implements CartChangeSalesUnitExpanderInterfac
      */
     public function expandItemsWithDefaultQuantitySalesUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-
         $productConcreteSkus = $this->getProductConcreteSkus($cartChangeTransfer);
 
         if (!$productConcreteSkus) {

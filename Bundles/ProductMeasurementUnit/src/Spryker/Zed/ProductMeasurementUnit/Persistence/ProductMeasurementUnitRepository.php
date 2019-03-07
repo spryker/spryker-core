@@ -256,7 +256,6 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
 
     /**
      * @module Product
-     * @module Store
      *
      * @param string[] $productConcreteSkus
      * @param int $idStore
