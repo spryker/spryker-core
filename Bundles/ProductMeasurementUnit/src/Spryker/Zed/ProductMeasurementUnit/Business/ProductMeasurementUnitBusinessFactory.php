@@ -28,6 +28,7 @@ use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasure
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeInterface;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToStoreFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface;
 use Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitDependencyProvider;
 
@@ -146,7 +147,16 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     public function createCartChangeSalesUnitExpander(): CartChangeSalesUnitExpanderInterface
     {
         return new CartChangeSalesUnitExpander(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getStoreFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductMeasurementUnitToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitDependencyProvider::FACADE_STORE);
     }
 }

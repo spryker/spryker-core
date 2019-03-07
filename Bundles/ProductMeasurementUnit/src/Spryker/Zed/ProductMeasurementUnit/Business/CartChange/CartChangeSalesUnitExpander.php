@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business\CartChange;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToStoreFacadeInterface as ProductMeasurementUnitToStoreFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface;
 
 class CartChangeSalesUnitExpander implements CartChangeSalesUnitExpanderInterface
@@ -19,12 +20,20 @@ class CartChangeSalesUnitExpander implements CartChangeSalesUnitExpanderInterfac
     protected $productMeasurementUnitRepository;
 
     /**
+     * @var \Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface $productMeasurementUnitRepository
+     * @param \Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToStoreFacadeInterface $storeFacade
      */
     public function __construct(
-        ProductMeasurementUnitRepositoryInterface $productMeasurementUnitRepository
+        ProductMeasurementUnitRepositoryInterface $productMeasurementUnitRepository,
+        ProductMeasurementUnitToStoreFacadeInterface $storeFacade
     ) {
         $this->productMeasurementUnitRepository = $productMeasurementUnitRepository;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -34,14 +43,14 @@ class CartChangeSalesUnitExpander implements CartChangeSalesUnitExpanderInterfac
      */
     public function expandItemsWithDefaultQuantitySalesUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
 
         $productConcreteSkus = $this->getProductConcreteSkus($cartChangeTransfer);
 
-        if (!$productConcreteSkus || !$storeTransfer) {
+        if (!$productConcreteSkus) {
             return $cartChangeTransfer;
         }
 
+        $storeTransfer = $this->storeFacade->getCurrentStore();
         $indexedProductMeasurementSalesUnitIds = $this->productMeasurementUnitRepository->findIndexedStoreAwareDefaultProductMeasurementSalesUnitIds(
             $productConcreteSkus,
             $storeTransfer->getIdStore()
