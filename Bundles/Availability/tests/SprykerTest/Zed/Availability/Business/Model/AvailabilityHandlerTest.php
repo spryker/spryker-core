@@ -174,11 +174,11 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @param int $availabilityQuantity
+     * @param float $availabilityQuantity
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
-    protected function createAvailabilityQueryContainerMock($availabilityQuantity = 0)
+    protected function createAvailabilityQueryContainerMock($availabilityQuantity = 0.0)
     {
         $availabilityContainerMock = $this->getMockBuilder(AvailabilityQueryContainerInterface::class)
             ->getMock();

@@ -83,19 +83,32 @@ class AvailabilityFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider calculateStockForProductShouldReturnPersistedStockProvider
+     *
+     * @param float $quantity
+     *
      * @return void
      */
-    public function testCalculateStockForProductShouldReturnPersistedStock()
+    public function testCalculateStockForProductShouldReturnPersistedStock(float $quantity): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
-
-        $quantity = 5;
 
         $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => $quantity]);
 
         $calculatedQuantity = $availabilityFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
         $this->assertSame($quantity, $calculatedQuantity);
+    }
+
+    /**
+     * @return array
+     */
+    public function calculateStockForProductShouldReturnPersistedStockProvider(): array
+    {
+        return [
+            'int stock' => [5.0],
+            'float stock' => [5.5],
+        ];
     }
 
     /**
@@ -135,32 +148,51 @@ class AvailabilityFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider updateAvailabilityShouldStoreNewQuantityProvider
+     *
+     * @param float $quantity
+     *
      * @return void
      */
-    public function testUpdateAvailabilityShouldStoreNewQuantity()
+    public function testUpdateAvailabilityShouldStoreNewQuantity(float $quantity): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
         $stockProductEntity = $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 5]);
 
-        $stockProductEntity->setQuantity(50);
+        $stockProductEntity->setQuantity($quantity);
         $stockProductEntity->save();
 
         $availabilityFacade->updateAvailability(self::CONCRETE_SKU);
 
         $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(self::CONCRETE_SKU);
 
-        $this->assertSame(50, $availabilityEntity->getQuantity());
+        $this->assertSame($quantity, $availabilityEntity->getQuantity());
     }
 
     /**
+     * @return array
+     */
+    public function updateAvailabilityShouldStoreNewQuantityProvider(): array
+    {
+        return [
+            'int stock' => [50.0],
+            'float stock' => [55.0],
+        ];
+    }
+
+    /**
+     * @dataProvider updateAvailabilityWhenItsEmptyShouldStoreNewQuantityProvider
+     *
+     * @param float $quantity
+     *
      * @return void
      */
-    public function testUpdateAvailabilityWhenItsEmptyShouldStoreNewQuantity()
+    public function testUpdateAvailabilityWhenItsEmptyShouldStoreNewQuantity(float $quantity): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 50]);
+        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => $quantity]);
 
         $this->createProductAvailability();
 
@@ -168,34 +200,64 @@ class AvailabilityFacadeTest extends Unit
 
         $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(self::CONCRETE_SKU);
 
-        $this->assertSame(50, $availabilityEntity->getQuantity());
+        $this->assertSame($quantity, $availabilityEntity->getQuantity());
     }
 
     /**
+     * @return array
+     */
+    public function updateAvailabilityWhenItsEmptyShouldStoreNewQuantityProvider(): array
+    {
+        return [
+            'int stock' => [50.0],
+            'float stock' => [50.5],
+        ];
+    }
+
+    /**
+     * @dataProvider updateAvailabilityWhenSetToEmptyShouldStoreEmptyQuantityProvider
+     *
+     * @param float $quantity
+     *
      * @return void
      */
-    public function testUpdateAvailabilityWhenSetToEmptyShouldStoreEmptyQuantity()
+    public function testUpdateAvailabilityWhenSetToEmptyShouldStoreEmptyQuantity(float $quantity): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
         $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 0]);
 
-        $availabilityEntity = $this->createProductAvailability(5);
+        $availabilityEntity = $this->createProductAvailability($quantity);
 
-        $this->assertSame(5, $availabilityEntity->getQuantity());
+        $this->assertSame($quantity, $availabilityEntity->getQuantity());
 
         $availabilityFacade->updateAvailability(self::CONCRETE_SKU);
 
         $availabilityEntity = SpyAvailabilityQuery::create()
             ->findOneBySku(self::CONCRETE_SKU);
 
-        $this->assertSame(0, $availabilityEntity->getQuantity());
+        $this->assertSame(0.0, $availabilityEntity->getQuantity());
     }
 
     /**
+     * @return array
+     */
+    public function updateAvailabilityWhenSetToEmptyShouldStoreEmptyQuantityProvider(): array
+    {
+        return [
+            'int stock' => [5.0],
+            'float stock' => [5.5],
+        ];
+    }
+
+    /**
+     * @dataProvider saveProductAvailabilityForStoreShouldStoreAvailabilityProvider
+     *
+     * @param float $quantity
+     *
      * @return void
      */
-    public function testSaveProductAvailabilityForStoreShouldStoreAvailability()
+    public function testSaveProductAvailabilityForStoreShouldStoreAvailability(float $quantity)
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -203,7 +265,7 @@ class AvailabilityFacadeTest extends Unit
 
         $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 0]);
 
-        $availabilityFacade->saveProductAvailabilityForStore(self::CONCRETE_SKU, 2, $storeTransfer);
+        $availabilityFacade->saveProductAvailabilityForStore(self::CONCRETE_SKU, $quantity, $storeTransfer);
 
         $productConcreteAvailabilityRequestTransfer = (new ProductConcreteAvailabilityRequestBuilder([
             ProductConcreteAvailabilityRequestTransfer::SKU => self::CONCRETE_SKU,
@@ -211,7 +273,18 @@ class AvailabilityFacadeTest extends Unit
 
         $productConcreteAvailabilityTransfer = $availabilityFacade->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
 
-        $this->assertSame(2, $productConcreteAvailabilityTransfer->getAvailability());
+        $this->assertSame($quantity, $productConcreteAvailabilityTransfer->getAvailability());
+    }
+
+    /**
+     * @return array
+     */
+    public function saveProductAvailabilityForStoreShouldStoreAvailabilityProvider(): array
+    {
+        return [
+            'int stock' => [2.0],
+            'float stock' => [2.5],
+        ];
     }
 
     /**
