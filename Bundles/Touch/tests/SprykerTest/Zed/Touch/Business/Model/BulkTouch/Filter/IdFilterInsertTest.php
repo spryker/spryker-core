@@ -24,6 +24,8 @@ use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert;
  */
 class IdFilterInsertTest extends Unit
 {
+    public const ITEM_EVENT_ACTIVE = 'active';
+
     /**
      * @var \Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert|\PHPUnit\Framework\MockObject\MockObject
      */
@@ -53,7 +55,7 @@ class IdFilterInsertTest extends Unit
             ->method('getIdCollection')
             ->willReturn($ids);
 
-        $result = $this->idFilterInsert->filter($ids, 'foo');
+        $result = $this->idFilterInsert->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
 
         $this->assertSame([], $result);
     }
@@ -75,7 +77,7 @@ class IdFilterInsertTest extends Unit
                 ->willReturn($itemIdChunk);
         }
 
-        $result = $this->idFilterInsert->filter($ids, 'foo');
+        $result = $this->idFilterInsert->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
         $this->assertSame([], $result);
     }
 
@@ -95,7 +97,7 @@ class IdFilterInsertTest extends Unit
                 ->willReturn([]);
         }
 
-        $result = $this->idFilterInsert->filter($ids, 'foo');
+        $result = $this->idFilterInsert->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
         $this->assertSame($ids, $result);
     }
 }

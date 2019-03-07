@@ -201,7 +201,6 @@ interface PersistentCartFacadeInterface
      * Specification:
      *  - Saves quote in database.
      *  - Call quote response extend plugins.
-     *  - Operation will be performed only if customer has permission to update quote.
      *
      * @api
      *
