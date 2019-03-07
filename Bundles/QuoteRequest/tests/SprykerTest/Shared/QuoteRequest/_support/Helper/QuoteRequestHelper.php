@@ -27,7 +27,7 @@ class QuoteRequestHelper extends Module
     {
         $quoteRequestTransfer = (new QuoteRequestBuilder($seed))->build();
 
-        return $this->getLocator()->quoteRequest()->facade()->create($quoteRequestTransfer)->getQuoteRequest();
+        return $this->getLocator()->quoteRequest()->facade()->createQuoteRequest($quoteRequestTransfer)->getQuoteRequest();
     }
 
     /**

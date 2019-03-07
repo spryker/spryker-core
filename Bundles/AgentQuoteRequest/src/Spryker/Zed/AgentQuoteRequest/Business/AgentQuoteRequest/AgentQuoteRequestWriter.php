@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest;
 
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
@@ -42,15 +43,15 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestFilterTransfer->requireQuoteRequestReference();
+        $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 
-        $quoteRequestTransfer = $this->findQuoteRequest($quoteRequestFilterTransfer);
+        $quoteRequestTransfer = $this->findQuoteRequestByReference($quoteRequestCriteriaTransfer->getQuoteRequestReference());
         $quoteRequestResponseTransfer = new QuoteRequestResponseTransfer();
 
         if (!$quoteRequestTransfer) {
@@ -67,19 +68,19 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
 
         $quoteRequestTransfer->setStatus(SharedAgentQuoteRequestConfig::STATUS_CANCELED);
 
-        return $this->quoteRequestFacade->update($quoteRequestTransfer);
+        return $this->quoteRequestFacade->updateQuoteRequest($quoteRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function setQuoteRequestEditable(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestFilterTransfer->requireQuoteRequestReference();
+        $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 
-        $quoteRequestTransfer = $this->findQuoteRequest($quoteRequestFilterTransfer);
+        $quoteRequestTransfer = $this->findQuoteRequestByReference($quoteRequestCriteriaTransfer->getQuoteRequestReference());
         $quoteRequestResponseTransfer = new QuoteRequestResponseTransfer();
 
         if (!$quoteRequestTransfer) {
@@ -101,16 +102,30 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
         $quoteRequestTransfer->setStatus(SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS);
         $quoteRequestTransfer->setQuoteInProgress($quoteRequestTransfer->getLatestVersion()->getQuote());
 
-        return $this->quoteRequestFacade->update($quoteRequestTransfer);
+        return $this->quoteRequestFacade->updateQuoteRequest($quoteRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestFacade->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+    }
+
+    /**
+     * @param string $quoteRequestReference
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    protected function findQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): ?QuoteRequestTransfer
+    protected function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer
     {
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setQuoteRequestReference($quoteRequestReference)
+            ->setWithHidden(true);
+
         $quoteRequestTransfers = $this->quoteRequestFacade
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
             ->getQuoteRequests()

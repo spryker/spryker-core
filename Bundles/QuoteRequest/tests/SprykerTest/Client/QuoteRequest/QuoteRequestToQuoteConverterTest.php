@@ -13,16 +13,16 @@ use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestVersionBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
-use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestChecker;
-use Spryker\Client\QuoteRequest\QuoteRequestConfig;
-use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface;
+use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestChecker;
 use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverter;
+use Spryker\Client\QuoteRequest\QuoteRequestConfig;
+use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 
 /**
  * Auto-generated group annotations

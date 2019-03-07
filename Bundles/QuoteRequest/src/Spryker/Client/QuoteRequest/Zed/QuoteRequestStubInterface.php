@@ -8,6 +8,7 @@
 namespace Spryker\Client\QuoteRequest\Zed;
 
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
@@ -21,14 +22,21 @@ interface QuoteRequestStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function create(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+    public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function update(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
@@ -43,18 +51,4 @@ interface QuoteRequestStubInterface
      * @return \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer
      */
     public function getQuoteRequestVersionCollectionByFilter(QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer): QuoteRequestVersionCollectionTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function sendQuoteRequestToCustomer(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
 }

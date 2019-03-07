@@ -13,10 +13,10 @@ use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInter
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
 use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestChecker;
 use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestCheckerInterface;
-use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverter;
-use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverterInterface;
 use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestReader;
 use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestReaderInterface;
+use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverter;
+use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverterInterface;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStub;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface;
 

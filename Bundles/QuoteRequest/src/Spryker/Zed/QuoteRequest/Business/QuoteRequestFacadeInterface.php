@@ -9,6 +9,7 @@ namespace Spryker\Zed\QuoteRequest\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
@@ -34,7 +35,7 @@ interface QuoteRequestFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function create(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+    public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
 
     /**
      * Specification:
@@ -47,7 +48,42 @@ interface QuoteRequestFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function update(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Looks up one "Request for Quote" by provided quote request reference.
+     * - Expects the related company user to be provided.
+     * - Expects "Request for Quote" status to be "waiting".
+     * - Sets status to "Cancelled".
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expects quoter request reference to be provided.
+     * - Retrieves "Request for Quote" entity filtered by reference.
+     * - Expects "Request for Quote" status to be "in-progress".
+     * - Expects "Request for Quote" quoteInProgress property exists.
+     * - Expects "Request for Quote" validUntil property exists and greater than current time.
+     * - Changes status from "in-progress" to "ready".
+     * - Resets isHidden flag to false.
+     * - Creates version from quoteInProgress property.
+     * - Sets latest version.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
 
     /**
      * Specification:
@@ -80,21 +116,6 @@ interface QuoteRequestFacadeInterface
 
     /**
      * Specification:
-     * - Looks up one "Request for Quote" by provided quote request reference.
-     * - Expects the related company user to be provided.
-     * - Expects "Request for Quote" status to be "waiting".
-     * - Sets status to "Cancelled".
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
-
-    /**
-     * Specification:
      * - Validates quote request if quote request reference exists in quote.
      * - Checks if quote request version exists in database.
      * - Checks status from quote request.
@@ -111,24 +132,4 @@ interface QuoteRequestFacadeInterface
      * @return bool
      */
     public function checkCheckoutQuoteRequest(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
-
-    /**
-     * Specification:
-     * - Expects quoter request reference to be provided.
-     * - Retrieves "Request for Quote" entity filtered by reference.
-     * - Expects "Request for Quote" status to be "in-progress".
-     * - Expects "Request for Quote" quoteInProgress property exists.
-     * - Expects "Request for Quote" validUntil property exists and greater than current time.
-     * - Changes status from "in-progress" to "ready".
-     * - Resets isHidden flag to false.
-     * - Creates version from quoteInProgress property.
-     * - Sets latest version.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function sendQuoteRequestToCustomer(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
 }

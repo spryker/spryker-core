@@ -8,6 +8,7 @@
 namespace Spryker\Client\QuoteRequest;
 
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
@@ -33,7 +34,7 @@ interface QuoteRequestClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function create(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+    public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
 
     /**
      * Specification:
@@ -47,7 +48,23 @@ interface QuoteRequestClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function update(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Looks up one "Request for Quote" by provided quote request reference.
+     * - Expects the related company user to be provided.
+     * - Expects "Request for Quote" status to be "waiting".
+     * - Sets status to "Cancelled".
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
 
     /**
      * Specification:
@@ -83,18 +100,19 @@ interface QuoteRequestClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Looks up one "Request for Quote" by provided quote request reference.
-     * - Expects the related company user to be provided.
-     * - Expects "Request for Quote" status to be "waiting".
-     * - Sets status to "Cancelled".
+     * - Retrieves "Request for Quote" entities filtered by company user.
+     * - Filters by quote request reference.
+     * - Excludes hidden "Request for Quote" entities.
+     * - Selects latestVersion based on latest version id.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param string $quoteRequestReference
+     * @param int $idCompanyUser
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
+    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer;
 
     /**
      * Specification:
@@ -126,46 +144,7 @@ interface QuoteRequestClientInterface
 
     /**
      * Specification:
-     * - Makes Zed request.
-     * - Expects quoter request reference to be provided.
-     * - Retrieves "Request for Quote" entity filtered by reference.
-     * - Expects "Request for Quote" status to be "in-progress".
-     * - Expects "Request for Quote" quoteInProgress property exists.
-     * - Expects "Request for Quote" validUntil property exists and greater than current time.
-     * - Changes status from "in-progress" to "ready".
-     * - Resets isHidden flag to false.
-     * - Creates version from quoteInProgress property.
-     * - Sets latest version.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function sendQuoteRequestToCustomer(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
-
-    /**
-     * Specification:
-     * - Makes Zed request.
-     * - Retrieves "Request for Quote" entities filtered by company user.
-     * - Filters by quote request reference.
-     * - Excludes hidden "Request for Quote" entities.
-     * - Selects latestVersion based on latest version id.
-     *
-     * @api
-     *
-     * @param string $quoteRequestReference
-     * @param int $idCompanyUser
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
-     */
-    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer;
-
-    /**
-     * Specification:
      * - Checks convertible status from config.
-     * - Checks if quote request latest version exists.
      * - If "Request for Quote" convertible - return true.
      *
      * @api
