@@ -500,16 +500,23 @@ class Customer implements CustomerInterface
     protected function validateCustomerEmail(CustomerResponseTransfer $customerResponseTransfer, SpyCustomer $customerEntity)
     {
         if (!$this->emailValidator->isFormatValid($customerEntity->getEmail())) {
-            $customerResponseTransfer->setIsSuccess(false);
-            $customerResponseTransfer->addError(
-                $this->createErrorCustomerResponseTransfer(Messages::CUSTOMER_EMAIL_FORMAT_INVALID)
+            $customerResponseTransfer = $this->addErrorToCustomerResponseTransfer(
+                $customerResponseTransfer,
+                Messages::CUSTOMER_EMAIL_FORMAT_INVALID
             );
         }
 
         if (!$this->emailValidator->isEmailAvailableForCustomer($customerEntity->getEmail(), $customerEntity->getIdCustomer())) {
-            $customerResponseTransfer->setIsSuccess(false);
-            $customerResponseTransfer->addError(
-                $this->createErrorCustomerResponseTransfer(Messages::CUSTOMER_EMAIL_ALREADY_USED)
+            $customerResponseTransfer = $this->addErrorToCustomerResponseTransfer(
+                $customerResponseTransfer,
+                Messages::CUSTOMER_EMAIL_ALREADY_USED
+            );
+        }
+
+        if (!$this->emailValidator->isEmailLengthValid($customerEntity->getEmail())) {
+            $customerResponseTransfer = $this->addErrorToCustomerResponseTransfer(
+                $customerResponseTransfer,
+                Messages::CUSTOMER_EMAIL_TOO_LONG
             );
         }
 
@@ -862,5 +869,21 @@ class Customer implements CustomerInterface
         foreach ($this->postCustomerRegistrationPlugins as $postCustomerRegistrationPlugin) {
             $postCustomerRegistrationPlugin->execute($customerTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    protected function addErrorToCustomerResponseTransfer(CustomerResponseTransfer $customerResponseTransfer, string $message): CustomerResponseTransfer
+    {
+        $customerResponseTransfer->setIsSuccess(false);
+        $customerResponseTransfer->addError(
+            $this->createErrorCustomerResponseTransfer($message)
+        );
+
+        return $customerResponseTransfer;
     }
 }

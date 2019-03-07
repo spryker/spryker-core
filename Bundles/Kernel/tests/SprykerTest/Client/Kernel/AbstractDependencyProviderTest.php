@@ -35,7 +35,7 @@ class AbstractDependencyProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Kernel\AbstractDependencyProvider
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Kernel\AbstractDependencyProvider
      */
     private function getAbstractDependencyProviderMock()
     {
@@ -53,7 +53,7 @@ class AbstractDependencyProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Kernel\AbstractDependencyProvider
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Kernel\AbstractDependencyProvider
      */
     private function getAbstractDependencyContainerMock()
     {

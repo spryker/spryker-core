@@ -56,7 +56,7 @@ class QuoteEditStatusValidator implements QuoteEditStatusValidatorInterface
      */
     protected function isQuoteOwner(QuoteTransfer $quoteTransfer): bool
     {
-        return $quoteTransfer->getCustomerReference() === $quoteTransfer->getCustomer()
+        return $quoteTransfer->getCustomerReference() === $quoteTransfer->requireCustomer()->getCustomer()
             ->getCustomerReference();
     }
 }
