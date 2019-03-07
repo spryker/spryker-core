@@ -22,7 +22,7 @@
             {% set titles = titles|merge([
                 'Count orders: '|trans ~ trace.labels[key] ~
                 '<br>' ~ 'Title: '|trans ~ (value|length > 35 ? value|slice(0, 35) ~ '…' : value) ~
-                '<br>' ~ 'Sku: '|trans ~ trace.options[key]
+                '<br>' ~ 'SKU: '|trans ~ trace.options[key]
             ]) %}
         {% endfor %}
 
