@@ -23,11 +23,13 @@ use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
 class AvailabilityEditStockCest
 {
     /**
+     * @dataProvider stockProvider
+     *
      * @param \SprykerTest\Zed\AvailabilityGui\AvailabilityGuiCommunicationTester $i
      *
      * @return void
      */
-    public function testEditExistingStock(AvailabilityGuiCommunicationTester $i)
+    public function testEditExistingStock(AvailabilityGuiCommunicationTester $i, \Codeception\Example $example)
     {
         $i->wantTo('Edit availability stock');
         $i->expect('New stock added.');
@@ -46,13 +48,9 @@ class AvailabilityEditStockCest
 
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_EDIT_HEADER);
 
-        $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 50);
+        $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', $example['quantity']);
         $i->click('Save');
-        $i->seeResponseCodeIs(200);
-
-        $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 50.88);
-        $i->click('Save');
-        $i->seeResponseCodeIs(200);
+        $i->seeResponseCodeIs($example['expectedResponseCode']);
 
         $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 'string');
         $i->click('input[type=submit]');
@@ -60,5 +58,16 @@ class AvailabilityEditStockCest
 
         $i->click('//*[@id="page-wrapper"]/div[2]/div[2]/div/a');
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
+    }
+
+    /**
+     * @return array
+     */
+    protected function stockProvider()
+    {
+        return [
+            ['quantity' => 50, 'expectedResponseCode' => 200],
+            ['quantity' => 50.88, 'expectedResponseCode' => 200],
+        ];
     }
 }

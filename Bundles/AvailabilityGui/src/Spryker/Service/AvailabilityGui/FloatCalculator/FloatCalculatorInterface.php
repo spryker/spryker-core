@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\AvailabilityGui;
+namespace Spryker\Service\AvailabilityGui\Model;
 
-interface FloatCalculatorServiceInterface
+interface FloatCalculatorInterface
 {
     /**
      * @param float $leftOperand
      * @param float $rightOperand
      *
-     * @return int
+     * @return bool
      */
-    public function compare(float $leftOperand, float $rightOperand): int;
+    public function isEqual(float $leftOperand, float $rightOperand): bool;
 }

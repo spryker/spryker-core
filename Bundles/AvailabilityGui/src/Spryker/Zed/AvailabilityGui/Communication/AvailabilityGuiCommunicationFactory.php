@@ -8,9 +8,8 @@
 namespace Spryker\Zed\AvailabilityGui\Communication;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Service\AvailabilityGui\AvailabilityGuiServiceInterface;
 use Spryker\Zed\AvailabilityGui\AvailabilityGuiDependencyProvider;
-use Spryker\Zed\AvailabilityGui\Business\Model\FloatCalculator;
-use Spryker\Zed\AvailabilityGui\Business\Model\FloatCalculatorInterface;
 use Spryker\Zed\AvailabilityGui\Communication\Form\AvailabilityStockForm;
 use Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider\AvailabilityStockFormDataProvider;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
@@ -71,14 +70,6 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
             $storeTransfer,
             $this->getOmsFacade()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\AvailabilityGui\Business\Model\FloatCalculatorInterface
-     */
-    public function createFloatCalculator(): FloatCalculatorInterface
-    {
-        return new FloatCalculator();
     }
 
     /**
@@ -201,5 +192,14 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function getOmsFacade()
     {
         return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \Spryker\Service\AvailabilityGui\AvailabilityGuiServiceInterface
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getFloatCalculator(): AvailabilityGuiServiceInterface
+    {
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::SERVICE_FLOAT_CONATAINER);
     }
 }

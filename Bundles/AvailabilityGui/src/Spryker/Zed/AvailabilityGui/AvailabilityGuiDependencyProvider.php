@@ -27,6 +27,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_AVAILABILITY = 'availability facade';
     public const FACADE_STORE = 'store facade';
     public const FACADE_OMS = 'oms facade';
+    public const SERVICE_FLOAT_CONATAINER = 'SERVICE_FLOAT_CONATAINER';
 
     public const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
     public const QUERY_CONTAINER_PRODUCT_BUNDLE = 'product bundle query container';
@@ -55,6 +56,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQueryContainerProductBundle($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addOmsFacade($container);
+        $container = $this->addFloatCalculator($container);
 
         return $container;
     }
@@ -148,6 +150,20 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_OMS] = function (Container $container) {
             return new AvailabilityGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());
         };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFloatCalculator(Container $container): Container
+    {
+        $container[static::SERVICE_FLOAT_CONATAINER] = function (Container $container) {
+            return $container->getLocator()->availabilityGui()->service();
+        };
+
         return $container;
     }
 }
