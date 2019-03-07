@@ -112,6 +112,29 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetProductBundleCollectionByCriteriaFilterShouldReturnPersistedBundledProducts(): void
+    {
+        $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
+
+        $productBundleFacade = $this->createProductBundleFacade();
+        foreach ($productConcreteBundleTransfer->getProductBundle()->getBundledProducts() as $bundledProduct) {
+            $productBundleCollection = $productBundleFacade->getProductBundleCollectionByCriteriaFilter(
+                (new ProductBundleCriteriaFilterTransfer())->setIdBundledProduct($bundledProduct->getIdProductConcrete())
+            );
+
+            $productBundleTransfers = $productBundleCollection->getProductBundles()->getArrayCopy();
+            /** @var \Generated\Shared\Transfer\ProductBundleTransfer $productBundleTransfer */
+            $productBundleTransfer = reset($productBundleTransfers);
+
+            $this->assertSame(1, $productBundleCollection->getProductBundles()->count());
+            $this->assertSame(1, $productBundleTransfer->getBundledProducts()->count());
+            $this->assertSame($bundledProduct->getIdProductConcrete(), $productBundleTransfer->getBundledProducts()->offsetGet(0)->getIdProductConcrete());
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function testExpandCartItemGroupKeyShouldAppendBundleToKey(): void
     {
         $productBundleFacade = $this->createProductBundleFacade();
@@ -413,25 +436,6 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductBundleCollectionByCriteriaFilterShouldReturnPersistedBundledProducts()
-    {
-        $this->markTestIncomplete('Something with transactions');
-        $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
-
-        $productBundleFacade = $this->createProductBundleFacade();
-        foreach ($productConcreteBundleTransfer->getProductBundle()->getBundledProducts() as $bundledProduct) {
-            $productBundleCollection = $productBundleFacade->getProductBundleCollectionByCriteriaFilter(
-                (new ProductBundleCriteriaFilterTransfer())->setIdBundledProduct($bundledProduct->getIdProductConcrete())
-            );
-
-            $this->assertSame(1, $productBundleCollection->getProductBundles()->count());
-            $this->assertSame($productConcreteBundleTransfer->getProductBundle()->getIdProductConcrete(), $productBundleCollection->getProductBundles()->offsetGet(0)->getIdProductConcrete());
-        }
-    }
-
-    /**
-     * @return void
-     */
     public function testAssignBundledProductsToProductConcreteShouldAssignPersistedBundledProducts(): void
     {
         $this->markTestIncomplete('Something with transactions');
@@ -575,7 +579,7 @@ class ProductBundleFacadeTest extends Unit
         }
 
         $bundledProductTransfer = new ProductForBundleTransfer();
-        $bundledProductTransfer->setQuantity(static::ID_STORE);
+        $bundledProductTransfer->setQuantity(1);
         $bundledProductTransfer->setIdProductConcrete($productConcreteTransferToAssign1->getIdProductConcrete());
         $productBundleTransfer->addBundledProduct($bundledProductTransfer);
 
