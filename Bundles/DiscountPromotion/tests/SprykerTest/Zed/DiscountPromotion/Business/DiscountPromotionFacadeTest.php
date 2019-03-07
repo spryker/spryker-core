@@ -64,21 +64,19 @@ class DiscountPromotionFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider collectWhenPromotionItemIsAlreadyInCartShouldCollectItProvider
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
      * @return void
      */
-    public function testCollectWhenPromotionItemIsAlreadyInCartShouldCollectIt()
+    public function testCollectWhenPromotionItemIsAlreadyInCartShouldCollectIt(ItemTransfer $itemTransfer)
     {
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
-        $promotionItemSku = '001';
-        $promotionItemQuantity = 1.0;
-        $grossPrice = 100;
-        $price = 80;
-        $quantity = 1.0;
-
         $discountGeneralTransfer = $this->tester->haveDiscount();
 
-        $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
+        $discountPromotionTransfer = $this->createDiscountPromotionTransfer($itemTransfer->getAbstractSku(), $itemTransfer->getQuantity());
         $discountPromotionTransfer->setFkDiscount($discountGeneralTransfer->getIdDiscount());
         $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
 
@@ -86,21 +84,43 @@ class DiscountPromotionFacadeTest extends Unit
         $discountTransfer->setIdDiscount($discountGeneralTransfer->getIdDiscount());
 
         $quoteTransfer = new QuoteTransfer();
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setAbstractSku($promotionItemSku);
-        $itemTransfer->setQuantity($quantity);
         $itemTransfer->setIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());
-        $itemTransfer->setUnitGrossPrice($grossPrice);
-        $itemTransfer->setUnitPrice($price);
         $quoteTransfer->addItem($itemTransfer);
 
         $collectedDiscounts = $discountPromotionFacade->collect($discountTransfer, $quoteTransfer);
 
         $this->assertCount(0, $quoteTransfer->getPromotionItems());
         $this->assertCount(1, $collectedDiscounts);
-        $this->assertSame($grossPrice, $collectedDiscounts[0]->getUnitGrossPrice());
-        $this->assertSame($price, $collectedDiscounts[0]->getUnitPrice());
-        $this->assertSame($quantity, $collectedDiscounts[0]->getQuantity());
+        $this->assertSame($itemTransfer->getUnitGrossPrice(), $collectedDiscounts[0]->getUnitGrossPrice());
+        $this->assertSame($itemTransfer->getUnitPrice(), $collectedDiscounts[0]->getUnitPrice());
+        $this->assertSame($itemTransfer->getQuantity(), $collectedDiscounts[0]->getQuantity());
+    }
+
+    /**
+     * @return array
+     */
+    public function collectWhenPromotionItemIsAlreadyInCartShouldCollectItProvider(): array
+    {
+        return [
+            'int stock' => [$this->collectWhenPromotionItemIsAlreadyInCartShouldCollectItData(1)],
+            'float stock' => [$this->collectWhenPromotionItemIsAlreadyInCartShouldCollectItData(1.5)],
+        ];
+    }
+
+    /**
+     * @param int|float $quantity
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function collectWhenPromotionItemIsAlreadyInCartShouldCollectItData($quantity): ItemTransfer
+    {
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setAbstractSku('001');
+        $itemTransfer->setQuantity($quantity);
+        $itemTransfer->setUnitGrossPrice(100);
+        $itemTransfer->setUnitPrice(80);
+
+        return $itemTransfer;
     }
 
     /**
@@ -134,33 +154,28 @@ class DiscountPromotionFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider collectAdjustsQuantityBasedOnAvailabilityProvider
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
      * @return void
      */
-    public function testCollectAdjustsQuantityBasedOnAvailability()
+    public function testCollectAdjustsQuantityBasedOnAvailability(ItemTransfer $itemTransfer)
     {
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
-        $promotionItemSku = '001';
         $promotionItemQuantity = 5.0;
-        $grossPrice = 100;
-        $price = 80;
-        $quantity = 1.0;
 
         $discountGeneralTransfer = $this->tester->haveDiscount();
 
-        $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
+        $discountPromotionTransfer = $this->createDiscountPromotionTransfer($itemTransfer->getAbstractSku(), $promotionItemQuantity);
         $discountPromotionTransfer->setFkDiscount($discountGeneralTransfer->getIdDiscount());
         $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
 
         $discountTransfer = (new DiscountTransfer())
             ->setIdDiscount($discountGeneralTransfer->getIdDiscount());
 
-        $itemTransfer = (new ItemTransfer())
-            ->setAbstractSku($promotionItemSku)
-            ->setQuantity($quantity)
-            ->setIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion())
-            ->setUnitGrossPrice($grossPrice)
-            ->setUnitPrice($price);
+        $itemTransfer->setIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());
 
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->addItem($itemTransfer);
@@ -170,8 +185,35 @@ class DiscountPromotionFacadeTest extends Unit
         $promotionItemTransfer = $quoteTransfer->getItems()[0];
 
         $this->assertCount(0, $quoteTransfer->getPromotionItems());
-        $this->assertSame($quantity, $collectedDiscounts[0]->getQuantity());
+        $this->assertSame($itemTransfer->getQuantity(), $collectedDiscounts[0]->getQuantity());
         $this->assertSame($promotionItemQuantity, $promotionItemTransfer->getMaxQuantity());
+    }
+
+    /**
+     * @return array
+     */
+    public function collectAdjustsQuantityBasedOnAvailabilityProvider(): array
+    {
+        return [
+            'int stock' => [$this->collectAdjustsQuantityBasedOnAvailabilityProviderData(1)],
+            'float stock' => [$this->collectAdjustsQuantityBasedOnAvailabilityProviderData(1.5)],
+        ];
+    }
+
+    /**
+     * @param int|float $quantity
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function collectAdjustsQuantityBasedOnAvailabilityProviderData($quantity): ItemTransfer
+    {
+        $itemTransfer = (new ItemTransfer())
+            ->setAbstractSku('001')
+            ->setQuantity($quantity)
+            ->setUnitGrossPrice(100)
+            ->setUnitPrice(80);
+
+        return $itemTransfer;
     }
 
     /**
