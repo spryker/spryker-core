@@ -53,6 +53,11 @@ class CalculatorTest extends Unit
     public const ITEM_GROSS_PRICE_500 = 500;
 
     /**
+     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testCalculationWithoutAnyDiscountShouldReturnEmptyData()
@@ -200,7 +205,8 @@ class CalculatorTest extends Unit
      */
     protected function createComparatorOperators()
     {
-        $operators = (new OperatorProvider())->createComparators();
+        $operators = (new OperatorProvider($this->tester->getLocator()->discount()->service()))
+            ->createComparators();
         return new ComparatorOperators($operators);
     }
 
@@ -266,7 +272,8 @@ class CalculatorTest extends Unit
     {
         return new Distributor(
             $this->createDiscountableItemTransformer(),
-            $this->createDiscountableItemTransformerStrategyPlugins()
+            $this->createDiscountableItemTransformerStrategyPlugins(),
+            $this->tester->getLocator()->discount()->service()
         );
     }
 

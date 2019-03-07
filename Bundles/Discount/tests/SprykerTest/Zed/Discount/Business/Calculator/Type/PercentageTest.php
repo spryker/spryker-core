@@ -33,6 +33,11 @@ class PercentageTest extends Unit
     public const DISCOUNT_PERCENTAGE_200 = 20000;
 
     /**
+     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testCalculatePercentageShouldNotGrantDiscountsHigherThanHundredPercent()
@@ -45,7 +50,9 @@ class PercentageTest extends Unit
             ]
         );
 
-        $calculator = new PercentageType();
+        $calculator = new PercentageType(
+            $this->tester->getLocator()->discount()->service()
+        );
         $discountTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_PERCENTAGE_200);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
@@ -65,7 +72,9 @@ class PercentageTest extends Unit
             ]
         );
 
-        $calculator = new PercentageType();
+        $calculator = new PercentageType(
+            $this->tester->getLocator()->discount()->service()
+        );
         $discountTransfer = (new DiscountTransfer())->setAmount(-1 * self::DISCOUNT_PERCENTAGE_200);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
@@ -85,7 +94,9 @@ class PercentageTest extends Unit
             ]
         );
 
-        $calculator = new PercentageType();
+        $calculator = new PercentageType(
+            $this->tester->getLocator()->discount()->service()
+        );
         $this->expectException(CalculatorException::class);
         $discountCalculatorTransfer = (new DiscountTransfer())->setAmount('string');
         $calculator->calculateDiscount($items, $discountCalculatorTransfer);
@@ -104,7 +115,9 @@ class PercentageTest extends Unit
             ]
         );
 
-        $calculator = new PercentageType();
+        $calculator = new PercentageType(
+            $this->tester->getLocator()->discount()->service()
+        );
         $discountCalculatorTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_PERCENTAGE_10);
         $discountAmount = $calculator->calculateDiscount($items, $discountCalculatorTransfer);
 
@@ -124,7 +137,9 @@ class PercentageTest extends Unit
 
         $items[0]->setQuantity(0);
 
-        $calculator = new PercentageType();
+        $calculator = new PercentageType(
+            $this->tester->getLocator()->discount()->service()
+        );
         $discountTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_PERCENTAGE_10);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 

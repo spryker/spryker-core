@@ -11,7 +11,7 @@ use Spryker\Service\Kernel\AbstractBundleConfig;
 
 class DiscountConfig extends AbstractBundleConfig
 {
-    protected const ROUND_PRECISION = 0;
+    protected const ROUND_PRECISION = 2;
     protected const ROUND_MODE = PHP_ROUND_HALF_UP;
 
     /**

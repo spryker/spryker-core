@@ -963,6 +963,9 @@ class DiscountFacadeTest extends Unit
                 $discountRulePluginMock,
             ];
         };
+        $container[DiscountDependencyProvider::SERVICE_DISCOUNT] = function () {
+            return $this->tester->getLocator()->discount()->service();
+        };
         $factory->setContainer($container);
         $discountFacade->setFactory($factory);
 

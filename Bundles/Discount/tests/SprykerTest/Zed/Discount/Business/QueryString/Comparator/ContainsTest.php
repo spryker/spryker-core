@@ -26,6 +26,11 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Contains;
 class ContainsTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testAcceptShouldReturnTrueWhenContainsExpressionProvided()
@@ -89,6 +94,6 @@ class ContainsTest extends Unit
      */
     protected function createContains()
     {
-        return new Contains();
+        return new Contains($this->tester->getLocator()->discount()->service());
     }
 }

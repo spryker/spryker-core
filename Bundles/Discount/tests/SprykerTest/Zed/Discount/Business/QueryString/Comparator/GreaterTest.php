@@ -26,6 +26,11 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Greater;
 class GreaterTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testAcceptShouldReturnTrueWhenMoreExpressionProvided()
@@ -41,33 +46,73 @@ class GreaterTest extends Unit
     }
 
     /**
+     * @dataProvider compareWhenClauseValueIsBiggerThanProvidedShouldReturnTrueProvider
+     *
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     * @param string $withValue
+     *
      * @return void
      */
-    public function testCompareWhenClauseValueIsBiggerThanProvidedShouldReturnTrue()
+    public function testCompareWhenClauseValueIsBiggerThanProvidedShouldReturnTrue(ClauseTransfer $clauseTransfer, string $withValue): void
     {
         $more = $this->createMore();
 
-        $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue('1');
-
-        $isMatching = $more->compare($clauseTransfer, '2');
+        $isMatching = $more->compare($clauseTransfer, $withValue);
 
         $this->assertTrue($isMatching);
     }
 
     /**
+     * @return array
+     */
+    public function compareWhenClauseValueIsBiggerThanProvidedShouldReturnTrueProvider(): array
+    {
+        return [
+            'int stock' => $this->createClauseData('1', '2'),
+            'float stock' => $this->createClauseData('1.1', '1.2'),
+        ];
+    }
+
+    /**
+     * @param string $clauseValue
+     * @param string $withValue
+     *
+     * @return array
+     */
+    protected function createClauseData(string $clauseValue, string $withValue): array
+    {
+        $clauseTransfer = new ClauseTransfer();
+        $clauseTransfer->setValue($clauseValue);
+
+        return [$clauseTransfer, $withValue];
+    }
+
+    /**
+     * @dataProvider compareWhenClauseValueIsSmallerThanProvidedShouldReturnFalseProvider
+     *
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     * @param string $withValue
+     *
      * @return void
      */
-    public function testCompareWhenClauseValueIsSmallerThanProvidedShouldReturnFalse()
+    public function testCompareWhenClauseValueIsSmallerThanProvidedShouldReturnFalse(ClauseTransfer $clauseTransfer, string $withValue): void
     {
         $more = $this->createMore();
 
-        $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setValue('2');
-
-        $isMatching = $more->compare($clauseTransfer, '1');
+        $isMatching = $more->compare($clauseTransfer, $withValue);
 
         $this->assertFalse($isMatching);
+    }
+
+    /**
+     * @return array
+     */
+    public function compareWhenClauseValueIsSmallerThanProvidedShouldReturnFalseProvider(): array
+    {
+        return [
+            'int stock' => $this->createClauseData('2', '1'),
+            'float stock' => $this->createClauseData('1.2', '1.1'),
+        ];
     }
 
     /**
@@ -89,6 +134,6 @@ class GreaterTest extends Unit
      */
     protected function createMore()
     {
-        return new Greater();
+        return new Greater($this->tester->getLocator()->discount()->service());
     }
 }

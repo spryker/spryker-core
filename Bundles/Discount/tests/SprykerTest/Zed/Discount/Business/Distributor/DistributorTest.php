@@ -49,6 +49,11 @@ class DistributorTest extends Unit
     protected $discountFacade;
 
     /**
+     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     protected function setUp()
@@ -484,7 +489,8 @@ class DistributorTest extends Unit
     {
         return new Distributor(
             $this->createDiscountableItemTransformer(),
-            $this->createDiscountableItemTransformerStrategyPlugins()
+            $this->createDiscountableItemTransformerStrategyPlugins(),
+            $this->tester->getLocator()->discount()->service()
         );
     }
 

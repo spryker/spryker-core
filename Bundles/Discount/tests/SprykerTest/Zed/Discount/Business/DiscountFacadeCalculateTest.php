@@ -48,6 +48,11 @@ class DiscountFacadeCalculateTest extends Unit
     use LocatorHelperTrait;
 
     /**
+     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     protected function setUp()
@@ -422,6 +427,10 @@ class DiscountFacadeCalculateTest extends Unit
 
         $container[DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY] = function () use ($discountableItemTransformerStrategyPlugins) {
             return $discountableItemTransformerStrategyPlugins;
+        };
+
+        $container[DiscountDependencyProvider::SERVICE_DISCOUNT] = function () {
+            return $this->tester->getLocator()->discount()->service();
         };
 
         $discountBusinessFactory->setContainer($container);
