@@ -17,7 +17,7 @@ class CompanyUserAccessTokensResourceRoutePlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritdoc}
-     *  - configure actions for `company-user-access-tokens` resource.
+     *  - Configures actions for `company-user-access-tokens` resource.
      *
      * @api
      *
