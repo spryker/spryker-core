@@ -5,9 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityGui\Business\Model;
+namespace Spryker\Service\AvailabilityGui;
 
-class FloatCalculator implements FloatCalculatorInterface
+use Spryker\Service\Kernel\AbstractService;
+
+class FloatCalculatorService extends AbstractService implements FloatCalculatorServiceInterface
 {
     /**
      * @var int

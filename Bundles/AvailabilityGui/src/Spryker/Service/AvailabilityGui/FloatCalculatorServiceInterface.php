@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityGui\Business\Model;
+namespace Spryker\Service\AvailabilityGui;
 
-interface FloatCalculatorInterface
+interface FloatCalculatorServiceInterface
 {
     /**
      * @param float $leftOperand
