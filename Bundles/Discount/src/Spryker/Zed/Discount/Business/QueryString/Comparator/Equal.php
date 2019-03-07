@@ -8,23 +8,23 @@
 namespace Spryker\Zed\Discount\Business\QueryString\Comparator;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface;
+use Spryker\Service\Discount\DiscountServiceInterface;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class Equal implements ComparatorInterface
 {
     /**
-     * @var \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface
+     * @var \Spryker\Service\Discount\DiscountServiceInterface
      */
-    protected $floatRounder;
+    protected $service;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface $floatRounder
+     * @param \Spryker\Service\Discount\DiscountServiceInterface $service
      */
-    public function __construct(FloatRounderInterface $floatRounder)
+    public function __construct(DiscountServiceInterface $service)
     {
-        $this->floatRounder = $floatRounder;
+        $this->service = $service;
     }
 
     /**
@@ -52,8 +52,8 @@ class Equal implements ComparatorInterface
      */
     protected function compareNumbers(float $clauseValue, float $withValue): bool
     {
-        return $this->floatRounder->round($clauseValue) ===
-            $this->floatRounder->round($withValue);
+        return $this->service->round($clauseValue) ===
+            $this->service->round($withValue);
     }
 
     /**

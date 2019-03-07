@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\Discount\Business;
 
+use Spryker\Service\Discount\DiscountServiceInterface;
 use Spryker\Zed\Discount\Business\Calculator\CollectorStrategyResolver;
 use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Calculator\FilteredCalculator;
-use Spryker\Zed\Discount\Business\Calculator\FloatRounder;
-use Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface;
 use Spryker\Zed\Discount\Business\Calculator\Type\FixedType;
 use Spryker\Zed\Discount\Business\Calculator\Type\PercentageType;
 use Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaver;
@@ -105,7 +104,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createCalculatorPercentageType()
     {
         return new PercentageType(
-            $this->createFloatRounder()
+            $this->getDiscountService()
         );
     }
 
@@ -125,7 +124,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
         return new Distributor(
             $this->createDiscountableItemTransformer(),
             $this->getDiscountableItemTransformerStrategyPlugins(),
-            $this->createFloatRounder()
+            $this->getDiscountService()
         );
     }
 
@@ -230,7 +229,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     protected function createComparatorProvider()
     {
-        return new OperatorProvider($this->createFloatRounder());
+        return new OperatorProvider($this->getDiscountService());
     }
 
     /**
@@ -658,10 +657,10 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface
+     * @return \Spryker\Service\Discount\DiscountServiceInterface
      */
-    public function createFloatRounder(): FloatRounderInterface
+    public function getDiscountService(): DiscountServiceInterface
     {
-        return new FloatRounder();
+        return $this->getProvidedDependency(DiscountDependencyProvider::SERVICE_DISCOUNT);
     }
 }

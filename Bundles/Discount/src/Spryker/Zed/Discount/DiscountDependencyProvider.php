@@ -60,6 +60,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     public const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
+    public const SERVICE_DISCOUNT = 'SERVICE_DISCOUNT';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -81,6 +83,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCurrencyFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addDiscountableItemExpanderStrategyPlugins($container);
+        $container = $this->addDiscountService($container);
 
         return $container;
     }
@@ -180,6 +183,20 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
             $discountToMoneyBridge = new DiscountToMoneyBridge($container->getLocator()->money()->facade());
 
             return $discountToMoneyBridge;
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDiscountService(Container $container): Container
+    {
+        $container[static::SERVICE_DISCOUNT] = function (Container $container) {
+            return $container->getLocator()->discount()->service();
         };
 
         return $container;

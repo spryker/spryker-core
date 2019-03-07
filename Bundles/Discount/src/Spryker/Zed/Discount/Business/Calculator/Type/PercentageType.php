@@ -9,7 +9,7 @@ namespace Spryker\Zed\Discount\Business\Calculator\Type;
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface;
+use Spryker\Service\Discount\DiscountServiceInterface;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 
 class PercentageType implements CalculatorTypeInterface
@@ -20,16 +20,16 @@ class PercentageType implements CalculatorTypeInterface
     protected static $roundingError = 0.0;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface
+     * @var \Spryker\Service\Discount\DiscountServiceInterface
      */
-    protected $floatRounder;
+    protected $service;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface $floatRounder
+     * @param \Spryker\Service\Discount\DiscountServiceInterface $service
      */
-    public function __construct(FloatRounderInterface $floatRounder)
+    public function __construct(DiscountServiceInterface $service)
     {
-        $this->floatRounder = $floatRounder;
+        $this->service = $service;
     }
 
     /**
@@ -57,7 +57,7 @@ class PercentageType implements CalculatorTypeInterface
         }
 
         foreach ($discountableItems as $discountableItemTransfer) {
-            $itemTotalAmount = $this->floatRounder->round(
+            $itemTotalAmount = $this->service->roundToInt(
                 $discountableItemTransfer->getUnitPrice() * $this->getDiscountableObjectQuantity($discountableItemTransfer)
             );
             $discountAmount += $this->calculateDiscountAmount($itemTotalAmount, $value);

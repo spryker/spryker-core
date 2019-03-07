@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Discount\Business\QueryString;
 
-use Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface;
+use Spryker\Service\Discount\DiscountServiceInterface;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Contains;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\DoesNotContain;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Equal;
@@ -22,16 +22,16 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual;
 class OperatorProvider
 {
     /**
-     * @var \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface
+     * @var \Spryker\Service\Discount\DiscountServiceInterface
      */
-    protected $floatRounder;
+    protected $service;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface $floatRounder
+     * @param \Spryker\Service\Discount\DiscountServiceInterface $service
      */
-    public function __construct(FloatRounderInterface $floatRounder)
+    public function __construct(DiscountServiceInterface $service)
     {
-        $this->floatRounder = $floatRounder;
+        $this->service = $service;
     }
 
     /**
@@ -58,7 +58,7 @@ class OperatorProvider
      */
     protected function createContains()
     {
-        return new Contains($this->floatRounder);
+        return new Contains($this->service);
     }
 
     /**
@@ -66,7 +66,7 @@ class OperatorProvider
      */
     protected function createDoesNotContain()
     {
-        return new DoesNotContain($this->floatRounder);
+        return new DoesNotContain($this->service);
     }
 
     /**
@@ -74,7 +74,7 @@ class OperatorProvider
      */
     protected function createEqual()
     {
-        return new Equal($this->floatRounder);
+        return new Equal($this->service);
     }
 
     /**
@@ -98,7 +98,7 @@ class OperatorProvider
      */
     protected function createLess()
     {
-        return new Less($this->floatRounder);
+        return new Less($this->service);
     }
 
     /**
@@ -106,7 +106,7 @@ class OperatorProvider
      */
     protected function createLessEqual()
     {
-        return new LessEqual($this->floatRounder);
+        return new LessEqual($this->service);
     }
 
     /**
@@ -114,7 +114,7 @@ class OperatorProvider
      */
     protected function createGreater()
     {
-        return new Greater($this->floatRounder);
+        return new Greater($this->service);
     }
 
     /**
@@ -122,7 +122,7 @@ class OperatorProvider
      */
     protected function createGreaterEqual()
     {
-        return new GreaterEqual($this->floatRounder);
+        return new GreaterEqual($this->service);
     }
 
     /**
@@ -130,6 +130,6 @@ class OperatorProvider
      */
     protected function createNotEqual()
     {
-        return new NotEqual($this->floatRounder);
+        return new NotEqual($this->service);
     }
 }

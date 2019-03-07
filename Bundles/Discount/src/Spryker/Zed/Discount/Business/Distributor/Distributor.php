@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface;
+use Spryker\Service\Discount\DiscountServiceInterface;
 use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface;
 
 class Distributor implements DistributorInterface
@@ -32,23 +32,23 @@ class Distributor implements DistributorInterface
     protected $discountableItemTransformerStrategyPlugins;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface
+     * @var \Spryker\Service\Discount\DiscountServiceInterface
      */
-    protected $floatRounder;
+    protected $service;
 
     /**
      * @param \Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface $discountableItemTransformer
      * @param array $discountableItemTransformerStrategyPlugins
-     * @param \Spryker\Zed\Discount\Business\Calculator\FloatRounderInterface $floatRounder
+     * @param \Spryker\Service\Discount\DiscountServiceInterface $service
      */
     public function __construct(
         DiscountableItemTransformerInterface $discountableItemTransformer,
         array $discountableItemTransformerStrategyPlugins,
-        FloatRounderInterface $floatRounder
+        DiscountServiceInterface $service
     ) {
         $this->discountableItemTransformer = $discountableItemTransformer;
         $this->discountableItemTransformerStrategyPlugins = $discountableItemTransformerStrategyPlugins;
-        $this->floatRounder = $floatRounder;
+        $this->service = $service;
     }
 
     /**
@@ -166,7 +166,7 @@ class Distributor implements DistributorInterface
     {
         $totalGrossAmount = 0;
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
-            $grossAmount = $this->floatRounder->round(
+            $grossAmount = $this->service->roundToInt(
                 $discountableItemTransfer->getUnitPrice() *
                 $this->getDiscountableItemQuantity($discountableItemTransfer)
             );
@@ -183,7 +183,7 @@ class Distributor implements DistributorInterface
      */
     protected function getDiscountableItemQuantity(DiscountableItemTransfer $discountableItemTransfer): float
     {
-        $quantity = 1;
+        $quantity = 1.0;
         if ($discountableItemTransfer->getQuantity()) {
             $quantity = $discountableItemTransfer->getQuantity();
         }

@@ -5,14 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Discount\Business\Calculator;
+namespace Spryker\Service\Discount\FloatRounder;
 
 interface FloatRounderInterface
 {
     /**
-     * @param float $number
+     * @param float $value
+     *
+     * @return float
+     */
+    public function round(float $value): float;
+
+    /**
+     * @param float $value
      *
      * @return int
      */
-    public function round(float $number): int;
+    public function roundToInt(float $value): int;
 }
