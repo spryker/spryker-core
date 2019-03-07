@@ -93,7 +93,7 @@ class ItemFormHandler implements FormHandlerInterface
         $addedSkus = [];
 
         foreach ($quoteTransfer->getManualOrder()->getItems() as $newItemTransfer) {
-            if ($newItemTransfer->getQuantity() <= 0
+            if ($newItemTransfer->getQuantity() <= 0.0
                 || isset($addedSkus[$newItemTransfer->getSku()])
             ) {
                 continue;

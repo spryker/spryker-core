@@ -50,6 +50,8 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     public const PLUGINS_MANUAL_ORDER_ENTRY_FORM = 'PLUGINS_MANUAL_ORDER_ENTRY_FORM';
     public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
 
+    public const SERVICE_MANUAL_ORDER_ENTRY_GUI = 'SERVICE_MANUAL_ORDER_ENTRY_GUI';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -75,6 +77,21 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addCustomerQueryContainer($container);
         $container = $this->addManualOrderEntryFormPlugins($container);
         $container = $this->addQuoteExpanderPlugins($container);
+        $container = $this->addManualOrderEntryGuiService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addManualOrderEntryGuiService(Container $container): Container
+    {
+        $container[static::SERVICE_MANUAL_ORDER_ENTRY_GUI] = function (Container $container) {
+            return $container->getLocator()->manualOrderEntryGui()->service();
+        };
 
         return $container;
     }

@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Service\ManualOrderEntryGui\ManualOrderEntryGuiServiceInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,15 +29,23 @@ class ProductFormHandler implements FormHandlerInterface
     protected $productFacade;
 
     /**
+     * @var \Spryker\Service\ManualOrderEntryGui\ManualOrderEntryGuiServiceInterface
+     */
+    protected $service;
+
+    /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface $productFacade
+     * @param \Spryker\Service\ManualOrderEntryGui\ManualOrderEntryGuiServiceInterface $service
      */
     public function __construct(
         ManualOrderEntryGuiToCartFacadeInterface $cartFacade,
-        ManualOrderEntryGuiToProductFacadeInterface $productFacade
+        ManualOrderEntryGuiToProductFacadeInterface $productFacade,
+        ManualOrderEntryGuiServiceInterface $service
     ) {
         $this->cartFacade = $cartFacade;
         $this->productFacade = $productFacade;
+        $this->service = $service;
     }
 
     /**
@@ -82,9 +91,10 @@ class ProductFormHandler implements FormHandlerInterface
         $items = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (isset($items[$itemTransfer->getSku()])) {
-                $items[$itemTransfer->getSku()]->setQuantity(
+                $newQuantity = $this->service->round(
                     $items[$itemTransfer->getSku()]->getQuantity() + $itemTransfer->getQuantity()
                 );
+                $items[$itemTransfer->getSku()]->setQuantity($newQuantity);
                 continue;
             }
 
@@ -115,7 +125,7 @@ class ProductFormHandler implements FormHandlerInterface
     protected function isProductInvalid(ItemTransfer $newProduct, array $addedSkus): bool
     {
         return $newProduct->getSku() === ''
-            || $newProduct->getQuantity() <= 0
+            || $newProduct->getQuantity() <= 0.0
             || in_array($newProduct->getSku(), $addedSkus)
             || !$this->productFacade->hasProductConcrete($newProduct->getSku());
     }

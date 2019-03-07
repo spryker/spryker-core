@@ -9,6 +9,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Service\ManualOrderEntryGui\ManualOrderEntryGuiServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Controller\CreateController;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
@@ -91,6 +92,14 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getCartFacade(): ManualOrderEntryGuiToCartFacadeInterface
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_CART);
+    }
+
+    /**
+     * @return \Spryker\Service\ManualOrderEntryGui\ManualOrderEntryGuiServiceInterface
+     */
+    public function getManualOrderEntryGuiService(): ManualOrderEntryGuiServiceInterface
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::SERVICE_MANUAL_ORDER_ENTRY_GUI);
     }
 
     /**
@@ -576,7 +585,8 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ProductFormHandler(
             $this->getCartFacade(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
+            $this->getManualOrderEntryGuiService()
         );
     }
 

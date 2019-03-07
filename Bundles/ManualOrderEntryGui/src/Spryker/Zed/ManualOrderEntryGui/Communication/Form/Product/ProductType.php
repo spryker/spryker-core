@@ -75,7 +75,7 @@ class ProductType extends AbstractType
      *
      * @return $this
      */
-    protected function addQuantityField(FormBuilderInterface $builder, array $options): ProductType
+    protected function addQuantityField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_QUANTITY, TextType::class, [
             'label' => 'Quantity',
