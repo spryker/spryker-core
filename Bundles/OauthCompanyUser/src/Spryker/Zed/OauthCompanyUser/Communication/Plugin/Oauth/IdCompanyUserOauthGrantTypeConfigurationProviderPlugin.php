@@ -9,7 +9,7 @@ namespace Spryker\Zed\OauthCompanyUser\Communication\Plugin\Oauth;
 
 use Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\OauthCompanyUser\Business\League\Grant\IdCompanyUserGrantTypeType;
+use Spryker\Zed\OauthCompanyUser\Business\League\Grant\IdCompanyUserGrantType;
 use Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface;
 
@@ -31,6 +31,6 @@ class IdCompanyUserOauthGrantTypeConfigurationProviderPlugin extends AbstractPlu
     {
         return (new OauthGrantTypeConfigurationTransfer())
             ->setIdentifier(OauthCompanyUserConfig::GRANT_TYPE_ID_COMPANY_USER)
-            ->setFullyQualifiedClassName(IdCompanyUserGrantTypeType::class);
+            ->setFullyQualifiedClassName(IdCompanyUserGrantType::class);
     }
 }

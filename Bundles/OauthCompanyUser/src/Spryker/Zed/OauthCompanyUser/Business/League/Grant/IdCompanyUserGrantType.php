@@ -17,7 +17,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeInterface;
 use Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig;
 
-class IdCompanyUserGrantTypeType extends AbstractGrant implements GrantTypeInterface
+class IdCompanyUserGrantType extends AbstractGrant implements GrantTypeInterface
 {
     protected const REQUEST_PARAMETER_CUSTOMER_REFERENCE = 'customer_reference';
     protected const REQUEST_PARAMETER_ID_COMPANY_USER = 'id_company_user';
