@@ -225,6 +225,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             self::$cachedKeys[$key] = self::KEY_USED;
         }
 
+        $allPreparedKeys = $this->prefixKeyValues(array_flip($keys));
+
         // Get the rest of requested keys without a value
         $keys = array_diff($keys, array_keys($keyValues));
 
@@ -235,7 +237,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             self::$cachedKeys += array_fill_keys($keys, self::KEY_NEW);
         }
 
-        return $keyValues;
+        return array_merge($allPreparedKeys, $keyValues);
     }
 
     /**
