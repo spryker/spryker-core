@@ -21,7 +21,7 @@ use Generated\Shared\Transfer\RounderTransfer;
 class UtilNumberServiceTest extends Unit
 {
     /**
-     * @var \SprykerTest\Service\UtilCsv\UtilCsvServiceTester
+     * @var \SprykerTest\Service\UtilNumber\UtilNumberServiceTester
      */
     protected $tester;
 
