@@ -34,7 +34,9 @@ class CartItemsProductsRelationshipExpander implements CartItemsProductsRelation
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $productResource = $this->productsResource->findProductConcreteBySku($resource->getId(), $restRequest);
+            $sku = $resource->getAttributes()->getSku();
+            
+            $productResource = $this->productsResource->findProductConcreteBySku($sku, $restRequest);
             if ($productResource !== null) {
                 $resource->addRelationship($productResource);
             }
