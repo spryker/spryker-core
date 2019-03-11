@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Persistence;
 
+use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -38,9 +39,9 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     /**
      * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductBundleTransfer[]
+     * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
      */
-    public function getProductBundleTransfersByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): array
+    public function getProductBundleCollectionByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): ProductBundleCollectionTransfer
     {
         $productBundleQuery = $this->getFactory()
             ->createProductBundleQuery()
@@ -54,6 +55,6 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
 
         return $this->getFactory()
             ->createProductBundleMapper()
-            ->mapProductBundleEntitiesToProductBundleTransfers($productBundleEntities->getArrayCopy());
+            ->mapProductBundleEntitiesToProductBundleCollectionTransfer($productBundleEntities->getArrayCopy(), new ProductBundleCollectionTransfer());
     }
 }

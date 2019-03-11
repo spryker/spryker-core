@@ -284,8 +284,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      */
     public function getProductBundleCollectionByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): ProductBundleCollectionTransfer
     {
-        return $this->getFactory()
-            ->createProductBundleReader()
+        return $this->getRepository()
             ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
     }
 
