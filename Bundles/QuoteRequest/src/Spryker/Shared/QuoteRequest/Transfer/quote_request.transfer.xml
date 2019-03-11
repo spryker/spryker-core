@@ -72,6 +72,11 @@
         <property name="grandTotal" type="int" />
     </transfer>
 
+    <transfer name="Item">
+        <property name="sourceUnitGrossPrice" type="int" />
+        <property name="sourceUnitNetPrice" type="int" />
+    </transfer>
+
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int" />
     </transfer>
