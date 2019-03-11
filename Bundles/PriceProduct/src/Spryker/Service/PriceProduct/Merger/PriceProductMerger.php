@@ -21,8 +21,8 @@ class PriceProductMerger implements PriceProductMergerInterface
         array $abstractPriceProductTransfers,
         array $concretePriceProductTransfers
     ): array {
-        $abstractPriceProductTransfers = $this->prefillPriceProductTransferKeys($abstractPriceProductTransfers);
-        $concretePriceProductTransfers = $this->prefillPriceProductTransferKeys($concretePriceProductTransfers);
+        $abstractPriceProductTransfers = $this->groupPriceProductTransfersByIdentifier($abstractPriceProductTransfers);
+        $concretePriceProductTransfers = $this->groupPriceProductTransfersByIdentifier($concretePriceProductTransfers);
 
         $priceProductTransfers = [];
 
@@ -82,56 +82,14 @@ class PriceProductMerger implements PriceProductMergerInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function prefillPriceProductTransferKeys(array $priceProductTransfers): array
+    protected function groupPriceProductTransfersByIdentifier(array $priceProductTransfers): array
     {
         $priceProductTransfersResult = [];
+
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceProductTransfersResult[$this->buildPriceProductIdentifier($priceProductTransfer)] = $priceProductTransfer;
+            $priceProductTransfersResult[$priceProductTransfer->getIdentifier()] = $priceProductTransfer;
         }
 
         return $priceProductTransfersResult;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return string
-     */
-    protected function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string
-    {
-        $priceProductTransfer->requireMoneyValue();
-        $priceProductTransfer->requirePriceTypeName();
-        $priceProductTransfer->getMoneyValue()->requireCurrency();
-        $priceProductTransfer->getMoneyValue()->getCurrency()->requireCode();
-        $priceProductTransfer->requirePriceDimension();
-
-        return implode('-', array_filter($this->getIdentifiersPath($priceProductTransfer)));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return array
-     */
-    protected function getIdentifiersPath(PriceProductTransfer $priceProductTransfer): array
-    {
-        $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
-        $priceData = $priceProductTransfer->getMoneyValue()->getPriceData();
-
-        $identifierPaths = [
-            $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
-            $priceProductTransfer->getPriceTypeName(),
-            $priceProductTransfer->getMoneyValue()->getFkStore(),
-        ];
-
-        if ($priceProductTransfer->getPriceType()) {
-            $identifierPaths[] = $priceProductTransfer->getPriceType()->getPriceModeConfiguration();
-        }
-
-        if ($priceData) {
-            $identifierPaths[] = $priceData;
-        }
-
-        return array_merge($identifierPaths, array_values($priceDimensionTransfer->toArray()));
     }
 }

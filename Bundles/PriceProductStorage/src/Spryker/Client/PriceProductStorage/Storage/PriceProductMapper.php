@@ -64,6 +64,7 @@ class PriceProductMapper implements PriceProductMapperInterface
 
                 $priceProductTransfer->getMoneyValue()->setNetAmount($priceValue);
                 $priceProductTransfer = $this->setPriceData($priceProductTransfer, $prices);
+                $priceProductTransfer->setIdentifier($this->buildPriceProductIdentifier($priceProductTransfer));
             }
         }
     }
@@ -111,5 +112,43 @@ class PriceProductMapper implements PriceProductMapperInterface
         }
 
         return $priceProductTransfers[$index];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return string
+     */
+    protected function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string
+    {
+        $priceProductTransfer->requireMoneyValue();
+        $priceProductTransfer->requirePriceTypeName();
+        $priceProductTransfer->getMoneyValue()->requireCurrency();
+        $priceProductTransfer->getMoneyValue()->getCurrency()->requireCode();
+        $priceProductTransfer->requirePriceDimension();
+
+        return implode('-', array_filter($this->getIdentifiersPath($priceProductTransfer)));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return array
+     */
+    protected function getIdentifiersPath(PriceProductTransfer $priceProductTransfer): array
+    {
+        $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
+
+        $identifierPaths = [
+            $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
+            $priceProductTransfer->getPriceTypeName(),
+            $priceProductTransfer->getMoneyValue()->getFkStore(),
+        ];
+
+        if ($priceProductTransfer->getPriceType()) {
+            $identifierPaths[] = $priceProductTransfer->getPriceType()->getPriceModeConfiguration();
+        }
+
+        return array_merge($identifierPaths, array_values($priceDimensionTransfer->toArray()));
     }
 }

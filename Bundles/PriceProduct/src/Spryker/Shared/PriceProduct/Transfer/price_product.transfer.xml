@@ -15,6 +15,7 @@
         <property name="priceType"  type="PriceType" />
         <property name="moneyValue" type="MoneyValue" />
         <property name="priceDimension" type="PriceProductDimension" />
+        <property name="identifier" type="string" />
     </transfer>
 
     <transfer name="MoneyValue">
