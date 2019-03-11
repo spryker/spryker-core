@@ -196,7 +196,6 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @return \Spryker\Service\AvailabilityGui\AvailabilityGuiServiceInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getFloatCalculator(): AvailabilityGuiServiceInterface
     {

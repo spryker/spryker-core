@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\AvailabilityGui\Model;
+namespace Spryker\Service\AvailabilityGui\FloatCalculator;
 
 use Spryker\Service\AvailabilityGui\AvailabilityGuiConfig;
 use Spryker\Service\Kernel\AbstractService;

@@ -7,8 +7,8 @@
 
 namespace Spryker\Service\AvailabilityGui;
 
-use Spryker\Service\AvailabilityGui\Model\FloatCalculator;
-use Spryker\Service\AvailabilityGui\Model\FloatCalculatorInterface;
+use Spryker\Service\AvailabilityGui\FloatCalculator\FloatCalculator;
+use Spryker\Service\AvailabilityGui\FloatCalculator\FloatCalculatorInterface;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 /**

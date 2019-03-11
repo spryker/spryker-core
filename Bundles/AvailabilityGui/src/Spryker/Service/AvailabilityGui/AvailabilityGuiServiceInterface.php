@@ -7,12 +7,11 @@
 
 namespace Spryker\Service\AvailabilityGui;
 
-
 interface AvailabilityGuiServiceInterface
 {
     /**
      * Specification:
-     *  - compares two float numbers
+     *  - compares two float numbers with precision defined in config.
      *
      * @api
      *

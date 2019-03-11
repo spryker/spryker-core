@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\AvailabilityGui\Communication\Controller;
 
+use Codeception\Example;
 use SprykerTest\Zed\AvailabilityGui\AvailabilityGuiCommunicationTester;
 use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
 
@@ -26,10 +27,11 @@ class AvailabilityEditStockCest
      * @dataProvider stockProvider
      *
      * @param \SprykerTest\Zed\AvailabilityGui\AvailabilityGuiCommunicationTester $i
+     * @param \Codeception\Example $example
      *
      * @return void
      */
-    public function testEditExistingStock(AvailabilityGuiCommunicationTester $i, \Codeception\Example $example)
+    public function testEditExistingStock(AvailabilityGuiCommunicationTester $i, Example $example)
     {
         $i->wantTo('Edit availability stock');
         $i->expect('New stock added.');
