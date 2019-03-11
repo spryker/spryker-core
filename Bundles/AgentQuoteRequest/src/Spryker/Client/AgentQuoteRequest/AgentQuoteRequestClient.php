@@ -72,11 +72,11 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function convertQuoteRequestToEditableQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    public function convertQuoteRequestToQuoteInProgress(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteRequestConverter()
-            ->convertQuoteRequestToEditableQuote($quoteRequestTransfer);
+            ->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer);
     }
 
     /**

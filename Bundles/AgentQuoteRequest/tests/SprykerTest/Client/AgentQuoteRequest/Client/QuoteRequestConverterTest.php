@@ -12,19 +12,19 @@ use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Shared\AgentQuoteRequest\AgentQuoteRequestConfig as SharedAgentQuoteRequestConfig;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToQuoteClientInterface;
 use Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestChecker;
 use Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestConverter;
-use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\AgentQuoteRequest\AgentQuoteRequestConfig as SharedAgentQuoteRequestConfig;
 
 /**
  * Auto-generated group annotations
- *
  * @group SprykerTest
  * @group Client
- * @group AgentQuoteRequest
+ * @group QuoteRequest
+ * @group Client
  * @group QuoteRequestConverterTest
  * Add your own group annotations below this line
  */
@@ -71,7 +71,7 @@ class QuoteRequestConverterTest extends Unit
         ]))->build();
 
         // Act
-        $quoteResponseTransfer = $this->quoteRequestConverterMock->convertQuoteRequestToEditableQuote($quoteRequestTransfer);
+        $quoteResponseTransfer = $this->quoteRequestConverterMock->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer);
 
         // Assert
         $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
@@ -88,7 +88,7 @@ class QuoteRequestConverterTest extends Unit
         ]))->build();
 
         // Act
-        $quoteResponseTransfer = $this->quoteRequestConverterMock->convertQuoteRequestToEditableQuote($quoteRequestTransfer);
+        $quoteResponseTransfer = $this->quoteRequestConverterMock->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer);
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
@@ -109,7 +109,7 @@ class QuoteRequestConverterTest extends Unit
         ]))->build();
 
         // Act
-        $quoteResponseTransfer = $this->quoteRequestConverterMock->convertQuoteRequestToEditableQuote($quoteRequestTransfer);
+        $quoteResponseTransfer = $this->quoteRequestConverterMock->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer);
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
