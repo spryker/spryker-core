@@ -91,7 +91,7 @@ class PriceProductMerger implements PriceProductMergerInterface
         $priceProductTransfersResult = [];
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceProductTransfersResult[$priceProductTransfer->getIdentifier()] = $priceProductTransfer;
+            $priceProductTransfersResult[$priceProductTransfer->requireIdentifier()->getIdentifier()] = $priceProductTransfer;
         }
 
         return $priceProductTransfersResult;

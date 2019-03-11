@@ -122,12 +122,6 @@ class PriceProductMapper implements PriceProductMapperInterface
      */
     protected function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string
     {
-        $priceProductTransfer->requireMoneyValue();
-        $priceProductTransfer->requirePriceTypeName();
-        $priceProductTransfer->getMoneyValue()->requireCurrency();
-        $priceProductTransfer->getMoneyValue()->getCurrency()->requireCode();
-        $priceProductTransfer->requirePriceDimension();
-
         return implode('-', array_filter($this->getIdentifiersPath($priceProductTransfer)));
     }
 
@@ -138,6 +132,12 @@ class PriceProductMapper implements PriceProductMapperInterface
      */
     protected function getIdentifiersPath(PriceProductTransfer $priceProductTransfer): array
     {
+        $priceProductTransfer->requireMoneyValue();
+        $priceProductTransfer->requirePriceTypeName();
+        $priceProductTransfer->getMoneyValue()->requireCurrency();
+        $priceProductTransfer->getMoneyValue()->getCurrency()->requireCode();
+        $priceProductTransfer->requirePriceDimension();
+
         $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
 
         $identifierPaths = [
