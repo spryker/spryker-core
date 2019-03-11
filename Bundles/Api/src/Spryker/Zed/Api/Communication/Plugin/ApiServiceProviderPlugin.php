@@ -10,6 +10,7 @@ namespace Spryker\Zed\Api\Communication\Plugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -50,7 +51,7 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
      */
     public function register(Application $app)
     {
-        $app['dispatcher'] = $app->share($app->extend('dispatcher', function ($dispatcher) {
+        $app['dispatcher'] = $app->share($app->extend('dispatcher', function (EventDispatcherInterface $dispatcher) {
             $dispatcher->addListener(
                 KernelEvents::CONTROLLER,
                 [
