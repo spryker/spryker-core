@@ -128,8 +128,8 @@ class PriceProductMerger implements PriceProductMergerInterface
             $identifierPaths[] = $priceProductTransfer->getPriceType()->getPriceModeConfiguration();
         }
 
-        if ($priceProductTransfer->getVolumeQuantity()) {
-            $identifierPaths[] = $priceProductTransfer->getVolumeQuantity();
+        if ($priceData) {
+            $identifierPaths[] = $priceData;
         }
 
         return array_merge($identifierPaths, array_values($priceDimensionTransfer->toArray()));
