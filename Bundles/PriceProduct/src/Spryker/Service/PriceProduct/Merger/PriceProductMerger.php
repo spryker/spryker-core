@@ -116,6 +116,7 @@ class PriceProductMerger implements PriceProductMergerInterface
     protected function getIdentifiersPath(PriceProductTransfer $priceProductTransfer): array
     {
         $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
+        $priceData = $priceProductTransfer->getMoneyValue()->getPriceData();
 
         $identifierPaths = [
             $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
