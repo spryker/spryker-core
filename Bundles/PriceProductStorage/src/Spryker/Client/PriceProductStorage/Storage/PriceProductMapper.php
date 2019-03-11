@@ -65,6 +65,7 @@ class PriceProductMapper implements PriceProductMapperInterface
                 $priceProductTransfer->getMoneyValue()->setNetAmount($priceValue);
                 $priceProductTransfer = $this->setPriceData($priceProductTransfer, $prices);
                 $priceProductTransfer->setIdentifier($this->buildPriceProductIdentifier($priceProductTransfer));
+                $priceProductTransfer->setIsExtendable(true);
             }
         }
     }

@@ -9,6 +9,7 @@
         <property name="moneyValue" type="MoneyValue" />
         <property name="priceDimension" type="PriceProductDimension" />
         <property name="identifier" type="string" />
+        <property name="isExtendable" type="bool" />
     </transfer>
 
     <transfer name="PriceProductStorage">

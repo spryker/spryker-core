@@ -24,6 +24,10 @@ class PriceProductMerger implements PriceProductMergerInterface
         $abstractPriceProductTransfers = $this->groupPriceProductTransfersByIdentifier($abstractPriceProductTransfers);
         $concretePriceProductTransfers = $this->groupPriceProductTransfersByIdentifier($concretePriceProductTransfers);
 
+        if ($this->hasNotExtandableProductPrices($concretePriceProductTransfers)) {
+            $abstractPriceProductTransfers = $this->filterNotExtandableProductPrices($abstractPriceProductTransfers);
+        }
+
         $priceProductTransfers = [];
 
         foreach ($abstractPriceProductTransfers as $abstractPriceProductTransferKey => $abstractPriceProductTransfer) {
@@ -91,5 +95,33 @@ class PriceProductMerger implements PriceProductMergerInterface
         }
 
         return $priceProductTransfersResult;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return bool
+     */
+    protected function hasNotExtandableProductPrices(array $priceProductTransfers): bool
+    {
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            if ($priceProductTransfer->getIsExtendable()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function filterNotExtandableProductPrices(array $priceProductTransfers)
+    {
+        return array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) {
+            return $priceProductTransfer->getIsExtendable();
+        });
     }
 }

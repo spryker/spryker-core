@@ -130,6 +130,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
                     $volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY]
                 )
             )
+            ->setIsExtendable(false)
             ->getMoneyValue()
             ->setGrossAmount($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE])
             ->setNetAmount($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE]);

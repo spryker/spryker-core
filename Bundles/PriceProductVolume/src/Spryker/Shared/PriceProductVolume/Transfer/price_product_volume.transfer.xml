@@ -5,6 +5,7 @@
     <transfer name="PriceProduct">
         <property name="volumeQuantity" type="int"/>
         <property name="identifier" type="string" />
+        <property name="isExtendable" type="bool" />
     </transfer>
 
     <transfer name="PriceProductVolume">
