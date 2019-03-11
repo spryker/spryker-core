@@ -184,4 +184,16 @@ interface ProductMeasurementUnitFacadeInterface
     public function translateProductMeasurementSalesUnit(
         ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
     ): ProductMeasurementSalesUnitTransfer;
+
+    /**
+     * Specification:
+     * - Expands items without measurement sales unit with default measurement sales unit if it exists by store and product concrete sku.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandItemsWithDefaultQuantitySalesUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }
