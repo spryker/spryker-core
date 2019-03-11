@@ -118,4 +118,9 @@
         <property name="currency" type="Currency" />
     </transfer>
 
+    <transfer name="CalculableObject">
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="originalQuote" type="Quote" />
+    </transfer>
+
 </transfers>

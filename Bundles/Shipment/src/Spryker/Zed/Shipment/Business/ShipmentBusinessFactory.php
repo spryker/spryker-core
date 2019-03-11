@@ -9,6 +9,8 @@ namespace Spryker\Zed\Shipment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
+use Spryker\Zed\Shipment\Business\Expense\ShipmentQuoteExpenseWriter;
+use Spryker\Zed\Shipment\Business\Expense\ShipmentQuoteExpenseWriterInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
@@ -68,6 +70,14 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getCurrencyFacade(),
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Expense\ShipmentQuoteExpenseWriterInterface
+     */
+    public function createShipmentQuoteExpenseWriter(): ShipmentQuoteExpenseWriterInterface
+    {
+        return new ShipmentQuoteExpenseWriter();
     }
 
     /**
