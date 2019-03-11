@@ -22,8 +22,6 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundlePreReload
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFinder;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFinderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Grouper\ProductBundleGrouper;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Grouper\ProductBundleGrouperInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinder;
@@ -70,7 +68,6 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getAvailabilityQueryContainer(),
             $this->getStoreFacade(),
-            $this->createProductBundleGrouper(),
             $this->getRepository()
         );
     }
@@ -87,14 +84,6 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getPriceFacade()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Grouper\ProductBundleGrouperInterface
-     */
-    public function createProductBundleGrouper(): ProductBundleGrouperInterface
-    {
-        return new ProductBundleGrouper();
     }
 
     /**

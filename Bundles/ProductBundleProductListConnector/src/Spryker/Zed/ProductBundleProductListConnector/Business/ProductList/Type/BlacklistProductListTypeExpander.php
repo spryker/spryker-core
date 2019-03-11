@@ -72,12 +72,13 @@ class BlacklistProductListTypeExpander extends AbstractProductListTypeExpander
             ->getProductIds();
 
         foreach ($productBundleCollectionTransfer->getProductBundles() as $productBundleTransfer) {
-            if (in_array($productBundleTransfer->getIdProductConcrete(), $productIdsToAssign)) {
+            /** @var \Generated\Shared\Transfer\ProductBundleTransfer $productBundleTransfer */
+            if (in_array($productBundleTransfer->getIdProductConcreteBundle(), $productIdsToAssign)) {
                 continue;
             }
 
-            $productIdsToAssign[] = $productBundleTransfer->getIdProductConcrete();
-            $messageTransfer = $this->generateMessageTransfer(static::MESSAGE_VALUE, $productBundleTransfer->getIdProductConcrete(), $idProductConcreteBundled);
+            $productIdsToAssign[] = $productBundleTransfer->getIdProductConcreteBundle();
+            $messageTransfer = $this->generateMessageTransfer(static::MESSAGE_VALUE, $productBundleTransfer->getIdProductConcreteBundle(), $idProductConcreteBundled);
             $productListResponseTransfer->addMessage($messageTransfer);
         }
 

@@ -21,7 +21,7 @@ interface ProductBundleRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     * @return \Generated\Shared\Transfer\ProductBundleTransfer[]
      */
-    public function getProductForBundleTransfersByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): array;
+    public function getProductBundleTransfersByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): array;
 }

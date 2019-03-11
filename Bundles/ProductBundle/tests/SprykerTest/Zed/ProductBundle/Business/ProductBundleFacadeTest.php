@@ -122,13 +122,12 @@ class ProductBundleFacadeTest extends Unit
                 (new ProductBundleCriteriaFilterTransfer())->setIdBundledProduct($bundledProduct->getIdProductConcrete())
             );
 
-            $productBundleTransfers = $productBundleCollection->getProductBundles()->getArrayCopy();
             /** @var \Generated\Shared\Transfer\ProductBundleTransfer $productBundleTransfer */
-            $productBundleTransfer = reset($productBundleTransfers);
+            $productBundleTransfer = $productBundleCollection->getProductBundles()->offsetGet(0);
+            $bundleProduct = SpyProductBundleQuery::create()->findOneByFkBundledProduct($bundledProduct->getIdProductConcrete());
 
             $this->assertSame(1, $productBundleCollection->getProductBundles()->count());
-            $this->assertSame(1, $productBundleTransfer->getBundledProducts()->count());
-            $this->assertSame($bundledProduct->getIdProductConcrete(), $productBundleTransfer->getBundledProducts()->offsetGet(0)->getIdProductConcrete());
+            $this->assertSame($bundleProduct->getFkProduct(), $productBundleTransfer->getIdProductConcreteBundle());
         }
     }
 

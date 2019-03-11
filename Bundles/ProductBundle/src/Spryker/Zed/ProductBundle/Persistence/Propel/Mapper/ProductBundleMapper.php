@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 
 class ProductBundleMapper
@@ -27,6 +28,23 @@ class ProductBundleMapper
             )
                 ->setIdProductConcrete($productBundleEntity->getFkBundledProduct())
                 ->setIdProductBundle($productBundleEntity->getFkProduct());
+        }
+
+        return $productForBundleTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $productBundleEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleTransfer[]
+     */
+    public function mapProductBundleEntitiesToProductBundleTransfers(
+        array $productBundleEntities
+    ): array {
+        $productForBundleTransfers = [];
+        foreach ($productBundleEntities as $productBundleEntity) {
+            $productForBundleTransfers[] = (new ProductBundleTransfer())
+                ->setIdProductConcreteBundle($productBundleEntity->getFkProduct());
         }
 
         return $productForBundleTransfers;

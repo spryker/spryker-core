@@ -150,7 +150,7 @@ class BlacklistExpandProductBundleTest extends Unit
     protected function createProductBundleCollectionTransfer(int $idProductConcrete): ProductBundleCollectionTransfer
     {
         $productBundle = (new ProductBundleTransfer())
-            ->setIdProductConcrete($idProductConcrete);
+            ->setIdProductConcreteBundle($idProductConcrete);
         $productBundles = new ArrayObject([$productBundle]);
         $productBundleCollection = (new ProductBundleCollectionTransfer())->setProductBundles($productBundles);
 

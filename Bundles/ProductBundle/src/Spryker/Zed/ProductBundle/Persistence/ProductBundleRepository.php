@@ -38,13 +38,13 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
     /**
      * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     * @return \Generated\Shared\Transfer\ProductBundleTransfer[]
      */
-    public function getProductForBundleTransfersByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): array
+    public function getProductBundleTransfersByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): array
     {
         $productBundleQuery = $this->getFactory()
             ->createProductBundleQuery()
-            ->joinWithSpyProductRelatedByFkBundledProduct();
+            ->joinWithSpyProductRelatedByFkProduct();
 
         if ($productBundleCriteriaFilterTransfer->getIdBundledProduct()) {
             $productBundleQuery->filterByFkBundledProduct($productBundleCriteriaFilterTransfer->getIdBundledProduct());
@@ -54,6 +54,6 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
 
         return $this->getFactory()
             ->createProductBundleMapper()
-            ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities->getArrayCopy());
+            ->mapProductBundleEntitiesToProductBundleTransfers($productBundleEntities->getArrayCopy());
     }
 }
