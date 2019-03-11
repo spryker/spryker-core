@@ -114,10 +114,12 @@ class ProductBundleFacadeTest extends Unit
      */
     public function testGetProductBundleCollectionByCriteriaFilterShouldReturnPersistedBundledProducts(): void
     {
+        //Assign
         $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
-
         $productBundleFacade = $this->createProductBundleFacade();
+
         foreach ($productConcreteBundleTransfer->getProductBundle()->getBundledProducts() as $bundledProduct) {
+            //Act
             $productBundleCollection = $productBundleFacade->getProductBundleCollectionByCriteriaFilter(
                 (new ProductBundleCriteriaFilterTransfer())->setIdBundledProduct($bundledProduct->getIdProductConcrete())
             );
@@ -126,6 +128,7 @@ class ProductBundleFacadeTest extends Unit
             $productBundleTransfer = $productBundleCollection->getProductBundles()->offsetGet(0);
             $bundleProduct = SpyProductBundleQuery::create()->findOneByFkBundledProduct($bundledProduct->getIdProductConcrete());
 
+            //Assert
             $this->assertSame(1, $productBundleCollection->getProductBundles()->count());
             $this->assertSame($bundleProduct->getFkProduct(), $productBundleTransfer->getIdProductConcreteBundle());
         }

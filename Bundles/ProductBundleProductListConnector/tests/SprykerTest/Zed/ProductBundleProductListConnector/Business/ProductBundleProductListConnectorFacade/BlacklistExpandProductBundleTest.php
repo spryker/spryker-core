@@ -46,18 +46,20 @@ class BlacklistExpandProductBundleTest extends Unit
      */
     public function testExpandProductListWithProductBundleBlacklistShouldAddBundle(): void
     {
+        //Assign
         $productBundleCollection = $this->createProductBundleCollectionTransfer(static::BUNDLE_PRODUCT_ID);
         $productBundleProductListConnectorToProductBundleFacadeBridgeMock = $this->getProductBundleProductListConnectorToProductBundleFacadeBridgeMock($productBundleCollection);
         $productBundleProductListConnectorFacade = $this->tester->getFacadeWitMockDependency($productBundleProductListConnectorToProductBundleFacadeBridgeMock);
         $productListTransfer = $this->createBlacklistProductListTransfer([static::PRODUCT_ID_1]);
-
-        $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductListWithProductBundle($productListTransfer);
-
         $expectedProductIds = [
             static::PRODUCT_ID_1,
             static::BUNDLE_PRODUCT_ID,
         ];
 
+        //Act
+        $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductListWithProductBundle($productListTransfer);
+
+        //Assert
         $this->assertSame($expectedProductIds, $resultProductListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds());
     }
 
@@ -66,13 +68,16 @@ class BlacklistExpandProductBundleTest extends Unit
      */
     public function testExpandProductListWithProductBundleBlacklistShouldAddOneMessage(): void
     {
+        //Assign
         $productBundleCollection = $this->createProductBundleCollectionTransfer(static::BUNDLE_PRODUCT_ID);
         $productBundleProductListConnectorToProductBundleFacadeBridgeMock = $this->getProductBundleProductListConnectorToProductBundleFacadeBridgeMock($productBundleCollection);
         $productBundleProductListConnectorFacade = $this->tester->getFacadeWitMockDependency($productBundleProductListConnectorToProductBundleFacadeBridgeMock);
         $productListTransfer = $this->createBlacklistProductListTransfer([static::PRODUCT_ID_1]);
 
+        //Act
         $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductListWithProductBundle($productListTransfer);
 
+        //Assert
         $this->assertCount(1, $resultProductListResponseTransfer->getMessages());
     }
 
@@ -81,17 +86,19 @@ class BlacklistExpandProductBundleTest extends Unit
      */
     public function testExpandProductListWithProductBundleBlacklistShouldNotAddBundle(): void
     {
+        //Assign
         $productBundleCollection = $this->createEmptyProductBundleCollectionTransfer();
         $productBundleProductListConnectorToProductBundleFacadeBridgeMock = $this->getProductBundleProductListConnectorToProductBundleFacadeBridgeMock($productBundleCollection);
         $productBundleProductListConnectorFacade = $this->tester->getFacadeWitMockDependency($productBundleProductListConnectorToProductBundleFacadeBridgeMock);
         $productListTransfer = $this->createBlacklistProductListTransfer([static::PRODUCT_ID_1]);
-
-        $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductListWithProductBundle($productListTransfer);
-
         $expectedProductIds = [
             static::PRODUCT_ID_1,
         ];
 
+        //Act
+        $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductListWithProductBundle($productListTransfer);
+
+        //Assert
         $this->assertSame($expectedProductIds, $resultProductListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds());
     }
 
@@ -100,13 +107,16 @@ class BlacklistExpandProductBundleTest extends Unit
      */
     public function testExpandProductListWithProductBundleBlacklistShouldNotAddMessages(): void
     {
+        //Assign
         $productBundleCollection = $this->createEmptyProductBundleCollectionTransfer();
         $productBundleProductListConnectorToProductBundleFacadeBridgeMock = $this->getProductBundleProductListConnectorToProductBundleFacadeBridgeMock($productBundleCollection);
         $productBundleProductListConnectorFacade = $this->tester->getFacadeWitMockDependency($productBundleProductListConnectorToProductBundleFacadeBridgeMock);
         $productListTransfer = $this->createBlacklistProductListTransfer([static::PRODUCT_ID_1]);
 
+        //Act
         $resultProductListResponseTransfer = $productBundleProductListConnectorFacade->expandProductListWithProductBundle($productListTransfer);
 
+        //Assert
         $this->assertEmpty($resultProductListResponseTransfer->getMessages());
     }
 
