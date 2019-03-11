@@ -10,6 +10,7 @@ namespace Spryker\Zed\ContentGui\Communication\Form;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,8 +29,8 @@ class ContentForm extends AbstractType
     public const FIELD_CONTENT_TYPE_KEY = 'content_type_key';
     public const FIELD_LOCALES = 'localizedContents';
 
-    public const PLACEHOLDER_NAME = 'Name';
-    public const PLACEHOLDER_DESCRIPTION = 'Description';
+    public const LABEL_NAME = 'Name';
+    public const LABEL_DESCRIPTION = 'Description';
 
     public const OPTION_AVAILABLE_LOCALES = 'OPTION_AVAILABLE_LOCALES';
     public const OPTION_CONTENT_ITEM_FORM_PLUGIN = 'OPTION_CONTENT_ITEM_FORM_PLUGIN';
@@ -71,10 +72,7 @@ class ContentForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
-            'attr' => [
-                'placeholder' => static::PLACEHOLDER_NAME,
-            ],
-            'label' => false,
+            'label' => static::LABEL_NAME,
             'constraints' => $this->getFieldDefaultConstraints(),
         ]);
 
@@ -88,11 +86,8 @@ class ContentForm extends AbstractType
      */
     protected function addDescriptionField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_DESCRIPTION, TextType::class, [
-            'attr' => [
-                'placeholder' => static::PLACEHOLDER_DESCRIPTION,
-            ],
-            'label' => false,
+        $builder->add(static::FIELD_DESCRIPTION, TextareaType::class, [
+            'label' => static::LABEL_DESCRIPTION,
             'constraints' => $this->getFieldDefaultConstraints(),
         ]);
 
