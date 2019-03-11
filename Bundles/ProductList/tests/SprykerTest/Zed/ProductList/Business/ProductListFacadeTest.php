@@ -102,10 +102,10 @@ class ProductListFacadeTest extends Unit
      */
     public function testCreateProductListCreatesProductList(): void
     {
-        // Assign
+        //Assign
         $productListTransfer = (new ProductListBuilder())->build();
 
-        // Act
+        //Act
         $productListResponseTransfer = $this->getFacade()->createProductList($productListTransfer);
 
         //Assert
@@ -118,10 +118,10 @@ class ProductListFacadeTest extends Unit
      */
     public function testCreateProductListIsSuccessful(): void
     {
-        // Assign
+        //Assign
         $productListTransfer = (new ProductListBuilder())->build();
 
-        // Act
+        //Act
         $productListResponseTransfer = $this->getFacade()->createProductList($productListTransfer);
 
         //Assert
@@ -133,13 +133,13 @@ class ProductListFacadeTest extends Unit
      */
     public function testCreateProductListCreatesProductListCategoryRelations(): void
     {
-        // Assign
+        //Assign
         $categoryTransfer = $this->tester->haveCategory();
         /** @var \Generated\Shared\Transfer\ProductListTransfer $productListTransfer */
         $productListTransfer = (new ProductListBuilder())->withProductListCategoryRelation()->build();
         $productListTransfer->getProductListCategoryRelation()->addCategoryIds($categoryTransfer->getIdCategory());
 
-        // Act
+        //Act
         $productListResponseTransfer = $this->getFacade()->createProductList($productListTransfer);
         $productListTransfer = $productListResponseTransfer->getProductList();
 
@@ -152,18 +152,18 @@ class ProductListFacadeTest extends Unit
      */
     public function testCreateProductListCreatesProductListProductConcreteRelations(): void
     {
-        // Assign
+        //Assign
         $productTransfer = $this->tester->haveProduct();
 
         /** @var \Generated\Shared\Transfer\ProductListTransfer $productListTransfer */
         $productListTransfer = (new ProductListBuilder())->withProductListProductConcreteRelation()->build();
         $productListTransfer->getProductListProductConcreteRelation()->addProductIds($productTransfer->getIdProductConcrete());
 
-        // Act
+        //Act
         $productListResponseTransfer = $this->getFacade()->createProductList($productListTransfer);
         $productListTransfer = $productListResponseTransfer->getProductList();
 
-        // Assert
+        //Assert
         $this->assertCount(1, $productListTransfer->getProductListProductConcreteRelation()->getProductIds());
     }
 
@@ -172,14 +172,14 @@ class ProductListFacadeTest extends Unit
      */
     public function testUpdateProductListUpdatesProductList(): void
     {
-        // Assign
+        //Assign
         $productListTransfer = $this->tester->haveProductList();
         $productListTransfer->setTitle('TEST');
 
-        // Act
+        //Act
         $productListResponseTransfer = $this->getFacade()->updateProductList($productListTransfer);
 
-        // Assert
+        //Assert
         $this->assertSame('TEST', $productListResponseTransfer->getProductList()->getTitle());
     }
 
