@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesQuantity\Business\Order\Item;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Spryker\Service\SalesQuantity\SalesQuantityServiceInterface;
 use Spryker\Zed\SalesQuantity\SalesQuantityConfig;
 
 class ItemQuantityValidator implements ItemQuantityValidatorInterface
@@ -18,11 +19,18 @@ class ItemQuantityValidator implements ItemQuantityValidatorInterface
     protected $config;
 
     /**
-     * @param \Spryker\Zed\SalesQuantity\SalesQuantityConfig $config
+     * @var \Spryker\Service\SalesQuantity\SalesQuantityServiceInterface
      */
-    public function __construct(SalesQuantityConfig $config)
+    protected $service;
+
+    /**
+     * @param \Spryker\Zed\SalesQuantity\SalesQuantityConfig $config
+     * @param \Spryker\Service\SalesQuantity\SalesQuantityServiceInterface $service
+     */
+    public function __construct(SalesQuantityConfig $config, SalesQuantityServiceInterface $service)
     {
         $this->config = $config;
+        $this->service = $service;
     }
 
     /**
@@ -89,7 +97,10 @@ class ItemQuantityValidator implements ItemQuantityValidatorInterface
             return false;
         }
 
-        if ($itemTransfer->getQuantity() >= $threshold) {
+        $threshold = $this->service->round($threshold);
+        $itemQuantity = $this->service->round($itemTransfer->getQuantity());
+
+        if ($itemQuantity >= $threshold) {
             return true;
         }
 

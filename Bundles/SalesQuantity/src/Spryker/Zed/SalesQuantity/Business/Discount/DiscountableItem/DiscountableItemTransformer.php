@@ -10,9 +10,23 @@ namespace Spryker\Zed\SalesQuantity\Business\Discount\DiscountableItem;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Spryker\Service\SalesQuantity\SalesQuantityServiceInterface;
 
 class DiscountableItemTransformer implements DiscountableItemTransformerInterface
 {
+    /**
+     * @var \Spryker\Service\SalesQuantity\SalesQuantityServiceInterface
+     */
+    protected $service;
+
+    /**
+     * @param \Spryker\Service\SalesQuantity\SalesQuantityServiceInterface $service
+     */
+    public function __construct(SalesQuantityServiceInterface $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
@@ -32,13 +46,14 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() * $quantity / $totalAmount;
 
         $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $roundingError;
-        $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
+        $itemDiscountAmountRounded = $this->service->rountToInt($itemDiscountAmount);
         $roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
 
         $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
         $distributedDiscountTransfer->setIdDiscount($discountTransfer->getIdDiscount());
         $distributedDiscountTransfer->setSumAmount($itemDiscountAmountRounded);
-        $distributedDiscountTransfer->setUnitAmount((int)round($itemDiscountAmountRounded / $quantity));
+        $unitAmount = $this->service->rountToInt($itemDiscountAmountRounded / $quantity);
+        $distributedDiscountTransfer->setUnitAmount($unitAmount);
         $distributedDiscountTransfer->setQuantity($quantity);
 
         $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);

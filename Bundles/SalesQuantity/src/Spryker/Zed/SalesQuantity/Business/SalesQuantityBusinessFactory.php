@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesQuantity\Business;
 
+use Spryker\Service\SalesQuantity\SalesQuantityServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesQuantity\Business\Cart\Expander\ItemExpander;
 use Spryker\Zed\SalesQuantity\Business\Discount\DiscountableItem\DiscountableItemTransformer;
@@ -52,7 +53,7 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountableItemTransformer(): DiscountableItemTransformerInterface
     {
-        return new DiscountableItemTransformer();
+        return new DiscountableItemTransformer($this->getSalesQuantityService());
     }
 
     /**
@@ -60,6 +61,14 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
      */
     public function createItemQuantityValidator()
     {
-        return new ItemQuantityValidator($this->getConfig());
+        return new ItemQuantityValidator($this->getConfig(), $this->getSalesQuantityService());
+    }
+
+    /**
+     * @return \Spryker\Service\SalesQuantity\SalesQuantityServiceInterface
+     */
+    public function getSalesQuantityService(): SalesQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(SalesQuantityDependencyProvider::SERVICE_SALES_QUANTITY);
     }
 }

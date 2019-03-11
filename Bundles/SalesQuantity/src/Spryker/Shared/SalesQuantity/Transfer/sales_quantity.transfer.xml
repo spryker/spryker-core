@@ -11,4 +11,12 @@
         <property name="isQuantitySplittable" type="bool" />
     </transfer>
 
+    <transfer name="CalculatedDiscount">
+        <property name="quantity" type="float"/>
+    </transfer>
+
+    <transfer name="DiscountableItemTransformer">
+        <property name="quantity" type="float"/>
+    </transfer>
+
 </transfers>
