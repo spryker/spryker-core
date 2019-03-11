@@ -19,4 +19,8 @@
         <property name="quantity" type="float"/>
     </transfer>
 
+    <transfer name="DiscountableItem">
+        <property name="quantity" type="float"/>
+    </transfer>
+
 </transfers>
