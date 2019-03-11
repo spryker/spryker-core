@@ -55,7 +55,7 @@ class ProductListExpander implements ProductListExpanderInterface
         $productListResponseTransfer = (new ProductListResponseTransfer())
             ->setProductList($productListTransfer);
 
-        if ($productListTransfer->getType() === null) {
+        if (!$productListTransfer->getType()) {
             return $productListResponseTransfer;
         }
 

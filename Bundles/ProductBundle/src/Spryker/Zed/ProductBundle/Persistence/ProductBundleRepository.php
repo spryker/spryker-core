@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductBundle\Persistence;
 
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
-use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -47,27 +46,14 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             ->createProductBundleQuery()
             ->joinWithSpyProductRelatedByFkBundledProduct();
 
-        $productBundleQuery = $this->applyFilters($productBundleQuery, $productBundleCriteriaFilterTransfer);
+        if ($productBundleCriteriaFilterTransfer->getIdBundledProduct()) {
+            $productBundleQuery->filterByFkBundledProduct($productBundleCriteriaFilterTransfer->getIdBundledProduct());
+        }
 
         $productBundleEntities = $productBundleQuery->find();
 
         return $this->getFactory()
             ->createProductBundleMapper()
             ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities->getArrayCopy());
-    }
-
-    /**
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery $productBundleQuery
-     * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
-     *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
-     */
-    protected function applyFilters(SpyProductBundleQuery $productBundleQuery, ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): SpyProductBundleQuery
-    {
-        if ($productBundleCriteriaFilterTransfer->getIdBundledProduct() !== null) {
-            $productBundleQuery->filterByFkBundledProduct($productBundleCriteriaFilterTransfer->getIdBundledProduct());
-        }
-
-        return $productBundleQuery;
     }
 }

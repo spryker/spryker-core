@@ -10,34 +10,12 @@ namespace Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Typ
 use ArrayObject;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
-use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface;
-use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductFacadeInterface;
 
-class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterface
+class WhitelistProductListTypeExpander extends AbstractProductListTypeExpander
 {
     protected const MESSAGE_VALUE = 'product_bundle_sku was added to the whitelist with follow products product_bundled_skus.';
-
-    /**
-     * @var \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface
-     */
-    protected $productBundleFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductFacadeInterface
-     */
-    protected $productFacade;
-
-    /**
-     * @param \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface $productBundleFacade
-     * @param \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductFacadeInterface $productFacade
-     */
-    public function __construct(
-        ProductBundleProductListConnectorToProductBundleFacadeInterface $productBundleFacade,
-        ProductBundleProductListConnectorToProductFacadeInterface $productFacade
-    ) {
-        $this->productBundleFacade = $productBundleFacade;
-        $this->productFacade = $productFacade;
-    }
+    protected const PRODUCT_BUNDLE_SKU_PARAMETER = 'product_bundle_sku';
+    protected const PRODUCT_BUNDLED_SKUS_PARAMETER = 'product_bundled_skus';
 
     /**
      * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
@@ -156,18 +134,8 @@ class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterfa
         return (new MessageTransfer())
             ->setValue($value)
             ->setParameters([
-                'product_bundle_sku' => $this->getMessageTransferParameter($this->productFacade->getProductConcreteSkusByConcreteIds([$idProductConcreteBundle])),
-                'product_bundled_skus' => $this->getMessageTransferParameter($this->productFacade->getProductConcreteSkusByConcreteIds($productForBundleIdsToAssign)),
+                static::PRODUCT_BUNDLE_SKU_PARAMETER => $this->getMessageTransferParameter($this->productFacade->getProductConcreteSkusByConcreteIds([$idProductConcreteBundle])),
+                static::PRODUCT_BUNDLED_SKUS_PARAMETER => $this->getMessageTransferParameter($this->productFacade->getProductConcreteSkusByConcreteIds($productForBundleIdsToAssign)),
             ]);
-    }
-
-    /**
-     * @param string[] $productConcreteSkus
-     *
-     * @return string
-     */
-    protected function getMessageTransferParameter(array $productConcreteSkus): string
-    {
-        return implode(', ', array_keys($productConcreteSkus));
     }
 }

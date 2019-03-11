@@ -11,34 +11,12 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
-use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface;
-use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductFacadeInterface;
 
-class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterface
+class BlacklistProductListTypeExpander extends AbstractProductListTypeExpander
 {
     protected const MESSAGE_VALUE = 'product_bundle_sku was blacklisted due to blacklisting product_bundled_skus.';
-
-    /**
-     * @var \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface
-     */
-    protected $productBundleFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductFacadeInterface
-     */
-    protected $productFacade;
-
-    /**
-     * @param \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface $productBundleFacade
-     * @param \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductFacadeInterface $productFacade
-     */
-    public function __construct(
-        ProductBundleProductListConnectorToProductBundleFacadeInterface $productBundleFacade,
-        ProductBundleProductListConnectorToProductFacadeInterface $productFacade
-    ) {
-        $this->productBundleFacade = $productBundleFacade;
-        $this->productFacade = $productFacade;
-    }
+    protected const PRODUCT_BUNDLE_SKU_PARAMETER = 'product_bundle_sku';
+    protected const PRODUCT_BUNDLED_SKUS_PARAMETER = 'product_bundled_skus';
 
     /**
      * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
@@ -62,7 +40,8 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
      */
     protected function expandByIdProductConcrete(int $idProductConcreteBundled, ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
     {
-        $productBundleCriteriaFilterTransfer = $this->createProductBundleCriteriaFilterTransfer($idProductConcreteBundled);
+        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
+            ->setIdBundledProduct($idProductConcreteBundled);
         $productBundleCollectionTransfer = $this->productBundleFacade->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
 
         if (empty($productBundleCollectionTransfer->getProductBundles())) {
@@ -121,29 +100,8 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
         return (new MessageTransfer())
             ->setValue($value)
             ->setParameters([
-                'product_bundle_sku' => $this->getMessageTransferParameter($this->productFacade->getProductConcreteSkusByConcreteIds([$idProductConcreteBundle])),
-                'product_bundled_skus' => $this->getMessageTransferParameter($this->productFacade->getProductConcreteSkusByConcreteIds([$idProductConcreteBundled])),
+                static::PRODUCT_BUNDLE_SKU_PARAMETER => $this->getMessageTransferParameter($this->productFacade->getProductConcreteSkusByConcreteIds([$idProductConcreteBundle])),
+                static::PRODUCT_BUNDLED_SKUS_PARAMETER => $this->getMessageTransferParameter($this->productFacade->getProductConcreteSkusByConcreteIds([$idProductConcreteBundled])),
             ]);
-    }
-
-    /**
-     * @param string[] $productConcreteSkus
-     *
-     * @return string
-     */
-    protected function getMessageTransferParameter(array $productConcreteSkus): string
-    {
-        return implode(', ', array_keys($productConcreteSkus));
-    }
-
-    /**
-     * @param int $idBundledProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer
-     */
-    protected function createProductBundleCriteriaFilterTransfer(int $idBundledProduct): ProductBundleCriteriaFilterTransfer
-    {
-        return (new ProductBundleCriteriaFilterTransfer())
-            ->setIdBundledProduct($idBundledProduct);
     }
 }

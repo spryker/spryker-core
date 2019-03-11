@@ -14,7 +14,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductBundleProductListConnector\Business\ProductBundleProductListConnectorBusinessFactory;
 use Spryker\Zed\ProductBundleProductListConnector\Business\ProductBundleProductListConnectorFacadeInterface;
-use Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorConfig;
 use Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorDependencyProvider;
 
 /**
@@ -59,22 +58,15 @@ class ProductBundleProductListConnectorBusinessTester extends Actor
      *
      * @return \Spryker\Zed\ProductBundleProductListConnector\Business\ProductBundleProductListConnectorFacadeInterface
      */
-    public function getFacade(
+    public function getFacadeWitMockDependency(
         MockObject $productBundleProductListConnectorToProductBundleFacadeBridgeMock
     ): ProductBundleProductListConnectorFacadeInterface {
-        $productBundleProductListConnectorFacade = $this->getLocator()->productBundleProductListConnector()->facade();
+        /** @var \Spryker\Zed\ProductBundleProductListConnector\Business\ProductBundleProductListConnectorFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade $productBundleProductListConnectorFacade */
+        $productBundleProductListConnectorFacade = $this->getFacade();
         $productBundleProductListConnectorBusinessFactory = $this->getProductBundleProductListConnectorBusinessFactory($productBundleProductListConnectorToProductBundleFacadeBridgeMock);
         $productBundleProductListConnectorFacade->setFactory($productBundleProductListConnectorBusinessFactory);
 
         return $productBundleProductListConnectorFacade;
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorConfig
-     */
-    public function createProductBundleProductListConnectorConfig(): ProductBundleProductListConnectorConfig
-    {
-        return new ProductBundleProductListConnectorConfig();
     }
 
     /**
