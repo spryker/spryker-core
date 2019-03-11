@@ -157,6 +157,7 @@ interface CompanyBusinessUnitFacadeInterface
      * - Checks if company user already exists by customer id and company business unit id.
      * - Returns false in isSuccessful property if column fk_customer doesn't exist.
      * - Returns false in isSuccessful property if company user already exists and adds error message to messages collection.
+     * - Returns true if idCompanyBusinessUnit is empty.
      *
      * @api
      *
