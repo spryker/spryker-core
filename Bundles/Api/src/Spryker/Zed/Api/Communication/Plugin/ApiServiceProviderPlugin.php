@@ -50,13 +50,17 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
      */
     public function register(Application $app)
     {
-        $this->getEventDispatcher($app)->addListener(
-            KernelEvents::CONTROLLER,
-            [
-                $this->getControllerListener(),
-                'onKernelController',
-            ]
-        );
+        $app['dispatcher'] = $app->share($app->extend('dispatcher', function ($dispatcher) {
+            $dispatcher->addListener(
+                KernelEvents::CONTROLLER,
+                [
+                    $this->getControllerListener(),
+                    'onKernelController',
+                ]
+            );
+
+            return $dispatcher;
+        }));
     }
 
     /**
@@ -80,15 +84,5 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
      */
     public function boot(Application $app)
     {
-    }
-
-    /**
-     * @param \Silex\Application $app
-     *
-     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected function getEventDispatcher(Application $app)
-    {
-        return $app['dispatcher'];
     }
 }
