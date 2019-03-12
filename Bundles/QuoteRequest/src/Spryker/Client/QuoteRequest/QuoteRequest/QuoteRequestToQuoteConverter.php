@@ -67,7 +67,7 @@ class QuoteRequestToQuoteConverter implements QuoteRequestToQuoteConverterInterf
         $quoteTransfer = $latestQuoteRequestVersionTransfer->getQuote();
 
         $quoteTransfer->setQuoteRequestVersionReference($latestQuoteRequestVersionTransfer->getVersionReference());
-        $this->quoteClient->lockQuote($quoteTransfer);
+        $quoteTransfer = $this->quoteClient->lockQuote($quoteTransfer);
 
         return $this->persistentCartClient->persistCustomerQuote($quoteTransfer);
     }

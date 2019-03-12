@@ -213,6 +213,8 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves current customer quote.
+     * - Sets idQuote from current quote.
      * - Makes full replacement of the customer quote.
      *
      * @api

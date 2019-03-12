@@ -10,7 +10,6 @@ namespace Spryker\Client\PersistentCart;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToCustomerClientInterface;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface;
-use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToStoreClientInterface;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientInterface;
 use Spryker\Client\PersistentCart\GuestCartCustomerReferenceGenerator\GuestCartCustomerReferenceGenerator;
 use Spryker\Client\PersistentCart\GuestCartCustomerReferenceGenerator\GuestCartCustomerReferenceGeneratorInterface;
@@ -69,8 +68,7 @@ class PersistentCartFactory extends AbstractFactory
     {
         return new QuoteWriter(
             $this->getQuotePersistPlugin(),
-            $this->getQuoteClient(),
-            $this->getStoreClient()
+            $this->getQuoteClient()
         );
     }
 
@@ -102,14 +100,6 @@ class PersistentCartFactory extends AbstractFactory
     public function getZedRequestClient(): PersistentCartToZedRequestClientInterface
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::CLIENT_ZED_REQUEST);
-    }
-
-    /**
-     * @return \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToStoreClientInterface
-     */
-    public function getStoreClient(): PersistentCartToStoreClientInterface
-    {
-        return $this->getProvidedDependency(PersistentCartDependencyProvider::CLIENT_STORE);
     }
 
     /**

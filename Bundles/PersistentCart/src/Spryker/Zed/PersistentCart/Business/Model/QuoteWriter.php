@@ -113,6 +113,17 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
+        $quoteResponseTransfer = $this->quoteFacade->findQuoteByCustomerAndStore(
+            $quoteTransfer->getCustomer(),
+            $quoteTransfer->getStore()
+        );
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+
+        $quoteTransfer->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote());
+
         return $this->quoteFacade->updateQuote($quoteTransfer);
     }
 

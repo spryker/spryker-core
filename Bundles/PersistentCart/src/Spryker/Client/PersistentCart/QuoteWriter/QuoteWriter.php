@@ -10,7 +10,6 @@ namespace Spryker\Client\PersistentCart\QuoteWriter;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface;
-use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToStoreClientInterface;
 use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuotePersistPluginInterface;
 
 class QuoteWriter implements QuoteWriterInterface
@@ -31,23 +30,15 @@ class QuoteWriter implements QuoteWriterInterface
     protected $quotePersistPlugin;
 
     /**
-     * @var \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToStoreClientInterface
-     */
-    protected $storeClient;
-
-    /**
      * @param \Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuotePersistPluginInterface $quotePersistPlugin
      * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface $quoteClient
-     * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToStoreClientInterface $storeClient
      */
     public function __construct(
         QuotePersistPluginInterface $quotePersistPlugin,
-        PersistentCartToQuoteClientInterface $quoteClient,
-        PersistentCartToStoreClientInterface $storeClient
+        PersistentCartToQuoteClientInterface $quoteClient
     ) {
         $this->quotePersistPlugin = $quotePersistPlugin;
         $this->quoteClient = $quoteClient;
-        $this->storeClient = $storeClient;
     }
 
     /**
@@ -64,8 +55,6 @@ class QuoteWriter implements QuoteWriterInterface
                 ->setIsSuccessful(true)
                 ->setQuoteTransfer($quoteTransfer);
         }
-
-        $quoteTransfer->setStore($this->storeClient->getCurrentStore());
 
         return $this->quotePersistPlugin->persist($quoteTransfer);
     }
