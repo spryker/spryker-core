@@ -24,7 +24,7 @@ class PriceProductMerger implements PriceProductMergerInterface
         $abstractPriceProductTransfers = $this->groupPriceProductTransfers($abstractPriceProductTransfers);
         $concretePriceProductTransfers = $this->groupPriceProductTransfers($concretePriceProductTransfers);
 
-        if ($this->hasNotMergeableProductPrices($concretePriceProductTransfers)) {
+        if (!$this->isAllProductPricesMergeable($concretePriceProductTransfers)) {
             $abstractPriceProductTransfers = $this->filterNotMergeableProductPrices($abstractPriceProductTransfers);
         }
 
@@ -102,15 +102,15 @@ class PriceProductMerger implements PriceProductMergerInterface
      *
      * @return bool
      */
-    protected function hasNotMergeableProductPrices(array $priceProductTransfers): bool
+    protected function isAllProductPricesMergeable(array $priceProductTransfers): bool
     {
         foreach ($priceProductTransfers as $priceProductTransfer) {
             if (!$priceProductTransfer->getIsMergeable()) {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     /**
