@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Shipment\Business\Expense;
+namespace Spryker\Zed\Shipment\Business\ShipmentExpense;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 
-interface ShipmentExpenseWriterInterface
+interface ShipmentExpenseFilterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function removeObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
+    public function filterObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
 }

@@ -308,10 +308,10 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @return void
      */
-    public function removeObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
+    public function filterObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
     {
         $this->getFactory()
-            ->createShipmentQuoteExpenseWriter()
-            ->removeObsoleteShipmentExpenses($calculableObjectTransfer);
+            ->createShipmentExpenseFilter()
+            ->filterObsoleteShipmentExpenses($calculableObjectTransfer);
     }
 }

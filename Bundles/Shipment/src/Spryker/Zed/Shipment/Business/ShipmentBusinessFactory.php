@@ -9,8 +9,6 @@ namespace Spryker\Zed\Shipment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
-use Spryker\Zed\Shipment\Business\Expense\ShipmentExpenseWriter;
-use Spryker\Zed\Shipment\Business\Expense\ShipmentExpenseWriterInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
@@ -19,6 +17,8 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
+use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilter;
+use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilterInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
@@ -73,11 +73,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Expense\ShipmentExpenseWriterInterface
+     * @return \Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilterInterface
      */
-    public function createShipmentQuoteExpenseWriter(): ShipmentExpenseWriterInterface
+    public function createShipmentExpenseFilter(): ShipmentExpenseFilterInterface
     {
-        return new ShipmentExpenseWriter();
+        return new ShipmentExpenseFilter();
     }
 
     /**

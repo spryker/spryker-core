@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Shipment\Business\Expense;
+namespace Spryker\Zed\Shipment\Business\ShipmentExpense;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 
-class ShipmentExpenseWriter implements ShipmentExpenseWriterInterface
+class ShipmentExpenseFilter implements ShipmentExpenseFilterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function removeObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
+    public function filterObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
     {
         $quoteTransfer = $calculableObjectTransfer->getOriginalQuote();
         if ($quoteTransfer === null || $this->isShipmentMethodSet($quoteTransfer) === true) {
@@ -27,7 +27,7 @@ class ShipmentExpenseWriter implements ShipmentExpenseWriterInterface
         }
 
         $calculableObjectTransfer->setExpenses(
-            $this->filterExpenseTransferCollectionByExpenseType($calculableObjectTransfer->getExpenses())
+            $this->filterShipmentExpenses($calculableObjectTransfer->getExpenses())
         );
     }
 
@@ -36,7 +36,7 @@ class ShipmentExpenseWriter implements ShipmentExpenseWriterInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]
      */
-    protected function filterExpenseTransferCollectionByExpenseType(ArrayObject $expenseTransferCollection): ArrayObject
+    protected function filterShipmentExpenses(ArrayObject $expenseTransferCollection): ArrayObject
     {
         $filteredExpenseTransferCollection = new ArrayObject();
         foreach ($expenseTransferCollection as $expenseTransfer) {
@@ -56,12 +56,12 @@ class ShipmentExpenseWriter implements ShipmentExpenseWriterInterface
     protected function isShipmentMethodSet(QuoteTransfer $quoteTransfer): bool
     {
         $shipmentTransfer = $quoteTransfer->getShipment();
-        if ($shipmentTransfer === null) {
+        if (!$shipmentTransfer) {
             return false;
         }
 
         $shipmentMethodTransfer = $shipmentTransfer->getMethod();
-        if ($shipmentMethodTransfer === null || $shipmentMethodTransfer->getIdShipmentMethod() === null) {
+        if (!$shipmentMethodTransfer || !$shipmentMethodTransfer->getIdShipmentMethod()) {
             return false;
         }
 

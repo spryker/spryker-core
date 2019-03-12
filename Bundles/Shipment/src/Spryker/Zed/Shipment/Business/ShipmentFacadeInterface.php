@@ -259,7 +259,7 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Removes obsolete shipment expenses from Quote if shipment method is not set.
+     * - Filters obsolete shipment expenses from Quote if shipment method is not set.
      *
      * @api
      *
@@ -267,5 +267,5 @@ interface ShipmentFacadeInterface
      *
      * @return void
      */
-    public function removeObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
+    public function filterObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
 }

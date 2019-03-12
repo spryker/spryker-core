@@ -17,11 +17,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  */
-class RemoveObsoleteShipmentExpensesCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
+class FilterObsoleteShipmentExpensesCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Removes obsolete shipment expenses from Quote if shipment method is not set.
+     * - Filters obsolete shipment expenses from Quote if shipment method is not set.
      *
      * @api
      *
@@ -29,8 +29,8 @@ class RemoveObsoleteShipmentExpensesCalculatorPlugin extends AbstractPlugin impl
      *
      * @return void
      */
-    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer): void
     {
-        $this->getFacade()->removeObsoleteShipmentExpenses($calculableObjectTransfer);
+        $this->getFacade()->filterObsoleteShipmentExpenses($calculableObjectTransfer);
     }
 }
