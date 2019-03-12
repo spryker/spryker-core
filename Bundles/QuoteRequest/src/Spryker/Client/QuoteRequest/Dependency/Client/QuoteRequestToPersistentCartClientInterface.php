@@ -17,5 +17,5 @@ interface QuoteRequestToPersistentCartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function replaceCustomerCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function persistCustomerQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

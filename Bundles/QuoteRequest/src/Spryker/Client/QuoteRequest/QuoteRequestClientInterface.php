@@ -116,6 +116,7 @@ interface QuoteRequestClientInterface
 
     /**
      * Specification:
+     * - Makes Zed request.
      * - Expects "Request for Quote" status to be "ready".
      * - Expects the related latest version to be provided.
      * - Replaces current customer quote by quote from latest quote request version.
@@ -153,5 +154,5 @@ interface QuoteRequestClientInterface
      *
      * @return bool
      */
-    public function isQuoteRequestConvertible(QuoteRequestTransfer $quoteRequestTransfer): bool;
+    public function isQuoteRequestReady(QuoteRequestTransfer $quoteRequestTransfer): bool;
 }

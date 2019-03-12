@@ -10,11 +10,11 @@ namespace Spryker\Client\PersistentCartExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteReplacePluginInterface
+interface QuotePersistPluginInterface
 {
     /**
      * Specification:
-     * - Plugin executed to replace active customer cart.
+     * - Plugin executed to persist cart.
      *
      * @api
      *
@@ -22,5 +22,5 @@ interface QuoteReplacePluginInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function replace(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function persist(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

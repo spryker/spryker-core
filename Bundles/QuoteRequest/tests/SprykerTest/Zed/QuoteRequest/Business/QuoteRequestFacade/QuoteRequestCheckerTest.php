@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
@@ -378,9 +379,9 @@ class QuoteRequestCheckerTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker|\PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteRequestChecker(): QuoteRequestChecker
+    protected function createQuoteRequestChecker(): MockObject
     {
         $quoteRequestChecker = $this->getMockBuilder(QuoteRequestChecker::class)
             ->setMethods(['findQuoteRequest', 'findQuoteRequestVersion'])
@@ -391,9 +392,9 @@ class QuoteRequestCheckerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteRequestRepositoryMock(): QuoteRequestRepositoryInterface
+    protected function createQuoteRequestRepositoryMock(): MockObject
     {
         return $this->getMockBuilder(QuoteRequestRepositoryInterface::class)
             ->setMethods(['getQuoteRequestCollectionByFilter', 'getQuoteRequestVersionCollectionByFilter'])

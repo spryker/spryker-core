@@ -168,7 +168,7 @@ class AgentQuoteRequestFacadeTest extends Unit
             ->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
 
         // Assert
-        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccess());
+        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS,
             $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
@@ -198,7 +198,7 @@ class AgentQuoteRequestFacadeTest extends Unit
             ->cancelQuoteRequest($quoteRequestCriteriaTransfer);
 
         // Assert
-        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccess());
+        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             SharedAgentQuoteRequestConfig::STATUS_CANCELED,
             $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()

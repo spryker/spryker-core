@@ -213,7 +213,7 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     * - Makes full replacement of the quote.
+     * - Makes full replacement of the customer quote.
      *
      * @api
      *
@@ -221,7 +221,7 @@ interface PersistentCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function replaceQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
