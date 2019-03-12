@@ -157,6 +157,7 @@ interface CompanyBusinessUnitFacadeInterface
      * - Checks if company user already exists by customer id and company business unit id.
      * - Ignores company user by CompanyUserTransfer::idCompanyUser.
      * - Returns true in isSuccessful property if CompanyUserTransfer::fkCompanyBusinessUnit is empty.
+     * - Returns true in isSuccessful property if CompanyUserTransfer::getCustomer()::idCustomer is empty.
      * - Returns false in isSuccessful property if column fk_customer doesn't exist.
      * - Returns false in isSuccessful property if company user already exists and adds error message to messages collection.
      *

@@ -43,6 +43,10 @@ class CompanyUserValidator implements CompanyUserValidatorInterface
             return $companyUserResponseTransfer;
         }
 
+        if (!$companyUserTransfer->getCustomer()->getIdCustomer()) {
+            return $companyUserResponseTransfer;
+        }
+
         $existsCompanyUser = $this->companyBusinessUnitRepository
             ->hasCompanyUserByCustomer($companyUserTransfer);
 
