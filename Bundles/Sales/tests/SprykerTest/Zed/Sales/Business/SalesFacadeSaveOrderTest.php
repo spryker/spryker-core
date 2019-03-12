@@ -334,7 +334,7 @@ class SalesFacadeSaveOrderTest extends Unit
     }
 
     /**
-     * @dataProvider saveOrderCreatesAndFillsOrderItemsProvider
+     * @dataProvider saveOrderCreatesAndFillsOrderItemsDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $firstItem
@@ -393,18 +393,18 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return array
      */
-    public function saveOrderCreatesAndFillsOrderItemsProvider(): array
+    public function saveOrderCreatesAndFillsOrderItemsDataProvider(): array
     {
         return [
-            'int stock' => $this->saveOrderCreatesAndFillsOrderItemsIntStockData(),
-            'float stock' => $this->saveOrderCreatesAndFillsOrderItemsFloatStockData(),
+            'int stock' => $this->getDataForSaveOrderCreatesAndFillsOrderItemsWithIntStock(),
+            'float stock' => $this->getDataForSaveOrderCreatesAndFillsOrderItemsWithFloatStock(),
         ];
     }
 
     /**
      * @return array
      */
-    protected function saveOrderCreatesAndFillsOrderItemsIntStockData(): array
+    protected function getDataForSaveOrderCreatesAndFillsOrderItemsWithIntStock(): array
     {
         return [
             $this->createValidQuoteWithoutItems(),
@@ -424,7 +424,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return array
      */
-    protected function saveOrderCreatesAndFillsOrderItemsFloatStockData(): array
+    protected function getDataForSaveOrderCreatesAndFillsOrderItemsWithFloatStock(): array
     {
         return [
             $this->createValidQuoteWithoutItems(),
