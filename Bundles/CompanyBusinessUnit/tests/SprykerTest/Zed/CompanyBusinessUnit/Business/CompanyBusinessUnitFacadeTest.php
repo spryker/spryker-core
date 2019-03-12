@@ -11,7 +11,6 @@ use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\CompanyUserBuilder;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use TypeError;
 
@@ -379,7 +378,7 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         $notExistentCompanyUserTransfer = (new CompanyUserBuilder())
             ->build()
-            ->setCustomer($customerTransfer);
+            ->setFkCustomer($customerTransfer->getIdCustomer());
 
         // Act
         $existsCompanyUser = $this->getFacade()
@@ -392,14 +391,13 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testIsUniqueCompanyUserByCustomerShouldReturnTrueIfIdCustomerIsEmpty()
+    public function testIsUniqueCompanyUserByCustomerShouldReturnTrueIfFkCustomerIsEmpty()
     {
         // Arrange
         $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
 
         $notExistentCompanyUserTransfer = (new CompanyUserBuilder())
             ->build()
-            ->setCustomer(new CustomerTransfer())
             ->setFkCompanyBusinessUnit($businessUnitTransfer->getFkCompany());
 
         // Act
@@ -421,7 +419,7 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         $notExistentCompanyUserTransfer = (new CompanyUserBuilder())
             ->build()
-            ->setCustomer($customerTransfer)
+            ->setFkCustomer($customerTransfer->getIdCustomer())
             ->setFkCompanyBusinessUnit($businessUnitTransfer->getFkCompany());
 
         // Act

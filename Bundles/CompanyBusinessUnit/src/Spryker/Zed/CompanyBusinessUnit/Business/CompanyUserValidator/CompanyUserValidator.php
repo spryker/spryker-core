@@ -39,11 +39,7 @@ class CompanyUserValidator implements CompanyUserValidatorInterface
     {
         $companyUserResponseTransfer = (new CompanyUserResponseTransfer())->setIsSuccessful(true);
 
-        if (!$companyUserTransfer->getFkCompanyBusinessUnit()) {
-            return $companyUserResponseTransfer;
-        }
-
-        if (!$companyUserTransfer->getCustomer()->getIdCustomer()) {
+        if (!$companyUserTransfer->getFkCompanyBusinessUnit() || !$companyUserTransfer->getFkCustomer()) {
             return $companyUserResponseTransfer;
         }
 

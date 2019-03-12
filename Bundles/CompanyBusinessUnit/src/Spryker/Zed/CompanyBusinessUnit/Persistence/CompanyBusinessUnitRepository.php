@@ -248,8 +248,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     {
         $companyUserTransfer
             ->requireFkCompanyBusinessUnit()
-            ->getCustomer()
-                ->requireIdCustomer();
+            ->requireFkCustomer();
 
         $companyUserQuery = $this->getFactory()
             ->createCompanyBusinessUnitQuery()
