@@ -22,7 +22,7 @@ class ShipmentExpenseWriter implements ShipmentExpenseWriterInterface
     public function removeObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
     {
         $quoteTransfer = $calculableObjectTransfer->getOriginalQuote();
-        if ($quoteTransfer === null || $this->isShipmentDataInQuote($quoteTransfer) === true) {
+        if ($quoteTransfer === null || $this->isShipmentMethodSet($quoteTransfer) === true) {
             return;
         }
 
@@ -53,7 +53,7 @@ class ShipmentExpenseWriter implements ShipmentExpenseWriterInterface
      *
      * @return bool
      */
-    protected function isShipmentDataInQuote(QuoteTransfer $quoteTransfer): bool
+    protected function isShipmentMethodSet(QuoteTransfer $quoteTransfer): bool
     {
         $shipmentTransfer = $quoteTransfer->getShipment();
         if ($shipmentTransfer === null) {
