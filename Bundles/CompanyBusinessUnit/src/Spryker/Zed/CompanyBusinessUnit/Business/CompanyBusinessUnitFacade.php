@@ -204,4 +204,18 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
             ->createCompanyUserValidator()
             ->isUniqueCompanyUserByCustomer($companyUserTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer
+    {
+        return $this->getRepository()->findCompanyBusinessUnitById($idCompanyBusinessUnit);
+    }
 }

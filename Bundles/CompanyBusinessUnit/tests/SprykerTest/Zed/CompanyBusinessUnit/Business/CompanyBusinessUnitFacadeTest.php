@@ -64,6 +64,37 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
+    public function testFindCompanyBusinessUnitByIdShouldReturnTransferObject(): void
+    {
+        //Arrange
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+
+        //Act
+        $expectedCompanyBusinessUnitTransfer = $this->getFacade()
+            ->create($companyBusinessUnitTransfer)
+            ->getCompanyBusinessUnitTransfer();
+        $actualCompanyBusinessUnitTransfer = $this->getFacade()
+            ->findCompanyBusinessUnitById($expectedCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+
+        //Assert
+        $this->assertSame($expectedCompanyBusinessUnitTransfer->getName(), $actualCompanyBusinessUnitTransfer->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCompanyBusinessUnitByIdShouldReturnNull(): void
+    {
+        //Act
+        $companyBusinessUnitTransfer = $this->getFacade()->findCompanyBusinessUnitById(-1);
+
+        //Assert
+        $this->assertNull($companyBusinessUnitTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetCustomerCompanyBusinessUnitTreeShouldReturnNodesCollection()
     {
         $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();

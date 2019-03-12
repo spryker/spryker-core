@@ -59,4 +59,11 @@ interface CompanyBusinessUnitRepositoryInterface
      * @return bool
      */
     public function hasCompanyUserByCustomer(CompanyUserTransfer $companyUserTransfer): bool;
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer;
 }

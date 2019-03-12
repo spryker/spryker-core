@@ -237,6 +237,10 @@ class Operation implements OperationInterface
      */
     public function reloadItems(QuoteTransfer $quoteTransfer)
     {
+        if ($this->quoteFacade->isQuoteLocked($quoteTransfer)) {
+            return $quoteTransfer;
+        }
+
         $originalQuoteTransfer = (new QuoteTransfer())->fromArray($quoteTransfer->modifiedToArray(), true);
 
         $quoteTransfer = $this->executePreReloadPlugins($quoteTransfer);

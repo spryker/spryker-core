@@ -22,12 +22,13 @@ class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
     public function bulkTouch($itemType, $itemEvent, array $itemIds)
     {
         $updated = 0;
-        $itemIds = $this->filter->filter($itemIds, $itemType);
+        $itemIds = $this->filter->filter($itemIds, $itemType, $itemEvent);
         $itemIdChunks = array_chunk($itemIds, self::BULK_UPDATE_CHUNK_SIZE);
+        $originalItemEvent = $itemEvent;
         $itemEvent = $this->getItemEventValueFor($itemEvent);
 
         foreach ($itemIdChunks as $itemIdChunk) {
-            $touchQuery = $this->touchQueryContainer->queryTouchEntriesByItemTypeAndItemIds($itemType, $itemIdChunk);
+            $touchQuery = $this->touchQueryContainer->queryTouchEntriesByItemTypeAndItemEventAndItemIds($itemType, $originalItemEvent, $itemIdChunk);
             $updated += $touchQuery->update([
                 $this->getTouchedColumnName() => new DateTime(),
                 $this->getItemEventColumnName() => $itemEvent,
