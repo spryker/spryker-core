@@ -4,10 +4,7 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="PriceProduct">
-        <property name="priceTypeName" type="string" />
-        <property name="priceType"  type="PriceType" />
         <property name="moneyValue" type="MoneyValue" />
-        <property name="priceDimension" type="PriceProductDimension" />
         <property name="identifier" type="string" />
         <property name="isExtendable" type="bool" />
     </transfer>
@@ -24,16 +21,6 @@
 
     <transfer name="MoneyValue">
         <property name="priceData" type="string" />
-        <property name="currency" type="Currency" />
-        <property name="fkStore"  type="int" />
-    </transfer>
-
-    <transfer name="Currency">
-        <property name="code" type="string" />
-    </transfer>
-
-    <transfer name="PriceType">
-        <property name="priceModeConfiguration" type="string" />
     </transfer>
 
     <transfer name="PriceProductFilter">

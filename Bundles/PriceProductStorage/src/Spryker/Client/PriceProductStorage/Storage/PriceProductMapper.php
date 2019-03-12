@@ -12,12 +12,26 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
 class PriceProductMapper implements PriceProductMapperInterface
 {
     protected const INDEX_SEPARATOR = '-';
+
+    /**
+     * @var \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
+     * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface $priceProductService
+     */
+    public function __construct(PriceProductStorageToPriceProductServiceInterface $priceProductService)
+    {
+        $this->priceProductService = $priceProductService;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
@@ -64,8 +78,8 @@ class PriceProductMapper implements PriceProductMapperInterface
 
                 $priceProductTransfer->getMoneyValue()->setNetAmount($priceValue);
                 $priceProductTransfer = $this->setPriceData($priceProductTransfer, $prices);
-                $priceProductTransfer->setIdentifier($this->buildPriceProductIdentifier($priceProductTransfer));
-                $priceProductTransfer->setIsExtendable(true);
+                $priceProductTransfer->setIdentifier($this->priceProductService->buildPriceProductIdentifier($priceProductTransfer))
+                    ->setIsExtendable(true);
             }
         }
     }
@@ -113,43 +127,5 @@ class PriceProductMapper implements PriceProductMapperInterface
         }
 
         return $priceProductTransfers[$index];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return string
-     */
-    protected function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string
-    {
-        return implode('-', array_filter($this->getIdentifiersPath($priceProductTransfer)));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return array
-     */
-    protected function getIdentifiersPath(PriceProductTransfer $priceProductTransfer): array
-    {
-        $priceProductTransfer->requireMoneyValue();
-        $priceProductTransfer->requirePriceTypeName();
-        $priceProductTransfer->getMoneyValue()->requireCurrency();
-        $priceProductTransfer->getMoneyValue()->getCurrency()->requireCode();
-        $priceProductTransfer->requirePriceDimension();
-
-        $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
-
-        $identifierPaths = [
-            $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
-            $priceProductTransfer->getPriceTypeName(),
-            $priceProductTransfer->getMoneyValue()->getFkStore(),
-        ];
-
-        if ($priceProductTransfer->getPriceType()) {
-            $identifierPaths[] = $priceProductTransfer->getPriceType()->getPriceModeConfiguration();
-        }
-
-        return array_merge($identifierPaths, array_values($priceDimensionTransfer->toArray()));
     }
 }

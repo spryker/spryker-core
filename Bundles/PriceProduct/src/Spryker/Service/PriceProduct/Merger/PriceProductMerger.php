@@ -105,7 +105,7 @@ class PriceProductMerger implements PriceProductMergerInterface
     protected function hasNotExtandableProductPrices(array $priceProductTransfers): bool
     {
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            if ($priceProductTransfer->getIsExtendable()) {
+            if (!$priceProductTransfer->getIsExtendable()) {
                 return true;
             }
         }
