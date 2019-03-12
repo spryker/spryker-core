@@ -26,10 +26,6 @@ class ShipmentExpenseWriter implements ShipmentExpenseWriterInterface
             return;
         }
 
-        $quoteTransfer->setExpenses(
-            $this->filterExpenseTransferCollectionByExpenseType($quoteTransfer->getExpenses())
-        );
-
         $calculableObjectTransfer->setExpenses(
             $this->filterExpenseTransferCollectionByExpenseType($calculableObjectTransfer->getExpenses())
         );
