@@ -8,6 +8,7 @@
         <property name="fkCompanyBusinessUnit" type="int"/>
         <property name="fkCustomer" type="int"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
