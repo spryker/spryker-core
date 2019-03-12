@@ -29,9 +29,9 @@ class PriceProductStorageToPriceProductServiceBridge implements PriceProductStor
      *
      * @return string
      */
-    public function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string
+    public function buildPriceProductGroupKey(PriceProductTransfer $priceProductTransfer): string
     {
-        return $this->priceProductService->buildPriceProductIdentifier($priceProductTransfer);
+        return $this->priceProductService->buildPriceProductGroupKey($priceProductTransfer);
     }
 
     /**

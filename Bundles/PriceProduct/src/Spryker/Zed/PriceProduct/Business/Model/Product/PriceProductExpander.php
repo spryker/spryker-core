@@ -70,7 +70,7 @@ class PriceProductExpander implements PriceProductExpanderInterface
     {
         $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
         $priceProductTransfer->setPriceDimension($this->expandPriceProductDimensionTransfer($priceDimensionTransfer));
-        $priceProductTransfer->setIdentifier($this->priceProductService->buildPriceProductIdentifier($priceProductTransfer));
+        $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer));
 
         return $priceProductTransfer;
     }

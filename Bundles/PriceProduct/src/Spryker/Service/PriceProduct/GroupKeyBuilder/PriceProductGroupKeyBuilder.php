@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\PriceProduct\IdentifierBuilder;
+namespace Spryker\Service\PriceProduct\GroupKeyBuilder;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 
-class PriceProductIdentifierBuilder implements PriceProductIdentifierBuilderInterface
+class PriceProductGroupKeyBuilder implements PriceProductGroupKeyBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return string
      */
-    public function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string
+    public function buildPriceProductGroupKey(PriceProductTransfer $priceProductTransfer): string
     {
-        return implode('-', array_filter($this->getIdentifiersPath($priceProductTransfer)));
+        return implode('-', array_filter($this->getGroupKeyParts($priceProductTransfer)));
     }
 
     /**
@@ -26,7 +26,7 @@ class PriceProductIdentifierBuilder implements PriceProductIdentifierBuilderInte
      *
      * @return array
      */
-    protected function getIdentifiersPath(PriceProductTransfer $priceProductTransfer): array
+    protected function getGroupKeyParts(PriceProductTransfer $priceProductTransfer): array
     {
         $priceProductTransfer->requireMoneyValue()
             ->requirePriceDimension()
@@ -35,8 +35,6 @@ class PriceProductIdentifierBuilder implements PriceProductIdentifierBuilderInte
             ->requireCurrency()
             ->getCurrency()
             ->requireCode();
-
-        $priceDimensionTransfer = clone $priceProductTransfer->getPriceDimension();
 
         $identifierPaths = [
             $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
@@ -48,6 +46,10 @@ class PriceProductIdentifierBuilder implements PriceProductIdentifierBuilderInte
             $identifierPaths[] = $priceProductTransfer->getPriceType()->getPriceModeConfiguration();
         }
 
+        $priceDimensionTransfer = clone $priceProductTransfer->getPriceDimension();
+        /**
+         * Since abstract and concrete priduct prices has different `idPriceProductDefault` it should't be inclued in group key.
+         */
         $priceDimensionTransfer->setIdPriceProductDefault(null);
 
         return array_merge($identifierPaths, array_values($priceDimensionTransfer->toArray()));

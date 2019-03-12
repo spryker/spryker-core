@@ -123,14 +123,14 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
             ->setVolumeQuantity($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY]);
 
         $volumePriceTransfer
-            ->setIdentifier(
+            ->setGroupKey(
                 sprintf(
                     '%s-%s',
-                    $volumePriceTransfer->getIdentifier(),
+                    $volumePriceTransfer->getGroupKey(),
                     $volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY]
                 )
             )
-            ->setIsExtendable(false)
+            ->setIsMergeable(false)
             ->getMoneyValue()
             ->setGrossAmount($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE])
             ->setNetAmount($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE]);

@@ -69,7 +69,7 @@ interface PriceProductServiceInterface
 
     /**
      * Specifications:
-     * - Builds price product identifier applicable for grouping by type.
+     * - Builds price product group key based on PriceProductTransfer data.
      *
      * @api
      *
@@ -77,5 +77,5 @@ interface PriceProductServiceInterface
      *
      * @return string
      */
-    public function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string;
+    public function buildPriceProductGroupKey(PriceProductTransfer $priceProductTransfer): string;
 }

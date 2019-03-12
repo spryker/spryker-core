@@ -5,8 +5,8 @@
 
     <transfer name="PriceProduct">
         <property name="moneyValue" type="MoneyValue" />
-        <property name="identifier" type="string" />
-        <property name="isExtendable" type="bool" />
+        <property name="groupKey" type="string" />
+        <property name="isMergeable" type="bool" />
     </transfer>
 
     <transfer name="PriceProductStorage">

@@ -94,10 +94,10 @@ class PriceProductService extends AbstractService implements PriceProductService
      *
      * @return string
      */
-    public function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string
+    public function buildPriceProductGroupKey(PriceProductTransfer $priceProductTransfer): string
     {
         return $this->getFactory()
-            ->createPriceProductIdentifierBuilder()
-            ->buildPriceProductIdentifier($priceProductTransfer);
+            ->createPriceProductGroupKeyBuilder()
+            ->buildPriceProductGroupKey($priceProductTransfer);
     }
 }

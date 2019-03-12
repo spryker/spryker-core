@@ -21,11 +21,11 @@ class PriceProductMerger implements PriceProductMergerInterface
         array $abstractPriceProductTransfers,
         array $concretePriceProductTransfers
     ): array {
-        $abstractPriceProductTransfers = $this->groupPriceProductTransfersByIdentifier($abstractPriceProductTransfers);
-        $concretePriceProductTransfers = $this->groupPriceProductTransfersByIdentifier($concretePriceProductTransfers);
+        $abstractPriceProductTransfers = $this->groupPriceProductTransfers($abstractPriceProductTransfers);
+        $concretePriceProductTransfers = $this->groupPriceProductTransfers($concretePriceProductTransfers);
 
-        if ($this->hasNotExtandableProductPrices($concretePriceProductTransfers)) {
-            $abstractPriceProductTransfers = $this->filterNotExtandableProductPrices($abstractPriceProductTransfers);
+        if ($this->hasNotMergeableProductPrices($concretePriceProductTransfers)) {
+            $abstractPriceProductTransfers = $this->filterNotMergeableProductPrices($abstractPriceProductTransfers);
         }
 
         $priceProductTransfers = [];
@@ -86,12 +86,12 @@ class PriceProductMerger implements PriceProductMergerInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function groupPriceProductTransfersByIdentifier(array $priceProductTransfers): array
+    protected function groupPriceProductTransfers(array $priceProductTransfers): array
     {
         $priceProductTransfersResult = [];
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceProductTransfersResult[$priceProductTransfer->requireIdentifier()->getIdentifier()] = $priceProductTransfer;
+            $priceProductTransfersResult[$priceProductTransfer->requireGroupKey()->getGroupKey()] = $priceProductTransfer;
         }
 
         return $priceProductTransfersResult;
@@ -102,10 +102,10 @@ class PriceProductMerger implements PriceProductMergerInterface
      *
      * @return bool
      */
-    protected function hasNotExtandableProductPrices(array $priceProductTransfers): bool
+    protected function hasNotMergeableProductPrices(array $priceProductTransfers): bool
     {
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            if (!$priceProductTransfer->getIsExtendable()) {
+            if (!$priceProductTransfer->getIsMergeable()) {
                 return true;
             }
         }
@@ -118,10 +118,10 @@ class PriceProductMerger implements PriceProductMergerInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function filterNotExtandableProductPrices(array $priceProductTransfers)
+    protected function filterNotMergeableProductPrices(array $priceProductTransfers): array
     {
         return array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) {
-            return $priceProductTransfer->getIsExtendable();
+            return $priceProductTransfer->getIsMergeable();
         });
     }
 }

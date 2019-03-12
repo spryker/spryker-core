@@ -10,8 +10,8 @@ namespace Spryker\Service\PriceProduct;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterMinStrategy;
 use Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface;
-use Spryker\Service\PriceProduct\IdentifierBuilder\PriceProductIdentifierBuilder;
-use Spryker\Service\PriceProduct\IdentifierBuilder\PriceProductIdentifierBuilderInterface;
+use Spryker\Service\PriceProduct\GroupKeyBuilder\PriceProductGroupKeyBuilder;
+use Spryker\Service\PriceProduct\GroupKeyBuilder\PriceProductGroupKeyBuilderInterface;
 use Spryker\Service\PriceProduct\Merger\PriceProductMerger;
 use Spryker\Service\PriceProduct\Merger\PriceProductMergerInterface;
 use Spryker\Service\PriceProduct\Model\PriceProductMatcher;
@@ -31,11 +31,11 @@ class PriceProductServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\PriceProduct\IdentifierBuilder\PriceProductIdentifierBuilderInterface
+     * @return \Spryker\Service\PriceProduct\GroupKeyBuilder\PriceProductGroupKeyBuilderInterface
      */
-    public function createPriceProductIdentifierBuilder(): PriceProductIdentifierBuilderInterface
+    public function createPriceProductGroupKeyBuilder(): PriceProductGroupKeyBuilderInterface
     {
-        return new PriceProductIdentifierBuilder();
+        return new PriceProductGroupKeyBuilder();
     }
 
     /**

@@ -16,7 +16,7 @@ interface PriceProductStorageToPriceProductServiceInterface
      *
      * @return string
      */
-    public function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string;
+    public function buildPriceProductGroupKey(PriceProductTransfer $priceProductTransfer): string;
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
