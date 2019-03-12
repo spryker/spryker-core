@@ -5,32 +5,29 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\CmsBlock\Twig\Plugin;
+namespace Spryker\Yves\CmsBlock\Plugin\Twig;
 
-use Silex\Application;
-use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
-use Twig_SimpleFunction;
+use Spryker\Yves\Twig\Plugin\AbstractTwigExtensionPlugin;
+use Twig\TwigFunction;
 
 /**
- * @deprecated Use `Spryker\Yves\CmsBlock\Plugin\Twig\CmsBlockPlaceholderTwigPlugin` instead.
- *
  * @method \Spryker\Client\CmsBlock\CmsBlockClientInterface getClient()
  * @method \Spryker\Yves\CmsBlock\CmsBlockFactory getFactory()
  */
-class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPluginInterface
+class CmsBlockPlaceholderTwigPlugin extends AbstractTwigExtensionPlugin
 {
     public const CMS_BLOCK_PREFIX_KEY = 'generated.cms.cms-block';
 
+    protected const SPY_CMS_BLOCK_PLACEHOLDER_TWIG_FUNCTION = 'spyCmsBlockPlaceholder';
+    protected const SERVICE_TRANSLATOR = 'translator';
+
     /**
-     * @param \Silex\Application $application
-     *
-     * @return \Twig_SimpleFunction[]
+     * @return \Twig\TwigFunction[]
      */
-    public function getFunctions(Application $application)
+    public function getFunctions(): array
     {
         return [
-            new Twig_SimpleFunction('spyCmsBlockPlaceholder', function (array $context, $identifier) use ($application) {
+            new TwigFunction(static::SPY_CMS_BLOCK_PLACEHOLDER_TWIG_FUNCTION, function (array $context, $identifier) {
                 $placeholders = $context['placeholders'];
 
                 $translation = '';
@@ -39,7 +36,7 @@ class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPlug
                 }
 
                 if ($this->isGlossaryKey($translation)) {
-                    $translator = $this->getTranslator($application);
+                    $translator = $this->getTranslator();
                     $translation = $translator->trans($translation);
                 }
 
@@ -59,7 +56,7 @@ class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPlug
      *
      * @return string
      */
-    protected function renderCmsTwigContent($translation, $identifier, array $context)
+    protected function renderCmsTwigContent(string $translation, string $identifier, array $context): string
     {
         $twigRenderedPlugin = $this->getFactory()->getCmsBlockTwigContentRendererPlugin();
         if (!$twigRenderedPlugin) {
@@ -67,6 +64,7 @@ class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPlug
         }
 
         $renderedTwigContent = $twigRenderedPlugin->render([$identifier => $translation], $context);
+
         return $renderedTwigContent[$identifier];
     }
 
@@ -75,18 +73,16 @@ class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPlug
      *
      * @return bool
      */
-    protected function isGlossaryKey($translation)
+    protected function isGlossaryKey(string $translation): bool
     {
         return strpos($translation, static::CMS_BLOCK_PREFIX_KEY) === 0;
     }
 
     /**
-     * @param \Silex\Application $application
-     *
-     * @return \Symfony\Component\Translation\TranslatorInterface
+     * @return mixed
      */
-    protected function getTranslator(Application $application)
+    protected function getTranslator()
     {
-        return $application['translator'];
+        return $this->getApplication()->get(static::SERVICE_TRANSLATOR);
     }
 }

@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Translator\Communication\Plugin\Messenger;
 
+use Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface;
-use Spryker\Zed\Translator\Business\Translator\TranslatorInterface;
 
 /**
  * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
@@ -29,10 +29,7 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
      */
     public function hasKey($keyName): bool
     {
-        /** @var \Symfony\Component\Translation\MessageCatalogueInterface $catalogue */
-        $catalogue = $this->getTranslator()->getCatalogue($this->getLocaleName());
-
-        return $catalogue->defines($keyName);
+        return $this->getTranslator()->has($keyName, $this->getLocaleName());
     }
 
     /**
@@ -59,9 +56,9 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
     }
 
     /**
-     * @return \Spryker\Zed\Translator\Business\Translator\TranslatorInterface
+     * @return \Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface
      */
-    protected function getTranslator(): TranslatorInterface
+    protected function getTranslator(): TranslatorPluginInterface
     {
         return $this->getFactory()->getApplication()['translator'];
     }

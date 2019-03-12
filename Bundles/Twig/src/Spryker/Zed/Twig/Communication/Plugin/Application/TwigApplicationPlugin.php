@@ -54,6 +54,7 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
             $twigOptions = $this->getTwigOptions($container);
             $twig = new Environment($twigChainLoader, $twigOptions);
             $twig->addGlobal('app', $container);
+
             $twig = $this->extendTwig($twig, $container);
 
             return $twig;

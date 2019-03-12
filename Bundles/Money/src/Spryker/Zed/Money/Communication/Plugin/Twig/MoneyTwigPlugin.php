@@ -132,7 +132,7 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
             static::FUNCTION_NAME_MONEY_COLLECTION,
             function ($moneyValueFormViewCollection) use ($twig) {
                 return $twig->render(
-                    $this->getConfig(),
+                    $this->getConfig()->getMoneyTableTemplatePath(),
                     [
                         'moneyValueFormViewCollection' => $moneyValueFormViewCollection,
                     ]

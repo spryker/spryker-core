@@ -30,4 +30,12 @@ interface TranslatorInterface extends SymfonyTranslatorInterface, TranslatorBagI
      * @return void
      */
     public function addResource($format, $resource, $locale, $domain = null);
+
+    /**
+     * @param string $keyName
+     * @param string $locale
+     *
+     * @return bool
+     */
+    public function has(string $keyName, string $locale): bool;
 }

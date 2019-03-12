@@ -7,8 +7,8 @@
 
 namespace Spryker\Shared\Translator;
 
-use Symfony\Component\Translation\TranslatorInterface as SumfonyTranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface as SymfonyTranslatorInterface;
 
-interface TranslatorInterface extends SumfonyTranslatorInterface
+interface TranslatorInterface extends SymfonyTranslatorInterface
 {
 }

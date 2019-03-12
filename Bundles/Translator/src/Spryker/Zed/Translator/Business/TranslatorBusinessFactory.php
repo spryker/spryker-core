@@ -101,7 +101,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string|null $localeName
      *
-     * @return \Symfony\Component\Translation\TranslatorInterface|\Symfony\Component\Translation\TranslatorBagInterface|\Spryker\Zed\Translator\Business\Translator\TranslatorInterface
+     * @return \Spryker\Zed\Translator\Business\Translator\TranslatorInterface
      */
     public function createTranslator(?string $localeName = null)
     {

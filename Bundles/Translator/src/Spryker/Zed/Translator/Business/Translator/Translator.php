@@ -75,4 +75,15 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
     {
         return static::$locale;
     }
+
+    /**
+     * @param string $keyName
+     * @param string $locale
+     *
+     * @return bool
+     */
+    public function has(string $keyName, string $locale): bool
+    {
+        return $this->getCatalogue($locale)->defines($keyName);
+    }
 }
