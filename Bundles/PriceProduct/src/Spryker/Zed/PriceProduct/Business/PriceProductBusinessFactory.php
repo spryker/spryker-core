@@ -133,8 +133,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getCurrencyFacade(),
             $this->createPriceTypeMapper(),
             $this->getPriceFacade(),
-            $this->getConfig(),
-            $this->getPriceProductService()
+            $this->getConfig()
         );
     }
 
@@ -155,7 +154,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductExpander(
             $this->getPriceProductDimensionExpanderStrategyPlugins(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getPriceProductService()
         );
     }
 

@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
-use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
@@ -52,29 +51,21 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected $config;
 
     /**
-     * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
-     */
-    protected $priceProductService;
-
-    /**
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface $priceProductTypeMapper
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface $priceFacade
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
-     * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
      */
     public function __construct(
         PriceProductToCurrencyFacadeInterface $currencyFacade,
         ProductPriceTypeMapperInterface $priceProductTypeMapper,
         PriceProductToPriceFacadeInterface $priceFacade,
-        PriceProductConfig $config,
-        PriceProductServiceInterface $priceProductService
+        PriceProductConfig $config
     ) {
         $this->currencyFacade = $currencyFacade;
         $this->priceProductTypeMapper = $priceProductTypeMapper;
         $this->priceFacade = $priceFacade;
         $this->config = $config;
-        $this->priceProductService = $priceProductService;
     }
 
     /**
@@ -181,7 +172,7 @@ class PriceProductMapper implements PriceProductMapperInterface
             $priceProductStoreEntity
         );
 
-        $priceProductTransfer = (new PriceProductTransfer())
+        return (new PriceProductTransfer())
             ->fromArray($priceProductEntity->toArray(), true)
             ->setIdProduct($priceProductEntity->getFkProduct())
             ->setIdProductAbstract($priceProductEntity->getFkProductAbstract())
@@ -190,8 +181,6 @@ class PriceProductMapper implements PriceProductMapperInterface
             ->setMoneyValue($moneyValueTransfer)
             ->setPriceDimension($priceProductDimensionTransfer)
             ->setIsExtendable(true);
-
-        return $priceProductTransfer->setIdentifier($this->priceProductService->buildPriceProductIdentifier($priceProductTransfer));
     }
 
     /**

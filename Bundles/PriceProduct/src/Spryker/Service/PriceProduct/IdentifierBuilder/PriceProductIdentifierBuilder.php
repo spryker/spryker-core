@@ -8,7 +8,6 @@
 namespace Spryker\Service\PriceProduct\IdentifierBuilder;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
 
 class PriceProductIdentifierBuilder implements PriceProductIdentifierBuilderInterface
 {
@@ -37,7 +36,7 @@ class PriceProductIdentifierBuilder implements PriceProductIdentifierBuilderInte
             ->getCurrency()
             ->requireCode();
 
-        $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
+        $priceDimensionTransfer = clone $priceProductTransfer->getPriceDimension();
 
         $identifierPaths = [
             $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
@@ -49,10 +48,8 @@ class PriceProductIdentifierBuilder implements PriceProductIdentifierBuilderInte
             $identifierPaths[] = $priceProductTransfer->getPriceType()->getPriceModeConfiguration();
         }
 
-        if ($priceProductTransfer->getPriceDimension()->getIdPriceProductDefault()) {
-            $identifierPaths[] = PriceProductConstants::PRICE_DIMENSION_DEFAULT;
-        }
+        $priceDimensionTransfer->setIdPriceProductDefault(null);
 
-        return $identifierPaths;
+        return array_merge($identifierPaths, array_values($priceDimensionTransfer->toArray()));
     }
 }
