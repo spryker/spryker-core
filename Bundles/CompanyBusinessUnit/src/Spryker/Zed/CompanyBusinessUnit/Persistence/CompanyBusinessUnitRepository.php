@@ -240,8 +240,6 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     }
 
     /**
-     * @module CompanyUser
-     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return bool
