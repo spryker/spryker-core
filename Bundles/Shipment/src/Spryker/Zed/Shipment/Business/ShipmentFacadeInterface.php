@@ -259,7 +259,7 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Removes obsolete shipment expenses from Quote if shipment method is not defined.
+     * - Removes obsolete shipment expenses from Quote if shipment method is not set.
      *
      * @api
      *
