@@ -48,7 +48,7 @@ class PriceProductGroupKeyBuilder implements PriceProductGroupKeyBuilderInterfac
 
         $priceDimensionTransfer = clone $priceProductTransfer->getPriceDimension();
         /**
-         * Since abstract and concrete priduct prices has different `idPriceProductDefault` it should't be inclued in group key.
+         * Since abstract and concrete priduct prices has different `idPriceProductDefault` it should't be included in group key.
          */
         $priceDimensionTransfer->setIdPriceProductDefault(null);
 
