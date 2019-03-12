@@ -82,7 +82,6 @@
 
     <transfer name="Expense">
         <property name="idSalesExpense" type="int" />
-        <property name="type" type="string" />
         <property name="name" type="string" />
         <property name="type" type="string" />
         <property name="unitGrossPrice" type="int" />
