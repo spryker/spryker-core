@@ -47,14 +47,23 @@ class PriceProductGroupKeyBuilder implements PriceProductGroupKeyBuilderInterfac
             $identifierPaths[] = $priceProductTransfer->getPriceType()->getPriceModeConfiguration();
         }
 
-        $priceDimension = $priceProductTransfer->getPriceDimension()
-            ->toArray(false, true);
+        return array_merge($identifierPaths, $this->getPriceDimensionGroupKeys($priceProductTransfer->getPriceDimension()));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
+     *
+     * @return array
+     */
+    public function getPriceDimensionGroupKeys(PriceProductDimensionTransfer $priceProductDimensionTransfer): array
+    {
+        $priceDimensionKeys = $priceProductDimensionTransfer->toArray(false, true);
 
         /**
          * Since abstract and concrete product prices has different `idPriceProductDefault` it should't be included in group key.
          */
-        unset($priceDimension[PriceProductDimensionTransfer::ID_PRICE_PRODUCT_DEFAULT]);
+        unset($priceDimensionKeys[PriceProductDimensionTransfer::ID_PRICE_PRODUCT_DEFAULT]);
 
-        return array_merge($identifierPaths, array_values($priceDimension));
+        return array_values($priceDimensionKeys);
     }
 }
