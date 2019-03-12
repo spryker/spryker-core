@@ -11,6 +11,7 @@ use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\CompanyUserBuilder;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use TypeError;
 
@@ -332,12 +333,81 @@ class CompanyBusinessUnitFacadeTest extends Test
             ]
         );
 
+        $companyUserTransfer->setIdCompanyUser(null);
+
         // Act
         $existsCompanyUser = $this->getFacade()
             ->isUniqueCompanyUserByCustomer($companyUserTransfer);
 
         // Assert
         $this->assertFalse($existsCompanyUser->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsUniqueCompanyUserByCustomerShouldReturnTrueToUpdateItself()
+    {
+        // Arrange
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+        $customerTransfer = $this->tester->haveCustomer();
+        $companyUserTransfer = $this->tester->haveCompanyUser(
+            [
+                CompanyUserTransfer::CUSTOMER => $customerTransfer,
+                CompanyUserTransfer::COMPANY_BUSINESS_UNIT => $businessUnitTransfer,
+                CompanyUserTransfer::FK_COMPANY => $businessUnitTransfer->getFkCompany(),
+                CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $businessUnitTransfer->getIdCompanyBusinessUnit(),
+                CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
+            ]
+        );
+
+        // Act
+        $existsCompanyUser = $this->getFacade()
+            ->isUniqueCompanyUserByCustomer($companyUserTransfer);
+
+        // Assert
+        $this->assertTrue($existsCompanyUser->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsUniqueCompanyUserByCustomerShouldReturnTrueIfFkCompanyBusinessUnitIsEmpty()
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+
+        $notExistentCompanyUserTransfer = (new CompanyUserBuilder())
+            ->build()
+            ->setCustomer($customerTransfer);
+
+        // Act
+        $existsCompanyUser = $this->getFacade()
+            ->isUniqueCompanyUserByCustomer($notExistentCompanyUserTransfer);
+
+        // Assert
+        $this->assertTrue($existsCompanyUser->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsUniqueCompanyUserByCustomerShouldReturnTrueIfIdCustomerIsEmpty()
+    {
+        // Arrange
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
+
+        $notExistentCompanyUserTransfer = (new CompanyUserBuilder())
+            ->build()
+            ->setCustomer(new CustomerTransfer())
+            ->setFkCompanyBusinessUnit($businessUnitTransfer->getFkCompany());
+
+        // Act
+        $existsCompanyUser = $this->getFacade()
+            ->isUniqueCompanyUserByCustomer($notExistentCompanyUserTransfer);
+
+        // Assert
+        $this->assertTrue($existsCompanyUser->getIsSuccessful());
     }
 
     /**
