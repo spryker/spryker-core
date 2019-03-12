@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 
-class ShipmentQuoteExpenseWriter implements ShipmentQuoteExpenseWriterInterface
+class ShipmentExpenseWriter implements ShipmentExpenseWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer

@@ -9,8 +9,8 @@ namespace Spryker\Zed\Shipment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
-use Spryker\Zed\Shipment\Business\Expense\ShipmentQuoteExpenseWriter;
-use Spryker\Zed\Shipment\Business\Expense\ShipmentQuoteExpenseWriterInterface;
+use Spryker\Zed\Shipment\Business\Expense\ShipmentExpenseWriter;
+use Spryker\Zed\Shipment\Business\Expense\ShipmentExpenseWriterInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
@@ -73,11 +73,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Expense\ShipmentQuoteExpenseWriterInterface
+     * @return \Spryker\Zed\Shipment\Business\Expense\ShipmentExpenseWriterInterface
      */
-    public function createShipmentQuoteExpenseWriter(): ShipmentQuoteExpenseWriterInterface
+    public function createShipmentQuoteExpenseWriter(): ShipmentExpenseWriterInterface
     {
-        return new ShipmentQuoteExpenseWriter();
+        return new ShipmentExpenseWriter();
     }
 
     /**

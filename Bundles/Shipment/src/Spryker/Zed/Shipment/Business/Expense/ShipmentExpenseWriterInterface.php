@@ -9,7 +9,7 @@ namespace Spryker\Zed\Shipment\Business\Expense;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 
-interface ShipmentQuoteExpenseWriterInterface
+interface ShipmentExpenseWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
