@@ -482,14 +482,30 @@ class SalesFacadeSaveOrderTest extends Unit
     public function createSalesExpenseSaveExpenseDataProvider(): array
     {
         return [
-            'int stock' => [
-                $this->getValidBaseQuoteTransfer(),
-                $this->createExpenseTransfer(),
-            ],
-            'float stock' => [
-                $this->createValidBaseQuoteWithFloatQuantity(),
-                $this->createExpenseTransferWithFloatQuantity(),
-            ],
+            'int stock' => $this->getIntDataForCreateSalesExpenseSaveExpense(),
+            'float stock' => $this->getFloatDataDataForCreateSalesExpenseSaveExpense(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getIntDataForCreateSalesExpenseSaveExpense(): array
+    {
+        return [
+            $this->getValidBaseQuoteTransfer(),
+            $this->createExpenseTransfer(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getFloatDataDataForCreateSalesExpenseSaveExpense(): array
+    {
+        return [
+            $this->createValidBaseQuoteWithFloatQuantity(),
+            $this->createExpenseTransferWithFloatQuantity(),
         ];
     }
 
@@ -506,7 +522,7 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     protected function createExpenseTransferWithFloatQuantity(): ExpenseTransfer
     {
-        return (new ExpenseBuilder())->seed([ExpenseTransfer::QUANTITY => 1])->seed()->build();
+        return (new ExpenseBuilder())->seed([ExpenseTransfer::QUANTITY => 1.6])->seed()->build();
     }
 
     /**
