@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -239,6 +240,8 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     }
 
     /**
+     * @module CompanyUser
+     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return bool
@@ -256,6 +259,11 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
 
         if (!$companyUserQuery->getTableMap()->hasColumn(static::COL_FK_CUSTOMER)) {
             return false;
+        }
+
+        if ($companyUserTransfer->getIdCompanyUser()) {
+            $companyUserQuery
+                ->filterByIdCompanyUser($companyUserTransfer->getIdCompanyUser(), Criteria::NOT_EQUAL);
         }
 
         return $companyUserQuery
