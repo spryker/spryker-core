@@ -7,6 +7,7 @@
 
 namespace Spryker\Service\PriceProduct\GroupKeyBuilder;
 
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 
 class PriceProductGroupKeyBuilder implements PriceProductGroupKeyBuilderInterface
@@ -46,12 +47,14 @@ class PriceProductGroupKeyBuilder implements PriceProductGroupKeyBuilderInterfac
             $identifierPaths[] = $priceProductTransfer->getPriceType()->getPriceModeConfiguration();
         }
 
-        $priceDimensionTransfer = clone $priceProductTransfer->getPriceDimension();
-        /**
-         * Since abstract and concrete priduct prices has different `idPriceProductDefault` it should't be included in group key.
-         */
-        $priceDimensionTransfer->setIdPriceProductDefault(null);
+        $priceDimension = $priceProductTransfer->getPriceDimension()
+            ->toArray(false, true);
 
-        return array_merge($identifierPaths, array_values($priceDimensionTransfer->toArray()));
+        /**
+         * Since abstract and concrete product prices has different `idPriceProductDefault` it should't be included in group key.
+         */
+        unset($priceDimension[PriceProductDimensionTransfer::ID_PRICE_PRODUCT_DEFAULT]);
+
+        return array_merge($identifierPaths, array_values($priceDimension));
     }
 }

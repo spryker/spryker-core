@@ -86,7 +86,7 @@ class PriceProductService extends AbstractService implements PriceProductService
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @api
      *
