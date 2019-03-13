@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Offer\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
@@ -31,57 +33,81 @@ class OfferFacadeTest extends Unit
     protected $tester;
 
     /**
+     * @dataProvider aggregateOfferItemSubtotalShouldWorkWithFloatItemQuantityDataProvider
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     * @param int $expectedResult
+     *
      * @return void
      */
-    public function testAggregateOfferItemSubtotalShouldWorkWithFloatItemQuantity()
+    public function testAggregateOfferItemSubtotalShouldWorkWithFloatQuantity(CalculableObjectTransfer $calculableObjectTransfer, int $expectedResult): void
     {
         /**
          * @var \Spryker\Zed\Offer\Business\OfferFacade $offerFacade
          */
         $offerFacade = $this->tester->getFacade();
-        $quoteTransfer = new QuoteTransfer();
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSumSubtotalAggregation(150);
-        $itemTransfer->setOfferFee(15);
-        $itemTransfer->setQuantity(1.3);
-
-        $quoteTransfer->addItem($itemTransfer);
-
-        $calculableObjectTransfer = new CalculableObjectTransfer();
-        $calculableObjectTransfer->setItems($quoteTransfer->getItems());
+        $aggregatedItemTransfer = $calculableObjectTransfer->getItems()[0];
 
         $offerFacade->aggregateOfferItemSubtotal($calculableObjectTransfer);
 
-        $aggregatedItemTransfer = $quoteTransfer->getItems()[0];
-
         $this->assertIsInt($aggregatedItemTransfer->getSumSubtotalAggregation());
-        $this->assertSame(170, $aggregatedItemTransfer->getSumSubtotalAggregation());
+        $this->assertSame($expectedResult, $aggregatedItemTransfer->getSumSubtotalAggregation());
     }
 
     /**
+     * @return array
+     */
+    public function aggregateOfferItemSubtotalShouldWorkWithFloatItemQuantityDataProvider(): array
+    {
+        return [
+            'normal fee and qty' => $this->getDataForAggregateOfferItemSubtotal(1.3, 100, 200, 330),
+            'extremely small offer fee and qty' => $this->getDataForAggregateOfferItemSubtotal(0.5, 1, 2, 3),
+            'below 0 offer fee and qty' => $this->getDataForAggregateOfferItemSubtotal(0.4, 1, 2, 2),
+        ];
+    }
+
+    /**
+     * @param float $quantity
+     * @param int $offerFee
+     * @param int $sumSubtotalAggregation
+     * @param int $expectedResult
+     *
+     * @return array
+     */
+    protected function getDataForAggregateOfferItemSubtotal(
+        float $quantity,
+        int $offerFee,
+        int $sumSubtotalAggregation,
+        int $expectedResult
+    ): array {
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $itemTransfer = (new ItemBuilder())->seed([
+            ItemTransfer::QUANTITY => $quantity,
+            ItemTransfer::OFFER_FEE => $offerFee,
+            ItemTransfer::SUM_SUBTOTAL_AGGREGATION => $sumSubtotalAggregation,
+        ])->build();
+
+        $quoteTransfer->addItem($itemTransfer);
+        $calculableObjectTransfer = new CalculableObjectTransfer();
+        $calculableObjectTransfer->setItems($quoteTransfer->getItems());
+
+        return [$calculableObjectTransfer, $expectedResult];
+    }
+
+    /**
+     * @dataProvider hydrateOfferWithSavingAmountShouldWorkWithFloatItemQuantityDataProvider
+     *
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     * @param int $expectedResult
+     *
      * @return void
      */
-    public function testHydrateOfferWithSavingAmountShluldWorkWithFloatItemQuantity()
+    public function testHydrateOfferWithSavingAmountShouldWorkWithFloatItemQuantity(OfferTransfer $offerTransfer, int $expectedResult)
     {
         /**
          * @var \Spryker\Zed\Offer\Business\OfferFacade $offerFacade
          */
         $offerFacade = $this->tester->getFacade();
-        $offerTransfer = new OfferTransfer();
-
-        $quoteTranfer = new QuoteTransfer();
-        $quoteTranfer->setPriceMode('NET_MODE');
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setOriginUnitNetPrice(150);
-        $itemTransfer->setUnitNetPrice(104);
-        $itemTransfer->setOfferDiscount(0);
-        $itemTransfer->setOfferFee(15);
-        $itemTransfer->setQuantity(1.7);
-
-        $quoteTranfer->addItem($itemTransfer);
-        $offerTransfer->setQuote($quoteTranfer);
 
         $hydratedOfferTransfer = $offerFacade->hydrateOfferWithSavingAmount($offerTransfer);
 
@@ -90,6 +116,47 @@ class OfferFacadeTest extends Unit
             ->getItems()[0];
 
         $this->assertIsInt($hydratedItemTransfer->getSavingAmount());
-        $this->assertSame(53, $hydratedItemTransfer->getSavingAmount());
+        $this->assertSame($expectedResult, $hydratedItemTransfer->getSavingAmount());
+    }
+
+    /**
+     * @return array
+     */
+    public function hydrateOfferWithSavingAmountShouldWorkWithFloatItemQuantityDataProvider(): array
+    {
+        return [
+            'normal prices and qty' => $this->getDataForHydrateOfferWithSavingAmount(104, 15, 1.7, 53),
+            'extremely small prices and qty' => $this->getDataForHydrateOfferWithSavingAmount(124, 23, 0.6, 2),
+            'below 0 prices and qty combo' => $this->getDataForHydrateOfferWithSavingAmount(124, 25, 0.3, 0),
+        ];
+    }
+
+    /**
+     * @param int $unitNetPrice
+     * @param int $offerFee
+     * @param float $quantity
+     * @param int $expectedResult
+     *
+     * @return array
+     */
+    protected function getDataForHydrateOfferWithSavingAmount(int $unitNetPrice, int $offerFee, float $quantity, int $expectedResult)
+    {
+        $offerTransfer = new OfferTransfer();
+        $quoteTransfer = (new QuoteBuilder())->seed([
+            QuoteTransfer::PRICE_MODE => 'NET_MODE',
+        ])->build();
+
+        $itemTransfer = (new ItemBuilder())->seed([
+            ItemTransfer::ORIGIN_UNIT_NET_PRICE => 150,
+            ItemTransfer::UNIT_NET_PRICE => $unitNetPrice,
+            ItemTransfer::OFFER_DISCOUNT => 0,
+            ItemTransfer::OFFER_FEE => $offerFee,
+            ItemTransfer::QUANTITY => $quantity,
+        ])->build();
+
+        $quoteTransfer->addItem($itemTransfer);
+        $offerTransfer->setQuote($quoteTransfer);
+
+        return [$offerTransfer, $expectedResult];
     }
 }

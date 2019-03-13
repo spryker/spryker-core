@@ -9,7 +9,6 @@ namespace Spryker\Zed\Offer\Business\Model\Hydrator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Spryker\Service\Offer\OfferServiceInterface;
 use Spryker\Zed\Offer\OfferConfig;
 
 class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
@@ -20,20 +19,12 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
     protected $offerConfig;
 
     /**
-     * @var \Spryker\Service\Offer\OfferServiceInterface
-     */
-    protected $service;
-
-    /**
      * @param \Spryker\Zed\Offer\OfferConfig $offerConfig
-     * @param \Spryker\Service\Offer\OfferServiceInterface $service
      */
     public function __construct(
-        OfferConfig $offerConfig,
-        OfferServiceInterface $service
+        OfferConfig $offerConfig
     ) {
         $this->offerConfig = $offerConfig;
-        $this->service = $service;
     }
 
     /**
@@ -52,11 +43,7 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
             $savingAmount -= $itemTransfer->getOfferFee();
             $savingAmount *= $itemTransfer->getQuantity();
 
-            $savingAmount = $this
-                ->service
-                ->convert($savingAmount);
-
-            $itemTransfer->setSavingAmount($savingAmount);
+            $itemTransfer->setSavingAmount((int)round($savingAmount));
         }
 
         return $offerTransfer;

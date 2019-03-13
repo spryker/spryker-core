@@ -8,23 +8,9 @@
 namespace Spryker\Zed\Offer\Business\Model;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Spryker\Service\Offer\OfferServiceInterface;
 
 class OfferItemSubtotalAggregator implements OfferItemSubtotalAggregatorInterface
 {
-    /**
-     * @var \Spryker\Service\Offer\OfferServiceInterface
-     */
-    protected $service;
-
-    /**
-     * @param \Spryker\Service\Offer\OfferServiceInterface $service
-     */
-    public function __construct(OfferServiceInterface $service)
-    {
-        $this->service = $service;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -58,9 +44,7 @@ class OfferItemSubtotalAggregator implements OfferItemSubtotalAggregatorInterfac
             $originSumSubtotal = $itemTransfer->getSumSubtotalAggregation();
             $calculatedFeeSumSubtotal = $itemTransfer->getQuantity() * $itemTransfer->getOfferFee();
             $calculatedSumSubtotal = $originSumSubtotal + $calculatedFeeSumSubtotal;
-            $calculatedSumSubtotal = $this
-                ->service
-                ->convert($calculatedSumSubtotal);
+            $calculatedSumSubtotal = (int)round($calculatedSumSubtotal);
 
             $itemTransfer->setSumSubtotalAggregation($calculatedSumSubtotal);
         }
