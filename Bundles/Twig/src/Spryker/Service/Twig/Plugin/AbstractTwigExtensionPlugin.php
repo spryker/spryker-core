@@ -12,7 +12,6 @@ use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Shared\Twig\TwigExtensionInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Twig\Environment;
-use Twig_Environment;
 
 abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements TwigPluginInterface, TwigExtensionInterface
 {
@@ -36,11 +35,11 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     /**
      * @deprecated since 1.23 (to be removed in 2.0), implement \Twig\Extension\InitRuntimeInterface instead
      *
-     * @param \Twig_Environment $environment
+     * @param \Twig\Environment $environment
      *
      * @return void
      */
-    public function initRuntime(Twig_Environment $environment)
+    public function initRuntime(Environment $environment)
     {
     }
 

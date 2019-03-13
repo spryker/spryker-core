@@ -12,7 +12,6 @@ use Spryker\Shared\Twig\TwigExtensionInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
-use Twig_Environment;
 
 /**
  * @method \Spryker\Yves\Kernel\AbstractFactory getFactory()
@@ -43,11 +42,11 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
      *
      * @api
      *
-     * @param \Twig_Environment $environment The current Twig_Environment instance
+     * @param \Twig\Environment $environment The current Twig_Environment instance
      *
      * @return void
      */
-    public function initRuntime(Twig_Environment $environment)
+    public function initRuntime(Environment $environment)
     {
     }
 
