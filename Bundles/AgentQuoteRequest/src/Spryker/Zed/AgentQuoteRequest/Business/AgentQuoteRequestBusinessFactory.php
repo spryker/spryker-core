@@ -12,11 +12,14 @@ use Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestRe
 use Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestReaderInterface;
 use Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestWriter;
 use Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestWriterInterface;
+use Spryker\Zed\AgentQuoteRequest\Business\CompanyUser\CompanyUserReader;
+use Spryker\Zed\AgentQuoteRequest\Business\CompanyUser\CompanyUserReaderInterface;
 use Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig getConfig()
+ * @method \Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestRepositoryInterface getRepository()()
  */
 class AgentQuoteRequestBusinessFactory extends AbstractBusinessFactory
 {
@@ -38,6 +41,16 @@ class AgentQuoteRequestBusinessFactory extends AbstractBusinessFactory
         return new AgentQuoteRequestWriter(
             $this->getQuoteRequestFacade(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AgentQuoteRequest\Business\CompanyUser\CompanyUserReaderInterface
+     */
+    public function createCompanyUserReader(): CompanyUserReaderInterface
+    {
+        return new CompanyUserReader(
+            $this->getRepository()
         );
     }
 

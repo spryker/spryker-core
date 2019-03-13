@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AgentQuoteRequest\Business;
 
+use Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserQueryTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
@@ -15,6 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequestBusinessFactory getFactory()
+ * @method \Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestRepositoryInterface getRepository()
  */
 class AgentQuoteRequestFacade extends AbstractFacade implements AgentQuoteRequestFacadeInterface
 {
@@ -65,5 +68,21 @@ class AgentQuoteRequestFacade extends AbstractFacade implements AgentQuoteReques
         return $this->getFactory()
             ->createAgentQuoteRequestWriter()
             ->setQuoteRequestEditable($quoteRequestFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $customerQueryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
+     */
+    public function findCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyUserReader()
+            ->findCompanyUsersByQuery($customerQueryTransfer);
     }
 }

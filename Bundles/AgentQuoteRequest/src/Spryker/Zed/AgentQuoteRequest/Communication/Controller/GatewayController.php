@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AgentQuoteRequest\Communication\Controller;
 
+use Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserQueryTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
@@ -48,5 +50,15 @@ class GatewayController extends AbstractGatewayController
     public function setQuoteRequestEditableAction(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFacade()->setQuoteRequestEditable($quoteRequestFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $customerQueryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
+     */
+    public function findCompanyUsersByQueryAction(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
+    {
+        return $this->getFacade()->findCompanyUsersByQuery($customerQueryTransfer);
     }
 }
