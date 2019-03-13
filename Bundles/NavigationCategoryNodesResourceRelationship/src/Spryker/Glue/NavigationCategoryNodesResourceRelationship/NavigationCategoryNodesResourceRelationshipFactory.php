@@ -27,6 +27,6 @@ class NavigationCategoryNodesResourceRelationshipFactory extends AbstractFactory
      */
     public function getCategoriesResource(): NavigationCategoryNodesResourceRelationshipToCategoriesRestApiInterface
     {
-        return $this->getProvidedDependency(NavigationCategoryNodesResourceRelationshipDependencyProvider::RESOURCE_CATEGORY_NODES);
+        return $this->getProvidedDependency(NavigationCategoryNodesResourceRelationshipDependencyProvider::RESOURCE_CATEGORIES);
     }
 }
