@@ -69,6 +69,9 @@ class PriceProductMapper implements PriceProductMapperInterface
             foreach ($prices[$priceMode] as $priceAttribute => $priceValue) {
                 $priceProductTransfer = $this->findProductTransferInCollection($currencyCode, $priceAttribute, $priceProductTransfers);
 
+                $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer))
+                    ->setIsMergeable(true);
+
                 if ($priceMode === PriceProductStorageConfig::PRICE_GROSS_MODE) {
                     $priceProductTransfer->getMoneyValue()->setGrossAmount($priceValue);
                     $priceProductTransfer = $this->setPriceData($priceProductTransfer, $prices);
@@ -78,8 +81,6 @@ class PriceProductMapper implements PriceProductMapperInterface
 
                 $priceProductTransfer->getMoneyValue()->setNetAmount($priceValue);
                 $priceProductTransfer = $this->setPriceData($priceProductTransfer, $prices);
-                $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer))
-                    ->setIsMergeable(true);
             }
         }
     }
