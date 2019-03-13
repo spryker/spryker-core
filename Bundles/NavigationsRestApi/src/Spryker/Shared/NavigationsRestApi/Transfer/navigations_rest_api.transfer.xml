@@ -11,6 +11,7 @@
 
     <transfer name="RestNavigationNode">
         <property name="isActive" type="bool" />
+        <property name="resourceId" type="int" />
         <property name="nodeType" type="string" />
         <property name="title" type="string" />
         <property name="url" type="string" />
