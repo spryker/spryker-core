@@ -10,11 +10,32 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Business\Collector;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollector as ShipmentDiscountWithoutMultiShipmentCollector;
+use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface;
 
 class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentCollector
 {
+    /**
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface
+     */
+    protected $shipmentService;
+
+    /**
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface $shipmentService
+     */
+    public function __construct(
+        ShipmentDiscountDecisionRuleInterface $carrierDiscountDecisionRule,
+        ShipmentDiscountConnectorToShipmentServiceInterface $shipmentService
+    ) {
+        parent::__construct($carrierDiscountDecisionRule);
+
+        $this->shipmentService = $shipmentService;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -25,8 +46,10 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
     {
         $discountableItems = [];
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shipmentTransfer = $itemTransfer->getShipment();
+        $shipmentGroups = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
+
+        foreach ($shipmentGroups as $shipmentGroupTransfer) {
+            $shipmentTransfer = $shipmentGroupTransfer->getShipment();
             if ($shipmentTransfer === null) {
                 continue;
             }
@@ -36,9 +59,7 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
                 continue;
             }
 
-            $isSatisfied = $this->shipmentDiscountDecisionRule->isItemShipmentExpenseSatisfiedBy($itemTransfer, $expenseTransfer, $clauseTransfer);
-
-            if ($isSatisfied) {
+            if ($this->isShipmentExpenseSatisfiedBy($shipmentGroupTransfer, $expenseTransfer, $clauseTransfer)) {
                 $discountableItems[] = $this->createDiscountableItemTransfer($expenseTransfer, $quoteTransfer->getPriceMode());
             }
         }
@@ -64,5 +85,28 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return bool
+     */
+    protected function isShipmentExpenseSatisfiedBy(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        ShipmentTransfer $expenseTransfer,
+        ClauseTransfer $clauseTransfer
+    ): ?ExpenseTransfer {
+        foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+            if (!$this->shipmentDiscountDecisionRule
+                    ->isItemShipmentExpenseSatisfiedBy($itemTransfer, $expenseTransfer, $clauseTransfer)
+            ) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

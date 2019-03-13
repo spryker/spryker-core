@@ -32,11 +32,12 @@
     </transfer>
 
     <transfer name="Order">
-        <property name="idShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.shippingAddress) instead." />
+        <property name="idShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.idShipmentMethod) instead." />
         <property name="shipmentDeliveryTime" type="int" deprecated="Use item level shipment method delivery time (item.shipment.method.deliveryTime) instead." />
         <property name="expenses" type="Expense[]" singular="expense" />
         <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod" deprecated="Obsolete. Not used." />
         <property name="currencyIsoCode" type="string" />
+        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
     </transfer>
 
     <transfer name="Address">

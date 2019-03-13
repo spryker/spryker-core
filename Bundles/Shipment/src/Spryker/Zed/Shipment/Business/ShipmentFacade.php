@@ -284,7 +284,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function hydrateOrderShipment(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createShipmentOrderHydrate()->hydrateOrderWithShipment($orderTransfer);
+        return $this->getFactory()->createMultipleShipmentOrderHydrate()->hydrateOrderWithShipment($orderTransfer);
     }
 
     /**

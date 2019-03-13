@@ -12,9 +12,14 @@
 
     <div id="order-overview">{% include '@Sales/Detail/boxes/order-overview.twig' %}</div>
     <div id="customer">{% include '@Sales/Detail/boxes/customer.twig' %}</div>
-    <div id="items">{% include '@Sales/Detail/boxes/items.twig' %}</div>
+    <div id="items">{% include [
+        '@ShipmentGui/Sales/items.twig',
+        '@Sales/Detail/boxes/items.twig'
+    ] %}</div>
     {% for blockName, externalBlock in blocks %}
-    <div id="{{ blockName }}">{{ externalBlock | raw }}</div>
+        {% if externalBlock %}
+            <div id="{{ blockName }}">{{ externalBlock | raw }}</div>
+        {% endif %}
     {% endfor %}
      {# @deprecated Addresses block exists for Backward Compatibility reasons only. #}
     {%  if not isMultiShipmentEnabled %}

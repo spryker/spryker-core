@@ -95,14 +95,4 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->getCustomerOrderByOrderReference($orderTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     */
-    public function getUniqueOrderItemsForShipmentGroupsAction(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer
-    {
-        return $this->getFacade()->getUniqueOrderItemsForShipmentGroups($orderTransfer);
-    }
 }

@@ -22,6 +22,10 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
+use Spryker\Zed\Shipment\Business\OrderItem\OrderItemGrouper;
+use Spryker\Zed\Shipment\Business\OrderItem\OrderItemGrouperInterface;
+use Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrateInterface;
+use Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrate as MultipleShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentReader;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentReaderInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaver;
@@ -197,8 +201,9 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentTaxCalculatorWithItemShipmentTaxRate(): CalculatorInterface
     {
         return new ShipmentTaxRateCalculatorWithItemShipmentTaxRate(
-            $this->getQueryContainer(),
-            $this->getTaxFacade()
+            $this->getRepository(),
+            $this->getTaxFacade(),
+            $this->getShipmentService()
         );
     }
 
@@ -243,11 +248,25 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrateInterface instead.
+     *
      * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrateInterface
      */
     public function createShipmentOrderHydrate()
     {
         return new ShipmentOrderHydrate($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrateInterface
+     */
+    public function createMultipleShipmentOrderHydrate(): ShipmentOrderHydrateInterface
+    {
+        return new MultipleShipmentOrderHydrate(
+            $this->getRepository(),
+            $this->getShipmentService(),
+            $this->getSalesFacade()
+        );
     }
 
     /**

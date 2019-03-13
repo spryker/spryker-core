@@ -84,11 +84,42 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     {
         $itemTransfer = parent::hydrateOrderItemTransfer($orderItemEntity);
 
+        /**
+         * @todo Move to ShipmentOrderHydrator.
+         */
         if ($orderItemEntity->getSpySalesShipment() !== null) {
             $this->hydrateItemShipment($orderItemEntity, $itemTransfer);
         }
 
         return $itemTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return void
+     */
+    public function hydrateOrderItemsToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
+    {
+        parent::hydrateOrderItemsToOrderTransfer($orderEntity, $orderTransfer);
+
+        /**
+         * @todo Uncomment this.
+         */
+//        $orderTransfer = $this->setUniqueOrderItems($orderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function setUniqueOrderItems(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        $uniqueOrderItems = $this->salesFacade->getUniqueOrderItems($orderTransfer->getItems());
+
+        return $orderTransfer->setItems($uniqueOrderItems->getItems());
     }
 
     /**

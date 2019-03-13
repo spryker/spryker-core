@@ -5,13 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Shipment\Business\Model;
+namespace Spryker\Zed\Shipment\Business\Shipment;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-/**
- * @deprecated Use \Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrateInterface instead.
- */
 interface ShipmentOrderHydrateInterface
 {
     /**

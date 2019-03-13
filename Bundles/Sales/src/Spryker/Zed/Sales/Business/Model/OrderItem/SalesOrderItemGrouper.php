@@ -17,91 +17,39 @@ use Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface;
 class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
 {
     /**
-     * @var \Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface
-     */
-    protected $shipmentService;
-
-    /**
-     * @param \Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface $shipmentService
-     */
-    public function __construct(SalesToShipmentServiceInterface $shipmentService)
-    {
-        $this->shipmentService = $shipmentService;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     */
-    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer
-    {
-        $shipmentGroups = $this->shipmentService->groupItemsByShipment($orderTransfer->getItems());
-
-        foreach ($shipmentGroups as $shipmentGroupTransfer) {
-            $groupedShipmentItems = $this->getUniqueOrderItems($shipmentGroupTransfer->getItems());
-            $shipmentGroupTransfer->setItems($groupedShipmentItems->getItems());
-        }
-
-        return (new ShipmentGroupCollectionTransfer())
-            ->setShipmentGroups($shipmentGroups);
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function getUniqueOrderItems(ArrayObject $itemTransfers): ItemCollectionTransfer
+    public function getUniqueOrderItems(iterable $itemTransfers): ItemCollectionTransfer
     {
-        $existedOrderLines = new ArrayObject();
+        $calculatedOrderLines = new ArrayObject();
         foreach ($itemTransfers as $itemTransfer) {
             $itemTransfer->requireGroupKey();
-            if (isset($existedOrderLines[$itemTransfer->getGroupKey()])) {
-                $existedOrderLines = $this->changeQuantityOfUniqueItem($existedOrderLines, $itemTransfer);
+            $key = $itemTransfer->getGroupKey();
+            if (!isset($calculatedOrderLines[$key])) {
+                $calculatedOrderLines[$key] = $itemTransfer;
                 continue;
             }
 
-            $existedOrderLines = $this->addItemToUniqueItemsArray($existedOrderLines, $itemTransfer);
+            $calculatedOrderLines[$key] = $this->changeQuantityOfUniqueItem($calculatedOrderLines[$key], $itemTransfer);
         }
 
-        $itemCollectionTransfer = (new ItemCollectionTransfer())
-            ->setItems($existedOrderLines);
-
-        return $itemCollectionTransfer;
+        return (new ItemCollectionTransfer())
+            ->setItems($calculatedOrderLines);
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $existedOrderLines
+     * @param \Generated\Shared\Transfer\ItemTransfer $calculatedItem
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \ArrayObject
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function changeQuantityOfUniqueItem(ArrayObject $existedOrderLines, ItemTransfer $itemTransfer): ArrayObject
+    protected function changeQuantityOfUniqueItem(ItemTransfer $calculatedItem, ItemTransfer $itemTransfer): ItemTransfer
     {
-        $sku = $itemTransfer->getSku();
-        /**
-         * @var \Generated\Shared\Transfer\ItemTransfer $existedItem
-         */
-        $existedItem = $existedOrderLines[$sku];
-        $newQuantity = $existedItem->getQuantity() + $itemTransfer->getQuantity();
-        $existedItem->setQuantity($newQuantity);
-        $newPrice = $itemTransfer->getSumPrice() * $newQuantity;
-        $existedItem->setSumPrice($newPrice);
+        $calculatedItem->setQuantity($calculatedItem->getQuantity() + $itemTransfer->getQuantity());
+        $calculatedItem->setSumPrice($calculatedItem->getSumPrice() + $itemTransfer->getSumPrice());
 
-        return $existedOrderLines;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $existedOrderLines
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return array
-     */
-    protected function addItemToUniqueItemsArray(ArrayObject $existedOrderLines, ItemTransfer $itemTransfer): ArrayObject
-    {
-        $existedOrderLines[$itemTransfer->getSku()] = $itemTransfer;
-
-        return $existedOrderLines;
+        return $calculatedItem;
     }
 }

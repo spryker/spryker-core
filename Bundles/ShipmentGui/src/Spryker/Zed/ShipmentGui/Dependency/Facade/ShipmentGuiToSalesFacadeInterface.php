@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 
-interface ShipmentGuiToSalesInterface
+interface ShipmentGuiToSalesFacadeInterface
 {
     /**
      * @param int $idSalesOrder

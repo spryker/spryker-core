@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface ShipmentGuiToCustomerInterface
+interface ShipmentGuiToCustomerFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

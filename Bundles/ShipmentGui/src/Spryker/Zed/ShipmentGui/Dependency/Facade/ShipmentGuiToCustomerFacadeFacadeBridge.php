@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
-class ShipmentGuiToCustomerBridge implements ShipmentGuiToCustomerInterface
+class ShipmentGuiToCustomerFacadeFacadeBridge implements ShipmentGuiToCustomerInterface
 {
     /**
      * @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface

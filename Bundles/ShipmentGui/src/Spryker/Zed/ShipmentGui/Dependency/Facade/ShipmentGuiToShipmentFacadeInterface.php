@@ -13,48 +13,26 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 
-class ShipmentGuiToShipmentBridge implements ShipmentGuiToShipmentInterface
+interface ShipmentGuiToShipmentFacadeInterface
 {
-    /**
-     * @var \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface
-     */
-    protected $shipmentFacade;
-
-    /**
-     * @param \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface $shipmentFacade
-     */
-    public function __construct($shipmentFacade)
-    {
-        $this->shipmentFacade = $shipmentFacade;
-    }
-
     /**
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function getMethods()
-    {
-        return $this->shipmentFacade->getMethods();
-    }
+    public function getMethods();
 
     /**
      * @param int $idShipmentMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findMethodById($idShipmentMethod): ?ShipmentMethodTransfer
-    {
-        return $this->shipmentFacade->findMethodById($idShipmentMethod);
-    }
+    public function findMethodById($idShipmentMethod): ?ShipmentMethodTransfer;
 
     /**
      * @param int $idShipment
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    public function findShipmentById(int $idShipment): ?ShipmentTransfer
-    {
-        return $this->shipmentFacade->findShipmentTransferById($idShipment);
-    }
+    public function findShipmentById(int $idShipment): ?ShipmentTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
@@ -62,8 +40,5 @@ class ShipmentGuiToShipmentBridge implements ShipmentGuiToShipmentInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupResponseTransfer
      */
-    public function saveShipment(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupResponseTransfer
-    {
-        return $this->shipmentFacade->saveShipment($shipmentGroupTransfer, $orderTransfer);
-    }
+    public function saveShipment(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupResponseTransfer;
 }

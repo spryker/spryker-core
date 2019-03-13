@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\OrderItem;
+namespace Spryker\Zed\Shipment\Business\OrderItem;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 
-interface SalesOrderItemGrouperInterface
+interface OrderItemGrouperInterface
 {
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
      */
-    public function getUniqueOrderItems(iterable $itemTransfers): ItemCollectionTransfer;
+    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer;
 }

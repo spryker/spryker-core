@@ -91,19 +91,4 @@ class SalesStub implements SalesStubInterface
 
         return $orderTransfer;
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     */
-    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer
-    {
-        /**
-         * @var \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer $shipmentGroupCollectionTransfer
-         */
-        $shipmentGroupCollectionTransfer = $this->zedStub->call('/sales/gateway/get-unique-order-items-for-shipment-groups', $orderTransfer);
-
-        return $shipmentGroupCollectionTransfer;
-    }
 }

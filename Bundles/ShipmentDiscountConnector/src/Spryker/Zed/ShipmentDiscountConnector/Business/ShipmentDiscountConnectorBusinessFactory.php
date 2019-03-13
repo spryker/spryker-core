@@ -58,7 +58,8 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createCarrierDiscountCollectorWithMultiShipment(): ShipmentDiscountCollectorInterface
     {
         return new ShipmentDiscountCollectorWithMultiShipment(
-            $this->createCarrierDiscountDecisionRuleWithMultiShipment()
+            $this->createCarrierDiscountDecisionRuleWithMultiShipment(),
+            $this->getShipmentService()
         );
     }
 
@@ -104,7 +105,8 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createMethodDiscountCollectorWithMultiShipment(): ShipmentDiscountCollectorInterface
     {
         return new ShipmentDiscountCollectorWithMultiShipment(
-            $this->createMethodDiscountDecisionRuleWithMultiShipment()
+            $this->createMethodDiscountDecisionRuleWithMultiShipment(),
+            $this->getShipmentService()
         );
     }
 
@@ -148,7 +150,8 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     public function createShipmentPriceDiscountCollectorWithMultiShipment(): ShipmentDiscountCollectorInterface
     {
         return new ShipmentDiscountCollectorWithMultiShipment(
-            $this->createShipmentPriceDiscountDecisionRuleWithMultiShipment()
+            $this->createShipmentPriceDiscountDecisionRuleWithMultiShipment(),
+            $this->getShipmentService()
         );
     }
 
@@ -198,6 +201,14 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     protected function getMoneyFacade()
     {
         return $this->getProvidedDependency(ShipmentDiscountConnectorDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface
+     */
+    protected function getShipmentService()
+    {
+        return $this->getProvidedDependency(ShipmentDiscountConnectorDependencyProvider::SERVICE_SHIPMENT);
     }
 
     /**

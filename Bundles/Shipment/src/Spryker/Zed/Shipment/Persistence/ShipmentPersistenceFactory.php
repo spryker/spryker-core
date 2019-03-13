@@ -15,6 +15,8 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapper;
 use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapperInterface;
+use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentTaxSetMapper;
+use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentTaxSetMapperInterface;
 
 /**
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
@@ -69,5 +71,13 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
     public function createShipmentMapper(): ShipmentMapperInterface
     {
         return new ShipmentMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentTaxSetMapperInterface
+     */
+    public function createTaxSetMapper(): ShipmentTaxSetMapperInterface
+    {
+        return new ShipmentTaxSetMapper();
     }
 }

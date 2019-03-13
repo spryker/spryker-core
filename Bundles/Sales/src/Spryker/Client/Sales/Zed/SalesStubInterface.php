@@ -47,11 +47,4 @@ interface SalesStubInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     */
-    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer;
 }

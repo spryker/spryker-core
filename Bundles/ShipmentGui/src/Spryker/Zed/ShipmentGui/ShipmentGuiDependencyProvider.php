@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerBridge;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesBridge;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentBridge;
+use Spryker\Zed\ShipmentGui\Dependency\Service\ShipmentGuiToShipmentServiceBridge;
 
 /**
  * @method \Spryker\Zed\ShipmentGui\ShipmentGuiConfig getConfig()
@@ -21,6 +22,8 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
+    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -46,6 +49,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSalesFacade($container);
         $container = $this->addShipmentFacade($container);
         $container = $this->addCustomerFacade($container);
+        $container = $this->addShipmentService($container);
 
         return $container;
     }
@@ -87,6 +91,20 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CUSTOMER] = function (Container $container) {
             return new ShipmentGuiToCustomerBridge($container->getLocator()->customer()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentService(Container $container)
+    {
+        $container[static::SERVICE_SHIPMENT] = function (Container $container) {
+            return new ShipmentGuiToShipmentServiceBridge($container->getLocator()->shipment()->service());
         };
 
         return $container;

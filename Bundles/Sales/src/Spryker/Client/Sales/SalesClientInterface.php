@@ -75,16 +75,4 @@ interface SalesClientInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
-
-    /**
-     * Specification:
-     * - Creates a collection of unique order items for shipment groups.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentGroupCollectionTransfer
-     **/
-    public function getUniqueOrderItemsForShipmentGroups(OrderTransfer $orderTransfer): ShipmentGroupCollectionTransfer;
 }

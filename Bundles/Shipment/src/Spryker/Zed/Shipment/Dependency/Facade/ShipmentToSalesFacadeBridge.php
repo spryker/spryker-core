@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Dependency\Facade;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 
 class ShipmentToSalesFacadeBridge implements ShipmentToSalesFacadeInterface
 {
@@ -63,5 +64,15 @@ class ShipmentToSalesFacadeBridge implements ShipmentToSalesFacadeInterface
     public function findOrderAddressByIdOrderAddress(int $idSalesOrderAddress): ?AddressTransfer
     {
         return $this->salesFacade->findOrderAddressByIdOrderAddress($idSalesOrderAddress);
+    }
+
+    /**
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function getUniqueOrderItems(iterable $itemTransfers): ItemCollectionTransfer
+    {
+        return $this->salesFacade->getUniqueOrderItems($itemTransfers);
     }
 }
