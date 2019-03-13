@@ -133,7 +133,24 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
             ->setIsMergeable(false)
             ->getMoneyValue()
             ->setGrossAmount($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE])
-            ->setNetAmount($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE])
+            ->setNetAmount($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE]);
+
+        $volumePriceTransfer = $this->setPriceData($volumePriceTransfer, $volumePrice);
+
+        return $volumePriceTransfer;
+    }
+
+    /**
+     * @deprecated Will be removed with next major release.
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $volumePriceTransfer
+     * @param array $volumePrice
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function setPriceData(PriceProductTransfer $volumePriceTransfer, array $volumePrice): PriceProductTransfer
+    {
+        $volumePriceTransfer->getMoneyValue()
             ->setPriceData($this->utilEncoding->encodeJson([
                 PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY => $volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY],
             ]));
