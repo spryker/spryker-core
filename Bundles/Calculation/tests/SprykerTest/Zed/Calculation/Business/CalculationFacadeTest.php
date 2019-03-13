@@ -9,6 +9,10 @@ namespace SprykerTest\Zed\Calculation\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ExpenseBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\ProductOptionBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -50,7 +54,7 @@ use Spryker\Zed\Kernel\Container;
 class CalculationFacadeTest extends Unit
 {
     /**
-     * @dataProvider calculatePriceShouldSetDefaultStorePriceValuesProvider
+     * @dataProvider calculatePriceShouldSetDefaultStorePriceValuesDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -68,35 +72,107 @@ class CalculationFacadeTest extends Unit
 
         //item
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
-        $this->assertNotEmpty($calculatedItemTransfer->getSumGrossPrice());
-        $this->assertSame($calculatedItemTransfer->getUnitPrice(), $calculatedItemTransfer->getUnitGrossPrice());
+        $this->assertNotEmpty(
+            $calculatedItemTransfer->getSumGrossPrice(),
+            'Item sum gross price is not set.'
+        );
+        $this->assertSame(
+            $calculatedItemTransfer->getUnitPrice(),
+            $calculatedItemTransfer->getUnitGrossPrice(),
+            'Item unit price must be the same as the item unit gross price'
+        );
         $this->assertNotEmpty($calculatedItemTransfer->getSumPrice(), 'Item sum price is not set.');
-        $this->assertSame($calculatedItemTransfer->getSumPrice(), $calculatedItemTransfer->getSumGrossPrice());
+        $this->assertSame(
+            $calculatedItemTransfer->getSumPrice(),
+            $calculatedItemTransfer->getSumGrossPrice(),
+            'Item sum price must be the same as the item sum gross price'
+        );
 
         //item.option
         $calculatedItemProductOptionTransfer = $calculatedItemTransfer->getProductOptions()[0];
-        $this->assertNotEmpty($calculatedItemProductOptionTransfer->getSumGrossPrice());
-        $this->assertSame($calculatedItemProductOptionTransfer->getUnitPrice(), $calculatedItemProductOptionTransfer->getUnitPrice());
-        $this->assertNotEmpty($calculatedItemProductOptionTransfer->getSumPrice(), "Product option sum price is not set.");
-        $this->assertSame($calculatedItemProductOptionTransfer->getSumPrice(), $calculatedItemProductOptionTransfer->getSumGrossPrice());
+        $this->assertNotEmpty(
+            $calculatedItemProductOptionTransfer->getSumGrossPrice(),
+            "Product option sum gross price is not set."
+        );
+        $this->assertSame(
+            $calculatedItemProductOptionTransfer->getUnitPrice(),
+            $calculatedItemProductOptionTransfer->getUnitGrossPrice(),
+            'Product option unit price must be the same as the unit gross price'
+        );
+        $this->assertNotEmpty(
+            $calculatedItemProductOptionTransfer->getSumPrice(),
+            "Product option sum price is not set."
+        );
+        $this->assertSame(
+            $calculatedItemProductOptionTransfer->getSumPrice(),
+            $calculatedItemProductOptionTransfer->getSumGrossPrice(),
+            'Product option sum price must be equal sum gross price'
+        );
 
         //order.expense
         $calculatedExpenseTransfer = $quoteTransfer->getExpenses()[0];
-        $this->assertNotEmpty($calculatedExpenseTransfer->getSumGrossPrice());
-        $this->assertSame($calculatedExpenseTransfer->getUnitPrice(), $calculatedExpenseTransfer->getUnitGrossPrice());
-        $this->assertNotEmpty($calculatedExpenseTransfer->getSumPrice(), 'Item sum price is not set.');
-        $this->assertSame($calculatedExpenseTransfer->getSumPrice(), $calculatedExpenseTransfer->getSumGrossPrice());
+        $this->assertNotEmpty(
+            $calculatedExpenseTransfer->getSumGrossPrice(),
+            'Expense sum gross price is not set.'
+        );
+        $this->assertSame(
+            $calculatedExpenseTransfer->getUnitPrice(),
+            $calculatedExpenseTransfer->getUnitGrossPrice(),
+            'Expense unit price must be the same as the unit gross price'
+        );
+        $this->assertNotEmpty($calculatedExpenseTransfer->getSumPrice(), 'Expense sum price is not set.');
+        $this->assertSame(
+            $calculatedExpenseTransfer->getSumPrice(),
+            $calculatedExpenseTransfer->getSumGrossPrice(),
+            'Expense sum price must be the same as the sum gross price'
+        );
     }
 
     /**
      * @return array
      */
-    public function calculatePriceShouldSetDefaultStorePriceValuesProvider(): array
+    public function calculatePriceShouldSetDefaultStorePriceValuesDataProvider(): array
     {
         return [
-            'int stock' => $this->calculatePriceShouldSetDefaultStorePriceValuesData(2, 1),
-            'float stock' => $this->calculatePriceShouldSetDefaultStorePriceValuesData(2.5, 1.5),
+            'int stock' => $this->getIntDataForCalculatePriceShouldSetDefaultStorePriceValues(2, 1),
+            'float stock' => $this->getFloatDataForCalculatePriceShouldSetDefaultStorePriceValues(2.5, 1.5),
         ];
+    }
+
+    /**
+     * @param int $productQuantity
+     * @param int $expenseQuantity
+     *
+     * @return array
+     */
+    protected function getIntDataForCalculatePriceShouldSetDefaultStorePriceValues(int $productQuantity, int $expenseQuantity): array
+    {
+        $quoteTransfer = (new QuoteBuilder())->seed([
+            QuoteTransfer::PRICE_MODE => CalculationPriceMode::PRICE_MODE_GROSS,
+        ])->build();
+
+        $itemTransfer = (new ItemBuilder())->seed([
+            ItemTransfer::QUANTITY => $productQuantity,
+            ItemTransfer::UNIT_GROSS_PRICE => 100,
+        ])->build();
+
+        $productOptionTransfer = (new ProductOptionBuilder())->seed([
+            ProductOptionTransfer::QUANTITY => $productQuantity,
+            ProductOptionTransfer::UNIT_GROSS_PRICE => 10,
+        ])->build();
+
+        $itemTransfer->addProductOption($productOptionTransfer);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        $expenseTransfer = (new ExpenseBuilder())->seed([
+            ExpenseTransfer::QUANTITY => $expenseQuantity,
+            ExpenseTransfer::UNIT_GROSS_PRICE => 100,
+        ])->build();
+
+        $quoteTransfer->addExpense($expenseTransfer);
+
+        return [$quoteTransfer];
     }
 
     /**
@@ -105,26 +181,30 @@ class CalculationFacadeTest extends Unit
      *
      * @return array
      */
-    protected function calculatePriceShouldSetDefaultStorePriceValuesData(float $productQuantity, float $expenseQuantity): array
+    protected function getFloatDataForCalculatePriceShouldSetDefaultStorePriceValues(float $productQuantity, float $expenseQuantity): array
     {
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setPriceMode(CalculationPriceMode::PRICE_MODE_GROSS);
+        $quoteTransfer = (new QuoteBuilder())->seed([
+            QuoteTransfer::PRICE_MODE => CalculationPriceMode::PRICE_MODE_GROSS,
+        ])->build();
 
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity($productQuantity);
-        $itemTransfer->setUnitGrossPrice(100);
+        $itemTransfer = (new ItemBuilder())->seed([
+            ItemTransfer::QUANTITY => $productQuantity,
+            ItemTransfer::UNIT_GROSS_PRICE => 100,
+        ])->build();
 
-        $productOptionTransfer = new ProductOptionTransfer();
-        $productOptionTransfer->setQuantity($productQuantity);
-        $productOptionTransfer->setUnitGrossPrice(10);
+        $productOptionTransfer = (new ProductOptionBuilder())->seed([
+            ProductOptionTransfer::QUANTITY => $productQuantity,
+            ProductOptionTransfer::UNIT_GROSS_PRICE => 10,
+        ])->build();
 
         $itemTransfer->addProductOption($productOptionTransfer);
 
         $quoteTransfer->addItem($itemTransfer);
 
-        $expenseTransfer = new ExpenseTransfer();
-        $expenseTransfer->setUnitGrossPrice(100);
-        $expenseTransfer->setQuantity($expenseQuantity);
+        $expenseTransfer = (new ExpenseBuilder())->seed([
+            ExpenseTransfer::QUANTITY => $expenseQuantity,
+            ExpenseTransfer::UNIT_GROSS_PRICE => 100,
+        ])->build();
 
         $quoteTransfer->addExpense($expenseTransfer);
 
@@ -629,7 +709,7 @@ class CalculationFacadeTest extends Unit
         $calculationBusinessFactory = new CalculationBusinessFactory();
 
         $container = new Container();
-        $container[CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK] = function (Container $container) use ($calculatorPlugins) {
+        $container[CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK] = function () use ($calculatorPlugins) {
             return $calculatorPlugins;
         };
 
