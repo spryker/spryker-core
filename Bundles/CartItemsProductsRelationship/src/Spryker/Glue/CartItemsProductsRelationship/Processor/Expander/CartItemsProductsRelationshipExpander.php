@@ -12,7 +12,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CartItemsProductsRelationshipExpander implements CartItemsProductsRelationshipExpanderInterface
 {
-    protected const ATTRIBUTE_SKU = 'sku';
+    protected const KEY_SKU = 'sku';
 
     /**
      * @var \Spryker\Glue\CartItemsProductsRelationship\Dependency\RestResource\CartItemsProductsRelationToProductsRestApiInterface
@@ -36,12 +36,14 @@ class CartItemsProductsRelationshipExpander implements CartItemsProductsRelation
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            if ($resource->getAttributes() === null || !$resource->getAttributes()->offsetExists(static::ATTRIBUTE_SKU)) {
+            if ($resource->getAttributes() === null || !$resource->getAttributes()->offsetExists(static::KEY_SKU)) {
                 continue;
             }
 
-            $sku = $resource->getAttributes()->offsetGet(static::ATTRIBUTE_SKU);
-            $productResource = $this->productsResource->findProductConcreteBySku($sku, $restRequest);
+            $productResource = $this->productsResource->findProductConcreteBySku(
+                $resource->getAttributes()->offsetGet(static::KEY_SKU),
+                $restRequest
+            );
 
             if ($productResource !== null) {
                 $resource->addRelationship($productResource);
