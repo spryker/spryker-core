@@ -10,24 +10,25 @@ namespace Spryker\Glue\NavigationCategoryNodesResourceRelationship\Processor\Exp
 use Generated\Shared\Transfer\RestNavigationNodeTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiInterface;
+use Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface;
 
 class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInterface
 {
-    protected const RESOURCE_ID = 'resourceId';
-    protected const NODE_TYPE = 'nodeType';
+    protected const KEY_RESOURCE_ID = 'resourceId';
+    protected const KEY_NODE_TYPE = 'nodeType';
+    protected const KEY_NODES = 'nodes';
+
     protected const NODE_TYPE_VALUE_CATEGORY = 'category';
-    protected const NODES = 'nodes';
 
     /**
-     * @var \Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiInterface
+     * @var \Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface
      */
     protected $categoriesResource;
 
     /**
-     * @param \Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiInterface $categoriesResource
+     * @param \Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface $categoriesResource
      */
-    public function __construct(NavigationCategoryNodesResourceRelationshipToCategoriesRestApiInterface $categoriesResource)
+    public function __construct(NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface $categoriesResource)
     {
         $this->categoriesResource = $categoriesResource;
     }
@@ -41,11 +42,11 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
     public function expandResourceWithCategoryNode(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            if (empty($resource->getAttributes()->offsetGet(static::NODES))) {
+            if (empty($resource->getAttributes()->offsetGet(static::KEY_NODES))) {
                 continue;
             }
 
-            foreach ($resource->getAttributes()->offsetGet(static::NODES) as $restNavigationNodeTransfer) {
+            foreach ($resource->getAttributes()->offsetGet(static::KEY_NODES) as $restNavigationNodeTransfer) {
                 $this->addResourceRelationship($resource, $restRequest, $restNavigationNodeTransfer);
             }
         }
@@ -63,12 +64,12 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
         RestRequestInterface $restRequest,
         RestNavigationNodeTransfer $restNavigationNodeTransfer
     ): void {
-        if (!empty($restNavigationNodeTransfer->offsetGet(static::RESOURCE_ID))
-            && !empty($restNavigationNodeTransfer->offsetGet(static::NODE_TYPE))
-            && $restNavigationNodeTransfer->offsetGet(static::NODE_TYPE) === static::NODE_TYPE_VALUE_CATEGORY
+        if (!empty($restNavigationNodeTransfer->offsetGet(static::KEY_RESOURCE_ID))
+            && !empty($restNavigationNodeTransfer->offsetGet(static::KEY_NODE_TYPE))
+            && $restNavigationNodeTransfer->offsetGet(static::KEY_NODE_TYPE) === static::NODE_TYPE_VALUE_CATEGORY
         ) {
             $categoryNode = $this->categoriesResource->findCategoryNodeById(
-                $restNavigationNodeTransfer->offsetGet(static::RESOURCE_ID),
+                $restNavigationNodeTransfer->offsetGet(static::KEY_RESOURCE_ID),
                 $restRequest->getMetadata()->getLocale()
             );
             if ($categoryNode) {

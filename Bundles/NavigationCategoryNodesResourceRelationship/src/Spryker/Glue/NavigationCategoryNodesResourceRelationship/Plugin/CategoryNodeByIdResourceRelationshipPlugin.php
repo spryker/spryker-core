@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\NavigationCategoryNodesResourceRelationship\Plugin;
 
-use Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
@@ -17,6 +16,11 @@ use Spryker\Glue\Kernel\AbstractPlugin;
  */
 class CategoryNodeByIdResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
+    /**
+     * @uses \Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig::RESOURCE_CATEGORY_NODES
+     */
+    protected const RESOURCE_CATEGORY_NODES = 'category-nodes';
+
     /**
      * {@inheritdoc}
      *  - Adds category node resource as relationship.
@@ -44,6 +48,6 @@ class CategoryNodeByIdResourceRelationshipPlugin extends AbstractPlugin implemen
      */
     public function getRelationshipResourceType(): string
     {
-        return CategoriesRestApiConfig::RESOURCE_CATEGORY_NODES;
+        return static::RESOURCE_CATEGORY_NODES;
     }
 }

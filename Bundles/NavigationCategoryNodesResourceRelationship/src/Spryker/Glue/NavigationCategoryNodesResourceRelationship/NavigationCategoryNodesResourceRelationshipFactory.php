@@ -8,7 +8,7 @@
 namespace Spryker\Glue\NavigationCategoryNodesResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiInterface;
+use Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface;
 use Spryker\Glue\NavigationCategoryNodesResourceRelationship\Processor\Expander\CategoryNodesResourceExpander;
 use Spryker\Glue\NavigationCategoryNodesResourceRelationship\Processor\Expander\CategoryNodesResourceExpanderInterface;
 
@@ -23,9 +23,9 @@ class NavigationCategoryNodesResourceRelationshipFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiInterface
+     * @return \Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface
      */
-    public function getCategoriesResource(): NavigationCategoryNodesResourceRelationshipToCategoriesRestApiInterface
+    public function getCategoriesResource(): NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface
     {
         return $this->getProvidedDependency(NavigationCategoryNodesResourceRelationshipDependencyProvider::RESOURCE_CATEGORIES);
     }

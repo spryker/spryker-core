@@ -9,7 +9,7 @@ namespace Spryker\Glue\NavigationCategoryNodesResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiBridge;
+use Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceBridge;
 
 /**
  * @method \Spryker\Glue\NavigationCategoryNodesResourceRelationship\NavigationCategoryNodesResourceRelationshipConfig getConfig()
@@ -25,7 +25,7 @@ class NavigationCategoryNodesResourceRelationshipDependencyProvider extends Abst
      */
     public function provideDependencies(Container $container): Container
     {
-        parent::provideDependencies($container);
+        $container = parent::provideDependencies($container);
         $container = $this->addCategoriesResource($container);
 
         return $container;
@@ -39,7 +39,7 @@ class NavigationCategoryNodesResourceRelationshipDependencyProvider extends Abst
     protected function addCategoriesResource(Container $container): Container
     {
         $container[static::RESOURCE_CATEGORIES] = function (Container $container) {
-            return new NavigationCategoryNodesResourceRelationshipToCategoriesRestApiBridge(
+            return new NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceBridge(
                 $container->getLocator()->categoriesRestApi()->resource()
             );
         };
