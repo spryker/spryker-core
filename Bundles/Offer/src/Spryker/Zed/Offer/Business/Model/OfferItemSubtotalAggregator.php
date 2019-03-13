@@ -39,13 +39,13 @@ class OfferItemSubtotalAggregator implements OfferItemSubtotalAggregatorInterfac
             //apply fee
             $originUnitSubtotal = $itemTransfer->getUnitSubtotalAggregation();
             $calculatedUnitSubtotal = $originUnitSubtotal + $itemTransfer->getOfferFee();
-            $calculatedUnitSubtotal = (int)$calculatedUnitSubtotal;
             $itemTransfer->setUnitSubtotalAggregation($calculatedUnitSubtotal);
 
             $originSumSubtotal = $itemTransfer->getSumSubtotalAggregation();
             $calculatedFeeSumSubtotal = $itemTransfer->getQuantity() * $itemTransfer->getOfferFee();
             $calculatedSumSubtotal = $originSumSubtotal + $calculatedFeeSumSubtotal;
-            $calculatedSumSubtotal = (int)$calculatedSumSubtotal;
+            $calculatedSumSubtotal = (int)round($calculatedSumSubtotal);
+
             $itemTransfer->setSumSubtotalAggregation($calculatedSumSubtotal);
         }
     }
