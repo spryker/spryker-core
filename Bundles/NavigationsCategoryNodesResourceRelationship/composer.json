@@ -1,7 +1,7 @@
 {
-  "name": "spryker/navigation-category-nodes-resource-relationship",
+  "name": "spryker/navigations-category-nodes-resource-relationship",
   "type": "library",
-  "description": "NavigationCategoryNodesResourceRelationship module",
+  "description": "NavigationsCategoryNodesResourceRelationship module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",

@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource;
+namespace Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestResource;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-interface NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface
+interface NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface
 {
     /**
      * @param int $nodeId

@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\NavigationCategoryNodesResourceRelationship\Processor\Expander;
+namespace Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Processor\Expander;
 
 use Generated\Shared\Transfer\RestNavigationNodeTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface;
+use Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestResource\NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface;
 
 class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInterface
 {
@@ -21,14 +21,14 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
     protected const NODE_TYPE_VALUE_CATEGORY = 'category';
 
     /**
-     * @var \Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface
+     * @var \Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestResource\NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface
      */
     protected $categoriesResource;
 
     /**
-     * @param \Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface $categoriesResource
+     * @param \Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestResource\NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface $categoriesResource
      */
-    public function __construct(NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface $categoriesResource)
+    public function __construct(NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface $categoriesResource)
     {
         $this->categoriesResource = $categoriesResource;
     }

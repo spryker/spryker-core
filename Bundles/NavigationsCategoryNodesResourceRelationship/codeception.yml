@@ -1,4 +1,4 @@
-namespace: NavigationCategoryNodesResourceRelationship
+namespace: NavigationsCategoryNodesResourceRelationship
 actor: Tester
 paths:
     tests: tests

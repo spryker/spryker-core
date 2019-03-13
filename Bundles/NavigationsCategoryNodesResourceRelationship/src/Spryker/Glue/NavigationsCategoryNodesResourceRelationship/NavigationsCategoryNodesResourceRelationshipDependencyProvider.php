@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\NavigationCategoryNodesResourceRelationship;
+namespace Spryker\Glue\NavigationsCategoryNodesResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\NavigationCategoryNodesResourceRelationship\Dependency\RestResource\NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceBridge;
+use Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestResource\NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceBridge;
 
 /**
- * @method \Spryker\Glue\NavigationCategoryNodesResourceRelationship\NavigationCategoryNodesResourceRelationshipConfig getConfig()
+ * @method \Spryker\Glue\NavigationsCategoryNodesResourceRelationship\NavigationsCategoryNodesResourceRelationshipConfig getConfig()
  */
-class NavigationCategoryNodesResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
+class NavigationsCategoryNodesResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const RESOURCE_CATEGORIES = 'RESOURCE_CATEGORIES';
 
@@ -39,7 +39,7 @@ class NavigationCategoryNodesResourceRelationshipDependencyProvider extends Abst
     protected function addCategoriesResource(Container $container): Container
     {
         $container[static::RESOURCE_CATEGORIES] = function (Container $container) {
-            return new NavigationCategoryNodesResourceRelationshipToCategoriesRestApiResourceBridge(
+            return new NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceBridge(
                 $container->getLocator()->categoriesRestApi()->resource()
             );
         };

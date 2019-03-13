@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\NavigationCategoryNodesResourceRelationship;
+namespace Spryker\Glue\NavigationsCategoryNodesResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 
-class NavigationCategoryNodesResourceRelationshipConfig extends AbstractBundleConfig
+class NavigationsCategoryNodesResourceRelationshipConfig extends AbstractBundleConfig
 {
 }
