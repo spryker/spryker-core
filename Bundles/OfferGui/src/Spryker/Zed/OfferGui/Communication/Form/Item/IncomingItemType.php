@@ -24,6 +24,8 @@ class IncomingItemType extends AbstractType
 
     protected const DEFAULT_QUANTITY = 1;
 
+    protected const PATTERN_NUMBER = '/^([0-9]*[.])?[0-9]+$/';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -83,7 +85,7 @@ class IncomingItemType extends AbstractType
         $validationGroup = $this->getValidationGroup($options);
 
         return new Regex([
-            'pattern' => '/^([0-9]*[.])?[0-9]+$/',
+            'pattern' => static::PATTERN_NUMBER,
             'message' => 'This field should contain a valid number.',
             'groups' => $validationGroup,
         ]);

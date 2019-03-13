@@ -41,6 +41,7 @@ class ItemType extends AbstractType
 
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
+    protected const PATTERN_NUMBER = '/^([0-9]*[.])?[0-9]+$/';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -362,7 +363,7 @@ class ItemType extends AbstractType
         $validationGroup = $this->getValidationGroup($options);
 
         return new Regex([
-            'pattern' => '/^([0-9]*[.])?[0-9]+$/',
+            'pattern' => static::PATTERN_NUMBER,
             'message' => 'This field should contain a valid number.',
             'groups' => $validationGroup,
         ]);
