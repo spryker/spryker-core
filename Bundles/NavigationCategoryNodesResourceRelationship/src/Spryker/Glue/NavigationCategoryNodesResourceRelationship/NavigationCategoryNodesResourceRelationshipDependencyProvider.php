@@ -25,6 +25,7 @@ class NavigationCategoryNodesResourceRelationshipDependencyProvider extends Abst
      */
     public function provideDependencies(Container $container): Container
     {
+        parent::provideDependencies($container);
         $container = $this->addCategoriesResource($container);
 
         return $container;
