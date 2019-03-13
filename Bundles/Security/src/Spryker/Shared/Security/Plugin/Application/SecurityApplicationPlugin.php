@@ -35,7 +35,7 @@ class SecurityApplicationPlugin implements ApplicationPluginInterface
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::SERVICE_CSRF_PROVIDER, function (ContainerInterface $container) {
+        $container->setGlobal(static::SERVICE_CSRF_PROVIDER, function (ContainerInterface $container) {
             return $this->createCsrfTokenManager($container);
         });
 

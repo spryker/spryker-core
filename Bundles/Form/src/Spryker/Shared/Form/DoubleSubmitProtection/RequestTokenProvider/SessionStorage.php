@@ -34,9 +34,9 @@ class SessionStorage implements StorageInterface
     /**
      * @param string $formName
      *
-     * @return string
+     * @return string|null
      */
-    public function getToken(string $formName): string
+    public function getToken(string $formName): ?string
     {
         return $this->session->get($this->keyPrefix . $formName);
     }

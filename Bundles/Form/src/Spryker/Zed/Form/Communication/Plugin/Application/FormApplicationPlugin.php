@@ -49,7 +49,7 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
             return $formFactoryBuilder->getFormFactory();
         });
 
-        $container->setGlobal(static::SERVICE_FORM_FACTORY_ALIAS, $container->get(static::SERVICE_FORM_FACTORY));
+        $container->configure(static::SERVICE_FORM_FACTORY, ['alias' => static::SERVICE_FORM_FACTORY_ALIAS, 'isGlobal' => true]);
 
         return $container;
     }

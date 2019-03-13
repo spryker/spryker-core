@@ -12,9 +12,9 @@ interface StorageInterface
     /**
      * @param string $formName
      *
-     * @return string
+     * @return string|null
      */
-    public function getToken(string $formName): string;
+    public function getToken(string $formName): ?string;
 
     /**
      * @param string $formName
