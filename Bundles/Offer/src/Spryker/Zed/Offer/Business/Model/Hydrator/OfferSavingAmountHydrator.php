@@ -9,6 +9,7 @@ namespace Spryker\Zed\Offer\Business\Model\Hydrator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
+use Spryker\Zed\Offer\Dependency\Service\OfferToUtilProductServiceInterface;
 use Spryker\Zed\Offer\OfferConfig;
 
 class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
@@ -19,12 +20,20 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
     protected $offerConfig;
 
     /**
+     * @var \Spryker\Zed\Offer\Dependency\Service\OfferToUtilProductServiceInterface
+     */
+    protected $utilProductService;
+
+    /**
      * @param \Spryker\Zed\Offer\OfferConfig $offerConfig
+     * @param \Spryker\Zed\Offer\Dependency\Service\OfferToUtilProductServiceInterface $utilProductService
      */
     public function __construct(
-        OfferConfig $offerConfig
+        OfferConfig $offerConfig,
+        OfferToUtilProductServiceInterface $utilProductService
     ) {
         $this->offerConfig = $offerConfig;
+        $this->utilProductService = $utilProductService;
     }
 
     /**
@@ -39,14 +48,25 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $savingAmount = $this->getOriginUnitPrice($itemTransfer, $quoteTransfer->getPriceMode());
             $savingAmount -= $this->getUnitPrice($itemTransfer, $quoteTransfer->getPriceMode());
-            $savingAmount += (int)($this->getUnitPrice($itemTransfer, $quoteTransfer->getPriceMode()) / 100 * $itemTransfer->getOfferDiscount());
+            $savingAmount += ($this->getUnitPrice($itemTransfer, $quoteTransfer->getPriceMode()) / 100 * $itemTransfer->getOfferDiscount());
             $savingAmount -= $itemTransfer->getOfferFee();
             $savingAmount *= $itemTransfer->getQuantity();
+            $savingAmount = $this->roundSavingAmount($savingAmount);
 
-            $itemTransfer->setSavingAmount((int)round($savingAmount));
+            $itemTransfer->setSavingAmount($savingAmount);
         }
 
         return $offerTransfer;
+    }
+
+    /**
+     * @param float $savingAmount
+     *
+     * @return int
+     */
+    protected function roundSavingAmount(float $savingAmount): int
+    {
+        return $this->utilProductService->roundPrice($savingAmount);
     }
 
     /**

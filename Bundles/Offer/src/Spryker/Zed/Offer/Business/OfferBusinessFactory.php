@@ -26,6 +26,7 @@ use Spryker\Zed\Offer\Business\Model\OfferWriterInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToCustomerFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface;
+use Spryker\Zed\Offer\Dependency\Service\OfferToUtilProductServiceInterface;
 use Spryker\Zed\Offer\OfferDependencyProvider;
 
 /**
@@ -113,7 +114,8 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferSavingAmountHydrator(): OfferSavingAmountHydratorInterface
     {
         return new OfferSavingAmountHydrator(
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getUtilProductService()
         );
     }
 
@@ -122,7 +124,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
      */
     public function createOfferItemSubtotalAggregator(): OfferItemSubtotalAggregatorInterface
     {
-        return new OfferItemSubtotalAggregator();
+        return new OfferItemSubtotalAggregator($this->getUtilProductService());
     }
 
     /**
@@ -155,5 +157,13 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferGrandTotalCalculator(): OfferGrandTotalCalculatorInterface
     {
         return new OfferGrandTotalCalculator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Offer\Dependency\Service\OfferToUtilProductServiceInterface
+     */
+    public function getUtilProductService(): OfferToUtilProductServiceInterface
+    {
+        return $this->getProvidedDependency(OfferDependencyProvider::SERVICE_UTIL_PRODUCT);
     }
 }
