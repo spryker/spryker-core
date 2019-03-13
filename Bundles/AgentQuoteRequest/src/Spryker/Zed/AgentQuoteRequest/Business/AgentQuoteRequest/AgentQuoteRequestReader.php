@@ -40,7 +40,7 @@ class AgentQuoteRequestReader implements AgentQuoteRequestReaderInterface
     ): QuoteRequestOverviewCollectionTransfer {
         return (new QuoteRequestOverviewCollectionTransfer())
             ->setQuoteRequests($this->getQuoteRequestCollection($quoteRequestOverviewFilterTransfer)->getQuoteRequests())
-            ->setCurrentQuoteRequest($this->findQuoteRequest($quoteRequestOverviewFilterTransfer));
+            ->setCurrentQuoteRequest($this->findQuoteRequestTransfer($quoteRequestOverviewFilterTransfer));
     }
 
     /**
@@ -64,7 +64,7 @@ class AgentQuoteRequestReader implements AgentQuoteRequestReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    protected function findQuoteRequest(QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer): ?QuoteRequestTransfer
+    protected function findQuoteRequestTransfer(QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer): ?QuoteRequestTransfer
     {
         if (!$quoteRequestOverviewFilterTransfer->getQuoteRequestReference()) {
             return null;

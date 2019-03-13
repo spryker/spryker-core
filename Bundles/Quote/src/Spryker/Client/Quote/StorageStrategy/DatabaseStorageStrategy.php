@@ -9,6 +9,7 @@ namespace Spryker\Client\Quote\StorageStrategy;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface;
+use Spryker\Client\Quote\QuoteLocker\QuoteLocker;
 use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface;
 use Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface;
 use Spryker\Client\Quote\Session\QuoteSessionInterface;
@@ -43,6 +44,11 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     protected $quoteEditStatusValidator;
 
     /**
+     * @var \Spryker\Client\Quote\QuoteLocker\QuoteLocker
+     */
+    protected $quoteLocker;
+
+    /**
      * @var array|\Spryker\Zed\QuoteExtension\Dependency\Plugin\AllowableDatabaseStrategyPluginInterface[]
      */
     protected $allowableDatabaseStrategyPlugins;
@@ -53,6 +59,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
      * @param \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface $quoteLockStatusValidator
      * @param \Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface $quoteEditStatusValidator
+     * @param \Spryker\Client\Quote\QuoteLocker\QuoteLocker $quoteLocker
      * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\AllowableDatabaseStrategyPluginInterface[] $allowableDatabaseStrategyPlugins
      */
     public function __construct(
@@ -61,6 +68,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
         QuoteSessionInterface $quoteSession,
         QuoteLockStatusValidatorInterface $quoteLockStatusValidator,
         QuoteEditStatusValidatorInterface $quoteEditStatusValidator,
+        QuoteLocker $quoteLocker,
         array $allowableDatabaseStrategyPlugins
     ) {
         $this->customerClient = $customerClient;
@@ -68,6 +76,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
         $this->quoteSession = $quoteSession;
         $this->quoteLockStatusValidator = $quoteLockStatusValidator;
         $this->quoteEditStatusValidator = $quoteEditStatusValidator;
+        $this->quoteLocker = $quoteLocker;
         $this->allowableDatabaseStrategyPlugins = $allowableDatabaseStrategyPlugins;
     }
 
@@ -144,5 +153,15 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool
     {
         return $this->quoteEditStatusValidator->isQuoteEditable($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->quoteLocker->lock($quoteTransfer);
     }
 }

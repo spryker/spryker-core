@@ -9,6 +9,8 @@ namespace Spryker\Client\Quote;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
+use Spryker\Client\Quote\QuoteLocker\QuoteLocker;
+use Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface;
 use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidator;
 use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface;
 use Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidator;
@@ -46,6 +48,14 @@ class QuoteFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface
+     */
+    public function createQuoteLocker(): QuoteLockerInterface
+    {
+        return new QuoteLocker();
+    }
+
+    /**
      * @return \Spryker\Client\Quote\StorageStrategy\StorageStrategyProviderInterface
      */
     protected function createStorageStrategyProvider()
@@ -75,7 +85,8 @@ class QuoteFactory extends AbstractFactory
         return new SessionStorageStrategy(
             $this->createSession(),
             $this->createQuoteLockStatusValidator(),
-            $this->createQuoteEditStatusValidator()
+            $this->createQuoteEditStatusValidator(),
+            $this->createQuoteLocker()
         );
     }
 
@@ -90,6 +101,7 @@ class QuoteFactory extends AbstractFactory
             $this->createSession(),
             $this->createQuoteLockStatusValidator(),
             $this->createQuoteEditStatusValidator(),
+            $this->createQuoteLocker(),
             $this->getAllowableDatabaseStrategyPlugins()
         );
     }
