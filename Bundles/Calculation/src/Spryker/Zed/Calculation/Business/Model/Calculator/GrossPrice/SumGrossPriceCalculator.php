@@ -11,24 +11,10 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class SumGrossPriceCalculator implements CalculatorInterface
 {
-    /**
-     * @var \Spryker\Service\Calculation\CalculationServiceInterface
-     */
-    protected $service;
-
-    /**
-     * @param \Spryker\Service\Calculation\CalculationServiceInterface $service
-     */
-    public function __construct(CalculationServiceInterface $service)
-    {
-        $this->service = $service;
-    }
-
     /**
      * For already ordered entities, sum prices are acting as source of truth.
      *
@@ -53,7 +39,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
             if ($expenseTransfer->getIsOrdered() === true) {
                 continue;
             }
-            $sumGrossPrice = $this->service->convert(
+            $sumGrossPrice = (int)round(
                 $expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity()
             );
 
@@ -74,7 +60,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
             return;
         }
 
-        $sumGrossPrice = $this->service->convert($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity());
+        $sumGrossPrice = (int)round($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity());
 
         $itemTransfer->setSumGrossPrice($sumGrossPrice);
     }
@@ -115,7 +101,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
                     continue;
                 }
 
-                $sumGrossPrice = $this->service->convert(
+                $sumGrossPrice = (int)round(
                     $productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity()
                 );
 

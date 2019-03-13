@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class DiscountAmountAggregator implements CalculatorInterface
@@ -25,19 +24,6 @@ class DiscountAmountAggregator implements CalculatorInterface
      * @var int[]
      */
     protected $cartRuleDiscountTotals = [];
-
-    /**
-     * @var \Spryker\Service\Calculation\CalculationServiceInterface
-     */
-    protected $service;
-
-    /**
-     * @param \Spryker\Service\Calculation\CalculationServiceInterface $service
-     */
-    public function __construct(CalculationServiceInterface $service)
-    {
-        $this->service = $service;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
@@ -135,7 +121,7 @@ class DiscountAmountAggregator implements CalculatorInterface
     protected function sanitizeCalculatedDiscountSumPrices(CalculatedDiscountTransfer $calculatedDiscountTransfer)
     {
         if (!$calculatedDiscountTransfer->getSumAmount()) {
-            $sumAmount = $this->service->convert(
+            $sumAmount = (int)round(
                 $calculatedDiscountTransfer->getUnitAmount() * $calculatedDiscountTransfer->getQuantity()
             );
             $calculatedDiscountTransfer->setSumAmount($sumAmount);

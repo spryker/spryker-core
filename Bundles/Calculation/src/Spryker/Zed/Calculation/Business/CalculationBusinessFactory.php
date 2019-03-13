@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Calculation\Business;
 
-use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator\DiscountAmountAggregatorForGrossAmount;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\ItemDiscountAmountFullAggregator;
@@ -107,7 +106,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSumNetPriceCalculator()
     {
-        return new SumNetPriceCalculator($this->getCalculationService());
+        return new SumNetPriceCalculator();
     }
 
     /**
@@ -133,7 +132,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSumGrossPriceCalculator()
     {
-        return new SumGrossPriceCalculator($this->getCalculationService());
+        return new SumGrossPriceCalculator();
     }
 
     /**
@@ -149,7 +148,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountAmountAggregator()
     {
-        return new DiscountAmountAggregatorForGrossAmount($this->getCalculationService());
+        return new DiscountAmountAggregatorForGrossAmount();
     }
 
     /**
@@ -157,7 +156,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountAmountAggregatorForGenericAmount()
     {
-        return new DiscountAmountAggregator($this->getCalculationService());
+        return new DiscountAmountAggregator();
     }
 
     /**
@@ -334,13 +333,5 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     public function getUtilTextService()
     {
         return $this->getProvidedDependency(CalculationDependencyProvider::SERVICE_UTIL_TEXT);
-    }
-
-    /**
-     * @return \Spryker\Service\Calculation\CalculationServiceInterface
-     */
-    public function getCalculationService(): CalculationServiceInterface
-    {
-        return $this->getProvidedDependency(CalculationDependencyProvider::SERVICE_CALCULATION);
     }
 }

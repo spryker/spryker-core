@@ -11,24 +11,10 @@ use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Spryker\Service\Calculation\CalculationServiceInterface;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class SumNetPriceCalculator implements CalculatorInterface
 {
-    /**
-     * @var \Spryker\Service\Calculation\CalculationServiceInterface
-     */
-    protected $service;
-
-    /**
-     * @param \Spryker\Service\Calculation\CalculationServiceInterface $service
-     */
-    public function __construct(CalculationServiceInterface $service)
-    {
-        $this->service = $service;
-    }
-
     /**
      * For already ordered entities, sum prices are acting as source of truth.
      *
@@ -54,7 +40,7 @@ class SumNetPriceCalculator implements CalculatorInterface
                 continue;
             }
 
-            $sumNetPrice = $this->service->convert(
+            $sumNetPrice = (int)round(
                 $expenseTransfer->getUnitNetPrice() * $expenseTransfer->getQuantity()
             );
             $expenseTransfer->setSumNetPrice($sumNetPrice);
@@ -74,7 +60,9 @@ class SumNetPriceCalculator implements CalculatorInterface
             return;
         }
 
-        $itemTransfer->setSumNetPrice($itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity());
+        $sumNetPrice = (int)round($itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity());
+
+        $itemTransfer->setSumNetPrice($sumNetPrice);
     }
 
     /**
