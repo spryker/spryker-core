@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest;
 
+use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
@@ -42,56 +44,46 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestFilterTransfer->requireQuoteRequestReference();
+        $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 
-        $quoteRequestTransfer = $this->findQuoteRequest($quoteRequestFilterTransfer);
-        $quoteRequestResponseTransfer = new QuoteRequestResponseTransfer();
+        $quoteRequestTransfer = $this->findQuoteRequestByReference($quoteRequestCriteriaTransfer->getQuoteRequestReference());
 
         if (!$quoteRequestTransfer) {
-            return $quoteRequestResponseTransfer
-                ->setIsSuccess(false)
-                ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS);
+            return $this->getErrorResponse(static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS);
         }
 
         if (!$this->isQuoteRequestCancelable($quoteRequestTransfer)) {
-            return $quoteRequestResponseTransfer
-                ->setIsSuccess(false)
-                ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
+            return $this->getErrorResponse(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
         }
 
         $quoteRequestTransfer->setStatus(SharedAgentQuoteRequestConfig::STATUS_CANCELED);
 
-        return $this->quoteRequestFacade->update($quoteRequestTransfer);
+        return $this->quoteRequestFacade->updateQuoteRequest($quoteRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function setQuoteRequestEditable(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestFilterTransfer->requireQuoteRequestReference();
+        $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 
-        $quoteRequestTransfer = $this->findQuoteRequest($quoteRequestFilterTransfer);
-        $quoteRequestResponseTransfer = new QuoteRequestResponseTransfer();
+        $quoteRequestTransfer = $this->findQuoteRequestByReference($quoteRequestCriteriaTransfer->getQuoteRequestReference());
 
         if (!$quoteRequestTransfer) {
-            return $quoteRequestResponseTransfer
-                ->setIsSuccess(false)
-                ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS);
+            return $this->getErrorResponse(static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS);
         }
 
         if (!$this->isQuoteRequestCanStartEditable($quoteRequestTransfer)) {
-            return $quoteRequestResponseTransfer
-                ->setIsSuccess(false)
-                ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
+            return $this->getErrorResponse(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
         }
 
         $quoteRequestTransfer->requireLatestVersion()
@@ -101,16 +93,32 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
         $quoteRequestTransfer->setStatus(SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS);
         $quoteRequestTransfer->setQuoteInProgress($quoteRequestTransfer->getLatestVersion()->getQuote());
 
-        return $this->quoteRequestFacade->update($quoteRequestTransfer);
+        return $this->quoteRequestFacade->updateQuoteRequest($quoteRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
+        $quoteRequestCriteriaTransfer->setWithHidden(true);
+
+        return $this->quoteRequestFacade->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+    }
+
+    /**
+     * @param string $quoteRequestReference
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    protected function findQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): ?QuoteRequestTransfer
+    protected function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer
     {
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setQuoteRequestReference($quoteRequestReference)
+            ->setWithHidden(true);
+
         $quoteRequestTransfers = $this->quoteRequestFacade
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
             ->getQuoteRequests()
@@ -137,5 +145,17 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
     protected function isQuoteRequestCanStartEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_WAITING;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    protected function getErrorResponse(string $message): QuoteRequestResponseTransfer
+    {
+        return (new QuoteRequestResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage((new MessageTransfer())->setValue($message));
     }
 }

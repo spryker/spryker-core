@@ -8,11 +8,13 @@
 namespace Spryker\Client\QuoteRequest;
 
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface;
 
@@ -30,9 +32,9 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function create(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getZedStub()->create($quoteRequestTransfer);
+        return $this->getZedStub()->createQuoteRequest($quoteRequestTransfer);
     }
 
     /**
@@ -44,9 +46,23 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function update(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getZedStub()->update($quoteRequestTransfer);
+        return $this->getZedStub()->updateQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getZedStub()->cancelQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -82,13 +98,32 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param string $quoteRequestReference
+     * @param int $idCompanyUser
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer
     {
-        return $this->getZedStub()->cancelByReference($quoteRequestFilterTransfer);
+        return $this->getFactory()
+            ->createQuoteRequestReader()
+            ->findCompanyUserQuoteRequestByReference($quoteRequestReference, $idCompanyUser);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestToQuoteConverter()
+            ->convertQuoteRequestToQuote($quoteRequestTransfer);
     }
 
     /**
@@ -112,30 +147,15 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     * @return bool
      */
-    public function sendQuoteRequestToCustomer(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
-    {
-        return $this->getZedStub()->sendQuoteRequestToCustomer($quoteRequestFilterTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $quoteRequestReference
-     * @param int $idCompanyUser
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
-     */
-    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer
+    public function isQuoteRequestReady(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $this->getFactory()
-            ->createQuoteRequestReader()
-            ->findCompanyUserQuoteRequestByReference($quoteRequestReference, $idCompanyUser);
+            ->createQuoteRequestChecker()
+            ->isQuoteRequestReady($quoteRequestTransfer);
     }
 
     /**
