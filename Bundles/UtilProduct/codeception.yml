@@ -1,8 +1,5 @@
 namespace: SprykerTest
 
-include:
-    - tests/SprykerTest/Service/UtilNumber
-
 paths:
     tests: tests
     log: tests/_output

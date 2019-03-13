@@ -1,8 +1,8 @@
-# UtilNumber Module
+# UtilProduct Module
 [![Build Status](https://travis-ci.org/spryker/util-number.svg)](https://travis-ci.org/spryker/util-number)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/util-number/badge.svg)](https://coveralls.io/github/spryker/util-number)
 
-Provide service for operations with float numbers.
+Provide service for operations with product.
 
 ## Installation
 

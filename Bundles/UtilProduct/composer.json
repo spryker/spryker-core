@@ -1,7 +1,7 @@
 {
-  "name": "spryker/util-number",
+  "name": "spryker/util-product",
   "type": "library",
-  "description": "UtilNumber module",
+  "description": "UtilProduct module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
