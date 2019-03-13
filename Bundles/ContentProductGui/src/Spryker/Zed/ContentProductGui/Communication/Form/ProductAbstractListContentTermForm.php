@@ -20,8 +20,8 @@ use Symfony\Component\Validator\Constraints\Required;
 
 class ProductAbstractListContentTermForm extends AbstractType
 {
-    public const FIELD_SKUS = 'skus';
-    public const PLACEHOLDER_SKU = 'sku';
+    public const FIELD_IDS = 'ids';
+    public const PLACEHOLDER_ID = 'id';
 
     protected const TEMPLATE_PATH = '@ContentProductGui/ProductAbstractList/product_abstract_list.twig';
 
@@ -42,8 +42,8 @@ class ProductAbstractListContentTermForm extends AbstractType
                 /** @var \Generated\Shared\Transfer\ContentProductAbstractListTransfer $contentProductAbstractList */
                 $contentProductAbstractList = $form->getNormData();
 
-                foreach ($contentProductAbstractList->getSkus() as $sku) {
-                    if ($sku) {
+                foreach ($contentProductAbstractList->getIds() as $id) {
+                    if ($id) {
                         return [Constraint::DEFAULT_GROUP];
                     }
                 }
@@ -72,7 +72,7 @@ class ProductAbstractListContentTermForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addSkusField($builder);
+        $this->addIdsField($builder);
     }
 
     /**
@@ -80,9 +80,9 @@ class ProductAbstractListContentTermForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSkusField(FormBuilderInterface $builder)
+    protected function addIdsField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_SKUS, CollectionType::class, [
+        $builder->add(static::FIELD_IDS, CollectionType::class, [
             'entry_type' => TextType::class,
             'label' => false,
             'prototype' => true,
@@ -91,7 +91,7 @@ class ProductAbstractListContentTermForm extends AbstractType
             'entry_options' => [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => static::PLACEHOLDER_SKU,
+                    'placeholder' => static::PLACEHOLDER_ID,
                 ],
                 'constraints' => $this->getTextFieldConstraints(),
             ],
