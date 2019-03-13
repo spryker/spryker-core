@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Offer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Offer\Business\Model\Calculator\FloatToIntegerConverter;
-use Spryker\Zed\Offer\Business\Model\Calculator\FloatToIntegerConverterInterface;
 use Spryker\Zed\Offer\Business\Model\Calculator\OfferCalculator;
 use Spryker\Zed\Offer\Business\Model\Calculator\OfferCalculatorInterface;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferQuoteExpander;
@@ -157,13 +155,5 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferGrandTotalCalculator(): OfferGrandTotalCalculatorInterface
     {
         return new OfferGrandTotalCalculator();
-    }
-
-    /**
-     * @return \Spryker\Zed\Offer\Business\Model\Calculator\FloatToIntegerConverterInterface
-     */
-    public function createFloatToIntegerConverter(): FloatToIntegerConverterInterface
-    {
-        return new FloatToIntegerConverter();
     }
 }
