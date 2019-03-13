@@ -14,6 +14,9 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/navigations-rest-api": "If you want to expand navigation resource with category nodes relationship."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

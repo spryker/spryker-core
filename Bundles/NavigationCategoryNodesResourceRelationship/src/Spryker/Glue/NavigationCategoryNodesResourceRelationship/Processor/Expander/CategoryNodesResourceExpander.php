@@ -16,7 +16,7 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
 {
     protected const RESOURCE_ID = 'resourceId';
     protected const NODE_TYPE = 'nodeType';
-    protected const NODE_TYPE_CATEGORY_VALUE = 'category';
+    protected const NODE_TYPE_VALUE_CATEGORY = 'category';
     protected const NODES = 'nodes';
 
     /**
@@ -41,6 +41,10 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
     public function expandResourceWithCategoryNode(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
+            if (empty($resource->getAttributes()[static::NODES])) {
+                continue;
+            }
+
             foreach ($resource->getAttributes()[static::NODES] as $restNavigationNodeTransfer) {
                 $this->addResourceRelationship($resource, $restRequest, $restNavigationNodeTransfer);
             }
@@ -59,13 +63,15 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
         RestRequestInterface $restRequest,
         RestNavigationNodeTransfer $restNavigationNodeTransfer
     ): void {
-        if ($restNavigationNodeTransfer[static::RESOURCE_ID]) {
+        if (!empty($restNavigationNodeTransfer[static::RESOURCE_ID])
+            && !empty($restNavigationNodeTransfer[static::NODE_TYPE])
+            && $restNavigationNodeTransfer[static::NODE_TYPE] === static::NODE_TYPE_VALUE_CATEGORY
+        ) {
             $categoryNode = $this->categoriesResource->findCategoryNodeById(
                 $restNavigationNodeTransfer[static::RESOURCE_ID],
                 $restRequest->getMetadata()->getLocale()
             );
-
-            if ($categoryNode !== null && $restNavigationNodeTransfer[static::NODE_TYPE] === static::NODE_TYPE_CATEGORY_VALUE) {
+            if ($categoryNode) {
                 $resource->addRelationship($categoryNode);
             }
         }
