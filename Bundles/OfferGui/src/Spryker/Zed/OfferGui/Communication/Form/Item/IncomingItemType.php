@@ -83,8 +83,8 @@ class IncomingItemType extends AbstractType
         $validationGroup = $this->getValidationGroup($options);
 
         return new Regex([
-            'pattern' => '/^\d*$/',
-            'message' => 'This field should contain digits.',
+            'pattern' => '/^([0-9]*[.])?[0-9]+$/',
+            'message' => 'This field should contain a valid number.',
             'groups' => $validationGroup,
         ]);
     }
