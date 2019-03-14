@@ -67,6 +67,37 @@ interface PersistentCartClientInterface
 
     /**
      * Specification:
+     * - Makes Zed request.
+     * - Retrieves current customer quote.
+     * - Sets idQuote from current quote.
+     * - Makes full replacement of the customer quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request in case when storage strategy is set.
+     * - Replaces active customer cart.
+     * - In case of persistent strategy the quote is also replaced in database.
+     * - Takes replacer plugin from QuoteReplacePluginInterface stack.
+     * - Uses PersistentCartQuoteReplacePlugin by default.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function persistCustomerQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
      * - Prepends customer reference with anonymous prefix from configuration.
      *
      * @api

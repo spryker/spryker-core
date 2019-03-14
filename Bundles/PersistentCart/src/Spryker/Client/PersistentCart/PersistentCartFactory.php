@@ -25,8 +25,11 @@ use Spryker\Client\PersistentCart\QuoteWriter\QuoteDeleter;
 use Spryker\Client\PersistentCart\QuoteWriter\QuoteDeleterInterface;
 use Spryker\Client\PersistentCart\QuoteWriter\QuoteUpdater;
 use Spryker\Client\PersistentCart\QuoteWriter\QuoteUpdaterInterface;
+use Spryker\Client\PersistentCart\QuoteWriter\QuoteWriter;
+use Spryker\Client\PersistentCart\QuoteWriter\QuoteWriterInterface;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStub;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface;
+use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuotePersistPluginInterface;
 
 /**
  * @method \Spryker\Client\PersistentCart\PersistentCartConfig getConfig()
@@ -55,6 +58,17 @@ class PersistentCartFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->createZedPersistentCartStub(),
             $this->createQuoteUpdatePluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\QuoteWriter\QuoteWriterInterface
+     */
+    public function createQuoteWriter(): QuoteWriterInterface
+    {
+        return new QuoteWriter(
+            $this->getQuotePersistPlugin(),
+            $this->getQuoteClient()
         );
     }
 
@@ -147,6 +161,14 @@ class PersistentCartFactory extends AbstractFactory
     protected function getChangeRequestExtendPlugins(): array
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_CHANGE_REQUEST_EXTEND);
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuotePersistPluginInterface
+     */
+    protected function getQuotePersistPlugin(): QuotePersistPluginInterface
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGIN_QUOTE_PERSIST);
     }
 
     /**

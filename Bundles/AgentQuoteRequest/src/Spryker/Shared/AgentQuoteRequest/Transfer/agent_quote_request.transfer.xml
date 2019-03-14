@@ -28,8 +28,12 @@
 
     <transfer name="QuoteRequestResponse">
         <property name="quoteRequest" type="QuoteRequest" />
-        <property name="isSuccess" type="bool" />
-        <property name="errors" type="array" singular="error" />
+        <property name="isSuccessful" type="bool" />
+        <property name="messages" type="Message[]"  singular="message" />
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="Pagination">

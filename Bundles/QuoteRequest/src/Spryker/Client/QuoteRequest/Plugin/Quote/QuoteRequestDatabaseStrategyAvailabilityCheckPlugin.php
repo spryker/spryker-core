@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteRequest\Communication\Plugin\Quote;
+namespace Spryker\Client\QuoteRequest\Plugin\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\QuoteExtension\Dependency\Plugin\AllowableDatabaseStrategyPluginInterface;
+use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyAvailabilityCheckPluginInterface;
 
-/**
- * @method \Spryker\Zed\QuoteRequest\Business\QuoteRequestFacadeInterface getFacade()
- * @method \Spryker\Zed\QuoteRequest\Communication\QuoteRequestCommunicationFactory getFactory()
- * @method \Spryker\Zed\QuoteRequest\QuoteRequestConfig getConfig()
- */
-class QuoteRequestAllowableDatabaseStrategyPlugin extends AbstractPlugin implements AllowableDatabaseStrategyPluginInterface
+class QuoteRequestDatabaseStrategyAvailabilityCheckPlugin extends AbstractPlugin implements DatabaseStrategyAvailabilityCheckPluginInterface
 {
     /**
      * {@inheritdoc}

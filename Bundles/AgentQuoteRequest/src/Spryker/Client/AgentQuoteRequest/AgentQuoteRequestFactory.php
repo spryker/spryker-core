@@ -8,11 +8,14 @@
 namespace Spryker\Client\AgentQuoteRequest;
 
 use Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToQuoteClientInterface;
+use Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToQuoteRequestClientInterface;
 use Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToZedRequestClientInterface;
 use Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestChecker;
 use Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestCheckerInterface;
 use Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestConverter;
 use Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestConverterInterface;
+use Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestReader;
+use Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestReaderInterface;
 use Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStub;
 use Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -42,6 +45,16 @@ class AgentQuoteRequestFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestReaderInterface
+     */
+    public function createQuoteRequestReader(): QuoteRequestReaderInterface
+    {
+        return new QuoteRequestReader(
+            $this->getQuoteRequestClient()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStubInterface
      */
     public function createAgentQuoteRequestStub(): AgentQuoteRequestStubInterface
@@ -63,5 +76,13 @@ class AgentQuoteRequestFactory extends AbstractFactory
     public function getQuoteClient(): AgentQuoteRequestToQuoteClientInterface
     {
         return $this->getProvidedDependency(AgentQuoteRequestDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToQuoteRequestClientInterface
+     */
+    public function getQuoteRequestClient(): AgentQuoteRequestToQuoteRequestClientInterface
+    {
+        return $this->getProvidedDependency(AgentQuoteRequestDependencyProvider::CLIENT_QUOTE_REQUEST);
     }
 }

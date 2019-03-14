@@ -213,6 +213,20 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves current customer quote.
+     * - Sets idQuote from current quote.
+     * - Makes full replacement of the customer quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
      *  - Saves quote in database.
      *  - Call quote response extend plugins.
      *

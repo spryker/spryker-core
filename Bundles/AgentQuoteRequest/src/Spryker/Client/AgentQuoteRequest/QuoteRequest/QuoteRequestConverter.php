@@ -14,8 +14,8 @@ use Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToQuoteC
 
 class QuoteRequestConverter implements QuoteRequestConverterInterface
 {
-    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
-    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
+    protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
+    protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
 
     /**
      * @var \Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToQuoteClientInterface
@@ -46,34 +46,33 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
      */
     public function convertQuoteRequestToQuoteInProgress(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-
         if (!$this->quoteRequestChecker->isQuoteRequestEditable($quoteRequestTransfer)) {
-            return $quoteResponseTransfer
-                ->setIsSuccessful(false)
-                ->addError((new QuoteErrorTransfer())->setMessage(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS));
+            return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS);
         }
 
         if (!$quoteRequestTransfer->getQuoteInProgress()) {
-            return $quoteResponseTransfer
-                ->setIsSuccessful(false)
-                ->addError((new QuoteErrorTransfer())->setMessage(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND));
+            return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND);
         }
 
         $quoteTransfer = $quoteRequestTransfer->getQuoteInProgress();
         $quoteTransfer->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
 
-        $currentQuoteTransfer = $this->quoteClient->getQuote();
-
-        $quoteTransfer
-            ->setCustomer($currentQuoteTransfer->getCustomer())
-            ->setCustomerReference($currentQuoteTransfer->getCustomerReference())
-            ->setStore($currentQuoteTransfer->getStore());
-
         $this->quoteClient->setQuote($quoteTransfer);
 
-        return $quoteResponseTransfer
+        return (new QuoteResponseTransfer())
             ->setIsSuccessful(true)
             ->setQuoteTransfer($quoteTransfer);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function getErrorResponse(string $message): QuoteResponseTransfer
+    {
+        return (new QuoteResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addError((new QuoteErrorTransfer())->setMessage($message));
     }
 }

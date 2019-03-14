@@ -5,21 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteExtension\Dependency\Plugin;
+namespace Spryker\Client\Quote\QuoteLocker;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface AllowableDatabaseStrategyPluginInterface
+class QuoteLocker implements QuoteLockerInterface
 {
     /**
-     * Specification:
-     * - Allows database strategy.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function isAllowed(QuoteTransfer $quoteTransfer): bool;
+    public function lock(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $quoteTransfer->setIsLocked(true);
+    }
 }
