@@ -134,12 +134,13 @@ class WishlistFacadeTest extends Unit
         $this->product_1 = $this->createProduct('concrete_sku_1', $this->productAbstract->getIdProductAbstract(), 10);
         $this->product_2 = $this->createProduct('concrete_sku_2', $this->productAbstract->getIdProductAbstract(), 20);
         $this->product_3 = $this->createProduct('concrete_sku_3', $this->productAbstract->getIdProductAbstract(), 30);
+        $this->product_4 = $this->createProduct('concrete_sku_4', $this->productAbstract->getIdProductAbstract(), 1.1);
     }
 
     /**
      * @param string $sku
      * @param int $idProductAbstract
-     * @param float|null $quantity
+     * @param int|float|null $quantity
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
@@ -627,7 +628,7 @@ class WishlistFacadeTest extends Unit
 
     /**
      * @param string $sku
-     * @param float $quantity
+     * @param int|float|null $quantity
      *
      * @return void
      */
