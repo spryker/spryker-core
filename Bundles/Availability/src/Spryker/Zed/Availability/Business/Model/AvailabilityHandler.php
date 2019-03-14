@@ -110,7 +110,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer)
     {
         $quantity = $this->sellable->calculateStockForProductWithStore($sku, $storeTransfer);
-        $quantity = $this->service->round($quantity);
         $quantityWithReservedItems = $this->getQuantity($quantity);
 
         $this->saveAndTouchAvailability($sku, $quantityWithReservedItems, $storeTransfer);
@@ -207,14 +206,11 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             return true;
         }
 
-        $currentQuantity = $this->service->round($currentQuantity);
-        $quantityWithReservedItems = $this->service->round($quantityWithReservedItems);
-
-        if ($currentQuantity === 0.0 && $quantityWithReservedItems > $currentQuantity) {
+        if (!$currentQuantity && $quantityWithReservedItems > $currentQuantity) {
             return true;
         }
 
-        if ($currentQuantity !== 0.0 && $quantityWithReservedItems === 0.0) {
+        if ($currentQuantity && !$quantityWithReservedItems) {
             return true;
         }
 

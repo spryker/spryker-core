@@ -133,7 +133,7 @@ class Sellable implements SellableInterface
 
         $realStock = $this->calculateStock($sku, $storeTransfer);
 
-        return ($this->service->round($realStock) >= $this->service->round($quantity));
+        return ($realStock >= $quantity);
     }
 
     /**
