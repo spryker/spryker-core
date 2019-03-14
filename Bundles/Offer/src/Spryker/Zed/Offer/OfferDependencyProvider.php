@@ -15,7 +15,7 @@ use Spryker\Zed\Offer\Dependency\Facade\OfferToCustomerFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceBridge;
-use Spryker\Zed\Offer\Dependency\Service\OfferToUtilProductServiceBridge;
+use Spryker\Zed\Offer\Dependency\Service\OfferToUtilPriceServiceBridge;
 
 /**
  * @method \Spryker\Zed\Offer\OfferConfig getConfig()
@@ -27,7 +27,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
-    public const SERVICE_UTIL_PRODUCT = 'SERVICE_UTIL_PRODUCT';
+    public const SERVICE_UTIL_PRICE = 'SERVICE_UTIL_PRICE';
     public const PLUGINS_OFFER_HYDRATOR = 'PLUGINS_OFFER_HYDRATOR';
     public const PLUGINS_OFFER_DO_UPDATE = 'PLUGINS_OFFER_DO_UPDATE';
 
@@ -45,7 +45,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOfferHydratorPlugins($container);
         $container = $this->addOfferDoUpdatePlugins($container);
         $container = $this->addCartFacade($container);
-        $container = $this->addUtilProductService($container);
+        $container = $this->addUtilPriceService($container);
 
         return $container;
     }
@@ -80,11 +80,11 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilProductService(Container $container): Container
+    protected function addUtilPriceService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_PRODUCT] = function (Container $container) {
-            return new OfferToUtilProductServiceBridge(
-                $container->getLocator()->utilProduct()->service()
+        $container[static::SERVICE_UTIL_PRICE] = function (Container $container) {
+            return new OfferToUtilPriceServiceBridge(
+                $container->getLocator()->utilPrice()->service()
             );
         };
 

@@ -8,21 +8,21 @@
 namespace Spryker\Zed\Offer\Business\Model;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Spryker\Zed\Offer\Dependency\Service\OfferToUtilProductServiceInterface;
+use Spryker\Zed\Offer\Dependency\Service\OfferToUtilPriceServiceInterface;
 
 class OfferItemSubtotalAggregator implements OfferItemSubtotalAggregatorInterface
 {
     /**
-     * @var \Spryker\Zed\Offer\Dependency\Service\OfferToUtilProductServiceInterface
+     * @var \Spryker\Zed\Offer\Dependency\Service\OfferToUtilPriceServiceInterface
      */
-    protected $utilProductService;
+    protected $utilPriceService;
 
     /**
-     * @param \Spryker\Zed\Offer\Dependency\Service\OfferToUtilProductServiceInterface $utilProductService
+     * @param \Spryker\Zed\Offer\Dependency\Service\OfferToUtilPriceServiceInterface $utilPriceService
      */
-    public function __construct(OfferToUtilProductServiceInterface $utilProductService)
+    public function __construct(OfferToUtilPriceServiceInterface $utilPriceService)
     {
-        $this->utilProductService = $utilProductService;
+        $this->utilPriceService = $utilPriceService;
     }
 
     /**
@@ -40,7 +40,7 @@ class OfferItemSubtotalAggregator implements OfferItemSubtotalAggregatorInterfac
                 $originUnitSubtotal = $itemTransfer->getUnitSubtotalAggregation();
                 $calculatedDiscount = $originUnitSubtotal / 100 * $itemTransfer->getOfferDiscount();
                 $calculatedUnitSubtotal = $originUnitSubtotal - $calculatedDiscount;
-                $calculatedUnitSubtotal = $this->roundUnitSubtotalAggregation($calculatedUnitSubtotal);
+                $calculatedUnitSubtotal = $this->roundPrice($calculatedUnitSubtotal);
                 $itemTransfer->setUnitSubtotalAggregation($calculatedUnitSubtotal);
 
                 $originUnitSubtotal = $itemTransfer->getSumSubtotalAggregation();
@@ -58,29 +58,19 @@ class OfferItemSubtotalAggregator implements OfferItemSubtotalAggregatorInterfac
             $originSumSubtotal = $itemTransfer->getSumSubtotalAggregation();
             $calculatedFeeSumSubtotal = $itemTransfer->getQuantity() * $itemTransfer->getOfferFee();
             $calculatedSumSubtotal = $originSumSubtotal + $calculatedFeeSumSubtotal;
-            $calculatedSumSubtotal = $this->roundSumSubtotalAggregation($calculatedSumSubtotal);
+            $calculatedSumSubtotal = $this->roundPrice($calculatedSumSubtotal);
 
             $itemTransfer->setSumSubtotalAggregation($calculatedSumSubtotal);
         }
     }
 
     /**
-     * @param float $unitSubtotalAggregation
+     * @param float $price
      *
      * @return int
      */
-    protected function roundUnitSubtotalAggregation(float $unitSubtotalAggregation): int
+    protected function roundPrice(float $price): int
     {
-        return $this->utilProductService->roundPrice($unitSubtotalAggregation);
-    }
-
-    /**
-     * @param float $sumSubtotalAggregation
-     *
-     * @return int
-     */
-    protected function roundSumSubtotalAggregation(float $sumSubtotalAggregation): int
-    {
-        return $this->utilProductService->roundPrice($sumSubtotalAggregation);
+        return $this->utilPriceService->roundPrice($price);
     }
 }

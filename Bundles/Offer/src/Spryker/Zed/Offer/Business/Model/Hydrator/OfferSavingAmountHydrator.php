@@ -9,7 +9,7 @@ namespace Spryker\Zed\Offer\Business\Model\Hydrator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Spryker\Zed\Offer\Dependency\Service\OfferToUtilProductServiceInterface;
+use Spryker\Zed\Offer\Dependency\Service\OfferToUtilPriceServiceInterface;
 use Spryker\Zed\Offer\OfferConfig;
 
 class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
@@ -20,20 +20,20 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
     protected $offerConfig;
 
     /**
-     * @var \Spryker\Zed\Offer\Dependency\Service\OfferToUtilProductServiceInterface
+     * @var \Spryker\Zed\Offer\Dependency\Service\OfferToUtilPriceServiceInterface
      */
-    protected $utilProductService;
+    protected $utilPriceService;
 
     /**
      * @param \Spryker\Zed\Offer\OfferConfig $offerConfig
-     * @param \Spryker\Zed\Offer\Dependency\Service\OfferToUtilProductServiceInterface $utilProductService
+     * @param \Spryker\Zed\Offer\Dependency\Service\OfferToUtilPriceServiceInterface $utilPriceService
      */
     public function __construct(
         OfferConfig $offerConfig,
-        OfferToUtilProductServiceInterface $utilProductService
+        OfferToUtilPriceServiceInterface $utilPriceService
     ) {
         $this->offerConfig = $offerConfig;
-        $this->utilProductService = $utilProductService;
+        $this->utilPriceService = $utilPriceService;
     }
 
     /**
@@ -51,7 +51,7 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
             $savingAmount += ($this->getUnitPrice($itemTransfer, $quoteTransfer->getPriceMode()) / 100 * $itemTransfer->getOfferDiscount());
             $savingAmount -= $itemTransfer->getOfferFee();
             $savingAmount *= $itemTransfer->getQuantity();
-            $savingAmount = $this->roundSavingAmount($savingAmount);
+            $savingAmount = $this->roundPrice($savingAmount);
 
             $itemTransfer->setSavingAmount($savingAmount);
         }
@@ -60,13 +60,13 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
     }
 
     /**
-     * @param float $savingAmount
+     * @param float $price
      *
      * @return int
      */
-    protected function roundSavingAmount(float $savingAmount): int
+    protected function roundPrice(float $price): int
     {
-        return $this->utilProductService->roundPrice($savingAmount);
+        return $this->utilPriceService->roundPrice($price);
     }
 
     /**
