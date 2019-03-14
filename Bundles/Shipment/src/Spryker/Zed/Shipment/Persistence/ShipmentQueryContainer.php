@@ -249,7 +249,9 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
 
         return $query;
     }
-
+    /**
+     * @todo  Deprecate some methods used before in ShipmentOrderHydrate class.
+     */
     /**
      * @api
      *

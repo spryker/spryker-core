@@ -22,8 +22,6 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
-use Spryker\Zed\Shipment\Business\OrderItem\OrderItemGrouper;
-use Spryker\Zed\Shipment\Business\OrderItem\OrderItemGrouperInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrateInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrate as MultipleShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentReader;
