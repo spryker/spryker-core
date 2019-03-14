@@ -8,25 +8,11 @@
 namespace Spryker\Zed\Discount\Business\QueryString\Comparator;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Spryker\Service\Discount\DiscountServiceInterface;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class LessEqual implements ComparatorInterface
 {
-    /**
-     * @var \Spryker\Service\Discount\DiscountServiceInterface
-     */
-    protected $service;
-
-    /**
-     * @param \Spryker\Service\Discount\DiscountServiceInterface $service
-     */
-    public function __construct(DiscountServiceInterface $service)
-    {
-        $this->service = $service;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $compareWithValue
      * @param string $withValue
@@ -37,8 +23,7 @@ class LessEqual implements ComparatorInterface
     {
         $this->isValidValue($withValue);
 
-        return $this->service->round($withValue) <=
-            $this->service->round($compareWithValue->getValue());
+        return $withValue <= $compareWithValue->getValue();
     }
 
     /**

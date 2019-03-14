@@ -229,7 +229,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     protected function createComparatorProvider()
     {
-        return new OperatorProvider($this->getDiscountService());
+        return new OperatorProvider();
     }
 
     /**

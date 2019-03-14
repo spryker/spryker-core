@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Discount\Business\QueryString;
 
-use Spryker\Service\Discount\DiscountServiceInterface;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Contains;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\DoesNotContain;
 use Spryker\Zed\Discount\Business\QueryString\Comparator\Equal;
@@ -21,19 +20,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual;
 
 class OperatorProvider
 {
-    /**
-     * @var \Spryker\Service\Discount\DiscountServiceInterface
-     */
-    protected $service;
-
-    /**
-     * @param \Spryker\Service\Discount\DiscountServiceInterface $service
-     */
-    public function __construct(DiscountServiceInterface $service)
-    {
-        $this->service = $service;
-    }
-
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[]
      */
@@ -58,7 +44,7 @@ class OperatorProvider
      */
     protected function createContains()
     {
-        return new Contains($this->service);
+        return new Contains();
     }
 
     /**
@@ -66,7 +52,7 @@ class OperatorProvider
      */
     protected function createDoesNotContain()
     {
-        return new DoesNotContain($this->service);
+        return new DoesNotContain();
     }
 
     /**
@@ -74,7 +60,7 @@ class OperatorProvider
      */
     protected function createEqual()
     {
-        return new Equal($this->service);
+        return new Equal();
     }
 
     /**
@@ -98,7 +84,7 @@ class OperatorProvider
      */
     protected function createLess()
     {
-        return new Less($this->service);
+        return new Less();
     }
 
     /**
@@ -106,7 +92,7 @@ class OperatorProvider
      */
     protected function createLessEqual()
     {
-        return new LessEqual($this->service);
+        return new LessEqual();
     }
 
     /**
@@ -114,7 +100,7 @@ class OperatorProvider
      */
     protected function createGreater()
     {
-        return new Greater($this->service);
+        return new Greater();
     }
 
     /**
@@ -122,7 +108,7 @@ class OperatorProvider
      */
     protected function createGreaterEqual()
     {
-        return new GreaterEqual($this->service);
+        return new GreaterEqual();
     }
 
     /**
@@ -130,6 +116,6 @@ class OperatorProvider
      */
     protected function createNotEqual()
     {
-        return new NotEqual($this->service);
+        return new NotEqual();
     }
 }

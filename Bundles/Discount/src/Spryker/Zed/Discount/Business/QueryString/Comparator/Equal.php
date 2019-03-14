@@ -8,25 +8,11 @@
 namespace Spryker\Zed\Discount\Business\QueryString\Comparator;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Spryker\Service\Discount\DiscountServiceInterface;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class Equal implements ComparatorInterface
 {
-    /**
-     * @var \Spryker\Service\Discount\DiscountServiceInterface
-     */
-    protected $service;
-
-    /**
-     * @param \Spryker\Service\Discount\DiscountServiceInterface $service
-     */
-    public function __construct(DiscountServiceInterface $service)
-    {
-        $this->service = $service;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
@@ -37,23 +23,7 @@ class Equal implements ComparatorInterface
     {
         $this->isValidValue($withValue);
 
-        if (is_numeric($clauseTransfer->getValue()) && is_numeric($withValue)) {
-             return $this->compareNumbers($clauseTransfer->getValue(), $withValue);
-        }
-
         return strcasecmp($clauseTransfer->getValue(), $withValue) === 0;
-    }
-
-    /**
-     * @param float $clauseValue
-     * @param float $withValue
-     *
-     * @return bool
-     */
-    protected function compareNumbers(float $clauseValue, float $withValue): bool
-    {
-        return $this->service->round($clauseValue) ===
-            $this->service->round($withValue);
     }
 
     /**
