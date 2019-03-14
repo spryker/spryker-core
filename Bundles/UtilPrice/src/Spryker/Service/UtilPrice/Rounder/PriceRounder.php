@@ -5,14 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilProduct\Rounder;
+namespace Spryker\Service\UtilPrice\Rounder;
 
-interface PriceRounderInterface
+class PriceRounder implements PriceRounderInterface
 {
     /**
      * @param float $price
      *
      * @return int
      */
-    public function roundPrice(float $price): int;
+    public function roundPrice(float $price): int
+    {
+        return (int)round($price);
+    }
 }

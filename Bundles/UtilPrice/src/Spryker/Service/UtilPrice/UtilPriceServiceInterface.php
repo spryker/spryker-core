@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilProduct;
+namespace Spryker\Service\UtilPrice;
 
 /**
- * @method \Spryker\Service\UtilProduct\UtilProductServiceFactory getFactory()
+ * @method \Spryker\Service\UtilPrice\UtilPriceServiceFactory getFactory()
  */
-interface UtilProductServiceInterface
+interface UtilPriceServiceInterface
 {
     /**
      * Specification:
@@ -24,16 +24,4 @@ interface UtilProductServiceInterface
      * @return int
      */
     public function roundPrice(float $price): int;
-
-    /**
-     * Specification:
-     * - makes rounding operation with quantity.
-     *
-     * @api
-     *
-     * @param float $quantity
-     *
-     * @return float
-     */
-    public function roundQuantity(float $quantity): float;
 }

@@ -1,7 +1,7 @@
 {
-  "name": "spryker/util-product",
+  "name": "spryker/util-price",
   "type": "library",
-  "description": "UtilProduct module",
+  "description": "UtilPrice module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",

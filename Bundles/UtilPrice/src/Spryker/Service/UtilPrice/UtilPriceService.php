@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilProduct;
+namespace Spryker\Service\UtilPrice;
 
 use Spryker\Service\Kernel\AbstractService;
 
 /**
- * @method \Spryker\Service\UtilProduct\UtilProductServiceFactory getFactory()
+ * @method \Spryker\Service\UtilPrice\UtilPriceServiceFactory getFactory()
  */
-class UtilProductService extends AbstractService implements UtilProductServiceInterface
+class UtilPriceService extends AbstractService implements UtilPriceServiceInterface
 {
     /**
      * {@inheritdoc}
@@ -28,21 +28,5 @@ class UtilProductService extends AbstractService implements UtilProductServiceIn
         return $this->getFactory()
             ->createPriceRounder()
             ->roundPrice($price);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param float $quantity
-     *
-     * @return float
-     */
-    public function roundQuantity(float $quantity): float
-    {
-        return $this->getFactory()
-            ->createQuantityRounder()
-            ->roundQuantity($quantity);
     }
 }

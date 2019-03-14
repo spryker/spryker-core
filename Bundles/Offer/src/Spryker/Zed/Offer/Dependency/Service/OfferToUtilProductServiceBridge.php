@@ -10,12 +10,12 @@ namespace Spryker\Zed\Offer\Dependency\Service;
 class OfferToUtilProductServiceBridge implements OfferToUtilProductServiceInterface
 {
     /**
-     * @var \Spryker\Service\UtilProduct\UtilProductServiceInterface
+     * @var \Spryker\Service\UtilProduct\UtilPriceServiceInterface
      */
     protected $utilProductService;
 
     /**
-     * @param \Spryker\Service\UtilProduct\UtilProductServiceInterface $utilProductService
+     * @param \Spryker\Service\UtilProduct\UtilPriceServiceInterface $utilProductService
      */
     public function __construct($utilProductService)
     {
