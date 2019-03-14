@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductStorage\Dependency\Service;
+namespace Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 
-class PriceProductStorageToPriceProductServiceBridge implements PriceProductStorageToPriceProductServiceInterface
+class PriceProductMerchantRelationshipStorageToPriceProductServiceBridge implements PriceProductMerchantRelationshipStorageToPriceProductServiceInterface
 {
     /**
      * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
@@ -32,16 +32,5 @@ class PriceProductStorageToPriceProductServiceBridge implements PriceProductStor
     public function buildPriceProductGroupKey(PriceProductTransfer $priceProductTransfer): string
     {
         return $this->priceProductService->buildPriceProductGroupKey($priceProductTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function mergeConcreteAndAbstractPrices(array $abstractPriceProductTransfers, array $concretePriceProductTransfers): array
-    {
-        return $this->priceProductService->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
     }
 }

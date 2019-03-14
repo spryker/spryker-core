@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
 
@@ -25,15 +26,23 @@ class PriceProductExpander implements PriceProductExpanderInterface
     protected $priceProductConfig;
 
     /**
+     * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
      * @param \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface[] $priceProductDimensionExpanderStrategyPlugins
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $priceProductConfig
+     * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
      */
     public function __construct(
         array $priceProductDimensionExpanderStrategyPlugins,
-        PriceProductConfig $priceProductConfig
+        PriceProductConfig $priceProductConfig,
+        PriceProductServiceInterface $priceProductService
     ) {
         $this->priceProductDimensionExpanderStrategyPlugins = $priceProductDimensionExpanderStrategyPlugins;
         $this->priceProductConfig = $priceProductConfig;
+        $this->priceProductService = $priceProductService;
     }
 
     /**
@@ -61,6 +70,7 @@ class PriceProductExpander implements PriceProductExpanderInterface
     {
         $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
         $priceProductTransfer->setPriceDimension($this->expandPriceProductDimensionTransfer($priceDimensionTransfer));
+        $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer));
 
         return $priceProductTransfer;
     }
