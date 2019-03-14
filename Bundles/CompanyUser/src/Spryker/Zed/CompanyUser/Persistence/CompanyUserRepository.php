@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
+use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -123,13 +124,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
                 ->filterByAnonymizedAt(null, Criteria::ISNULL)
             ->endUse();
 
-        if ($criteriaFilterTransfer->getIdCompany() !== null) {
-            $queryCompanyUser->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
-        }
-
-        if ($criteriaFilterTransfer->getCompanyUserIds()) {
-            $queryCompanyUser->filterByIdCompanyUser_In($criteriaFilterTransfer->getCompanyUserIds());
-        }
+        $this->applyFilters($queryCompanyUser, $criteriaFilterTransfer);
 
         $collection = $this->buildQueryFromCriteria($queryCompanyUser, $criteriaFilterTransfer->getFilter());
         /** @var \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[] $companyUserCollection */
@@ -284,5 +279,52 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->endUse();
 
         return $query->count();
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $queryCompanyUser
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return void
+     */
+    protected function applyFilters(SpyCompanyUserQuery $queryCompanyUser, CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer): void
+    {
+        if ($criteriaFilterTransfer->getIdCompany() !== null) {
+            $queryCompanyUser->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
+        }
+
+        if ($criteriaFilterTransfer->getCompanyUserIds()) {
+            $queryCompanyUser->filterByIdCompanyUser_In($criteriaFilterTransfer->getCompanyUserIds());
+        }
+
+        if ($criteriaFilterTransfer->getIsActive() !== null) {
+            $queryCompanyUser->filterByIsActive($criteriaFilterTransfer->getIsActive());
+        }
+    }
+
+    /**
+     * @module Customer
+     * @module Company
+     *
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer
+    {
+        $companyUserEntity = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->joinWithCustomer()
+            ->leftJoinWithCompany()
+            ->filterByIdCompanyUser($idCompanyUser)
+            ->findOne();
+
+        if (!$companyUserEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyUserMapper()
+            ->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntity);
     }
 }

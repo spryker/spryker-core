@@ -23,4 +23,12 @@ interface CategoryStorageToEventBehaviorFacadeInterface
      * @return array
      */
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param string $columnName
+     *
+     * @return array
+     */
+    public function getEventTransfersOriginalValues(array $eventTransfers, string $columnName): array;
 }

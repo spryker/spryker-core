@@ -50,6 +50,8 @@ interface PriceProductFacadeInterface
      *  - If store not set it will use default store.
      *  - If product price type is not set it will use default.
      *  - If price mode is not set it will use default.
+     *  - If it's a concrete product and it doesn't have any price assigned explicitly, then the price of the
+     * abstract product will be returned instead.
      *
      * @api
      *
@@ -65,6 +67,8 @@ interface PriceProductFacadeInterface
      *  - If currency not set it will use default store currency.
      *  - If store not set it will use default store.
      *  - If product price type is not set it will use default.
+     *  - If it's a concrete product and it doesn't have any price assigned explicitly, then the price of the
+     * abstract product will be returned instead.
      *
      * @api
      *
@@ -238,6 +242,7 @@ interface PriceProductFacadeInterface
      * Specification:
      *  - Reads prices same as findPricesBySkuForCurrentStore, then groups by currency, price mode, price type for current store.
      *  - Delegates call to findPricesBySkuForCurrentStore and groups result after by currency, price mode and price type.
+     *  - Groups provided transfers `priceData` by currency only.
      *
      * For example:
      *   $result = [
@@ -246,6 +251,7 @@ interface PriceProductFacadeInterface
      *           'DEFAULT' => 1000,
      *           'ORIGINAL' => 2000,
      *        ],
+     *      'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
      *     ]
      *  ];
      *
@@ -261,6 +267,7 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Groups provided transfers by currency, price mode and price type.
+     * - Groups provided transfers `priceData` by currency only.
      *
      * Example:
      *   $result = [
@@ -269,6 +276,7 @@ interface PriceProductFacadeInterface
      *           'DEFAULT' => 1000,
      *           'ORIGINAL' => 2000,
      *        ],
+     *      'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
      *     ]
      *  ];
      *
