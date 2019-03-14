@@ -260,10 +260,7 @@ class IndexController extends AbstractController
      */
     protected function isStockProductTransferValid(StockProductTransfer $stockProductTransfer)
     {
-        $floatCalculator = $this->getFactory()->getFloatCalculator();
-        $isStockProductQuantityNotZero = $floatCalculator->isEqual($stockProductTransfer->getQuantity(), 0.0);
-
-        return $stockProductTransfer->getIdStockProduct() === null && $isStockProductQuantityNotZero || $stockProductTransfer->getIsNeverOutOfStock();
+        return $stockProductTransfer->getIdStockProduct() === null && ((int)$stockProductTransfer->getQuantity() !== 0) || $stockProductTransfer->getIsNeverOutOfStock();
     }
 
     /**

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\AvailabilityGui\Communication;
 
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Service\AvailabilityGui\AvailabilityGuiServiceInterface;
 use Spryker\Zed\AvailabilityGui\AvailabilityGuiDependencyProvider;
 use Spryker\Zed\AvailabilityGui\Communication\Form\AvailabilityStockForm;
 use Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider\AvailabilityStockFormDataProvider;
@@ -192,13 +191,5 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function getOmsFacade()
     {
         return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::FACADE_OMS);
-    }
-
-    /**
-     * @return \Spryker\Service\AvailabilityGui\AvailabilityGuiServiceInterface
-     */
-    public function getFloatCalculator(): AvailabilityGuiServiceInterface
-    {
-        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::SERVICE_FLOAT_CONATAINER);
     }
 }
