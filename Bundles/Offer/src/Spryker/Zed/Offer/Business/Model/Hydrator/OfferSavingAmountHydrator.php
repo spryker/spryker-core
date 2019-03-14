@@ -43,7 +43,7 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
             $savingAmount -= $itemTransfer->getOfferFee();
             $savingAmount *= $itemTransfer->getQuantity();
 
-            $itemTransfer->setSavingAmount($savingAmount);
+            $itemTransfer->setSavingAmount((int)round($savingAmount));
         }
 
         return $offerTransfer;
