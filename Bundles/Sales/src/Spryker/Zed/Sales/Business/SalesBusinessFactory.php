@@ -31,6 +31,7 @@ use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilProductServiceInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -177,6 +178,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydrator(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
+            $this->getUtilProductService(),
             $this->getHydrateOrderPlugins()
         );
     }
@@ -328,5 +330,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new ExpenseWriter(
             $this->getEntityManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Service\SalesToUtilProductServiceInterface
+     */
+    public function getUtilProductService(): SalesToUtilProductServiceInterface
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_PRODUCT);
     }
 }

@@ -17,6 +17,7 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilProductServiceBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
 
 /**
@@ -47,6 +48,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_LOCALE = 'LOCALE_FACADE';
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
 
+    public const SERVICE_UTIL_PRODUCT = 'SERVICE_UTIL_PRODUCT';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -65,6 +68,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerFacade($container);
         $container = $this->addOrderItemExpanderPreSavePlugins($container);
         $container = $this->addItemTransformerStrategyPlugins($container);
+        $container = $this->addUtilProductService($container);
 
         return $container;
     }
@@ -84,6 +88,22 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addSalesTablePlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilProductService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_PRODUCT] = function (Container $container) {
+            return new SalesToUtilProductServiceBridge(
+                $container->getLocator()->utilProduct()->service()
+            );
+        };
 
         return $container;
     }

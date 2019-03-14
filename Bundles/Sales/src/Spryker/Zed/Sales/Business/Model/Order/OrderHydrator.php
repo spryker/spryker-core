@@ -22,6 +22,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
+use Spryker\Zed\Sales\Dependency\Service\SalesToUtilProductServiceInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderHydrator implements OrderHydratorInterface
@@ -42,18 +43,26 @@ class OrderHydrator implements OrderHydratorInterface
     protected $hydrateOrderPlugins;
 
     /**
+     * @var \Spryker\Zed\Sales\Dependency\Service\SalesToUtilProductServiceInterface
+     */
+    protected $utilProductService;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilProductServiceInterface $utilProductService
      * @param \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[] $hydrateOrderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         SalesToOmsInterface $omsFacade,
+        SalesToUtilProductServiceInterface $utilProductService,
         array $hydrateOrderPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->omsFacade = $omsFacade;
         $this->hydrateOrderPlugins = $hydrateOrderPlugins;
+        $this->utilProductService = $utilProductService;
     }
 
     /**
@@ -163,7 +172,7 @@ class OrderHydrator implements OrderHydratorInterface
             $orderTransfer->setTotalOrderCount($totalCustomerOrderCount);
         }
 
-        $uniqueProductQuantity = (int)$this->queryContainer
+        $uniqueProductQuantity = $this->queryContainer
             ->queryCountUniqueProductsForOrder($orderEntity->getIdSalesOrder())
             ->count();
 
@@ -263,16 +272,127 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function deriveOrderItemUnitPrices(ItemTransfer $itemTransfer)
     {
-        $itemTransfer->setUnitGrossPrice((int)round($itemTransfer->getSumGrossPrice() / $itemTransfer->getQuantity()));
-        $itemTransfer->setUnitNetPrice((int)round($itemTransfer->getSumNetPrice() / $itemTransfer->getQuantity()));
-        $itemTransfer->setUnitPrice((int)round($itemTransfer->getSumPrice() / $itemTransfer->getQuantity()));
-        $itemTransfer->setUnitSubtotalAggregation((int)round($itemTransfer->getSumSubtotalAggregation() / $itemTransfer->getQuantity()));
-        $itemTransfer->setUnitDiscountAmountAggregation((int)round($itemTransfer->getSumDiscountAmountAggregation() / $itemTransfer->getQuantity()));
-        $itemTransfer->setUnitDiscountAmountFullAggregation((int)round($itemTransfer->getSumDiscountAmountFullAggregation() / $itemTransfer->getQuantity()));
-        $itemTransfer->setUnitExpensePriceAggregation((int)round($itemTransfer->getSumExpensePriceAggregation() / $itemTransfer->getQuantity()));
-        $itemTransfer->setUnitTaxAmount((int)round($itemTransfer->getSumTaxAmount() / $itemTransfer->getQuantity()));
-        $itemTransfer->setUnitTaxAmountFullAggregation((int)round($itemTransfer->getSumTaxAmountFullAggregation() / $itemTransfer->getQuantity()));
-        $itemTransfer->setUnitPriceToPayAggregation((int)round($itemTransfer->getSumPriceToPayAggregation() / $itemTransfer->getQuantity()));
+        $unitGrossPrice = $this->roundUnitGrossPrice($itemTransfer->getSumGrossPrice() / $itemTransfer->getQuantity());
+        $unitNetPrice = $this->roundUnitNetPrice($itemTransfer->getSumNetPrice() / $itemTransfer->getQuantity());
+        $unitPrice = $this->roundUnitPrice($itemTransfer->getSumPrice() / $itemTransfer->getQuantity());
+        $unitSubtotalAggregation = $this->roundUnitSubtotalAggregation($itemTransfer->getSumSubtotalAggregation() / $itemTransfer->getQuantity());
+        $unitDiscountAmountAggregation = $this->roundUnitDiscountAmountAggregation($itemTransfer->getSumDiscountAmountAggregation() / $itemTransfer->getQuantity());
+        $unitDiscountAmountFullAggregation = $this->roundUnitDiscountAmountFullAggregation($itemTransfer->getSumDiscountAmountFullAggregation() / $itemTransfer->getQuantity());
+        $unitExpensePriceAggregation = $this->roundUnitExpensePriceAggregation($itemTransfer->getSumExpensePriceAggregation() / $itemTransfer->getQuantity());
+        $unitTaxAmount = $this->roundUnitTaxAmount($itemTransfer->getSumTaxAmount() / $itemTransfer->getQuantity());
+        $unitTaxAmountFullAggregation = $this->roundUnitTaxAmountFullAggregation($itemTransfer->getSumTaxAmountFullAggregation() / $itemTransfer->getQuantity());
+        $unitPriceToPayAggregation = $this->roundUnitPriceToPayAggregation($itemTransfer->getSumPriceToPayAggregation() / $itemTransfer->getQuantity());
+
+        $itemTransfer->setUnitGrossPrice($unitGrossPrice);
+        $itemTransfer->setUnitNetPrice($unitNetPrice);
+        $itemTransfer->setUnitPrice($unitPrice);
+        $itemTransfer->setUnitSubtotalAggregation($unitSubtotalAggregation);
+        $itemTransfer->setUnitDiscountAmountAggregation($unitDiscountAmountAggregation);
+        $itemTransfer->setUnitDiscountAmountFullAggregation($unitDiscountAmountFullAggregation);
+        $itemTransfer->setUnitExpensePriceAggregation($unitExpensePriceAggregation);
+        $itemTransfer->setUnitTaxAmount($unitTaxAmount);
+        $itemTransfer->setUnitTaxAmountFullAggregation($unitTaxAmountFullAggregation);
+        $itemTransfer->setUnitPriceToPayAggregation($unitPriceToPayAggregation);
+    }
+
+    /**
+     * @param float $unitPriceToPayAggregation
+     *
+     * @return int
+     */
+    protected function roundUnitPriceToPayAggregation(float $unitPriceToPayAggregation): int
+    {
+        return $this->utilProductService->roundPrice($unitPriceToPayAggregation);
+    }
+
+    /**
+     * @param float $unitTaxAmountFullAggregation
+     *
+     * @return int
+     */
+    protected function roundUnitTaxAmountFullAggregation(float $unitTaxAmountFullAggregation): int
+    {
+        return $this->utilProductService->roundPrice($unitTaxAmountFullAggregation);
+    }
+
+    /**
+     * @param float $unitTaxAmount
+     *
+     * @return int
+     */
+    protected function roundUnitTaxAmount(float $unitTaxAmount): int
+    {
+        return $this->utilProductService->roundPrice($unitTaxAmount);
+    }
+
+    /**
+     * @param float $unitExpensePriceAggregation
+     *
+     * @return int
+     */
+    protected function roundUnitExpensePriceAggregation(float $unitExpensePriceAggregation): int
+    {
+        return $this->utilProductService->roundPrice($unitExpensePriceAggregation);
+    }
+
+    /**
+     * @param float $unitDiscountAmountFullAggregation
+     *
+     * @return int
+     */
+    protected function roundUnitDiscountAmountFullAggregation(float $unitDiscountAmountFullAggregation): int
+    {
+        return $this->utilProductService->roundPrice($unitDiscountAmountFullAggregation);
+    }
+
+    /**
+     * @param float $unitDiscountAmountAggregation
+     *
+     * @return int
+     */
+    protected function roundUnitDiscountAmountAggregation(float $unitDiscountAmountAggregation): int
+    {
+        return $this->utilProductService->roundPrice($unitDiscountAmountAggregation);
+    }
+
+    /**
+     * @param float $unitSubtotalAggregation
+     *
+     * @return int
+     */
+    protected function roundUnitSubtotalAggregation(float $unitSubtotalAggregation): int
+    {
+        return $this->utilProductService->roundPrice($unitSubtotalAggregation);
+    }
+
+    /**
+     * @param float $unitPrice
+     *
+     * @return int
+     */
+    protected function roundUnitPrice(float $unitPrice): int
+    {
+        return $this->utilProductService->roundPrice($unitPrice);
+    }
+
+    /**
+     * @param float $unitNetPrice
+     *
+     * @return int
+     */
+    protected function roundUnitNetPrice(float $unitNetPrice): int
+    {
+        return $this->utilProductService->roundPrice($unitNetPrice);
+    }
+
+    /**
+     * @param float $unitGrossPrice
+     *
+     * @return int
+     */
+    protected function roundUnitGrossPrice(float $unitGrossPrice): int
+    {
+        return $this->utilProductService->roundPrice($unitGrossPrice);
     }
 
     /**
@@ -360,11 +480,17 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function deriveExpenseUnitPrices(ExpenseTransfer $expenseTransfer)
     {
-        $expenseTransfer->setUnitGrossPrice((int)round($expenseTransfer->getSumGrossPrice() / $expenseTransfer->getQuantity()));
-        $expenseTransfer->setUnitNetPrice((int)round($expenseTransfer->getSumNetPrice() / $expenseTransfer->getQuantity()));
-        $expenseTransfer->setUnitPrice((int)round($expenseTransfer->getSumPrice() / $expenseTransfer->getQuantity()));
-        $expenseTransfer->setUnitPriceToPayAggregation((int)round($expenseTransfer->getSumPriceToPayAggregation() / $expenseTransfer->getQuantity()));
-        $expenseTransfer->setUnitTaxAmount((int)round($expenseTransfer->getSumTaxAmount() / $expenseTransfer->getQuantity()));
+        $unitGrossPrice = $this->roundUnitGrossPrice($expenseTransfer->getSumGrossPrice() / $expenseTransfer->getQuantity());
+        $unitNetPrice = $this->roundUnitNetPrice($expenseTransfer->getSumNetPrice() / $expenseTransfer->getQuantity());
+        $unitPrice = $this->roundUnitPrice($expenseTransfer->getSumPrice() / $expenseTransfer->getQuantity());
+        $unitPriceToPayAggregation = $this->roundUnitPriceToPayAggregation($expenseTransfer->getSumPriceToPayAggregation() / $expenseTransfer->getQuantity());
+        $unitTaxAmount = $this->roundUnitTaxAmount($expenseTransfer->getSumTaxAmount() / $expenseTransfer->getQuantity());
+
+        $expenseTransfer->setUnitGrossPrice($unitGrossPrice);
+        $expenseTransfer->setUnitNetPrice($unitNetPrice);
+        $expenseTransfer->setUnitPrice($unitPrice);
+        $expenseTransfer->setUnitPriceToPayAggregation($unitPriceToPayAggregation);
+        $expenseTransfer->setUnitTaxAmount($unitTaxAmount);
     }
 
     /**
