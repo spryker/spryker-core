@@ -71,7 +71,7 @@ class CompanyUnitAddressLabelDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
      */
-    public function haveLabelCollection(array $labelCollectionSeed = [], array $labelsSeed = []): CompanyUnitAddressLabelCollectionTransfer
+    public function haveCompanyUnitAddressLabelCollection(array $labelCollectionSeed = [], array $labelsSeed = []): CompanyUnitAddressLabelCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer $companyUnitAddressLabelCollection */
         $companyUnitAddressLabelCollection = (new CompanyUnitAddressLabelCollectionBuilder($labelCollectionSeed))

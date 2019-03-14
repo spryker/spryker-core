@@ -59,7 +59,7 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
     public function testSaveLabelToAddressRelationsStoresDataToTheDatabase(): void
     {
         // Arrange
-        $companyUnitAddressLabelCollectionTransfer = $this->tester->haveLabelCollection();
+        $companyUnitAddressLabelCollectionTransfer = $this->tester->haveCompanyUnitAddressLabelCollection();
         $this->companyUnitAddressTransfer->setLabelCollection($companyUnitAddressLabelCollectionTransfer);
 
         // Act
@@ -75,7 +75,7 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
     public function testHydrateCompanyUnitAddressWithLabelCollectionHydratesTransfer(): void
     {
         // Arrange
-        $this->tester->haveLabelAddressRelations($this->tester->haveLabelCollection(), $this->companyUnitAddressTransfer);
+        $this->tester->haveLabelAddressRelations($this->tester->haveCompanyUnitAddressLabelCollection(), $this->companyUnitAddressTransfer);
 
         // Act
         $this->companyUnitAddressTransfer = $this->companyUnitAddressLabelFacade->hydrateCompanyUnitAddressWithLabelCollection($this->companyUnitAddressTransfer);
@@ -94,7 +94,7 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
     public function testGetCompanyUnitAddressLabelsByAddress(): void
     {
         // Arrange
-        $labelCollection = $this->tester->haveLabelCollection();
+        $labelCollection = $this->tester->haveCompanyUnitAddressLabelCollection();
         $this->tester->haveLabelAddressRelations($labelCollection, $this->companyUnitAddressTransfer);
 
         // Act
