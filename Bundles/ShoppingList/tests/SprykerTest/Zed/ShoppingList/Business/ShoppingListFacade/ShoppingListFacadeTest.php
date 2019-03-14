@@ -390,7 +390,7 @@ class ShoppingListFacadeTest extends Unit
         $resultShoppingListItemTransfer = $this->tester->getFacade()->addItem($shoppingListItemTransfer);
 
         // Assert
-        $this->assertNull($resultShoppingListItemTransfer->getIdShoppingListItem(), "Owner should not be able to add item with quantity '$quantity'' to shopping list.");
+        $this->assertNull($resultShoppingListItemTransfer->getIdShoppingListItem(), "Owner should not be able to add item to shopping list.");
     }
 
     /**
@@ -400,8 +400,8 @@ class ShoppingListFacadeTest extends Unit
     {
         return [
             'zero stock' => [0],
-            'int stock' => [-1],
-            'float stock' => [-1.5],
+            'negative int stock' => [-1],
+            'negative float stock' => [-1.5],
         ];
     }
 
