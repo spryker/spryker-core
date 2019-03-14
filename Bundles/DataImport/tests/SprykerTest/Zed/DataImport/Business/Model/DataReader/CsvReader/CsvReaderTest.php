@@ -199,7 +199,7 @@ class CsvReaderTest extends Unit
     public function testKeyReturnsCurrentDataSetPosition()
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv');
-        $this->assertInternalType('int', $csvReader->key());
+        $this->assertIsInt($csvReader->key());
     }
 
     /**

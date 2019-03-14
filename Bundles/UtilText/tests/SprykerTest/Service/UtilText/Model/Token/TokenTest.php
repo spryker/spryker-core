@@ -30,7 +30,7 @@ class TokenTest extends Unit
         $tokenService = new Token();
         $token = $tokenService->generate('token');
 
-        $this->assertInternalType('string', $token);
+        $this->assertIsString($token);
     }
 
     /**

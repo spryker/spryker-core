@@ -15,108 +15,71 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueUrlValidator extends ConstraintValidator
 {
+    protected const ERROR_MESSAGE_PROVIDED_URL_IS_ALREADY_TAKEN = 'Provided URL "%s" is already taken.';
+
     /**
      * Checks if the passed url is unique.
      *
      * @api
      *
-     * @param mixed $value The value that should be validated
-     * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer|mixed $cmsPageAttributesTransfer The value that should be validated
+     * @param \Symfony\Component\Validator\Constraint $uniqueUrlConstraint The constraint for the validation
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($cmsPageAttributesTransfer, Constraint $uniqueUrlConstraint)
     {
-        if (!$value->getUrl()) {
+        if (!$cmsPageAttributesTransfer->getUrl()) {
             return;
         }
 
-        if (!$constraint instanceof UniqueUrl) {
-            throw new UnexpectedTypeException($constraint, UniqueUrl::class);
+        if (!$uniqueUrlConstraint instanceof UniqueUrl) {
+            throw new UnexpectedTypeException($uniqueUrlConstraint, UniqueUrl::class);
         }
 
-        $url = $this->buildUrl($value, $constraint);
+        $submittedUrlTransfer = $this->buildUrlTransfer($cmsPageAttributesTransfer, $uniqueUrlConstraint);
+        $existingUrlTransfer = $uniqueUrlConstraint->getUrlFacade()->findUrlCaseInsensitive($submittedUrlTransfer);
 
-        if (!$this->isUrlChanged($url, $value, $constraint)) {
+        if ($existingUrlTransfer === null || $this->isResourcePageChanged($submittedUrlTransfer, $existingUrlTransfer)) {
             return;
         }
 
-        if ($this->hasUrl($url, $constraint, $value->getIdCmsPage())) {
-            $this->context
-                ->buildViolation(sprintf('Provided URL "%s" is already taken.', $url))
-                ->atPath('url')
-                ->addViolation();
+        if ($existingUrlTransfer->getUrl() === $submittedUrlTransfer->getUrl()) {
+            return;
         }
+
+        $this->context->buildViolation(sprintf(static::ERROR_MESSAGE_PROVIDED_URL_IS_ALREADY_TAKEN, $submittedUrlTransfer->getUrl()))
+            ->atPath('url')
+            ->addViolation();
     }
 
     /**
-     * @param string $url
-     * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl $constraint
-     * @param int|null $idCmsPage
+     * @param \Generated\Shared\Transfer\UrlTransfer $submittedUrlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer $existingUrlTransfer
      *
      * @return bool
      */
-    protected function hasUrl($url, UniqueUrl $constraint, $idCmsPage = null)
+    protected function isResourcePageChanged(UrlTransfer $submittedUrlTransfer, UrlTransfer $existingUrlTransfer): bool
     {
-        $urlTransfer = new UrlTransfer();
-        $urlTransfer->setFkResourcePage($idCmsPage);
-        $urlTransfer->setUrl($url);
+        $submittedUrlFkResourcePage = $submittedUrlTransfer->getFkResourcePage();
 
-        return $constraint->getUrlFacade()->hasUrl($urlTransfer);
+        return $submittedUrlFkResourcePage !== null && $submittedUrlFkResourcePage !== $existingUrlTransfer->getFkResourcePage();
     }
 
     /**
-     * @param string $url
-     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $submittedPageAttributesTransfer
-     * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl $constraint
+     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
+     * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl $uniqueUrlConstraint
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function isUrlChanged(
-        $url,
-        CmsPageAttributesTransfer $submittedPageAttributesTransfer,
-        UniqueUrl $constraint
-    ) {
-        $urlTransfer = $this->findUrl($constraint, $url);
-
-        if ($urlTransfer === null) {
-            return true;
-        }
-
-        if ($urlTransfer->getFkResourcePage() && (int)$urlTransfer->getFkResourcePage() === (int)$submittedPageAttributesTransfer->getIdCmsPage()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $submittedPageAttributesTransfer
-     * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl $constraint
-     *
-     * @return string
-     */
-    protected function buildUrl(CmsPageAttributesTransfer $submittedPageAttributesTransfer, UniqueUrl $constraint)
+    protected function buildUrlTransfer(CmsPageAttributesTransfer $cmsPageAttributesTransfer, UniqueUrl $uniqueUrlConstraint): UrlTransfer
     {
-        return $constraint->getCmsFacade()->buildPageUrl($submittedPageAttributesTransfer);
-    }
+        $url = $uniqueUrlConstraint->getCmsFacade()->buildPageUrl($cmsPageAttributesTransfer);
 
-    /**
-     * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl $constraint
-     * @param string $url
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
-     */
-    protected function findUrl(UniqueUrl $constraint, $url)
-    {
-        $urlTransfer = new UrlTransfer();
-        $urlTransfer->setUrl($url);
-
-        $urlTransfer = $constraint->getUrlFacade()
-            ->findUrl($urlTransfer);
-
-        return $urlTransfer;
+        return (new UrlTransfer())
+            ->setUrl($url)
+            ->setFkResourcePage($cmsPageAttributesTransfer->getIdCmsPage());
     }
 }

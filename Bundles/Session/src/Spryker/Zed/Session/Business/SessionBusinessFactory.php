@@ -39,7 +39,8 @@ class SessionBusinessFactory extends AbstractBusinessFactory
         $sessionLockReleaserPool = new SessionLockReleaserPool();
         $sessionLockReleaserPool->addLockReleaser(
             $this->createRedisSessionLockReleaser(
-                $this->getConfig()->getSessionHandlerRedisDataSourceNameYves()
+                $this->getConfig()->getSessionHandlerRedisConnectionParametersYves(),
+                $this->getConfig()->getSessionHandlerRedisConnectionOptionsYves()
             ),
             SessionConfig::SESSION_HANDLER_REDIS_LOCKING
         );
@@ -64,7 +65,8 @@ class SessionBusinessFactory extends AbstractBusinessFactory
         $sessionLockReleaserPool = new SessionLockReleaserPool();
         $sessionLockReleaserPool->addLockReleaser(
             $this->createRedisSessionLockReleaser(
-                $this->getConfig()->getSessionHandlerRedisDataSourceNameZed()
+                $this->getConfig()->getSessionHandlerRedisConnectionParametersZed(),
+                $this->getConfig()->getSessionHandlerRedisConnectionOptionsZed()
             ),
             SessionConfig::SESSION_HANDLER_REDIS_LOCKING
         );
@@ -73,13 +75,14 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param string $dsn
+     * @param array|string $connectionParameters
+     * @param array $connectionOptions
      *
      * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface
      */
-    protected function createRedisSessionLockReleaser($dsn)
+    protected function createRedisSessionLockReleaser($connectionParameters, array $connectionOptions = [])
     {
-        $redisClient = $this->getRedisClient($dsn);
+        $redisClient = $this->getRedisClient($connectionParameters, $connectionOptions);
 
         return new SessionLockReleaser(
             $this->getRedisSessionLocker($redisClient),
@@ -88,15 +91,16 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param string $dsn
+     * @param array|string $connectionParameters
+     * @param array $connectionOptions
      *
      * @return \Predis\Client
      */
-    protected function getRedisClient($dsn)
+    protected function getRedisClient($connectionParameters, array $connectionOptions = [])
     {
         return $this
             ->createSessionHandlerFactory()
-            ->createRedisClient($dsn);
+            ->createRedisClient($connectionParameters, $connectionOptions);
     }
 
     /**
