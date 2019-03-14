@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy;
 
-use Spryker\Service\DiscountPromotion\DiscountPromotionServiceInterface;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface;
 
@@ -24,24 +23,16 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Service\DiscountPromotion\DiscountPromotionServiceInterface
-     */
-    protected $service;
-
-    /**
      * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface $localeFacade
-     * @param \Spryker\Service\DiscountPromotion\DiscountPromotionServiceInterface $service
      */
     public function __construct(
         DiscountPromotionToAvailabilityInterface $availabilityFacade,
-        DiscountPromotionToLocaleInterface $localeFacade,
-        DiscountPromotionServiceInterface $service
+        DiscountPromotionToLocaleInterface $localeFacade
     ) {
 
         $this->availabilityFacade = $availabilityFacade;
         $this->localeFacade = $localeFacade;
-        $this->service = $service;
     }
 
     /**
@@ -57,8 +48,7 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
         if ($productAbstractAvailabilityTransfer->getIsNeverOutOfStock()) {
             return $maxQuantity;
         }
-
-        $availability = $this->service->round($productAbstractAvailabilityTransfer->getAvailability());
+        $availability = $productAbstractAvailabilityTransfer->getAvailability();
 
         if ($availability <= 0.0) {
             return 0.0;
