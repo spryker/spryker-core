@@ -205,8 +205,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                 $bundleItemQuantity = $bundledItemQuantity[$idProduct];
                 $isNeverOutOfStock = $productStockQuantity[static::IS_NEVER_OUT_OF_STOCK];
 
-                $itemStock = $productStockQuantity[static::QUANTITY] / $bundleItemQuantity;
-                $itemStock = $this->service->round($itemStock);
+                $itemStock = (int)floor($productStockQuantity[static::QUANTITY] / $bundleItemQuantity);
 
                 if ($this->isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)) {
                     $bundleStock = $itemStock;
