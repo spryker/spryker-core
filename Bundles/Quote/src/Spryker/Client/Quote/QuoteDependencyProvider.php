@@ -26,7 +26,7 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const SERVICE_ZED = 'SERVICE_ZED';
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
-    public const PLUGINS_ALLOWABLE_DATABASE_STRATEGY = 'PLUGINS_ALLOWABLE_DATABASE_STRATEGY';
+    public const PLUGINS_DATABASE_STRATEGY_AVAILABILITY_CHECK = 'PLUGINS_DATABASE_STRATEGY_AVAILABILITY_CHECK';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -41,7 +41,7 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
         $container = $this->addCustomerClient($container);
         $container = $this->addZedSevice($container);
         $container = $this->addCurrencyClient($container);
-        $container = $this->addAllowableDatabaseStrategyPlugins($container);
+        $container = $this->addDatabaseStrategyAvailabilityCheckPlugins($container);
 
         return $container;
     }
@@ -93,10 +93,10 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addAllowableDatabaseStrategyPlugins(Container $container)
+    protected function addDatabaseStrategyAvailabilityCheckPlugins(Container $container)
     {
-        $container[static::PLUGINS_ALLOWABLE_DATABASE_STRATEGY] = function () {
-            return $this->getAllowableDatabaseStrategyPlugins();
+        $container[static::PLUGINS_DATABASE_STRATEGY_AVAILABILITY_CHECK] = function () {
+            return $this->getDatabaseStrategyAvailabilityCheckPlugins();
         };
 
         return $container;
@@ -155,9 +155,9 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\AllowableDatabaseStrategyPluginInterface[]
+     * @return \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyAvailabilityCheckPluginInterface[]
      */
-    protected function getAllowableDatabaseStrategyPlugins()
+    protected function getDatabaseStrategyAvailabilityCheckPlugins(): array
     {
         return [];
     }

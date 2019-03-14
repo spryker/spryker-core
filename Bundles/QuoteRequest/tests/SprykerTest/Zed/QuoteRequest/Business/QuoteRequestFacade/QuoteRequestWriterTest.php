@@ -43,14 +43,14 @@ class QuoteRequestWriterTest extends Unit
     protected const FAKE_ID_QUOTE_REQUEST_VERSION = 'FAKE_ID_QUOTE_REQUEST_VERSION';
 
     /**
-     * @uses \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS
+     * @uses \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS
      */
-    protected const ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
 
     /**
-     * @uses \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS
+     * @uses \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS
      */
-    protected const ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
     /**
      * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter|\PHPUnit_Framework_MockObject_MockObject
@@ -177,7 +177,7 @@ class QuoteRequestWriterTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertCount(1, $quoteRequestResponseTransfer->getMessages());
         $this->assertEquals(
-            static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS,
+            static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS,
             $quoteRequestResponseTransfer->getMessages()[0]->getValue()
         );
     }
@@ -208,7 +208,7 @@ class QuoteRequestWriterTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertCount(1, $quoteRequestResponseTransfer->getMessages());
         $this->assertEquals(
-            static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS,
+            static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS,
             $quoteRequestResponseTransfer->getMessages()[0]->getValue()
         );
     }

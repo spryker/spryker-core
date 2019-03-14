@@ -89,6 +89,20 @@ interface AgentQuoteRequestClientInterface
 
     /**
      * Specification:
+     * - Makes Zed request.
+     * - Retrieves "Request for Quote" entity filtered by quote request reference.
+     * - Selects latestVersion based on latest version id.
+     *
+     * @api
+     *
+     * @param string $quoteRequestReference
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer;
+
+    /**
+     * Specification:
      * - Expects "Request for Quote" status to be "in-progress".
      * - Expects quoteInProgress property in QuoteRequestTransfer.
      * - Sets quoteRequestReference to Quote transfer.

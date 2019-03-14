@@ -82,6 +82,22 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
      *
      * @api
      *
+     * @param string $quoteRequestReference
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestReader()
+            ->findQuoteRequestByReference($quoteRequestReference);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

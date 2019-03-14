@@ -9,7 +9,7 @@ namespace Spryker\Client\Quote\StorageStrategy;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface;
-use Spryker\Client\Quote\QuoteLocker\QuoteLocker;
+use Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface;
 use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface;
 use Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface;
 use Spryker\Client\Quote\Session\QuoteSessionInterface;
@@ -44,14 +44,14 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     protected $quoteEditStatusValidator;
 
     /**
-     * @var \Spryker\Client\Quote\QuoteLocker\QuoteLocker
+     * @var \Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface
      */
     protected $quoteLocker;
 
     /**
-     * @var array|\Spryker\Zed\QuoteExtension\Dependency\Plugin\AllowableDatabaseStrategyPluginInterface[]
+     * @var \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyAvailabilityCheckPluginInterface[]
      */
-    protected $allowableDatabaseStrategyPlugins;
+    protected $databaseStrategyAvailabilityCheckPlugins;
 
     /**
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface $customerClient
@@ -59,8 +59,8 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
      * @param \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface $quoteLockStatusValidator
      * @param \Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface $quoteEditStatusValidator
-     * @param \Spryker\Client\Quote\QuoteLocker\QuoteLocker $quoteLocker
-     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\AllowableDatabaseStrategyPluginInterface[] $allowableDatabaseStrategyPlugins
+     * @param \Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface $quoteLocker
+     * @param \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyAvailabilityCheckPluginInterface[] $databaseStrategyAvailabilityCheckPlugins
      */
     public function __construct(
         QuoteToCustomerClientInterface $customerClient,
@@ -68,8 +68,8 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
         QuoteSessionInterface $quoteSession,
         QuoteLockStatusValidatorInterface $quoteLockStatusValidator,
         QuoteEditStatusValidatorInterface $quoteEditStatusValidator,
-        QuoteLocker $quoteLocker,
-        array $allowableDatabaseStrategyPlugins
+        QuoteLockerInterface $quoteLocker,
+        array $databaseStrategyAvailabilityCheckPlugins
     ) {
         $this->customerClient = $customerClient;
         $this->quoteStub = $quoteStub;
@@ -77,7 +77,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
         $this->quoteLockStatusValidator = $quoteLockStatusValidator;
         $this->quoteEditStatusValidator = $quoteEditStatusValidator;
         $this->quoteLocker = $quoteLocker;
-        $this->allowableDatabaseStrategyPlugins = $allowableDatabaseStrategyPlugins;
+        $this->databaseStrategyAvailabilityCheckPlugins = $databaseStrategyAvailabilityCheckPlugins;
     }
 
     /**
@@ -93,12 +93,8 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      */
     public function isAllowed()
     {
-        $quoteTransfer = $this->getQuote();
-
-        foreach ($this->allowableDatabaseStrategyPlugins as $allowableDatabaseStrategyPlugin) {
-            if (!$allowableDatabaseStrategyPlugin->isAllowed($quoteTransfer)) {
-                return false;
-            }
+        if (!$this->checkDatabaseStrategyAvailability()) {
+            return false;
         }
 
         return $this->customerClient->isLoggedIn();
@@ -163,5 +159,21 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->quoteLocker->lock($quoteTransfer);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function checkDatabaseStrategyAvailability(): bool
+    {
+        $quoteTransfer = $this->getQuote();
+
+        foreach ($this->databaseStrategyAvailabilityCheckPlugins as $databaseStrategyAvailabilityCheckPlugin) {
+            if (!$databaseStrategyAvailabilityCheckPlugin->isAllowed($quoteTransfer)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

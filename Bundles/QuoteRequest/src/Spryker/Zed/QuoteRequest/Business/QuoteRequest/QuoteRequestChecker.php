@@ -20,11 +20,11 @@ use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 
 class QuoteRequestChecker implements QuoteRequestCheckerInterface
 {
-    protected const ERROR_MESSAGE_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
-    protected const ERROR_MESSAGE_WRONG_QUOTE_REQUEST_NOT_FOUND = 'quote_request.checkout.validation.error.not_found';
-    protected const ERROR_MESSAGE_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
-    protected const ERROR_MESSAGE_WRONG_QUOTE_REQUEST_VERSION = 'quote_request.checkout.validation.error.wrong_version';
-    protected const ERROR_MESSAGE_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.validation.error.wrong_valid_until';
+    protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
+    protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_NOT_FOUND = 'quote_request.checkout.validation.error.not_found';
+    protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
+    protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION = 'quote_request.checkout.validation.error.wrong_version';
+    protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.validation.error.wrong_valid_until';
 
     /**
      * @var \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface
@@ -54,7 +54,7 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
         $quoteRequestVersionTransfer = $this->findQuoteRequestVersion($quoteTransfer->getQuoteRequestVersionReference());
 
         if (!$quoteRequestVersionTransfer) {
-            $this->addCheckoutError($checkoutResponseTransfer, static::ERROR_MESSAGE_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND);
+            $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND);
 
             return false;
         }
@@ -62,7 +62,7 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
         $quoteRequestTransfer = $this->findQuoteRequest($quoteRequestVersionTransfer);
 
         if (!$quoteRequestTransfer) {
-            $this->addCheckoutError($checkoutResponseTransfer, static::ERROR_MESSAGE_WRONG_QUOTE_REQUEST_NOT_FOUND);
+            $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_NOT_FOUND);
 
             return false;
         }
@@ -123,20 +123,20 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool {
         if ($quoteRequestTransfer->getStatus() !== SharedQuoteRequestConfig::STATUS_READY) {
-            $this->addCheckoutError($checkoutResponseTransfer, static::ERROR_MESSAGE_WRONG_QUOTE_REQUEST_STATUS);
+            $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS);
 
             return false;
         }
 
         if ($quoteRequestTransfer->getLatestVersion()->getIdQuoteRequestVersion() !== $quoteRequestVersionTransfer->getIdQuoteRequestVersion()) {
-            $this->addCheckoutError($checkoutResponseTransfer, static::ERROR_MESSAGE_WRONG_QUOTE_REQUEST_VERSION);
+            $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION);
 
             return false;
         }
 
         if (!$quoteRequestTransfer->getValidUntil()
             || (new DateTime($quoteRequestTransfer->getValidUntil()) < new DateTime('now'))) {
-            $this->addCheckoutError($checkoutResponseTransfer, static::ERROR_MESSAGE_WRONG_QUOTE_REQUEST_VALID_UNTIL);
+            $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL);
 
             return false;
         }

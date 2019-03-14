@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteExtension\Dependency\Plugin;
+namespace Spryker\Client\QuoteExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface AllowableDatabaseStrategyPluginInterface
+interface DatabaseStrategyAvailabilityCheckPluginInterface
 {
     /**
      * Specification:
-     * - Allows database strategy.
+     * - Checks database strategy availability.
      *
      * @api
      *
