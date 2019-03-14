@@ -26,6 +26,7 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
                 - \SprykerTest\Zed\Touch\Helper\TouchAssertionHelper
+                - \SprykerTest\Zed\CompanyUnitAddress\Helper\CompanyUnitAddressDataHelper
                 - \SprykerTest\Zed\CompanyUnitAddressLabel\Helper\CompanyUnitAddressLabelDataHelper
                 - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
-
+                - \SprykerTest\Zed\Country\Helper\CountryDataHelper

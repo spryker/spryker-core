@@ -8,26 +8,19 @@
 namespace SprykerTest\Zed\CompanyUnitAddressLabel\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\CompanyUnitAddressBuilder;
 use Generated\Shared\DataBuilder\CompanyUnitAddressLabelBuilder;
 use Generated\Shared\DataBuilder\CompanyUnitAddressLabelCollectionBuilder;
-use Generated\Shared\DataBuilder\CountryBuilder;
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressLabelTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-use Generated\Shared\Transfer\CountryTransfer;
-use Generated\Shared\Transfer\SpyRegionEntityTransfer;
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabel;
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery;
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelToCompanyUnitAddress;
-use Orm\Zed\Country\Persistence\SpyRegionQuery;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
-use Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface;
 use Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepository;
-use Spryker\Zed\Country\Business\CountryFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
+use SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper;
+use SprykerTest\Zed\CompanyUnitAddress\Helper\CompanyUnitAddressDataHelper;
 
 class CompanyUnitAddressLabelDataHelper extends Module
 {
@@ -57,86 +50,32 @@ class CompanyUnitAddressLabelDataHelper extends Module
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
-    public function haveCompanyUnitAddressTransfer(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyUnitAddressTransfer
-    {
-        $countryTransfer = $this->haveCountryTransfer();
-        $regionTransfer = $this->haveRegionTransfer();
-
-        /** @var \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer */
-        $companyUnitAddressTransfer = (new CompanyUnitAddressBuilder())
-            ->build();
-
-        $companyUnitAddressTransfer->setFkCompany($companyBusinessUnitTransfer->getFkCompany());
-        $companyUnitAddressTransfer->setFkCountry($countryTransfer->getIdCountry());
-        $companyUnitAddressTransfer->setFkRegion($regionTransfer->getIdRegion());
-        $companyUnitAddressTransfer->setFkCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
-
-        $response = $this->getCompanyUnitAddressFacade()
-            ->create($companyUnitAddressTransfer);
-
-        return $response->getCompanyUnitAddressTransfer();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CountryTransfer
-     */
-    public function haveCountryTransfer(): CountryTransfer
-    {
-        /** @var \Generated\Shared\Transfer\CountryTransfer $countryTransfer */
-        $countryTransfer = (new CountryBuilder())->build();
-
-        return $this->getCountryFacade()->getCountryByIso2Code(
-            $countryTransfer->getIso2Code()
-        );
-    }
-
-    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer $labelCollection
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return void
      */
-    public function haveLabelAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
+    public function haveLabelAddressRelations(CompanyUnitAddressLabelCollectionTransfer $labelCollection, CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
     {
         $labelAddressRelation = new SpyCompanyUnitAddressLabelToCompanyUnitAddress();
-        $labels = $this->haveLabelCollection();
         $labelAddressRelation->setFkCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
-        foreach ($labels->getLabels() as $labelTransfer) {
+        foreach ($labelCollection->getLabels() as $labelTransfer) {
             $labelAddressRelation->setFkCompanyUnitAddressLabel($labelTransfer->getIdCompanyUnitAddressLabel());
             $labelAddressRelation->save();
         }
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SpyRegionEntityTransfer
-     */
-    public function haveRegionTransfer(): SpyRegionEntityTransfer
-    {
-        $countryTransfer = $this->haveCountryTransfer();
-        $regionEntity = SpyRegionQuery::create()
-            ->filterByName('test region')
-            ->filterByIso2Code(
-                $countryTransfer->getIso2Code()
-            )->filterByFkCountry(
-                $countryTransfer->getIdCountry()
-            )->findOneOrCreate();
-
-        return (new SpyRegionEntityTransfer())
-            ->fromArray($regionEntity->toArray());
-    }
-
-    /**
+     * @param array $labelCollectionSeed
+     * @param array $labelsSeed
+     *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
      */
-    public function haveLabelCollection(): CompanyUnitAddressLabelCollectionTransfer
+    public function haveLabelCollection(array $labelCollectionSeed = [], array $labelsSeed = []): CompanyUnitAddressLabelCollectionTransfer
     {
-
         /** @var \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer $companyUnitAddressLabelCollection */
-        $companyUnitAddressLabelCollection = (new CompanyUnitAddressLabelCollectionBuilder())
-            ->withLabels()
+        $companyUnitAddressLabelCollection = (new CompanyUnitAddressLabelCollectionBuilder($labelCollectionSeed))
+            ->withLabels($labelsSeed)
             ->build();
 
         foreach ($companyUnitAddressLabelCollection->getLabels() as $companyUnitAddressLabelEntityTransfer) {
@@ -150,43 +89,48 @@ class CompanyUnitAddressLabelDataHelper extends Module
     }
 
     /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     */
+    public function getCompanyUnitAddressTransfer(array $seed = []): CompanyUnitAddressTransfer
+    {
+        if (empty($seed['fkCompany'])) {
+            $seed['fkCompany'] = $this->getCompanyBusinessUnitHelper()->haveCompanyBusinessUnitWithCompany()->getFkCompany();
+        }
+
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer */
+        $companyUnitAddressTransfer = $this->getCompanyUnitAddressHelper()->haveCompanyUnitAddress($seed);
+
+        return $companyUnitAddressTransfer;
+    }
+
+    /**
+     * @return \SprykerTest\Zed\CompanyUnitAddress\Helper\CompanyUnitAddressDataHelper
+     */
+    protected function getCompanyUnitAddressHelper(): CompanyUnitAddressDataHelper
+    {
+        /** @var \SprykerTest\Zed\CompanyUnitAddress\Helper\CompanyUnitAddressDataHelper $companyUnitAddressDataHelper */
+        $companyUnitAddressDataHelper = $this->getModule('\\' . CompanyUnitAddressDataHelper::class);
+        return $companyUnitAddressDataHelper;
+    }
+
+    /**
+     * @return \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
+     */
+    protected function getCompanyBusinessUnitHelper(): CompanyBusinessUnitHelper
+    {
+        /** @var \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper $companyBusinessUnitHelper */
+        $companyBusinessUnitHelper = $this->getModule('\\' . CompanyBusinessUnitHelper::class);
+        return $companyBusinessUnitHelper;
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface
      */
     public function getCompanyUnitAddressLabelFacade(): CompanyUnitAddressLabelFacadeInterface
     {
         return $this->getLocator()->companyUnitAddressLabel()->facade();
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface
-     */
-    protected function getCompanyUnitAddressFacade(): CompanyUnitAddressFacadeInterface
-    {
-        return $this->getLocator()->companyUnitAddress()->facade();
-    }
-
-    /**
-     * @return \Spryker\Zed\Country\Business\CountryFacadeInterface
-     */
-    protected function getCountryFacade(): CountryFacadeInterface
-    {
-        return $this->getLocator()->country()->facade();
-    }
-
-    /**
-     * @return \Spryker\Zed\Company\Business\CompanyFacadeInterface
-     */
-    protected function getCompanyFacade()
-    {
-        return $this->getLocator()->company()->facade();
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface
-     */
-    protected function getCompanyBusinessUnitFacade(): CompanyBusinessUnitFacadeInterface
-    {
-        return $this->getLocator()->companyBusinessUnit()->facade();
     }
 
     /**
