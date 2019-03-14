@@ -11,6 +11,9 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\UtilQuantity\Rounder\QuantityRounder;
 use Spryker\Service\UtilQuantity\Rounder\QuantityRounderInterface;
 
+/**
+ * @method \Spryker\Service\UtilQuantity\UtilQuantityConfig getConfig()
+ */
 class UtilQuantityServiceFactory extends AbstractServiceFactory
 {
     /**
@@ -18,6 +21,6 @@ class UtilQuantityServiceFactory extends AbstractServiceFactory
      */
     public function createQuantityRounder(): QuantityRounderInterface
     {
-        return new QuantityRounder();
+        return new QuantityRounder($this->getConfig());
     }
 }
