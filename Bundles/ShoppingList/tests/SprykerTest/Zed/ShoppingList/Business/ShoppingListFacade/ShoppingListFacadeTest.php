@@ -747,6 +747,8 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
+     *
+     * @group qwe
      * @dataProvider customerShoppingListItemQuantityCollectionDataProvider
      *
      * @param int|float $quantity1
@@ -779,7 +781,7 @@ class ShoppingListFacadeTest extends Unit
         $shoppingListItemResponseTransfer = $this->tester->getFacade()->getCustomerShoppingListCollection($this->ownerCompanyUserTransfer->getCustomer());
 
         // Assert
-        $this->assertSame($quantitySum, $shoppingListItemResponseTransfer->getShoppingLists()[0]->getNumberOfItems(), 'Customer should get correct count of items in the shopping list.');
+        $this->assertEquals($quantitySum, $shoppingListItemResponseTransfer->getShoppingLists()[0]->getNumberOfItems(), 'Customer should get correct count of items in the shopping list.');
     }
 
     /**
@@ -788,7 +790,7 @@ class ShoppingListFacadeTest extends Unit
     public function customerShoppingListItemQuantityCollectionDataProvider(): array
     {
         return [
-            'int stock' => [1, 2, 3.0],
+            'int stock' => [1, 2, 3],
             'float stock' => [1.1, 2.2, 3.3],
         ];
     }
