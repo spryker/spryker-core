@@ -5,7 +5,7 @@
 
     <transfer name="ItemSplit">
         <property name="idSalesOrderItem" type="int" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
     </transfer>
 
     <transfer name="ItemSplitResponse">
