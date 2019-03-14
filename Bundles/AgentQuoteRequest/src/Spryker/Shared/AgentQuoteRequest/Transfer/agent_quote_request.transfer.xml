@@ -11,6 +11,7 @@
     <transfer name="QuoteRequestOverviewFilter">
         <property name="quoteRequestReference" type="string" />
         <property name="pagination" type="Pagination" />
+        <property name="excludedStatuses" type="array" />
     </transfer>
 
     <transfer name="QuoteRequest">
