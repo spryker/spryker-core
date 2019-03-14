@@ -340,11 +340,14 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     /**
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    protected function createPersistentCartChangeTransfer()
+    protected function createPersistentCartChangeTransfer(): PersistentCartChangeTransfer
     {
         $persistentQuoteChange = new PersistentCartChangeTransfer();
         $persistentQuoteChange->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
-        $persistentQuoteChange->setIdQuote($this->getQuoteClient()->getQuote()->getIdQuote());
+
+        $sessionQuoteTransfer = $this->getQuoteClient()->getQuote();
+        $persistentQuoteChange->setIdQuote($sessionQuoteTransfer->getIdQuote());
+        $persistentQuoteChange->setSessionQuote($sessionQuoteTransfer);
 
         return $persistentQuoteChange;
     }
@@ -352,11 +355,14 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     /**
      * @return \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer
      */
-    protected function createPersistentCartChangeQuantityTransfer()
+    protected function createPersistentCartChangeQuantityTransfer(): PersistentCartChangeQuantityTransfer
     {
         $persistentQuoteChange = new PersistentCartChangeQuantityTransfer();
         $persistentQuoteChange->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
-        $persistentQuoteChange->setIdQuote($this->getQuoteClient()->getQuote()->getIdQuote());
+
+        $sessionQuoteTransfer = $this->getQuoteClient()->getQuote();
+        $persistentQuoteChange->setIdQuote($sessionQuoteTransfer->getIdQuote());
+        $persistentQuoteChange->setSessionQuote($sessionQuoteTransfer);
 
         return $persistentQuoteChange;
     }
