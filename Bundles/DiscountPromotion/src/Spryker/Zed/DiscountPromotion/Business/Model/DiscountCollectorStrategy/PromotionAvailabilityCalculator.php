@@ -50,7 +50,7 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
         }
         $availability = $productAbstractAvailabilityTransfer->getAvailability();
 
-        if ($availability <= 0.0) {
+        if ($availability <= 0) {
             return 0.0;
         }
 

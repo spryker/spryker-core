@@ -79,7 +79,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             $discountPromotionEntity->getQuantity()
         );
 
-        if ($promotionMaximumQuantity === 0.0) {
+        if (!$promotionMaximumQuantity) {
             return [];
         }
 

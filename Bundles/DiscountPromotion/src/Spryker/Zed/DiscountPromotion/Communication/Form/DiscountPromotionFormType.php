@@ -64,7 +64,7 @@ class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
                 'label' => 'Quantity',
                 'constraints' => [
                     new NotBlank(['groups' => DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY]),
-                    new Type('float'),
+                    new Type('numeric'),
                 ],
             ]
         );

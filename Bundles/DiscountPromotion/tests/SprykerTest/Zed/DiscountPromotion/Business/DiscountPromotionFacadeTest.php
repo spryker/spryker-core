@@ -7,6 +7,7 @@
 namespace SprykerTest\Zed\DiscountPromotion\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
@@ -43,7 +44,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
         $promotionItemSku = '001';
-        $promotionItemQuantity = 1.0;
+        $promotionItemQuantity = 1;
 
         $discountGeneralTransfer = $this->tester->haveDiscount();
 
@@ -64,7 +65,7 @@ class DiscountPromotionFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider collectWhenPromotionItemIsAlreadyInCartShouldCollectItProvider
+     * @dataProvider collectWhenPromotionItemIsAlreadyInCartShouldCollectItDataProvider
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -99,28 +100,27 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return array
      */
-    public function collectWhenPromotionItemIsAlreadyInCartShouldCollectItProvider(): array
+    public function collectWhenPromotionItemIsAlreadyInCartShouldCollectItDataProvider(): array
     {
         return [
-            'int stock' => [$this->collectWhenPromotionItemIsAlreadyInCartShouldCollectItData(1)],
-            'float stock' => [$this->collectWhenPromotionItemIsAlreadyInCartShouldCollectItData(1.5)],
+            'int stock' => $this->getDataForCollectWhenPromotionItemIsAlreadyInCartShouldCollectIt(1),
+            'float stock' => $this->getDataForCollectWhenPromotionItemIsAlreadyInCartShouldCollectIt(1.5),
         ];
     }
 
     /**
      * @param int|float $quantity
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer
+     * @return array
      */
-    public function collectWhenPromotionItemIsAlreadyInCartShouldCollectItData($quantity): ItemTransfer
+    public function getDataForCollectWhenPromotionItemIsAlreadyInCartShouldCollectIt($quantity): array
     {
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setAbstractSku('001');
-        $itemTransfer->setQuantity($quantity);
-        $itemTransfer->setUnitGrossPrice(100);
-        $itemTransfer->setUnitPrice(80);
+        $itemTransfer = (new ItemBuilder())->seed([
+            ItemTransfer::ABSTRACT_SKU => '001',
+            ItemTransfer::QUANTITY => $quantity,
+        ])->build();
 
-        return $itemTransfer;
+        return [$itemTransfer];
     }
 
     /**
@@ -131,7 +131,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
         $promotionItemSku = '001';
-        $promotionItemQuantity = 1.0;
+        $promotionItemQuantity = 1;
 
         $discountGeneralTransfer = $this->tester->haveDiscount();
 
@@ -154,7 +154,7 @@ class DiscountPromotionFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider collectAdjustsQuantityBasedOnAvailabilityProvider
+     * @dataProvider collectAdjustsQuantityBasedOnAvailabilityDataProvider
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -192,28 +192,27 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return array
      */
-    public function collectAdjustsQuantityBasedOnAvailabilityProvider(): array
+    public function collectAdjustsQuantityBasedOnAvailabilityDataProvider(): array
     {
         return [
-            'int stock' => [$this->collectAdjustsQuantityBasedOnAvailabilityProviderData(1)],
-            'float stock' => [$this->collectAdjustsQuantityBasedOnAvailabilityProviderData(1.5)],
+            'int stock' => $this->getDataForCollectAdjustsQuantityBasedOnAvailability(1),
+            'float stock' => $this->getDataForCollectAdjustsQuantityBasedOnAvailability(1.5),
         ];
     }
 
     /**
      * @param int|float $quantity
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer
+     * @return array
      */
-    public function collectAdjustsQuantityBasedOnAvailabilityProviderData($quantity): ItemTransfer
+    public function getDataForCollectAdjustsQuantityBasedOnAvailability($quantity): array
     {
-        $itemTransfer = (new ItemTransfer())
-            ->setAbstractSku('001')
-            ->setQuantity($quantity)
-            ->setUnitGrossPrice(100)
-            ->setUnitPrice(80);
+        $itemTransfer = (new ItemBuilder())->seed([
+            ItemTransfer::QUANTITY => $quantity,
+            ItemTransfer::ABSTRACT_SKU => '001',
+        ])->build();
 
-        return $itemTransfer;
+        return [$itemTransfer];
     }
 
     /**
