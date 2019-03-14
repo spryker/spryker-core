@@ -134,6 +134,6 @@ class GreaterTest extends Unit
      */
     protected function createMore()
     {
-        return new Greater($this->tester->getLocator()->discount()->service());
+        return new Greater();
     }
 }

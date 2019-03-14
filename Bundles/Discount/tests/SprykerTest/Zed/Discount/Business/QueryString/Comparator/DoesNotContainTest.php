@@ -94,6 +94,6 @@ class DoesNotContainTest extends Unit
      */
     protected function createDoesNotContains()
     {
-        return new DoesNotContain($this->tester->getLocator()->discount()->service());
+        return new DoesNotContain();
     }
 }

@@ -162,6 +162,6 @@ class GreaterEqualTest extends Unit
      */
     protected function createMoreEqual()
     {
-        return new GreaterEqual($this->tester->getLocator()->discount()->service());
+        return new GreaterEqual();
     }
 }

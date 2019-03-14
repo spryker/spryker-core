@@ -162,6 +162,6 @@ class LessEqualTest extends Unit
      */
     protected function createLessEqual()
     {
-        return new LessEqual($this->tester->getLocator()->discount()->service());
+        return new LessEqual();
     }
 }

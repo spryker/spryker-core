@@ -94,6 +94,6 @@ class ContainsTest extends Unit
      */
     protected function createContains()
     {
-        return new Contains($this->tester->getLocator()->discount()->service());
+        return new Contains();
     }
 }

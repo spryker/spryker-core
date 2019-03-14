@@ -134,6 +134,6 @@ class EqualTest extends Unit
      */
     protected function createEqual()
     {
-        return new Equal($this->tester->getLocator()->discount()->service());
+        return new Equal();
     }
 }

@@ -205,7 +205,7 @@ class CalculatorTest extends Unit
      */
     protected function createComparatorOperators()
     {
-        $operators = (new OperatorProvider($this->tester->getLocator()->discount()->service()))
+        $operators = (new OperatorProvider())
             ->createComparators();
         return new ComparatorOperators($operators);
     }

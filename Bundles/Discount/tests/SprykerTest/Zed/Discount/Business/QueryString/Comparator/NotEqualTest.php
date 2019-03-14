@@ -134,6 +134,6 @@ class NotEqualTest extends Unit
      */
     protected function createNotEqual()
     {
-        return new NotEqual($this->tester->getLocator()->discount()->service());
+        return new NotEqual();
     }
 }

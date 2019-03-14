@@ -134,6 +134,6 @@ class LessTest extends Unit
      */
     protected function createLess()
     {
-        return new Less($this->tester->getLocator()->discount()->service());
+        return new Less();
     }
 }
