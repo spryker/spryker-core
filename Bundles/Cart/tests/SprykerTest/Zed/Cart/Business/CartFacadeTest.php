@@ -200,14 +200,18 @@ class CartFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider quoteOneItemQuantityDataProvider
+     *
+     * @param int|float $quantity
+     *
      * @return void
      */
-    public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItem(): void
+    public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItem($quantity): void
     {
         // Arrange
         $quoteTransfer = new QuoteTransfer();
         $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
-            ->setQuantity(3)
+            ->setQuantity($quantity)
             ->setUnitGrossPrice(1)
             ->setGroupKeyPrefix(uniqid('', true));
 
@@ -221,19 +225,35 @@ class CartFacadeTest extends Unit
     }
 
     /**
+     * @return array
+     */
+    public function quoteOneItemQuantityDataProvider(): array
+    {
+        return [
+            'int stock' => [1],
+            'float stock' => [1.1],
+        ];
+    }
+
+    /**
+     * @dataProvider quoteTwoItemQuantityDataProvider
+     *
+     * @param int|float $quantity1
+     * @param int|float $quantity2
+     *
      * @return void
      */
-    public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItemIfMoreThanOne(): void
+    public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItemIfMoreThanOne($quantity1, $quantity2): void
     {
         // Arrange
         $quoteTransfer = new QuoteTransfer();
         $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
-            ->setQuantity(3)
+            ->setQuantity($quantity1)
             ->setUnitGrossPrice(1)
             ->setGroupKeyPrefix(uniqid('', true));
 
         $newItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
-            ->setQuantity(1)
+            ->setQuantity($quantity2)
             ->setUnitGrossPrice(1);
 
         $quoteTransfer->addItem($cartItem);
@@ -244,6 +264,17 @@ class CartFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($quoteTransfer->getItems()[0]->getGroupKeyPrefix());
+    }
+
+    /**
+     * @return array
+     */
+    public function quoteTwoItemQuantityDataProvider(): array
+    {
+        return [
+            'int stock' => [1, 2],
+            'float stock' => [1.1, 2.2],
+        ];
     }
 
     /**
