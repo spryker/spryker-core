@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Sales\Dependency\Service;
 
-interface SalesToUtilProductServiceInterface
+interface SalesToUtilPriceServiceInterface
 {
     /**
      * @param float $price
