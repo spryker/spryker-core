@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints\Required;
 class ProductAbstractListContentTermForm extends AbstractType
 {
     public const FIELD_ID_ABSTRACT_PRODUCTS = 'idProductAbstracts';
-    public const PLACEHOLDER_ID_ABSTRACT_PRODUCTS = 'id';
+    public const PLACEHOLDER_ID_ABSTRACT_PRODUCTS = 'ID';
 
     protected const TEMPLATE_PATH = '@ContentProductGui/ProductAbstractList/product_abstract_list.twig';
 
