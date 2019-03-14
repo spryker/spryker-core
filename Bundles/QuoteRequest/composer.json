@@ -13,6 +13,7 @@
     "spryker/persistent-cart": "1.8.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/quote": "2.9.0",
+    "spryker/quote-extension": "^1.3.0",
     "spryker/sequence-number": "^3.0.0",
     "spryker/util-encoding": "^2.0.0",
     "spryker/zed-request": "^3.0.0"
@@ -32,7 +33,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\QuoteRequest\\Helper\\": "tests/SprykerTest/Shared/QuoteRequest/_support/Helper/"
     }
   },
   "autoload-dev": {

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 interface AgentQuoteRequestClientInterface
 {
@@ -85,6 +86,36 @@ interface AgentQuoteRequestClientInterface
     public function getQuoteRequestOverviewCollection(
         QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
     ): QuoteRequestOverviewCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Retrieves "Request for Quote" entity filtered by quote request reference.
+     * - Selects latestVersion based on latest version id.
+     *
+     * @api
+     *
+     * @param string $quoteRequestReference
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer;
+
+    /**
+     * Specification:
+     * - Expects "Request for Quote" status to be "in-progress".
+     * - Expects quoteInProgress property in QuoteRequestTransfer.
+     * - Sets quoteRequestReference to Quote transfer.
+     * - Replaces current customer quote by quoteInProgress from quote request.
+     * - Avoids database strategy.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function convertQuoteRequestToQuoteInProgress(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

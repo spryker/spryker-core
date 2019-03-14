@@ -55,22 +55,32 @@ class QuoteRequestToQuoteConverter implements QuoteRequestToQuoteConverterInterf
      */
     public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = (new QuoteResponseTransfer())->setIsSuccessful(false);
-
-        if (!$this->quoteRequestChecker->isQuoteRequestConvertible($quoteRequestTransfer)) {
-            return $quoteResponseTransfer->addError((new QuoteErrorTransfer())->setMessage(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS));
+        if (!$this->quoteRequestChecker->isQuoteRequestReady($quoteRequestTransfer)) {
+            return $this->getErrorResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS);
         }
 
         if (!$quoteRequestTransfer->getLatestVersion()) {
-            return $quoteResponseTransfer->addError((new QuoteErrorTransfer())->setMessage(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND));
+            return $this->getErrorResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND);
         }
 
         $latestQuoteRequestVersionTransfer = $quoteRequestTransfer->getLatestVersion();
         $quoteTransfer = $latestQuoteRequestVersionTransfer->getQuote();
 
         $quoteTransfer->setQuoteRequestVersionReference($latestQuoteRequestVersionTransfer->getVersionReference());
-        $this->quoteClient->lockQuote($quoteTransfer);
+        $quoteTransfer = $this->quoteClient->lockQuote($quoteTransfer);
 
-        return $this->persistentCartClient->replaceCustomerCart($quoteTransfer);
+        return $this->persistentCartClient->persistCustomerQuote($quoteTransfer);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function getErrorResponse(string $message): QuoteResponseTransfer
+    {
+        return (new QuoteResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addError((new QuoteErrorTransfer())->setMessage($message));
     }
 }

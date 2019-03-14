@@ -5,17 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\QuoteRequest\Dependency\Client;
+namespace Spryker\Client\QuoteExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteRequestToPersistentCartClientInterface
+interface DatabaseStrategyAvailabilityCheckPluginInterface
 {
     /**
+     * Specification:
+     * - Checks database strategy availability.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return bool
      */
-    public function persistCustomerQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function isAllowed(QuoteTransfer $quoteTransfer): bool;
 }

@@ -5,17 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\QuoteRequest\Dependency\Client;
+namespace Spryker\Client\AgentQuoteRequest\Dependency\Client;
 
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteRequestToPersistentCartClientInterface
+interface AgentQuoteRequestToQuoteClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return void
      */
-    public function persistCustomerQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function setQuote(QuoteTransfer $quoteTransfer);
 }

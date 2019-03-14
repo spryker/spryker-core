@@ -10,19 +10,24 @@ namespace Spryker\Client\MultiCart\Plugin\PersistentCart;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteReplacePluginInterface;
+use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuotePersistPluginInterface;
 
 /**
  * @method \Spryker\Client\MultiCart\MultiCartClientInterface getClient()
  */
-class MultiCartQuoteReplacePlugin extends AbstractPlugin implements QuoteReplacePluginInterface
+class MultiCartQuotePersistPlugin extends AbstractPlugin implements QuotePersistPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Plugin executed to create new active customer cart.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function replace(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function persist(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getClient()->createQuote($quoteTransfer);
     }

@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface;
 use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestChecker;
@@ -131,9 +132,9 @@ class QuoteRequestToQuoteConverterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverter
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteRequestToQuoteConverterMock()
+    protected function createQuoteRequestToQuoteConverterMock(): MockObject
     {
         return $this->getMockBuilder(QuoteRequestToQuoteConverter::class)
             ->setConstructorArgs([
@@ -146,17 +147,17 @@ class QuoteRequestToQuoteConverterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteRequestToPersistentCartClientInterfaceMock(): QuoteRequestToPersistentCartClientInterface
+    protected function createQuoteRequestToPersistentCartClientInterfaceMock(): MockObject
     {
         $quoteRequestToPersistentCartClientInterfaceMock = $this->getMockBuilder(QuoteRequestToPersistentCartClientInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['replaceCustomerCart'])
+            ->setMethods(['persistCustomerQuote'])
             ->getMock();
 
         $quoteRequestToPersistentCartClientInterfaceMock->expects($this->any())
-            ->method('replaceCustomerCart')
+            ->method('persistCustomerQuote')
             ->willReturnCallback(function (QuoteTransfer $quoteTransfer) {
                 return (new QuoteResponseTransfer())->setQuoteTransfer($quoteTransfer)->setIsSuccessful(true);
             });
@@ -165,9 +166,9 @@ class QuoteRequestToQuoteConverterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteRequestToQuoteClientInterfaceMock(): QuoteRequestToQuoteClientInterface
+    protected function createQuoteRequestToQuoteClientInterfaceMock(): MockObject
     {
         $quoteRequestToQuoteClientInterfaceMock = $this->getMockBuilder(QuoteRequestToQuoteClientInterface::class)
             ->disableOriginalConstructor()
@@ -184,9 +185,9 @@ class QuoteRequestToQuoteConverterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestChecker
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteRequestCheckerMock(): QuoteRequestChecker
+    protected function createQuoteRequestCheckerMock(): MockObject
     {
         return $this->getMockBuilder(QuoteRequestChecker::class)
             ->setConstructorArgs([$this->createQuoteRequestConfigMock()])
@@ -195,9 +196,9 @@ class QuoteRequestToQuoteConverterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\QuoteRequest\QuoteRequestConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteRequestConfigMock(): QuoteRequestConfig
+    protected function createQuoteRequestConfigMock(): MockObject
     {
         $quoteRequestConfigMock = $this->getMockBuilder(QuoteRequestConfig::class)
             ->setMethods(['getCancelableStatuses'])

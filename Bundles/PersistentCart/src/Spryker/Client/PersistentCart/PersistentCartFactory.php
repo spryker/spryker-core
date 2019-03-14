@@ -8,8 +8,6 @@
 namespace Spryker\Client\PersistentCart;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\PersistentCart\CustomerCartReplacer\CustomerCartReplacer;
-use Spryker\Client\PersistentCart\CustomerCartReplacer\CustomerCartReplacerInterface;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToCustomerClientInterface;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface;
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientInterface;
@@ -27,9 +25,11 @@ use Spryker\Client\PersistentCart\QuoteWriter\QuoteDeleter;
 use Spryker\Client\PersistentCart\QuoteWriter\QuoteDeleterInterface;
 use Spryker\Client\PersistentCart\QuoteWriter\QuoteUpdater;
 use Spryker\Client\PersistentCart\QuoteWriter\QuoteUpdaterInterface;
+use Spryker\Client\PersistentCart\QuoteWriter\QuoteWriter;
+use Spryker\Client\PersistentCart\QuoteWriter\QuoteWriterInterface;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStub;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface;
-use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteReplacePluginInterface;
+use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuotePersistPluginInterface;
 
 /**
  * @method \Spryker\Client\PersistentCart\PersistentCartConfig getConfig()
@@ -62,12 +62,12 @@ class PersistentCartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PersistentCart\CustomerCartReplacer\CustomerCartReplacerInterface
+     * @return \Spryker\Client\PersistentCart\QuoteWriter\QuoteWriterInterface
      */
-    public function createCustomerCartReplacer(): CustomerCartReplacerInterface
+    public function createQuoteWriter(): QuoteWriterInterface
     {
-        return new CustomerCartReplacer(
-            $this->getQuoteReplacePlugin(),
+        return new QuoteWriter(
+            $this->getQuotePersistPlugin(),
             $this->getQuoteClient()
         );
     }
@@ -164,11 +164,11 @@ class PersistentCartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteReplacePluginInterface
+     * @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuotePersistPluginInterface
      */
-    protected function getQuoteReplacePlugin(): QuoteReplacePluginInterface
+    protected function getQuotePersistPlugin(): QuotePersistPluginInterface
     {
-        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGIN_QUOTE_REPLACE);
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGIN_QUOTE_PERSIST);
     }
 
     /**

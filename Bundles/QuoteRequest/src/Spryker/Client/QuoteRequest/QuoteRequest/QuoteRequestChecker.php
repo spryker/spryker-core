@@ -41,7 +41,7 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
      *
      * @return bool
      */
-    public function isQuoteRequestConvertible(QuoteRequestTransfer $quoteRequestTransfer): bool
+    public function isQuoteRequestReady(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_READY;
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
@@ -17,8 +18,8 @@ use Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequ
 
 class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
 {
-    protected const ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
-    protected const ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
     /**
      * @var \Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestInterface
@@ -52,18 +53,13 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
         $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 
         $quoteRequestTransfer = $this->findQuoteRequestByReference($quoteRequestCriteriaTransfer->getQuoteRequestReference());
-        $quoteRequestResponseTransfer = new QuoteRequestResponseTransfer();
 
         if (!$quoteRequestTransfer) {
-            return $quoteRequestResponseTransfer
-                ->setIsSuccess(false)
-                ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS);
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
         }
 
         if (!$this->isQuoteRequestCancelable($quoteRequestTransfer)) {
-            return $quoteRequestResponseTransfer
-                ->setIsSuccess(false)
-                ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
         }
 
         $quoteRequestTransfer->setStatus(SharedAgentQuoteRequestConfig::STATUS_CANCELED);
@@ -81,18 +77,13 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
         $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 
         $quoteRequestTransfer = $this->findQuoteRequestByReference($quoteRequestCriteriaTransfer->getQuoteRequestReference());
-        $quoteRequestResponseTransfer = new QuoteRequestResponseTransfer();
 
         if (!$quoteRequestTransfer) {
-            return $quoteRequestResponseTransfer
-                ->setIsSuccess(false)
-                ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS);
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
         }
 
         if (!$this->isQuoteRequestCanStartEditable($quoteRequestTransfer)) {
-            return $quoteRequestResponseTransfer
-                ->setIsSuccess(false)
-                ->addError(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
         }
 
         $quoteRequestTransfer->requireLatestVersion()
@@ -112,6 +103,8 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
      */
     public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
+        $quoteRequestCriteriaTransfer->setWithHidden(true);
+
         return $this->quoteRequestFacade->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
     }
 
@@ -152,5 +145,17 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
     protected function isQuoteRequestCanStartEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_WAITING;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    protected function getErrorResponse(string $message): QuoteRequestResponseTransfer
+    {
+        return (new QuoteRequestResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage((new MessageTransfer())->setValue($message));
     }
 }

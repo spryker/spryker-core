@@ -82,9 +82,9 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function replaceQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getFactory()->createZedPersistentCartStub()->replaceQuote($quoteTransfer);
+        return $this->getFactory()->createZedPersistentCartStub()->persistQuote($quoteTransfer);
     }
 
     /**
@@ -96,9 +96,9 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function replaceCustomerCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function persistCustomerQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getFactory()->createCustomerCartReplacer()->replace($quoteTransfer);
+        return $this->getFactory()->createQuoteWriter()->persist($quoteTransfer);
     }
 
     /**

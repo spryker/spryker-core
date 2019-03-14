@@ -155,9 +155,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function replaceQuoteAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function persistQuoteAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->replaceQuote($quoteTransfer);
+        return $this->getFacade()->persistQuote($quoteTransfer);
     }
 
     /**

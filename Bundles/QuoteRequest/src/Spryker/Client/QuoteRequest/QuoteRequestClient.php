@@ -151,11 +151,11 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @return bool
      */
-    public function isQuoteRequestConvertible(QuoteRequestTransfer $quoteRequestTransfer): bool
+    public function isQuoteRequestReady(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $this->getFactory()
             ->createQuoteRequestChecker()
-            ->isQuoteRequestConvertible($quoteRequestTransfer);
+            ->isQuoteRequestReady($quoteRequestTransfer);
     }
 
     /**
