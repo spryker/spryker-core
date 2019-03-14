@@ -1,11 +1,11 @@
-<div class="sku-fields" id="localized-contents-{{ form.parent.vars.name }}" data-prototype="{{ form_row(form.skus.vars.prototype)|e }}">
-{% for sku in form.skus %}
-    {{ form_row(sku) }}
+<div class="id-product-abstract-fields" id="localized-contents-{{ form.parent.vars.name }}" data-prototype="{{ form_row(form.idProductAbstracts.vars.prototype)|e }}">
+{% for idProductAbstract in form.idProductAbstracts %}
+    {{ form_row(idProductAbstract) }}
 {% endfor %}
 </div>
 <button type="button"
-        class="add-abstract-product-sku btn-create"
-        data-list="#localized-contents-{{ form.parent.vars.name }}"><i class="fa fa-plus"></i> Add sku</button>
+        class="add-abstract-product-id btn-create"
+        data-list="#localized-contents-{{ form.parent.vars.name }}"><i class="fa fa-plus"></i> Add id</button>
 
 <link rel="stylesheet" href="/assets/css/spryker-zed-abstract-product-add.css" />
 <script src="/assets/js/spryker-zed-abstract-product-add.js"></script>
