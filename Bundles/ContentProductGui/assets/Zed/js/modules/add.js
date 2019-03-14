@@ -10,7 +10,7 @@ $(document).ready(function () {
         var subformList = $($(subform).data('list'));
         $.each(subformList.children(), function(index, element) {
             if (index > 0) {
-                addRemoveIdButton(element);
+                addRemoveIdProductAbstractButton(element);
             }
         });
     });
@@ -22,7 +22,7 @@ $(document).ready(function () {
         newWidget = newWidget.replace(/__name__/g, counter);
         counter++;
         list.data('widget-counter', counter);
-        var newElement = addRemoveIdButton(newWidget);
+        var newElement = addRemoveIdProductAbstractButton(newWidget);
         list.append(newElement);
     });
 
@@ -30,7 +30,7 @@ $(document).ready(function () {
         $(this).parent().remove();
     });
 
-    function addRemoveIdButton(element) {
+    function addRemoveIdProductAbstractButton(element) {
         return $(element).append('<i class="fa fa-minus remove-abstract-product-id pull-right"></i>');
     }
 });

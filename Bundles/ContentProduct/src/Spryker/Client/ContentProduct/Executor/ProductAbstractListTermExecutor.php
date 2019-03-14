@@ -21,6 +21,6 @@ class ProductAbstractListTermExecutor implements ProductAbstractListTermExecutor
         /** @var \Generated\Shared\Transfer\ContentProductAbstractListTransfer $contentProductAbstractListTransfer */
         $contentProductAbstractListTransfer = $parameters;
 
-        return $contentProductAbstractListTransfer->getIds();
+        return $contentProductAbstractListTransfer->getIdProductAbstracts();
     }
 }

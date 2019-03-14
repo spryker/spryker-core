@@ -1,6 +1,6 @@
-<div class="id-fields" id="localized-contents-{{ form.parent.vars.name }}" data-prototype="{{ form_row(form.ids.vars.prototype)|e }}">
-{% for id in form.ids %}
-    {{ form_row(id) }}
+<div class="id-product-abstract-fields" id="localized-contents-{{ form.parent.vars.name }}" data-prototype="{{ form_row(form.idProductAbstracts.vars.prototype)|e }}">
+{% for idProductAbstract in form.idProductAbstracts %}
+    {{ form_row(idProductAbstract) }}
 {% endfor %}
 </div>
 <button type="button"
