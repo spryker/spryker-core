@@ -25,7 +25,7 @@ class BaseDiscountPromotionSaverPlugin extends AbstractPlugin
      *
      * @return bool
      */
-    protected function isDiscountWithPromotion(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    protected function isDiscountWithPromotion(DiscountConfiguratorTransfer $discountConfiguratorTransfer): bool
     {
         return $discountConfiguratorTransfer->getDiscountCalculator()->getCollectorStrategyType() === DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY;
     }
@@ -38,6 +38,7 @@ class BaseDiscountPromotionSaverPlugin extends AbstractPlugin
     protected function getDiscountPromotionTransfer(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountPromotionTransfer
     {
         $discountGeneralTransfer = $discountConfiguratorTransfer->getDiscountGeneral();
+        $discountGeneralTransfer->requireIdDiscount();
         $discountPromotionTransfer = $discountConfiguratorTransfer->getDiscountCalculator()->getDiscountPromotion() ?? new DiscountPromotionTransfer();
         $discountPromotionTransfer->setFkDiscount($discountGeneralTransfer->getIdDiscount());
 
