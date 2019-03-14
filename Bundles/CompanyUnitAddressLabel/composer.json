@@ -14,8 +14,8 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker/company-business-unit": "*",
     "spryker/code-sniffer": "*",
+    "spryker/company-business-unit": "*",
     "spryker/country": "*",
     "spryker/locale": "*",
     "spryker/propel": "*",
