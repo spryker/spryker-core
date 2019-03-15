@@ -59,6 +59,8 @@ class FooBarTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
         ],
         self::BLA => [
             'type' => 'int',
@@ -66,6 +68,8 @@ class FooBarTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
         ],
         self::SELF_REFERENCE => [
             'type' => 'Generated\Shared\Transfer\FooBarTransfer',
@@ -73,6 +77,8 @@ class FooBarTransfer extends AbstractTransfer
             'is_collection' => true,
             'is_transfer' => true,
             'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
         ],
     ];
 

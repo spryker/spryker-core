@@ -56,7 +56,7 @@ class BundleMethodGeneratorTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Twig_Environment
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Twig_Environment
      */
     protected function createTwigEnvironmentMock()
     {

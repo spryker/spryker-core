@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Auth\Business\Model;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\UserTransfer;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
@@ -162,7 +162,7 @@ class AuthTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge
      */
     protected function createFacadeUser()
     {
@@ -176,7 +176,7 @@ class AuthTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Session\SessionClient
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Session\SessionClient
      */
     protected function createSessionClient()
     {
@@ -187,7 +187,7 @@ class AuthTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Auth\Business\Client\StaticToken
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Auth\Business\Client\StaticToken
      */
     protected function createStaticTokenClient()
     {
@@ -217,11 +217,11 @@ class AuthTest extends Unit
     }
 
     /**
-     * @param \PHPUnit_Framework_MockObject_MockObject $sessionClient
+     * @param \PHPUnit\Framework\MockObject\MockObject $sessionClient
      *
      * @return void
      */
-    protected function checkMigrateIsCalled(PHPUnit_Framework_MockObject_MockObject $sessionClient)
+    protected function checkMigrateIsCalled(MockObject $sessionClient)
     {
         $sessionClient->expects($this->once())
             ->method('migrate')

@@ -14,15 +14,16 @@ class IdFilterInsert extends AbstractIdFilter
     /**
      * @param array $ids
      * @param string $itemType
+     * @param string $itemEvent
      *
      * @return array
      */
-    public function filter(array $ids, $itemType)
+    public function filter(array $ids, string $itemType, string $itemEvent): array
     {
         $filteredIds = [];
         $itemIdChunks = array_chunk($ids, self::CHUNK_SIZE);
         foreach ($itemIdChunks as $itemIdChunk) {
-            $idCollection = $this->getIdCollection($itemType, $itemIdChunk);
+            $idCollection = $this->getIdCollection($itemType, $itemIdChunk, $itemEvent);
 
             $filteredIds = array_merge($filteredIds, array_diff($itemIdChunk, $idCollection));
         }

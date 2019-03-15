@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipStorageToPriceProductServiceInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
 use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig as SharedPriceProductMerchantRelationshipStorageConfig;
 
@@ -25,11 +26,20 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected $priceProductMerchantRelationshipStorageConfig;
 
     /**
-     * @param \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig $priceProductMerchantRelationshipStorageConfig
+     * @var \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipStorageToPriceProductServiceInterface
      */
-    public function __construct(PriceProductMerchantRelationshipStorageConfig $priceProductMerchantRelationshipStorageConfig)
-    {
+    protected $priceProductService;
+
+    /**
+     * @param \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig $priceProductMerchantRelationshipStorageConfig
+     * @param \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipStorageToPriceProductServiceInterface $priceProductService
+     */
+    public function __construct(
+        PriceProductMerchantRelationshipStorageConfig $priceProductMerchantRelationshipStorageConfig,
+        PriceProductMerchantRelationshipStorageToPriceProductServiceInterface $priceProductService
+    ) {
         $this->priceProductMerchantRelationshipStorageConfig = $priceProductMerchantRelationshipStorageConfig;
+        $this->priceProductService = $priceProductService;
     }
 
     /**
@@ -56,6 +66,9 @@ class PriceProductMapper implements PriceProductMapperInterface
                             $priceType,
                             $priceProductTransfers
                         );
+
+                        $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer))
+                            ->setIsMergeable(true);
 
                         if ($priceMode === SharedPriceProductMerchantRelationshipStorageConfig::PRICE_GROSS_MODE) {
                             $priceProductTransfer->getMoneyValue()->setGrossAmount($priceAmount);
