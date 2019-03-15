@@ -26,8 +26,10 @@ class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements Re
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection
-            ->addGet('get', false);
+        $resourceRouteCollection->addGet(
+            ContentProductAbstractListsRestApiConfig::ACTION_RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_GET,
+            false
+        );
 
         return $resourceRouteCollection;
     }
@@ -41,7 +43,7 @@ class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements Re
      */
     public function getResourceType(): string
     {
-        return ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCTS;
+        return ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS;
     }
 
     /**
@@ -53,7 +55,7 @@ class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements Re
      */
     public function getController(): string
     {
-        return ContentProductAbstractListsRestApiConfig::CONTROLLER_CONTENT_PRODUCT;
+        return ContentProductAbstractListsRestApiConfig::CONTROLLER_CONTENT_PRODUCT_ABSTRACT_LIST;
     }
 
     /**

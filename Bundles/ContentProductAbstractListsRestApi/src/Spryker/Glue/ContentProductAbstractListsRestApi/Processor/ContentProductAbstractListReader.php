@@ -61,7 +61,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     public function getContentItemById(RestRequestInterface $restRequest): RestResponseInterface
     {
         $parentResource = $restRequest->findParentResourceByType(
-            ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCTS
+            ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS
         );
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
