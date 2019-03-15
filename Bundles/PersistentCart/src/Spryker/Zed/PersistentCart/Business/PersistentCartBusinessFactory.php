@@ -27,6 +27,7 @@ use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface;
+use Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface;
 use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
@@ -44,7 +45,8 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteItemFinderPlugin(),
             $this->createQuoteResponseExpander(),
             $this->createQuoteResolver(),
-            $this->createQuoteItemOperation()
+            $this->createQuoteItemOperation(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -141,7 +143,8 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     public function createQuoteMerger(): QuoteMergerInterface
     {
         return new QuoteMerger(
-            $this->getCartAddItemStrategyPlugins()
+            $this->getCartAddItemStrategyPlugins(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -207,5 +210,13 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     public function getCartAddItemStrategyPlugins(): array
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_CART_ADD_ITEM_STRATEGY);
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface
+     */
+    public function getUtilQuantityService(): PersistentCartToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

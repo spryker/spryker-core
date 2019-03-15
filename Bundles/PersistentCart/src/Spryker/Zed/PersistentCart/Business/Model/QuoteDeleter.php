@@ -132,7 +132,7 @@ class QuoteDeleter implements QuoteDeleterInterface
             }
         }
 
-        return $customerQuoteQuantity === 0;
+        return $customerQuoteQuantity == 0;
     }
 
     /**

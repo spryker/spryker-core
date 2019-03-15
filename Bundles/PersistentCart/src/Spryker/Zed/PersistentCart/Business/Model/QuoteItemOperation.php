@@ -215,7 +215,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
     {
         $items = $quoteTransfer->getItems();
 
-        if (count($items) === 0) {
+        if (count($items) == 0) {
             $quoteTransfer->setItems(new ArrayObject());
         }
 

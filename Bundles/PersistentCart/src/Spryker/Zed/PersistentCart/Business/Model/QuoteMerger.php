@@ -10,6 +10,7 @@ namespace Spryker\Zed\PersistentCart\Business\Model;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface;
 use Traversable;
 
 class QuoteMerger implements QuoteMergerInterface
@@ -20,12 +21,20 @@ class QuoteMerger implements QuoteMergerInterface
     protected $cartAddItemStrategyPlugins;
 
     /**
+     * @var \Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartAddItemStrategyPlugins
+     * @param \Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
-        array $cartAddItemStrategyPlugins
+        array $cartAddItemStrategyPlugins,
+        PersistentCartToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->cartAddItemStrategyPlugins = $cartAddItemStrategyPlugins;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -122,6 +131,16 @@ class QuoteMerger implements QuoteMergerInterface
         $existingItemTransfer = $existingItems[$index];
         $changedQuantity = $existingItemTransfer->getQuantity() + $itemTransfer->getQuantity();
 
-        $existingItemTransfer->setQuantity($changedQuantity);
+        $existingItemTransfer->setQuantity($this->roundQuantity($changedQuantity));
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 }
