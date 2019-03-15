@@ -17,7 +17,7 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacad
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeBridge;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityBridge;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToProductQueryContainerBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerBridge;
@@ -253,7 +253,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     protected function addUtilQuantityService(Container $container)
     {
         $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
-            return new ProductBundleToUtilQuantityBridge($container->getLocator()->utilQuantity()->service());
+            return new ProductBundleToUtilQuantityServiceBridge($container->getLocator()->utilQuantity()->service());
         };
 
         return $container;

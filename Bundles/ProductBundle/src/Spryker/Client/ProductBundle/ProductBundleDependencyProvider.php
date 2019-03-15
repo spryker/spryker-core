@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductBundle;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceBridge;
 
 class ProductBundleDependencyProvider extends AbstractDependencyProvider
 {
@@ -34,7 +35,7 @@ class ProductBundleDependencyProvider extends AbstractDependencyProvider
     protected function addUtilQuantityService(Container $container): Container
     {
         $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
-            return $container->getLocator()->utilQuantity()->service();
+            return new ProductBundleToUtilQuantityServiceBridge($container->getLocator()->utilQuantity()->service());
         };
 
         return $container;

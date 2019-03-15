@@ -10,19 +10,19 @@ namespace Spryker\Client\ProductBundle\QuoteChangeRequestExpander;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface;
 
 class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface
      */
     protected $utilQuantityService;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface $utilQuantityService
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
      */
-    public function __construct(ProductBundleToUtilQuantityInterface $utilQuantityService)
+    public function __construct(ProductBundleToUtilQuantityServiceInterface $utilQuantityService)
     {
         $this->utilQuantityService = $utilQuantityService;
     }

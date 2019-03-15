@@ -17,7 +17,8 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityBridge;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceBridge;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -143,11 +144,11 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerBridge
+     * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface
      */
-    protected function createUtilQuantityService()
+    protected function createUtilQuantityService(): ProductBundleToUtilQuantityServiceInterface
     {
-        return new ProductBundleToUtilQuantityBridge($this->tester->getLocator()->utilQuantity()->service());
+        return new ProductBundleToUtilQuantityServiceBridge($this->tester->getLocator()->utilQuantity()->service());
     }
 
     /**

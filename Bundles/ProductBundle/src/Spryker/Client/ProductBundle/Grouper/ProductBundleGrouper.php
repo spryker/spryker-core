@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface;
 
 class ProductBundleGrouper implements ProductBundleGrouperInterface
 {
@@ -25,14 +25,14 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     protected $bundleGroupKeys = [];
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface
      */
     protected $utilQuantityService;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface $utilQuantityService
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
      */
-    public function __construct(ProductBundleToUtilQuantityInterface $utilQuantityService)
+    public function __construct(ProductBundleToUtilQuantityServiceInterface $utilQuantityService)
     {
         $this->utilQuantityService = $utilQuantityService;
     }
@@ -197,9 +197,8 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
             if (!isset($groupedBundleQuantity[$bundleGroupKey])) {
                 $groupedBundleQuantity[$bundleGroupKey] = $bundleItemTransfer->getQuantity();
             } else {
-                $groupedBundleQuantity[$bundleGroupKey] = $this->utilQuantityService->roundQuantity(
-                    $groupedBundleQuantity[$bundleGroupKey] + $bundleItemTransfer->getQuantity()
-                );
+                $summaryQuantity = $groupedBundleQuantity[$bundleGroupKey] + $bundleItemTransfer->getQuantity();
+                $groupedBundleQuantity[$bundleGroupKey] = $this->utilQuantityService->roundQuantity($summaryQuantity);
             }
         }
 
@@ -255,10 +254,9 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
             $currentBundledItems[$currentBundleIdentifer] = clone $bundledItemTransfer;
         } else {
             $currentBundleItemTransfer = $currentBundledItems[$currentBundleIdentifer];
-            $summaryQuantity = $this->utilQuantityService->roundQuantity(
-                $currentBundleItemTransfer->getQuantity() + $bundledItemTransfer->getQuantity()
-            );
-            $currentBundleItemTransfer->setQuantity($summaryQuantity);
+            $summaryQuantity = $currentBundleItemTransfer->getQuantity() + $bundledItemTransfer->getQuantity();
+            $roundedQuantity = $this->utilQuantityService->roundQuantity($summaryQuantity);
+            $currentBundleItemTransfer->setQuantity($roundedQuantity);
         }
 
         return $currentBundledItems;

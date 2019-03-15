@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
-class ProductBundleToUtilQuantityBridge implements ProductBundleToUtilQuantityInterface
+class ProductBundleToUtilQuantityServiceBridge implements ProductBundleToUtilQuantityServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilQuantity\UtilQuantityServiceInterface

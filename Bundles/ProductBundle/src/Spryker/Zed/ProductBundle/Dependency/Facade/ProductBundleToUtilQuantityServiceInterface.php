@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
-interface ProductBundleToUtilQuantityInterface
+interface ProductBundleToUtilQuantityServiceInterface
 {
     /**
      * @param float $quantity
