@@ -16,6 +16,8 @@ use Twig_Environment;
 use Twig_SimpleFilter;
 
 /**
+ * @deprecated Use `Spryker\Yves\Money\Plugin\Twig\MoneyTwigPlugin` instead.
+ *
  * @method \Spryker\Yves\Money\MoneyFactory getFactory()
  */
 class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProviderInterface

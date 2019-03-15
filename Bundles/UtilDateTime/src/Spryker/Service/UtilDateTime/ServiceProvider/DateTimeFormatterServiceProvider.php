@@ -13,6 +13,9 @@ use Spryker\Service\UtilDateTime\Model\DateTimeFormatterTwigExtension;
 use Spryker\Service\UtilDateTime\UtilDateTimeService;
 use Twig_Environment;
 
+/**
+ * @deprecated Use `\Spryker\Service\UtilDateTime\Plugin\Twig\DateTimeFormatterTwigPlugin` instead.
+ */
 class DateTimeFormatterServiceProvider implements ServiceProviderInterface
 {
     /**

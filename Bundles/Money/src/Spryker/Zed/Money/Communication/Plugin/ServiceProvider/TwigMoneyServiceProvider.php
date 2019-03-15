@@ -16,6 +16,8 @@ use Twig_Environment;
 use Twig_SimpleFilter;
 
 /**
+ * @deprecated Use `Spryker\Zed\Money\Communication\Plugin\Twig\MoneyTwigPlugin` instead.
+ *
  * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
  * @method \Spryker\Zed\Money\MoneyConfig getConfig()

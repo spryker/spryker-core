@@ -8,11 +8,11 @@
 namespace Spryker\Shared\Twig;
 
 use Spryker\Shared\Twig\Cache\CacheInterface;
+use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface;
 use Twig_Error_Loader;
-use Twig_LoaderInterface;
 
-class TwigFilesystemLoader implements Twig_LoaderInterface
+class TwigFilesystemLoader implements FilesystemLoaderInterface
 {
     /**
      * @var array
@@ -43,10 +43,11 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
 
     /**
      * @param string $path
+     * @param string $namespace
      *
      * @return $this
      */
-    public function addPath($path)
+    public function addPath($path, $namespace = '__main__')
     {
         $this->paths[] = rtrim($path, '/\\');
 
