@@ -218,7 +218,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *  - Recalculates quote totals.
      *  - Save updated quote to database.
      *  - Stores quote in session internally after zed request.
-     *  - Returns update quote.ker/spryker/Bundles/Cart/src/Spryker/Client/Cart/CartClient.ph
+     *  - Returns update quote.
      *
      * @param string $sku
      * @param string|null $groupKey
