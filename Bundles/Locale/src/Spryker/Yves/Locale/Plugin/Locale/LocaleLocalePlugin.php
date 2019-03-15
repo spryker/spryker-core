@@ -67,9 +67,9 @@ class LocaleLocalePlugin extends AbstractPlugin implements LocalePluginInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    protected function getRequestUri(): string
+    protected function getRequestUri(): ?string
     {
         $requestUri = Request::createFromGlobals()
             ->server->get(static::REQUEST_URI);

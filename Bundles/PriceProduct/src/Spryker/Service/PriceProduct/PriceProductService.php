@@ -84,4 +84,20 @@ class PriceProductService extends AbstractService implements PriceProductService
             ->createPriceProductMerger()
             ->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return string
+     */
+    public function buildPriceProductGroupKey(PriceProductTransfer $priceProductTransfer): string
+    {
+        return $this->getFactory()
+            ->createPriceProductGroupKeyBuilder()
+            ->buildPriceProductGroupKey($priceProductTransfer);
+    }
 }

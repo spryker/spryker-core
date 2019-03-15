@@ -9,7 +9,6 @@ namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\CustomerBusinessUnitAttachForm;
@@ -57,16 +56,25 @@ class CustomerBusinessUnitAttachFormDataProvider
      */
     public function getData(int $idCustomer, int $idCompany): CompanyUserTransfer
     {
-        $companyTransfer = $this->companyFacade->getCompanyById(
-            (new CompanyTransfer())->setIdCompany($idCompany)
-        );
+        $companyUserTransfer = new CompanyUserTransfer();
+
+        $companyTransfer = $this->companyFacade->findCompanyById($idCompany);
+
+        if (!$companyTransfer) {
+            return $companyUserTransfer;
+        }
+
+        $companyUserTransfer->setFkCompany($idCompany);
 
         $customerTransfer = $this->customerFacade->findCustomerById(
             (new CustomerTransfer())->setIdCustomer($idCustomer)
         );
 
-        return (new CompanyUserTransfer())
-            ->setFkCompany($idCompany)
+        if (!$customerTransfer) {
+            return $companyUserTransfer;
+        }
+
+        return $companyUserTransfer
             ->setFkCustomer($idCustomer)
             ->setCompany($companyTransfer)
             ->setCustomer($customerTransfer);

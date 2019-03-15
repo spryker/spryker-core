@@ -63,4 +63,19 @@ interface TranslatorPluginInterface extends TranslatorInterface
      * @return string The locale
      */
     public function getLocale(): string;
+
+    /**
+     * Specification:
+     * - Check if we have key in the catalogue by locale and key.
+     *
+     * @api
+     *
+     * @param string $keyName
+     * @param string $locale
+     *
+     * @throws \Symfony\Component\Translation\Exception\InvalidArgumentException
+     *
+     * @return bool
+     */
+    public function has(string $keyName, string $locale): bool;
 }

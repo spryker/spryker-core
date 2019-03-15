@@ -7,8 +7,17 @@
 
 namespace Spryker\Client\PriceProductStorage\Dependency\Service;
 
+use Generated\Shared\Transfer\PriceProductTransfer;
+
 interface PriceProductStorageToPriceProductServiceInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return string
+     */
+    public function buildPriceProductGroupKey(PriceProductTransfer $priceProductTransfer): string;
+
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers

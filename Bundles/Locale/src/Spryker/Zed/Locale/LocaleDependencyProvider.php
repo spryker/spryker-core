@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\LocaleExtension\Dependency\Plugin\LocalePluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Locale\Communication\Plugin\LocalePlugin;
+use Spryker\Zed\Locale\Communication\Plugin\Locale\LocaleLocalePlugin;
 
 /**
  * @method \Spryker\Zed\Locale\LocaleConfig getConfig()
@@ -64,7 +64,7 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getLocalePlugin(): LocalePluginInterface
     {
-        return new LocalePlugin();
+        return new LocaleLocalePlugin();
     }
 
     /**

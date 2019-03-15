@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Locale\Communication\Plugin;
+namespace Spryker\Zed\Locale\Communication\Plugin\Locale;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Service\Container\ContainerInterface;
@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Locale\Business\LocaleFacadeInterface getFacade()
  * @method \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface getQueryContainer()
  */
-class LocalePlugin extends AbstractPlugin implements LocalePluginInterface
+class LocaleLocalePlugin extends AbstractPlugin implements LocalePluginInterface
 {
     /**
      * {@inheritdoc}

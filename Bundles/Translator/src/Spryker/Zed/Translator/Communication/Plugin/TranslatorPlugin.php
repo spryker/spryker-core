@@ -77,4 +77,19 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
     {
         return $this->getFacade()->getLocale();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $keyName
+     * @param string $locale
+     *
+     * @return bool
+     */
+    public function has(string $keyName, string $locale): bool
+    {
+        return $this->getFacade()->has($keyName, $locale);
+    }
 }

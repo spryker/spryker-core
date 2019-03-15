@@ -22,6 +22,7 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SilexRoutingSer
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SubRequestServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TranslationServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TwigGlobalVariablesServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -76,6 +77,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     protected function getServiceProviders(Container $container)
     {
         $providers = [
+            new TwigGlobalVariablesServiceProvider(),
             new RequestServiceProvider(),
             new SslServiceProvider(),
             new ServiceControllerServiceProvider(),

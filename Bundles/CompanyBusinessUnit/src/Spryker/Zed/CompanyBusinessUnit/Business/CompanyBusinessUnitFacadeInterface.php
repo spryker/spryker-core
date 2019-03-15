@@ -155,6 +155,8 @@ interface CompanyBusinessUnitFacadeInterface
     /**
      * Specification:
      * - Checks if company user already exists by customer id and company business unit id.
+     * - Ignores company user by CompanyUserTransfer::idCompanyUser.
+     * - Returns true in isSuccessful property if CompanyUserTransfer::fkCompanyBusinessUnit or CompanyUserTransfer::fkCustomer is empty.
      * - Returns false in isSuccessful property if column fk_customer doesn't exist.
      * - Returns false in isSuccessful property if company user already exists and adds error message to messages collection.
      *
@@ -165,4 +167,17 @@ interface CompanyBusinessUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function isUniqueCompanyUserByCustomer(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds company business unit by id.
+     * - Returns null if business unit does not exist.
+     *
+     * @api
+     *
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer;
 }

@@ -112,4 +112,19 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     {
         return $this->getFactory()->createTranslator()->getLocale();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $keyName
+     * @param string $locale
+     *
+     * @return bool
+     */
+    public function has(string $keyName, string $locale): bool
+    {
+        return $this->getFactory()->createTranslator()->has($keyName, $locale);
+    }
 }
