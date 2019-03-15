@@ -138,8 +138,7 @@ class AvailabilityHandlerTest extends Unit
             $touchFacade,
             $availabilityQueryContainer,
             $availabilityToProductFacade,
-            $availabilityToStoreFacade,
-            $this->tester->getLocator()->availability()->service()
+            $availabilityToStoreFacade
         );
     }
 

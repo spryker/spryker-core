@@ -13,6 +13,7 @@ use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceBridge;
 
 /**
  * Auto-generated group annotations
@@ -108,7 +109,9 @@ class SellableTest extends Unit
             $omsFacadeMock,
             $stockFacadeMock,
             $storeFacade,
-            $this->tester->getLocator()->availability()->service()
+            new AvailabilityToUtilQuantityServiceBridge(
+                $this->tester->getLocator()->utilQuantity()->service()
+            )
         );
     }
 

@@ -22,7 +22,20 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
+use Spryker\Service\UtilQuantity\UtilQuantityConfig;
+use Spryker\Service\UtilQuantity\UtilQuantityService;
+use Spryker\Service\UtilQuantity\UtilQuantityServiceFactory;
+use Spryker\Service\UtilQuantity\UtilQuantityServiceInterface;
+use Spryker\Zed\Availability\AvailabilityDependencyProvider;
+use Spryker\Zed\Availability\Business\AvailabilityBusinessFactory;
 use Spryker\Zed\Availability\Business\AvailabilityFacade;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsBridge;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductBridge;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockBridge;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeBridge;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchBridge;
+use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceBridge;
+use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
@@ -39,6 +52,11 @@ class AvailabilityFacadeTest extends Unit
     public const ABSTRACT_SKU = '123_availability_test';
     public const CONCRETE_SKU = '123_availability_test-concrete';
     public const ID_STORE = 1;
+
+    /**
+     * @var \SprykerTest\Zed\Availability\AvailabilityBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -288,11 +306,69 @@ class AvailabilityFacadeTest extends Unit
     }
 
     /**
+     * @return \Spryker\Service\UtilQuantity\UtilQuantityServiceInterface
+     */
+    protected function createUtilQuantityService(): UtilQuantityServiceInterface
+    {
+        $utilQuantityConfigMock = $this->getMockBuilder(UtilQuantityConfig::class)->setMethods([
+            'getQuantityRoundingPrecision',
+        ])->getMock();
+        $utilQuantityConfigMock->method('getQuantityRoundingPrecision')->willReturn(2);
+        $utilQuantityFactory = new UtilQuantityServiceFactory();
+        $utilQuantityFactory->setConfig($utilQuantityConfigMock);
+        $utilQuantityService = new UtilQuantityService();
+        $utilQuantityService->setFactory($utilQuantityFactory);
+
+        return $utilQuantityService;
+    }
+
+    /**
      * @return \Spryker\Zed\Availability\Business\AvailabilityFacade
      */
     protected function createAvailabilityFacade()
     {
-        return new AvailabilityFacade();
+        $utilQuantityService = $this->createUtilQuantityService();
+
+        $availabilityFacade = new AvailabilityFacade();
+        $availabilityBusinessFactory = new AvailabilityBusinessFactory();
+
+        $availabilityContainer = new Container();
+        $availabilityContainer[AvailabilityDependencyProvider::SERVICE_UTIL_QUANTITY] = function () use ($utilQuantityService) {
+            return new AvailabilityToUtilQuantityServiceBridge(
+                $utilQuantityService
+            );
+        };
+        $availabilityContainer[AvailabilityDependencyProvider::FACADE_OMS] = function () {
+            return new AvailabilityToOmsBridge(
+                $this->tester->getLocator()->oms()->facade()
+            );
+        };
+        $availabilityContainer[AvailabilityDependencyProvider::FACADE_STOCK] = function () {
+            return new AvailabilityToStockBridge(
+                $this->tester->getLocator()->stock()->facade()
+            );
+        };
+        $availabilityContainer[AvailabilityDependencyProvider::FACADE_STORE] = function () {
+            return new AvailabilityToStoreFacadeBridge(
+                $this->tester->getLocator()->store()->facade()
+            );
+        };
+        $availabilityContainer[AvailabilityDependencyProvider::FACADE_TOUCH] = function () {
+            return new AvailabilityToTouchBridge(
+                $this->tester->getLocator()->touch()->facade()
+            );
+        };
+        $availabilityContainer[AvailabilityDependencyProvider::FACADE_PRODUCT] = function () {
+            return new AvailabilityToProductBridge(
+                $this->tester->getLocator()->product()->facade()
+            );
+        };
+
+        $availabilityBusinessFactory->setContainer($availabilityContainer);
+
+        $availabilityFacade->setFactory($availabilityBusinessFactory);
+
+        return $availabilityFacade;
     }
 
     /**

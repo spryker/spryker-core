@@ -51,11 +51,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface $touchFacade
@@ -241,7 +236,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function getQuantity($quantity)
     {
-        return $quantity > 0.0 ? $quantity : 0;
+        return $quantity > 0 ? $quantity : 0;
     }
 
     /**
