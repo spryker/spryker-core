@@ -39,7 +39,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 class ProductBundleCartExpanderTest extends Unit
 {
     protected const INT_QUANTITY = 2;
-    protected const FLOAT_QUANTITY = 2.0;
+    protected const FLOAT_QUANTITY = 2.1;
 
     /**
      * @var array
@@ -56,11 +56,15 @@ class ProductBundleCartExpanderTest extends Unit
      * @dataProvider cartChangeTransferDataProvider
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param int $expectedItemsCount
+     * @param int $expectedBundleItemsCount
      *
      * @return void
      */
     public function testExpandBundleItemsShouldExtractBundledItemsAndDistributeBundlePrice(
-        CartChangeTransfer $cartChangeTransfer
+        CartChangeTransfer $cartChangeTransfer,
+        int $expectedItemsCount,
+        int $expectedBundleItemsCount
     ) {
         $productExpanderMock = $this->setupProductExpander();
 
@@ -71,8 +75,8 @@ class ProductBundleCartExpanderTest extends Unit
         $bundleItems = $updatedCartChangeTransfer->getQuote()->getBundleItems();
         $updatedAddToCartItems = $updatedCartChangeTransfer->getItems();
 
-        $this->assertCount(4, $updatedAddToCartItems);
-        $this->assertCount(2, $bundleItems);
+        $this->assertCount($expectedItemsCount, $updatedAddToCartItems);
+        $this->assertCount($expectedBundleItemsCount, $bundleItems);
         $this->assertCount(0, $updatedCartChangeTransfer->getQuote()->getItems());
 
         $bundleItemTransfer = $bundleItems[0];
@@ -180,10 +184,10 @@ class ProductBundleCartExpanderTest extends Unit
     {
         $cartChangeTransfer = [
             'int quantity' => $this->createCartChangeTransfer(
-                static::INT_QUANTITY, $this->fixtures['bundledProductSku']
+                static::INT_QUANTITY, $this->fixtures['bundledProductSku'], 4, 2
             ),
             'float quantity' => $this->createCartChangeTransfer(
-                static::FLOAT_QUANTITY, $this->fixtures['bundledProductSku']
+                static::FLOAT_QUANTITY, $this->fixtures['bundledProductSku'], 6, 3
             ),
         ];
 
@@ -193,33 +197,35 @@ class ProductBundleCartExpanderTest extends Unit
     /**
      * @param float|int $quantity
      * @param string $bundleSku
+     * @param int $expectedItemsCount
+     * @param int $expectedBundleItemsCount
      *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer[]
+     * @return array
      */
-    protected function createCartChangeTransfer($quantity, string $bundleSku)
-    {
-        $cartChangeTransfer = new CartChangeTransfer();
+    protected function createCartChangeTransfer(
+        $quantity,
+        string $bundleSku,
+        int $expectedItemsCount,
+        int $expectedBundleItemsCount
+    ): array {
+        $currencyTransfer = (new CurrencyTransfer())->setCode('EUR');
+        $quoteTransfer = (new QuoteTransfer())
+            ->setPriceMode(PriceConfig::PRICE_MODE_GROSS)
+            ->setCurrency($currencyTransfer);
 
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setPriceMode(PriceConfig::PRICE_MODE_GROSS);
+        $itemTransfer = (new ItemTransfer())
+            ->setQuantity($quantity)
+            ->setUnitGrossPrice(300)
+            ->setUnitPrice(300)
+            ->setUnitNetPrice(300)
+            ->setSku($bundleSku)
+            ->setId(1);
 
-        $currencyTransfer = new CurrencyTransfer();
-        $currencyTransfer->setCode('EUR');
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->setQuote($quoteTransfer)
+            ->addItem($itemTransfer);
 
-        $quoteTransfer->setCurrency($currencyTransfer);
-        $cartChangeTransfer->setQuote($quoteTransfer);
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity($quantity);
-        $itemTransfer->setUnitGrossPrice(300);
-        $itemTransfer->setUnitPrice(300);
-        $itemTransfer->setUnitNetPrice(300);
-        $itemTransfer->setSku($bundleSku);
-        $itemTransfer->setId(1);
-
-        $cartChangeTransfer->addItem($itemTransfer);
-
-        return [$cartChangeTransfer];
+        return [$cartChangeTransfer, $expectedItemsCount, $expectedBundleItemsCount];
     }
 
     /**

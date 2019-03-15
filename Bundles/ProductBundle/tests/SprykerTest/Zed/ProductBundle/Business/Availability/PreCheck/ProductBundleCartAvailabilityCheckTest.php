@@ -45,19 +45,21 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $cartChangeItemTransfer
+     * @param float|int $expectedQuantity
      *
      * @return void
      */
     public function testCheckCartAvailabilityWhenBundledItemsAvailableShouldReturnEmptyMessageContainer(
         QuoteTransfer $quoteTransfer,
-        ItemTransfer $cartChangeItemTransfer
+        ItemTransfer $cartChangeItemTransfer,
+        $expectedQuantity
     ) {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock
             ->expects($this->once())
             ->method('isProductSellableForStore')
             ->withConsecutive(
-                [$this->equalTo($this->fixtures['bundledProductSku']), $this->equalTo(15)]
+                [$this->equalTo($this->fixtures['bundledProductSku']), $this->equalTo($expectedQuantity)]
             )
             ->willReturn(true);
 
@@ -206,6 +208,6 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
         $cartChangeItemTransfer->setSku($bundleSku);
         $cartChangeItemTransfer->setQuantity($quantity);
 
-        return [$quoteTransfer, $cartChangeItemTransfer];
+        return [$quoteTransfer, $cartChangeItemTransfer, $quantity * $this->fixtures['bundledProductQuantity']];
     }
 }
