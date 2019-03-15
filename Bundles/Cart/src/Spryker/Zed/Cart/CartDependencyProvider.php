@@ -55,7 +55,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartAddItemStrategyPlugins($container);
         $container = $this->addCartRemoveItemStrategyPlugins($container);
         $container = $this->addPostReloadItemsPlugins($container);
-        $container = $this->addUtilPriceService($container);
+        $container = $this->addUtilQuantityService($container);
 
         return $container;
     }
@@ -227,7 +227,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilPriceService(Container $container): Container
+    protected function addUtilQuantityService(Container $container): Container
     {
         $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
             return new CartToUtilQuantityServiceBridge(

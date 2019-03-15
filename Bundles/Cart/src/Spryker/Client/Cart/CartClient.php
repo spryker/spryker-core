@@ -164,7 +164,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param float $quantity
+     * @param float|int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -180,7 +180,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param float $quantity
+     * @param float|int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -196,7 +196,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param float $quantity
+     * @param float|int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

@@ -111,7 +111,7 @@ interface QuoteStorageStrategyPluginInterface
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param float $quantity
+     * @param float|int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -127,7 +127,7 @@ interface QuoteStorageStrategyPluginInterface
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param float $quantity
+     * @param float|int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -143,7 +143,7 @@ interface QuoteStorageStrategyPluginInterface
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param float $quantity
+     * @param float|int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
