@@ -285,12 +285,12 @@ class CalculationFacadeTest extends Unit
      * @dataProvider calculateSumDiscountAmountShouldSumAllItemDiscountsDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $itemResult
-     * @param int $expenseResult
+     * @param int $expectedItemSumDiscountAmountAggregation
+     * @param int $expectedExpenseSumDiscountAmountAggregation
      *
      * @return void
      */
-    public function testCalculateSumDiscountAmountShouldSumAllItemDiscounts(QuoteTransfer $quoteTransfer, int $itemResult, int $expenseResult): void
+    public function testCalculateSumDiscountAmountShouldSumAllItemDiscounts(QuoteTransfer $quoteTransfer, int $expectedItemSumDiscountAmountAggregation, int $expectedExpenseSumDiscountAmountAggregation): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -303,8 +303,8 @@ class CalculationFacadeTest extends Unit
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
         $calculatedExpenseTransfer = $quoteTransfer->getExpenses()[0];
 
-        $this->assertSame($itemResult, $calculatedItemTransfer->getSumDiscountAmountAggregation());
-        $this->assertSame($expenseResult, $calculatedExpenseTransfer->getSumDiscountAmountAggregation());
+        $this->assertSame($expectedItemSumDiscountAmountAggregation, $calculatedItemTransfer->getSumDiscountAmountAggregation());
+        $this->assertSame($expectedExpenseSumDiscountAmountAggregation, $calculatedExpenseTransfer->getSumDiscountAmountAggregation());
     }
 
     /**
@@ -313,23 +313,25 @@ class CalculationFacadeTest extends Unit
     public function calculateSumDiscountAmountShouldSumAllItemDiscountsDataProvider(): array
     {
         return [
-            'int stock' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(2, 160, 40),
-            'float stock' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(1.33, 108, 27),
+            'int stock' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(2, 20, 160, 40),
+            'float stock' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(1.33, 20, 108, 27),
+            'float stock small price' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(1.13, 1, 4, 1),
         ];
     }
 
     /**
      * @param int|float $quantity
+     * @param int $unitAmount
      * @param int $itemResult
      * @param int $expenseResult
      *
      * @return array
      */
-    protected function getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts($quantity, int $itemResult, int $expenseResult): array
+    protected function getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts($quantity, int $unitAmount, int $itemResult, int $expenseResult): array
     {
         $calculatedDiscountMap = [
             CalculatedDiscountTransfer::ID_DISCOUNT => 1,
-            CalculatedDiscountTransfer::UNIT_AMOUNT => 20,
+            CalculatedDiscountTransfer::UNIT_AMOUNT => $unitAmount,
             CalculatedDiscountTransfer::QUANTITY => $quantity,
         ];
         $baseTransferMap = [
