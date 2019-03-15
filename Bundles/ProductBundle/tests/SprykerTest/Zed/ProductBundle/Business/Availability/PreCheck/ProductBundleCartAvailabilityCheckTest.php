@@ -7,13 +7,10 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business\Availability\PreCheck;
 
-use Generated\Shared\DataBuilder\ItemBuilder;
-use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
@@ -172,10 +169,12 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     {
         $quoteTransferWithCartChangeItemTransferDataProvider = [
             'int quantity' => $this->createQuoteTransferWithCartChangeItemTransferDataProvider(
-                static::INT_QUANTITY, $this->fixtures['bundle-sku']
+                static::INT_QUANTITY,
+                $this->fixtures['bundle-sku']
             ),
             'float quantity' => $this->createQuoteTransferWithCartChangeItemTransferDataProvider(
-                static::FLOAT_QUANTITY, $this->fixtures['bundle-sku']
+                static::FLOAT_QUANTITY,
+                $this->fixtures['bundle-sku']
             ),
         ];
 

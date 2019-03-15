@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Service\ProductBundle\ProductBundleServiceInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Throwable;
@@ -46,29 +46,29 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Service\ProductBundle\ProductBundleServiceInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface
      */
-    protected $service;
+    protected $utilQuantityService;
 
     /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface $stockQueryContainer
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandler
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Service\ProductBundle\ProductBundleServiceInterface $service
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface $utilQuantityService
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToStockQueryContainerInterface $stockQueryContainer,
         ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandler,
         ProductBundleToStoreFacadeInterface $storeFacade,
-        ProductBundleServiceInterface $service
+        ProductBundleToUtilQuantityInterface $utilQuantityService
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->stockQueryContainer = $stockQueryContainer;
         $this->productBundleAvailabilityHandler = $productBundleAvailabilityHandler;
         $this->storeFacade = $storeFacade;
-        $this->service = $service;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**

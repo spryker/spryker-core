@@ -9,9 +9,23 @@ namespace Spryker\Client\ProductBundle\QuoteItemFinder;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
 
 class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
+     */
+    protected $utilQuantityService;
+
+    /**
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface $utilQuantityService
+     */
+    public function __construct(ProductBundleToUtilQuantityInterface $utilQuantityService)
+    {
+        $this->utilQuantityService = $utilQuantityService;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
@@ -41,7 +55,8 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
             if ($this->checkItem($itemTransfer, $sku, $groupKey)) {
                 $itemTransfer = clone $itemTransfer;
-                $itemTransfer->setQuantity($this->getBundledProductTotalQuantity($quoteTransfer, $itemTransfer->getGroupKey()));
+                $totalQuantity = $this->getBundledProductTotalQuantity($quoteTransfer, $itemTransfer->getGroupKey());
+                $itemTransfer->setQuantity($totalQuantity);
 
                 return $itemTransfer;
             }
@@ -63,10 +78,11 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
             if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
                 continue;
             }
+
             $bundleItemQuantity += $bundleItemTransfer->getQuantity();
         }
 
-        return $bundleItemQuantity;
+        return $this->utilQuantityService->roundQuantity($bundleItemQuantity);
     }
 
     /**

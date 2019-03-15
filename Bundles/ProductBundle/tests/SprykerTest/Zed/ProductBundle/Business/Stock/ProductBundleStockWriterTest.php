@@ -21,6 +21,7 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -154,18 +155,24 @@ class ProductBundleStockWriterTest extends Unit
 
         $productBundleQueryContainerMock->method('getConnection')->willReturn($connectionMock);
 
-        $service = $this->tester->getLocator()->productBundle()->service();
-
         return $this->getMockBuilder(ProductBundleStockWriter::class)
             ->setConstructorArgs([
                 $productBundleQueryContainerMock,
                 $stockQueryContainerMock,
                 $productBundleAvailabilityMock,
                 $storeFacadeMock,
-                $service,
+                $this->createUtilQuantityService(),
             ])
             ->setMethods(['findProductStocks', 'findOrCreateProductStockEntity', 'findBundledItemsByIdBundleProduct', 'findProductBundleBySku'])
             ->getMock();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerBridge
+     */
+    protected function createUtilQuantityService()
+    {
+        return new ProductBundleToUtilQuantityBridge($this->tester->getLocator()->utilQuantity()->service());
     }
 
     /**

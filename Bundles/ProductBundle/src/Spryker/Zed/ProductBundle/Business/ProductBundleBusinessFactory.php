@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductBundle\Business;
 
-use Spryker\Service\ProductBundle\ProductBundleServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCheckoutAvailabilityCheck;
@@ -37,6 +36,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundlesSalesOr
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandler;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
 use Spryker\Zed\ProductBundle\ProductBundleDependencyProvider;
 
 /**
@@ -173,7 +173,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
             $this->getStoreFacade(),
-            $this->getProductBundleService()
+            $this->getUtilQuantityService()
         );
     }
 
@@ -198,7 +198,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getStockQueryContainer(),
             $this->createProductBundleAvailabilityHandler(),
             $this->getStoreFacade(),
-            $this->getProductBundleService()
+            $this->getUtilQuantityService()
         );
     }
 
@@ -366,10 +366,10 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Service\ProductBundle\ProductBundleServiceInterface
+     * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface
      */
-    protected function getProductBundleService(): ProductBundleServiceInterface
+    protected function getUtilQuantityService(): ProductBundleToUtilQuantityInterface
     {
-        return $this->getProvidedDependency(ProductBundleDependencyProvider::SERVICE_PRODUCT_BUNDLE);
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

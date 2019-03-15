@@ -10,21 +10,21 @@ namespace Spryker\Client\ProductBundle\QuoteChangeRequestExpander;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Service\ProductBundle\ProductBundleServiceInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
 
 class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
 {
     /**
-     * @var \Spryker\Service\ProductBundle\ProductBundleServiceInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
      */
-    protected $service;
+    protected $utilQuantityService;
 
     /**
-     * @param \Spryker\Service\ProductBundle\ProductBundleServiceInterface $service
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface $utilQuantityService
      */
-    public function __construct(ProductBundleServiceInterface $service)
+    public function __construct(ProductBundleToUtilQuantityInterface $utilQuantityService)
     {
-        $this->service = $service;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -37,13 +37,21 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
     {
         $itemTransferList = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $bundledItemTransferList = $this->getBundledItems($cartChangeTransfer->getQuote(), $itemTransfer->getGroupKey(), $itemTransfer->getQuantity());
+            $bundledItemTransferList = $this->getBundledItems(
+                $cartChangeTransfer->getQuote(),
+                $itemTransfer->getGroupKey(),
+                $itemTransfer->getQuantity()
+            );
+
             if (count($bundledItemTransferList)) {
                 $itemTransferList = array_merge($itemTransferList, $bundledItemTransferList);
+
                 continue;
             }
+
             $itemTransferList[] = $itemTransfer;
         }
+
         $cartChangeTransfer->setItems(new ArrayObject($itemTransferList));
 
         return $cartChangeTransfer;
@@ -61,7 +69,8 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
         if (!$numberOfBundlesToRemove) {
             $numberOfBundlesToRemove = $this->getBundledProductTotalQuantity($quoteTransfer, $groupKey);
         }
-        $numberOfBundlesToRemove = $this->service->convertToInt($numberOfBundlesToRemove);
+
+        $numberOfBundlesToRemove = (int)$this->utilQuantityService->roundQuantity($numberOfBundlesToRemove);
         $bundledItems = [];
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($numberOfBundlesToRemove === 0) {
@@ -76,8 +85,10 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
                 if ($itemTransfer->getRelatedBundleItemIdentifier() !== $bundleItemTransfer->getBundleItemIdentifier()) {
                     continue;
                 }
+
                 $bundledItems[] = $itemTransfer;
             }
+
             $numberOfBundlesToRemove--;
         }
 
@@ -97,9 +108,10 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
             if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
                 continue;
             }
+
             $bundleItemQuantity += $bundleItemTransfer->getQuantity();
         }
 
-        return $bundleItemQuantity;
+        return $this->utilQuantityService->roundQuantity($bundleItemQuantity);
     }
 }

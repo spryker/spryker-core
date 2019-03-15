@@ -8,14 +8,14 @@
 namespace SprykerTest\Zed\ProductBundle\Business\Availability\PreCheck;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCheckoutAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Spryker\Zed\ProductBundle\ProductBundleConfig;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 
 /**
  * Auto-generated group annotations
@@ -142,10 +142,12 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
     {
         return [
             'int quantity' => $this->createQuoteTransferDataProvider(
-                static::INT_QUANTITY, $this->fixtures['bundle-sku']
+                static::INT_QUANTITY,
+                $this->fixtures['bundle-sku']
             ),
             'float quantity' => $this->createQuoteTransferDataProvider(
-                static::FLOAT_QUANTITY, $this->fixtures['bundle-sku']
+                static::FLOAT_QUANTITY,
+                $this->fixtures['bundle-sku']
             ),
         ];
     }

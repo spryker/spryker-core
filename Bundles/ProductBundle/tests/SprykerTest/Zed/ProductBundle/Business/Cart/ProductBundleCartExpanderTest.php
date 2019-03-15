@@ -184,10 +184,16 @@ class ProductBundleCartExpanderTest extends Unit
     {
         $cartChangeTransfer = [
             'int quantity' => $this->createCartChangeTransfer(
-                static::INT_QUANTITY, $this->fixtures['bundledProductSku'], 4, 2
+                static::INT_QUANTITY,
+                $this->fixtures['bundledProductSku'],
+                4,
+                2
             ),
             'float quantity' => $this->createCartChangeTransfer(
-                static::FLOAT_QUANTITY, $this->fixtures['bundledProductSku'], 6, 3
+                static::FLOAT_QUANTITY,
+                $this->fixtures['bundledProductSku'],
+                6,
+                3
             ),
         ];
 

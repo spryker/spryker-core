@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\Container;
 
 class ProductBundleDependencyProvider extends AbstractDependencyProvider
 {
-    public const SERVICE_PRODUCT_BUNDLE = 'SERVICE_PRODUCT_BUNDLE';
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -21,7 +21,7 @@ class ProductBundleDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container = $this->addProductBundleService($container);
+        $container = $this->addUtilQuantityService($container);
 
         return $container;
     }
@@ -31,10 +31,10 @@ class ProductBundleDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addProductBundleService(Container $container): Container
+    protected function addUtilQuantityService(Container $container): Container
     {
-        $container[static::SERVICE_PRODUCT_BUNDLE] = function (Container $container) {
-            return $container->getLocator()->productBundle()->service();
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return $container->getLocator()->utilQuantity()->service();
         };
 
         return $container;

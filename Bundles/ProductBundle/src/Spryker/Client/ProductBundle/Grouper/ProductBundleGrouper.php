@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
 
 class ProductBundleGrouper implements ProductBundleGrouperInterface
 {
@@ -22,6 +23,19 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
      * @var array
      */
     protected $bundleGroupKeys = [];
+
+    /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
+     */
+    protected $utilQuantityService;
+
+    /**
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface $utilQuantityService
+     */
+    public function __construct(ProductBundleToUtilQuantityInterface $utilQuantityService)
+    {
+        $this->utilQuantityService = $utilQuantityService;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -179,12 +193,16 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         $groupedBundleQuantity = [];
         foreach ($bundleItems as $bundleItemTransfer) {
             $bundleGroupKey = $this->getBundleItemGroupKey($bundleItemTransfer, $items);
+
             if (!isset($groupedBundleQuantity[$bundleGroupKey])) {
                 $groupedBundleQuantity[$bundleGroupKey] = $bundleItemTransfer->getQuantity();
             } else {
-                $groupedBundleQuantity[$bundleGroupKey] += $bundleItemTransfer->getQuantity();
+                $groupedBundleQuantity[$bundleGroupKey] = $this->utilQuantityService->roundQuantity(
+                    $groupedBundleQuantity[$bundleGroupKey] + $bundleItemTransfer->getQuantity()
+                );
             }
         }
+
         return $groupedBundleQuantity;
     }
 
@@ -237,9 +255,10 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
             $currentBundledItems[$currentBundleIdentifer] = clone $bundledItemTransfer;
         } else {
             $currentBundleItemTransfer = $currentBundledItems[$currentBundleIdentifer];
-            $currentBundleItemTransfer->setQuantity(
+            $summaryQuantity = $this->utilQuantityService->roundQuantity(
                 $currentBundleItemTransfer->getQuantity() + $bundledItemTransfer->getQuantity()
             );
+            $currentBundleItemTransfer->setQuantity($summaryQuantity);
         }
 
         return $currentBundledItems;

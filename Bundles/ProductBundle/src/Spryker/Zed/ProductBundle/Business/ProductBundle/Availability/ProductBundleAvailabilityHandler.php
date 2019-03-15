@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
-use Spryker\Service\ProductBundle\ProductBundleServiceInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Traversable;
@@ -50,29 +50,29 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Service\ProductBundle\ProductBundleServiceInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface
      */
-    protected $service;
+    protected $utilQuantityService;
 
     /**
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Service\ProductBundle\ProductBundleServiceInterface $service
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface $utilQuantityService
      */
     public function __construct(
         ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
         ProductBundleToAvailabilityInterface $availabilityFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToStoreFacadeInterface $storeFacade,
-        ProductBundleServiceInterface $service
+        ProductBundleToUtilQuantityInterface $utilQuantityService
     ) {
         $this->availabilityQueryContainer = $availabilityQueryContainer;
         $this->availabilityFacade = $availabilityFacade;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->storeFacade = $storeFacade;
-        $this->service = $service;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**

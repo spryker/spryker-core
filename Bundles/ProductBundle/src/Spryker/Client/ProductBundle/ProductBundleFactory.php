@@ -15,7 +15,7 @@ use Spryker\Client\ProductBundle\QuoteItemFinder\BundleProductQuoteItemFinder;
 use Spryker\Client\ProductBundle\QuoteItemFinder\BundleProductQuoteItemFinderInterface;
 use Spryker\Client\ProductBundle\QuoteItemFinder\QuoteBundleItemsFinder;
 use Spryker\Client\ProductBundle\QuoteItemFinder\QuoteBundleItemsFinderInterface;
-use Spryker\Service\ProductBundle\ProductBundleServiceInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
 
 class ProductBundleFactory extends AbstractFactory
 {
@@ -24,7 +24,7 @@ class ProductBundleFactory extends AbstractFactory
      */
     public function createProductBundleGrouper()
     {
-        return new ProductBundleGrouper();
+        return new ProductBundleGrouper($this->getUtilQuantityService());
     }
 
     /**
@@ -32,7 +32,7 @@ class ProductBundleFactory extends AbstractFactory
      */
     public function createQuoteChangeRequestExpander(): QuoteChangeRequestExpanderInterface
     {
-        return new QuoteChangeRequestExpander($this->getProductBundleService());
+        return new QuoteChangeRequestExpander($this->getUtilQuantityService());
     }
 
     /**
@@ -40,7 +40,7 @@ class ProductBundleFactory extends AbstractFactory
      */
     public function createBundleProductQuoteItemFinder(): BundleProductQuoteItemFinderInterface
     {
-        return new BundleProductQuoteItemFinder();
+        return new BundleProductQuoteItemFinder($this->getUtilQuantityService());
     }
 
     /**
@@ -52,10 +52,10 @@ class ProductBundleFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Service\ProductBundle\ProductBundleServiceInterface
+     * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface
      */
-    public function getProductBundleService(): ProductBundleServiceInterface
+    public function getUtilQuantityService(): ProductBundleToUtilQuantityInterface
     {
-        return $this->getProvidedDependency(ProductBundleDependencyProvider::SERVICE_PRODUCT_BUNDLE);
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }
