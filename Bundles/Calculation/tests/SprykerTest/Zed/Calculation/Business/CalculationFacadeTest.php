@@ -66,7 +66,7 @@ class CalculationFacadeTest extends Unit
      *
      * @return void
      */
-    public function testCalculatePriceShouldSetDefaultStorePriceValues(QuoteTransfer $quoteTransfer)
+    public function testCalculatePriceShouldSetDefaultStorePriceValuesForItem(QuoteTransfer $quoteTransfer): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -76,7 +76,6 @@ class CalculationFacadeTest extends Unit
 
         $calculationFacade->recalculateQuote($quoteTransfer);
 
-        //item
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
         $this->assertNotEmpty(
             $calculatedItemTransfer->getSumGrossPrice(),
@@ -93,8 +92,26 @@ class CalculationFacadeTest extends Unit
             $calculatedItemTransfer->getSumGrossPrice(),
             'Item sum price must be the same as the item sum gross price'
         );
+    }
 
-        //item.option
+    /**
+     * @dataProvider calculatePriceShouldSetDefaultStorePriceValuesDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function testCalculatePriceShouldSetDefaultStorePriceValuesForItemOption(QuoteTransfer $quoteTransfer): void
+    {
+        $calculationFacade = $this->createCalculationFacade(
+            [
+                new PriceCalculatorPlugin(),
+            ]
+        );
+
+        $calculationFacade->recalculateQuote($quoteTransfer);
+
+        $calculatedItemTransfer = $quoteTransfer->getItems()[0];
         $calculatedItemProductOptionTransfer = $calculatedItemTransfer->getProductOptions()[0];
         $this->assertNotEmpty(
             $calculatedItemProductOptionTransfer->getSumGrossPrice(),
@@ -114,8 +131,25 @@ class CalculationFacadeTest extends Unit
             $calculatedItemProductOptionTransfer->getSumGrossPrice(),
             'Product option sum price must be equal sum gross price'
         );
+    }
 
-        //order.expense
+    /**
+     * @dataProvider calculatePriceShouldSetDefaultStorePriceValuesDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function testCalculatePriceShouldSetDefaultStorePriceValuesForExpense(QuoteTransfer $quoteTransfer): void
+    {
+        $calculationFacade = $this->createCalculationFacade(
+            [
+                new PriceCalculatorPlugin(),
+            ]
+        );
+
+        $calculationFacade->recalculateQuote($quoteTransfer);
+
         $calculatedExpenseTransfer = $quoteTransfer->getExpenses()[0];
         $this->assertNotEmpty(
             $calculatedExpenseTransfer->getSumGrossPrice(),
