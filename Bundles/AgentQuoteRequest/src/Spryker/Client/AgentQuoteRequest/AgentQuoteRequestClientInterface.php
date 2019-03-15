@@ -21,6 +21,21 @@ interface AgentQuoteRequestClientInterface
     /**
      * Specification:
      * - Makes Zed request.
+     * - Creates "Request for Quote" for the provided company user with "in-progress" status.
+     * - Generates unique reference number.
+     * - Sets hidden visibility for customer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
      * - Looks up one "Request for Quote" by provided quote request reference.
      * - Expects "Request for Quote" status to not be "canceled".
      * - Sets status to "Cancelled".

@@ -9,6 +9,7 @@ namespace Spryker\Zed\AgentQuoteRequest\Persistence;
 
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestDependencyProvider;
+use Spryker\Zed\AgentQuoteRequest\Persistence\Propel\Mapper\CompanyUserMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -23,5 +24,13 @@ class AgentQuoteRequestPersistenceFactory extends AbstractPersistenceFactory
     public function getCompanyUserPropelQuery(): SpyCompanyUserQuery
     {
         return $this->getProvidedDependency(AgentQuoteRequestDependencyProvider::PROPEL_QUERY_COMPANY_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\AgentQuoteRequest\Persistence\Propel\Mapper\CompanyUserMapper
+     */
+    public function createCompanyUserMapper(): CompanyUserMapper
+    {
+        return new CompanyUserMapper();
     }
 }

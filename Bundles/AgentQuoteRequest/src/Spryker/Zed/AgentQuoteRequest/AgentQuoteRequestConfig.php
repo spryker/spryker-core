@@ -22,12 +22,4 @@ class AgentQuoteRequestConfig extends AbstractBundleConfig
     {
         return SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS;
     }
-
-    /**
-     * @return string[]
-     */
-    public function getCancelableStatuses(): array
-    {
-        return $this->getSharedConfig()->getCancelableStatuses();
-    }
 }

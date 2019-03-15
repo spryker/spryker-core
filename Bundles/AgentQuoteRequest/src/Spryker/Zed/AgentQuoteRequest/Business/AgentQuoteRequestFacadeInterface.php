@@ -9,14 +9,28 @@ namespace Spryker\Zed\AgentQuoteRequest\Business;
 
 use Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserQueryTransfer;
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 
 interface AgentQuoteRequestFacadeInterface
 {
+    /**
+     * Specification:
+     * - Creates "Request for Quote" for the provided company user with "in-progress" status.
+     * - Generates unique reference number.
+     * - Sets hidden visibility for customer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
     /**
      * Specification:
      * - Looks up one "Request for Quote" by provided quote request reference.
@@ -33,6 +47,20 @@ interface AgentQuoteRequestFacadeInterface
 
     /**
      * Specification:
+     * - Returns CompanyUserAutocompleteResponseTransfer with list of company users found by query.
+     * - Search works by first name, last name and email.
+     * - If company users by query are not exist, collection will be empty.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $customerQueryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
+     */
+    public function findCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer;
+
+    /**
+     * Specification:
      * - Looks up one "Request for Quote" by provided quote request reference.
      * - Expects "Request for Quote" status to be "waiting".
      * - Requires latest version inside QuoteRequestTransfer.
@@ -46,21 +74,6 @@ interface AgentQuoteRequestFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function setQuoteRequestEditable(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
-
-    /**
-     * Specification:
-     * - Returns CompanyUserAutocompleteResponseTransfer with list of company users found by query.
-     * - Search works by first name, last name and email.
-     * - If company users by query are not exist, collection will be empty.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $customerQueryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
-     */
-    public function findCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer;
     public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
 
     /**

@@ -12,6 +12,8 @@ use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestCheckerInterface;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGenerator;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestUserWriter;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestUserWriterInterface;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriterInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface;
@@ -38,6 +40,20 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteRequestReferenceGenerator(),
             $this->getCompanyUserFacade(),
             $this->getCalculationFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestUserWriterInterface
+     */
+    public function createQuoteRequestUserWriter(): QuoteRequestUserWriterInterface
+    {
+        return new QuoteRequestUserWriter(
+            $this->getConfig(),
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createQuoteRequestReferenceGenerator(),
+            $this->getCompanyUserFacade()
         );
     }
 

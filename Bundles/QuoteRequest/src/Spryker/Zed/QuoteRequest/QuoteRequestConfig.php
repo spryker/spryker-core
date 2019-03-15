@@ -55,6 +55,14 @@ class QuoteRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string[]
+     */
+    public function getUserCancelableStatuses(): array
+    {
+        return $this->getSharedConfig()->getUserCancelableStatuses();
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
     public function getQuoteRequestReferenceDefaults()

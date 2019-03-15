@@ -50,11 +50,11 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
             return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS);
         }
 
-        if (!$quoteRequestTransfer->getQuoteInProgress()) {
-            return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND);
-        }
+//        if (!$quoteRequestTransfer->getQuoteInProgress()) {
+//            return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND);
+//        }
 
-        $quoteTransfer = $quoteRequestTransfer->getQuoteInProgress();
+        $quoteTransfer = $quoteRequestTransfer->getQuoteInProgress() ?? $this->quoteClient->getQuote();
         $quoteTransfer->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
 
         $this->quoteClient->setQuote($quoteTransfer);

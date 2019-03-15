@@ -8,8 +8,6 @@
 namespace Spryker\Zed\AgentQuoteRequest\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserQueryTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -52,23 +50,8 @@ class AgentQuoteRequestRepository extends AbstractRepository implements AgentQuo
             $companyUsersQuery->limit($companyUserQueryTransfer->getLimit());
         }
 
-        $companyUsers = $companyUsersQuery->find();
-
-        $companyUserTransfers = [];
-
-        foreach ($companyUsers as $companyUser) {
-            $customerTransfer = (new CustomerTransfer())
-                ->setFirstName($companyUser[SpyCustomerTableMap::COL_FIRST_NAME])
-                ->setLastName($companyUser[SpyCustomerTableMap::COL_LAST_NAME])
-                ->setEmail($companyUser[SpyCustomerTableMap::COL_EMAIL]);
-
-            $companyUserTransfer = (new CompanyUserTransfer())
-                ->setIdCompanyUser($companyUser[SpyCompanyUserTableMap::COL_ID_COMPANY_USER])
-                ->setCustomer($customerTransfer);
-
-            $companyUserTransfers[] = $companyUserTransfer;
-        }
-
-        return $companyUserTransfers;
+        return $this->getFactory()
+            ->createCompanyUserMapper()
+            ->mapCompanyUserEntityCollectionToTransfers($companyUsersQuery->find());
     }
 }
