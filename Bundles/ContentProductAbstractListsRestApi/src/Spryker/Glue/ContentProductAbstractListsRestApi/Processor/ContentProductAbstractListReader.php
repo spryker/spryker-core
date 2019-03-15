@@ -60,24 +60,22 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
      */
     public function getContentItemById(RestRequestInterface $restRequest): RestResponseInterface
     {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
         $parentResource = $restRequest->findParentResourceByType(
             ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS
         );
-        $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$parentResource || !$parentResource->getId()) {
-            return $this->addContentProductIdNotSpecifiedError($restResponse);
+            return $this->addContentItemIdNotSpecifiedError($restResponse);
         }
 
-        $idContentItem = $parentResource->getId();
-
         $executedContentStorageTransfer = $this->contentStorageClient->findContentById(
-            (int)$idContentItem,
+            (int)$parentResource->getId(),
             $restRequest->getMetadata()->getLocale()
         );
 
         if (!$executedContentStorageTransfer) {
-            return $this->addContentProductNotFoundError($restResponse);
+            return $this->addContentItemtNotFoundError($restResponse);
         }
 
         if ($executedContentStorageTransfer->getType() !== static::CONTENT_TYPE_PRODUCT_ABSTRACT_LIST) {
@@ -85,7 +83,6 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         }
 
         $idProductAbstractList = $executedContentStorageTransfer->getContent();
-
         foreach ($idProductAbstractList as $idProductAbstract) {
             $abstractProductResource = $this->productsRestApiResource->findProductAbstractById($idProductAbstract, $restRequest);
 
@@ -100,7 +97,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addContentProductIdNotSpecifiedError(RestResponseInterface $response): RestResponseInterface
+    protected function addContentItemIdNotSpecifiedError(RestResponseInterface $response): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(ContentProductAbstractListsRestApiConfig::RESPONSE_CODE_CONTENT_ID_IS_MISSING)
@@ -114,7 +111,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addContentProductNotFoundError(RestResponseInterface $response): RestResponseInterface
+    protected function addContentItemtNotFoundError(RestResponseInterface $response): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(ContentProductAbstractListsRestApiConfig::RESPONSE_CODE_CONTENT_NOT_FOUND)
