@@ -25,9 +25,6 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
-/**
- * @deprecated Use \Spryker\Zed\Sales\Business\Order\SalesOrderSaver instead.
- */
 class SalesOrderSaver implements SalesOrderSaverInterface
 {
     use DatabaseTransactionHandlerTrait;
@@ -188,10 +185,11 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected function hydrateAddresses(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
     {
         $billingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getBillingAddress());
-        $shippingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getShippingAddress());
+        if ($quoteTransfer->getShippingAddress() !== null) {
+            $shippingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getShippingAddress());
+        }
 
         $salesOrderEntity->setBillingAddress($billingAddressEntity);
-        $salesOrderEntity->setShippingAddress($shippingAddressEntity);
     }
 
     /**

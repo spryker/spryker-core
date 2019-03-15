@@ -7,11 +7,18 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
-use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface as SalesOrderSaverMultipleShippingAddressInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 
-/**
- * @deprecated Use \Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface instead.
- */
-interface SalesOrderSaverInterface extends SalesOrderSaverMultipleShippingAddressInterface
+interface SalesOrderSaverInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    public function saveOrderSales(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 }

@@ -39,8 +39,6 @@ use Spryker\Zed\Sales\Business\Order\OrderHydrator as OrderHydratorWithMultiShip
 use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
 use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShippingAddress;
 use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
-use Spryker\Zed\Sales\Business\Order\SalesOrderSaver as SalesOrderSaverMultipleShippingAddress;
-use Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface as SalesOrderSaverMultipleShippingAddressInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderSaverStrategyResolver;
@@ -101,51 +99,11 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createSalesOrderSaver() instead.
-     *
-     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderSaverInterface
-     */
-    public function createOrderSaver()
-    {
-        return new OrderSaver(
-            $this->getCountryFacade(),
-            $this->getOmsFacade(),
-            $this->createReferenceGenerator(),
-            $this->getConfig(),
-            $this->getLocaleQueryContainer(),
-            $this->getStore(),
-            $this->getOrderExpanderPreSavePlugins(),
-            $this->createSalesOrderSaverPluginExecutor(),
-            $this->createOrderItemMapper()
-        );
-    }
-
-    /**
-     * @deprecated Use createSalesOrderSaverMultipleShippingAddress() instead.
-     *
      * @return \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface
      */
     public function createSalesOrderSaver(): SalesOrderSaverInterface
     {
         return new SalesOrderSaver(
-            $this->getCountryFacade(),
-            $this->getOmsFacade(),
-            $this->createReferenceGenerator(),
-            $this->getConfig(),
-            $this->getLocaleQueryContainer(),
-            $this->getStore(),
-            $this->getOrderExpanderPreSavePlugins(),
-            $this->createSalesOrderSaverPluginExecutor(),
-            $this->createOrderItemMapper()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\Order\SalesOrderSaverInterface
-     */
-    public function createSalesOrderSaverMultipleShippingAddress(): SalesOrderSaverMultipleShippingAddressInterface
-    {
-        return new SalesOrderSaverMultipleShippingAddress(
             $this->getCountryFacade(),
             $this->getOmsFacade(),
             $this->createReferenceGenerator(),
@@ -392,26 +350,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new ExpenseWriter(
             $this->getEntityManager()
         );
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only. Use $this->createSalesOrderSaverMultipleShippingAddress() instead.
-     *
-     * @return \Spryker\Zed\Sales\Business\StrategyResolver\OrderSaverStrategyResolverInterface
-     */
-    public function createOrderSaverStrategyResolver(): OrderSaverStrategyResolverInterface
-    {
-        $strategyContainer = [];
-
-        $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
-            return $this->createSalesOrderSaver();
-        };
-
-        $strategyContainer[OrderSaverStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
-            return $this->createSalesOrderSaverMultipleShippingAddress();
-        };
-
-        return new OrderSaverStrategyResolver($strategyContainer);
     }
 
     /**

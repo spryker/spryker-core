@@ -200,8 +200,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         $this->getFactory()
-            ->createOrderSaverStrategyResolver()
-            ->resolve($quoteTransfer->getItems())
+            ->createSalesOrderSaver()
             ->saveOrderSales($quoteTransfer, $saveOrderTransfer);
     }
 

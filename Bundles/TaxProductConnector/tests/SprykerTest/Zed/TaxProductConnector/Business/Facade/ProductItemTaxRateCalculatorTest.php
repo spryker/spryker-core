@@ -1,11 +1,10 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Sales\Business\Facade;
+namespace SprykerTest\Zed\TaxProductConnector\Business\Facade;
 
 use BadMethodCallException;
 use Codeception\TestCase\Test;
@@ -24,78 +23,102 @@ use Spryker\Shared\Sales\SalesConstants;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
-use Spryker\Zed\Sales\SalesConfig;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group Sales
+ * @group TaxProductConnector
  * @group Business
  * @group Facade
- * @group ShippingAddressSaveTest
+ * @group ProductItemTaxRateCalculatorTest
  * Add your own group annotations below this line
  */
-class ShippingAddressSaveTest extends Test
+class ProductItemTaxRateCalculatorTest extends Test
 {
     /**
-     * @var \SprykerTest\Zed\Sales\SalesBusinessTester
+     * @var \SprykerTest\Zed\TaxProductConnector\TaxProductConnectorBusinessTester
      */
     protected $tester;
 
     /**
-     * @dataProvider saveOrderAddressShouldPersistAddressEntityDataProvider
+     * @dataProvider taxRateCalculationShouldUseQuoteShippingAddressDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
-    public function testSaveOrderAddressShouldPersistAddressEntity(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function testTaxRateCalculationShouldUseQuoteShippingAddress(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
-        // Arrange
-        $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
-        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
-        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()->filterByAddress1($shippingAddressTransfer->getAddress1());
-        $salesFacade = $this->getSalesFacadeWithMockedConfig();
-
-        // Act
-        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
-
-        // Assert
-        $this->assertTrue($salesOrderAddressQuery->count() === 1, 'Shipping address should have been saved');
-        $this->assertNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should not have been assigned on sales order level.');
+//        // Arrange
+//        $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
+//        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
+//        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()->filterByAddress1($shippingAddressTransfer->getAddress1());
+//        $salesFacade = $this->getSalesFacadeWithMockedConfig();
+//
+//        // Act
+//        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+//
+//        // Assert
+//        $this->assertTrue($salesOrderAddressQuery->count() === 1, 'Shipping address should have been saved');
+//        $this->assertNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should not have been assigned on sales order level.');
     }
 
     /**
-     * @dataProvider saveOrderAddressShouldntPersistAddressEntityDataProvider
+     * @dataProvider taxRateCalculationShouldUseItemShippingAddressDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
-    public function testSaveOrderAddressShouldntPersistAddressEntity(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function testTaxRateCalculationShouldUseItemShippingAddress(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
-        // Arrange
-        $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
-        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create();
-        $countBefore = $salesOrderAddressQuery->count();
-        $salesFacade = $this->getSalesFacadeWithMockedConfig();
+//        // Arrange
+//        $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
+//        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create();
+//        $countBefore = $salesOrderAddressQuery->count();
+//        $salesFacade = $this->getSalesFacadeWithMockedConfig();
+//
+//        // Act
+//        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+//
+//        // Assert
+//        $expectedOrderAddressCount = $countBefore + 1;
+//        $this->assertEquals($expectedOrderAddressCount, $salesOrderAddressQuery->count(), 'Address count mismatch! Only billing address should have been saved.');
+//        $this->assertNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should not have been assigned on sales order level.');
+    }
 
-        // Act
-        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
-
-        // Assert
-        $expectedOrderAddressCount = $countBefore + 1;
-        $this->assertEquals($expectedOrderAddressCount, $salesOrderAddressQuery->count(), 'Address count mismatch! Only billing address should have been saved.');
-        $this->assertNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should not have been assigned on sales order level.');
+    /**
+     * @dataProvider taxRateCalculationShouldBeDefaultDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function testTaxRateCalculationShouldBeDefault(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    {
+//        // Arrange
+//        $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
+//        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create();
+//        $countBefore = $salesOrderAddressQuery->count();
+//        $salesFacade = $this->getSalesFacadeWithMockedConfig();
+//
+//        // Act
+//        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+//
+//        // Assert
+//        $expectedOrderAddressCount = $countBefore + 1;
+//        $this->assertEquals($expectedOrderAddressCount, $salesOrderAddressQuery->count(), 'Address count mismatch! Only billing address should have been saved.');
+//        $this->assertNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should not have been assigned on sales order level.');
     }
 
     /**
      * @return array
      */
-    public function saveOrderAddressShouldPersistAddressEntityDataProvider()
+    public function taxRateCalculationShouldUseQuoteShippingAddressDataProvider()
     {
         return [
             'with quote level shipping address' => $this->getDataWithQuoteLevelShippingAddress(),
@@ -105,10 +128,20 @@ class ShippingAddressSaveTest extends Test
     /**
      * @return array
      */
-    public function saveOrderAddressShouldntPersistAddressEntityDataProvider()
+    public function taxRateCalculationShouldUseItemShippingAddressDataProvider()
     {
         return [
-            'without quote level shipping address' => $this->getDataWithoutQuoteLevelShippingAddress(),
+            'without quote level shipping address, with item level shipping addresses' => $this->getDataWithoutQuoteLevelShippingAddress(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function taxRateCalculationShouldBeDefaultDataProvider()
+    {
+        return [
+            'without quote and item level shipping addresses' => $this->getDataWithoutQuoteLevelShippingAddress(),
         ];
     }
 
