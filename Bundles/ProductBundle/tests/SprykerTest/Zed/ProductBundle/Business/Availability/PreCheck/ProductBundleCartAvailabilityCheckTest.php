@@ -7,7 +7,12 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business\Availability\PreCheck;
 
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheck;
@@ -32,13 +37,21 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
 {
     public const ID_STORE = 1;
 
+    protected const INT_QUANTITY = 3;
+    protected const FLOAT_QUANTITY = 3.1;
+
     /**
-     * return void
+     * @dataProvider quoteTransferWithCartChangeItemTransferDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $cartChangeItemTransfer
      *
      * @return void
      */
-    public function testCheckCartAvailabilityWhenBundledItemsAvailableShouldReturnEmptyMessageContainer()
-    {
+    public function testCheckCartAvailabilityWhenBundledItemsAvailableShouldReturnEmptyMessageContainer(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $cartChangeItemTransfer
+    ) {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock
             ->expects($this->once())
@@ -49,19 +62,12 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
             ->willReturn(true);
 
         $productBundleAvailabilityCheckMock = $this->createProductBundleCartAvailabilityCheckMock($availabilityFacadeMock);
-
         $this->setupFindBundledProducts($this->fixtures, $productBundleAvailabilityCheckMock);
-
-        $quoteTransfer = $this->createTestQuoteTransfer();
 
         $cartChangeTransfer = new CartChangeTransfer();
         $cartChangeTransfer->setQuote($quoteTransfer);
 
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($this->fixtures['bundle-sku']);
-        $itemTransfer->setQuantity(3);
-        $cartChangeTransfer->addItem($itemTransfer);
-
+        $cartChangeTransfer->addItem($cartChangeItemTransfer);
         $cartPreCheckResponseTransfer = $productBundleAvailabilityCheckMock->checkCartAvailability($cartChangeTransfer);
 
         $this->assertCount(0, $cartPreCheckResponseTransfer->getMessages());
@@ -69,12 +75,17 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     }
 
     /**
-     * return void
+     * @dataProvider quoteTransferWithCartChangeItemTransferDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $cartChangeItemTransfer
      *
      * @return void
      */
-    public function testCheckCartAvailabilityWhenBundledItemsNotAvailableShouldStoreErrorMessages()
-    {
+    public function testCheckCartAvailabilityWhenBundledItemsNotAvailableShouldStoreErrorMessages(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $cartChangeItemTransfer
+    ) {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock->expects($this->once())
             ->method('isProductSellableForStore')
@@ -90,16 +101,9 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
 
         $this->setupFindBundledProducts($this->fixtures, $productBundleAvailabilityCheckMock);
 
-        $quoteTransfer = $this->createTestQuoteTransfer();
-
         $cartChangeTransfer = new CartChangeTransfer();
         $cartChangeTransfer->setQuote($quoteTransfer);
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($this->fixtures['bundle-sku']);
-        $itemTransfer->setQuantity(3);
-        $cartChangeTransfer->addItem($itemTransfer);
-
+        $cartChangeTransfer->addItem($cartChangeItemTransfer);
         $cartPreCheckResponseTransfer = $productBundleAvailabilityCheckMock->checkCartAvailability($cartChangeTransfer);
 
         $this->assertCount(1, $cartPreCheckResponseTransfer->getMessages());
@@ -157,5 +161,51 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     protected function createProductBundleConfigMock(): ProductBundleConfig
     {
         return $this->getMockBuilder(ProductBundleConfig::class)->getMock();
+    }
+
+    /**
+     * @return array
+     */
+    public function quoteTransferWithCartChangeItemTransferDataProvider(): array
+    {
+        $quoteTransferWithCartChangeItemTransferDataProvider = [
+            'int quantity' => $this->createQuoteTransferWithCartChangeItemTransferDataProvider(
+                static::INT_QUANTITY, $this->fixtures['bundle-sku']
+            ),
+            'float quantity' => $this->createQuoteTransferWithCartChangeItemTransferDataProvider(
+                static::FLOAT_QUANTITY, $this->fixtures['bundle-sku']
+            ),
+        ];
+
+        return $quoteTransferWithCartChangeItemTransferDataProvider;
+    }
+
+    /**
+     * @param float|int $quantity
+     * @param string $bundleSku
+     *
+     * @return array
+     */
+    protected function createQuoteTransferWithCartChangeItemTransferDataProvider($quantity, string $bundleSku)
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku($bundleSku);
+        $itemTransfer->setQuantity($quantity);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        $bundleItemTransfer = new ItemTransfer();
+        $bundleItemTransfer->setSku($bundleSku);
+
+        $quoteTransfer->addBundleItem($bundleItemTransfer);
+
+        $cartChangeItemTransfer = new ItemTransfer();
+        $cartChangeItemTransfer->setSku($bundleSku);
+        $cartChangeItemTransfer->setQuantity($quantity);
+
+        return [$quoteTransfer, $cartChangeItemTransfer];
     }
 }

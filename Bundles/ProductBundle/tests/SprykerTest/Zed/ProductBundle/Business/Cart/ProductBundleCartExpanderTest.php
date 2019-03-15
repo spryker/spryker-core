@@ -38,6 +38,9 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleCartExpanderTest extends Unit
 {
+    protected const INT_QUANTITY = 2;
+    protected const FLOAT_QUANTITY = 2.0;
+
     /**
      * @var array
      */
@@ -50,15 +53,18 @@ class ProductBundleCartExpanderTest extends Unit
     ];
 
     /**
+     * @dataProvider cartChangeTransferDataProvider
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
      * @return void
      */
-    public function testExpandBundleItemsShouldExtractBundledItemsAndDistributeBundlePrice()
-    {
+    public function testExpandBundleItemsShouldExtractBundledItemsAndDistributeBundlePrice(
+        CartChangeTransfer $cartChangeTransfer
+    ) {
         $productExpanderMock = $this->setupProductExpander();
 
         $this->setupFindBundledItemsByIdProductConcrete($this->fixtures, $productExpanderMock);
-
-        $cartChangeTransfer = $this->createCartChangeTransfer();
 
         $updatedCartChangeTransfer = $productExpanderMock->expandBundleItems($cartChangeTransfer);
 
@@ -168,9 +174,29 @@ class ProductBundleCartExpanderTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     * @return array
      */
-    protected function createCartChangeTransfer()
+    public function cartChangeTransferDataProvider(): array
+    {
+        $cartChangeTransfer = [
+            'int quantity' => $this->createCartChangeTransfer(
+                static::INT_QUANTITY, $this->fixtures['bundledProductSku']
+            ),
+            'float quantity' => $this->createCartChangeTransfer(
+                static::FLOAT_QUANTITY, $this->fixtures['bundledProductSku']
+            ),
+        ];
+
+        return $cartChangeTransfer;
+    }
+
+    /**
+     * @param float|int $quantity
+     * @param string $bundleSku
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer[]
+     */
+    protected function createCartChangeTransfer($quantity, string $bundleSku)
     {
         $cartChangeTransfer = new CartChangeTransfer();
 
@@ -184,16 +210,16 @@ class ProductBundleCartExpanderTest extends Unit
         $cartChangeTransfer->setQuote($quoteTransfer);
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(2);
+        $itemTransfer->setQuantity($quantity);
         $itemTransfer->setUnitGrossPrice(300);
         $itemTransfer->setUnitPrice(300);
         $itemTransfer->setUnitNetPrice(300);
-        $itemTransfer->setSku('sku-123');
+        $itemTransfer->setSku($bundleSku);
         $itemTransfer->setId(1);
 
         $cartChangeTransfer->addItem($itemTransfer);
 
-        return $cartChangeTransfer;
+        return [$cartChangeTransfer];
     }
 
     /**

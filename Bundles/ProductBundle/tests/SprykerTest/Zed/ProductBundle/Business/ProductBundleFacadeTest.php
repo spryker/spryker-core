@@ -349,8 +349,9 @@ class ProductBundleFacadeTest extends Unit
      *
      * @return void
      */
-    public function testSaveBundledProductsShouldAddProvidedConcreteToBundle(ProductForBundleTransfer $bundledProductTransfer)
-    {
+    public function testSaveBundledProductsShouldAddProvidedConcreteToBundle(
+        ProductForBundleTransfer $bundledProductTransfer
+    ) {
         $productConcreteBundleTransfer = $this->createProduct(self::BUNDLED_PRODUCT_PRICE_1, self::BUNDLE_SKU_3);
         $productConcreateToAssignTransfer = $this->createProduct(self::BUNDLED_PRODUCT_PRICE_1, self::SKU_BUNDLED_1);
 

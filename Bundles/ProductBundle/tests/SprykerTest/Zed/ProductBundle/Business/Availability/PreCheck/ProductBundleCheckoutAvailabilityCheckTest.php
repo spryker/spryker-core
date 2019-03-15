@@ -13,6 +13,9 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInter
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Spryker\Zed\ProductBundle\ProductBundleConfig;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 
 /**
  * Auto-generated group annotations
@@ -29,11 +32,19 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
 {
     public const ID_STORE = 1;
 
+    protected const INT_QUANTITY = 5;
+    protected const FLOAT_QUANTITY = 5.1;
+
     /**
+     * @dataProvider quoteTransferDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return void
      */
-    public function testCheckCheckoutAvailabilityWhenAvailabilityExistingShouldReturnEmptyErrorContainer()
-    {
+    public function testCheckCheckoutAvailabilityWhenAvailabilityExistingShouldReturnEmptyErrorContainer(
+        QuoteTransfer $quoteTransfer
+    ) {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock->expects($this->once())
             ->method('isProductSellableForStore')
@@ -42,8 +53,6 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
         $productBundleAvailabilityCheckMock = $this->createProductBundleCheckoutAvailabilityCheckMock($availabilityFacadeMock);
 
         $this->setupFindBundledProducts($this->fixtures, $productBundleAvailabilityCheckMock);
-
-        $quoteTransfer = $this->createTestQuoteTransfer();
 
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsSuccess(true);
@@ -58,10 +67,15 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
     }
 
     /**
+     * @dataProvider quoteTransferDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return void
      */
-    public function testCheckCheckoutAvailabilityWhenAvailabilityNonExistingShouldStoreErrorMessage()
-    {
+    public function testCheckCheckoutAvailabilityWhenAvailabilityNonExistingShouldStoreErrorMessage(
+        QuoteTransfer $quoteTransfer
+    ) {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock->expects($this->once())
             ->method('isProductSellableForStore')
@@ -70,8 +84,6 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
         $productBundleAvailabilityCheckMock = $this->createProductBundleCheckoutAvailabilityCheckMock($availabilityFacadeMock);
 
         $this->setupFindBundledProducts($this->fixtures, $productBundleAvailabilityCheckMock);
-
-        $quoteTransfer = $this->createTestQuoteTransfer();
 
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsSuccess(true);
@@ -121,5 +133,45 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
     protected function createProductBundleConfigMock(): ProductBundleConfig
     {
         return $this->getMockBuilder(ProductBundleConfig::class)->getMock();
+    }
+
+    /**
+     * @return array
+     */
+    public function quoteTransferDataProvider(): array
+    {
+        return [
+            'int quantity' => $this->createQuoteTransferDataProvider(
+                static::INT_QUANTITY, $this->fixtures['bundle-sku']
+            ),
+            'float quantity' => $this->createQuoteTransferDataProvider(
+                static::FLOAT_QUANTITY, $this->fixtures['bundle-sku']
+            ),
+        ];
+    }
+
+    /**
+     * @param float|int $quantity
+     * @param string $bundleSku
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer[]
+     */
+    protected function createQuoteTransferDataProvider($quantity, string $bundleSku)
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku($bundleSku);
+        $itemTransfer->setQuantity($quantity);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        $bundleItemTransfer = new ItemTransfer();
+        $bundleItemTransfer->setSku($bundleSku);
+
+        $quoteTransfer->addBundleItem($bundleItemTransfer);
+
+        return [$quoteTransfer];
     }
 }

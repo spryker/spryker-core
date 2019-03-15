@@ -23,6 +23,7 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabil
 class PreCheckMocks extends Unit
 {
     public const ID_STORE = 1;
+
     /**
      * @var array
      */
@@ -41,28 +42,6 @@ class PreCheckMocks extends Unit
     protected function createAvailabilityFacadeMock()
     {
         return $this->getMockBuilder(ProductBundleToAvailabilityInterface::class)->getMock();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function createTestQuoteTransfer()
-    {
-        $quoteTransfer = new QuoteTransfer();
-
-        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($this->fixtures['bundle-sku']);
-        $itemTransfer->setQuantity(5);
-
-        $quoteTransfer->addItem($itemTransfer);
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($this->fixtures['bundle-sku']);
-
-        $quoteTransfer->addBundleItem($itemTransfer);
-        return $quoteTransfer;
     }
 
     /**
