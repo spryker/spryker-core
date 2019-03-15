@@ -25,7 +25,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     protected $bundleGroupKeys = [];
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface
      */
     protected $utilQuantityService;
 

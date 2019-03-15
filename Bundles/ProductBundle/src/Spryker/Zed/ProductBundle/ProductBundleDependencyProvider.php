@@ -17,6 +17,7 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacad
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeBridge;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToProductQueryContainerBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerBridge;
@@ -40,7 +41,8 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_STOCK = 'stock query container';
     public const QUERY_CONTAINER_PRODUCT = 'product query container';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
-    public const SERVICE_PRODUCT_BUNDLE = 'SERVICE_PRODUCT_BUNDLE';
+
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -62,7 +64,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQueryContainerSales($container);
         $container = $this->addQueryContainerStock($container);
         $container = $this->addQueryContainerProduct($container);
-        $container = $this->addProductBundleService($container);
+        $container = $this->addUtilQuantityService($container);
 
         return $container;
     }
@@ -84,20 +86,6 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductBundleService(Container $container): Container
-    {
-        $container[static::SERVICE_PRODUCT_BUNDLE] = function (Container $container) {
-            return $container->getLocator()->productBundle()->service();
-        };
-
         return $container;
     }
 
@@ -254,6 +242,20 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_MESSENGER] = function (Container $container) {
             return new ProductBundleToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
         };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilQuantityService(Container $container)
+    {
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new ProductBundleToUtilQuantityBridge($container->getLocator()->utilQuantity()->service());
+        };
+
         return $container;
     }
 }

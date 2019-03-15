@@ -14,7 +14,7 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInter
 class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface
      */
     protected $utilQuantityService;
 

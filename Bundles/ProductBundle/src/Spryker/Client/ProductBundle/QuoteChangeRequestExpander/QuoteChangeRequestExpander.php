@@ -15,7 +15,7 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInter
 class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface;
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityInterface
      */
     protected $utilQuantityService;
 
