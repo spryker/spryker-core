@@ -21,13 +21,11 @@ use Symfony\Component\Form\ResolvedFormTypeFactoryInterface;
 class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
     public const SERVICE_FORM_FACTORY = 'form.factory';
-    public const SERVICE_FORM_RESOLVED_TYPE_FACTORY = 'form.resolved_type_factory';
 
     public const SERVICE_FORM_FACTORY_ALIAS = 'FORM_FACTORY';
 
     /**
      * {@inheritdoc}
-     * - Adds `form.resolved_type_factory` service.
      * - Adds `form.factory` service.
      * - Adds global `FORM_FACTORY` service as an alias for `form.factory`.
      *

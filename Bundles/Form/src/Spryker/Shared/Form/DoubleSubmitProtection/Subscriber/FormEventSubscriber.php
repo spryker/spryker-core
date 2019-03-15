@@ -106,7 +106,7 @@ class FormEventSubscriber implements EventSubscriberInterface
         $this->tokenStorage->deleteToken($formName);
 
         if (is_array($data)) {
-            unset($data[$this->fieldName]);
+            unset($data[$this->getFieldName()]);
         }
 
         $event->setData($data);
@@ -180,7 +180,7 @@ class FormEventSubscriber implements EventSubscriberInterface
      */
     protected function isTokenValid($data, $formName): bool
     {
-        $givenToken = $data[$this->fieldName];
+        $givenToken = $data[$this->getFieldName()];
         $expectedToken = $this->tokenStorage->getToken($formName);
 
         return $expectedToken !== null &&
@@ -196,7 +196,7 @@ class FormEventSubscriber implements EventSubscriberInterface
         $errorMessage = $this->errorMessage;
         if ($this->translator !== null) {
             $errorMessage = $this->translator->trans(
-                $this->errorMessage,
+                $this->getErrorMessage(),
                 $this->translationOptions,
                 $this->translationDomain
             );
