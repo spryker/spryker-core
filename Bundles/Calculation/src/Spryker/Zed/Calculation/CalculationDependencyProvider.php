@@ -42,6 +42,8 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
             return new CalculationToUtilTextBridge($container->getLocator()->utilText()->service());
         };
 
+        $container = $this->addUtilPriceService($container);
+
         return $container;
     }
 

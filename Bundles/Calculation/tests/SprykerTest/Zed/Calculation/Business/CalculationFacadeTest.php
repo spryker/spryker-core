@@ -39,6 +39,7 @@ use Spryker\Zed\Calculation\Communication\Plugin\Calculator\RefundableAmountCalc
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\RefundTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\SubtotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\TaxTotalCalculatorPlugin;
+use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceBridge;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -53,6 +54,11 @@ use Spryker\Zed\Kernel\Container;
  */
 class CalculationFacadeTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\Calculation\CalculationBusinessTester
+     */
+    protected $tester;
+
     /**
      * @dataProvider calculatePriceShouldSetDefaultStorePriceValuesDataProvider
      *
@@ -709,6 +715,12 @@ class CalculationFacadeTest extends Unit
         $calculationBusinessFactory = new CalculationBusinessFactory();
 
         $container = new Container();
+        $container[CalculationDependencyProvider::SERVICE_UTIL_PRICE] = function () {
+            return new CalculationToUtilPriceServiceBridge(
+                $this->tester->getLocator()->utilPrice()->service()
+            );
+        };
+
         $container[CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK] = function () use ($calculatorPlugins) {
             return $calculatorPlugins;
         };
