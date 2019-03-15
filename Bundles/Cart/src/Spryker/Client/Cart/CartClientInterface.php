@@ -136,7 +136,7 @@ interface CartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity(string $sku, string $groupKey = null, float $quantity = 1.0): QuoteTransfer;
+    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1);
 
     /**
      * Specification:
@@ -152,7 +152,7 @@ interface CartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity(string $sku, string $groupKey = null, float $quantity = 1.0): QuoteTransfer;
+    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1);
 
     /**
      * Specification:
@@ -168,7 +168,7 @@ interface CartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItemQuantity(string $sku, string $groupKey = null, float $quantity = 1.0): QuoteTransfer;
+    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1);
 
     /**
      * Specification:

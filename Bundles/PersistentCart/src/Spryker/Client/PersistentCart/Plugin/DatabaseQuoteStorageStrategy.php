@@ -197,7 +197,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity(string $sku, string $groupKey = null, float $quantity = 1.0): QuoteTransfer
+    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeQuantityTransfer();
         $itemTransfer = new ItemTransfer();
@@ -218,7 +218,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *  - Recalculates quote totals.
      *  - Save updated quote to database.
      *  - Stores quote in session internally after zed request.
-     *  - Returns update quote.
+     *  - Returns update quote.ker/spryker/Bundles/Cart/src/Spryker/Client/Cart/CartClient.ph
      *
      * @param string $sku
      * @param string|null $groupKey
@@ -226,7 +226,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity(string $sku, string $groupKey = null, float $quantity = 1.0): QuoteTransfer
+    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeQuantityTransfer();
         $itemTransfer = new ItemTransfer();
@@ -255,7 +255,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItemQuantity(string $sku, string $groupKey = null, float $quantity = 1.0): QuoteTransfer
+    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeQuantityTransfer();
         $itemTransfer = new ItemTransfer();

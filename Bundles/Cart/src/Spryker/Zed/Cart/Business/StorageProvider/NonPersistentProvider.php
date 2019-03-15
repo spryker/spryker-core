@@ -172,7 +172,7 @@ class NonPersistentProvider implements StorageProviderInterface
             }
         }
 
-        if ($existingItemTransfer === null) {
+        if ($existingItemTransfer === null && isset($existingItems[$itemIndex])) {
             $itemIndex = $cartIndex[$itemIdentifier];
             $existingItemTransfer = $existingItems[$itemIndex];
         }
@@ -180,7 +180,7 @@ class NonPersistentProvider implements StorageProviderInterface
         $changedQuantity = $existingItemTransfer->getQuantity() - $itemTransfer->getQuantity();
         $changedQuantity = $this->utilQuantityService->roundQuantity($changedQuantity);
 
-        if ($changedQuantity > 0.0) {
+        if ($changedQuantity > 0) {
             $existingItemTransfer->setQuantity($changedQuantity);
         } else {
             unset($existingItems[$itemIndex]);
@@ -196,6 +196,10 @@ class NonPersistentProvider implements StorageProviderInterface
      */
     protected function increaseExistingItem(Traversable $existingItems, $index, $itemTransfer)
     {
+        if (!isset($existingItems[$index])) {
+            return;
+        }
+
         $existingItemTransfer = $existingItems[$index];
         $changedQuantity = $existingItemTransfer->getQuantity() + $itemTransfer->getQuantity();
         $changedQuantity = $this->utilQuantityService->roundQuantity($changedQuantity);
@@ -212,7 +216,7 @@ class NonPersistentProvider implements StorageProviderInterface
      */
     protected function isValidQuantity(ItemTransfer $itemTransfer)
     {
-        if ($itemTransfer->getQuantity() <= 0.0) {
+        if ($itemTransfer->getQuantity() <= 0) {
             throw new InvalidQuantityExeption(
                 sprintf(
                     'Could not change the quantity of cart item "%s" to "%d".',
