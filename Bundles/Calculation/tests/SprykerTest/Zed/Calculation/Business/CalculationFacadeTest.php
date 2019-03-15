@@ -282,9 +282,15 @@ class CalculationFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider calculateSumDiscountAmountShouldSumAllItemDiscountsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $itemResult
+     * @param int $expenseResult
+     *
      * @return void
      */
-    public function testCalculateSumDiscountAmountShouldSumAllItemDiscounts()
+    public function testCalculateSumDiscountAmountShouldSumAllItemDiscounts(QuoteTransfer $quoteTransfer, int $itemResult, int $expenseResult): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -292,62 +298,61 @@ class CalculationFacadeTest extends Unit
             ]
         );
 
-        $quoteTransfer = new QuoteTransfer();
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setUnitPrice(200);
-        $itemTransfer->setSumPrice(200);
-
-        $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitAmount(20);
-        $calculatedDiscountTransfer->setSumAmount(20);
-        $calculatedDiscountTransfer->setQuantity(1);
-        $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
-
-        $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitAmount(20);
-        $calculatedDiscountTransfer->setSumAmount(20);
-        $calculatedDiscountTransfer->setQuantity(1);
-        $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
-
-        $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitAmount(20);
-        $calculatedDiscountTransfer->setSumAmount(20);
-        $calculatedDiscountTransfer->setQuantity(1);
-        $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
-
-        $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitAmount(20);
-        $calculatedDiscountTransfer->setSumAmount(20);
-        $calculatedDiscountTransfer->setQuantity(1);
-        $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
-
-        $quoteTransfer->addItem($itemTransfer);
-
-        $expenseTransfer = new ExpenseTransfer();
-        $expenseTransfer->setUnitPrice(200);
-        $expenseTransfer->setSumPrice(200);
-
-        $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitAmount(20);
-        $calculatedDiscountTransfer->setSumAmount(20);
-        $calculatedDiscountTransfer->setQuantity(1);
-        $expenseTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
-
-        $quoteTransfer->addExpense($expenseTransfer);
-
         $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
         $calculatedExpenseTransfer = $quoteTransfer->getExpenses()[0];
 
-        $this->assertSame(80, $calculatedItemTransfer->getSumDiscountAmountAggregation());
-        $this->assertSame(20, $calculatedExpenseTransfer->getSumDiscountAmountAggregation());
+        $this->assertSame($itemResult, $calculatedItemTransfer->getSumDiscountAmountAggregation());
+        $this->assertSame($expenseResult, $calculatedExpenseTransfer->getSumDiscountAmountAggregation());
+    }
+
+    /**
+     * @return array
+     */
+    public function calculateSumDiscountAmountShouldSumAllItemDiscountsDataProvider(): array
+    {
+        return [
+            'int stock' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(2, 160, 40),
+            'float stock' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(1.33, 108, 27),
+        ];
+    }
+
+    /**
+     * @param int|float $quantity
+     * @param int $itemResult
+     * @param int $expenseResult
+     *
+     * @return array
+     */
+    protected function getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts($quantity, int $itemResult, int $expenseResult): array
+    {
+        $calculatedDiscountMap = [
+            CalculatedDiscountTransfer::ID_DISCOUNT => 1,
+            CalculatedDiscountTransfer::UNIT_AMOUNT => 20,
+            CalculatedDiscountTransfer::QUANTITY => $quantity,
+        ];
+        $baseTransferMap = [
+            ExpenseTransfer::UNIT_PRICE => 200,
+            ExpenseTransfer::SUM_PRICE => 200,
+        ];
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $itemTransfer = (new ItemBuilder())
+            ->seed($baseTransferMap)
+            ->withCalculatedDiscount($calculatedDiscountMap)
+            ->withCalculatedDiscount($calculatedDiscountMap)
+            ->withCalculatedDiscount($calculatedDiscountMap)
+            ->withCalculatedDiscount($calculatedDiscountMap)->build();
+        $quoteTransfer->addItem($itemTransfer);
+
+        $expenseTransfer = (new ExpenseBuilder())
+            ->seed($baseTransferMap)
+            ->withCalculatedDiscount($calculatedDiscountMap)
+            ->build();
+
+        $quoteTransfer->addExpense($expenseTransfer);
+
+        return [$quoteTransfer, $itemResult, $expenseResult];
     }
 
     /**
@@ -601,9 +606,14 @@ class CalculationFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider calculateRefundTotalShouldSumAllRefundableAmountsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $expectedResult
+     *
      * @return void
      */
-    public function testCalculateRefundTotalShouldSumAllRefundableAmounts()
+    public function testCalculateRefundTotalShouldSumAllRefundableAmounts(QuoteTransfer $quoteTransfer, int $expectedResult): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -611,33 +621,46 @@ class CalculationFacadeTest extends Unit
             ]
         );
 
-        $quoteTransfer = new QuoteTransfer();
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(1);
-        $itemTransfer->setRefundableAmount(10);
-
-        $productOptionTransfer = new ProductOptionTransfer();
-        $productOptionTransfer->setQuantity(1);
-        $productOptionTransfer->setRefundableAmount(10);
-
-        $itemTransfer->addProductOption($productOptionTransfer);
-
-        $quoteTransfer->addItem($itemTransfer);
-
-        $expenseTransfer = new ExpenseTransfer();
-        $expenseTransfer->setQuantity(1);
-        $expenseTransfer->setRefundableAmount(10);
-        $quoteTransfer->addExpense($expenseTransfer);
-
-        $totalsTransfer = new TotalsTransfer();
-        $quoteTransfer->setTotals($totalsTransfer);
-
         $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedRefundTotal = $quoteTransfer->getTotals()->getRefundTotal();
 
-        $this->assertSame(30, $calculatedRefundTotal);
+        $this->assertSame($expectedResult, $calculatedRefundTotal);
+    }
+
+    /**
+     * @return array
+     */
+    public function calculateRefundTotalShouldSumAllRefundableAmountsDataProvider(): array
+    {
+        return [
+            'int data' => $this->getDataForCalculateRefundTotalShouldSumAllRefundableAmounts(30),
+        ];
+    }
+
+    /**
+     * @param int $expectedResult
+     *
+     * @return array
+     */
+    protected function getDataForCalculateRefundTotalShouldSumAllRefundableAmounts(int $expectedResult): array
+    {
+        $quoteTransfer = (new QuoteBuilder())
+            ->withExpense([
+                ExpenseTransfer::REFUNDABLE_AMOUNT => 10,
+            ])
+            ->build();
+        $itemTransfer = (new ItemBuilder())->seed([
+            ItemTransfer::REFUNDABLE_AMOUNT => 10,
+        ])->withProductOption([
+            ProductOptionTransfer::REFUNDABLE_AMOUNT => 10,
+        ])->build();
+        $quoteTransfer->addItem($itemTransfer);
+
+        $totalsTransfer = new TotalsTransfer();
+        $quoteTransfer->setTotals($totalsTransfer);
+
+        return [$quoteTransfer, $expectedResult];
     }
 
     /**
