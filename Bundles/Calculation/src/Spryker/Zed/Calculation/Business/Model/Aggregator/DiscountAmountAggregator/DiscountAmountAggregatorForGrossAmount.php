@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface;
 
 /**
  * Old implementation of DiscountAmountAggregation not used since Discount module version 5, kept for BC reasons.
@@ -35,6 +36,19 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
      * @var bool
      */
     protected $isOrder = false;
+
+    /**
+     * @var \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface
+     */
+    protected $utilPriceService;
+
+    /**
+     * @param \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface $utilPriceService
+     */
+    public function __construct(CalculationToUtilPriceServiceInterface $utilPriceService)
+    {
+        $this->utilPriceService = $utilPriceService;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
@@ -118,7 +132,7 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
      */
     protected function setCalculatedDiscountsSumGrossAmount(CalculatedDiscountTransfer $calculatedDiscountTransfer)
     {
-        $sumGrossAmount = (int)round(
+        $sumGrossAmount = $this->roundPrice(
             $calculatedDiscountTransfer->getUnitGrossAmount() * $calculatedDiscountTransfer->getQuantity()
         );
         $calculatedDiscountTransfer->setSumGrossAmount(
@@ -126,6 +140,16 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
         );
 
         $this->setCalculatedDiscounts($calculatedDiscountTransfer);
+    }
+
+    /**
+     * @param float $price
+     *
+     * @return int
+     */
+    protected function roundPrice(float $price): int
+    {
+        return $this->utilPriceService->roundPrice($price);
     }
 
     /**

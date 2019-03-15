@@ -12,9 +12,23 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface;
 
 class SumNetPriceCalculator implements CalculatorInterface
 {
+    /**
+     * @var \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface
+     */
+    protected $utilPriceService;
+
+    /**
+     * @param \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface $utilPriceService
+     */
+    public function __construct(CalculationToUtilPriceServiceInterface $utilPriceService)
+    {
+        $this->utilPriceService = $utilPriceService;
+    }
+
     /**
      * For already ordered entities, sum prices are acting as source of truth.
      *
@@ -40,11 +54,21 @@ class SumNetPriceCalculator implements CalculatorInterface
                 continue;
             }
 
-            $sumNetPrice = (int)round(
+            $sumNetPrice = $this->roundPrice(
                 $expenseTransfer->getUnitNetPrice() * $expenseTransfer->getQuantity()
             );
             $expenseTransfer->setSumNetPrice($sumNetPrice);
         }
+    }
+
+    /**
+     * @param float $price
+     *
+     * @return int
+     */
+    protected function roundPrice(float $price): int
+    {
+        return $this->utilPriceService->roundPrice($price);
     }
 
     /**
@@ -60,7 +84,9 @@ class SumNetPriceCalculator implements CalculatorInterface
             return;
         }
 
-        $sumNetPrice = (int)round($itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity());
+        $sumNetPrice = $this->roundPrice(
+            $itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity()
+        );
 
         $itemTransfer->setSumNetPrice($sumNetPrice);
     }
@@ -101,7 +127,10 @@ class SumNetPriceCalculator implements CalculatorInterface
                     continue;
                 }
 
-                $productOptionTransfer->setSumNetPrice($productOptionTransfer->getUnitNetPrice() * $productOptionTransfer->getQuantity());
+                $sumNetPrice = $this->roundPrice(
+                    $productOptionTransfer->getUnitNetPrice() * $productOptionTransfer->getQuantity()
+                );
+                $productOptionTransfer->setSumNetPrice($sumNetPrice);
             }
         }
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Calculation;
 
+use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceBridge;
 use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -19,6 +20,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     public const QUOTE_CALCULATOR_PLUGIN_STACK = 'quote calculator plugin stack';
     public const ORDER_CALCULATOR_PLUGIN_STACK = 'order calculator plugin stack';
 
+    public const SERVICE_UTIL_PRICE = 'SERVICE_UTIL_PRICE';
     public const SERVICE_UTIL_TEXT = 'util text service';
 
     /**
@@ -38,6 +40,22 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
             return new CalculationToUtilTextBridge($container->getLocator()->utilText()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilPriceService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_PRICE] = function (Container $container) {
+            return new CalculationToUtilPriceServiceBridge(
+                $container->getLocator()->utilPrice()->service()
+            );
         };
 
         return $container;
