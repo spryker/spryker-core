@@ -32,6 +32,7 @@
     "spryker/calculation": "*",
     "spryker/checkout": "*",
     "spryker/config": "*",
+    "spryker/oms": "*",
     "spryker/propel": "*",
     "spryker/testify": "*",
     "spryker/zed-navigation": "*"
