@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Availability\Business;
 
-use Spryker\Service\Availability\AvailabilityServiceInterface;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Availability\Business\Model\ProductReservationReader;
 use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreCondition;
 use Spryker\Zed\Availability\Business\Model\Sellable;
+use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -30,7 +30,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->getStockFacade(),
             $this->getStoreFacade(),
-            $this->getAvailabilityService()
+            $this->getUtilQuantityService()
         );
     }
 
@@ -45,8 +45,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getQueryContainer(),
             $this->getProductFacade(),
-            $this->getStoreFacade(),
-            $this->getAvailabilityService()
+            $this->getStoreFacade()
         );
     }
 
@@ -59,7 +58,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getStockFacade(),
             $this->getStoreFacade(),
-            $this->getAvailabilityService()
+            $this->getUtilQuantityService()
         );
     }
 
@@ -103,7 +102,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new ProductsAvailableCheckoutPreCondition(
             $this->createSellableModel(),
             $this->getConfig(),
-            $this->getAvailabilityService()
+            $this->getUtilQuantityService()
         );
     }
 
@@ -116,10 +115,10 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Service\Availability\AvailabilityServiceInterface
+     * @return \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface
      */
-    public function getAvailabilityService(): AvailabilityServiceInterface
+    public function getUtilQuantityService(): AvailabilityToUtilQuantityServiceInterface
     {
-        return $this->getProvidedDependency(AvailabilityDependencyProvider::SERVICE_AVAILABILITY);
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

@@ -10,7 +10,6 @@ namespace Spryker\Zed\Availability\Business\Model;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
-use Spryker\Service\Availability\AvailabilityServiceInterface;
 use Spryker\Shared\Availability\AvailabilityConfig;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
@@ -52,9 +51,9 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Service\Availability\AvailabilityServiceInterface
+     * @var \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface
      */
-    protected $service;
+    protected $utilQuantityService;
 
     /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
@@ -63,7 +62,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface $productFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Service\Availability\AvailabilityServiceInterface $service
      */
     public function __construct(
         SellableInterface $sellable,
@@ -71,8 +69,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         AvailabilityToTouchInterface $touchFacade,
         AvailabilityQueryContainerInterface $queryContainer,
         AvailabilityToProductInterface $productFacade,
-        AvailabilityToStoreFacadeInterface $storeFacade,
-        AvailabilityServiceInterface $service
+        AvailabilityToStoreFacadeInterface $storeFacade
     ) {
         $this->sellable = $sellable;
         $this->stockFacade = $stockFacade;
@@ -80,7 +77,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $this->queryContainer = $queryContainer;
         $this->productFacade = $productFacade;
         $this->storeFacade = $storeFacade;
-        $this->service = $service;
     }
 
     /**

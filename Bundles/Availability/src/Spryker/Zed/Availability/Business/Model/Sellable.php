@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Service\Availability\AvailabilityServiceInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface;
 
 class Sellable implements SellableInterface
 {
@@ -31,26 +31,26 @@ class Sellable implements SellableInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Service\Availability\AvailabilityServiceInterface
+     * @var \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface
      */
-    protected $service;
+    protected $utilQuantityService;
 
     /**
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface $omsFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Service\Availability\AvailabilityServiceInterface $service
+     * @param \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         AvailabilityToOmsInterface $omsFacade,
         AvailabilityToStockInterface $stockFacade,
         AvailabilityToStoreFacadeInterface $storeFacade,
-        AvailabilityServiceInterface $service
+        AvailabilityToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->omsFacade = $omsFacade;
         $this->stockFacade = $stockFacade;
         $this->storeFacade = $storeFacade;
-        $this->service = $service;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -147,6 +147,16 @@ class Sellable implements SellableInterface
         $physicalItems = $this->stockFacade->calculateProductStockForStore($sku, $storeTransfer);
         $reservedItems = $this->omsFacade->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
 
-        return $this->service->round($physicalItems - $reservedItems);
+        return $this->roundQuantity($physicalItems - $reservedItems);
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 }

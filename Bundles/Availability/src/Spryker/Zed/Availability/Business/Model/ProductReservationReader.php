@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Spryker\Service\Availability\AvailabilityServiceInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 
 class ProductReservationReader implements ProductReservationReaderInterface
@@ -35,26 +35,26 @@ class ProductReservationReader implements ProductReservationReaderInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Service\Availability\AvailabilityServiceInterface
+     * @var \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface
      */
-    protected $service;
+    protected $utilQuantityService;
 
     /**
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $availabilityQueryContainer
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Service\Availability\AvailabilityServiceInterface $service
+     * @param \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         AvailabilityQueryContainerInterface $availabilityQueryContainer,
         AvailabilityToStockInterface $stockFacade,
         AvailabilityToStoreFacadeInterface $storeFacade,
-        AvailabilityServiceInterface $service
+        AvailabilityToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->availabilityQueryContainer = $availabilityQueryContainer;
         $this->stockFacade = $stockFacade;
         $this->storeFacade = $storeFacade;
-        $this->service = $service;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -161,7 +161,17 @@ class ProductReservationReader implements ProductReservationReaderInterface
             }
         }
 
-        return $this->service->round($reservation);
+        return $this->roundQuantity($reservation);
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 
     /**

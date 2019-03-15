@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Service\Availability\AvailabilityServiceInterface;
 use Spryker\Zed\Availability\AvailabilityConfig;
+use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface;
 
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
 {
@@ -30,23 +30,23 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     protected $availabilityConfig;
 
     /**
-     * @var \Spryker\Service\Availability\AvailabilityServiceInterface
+     * @var \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface
      */
-    protected $service;
+    protected $utilQuantityService;
 
     /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      * @param \Spryker\Zed\Availability\AvailabilityConfig $availabilityConfig
-     * @param \Spryker\Service\Availability\AvailabilityServiceInterface $service
+     * @param \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         SellableInterface $sellable,
         AvailabilityConfig $availabilityConfig,
-        AvailabilityServiceInterface $service
+        AvailabilityToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->sellable = $sellable;
         $this->availabilityConfig = $availabilityConfig;
-        $this->service = $service;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -102,12 +102,22 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
             if (!isset($result[$sku])) {
                 $result[$sku] = 0;
             }
-            $result[$sku] = $this->service->round(
+            $result[$sku] = $this->roundQuantity(
                 $result[$sku] + $itemTransfer->getQuantity()
             );
         }
 
         return $result;
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 
     /**
