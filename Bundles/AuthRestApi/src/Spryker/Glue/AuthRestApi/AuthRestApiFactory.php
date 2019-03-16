@@ -10,8 +10,12 @@ namespace Spryker\Glue\AuthRestApi;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokensReader;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokensReaderInterface;
+use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenUserFinder;
+use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenUserFinderInterface;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidator;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidatorInterface;
+use Spryker\Glue\AuthRestApi\Processor\AccessTokens\Validator\RestRequestAccessTokenValidator;
+use Spryker\Glue\AuthRestApi\Processor\AccessTokens\Validator\RestRequestAccessTokenValidatorInterface;
 use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensReader;
 use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensReaderInterface;
 use Spryker\Glue\AuthRestApi\Processor\ResponseFormatter\AuthenticationErrorResponseHeadersFormatter;
@@ -63,6 +67,25 @@ class AuthRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenUserFinderInterface
+     */
+    public function createAccessTokenUserFinder(): AccessTokenUserFinderInterface
+    {
+        return new AccessTokenUserFinder(
+            $this->getOauthClient(),
+            $this->getRestUserIdentifierExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\Validator\RestRequestAccessTokenValidatorInterface
+     */
+    public function createRestRequestAccessTokenValidator(): RestRequestAccessTokenValidatorInterface
+    {
+        return new RestRequestAccessTokenValidator();
+    }
+
+    /**
      * @return \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface
      */
     public function getOauthClient(): AuthRestApiToOauthClientInterface
@@ -73,7 +96,7 @@ class AuthRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserIdentifierExpanderPluginInterface[]
      */
-    protected function getRestUserIdentifierExpanderPlugins(): array
+    public function getRestUserIdentifierExpanderPlugins(): array
     {
         return $this->getProvidedDependency(AuthRestApiDependencyProvider::PLUGINS_REST_USER_IDENTIFIER_EXPANDER);
     }

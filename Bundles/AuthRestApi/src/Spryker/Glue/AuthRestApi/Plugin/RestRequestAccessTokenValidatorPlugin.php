@@ -6,30 +6,28 @@
 
 namespace Spryker\Glue\AuthRestApi\Plugin;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Glue\AuthRestApi\AuthRestApiFactory getFactory()
  */
-class AccessTokenValidatorPlugin extends AbstractPlugin implements ValidateRestRequestPluginInterface
+class RestRequestAccessTokenValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
 {
     /**
-     * @deprecated Will be removed with nex major release.
-     *
      * {@inheritdoc}
      *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    public function validate(Request $request, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
+    public function validate(Request $request, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
-        return $this->getFactory()->createAccessTokenValidator()->validate($request, $restRequest);
+        return $this->getFactory()->createRestRequestAccessTokenValidator()->validate($request, $restRequest);
     }
 }
