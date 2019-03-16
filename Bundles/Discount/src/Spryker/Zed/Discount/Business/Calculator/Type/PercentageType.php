@@ -9,8 +9,8 @@ namespace Spryker\Zed\Discount\Business\Calculator\Type;
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Service\Discount\DiscountServiceInterface;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
+use Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceInterface;
 
 class PercentageType implements CalculatorTypeInterface
 {
@@ -20,16 +20,16 @@ class PercentageType implements CalculatorTypeInterface
     protected static $roundingError = 0.0;
 
     /**
-     * @var \Spryker\Service\Discount\DiscountServiceInterface
+     * @var \Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceInterface
      */
-    protected $service;
+    protected $utilPriceService;
 
     /**
-     * @param \Spryker\Service\Discount\DiscountServiceInterface $service
+     * @param \Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceInterface $utilPriceService
      */
-    public function __construct(DiscountServiceInterface $service)
+    public function __construct(DiscountToUtilPriceServiceInterface $utilPriceService)
     {
-        $this->service = $service;
+        $this->utilPriceService = $utilPriceService;
     }
 
     /**
@@ -57,9 +57,7 @@ class PercentageType implements CalculatorTypeInterface
         }
 
         foreach ($discountableItems as $discountableItemTransfer) {
-            $itemTotalAmount = $this->service->roundToInt(
-                $discountableItemTransfer->getUnitPrice() * $this->getDiscountableObjectQuantity($discountableItemTransfer)
-            );
+            $itemTotalAmount = $discountableItemTransfer->getUnitPrice() * $this->getDiscountableObjectQuantity($discountableItemTransfer);
             $discountAmount += $this->calculateDiscountAmount($itemTotalAmount, $value);
         }
 
@@ -67,7 +65,17 @@ class PercentageType implements CalculatorTypeInterface
             return 0;
         }
 
-        return $discountAmount;
+        return $this->roundPrice($discountAmount);
+    }
+
+    /**
+     * @param float $price
+     *
+     * @return int
+     */
+    protected function roundPrice(float $price): int
+    {
+        return $this->utilPriceService->roundPrice($price);
     }
 
     /**

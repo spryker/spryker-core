@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Service\Discount\DiscountServiceInterface;
 use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface;
+use Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceInterface;
 
 class Distributor implements DistributorInterface
 {
@@ -32,23 +32,23 @@ class Distributor implements DistributorInterface
     protected $discountableItemTransformerStrategyPlugins;
 
     /**
-     * @var \Spryker\Service\Discount\DiscountServiceInterface
+     * @var \Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceInterface
      */
-    protected $service;
+    protected $utilPriceService;
 
     /**
      * @param \Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface $discountableItemTransformer
      * @param array $discountableItemTransformerStrategyPlugins
-     * @param \Spryker\Service\Discount\DiscountServiceInterface $service
+     * @param \Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceInterface $utilPriceService
      */
     public function __construct(
         DiscountableItemTransformerInterface $discountableItemTransformer,
         array $discountableItemTransformerStrategyPlugins,
-        DiscountServiceInterface $service
+        DiscountToUtilPriceServiceInterface $utilPriceService
     ) {
         $this->discountableItemTransformer = $discountableItemTransformer;
         $this->discountableItemTransformerStrategyPlugins = $discountableItemTransformerStrategyPlugins;
-        $this->service = $service;
+        $this->utilPriceService = $utilPriceService;
     }
 
     /**
@@ -166,14 +166,22 @@ class Distributor implements DistributorInterface
     {
         $totalGrossAmount = 0;
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
-            $grossAmount = $this->service->roundToInt(
-                $discountableItemTransfer->getUnitPrice() *
-                $this->getDiscountableItemQuantity($discountableItemTransfer)
-            );
+            $grossAmount = $discountableItemTransfer->getUnitPrice() *
+                $this->getDiscountableItemQuantity($discountableItemTransfer);
             $totalGrossAmount += $grossAmount;
         }
 
-        return $totalGrossAmount;
+        return $this->roundPrice($totalGrossAmount);
+    }
+
+    /**
+     * @param float $price
+     *
+     * @return int
+     */
+    protected function roundPrice(float $price): int
+    {
+        return $this->utilPriceService->roundPrice($price);
     }
 
     /**

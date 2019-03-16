@@ -35,6 +35,7 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceBridge;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
 
@@ -273,7 +274,9 @@ class CalculatorTest extends Unit
         return new Distributor(
             $this->createDiscountableItemTransformer(),
             $this->createDiscountableItemTransformerStrategyPlugins(),
-            $this->tester->getLocator()->discount()->service()
+            new DiscountToUtilPriceServiceBridge(
+                $this->tester->getLocator()->utilPrice()->service()
+            )
         );
     }
 

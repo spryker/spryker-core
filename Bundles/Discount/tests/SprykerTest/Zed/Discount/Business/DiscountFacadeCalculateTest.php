@@ -29,6 +29,7 @@ use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface;
+use Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceBridge;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -429,8 +430,10 @@ class DiscountFacadeCalculateTest extends Unit
             return $discountableItemTransformerStrategyPlugins;
         };
 
-        $container[DiscountDependencyProvider::SERVICE_DISCOUNT] = function () {
-            return $this->tester->getLocator()->discount()->service();
+        $container[DiscountDependencyProvider::SERVICE_UTIL_PRICE] = function () {
+            return new DiscountToUtilPriceServiceBridge(
+                $this->tester->getLocator()->utilPrice()->service()
+            );
         };
 
         $discountBusinessFactory->setContainer($container);

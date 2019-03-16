@@ -28,6 +28,7 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeBridge;
+use Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceBridge;
 use Spryker\Zed\Discount\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
@@ -60,7 +61,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     public const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
-    public const SERVICE_DISCOUNT = 'SERVICE_DISCOUNT';
+    public const SERVICE_UTIL_PRICE = 'SERVICE_UTIL_PRICE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -83,7 +84,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCurrencyFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addDiscountableItemExpanderStrategyPlugins($container);
-        $container = $this->addDiscountService($container);
+        $container = $this->addUtilPriceService($container);
 
         return $container;
     }
@@ -193,10 +194,12 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addDiscountService(Container $container): Container
+    protected function addUtilPriceService(Container $container): Container
     {
-        $container[static::SERVICE_DISCOUNT] = function (Container $container) {
-            return $container->getLocator()->discount()->service();
+        $container[static::SERVICE_UTIL_PRICE] = function (Container $container) {
+            return new DiscountToUtilPriceServiceBridge(
+                $container->getLocator()->utilPrice()->service()
+            );
         };
 
         return $container;

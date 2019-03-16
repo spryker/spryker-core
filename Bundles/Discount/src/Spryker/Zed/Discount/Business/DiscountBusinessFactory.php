@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Discount\Business;
 
-use Spryker\Service\Discount\DiscountServiceInterface;
 use Spryker\Zed\Discount\Business\Calculator\CollectorStrategyResolver;
 use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Calculator\FilteredCalculator;
@@ -58,6 +57,7 @@ use Spryker\Zed\Discount\Business\QuoteDiscountValidator\QuoteDiscountMaxUsageVa
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
+use Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -104,7 +104,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createCalculatorPercentageType()
     {
         return new PercentageType(
-            $this->getDiscountService()
+            $this->getUtilPriceService()
         );
     }
 
@@ -124,7 +124,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
         return new Distributor(
             $this->createDiscountableItemTransformer(),
             $this->getDiscountableItemTransformerStrategyPlugins(),
-            $this->getDiscountService()
+            $this->getUtilPriceService()
         );
     }
 
@@ -657,10 +657,10 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Service\Discount\DiscountServiceInterface
+     * @return \Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceInterface
      */
-    public function getDiscountService(): DiscountServiceInterface
+    public function getUtilPriceService(): DiscountToUtilPriceServiceInterface
     {
-        return $this->getProvidedDependency(DiscountDependencyProvider::SERVICE_DISCOUNT);
+        return $this->getProvidedDependency(DiscountDependencyProvider::SERVICE_UTIL_PRICE);
     }
 }

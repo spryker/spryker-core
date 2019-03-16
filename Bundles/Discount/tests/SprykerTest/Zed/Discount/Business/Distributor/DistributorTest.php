@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformer;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
+use Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceBridge;
 
 /**
  * Auto-generated group annotations
@@ -490,7 +491,9 @@ class DistributorTest extends Unit
         return new Distributor(
             $this->createDiscountableItemTransformer(),
             $this->createDiscountableItemTransformerStrategyPlugins(),
-            $this->tester->getLocator()->discount()->service()
+            new DiscountToUtilPriceServiceBridge(
+                $this->tester->getLocator()->utilPrice()->service()
+            )
         );
     }
 

@@ -184,7 +184,7 @@ class SpecificationBuilderTest extends Unit
      */
     protected function createComparatorOperators()
     {
-        $operators = (new OperatorProvider($this->tester->getLocator()->discount()->service()))
+        $operators = (new OperatorProvider())
             ->createComparators();
         $comparatorOperators = new ComparatorOperators($operators);
 
