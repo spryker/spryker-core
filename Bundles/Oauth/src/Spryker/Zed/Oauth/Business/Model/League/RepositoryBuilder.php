@@ -11,12 +11,12 @@ use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
+use League\OAuth2\Server\Repositories\UserRepositoryInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\AccessTokenRepository;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\ClientRepository;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepository;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\ScopeRepository;
 use Spryker\Zed\Oauth\Business\Model\League\Repositories\UserRepository;
-use Spryker\Zed\Oauth\Business\Model\League\Repositories\UserRepositoryInterface;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
 use Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface;
 
@@ -85,7 +85,7 @@ class RepositoryBuilder implements RepositoryBuilderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Oauth\Business\Model\League\Repositories\UserRepositoryInterface
+     * @return \League\OAuth2\Server\Repositories\UserRepositoryInterface
      */
     public function createUserRepository(): UserRepositoryInterface
     {

@@ -39,6 +39,10 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
      */
     protected $searchString = '';
 
+    /**
+     * Specification:
+     * - Builds score based on multimatch cross fileds query type.
+     */
     public function __construct()
     {
         $this->createQuery();
@@ -53,6 +57,11 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * {@inheritdoc}
+     * - Builds score based on multimatch cross fileds query type.
+     *
+     * @api
+     *
      * @param string $searchString
      *
      * @return void
@@ -101,7 +110,7 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
         $matchQuery = (new MultiMatch())
             ->setFields($fields)
             ->setQuery($this->searchString)
-            ->setType(MultiMatch::TYPE_PHRASE_PREFIX);
+            ->setType(MultiMatch::TYPE_CROSS_FIELDS);
 
         return $matchQuery;
     }

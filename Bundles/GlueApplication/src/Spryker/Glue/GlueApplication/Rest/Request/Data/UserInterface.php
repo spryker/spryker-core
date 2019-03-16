@@ -6,8 +6,6 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Request\Data;
 
-use Generated\Shared\Transfer\RestUserIdentifierTransfer;
-
 interface UserInterface
 {
     /**
@@ -30,9 +28,4 @@ interface UserInterface
      * @return array
      */
     public function getScopes(): array;
-
-    /**
-     * @return \Generated\Shared\Transfer\RestUserIdentifierTransfer|null
-     */
-    public function getRestUserIdentifierTransfer(): ?RestUserIdentifierTransfer;
 }

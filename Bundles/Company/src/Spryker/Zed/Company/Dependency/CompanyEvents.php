@@ -11,7 +11,7 @@ interface CompanyEvents
 {
     /**
      * Specification:
-     * - This event will be used for company entity update
+     * - This event will be used for company entity update.
      *
      * @api
      */

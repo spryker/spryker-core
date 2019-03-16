@@ -55,19 +55,6 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
     }
 
     /**
-     * @param array $companyUserIds
-     *
-     * @return void
-     */
-    public function publishByCompanyUserIds(array $companyUserIds): void
-    {
-        $activeCompanyUserTransfers = $this->companyUserFacade->findActiveCompanyUsers($companyUserIds);
-        $indexedCompanyUserStorageEntities = $this->companyUserStorageRepository->findCompanyUserStorageEntities($companyUserIds);
-
-        $this->storeData($activeCompanyUserTransfers, $indexedCompanyUserStorageEntities);
-    }
-
-    /**
      * @param array $companyIds
      *
      * @return void
@@ -77,6 +64,21 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
         $companyUserIds = $this->companyUserFacade->findActiveCompanyUserIdsByCompanyIds($companyIds);
 
         $this->publishByCompanyUserIds($companyUserIds);
+    }
+
+    /**
+     * @param array $companyUserIds
+     *
+     * @return void
+     */
+    public function publishByCompanyUserIds(array $companyUserIds): void
+    {
+        $activeCompanyUserTransfers = $this->companyUserFacade->findActiveCompanyUsersByIds($companyUserIds);
+        $indexedCompanyUserStorageEntities = $this->companyUserStorageRepository->findCompanyUserStorageEntities($companyUserIds);
+
+        $this->storeData($activeCompanyUserTransfers, $indexedCompanyUserStorageEntities);
+
+        $this->deleteInactiveEntities($activeCompanyUserTransfers, $indexedCompanyUserStorageEntities);
     }
 
     /**
@@ -100,13 +102,10 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
     {
         foreach ($activeCompanyUserTransfers as $companyUserTransfer) {
             $idCompanyUser = $companyUserTransfer->getIdCompanyUser();
-            $companyUserStorageEntity = $this->selectCompanyUserStorageEntity($indexedCompanyUserStorageEntities, $idCompanyUser);
+            $companyUserStorageEntity = $indexedCompanyUserStorageEntities[$idCompanyUser] ?? new SpyCompanyUserStorage();
 
-            unset($indexedCompanyUserStorageEntities[$idCompanyUser]);
             $this->storeDataSet($companyUserTransfer, $companyUserStorageEntity);
         }
-
-        $this->deleteStorageEntities($indexedCompanyUserStorageEntities);
     }
 
     /**
@@ -170,13 +169,31 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[] $indexedCompanyUserStorageEntities
      * @param int $idCompanyUser
+     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[] $indexedCompanyUserStorageEntities
      *
      * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage
      */
-    protected function selectCompanyUserStorageEntity(array $indexedCompanyUserStorageEntities, int $idCompanyUser): SpyCompanyUserStorage
+    protected function getCompanyUserStorageEntity(int $idCompanyUser, array $indexedCompanyUserStorageEntities): SpyCompanyUserStorage
     {
         return $indexedCompanyUserStorageEntities[$idCompanyUser] ?? new SpyCompanyUserStorage();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer[] $activeCompanyUserTransfers
+     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[] $indexedCompanyUserStorageEntities
+     *
+     * @return void
+     */
+    protected function deleteInactiveEntities($activeCompanyUserTransfers, array $indexedCompanyUserStorageEntities): void
+    {
+        $companyUserStorageEntitiesToDelete = $indexedCompanyUserStorageEntities;
+        foreach ($activeCompanyUserTransfers as $companyUserTransfer) {
+            if (isset($companyUserStorageEntitiesToDelete[$companyUserTransfer->getIdCompanyUser()])) {
+                unset($companyUserStorageEntitiesToDelete[$companyUserTransfer->getIdCompanyUser()]);
+            }
+        }
+
+        $this->deleteStorageEntities($companyUserStorageEntitiesToDelete);
     }
 }

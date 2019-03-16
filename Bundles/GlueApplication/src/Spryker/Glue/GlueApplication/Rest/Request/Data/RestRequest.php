@@ -6,7 +6,7 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Request\Data;
 
-use Generated\Shared\Transfer\RestUserIdentifierTransfer;
+use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\GlueApplication\Rest\Exception\UserAlreadySetException;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,9 +64,16 @@ class RestRequest implements RestRequestInterface
     protected $filters = [];
 
     /**
+     * @deprecated use $restUser instead.
+     *
      * @var \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null
      */
     protected $user;
+
+    /**
+     * @var \Generated\Shared\Transfer\RestUserTransfer|null
+     */
+    protected $restUser;
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -243,6 +250,8 @@ class RestRequest implements RestRequestInterface
     }
 
     /**
+     * @deprecated use getRestUser() instead.
+     *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null
      */
     public function getUser(): ?UserInterface
@@ -251,10 +260,11 @@ class RestRequest implements RestRequestInterface
     }
 
     /**
+     * @deprecated use setRestUser() instead.
+     *
      * @param string $surrogateIdentifier
      * @param string $naturalIdentifier
      * @param array $scopes
-     * @param \Generated\Shared\Transfer\RestUserIdentifierTransfer|null $restUserIdentifierTransfer
      *
      * @throws \Spryker\Glue\GlueApplication\Rest\Exception\UserAlreadySetException
      *
@@ -263,14 +273,37 @@ class RestRequest implements RestRequestInterface
     public function setUser(
         string $surrogateIdentifier,
         string $naturalIdentifier,
-        array $scopes = [],
-        ?RestUserIdentifierTransfer $restUserIdentifierTransfer = null
+        array $scopes = []
     ): void {
         if ($this->user) {
             throw new UserAlreadySetException('Rest request object already have user set.');
         }
 
-        $this->user = new User($surrogateIdentifier, $naturalIdentifier, $scopes, $restUserIdentifierTransfer);
+        $this->user = new User($surrogateIdentifier, $naturalIdentifier, $scopes);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestUserTransfer|null $restUserTransfer
+     *
+     * @throws \Spryker\Glue\GlueApplication\Rest\Exception\UserAlreadySetException
+     *
+     * @return void
+     */
+    public function setRestUser(?RestUserTransfer $restUserTransfer): void
+    {
+        if ($this->restUser) {
+            throw new UserAlreadySetException('Rest request object already have user set.');
+        }
+
+        $this->restUser = $restUserTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestUserTransfer|null
+     */
+    public function getRestUser(): ?RestUserTransfer
+    {
+        return $this->restUser;
     }
 
     /**

@@ -27,7 +27,7 @@ class CompanyUserAccessTokensResourceController extends AbstractController
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCompanyUserAccessTokenResponseAttributes",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCompanyUserAccessTokenResponseAttributesTransfer",
      *          "responses": {
      *              "401": "Failed to authenticate user.",
      *              "403": "Unauthorized request."
@@ -45,7 +45,7 @@ class CompanyUserAccessTokensResourceController extends AbstractController
         RestCompanyUserAccessTokensAttributesTransfer $restCompanyUserAccessTokensAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()
-            ->createAccessTokenReader()
+            ->createCompanyUserAccessTokenReader()
             ->processAccessTokenRequest($restRequest, $restCompanyUserAccessTokensAttributesTransfer);
     }
 }

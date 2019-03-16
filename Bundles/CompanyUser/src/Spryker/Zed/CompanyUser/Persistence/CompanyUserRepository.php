@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
+use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -64,7 +65,6 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->filterByFkCustomer($idCustomer)
             ->joinCompany()
             ->useCompanyQuery()
-                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
                 ->filterByIsActive(true)
             ->endUse();
 
@@ -96,7 +96,6 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
                 ->filterByCustomerReference($customerReference)
             ->endUse()
             ->useCompanyQuery()
-                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
                 ->filterByIsActive(true)
             ->endUse()
             ->joinWithCompany();
@@ -126,13 +125,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
                 ->filterByAnonymizedAt(null, Criteria::ISNULL)
             ->endUse();
 
-        if ($criteriaFilterTransfer->getIdCompany() !== null) {
-            $queryCompanyUser->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
-        }
-
-        if ($criteriaFilterTransfer->getCompanyUserIds()) {
-            $queryCompanyUser->filterByIdCompanyUser_In($criteriaFilterTransfer->getCompanyUserIds());
-        }
+        $this->applyFilters($queryCompanyUser, $criteriaFilterTransfer);
 
         $collection = $this->buildQueryFromCriteria($queryCompanyUser, $criteriaFilterTransfer->getFilter());
         /** @var \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[] $companyUserCollection */
@@ -228,6 +221,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
                 ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
                 ->filterByIsActive(true)
             ->endUse()
+            ->filterByIsActive(true)
             ->filterByUuid($uuidCompanyUser);
 
         $companyUserEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
@@ -274,7 +268,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @module Customer
      *
      * @param int $idCompany
      *
@@ -299,7 +293,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     * @module Company
      *
      * @param int $idCustomer
      *
@@ -319,14 +313,61 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
-     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $queryCompanyUser
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return void
+     */
+    protected function applyFilters(SpyCompanyUserQuery $queryCompanyUser, CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer): void
+    {
+        if ($criteriaFilterTransfer->getIdCompany() !== null) {
+            $queryCompanyUser->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
+        }
+
+        if ($criteriaFilterTransfer->getCompanyUserIds()) {
+            $queryCompanyUser->filterByIdCompanyUser_In($criteriaFilterTransfer->getCompanyUserIds());
+        }
+
+        if ($criteriaFilterTransfer->getIsActive() !== null) {
+            $queryCompanyUser->filterByIsActive($criteriaFilterTransfer->getIsActive());
+        }
+    }
+
+    /**
+     * @module Customer
+     * @module Company
+     *
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer
+    {
+        $companyUserEntity = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->joinWithCustomer()
+            ->leftJoinWithCompany()
+            ->filterByIdCompanyUser($idCompanyUser)
+            ->findOne();
+
+        if (!$companyUserEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyUserMapper()
+            ->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntity);
+    }
+
+    /**
+     * @module Customer
+     * @module Company
      *
      * @param array $companyUserIds
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findActiveCompanyUsers(array $companyUserIds): array
+    public function findActiveCompanyUsersByIds(array $companyUserIds): array
     {
         $query = $this->getFactory()
             ->createCompanyUserQuery()
@@ -352,7 +393,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @module Customer
      *
      * @param array $companyIds
      *
@@ -367,7 +408,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->useCustomerQuery()
                 ->filterByAnonymizedAt(null, Criteria::ISNULL)
             ->endUse()
-            ->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER);
+            ->select([SpyCompanyUserTableMap::COL_ID_COMPANY_USER]);
 
         return $query->find()->getData();
     }

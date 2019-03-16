@@ -29,7 +29,7 @@ class SetCustomerBeforeActionPlugin extends AbstractPlugin implements Controller
     public function beforeAction(string $action, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createCustomerSessionWriter()
-            ->setCustomerSession($restRequest);
+            ->createSessionCreator()
+            ->setCustomer($restRequest);
     }
 }

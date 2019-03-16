@@ -79,11 +79,18 @@ interface CompanyUserRepositoryInterface
     ): CompanyUserCollectionTransfer;
 
     /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer;
+
+    /**
      * @param array $companyUserIds
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findActiveCompanyUsers(array $companyUserIds): array;
+    public function findActiveCompanyUsersByIds(array $companyUserIds): array;
 
     /**
      * @param array $companyIds

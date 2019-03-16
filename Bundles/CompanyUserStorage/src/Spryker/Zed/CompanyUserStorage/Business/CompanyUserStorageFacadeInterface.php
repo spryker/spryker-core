@@ -13,7 +13,7 @@ interface CompanyUserStorageFacadeInterface
      * Specification:
      *  - Queries all active company users for the given companyUserIds.
      *  - Removes all inactive company users from storage table.
-     *  - Stores JSON encoded data to a storage table.
+     *  - Publishes active company users.
      *
      * @api
      *
@@ -27,7 +27,7 @@ interface CompanyUserStorageFacadeInterface
      * Specification:
      *  - Queries all active company users for the given companyIds.
      *  - Removes all inactive company users from storage table.
-     *  - Stores JSON encoded data to a storage table.
+     *  - Publishes active company users.
      *
      * @api
      *

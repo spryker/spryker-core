@@ -9,7 +9,7 @@ namespace Spryker\Glue\AuthRestApi\Processor\AccessTokens;
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestUserIdentifierTransfer;
+use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -18,26 +18,29 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AccessTokenValidator implements AccessTokenValidatorInterface
 {
+    protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
+    protected const HEADER_AUTHORIZATION = 'Authorization';
+
     /**
      * @var \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface
      */
     protected $oauthClient;
 
     /**
-     * @var \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserIdentifierExpanderPluginInterface[]
+     * @var \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserExpanderPluginInterface[]
      */
-    protected $restUserIdentifierExpanderPlugins;
+    protected $restUserExpanderPlugins;
 
     /**
      * @param \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface $oauthClient
-     * @param \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserIdentifierExpanderPluginInterface[] $restUserIdentifierExpanderPlugins
+     * @param \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserExpanderPluginInterface[] $restUserExpanderPlugins
      */
     public function __construct(
         AuthRestApiToOauthClientInterface $oauthClient,
-        array $restUserIdentifierExpanderPlugins
+        array $restUserExpanderPlugins
     ) {
         $this->oauthClient = $oauthClient;
-        $this->restUserIdentifierExpanderPlugins = $restUserIdentifierExpanderPlugins;
+        $this->restUserExpanderPlugins = $restUserExpanderPlugins;
     }
 
     /**
@@ -48,9 +51,9 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
      */
     public function validate(Request $request, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
-        $isProtected = $request->attributes->get('is-protected', false);
+        $isProtected = $request->attributes->get(static::REQUEST_ATTRIBUTE_IS_PROTECTED, false);
 
-        $authorizationToken = $request->headers->get('Authorization');
+        $authorizationToken = $request->headers->get(static::HEADER_AUTHORIZATION);
         if (!$authorizationToken && $isProtected === true) {
             return $this->createErrorMessageTransfer(
                 AuthRestApiConfig::RESPONSE_DETAIL_MISSING_ACCESS_TOKEN,
@@ -72,7 +75,7 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
                 AuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID
             );
         }
-        $this->setCustomerData($restRequest, $authAccessTokenValidationResponseTransfer);
+        $this->setRestUserData($restRequest, $authAccessTokenValidationResponseTransfer);
 
         return null;
     }
@@ -112,20 +115,21 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
      *
      * @return void
      */
-    protected function setCustomerData(
+    protected function setRestUserData(
         RestRequestInterface $restRequest,
         OauthAccessTokenValidationResponseTransfer $authAccessTokenValidationResponseTransfer
     ): void {
 
-        $customerIdentifier = json_decode($authAccessTokenValidationResponseTransfer->getOauthUserId(), true);
-        $restUserIdentifierTransfer = $this->getRestUserIdentifierTransfer($customerIdentifier, $restRequest);
+        $userIdentifier = json_decode($authAccessTokenValidationResponseTransfer->getOauthUserId(), true);
+        $restUserTransfer = $this->getRestUserTransfer($userIdentifier, $restRequest);
 
         $restRequest->setUser(
-            $customerIdentifier['id_customer'],
-            $customerIdentifier['customer_reference'],
-            $authAccessTokenValidationResponseTransfer->getOauthScopes(),
-            $restUserIdentifierTransfer
+            $userIdentifier['id_customer'],
+            $userIdentifier['customer_reference'],
+            $authAccessTokenValidationResponseTransfer->getOauthScopes()
         );
+
+        $restRequest->setRestUser($restUserTransfer);
     }
 
     /**
@@ -150,20 +154,33 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     }
 
     /**
-     * @param array $customerIdentifier
+     * @param array $userIdentifier
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestUserIdentifierTransfer
+     * @return \Generated\Shared\Transfer\RestUserTransfer
      */
-    protected function getRestUserIdentifierTransfer(array $customerIdentifier, RestRequestInterface $restRequest): RestUserIdentifierTransfer
+    protected function getRestUserTransfer(array $userIdentifier, RestRequestInterface $restRequest): RestUserTransfer
     {
-        $restUserIdentifierTransfer = (new RestUserIdentifierTransfer())
-            ->fromArray($customerIdentifier, true);
+        $restUserTransfer = (new RestUserTransfer())
+            ->fromArray($userIdentifier, true)
+            ->setNaturalIdentifier($userIdentifier['customer_reference'])
+            ->setSurrogateIdentifier($userIdentifier['id_customer']);
 
-        foreach ($this->restUserIdentifierExpanderPlugins as $restUserIdentifierExpanderPlugin) {
-            $restUserIdentifierTransfer = $restUserIdentifierExpanderPlugin->expand($restUserIdentifierTransfer, $restRequest);
+        return $this->executeRestUserExpanderPlugins($restRequest, $restUserTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestUserTransfer $restUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestUserTransfer
+     */
+    protected function executeRestUserExpanderPlugins(RestRequestInterface $restRequest, RestUserTransfer $restUserTransfer): RestUserTransfer
+    {
+        foreach ($this->restUserExpanderPlugins as $restUserExpanderPlugin) {
+            $restUserTransfer = $restUserExpanderPlugin->expand($restUserTransfer, $restRequest);
         }
 
-        return $restUserIdentifierTransfer;
+        return $restUserTransfer;
     }
 }

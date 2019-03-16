@@ -26,8 +26,4 @@
         <property name="refreshToken" type="string" />
     </transfer>
 
-    <transfer name="RestUserIdentifier">
-        <property name="customerReference" type="string" />
-    </transfer>
-
 </transfers>

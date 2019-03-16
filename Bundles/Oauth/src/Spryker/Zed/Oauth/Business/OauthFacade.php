@@ -34,7 +34,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      */
     public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
-        return $this->getFactory()->createAccessGrantExecutor()->executeByRequest($oauthRequestTransfer);
+        return $this->getFactory()->createAccessTokenRequestExecutor()->executeByRequest($oauthRequestTransfer);
     }
 
     /**
@@ -119,33 +119,5 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     public function getScopesByIdentifiers(array $customerScopes): array
     {
         return $this->getFactory()->createOauthScopeReader()->getScopesByIdentifiers($customerScopes);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function installOauthScope(): void
-    {
-        $this->getFactory()
-            ->createOauthScopeInstaller()
-            ->install();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function installOauthClient(): void
-    {
-        $this->getFactory()
-            ->createOauthClientInstaller()
-            ->install();
     }
 }

@@ -28,33 +28,6 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param array $request
-     * @param string $grantType The grant type used
-     * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
-     *
-     * @return \League\OAuth2\Server\Entities\UserEntityInterface|null
-     */
-    public function getUserEntityByRequest(
-        array $request,
-        string $grantType,
-        ClientEntityInterface $clientEntity
-    ): ?UserEntityInterface {
-
-        $oauthUserTransfer = new OauthUserTransfer();
-        $oauthUserTransfer->fromArray($request, true);
-        $oauthUserTransfer->setClientId($clientEntity->getIdentifier())
-            ->setGrantType($grantType)
-            ->setClientName($clientEntity->getName());
-        $oauthUserTransfer = $this->findUser($oauthUserTransfer);
-
-        if ($oauthUserTransfer && $oauthUserTransfer->getIsSuccess() && $oauthUserTransfer->getUserIdentifier()) {
-            return new UserEntity($oauthUserTransfer->getUserIdentifier());
-        }
-
-        return null;
-    }
-
-    /**
      * @param string $username
      * @param string $password
      * @param string $grantType The grant type used
@@ -70,6 +43,34 @@ class UserRepository implements UserRepositoryInterface
     ) {
 
         $oauthUserTransfer = $this->createOauthUserTransfer($username, $password, $grantType, $clientEntity);
+        $oauthUserTransfer = $this->findUser($oauthUserTransfer);
+
+        if ($oauthUserTransfer && $oauthUserTransfer->getIsSuccess() && $oauthUserTransfer->getUserIdentifier()) {
+            return new UserEntity($oauthUserTransfer->getUserIdentifier());
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array $request
+     * @param string $grantType The grant type used
+     * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
+     *
+     * @return \League\OAuth2\Server\Entities\UserEntityInterface|null
+     */
+    public function getUserEntityByRequest(
+        array $request,
+        string $grantType,
+        ClientEntityInterface $clientEntity
+    ): ?UserEntityInterface {
+
+        $oauthUserTransfer = (new OauthUserTransfer())
+            ->fromArray($request, true)
+            ->setClientId($clientEntity->getIdentifier())
+            ->setGrantType($grantType)
+            ->setClientName($clientEntity->getName());
+
         $oauthUserTransfer = $this->findUser($oauthUserTransfer);
 
         if ($oauthUserTransfer && $oauthUserTransfer->getIsSuccess() && $oauthUserTransfer->getUserIdentifier()) {

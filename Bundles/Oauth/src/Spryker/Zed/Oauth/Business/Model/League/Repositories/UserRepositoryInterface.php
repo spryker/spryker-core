@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oauth\Business\Model\League\Repositories;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
+use League\OAuth2\Server\Entities\UserEntityInterface;
 use League\OAuth2\Server\Repositories\UserRepositoryInterface as LeagueUserRepositoryInterface;
 
 interface UserRepositoryInterface extends LeagueUserRepositoryInterface
@@ -17,11 +18,11 @@ interface UserRepositoryInterface extends LeagueUserRepositoryInterface
      * @param string $grantType The grant type used
      * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
      *
-     * @return \League\OAuth2\Server\Entities\UserEntityInterface
+     * @return \League\OAuth2\Server\Entities\UserEntityInterface|null
      */
     public function getUserEntityByRequest(
         array $request,
         string $grantType,
         ClientEntityInterface $clientEntity
-    );
+    ): ?UserEntityInterface;
 }

@@ -10,8 +10,8 @@ namespace Spryker\Glue\CompanyUsersRestApi;
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReader;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReaderInterface;
-use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerSessionExpander;
-use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerSessionExpanderInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpander;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpanderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapper;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -39,11 +39,11 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerSessionExpanderInterface
+     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpanderInterface
      */
-    public function createCustomerSessionExpander(): CustomerSessionExpanderInterface
+    public function createCustomerExpander(): CustomerExpanderInterface
     {
-        return new CustomerSessionExpander();
+        return new CustomerExpander();
     }
 
     /**
