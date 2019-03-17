@@ -6,15 +6,15 @@
 
 namespace Spryker\Glue\AuthRestApi\Processor\AccessTokens;
 
+use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface;
 
 interface AccessTokenUserFinderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null
+     * @return \Generated\Shared\Transfer\RestUserTransfer|null
      */
-    public function findUser(RestRequestInterface $restRequest): ?UserInterface;
+    public function findUser(RestRequestInterface $restRequest): ?RestUserTransfer;
 }

@@ -6,8 +6,8 @@
 
 namespace Spryker\Glue\AuthRestApi\Plugin;
 
+use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
@@ -23,9 +23,9 @@ class RestUserFinderByAccessTokenPlugin extends AbstractPlugin implements RestUs
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return null|\Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface
+     * @return null|\Generated\Shared\Transfer\RestUserTransfer
      */
-    public function findUser(RestRequestInterface $restRequest): ?UserInterface
+    public function findUser(RestRequestInterface $restRequest): ?RestUserTransfer
     {
         return $this->getFactory()->createAccessTokenUserFinder()->findUser($restRequest);
     }
