@@ -1,5 +1,6 @@
 {
   "name": "spryker/validator",
+  "type": "library",
   "description": "Validator module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/form",
+  "type": "library",
   "description": "Form module",
   "license": "proprietary",
   "require": {

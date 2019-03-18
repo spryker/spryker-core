@@ -1,5 +1,6 @@
 {
   "name": "spryker/security",
+  "type": "library",
   "description": "Security module",
   "license": "proprietary",
   "require": {

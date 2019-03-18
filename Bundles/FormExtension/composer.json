@@ -1,5 +1,6 @@
 {
   "name": "spryker/form-extension",
+  "type": "library",
   "description": "FormExtension module",
   "license": "proprietary",
   "require": {
