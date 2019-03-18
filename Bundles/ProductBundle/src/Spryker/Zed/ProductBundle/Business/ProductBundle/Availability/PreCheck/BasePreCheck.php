@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
@@ -43,21 +44,29 @@ class BasePreCheck
     protected $productBundleConfig;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductBundle\ProductBundleConfig $productBundleConfig
+     * @param \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ProductBundleToAvailabilityInterface $availabilityFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToStoreFacadeInterface $storeFacade,
-        ProductBundleConfig $productBundleConfig
+        ProductBundleConfig $productBundleConfig,
+        ProductBundleToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->availabilityFacade = $availabilityFacade;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->storeFacade = $storeFacade;
         $this->productBundleConfig = $productBundleConfig;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -120,6 +129,7 @@ class BasePreCheck
         $itemQuantity = 0.0
     ) {
         $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($items, $sku);
+        $currentItemQuantity = $this->roundQuantity($currentItemQuantity);
         $currentItemQuantity += $itemQuantity;
 
         return $this->availabilityFacade->isProductSellableForStore($sku, $currentItemQuantity, $storeTransfer);
@@ -138,9 +148,20 @@ class BasePreCheck
             if ($itemTransfer->getSku() !== $sku) {
                 continue;
             }
+
             $quantity += $itemTransfer->getQuantity();
         }
 
         return $quantity;
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 }

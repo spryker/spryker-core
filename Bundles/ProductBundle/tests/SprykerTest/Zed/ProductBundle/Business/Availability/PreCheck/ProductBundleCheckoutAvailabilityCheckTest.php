@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCheckoutAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceBridge;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
@@ -120,7 +122,13 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
         $productBundleConfig = $this->createProductBundleConfigMock();
 
         $productBundleCartAvailabilityCheckMock = $this->getMockBuilder(ProductBundleCheckoutAvailabilityCheck::class)
-            ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $storeFacadeMock, $productBundleConfig])
+            ->setConstructorArgs([
+                $availabilityFacadeMock,
+                $productBundleQueryContainerMock,
+                $storeFacadeMock,
+                $productBundleConfig,
+                $this->createUtilQuantityService(),
+            ])
             ->setMethods(['findBundledProducts'])
             ->getMock();
 
@@ -133,6 +141,14 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
     protected function createProductBundleConfigMock(): ProductBundleConfig
     {
         return $this->getMockBuilder(ProductBundleConfig::class)->getMock();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
+     */
+    protected function createUtilQuantityService(): ProductBundleToUtilQuantityServiceInterface
+    {
+        return new ProductBundleToUtilQuantityServiceBridge($this->tester->getLocator()->utilQuantity()->service());
     }
 
     /**

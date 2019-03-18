@@ -146,7 +146,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getAvailabilityQueryContainer(),
             $this->getStoreFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -159,7 +160,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
             $this->getStoreFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getUtilQuantityService()
         );
     }
 

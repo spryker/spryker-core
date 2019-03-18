@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\ProductBundle\Dependency\Service;
 
-use Spryker\Client\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface;
-
 class ProductBundleToUtilQuantityServiceBridge implements ProductBundleToUtilQuantityServiceInterface
 {
     /**
