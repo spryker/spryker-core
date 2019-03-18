@@ -303,7 +303,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return bool
      */
-    protected function isMaxQuantity(float $bundleAvailabilityQuantity, float $bundledItemQuantity): bool
+    protected function isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)
     {
         return ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0);
     }

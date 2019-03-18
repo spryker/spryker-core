@@ -56,7 +56,7 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandBundleItemsShouldCreateBundleItemsAndCalculateSplitPrice()
+    public function testExpandBundleItemsShouldCreateBundleItemsAndCalculateSplitPrice(): void
     {
         $this->markTestSkipped();
 
@@ -110,7 +110,7 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandCartItemGroupKeyShouldAppendBundleToKey()
+    public function testExpandCartItemGroupKeyShouldAppendBundleToKey(): void
     {
         $productBundleFacade = $this->createProductBundleFacade();
 
@@ -136,7 +136,7 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPostSaveCartUpdateWhenBundleRemoveShouldReturnQuoteWithouBundles()
+    public function testPostSaveCartUpdateWhenBundleRemoveShouldReturnQuoteWithouBundles(): void
     {
         $quoteTransfer = $this->createBaseQuoteTransfer();
 
@@ -158,7 +158,7 @@ class ProductBundleFacadeTest extends Unit
      *
      * @return void
      */
-    public function testPreCheckCartAvailabilityWhenBundleAvailable(CartChangeTransfer $cartChangeTransfer)
+    public function testPreCheckCartAvailabilityWhenBundleAvailable(CartChangeTransfer $cartChangeTransfer): void
     {
         $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, true);
 
@@ -213,7 +213,7 @@ class ProductBundleFacadeTest extends Unit
      *
      * @return void
      */
-    public function testPreCheckCartAvailabilityWhenBundleUnavailable(CartChangeTransfer $cartChangeTransfer)
+    public function testPreCheckCartAvailabilityWhenBundleUnavailable(CartChangeTransfer $cartChangeTransfer): void
     {
         $this->createProductBundle(self::BUNDLED_PRODUCT_PRICE_2);
 
@@ -268,7 +268,7 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPreCheckCheckoutAvailabilityWhenBundleUnavailable()
+    public function testPreCheckCheckoutAvailabilityWhenBundleUnavailable(): void
     {
         $productConcreteTransfer = $this->createProductBundle(self::BUNDLED_PRODUCT_PRICE_2);
 
@@ -297,7 +297,7 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPreCheckCheckoutAvailabilityWhenBundleAvailable()
+    public function testPreCheckCheckoutAvailabilityWhenBundleAvailable(): void
     {
         $productConcreteTransfer = $this->createProductBundle(self::BUNDLED_PRODUCT_PRICE_2, true);
 
@@ -326,7 +326,7 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAffectedBundleAvailabilityWhenOneOfBundledItemsUnavailable()
+    public function testUpdateAffectedBundleAvailabilityWhenOneOfBundledItemsUnavailable(): void
     {
         $this->createProductBundle(self::BUNDLED_PRODUCT_PRICE_2);
 
@@ -354,7 +354,7 @@ class ProductBundleFacadeTest extends Unit
      */
     public function testSaveBundledProductsShouldAddProvidedConcreteToBundle(
         ProductForBundleTransfer $bundledProductTransfer
-    ) {
+    ): void {
         $productConcreteBundleTransfer = $this->createProduct(self::BUNDLED_PRODUCT_PRICE_1, self::BUNDLE_SKU_3);
         $productConcreateToAssignTransfer = $this->createProduct(self::BUNDLED_PRODUCT_PRICE_1, self::SKU_BUNDLED_1);
 
@@ -409,7 +409,7 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveBundledProductsWhenRemoveListProvidedShouldRemoveBundledProducts()
+    public function testSaveBundledProductsWhenRemoveListProvidedShouldRemoveBundledProducts(): void
     {
         $this->markTestIncomplete('Something with transactions');
 
@@ -432,7 +432,7 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindBundledProductsByIdProductConcreteShouldReturnPersistedBundledProducts()
+    public function testFindBundledProductsByIdProductConcreteShouldReturnPersistedBundledProducts(): void
     {
         $this->markTestIncomplete('Something with transactions');
 
@@ -449,7 +449,7 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAssignBundledProductsToProductConcreteShouldAssignPersistedBundledProducts()
+    public function testAssignBundledProductsToProductConcreteShouldAssignPersistedBundledProducts(): void
     {
         $this->markTestIncomplete('Something with transactions');
 
@@ -468,7 +468,7 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFilterBundleItemsOnCartReloadShouldRemoveBundleItems()
+    public function testFilterBundleItemsOnCartReloadShouldRemoveBundleItems(): void
     {
         $productBundleFacade = $this->createProductBundleFacade();
 

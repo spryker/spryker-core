@@ -44,7 +44,7 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
      */
     public function testCheckCheckoutAvailabilityWhenAvailabilityExistingShouldReturnEmptyErrorContainer(
         QuoteTransfer $quoteTransfer
-    ) {
+    ): void {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock->expects($this->once())
             ->method('isProductSellableForStore')
@@ -75,7 +75,7 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
      */
     public function testCheckCheckoutAvailabilityWhenAvailabilityNonExistingShouldStoreErrorMessage(
         QuoteTransfer $quoteTransfer
-    ) {
+    ): void {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock->expects($this->once())
             ->method('isProductSellableForStore')
@@ -158,7 +158,7 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer[]
      */
-    protected function getDataForQuoteTransfer($quantity, string $bundleSku)
+    protected function getDataForQuoteTransfer($quantity, string $bundleSku): array
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));

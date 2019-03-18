@@ -232,16 +232,17 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         foreach ($bundledProducts as $productBundleEntity) {
             $productBundleQuantity = $productBundleEntity->getQuantity();
 
-            for ($i = $productBundleQuantity; $i > 0; $i--) {
+            for ($quantity = $productBundleQuantity; $quantity > 0; $quantity--) {
                 $bundledItems[] = $this->createBundledItemTransfer(
                     $productBundleEntity,
                     $bundleItemIdentifier,
                     $priceMode,
                     $currencyIsoCode,
-                    $i > 1 ? 1.0 : $i
+                    $quantity > 1 ? 1.0 : $quantity
                 );
             }
         }
+
         return $bundledItems;
     }
 
@@ -305,7 +306,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         $bundleItemIdentifier,
         $priceMode,
         $currencyIsoCode,
-        $quantity
+        float $quantity
     ) {
         $bundledConcreteProductEntity = $bundleProductEntity->getSpyProductRelatedByFkBundledProduct();
 
