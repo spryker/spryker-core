@@ -68,6 +68,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated since version 7.0.1 should be removed in the next version.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return \Generated\Shared\Transfer\PageTransfer
@@ -84,6 +86,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated since version 7.0.1 should be removed in the next version.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return \Generated\Shared\Transfer\PageTransfer
@@ -106,6 +110,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated since version 7.0.1 should be removed in the next version.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return void
@@ -127,6 +133,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated since version 7.0.1 should be removed in the next version.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return \Generated\Shared\Transfer\PageTransfer
@@ -330,6 +338,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated since version 7.0.1 should be removed in the next version.
+     *
      * @param int $idLocale
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\LocaleNotFoundException
@@ -353,6 +363,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated since version 7.0.1 should be removed in the next version.
+     *
      * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[]|\ArrayObject $cmsPageLocalizedAttributesTransfers
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
      *
@@ -371,6 +383,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated since version 7.0.1 should be removed in the next version.
+     *
      * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[]|\ArrayObject $cmsPageLocalizedAttributesTransfers
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
      *
@@ -380,7 +394,7 @@ class PageManager implements PageManagerInterface
     {
         foreach ($cmsPageLocalizedAttributesTransfers as $localizedAttributesTransfer) {
             $cmsPageLocalizedAttributesEntity = $this->getLocalizedAttributesForPage($pageEntity, $localizedAttributesTransfer);
-            $cmsPageLocalizedAttributesEntity->fromArray(array_filter($localizedAttributesTransfer->modifiedToArray()));
+            $cmsPageLocalizedAttributesEntity->fromArray($localizedAttributesTransfer->modifiedToArray());
             $cmsPageLocalizedAttributesEntity->save();
 
             $localizedAttributesTransfer->fromArray($cmsPageLocalizedAttributesEntity->toArray(), true);
