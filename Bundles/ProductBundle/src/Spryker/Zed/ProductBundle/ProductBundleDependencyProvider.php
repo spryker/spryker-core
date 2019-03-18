@@ -94,7 +94,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addFacadeProduct(Container $container): Container
+    protected function addFacadeProduct(Container $container)
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductBundleToProductBridge($container->getLocator()->product()->facade());
@@ -108,7 +108,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addFacadePriceProduct(Container $container): Container
+    protected function addFacadePriceProduct(Container $container)
     {
         $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
             return new ProductBundleToPriceProductFacadeBridge($container->getLocator()->priceProduct()->facade());
@@ -122,7 +122,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addFacadeLocale(Container $container): Container
+    protected function addFacadeLocale(Container $container)
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductBundleToLocaleBridge($container->getLocator()->locale()->facade());
@@ -136,7 +136,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addFacadeAvailability(Container $container): Container
+    protected function addFacadeAvailability(Container $container)
     {
         $container[static::FACADE_AVAILABILITY] = function (Container $container) {
             return new ProductBundleToAvailabilityBridge($container->getLocator()->availability()->facade());
@@ -150,7 +150,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQueryContainerAvailability(Container $container): Container
+    protected function addQueryContainerAvailability(Container $container)
     {
         $container[static::QUERY_CONTAINER_AVAILABILITY] = function (Container $container) {
             return new ProductBundleToAvailabilityQueryContainerBridge($container->getLocator()->availability()->queryContainer());
@@ -164,7 +164,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQueryContainerSales(Container $container): Container
+    protected function addQueryContainerSales(Container $container)
     {
         $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
             return new ProductBundleToSalesQueryContainerBridge($container->getLocator()->sales()->queryContainer());
@@ -178,7 +178,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQueryContainerStock(Container $container): Container
+    protected function addQueryContainerStock(Container $container)
     {
         $container[static::QUERY_CONTAINER_STOCK] = function (Container $container) {
             return new ProductBundleToStockQueryContainerBridge($container->getLocator()->stock()->queryContainer());
@@ -192,7 +192,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQueryContainerProduct(Container $container): Container
+    protected function addQueryContainerProduct(Container $container)
     {
         $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return new ProductBundleToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
@@ -206,7 +206,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addFacadeProductImage(Container $container): Container
+    protected function addFacadeProductImage(Container $container)
     {
         $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
             return new ProductBundleToProductImageBridge($container->getLocator()->productImage()->facade());
@@ -220,7 +220,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addFacadePrice(Container $container): Container
+    protected function addFacadePrice(Container $container)
     {
         $container[static::FACADE_PRICE] = function (Container $container) {
             return new ProductBundleToPriceBridge($container->getLocator()->price()->facade());
@@ -234,7 +234,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStoreFacade(Container $container): Container
+    protected function addStoreFacade(Container $container)
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             return new ProductBundleToStoreFacadeBridge($container->getLocator()->store()->facade());
@@ -248,7 +248,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMessengerFacade(Container $container): Container
+    protected function addMessengerFacade(Container $container)
     {
         $container[static::FACADE_MESSENGER] = function (Container $container) {
             return new ProductBundleToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
