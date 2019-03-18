@@ -7,12 +7,9 @@
 
 namespace Spryker\Glue\ContentProductAbstractListsRestApi\Controller;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiFactory getFactory()
@@ -23,18 +20,16 @@ class ContentProductAbstractListController extends AbstractController
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Retrieves a content item by id."
+     *              "Retrieves content item abstract products."
      *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
-     *              "501": "Not implemented."
-     *          }
-     *     },
-     *    "getCollection": {
-     *          "summary": [
-     *              "Retrieves content items collection."
-     *          ],
-     *          "responses": {
-     *              "501": "Not implemented."
+     *              "400": "Content item id is not specified.",
+     *              "403": "Unauthorized request.",
+     *              "404": "Content item not found."
      *          }
      *     }
      * })
@@ -45,10 +40,8 @@ class ContentProductAbstractListController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
-            ->setDetail(ContentProductAbstractListsRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
-
-        return $this->getFactory()->getResourceBuilder()->createRestResponse()->addError($restErrorMessageTransfer);
+        return $this->getFactory()
+            ->createContentProductAbstractListReader()
+            ->getContentItemById($restRequest);
     }
 }

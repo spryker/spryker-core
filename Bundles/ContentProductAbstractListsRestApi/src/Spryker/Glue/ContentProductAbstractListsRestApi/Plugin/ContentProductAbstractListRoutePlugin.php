@@ -7,13 +7,14 @@
 
 namespace Spryker\Glue\ContentProductAbstractListsRestApi\Plugin;
 
-use Generated\Shared\Transfer\ContentProductAbstractListRestAttributesTransfer;
+use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
 use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
-class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -43,7 +44,7 @@ class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements Re
      */
     public function getResourceType(): string
     {
-        return ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS;
+        return ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_PRODUCTS;
     }
 
     /**
@@ -67,6 +68,18 @@ class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements Re
      */
     public function getResourceAttributesClassName(): string
     {
-        return ContentProductAbstractListRestAttributesTransfer::class;
+        return AbstractProductsRestAttributesTransfer::class;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getParentResourceType(): string
+    {
+        return ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS;
     }
 }
