@@ -82,7 +82,7 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
             $bundleItemQuantity += $bundleItemTransfer->getQuantity();
         }
 
-        return $this->utilQuantityService->roundQuantity($bundleItemQuantity);
+        return $this->roundQuantity($bundleItemQuantity);
     }
 
     /**
@@ -114,5 +114,15 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
     {
         return ($itemTransfer->getSku() === $sku && $groupKey === null) ||
             $itemTransfer->getGroupKey() === $groupKey;
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 }

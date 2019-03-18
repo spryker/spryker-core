@@ -112,6 +112,16 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
             $bundleItemQuantity += $bundleItemTransfer->getQuantity();
         }
 
-        return $this->utilQuantityService->roundQuantity($bundleItemQuantity);
+        return $this->roundQuantity($bundleItemQuantity);
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 }

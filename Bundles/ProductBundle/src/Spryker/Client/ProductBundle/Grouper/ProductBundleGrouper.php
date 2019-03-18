@@ -198,7 +198,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
                 $groupedBundleQuantity[$bundleGroupKey] = $bundleItemTransfer->getQuantity();
             } else {
                 $summaryQuantity = $groupedBundleQuantity[$bundleGroupKey] + $bundleItemTransfer->getQuantity();
-                $groupedBundleQuantity[$bundleGroupKey] = $this->utilQuantityService->roundQuantity($summaryQuantity);
+                $groupedBundleQuantity[$bundleGroupKey] = $this->roundQuantity($summaryQuantity);
             }
         }
 
