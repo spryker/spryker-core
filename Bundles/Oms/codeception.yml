@@ -2,7 +2,6 @@ namespace: SprykerTest
 
 include:
     - tests/SprykerTest/Zed/Oms
-    - tests/SprykerTest/Service/Oms
 
 paths:
     tests: tests

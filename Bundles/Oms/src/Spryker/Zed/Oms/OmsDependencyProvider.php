@@ -17,6 +17,7 @@ use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesBridge;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeBridge;
 use Spryker\Zed\Oms\Dependency\QueryContainer\OmsToSalesBridge as PersistenceOmsToSalesBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkBridge;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilQuantityServiceBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextBridge;
 
@@ -39,9 +40,9 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
-    public const SERVICE_OMS = 'SERVICE_OMS';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -88,7 +89,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addStoreFacade($container);
         $container = $this->addReservationExportPlugins($container);
-        $container = $this->addOmsService($container);
+        $container = $this->addUtilQuantityService($container);
 
         return $container;
     }
@@ -98,10 +99,12 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addOmsService(Container $container): Container
+    protected function addUtilQuantityService(Container $container): Container
     {
-        $container[static::SERVICE_OMS] = function (Container $container) {
-            return $container->getLocator()->oms()->service();
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new OmsToUtilQuantityServiceBridge(
+                $container->getLocator()->utilQuantity()->service()
+            );
         };
 
         return $container;

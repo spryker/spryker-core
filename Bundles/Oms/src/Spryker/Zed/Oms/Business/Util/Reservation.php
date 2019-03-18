@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Service\Oms\OmsServiceInterface;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilQuantityServiceInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Reservation implements ReservationInterface
@@ -35,29 +35,29 @@ class Reservation implements ReservationInterface
     protected $activeProcessFetcher;
 
     /**
-     * @var \Spryker\Service\Oms\OmsServiceInterface
+     * @var \Spryker\Zed\Oms\Dependency\Service\OmsToUtilQuantityServiceInterface
      */
-    protected $service;
+    protected $utilQuantityService;
 
     /**
      * @param \Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface $activeProcessFetcher
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[] $reservationHandlerPlugins
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Service\Oms\OmsServiceInterface $service
+     * @param \Spryker\Zed\Oms\Dependency\Service\OmsToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ActiveProcessFetcherInterface $activeProcessFetcher,
         OmsQueryContainerInterface $queryContainer,
         array $reservationHandlerPlugins,
         OmsToStoreFacadeInterface $storeFacade,
-        OmsServiceInterface $service
+        OmsToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->activeProcessFetcher = $activeProcessFetcher;
         $this->queryContainer = $queryContainer;
         $this->reservationHandlerPlugins = $reservationHandlerPlugins;
         $this->storeFacade = $storeFacade;
-        $this->service = $service;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -118,7 +118,17 @@ class Reservation implements ReservationInterface
 
         $reservationQuantity += $this->getReservationsFromOtherStores($sku, $storeTransfer);
 
-        return $this->service->round($reservationQuantity);
+        return $this->roundQuantity($reservationQuantity);
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 
     /**
@@ -140,7 +150,8 @@ class Reservation implements ReservationInterface
             }
             $reservationQuantity += $omsProductReservationStoreEntity->getReservationQuantity();
         }
-        return $this->service->round($reservationQuantity);
+
+        return $this->roundQuantity($reservationQuantity);
     }
 
     /**

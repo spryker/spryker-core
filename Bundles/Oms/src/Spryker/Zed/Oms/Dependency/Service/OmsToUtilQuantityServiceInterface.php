@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Oms\Rounder;
+namespace Spryker\Zed\Oms\Dependency\Service;
 
-interface FloatRounderInterface
+interface OmsToUtilQuantityServiceInterface
 {
     /**
-     * @param float $value
+     * @param float $quantity
      *
      * @return float
      */
-    public function round(float $value): float;
+    public function roundQuantity(float $quantity): float;
 }
