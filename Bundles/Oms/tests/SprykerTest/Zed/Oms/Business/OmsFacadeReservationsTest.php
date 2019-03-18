@@ -11,7 +11,19 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\OmsAvailabilityReservationRequestBuilder;
 use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Spryker\Service\UtilQuantity\UtilQuantityConfig;
+use Spryker\Service\UtilQuantity\UtilQuantityService;
+use Spryker\Service\UtilQuantity\UtilQuantityServiceFactory;
+use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Oms\Business\OmsBusinessFactory;
+use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeBridge;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkBridge;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilQuantityServiceBridge;
+use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextBridge;
+use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -33,29 +45,57 @@ class OmsFacadeReservationsTest extends Unit
     /**
      * Import from store AT to store DE
      *
+     * @dataProvider importReservationShouldHaveAmountInReservationTotalsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $availabilityReservationRequestTransfer
+     * @param float $expectedResult
+     *
      * @return void
      */
-    public function testImportReservationShouldHaveAmountInReservationTotals()
-    {
+    public function testImportReservationShouldHaveAmountInReservationTotals(
+        StoreTransfer $storeTransfer,
+        OmsAvailabilityReservationRequestTransfer $availabilityReservationRequestTransfer,
+        float $expectedResult
+    ) {
         $omsFacade = $this->createOmsFacade();
-
-       //origin store
-        $storeTransfer = $this->createStoreTransfer()->setName('AT');
-
-        $availabilityReservationRequestTransfer = (new OmsAvailabilityReservationRequestBuilder([
-           OmsAvailabilityReservationRequestTransfer::SKU => 123,
-           OmsAvailabilityReservationRequestTransfer::VERSION => 1,
-           OmsAvailabilityReservationRequestTransfer::ORIGIN_STORE => $storeTransfer,
-           OmsAvailabilityReservationRequestTransfer::RESERVATION_AMOUNT => 1,
-        ]))->build();
 
         $omsFacade->importReservation($availabilityReservationRequestTransfer);
 
        //other store
-        $storeTransfer = $this->createStoreTransfer()->setName('DE');
+        $storeTransfer = $storeTransfer->setName('DE');
         $reservedAmount = $omsFacade->getOmsReservedProductQuantityForSku(123, $storeTransfer);
 
-        $this->assertSame(1.0, $reservedAmount);
+        $this->assertSame($expectedResult, $reservedAmount);
+    }
+
+    /**
+     * @return array
+     */
+    public function importReservationShouldHaveAmountInReservationTotalsDataProvider(): array
+    {
+        return [
+            'int stock' => $this->getDataForImportReservationShouldHaveAmountInReservationTotals(1),
+            'float stock' => $this->getDataForImportReservationShouldHaveAmountInReservationTotals(0.1),
+        ];
+    }
+
+    /**
+     * @param int|float $quantity
+     *
+     * @return array
+     */
+    protected function getDataForImportReservationShouldHaveAmountInReservationTotals($quantity): array
+    {
+        $storeTransfer = $this->createStoreTransfer()->setName('AT');
+        $availabilityReservationRequestTransfer = (new OmsAvailabilityReservationRequestBuilder([
+            OmsAvailabilityReservationRequestTransfer::SKU => 123,
+            OmsAvailabilityReservationRequestTransfer::VERSION => 1,
+            OmsAvailabilityReservationRequestTransfer::ORIGIN_STORE => $storeTransfer,
+            OmsAvailabilityReservationRequestTransfer::RESERVATION_AMOUNT => $quantity,
+        ]))->build();
+
+        return [$storeTransfer, $availabilityReservationRequestTransfer, $quantity];
     }
 
     /**
@@ -93,26 +133,56 @@ class OmsFacadeReservationsTest extends Unit
     /**
      * Import from store AT to store DE
      *
+     * @dataProvider getReservationsFromOtherStoresShouldReturnReservationsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $availabilityReservationRequestTransfer
+     * @param float $expectedResult
+     *
      * @return void
      */
-    public function testGetReservationsFromOtherStoresShouldReturnReservations()
-    {
+    public function testGetReservationsFromOtherStoresShouldReturnReservations(
+        StoreTransfer $storeTransfer,
+        OmsAvailabilityReservationRequestTransfer $availabilityReservationRequestTransfer,
+        float $expectedResult
+    ): void {
         $omsFacade = $this->createOmsFacade();
-        $storeTransfer = $this->createStoreTransfer()->setName('AT');
 
+        $omsFacade->importReservation($availabilityReservationRequestTransfer);
+
+        $storeTransfer = $storeTransfer->setName('DE');
+        $reserved = $omsFacade->getReservationsFromOtherStores(123, $storeTransfer);
+
+        $this->assertSame($expectedResult, $reserved);
+    }
+
+    /**
+     * @return array
+     */
+    public function getReservationsFromOtherStoresShouldReturnReservationsDataProvider(): array
+    {
+        return [
+            'int stock' => $this->getDataForGetReservationsFromOtherStoresShouldReturnReservations(1),
+            'float stock' => $this->getDataForGetReservationsFromOtherStoresShouldReturnReservations(0.1),
+        ];
+    }
+
+    /**
+     * @param int|float $quantity
+     *
+     * @return array
+     */
+    protected function getDataForGetReservationsFromOtherStoresShouldReturnReservations($quantity): array
+    {
+        $storeTransfer = $this->createStoreTransfer()->setName('AT');
         $availabilityReservationRequestTransfer = (new OmsAvailabilityReservationRequestBuilder([
             OmsAvailabilityReservationRequestTransfer::SKU => 123,
             OmsAvailabilityReservationRequestTransfer::VERSION => 1,
             OmsAvailabilityReservationRequestTransfer::ORIGIN_STORE => $storeTransfer,
-            OmsAvailabilityReservationRequestTransfer::RESERVATION_AMOUNT => 1,
+            OmsAvailabilityReservationRequestTransfer::RESERVATION_AMOUNT => $quantity,
         ]))->build();
 
-        $omsFacade->importReservation($availabilityReservationRequestTransfer);
-
-        $storeTransfer = $this->createStoreTransfer()->setName('DE');
-        $reserved = $omsFacade->getReservationsFromOtherStores(123, $storeTransfer);
-
-        $this->assertSame(1.0, $reserved);
+        return [$storeTransfer, $availabilityReservationRequestTransfer, (float)$quantity];
     }
 
     /**
@@ -120,7 +190,49 @@ class OmsFacadeReservationsTest extends Unit
      */
     protected function createOmsFacade()
     {
-        return $this->tester->getFacade();
+        $utilQuantityConfigMock = $this->getMockBuilder(UtilQuantityConfig::class)
+            ->setMethods([
+                'getQuantityRoundingPrecision',
+            ])->getMock();
+        $utilQuantityConfigMock->method('getQuantityRoundingPrecision')
+            ->will($this->returnValue(2));
+        $utilQuantityFactory = new UtilQuantityServiceFactory();
+        $utilQuantityFactory->setConfig($utilQuantityConfigMock);
+        $utilQuantityService = new UtilQuantityService();
+        $utilQuantityService->setFactory($utilQuantityFactory);
+
+        $omsFacade = $this->tester->getFacade();
+        $omsBusinessFactory = new OmsBusinessFactory();
+        $container = new Container();
+        $container[OmsDependencyProvider::SERVICE_UTIL_QUANTITY] = function () use ($utilQuantityService) {
+            return new OmsToUtilQuantityServiceBridge($utilQuantityService);
+        };
+        $container[OmsDependencyProvider::FACADE_STORE] = function () {
+            return new OmsToStoreFacadeBridge(
+                $this->tester->getLocator()->store()->facade()
+            );
+        };
+        $container[OmsDependencyProvider::COMMAND_PLUGINS] = [];
+        $container[OmsDependencyProvider::CONDITION_PLUGINS] = [];
+        $container[OmsDependencyProvider::PLUGIN_GRAPH] = function () {
+            return new GraphPlugin();
+        };
+        $container[OmsDependencyProvider::FACADE_UTIL_TEXT] = function () {
+            return new OmsToUtilTextBridge(
+                $this->tester->getLocator()->utilText()->service()
+            );
+        };
+        $container[OmsDependencyProvider::PLUGINS_RESERVATION] = [];
+        $container[OmsDependencyProvider::SERVICE_UTIL_NETWORK] = function () {
+            return new OmsToUtilNetworkBridge(
+                $this->tester->getLocator()->utilNetwork()->service()
+            );
+        };
+        $container[OmsDependencyProvider::PLUGINS_RESERVATION_EXPORT] = [];
+        $omsBusinessFactory->setContainer($container);
+        $omsFacade->setFactory($omsBusinessFactory);
+
+        return $omsFacade;
     }
 
     /**
