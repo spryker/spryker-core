@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductMeasurementUnit\Persistence\Map\SpyProductMeasurementSalesUnitTableMap;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\EntityNotFoundException;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
