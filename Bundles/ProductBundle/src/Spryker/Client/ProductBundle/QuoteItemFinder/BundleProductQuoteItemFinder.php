@@ -9,17 +9,17 @@ namespace Spryker\Client\ProductBundle\QuoteItemFinder;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 
 class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
      */
     protected $utilQuantityService;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
+     * @param \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(ProductBundleToUtilQuantityServiceInterface $utilQuantityService)
     {

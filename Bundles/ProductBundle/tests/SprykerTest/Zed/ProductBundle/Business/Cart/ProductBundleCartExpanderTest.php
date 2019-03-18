@@ -183,13 +183,13 @@ class ProductBundleCartExpanderTest extends Unit
     public function cartChangeTransferDataProvider(): array
     {
         $cartChangeTransfer = [
-            'int quantity' => $this->createCartChangeTransfer(
+            'int quantity' => $this->getDataForCartChangeTransfer(
                 static::INT_QUANTITY,
                 $this->fixtures['bundledProductSku'],
                 4,
                 2
             ),
-            'float quantity' => $this->createCartChangeTransfer(
+            'float quantity' => $this->getDataForCartChangeTransfer(
                 static::FLOAT_QUANTITY,
                 $this->fixtures['bundledProductSku'],
                 6,
@@ -208,7 +208,7 @@ class ProductBundleCartExpanderTest extends Unit
      *
      * @return array
      */
-    protected function createCartChangeTransfer(
+    protected function getDataForCartChangeTransfer(
         $quantity,
         string $bundleSku,
         int $expectedItemsCount,

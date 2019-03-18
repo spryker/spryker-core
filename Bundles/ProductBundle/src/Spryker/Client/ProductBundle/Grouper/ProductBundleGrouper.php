@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 
 class ProductBundleGrouper implements ProductBundleGrouperInterface
 {
@@ -25,12 +25,12 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     protected $bundleGroupKeys = [];
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
      */
     protected $utilQuantityService;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
+     * @param \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(ProductBundleToUtilQuantityServiceInterface $utilQuantityService)
     {
@@ -255,7 +255,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         } else {
             $currentBundleItemTransfer = $currentBundledItems[$currentBundleIdentifer];
             $summaryQuantity = $currentBundleItemTransfer->getQuantity() + $bundledItemTransfer->getQuantity();
-            $roundedQuantity = $this->utilQuantityService->roundQuantity($summaryQuantity);
+            $roundedQuantity = $this->roundQuantity($summaryQuantity);
             $currentBundleItemTransfer->setQuantity($roundedQuantity);
         }
 
@@ -330,5 +330,15 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         }
 
         return $groupedBundleItems;
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 }

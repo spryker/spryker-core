@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductBundle;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceBridge;
+use Spryker\Client\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceBridge;
 
 class ProductBundleDependencyProvider extends AbstractDependencyProvider
 {

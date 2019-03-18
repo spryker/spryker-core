@@ -141,11 +141,11 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
     public function quoteTransferDataProvider(): array
     {
         return [
-            'int quantity' => $this->createQuoteTransferDataProvider(
+            'int quantity' => $this->getDataForQuoteTransfer(
                 static::INT_QUANTITY,
                 $this->fixtures['bundle-sku']
             ),
-            'float quantity' => $this->createQuoteTransferDataProvider(
+            'float quantity' => $this->getDataForQuoteTransfer(
                 static::FLOAT_QUANTITY,
                 $this->fixtures['bundle-sku']
             ),
@@ -158,7 +158,7 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer[]
      */
-    protected function createQuoteTransferDataProvider($quantity, string $bundleSku)
+    protected function getDataForQuoteTransfer($quantity, string $bundleSku)
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));

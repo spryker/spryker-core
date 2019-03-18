@@ -12,8 +12,8 @@ use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Traversable;
 
@@ -50,7 +50,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
      */
     protected $utilQuantityService;
 
@@ -59,7 +59,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
+     * @param \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
@@ -249,7 +249,12 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             return false;
         }
 
-        return ($bundledProductAvailabilityEntity->getQuantity() === 0 && !$bundledProductAvailabilityEntity->getIsNeverOutOfStock());
+        $isBundledItemUnavailable = (
+            !$bundledProductAvailabilityEntity->getQuantity()
+            && !$bundledProductAvailabilityEntity->getIsNeverOutOfStock()
+        );
+
+        return $isBundledItemUnavailable;
     }
 
     /**
@@ -277,12 +282,13 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
         ?SpyAvailability $bundledProductAvailabilityEntity,
         SpyProductBundle $bundleItemEntity,
         $bundleAvailabilityQuantity
-    ) {
+    ): float {
         if (!$bundledProductAvailabilityEntity) {
             return 0.0;
         }
 
-        $bundledItemQuantity = (int)floor($bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity());
+        $bundledItemQuantity = $bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity();
+        $bundledItemQuantity = $this->roundQuantity($bundledItemQuantity);
 
         if ($this->isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)) {
             return $bundledItemQuantity;
@@ -297,8 +303,18 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return bool
      */
-    protected function isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)
+    protected function isMaxQuantity(float $bundleAvailabilityQuantity, float $bundledItemQuantity): bool
     {
-        return ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0.0);
+        return ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0);
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 }

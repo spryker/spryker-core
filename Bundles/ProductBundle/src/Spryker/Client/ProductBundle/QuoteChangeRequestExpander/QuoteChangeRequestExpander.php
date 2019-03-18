@@ -10,17 +10,17 @@ namespace Spryker\Client\ProductBundle\QuoteChangeRequestExpander;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 
 class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
      */
     protected $utilQuantityService;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
+     * @param \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(ProductBundleToUtilQuantityServiceInterface $utilQuantityService)
     {
@@ -70,7 +70,7 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
             $numberOfBundlesToRemove = $this->getBundledProductTotalQuantity($quoteTransfer, $groupKey);
         }
 
-        $numberOfBundlesToRemove = (int)$this->utilQuantityService->roundQuantity($numberOfBundlesToRemove);
+        $numberOfBundlesToRemove = (int)$numberOfBundlesToRemove;
         $bundledItems = [];
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($numberOfBundlesToRemove === 0) {

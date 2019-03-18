@@ -36,7 +36,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundlesSalesOr
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandler;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\ProductBundleDependencyProvider;
 
 /**
@@ -366,7 +366,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface
+     * @return \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
      */
     protected function getUtilQuantityService(): ProductBundleToUtilQuantityServiceInterface
     {

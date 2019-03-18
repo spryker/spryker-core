@@ -15,7 +15,7 @@ use Spryker\Client\ProductBundle\QuoteItemFinder\BundleProductQuoteItemFinder;
 use Spryker\Client\ProductBundle\QuoteItemFinder\BundleProductQuoteItemFinderInterface;
 use Spryker\Client\ProductBundle\QuoteItemFinder\QuoteBundleItemsFinder;
 use Spryker\Client\ProductBundle\QuoteItemFinder\QuoteBundleItemsFinderInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 
 class ProductBundleFactory extends AbstractFactory
 {
@@ -52,7 +52,7 @@ class ProductBundleFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToUtilQuantityServiceInterface
+     * @return \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
      */
     public function getUtilQuantityService(): ProductBundleToUtilQuantityServiceInterface
     {

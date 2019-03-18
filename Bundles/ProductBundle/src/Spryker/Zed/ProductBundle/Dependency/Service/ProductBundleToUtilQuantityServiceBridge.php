@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductBundle\Dependency\Facade;
+namespace Spryker\Zed\ProductBundle\Dependency\Service;
 
 class ProductBundleToUtilQuantityServiceBridge implements ProductBundleToUtilQuantityServiceInterface
 {

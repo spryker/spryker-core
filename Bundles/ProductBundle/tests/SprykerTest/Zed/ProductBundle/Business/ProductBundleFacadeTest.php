@@ -59,6 +59,7 @@ class ProductBundleFacadeTest extends Unit
     public function testExpandBundleItemsShouldCreateBundleItemsAndCalculateSplitPrice()
     {
         $this->markTestSkipped();
+
         $bundlePrice = self::BUNDLED_PRODUCT_PRICE_2;
 
         $productConcreteTransfer = $this->createProductBundle($bundlePrice);
@@ -151,7 +152,7 @@ class ProductBundleFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider preCheckCartAvailabilityWhenBundleAvailableProvider
+     * @dataProvider preCheckCartAvailabilityWhenBundleAvailableDataProvider
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -171,20 +172,20 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return array
      */
-    public function preCheckCartAvailabilityWhenBundleAvailableProvider(): array
+    public function preCheckCartAvailabilityWhenBundleAvailableDataProvider(): array
     {
         return [
-            'int stock' => $this->preCheckCartAvailabilityWhenBundleAvailableData(static::INT_QUANTITY),
-            'float stock' => $this->preCheckCartAvailabilityWhenBundleAvailableData(static::FLOAT_QUANTITY),
+            'int stock' => $this->getDataForPreCheckCartAvailabilityWhenBundleAvailable(static::INT_QUANTITY),
+            'float stock' => $this->getDataForPreCheckCartAvailabilityWhenBundleAvailable(static::FLOAT_QUANTITY),
         ];
     }
 
     /**
-     * @param float $quantity
+     * @param float|int $quantity
      *
      * @return array
      */
-    public function preCheckCartAvailabilityWhenBundleAvailableData(float $quantity): array
+    public function getDataForPreCheckCartAvailabilityWhenBundleAvailable($quantity): array
     {
         $cartChangeTransfer = new CartChangeTransfer();
 
@@ -206,7 +207,7 @@ class ProductBundleFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider preCheckCartAvailabilityWhenBundleUnavailableProvider
+     * @dataProvider preCheckCartAvailabilityWhenBundleUnavailableDataProvider
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -226,11 +227,11 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return array
      */
-    public function preCheckCartAvailabilityWhenBundleUnavailableProvider(): array
+    public function preCheckCartAvailabilityWhenBundleUnavailableDataProvider(): array
     {
         return [
-            'int stock' => $this->preCheckCartAvailabilityWhenBundleUnavailableData(5, 25),
-            'float stock' => $this->preCheckCartAvailabilityWhenBundleUnavailableData(5.5, 25.5),
+            'int stock' => $this->getDataForPreCheckCartAvailabilityWhenBundleUnavailable(5, 25),
+            'float stock' => $this->getDataForPreCheckCartAvailabilityWhenBundleUnavailable(5.5, 25.5),
         ];
     }
 
@@ -240,8 +241,10 @@ class ProductBundleFacadeTest extends Unit
      *
      * @return array
      */
-    protected function preCheckCartAvailabilityWhenBundleUnavailableData(float $firstQuantity, float $secondQuantity): array
-    {
+    protected function getDataForPreCheckCartAvailabilityWhenBundleUnavailable(
+        float $firstQuantity,
+        float $secondQuantity
+    ): array {
         $cartChangeTransfer = new CartChangeTransfer();
 
         $itemTransfer = new ItemTransfer();
@@ -343,7 +346,7 @@ class ProductBundleFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider saveBundledProductsShouldAddProvidedConcreteToBundleProvider
+     * @dataProvider saveBundledProductsShouldAddProvidedConcreteToBundleDataProvider
      *
      * @param \Generated\Shared\Transfer\ProductForBundleTransfer $bundledProductTransfer
      *
@@ -382,11 +385,11 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return array
      */
-    public function saveBundledProductsShouldAddProvidedConcreteToBundleProvider(): array
+    public function saveBundledProductsShouldAddProvidedConcreteToBundleDataProvider(): array
     {
         return [
-            'int stock' => $this->saveBundledProductsShouldAddProvidedConcreteToBundleData(2.0),
-            'float stock' => $this->saveBundledProductsShouldAddProvidedConcreteToBundleData(2.5),
+            'int stock' => $this->getDataForSaveBundledProductsShouldAddProvidedConcreteToBundle(2.0),
+            'float stock' => $this->getDataForSaveBundledProductsShouldAddProvidedConcreteToBundle(2.5),
         ];
     }
 
@@ -395,7 +398,7 @@ class ProductBundleFacadeTest extends Unit
      *
      * @return array
      */
-    public function saveBundledProductsShouldAddProvidedConcreteToBundleData(float $quantity): array
+    public function getDataForSaveBundledProductsShouldAddProvidedConcreteToBundle(float $quantity): array
     {
         $bundledProductTransfer = new ProductForBundleTransfer();
         $bundledProductTransfer->setQuantity($quantity);
@@ -409,6 +412,7 @@ class ProductBundleFacadeTest extends Unit
     public function testSaveBundledProductsWhenRemoveListProvidedShouldRemoveBundledProducts()
     {
         $this->markTestIncomplete('Something with transactions');
+
         $productConcreteBundleTransfer = $this->createProductBundle(self::BUNDLED_PRODUCT_PRICE_2);
 
         $productBundleFacade = $this->createProductBundleFacade();
@@ -431,6 +435,7 @@ class ProductBundleFacadeTest extends Unit
     public function testFindBundledProductsByIdProductConcreteShouldReturnPersistedBundledProducts()
     {
         $this->markTestIncomplete('Something with transactions');
+
         $productConcreteBundleTransfer = $this->createProductBundle(self::BUNDLED_PRODUCT_PRICE_2);
 
         $productBundleFacade = $this->createProductBundleFacade();
@@ -447,6 +452,7 @@ class ProductBundleFacadeTest extends Unit
     public function testAssignBundledProductsToProductConcreteShouldAssignPersistedBundledProducts()
     {
         $this->markTestIncomplete('Something with transactions');
+
         $productConcreteBundleTransfer = $this->createProductBundle(self::BUNDLED_PRODUCT_PRICE_2);
 
         $productConcreteTransfer = new ProductConcreteTransfer();
