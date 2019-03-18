@@ -129,6 +129,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
+     * @deprecated Use updateAvailabilityForStore() instead.
+     *
      * @param string $sku
      *
      * @return void
@@ -144,8 +146,6 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * {@inheritdoc}
      *
      * @api
-     *
-     * @deprecated Use updateAvailabilityForStore() instead.
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
