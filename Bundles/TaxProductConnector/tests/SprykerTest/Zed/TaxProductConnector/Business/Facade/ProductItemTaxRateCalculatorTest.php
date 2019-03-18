@@ -63,10 +63,9 @@ class ProductItemTaxRateCalculatorTest extends Test
      *
      * @return void
      */
-    public function testTaxRateCalculationShouldUseQuoteShippingAddress(QuoteTransfer $quoteTransfer, array $expectedValues)
+    public function testTaxRateCalculationShouldUseQuoteShippingAddress(QuoteTransfer $quoteTransfer, array $expectedValues): void
     {
         // Arrange
-//        $this->tester->haveTaxRate($expectedVAT);
         $taxProductConnectorFacade = $this->tester->getFacade();
 
         // Act
@@ -84,7 +83,7 @@ class ProductItemTaxRateCalculatorTest extends Test
      *
      * @return void
      */
-    public function testTaxRateCalculationShouldUseItemShippingAddress(QuoteTransfer $quoteTransfer, array $expectedValues)
+    public function testTaxRateCalculationShouldUseItemShippingAddress(QuoteTransfer $quoteTransfer, array $expectedValues): void
     {
         // Arrange
         $taxProductConnectorFacade = $this->tester->getFacade();
@@ -104,7 +103,7 @@ class ProductItemTaxRateCalculatorTest extends Test
      *
      * @return void
      */
-    public function testTaxRateCalculationShouldBeDefault(QuoteTransfer $quoteTransfer, array $expectedValues)
+    public function testTaxRateCalculationShouldBeDefault(QuoteTransfer $quoteTransfer, array $expectedValues): void
     {
         // Arrange
         $taxProductConnectorFacade = $this->tester->getFacade();
@@ -119,47 +118,46 @@ class ProductItemTaxRateCalculatorTest extends Test
     /**
      * @return array
      */
-    public function taxRateCalculationShouldUseQuoteShippingAddressDataProvider()
+    public function taxRateCalculationShouldUseQuoteShippingAddressDataProvider(): array
     {
         return [
-            'with quote level shipping address: France tax 20%, Net price' => $this->getDataWithQuoteLevelShippingAddressToFranceWithTax20(),
-            'with quote level shipping address: Germany tax 15%, Gross price' => $this->getDataWithQuoteLevelShippingAddressToGermanyWithTax15(),
+            'with quote level shipping address: France, expected tax rate 20%' => $this->getDataWithQuoteLevelShippingAddressToFrance(),
+            'with quote level shipping address: Moon, expected tax rate 66%' => $this->getDataWithQuoteLevelShippingAddressToMoon(),
         ];
     }
 
     /**
      * @return array
      */
-    public function taxRateCalculationShouldUseItemShippingAddressDataProvider()
+    public function taxRateCalculationShouldUseItemShippingAddressDataProvider(): array
     {
         return [
-            'with item level shipping addresses: France tax 20%, Germany tax 15%, Net price' => $this->getDataWithItemLevelShippingAddressesToFranceAndGermanyWithNetPrice(),
-            'with item level shipping addresses: France tax 20%, Germany tax 15%, Gross price' => $this->getDataWithItemLevelShippingAddressesToFranceAndGermanyWithGrossPrice(),
+            'with item level shipping addresses: France expected tax rate 20%, Germany expected tax rate 15%' => $this->getDataWithItemLevelShippingAddressesToFranceAndGermany(),
+            'with item level shipping addresses: France expected tax rate 20%, Germany expected tax rate 15%' => $this->getDataWithItemLevelShippingAddressesToFranceAndGermany2(),
         ];
     }
 
     /**
      * @return array
      */
-    public function taxRateCalculationShouldBeDefaultDataProvider()
+    public function taxRateCalculationShouldBeDefaultDataProvider(): array
     {
         return [
-            'without quote and item level shipping addresses: France tax 20%, Net price' => $this->getDataWithoutQuoteAndItemLevelShippingAddressesToFranceWithTax20NetPrice(),
-            'without quote and item level shipping addresses: Germany tax 15%, Gross price' => $this->getDataWithoutQuoteAndItemLevelShippingAddressesToGermanyWithTax15GrossPrice(),
-            'without quote and item level shipping addresses: Moon tax undefined, Gross price' => $this->getDataWithoutQuoteAndItemLevelShippingAddressesToMoonWithTaxNullGrossPrice(),
-            'without quote and item level shipping addresses: Moon tax undefined, Net price' => $this->getDataWithoutQuoteAndItemLevelShippingAddressesToMoonWithTaxNullNetPrice(),
+            'without quote and item level shipping addresses: France expected tax rate 20%' => $this->getDataWithoutQuoteAndItemLevelShippingAddressesToFrance(),
+            'without quote and item level shipping addresses: Germany expected tax rate 15%' => $this->getDataWithoutQuoteAndItemLevelShippingAddressesToGermany(),
+            'without quote and item level shipping addresses: Moon expected tax rate 0%' => $this->getDataWithoutQuoteAndItemLevelShippingAddressesToMoon(),
         ];
     }
 
     /**
      * @return array
      */
-    protected function getDataWithQuoteLevelShippingAddressToFranceWithTax20()
+    protected function getDataWithQuoteLevelShippingAddressToFrance(): array
     {
         $itemBuilder = $this->createItemTransferBuilder([
             'unitNetPrice' => 10000,
             'sumNetPrice' => 10000,
-            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+            'idProductAbstract' => 141,
         ]);
 
         $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
@@ -181,15 +179,15 @@ class ProductItemTaxRateCalculatorTest extends Test
     /**
      * @return array
      */
-    protected function getDataWithQuoteLevelShippingAddressToGermanyWithTax15()
+    protected function getDataWithQuoteLevelShippingAddressToMoon(): array
     {
         $itemBuilder = $this->createItemTransferBuilder([
             'unitGrossPrice' => 10000,
             'sumGrossPrice' => 10000,
-            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+            'idProductAbstract' => 141,
         ]);
 
-        $addressBuilder = (new AddressBuilder(['iso2Code' => 'DE']));
+        $addressBuilder = (new AddressBuilder(['iso2Code' => 'MOON']));
 
         $quoteTransfer = (new QuoteBuilder([
                 'priceMode' => static::PRICE_MODE_GROSS,
@@ -202,19 +200,19 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, [141 => 13.04]];
+        return [$quoteTransfer, [141 => 66.00]];
     }
 
     /**
      * @return array
      */
-    protected function getDataWithItemLevelShippingAddressesToFranceAndGermanyWithNetPrice()
+    protected function getDataWithItemLevelShippingAddressesToFranceAndGermany(): array
     {
         $addressBuilder1 = (new AddressBuilder(['iso2Code' => 'FR']));
         $itemBuilder1 = $this->createItemTransferBuilder([
             'unitNetPrice' => 10000,
             'sumNetPrice' => 10000,
-            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+            'idProductAbstract' => 141,
         ])
         ->withAnotherShipment(
             (new ShipmentBuilder())
@@ -225,7 +223,7 @@ class ProductItemTaxRateCalculatorTest extends Test
         $itemBuilder2 = $this->createItemTransferBuilder([
             'unitNetPrice' => 10000,
             'sumNetPrice' => 10000,
-            'idProductAbstract' => 142, // @todo Save product into DB. Add tax rate.
+            'idProductAbstract' => 142,
         ])
             ->withAnotherShipment(
                 (new ShipmentBuilder())
@@ -243,19 +241,19 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, [141 => 20.00, 142 => 13.04]];
+        return [$quoteTransfer, [141 => 20.00, 142 => 15.00]];
     }
 
     /**
      * @return array
      */
-    protected function getDataWithItemLevelShippingAddressesToFranceAndGermanyWithGrossPrice()
+    protected function getDataWithItemLevelShippingAddressesToFranceAndGermany2(): array
     {
         $addressBuilder1 = (new AddressBuilder(['iso2Code' => 'FR']));
         $itemBuilder1 = $this->createItemTransferBuilder([
             'unitNetPrice' => 10000,
             'sumNetPrice' => 10000,
-            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+            'idProductAbstract' => 141,
         ])
             ->withAnotherShipment(
                 (new ShipmentBuilder())
@@ -266,7 +264,7 @@ class ProductItemTaxRateCalculatorTest extends Test
         $itemBuilder2 = $this->createItemTransferBuilder([
             'unitNetPrice' => 10000,
             'sumNetPrice' => 10000,
-            'idProductAbstract' => 142, // @todo Save product into DB. Add tax rate.
+            'idProductAbstract' => 142,
         ])
             ->withAnotherShipment(
                 (new ShipmentBuilder())
@@ -284,18 +282,18 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, [141 => 16.67, 142 => 13.04]];
+        return [$quoteTransfer, [141 => 20.00, 142 => 15.00]];
     }
 
     /**
      * @return array
      */
-    protected function getDataWithoutQuoteAndItemLevelShippingAddressesToFranceWithTax20NetPrice()
+    protected function getDataWithoutQuoteAndItemLevelShippingAddressesToFrance(): array
     {
         $itemBuilder = $this->createItemTransferBuilder([
             'unitNetPrice' => 10000,
             'sumNetPrice' => 10000,
-            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+            'idProductAbstract' => 141,
         ]);
 
         $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
@@ -317,12 +315,12 @@ class ProductItemTaxRateCalculatorTest extends Test
     /**
      * @return array
      */
-    protected function getDataWithoutQuoteAndItemLevelShippingAddressesToGermanyWithTax15GrossPrice()
+    protected function getDataWithoutQuoteAndItemLevelShippingAddressesToGermany(): array
     {
         $itemBuilder = $this->createItemTransferBuilder([
             'unitGrossPrice' => 10000,
             'sumGrossPrice' => 10000,
-            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+            'idProductAbstract' => 141,
         ]);
 
         $addressBuilder = (new AddressBuilder(['iso2Code' => 'DE']));
@@ -338,18 +336,18 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, [141 => 13.04]];
+        return [$quoteTransfer, [141 => 15.00]];
     }
 
     /**
      * @return array
      */
-    protected function getDataWithoutQuoteAndItemLevelShippingAddressesToMoonWithTaxNullGrossPrice()
+    protected function getDataWithoutQuoteAndItemLevelShippingAddressesToMoon(): array
     {
         $itemBuilder = $this->createItemTransferBuilder([
             'unitGrossPrice' => 10000,
             'sumGrossPrice' => 10000,
-            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+            'idProductAbstract' => 141,
         ]);
 
         $addressBuilder = (new AddressBuilder(['iso2Code' => 'MOON']));
@@ -365,34 +363,7 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, [141 => 0]];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDataWithoutQuoteAndItemLevelShippingAddressesToMoonWithTaxNullNetPrice()
-    {
-        $itemBuilder = $this->createItemTransferBuilder([
-            'unitGrossPrice' => 10000,
-            'sumGrossPrice' => 10000,
-            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
-        ]);
-
-        $addressBuilder = (new AddressBuilder(['iso2Code' => 'MOON']));
-
-        $quoteTransfer = (new QuoteBuilder([
-            'priceMode' => static::PRICE_MODE_GROSS,
-        ]))
-            ->withShippingAddress($addressBuilder)
-            ->withAnotherBillingAddress()
-            ->withAnotherItem($itemBuilder)
-            ->withTotals()
-            ->withCustomer()
-            ->withCurrency()
-            ->build();
-
-        return [$quoteTransfer, [141 => 0]];
+        return [$quoteTransfer, [141 => 0.00]];
     }
 
     /**
@@ -418,9 +389,9 @@ class ProductItemTaxRateCalculatorTest extends Test
                 continue;
             }
 
-            $expectedVAT = $expectedValues[$itemTransfer->getIdProductAbstract()];
-            $this->assertEqualsWithDelta($expectedVAT, $itemTransfer->getTaxRate(), static::FLOAT_COMPARISION_DELTA,
-                'VAT should be ' . $expectedVAT . ' for product ID ' . $itemTransfer->getIdProductAbstract()
+            $expectedTaxRate = $expectedValues[$itemTransfer->getIdProductAbstract()];
+            $this->assertEqualsWithDelta($expectedTaxRate, $itemTransfer->getTaxRate(), static::FLOAT_COMPARISION_DELTA,
+                'tax rate should be ' . $expectedTaxRate . ' for product ID ' . $itemTransfer->getIdProductAbstract()
                 . ', ' . $itemTransfer->getTaxRate() . ' given.'
             );
         }

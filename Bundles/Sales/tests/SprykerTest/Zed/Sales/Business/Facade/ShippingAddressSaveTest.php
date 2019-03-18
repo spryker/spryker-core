@@ -51,7 +51,7 @@ class ShippingAddressSaveTest extends Test
      *
      * @return void
      */
-    public function testSaveOrderAddressShouldPersistAddressEntity(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function testSaveOrderAddressShouldPersistAddressEntity(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         // Arrange
         $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
@@ -75,7 +75,7 @@ class ShippingAddressSaveTest extends Test
      *
      * @return void
      */
-    public function testSaveOrderAddressShouldntPersistAddressEntity(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function testSaveOrderAddressShouldntPersistAddressEntity(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         // Arrange
         $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
@@ -95,7 +95,7 @@ class ShippingAddressSaveTest extends Test
     /**
      * @return array
      */
-    public function saveOrderAddressShouldPersistAddressEntityDataProvider()
+    public function saveOrderAddressShouldPersistAddressEntityDataProvider(): array
     {
         return [
             'with quote level shipping address' => $this->getDataWithQuoteLevelShippingAddress(),
@@ -105,7 +105,7 @@ class ShippingAddressSaveTest extends Test
     /**
      * @return array
      */
-    public function saveOrderAddressShouldntPersistAddressEntityDataProvider()
+    public function saveOrderAddressShouldntPersistAddressEntityDataProvider(): array
     {
         return [
             'without quote level shipping address' => $this->getDataWithoutQuoteLevelShippingAddress(),
@@ -115,7 +115,7 @@ class ShippingAddressSaveTest extends Test
     /**
      * @return array
      */
-    protected function getDataWithQuoteLevelShippingAddress()
+    protected function getDataWithQuoteLevelShippingAddress(): array
     {
         $itemBuilder1 = $this->createItemTransferBuilder(['unitPrice' => 1001]);
         $itemBuilder2 = $this->createItemTransferBuilder(['unitPrice' => 2002]);
@@ -136,7 +136,7 @@ class ShippingAddressSaveTest extends Test
     /**
      * @return array
      */
-    protected function getDataWithoutQuoteLevelShippingAddress()
+    protected function getDataWithoutQuoteLevelShippingAddress(): array
     {
         $itemBuilder1 = $this->createItemTransferBuilder(['unitPrice' => 1001]);
         $itemBuilder2 = $this->createItemTransferBuilder(['unitPrice' => 2002]);
