@@ -120,7 +120,6 @@ class ShipmentDiscountConnectorFacadeTest extends Test
             'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
             'unitGrossPrice' => 2500,
             'taxRate' => 19,
-            'quantity' => 1.0,
         ]);
 
         $quoteTransfer = new QuoteTransfer();
