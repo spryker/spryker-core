@@ -27,7 +27,6 @@ class ContentProductAbstractListController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Content item id is not specified.",
      *              "403": "Unauthorized request.",
      *              "404": "Content item not found."
      *          }
