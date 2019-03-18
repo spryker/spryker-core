@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ContentProductAbstractListsRestApi\Plugin;
 
-use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
+use Generated\Shared\Transfer\ContentProductAbstractListRestAttributesTransfer;
 use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
@@ -67,6 +67,6 @@ class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements Re
      */
     public function getResourceAttributesClassName(): string
     {
-        return AbstractProductsRestAttributesTransfer::class;
+        return ContentProductAbstractListRestAttributesTransfer::class;
     }
 }

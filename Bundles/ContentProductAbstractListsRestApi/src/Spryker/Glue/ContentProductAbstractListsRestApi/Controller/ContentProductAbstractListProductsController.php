@@ -20,7 +20,7 @@ class ContentProductAbstractListProductsController extends AbstractController
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Retrieves content item data."
+     *              "Retrieves content item abstract products."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",

@@ -82,8 +82,8 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
             return $this->addContentTypeInvalidError($restResponse);
         }
 
-        $idProductAbstractList = $executedContentStorageTransfer->getContent();
-        foreach ($idProductAbstractList as $idProductAbstract) {
+        $idProductAbstracts = $executedContentStorageTransfer->getContent();
+        foreach ($idProductAbstracts as $idProductAbstract) {
             $abstractProductResource = $this->productsRestApiResource->findProductAbstractById($idProductAbstract, $restRequest);
 
             $restResponse->addResource($abstractProductResource);
@@ -103,6 +103,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
             ->setCode(ContentProductAbstractListsRestApiConfig::RESPONSE_CODE_CONTENT_ID_IS_MISSING)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(ContentProductAbstractListsRestApiConfig::RESPONSE_DETAILS_CONTENT_ID_IS_MISSING);
+
         return $response->addError($restErrorTransfer);
     }
 
@@ -117,6 +118,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
             ->setCode(ContentProductAbstractListsRestApiConfig::RESPONSE_CODE_CONTENT_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
             ->setDetail(ContentProductAbstractListsRestApiConfig::RESPONSE_DETAILS_CONTENT_NOT_FOUND);
+
         return $response->addError($restErrorTransfer);
     }
 
@@ -131,6 +133,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
             ->setCode(ContentProductAbstractListsRestApiConfig::RESPONSE_CODE_CONTENT_TYPE_INVALID)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->setDetail(ContentProductAbstractListsRestApiConfig::RESPONSE_DETAILS_CONTENT_TYPE_INVALID);
+
         return $response->addError($restErrorTransfer);
     }
 }
