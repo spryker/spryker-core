@@ -8,9 +8,11 @@ namespace SprykerTest\Zed\TaxProductConnector\Business\Facade;
 
 use BadMethodCallException;
 use Codeception\TestCase\Test;
+use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\SequenceNumberSettingsBuilder;
+use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -36,6 +38,18 @@ use Spryker\Zed\Sales\Business\SalesFacadeInterface;
  */
 class ProductItemTaxRateCalculatorTest extends Test
 {
+    protected const FLOAT_COMPARISION_DELTA = 0.001;
+
+    /**
+     * @see \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     */
+    protected const PRICE_MODE_NET = 'NET_MODE';
+
+    /**
+     * @see \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     */
+    protected const PRICE_MODE_GROSS = 'GROSS_MODE';
+
     /**
      * @var \SprykerTest\Zed\TaxProductConnector\TaxProductConnectorBusinessTester
      */
@@ -45,74 +59,61 @@ class ProductItemTaxRateCalculatorTest extends Test
      * @dataProvider taxRateCalculationShouldUseQuoteShippingAddressDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param array $expectedValues
      *
      * @return void
      */
-    public function testTaxRateCalculationShouldUseQuoteShippingAddress(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function testTaxRateCalculationShouldUseQuoteShippingAddress(QuoteTransfer $quoteTransfer, array $expectedValues)
     {
-//        // Arrange
-//        $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
-//        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
-//        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()->filterByAddress1($shippingAddressTransfer->getAddress1());
-//        $salesFacade = $this->getSalesFacadeWithMockedConfig();
-//
-//        // Act
-//        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
-//
-//        // Assert
-//        $this->assertTrue($salesOrderAddressQuery->count() === 1, 'Shipping address should have been saved');
-//        $this->assertNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should not have been assigned on sales order level.');
+        // Arrange
+//        $this->tester->haveTaxRate($expectedVAT);
+        $taxProductConnectorFacade = $this->tester->getFacade();
+
+        // Act
+        $taxProductConnectorFacade->calculateProductItemTaxRate($quoteTransfer);
+
+        // Assert
+        $this->assertItemsForTaxes($quoteTransfer, $expectedValues);
     }
 
     /**
      * @dataProvider taxRateCalculationShouldUseItemShippingAddressDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param array $expectedValues
      *
      * @return void
      */
-    public function testTaxRateCalculationShouldUseItemShippingAddress(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function testTaxRateCalculationShouldUseItemShippingAddress(QuoteTransfer $quoteTransfer, array $expectedValues)
     {
-//        // Arrange
-//        $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
-//        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create();
-//        $countBefore = $salesOrderAddressQuery->count();
-//        $salesFacade = $this->getSalesFacadeWithMockedConfig();
-//
-//        // Act
-//        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
-//
-//        // Assert
-//        $expectedOrderAddressCount = $countBefore + 1;
-//        $this->assertEquals($expectedOrderAddressCount, $salesOrderAddressQuery->count(), 'Address count mismatch! Only billing address should have been saved.');
-//        $this->assertNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should not have been assigned on sales order level.');
+        // Arrange
+        $taxProductConnectorFacade = $this->tester->getFacade();
+
+        // Act
+        $taxProductConnectorFacade->calculateProductItemTaxRate($quoteTransfer);
+
+        // Assert
+        $this->assertItemsForTaxes($quoteTransfer, $expectedValues);
     }
 
     /**
      * @dataProvider taxRateCalculationShouldBeDefaultDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param array $expectedValues
      *
      * @return void
      */
-    public function testTaxRateCalculationShouldBeDefault(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function testTaxRateCalculationShouldBeDefault(QuoteTransfer $quoteTransfer, array $expectedValues)
     {
-//        // Arrange
-//        $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
-//        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create();
-//        $countBefore = $salesOrderAddressQuery->count();
-//        $salesFacade = $this->getSalesFacadeWithMockedConfig();
-//
-//        // Act
-//        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
-//
-//        // Assert
-//        $expectedOrderAddressCount = $countBefore + 1;
-//        $this->assertEquals($expectedOrderAddressCount, $salesOrderAddressQuery->count(), 'Address count mismatch! Only billing address should have been saved.');
-//        $this->assertNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should not have been assigned on sales order level.');
+        // Arrange
+        $taxProductConnectorFacade = $this->tester->getFacade();
+
+        // Act
+        $taxProductConnectorFacade->calculateProductItemTaxRate($quoteTransfer);
+
+        // Assert
+        $this->assertItemsForTaxes($quoteTransfer, $expectedValues);
     }
 
     /**
@@ -121,7 +122,8 @@ class ProductItemTaxRateCalculatorTest extends Test
     public function taxRateCalculationShouldUseQuoteShippingAddressDataProvider()
     {
         return [
-            'with quote level shipping address' => $this->getDataWithQuoteLevelShippingAddress(),
+            'with quote level shipping address: France tax 20%, Net price' => $this->getDataWithQuoteLevelShippingAddressToFranceWithTax20(),
+            'with quote level shipping address: Germany tax 15%, Gross price' => $this->getDataWithQuoteLevelShippingAddressToGermanyWithTax15(),
         ];
     }
 
@@ -131,7 +133,8 @@ class ProductItemTaxRateCalculatorTest extends Test
     public function taxRateCalculationShouldUseItemShippingAddressDataProvider()
     {
         return [
-            'without quote level shipping address, with item level shipping addresses' => $this->getDataWithoutQuoteLevelShippingAddress(),
+            'with item level shipping addresses: France tax 20%, Germany tax 15%, Net price' => $this->getDataWithItemLevelShippingAddressesToFranceAndGermanyWithNetPrice(),
+            'with item level shipping addresses: France tax 20%, Germany tax 15%, Gross price' => $this->getDataWithItemLevelShippingAddressesToFranceAndGermanyWithGrossPrice(),
         ];
     }
 
@@ -141,116 +144,285 @@ class ProductItemTaxRateCalculatorTest extends Test
     public function taxRateCalculationShouldBeDefaultDataProvider()
     {
         return [
-            'without quote and item level shipping addresses' => $this->getDataWithoutQuoteLevelShippingAddress(),
+            'without quote and item level shipping addresses: France tax 20%, Net price' => $this->getDataWithoutQuoteAndItemLevelShippingAddressesToFranceWithTax20NetPrice(),
+            'without quote and item level shipping addresses: Germany tax 15%, Gross price' => $this->getDataWithoutQuoteAndItemLevelShippingAddressesToGermanyWithTax15GrossPrice(),
+            'without quote and item level shipping addresses: Moon tax undefined, Gross price' => $this->getDataWithoutQuoteAndItemLevelShippingAddressesToMoonWithTaxNullGrossPrice(),
+            'without quote and item level shipping addresses: Moon tax undefined, Net price' => $this->getDataWithoutQuoteAndItemLevelShippingAddressesToMoonWithTaxNullNetPrice(),
         ];
     }
 
     /**
      * @return array
      */
-    protected function getDataWithQuoteLevelShippingAddress()
+    protected function getDataWithQuoteLevelShippingAddressToFranceWithTax20()
     {
-        $itemTransferBuilder1 = $this->createItemTransferBuilder(1001);
-        $itemTransferBuilder2 = $this->createItemTransferBuilder(2002);
+        $itemBuilder = $this->createItemTransferBuilder([
+            'unitNetPrice' => 10000,
+            'sumNetPrice' => 10000,
+            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+        ]);
 
-        $quoteTransfer = (new QuoteBuilder())
-            ->withShippingAddress()
+        $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
+
+        $quoteTransfer = (new QuoteBuilder([
+                'priceMode' => static::PRICE_MODE_NET,
+            ]))
+            ->withShippingAddress($addressBuilder)
             ->withAnotherBillingAddress()
-            ->withAnotherItem($itemTransferBuilder1)
-            ->withAnotherItem($itemTransferBuilder2)
+            ->withAnotherItem($itemBuilder)
             ->withTotals()
             ->withCustomer()
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, new SaveOrderTransfer()];
+        return [$quoteTransfer, [141 => 20.00]];
     }
 
     /**
      * @return array
      */
-    protected function getDataWithoutQuoteLevelShippingAddress()
+    protected function getDataWithQuoteLevelShippingAddressToGermanyWithTax15()
     {
-        $itemTransferBuilder1 = $this->createItemTransferBuilder(1001);
-        $itemTransferBuilder2 = $this->createItemTransferBuilder(2002);
+        $itemBuilder = $this->createItemTransferBuilder([
+            'unitGrossPrice' => 10000,
+            'sumGrossPrice' => 10000,
+            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+        ]);
 
-        $quoteTransfer = (new QuoteBuilder())
+        $addressBuilder = (new AddressBuilder(['iso2Code' => 'DE']));
+
+        $quoteTransfer = (new QuoteBuilder([
+                'priceMode' => static::PRICE_MODE_GROSS,
+            ]))
+            ->withShippingAddress($addressBuilder)
             ->withAnotherBillingAddress()
-            ->withAnotherItem($itemTransferBuilder1)
-            ->withAnotherItem($itemTransferBuilder2)
+            ->withAnotherItem($itemBuilder)
             ->withTotals()
             ->withCustomer()
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, new SaveOrderTransfer()];
+        return [$quoteTransfer, [141 => 13.04]];
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
+     * @return array
      */
-    protected function getSalesFacadeWithMockedConfig(): SalesFacadeInterface {
-        $salesFacade = $this->createSalesFacade();
-        $salesBusinessFactory = $this->createBusinessFactory();
-
-        $salesConfigMock = $this->createSalesConfigMock();
-        $salesConfigMock->method('determineProcessForOrderItem')->willReturn('DummyPayment01');
-        $salesConfigMock->method('getOrderReferenceDefaults')->willReturn(
-            $this->createSequenceNumberSettingsTransfer()
+    protected function getDataWithItemLevelShippingAddressesToFranceAndGermanyWithNetPrice()
+    {
+        $addressBuilder1 = (new AddressBuilder(['iso2Code' => 'FR']));
+        $itemBuilder1 = $this->createItemTransferBuilder([
+            'unitNetPrice' => 10000,
+            'sumNetPrice' => 10000,
+            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+        ])
+        ->withAnotherShipment(
+            (new ShipmentBuilder())
+            ->withAnotherShippingAddress($addressBuilder1)
         );
 
-        $salesBusinessFactory->setConfig($salesConfigMock);
-        $salesFacade->setFactory($salesBusinessFactory);
+        $addressBuilder2 = (new AddressBuilder(['iso2Code' => 'DE']));
+        $itemBuilder2 = $this->createItemTransferBuilder([
+            'unitNetPrice' => 10000,
+            'sumNetPrice' => 10000,
+            'idProductAbstract' => 142, // @todo Save product into DB. Add tax rate.
+        ])
+            ->withAnotherShipment(
+                (new ShipmentBuilder())
+                    ->withAnotherShippingAddress($addressBuilder2)
+            );
 
-        return $salesFacade;
+        $quoteTransfer = (new QuoteBuilder([
+            'priceMode' => static::PRICE_MODE_NET,
+        ]))
+            ->withAnotherBillingAddress()
+            ->withAnotherItem($itemBuilder1)
+            ->withAnotherItem($itemBuilder2)
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        return [$quoteTransfer, [141 => 20.00, 142 => 13.04]];
     }
 
     /**
-     * @param int|null $unitPrice
+     * @return array
+     */
+    protected function getDataWithItemLevelShippingAddressesToFranceAndGermanyWithGrossPrice()
+    {
+        $addressBuilder1 = (new AddressBuilder(['iso2Code' => 'FR']));
+        $itemBuilder1 = $this->createItemTransferBuilder([
+            'unitNetPrice' => 10000,
+            'sumNetPrice' => 10000,
+            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+        ])
+            ->withAnotherShipment(
+                (new ShipmentBuilder())
+                    ->withAnotherShippingAddress($addressBuilder1)
+            );
+
+        $addressBuilder2 = (new AddressBuilder(['iso2Code' => 'DE']));
+        $itemBuilder2 = $this->createItemTransferBuilder([
+            'unitNetPrice' => 10000,
+            'sumNetPrice' => 10000,
+            'idProductAbstract' => 142, // @todo Save product into DB. Add tax rate.
+        ])
+            ->withAnotherShipment(
+                (new ShipmentBuilder())
+                    ->withAnotherShippingAddress($addressBuilder2)
+            );
+
+        $quoteTransfer = (new QuoteBuilder([
+            'priceMode' => static::PRICE_MODE_GROSS,
+        ]))
+            ->withAnotherBillingAddress()
+            ->withAnotherItem($itemBuilder1)
+            ->withAnotherItem($itemBuilder2)
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        return [$quoteTransfer, [141 => 16.67, 142 => 13.04]];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataWithoutQuoteAndItemLevelShippingAddressesToFranceWithTax20NetPrice()
+    {
+        $itemBuilder = $this->createItemTransferBuilder([
+            'unitNetPrice' => 10000,
+            'sumNetPrice' => 10000,
+            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+        ]);
+
+        $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
+
+        $quoteTransfer = (new QuoteBuilder([
+            'priceMode' => static::PRICE_MODE_NET,
+        ]))
+            ->withShippingAddress($addressBuilder)
+            ->withAnotherBillingAddress()
+            ->withAnotherItem($itemBuilder)
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        return [$quoteTransfer, [141 => 20.00]];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataWithoutQuoteAndItemLevelShippingAddressesToGermanyWithTax15GrossPrice()
+    {
+        $itemBuilder = $this->createItemTransferBuilder([
+            'unitGrossPrice' => 10000,
+            'sumGrossPrice' => 10000,
+            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+        ]);
+
+        $addressBuilder = (new AddressBuilder(['iso2Code' => 'DE']));
+
+        $quoteTransfer = (new QuoteBuilder([
+            'priceMode' => static::PRICE_MODE_GROSS,
+        ]))
+            ->withShippingAddress($addressBuilder)
+            ->withAnotherBillingAddress()
+            ->withAnotherItem($itemBuilder)
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        return [$quoteTransfer, [141 => 13.04]];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataWithoutQuoteAndItemLevelShippingAddressesToMoonWithTaxNullGrossPrice()
+    {
+        $itemBuilder = $this->createItemTransferBuilder([
+            'unitGrossPrice' => 10000,
+            'sumGrossPrice' => 10000,
+            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+        ]);
+
+        $addressBuilder = (new AddressBuilder(['iso2Code' => 'MOON']));
+
+        $quoteTransfer = (new QuoteBuilder([
+            'priceMode' => static::PRICE_MODE_GROSS,
+        ]))
+            ->withShippingAddress($addressBuilder)
+            ->withAnotherBillingAddress()
+            ->withAnotherItem($itemBuilder)
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        return [$quoteTransfer, [141 => 0]];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataWithoutQuoteAndItemLevelShippingAddressesToMoonWithTaxNullNetPrice()
+    {
+        $itemBuilder = $this->createItemTransferBuilder([
+            'unitGrossPrice' => 10000,
+            'sumGrossPrice' => 10000,
+            'idProductAbstract' => 141, // @todo Save product into DB. Add tax rate.
+        ]);
+
+        $addressBuilder = (new AddressBuilder(['iso2Code' => 'MOON']));
+
+        $quoteTransfer = (new QuoteBuilder([
+            'priceMode' => static::PRICE_MODE_GROSS,
+        ]))
+            ->withShippingAddress($addressBuilder)
+            ->withAnotherBillingAddress()
+            ->withAnotherItem($itemBuilder)
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        return [$quoteTransfer, [141 => 0]];
+    }
+
+    /**
+     * @param array $seed
      *
      * @return \Generated\Shared\DataBuilder\ItemBuilder
      */
-    protected function createItemTransferBuilder($unitPrice = null): ItemBuilder
+    protected function createItemTransferBuilder(array $seed = []): ItemBuilder
     {
-        return (new ItemBuilder([
-            'unitPrice' => $unitPrice,
-        ]));
+        return (new ItemBuilder($seed));
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
-     */
-    protected function createSalesFacade(): SalesFacadeInterface
-    {
-        return new SalesFacade();
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\SalesBusinessFactory
-     */
-    protected function createBusinessFactory(): SalesBusinessFactory
-    {
-        return new SalesBusinessFactory();
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Sales\SalesConfig
-     */
-    protected function createSalesConfigMock(): SalesConfig
-    {
-        return $this->getMockBuilder(SalesConfig::class)->getMock();
-    }
-
-    /**
-     * Defines the prefix for the sequence number which is the public id of an order.
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array $expectedValues
      *
-     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
+     * @return void
      */
-    protected function createSequenceNumberSettingsTransfer(): SequenceNumberSettingsTransfer
+    protected function assertItemsForTaxes(QuoteTransfer $quoteTransfer, array $expectedValues): void
     {
-        return (new SequenceNumberSettingsBuilder([
-            'name' => SalesConstants::NAME_ORDER_REFERENCE,
-            'prefix' => 'DE--',
-        ]))->build();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if (!isset($expectedValues[$itemTransfer->getIdProductAbstract()])) {
+                continue;
+            }
+
+            $expectedVAT = $expectedValues[$itemTransfer->getIdProductAbstract()];
+            $this->assertEqualsWithDelta($expectedVAT, $itemTransfer->getTaxRate(), static::FLOAT_COMPARISION_DELTA,
+                'VAT should be ' . $expectedVAT . ' for product ID ' . $itemTransfer->getIdProductAbstract()
+                . ', ' . $itemTransfer->getTaxRate() . ' given.'
+            );
+        }
     }
 }

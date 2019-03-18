@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\TaxProductConnector\Business\StrategyResolver;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 
 /**
@@ -15,9 +16,9 @@ use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 interface ProductItemTaxRateCalculatorStrategyResolverInterface
 {
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Zed\Tax\Business\Model\CalculatorInterface
      */
-    public function resolve(iterable $itemTransfers): CalculatorInterface;
+    public function resolve(QuoteTransfer $quoteTransfer): CalculatorInterface;
 }

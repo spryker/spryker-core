@@ -8,6 +8,7 @@
 namespace Spryker\Zed\TaxProductConnector\Business\StrategyResolver;
 
 use Closure;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
 
@@ -33,14 +34,20 @@ class ProductItemTaxRateCalculatorStrategyResolver implements ProductItemTaxRate
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Zed\Tax\Business\Model\CalculatorInterface
      */
-    public function resolve(iterable $itemTransfers): CalculatorInterface
+    public function resolve(QuoteTransfer $quoteTransfer): CalculatorInterface
     {
-        foreach ($itemTransfers as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null) {
+        if ($quoteTransfer->getShippingAddress() !== null) {
+            $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
+
+            return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
+        }
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($quoteTransfer->getShipment() === null) {
                 $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 
                 return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);

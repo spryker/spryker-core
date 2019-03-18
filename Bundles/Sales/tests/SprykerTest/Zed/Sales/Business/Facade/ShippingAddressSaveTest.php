@@ -117,14 +117,14 @@ class ShippingAddressSaveTest extends Test
      */
     protected function getDataWithQuoteLevelShippingAddress()
     {
-        $itemTransferBuilder1 = $this->createItemTransferBuilder(1001);
-        $itemTransferBuilder2 = $this->createItemTransferBuilder(2002);
+        $itemBuilder1 = $this->createItemTransferBuilder(['unitPrice' => 1001]);
+        $itemBuilder2 = $this->createItemTransferBuilder(['unitPrice' => 2002]);
 
         $quoteTransfer = (new QuoteBuilder())
             ->withShippingAddress()
             ->withAnotherBillingAddress()
-            ->withAnotherItem($itemTransferBuilder1)
-            ->withAnotherItem($itemTransferBuilder2)
+            ->withAnotherItem($itemBuilder1)
+            ->withAnotherItem($itemBuilder2)
             ->withTotals()
             ->withCustomer()
             ->withCurrency()
@@ -138,13 +138,13 @@ class ShippingAddressSaveTest extends Test
      */
     protected function getDataWithoutQuoteLevelShippingAddress()
     {
-        $itemTransferBuilder1 = $this->createItemTransferBuilder(1001);
-        $itemTransferBuilder2 = $this->createItemTransferBuilder(2002);
+        $itemBuilder1 = $this->createItemTransferBuilder(['unitPrice' => 1001]);
+        $itemBuilder2 = $this->createItemTransferBuilder(['unitPrice' => 2002]);
 
         $quoteTransfer = (new QuoteBuilder())
             ->withAnotherBillingAddress()
-            ->withAnotherItem($itemTransferBuilder1)
-            ->withAnotherItem($itemTransferBuilder2)
+            ->withAnotherItem($itemBuilder1)
+            ->withAnotherItem($itemBuilder2)
             ->withTotals()
             ->withCustomer()
             ->withCurrency()
@@ -173,15 +173,13 @@ class ShippingAddressSaveTest extends Test
     }
 
     /**
-     * @param int|null $unitPrice
+     * @param array $seed
      *
      * @return \Generated\Shared\DataBuilder\ItemBuilder
      */
-    protected function createItemTransferBuilder($unitPrice = null): ItemBuilder
+    protected function createItemTransferBuilder(array $seed = []): ItemBuilder
     {
-        return (new ItemBuilder([
-            'unitPrice' => $unitPrice,
-        ]));
+        return new ItemBuilder($seed);
     }
 
     /**

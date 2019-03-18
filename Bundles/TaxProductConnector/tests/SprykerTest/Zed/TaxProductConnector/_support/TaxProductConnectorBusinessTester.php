@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\TaxProductConnector;
 
 use Codeception\Actor;
+use Orm\Zed\Tax\Persistence\SpyTaxRate;
 
 /**
  * Inherited Methods
@@ -28,7 +29,22 @@ class TaxProductConnectorBusinessTester extends Actor
 {
     use _generated\TaxProductConnectorBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param float $taxRate
+     *
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxRate
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    public function haveTaxRate(float $taxRate): SpyTaxRate
+    {
+
+
+        $taxRateEntity = new SpyTaxRate();
+        $taxRateEntity->setRate(13.04);
+        $taxRateEntity->setFkCountry(60);
+        $taxRateEntity->setName('Germany Standard test');
+        $taxRateEntity->save();
+
+        return $taxRateEntity;
+    }
 }
