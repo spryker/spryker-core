@@ -11,21 +11,21 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface;
 
 class SplittableOrderItemTransformer implements SplittableOrderItemTransformerInterface
 {
     /**
-     * @var \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface
      */
-    protected $service;
+    protected $utilPriceService;
 
     /**
-     * @param \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface $service
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService
      */
-    public function __construct(ProductPackagingUnitServiceInterface $service)
+    public function __construct(ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService)
     {
-        $this->service = $service;
+        $this->utilPriceService = $utilPriceService;
     }
 
     /**
@@ -59,8 +59,7 @@ class SplittableOrderItemTransformer implements SplittableOrderItemTransformerIn
         $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
         $transformedItemTransfer->setQuantity(1.0);
         $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
-        $amountPerQuantity = $this->service->round($amountPerQuantity);
-        $transformedItemTransfer->setAmount((int)$amountPerQuantity);
+        $transformedItemTransfer->setAmount($this->roundPrice($amountPerQuantity));
         $transformedProductOptions = new ArrayObject();
 
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
@@ -69,6 +68,16 @@ class SplittableOrderItemTransformer implements SplittableOrderItemTransformerIn
 
         $transformedItemTransfer->setProductOptions($transformedProductOptions);
         $transformedItemsCollection->addItem($transformedItemTransfer);
+    }
+
+    /**
+     * @param float $price
+     *
+     * @return int
+     */
+    protected function roundPrice(float $price): int
+    {
+        return $this->utilPriceService->roundPrice($price);
     }
 
     /**

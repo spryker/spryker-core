@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
-use Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheck;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheckInterface;
@@ -69,6 +68,8 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToPro
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesQuantityFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilTextServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitDependencyProvider;
 
@@ -187,7 +188,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new ProductPackagingUnitCartPreCheck(
             $this->getAvailabilityFacade(),
             $this->createProductPackagingUnitReader(),
-            $this->getProductPackagingUnitService()
+            $this->getUtilQuantityService()
         );
     }
 
@@ -198,7 +199,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingUnitCheckoutPreCheck(
             $this->getAvailabilityFacade(),
-            $this->getProductPackagingUnitService()
+            $this->getUtilQuantityService()
         );
     }
 
@@ -207,7 +208,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductPackagingUnitCartOperation(): ProductPackagingUnitCartOperationInterface
     {
-        return new ProductPackagingUnitCartOperation($this->getProductPackagingUnitService());
+        return new ProductPackagingUnitCartOperation($this->getUtilQuantityService());
     }
 
     /**
@@ -323,7 +324,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new LeadProductReservationCalculator(
             $this->getOmsFacade(),
             $this->getRepository(),
-            $this->getProductPackagingUnitService()
+            $this->getUtilQuantityService()
         );
     }
 
@@ -334,7 +335,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceChangeExpander(
             $this->createProductPackagingUnitReader(),
-            $this->getProductPackagingUnitService()
+            $this->getUtilPriceService()
         );
     }
 
@@ -351,7 +352,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductPackagingUnitGroupKeyGenerator(): ProductPackagingUnitGroupKeyGeneratorInterface
     {
-        return new ProductPackagingUnitGroupKeyGenerator($this->getProductPackagingUnitService());
+        return new ProductPackagingUnitGroupKeyGenerator($this->getUtilPriceService());
     }
 
     /**
@@ -409,7 +410,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createSplittableOrderItemTransformer(): SplittableOrderItemTransformerInterface
     {
-        return new SplittableOrderItemTransformer($this->getProductPackagingUnitService());
+        return new SplittableOrderItemTransformer($this->getUtilPriceService());
     }
 
     /**
@@ -423,10 +424,18 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface
      */
-    public function getProductPackagingUnitService(): ProductPackagingUnitServiceInterface
+    public function getUtilQuantityService(): ProductPackagingUnitToUtilQuantityServiceInterface
     {
-        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::SERVICE_PRODUCT_PACKAGING_UNIT);
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::SERVICE_UTIL_QUANTITY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface
+     */
+    public function getUtilPriceService(): ProductPackagingUnitToUtilPriceServiceInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::SERVICE_UTIL_PRICE);
     }
 }

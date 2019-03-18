@@ -8,23 +8,23 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface;
 
 class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroupKeyGeneratorInterface
 {
     protected const AMOUNT_GROUP_KEY_FORMAT = '%s_amount_%s_sales_unit_id_%s';
 
     /**
-     * @var \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface
      */
-    protected $service;
+    protected $utilPriceService;
 
     /**
-     * @param \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface $service
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService
      */
-    public function __construct(ProductPackagingUnitServiceInterface $service)
+    public function __construct(ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService)
     {
-        $this->service = $service;
+        $this->utilPriceService = $utilPriceService;
     }
 
     /**
@@ -43,8 +43,18 @@ class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroup
         return sprintf(
             static::AMOUNT_GROUP_KEY_FORMAT,
             $itemTransfer->getGroupKey(),
-            $this->service->round($amountPerQuantity),
+            $this->roundPrice($amountPerQuantity),
             $itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit()
         );
+    }
+
+    /**
+     * @param float $price
+     *
+     * @return int
+     */
+    protected function roundPrice(float $price): int
+    {
+        return $this->utilPriceService->roundPrice($price);
     }
 }

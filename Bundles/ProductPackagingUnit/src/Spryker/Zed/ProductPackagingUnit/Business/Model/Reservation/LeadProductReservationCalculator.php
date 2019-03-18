@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class LeadProductReservationCalculator implements LeadProductReservationCalculatorInterface
@@ -25,23 +25,23 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
     protected $productPackagingUnitRepository;
 
     /**
-     * @var \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface
      */
-    protected $service;
+    protected $utilQuantityService;
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface $omsFacade
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
-     * @param \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface $service
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ProductPackagingUnitToOmsFacadeInterface $omsFacade,
         ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository,
-        ProductPackagingUnitServiceInterface $service
+        ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->omsFacade = $omsFacade;
         $this->productPackagingUnitRepository = $productPackagingUnitRepository;
-        $this->service = $service;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -62,6 +62,16 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
 
         $reservedAmount = $sumReservedLeadProductAmount + $sumReservedLeadProductQuantity;
 
-        return $this->service->round($reservedAmount);
+        return $this->roundQuantity($reservedAmount);
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 }

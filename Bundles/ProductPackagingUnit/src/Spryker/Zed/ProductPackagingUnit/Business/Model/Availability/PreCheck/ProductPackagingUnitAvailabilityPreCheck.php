@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface;
 use Traversable;
 
 abstract class ProductPackagingUnitAvailabilityPreCheck
@@ -21,20 +21,20 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
     protected $availabilityFacade;
 
     /**
-     * @var \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface
      */
-    protected $service;
+    protected $utilQuantityService;
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
-     * @param \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface $service
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade,
-        ProductPackagingUnitServiceInterface $service
+        ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->availabilityFacade = $availabilityFacade;
-        $this->service = $service;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -81,7 +81,17 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
             }
         }
 
-        return $this->service->round($quantity);
+        return $this->roundQuantity($quantity);
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 
     /**

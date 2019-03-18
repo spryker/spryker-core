@@ -9,21 +9,21 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Cart;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface;
 
 class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOperationInterface
 {
     /**
-     * @var \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface
      */
-    protected $service;
+    protected $utilQuantityService;
 
     /**
-     * @param \Spryker\Service\ProductPackagingUnit\ProductPackagingUnitServiceInterface $service
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
      */
-    public function __construct(ProductPackagingUnitServiceInterface $service)
+    public function __construct(ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService)
     {
-        $this->service = $service;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -38,7 +38,7 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
             if ($this->getItemIdentifier($currentItemTransfer) === $this->getItemIdentifier($itemTransfer)) {
                 $newQuantity = $currentItemTransfer->getQuantity() + $itemTransfer->getQuantity();
 
-                $currentItemTransfer->setQuantity($this->service->round($newQuantity));
+                $currentItemTransfer->setQuantity($this->roundQuantity($newQuantity));
 
                 $currentItemTransfer->setAmount(
                     $currentItemTransfer->getAmount() + $itemTransfer->getAmount()
@@ -54,6 +54,16 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
     }
 
     /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -64,7 +74,7 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
         foreach ($quoteTransfer->getItems() as $itemIndex => $currentItemTransfer) {
             if ($this->getItemIdentifier($currentItemTransfer) === $this->getItemIdentifier($itemTransfer)) {
                 $newQuantity = $currentItemTransfer->getQuantity() - $itemTransfer->getQuantity();
-                $newQuantity = $this->service->round($newQuantity);
+                $newQuantity = $this->roundQuantity($newQuantity);
                 $newAmount = $currentItemTransfer->getAmount() - $itemTransfer->getAmount();
 
                 if ($newQuantity <= 0 || $newAmount < 1) {
