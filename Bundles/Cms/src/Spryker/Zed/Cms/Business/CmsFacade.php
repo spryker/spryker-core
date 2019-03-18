@@ -73,6 +73,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     /**
      * @api
      *
+     * @deprecated since version 7.0.1 should be removed in next version.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return \Generated\Shared\Transfer\PageTransfer
