@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
+use Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface;
 
 class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionValidatorInterface
 {
@@ -30,11 +31,20 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     protected $productQuantityReader;
 
     /**
-     * @param \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface $productQuantityReader
+     * @var \Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface
      */
-    public function __construct(ProductQuantityReaderInterface $productQuantityReader)
-    {
+    protected $utilQuantityService;
+
+    /**
+     * @param \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface $productQuantityReader
+     * @param \Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface $utilQuantityService
+     */
+    public function __construct(
+        ProductQuantityReaderInterface $productQuantityReader,
+        ProductQuantityToUtilQuantityServiceInterface $utilQuantityService
+    ) {
         $this->productQuantityReader = $productQuantityReader;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -102,23 +112,23 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
      * @return void
      */
-    protected function validateItem(string $sku, int $quantity, ProductQuantityTransfer $productQuantityTransfer, CartPreCheckResponseTransfer $responseTransfer): void
+    protected function validateItem(string $sku, float $quantity, ProductQuantityTransfer $productQuantityTransfer, CartPreCheckResponseTransfer $responseTransfer): void
     {
         $min = $productQuantityTransfer->getQuantityMin();
         $max = $productQuantityTransfer->getQuantityMax();
         $interval = $productQuantityTransfer->getQuantityInterval();
 
-        if ($quantity !== 0 && $quantity < $min) {
+        if ($quantity != 0 && $quantity < $min) {
             $this->addViolation(static::ERROR_QUANTITY_MIN_NOT_FULFILLED, $sku, $min, $quantity, $responseTransfer);
         }
 
-        if ($quantity !== 0 && ($quantity - $min) % $interval !== 0) {
+        if ($quantity != 0 && ($quantity - $min) % $interval !== 0) {
             $this->addViolation(static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED, $sku, $interval, $quantity, $responseTransfer);
         }
 
@@ -143,10 +153,21 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
 
             if (isset($quoteQuantityMapByGroupKey[$productGroupKey])) {
                 $cartQuantityMap[$productGroupKey] += $quoteQuantityMapByGroupKey[$productGroupKey];
+                $cartQuantityMap[$productGroupKey] = $this->roundQuantity($cartQuantityMap[$productGroupKey]);
             }
         }
 
         return $cartQuantityMap;
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 
     /**
@@ -165,6 +186,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
 
             if (isset($quoteQuantityMapByGroupKey[$productGroupKey])) {
                 $cartQuantityMap[$productGroupKey] += $quoteQuantityMapByGroupKey[$productGroupKey];
+                $cartQuantityMap[$productGroupKey] = $this->roundQuantity($cartQuantityMap[$productGroupKey]);
             }
         }
 

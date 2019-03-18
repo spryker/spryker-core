@@ -9,13 +9,14 @@ namespace Spryker\Zed\ProductQuantity;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceBridge;
 
 /**
  * @method \Spryker\Zed\ProductQuantity\ProductQuantityConfig getConfig()
  */
 class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SERVICE_PRODUCT_QUANTITY = 'SERVICE_PRODUCT_QUANTITY';
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -25,6 +26,7 @@ class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addUtilQuantityService($container);
 
         return $container;
     }
@@ -34,10 +36,12 @@ class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductQuantityService(Container $container): Container
+    protected function addUtilQuantityService(Container $container): Container
     {
-        $container[static::SERVICE_PRODUCT_QUANTITY] = function (Container $container) {
-            return $container->getLocator()->productQuantity()->service();
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new ProductQuantityToUtilQuantityServiceBridge(
+                $container->getLocator()->utilQuantity()->service()
+            );
         };
 
         return $container;
