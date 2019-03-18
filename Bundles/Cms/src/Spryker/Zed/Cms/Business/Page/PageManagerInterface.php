@@ -15,7 +15,7 @@ use Orm\Zed\Cms\Persistence\SpyCmsPage;
 interface PageManagerInterface
 {
     /**
-     * @deprecated since version 7.0.1 will be removed in the next major release.
+     * @deprecated since version 7.0.1, will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
