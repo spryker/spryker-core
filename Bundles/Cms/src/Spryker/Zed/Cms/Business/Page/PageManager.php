@@ -68,7 +68,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @deprecated since version 7.0.1 should be removed in the next version.
+     * @deprecated since version 7.0.1 will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
@@ -86,7 +86,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @deprecated since version 7.0.1 should be removed in the next version.
+     * @deprecated since version 7.0.1 will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
@@ -110,7 +110,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @deprecated since version 7.0.1 should be removed in the next version.
+     * @deprecated since version 7.0.1 will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
@@ -133,7 +133,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @deprecated since version 7.0.1 should be removed in the next version.
+     * @deprecated since version 7.0.1 will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
@@ -155,7 +155,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @deprecated since version 7.0.1 should be removed in the next version.
+     * @deprecated since version 7.0.1 will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
@@ -177,6 +177,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated since version 7.0.1 will be removed in the next major release.
+     *
      * @param int $idTemplate
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
@@ -205,7 +207,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @deprecated since version 7.0.1 should be removed in the next version.
+     * @deprecated since version 7.0.1 will be removed in the next major release.
      *
      * @param int $idPage
      *
@@ -225,7 +227,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @deprecated since version 7.0.1 should be removed in the next version.
+     * @deprecated since version 7.0.1 will be removed in the next major release.
      *
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
      *
@@ -257,7 +259,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @deprecated since version 7.0.1 should be removed in the next version.
+     * @deprecated since version 7.0.1 will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
@@ -278,7 +280,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @deprecated since version 7.0.1 should be removed in the next version.
+     * @deprecated since version 7.0.1 will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
@@ -348,7 +350,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @deprecated since version 7.0.1 should be removed in the next version.
+     * @deprecated since version 7.0.1 will be removed in the next major release.
      *
      * @param int $idLocale
      *
@@ -373,7 +375,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @deprecated since version 7.0.1 should be removed in the next version.
+     * @deprecated since version 7.0.1 will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[]|\ArrayObject $cmsPageLocalizedAttributesTransfers
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
@@ -393,7 +395,7 @@ class PageManager implements PageManagerInterface
     }
 
     /**
-     * @deprecated since version 7.0.1 should be removed in the next version.
+     * @deprecated since version 7.0.1 will be removed in the next major release.
      *
      * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[]|\ArrayObject $cmsPageLocalizedAttributesTransfers
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
