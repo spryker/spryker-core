@@ -155,6 +155,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated since version 7.0.1 should be removed in the next version.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return void
@@ -203,6 +205,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated since version 7.0.1 should be removed in the next version.
+     *
      * @param int $idPage
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
@@ -221,6 +225,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated since version 7.0.1 should be removed in the next version.
+     *
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
      *
      * @return \Generated\Shared\Transfer\PageTransfer
@@ -251,6 +257,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated since version 7.0.1 should be removed in the next version.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
@@ -270,6 +278,8 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @deprecated since version 7.0.1 should be removed in the next version.
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
