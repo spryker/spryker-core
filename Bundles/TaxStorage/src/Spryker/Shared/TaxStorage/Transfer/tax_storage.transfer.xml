@@ -9,6 +9,7 @@
         <property name="name" type="string"/>
         <property name="taxRates" type="TaxRateStorage[]" singular="taxRate"/>
     </transfer>
+
     <transfer name="TaxRateStorage">
         <property name="name" type="string"/>
         <property name="country" type="string"/>
