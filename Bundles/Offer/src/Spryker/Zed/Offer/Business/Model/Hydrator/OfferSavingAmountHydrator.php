@@ -9,6 +9,7 @@ namespace Spryker\Zed\Offer\Business\Model\Hydrator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
+use Spryker\Zed\Offer\Dependency\Service\OfferToUtilPriceServiceInterface;
 use Spryker\Zed\Offer\OfferConfig;
 
 class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
@@ -19,12 +20,20 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
     protected $offerConfig;
 
     /**
+     * @var \Spryker\Zed\Offer\Dependency\Service\OfferToUtilPriceServiceInterface
+     */
+    protected $utilPriceService;
+
+    /**
      * @param \Spryker\Zed\Offer\OfferConfig $offerConfig
+     * @param \Spryker\Zed\Offer\Dependency\Service\OfferToUtilPriceServiceInterface $utilPriceService
      */
     public function __construct(
-        OfferConfig $offerConfig
+        OfferConfig $offerConfig,
+        OfferToUtilPriceServiceInterface $utilPriceService
     ) {
         $this->offerConfig = $offerConfig;
+        $this->utilPriceService = $utilPriceService;
     }
 
     /**
@@ -39,14 +48,25 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $savingAmount = $this->getOriginUnitPrice($itemTransfer, $quoteTransfer->getPriceMode());
             $savingAmount -= $this->getUnitPrice($itemTransfer, $quoteTransfer->getPriceMode());
-            $savingAmount += (int)($this->getUnitPrice($itemTransfer, $quoteTransfer->getPriceMode()) / 100 * $itemTransfer->getOfferDiscount());
+            $savingAmount += ($this->getUnitPrice($itemTransfer, $quoteTransfer->getPriceMode()) / 100 * $itemTransfer->getOfferDiscount());
             $savingAmount -= $itemTransfer->getOfferFee();
             $savingAmount *= $itemTransfer->getQuantity();
+            $savingAmount = $this->roundPrice($savingAmount);
 
             $itemTransfer->setSavingAmount($savingAmount);
         }
 
         return $offerTransfer;
+    }
+
+    /**
+     * @param float $price
+     *
+     * @return int
+     */
+    protected function roundPrice(float $price): int
+    {
+        return $this->utilPriceService->roundPrice($price);
     }
 
     /**
