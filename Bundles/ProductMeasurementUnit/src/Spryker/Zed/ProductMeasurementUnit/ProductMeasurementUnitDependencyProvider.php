@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeBridge;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeBridge;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceBridge;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilQuantityServiceBridge;
 
 /**
  * @method \Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitConfig getConfig()
@@ -20,6 +21,7 @@ use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnit
 class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION = 'SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION';
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     public const FACADE_EVENT = 'FACADE_EVENT';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
@@ -39,6 +41,7 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addEventFacade($container);
         $container = $this->addSalesOrderItemPropelQuery($container);
         $container = $this->addGlossaryFacade($container);
+        $container = $this->addUtilQuantityService($container);
 
         return $container;
     }
@@ -108,6 +111,22 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
     {
         $container[self::FACADE_GLOSSARY] = function (Container $container) {
             return new ProductMeasurementUnitToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilQuantityService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new ProductMeasurementUnitToUtilQuantityServiceBridge(
+                $container->getLocator()->utilQuantity()->service()
+            );
         };
 
         return $container;

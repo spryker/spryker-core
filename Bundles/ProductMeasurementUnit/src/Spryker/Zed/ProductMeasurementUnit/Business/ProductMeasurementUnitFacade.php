@@ -45,9 +45,9 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return int
+     * @return float
      */
-    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): int
+    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): float
     {
         return $this->getFactory()
             ->createProductMeasurementSalesUnitValue()

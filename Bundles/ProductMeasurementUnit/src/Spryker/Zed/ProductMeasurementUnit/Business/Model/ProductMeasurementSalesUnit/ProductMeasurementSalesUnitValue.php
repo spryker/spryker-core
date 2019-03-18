@@ -9,17 +9,31 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSa
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilQuantityServiceInterface;
 
 class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitValueInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
+     * @param \Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilQuantityServiceInterface $utilQuantityService
+     */
+    public function __construct(ProductMeasurementUnitToUtilQuantityServiceInterface $utilQuantityService)
+    {
+        $this->utilQuantityService = $utilQuantityService;
+    }
+
     /**
      * @see ProductMeasurementSalesUnitValue::calculateNormalizedValue()
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return int
+     * @return float
      */
-    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): int
+    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): float
     {
         $itemTransfer
             ->requireQuantitySalesUnit()
@@ -40,25 +54,9 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
      *
      * @example
      * 8 quantity is ordered (availability value),
-     * to be displayed sales unit is KG with a unit precision of 100 (exchanged value can be displayed up to 2 decimals),
+     * to be displayed sales unit is KG with a unit precision of 100 (exchanged value can be displayed up by utilQuantityService decimals),
      * and 2 KG represents 1 quantity (unit to availability conversion ratio is 0.5).
-     * The retrieved normalized unit value is 1600 (16.00 KG when displayed).
-     *
-     * @param float $availabilityValue
-     * @param float $unitToAvailabilityConversion
-     * @param int $unitPrecision
-     *
-     * @return int
-     */
-    protected function calculateNormalizedValue(float $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): int
-    {
-        return (int)round(
-            $this->calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision)
-        );
-    }
-
-    /**
-     * @see ProductMeasurementSalesUnitValue::calculateNormalizedValue()
+     * The retrieved normalized unit value is 16.00 (16.00 KG when displayed).
      *
      * @param float $availabilityValue
      * @param float $unitToAvailabilityConversion
@@ -66,9 +64,14 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
      *
      * @return float
      */
-    protected function calculateFloatNormalizedValue(float $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): float
-    {
-        return $availabilityValue / $unitToAvailabilityConversion * $unitPrecision;
+    protected function calculateNormalizedValue(
+        float $availabilityValue,
+        float $unitToAvailabilityConversion,
+        int $unitPrecision
+    ): float {
+        $calculatedNormalizedValue = $availabilityValue / $unitToAvailabilityConversion * $unitPrecision;
+
+        return $this->roundQuantity($calculatedNormalizedValue);
     }
 
     /**
@@ -89,5 +92,15 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param float $sumQuantities
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $sumQuantities): float
+    {
+        return $this->utilQuantityService->roundQuantity($sumQuantities);
     }
 }
