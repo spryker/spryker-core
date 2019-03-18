@@ -36,8 +36,6 @@ interface CmsFacadeInterface
     /**
      * @api
      *
-     * @deprecated since version 7.0.1, use `createPage()` or `updatePage()` instead.
-     *
      * @param string $path
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingTemplateException
@@ -57,6 +55,8 @@ interface CmsFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated since version 7.0.1, use `createPage()` or `updatePage()` instead.
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      *
