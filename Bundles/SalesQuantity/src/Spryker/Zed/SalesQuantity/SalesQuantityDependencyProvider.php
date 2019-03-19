@@ -10,6 +10,7 @@ namespace Spryker\Zed\SalesQuantity;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeBridge;
+use Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilPriceServiceBridge;
 
 /**
  * @method \Spryker\Zed\SalesQuantity\SalesQuantityConfig getConfig()
@@ -17,7 +18,7 @@ use Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeBrid
 class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    public const SERVICE_SALES_QUANTITY = 'SERVICE_SALESQ_QUANTITY';
+    public const SERVICE_UTIL_PRICE = 'SERVICE_UTIL_PRICE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,7 +28,7 @@ class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addProductFacade($container);
-        $container = $this->addSalesQuantityService($container);
+        $container = $this->addUtilPriceService($container);
 
         return $container;
     }
@@ -51,10 +52,12 @@ class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesQuantityService(Container $container): Container
+    protected function addUtilPriceService(Container $container): Container
     {
-        $container[static::SERVICE_SALES_QUANTITY] = function (Container $container) {
-            return $container->getLocator()->salesQuantity()->service();
+        $container[static::SERVICE_UTIL_PRICE] = function (Container $container) {
+            return new SalesQuantityToUtilPriceServiceBridge(
+                $container->getLocator()->utilPrice()->service()
+            );
         };
 
         return $container;

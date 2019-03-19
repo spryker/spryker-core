@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesQuantity\Business;
 
-use Spryker\Service\SalesQuantity\SalesQuantityServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesQuantity\Business\Cart\Expander\ItemExpander;
 use Spryker\Zed\SalesQuantity\Business\Discount\DiscountableItem\DiscountableItemTransformer;
@@ -15,6 +14,7 @@ use Spryker\Zed\SalesQuantity\Business\Discount\DiscountableItem\DiscountableIte
 use Spryker\Zed\SalesQuantity\Business\Order\Item\ItemQuantityValidator;
 use Spryker\Zed\SalesQuantity\Business\Order\Item\ItemTransformer;
 use Spryker\Zed\SalesQuantity\Business\Order\Item\ItemTransformerInterface;
+use Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilPriceServiceInterface;
 use Spryker\Zed\SalesQuantity\SalesQuantityDependencyProvider;
 
 /**
@@ -53,7 +53,7 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountableItemTransformer(): DiscountableItemTransformerInterface
     {
-        return new DiscountableItemTransformer($this->getSalesQuantityService());
+        return new DiscountableItemTransformer($this->getUtilPriceService());
     }
 
     /**
@@ -61,14 +61,14 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
      */
     public function createItemQuantityValidator()
     {
-        return new ItemQuantityValidator($this->getConfig(), $this->getSalesQuantityService());
+        return new ItemQuantityValidator($this->getConfig());
     }
 
     /**
-     * @return \Spryker\Service\SalesQuantity\SalesQuantityServiceInterface
+     * @return \Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilPriceServiceInterface
      */
-    public function getSalesQuantityService(): SalesQuantityServiceInterface
+    public function getUtilPriceService(): SalesQuantityToUtilPriceServiceInterface
     {
-        return $this->getProvidedDependency(SalesQuantityDependencyProvider::SERVICE_SALES_QUANTITY);
+        return $this->getProvidedDependency(SalesQuantityDependencyProvider::SERVICE_UTIL_PRICE);
     }
 }

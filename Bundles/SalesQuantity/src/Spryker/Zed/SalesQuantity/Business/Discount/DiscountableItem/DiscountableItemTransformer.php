@@ -10,21 +10,21 @@ namespace Spryker\Zed\SalesQuantity\Business\Discount\DiscountableItem;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Service\SalesQuantity\SalesQuantityServiceInterface;
+use Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilPriceServiceInterface;
 
 class DiscountableItemTransformer implements DiscountableItemTransformerInterface
 {
     /**
-     * @var \Spryker\Service\SalesQuantity\SalesQuantityServiceInterface
+     * @var \Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilPriceServiceInterface
      */
-    protected $service;
+    protected $utilPriceService;
 
     /**
-     * @param \Spryker\Service\SalesQuantity\SalesQuantityServiceInterface $service
+     * @param \Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilPriceServiceInterface $utilPriceService
      */
-    public function __construct(SalesQuantityServiceInterface $service)
+    public function __construct(SalesQuantityToUtilPriceServiceInterface $utilPriceService)
     {
-        $this->service = $service;
+        $this->utilPriceService = $utilPriceService;
     }
 
     /**
@@ -46,13 +46,13 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() * $quantity / $totalAmount;
 
         $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $roundingError;
-        $itemDiscountAmountRounded = $this->service->rountToInt($itemDiscountAmount);
+        $itemDiscountAmountRounded = $this->roundPrice($itemDiscountAmount);
         $roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
 
         $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
         $distributedDiscountTransfer->setIdDiscount($discountTransfer->getIdDiscount());
         $distributedDiscountTransfer->setSumAmount($itemDiscountAmountRounded);
-        $unitAmount = $this->service->rountToInt($itemDiscountAmountRounded / $quantity);
+        $unitAmount = $this->roundPrice($itemDiscountAmountRounded / $quantity);
         $distributedDiscountTransfer->setUnitAmount($unitAmount);
         $distributedDiscountTransfer->setQuantity($quantity);
 
@@ -63,6 +63,16 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
             ->setDiscountableItem($discountableItemTransfer);
 
         return $discountableItemTransformerTransfer;
+    }
+
+    /**
+     * @param float $price
+     *
+     * @return int
+     */
+    protected function roundPrice(float $price): int
+    {
+        return $this->utilPriceService->roundPrice($price);
     }
 
     /**
