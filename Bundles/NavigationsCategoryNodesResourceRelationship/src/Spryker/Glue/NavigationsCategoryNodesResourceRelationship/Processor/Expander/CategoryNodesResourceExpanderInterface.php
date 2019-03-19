@@ -17,5 +17,5 @@ interface CategoryNodesResourceExpanderInterface
      *
      * @return void
      */
-    public function expandResourceWithCategoryNode(array $resources, RestRequestInterface $restRequest): void;
+    public function addResourceRelationshipsByCategoryNode(array $resources, RestRequestInterface $restRequest): void;
 }

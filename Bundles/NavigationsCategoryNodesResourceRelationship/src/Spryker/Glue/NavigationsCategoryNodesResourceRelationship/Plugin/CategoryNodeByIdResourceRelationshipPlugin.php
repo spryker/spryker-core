@@ -33,7 +33,7 @@ class CategoryNodeByIdResourceRelationshipPlugin extends AbstractPlugin implemen
     {
         $this->getFactory()
             ->createCategoryNodesResourceExpander()
-            ->expandResourceWithCategoryNode($resources, $restRequest);
+            ->addResourceRelationshipsByCategoryNode($resources, $restRequest);
     }
 
     /**
