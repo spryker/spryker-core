@@ -9,6 +9,7 @@ namespace Spryker\Glue\CartItemsProductsRelationship\Processor\Expander;
 
 use Spryker\Glue\CartItemsProductsRelationship\Dependency\RestResource\CartItemsProductsRelationToProductsRestApiInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class CartItemsProductsRelationshipExpander implements CartItemsProductsRelationshipExpanderInterface
 {
@@ -36,18 +37,33 @@ class CartItemsProductsRelationshipExpander implements CartItemsProductsRelation
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            if ($resource->getAttributes() === null || !$resource->getAttributes()->offsetExists(static::KEY_SKU)) {
+            $sku = $this->findSku($resource->getAttributes());
+            if (!$sku) {
                 continue;
             }
 
-            $productResource = $this->productsResource->findProductConcreteBySku(
-                $resource->getAttributes()->offsetGet(static::KEY_SKU),
-                $restRequest
-            );
+            $productResource = $this->productsResource->findProductConcreteBySku($sku, $restRequest);
 
             if ($productResource !== null) {
                 $resource->addRelationship($productResource);
             }
         }
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $attributes
+     *
+     * @return string|null
+     */
+    protected function findSku(?AbstractTransfer $attributes): ?string
+    {
+        if ($attributes
+            && $attributes->offsetExists(static::KEY_SKU)
+            && $attributes->offsetGet(static::KEY_SKU)
+        ) {
+            return $attributes->offsetGet(static::KEY_SKU);
+        }
+
+        return null;
     }
 }
