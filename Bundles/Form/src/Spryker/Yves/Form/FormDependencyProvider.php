@@ -7,6 +7,8 @@
 
 namespace Spryker\Yves\Form;
 
+use Spryker\Shared\Form\Plugin\FormExtension\HttpFoundationFormPlugin;
+use Spryker\Shared\Validator\Plugin\FormExtension\ValidatorFormPlugin;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
@@ -48,6 +50,9 @@ class FormDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getFormPlugins(): array
     {
-        return [];
+        return [
+            new ValidatorFormPlugin(),
+            new HttpFoundationFormPlugin(),
+        ];
     }
 }
