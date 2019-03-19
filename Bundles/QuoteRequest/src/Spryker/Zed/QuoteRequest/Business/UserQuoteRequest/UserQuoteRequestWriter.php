@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
+namespace Spryker\Zed\QuoteRequest\Business\UserQuoteRequest;
 
 use DateTime;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -17,12 +17,13 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 use Spryker\Zed\QuoteRequest\QuoteRequestConfig;
 
-class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
+class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
 {
     use TransactionTrait;
 
@@ -82,7 +83,7 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function createQuoteRequestByUser(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
         $quoteRequestTransfer->requireCompanyUser()
             ->getCompanyUser()
@@ -114,7 +115,7 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function cancelQuoteRequestByUser(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 

@@ -86,6 +86,7 @@ class QuoteRequestFacadeTest extends Unit
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertEquals($quoteRequestTransfer->getCompanyUser(), $storedQuoteRequestTransfer->getCompanyUser());
+        $this->assertEquals(SharedQuoteRequestConfig::STATUS_WAITING, $storedQuoteRequestTransfer->getStatus());
         $this->assertEquals(
             $quoteRequestTransfer->getLatestVersion()->getQuote(),
             $storedQuoteRequestTransfer->getLatestVersion()->getQuote()
@@ -424,7 +425,7 @@ class QuoteRequestFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCancelQuoteRequestByUserChangesQuoteRequestStatusToCanceled(): void
+    public function testCancelUserQuoteRequestChangesQuoteRequestStatusToCanceled(): void
     {
         // Arrange
         $quoteRequestTransfer = $this->tester->createQuoteRequest(
@@ -437,7 +438,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->cancelQuoteRequestByUser($quoteRequestCriteriaTransfer);
+            ->cancelUserQuoteRequest($quoteRequestCriteriaTransfer);
 
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
@@ -445,5 +446,24 @@ class QuoteRequestFacadeTest extends Unit
             SharedQuoteRequestConfig::STATUS_CANCELED,
             $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateUserQuoteRequestCreatesUserQuoteRequest(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = (new QuoteRequestBuilder())->build()
+            ->setCompanyUser($this->companyUserTransfer);
+
+        // Act
+        $quoteRequestResponseTransfer = $this->tester->getFacade()->createUserQuoteRequest($quoteRequestTransfer);
+        $storedQuoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
+
+        // Assert
+        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
+        $this->assertEquals($quoteRequestTransfer->getCompanyUser(), $storedQuoteRequestTransfer->getCompanyUser());
+        $this->assertEquals(SharedQuoteRequestConfig::STATUS_IN_PROGRESS, $storedQuoteRequestTransfer->getStatus());
     }
 }

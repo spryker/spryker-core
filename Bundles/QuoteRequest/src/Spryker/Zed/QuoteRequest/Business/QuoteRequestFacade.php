@@ -50,11 +50,11 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function createQuoteRequestByUser(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    public function createUserQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestUserWriter()
-            ->createQuoteRequestByUser($quoteRequestTransfer);
+            ->createUserQuoteRequestWriter()
+            ->createQuoteRequest($quoteRequestTransfer);
     }
 
     /**
@@ -82,11 +82,11 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function cancelQuoteRequestByUser(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function cancelUserQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestUserWriter()
-            ->cancelQuoteRequestByUser($quoteRequestCriteriaTransfer);
+            ->createUserQuoteRequestWriter()
+            ->cancelQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -117,7 +117,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestUserWriter()
+            ->createUserQuoteRequestWriter()
             ->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
     }
 
@@ -133,7 +133,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestUserWriter()
+            ->createUserQuoteRequestWriter()
             ->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
     }
 

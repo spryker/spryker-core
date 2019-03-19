@@ -12,10 +12,10 @@ use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestCheckerInterface;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGenerator;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestUserWriter;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestUserWriterInterface;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriterInterface;
+use Spryker\Zed\QuoteRequest\Business\UserQuoteRequest\UserQuoteRequestWriter;
+use Spryker\Zed\QuoteRequest\Business\UserQuoteRequest\UserQuoteRequestWriterInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberInterface;
@@ -44,11 +44,11 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestUserWriterInterface
+     * @return \Spryker\Zed\QuoteRequest\Business\UserQuoteRequest\UserQuoteRequestWriterInterface
      */
-    public function createQuoteRequestUserWriter(): QuoteRequestUserWriterInterface
+    public function createUserQuoteRequestWriter(): UserQuoteRequestWriterInterface
     {
-        return new QuoteRequestUserWriter(
+        return new UserQuoteRequestWriter(
             $this->getConfig(),
             $this->getEntityManager(),
             $this->getRepository(),

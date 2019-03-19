@@ -34,7 +34,7 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
      */
     public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->createQuoteRequestByUser($quoteRequestTransfer);
+        return $this->quoteRequestFacade->createUserQuoteRequest($quoteRequestTransfer);
     }
 
     /**
@@ -44,7 +44,7 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
      */
     public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->cancelQuoteRequestByUser($quoteRequestCriteriaTransfer);
+        return $this->quoteRequestFacade->cancelUserQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
     /**

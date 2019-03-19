@@ -26,6 +26,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
 {
     use TransactionTrait;
 
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND = 'quote_request.validation.error.company_user_not_found';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
@@ -143,7 +144,17 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      */
     protected function executeCreateQuoteRequestTransaction(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestTransfer = $this->createQuoteRequestTransfer($quoteRequestTransfer);
+        $quoteRequestTransfer->requireCompanyUser()
+            ->getCompanyUser()
+            ->requireIdCompanyUser();
+
+        $customerReference = $this->findCustomerReference($quoteRequestTransfer->getCompanyUser());
+
+        if (!$customerReference) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND);
+        }
+
+        $quoteRequestTransfer = $this->createQuoteRequestTransfer($quoteRequestTransfer, $customerReference);
 
         $quoteRequestTransfer->requireLatestVersion()
             ->getLatestVersion()
@@ -180,17 +191,12 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param string $customerReference
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    protected function createQuoteRequestTransfer(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
+    protected function createQuoteRequestTransfer(QuoteRequestTransfer $quoteRequestTransfer, string $customerReference): QuoteRequestTransfer
     {
-        $quoteRequestTransfer->requireCompanyUser()
-            ->getCompanyUser()
-            ->requireIdCompanyUser();
-
-        $customerReference = $this->getCustomerReference($quoteRequestTransfer->getCompanyUser());
-
         $quoteRequestTransfer->setStatus($this->quoteRequestConfig->getInitialStatus());
         $quoteRequestTransfer->setQuoteRequestReference(
             $this->quoteRequestReferenceGenerator->generateQuoteRequestReference($quoteRequestTransfer, $customerReference)
@@ -262,9 +268,9 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return string
+     * @return string|null
      */
-    protected function getCustomerReference(CompanyUserTransfer $companyUserTransfer): string
+    protected function findCustomerReference(CompanyUserTransfer $companyUserTransfer): ?string
     {
         $customerReferences = $this->companyUserFacade
             ->getCustomerReferencesByCompanyUserIds([$companyUserTransfer->getIdCompanyUser()]);
