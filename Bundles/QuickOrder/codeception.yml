@@ -1,30 +1,19 @@
-namespace: SprykerTest
-
-include:
-    - tests/SprykerTest/Service/QuickOrder
-
+namespace: QuickOrder
+actor: Tester
 paths:
-    tests: tests
-    support: .
-    log: tests/_output
-    data: tests/_data
-    envs: tests/_envs
-
+  tests: tests
+  log: tests/_output
+  data: tests/_data
+  support: tests/_support
+  envs: tests/_envs
 settings:
-    bootstrap: _bootstrap.php
-    suite_class: \PHPUnit_Framework_TestSuite
-    colors: true
-    memory_limit: 1024M
-    log: true
-
+  bootstrap: _bootstrap.php
+  suite_class: \PHPUnit\Framework\TestSuite
+  colors: true
+  memory_limit: 1024M
+  log: true
 coverage:
-    enabled: true
-    whitelist: { include: ['src/*'] }
-
-extensions:
-    enabled:
-        - Codeception\Extension\Phantoman
-
-    config:
-        Codeception\Extension\Phantoman:
-            suites: ['Presentation']
+  enabled: true
+  whitelist:
+    include:
+      - 'src/*.php'
