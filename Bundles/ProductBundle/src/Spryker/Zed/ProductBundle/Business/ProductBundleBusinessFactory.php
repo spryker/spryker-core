@@ -236,7 +236,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createChangeRequestExpander(): ChangeRequestExpanderInterface
     {
-        return new ChangeRequestExpander();
+        return new ChangeRequestExpander($this->getUtilQuantityService());
     }
 
     /**

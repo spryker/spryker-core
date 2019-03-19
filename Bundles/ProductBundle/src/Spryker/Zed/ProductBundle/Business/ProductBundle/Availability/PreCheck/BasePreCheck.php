@@ -129,8 +129,8 @@ class BasePreCheck
         $itemQuantity = 0.0
     ) {
         $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($items, $sku);
-        $currentItemQuantity = $this->roundQuantity($currentItemQuantity);
         $currentItemQuantity += $itemQuantity;
+        $currentItemQuantity = $this->roundQuantity($currentItemQuantity);
 
         return $this->availabilityFacade->isProductSellableForStore($sku, $currentItemQuantity, $storeTransfer);
     }
@@ -152,7 +152,7 @@ class BasePreCheck
             $quantity += $itemTransfer->getQuantity();
         }
 
-        return $quantity;
+        return $this->roundQuantity($quantity);
     }
 
     /**
