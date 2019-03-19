@@ -101,7 +101,8 @@ class QuoteFactory extends AbstractFactory
             $this->createSession(),
             $this->createQuoteLockStatusValidator(),
             $this->createQuoteEditStatusValidator(),
-            $this->createQuoteLocker()
+            $this->createQuoteLocker(),
+            $this->getDatabaseStrategyAvailabilityCheckPlugins()
         );
     }
 
@@ -155,6 +156,14 @@ class QuoteFactory extends AbstractFactory
     protected function getQuoteTransferExpanderPlugins()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::QUOTE_TRANSFER_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyAvailabilityCheckPluginInterface[]
+     */
+    public function getDatabaseStrategyAvailabilityCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_DATABASE_STRATEGY_AVAILABILITY_CHECK);
     }
 
     /**

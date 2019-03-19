@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\AgentQuoteRequest\Zed\AgentQuoteRequestStubInterface;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -74,6 +75,38 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
     public function getQuoteRequestOverviewCollection(QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer): QuoteRequestOverviewCollectionTransfer
     {
         return $this->getZedStub()->getQuoteRequestOverviewCollection($quoteRequestOverviewFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $quoteRequestReference
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestReader()
+            ->findQuoteRequestByReference($quoteRequestReference);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function convertQuoteRequestToQuoteInProgress(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestConverter()
+            ->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer);
     }
 
     /**

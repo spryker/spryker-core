@@ -18,8 +18,8 @@ use Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequ
 
 class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
 {
-    protected const ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
-    protected const ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
     /**
      * @var \Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestInterface
@@ -55,11 +55,11 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
         $quoteRequestTransfer = $this->findQuoteRequestByReference($quoteRequestCriteriaTransfer->getQuoteRequestReference());
 
         if (!$quoteRequestTransfer) {
-            return $this->getErrorResponse(static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS);
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
         }
 
         if (!$this->isQuoteRequestCancelable($quoteRequestTransfer)) {
-            return $this->getErrorResponse(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
         }
 
         $quoteRequestTransfer->setStatus(SharedAgentQuoteRequestConfig::STATUS_CANCELED);
@@ -79,11 +79,11 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
         $quoteRequestTransfer = $this->findQuoteRequestByReference($quoteRequestCriteriaTransfer->getQuoteRequestReference());
 
         if (!$quoteRequestTransfer) {
-            return $this->getErrorResponse(static::ERROR_MESSAGE_QUOTE_REQUEST_NOT_EXISTS);
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
         }
 
         if (!$this->isQuoteRequestCanStartEditable($quoteRequestTransfer)) {
-            return $this->getErrorResponse(static::ERROR_MESSAGE_QUOTE_REQUEST_WRONG_STATUS);
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
         }
 
         $quoteRequestTransfer->requireLatestVersion()
