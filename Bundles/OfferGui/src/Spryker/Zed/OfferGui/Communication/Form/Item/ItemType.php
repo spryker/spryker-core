@@ -42,7 +42,6 @@ class ItemType extends AbstractType
 
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
-    protected const PATTERN_NUMBER = '/^([0-9]*[.])?[0-9]+$/';
     protected const VALIDATION_MESSAGE_QUANTITY = 'This field should contain a valid number.';
 
     /**
