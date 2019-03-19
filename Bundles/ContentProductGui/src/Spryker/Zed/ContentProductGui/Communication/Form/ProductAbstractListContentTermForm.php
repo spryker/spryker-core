@@ -20,8 +20,8 @@ use Symfony\Component\Validator\Constraints\Required;
 
 class ProductAbstractListContentTermForm extends AbstractType
 {
-    public const FIELD_SKUS = 'skus';
-    public const PLACEHOLDER_SKU = 'sku';
+    public const FIELD_ID_ABSTRACT_PRODUCTS = 'idProductAbstracts';
+    public const PLACEHOLDER_ID_ABSTRACT_PRODUCTS = 'ID';
 
     protected const TEMPLATE_PATH = '@ContentProductGui/ProductAbstractList/product_abstract_list.twig';
 
@@ -42,8 +42,8 @@ class ProductAbstractListContentTermForm extends AbstractType
                 /** @var \Generated\Shared\Transfer\ContentProductAbstractListTransfer $contentProductAbstractList */
                 $contentProductAbstractList = $form->getNormData();
 
-                foreach ($contentProductAbstractList->getSkus() as $sku) {
-                    if ($sku) {
+                foreach ($contentProductAbstractList->getIdProductAbstracts() as $idProductAbstract) {
+                    if ($idProductAbstract) {
                         return [Constraint::DEFAULT_GROUP];
                     }
                 }
@@ -72,7 +72,7 @@ class ProductAbstractListContentTermForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addSkusField($builder);
+        $this->addIdProductAbstractsField($builder);
     }
 
     /**
@@ -80,9 +80,9 @@ class ProductAbstractListContentTermForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSkusField(FormBuilderInterface $builder)
+    protected function addIdProductAbstractsField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_SKUS, CollectionType::class, [
+        $builder->add(static::FIELD_ID_ABSTRACT_PRODUCTS, CollectionType::class, [
             'entry_type' => TextType::class,
             'label' => false,
             'prototype' => true,
@@ -91,7 +91,7 @@ class ProductAbstractListContentTermForm extends AbstractType
             'entry_options' => [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => static::PLACEHOLDER_SKU,
+                    'placeholder' => static::PLACEHOLDER_ID_ABSTRACT_PRODUCTS,
                 ],
                 'constraints' => $this->getTextFieldConstraints(),
             ],

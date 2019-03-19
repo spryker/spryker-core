@@ -63,16 +63,16 @@ class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPlu
      */
     public function getTransferObject(?array $params = null): TransferInterface
     {
-        $contentProductAbstractPListTransfer = new ContentProductAbstractListTransfer();
+        $contentProductAbstractListTransfer = new ContentProductAbstractListTransfer();
 
-        if (empty($params) || empty($params[ContentProductAbstractListTransfer::SKUS])) {
-            $contentProductAbstractPListTransfer->setSkus(['']);
-
-            return $contentProductAbstractPListTransfer;
+        if ($params !== null) {
+            $contentProductAbstractListTransfer->fromArray($params);
         }
-        $params[ContentProductAbstractListTransfer::SKUS] = array_values($params[ContentProductAbstractListTransfer::SKUS]);
-        $contentProductAbstractPListTransfer->fromArray($params);
 
-        return $contentProductAbstractPListTransfer;
+        if (!$contentProductAbstractListTransfer->getIdProductAbstracts()) {
+            $contentProductAbstractListTransfer->setIdProductAbstracts([null]);
+        }
+
+        return $contentProductAbstractListTransfer;
     }
 }

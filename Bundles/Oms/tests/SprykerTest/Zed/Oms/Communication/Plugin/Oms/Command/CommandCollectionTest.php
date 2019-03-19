@@ -105,7 +105,7 @@ class CommandCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
      */
     private function getCommandMock()
     {

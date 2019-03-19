@@ -1,0 +1,39 @@
+{
+  "name": "spryker/content-product-abstract-lists-rest-api",
+  "type": "library",
+  "description": "ContentProductAbstractListsRestApi module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/content-storage": "^1.0.0",
+    "spryker/glue-application": "^1.8.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.22.0",
+    "spryker/products-rest-api": "^2.3.0",
+    "spryker/symfony": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
