@@ -18,7 +18,7 @@ class Validator implements ValidatorInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
-     * @param int $quantityToSplit
+     * @param float $quantityToSplit
      *
      * @return bool
      */
@@ -42,7 +42,7 @@ class Validator implements ValidatorInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
-     * @param int $quantityToSplit
+     * @param float $quantityToSplit
      *
      * @return bool
      */
