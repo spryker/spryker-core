@@ -43,7 +43,7 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
     {
         foreach ($resources as $resource) {
             if (!$resource->getAttributes()->offsetExists(static::KEY_NODES)
-                || !is_array($resource->getAttributes()->offsetGet(static::KEY_NODES))
+                || !is_array($resource->getAttributes()->offsetGet(static::KEY_NODES)->getArrayCopy())
             ) {
                 continue;
             }
