@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
@@ -42,6 +43,7 @@ class ItemType extends AbstractType
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
     protected const PATTERN_NUMBER = '/^([0-9]*[.])?[0-9]+$/';
+    protected const VALIDATION_MESSAGE_QUANTITY = 'This field should contain a valid number.';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -356,15 +358,15 @@ class ItemType extends AbstractType
     /**
      * @param array $options
      *
-     * @return \Symfony\Component\Validator\Constraints\Regex
+     * @return \Symfony\Component\Validator\Constraints\Type
      */
     protected function createNumberConstraint(array $options)
     {
         $validationGroup = $this->getValidationGroup($options);
 
-        return new Regex([
-            'pattern' => static::PATTERN_NUMBER,
-            'message' => 'This field should contain a valid number.',
+        return new Type([
+            'type' => 'numeric',
+            'message' => static::VALIDATION_MESSAGE_QUANTITY,
             'groups' => $validationGroup,
         ]);
     }

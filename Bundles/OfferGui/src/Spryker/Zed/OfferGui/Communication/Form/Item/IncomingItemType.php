@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
@@ -23,8 +23,7 @@ class IncomingItemType extends AbstractType
     public const FIELD_QUANTITY = 'quantity';
 
     protected const DEFAULT_QUANTITY = 1;
-
-    protected const PATTERN_NUMBER = '/^([0-9]*[.])?[0-9]+$/';
+    protected const VALIDATION_MESSAGE_QUANTITTY = 'This field should contain a valid number.';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -78,15 +77,15 @@ class IncomingItemType extends AbstractType
     /**
      * @param array $options
      *
-     * @return \Symfony\Component\Validator\Constraints\Regex
+     * @return \Symfony\Component\Validator\Constraints\Type
      */
     protected function createNumberConstraint(array $options)
     {
         $validationGroup = $this->getValidationGroup($options);
 
-        return new Regex([
-            'pattern' => static::PATTERN_NUMBER,
-            'message' => 'This field should contain a valid number.',
+        return new Type([
+            'type' => 'numeric',
+            'message' => static::VALIDATION_MESSAGE_QUANTITTY,
             'groups' => $validationGroup,
         ]);
     }
@@ -99,9 +98,11 @@ class IncomingItemType extends AbstractType
     protected function getValidationGroup(array $options)
     {
         $validationGroup = Constraint::DEFAULT_GROUP;
+
         if (!empty($options['validation_group'])) {
             $validationGroup = $options['validation_group'];
         }
+
         return $validationGroup;
     }
 }
