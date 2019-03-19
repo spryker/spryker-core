@@ -33,6 +33,11 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected $defaultTaxCountryIso2Code;
 
     /**
+     * @var float
+     */
+    protected $defaultTaxRate;
+
+    /**
      * @param \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface $taxQueryContainer
      * @param \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface $taxFacade
      */
@@ -143,6 +148,18 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
+     * @return float
+     */
+    protected function getDefaultTaxRate(): string
+    {
+        if ($this->defaultTaxRate === null) {
+            $this->defaultTaxRate = $this->taxFacade->getDefaultTaxRate();
+        }
+
+        return $this->defaultTaxRate;
+    }
+
+    /**
      * @param array $mappedTaxRates
      * @param int $idProductAbstract
      * @param string $countryIso2Code
@@ -153,7 +170,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     {
         $taxRate = $mappedTaxRates[$idProductAbstract][$countryIso2Code] ??
             $mappedTaxRates[$idProductAbstract][TaxConstants::TAX_EXEMPT_PLACEHOLDER] ??
-            $this->taxFacade->getDefaultTaxRate();
+            $this->getDefaultTaxRate();
 
         return (float)$taxRate;
     }

@@ -38,6 +38,16 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     protected $shipmentService;
 
     /**
+     * @var string
+     */
+    protected $defaultTaxCountryIso2Code;
+
+    /**
+     * @var float
+     */
+    protected $defaultTaxRate;
+
+    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      * @param \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface $taxFacade
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
@@ -126,10 +136,22 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
 
         if ($taxSetTransfer === null) {
             $taxSetTransfer = (new TaxSetTransfer())
-                ->setEffectiveRate($this->taxFacade->getDefaultTaxRate());
+                ->setEffectiveRate($this->getDefaultTaxRate());
         }
 
         return $taxSetTransfer;
+    }
+
+    /**
+     * @return float
+     */
+    protected function getDefaultTaxRate(): string
+    {
+        if ($this->defaultTaxRate === null) {
+            $this->defaultTaxRate = $this->taxFacade->getDefaultTaxRate();
+        }
+
+        return $this->defaultTaxRate;
     }
 
     /**
@@ -159,6 +181,18 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
             return $addressTransfer->getIso2Code();
         }
 
-        return $this->taxFacade->getDefaultTaxCountryIso2Code();
+        return $this->getDefaultTaxCountryIso2Code();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultTaxCountryIso2Code(): string
+    {
+        if ($this->defaultTaxCountryIso2Code === null) {
+            $this->defaultTaxCountryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code();
+        }
+
+        return $this->defaultTaxCountryIso2Code;
     }
 }

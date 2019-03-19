@@ -16,14 +16,11 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Sales\SalesConstants;
-use Spryker\Zed\Sales\Business\SalesBusinessFactory;
-use Spryker\Zed\Sales\Business\SalesFacade;
-use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
 /**
@@ -44,6 +41,17 @@ class ShippingAddressSaveTest extends Test
     protected $tester;
 
     /**
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $productTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
+    }
+
+    /**
      * @dataProvider saveOrderAddressShouldPersistAddressEntityDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -57,7 +65,7 @@ class ShippingAddressSaveTest extends Test
         $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
         $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
         $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()->filterByAddress1($shippingAddressTransfer->getAddress1());
-        $salesFacade = $this->getSalesFacadeWithMockedConfig();
+        $salesFacade = $this->tester->getSalesFacadeWithMockedConfig($this->createSalesConfigMock());
 
         // Act
         $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
@@ -81,7 +89,7 @@ class ShippingAddressSaveTest extends Test
         $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
         $salesOrderAddressQuery = SpySalesOrderAddressQuery::create();
         $countBefore = $salesOrderAddressQuery->count();
-        $salesFacade = $this->getSalesFacadeWithMockedConfig();
+        $salesFacade = $this->tester->getSalesFacadeWithMockedConfig($this->createSalesConfigMock());
 
         // Act
         $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
@@ -154,25 +162,6 @@ class ShippingAddressSaveTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
-     */
-    protected function getSalesFacadeWithMockedConfig(): SalesFacadeInterface {
-        $salesFacade = $this->createSalesFacade();
-        $salesBusinessFactory = $this->createBusinessFactory();
-
-        $salesConfigMock = $this->createSalesConfigMock();
-        $salesConfigMock->method('determineProcessForOrderItem')->willReturn('DummyPayment01');
-        $salesConfigMock->method('getOrderReferenceDefaults')->willReturn(
-            $this->createSequenceNumberSettingsTransfer()
-        );
-
-        $salesBusinessFactory->setConfig($salesConfigMock);
-        $salesFacade->setFactory($salesBusinessFactory);
-
-        return $salesFacade;
-    }
-
-    /**
      * @param array $seed
      *
      * @return \Generated\Shared\DataBuilder\ItemBuilder
@@ -183,39 +172,10 @@ class ShippingAddressSaveTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
-     */
-    protected function createSalesFacade(): SalesFacadeInterface
-    {
-        return new SalesFacade();
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\SalesBusinessFactory
-     */
-    protected function createBusinessFactory(): SalesBusinessFactory
-    {
-        return new SalesBusinessFactory();
-    }
-
-    /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Sales\SalesConfig
      */
     protected function createSalesConfigMock(): SalesConfig
     {
-        return $this->getMockBuilder(SalesConfig::class)->getMock();
-    }
-
-    /**
-     * Defines the prefix for the sequence number which is the public id of an order.
-     *
-     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
-     */
-    protected function createSequenceNumberSettingsTransfer(): SequenceNumberSettingsTransfer
-    {
-        return (new SequenceNumberSettingsBuilder([
-            'name' => SalesConstants::NAME_ORDER_REFERENCE,
-            'prefix' => 'DE--',
-        ]))->build();
+        return $this->getMockBuilder(SalesConfig::class)->disableOriginalConstructor()->getMock();
     }
 }

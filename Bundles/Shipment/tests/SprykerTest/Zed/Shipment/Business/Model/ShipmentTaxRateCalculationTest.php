@@ -284,14 +284,14 @@ class ShipmentTaxRateCalculationTest extends Unit
      *
      * @return float
      */
-    protected function getExpenseItemsTaxRateAverage(QuoteTransfer $quoteTransfer): float
+    protected function getExpenseItemsTaxRateAverage(QuoteTransfer $quoteTransfer)
     {
         $taxSum = 0;
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $taxSum += $itemTransfer->getShipment()->getExpense()->getTaxRate();
+        foreach ($quoteTransfer->getExpenses() as $expense) {
+            $taxSum += $expense->getTaxRate();
         }
 
-        $taxAverage = $taxSum / count($quoteTransfer->getItems());
+        $taxAverage = $taxSum / count($quoteTransfer->getExpenses());
 
         return $taxAverage;
     }
@@ -313,7 +313,7 @@ class ShipmentTaxRateCalculationTest extends Unit
         $expenseTransfer->setName($shipmentMethodTransfer->getName());
         $expenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
 
-        $shipmentTransfer->setExpense($expenseTransfer);
+        $quoteTransfer->addExpense($expenseTransfer);
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setShipment($shipmentTransfer);
