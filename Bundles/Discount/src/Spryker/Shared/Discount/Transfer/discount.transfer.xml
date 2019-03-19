@@ -142,7 +142,7 @@
 
     <transfer name="DiscountCondition">
         <property name="decisionRuleQueryString" type="string" />
-        <property name="minimumItemAmount" type="int" />
+        <property name="minimumItemAmount" type="float" />
     </transfer>
 
     <transfer name="DiscountVoucher">
