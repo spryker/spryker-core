@@ -43,7 +43,6 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
                     depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
                     serviceProvider:
-                      - Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider
                       - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider
                       - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider
                       - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider
