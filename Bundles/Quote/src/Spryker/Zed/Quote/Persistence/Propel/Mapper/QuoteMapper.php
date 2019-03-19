@@ -106,9 +106,22 @@ class QuoteMapper implements QuoteMapperInterface
     {
         $data = [];
         $quoteData = $quoteTransfer->modifiedToArray(true, true);
-        foreach ($this->quoteConfig->getQuoteFieldsAllowedForSaving() as $dataKey) {
-            if (isset($quoteData[$dataKey])) {
-                $data[$dataKey] = $quoteData[$dataKey];
+
+        foreach ($this->quoteConfig->getQuoteFieldsAllowedForSaving() as $fieldKey => $fieldData) {
+            if (is_string($fieldData) && isset($quoteData[$fieldData])) {
+                $data[$fieldData] = $quoteData[$fieldData];
+
+                continue;
+            }
+
+            if (is_array($fieldData) && isset($quoteData[$fieldKey])) {
+                foreach ($fieldData as $fieldName) {
+                    foreach ($quoteData[$fieldKey] as $key => $value) {
+                        if (isset($value[$fieldName])) {
+                            $data[$fieldKey][$key][$fieldName] = $value[$fieldName];
+                        }
+                    }
+                }
             }
         }
 
