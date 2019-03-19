@@ -187,11 +187,13 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
         $quoteTransferWithCartChangeItemTransferDataProvider = [
             'int quantity' => $this->getDataForQuoteTransferWithCartChangeItemTransfer(
                 static::INT_QUANTITY,
-                $this->fixtures['bundle-sku']
+                $this->fixtures['bundle-sku'],
+                15
             ),
             'float quantity' => $this->getDataForQuoteTransferWithCartChangeItemTransfer(
                 static::FLOAT_QUANTITY,
-                $this->fixtures['bundle-sku']
+                $this->fixtures['bundle-sku'],
+                16.00
             ),
         ];
 
@@ -204,8 +206,11 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
      *
      * @return array
      */
-    protected function getDataForQuoteTransferWithCartChangeItemTransfer($quantity, string $bundleSku)
-    {
+    protected function getDataForQuoteTransferWithCartChangeItemTransfer(
+        $quantity,
+        string $bundleSku,
+        $expectedValue
+    ): array {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
 
@@ -224,6 +229,6 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
         $cartChangeItemTransfer->setSku($bundleSku);
         $cartChangeItemTransfer->setQuantity($quantity);
 
-        return [$quoteTransfer, $cartChangeItemTransfer, $quantity * $this->fixtures['bundledProductQuantity']];
+        return [$quoteTransfer, $cartChangeItemTransfer, $expectedValue];
     }
 }
