@@ -32,7 +32,7 @@
         <property name="sumAmount" type="int" />
         <property name="unitGrossAmount" type="int" deprecated="use unitAmount" />
         <property name="sumGrossAmount" type="int" deprecated="use sumAmount"/>
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
     </transfer>
 
     <transfer name="Quote">

@@ -134,12 +134,13 @@ class WishlistFacadeTest extends Unit
         $this->product_1 = $this->createProduct('concrete_sku_1', $this->productAbstract->getIdProductAbstract(), 10);
         $this->product_2 = $this->createProduct('concrete_sku_2', $this->productAbstract->getIdProductAbstract(), 20);
         $this->product_3 = $this->createProduct('concrete_sku_3', $this->productAbstract->getIdProductAbstract(), 30);
+        $this->product_4 = $this->createProduct('concrete_sku_4', $this->productAbstract->getIdProductAbstract(), 1.1);
     }
 
     /**
      * @param string $sku
      * @param int $idProductAbstract
-     * @param int|null $quantity
+     * @param int|float|null $quantity
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
@@ -224,16 +225,16 @@ class WishlistFacadeTest extends Unit
      */
     public function testAddItemShouldAddItem()
     {
-        $WishlistItemTransfer = (new WishlistItemTransfer())
+        $wishlistItemTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setSku($this->product_3->getSku());
 
-        $WishlistItemTransfer = $this->wishlistFacade->addItem($WishlistItemTransfer);
+        $wishlistItemTransfer = $this->wishlistFacade->addItem($wishlistItemTransfer);
 
-        $this->assertInstanceOf(WishlistItemTransfer::class, $WishlistItemTransfer);
+        $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemTransfer);
         $this->assertWishlistItemCount(3);
-        $this->assertNotEmpty($WishlistItemTransfer->getIdWishlistItem());
+        $this->assertNotEmpty($wishlistItemTransfer->getIdWishlistItem());
     }
 
     /**
@@ -241,15 +242,15 @@ class WishlistFacadeTest extends Unit
      */
     public function testAddNonExistingItemShouldSkipItem()
     {
-        $WishlistItemTransfer = (new WishlistItemTransfer())
+        $wishlistItemTransfer = (new WishlistItemTransfer())
             ->setWishlistName(self::DEFAULT_NAME)
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setSku('non-existing-sku');
 
-        $WishlistItemTransfer = $this->wishlistFacade->addItem($WishlistItemTransfer);
+        $wishlistItemTransfer = $this->wishlistFacade->addItem($wishlistItemTransfer);
 
-        $this->assertInstanceOf(WishlistItemTransfer::class, $WishlistItemTransfer);
-        $this->assertEmpty($WishlistItemTransfer->getIdWishlistItem());
+        $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemTransfer);
+        $this->assertEmpty($wishlistItemTransfer->getIdWishlistItem());
     }
 
     /**
@@ -627,7 +628,7 @@ class WishlistFacadeTest extends Unit
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param int|float|null $quantity
      *
      * @return void
      */
