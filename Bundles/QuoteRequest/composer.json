@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/calculation": "^4.0.0",
-    "spryker/cart": "^5.0.0",
+    "spryker/cart": "^5.6.0",
     "spryker/checkout-extension": "^1.1.0",
     "spryker/company-user": "^2.6.0",
     "spryker/kernel": "^3.17.0",
