@@ -1,3 +1,3 @@
 # NavigationsCategoryNodesResourceRelationship Changelog
 
-[Release Changelog](https://github.com/spryker/navigations-category-nodes-resource-relationshiprce-relationship/releases)
+[Release Changelog](https://github.com/spryker/navigations-category-nodes-resource-relationship/releases)

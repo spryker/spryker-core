@@ -20,6 +20,7 @@ class CategoryNodeByIdResourceRelationshipPlugin extends AbstractPlugin implemen
     /**
      * {@inheritdoc}
      *  - Adds category node resource as relationship.
+     *  - Checks type of the node.
      *
      * @api
      *
