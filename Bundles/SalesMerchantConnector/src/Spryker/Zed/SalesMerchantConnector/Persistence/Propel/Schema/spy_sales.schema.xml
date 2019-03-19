@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\Sales\Persistence"
+          package="src.Orm.Zed.Sales.Persistence">
+
+
+    <table name="spy_sales_order_item" phpName="SpySalesOrderItem">
+        <column name="fk_merchant" type="INTEGER" required="false"/>
+
+        <foreign-key name="spy_sales_order_item-fk_merchant" foreignTable="spy_merchant" phpName="Merchant">
+            <reference local="fk_merchant" foreign="id_merchant"/>
+        </foreign-key>
+
+        <index name="spy_sales_order_item-fk_merchant">
+            <index-column name="fk_merchant"/>
+        </index>
+    </table>
+</database>

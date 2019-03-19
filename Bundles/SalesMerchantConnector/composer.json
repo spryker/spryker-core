@@ -1,0 +1,34 @@
+{
+  "name": "spryker/merchant-sales-connector",
+  "type": "library",
+  "description": "SalesMerchantConnector module",
+  "license": "proprietary",
+  "require": {
+    "spryker/merchant": "^1.0.0",
+    "spryker/sales": "^8.18.1"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
