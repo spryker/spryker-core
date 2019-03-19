@@ -36,11 +36,6 @@ class QuoteRequestConverterTest extends Unit
     protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
 
     /**
-     * @uses \Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestConverter::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND
-     */
-    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
-
-    /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\AgentQuoteRequest\QuoteRequest\QuoteRequestConverter
      */
     protected $quoteRequestConverterMock;
@@ -94,27 +89,6 @@ class QuoteRequestConverterTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS,
-            $quoteResponseTransfer->getErrors()[0]->getMessage()
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertQuoteRequestToQuoteWithoutQuoteInProgress(): void
-    {
-        // Arrange
-        $quoteRequestTransfer = (new QuoteRequestBuilder([
-            QuoteRequestTransfer::STATUS => SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS,
-        ]))->build();
-
-        // Act
-        $quoteResponseTransfer = $this->quoteRequestConverterMock->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer);
-
-        // Assert
-        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
-            static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND,
             $quoteResponseTransfer->getErrors()[0]->getMessage()
         );
     }

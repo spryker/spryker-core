@@ -132,7 +132,7 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
         return (new QuoteRequestResponseTransfer())
-            ->setIsSuccessful(false)
+            ->setIsSuccessful(true)
             ->setQuoteRequest($quoteRequestTransfer);
     }
 

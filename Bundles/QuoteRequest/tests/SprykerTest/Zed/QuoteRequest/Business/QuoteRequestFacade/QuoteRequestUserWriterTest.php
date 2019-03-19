@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\AgentQuoteRequest\Business;
+namespace SprykerTest\Zed\QuoteRequest\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
@@ -14,43 +14,45 @@ use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestVersionBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
-use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
-use Spryker\Shared\AgentQuoteRequest\AgentQuoteRequestConfig as SharedAgentQuoteRequestConfig;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
-use Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig;
-use Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestWriter;
-use Spryker\Zed\AgentQuoteRequest\Dependency\Facade\AgentQuoteRequestToQuoteRequestInterface;
+use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestUserWriter;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
+use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
+use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
+use Spryker\Zed\QuoteRequest\QuoteRequestConfig;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group AgentQuoteRequest
+ * @group QuoteRequest
  * @group Business
- * @group AgentQuoteRequestWriterTest
+ * @group QuoteRequestUserWriterTest
  * Add your own group annotations below this line
  */
-class AgentQuoteRequestWriterTest extends Unit
+class QuoteRequestUserWriterTest extends Unit
 {
     protected const FAKE_ID_QUOTE_REQUEST_VERSION = 'FAKE_ID_QUOTE_REQUEST_VERSION';
 
     /**
-     * @uses \Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS
+     * @uses \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestUserWriter::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
 
     /**
-     * @uses \Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS
+     * @uses \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestUserWriter::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
     /**
-     * @var \Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequest\AgentQuoteRequestWriter|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestUserWriter|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected $agentQuoteRequestWriter;
+    protected $quoteRequestUserWriter;
 
     /**
      * @return void
@@ -59,7 +61,7 @@ class AgentQuoteRequestWriterTest extends Unit
     {
         parent::setUp();
 
-        $this->agentQuoteRequestWriter = $this->createAgentQuoteRequestWriterMock();
+        $this->quoteRequestUserWriter = $this->createQuoteRequestUserWriterMock();
     }
 
     /**
@@ -69,23 +71,23 @@ class AgentQuoteRequestWriterTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
-            QuoteRequestTransfer::STATUS => SharedAgentQuoteRequestConfig::STATUS_WAITING,
+            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_WAITING,
         ]))->build();
 
-        $this->agentQuoteRequestWriter->expects($this->any())
-            ->method('findQuoteRequestByReference')
+        $this->quoteRequestUserWriter->expects($this->any())
+            ->method('findQuoteRequestTransfer')
             ->willReturn($quoteRequestTransfer);
 
         $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
 
         // Act
-        $quoteRequestResponseTransfer = $this->agentQuoteRequestWriter->cancelQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestUserWriter->cancelQuoteRequestByUser($quoteRequestCriteriaTransfer);
 
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertEquals(
-            SharedAgentQuoteRequestConfig::STATUS_CANCELED,
+            SharedQuoteRequestConfig::STATUS_CANCELED,
             $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
         );
     }
@@ -101,7 +103,7 @@ class AgentQuoteRequestWriterTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->agentQuoteRequestWriter->cancelQuoteRequest(new QuoteRequestCriteriaTransfer());
+        $this->quoteRequestUserWriter->cancelQuoteRequestByUser(new QuoteRequestCriteriaTransfer());
     }
 
     /**
@@ -110,15 +112,15 @@ class AgentQuoteRequestWriterTest extends Unit
     public function testCancelQuoteRequestChangesQuoteRequestStatusToCanceledWithWrongReference(): void
     {
         // Arrange
-        $this->agentQuoteRequestWriter->expects($this->any())
-            ->method('findQuoteRequestByReference')
+        $this->quoteRequestUserWriter->expects($this->any())
+            ->method('findQuoteRequestTransfer')
             ->willReturn(null);
 
         $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
             ->setQuoteRequestReference(static::FAKE_ID_QUOTE_REQUEST_VERSION);
 
         // Act
-        $quoteRequestResponseTransfer = $this->agentQuoteRequestWriter->cancelQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestUserWriter->cancelQuoteRequestByUser($quoteRequestCriteriaTransfer);
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -136,18 +138,18 @@ class AgentQuoteRequestWriterTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
-            QuoteRequestTransfer::STATUS => SharedAgentQuoteRequestConfig::STATUS_CANCELED,
+            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_CANCELED,
         ]))->build();
 
-        $this->agentQuoteRequestWriter->expects($this->any())
-            ->method('findQuoteRequestByReference')
+        $this->quoteRequestUserWriter->expects($this->any())
+            ->method('findQuoteRequestTransfer')
             ->willReturn($quoteRequestTransfer);
 
         $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
             ->setQuoteRequestReference(static::FAKE_ID_QUOTE_REQUEST_VERSION);
 
         // Act
-        $quoteRequestResponseTransfer = $this->agentQuoteRequestWriter->cancelQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestUserWriter->cancelQuoteRequestByUser($quoteRequestCriteriaTransfer);
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -165,7 +167,7 @@ class AgentQuoteRequestWriterTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
-            QuoteRequestTransfer::STATUS => SharedAgentQuoteRequestConfig::STATUS_WAITING,
+            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_WAITING,
         ]))->build();
 
         $quoteTransfer = (new QuoteBuilder())
@@ -178,20 +180,20 @@ class AgentQuoteRequestWriterTest extends Unit
 
         $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
 
-        $this->agentQuoteRequestWriter->expects($this->any())
-            ->method('findQuoteRequestByReference')
+        $this->quoteRequestUserWriter->expects($this->any())
+            ->method('findQuoteRequestTransfer')
             ->willReturn($quoteRequestTransfer);
 
         $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
 
         // Act
-        $quoteRequestResponseTransfer = $this->agentQuoteRequestWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestUserWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
 
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertEquals(
-            SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS,
+            SharedQuoteRequestConfig::STATUS_IN_PROGRESS,
             $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
         );
     }
@@ -207,7 +209,7 @@ class AgentQuoteRequestWriterTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->agentQuoteRequestWriter->markQuoteRequestInProgress(new QuoteRequestCriteriaTransfer());
+        $this->quoteRequestUserWriter->markQuoteRequestInProgress(new QuoteRequestCriteriaTransfer());
     }
 
     /**
@@ -216,15 +218,15 @@ class AgentQuoteRequestWriterTest extends Unit
     public function testMarkQuoteRequestInProgressChangesQuoteRequestStatusToInProgressWithWrongReference(): void
     {
         // Arrange
-        $this->agentQuoteRequestWriter->expects($this->any())
-            ->method('findQuoteRequestByReference')
+        $this->quoteRequestUserWriter->expects($this->any())
+            ->method('findQuoteRequestTransfer')
             ->willReturn(null);
 
         $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
             ->setQuoteRequestReference(static::FAKE_ID_QUOTE_REQUEST_VERSION);
 
         // Act
-        $quoteRequestResponseTransfer = $this->agentQuoteRequestWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestUserWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -242,18 +244,18 @@ class AgentQuoteRequestWriterTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
-            QuoteRequestTransfer::STATUS => SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS,
+            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_IN_PROGRESS,
         ]))->build();
 
-        $this->agentQuoteRequestWriter->expects($this->any())
-            ->method('findQuoteRequestByReference')
+        $this->quoteRequestUserWriter->expects($this->any())
+            ->method('findQuoteRequestTransfer')
             ->willReturn($quoteRequestTransfer);
 
         $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
             ->setQuoteRequestReference(static::FAKE_ID_QUOTE_REQUEST_VERSION);
 
         // Act
-        $quoteRequestResponseTransfer = $this->agentQuoteRequestWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestUserWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -271,11 +273,11 @@ class AgentQuoteRequestWriterTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
-            QuoteRequestTransfer::STATUS => SharedAgentQuoteRequestConfig::STATUS_WAITING,
+            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_WAITING,
         ]))->build();
 
-        $this->agentQuoteRequestWriter->expects($this->any())
-            ->method('findQuoteRequestByReference')
+        $this->quoteRequestUserWriter->expects($this->any())
+            ->method('findQuoteRequestTransfer')
             ->willReturn($quoteRequestTransfer);
 
         $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
@@ -285,7 +287,7 @@ class AgentQuoteRequestWriterTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->agentQuoteRequestWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        $this->quoteRequestUserWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -295,13 +297,13 @@ class AgentQuoteRequestWriterTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
-            QuoteRequestTransfer::STATUS => SharedAgentQuoteRequestConfig::STATUS_WAITING,
+            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_WAITING,
         ]))->build();
 
         $quoteRequestTransfer->setLatestVersion((new QuoteRequestVersionBuilder())->build());
 
-        $this->agentQuoteRequestWriter->expects($this->any())
-            ->method('findQuoteRequestByReference')
+        $this->quoteRequestUserWriter->expects($this->any())
+            ->method('findQuoteRequestTransfer')
             ->willReturn($quoteRequestTransfer);
 
         $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
@@ -311,40 +313,59 @@ class AgentQuoteRequestWriterTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->agentQuoteRequestWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        $this->quoteRequestUserWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
     }
 
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createAgentQuoteRequestWriterMock(): MockObject
+    protected function createQuoteRequestUserWriterMock(): MockObject
     {
-        return $this->getMockBuilder(AgentQuoteRequestWriter::class)
-            ->setMethods(['findQuoteRequestByReference'])
+        $quoteRequestUserWriterMock = $this->getMockBuilder(QuoteRequestUserWriter::class)
+            ->setMethods(['findQuoteRequestTransfer', 'findCustomerReference'])
             ->setConstructorArgs([
-                $this->createAgentQuoteRequestToQuoteRequestInterfaceMock(),
                 $this->createQuoteRequestConfigMock(),
+                $this->createQuoteRequestEntityManagerInterfaceMock(),
+                $this->createQuoteRequestRepositoryInterfaceMock(),
+                $this->createQuoteRequestReferenceGeneratorInterfaceMock(),
+                $this->createQuoteRequestToCompanyUserInterfaceMock(),
             ])
             ->getMock();
+
+        $quoteRequestUserWriterMock->method('findCustomerReference')
+            ->willReturn('');
+
+        return $quoteRequestUserWriterMock;
     }
 
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createAgentQuoteRequestToQuoteRequestInterfaceMock(): MockObject
+    protected function createQuoteRequestEntityManagerInterfaceMock(): MockObject
     {
-        $agentQuoteRequestToQuoteRequestInterface = $this->getMockBuilder(AgentQuoteRequestToQuoteRequestInterface::class)
-            ->setMethods(['getQuoteRequestCollectionByFilter', 'updateQuoteRequest', 'sendQuoteRequestToCustomer'])
+        $quoteRequestEntityManagerInterface = $this->getMockBuilder(QuoteRequestEntityManagerInterface::class)
+            ->setMethods([
+                'createQuoteRequest',
+                'updateQuoteRequest',
+                'createQuoteRequestVersion',
+                'updateQuoteRequestVersion',
+            ])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $agentQuoteRequestToQuoteRequestInterface
+        $quoteRequestEntityManagerInterface
             ->method('updateQuoteRequest')
             ->willReturnCallback(function (QuoteRequestTransfer $quoteRequestTransfer) {
-                return (new QuoteRequestResponseTransfer())->setQuoteRequest($quoteRequestTransfer)->setIsSuccessful(true);
+                return $quoteRequestTransfer;
             });
 
-        return $agentQuoteRequestToQuoteRequestInterface;
+        $quoteRequestEntityManagerInterface
+            ->method('createQuoteRequest')
+            ->willReturnCallback(function (QuoteRequestTransfer $quoteRequestTransfer) {
+                return $quoteRequestTransfer;
+            });
+
+        return $quoteRequestEntityManagerInterface;
     }
 
     /**
@@ -352,20 +373,50 @@ class AgentQuoteRequestWriterTest extends Unit
      */
     protected function createQuoteRequestConfigMock(): MockObject
     {
-        $quoteRequestConfigMock = $this->getMockBuilder(AgentQuoteRequestConfig::class)
-            ->setMethods(['getCancelableStatuses'])
+        $quoteRequestConfigMock = $this->getMockBuilder(QuoteRequestConfig::class)
+            ->setMethods(['getUserCancelableStatuses'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $quoteRequestConfigMock
-            ->method('getCancelableStatuses')
+            ->method('getUserCancelableStatuses')
             ->willReturn([
-                SharedAgentQuoteRequestConfig::STATUS_DRAFT,
-                SharedAgentQuoteRequestConfig::STATUS_WAITING,
-                SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS,
-                SharedAgentQuoteRequestConfig::STATUS_READY,
+                SharedQuoteRequestConfig::STATUS_DRAFT,
+                SharedQuoteRequestConfig::STATUS_WAITING,
+                SharedQuoteRequestConfig::STATUS_IN_PROGRESS,
+                SharedQuoteRequestConfig::STATUS_READY,
             ]);
 
         return $quoteRequestConfigMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createQuoteRequestRepositoryInterfaceMock(): MockObject
+    {
+        return $this->getMockBuilder(QuoteRequestRepositoryInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createQuoteRequestReferenceGeneratorInterfaceMock(): MockObject
+    {
+        return $this->getMockBuilder(QuoteRequestReferenceGeneratorInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createQuoteRequestToCompanyUserInterfaceMock(): MockObject
+    {
+        return $this->getMockBuilder(QuoteRequestToCompanyUserInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 }

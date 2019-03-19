@@ -17,6 +17,7 @@ use Generated\Shared\DataBuilder\QuoteRequestVersionFilterBuilder;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig;
@@ -388,5 +389,61 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertEquals(SharedQuoteRequestConfig::STATUS_READY, $quoteRequestTransfer->getStatus());
         $this->assertFalse($quoteRequestTransfer->getIsHidden());
         $this->assertEquals(2, $quoteRequestTransfer->getLatestVersion()->getVersion());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMarkQuoteRequestInProgressChangesQuoteRequestStatusToInProgress(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->tester->createQuoteRequest(
+            $this->tester->createQuoteRequestVersion($this->quoteTransfer),
+            $this->companyUserTransfer
+        );
+        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
+
+        // Act
+        $quoteRequestResponseTransfer = $this->tester
+            ->getFacade()
+            ->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+
+        // Assert
+        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
+        $this->assertEquals(
+            SharedQuoteRequestConfig::STATUS_IN_PROGRESS,
+            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
+        );
+        $this->assertInstanceOf(
+            QuoteTransfer::class,
+            $quoteRequestResponseTransfer->getQuoteRequest()->getQuoteInProgress()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCancelQuoteRequestByUserChangesQuoteRequestStatusToCanceled(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->tester->createQuoteRequest(
+            $this->tester->createQuoteRequestVersion($this->quoteTransfer),
+            $this->companyUserTransfer
+        );
+        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
+
+        // Act
+        $quoteRequestResponseTransfer = $this->tester
+            ->getFacade()
+            ->cancelQuoteRequestByUser($quoteRequestCriteriaTransfer);
+
+        // Assert
+        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
+        $this->assertEquals(
+            SharedQuoteRequestConfig::STATUS_CANCELED,
+            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
+        );
     }
 }
