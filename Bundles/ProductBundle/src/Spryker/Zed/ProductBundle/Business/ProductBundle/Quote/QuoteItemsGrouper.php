@@ -10,9 +10,23 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Quote;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 
 class QuoteItemsGrouper implements QuoteItemsGrouperInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
+     * @param \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
+     */
+    public function __construct(ProductBundleToUtilQuantityServiceInterface $utilQuantityService)
+    {
+        $this->utilQuantityService = $utilQuantityService;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -81,9 +95,20 @@ class QuoteItemsGrouper implements QuoteItemsGrouperInterface
             if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
                 continue;
             }
+
             $bundleItemQuantity += $bundleItemTransfer->getQuantity();
         }
 
-        return $bundleItemQuantity;
+        return $this->roundQuantity($bundleItemQuantity);
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 }

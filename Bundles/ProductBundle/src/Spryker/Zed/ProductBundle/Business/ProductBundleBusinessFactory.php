@@ -244,7 +244,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteItemFinder(): QuoteItemFinderInterface
     {
-        return new QuoteItemFinder();
+        return new QuoteItemFinder($this->getUtilQuantityService());
     }
 
     /**
@@ -268,7 +268,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteItemsGrouper(): QuoteItemsGrouperInterface
     {
-        return new QuoteItemsGrouper();
+        return new QuoteItemsGrouper($this->getUtilQuantityService());
     }
 
     /**

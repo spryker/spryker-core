@@ -109,7 +109,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
             $quantity += $itemTransfer->getQuantity();
         }
 
-        return $quantity;
+        return $this->roundQuantity($quantity);
     }
 
     /**

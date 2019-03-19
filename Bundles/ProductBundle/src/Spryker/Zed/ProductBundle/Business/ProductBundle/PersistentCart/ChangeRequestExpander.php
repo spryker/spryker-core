@@ -10,9 +10,23 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 
 class ChangeRequestExpander implements ChangeRequestExpanderInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
+     * @param \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
+     */
+    public function __construct(ProductBundleToUtilQuantityServiceInterface $utilQuantityService)
+    {
+        $this->utilQuantityService = $utilQuantityService;
+    }
+
     /**
      * Specification:
      * - Replace items with bundle items if it exist
@@ -90,6 +104,16 @@ class ChangeRequestExpander implements ChangeRequestExpanderInterface
             $bundleItemQuantity += $bundleItemTransfer->getQuantity();
         }
 
-        return $bundleItemQuantity;
+        return $this->roundQuantity($bundleItemQuantity);
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 }

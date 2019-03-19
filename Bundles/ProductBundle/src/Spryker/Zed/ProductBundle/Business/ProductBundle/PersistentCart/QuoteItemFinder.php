@@ -9,9 +9,23 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 
 class QuoteItemFinder implements QuoteItemFinderInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
+     * @param \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
+     */
+    public function __construct(ProductBundleToUtilQuantityServiceInterface $utilQuantityService)
+    {
+        $this->utilQuantityService = $utilQuantityService;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
@@ -65,10 +79,11 @@ class QuoteItemFinder implements QuoteItemFinderInterface
             if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
                 continue;
             }
+
             $bundleItemQuantity += $bundleItemTransfer->getQuantity();
         }
 
-        return $bundleItemQuantity;
+        return $this->roundQuantity($bundleItemQuantity);
     }
 
     /**
@@ -88,5 +103,15 @@ class QuoteItemFinder implements QuoteItemFinderInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 }

@@ -205,7 +205,8 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                 $bundleItemQuantity = $bundledItemQuantity[$idProduct];
                 $isNeverOutOfStock = $productStockQuantity[static::IS_NEVER_OUT_OF_STOCK];
 
-                $itemStock = (int)floor($productStockQuantity[static::QUANTITY] / $bundleItemQuantity);
+                $itemStock = $productStockQuantity[static::QUANTITY] / $bundleItemQuantity;
+                $itemStock = $this->roundQuantity($itemStock);
 
                 if ($this->isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)) {
                     $bundleStock = $itemStock;
@@ -370,5 +371,15 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                 $storeTransfer
             );
         }
+    }
+
+    /**
+     * @param float $quantity
+     *
+     * @return float
+     */
+    protected function roundQuantity(float $quantity): float
+    {
+        return $this->utilQuantityService->roundQuantity($quantity);
     }
 }
