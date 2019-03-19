@@ -42,7 +42,9 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
     public function expandResourceWithCategoryNode(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            if (!$resource->getAttributes()->offsetGet(static::KEY_NODES)) {
+            if (!$resource->getAttributes()->offsetExists(static::KEY_NODES)
+                || !is_array($resource->getAttributes()->offsetGet(static::KEY_NODES))
+            ) {
                 continue;
             }
 
