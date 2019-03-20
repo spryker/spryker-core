@@ -147,8 +147,6 @@ class CartFacadeTest extends Unit
     /**
      * @dataProvider addToCartDecreaseCartQuantityDataProvider
      *
-     * @group her
-     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param float $expectedResult
      *
