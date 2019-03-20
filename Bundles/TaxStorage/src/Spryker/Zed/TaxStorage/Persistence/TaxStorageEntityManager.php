@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\TaxStorage\Persistence;
 
-use Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage;
-use Orm\Zed\Tax\Persistence\SpyTaxSetStorage;
+use Generated\Shared\Transfer\TaxSetStorageTransfer;
+use Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
-use Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface;
 
 /**
  * @method \Spryker\Zed\TaxStorage\Persistence\TaxStoragePersistenceFactory getFactory()
@@ -18,19 +17,40 @@ use Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface;
 class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorageEntityManagerInterface
 {
     /**
-     * @param \Orm\Zed\Tax\Persistence\SpyTaxSetStorage $taxSetStorage
+     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $taxSetStorage
+     *
+     * @return void
      */
-    public function saveTaxSetStorage(SpyTaxSetStorage $taxSetStorage): void
+    public function saveTaxSetStorage(TaxSetStorageTransfer $taxSetStorage): void
     {
-        // TODO: Implement saveTaxSetStorage() method.
+        $taxStorageEntity = $this->getFactory()
+            ->createTaxSetStorageQuery()
+            ->filterByFkTaxSet($taxSetStorage->getFkTaxSet())
+            ->findOneOrCreate();
+
+        $taxStorageEntity = $this->getFactory()
+            ->createTaxStorageMapper()
+            ->mapTaxSetStorageTransferToEntity($taxSetStorage, $taxStorageEntity);
+
+        $taxStorageEntity->save();
     }
 
     /**
-     * @param \Orm\Zed\Tax\Persistence\SpyTaxSetStorage $taxSetStorage
+     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $taxSetStorage
+     *
+     * @return bool
      */
-    public function deleteTaxSetStorage(SpyTaxSetStorage $taxSetStorage): void
+    public function deleteTaxSetStorage(TaxSetStorageTransfer $taxSetStorage): bool
     {
-        // TODO: Implement deleteTaxSetStorage() method.
+        $storageEntity = $this->getFactory()
+            ->createTaxSetStorageQuery()
+            ->filterByFkTaxSet($taxSetStorage->getFkTaxSet())
+            ->findOne();
+        if ($storageEntity instanceof SpyTaxSetStorage) {
+            $storageEntity->delete();
+            return true;
+        }
+
+        return false;
     }
 }
-

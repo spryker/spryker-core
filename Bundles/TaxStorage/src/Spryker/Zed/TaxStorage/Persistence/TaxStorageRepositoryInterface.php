@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\TaxStorage\Persistence;
+
+use \ArrayObject;
 
 interface TaxStorageRepositoryInterface
 {
@@ -18,15 +21,21 @@ interface TaxStorageRepositoryInterface
     public function findTaxSetIdsByTaxRateIds(array $taxRateIds): array;
 
     /**
-     *
-     * @param array $taxSetIds
-     *
-     * @return \Spryker\Zed\TaxStorage\Persistence\SpyTaxSetStorag[]
+     * @return \ArrayObject
      */
-    public function findTaxSetSorageEntities(array $taxSetIds): array;
+    public function findAllTaxSetSorageEntities(): ArrayObject;
 
     /**
-     * findAllTaxSetSorageEntities
+     * @param array $taxSetIds
+     *
+     * @return \ArrayObject
      */
-    public function findAllTaxSetSorageEntities();
+    public function findTaxSetsByIds(array $taxSetIds): ArrayObject;
+
+    /**
+     * @param array $taxSetIds
+     *
+     * @return \ArrayObject
+     */
+    public function findTaxSetStoragesByIds(array $taxSetIds): ArrayObject;
 }

@@ -15,7 +15,7 @@ interface TaxEvents
      *
      * @api
      */
-    public const TAX_SET_PUBLISH = 'Entity.tax_set.publish';
+    public const TAX_SET_PUBLISH = 'Entity.spy_tax_set.publish';
 
     /**
      * Specification:
@@ -23,7 +23,7 @@ interface TaxEvents
      *
      * @api
      */
-    public const ENTITY_SPY_TAX_SET_CREATE = 'Entity.tax_set.create';
+    public const ENTITY_SPY_TAX_SET_CREATE = 'Entity.spy_tax_set.create';
 
     /**
      * Specification:
@@ -31,7 +31,7 @@ interface TaxEvents
      *
      * @api
      */
-    public const ENTITY_SPY_TAX_SET_UPDATE = 'Entity.tax_set.update';
+    public const ENTITY_SPY_TAX_SET_UPDATE = 'Entity.spy_tax_set.update';
 
     /**
      * Specification:
@@ -39,15 +39,7 @@ interface TaxEvents
      *
      * @api
      */
-    public const ENTITY_SPY_TAX_SET_DELETE = 'Entity.tax_set.delete';
-
-    /**
-     * Specification:
-     *  - This event will be used for tax_rate entity creation
-     *
-     * @api
-     */
-    public const ENTITY_SPY_TAX_RATE_CREATE = 'Entity.tax_rate.create';
+    public const ENTITY_SPY_TAX_SET_DELETE = 'Entity.spy_tax_set.delete';
 
     /**
      * Specification:
@@ -55,7 +47,7 @@ interface TaxEvents
      *
      * @api
      */
-    public const ENTITY_SPY_TAX_RATE_UPDATE = 'Entity.tax_rate.update';
+    public const ENTITY_SPY_TAX_RATE_UPDATE = 'Entity.spy_tax_rate.update';
 
     /**
      * Specification:
@@ -63,7 +55,7 @@ interface TaxEvents
      *
      * @api
      */
-    public const ENTITY_SPY_TAX_RATE_DELETE = 'Entity.tax_rate.delete';
+    public const ENTITY_SPY_TAX_RATE_DELETE = 'Entity.spy_tax_rate.delete';
 
     /**
      * Specification:
@@ -71,7 +63,7 @@ interface TaxEvents
      *
      * @api
      */
-    public const ENTITY_SPY_TAX_SET_TAX_CREATE = 'Entity.tax_set_tax.create';
+    public const ENTITY_SPY_TAX_SET_TAX_CREATE = 'Entity.spy_tax_set_tax.create';
 
     /**
      * Specification:
@@ -79,5 +71,5 @@ interface TaxEvents
      *
      * @api
      */
-    public const ENTITY_SPY_TAX_SET_TAX_DELETE = 'Entity.tax_set_tax.delete';
+    public const ENTITY_SPY_TAX_SET_TAX_DELETE = 'Entity.spy_tax_set_tax.delete';
 }

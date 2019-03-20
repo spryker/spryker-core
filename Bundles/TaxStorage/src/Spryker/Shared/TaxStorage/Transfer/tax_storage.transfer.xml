@@ -6,7 +6,13 @@
     <transfer name="TaxSetStorage">
         <property name="id" type="string"/>
         <property name="uuid" type="string"/>
+        <property name="key" type="string"/>
         <property name="name" type="string"/>
+        <property name="fkTaxSet" type="int"/>
+        <property name="data" type="TaxSetDataStorage"/>
+    </transfer>
+
+    <transfer name="TaxSetDataStorage">
         <property name="taxRates" type="TaxRateStorage[]" singular="taxRate"/>
     </transfer>
 

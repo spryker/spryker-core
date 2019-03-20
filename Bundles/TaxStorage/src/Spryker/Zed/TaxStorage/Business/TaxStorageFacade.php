@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -9,21 +10,43 @@ namespace Spryker\Zed\TaxStorage\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * These methods should call respective methods in the publisher business model
+ * @method \Spryker\Zed\TaxStorage\Business\TaxStorageBusinessFactory getFactory()
  */
-class TaxStorageFacade extends AbstractFacade
+class TaxStorageFacade extends AbstractFacade implements TaxStorageFacadeInterface
 {
+    /**
+     * @api
+     *
+     * @param array $taxSetIds
+     *
+     * @return void
+     */
     public function publishByTaxSetIds(array $taxSetIds): void
     {
+        $this->getFactory()->createTaxStoragePublisher()->publishByTaxSetIds($taxSetIds);
     }
 
+    /**
+     * @api
+     *
+     * @param array $taxRateIds
+     *
+     * @return void
+     */
     public function publishByTaxRateIds(array $taxRateIds): void
     {
-
+        $this->getFactory()->createTaxStoragePublisher()->publishByTaxRateIds($taxRateIds);
     }
 
+    /**
+     * @api
+     *
+     * @param array $taxSetIds
+     *
+     * @return void
+     */
     public function unpublishByTaxSetIds(array $taxSetIds): void
     {
-
+        $this->getFactory()->createTaxStoragePublisher()->unpublishByTaxSetIds($taxSetIds);
     }
 }

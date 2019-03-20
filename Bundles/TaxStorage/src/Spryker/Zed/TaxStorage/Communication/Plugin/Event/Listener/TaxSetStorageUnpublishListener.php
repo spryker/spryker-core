@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\TaxStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;

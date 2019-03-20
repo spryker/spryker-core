@@ -8,16 +8,15 @@
 namespace Spryker\Zed\TaxStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Shared\ProductQuantityStorage\ProductQuantityStorageConfig;
 use Spryker\Shared\TaxStorage\TaxStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageRepositoryInterface getRepository()
- * @method \Spryker\Zed\ProductQuantityStorage\Business\ProductQuantityStorageFacadeInterface getFacade()
- * @method \Spryker\Zed\ProductQuantityStorage\Communication\ProductQuantityStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductQuantityStorage\ProductQuantityStorageConfig getConfig()
+ * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepository getRepository()
+ * @method \Spryker\Zed\TaxStorage\Business\TaxStorageFacade getFacade()
+ * @method \Spryker\Zed\TaxStorage\Communication\TaxStorageCommunicationFactory getFactory()
+ * @method \Spryker\Shared\TaxStorage\TaxStorageConfig getConfig()
  */
 class TaxSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
 {
@@ -57,16 +56,16 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
     public function getData(array $ids = []): array
     {
         $synchronizationDataTransfers = [];
-        $productQuantityTransfers = $this->getRepository()->findProductQuantityStorageEntitiesByProductIds($ids);
+        $taxSetStorageTransfers = $this->getRepository()->findTaxSetStoragesByIds($ids);
 
-        if (empty($ids)) {
-            $productQuantityTransfers = $this->getRepository()->findAllProductQuantityStorageEntities();
-        }
+//        if (empty($ids)) {
+//            $productQuantityTransfers = $this->getRepository()->findAllProductQuantityStorageEntities();
+//        }
 
-        foreach ($productQuantityTransfers as $productQuantityTransfer) {
+        foreach ($taxSetStorageTransfers as $taxSetStorageTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($productQuantityTransfer->getData());
-            $synchronizationDataTransfer->setKey($productQuantityTransfer->getKey());
+            $synchronizationDataTransfer->setData($taxSetStorageTransfer->getData());
+            $synchronizationDataTransfer->setKey($taxSetStorageTransfer->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
@@ -94,7 +93,7 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      */
     public function getQueueName(): string
     {
-        return ProductQuantityStorageConfig::PRODUCT_QUANTITY_SYNC_STORAGE_QUEUE;
+        return TaxStorageConfig::TAX_SET_SYNC_STORAGE_QUEUE;
     }
 
     /**
@@ -106,6 +105,6 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return $this->getFactory()->getConfig()->getProductQuantitySynchronizationPoolName();
+        return null;
     }
 }
