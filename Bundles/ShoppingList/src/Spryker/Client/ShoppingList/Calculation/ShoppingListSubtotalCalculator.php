@@ -21,7 +21,7 @@ class ShoppingListSubtotalCalculator implements ShoppingListSubtotalCalculatorIn
     {
         $shoppingListSubtotal = 0;
         foreach ($shoppingListItems as $shoppingListItem) {
-            if (empty($shoppingListItem[self::KEY_PRICE] || empty($shoppingListItem[static::KEY_QUANTITY]))) {
+            if (empty($shoppingListItem[static::KEY_PRICE] || empty($shoppingListItem[static::KEY_QUANTITY]))) {
                 continue;
             }
 
