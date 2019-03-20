@@ -8,6 +8,7 @@
 namespace Spryker\Service\PriceProductMerchantRelationship\Plugin\PriceProductExtension;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
@@ -41,8 +42,12 @@ class MerchantRelationshipPriceProductFilterPlugin extends AbstractPlugin implem
                 $resultPriceProductTransfers[] = $priceProductTransfer;
             }
 
-            if ($minPriceProductTransfer === null) {
+            if ($minPriceProductTransfer === null || !$this->hasPriceByPriceMode($minPriceProductTransfer, $priceProductFilterTransfer->getPriceMode())) {
                 $minPriceProductTransfer = $priceProductTransfer;
+                continue;
+            }
+
+            if (!$this->hasPriceByPriceMode($priceProductTransfer, $priceProductFilterTransfer->getPriceMode())) {
                 continue;
             }
 
@@ -77,5 +82,17 @@ class MerchantRelationshipPriceProductFilterPlugin extends AbstractPlugin implem
     public function getDimensionName(): string
     {
         return PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param string $priceMode
+     *
+     * @return bool
+     */
+    protected function hasPriceByPriceMode(PriceProductTransfer $priceProductTransfer, string $priceMode): bool
+    {
+        return ($priceMode === PriceProductConfig::PRICE_GROSS_MODE && $priceProductTransfer->getMoneyValue()->getGrossAmount() !== null) ||
+            ($priceMode !== PriceProductConfig::PRICE_GROSS_MODE && $priceProductTransfer->getMoneyValue()->getNetAmount() !== null);
     }
 }
