@@ -8,8 +8,11 @@
 namespace SprykerTest\Shared\Testify\Helper;
 
 use ArrayObject;
+use Codeception\Configuration;
 use Codeception\Module;
+use Codeception\Stub;
 use Codeception\TestInterface;
+use Exception;
 use ReflectionClass;
 use Spryker\Shared\Config\Config;
 
@@ -19,6 +22,16 @@ class ConfigHelper extends Module
      * @var array
      */
     protected $configCache;
+
+    /**
+     * @var \Spryker\Shared\Kernel\AbstractBundleConfig|null
+     */
+    protected $configStub;
+
+    /**
+     * @var array
+     */
+    protected $mockedConfigMethods = [];
 
     /**
      * @return void
@@ -57,6 +70,53 @@ class ConfigHelper extends Module
     }
 
     /**
+     * @param string $methodName
+     * @param mixed $return
+     *
+     * @throws \Exception
+     *
+     * @return object|\Spryker\Shared\Kernel\AbstractBundleConfig|null
+     */
+    public function mockConfigMethod(string $methodName, $return)
+    {
+        $className = $this->getConfigClassName();
+
+        if (!method_exists($className, $methodName)) {
+            throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
+        }
+
+        $this->mockedConfigMethods[$methodName] = $return;
+        $this->configStub = Stub::make($className, $this->mockedConfigMethods);
+
+        return $this->configStub;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\AbstractBundleConfig
+     */
+    public function getModuleConfig()
+    {
+        if ($this->configStub !== null) {
+            return $this->configStub;
+        }
+
+        $moduleConfigClassName = $this->getConfigClassName();
+
+        return new $moduleConfigClassName();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getConfigClassName(): string
+    {
+        $config = Configuration::config();
+        $namespaceParts = explode('\\', $config['namespace']);
+
+        return sprintf('\%1$s\%2$s\%3$s\%3$sConfig', rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
+    }
+
+    /**
      * @param string $key
      *
      * @return void
@@ -67,6 +127,17 @@ class ConfigHelper extends Module
         $config = $configProperty->getValue();
         unset($config[$key]);
         $configProperty->setValue($config);
+    }
+
+    /**
+     * @param \Codeception\TestInterface $test
+     *
+     * @return void
+     */
+    public function _before(TestInterface $test)
+    {
+        $this->configStub = null;
+        $this->mockedConfigMethods = [];
     }
 
     /**

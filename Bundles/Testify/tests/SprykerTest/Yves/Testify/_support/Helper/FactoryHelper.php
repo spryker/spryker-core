@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Shared\Testify\Helper;
+namespace SprykerTest\Yves\Testify\Helper;
 
 use Codeception\Configuration;
 use Codeception\Module;
@@ -13,10 +13,10 @@ use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
 use Spryker\Shared\Testify\Locator\TestifyConfiguratorInterface;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Testify\Locator\Business\BusinessLocator as Locator;
+use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 
-class BusinessHelper extends Module
+class FactoryHelper extends Module
 {
     /**
      * @var array
@@ -44,7 +44,7 @@ class BusinessHelper extends Module
     protected $mockedFactoryMethods = [];
 
     /**
-     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
+     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Yves\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
      */
     public function getLocator()
     {
@@ -62,29 +62,6 @@ class BusinessHelper extends Module
         $this->dependencies[$key] = $value;
 
         return $this;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    public function getFacade()
-    {
-        $facade = $this->createFacade();
-        $facade->setFactory($this->getFactory());
-
-        return $facade;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    protected function createFacade(): AbstractFacade
-    {
-        $currentNamespace = Configuration::config()['namespace'];
-        $namespaceParts = explode('\\', $currentNamespace);
-        $moduleName = lcfirst($namespaceParts[2]);
-
-        return $this->getLocator()->$moduleName()->facade($this->createClosure());
     }
 
     /**
@@ -110,7 +87,7 @@ class BusinessHelper extends Module
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     * @return \Spryker\Yves\Kernel\AbstractFactory
      */
     public function getFactory()
     {
@@ -118,7 +95,7 @@ class BusinessHelper extends Module
             return $this->factoryStub;
         }
 
-        $moduleFactory = $this->createModuleFactory();
+        $moduleFactory = $this->createFactory();
         if ($this->hasModule('\\' . ConfigHelper::class)) {
             $moduleFactory->setConfig($this->getConfig());
         }
@@ -127,9 +104,9 @@ class BusinessHelper extends Module
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     * @return \Spryker\Yves\Kernel\AbstractFactory
      */
-    protected function createModuleFactory()
+    protected function createFactory()
     {
         $moduleFactoryClassName = $this->getFactoryClassName();
 
@@ -144,11 +121,11 @@ class BusinessHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf('\%1$s\%2$s\%3$s\%3$sBusinessFactory', $namespaceParts[0], $namespaceParts[1], $namespaceParts[2]);
+        return sprintf('\%1$s\Yves\%2$s\%2$sFactory', $namespaceParts[0], $namespaceParts[2]);
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
+     * @return \Spryker\Yves\Kernel\AbstractBundleConfig
      */
     protected function getConfig()
     {

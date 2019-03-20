@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Configuration;
+use Codeception\Module;
 use Codeception\Step;
 use ReflectionClass;
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
@@ -15,7 +16,7 @@ use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Testify\Locator\Business\BusinessLocator;
 
-class LocatorHelper extends ConfigHelper
+class LocatorHelper extends Module
 {
     /**
      * @var array
@@ -79,8 +80,17 @@ class LocatorHelper extends ConfigHelper
      */
     private function configureNamespacesForClassResolver()
     {
-        $this->setConfig(KernelConstants::PROJECT_NAMESPACES, $this->config['projectNamespaces']);
-        $this->setConfig(KernelConstants::CORE_NAMESPACES, $this->config['coreNamespaces']);
+        $configModule = $this->getConfigModule();
+        $configModule->setConfig(KernelConstants::PROJECT_NAMESPACES, $this->config['projectNamespaces']);
+        $configModule->setConfig(KernelConstants::CORE_NAMESPACES, $this->config['coreNamespaces']);
+    }
+
+    /**
+     * @return \SprykerTest\Shared\Testify\Helper\ConfigHelper
+     */
+    protected function getConfigModule(): ConfigHelper
+    {
+        return $this->getModule('\\' . ConfigHelper::class);
     }
 
     /**

@@ -1,5 +1,9 @@
 namespace: SprykerTest\Yves\Twig
 
+organization: Spryker
+application: Yves
+module: Twig
+
 paths:
     tests: .
     data: ../../../_data
@@ -21,5 +25,6 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Yves\Testify\Helper\FactoryHelper
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Shared\Propel\Helper\TransactionHelper

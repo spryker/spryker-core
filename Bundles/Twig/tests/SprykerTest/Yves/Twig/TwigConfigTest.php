@@ -21,13 +21,31 @@ use Spryker\Yves\Twig\TwigConfig;
 class TwigConfigTest extends Unit
 {
     /**
+     * @var \SprykerTest\Yves\Twig\TwigYvesTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
-    public function testGetTemplatePathsShouldReturnAnArray()
+    public function testGetTemplatePathsShouldReturnAnArrayWithOnlyDefaultTemplatePaths()
     {
-        $twigConfig = new TwigConfig();
+        $twigConfig = $this->tester->getModuleConfig();
 
-        $this->assertIsArray($twigConfig->getTemplatePaths());
+        $templatePaths = $twigConfig->getTemplatePaths();
+        $this->assertCount(4, $templatePaths);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetTemplatePathsShouldReturnAnArrayShouldReturnCustomAndDefaultTemplatePaths()
+    {
+        $this->tester->mockConfigMethod('getThemeNames', ['custom', 'default']);
+        $twigConfig = $this->tester->getModuleConfig();
+
+        $templatePaths = $twigConfig->getTemplatePaths();
+        $this->assertCount(8, $templatePaths);
     }
 
     /**

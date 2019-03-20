@@ -22,6 +22,8 @@ interface TwigConstants
     public const YVES_TWIG_OPTIONS = 'YVES_TWIG_OPTIONS';
 
     /**
+     * @deprecated Please use `YVES_THEMES` instead.
+     *
      * Specification:
      * - Defines the used theme name for Yves.
      * - Default theme name is "default".
@@ -29,6 +31,12 @@ interface TwigConstants
      * @api
      */
     public const YVES_THEME = 'YVES_THEME';
+
+    /**
+     * Specification:
+     * - Returns an array with activated Themes.
+     */
+    public const YVES_THEMES = 'YVES_THEMES';
 
     /**
      * Specification:

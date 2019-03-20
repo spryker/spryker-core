@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Shared\Testify\Helper;
+namespace SprykerTest\Zed\Testify\Helper;
 
 use Codeception\Configuration;
 use Codeception\Module;
@@ -80,8 +80,9 @@ class BusinessHelper extends Module
      */
     protected function createFacade(): AbstractFacade
     {
-        $currentNamespace = Configuration::config()['namespace'];
-        $namespaceParts = explode('\\', $currentNamespace);
+        $config = Configuration::config();
+        $namespaceParts = explode('\\', $config['namespace']);
+
         $moduleName = lcfirst($namespaceParts[2]);
 
         return $this->getLocator()->$moduleName()->facade($this->createClosure());
@@ -145,6 +146,20 @@ class BusinessHelper extends Module
         $namespaceParts = explode('\\', $config['namespace']);
 
         return sprintf('\%1$s\%2$s\%3$s\%3$sBusinessFactory', $namespaceParts[0], $namespaceParts[1], $namespaceParts[2]);
+    }
+
+    /**
+     * @param array $config
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    protected function assertModuleSettings(array $config)
+    {
+        if (!isset($config['organization']) || !isset($config['application']) || !isset($config['module'])) {
+            throw new Exception(sprintf('You need to configure "%s" in your suite codeception.yml with "organization, application and module" at least one of them seems to be not set.', static::class));
+        }
     }
 
     /**
