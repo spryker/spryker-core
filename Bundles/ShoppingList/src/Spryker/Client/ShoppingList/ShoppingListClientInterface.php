@@ -319,4 +319,17 @@ interface ShoppingListClientInterface
      * @return void
      */
     public function updateCustomerPermission(): void;
+
+    /**
+     * Specification:
+     * - Calculates shopping list subtotal as a sum of each item price * item quantity.
+     * - Returns calculated subtotal in cents.
+     *
+     * @api
+     *
+     * @param array $shoppingListItems
+     *
+     * @return int
+     */
+    public function calculateShoppingListSubtotal(array $shoppingListItems): int;
 }
