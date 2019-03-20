@@ -8,7 +8,6 @@
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.21.0",
     "spryker/product": "^6.0.0",
-    "spryker/propel-orm": "^1.0.0",
     "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0"
@@ -24,7 +23,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+    "spryker/propel-orm": "If you want to use transaction functionality, minimum required version: 1.3.0"
   },
   "autoload": {
     "psr-4": {

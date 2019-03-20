@@ -13,6 +13,7 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\TaxProductStorage\Communication\Plugin\Event\Listener\TaxProductStoragePublishListener;
+use Spryker\Zed\TaxProductStorage\Communication\Plugin\Event\Listener\TaxProductStorageUnpublishListener;
 use Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageRepository;
 
 /**
@@ -40,6 +41,11 @@ class TaxProductStorageUnpublishListenerTest extends Unit
     protected $taxProductStorageRepository;
 
     /**
+     * @var \Spryker\Zed\TaxProductStorage\Communication\Plugin\Event\Listener\TaxProductStorageUnpublishListener
+     */
+    protected $taxProductStorageUnpublishListener;
+
+    /**
      * @var \Spryker\Zed\TaxProductStorage\Communication\Plugin\Event\Listener\TaxProductStoragePublishListener
      */
     protected $taxProductStoragePublishListener;
@@ -63,6 +69,7 @@ class TaxProductStorageUnpublishListenerTest extends Unit
         });
 
         $this->taxProductStorageRepository = new TaxProductStorageRepository();
+        $this->taxProductStorageUnpublishListener = new TaxProductStorageUnpublishListener();
         $this->taxProductStoragePublishListener = new TaxProductStoragePublishListener();
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();
     }
@@ -70,7 +77,7 @@ class TaxProductStorageUnpublishListenerTest extends Unit
     /**
      * @return void
      */
-    public function testHandleBulkProductAlternativeStorageEntityCanBePublished(): void
+    public function testHandleBulkProductAlternativeStorageEntityCanBeUnpublished(): void
     {
         // Arrange
         $eventTransfers = [
@@ -82,13 +89,16 @@ class TaxProductStorageUnpublishListenerTest extends Unit
             $eventTransfers,
             ProductEvents::PRODUCT_ABSTRACT_PUBLISH
         );
+        $this->taxProductStorageUnpublishListener->handleBulk(
+            $eventTransfers,
+            ProductEvents::PRODUCT_ABSTRACT_PUBLISH
+        );
         $taxProductStorageEntities = $this->taxProductStorageRepository
-            ->findTaxProductStorageEntities(
-                [$this->productAbstractTransfer->getIdProductAbstract()]
-            );
+            ->findTaxProductStorageEntities([
+                $this->productAbstractTransfer->getIdProductAbstract(),
+            ]);
 
         // Assert
-        $this->assertCount(1, $taxProductStorageEntities);
-        $this->assertEquals($this->productAbstractTransfer->getSku(), $taxProductStorageEntities[0]->getSku());
+        $this->assertCount(0, $taxProductStorageEntities);
     }
 }

@@ -91,4 +91,21 @@ class TaxProductStoragePublishListenerTest extends Unit
         $this->assertCount(1, $taxProductStorageEntities);
         $this->assertEquals($this->productAbstractTransfer->getSku(), $taxProductStorageEntities[0]->getSku());
     }
+
+    /**
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $taxProductStorageEntities = $this->taxProductStorageRepository
+            ->findTaxProductStorageEntities([
+                $this->productAbstractTransfer->getIdProductAbstract(),
+            ]);
+
+        foreach ($taxProductStorageEntities as $taxProductStorageEntity) {
+            $taxProductStorageEntity->delete();
+        }
+    }
 }
