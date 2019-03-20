@@ -14,7 +14,11 @@ use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Kernel\Communication\Application;
+use Spryker\Service\Container\Container;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Application\Application;
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
+use Spryker\Shared\Kernel\Communication\Application as LegacyApplication;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 
@@ -29,15 +33,22 @@ class ZedBootstrap
     private $additionalServiceProvider;
 
     /**
-     * @var \Silex\Application
+     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
-    private $application;
+    private $additionalApplicationPlugins;
 
     /**
+     * @var \Spryker\Shared\Kernel\Communication\Application|null
+     */
+    private $legacyApplication;
+
+    /**
+     * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[] $additionalApplicationPlugins
      * @param \Silex\ServiceProviderInterface[] $additionalServiceProvider
      */
-    public function __construct(array $additionalServiceProvider)
+    public function __construct(array $additionalApplicationPlugins, array $additionalServiceProvider)
     {
+        $this->additionalApplicationPlugins = $additionalApplicationPlugins;
         $this->additionalServiceProvider = $additionalServiceProvider;
     }
 
@@ -46,45 +57,108 @@ class ZedBootstrap
      */
     public function boot()
     {
-        $application = $this->getApplication();
-        $application['debug'] = true;
-        $application['locale'] = $this->getCurrentLocale();
-
-        $this->registerServiceProvider();
-        $application['session.test'] = true;
-
-        return $this->application;
+        return $this->getApplication();
     }
 
     /**
-     * @return \Silex\Application|\Spryker\Shared\Kernel\Communication\Application
+     * @return \Spryker\Shared\Application\Application
      */
-    private function getApplication()
+    private function getApplication(): Application
     {
-        $application = new Application();
-        $this->unsetSilexExceptionHandler($application);
-        Pimple::setApplication($application);
+        $container = $this->getContainer();
+        $application = new Application($container);
+        $application = $this->registerApplicationPlugins($application);
 
-        $this->application = $application;
+        if ($this->legacyApplication) {
+            $this->legacyApplication->boot();
+            Pimple::setApplication($this->legacyApplication);
+        }
 
-        return $this->application;
+        $application->boot();
+
+        return $application;
     }
 
     /**
-     * @return void
+     * @return \Spryker\Service\Container\ContainerInterface
      */
-    private function registerServiceProvider()
+    protected function getContainer(): ContainerInterface
+    {
+        if (class_exists(LegacyApplication::class)) {
+            $container = new LegacyApplication();
+            $container = $this->registerServiceProvider($container);
+            $container->set('debug', true);
+            $container->set('session.test', true);
+            $container->set('locale', $this->getCurrentLocale());
+            $container->remove('exception_handler');
+
+            $this->legacyApplication = $container;
+
+            return $container;
+        }
+
+        return new Container();
+    }
+
+    /**
+     * @deprecated Please switch to `Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface`.
+     *
+     * @param \Spryker\Shared\Kernel\Communication\Application $application
+     *
+     * @return \Spryker\Shared\Kernel\Communication\Application
+     */
+    private function registerServiceProvider(LegacyApplication $application): LegacyApplication
     {
         $serviceProviders = $this->getServiceProvider();
         foreach ($serviceProviders as $serviceProvider) {
             if (!($serviceProvider instanceof ServiceProviderInterface)) {
                 $serviceProvider = new $serviceProvider();
             }
-            $this->application->register($serviceProvider);
+            $application->register($serviceProvider);
         }
+
+        return $application;
     }
 
     /**
+     * @param \Spryker\Shared\Application\Application $application
+     *
+     * @return \Spryker\Shared\Application\Application
+     */
+    private function registerApplicationPlugins(Application $application): Application
+    {
+        $applicationPlugins = $this->getApplicationPlugins();
+        foreach ($applicationPlugins as $applicationPlugin) {
+            if (!($applicationPlugin instanceof ApplicationPluginInterface)) {
+                $applicationPlugin = new $applicationPlugin();
+            }
+            $application->registerApplicationPlugin($applicationPlugin);
+        }
+
+        return $application;
+    }
+
+    /**
+     * @return array
+     */
+    private function getApplicationPlugins()
+    {
+        $defaultApplicationPlugins = $this->getDefaultApplicationPlugins();
+
+        return array_merge($defaultApplicationPlugins, $this->additionalApplicationPlugins);
+    }
+
+    /**
+     * @return array
+     */
+    private function getDefaultApplicationPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Please switch to `Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface`.
+     *
      * @return array
      */
     private function getServiceProvider()
@@ -95,6 +169,8 @@ class ZedBootstrap
     }
 
     /**
+     * @deprecated Please switch to `Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface`.
+     *
      * @return array
      */
     private function getDefaultServiceProvider()
@@ -107,16 +183,6 @@ class ZedBootstrap
             new SessionServiceProvider(),
             new TwigServiceProvider(),
         ];
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Communication\Application $application
-     *
-     * @return void
-     */
-    private function unsetSilexExceptionHandler(Application $application)
-    {
-        unset($application['exception_handler']);
     }
 
     /**
