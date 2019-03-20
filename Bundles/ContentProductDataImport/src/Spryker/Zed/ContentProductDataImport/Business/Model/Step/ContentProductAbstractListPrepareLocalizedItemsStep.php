@@ -68,7 +68,10 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
             $contentValidationResponseTransfer = $this->contentProductFacade->validateContentProductAbstractList($contentProductAbstractListTransfer);
 
             if (!$contentValidationResponseTransfer->getIsSuccess()) {
-                $messageTransfer = $contentValidationResponseTransfer->getParameterMessages()->offsetGet(0)->getMessages()->offsetGet(0);
+                $messageTransfer = $contentValidationResponseTransfer->getParameterMessages()
+                    ->offsetGet(0)
+                    ->getMessages()
+                    ->offsetGet(0);
                 $kusLocaleColumn = ContentProductAbstractListDataSetInterface::COLUMN_SKUS . '.' . $localeName;
                 $rowKey = $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PROCUCT_ABSTRACT_LIST_KEY];
                 $parameters = array_merge($messageTransfer->getParameters(), [
