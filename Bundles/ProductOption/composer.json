@@ -16,6 +16,7 @@
     "spryker/money": "^2.4.0",
     "spryker/price": "^5.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
+    "spryker/product-option-extension": "^1.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "spryker/storage": "^3.0.0",

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\CartChangeSalesUnitExpander;
+use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\CartChangeSalesUnitExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstaller;
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstallerInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpander;
@@ -26,6 +28,7 @@ use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasure
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeInterface;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToStoreFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface;
 use Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitDependencyProvider;
 
@@ -136,5 +139,24 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
         return new ProductMeasurementUnitTranslationExpander(
             $this->getGlossaryFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\CartChange\CartChangeSalesUnitExpanderInterface
+     */
+    public function createCartChangeSalesUnitExpander(): CartChangeSalesUnitExpanderInterface
+    {
+        return new CartChangeSalesUnitExpander(
+            $this->getRepository(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductMeasurementUnitToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitDependencyProvider::FACADE_STORE);
     }
 }
