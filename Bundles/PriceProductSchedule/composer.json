@@ -5,10 +5,10 @@
   "license": "proprietary",
   "require": {
     "spryker/currency": "^3.5.3",
-    "spryker/customer": "^7.20.0",
     "spryker/price-product": "^2.11.0",
     "spryker/product": "^6.10.0",
-    "spryker/store": "^1.9.1"
+    "spryker/store": "^1.9.1",
+    "spryker/user": "^3.7.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

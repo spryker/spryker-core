@@ -62,12 +62,12 @@
         <property name="isActive" type="bool"/>
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
-        <property name="fkCustomer" type="int"/>
-        <property name="customer" type="Customer"/>
+        <property name="fkUser" type="int"/>
+        <property name="user" type="User"/>
     </transfer>
 
-    <transfer name="Customer">
-        <property name="idCustomer" type="int" />
+    <transfer name="User">
+        <property name="idUser" type="int" />
     </transfer>
 
 </transfers>
