@@ -20,11 +20,8 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Service\UtilQuantity\UtilQuantityConfig;
 use Spryker\Service\UtilQuantity\UtilQuantityService;
 use Spryker\Service\UtilQuantity\UtilQuantityServiceFactory;
-use Spryker\Zed\Cart\Business\CartBusinessFactory;
-use Spryker\Zed\Cart\Business\CartFacade;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceBridge;
-use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
@@ -52,18 +49,16 @@ class CartFacadeTest extends Unit
     private $cartFacade;
 
     /**
+     * @var \SprykerTest\Zed\Cart\CartBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
-
-        $container = new Container();
-
-        $dependencyProvider = new CartDependencyProvider();
-        $dependencyProvider->provideBusinessLayerDependencies($container);
-        $dependencyProvider->provideCommunicationLayerDependencies($container);
-        $dependencyProvider->providePersistenceLayerDependencies($container);
 
         $utilQuantityConfigMock = $this->getMockBuilder(UtilQuantityConfig::class)
             ->setMethods(['getQuantityRoundingPrecision'])
@@ -77,15 +72,11 @@ class CartFacadeTest extends Unit
         $utilQuantityService = new UtilQuantityService();
         $utilQuantityService->setFactory($utilQuantityServiceFactory);
 
-        $container[CartDependencyProvider::SERVICE_UTIL_QUANTITY] = function () use ($utilQuantityService) {
-            return new CartToUtilQuantityServiceBridge($utilQuantityService);
-        };
+        $utilQuantityServiceBridge = new CartToUtilQuantityServiceBridge($utilQuantityService);
 
-        $cartBusinessFactory = new CartBusinessFactory();
-        $cartBusinessFactory->setContainer($container);
+        $this->tester->setDependency(CartDependencyProvider::SERVICE_UTIL_QUANTITY, $utilQuantityServiceBridge);
 
-        $this->cartFacade = new CartFacade();
-        $this->cartFacade->setFactory($cartBusinessFactory);
+        $this->cartFacade = $this->tester->getFacade();
 
         $this->setTestData();
     }
