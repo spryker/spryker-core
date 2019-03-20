@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Cart\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CartChangeBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -15,8 +17,13 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Service\UtilQuantity\UtilQuantityConfig;
+use Spryker\Service\UtilQuantity\UtilQuantityService;
+use Spryker\Service\UtilQuantity\UtilQuantityServiceFactory;
+use Spryker\Zed\Cart\Business\CartBusinessFactory;
 use Spryker\Zed\Cart\Business\CartFacade;
 use Spryker\Zed\Cart\CartDependencyProvider;
+use Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceBridge;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -58,9 +65,139 @@ class CartFacadeTest extends Unit
         $dependencyProvider->provideCommunicationLayerDependencies($container);
         $dependencyProvider->providePersistenceLayerDependencies($container);
 
+        $utilQuantityConfigMock = $this->getMockBuilder(UtilQuantityConfig::class)
+            ->setMethods(['getQuantityRoundingPrecision'])
+            ->getMock();
+
+        $utilQuantityConfigMock->method('getQuantityRoundingPrecision')
+            ->will($this->returnValue(2));
+
+        $utilQuantityServiceFactory = new UtilQuantityServiceFactory();
+        $utilQuantityServiceFactory->setConfig($utilQuantityConfigMock);
+        $utilQuantityService = new UtilQuantityService();
+        $utilQuantityService->setFactory($utilQuantityServiceFactory);
+
+        $container[CartDependencyProvider::SERVICE_UTIL_QUANTITY] = function () use ($utilQuantityService) {
+            return new CartToUtilQuantityServiceBridge($utilQuantityService);
+        };
+
+        $cartBusinessFactory = new CartBusinessFactory();
+        $cartBusinessFactory->setContainer($container);
+
         $this->cartFacade = new CartFacade();
+        $this->cartFacade->setFactory($cartBusinessFactory);
 
         $this->setTestData();
+    }
+
+    /**
+     * @dataProvider addToCartIncreaseCartQuantityDataProvider
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param float $expectedResult
+     *
+     * @return void
+     */
+    public function testAddToCartIncreaseCartQuantity(CartChangeTransfer $cartChangeTransfer, float $expectedResult): void
+    {
+        $resultQuoteTransfer = $this->cartFacade->add($cartChangeTransfer);
+
+        $this->assertSame($expectedResult, $resultQuoteTransfer->getItems()[0]->getQuantity());
+    }
+
+    /**
+     * @return array
+     */
+    public function addToCartIncreaseCartQuantityDataProvider(): array
+    {
+        return [
+            'int stock' => $this->getDataForAddToCartIncreaseCartQuantity(1, 2, 3.0),
+            'float stock' => $this->getDataForAddToCartIncreaseCartQuantity(1.1, 2.2, 3.3),
+            'float stock high precision' => $this->getDataForAddToCartIncreaseCartQuantity(1.111111111, 2.100000002, 3.21),
+        ];
+    }
+
+    /**
+     * @param int|float $quoteQty
+     * @param int|float $additionalQty
+     * @param float $expectedResult
+     *
+     * @return array
+     */
+    public function getDataForAddToCartIncreaseCartQuantity($quoteQty, $additionalQty, float $expectedResult): array
+    {
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem([
+                ItemTransfer::QUANTITY => $quoteQty,
+                ItemTransfer::GROUP_KEY => 'group',
+                ItemTransfer::SKU => '123',
+            ])
+            ->build();
+
+        $cartChangeTransfer = (new CartChangeBuilder())->withItem([
+            ItemTransfer::QUANTITY => $additionalQty,
+            ItemTransfer::GROUP_KEY => 'group',
+            ItemTransfer::SKU => '123',
+        ])->build();
+        $cartChangeTransfer->setQuote($quoteTransfer);
+
+        return [$cartChangeTransfer, $expectedResult];
+    }
+
+    /**
+     * @dataProvider addToCartDecreaseCartQuantityDataProvider
+     *
+     * @group her
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param float $expectedResult
+     *
+     * @return void
+     */
+    public function testAddToCartDecreaseCartQuantity(CartChangeTransfer $cartChangeTransfer, float $expectedResult): void
+    {
+        $resultQuoteTransfer = $this->cartFacade->remove($cartChangeTransfer);
+
+        $this->assertSame($expectedResult, $resultQuoteTransfer->getItems()[0]->getQuantity());
+    }
+
+    /**
+     * @return array
+     */
+    public function addToCartDecreaseCartQuantityDataProvider(): array
+    {
+        return [
+            'int stock' => $this->getDataForAddToCartDecreaseCartQuantity(3, 1, 2.0),
+            'float stock' => $this->getDataForAddToCartDecreaseCartQuantity(3.1, 2.2, 0.9),
+            'float stock high precision' => $this->getDataForAddToCartDecreaseCartQuantity(3.111111111, 2.000000001, 1.11),
+        ];
+    }
+
+    /**
+     * @param int|float $quoteQty
+     * @param int|float $additionalQty
+     * @param float $expectedResult
+     *
+     * @return array
+     */
+    public function getDataForAddToCartDecreaseCartQuantity($quoteQty, $additionalQty, float $expectedResult): array
+    {
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem([
+                ItemTransfer::QUANTITY => $quoteQty,
+                ItemTransfer::GROUP_KEY => 'group',
+                ItemTransfer::SKU => '123',
+            ])
+            ->build();
+
+        $cartChangeTransfer = (new CartChangeBuilder())->withItem([
+            ItemTransfer::QUANTITY => $additionalQty,
+            ItemTransfer::GROUP_KEY => 'group',
+            ItemTransfer::SKU => '123',
+        ])->build();
+        $cartChangeTransfer->setQuote($quoteTransfer);
+
+        return [$cartChangeTransfer, $expectedResult];
     }
 
     /**
