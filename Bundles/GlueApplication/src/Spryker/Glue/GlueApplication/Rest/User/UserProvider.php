@@ -7,21 +7,20 @@
 namespace Spryker\Glue\GlueApplication\Rest\User;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface;
 
 class UserProvider implements UserProviderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface
      */
-    protected $restUserFinderPlugin;
+    protected $restUserFinderPlugins;
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface $userFinderPlugin
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface[] $restUserFinderPlugins
      */
-    public function __construct(RestUserFinderPluginInterface $userFinderPlugin)
+    public function __construct(array $restUserFinderPlugins)
     {
-        $this->restUserFinderPlugin = $userFinderPlugin;
+        $this->restUserFinderPlugins = $restUserFinderPlugins;
     }
 
     /**
@@ -35,15 +34,19 @@ class UserProvider implements UserProviderInterface
             return $restRequest;
         }
 
-        $restUserTransfer = $this->restUserFinderPlugin->findUser($restRequest);
-        if ($restUserTransfer) {
-            $restRequest->setUser(
-                $restUserTransfer->getSurrogateIdentifier(),
-                $restUserTransfer->getNaturalIdentifier(),
-                $restUserTransfer->getScopes()
-            );
+        foreach ($this->restUserFinderPlugins as $restUserFinderPlugin) {
+            $restUserTransfer = $restUserFinderPlugin->findUser($restRequest);
+            if ($restUserTransfer) {
+                $restRequest->setUser(
+                    $restUserTransfer->getSurrogateIdentifier(),
+                    $restUserTransfer->getNaturalIdentifier(),
+                    $restUserTransfer->getScopes()
+                );
 
-            $restRequest->setRestUser($restUserTransfer);
+                $restRequest->setRestUser($restUserTransfer);
+            }
+
+            break;
         }
 
         return $restRequest;

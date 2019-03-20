@@ -24,7 +24,6 @@ use Spryker\Shared\Log\LoggerTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-//TODO: move validators and formatters to separate classes
 class ControllerFilter implements ControllerFilterInterface
 {
     use LoggerTrait;
@@ -124,11 +123,11 @@ class ControllerFilter implements ControllerFilterInterface
 
             $restRequest = $this->requestFormatter->formatRequest($httpRequest);
 
-            $restRequest = $this->userProvider->setUserToRestRequest($restRequest);
-
             $restErrorCollectionTransfer = $this->validateRequest($controller, $httpRequest, $restRequest);
 
             if (!$restErrorCollectionTransfer || !$restErrorCollectionTransfer->getRestErrors()->count()) {
+                $restRequest = $this->userProvider->setUserToRestRequest($restRequest);
+
                 $restResponse = $this->executeAction($controller, $action, $restRequest);
             } else {
                 $restResponse = $this->createErrorResponse($restErrorCollectionTransfer);

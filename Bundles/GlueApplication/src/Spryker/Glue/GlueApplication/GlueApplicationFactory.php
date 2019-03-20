@@ -48,8 +48,6 @@ use Spryker\Glue\GlueApplication\Rest\Response\ResponsePagination;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponsePaginationInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseRelationship;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseRelationshipInterface;
-use Spryker\Glue\GlueApplication\Rest\Route\ProtectedRouteValidator;
-use Spryker\Glue\GlueApplication\Rest\Route\ProtectedRouteValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Serialize\DecoderMatcher;
 use Spryker\Glue\GlueApplication\Rest\Serialize\DecoderMatcherInterface;
 use Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcher;
@@ -65,7 +63,6 @@ use Spryker\Glue\GlueApplication\Serialize\Decoder\JsonDecoder;
 use Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface;
 use Spryker\Glue\GlueApplication\Serialize\Encoder\JsonEncoder;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\Kernel\Application;
 
@@ -339,7 +336,7 @@ class GlueApplicationFactory extends AbstractFactory
     public function createUserProvider(): UserProviderInterface
     {
         return new UserProvider(
-            $this->getRestUserFinderPlugin()
+            $this->getRestUserFinderPlugins()
         );
     }
 
@@ -456,10 +453,10 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface[]
      */
-    public function getRestUserFinderPlugin(): RestUserFinderPluginInterface
+    public function getRestUserFinderPlugins(): array
     {
-        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGIN_REST_USER_FINDER);
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_REST_USER_FINDER);
     }
 }

@@ -10,7 +10,6 @@ use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientB
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceBridge;
 use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRelationshipCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\Kernel\Plugin\Pimple;
@@ -31,7 +30,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CONTROLLER_BEFORE_ACTION = 'PLUGIN_CONTROLLER_BEFORE_ACTION';
     public const PLUGIN_CONTROLLER_AFTER_ACTION = 'PLUGIN_CONTROLLER_AFTER_ACTION';
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
-    public const PLUGIN_REST_USER_FINDER = 'PLUGIN_REST_USER_FINDER';
+    public const PLUGINS_REST_USER_FINDER = 'PLUGINS_REST_USER_FINDER';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const CLIENT_STORE = 'CLIENT_STORE';
@@ -59,7 +58,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addControllerBeforeActionPlugins($container);
         $container = $this->addControllerAfterActionPlugins($container);
         $container = $this->addApplicationPlugins($container);
-        $container = $this->addRestUserFinderPlugin($container);
+        $container = $this->addRestUserFinderPlugins($container);
 
         return $container;
     }
@@ -265,10 +264,10 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addRestUserFinderPlugin(Container $container): Container
+    protected function addRestUserFinderPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_REST_USER_FINDER] = function (Container $container) {
-            return $this->getRestUserFinderPlugin();
+        $container[static::PLUGINS_REST_USER_FINDER] = function (Container $container) {
+            return $this->getRestUserFinderPlugins();
         };
 
         return $container;
@@ -382,10 +381,10 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface[]
      */
-    protected function getRestUserFinderPlugin(): RestUserFinderPluginInterface
+    protected function getRestUserFinderPlugins(): array
     {
-        //todo: throw exception
+        return [];
     }
 }

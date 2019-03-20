@@ -27,20 +27,12 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     protected $oauthClient;
 
     /**
-     * @var \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserExpanderPluginInterface[]
-     */
-    protected $restUserExpanderPlugins;
-
-    /**
      * @param \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface $oauthClient
-     * @param \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserExpanderPluginInterface[] $restUserExpanderPlugins
      */
     public function __construct(
-        AuthRestApiToOauthClientInterface $oauthClient,
-        array $restUserExpanderPlugins
+        AuthRestApiToOauthClientInterface $oauthClient
     ) {
         $this->oauthClient = $oauthClient;
-        $this->restUserExpanderPlugins = $restUserExpanderPlugins;
     }
 
     /**
@@ -75,7 +67,6 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
                 AuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID
             );
         }
-        $this->setRestUserData($restRequest, $authAccessTokenValidationResponseTransfer);
 
         return null;
     }
@@ -110,29 +101,6 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer $authAccessTokenValidationResponseTransfer
-     *
-     * @return void
-     */
-    protected function setRestUserData(
-        RestRequestInterface $restRequest,
-        OauthAccessTokenValidationResponseTransfer $authAccessTokenValidationResponseTransfer
-    ): void {
-
-        $userIdentifier = json_decode($authAccessTokenValidationResponseTransfer->getOauthUserId(), true);
-        $restUserTransfer = $this->getRestUserTransfer($userIdentifier, $restRequest);
-
-        $restRequest->setUser(
-            $userIdentifier['id_customer'],
-            $userIdentifier['customer_reference'],
-            $authAccessTokenValidationResponseTransfer->getOauthScopes()
-        );
-
-        $restRequest->setRestUser($restUserTransfer);
-    }
-
-    /**
      * @param string $authorizationToken
      *
      * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
@@ -151,36 +119,5 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
         );
 
         return $authAccessTokenValidationResponseTransfer;
-    }
-
-    /**
-     * @param array $userIdentifier
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\RestUserTransfer
-     */
-    protected function getRestUserTransfer(array $userIdentifier, RestRequestInterface $restRequest): RestUserTransfer
-    {
-        $restUserTransfer = (new RestUserTransfer())
-            ->fromArray($userIdentifier, true)
-            ->setNaturalIdentifier($userIdentifier['customer_reference'])
-            ->setSurrogateIdentifier($userIdentifier['id_customer']);
-
-        return $this->executeRestUserExpanderPlugins($restRequest, $restUserTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestUserTransfer $restUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestUserTransfer
-     */
-    protected function executeRestUserExpanderPlugins(RestRequestInterface $restRequest, RestUserTransfer $restUserTransfer): RestUserTransfer
-    {
-        foreach ($this->restUserExpanderPlugins as $restUserExpanderPlugin) {
-            $restUserTransfer = $restUserExpanderPlugin->expand($restUserTransfer, $restRequest);
-        }
-
-        return $restUserTransfer;
     }
 }
