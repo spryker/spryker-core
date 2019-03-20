@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/price-product-schedule.svg)](https://travis-ci.org/spryker/price-product-schedule)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/price-product-schedule/badge.svg)](https://coveralls.io/github/spryker/price-product-schedule)
 
-{{ADD DESCRIPTION HERE}}
+This module allow to setup scheduled price for products 
 
 ## Installation
 
