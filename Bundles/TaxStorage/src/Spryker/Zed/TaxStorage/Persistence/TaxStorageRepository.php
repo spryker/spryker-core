@@ -98,6 +98,20 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
      */
     public function findAllTaxSetSorageEntities(): ArrayObject
     {
+        $taxSetStorageTransfers = new ArrayObject();
+        $taxSetStorages = $this->getFactory()
+            ->createTaxSetStorageQuery()
+            ->find();
+
+        $mapper = $this->getFactory()->createTaxStorageMapper();
+
+        foreach ($taxSetStorages as $taxSetStorage) {
+            $taxSetStorageTransfers->append(
+                $mapper->mapTaxSetStorageEntityToTransfer($taxSetStorage, new TaxSetStorageTransfer())
+            );
+        }
+
+        return $taxSetStorageTransfers;
     }
 
     /**
