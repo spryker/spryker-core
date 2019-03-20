@@ -9,7 +9,6 @@ namespace SprykerTest\Client\ShoppingList\Calculation;
 
 use Codeception\Test\Unit;
 use Spryker\Client\ShoppingList\Calculation\ShoppingListSubtotalCalculator;
-use Spryker\Client\ShoppingList\Calculation\ShoppingListSubtotalCalculatorInterface;
 
 /**
  * Auto-generated group annotations
@@ -31,6 +30,21 @@ class ShoppingListSubtotalCalculatorTest extends Unit
     protected $tester;
 
     /**
+     * @var \Spryker\Client\ShoppingList\Calculation\ShoppingListSubtotalCalculatorInterface
+     */
+    protected $shoppingListSubtotalCalculator;
+
+    /**
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->shoppingListSubtotalCalculator = new ShoppingListSubtotalCalculator();
+    }
+
+    /**
      * @return void
      */
     public function testCalculateShoppingListSubtotalShouldCalculatePricesCorrectly(): void
@@ -46,7 +60,7 @@ class ShoppingListSubtotalCalculatorTest extends Unit
         $expectedShoppingListSubtotal = 55;
 
         $this->assertSame(
-            $this->createShoppingListSubtotalCalculator()->calculateShoppingListSubtotal($shoppingListItems),
+            $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItems),
             $expectedShoppingListSubtotal
         );
     }
@@ -67,16 +81,8 @@ class ShoppingListSubtotalCalculatorTest extends Unit
         $expectedShoppingListSubtotal = 20;
 
         $this->assertSame(
-            $this->createShoppingListSubtotalCalculator()->calculateShoppingListSubtotal($shoppingListItems),
+            $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItems),
             $expectedShoppingListSubtotal
         );
-    }
-
-    /**
-     * @return \Spryker\Client\ShoppingList\Calculation\ShoppingListSubtotalCalculatorInterface
-     */
-    protected function createShoppingListSubtotalCalculator(): ShoppingListSubtotalCalculatorInterface
-    {
-        return new ShoppingListSubtotalCalculator();
     }
 }
