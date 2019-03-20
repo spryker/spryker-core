@@ -39,4 +39,11 @@ interface QuoteRequestEntityManagerInterface
      * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
      */
     public function updateQuoteRequestVersion(QuoteRequestVersionTransfer $quoteRequestTransfer): QuoteRequestVersionTransfer;
+
+    /**
+     * @param int[] $quoteRequestIds
+     *
+     * @return void
+     */
+    public function closeQuoteRequests(array $quoteRequestIds): void;
 }

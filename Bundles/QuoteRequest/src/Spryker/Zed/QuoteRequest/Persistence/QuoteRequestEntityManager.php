@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequest;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion;
+use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -92,5 +93,18 @@ class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRe
         $quoteRequestVersionEntity->save();
 
         return $quoteRequestVersionTransfer;
+    }
+
+    /**
+     * @param int[] $quoteRequestIds
+     *
+     * @return void
+     */
+    public function closeQuoteRequests(array $quoteRequestIds): void
+    {
+        $this->getFactory()
+            ->getQuoteRequestPropelQuery()
+            ->filterByIdQuoteRequest_In($quoteRequestIds)
+            ->update(['Status' => SharedQuoteRequestConfig::STATUS_CLOSED]);
     }
 }
