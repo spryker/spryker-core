@@ -61,10 +61,10 @@ class ShipmentTaxRateCalculationTest extends Unit
 
         $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
-        $shipmentTransfer->setExpense($expense);
         $shipmentTransfer->setShippingAddress($addressTransfer);
         $itemTransfer->setShipment($shipmentTransfer);
         $quoteTransfer->addItem($itemTransfer);
+        $quoteTransfer->addExpense($expense);
 
         $shipmentFacadeTest = $this->createShipmentFacade();
         $shipmentFacadeTest->calculateShipmentTaxRate($quoteTransfer);
@@ -88,10 +88,10 @@ class ShipmentTaxRateCalculationTest extends Unit
 
         $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
-        $shipmentTransfer->setExpense($expense);
         $shipmentTransfer->setShippingAddress($addressTransfer);
         $itemTransfer->setShipment($shipmentTransfer);
         $quoteTransfer->addItem($itemTransfer);
+        $quoteTransfer->addExpense($expense);
 
         $shipmentFacadeTest = $this->createShipmentFacade();
         $shipmentFacadeTest->calculateShipmentTaxRate($quoteTransfer);
