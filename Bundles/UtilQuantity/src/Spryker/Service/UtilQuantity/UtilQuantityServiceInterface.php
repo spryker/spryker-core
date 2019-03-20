@@ -20,4 +20,17 @@ interface UtilQuantityServiceInterface
      * @return float
      */
     public function roundQuantity(float $quantity): float;
+
+    /**
+     * Specification:
+     * - compares two float quantities.
+     *
+     * @api
+     *
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantitiesEqual(float $firstQuantity, float $secondQuantity): bool;
 }

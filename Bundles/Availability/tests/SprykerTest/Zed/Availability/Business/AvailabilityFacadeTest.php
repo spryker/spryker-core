@@ -27,15 +27,7 @@ use Spryker\Service\UtilQuantity\UtilQuantityService;
 use Spryker\Service\UtilQuantity\UtilQuantityServiceFactory;
 use Spryker\Service\UtilQuantity\UtilQuantityServiceInterface;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
-use Spryker\Zed\Availability\Business\AvailabilityBusinessFactory;
-use Spryker\Zed\Availability\Business\AvailabilityFacade;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsBridge;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductBridge;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockBridge;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeBridge;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchBridge;
 use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceBridge;
-use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
@@ -103,11 +95,11 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @dataProvider calculateStockForProductShouldReturnPersistedStockProvider
      *
-     * @param float $quantity
+     * @param int|float $quantity
      *
      * @return void
      */
-    public function testCalculateStockForProductShouldReturnPersistedStock(float $quantity): void
+    public function testCalculateStockForProductShouldReturnPersistedStock($quantity): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -115,7 +107,7 @@ class AvailabilityFacadeTest extends Unit
 
         $calculatedQuantity = $availabilityFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
-        $this->assertSame($quantity, $calculatedQuantity);
+        $this->assertSame((float)$quantity, $calculatedQuantity);
     }
 
     /**
@@ -124,7 +116,7 @@ class AvailabilityFacadeTest extends Unit
     public function calculateStockForProductShouldReturnPersistedStockProvider(): array
     {
         return [
-            'int stock' => [5.0],
+            'int stock' => [5],
             'float stock' => [5.5],
         ];
     }
@@ -168,11 +160,11 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @dataProvider updateAvailabilityShouldStoreNewQuantityProvider
      *
-     * @param float $quantity
+     * @param int|float $quantity
      *
      * @return void
      */
-    public function testUpdateAvailabilityShouldStoreNewQuantity(float $quantity): void
+    public function testUpdateAvailabilityShouldStoreNewQuantity($quantity): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -185,7 +177,7 @@ class AvailabilityFacadeTest extends Unit
 
         $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(self::CONCRETE_SKU);
 
-        $this->assertSame($quantity, $availabilityEntity->getQuantity());
+        $this->assertSame((float)$quantity, $availabilityEntity->getQuantity());
     }
 
     /**
@@ -194,7 +186,7 @@ class AvailabilityFacadeTest extends Unit
     public function updateAvailabilityShouldStoreNewQuantityProvider(): array
     {
         return [
-            'int stock' => [50.0],
+            'int stock' => [50],
             'float stock' => [55.0],
         ];
     }
@@ -202,11 +194,11 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @dataProvider updateAvailabilityWhenItsEmptyShouldStoreNewQuantityProvider
      *
-     * @param float $quantity
+     * @param int|float $quantity
      *
      * @return void
      */
-    public function testUpdateAvailabilityWhenItsEmptyShouldStoreNewQuantity(float $quantity): void
+    public function testUpdateAvailabilityWhenItsEmptyShouldStoreNewQuantity($quantity): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -218,7 +210,7 @@ class AvailabilityFacadeTest extends Unit
 
         $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(self::CONCRETE_SKU);
 
-        $this->assertSame($quantity, $availabilityEntity->getQuantity());
+        $this->assertSame((float)$quantity, $availabilityEntity->getQuantity());
     }
 
     /**
@@ -227,7 +219,7 @@ class AvailabilityFacadeTest extends Unit
     public function updateAvailabilityWhenItsEmptyShouldStoreNewQuantityProvider(): array
     {
         return [
-            'int stock' => [50.0],
+            'int stock' => [50],
             'float stock' => [50.5],
         ];
     }
@@ -235,11 +227,11 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @dataProvider updateAvailabilityWhenSetToEmptyShouldStoreEmptyQuantityProvider
      *
-     * @param float $quantity
+     * @param int|float $quantity
      *
      * @return void
      */
-    public function testUpdateAvailabilityWhenSetToEmptyShouldStoreEmptyQuantity(float $quantity): void
+    public function testUpdateAvailabilityWhenSetToEmptyShouldStoreEmptyQuantity($quantity): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -247,7 +239,7 @@ class AvailabilityFacadeTest extends Unit
 
         $availabilityEntity = $this->createProductAvailability($quantity);
 
-        $this->assertSame($quantity, $availabilityEntity->getQuantity());
+        $this->assertSame((float)$quantity, $availabilityEntity->getQuantity());
 
         $availabilityFacade->updateAvailability(self::CONCRETE_SKU);
 
@@ -263,7 +255,7 @@ class AvailabilityFacadeTest extends Unit
     public function updateAvailabilityWhenSetToEmptyShouldStoreEmptyQuantityProvider(): array
     {
         return [
-            'int stock' => [5.0],
+            'int stock' => [5],
             'float stock' => [5.5],
         ];
     }
@@ -271,11 +263,11 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @dataProvider saveProductAvailabilityForStoreShouldStoreAvailabilityProvider
      *
-     * @param float $quantity
+     * @param int|float $quantity
      *
      * @return void
      */
-    public function testSaveProductAvailabilityForStoreShouldStoreAvailability(float $quantity)
+    public function testSaveProductAvailabilityForStoreShouldStoreAvailability($quantity)
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -291,7 +283,7 @@ class AvailabilityFacadeTest extends Unit
 
         $productConcreteAvailabilityTransfer = $availabilityFacade->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
 
-        $this->assertSame($quantity, $productConcreteAvailabilityTransfer->getAvailability());
+        $this->assertSame((float)$quantity, $productConcreteAvailabilityTransfer->getAvailability());
     }
 
     /**
@@ -300,7 +292,7 @@ class AvailabilityFacadeTest extends Unit
     public function saveProductAvailabilityForStoreShouldStoreAvailabilityProvider(): array
     {
         return [
-            'int stock' => [2.0],
+            'int stock' => [2],
             'float stock' => [2.5],
         ];
     }
@@ -327,48 +319,10 @@ class AvailabilityFacadeTest extends Unit
      */
     protected function createAvailabilityFacade()
     {
-        $utilQuantityService = $this->createUtilQuantityService();
+        $utilQuantityService = new AvailabilityToUtilQuantityServiceBridge($this->createUtilQuantityService());
+        $this->tester->setDependency(AvailabilityDependencyProvider::SERVICE_UTIL_QUANTITY, $utilQuantityService);
 
-        $availabilityFacade = new AvailabilityFacade();
-        $availabilityBusinessFactory = new AvailabilityBusinessFactory();
-
-        $availabilityContainer = new Container();
-        $availabilityContainer[AvailabilityDependencyProvider::SERVICE_UTIL_QUANTITY] = function () use ($utilQuantityService) {
-            return new AvailabilityToUtilQuantityServiceBridge(
-                $utilQuantityService
-            );
-        };
-        $availabilityContainer[AvailabilityDependencyProvider::FACADE_OMS] = function () {
-            return new AvailabilityToOmsBridge(
-                $this->tester->getLocator()->oms()->facade()
-            );
-        };
-        $availabilityContainer[AvailabilityDependencyProvider::FACADE_STOCK] = function () {
-            return new AvailabilityToStockBridge(
-                $this->tester->getLocator()->stock()->facade()
-            );
-        };
-        $availabilityContainer[AvailabilityDependencyProvider::FACADE_STORE] = function () {
-            return new AvailabilityToStoreFacadeBridge(
-                $this->tester->getLocator()->store()->facade()
-            );
-        };
-        $availabilityContainer[AvailabilityDependencyProvider::FACADE_TOUCH] = function () {
-            return new AvailabilityToTouchBridge(
-                $this->tester->getLocator()->touch()->facade()
-            );
-        };
-        $availabilityContainer[AvailabilityDependencyProvider::FACADE_PRODUCT] = function () {
-            return new AvailabilityToProductBridge(
-                $this->tester->getLocator()->product()->facade()
-            );
-        };
-
-        $availabilityBusinessFactory->setContainer($availabilityContainer);
-
-        $availabilityFacade->setFactory($availabilityBusinessFactory);
-
-        return $availabilityFacade;
+        return $this->tester->getFacade();
     }
 
     /**

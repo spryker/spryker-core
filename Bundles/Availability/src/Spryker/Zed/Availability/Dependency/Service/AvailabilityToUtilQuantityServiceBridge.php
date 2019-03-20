@@ -31,4 +31,15 @@ class AvailabilityToUtilQuantityServiceBridge implements AvailabilityToUtilQuant
     {
         return $this->utilQuantityService->roundQuantity($quantity);
     }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantitiesEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantitiesEqual($firstQuantity, $secondQuantity);
+    }
 }

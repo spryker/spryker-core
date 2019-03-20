@@ -5,17 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Availability\Dependency\Service;
+namespace Spryker\Service\UtilQuantity\Comparator;
 
-interface AvailabilityToUtilQuantityServiceInterface
+interface QuantityComparatorInterface
 {
-    /**
-     * @param float $quantity
-     *
-     * @return float
-     */
-    public function roundQuantity(float $quantity): float;
-
     /**
      * @param float $firstQuantity
      * @param float $secondQuantity

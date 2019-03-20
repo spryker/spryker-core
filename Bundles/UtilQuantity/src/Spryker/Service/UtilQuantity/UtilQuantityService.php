@@ -29,4 +29,21 @@ class UtilQuantityService extends AbstractService implements UtilQuantityService
             ->createQuantityRounder()
             ->roundQuantity($quantity);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantitiesEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->getFactory()
+            ->createQuantityComparator()
+            ->isQuantitiesEqual($firstQuantity, $secondQuantity);
+    }
 }
