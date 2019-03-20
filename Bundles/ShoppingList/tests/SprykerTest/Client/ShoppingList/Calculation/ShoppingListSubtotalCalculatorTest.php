@@ -43,9 +43,11 @@ class ShoppingListSubtotalCalculatorTest extends Unit
             [ static::KEY_PRICE => 5, static::KEY_QUANTITY => 5 ],
         ];
 
+        $expectedShoppingListSubtotal = 55;
+
         $this->assertSame(
             $this->createShoppingListSubtotalCalculator()->calculateShoppingListSubtotal($shoppingListItems),
-            $this->getShoppingListSubtotalCalculatorMock()->calculateShoppingListSubtotal($shoppingListItems)
+            $expectedShoppingListSubtotal
         );
     }
 
@@ -62,9 +64,11 @@ class ShoppingListSubtotalCalculatorTest extends Unit
             [ static::KEY_PRICE => null, static::KEY_QUANTITY => null ],
         ];
 
+        $expectedShoppingListSubtotal = 20;
+
         $this->assertSame(
             $this->createShoppingListSubtotalCalculator()->calculateShoppingListSubtotal($shoppingListItems),
-            $this->getShoppingListSubtotalCalculatorMock()->calculateShoppingListSubtotal($shoppingListItems)
+            $expectedShoppingListSubtotal
         );
     }
 
@@ -74,27 +78,5 @@ class ShoppingListSubtotalCalculatorTest extends Unit
     protected function createShoppingListSubtotalCalculator(): ShoppingListSubtotalCalculatorInterface
     {
         return new ShoppingListSubtotalCalculator();
-    }
-
-    /**
-     * @return \Spryker\Client\ShoppingList\Calculation\ShoppingListSubtotalCalculatorInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function getShoppingListSubtotalCalculatorMock()
-    {
-        $shoppingListSubtotalCalculatorMock = $this->getMockBuilder(ShoppingListSubtotalCalculatorInterface::class)->getMock();
-        $shoppingListSubtotalCalculatorMock->method('calculateShoppingListSubtotal')->willReturnCallback(function ($shoppingListItems) {
-            $shoppingListSubtotal = 0;
-            foreach ($shoppingListItems as $shoppingListItem) {
-                if (empty($shoppingListItem[self::KEY_PRICE] || empty($shoppingListItem[static::KEY_QUANTITY]))) {
-                    continue;
-                }
-
-                $shoppingListSubtotal += ($shoppingListItem[static::KEY_PRICE] * $shoppingListItem[static::KEY_QUANTITY]);
-            }
-
-            return $shoppingListSubtotal;
-        });
-
-        return $shoppingListSubtotalCalculatorMock;
     }
 }
