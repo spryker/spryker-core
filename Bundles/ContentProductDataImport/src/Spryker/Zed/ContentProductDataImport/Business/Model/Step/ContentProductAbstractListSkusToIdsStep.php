@@ -12,12 +12,16 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ContentProductDataImport\Business\Model\DataSet\ContentProductAbstractListDataSetInterface;
+use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
 {
     protected const LOCALE_NAME_DEFAULT = 'default';
+    protected const EXCEPTION_ERROR_MESSAGE_SKUS_TO_IDS = 'Found not valid skus in the row with key:"{key}", column:"{column}"';
+    protected const EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN = '{column}';
+    protected const EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY = '{key}';
 
     /**
      * @var array
@@ -58,17 +62,41 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
                 continue;
             }
 
-            $abstractProductSkus = explode(',', $dataSet[$skusLocaleKey]);
-            $abstractProductIds = $this->getCachedAbstractProductIdsBySkus($abstractProductSkus);
-            $abstractProductSkus = $this->refactoringAbstractProductSkus($abstractProductSkus);
+            $idsLocaleKey = ContentProductAbstractListDataSetInterface::COLUMN_IDS . '.' . $localeName;
+            $dataSet[$idsLocaleKey] = $this->getAbstractProductIds($dataSet, $skusLocaleKey);
+        }
+    }
 
-            if (count($abstractProductSkus) > 0) {
-                $abstractProductIds = array_merge($abstractProductIds, $this->getAbstractProductIdsBySkus($abstractProductSkus));
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     * @param string $skusLocaleKey
+     *
+     * @return array
+     */
+    protected function getAbstractProductIds(DataSetInterface $dataSet, string $skusLocaleKey): array
+    {
+        $abstractProductSkus = explode(',', $dataSet[$skusLocaleKey]);
+        $abstractProductIds = $this->getCachedAbstractProductIdsBySkus($abstractProductSkus);
+        $refactoredAbstractProductSkus = $this->refactoringAbstractProductSkus($abstractProductSkus);
+
+        if (count($refactoredAbstractProductSkus) > 0) {
+            $abstractProductIdsFromDb = $this->getAbstractProductIdsBySkus($refactoredAbstractProductSkus);
+
+            if (count($abstractProductIdsFromDb) < count($refactoredAbstractProductSkus)) {
+                $rowKey = $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PROCUCT_ABSTRACT_LIST_KEY];
+                $parameters = [
+                    static::EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN => $skusLocaleKey,
+                    static::EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY => $rowKey,
+                ];
+
+                $this->creteInvalidDataImportException(static::EXCEPTION_ERROR_MESSAGE_SKUS_TO_IDS, $parameters);
             }
 
-            $idsLocaleKey = ContentProductAbstractListDataSetInterface::COLUMN_IDS . '.' . $localeName;
-            $dataSet[$idsLocaleKey] = $abstractProductIds;
+            $abstractProductIds = array_merge($abstractProductIds, $abstractProductIdsFromDb);
+            $this->addAbstractProductIdsToCache($abstractProductSkus, $abstractProductIds);
         }
+
+        return $abstractProductIds;
     }
 
     /**
@@ -170,11 +198,7 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
             ->select(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->find();
 
-        $abstractProductIds = array_values($abstractProductEntity->toArray());
-        $abstractProductSkus = array_values($abstractProductSkus);
-        $this->addAbstractProductIdsToCache($abstractProductSkus, $abstractProductIds);
-
-        return $abstractProductIds;
+        return $abstractProductEntity->toArray();
     }
 
     /**
@@ -185,10 +209,27 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
      */
     protected function addAbstractProductIdsToCache(array $abstractProductSkus, array $abstractProductIds): void
     {
+        $abstractProductSkus = array_values($abstractProductSkus);
+        $abstractProductIds = array_values($abstractProductIds);
         $abstractProductIdsToCache = array_combine($abstractProductSkus, $abstractProductIds);
 
         if (is_array($abstractProductIdsToCache)) {
             $this->cachedAbstractProductSkusToIds += $abstractProductIdsToCache;
         }
+    }
+
+    /**
+     * @param string $message
+     * @param array $parameters
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
+     *
+     * @return void
+     */
+    protected function creteInvalidDataImportException(string $message, array $parameters)
+    {
+        $errorMessage = strtr($message, $parameters);
+
+        throw new InvalidDataException($errorMessage);
     }
 }

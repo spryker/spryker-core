@@ -12,6 +12,7 @@ use Spryker\Zed\ContentProductDataImport\Business\Model\Step\ContentProductAbstr
 use Spryker\Zed\ContentProductDataImport\Business\Model\Step\ContentProductAbstractListPrepareLocalizedItemsStep;
 use Spryker\Zed\ContentProductDataImport\Business\Model\Step\ContentProductAbstractListSkusToIdsStep;
 use Spryker\Zed\ContentProductDataImport\ContentProductDataImportDependencyProvider;
+use Spryker\Zed\ContentProductDataImport\Dependency\Facade\ContentProductDataImportToContentProductFacadeInterface;
 use Spryker\Zed\ContentProductDataImport\Dependency\Service\ContentProductDataImportToUtilEncodingServiceInterface;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -62,7 +63,10 @@ class ContentProductDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function createContentProductAbstractListPrepareLocalizedItemsStep(): DataImportStepInterface
     {
-        return new ContentProductAbstractListPrepareLocalizedItemsStep($this->getUtilEncodingService());
+        return new ContentProductAbstractListPrepareLocalizedItemsStep(
+            $this->getUtilEncodingService(),
+            $this->getContentProductFacade()
+        );
     }
 
     /**
@@ -79,5 +83,13 @@ class ContentProductDataImportBusinessFactory extends DataImportBusinessFactory
     public function getUtilEncodingService(): ContentProductDataImportToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ContentProductDataImportDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentProductDataImport\Dependency\Facade\ContentProductDataImportToContentProductFacadeInterface
+     */
+    public function getContentProductFacade(): ContentProductDataImportToContentProductFacadeInterface
+    {
+        return $this->getProvidedDependency(ContentProductDataImportDependencyProvider::FACADE_CONTENT_PRODUCT);
     }
 }

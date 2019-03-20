@@ -10,23 +10,37 @@ namespace Spryker\Zed\ContentProductDataImport\Business\Model\Step;
 use Generated\Shared\Transfer\ContentProductAbstractListTransfer;
 use Orm\Zed\Content\Persistence\Map\SpyContentLocalizedTableMap;
 use Spryker\Zed\ContentProductDataImport\Business\Model\DataSet\ContentProductAbstractListDataSetInterface;
+use Spryker\Zed\ContentProductDataImport\Dependency\Facade\ContentProductDataImportToContentProductFacadeInterface;
 use Spryker\Zed\ContentProductDataImport\Dependency\Service\ContentProductDataImportToUtilEncodingServiceInterface;
+use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportStepInterface
 {
+    protected const EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN = '{column}';
+    protected const EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY = '{key}';
+
     /**
      * @var \Spryker\Zed\ContentProductDataImport\Dependency\Service\ContentProductDataImportToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Zed\ContentProductDataImport\Dependency\Service\ContentProductDataImportToUtilEncodingServiceInterface $utilEncodingService
+     * @var \Spryker\Zed\ContentProductDataImport\Dependency\Facade\ContentProductDataImportToContentProductFacadeInterface
      */
-    public function __construct(ContentProductDataImportToUtilEncodingServiceInterface $utilEncodingService)
-    {
+    protected $contentProductFacade;
+
+    /**
+     * @param \Spryker\Zed\ContentProductDataImport\Dependency\Service\ContentProductDataImportToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\ContentProductDataImport\Dependency\Facade\ContentProductDataImportToContentProductFacadeInterface $contentProductFacade
+     */
+    public function __construct(
+        ContentProductDataImportToUtilEncodingServiceInterface $utilEncodingService,
+        ContentProductDataImportToContentProductFacadeInterface $contentProductFacade
+    ) {
         $this->utilEncodingService = $utilEncodingService;
+        $this->contentProductFacade = $contentProductFacade;
     }
 
     /**
@@ -51,6 +65,19 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
             $contentProductAbstractListTransfer = (new ContentProductAbstractListTransfer())
                 ->setIdProductAbstracts($dataSet[$idsLocaleKey]);
 
+            $contentValidationResponseTransfer = $this->contentProductFacade->validateContentProductAbstractList($contentProductAbstractListTransfer);
+
+            if (!$contentValidationResponseTransfer->getIsSuccess()) {
+                $messageTransfer = $contentValidationResponseTransfer->getParameterMessages()->offsetGet(0)->getMessages()->offsetGet(0);
+                $kusLocaleColumn = ContentProductAbstractListDataSetInterface::COLUMN_SKUS . '.' . $localeName;
+                $rowKey = $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PROCUCT_ABSTRACT_LIST_KEY];
+                $parameters = array_merge($messageTransfer->getParameters(), [
+                    static::EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN => $kusLocaleColumn,
+                    static::EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY => $rowKey,
+                ]);
+                $this->creteInvalidDataImportException($messageTransfer->getValue(), $parameters);
+            }
+
             $localizedItem[SpyContentLocalizedTableMap::COL_PARAMETERS] = $this->utilEncodingService->encodeJson(
                 $contentProductAbstractListTransfer->toArray()
             );
@@ -59,5 +86,20 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
         }
 
         $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_LOCALIZED_ITEMS] = $contentLocalizedItems;
+    }
+
+    /**
+     * @param string $message
+     * @param array $parameters
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
+     *
+     * @return void
+     */
+    protected function creteInvalidDataImportException(string $message, array $parameters)
+    {
+        $errorMessage = strtr($message, $parameters);
+
+        throw new InvalidDataException($errorMessage);
     }
 }
