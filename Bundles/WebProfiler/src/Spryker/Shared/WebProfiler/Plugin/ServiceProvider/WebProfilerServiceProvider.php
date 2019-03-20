@@ -157,7 +157,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         }
 
         $app['web_profiler.controller.profiler'] = $app->share(function ($app) {
-            return new ProfilerController($app['url_generator'], $app['profiler'], $app['twig'], $app['data_collector.templates'], $app['web_profiler.debug_toolbar.position']);
+            return new ProfilerController($app['url_generator'], $app['profiler'], $app['twig'], $app['data_collector.templates']);
         });
 
         $app['web_profiler.controller.router'] = $app->share(function ($app) {
@@ -279,11 +279,12 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
 
         $dispatcher->addSubscriber($app['profiler.listener']);
 
+        $app->mount($app['profiler.mount_prefix'], $this->connect($app));
+
         if ($app['web_profiler.debug_toolbar.enable']) {
             $dispatcher->addSubscriber($app['web_profiler.toolbar.listener']);
         }
 
         $dispatcher->addSubscriber($app['profiler']->get('request'));
-        $app->mount($app['profiler.mount_prefix'], $this->connect($app));
     }
 }

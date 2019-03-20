@@ -61,20 +61,6 @@ interface ProductListRepositoryInterface
     public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
-     * @param int $idProduct
-     *
-     * @return int[]
-     */
-    public function getConcreteProductBlacklistIds(int $idProduct): array;
-
-    /**
-     * @param int $idProduct
-     *
-     * @return int[]
-     */
-    public function getConcreteProductWhitelistIds(int $idProduct): array;
-
-    /**
      * @param string[] $productConcreteSkus
      * @param int[] $blackListIds
      *
@@ -91,9 +77,48 @@ interface ProductListRepositoryInterface
     public function getProductConcreteSkusInWhitelists(array $productConcreteSkus, array $whiteListIds): array;
 
     /**
+     * @param int $idProduct
+     * @param string $listType
+     *
+     * @return int[]
+     */
+    public function getProductConcreteProductListIdsForType(int $idProduct, string $listType): array;
+
+    /**
+     * @param int $idProduct
+     * @param string $listType
+     *
+     * @return int[]
+     */
+    public function getProductConcreteProductListIdsRelatedToCategoriesForType(int $idProduct, string $listType): array;
+
+    /**
+     * @module Product
+     *
      * @param int[] $productListIds
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByProductListIds(array $productListIds): array;
+    public function getProductAbstractIdsRelatedToProductConcrete(array $productListIds): array;
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsRelatedToCategories(array $productListIds): array;
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsRelatedToProductLists(array $productListIds): array;
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsRelatedToProductListsCategories(array $productListIds): array;
 }

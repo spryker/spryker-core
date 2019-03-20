@@ -14,6 +14,7 @@ use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNode
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryStorageUnpublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateStoragePublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateStorageUnpublishListener;
+use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStorageParentPublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStoragePublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStorageUnpublishListener;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStoragePublishListener;
@@ -42,10 +43,15 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
         $this->addCategoryTreeEvents($eventCollection);
 
         $this->addCategoryNodePublishListener($eventCollection);
+        $this->addCategoryNodePublishParentListener($eventCollection);
         $this->addCategoryNodeUnpublishListener($eventCollection);
+        $this->addCategoryNodeUnpublishParentListener($eventCollection);
         $this->addCategoryNodeCreateListener($eventCollection);
+        $this->addCategoryNodeCreateParentListener($eventCollection);
         $this->addCategoryNodeUpdateListener($eventCollection);
+        $this->addCategoryNodeUpdateParentListener($eventCollection);
         $this->addCategoryNodeDeleteListener($eventCollection);
+        $this->addCategoryNodeDeleteParentListener($eventCollection);
         $this->addCategoryCreateListener($eventCollection);
         $this->addCategoryUpdateListener($eventCollection);
         $this->addCategoryDeleteListener($eventCollection);
@@ -94,9 +100,29 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      *
      * @return void
      */
+    protected function addCategoryNodePublishParentListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_NODE_PUBLISH, new CategoryNodeStorageParentPublishListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
     protected function addCategoryNodeUnpublishListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_NODE_UNPUBLISH, new CategoryNodeStorageUnpublishListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCategoryNodeUnpublishParentListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_NODE_UNPUBLISH, new CategoryNodeStorageParentPublishListener());
     }
 
     /**
@@ -114,6 +140,16 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      *
      * @return void
      */
+    protected function addCategoryNodeCreateParentListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_CREATE, new CategoryNodeStorageParentPublishListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
     protected function addCategoryNodeUpdateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_UPDATE, new CategoryNodeStoragePublishListener());
@@ -124,9 +160,29 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      *
      * @return void
      */
+    protected function addCategoryNodeUpdateParentListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_UPDATE, new CategoryNodeStorageParentPublishListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
     protected function addCategoryNodeDeleteListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new CategoryNodeStorageUnpublishListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCategoryNodeDeleteParentListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new CategoryNodeStorageParentPublishListener());
     }
 
     /**

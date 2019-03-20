@@ -51,7 +51,7 @@ class QueryContainerResolverTest extends AbstractResolverTest
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver
      */
     protected function getResolverMock(array $methods)
     {

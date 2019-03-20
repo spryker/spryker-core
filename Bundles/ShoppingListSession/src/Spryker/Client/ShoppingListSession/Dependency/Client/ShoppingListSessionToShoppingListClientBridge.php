@@ -31,4 +31,12 @@ class ShoppingListSessionToShoppingListClientBridge implements ShoppingListSessi
     {
         return $this->shoppingListClient->getCustomerShoppingListCollection();
     }
+
+    /**
+     * @return void
+     */
+    public function updateCustomerPermission(): void
+    {
+        $this->shoppingListClient->updateCustomerPermission();
+    }
 }

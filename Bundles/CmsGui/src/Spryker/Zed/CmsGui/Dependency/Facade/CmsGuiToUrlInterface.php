@@ -11,16 +11,16 @@ use Generated\Shared\Transfer\UrlTransfer;
 interface CmsGuiToUrlInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return bool
      */
-    public function hasUrl($urlTransfer);
+    public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
-    public function findUrl(UrlTransfer $urlTransfer);
+    public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer;
 }

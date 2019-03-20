@@ -82,7 +82,6 @@ CmsContentEditor.prototype.createCmsContentWidgetButton = function (cmsContentWi
         var button = ui.buttonGroup([
             ui.button({
                 contents: 'content widget <i class="fa fa-caret-down" aria-hidden="true"></i>',
-                tooltip: 'Insert cms content widget',
                 data: {
                     toggle: 'dropdown'
                 }
