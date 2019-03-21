@@ -402,7 +402,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @api
      *
-     * @param array $shoppingListItems
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItems
      *
      * @return int
      */

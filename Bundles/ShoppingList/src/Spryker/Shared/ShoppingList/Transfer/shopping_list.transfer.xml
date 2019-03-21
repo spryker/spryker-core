@@ -148,4 +148,8 @@
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
+    <transfer name="ProductView">
+        <property name="price" type="int" />
+        <property name="quantity" type="int" />
+    </transfer>
 </transfers>

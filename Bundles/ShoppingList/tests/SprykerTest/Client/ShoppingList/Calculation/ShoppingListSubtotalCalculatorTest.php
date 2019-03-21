@@ -8,6 +8,7 @@
 namespace SprykerTest\Client\ShoppingList\Calculation;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ShoppingList\Calculation\ShoppingListSubtotalCalculator;
 
 /**
@@ -21,9 +22,6 @@ use Spryker\Client\ShoppingList\Calculation\ShoppingListSubtotalCalculator;
  */
 class ShoppingListSubtotalCalculatorTest extends Unit
 {
-    protected const KEY_PRICE = 'price';
-    protected const KEY_QUANTITY = 'quantity';
-
     /**
      * @var \SprykerTest\Client\ShoppingList\ShoppingListClientTester
      */
@@ -50,11 +48,11 @@ class ShoppingListSubtotalCalculatorTest extends Unit
     public function testCalculateShoppingListSubtotalShouldCalculatePricesCorrectly(): void
     {
         $shoppingListItems = [
-            [ static::KEY_PRICE => 1, static::KEY_QUANTITY => 1 ],
-            [ static::KEY_PRICE => 2, static::KEY_QUANTITY => 2 ],
-            [ static::KEY_PRICE => 3, static::KEY_QUANTITY => 3 ],
-            [ static::KEY_PRICE => 4, static::KEY_QUANTITY => 4 ],
-            [ static::KEY_PRICE => 5, static::KEY_QUANTITY => 5 ],
+            (new ProductViewTransfer())->setPrice(1)->setQuantity(1),
+            (new ProductViewTransfer())->setPrice(2)->setQuantity(2),
+            (new ProductViewTransfer())->setPrice(3)->setQuantity(3),
+            (new ProductViewTransfer())->setPrice(4)->setQuantity(4),
+            (new ProductViewTransfer())->setPrice(5)->setQuantity(5),
         ];
 
         $expectedShoppingListSubtotal = 55;
@@ -71,11 +69,11 @@ class ShoppingListSubtotalCalculatorTest extends Unit
     public function testCalculateShoppingListSubtotalShouldSkipItemsWithoutPriceOrQuantityDuringSubtotalCalculation(): void
     {
         $shoppingListItems = [
-            [ static::KEY_PRICE => null, static::KEY_QUANTITY => 1 ],
-            [ static::KEY_PRICE => 2, static::KEY_QUANTITY => 2 ],
-            [ static::KEY_PRICE => 3, static::KEY_QUANTITY => null ],
-            [ static::KEY_PRICE => 4, static::KEY_QUANTITY => 4 ],
-            [ static::KEY_PRICE => null, static::KEY_QUANTITY => null ],
+            (new ProductViewTransfer())->setPrice(null)->setQuantity(1),
+            (new ProductViewTransfer())->setPrice(2)->setQuantity(2),
+            (new ProductViewTransfer())->setPrice(3)->setQuantity(null),
+            (new ProductViewTransfer())->setPrice(4)->setQuantity(4),
+            (new ProductViewTransfer())->setPrice(null)->setQuantity(null),
         ];
 
         $expectedShoppingListSubtotal = 20;

@@ -10,7 +10,7 @@ namespace Spryker\Client\ShoppingList\Calculation;
 interface ShoppingListSubtotalCalculatorInterface
 {
     /**
-     * @param array $shoppingListItems
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItems
      *
      * @return int
      */
