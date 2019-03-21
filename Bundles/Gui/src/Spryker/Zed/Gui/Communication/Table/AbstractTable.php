@@ -582,6 +582,7 @@ abstract class AbstractTable
                 'dataProcessing' => $this->config->isDataProcessing(),
                 'serverSide' => $this->config->isServerSide(),
                 'stateSave' => $this->config->isStateSave(),
+                'paging' => $this->config->isPaging(),
             ];
 
             $configArray = array_merge($configArray, $configTableArray);

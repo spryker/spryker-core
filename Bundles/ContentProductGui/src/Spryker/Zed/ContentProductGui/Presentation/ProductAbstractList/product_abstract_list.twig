@@ -1,10 +1,12 @@
 <div class="id-product-abstract-fields" id="localized-contents-{{ form.parent.vars.name }}" data-prototype="{{ form_row(form.idProductAbstracts.vars.prototype)|e }}">
-{% for idProductAbstract in form.idProductAbstracts %}
-    {{ form_row(idProductAbstract) }}
-{% endfor %}
-{{ form.vars.tables.productAbstractSelectedTable.render | raw }}
-    <h2>{{ 'Add more products' | trans }}</h2>
-{{ form.vars.tables.productAbstractViewTable.render | raw }}
+    <div class="product-abstract-list">
+        {% for idProductAbstract in form.idProductAbstracts %}
+            {{ form_row(idProductAbstract) }}
+        {% endfor %}
+    </div>
+    {{ form.vars.tables.productAbstractSelectedTable.render | raw }}
+        <h2>{{ 'Add more products' | trans }}</h2>
+    {{ form.vars.tables.productAbstractViewTable.render | raw }}
     <input type="button" id="add-selected-product-abstract-{{ form.parent.vars.name }}" class="btn btn-outline btn-create pull-right" value="Add Selected">
 </div>
 <link rel="stylesheet" href="/assets/css/spryker-zed-abstract-product-add.css" />
