@@ -72,7 +72,7 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
                     ->offsetGet(0)
                     ->getMessages()
                     ->offsetGet(0);
-                $kusLocaleColumn = ContentProductAbstractListDataSetInterface::COLUMN_SKUS . '.' . $localeName;
+                $skusLocaleColumn = ContentProductAbstractListDataSetInterface::COLUMN_SKUS . '.' . $localeName;
                 $rowKey = $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PROCUCT_ABSTRACT_LIST_KEY];
                 $parameters = array_merge($messageTransfer->getParameters(), [
                     static::EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN => $kusLocaleColumn,
