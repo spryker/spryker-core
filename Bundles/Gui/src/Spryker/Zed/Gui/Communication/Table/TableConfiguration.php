@@ -79,6 +79,21 @@ class TableConfiguration
     protected $stateSave = true;
 
     /**
+     * @var bool
+     */
+    protected $dataProcessing = true;
+
+    /**
+     * @var bool
+     */
+    protected $serverSide = true;
+
+    /**
+     * @var bool
+     */
+    protected $paging = true;
+
+    /**
      * @return array
      */
     public function getRawColumns()
@@ -345,5 +360,59 @@ class TableConfiguration
     public function setStateSave($stateSave)
     {
         $this->stateSave = $stateSave;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDataProcessing()
+    {
+        return $this->dataProcessing;
+    }
+
+    /**
+     * @param bool $dataProcessing
+     *
+     * @return void
+     */
+    public function setDataProcessing($dataProcessing)
+    {
+        $this->dataProcessing = $dataProcessing;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isServerSide()
+    {
+        return $this->serverSide;
+    }
+
+    /**
+     * @param bool $serverSide
+     *
+     * @return void
+     */
+    public function setServerSide($serverSide)
+    {
+        $this->serverSide = $serverSide;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPaging()
+    {
+        return $this->paging;
+    }
+
+    /**
+     * @param bool $paging
+     *
+     * @return void
+     */
+    public function setPaging($paging)
+    {
+        $this->paging = $paging;
     }
 }

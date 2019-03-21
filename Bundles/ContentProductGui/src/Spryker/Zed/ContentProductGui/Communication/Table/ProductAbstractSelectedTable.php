@@ -117,6 +117,18 @@ class ProductAbstractSelectedTable extends AbstractTable
     }
 
     /**
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function newTableConfiguration()
+    {
+        $tableConfiguration = parent::newTableConfiguration();
+        $tableConfiguration->setServerSide(false);
+        $tableConfiguration->setPaging(false);
+
+        return $tableConfiguration;
+    }
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array

@@ -69,17 +69,19 @@ class ProductAbstractListContentTermForm extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars['tables']['productAbstractViewTable'] = $this->getFactory()->createProductAbstractViewTable(
+        $productAbstractViewTable = $this->getFactory()->createProductAbstractViewTable(
             $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
             $view->vars['value']->getIdProductAbstracts(),
             $view->parent->vars['name']
-        )->render();
-
-        $view->vars['tables']['productAbstractSelectedTable'] = $this->getFactory()->createProductAbstractSelectedTable(
+        );
+        $productAbstractSelectedTable = $this->getFactory()->createProductAbstractSelectedTable(
             $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
             $view->vars['value']->getIdProductAbstracts(),
             $view->parent->vars['name']
-        )->render();
+        );
+        $data = $productAbstractSelectedTable->getData();
+        $view->vars['tables']['productAbstractViewTable'] = $productAbstractViewTable->render();
+        $view->vars['tables']['productAbstractSelectedTable'] = $productAbstractSelectedTable->render();
     }
 
     /**

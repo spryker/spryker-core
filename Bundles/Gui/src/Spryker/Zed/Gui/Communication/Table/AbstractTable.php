@@ -579,6 +579,8 @@ abstract class AbstractTable
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
+                'dataProcessing' => $this->config->isDataProcessing(),
+                'serverSide' => $this->config->isServerSide(),
                 'stateSave' => $this->config->isStateSave(),
             ];
 
