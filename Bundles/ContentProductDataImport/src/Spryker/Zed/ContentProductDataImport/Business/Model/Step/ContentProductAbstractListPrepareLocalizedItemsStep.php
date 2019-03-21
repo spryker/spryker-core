@@ -13,11 +13,13 @@ use Spryker\Zed\ContentProductDataImport\Business\Model\DataSet\ContentProductAb
 use Spryker\Zed\ContentProductDataImport\Dependency\Facade\ContentProductDataImportToContentProductFacadeInterface;
 use Spryker\Zed\ContentProductDataImport\Dependency\Service\ContentProductDataImportToUtilEncodingServiceInterface;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportStepInterface
 {
+    protected const ERROR_MESSAGE_SUFIX = 'Check please row with key: {key}, column: {column}';
     protected const EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN = '{column}';
     protected const EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY = '{key}';
 
@@ -52,14 +54,14 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
     {
         $contentLocalizedItems = [];
 
-        foreach ($dataSet[ContentProductAbstractListDataSetInterface::COLUMN_LOCALES] as $localeId => $localeName) {
+        foreach ($dataSet[AddLocalesStep::KEY_LOCALES] as $localeName => $idLocale) {
             $idsLocaleKey = ContentProductAbstractListDataSetInterface::COLUMN_IDS . '.' . $localeName;
 
             if (!isset($dataSet[$idsLocaleKey]) || !$dataSet[$idsLocaleKey]) {
                 continue;
             }
 
-            $localizedItem[SpyContentLocalizedTableMap::COL_FK_LOCALE] = $localeId > 0 ? $localeId : null;
+            $localizedItem[SpyContentLocalizedTableMap::COL_FK_LOCALE] = $idLocale ?? $idLocale;
             $localizedItem[SpyContentLocalizedTableMap::COL_FK_CONTENT] = $dataSet[ContentProductAbstractListDataSetInterface::COLUMN_ID_CONTENT];
 
             $contentProductAbstractListTransfer = (new ContentProductAbstractListTransfer())
@@ -73,12 +75,13 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
                     ->getMessages()
                     ->offsetGet(0);
                 $skusLocaleColumn = ContentProductAbstractListDataSetInterface::COLUMN_SKUS . '.' . $localeName;
-                $rowKey = $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PROCUCT_ABSTRACT_LIST_KEY];
+                $rowKey = $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY];
                 $parameters = array_merge($messageTransfer->getParameters(), [
                     static::EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN => $skusLocaleColumn,
                     static::EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY => $rowKey,
                 ]);
-                $this->creteInvalidDataImportException($messageTransfer->getValue(), $parameters);
+                $message = $messageTransfer->getValue() . ' ' . static::ERROR_MESSAGE_SUFIX;
+                $this->createInvalidDataImportException($message, $parameters);
             }
 
             $localizedItem[SpyContentLocalizedTableMap::COL_PARAMETERS] = $this->utilEncodingService->encodeJson(
@@ -99,7 +102,7 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
      *
      * @return void
      */
-    protected function creteInvalidDataImportException(string $message, array $parameters)
+    protected function createInvalidDataImportException(string $message, array $parameters)
     {
         $errorMessage = strtr($message, $parameters);
 

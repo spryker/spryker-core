@@ -7,12 +7,11 @@
 
 namespace Spryker\Zed\ContentProductDataImport\Business\Model\Step;
 
-use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ContentProductDataImport\Business\Model\DataSet\ContentProductAbstractListDataSetInterface;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
@@ -26,25 +25,7 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
     /**
      * @var array
      */
-    protected $cachedLocales = [];
-
-    /**
-     * @var array
-     */
-    protected $cachedAbstractProductSkusToIds = [];
-
-    /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
-     * @param \Spryker\Shared\Kernel\Store $store
-     */
-    public function __construct(Store $store)
-    {
-        $this->store = $store;
-    }
+    protected $cachedProductAbstractSkusToIds = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -53,9 +34,9 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet)
     {
-        $dataSet = $this->setLocales($dataSet);
+        $dataSet[AddLocalesStep::KEY_LOCALES] = array_merge($dataSet[AddLocalesStep::KEY_LOCALES], [static::LOCALE_NAME_DEFAULT => null]);
 
-        foreach ($dataSet[ContentProductAbstractListDataSetInterface::COLUMN_LOCALES] as $localeName) {
+        foreach ($dataSet[AddLocalesStep::KEY_LOCALES] as $localeName => $idLocale) {
             $skusLocaleKey = ContentProductAbstractListDataSetInterface::COLUMN_SKUS . '.' . $localeName;
 
             if (!isset($dataSet[$skusLocaleKey]) || !$dataSet[$skusLocaleKey]) {
@@ -63,7 +44,7 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
             }
 
             $idsLocaleKey = ContentProductAbstractListDataSetInterface::COLUMN_IDS . '.' . $localeName;
-            $dataSet[$idsLocaleKey] = $this->getAbstractProductIds($dataSet, $skusLocaleKey);
+            $dataSet[$idsLocaleKey] = $this->getProductAbstractIds($dataSet, $skusLocaleKey);
         }
     }
 
@@ -73,17 +54,17 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
      *
      * @return array
      */
-    protected function getAbstractProductIds(DataSetInterface $dataSet, string $skusLocaleKey): array
+    protected function getProductAbstractIds(DataSetInterface $dataSet, string $skusLocaleKey): array
     {
-        $abstractProductSkus = explode(',', $dataSet[$skusLocaleKey]);
-        $abstractProductIds = $this->getCachedAbstractProductIdsBySkus($abstractProductSkus);
-        $refactoredAbstractProductSkus = $this->refactoringAbstractProductSkus($abstractProductSkus);
+        $productAbstractSkus = explode(',', $dataSet[$skusLocaleKey]);
+        $productAbstractIds = $this->getCachedProductAbstractIdsBySkus($productAbstractSkus);
+        $filteredProductAbstractSkus = $this->filterCachedProductAbstractSkus($productAbstractSkus);
 
-        if (count($refactoredAbstractProductSkus) > 0) {
-            $abstractProductIdsFromDb = $this->getAbstractProductIdsBySkus($refactoredAbstractProductSkus);
+        if (count($filteredProductAbstractSkus) > 0) {
+            $productAbstractIdsFromDb = $this->getProductAbstractIdsBySkus($filteredProductAbstractSkus);
 
-            if (count($abstractProductIdsFromDb) < count($refactoredAbstractProductSkus)) {
-                $rowKey = $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PROCUCT_ABSTRACT_LIST_KEY];
+            if (count($productAbstractIdsFromDb) < count($filteredProductAbstractSkus)) {
+                $rowKey = $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY];
                 $parameters = [
                     static::EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN => $skusLocaleKey,
                     static::EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY => $rowKey,
@@ -92,129 +73,83 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
                 $this->creteInvalidDataImportException(static::EXCEPTION_ERROR_MESSAGE_SKUS_TO_IDS, $parameters);
             }
 
-            $abstractProductIds = array_merge($abstractProductIds, $abstractProductIdsFromDb);
-            $this->addAbstractProductIdsToCache($abstractProductSkus, $abstractProductIds);
+            $productAbstractIds = array_merge($productAbstractIds, $productAbstractIdsFromDb);
+            $this->addProductAbstractIdsToCache($productAbstractSkus, $productAbstractIds);
         }
 
-        return $abstractProductIds;
+        return $productAbstractIds;
     }
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface
-     */
-    protected function setLocales(DataSetInterface $dataSet): DataSetInterface
-    {
-        if (!$this->cachedLocales) {
-            $this->setCachedLocales();
-        }
-
-        $dataSet[ContentProductAbstractListDataSetInterface::COLUMN_LOCALES] = $this->cachedLocales;
-
-        return $dataSet;
-    }
-
-    /**
-     * @return void
-     */
-    protected function setCachedLocales(): void
-    {
-        $this->cachedLocales[0] = static::LOCALE_NAME_DEFAULT;
-
-        $localeEntityCollection = SpyLocaleQuery::create()
-            ->filterByLocaleName_In($this->getLocales())
-            ->find();
-
-        foreach ($localeEntityCollection as $localeEntity) {
-            $this->cachedLocales[$localeEntity->getIdLocale()] = $localeEntity->getLocaleName();
-        }
-    }
-
-    /**
-     * @return array
-     */
-    protected function getLocales(): array
-    {
-        $locales = $this->store->getLocales();
-
-        foreach ($this->store->getStoresWithSharedPersistence() as $storeName) {
-            $locales = array_merge($locales, $this->store->getLocalesPerStore($storeName));
-        }
-
-        return $locales;
-    }
-
-    /**
-     * @param string[] $abstractProductSkus
+     * @param string[] $productAbstractSkus
      *
      * @return array
      */
-    protected function getCachedAbstractProductIdsBySkus(array $abstractProductSkus): array
+    protected function getCachedProductAbstractIdsBySkus(array $productAbstractSkus): array
     {
-        $cachedAbstractProductIds = [];
+        $cachedProductAbstractIds = [];
 
-        foreach ($abstractProductSkus as $key => $abstractProductSku) {
-            if (!isset($this->cachedAbstractProductSkusToIds[$abstractProductSku])) {
+        foreach ($productAbstractSkus as $key => $productAbstractSku) {
+            if (!isset($this->cachedProductAbstractSkusToIds[$productAbstractSku])) {
                 continue;
             }
 
-            $cachedAbstractProductIds[$abstractProductSku] = $this->cachedAbstractProductSkusToIds[$abstractProductSku];
-            unset($abstractProductSkus[$key]);
+            $cachedProductAbstractIds[$productAbstractSku] = $this->cachedProductAbstractSkusToIds[$productAbstractSku];
+            unset($productAbstractSkus[$key]);
         }
 
-        return $cachedAbstractProductIds;
+        return $cachedProductAbstractIds;
     }
 
     /**
-     * @param string[] $abstractProductSkus
+     * @param string[] $productAbstractSkus
      *
      * @return array
      */
-    protected function refactoringAbstractProductSkus(array $abstractProductSkus): array
+    protected function filterCachedProductAbstractSkus(array $productAbstractSkus): array
     {
-        $refactoredAbstractProductSkus = [];
+        $filteredProductAbstractSkus = [];
 
-        foreach ($abstractProductSkus as $abstractProductSku) {
-            if (isset($this->cachedAbstractProductSkusToIds[$abstractProductSku])) {
+        foreach ($productAbstractSkus as $productAbstractSku) {
+            if (isset($this->cachedProductAbstractSkusToIds[$productAbstractSku])) {
                 continue;
             }
 
-            $refactoredAbstractProductSkus[] = $abstractProductSku;
+            $filteredProductAbstractSkus[] = $productAbstractSku;
         }
 
-        return $refactoredAbstractProductSkus;
+        return $filteredProductAbstractSkus;
     }
 
     /**
-     * @param string[] $abstractProductSkus
+     * @param string[] $productAbstractSkus
      *
      * @return array
      */
-    protected function getAbstractProductIdsBySkus(array $abstractProductSkus): array
+    protected function getProductAbstractIdsBySkus(array $productAbstractSkus): array
     {
-        $abstractProductEntity = SpyProductAbstractQuery::create()
-            ->filterBySku_In($abstractProductSkus)
+        $productAbstractEntity = SpyProductAbstractQuery::create()
+            ->filterBySku_In($productAbstractSkus)
             ->select(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->find();
 
-        return $abstractProductEntity->toArray();
+        return $productAbstractEntity->toArray();
     }
 
     /**
-     * @param string[] $abstractProductSkus
-     * @param int[] $abstractProductIds
+     * @param string[] $productAbstractSkus
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    protected function addAbstractProductIdsToCache(array $abstractProductSkus, array $abstractProductIds): void
+    protected function addProductAbstractIdsToCache(array $productAbstractSkus, array $productAbstractIds): void
     {
-        $abstractProductSkus = array_values($abstractProductSkus);
-        $abstractProductIds = array_values($abstractProductIds);
-        $abstractProductIdsToCache = array_combine($abstractProductSkus, $abstractProductIds);
+        $productAbstractSkus = array_values($productAbstractSkus);
+        $productAbstractIds = array_values($productAbstractIds);
+        $productAbstractIdsToCache = array_combine($productAbstractSkus, $productAbstractIds);
 
-        if (is_array($abstractProductIdsToCache)) {
-            $this->cachedAbstractProductSkusToIds += $abstractProductIdsToCache;
+        if (is_array($productAbstractIdsToCache)) {
+            $this->cachedProductAbstractSkusToIds += $productAbstractIdsToCache;
         }
     }
 

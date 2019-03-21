@@ -37,7 +37,7 @@ class ContentProductAbstractListWriterStep extends PublishAwareStep implements D
         }
 
         $contentEntity = SpyContentQuery::create()
-            ->filterByKey($dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PROCUCT_ABSTRACT_LIST_KEY])
+            ->filterByKey($dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY])
             ->findOneOrCreate();
 
         $this->addPublishEvents(

@@ -21,6 +21,6 @@ class ContentProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createContentProductAbstractListValidator(): ContentProductAbstractListValidatorInterface
     {
-        return new ContentProductAbstractListValidator();
+        return new ContentProductAbstractListValidator($this->getConfig());
     }
 }

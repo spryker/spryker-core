@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @api
- *
  * @method \Spryker\Zed\ContentProduct\Business\ContentProductBusinessFactory getFactory()
  */
 class ContentProductFacade extends AbstractFacade implements ContentProductFacadeInterface

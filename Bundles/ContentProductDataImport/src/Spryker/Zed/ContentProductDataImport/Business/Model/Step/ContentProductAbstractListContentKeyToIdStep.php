@@ -32,7 +32,7 @@ class ContentProductAbstractListContentKeyToIdStep implements DataImportStepInte
     public function execute(DataSetInterface $dataSet)
     {
         $contentEntity = SpyContentQuery::create()
-            ->filterByKey($dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PROCUCT_ABSTRACT_LIST_KEY])
+            ->filterByKey($dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY])
             ->findOneOrCreate();
 
         $contentEntity->setName($dataSet[ContentProductAbstractListDataSetInterface::COLUMN_NAME])

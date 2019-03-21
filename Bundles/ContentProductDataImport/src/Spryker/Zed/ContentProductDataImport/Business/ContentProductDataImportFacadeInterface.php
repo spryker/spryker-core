@@ -14,7 +14,7 @@ interface ContentProductDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - Imports content item abstract products from the specified file.
+     * - Imports content item abstract product list from the specified file.
      * - Iterates over the data sets and imports the data into persistence.
      *
      * @api

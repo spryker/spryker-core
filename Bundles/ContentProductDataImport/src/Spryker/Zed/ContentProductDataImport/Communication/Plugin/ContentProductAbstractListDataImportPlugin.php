@@ -20,6 +20,7 @@ class ContentProductAbstractListDataImportPlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritdoc}
+     * - Imports content item abstract product list.
      *
      * @api
      *
