@@ -132,4 +132,15 @@ interface QuoteRequestFacadeInterface
      * @return bool
      */
     public function checkCheckoutQuoteRequest(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+
+    /**
+     * Specification:
+     * - Retrieves requests for quote where valid_until less than current time and status is "ready".
+     * - Updates requests of quote status to "closed".
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function closeOutdatedQuoteRequests(): void;
 }

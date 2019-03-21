@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequest;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -18,6 +21,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRequestEntityManagerInterface
 {
+    protected const COLUMN_STATUS = 'Status';
+
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
@@ -92,5 +97,19 @@ class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRe
         $quoteRequestVersionEntity->save();
 
         return $quoteRequestVersionTransfer;
+    }
+
+    /**
+     * @param \DateTime $validUntil
+     *
+     * @return void
+     */
+    public function closeOutdatedQuoteRequests(DateTime $validUntil): void
+    {
+        $this->getFactory()
+            ->getQuoteRequestPropelQuery()
+            ->filterByStatus(SharedQuoteRequestConfig::STATUS_READY)
+            ->filterByValidUntil($validUntil, Criteria::LESS_EQUAL)
+            ->update([static::COLUMN_STATUS => SharedQuoteRequestConfig::STATUS_CLOSED]);
     }
 }
