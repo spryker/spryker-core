@@ -152,4 +152,5 @@
         <property name="price" type="int" />
         <property name="quantity" type="int" />
     </transfer>
+
 </transfers>

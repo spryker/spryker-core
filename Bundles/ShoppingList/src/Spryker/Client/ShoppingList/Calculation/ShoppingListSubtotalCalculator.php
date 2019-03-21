@@ -17,12 +17,12 @@ class ShoppingListSubtotalCalculator implements ShoppingListSubtotalCalculatorIn
     public function calculateShoppingListSubtotal(array $shoppingListItems): int
     {
         $shoppingListSubtotal = 0;
-        foreach ($shoppingListItems as $productViewTransfer) {
-            if (!$productViewTransfer->getPrice() || !$productViewTransfer->getQuantity()) {
+        foreach ($shoppingListItems as $shoppingListItem) {
+            if (!$shoppingListItem->getPrice() || !$shoppingListItem->getQuantity()) {
                 continue;
             }
 
-            $shoppingListSubtotal += ($productViewTransfer->getPrice() * $productViewTransfer->getQuantity());
+            $shoppingListSubtotal += ($shoppingListItem->getPrice() * $shoppingListItem->getQuantity());
         }
 
         return $shoppingListSubtotal;
