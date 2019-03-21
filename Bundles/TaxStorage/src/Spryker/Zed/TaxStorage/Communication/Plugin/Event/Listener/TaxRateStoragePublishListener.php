@@ -13,6 +13,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\TaxStorage\Business\TaxStorageFacade getFacade()
+ * @method \Spryker\Zed\TaxStorage\Communication\TaxStorageCommunicationFactory getFactory()
  */
 class TaxRateStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
@@ -28,6 +29,8 @@ class TaxRateStoragePublishListener extends AbstractPlugin implements EventBulkH
      */
     public function handleBulk(array $eventTransfers, $eventName)
     {
-        $this->getFacade()->publishByTaxRateIds();
+        $this->preventTransaction();
+        $taxRateIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $this->getFacade()->publishByTaxRateIds($taxRateIds);
     }
 }

@@ -56,16 +56,16 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
     public function getData(array $ids = []): array
     {
         $synchronizationDataTransfers = [];
-        $taxSetStorageTransfers = $this->getRepository()->findTaxSetStoragesByIds($ids);
+        $spyTaxSetStorages = $this->getRepository()->findTaxSetStoragesByIds($ids);
 
-//        if (empty($ids)) {
-//            $productQuantityTransfers = $this->getRepository()->findAllProductQuantityStorageEntities();
-//        }
+        if (empty($ids)) {
+            $spyTaxSetStorages = $this->getRepository()->findAllTaxSetSorage();
+        }
 
-        foreach ($taxSetStorageTransfers as $taxSetStorageTransfer) {
+        foreach ($spyTaxSetStorages as $spyTaxSetStorage) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($taxSetStorageTransfer->getData());
-            $synchronizationDataTransfer->setKey($taxSetStorageTransfer->getKey());
+            $synchronizationDataTransfer->setData($spyTaxSetStorage->getData());
+            $synchronizationDataTransfer->setKey($spyTaxSetStorage->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 

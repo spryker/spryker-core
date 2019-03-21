@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\TaxStorage\Persistence;
 
-use Generated\Shared\Transfer\TaxSetStorageTransfer;
 use Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -17,40 +16,22 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorageEntityManagerInterface
 {
     /**
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $taxSetStorage
+     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $spyTaxSetStorage
      *
      * @return void
      */
-    public function saveTaxSetStorage(TaxSetStorageTransfer $taxSetStorage): void
+    public function saveTaxSetStorage(SpyTaxSetStorage $spyTaxSetStorage): void
     {
-        $taxStorageEntity = $this->getFactory()
-            ->createTaxSetStorageQuery()
-            ->filterByFkTaxSet($taxSetStorage->getFkTaxSet())
-            ->findOneOrCreate();
-
-        $taxStorageEntity = $this->getFactory()
-            ->createTaxStorageMapper()
-            ->mapTaxSetStorageTransferToEntity($taxSetStorage, $taxStorageEntity);
-
-        $taxStorageEntity->save();
+        $spyTaxSetStorage->save();
     }
 
     /**
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $taxSetStorage
+     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $spyTaxSetStorage
      *
-     * @return bool
+     * @return void
      */
-    public function deleteTaxSetStorage(TaxSetStorageTransfer $taxSetStorage): bool
+    public function deleteTaxSetStorage(SpyTaxSetStorage $spyTaxSetStorage): void
     {
-        $storageEntity = $this->getFactory()
-            ->createTaxSetStorageQuery()
-            ->filterByFkTaxSet($taxSetStorage->getFkTaxSet())
-            ->findOne();
-        if ($storageEntity instanceof SpyTaxSetStorage) {
-            $storageEntity->delete();
-            return true;
-        }
-
-        return false;
+        $spyTaxSetStorage->delete();
     }
 }

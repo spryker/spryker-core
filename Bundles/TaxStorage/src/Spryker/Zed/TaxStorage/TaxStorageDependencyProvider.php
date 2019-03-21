@@ -14,18 +14,16 @@ use Spryker\Zed\TaxStorage\Dependency\Facade\TaxSetStorageToEventBehaviorFacadeB
 class TaxStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    public const OWN_CLIENT = 'OWN_CLIENT';
 
-    public function provideCommunicationLayerDependencies(Container $container)
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
-
-        /** REMOVE */
-        $container[static::OWN_CLIENT] = function (Container $container) {
-            return $container->getLocator()->taxStorage()->client();
-        };
-        /** REMOVE */
 
         return $container;
     }
@@ -35,7 +33,7 @@ class TaxStorageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addEventBehaviorFacade(Container $container)
+    protected function addEventBehaviorFacade(Container $container): Container
     {
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new TaxSetStorageToEventBehaviorFacadeBridge(
@@ -45,5 +43,4 @@ class TaxStorageDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

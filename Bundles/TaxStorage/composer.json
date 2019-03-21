@@ -4,10 +4,22 @@
   "description": "TaxStorage module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/event-behavior": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/storage": "^3.0.0",
+    "spryker/synchronization": "^1.0.0",
+    "spryker/synchronization-extension": "^1.0.0",
+    "spryker/tax": "^5.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/event": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/event": "Required to listen for changes affecting product relations."
   },
   "autoload": {
     "psr-4": {

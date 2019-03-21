@@ -7,11 +7,7 @@
 
 namespace Spryker\Zed\TaxStorage\Persistence;
 
-use ArrayObject;
-use Generated\Shared\Transfer\TaxSetStorageTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -21,11 +17,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class TaxStorageRepository extends AbstractRepository implements TaxStorageRepositoryInterface
 {
     /**
-     * finds to which tax sets assigned changed tax rates uses SpyTaxSetTaxQuery
-     *
      * @param array $taxRateIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\TaxRateTransfer[]
+     * @return array
      */
     public function findTaxSetIdsByTaxRateIds(array $taxRateIds): array
     {
@@ -33,9 +27,9 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
             ->createTaxSetQuery()
             ->select(SpyTaxSetTableMap::COL_ID_TAX_SET)
             ->useSpyTaxSetTaxQuery()
-            ->useSpyTaxRateQuery()
-            ->filterByIdTaxRate_In($taxRateIds)
-            ->endUse()
+                ->useSpyTaxRateQuery()
+                    ->filterByIdTaxRate_In($taxRateIds)
+                ->endUse()
             ->endUse()
             ->groupBy(SpyTaxSetTableMap::COL_ID_TAX_SET)
             ->find()
@@ -47,110 +41,42 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
     /**
      * @param array $taxSetIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\TaxSetTransfer[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Tax\Persistence\SpyTaxSet[]
      */
-    public function findTaxSetsByIds(array $taxSetIds): ArrayObject
+    public function findTaxSetsByIds(array $taxSetIds): iterable
     {
-        $taxSetTransfers = new ArrayObject();
-        $taxSets = $this->getFactory()
+        $spyTaxSets = $this->getFactory()
             ->createTaxSetQuery()
             ->filterByIdTaxSet($taxSetIds, Criteria::IN)
             ->find();
 
-        $mapper = $this->getFactory()->createTaxStorageMapper();
-
-        foreach ($taxSets as $taxSet) {
-            $taxSetTransfers->append(
-                $mapper->mapTaxSetEntityToTransfer($taxSet, new TaxSetTransfer())
-            );
-        }
-
-        return $taxSetTransfers;
+        return $spyTaxSets;
     }
-
 
     /**
      * @param array $taxSetIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\TaxSetStorageTransfer[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
      */
-    public function findTaxSetStoragesByIds(array $taxSetIds): ArrayObject
+    public function findTaxSetStoragesByIds(array $taxSetIds): iterable
     {
-        $taxSetStorageTransfers = new ArrayObject();
-        $taxSetStorages = $this->getFactory()
+        $spyTaxSetStorage = $this->getFactory()
             ->createTaxSetStorageQuery()
             ->filterByFkTaxSet($taxSetIds, Criteria::IN)
             ->find();
 
-        $mapper = $this->getFactory()->createTaxStorageMapper();
-
-        foreach ($taxSetStorages as $taxSetStorage) {
-            $taxSetStorageTransfers->append(
-                $mapper->mapTaxSetStorageEntityToTransfer($taxSetStorage, new TaxSetStorageTransfer())
-            );
-        }
-
-        return $taxSetStorageTransfers;
+        return $spyTaxSetStorage;
     }
 
     /**
-     * @return \ArrayObject
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
      */
-    public function findAllTaxSetSorageEntities(): ArrayObject
+    public function findAllTaxSetSorage(): iterable
     {
-        $taxSetStorageTransfers = new ArrayObject();
-        $taxSetStorages = $this->getFactory()
+        $spyTaxSetStorage = $this->getFactory()
             ->createTaxSetStorageQuery()
             ->find();
 
-        $mapper = $this->getFactory()->createTaxStorageMapper();
-
-        foreach ($taxSetStorages as $taxSetStorage) {
-            $taxSetStorageTransfers->append(
-                $mapper->mapTaxSetStorageEntityToTransfer($taxSetStorage, new TaxSetStorageTransfer())
-            );
-        }
-
-        return $taxSetStorageTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileStorageTransfer $fileStorageTransfer
-     *
-     * @return void
-     */
-    public function saveFileStorage(TaxSetStorageTransfer $taxSetStorageTransfer): void
-    {
-        $fileStorageEntity = $this->getFactory()
-            ->createTaxSetQuery()
-            ->filterByIdTaxSet($taxSetStorageTransfer->getId())
-            ->findOneOrCreate();
-
-        $fileStorageEntity = $this->getFactory()
-            ->createFileManagerStorageMapper()
-            ->mapFileStorageTransferToEntity($fileStorageTransfer, $fileStorageEntity);
-
-        $fileStorageEntity->save();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileStorageTransfer $fileStorageTransfer
-     *
-     * @return bool
-     */
-    public function deleteFileStorage(FileStorageTransfer $fileStorageTransfer): bool
-    {
-        $fileStorageEntity = $this->getFactory()
-            ->createFileStorageQuery()
-            ->filterByIdFileStorage($fileStorageTransfer->getIdFileStorage())
-            ->findOne();
-
-        if ($fileStorageEntity === null) {
-            return false;
-        }
-
-        $fileStorageEntity->delete();
-
-        return true;
+        return $spyTaxSetStorage;
     }
 }

@@ -7,21 +7,17 @@
 
 namespace Spryker\Zed\TaxStorage\Business\TaxStoragePublisher;
 
-use ArrayObject;
-use Generated\Shared\Transfer\TaxRateStorageTransfer;
-use Generated\Shared\Transfer\TaxSetDataStorageTransfer;
 use Generated\Shared\Transfer\TaxSetStorageTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapperInterface;
 use Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface;
 use Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface;
 
 class TaxStoragePublisher implements TaxStoragePublisherInterface
 {
     use TransactionTrait;
-
-    public const KEY_DELIMITER = ':';
-    public const KEY_PREFIX = 'tax_set';
 
     /**
      * @var \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface
@@ -34,13 +30,23 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
     protected $taxStorageEntityManager;
 
     /**
+     * @var \Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapperInterface
+     */
+    protected $taxStorageMapper;
+
+    /**
      * @param \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface $taxStorageRepository
      * @param \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapperInterface $taxStorageMapper
      */
-    public function __construct(TaxStorageRepositoryInterface $taxStorageRepository, TaxStorageEntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        TaxStorageRepositoryInterface $taxStorageRepository,
+        TaxStorageEntityManagerInterface $entityManager,
+        TaxStorageMapperInterface $taxStorageMapper
+    ) {
         $this->taxStorageRepository = $taxStorageRepository;
         $this->taxStorageEntityManager = $entityManager;
+        $this->taxStorageMapper = $taxStorageMapper;
     }
 
     /**
@@ -50,11 +56,14 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
      */
     public function publishByTaxSetIds(array $taxSetIds): void
     {
-        $taxSetTransfers = $this->taxStorageRepository->findTaxSetsByIds($taxSetIds);
-        $taxSetStorageTransfers = $this->taxStorageRepository->findTaxSetStoragesByIds($taxSetIds);
+        $spyTaxSets = $this->taxStorageRepository
+            ->findTaxSetsByIds($taxSetIds);
+        $spyTaxSetStorage = $this->taxStorageRepository
+            ->findTaxSetStoragesByIds($taxSetIds)
+            ->toKeyIndex('FkTaxSet');
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($taxSetTransfers, $taxSetStorageTransfers) {
-            return $this->storeDataSet($taxSetTransfers, $taxSetStorageTransfers);
+        $this->getTransactionHandler()->handleTransaction(function () use ($spyTaxSets, $spyTaxSetStorage) {
+            $this->storeDataSet($spyTaxSets, $spyTaxSetStorage);
         });
     }
 
@@ -65,13 +74,13 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
      */
     public function unpublishByTaxSetIds(array $taxSetIds): void
     {
-        $taxSetTransfers = $this->taxStorageRepository->findTaxSetsByIds($taxSetIds);
+        $spyTaxSetStorages = $this->taxStorageRepository
+            ->findTaxSetStoragesByIds($taxSetIds);
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($taxSetTransfers) {
-            return $this->executeUnpublishTransaction($taxSetTransfers);
+        $this->getTransactionHandler()->handleTransaction(function () use ($spyTaxSetStorages) {
+            $this->executeUnpublishTransaction($spyTaxSetStorages);
         });
     }
-
 
     /**
      * @param array $taxRateIds
@@ -80,61 +89,58 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
      */
     public function publishByTaxRateIds(array $taxRateIds): void
     {
-        $taxSetIds = $this->taxStorageRepository->findTaxSetIdsByTaxRateIds($taxRateIds);
+        $taxSetIds = $this->taxStorageRepository
+            ->findTaxSetIdsByTaxRateIds($taxRateIds);
 
         $this->publishByTaxSetIds($taxSetIds);
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\TaxSetTransfer[] $taxSetTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\TaxSetStorageTransfer[] $taxSetStorageTransfers
+     * @param \Orm\Zed\Tax\Persistence\SpyTaxSet[] $spyTaxSets
+     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[] $spyTaxSetStorages
      *
      * @return void
      */
-    protected function storeDataSet(ArrayObject $taxSetTransfers, ArrayObject $taxSetStorageTransfers): void
+    protected function storeDataSet(iterable $spyTaxSets, iterable $spyTaxSetStorages): void
     {
-        foreach ($taxSetTransfers as $taxSetTransfer) {
-            $this->createDataSet($taxSetTransfer);
+        foreach ($spyTaxSets as $spyTaxSet) {
+            $this->createDataSet($spyTaxSet, $spyTaxSetStorages[$spyTaxSet->getIdTaxSet()] ?? null);
         }
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\TaxSetStorageTransfer $taxSetStorageTransfers
+     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[] $spyTaxSetStorages
      *
      * @return void
      */
-    protected function executeUnpublishTransaction(ArrayObject $taxSetStorageTransfers): void
+    protected function executeUnpublishTransaction(iterable $spyTaxSetStorages): void
     {
-        foreach ($taxSetStorageTransfers as $taxSetStorageTransfer) {
-            if ($this->taxStorageEntityManager->deleteTaxSetStorage($taxSetStorageTransfer) === false) {
-                throw new \Exception('Did not found SpyTaxSetStorage with Fk =' . $taxSetStorageTransfer->getFkTaxSet());
-            }
+        foreach ($spyTaxSetStorages as $spyTaxSetStorage) {
+            $this->taxStorageEntityManager->deleteTaxSetStorage($spyTaxSetStorage);
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
+     * @param \Orm\Zed\Tax\Persistence\SpyTaxSet $spyTaxSet
+     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage|null $spyTaxSetStorage
      *
      * @return void
      */
-    protected function createDataSet(TaxSetTransfer $taxSetTransfer): void
+    protected function createDataSet(SpyTaxSet $spyTaxSet, ?SpyTaxSetStorage $spyTaxSetStorage = null): void
     {
+        if ($spyTaxSetStorage === null) {
+            $spyTaxSetStorage = new SpyTaxSetStorage();
+            $spyTaxSetStorage->setFkTaxSet($spyTaxSet->getIdTaxSet());
+        }
+
         $taxSetStorageTransfer = new TaxSetStorageTransfer();
-        $taxSetStorageTransfer->fromArray($taxSetTransfer->toArray(), true);
-        $taxSetStorageTransfer->setFkTaxSet($taxSetTransfer->getIdTaxSet());
+        $taxSetStorageTransfer->setId($spyTaxSet->getIdTaxSet());
+        $taxSetStorageTransfer->fromArray($spyTaxSet->toArray(), true);
+        $taxSetStorageTransfer->setTaxRates(
+            $this->taxStorageMapper->mapSpyTaxRatesToTransfer($spyTaxSet->getSpyTaxRates())
+        );
+        $spyTaxSetStorage->setData($taxSetStorageTransfer->toArray());
 
-        $taxRateStorageTransfers = new ArrayObject();
-        foreach ($taxSetTransfer->getTaxRates() as $taxRate) {
-            $taxRateStorageTransfer = (new TaxRateStorageTransfer())->fromArray(
-                $taxRate->toArray(),
-                true
-            );
-            $taxRateStorageTransfers->append($taxRateStorageTransfer);
-        }
-        $taxSetDataTransfer = new TaxSetDataStorageTransfer();
-        $taxSetDataTransfer->setTaxRates($taxRateStorageTransfers);
-        $taxSetStorageTransfer->setData($taxSetDataTransfer);
-
-        $this->taxStorageEntityManager->saveTaxSetStorage($taxSetStorageTransfer);
+        $this->taxStorageEntityManager->saveTaxSetStorage($spyTaxSetStorage);
     }
 }

@@ -15,4 +15,12 @@ interface TaxSetStorageToEventBehaviorFacadeInterface
      * @return array
      */
     public function getEventTransferIds(array $eventTransfers): array;
+
+    /**
+     * @param array $eventTransfers
+     * @param string $foreignKeyColumnName
+     *
+     * @return array
+     */
+    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName): array;
 }

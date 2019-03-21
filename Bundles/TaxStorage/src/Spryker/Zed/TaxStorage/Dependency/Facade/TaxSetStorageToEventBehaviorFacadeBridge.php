@@ -31,4 +31,15 @@ class TaxSetStorageToEventBehaviorFacadeBridge implements TaxSetStorageToEventBe
     {
         return $this->eventBehaviourFacade->getEventTransferIds($eventTransfers);
     }
+
+    /**
+     * @param array $eventTransfers
+     * @param string $foreignKeyColumnName
+     *
+     * @return array
+     */
+    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName): array
+    {
+        return $this->eventBehaviourFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -11,7 +12,9 @@ use Spryker\Zed\TaxStorage\Dependency\Facade\TaxSetStorageToEventBehaviorFacadeI
 use Spryker\Zed\TaxStorage\TaxStorageDependencyProvider;
 
 /**
- *  @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManager getEntityManager()
+ * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManager getEntityManager()
+ * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepository getRepository()
+ * @method \Spryker\Zed\TaxStorage\Business\TaxStorageFacade getFacade()
  */
 class TaxStorageCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -21,15 +24,5 @@ class TaxStorageCommunicationFactory extends AbstractCommunicationFactory
     public function getEventBehaviorFacade(): TaxSetStorageToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(TaxStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
-    }
-
-    public function getOwnClient()
-    {
-        return $this->getProvidedDependency(TaxStorageDependencyProvider::OWN_CLIENT);
-    }
-
-    public function getEm()
-    {
-        return $this->getEntityManager();
     }
 }

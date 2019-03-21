@@ -7,13 +7,9 @@
 
 namespace Spryker\Zed\TaxStorage\Persistence;
 
-use \ArrayObject;
-
 interface TaxStorageRepositoryInterface
 {
     /**
-     * finds to which tax sets assigned changed tax rates uses SpyTaxSetTaxQuery
-     *
      * @param array $taxRateIds
      *
      * @return array
@@ -21,21 +17,21 @@ interface TaxStorageRepositoryInterface
     public function findTaxSetIdsByTaxRateIds(array $taxRateIds): array;
 
     /**
-     * @return \ArrayObject
+     * @param array $taxSetIds
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Tax\Persistence\SpyTaxSet[]
      */
-    public function findAllTaxSetSorageEntities(): ArrayObject;
+    public function findTaxSetsByIds(array $taxSetIds): iterable;
 
     /**
      * @param array $taxSetIds
      *
-     * @return \ArrayObject
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
      */
-    public function findTaxSetsByIds(array $taxSetIds): ArrayObject;
+    public function findTaxSetStoragesByIds(array $taxSetIds): iterable;
 
     /**
-     * @param array $taxSetIds
-     *
-     * @return \ArrayObject
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
      */
-    public function findTaxSetStoragesByIds(array $taxSetIds): ArrayObject;
+    public function findAllTaxSetSorage(): iterable;
 }

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\TaxStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapper;
+use Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapperInterface;
 use Spryker\Zed\TaxStorage\Business\TaxStoragePublisher\TaxStoragePublisher;
 use Spryker\Zed\TaxStorage\Business\TaxStoragePublisher\TaxStoragePublisherInterface;
 
@@ -24,7 +26,16 @@ class TaxStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new TaxStoragePublisher(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->createTaxStorageMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxStorage\Persistence\Mapper\TaxStorageMapperInterface
+     */
+    public function createTaxStorageMapper(): TaxStorageMapperInterface
+    {
+        return new TaxStorageMapper();
     }
 }

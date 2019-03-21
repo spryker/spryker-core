@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\TaxStorage\Business\TaxStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManager getEntityManager()
+ * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepository getRepository()
  */
 class TaxStorageFacade extends AbstractFacade implements TaxStorageFacadeInterface
 {
@@ -29,18 +31,6 @@ class TaxStorageFacade extends AbstractFacade implements TaxStorageFacadeInterfa
     /**
      * @api
      *
-     * @param array $taxRateIds
-     *
-     * @return void
-     */
-    public function publishByTaxRateIds(array $taxRateIds): void
-    {
-        $this->getFactory()->createTaxStoragePublisher()->publishByTaxRateIds($taxRateIds);
-    }
-
-    /**
-     * @api
-     *
      * @param array $taxSetIds
      *
      * @return void
@@ -48,5 +38,17 @@ class TaxStorageFacade extends AbstractFacade implements TaxStorageFacadeInterfa
     public function unpublishByTaxSetIds(array $taxSetIds): void
     {
         $this->getFactory()->createTaxStoragePublisher()->unpublishByTaxSetIds($taxSetIds);
+    }
+
+    /**
+     * @api
+     *
+     * @param array $taxRateIds
+     *
+     * @return void
+     */
+    public function publishByTaxRateIds(array $taxRateIds): void
+    {
+        $this->getFactory()->createTaxStoragePublisher()->publishByTaxRateIds($taxRateIds);
     }
 }
