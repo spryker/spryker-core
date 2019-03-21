@@ -23,8 +23,8 @@
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
 
-        <foreign-key name="spy_price_product_schedule_product_abstract" foreignTable="spy_product_abstract"
-                     phpName="SpyProductAbstract" refPhpName="PriceProductSchedule">
+        <foreign-key name="spy_price_product_schedule-fk_product_abstract" foreignTable="spy_product_abstract"
+                     phpName="ProductAbstract" refPhpName="PriceProductSchedule">
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
 
