@@ -94,6 +94,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `Spryker\Client\SessionRedis\SessionRedis::getConnectionParameters()` instead.
+     *
      * @return array|string
      */
     public function getSessionHandlerRedisConnectionParameters()
@@ -108,6 +110,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `Spryker\Client\SessionRedis\SessionRedis::getSessionHandlerRedisDataSourceName()` instead.
+     *
      * @return string
      */
     public function getSessionHandlerRedisDataSourceName()
@@ -122,6 +126,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `Spryker\Client\SessionRedis\SessionRedis::getConnectionOptions()` instead.
+     *
      * @return array
      */
     public function getSessionHandlerRedisConnectionOptions(): array

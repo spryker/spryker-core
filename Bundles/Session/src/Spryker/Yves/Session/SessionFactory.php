@@ -45,7 +45,9 @@ class SessionFactory extends AbstractFactory
      */
     protected function createSessionStorageHandlerPool()
     {
-        $sessionHandlerPool = new SessionStorageHandlerPool();
+        $sessionHandlerPool = new SessionStorageHandlerPool(
+            $this->getSessionHandlerPlugins()
+        );
         $sessionHandlerPool
             ->addHandler($this->createSessionHandlerRedis(), SessionConfig::SESSION_HANDLER_REDIS)
             ->addHandler($this->createSessionHandlerRedisLocking(), SessionConfig::SESSION_HANDLER_REDIS_LOCKING)
@@ -92,6 +94,14 @@ class SessionFactory extends AbstractFactory
     protected function createSessionHandlerFactory()
     {
         return new SessionHandlerFactory($this->getConfig()->getSessionLifeTime(), $this->getMonitoringService());
+    }
+
+    /**
+     * @return \Spryker\Shared\Session\Plugin\SessionHandlerExtensionPluginInterface[]
+     */
+    protected function getSessionHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(SessionDependencyProvider::PLUGINS_SESSION_HANDLER);
     }
 
     /**

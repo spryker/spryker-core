@@ -46,7 +46,9 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
      */
     protected function createSessionStorageHandlerPool()
     {
-        $sessionHandlerPool = new SessionStorageHandlerPool();
+        $sessionHandlerPool = new SessionStorageHandlerPool(
+            $this->getSessionHandlerPlugins()
+        );
         $sessionHandlerPool
             ->addHandler($this->createSessionHandlerRedis(), SessionConfig::SESSION_HANDLER_REDIS)
             ->addHandler($this->createSessionHandlerRedisLocking(), SessionConfig::SESSION_HANDLER_REDIS_LOCKING)
@@ -101,6 +103,14 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     public function getMonitoringService(): SessionToMonitoringServiceInterface
     {
         return $this->getProvidedDependency(SessionDependencyProvider::MONITORING_SERVICE);
+    }
+
+    /**
+     * @return \Spryker\Shared\Session\Business\Plugin\SessionHandlerExtensionPluginInterface[]
+     */
+    protected function getSessionHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(SessionDependencyProvider::PLUGINS_HANDLER_SESSION);
     }
 
     /**

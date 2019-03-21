@@ -95,6 +95,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\SessionRedis\SessionRedisConfig::getSessionLifeTime()` instead.
+     *
      * @return int
      */
     public function getSessionLifeTime()
@@ -103,6 +105,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\SessionRedis\SessionRedisConfig::getConnectionParameters()` instead.
+     *
      * @return array|string
      */
     public function getSessionHandlerRedisConnectionParametersZed()

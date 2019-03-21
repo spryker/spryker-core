@@ -18,6 +18,16 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
     protected $sessionHandler = [];
 
     /**
+     * @param \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerPluginInterface[] $sessionHandlerPlugins
+     */
+    public function __construct(array $sessionHandlerPlugins = [])
+    {
+        $this->setupSessionHandlersFromPlugins($sessionHandlerPlugins);
+    }
+
+    /**
+     * @deprecated Stack of handlers should be passed to the constructor
+     *
      * @param \SessionHandlerInterface $sessionHandler
      * @param string $sessionHandlerName
      *
@@ -25,7 +35,9 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
      */
     public function addHandler(SessionHandlerInterface $sessionHandler, $sessionHandlerName)
     {
-        $this->sessionHandler[$sessionHandlerName] = $sessionHandler;
+        if (!isset($this->sessionHandler[$sessionHandlerName])) {
+            $this->sessionHandler[$sessionHandlerName] = $sessionHandler;
+        }
 
         return $this;
     }
@@ -52,5 +64,17 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
         );
 
         throw new SessionHandlerNotFoundInSessionHandlerPoolException($message);
+    }
+
+    /**
+     * @param \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerPluginInterface[] $sessionHandlerPlugins
+     *
+     * @return void
+     */
+    protected function setupSessionHandlersFromPlugins(array $sessionHandlerPlugins): void
+    {
+        foreach ($sessionHandlerPlugins as $sessionHandlerPlugin) {
+            $this->sessionHandler[$sessionHandlerPlugin->getSessionHandlerName()] = $sessionHandlerPlugin->getSessionHandler();
+        }
     }
 }
