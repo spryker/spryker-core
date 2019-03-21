@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption;
+use Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceInterface;
 use Traversable;
 
 class NonPersistentProvider implements StorageProviderInterface
@@ -26,15 +27,23 @@ class NonPersistentProvider implements StorageProviderInterface
     protected $cartRemoveItemStrategyPlugins;
 
     /**
+     * @var \Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartAddItemStrategyPlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartRemoveItemStrategyPlugins
+     * @param \Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         array $cartAddItemStrategyPlugins,
-        array $cartRemoveItemStrategyPlugins
+        array $cartRemoveItemStrategyPlugins,
+        CartToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->cartAddItemStrategyPlugins = $cartAddItemStrategyPlugins;
         $this->cartRemoveItemStrategyPlugins = $cartRemoveItemStrategyPlugins;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -163,12 +172,13 @@ class NonPersistentProvider implements StorageProviderInterface
             }
         }
 
-        if ($existingItemTransfer === null) {
+        if ($existingItemTransfer === null && isset($existingItems[$itemIndex])) {
             $itemIndex = $cartIndex[$itemIdentifier];
             $existingItemTransfer = $existingItems[$itemIndex];
         }
 
         $changedQuantity = $existingItemTransfer->getQuantity() - $itemTransfer->getQuantity();
+        $changedQuantity = $this->utilQuantityService->roundQuantity($changedQuantity);
 
         if ($changedQuantity > 0) {
             $existingItemTransfer->setQuantity($changedQuantity);
@@ -186,8 +196,13 @@ class NonPersistentProvider implements StorageProviderInterface
      */
     protected function increaseExistingItem(Traversable $existingItems, $index, $itemTransfer)
     {
+        if (!isset($existingItems[$index])) {
+            return;
+        }
+
         $existingItemTransfer = $existingItems[$index];
         $changedQuantity = $existingItemTransfer->getQuantity() + $itemTransfer->getQuantity();
+        $changedQuantity = $this->utilQuantityService->roundQuantity($changedQuantity);
 
         $existingItemTransfer->setQuantity($changedQuantity);
     }
@@ -201,7 +216,7 @@ class NonPersistentProvider implements StorageProviderInterface
      */
     protected function isValidQuantity(ItemTransfer $itemTransfer)
     {
-        if ($itemTransfer->getQuantity() < 1) {
+        if ($itemTransfer->getQuantity() <= 0) {
             throw new InvalidQuantityExeption(
                 sprintf(
                     'Could not change the quantity of cart item "%s" to "%d".',
