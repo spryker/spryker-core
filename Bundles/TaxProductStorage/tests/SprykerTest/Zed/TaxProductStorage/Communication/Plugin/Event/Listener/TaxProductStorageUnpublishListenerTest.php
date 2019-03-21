@@ -9,10 +9,11 @@ namespace SprykerTest\Zed\TaxProductStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\TaxProductStorageTransfer;
+use Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Product\Dependency\ProductEvents;
-use Spryker\Zed\TaxProductStorage\Communication\Plugin\Event\Listener\TaxProductStoragePublishListener;
 use Spryker\Zed\TaxProductStorage\Communication\Plugin\Event\Listener\TaxProductStorageUnpublishListener;
 use Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageRepository;
 
@@ -46,11 +47,6 @@ class TaxProductStorageUnpublishListenerTest extends Unit
     protected $taxProductStorageUnpublishListener;
 
     /**
-     * @var \Spryker\Zed\TaxProductStorage\Communication\Plugin\Event\Listener\TaxProductStoragePublishListener
-     */
-    protected $taxProductStoragePublishListener;
-
-    /**
      * @var \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     protected $productAbstractTransfer;
@@ -70,7 +66,6 @@ class TaxProductStorageUnpublishListenerTest extends Unit
 
         $this->taxProductStorageRepository = new TaxProductStorageRepository();
         $this->taxProductStorageUnpublishListener = new TaxProductStorageUnpublishListener();
-        $this->taxProductStoragePublishListener = new TaxProductStoragePublishListener();
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();
     }
 
@@ -83,15 +78,12 @@ class TaxProductStorageUnpublishListenerTest extends Unit
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
+        $this->saveTaxProductStorageEntity();
 
         // Act
-        $this->taxProductStoragePublishListener->handleBulk(
-            $eventTransfers,
-            ProductEvents::PRODUCT_ABSTRACT_PUBLISH
-        );
         $this->taxProductStorageUnpublishListener->handleBulk(
             $eventTransfers,
-            ProductEvents::PRODUCT_ABSTRACT_PUBLISH
+            ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH
         );
         $taxProductStorageEntities = $this->taxProductStorageRepository
             ->findTaxProductStorageEntities([
@@ -100,5 +92,23 @@ class TaxProductStorageUnpublishListenerTest extends Unit
 
         // Assert
         $this->assertCount(0, $taxProductStorageEntities);
+    }
+
+    /**
+     * @return void
+     */
+    protected function saveTaxProductStorageEntity(): void
+    {
+        $taxProductStorageTransfer = (new TaxProductStorageTransfer())
+            ->setSku($this->productAbstractTransfer->getSku())
+            ->setIdTaxSet($this->productAbstractTransfer->getIdTaxSet())
+            ->setIdProductAbstract($this->productAbstractTransfer->getIdProductAbstract());
+
+        $taxProductStorageEntity = (new SpyTaxProductStorage())
+            ->setData($taxProductStorageTransfer->toArray())
+            ->setSku($this->productAbstractTransfer->getSku())
+            ->setFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract());
+
+        $taxProductStorageEntity->save();
     }
 }

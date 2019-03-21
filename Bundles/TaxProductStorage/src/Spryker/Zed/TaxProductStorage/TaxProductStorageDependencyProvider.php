@@ -28,6 +28,7 @@ class TaxProductStorageDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
 
         return $container;
@@ -40,6 +41,7 @@ class TaxProductStorageDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
+        $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addProductAbstractQuery($container);
 
         return $container;

@@ -21,7 +21,7 @@ class TaxProductStorageRepository extends AbstractRepository implements TaxProdu
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
      */
-    public function findTaxSetIdsByProductAbstractIds(array $productAbstractIds): array
+    public function findProductAbstractEntitiesByProductAbstractIds(array $productAbstractIds): array
     {
         if (count($productAbstractIds) === 0) {
             return [];

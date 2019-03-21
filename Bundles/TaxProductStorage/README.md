@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/tax-product-storage.svg)](https://travis-ci.org/spryker/tax-product-storage)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/tax-product-storage/badge.svg)](https://coveralls.io/github/spryker/tax-product-storage)
 
-Main responsible module for dealing with tax products on the memory storage level.
+Main responsible module for dealing with products taxes on the memory storage level.
 
 ## Installation
 

@@ -11,7 +11,7 @@ interface TaxProductStorageFacadeInterface
 {
     /**
      * Specification:
-     *  - Queries product tax sets for the given productAbstractIds
+     *  - Queries product tax sets for the given productAbstractIds.
      *  - Publishes product tax sets to storage.
      *
      * @api

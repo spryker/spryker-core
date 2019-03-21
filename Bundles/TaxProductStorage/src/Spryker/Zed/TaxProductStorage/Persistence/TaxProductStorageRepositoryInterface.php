@@ -14,7 +14,7 @@ interface TaxProductStorageRepositoryInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
      */
-    public function findTaxSetIdsByProductAbstractIds(array $productAbstractIds): array;
+    public function findProductAbstractEntitiesByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * @param int[] $productAbstractIds

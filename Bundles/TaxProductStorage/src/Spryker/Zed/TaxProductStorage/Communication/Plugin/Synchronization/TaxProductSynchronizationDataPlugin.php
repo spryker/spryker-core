@@ -56,16 +56,14 @@ class TaxProductSynchronizationDataPlugin extends AbstractPlugin implements Sync
     public function getData(array $ids = []): array
     {
         $synchronizationDataTransfers = [];
-        $companyUserStorageEntities = $this->findTaxProductStorageEntities($ids);
+        $taxProductStorageEntities = $this->findTaxProductStorageEntities($ids);
 
-        foreach ($companyUserStorageEntities as $companyUserStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-
+        foreach ($taxProductStorageEntities as $taxProductStorageEntity) {
             /** @var string $data */
-            $data = $companyUserStorageEntity->getData();
-            $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($companyUserStorageEntity->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
+            $data = $taxProductStorageEntity->getData();
+            $synchronizationDataTransfers[] = (new SynchronizationDataTransfer())
+                ->setData($data)
+                ->setKey($taxProductStorageEntity->getKey());
         }
 
         return $synchronizationDataTransfers;

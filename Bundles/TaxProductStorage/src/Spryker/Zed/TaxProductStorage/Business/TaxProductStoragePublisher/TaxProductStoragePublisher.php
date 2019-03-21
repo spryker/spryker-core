@@ -45,7 +45,7 @@ class TaxProductStoragePublisher implements TaxProductStoragePublisherInterface
      */
     public function publish(array $productAbstractIds): void
     {
-        $productAbstractEntities = $this->taxProductStorageRepository->findTaxSetIdsByProductAbstractIds($productAbstractIds);
+        $productAbstractEntities = $this->taxProductStorageRepository->findProductAbstractEntitiesByProductAbstractIds($productAbstractIds);
         $indexedTaxProductStorageEntities = $this->taxProductStorageRepository->findTaxProductStorageEntities(
             $productAbstractIds,
             SpyTaxProductStorageEntityTransfer::FK_PRODUCT_ABSTRACT
