@@ -1,5 +1,9 @@
 namespace: ContentProductDataImport
 actor: Tester
+
+include:
+    - tests/SprykerTest/Zed/ContentProductDataImport
+
 paths:
     tests: tests
     log: tests/_output
