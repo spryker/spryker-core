@@ -5,18 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilQuantity;
+namespace Spryker\Service\UtilQuantity\Calculator;
 
-interface UtilQuantityServiceInterface
+interface QuantityCalculatorInterface
 {
     /**
-     * Specification:
-     * - get max precision of input quantities.
-     * - sum quantities.
-     * - rounds result with previously calculated precision.
-     *
-     * @api
-     *
      * @param float $firstQuantity
      * @param float $secondQuantity
      *
@@ -25,13 +18,6 @@ interface UtilQuantityServiceInterface
     public function sumQuantities(float $firstQuantity, float $secondQuantity): float;
 
     /**
-     * Specification:
-     * - get max precision of input quantities.
-     * - subtract quantities.
-     * - rounds result with previously calculated precision.
-     *
-     * @api
-     *
      * @param float $firstQuantity
      * @param float $secondQuantity
      *
