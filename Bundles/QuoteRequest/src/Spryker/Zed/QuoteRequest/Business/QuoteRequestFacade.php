@@ -183,4 +183,18 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
             ->createQuoteRequestChecker()
             ->checkValidUntil($quoteTransfer, $checkoutResponseTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function closeOutdatedQuoteRequests(): void
+    {
+        $this->getFactory()
+            ->createQuoteRequestCleaner()
+            ->closeOutdatedQuoteRequests();
+    }
 }
