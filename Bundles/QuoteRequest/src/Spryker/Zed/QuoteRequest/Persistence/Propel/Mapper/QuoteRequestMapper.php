@@ -119,7 +119,7 @@ class QuoteRequestMapper
     protected function findLatestQuoteRequestVersionTransfer(SpyQuoteRequest $quoteRequestEntity): ?QuoteRequestVersionTransfer
     {
         /** @var \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion|null $quoteRequestVersionEntity */
-        $quoteRequestVersionEntity = $quoteRequestEntity->getSpyQuoteRequestVersions()->getLast();
+        $quoteRequestVersionEntity = $quoteRequestEntity->getSpyQuoteRequestVersions()->getFirst();
 
         if (!$quoteRequestVersionEntity) {
             return null;

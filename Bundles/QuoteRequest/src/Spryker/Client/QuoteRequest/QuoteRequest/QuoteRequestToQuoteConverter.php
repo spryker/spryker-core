@@ -53,7 +53,7 @@ class QuoteRequestToQuoteConverter implements QuoteRequestToQuoteConverterInterf
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    public function convertQuoteRequestToLockedQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
         if (!$this->quoteRequestChecker->isQuoteRequestReady($quoteRequestTransfer)) {
             return $this->getErrorResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS);
@@ -68,6 +68,28 @@ class QuoteRequestToQuoteConverter implements QuoteRequestToQuoteConverterInterf
 
         $quoteTransfer->setQuoteRequestVersionReference($latestQuoteRequestVersionTransfer->getVersionReference());
         $quoteTransfer = $this->quoteClient->lockQuote($quoteTransfer);
+
+        return $this->persistentCartClient->persistCustomerQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function convertQuoteRequestToEditableQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    {
+        if (!$this->quoteRequestChecker->isQuoteRequestDraft($quoteRequestTransfer)) {
+            return $this->getErrorResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS);
+        }
+
+        $latestQuoteRequestVersionTransfer = $quoteRequestTransfer->requireLatestVersion()
+            ->getLatestVersion();
+
+        $quoteTransfer = $latestQuoteRequestVersionTransfer->getQuote()
+            ->setQuoteRequestVersionReference($latestQuoteRequestVersionTransfer->getVersionReference())
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
+            ->setName($quoteRequestTransfer->getQuoteRequestReference());
 
         return $this->persistentCartClient->persistCustomerQuote($quoteTransfer);
     }

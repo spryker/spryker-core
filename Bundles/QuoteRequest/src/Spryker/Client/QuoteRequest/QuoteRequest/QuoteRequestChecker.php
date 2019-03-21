@@ -45,4 +45,14 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
     {
         return $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_READY;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestDraft(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_DRAFT;
+    }
 }
