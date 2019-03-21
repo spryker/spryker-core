@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
@@ -62,12 +63,18 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     protected $calculationFacade;
 
     /**
+     * @var \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface
+     */
+    protected $cartFacade;
+
+    /**
      * @param \Spryker\Zed\QuoteRequest\QuoteRequestConfig $quoteRequestConfig
      * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface $quoteRequestEntityManager
      * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $quoteRequestRepository
      * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator
      * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface $companyUserFacade
      * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface $calculationFacade
+     * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface $cartFacade
      */
     public function __construct(
         QuoteRequestConfig $quoteRequestConfig,
@@ -75,7 +82,8 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         QuoteRequestRepositoryInterface $quoteRequestRepository,
         QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator,
         QuoteRequestToCompanyUserInterface $companyUserFacade,
-        QuoteRequestToCalculationInterface $calculationFacade
+        QuoteRequestToCalculationInterface $calculationFacade,
+        QuoteRequestToCartInterface $cartFacade
     ) {
         $this->quoteRequestConfig = $quoteRequestConfig;
         $this->quoteRequestEntityManager = $quoteRequestEntityManager;
@@ -83,6 +91,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         $this->quoteRequestReferenceGenerator = $quoteRequestReferenceGenerator;
         $this->companyUserFacade = $companyUserFacade;
         $this->calculationFacade = $calculationFacade;
+        $this->cartFacade = $cartFacade;
     }
 
     /**
@@ -220,6 +229,10 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      */
     protected function executeUpdateQuoteRequestTransaction(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
+        $quoteRequestTransfer->setQuoteInProgress(
+            $this->cartFacade->reloadItems($quoteRequestTransfer->getQuoteInProgress())
+        );
+
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
         return (new QuoteRequestResponseTransfer())
