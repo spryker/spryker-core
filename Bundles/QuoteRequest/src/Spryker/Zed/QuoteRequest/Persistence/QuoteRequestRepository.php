@@ -7,17 +7,14 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence;
 
-use DateTime;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
-use Orm\Zed\QuoteRequest\Persistence\Map\SpyQuoteRequestTableMap;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -79,20 +76,6 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
         return $this->getFactory()
             ->createQuoteRequestVersionMapper()
             ->mapEntityCollectionToTransferCollection($quoteRequestVersionQuery->find());
-    }
-
-    /**
-     * @return int[]
-     */
-    public function getOutdatedQuoteRequestIds(): array
-    {
-        return $this->getFactory()
-            ->getQuoteRequestPropelQuery()
-            ->filterByStatus(SharedQuoteRequestConfig::STATUS_READY)
-            ->filterByValidUntil((new DateTime())->format('Y-m-d H:i:s'), Criteria::LESS_EQUAL)
-            ->select([SpyQuoteRequestTableMap::COL_ID_QUOTE_REQUEST])
-            ->find()
-            ->toArray();
     }
 
     /**

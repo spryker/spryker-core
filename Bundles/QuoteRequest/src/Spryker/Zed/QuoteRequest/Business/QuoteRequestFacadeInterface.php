@@ -135,7 +135,7 @@ interface QuoteRequestFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves requests for quote where valid_until less than current time and status "ready".
+     * - Retrieves requests for quote where valid_until less than current time and status is "ready".
      * - Updates requests of quote status to "closed".
      *
      * @api

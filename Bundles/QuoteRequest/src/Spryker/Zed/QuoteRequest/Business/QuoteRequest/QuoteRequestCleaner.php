@@ -7,30 +7,21 @@
 
 namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
+use DateTime;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
-use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 
 class QuoteRequestCleaner implements QuoteRequestCleanerInterface
 {
-    /**
-     * @var \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface
-     */
-    protected $quoteRequestRepository;
-
     /**
      * @var \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface
      */
     protected $quoteRequestEntityManager;
 
     /**
-     * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $quoteRequestRepository
      * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface $quoteRequestEntityManager
      */
-    public function __construct(
-        QuoteRequestRepositoryInterface $quoteRequestRepository,
-        QuoteRequestEntityManagerInterface $quoteRequestEntityManager
-    ) {
-        $this->quoteRequestRepository = $quoteRequestRepository;
+    public function __construct(QuoteRequestEntityManagerInterface $quoteRequestEntityManager)
+    {
         $this->quoteRequestEntityManager = $quoteRequestEntityManager;
     }
 
@@ -39,12 +30,6 @@ class QuoteRequestCleaner implements QuoteRequestCleanerInterface
      */
     public function closeOutdatedQuoteRequests(): void
     {
-        $outdatedQuoteRequestIds = $this->quoteRequestRepository->getOutdatedQuoteRequestIds();
-
-        if (!$outdatedQuoteRequestIds) {
-            return;
-        }
-
-        $this->quoteRequestEntityManager->closeQuoteRequests($outdatedQuoteRequestIds);
+        $this->quoteRequestEntityManager->closeOutdatedQuoteRequests(new DateTime());
     }
 }

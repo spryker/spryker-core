@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 
@@ -41,9 +42,9 @@ interface QuoteRequestEntityManagerInterface
     public function updateQuoteRequestVersion(QuoteRequestVersionTransfer $quoteRequestTransfer): QuoteRequestVersionTransfer;
 
     /**
-     * @param int[] $quoteRequestIds
+     * @param \DateTime $validUntil
      *
      * @return void
      */
-    public function closeQuoteRequests(array $quoteRequestIds): void;
+    public function closeOutdatedQuoteRequests(DateTime $validUntil): void;
 }

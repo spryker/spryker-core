@@ -31,9 +31,4 @@ interface QuoteRequestRepositoryInterface
     public function getQuoteRequestVersionCollectionByFilter(
         QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
     ): QuoteRequestVersionCollectionTransfer;
-
-    /**
-     * @return int[]
-     */
-    public function getOutdatedQuoteRequestIds(): array;
 }
