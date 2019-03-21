@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ContentProductGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,7 +23,7 @@ class AbstractProductController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function productAbstractSelectedTableAction(Request $request)
+    public function productAbstractSelectedTableAction(Request $request): JsonResponse
     {
         $idProductAbstracts = $request->query->get(static::PARAM_IDS, []);
 
@@ -41,7 +42,7 @@ class AbstractProductController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function productAbstractViewTableAction(Request $request)
+    public function productAbstractViewTableAction(Request $request): JsonResponse
     {
         $idProductAbstracts = $request->query->get(static::PARAM_IDS, []);
 

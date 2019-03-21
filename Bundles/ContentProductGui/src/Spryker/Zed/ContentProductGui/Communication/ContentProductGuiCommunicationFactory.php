@@ -9,9 +9,13 @@ namespace Spryker\Zed\ContentProductGui\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelper;
+use Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
 use Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractSelectedTable;
 use Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractViewTable;
 use Spryker\Zed\ContentProductGui\ContentProductGuiDependencyProvider;
+use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToLocaleInterface;
+use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToProductImageInterface;
+use Spryker\Zed\ContentProductGui\Dependency\QueryContainer\ContentProductGuiToProductInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -33,7 +37,7 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
         LocaleTransfer $localeTransfer,
         array $idProductAbstracts,
         ?string $identifierPostfix = null
-    ) {
+    ): ProductAbstractViewTable {
         return new ProductAbstractViewTable(
             $this->getProductQueryContainer(),
             $this->createProductAbstractTableHelper(),
@@ -54,7 +58,7 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
         LocaleTransfer $localeTransfer,
         array $idProductAbstracts,
         ?string $identifierPostfix = null
-    ) {
+    ): ProductAbstractSelectedTable {
         return new ProductAbstractSelectedTable(
             $this->getProductQueryContainer(),
             $this->createProductAbstractTableHelper(),
@@ -67,7 +71,7 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface
      */
-    public function createProductAbstractTableHelper()
+    public function createProductAbstractTableHelper(): ProductAbstractTableHelperInterface
     {
         return new ProductAbstractTableHelper($this->getProductImageFacade());
     }
@@ -75,7 +79,7 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToProductImageInterface
      */
-    public function getProductImageFacade()
+    public function getProductImageFacade(): ContentProductGuiToProductImageInterface
     {
         return $this->getProvidedDependency(ContentProductGuiDependencyProvider::FACADE_PRODUCT_IMAGE);
     }
@@ -83,7 +87,7 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ContentProductGui\Dependency\QueryContainer\ContentProductGuiToProductInterface
      */
-    public function getProductQueryContainer()
+    public function getProductQueryContainer(): ContentProductGuiToProductInterface
     {
         return $this->getProvidedDependency(ContentProductGuiDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
@@ -91,7 +95,7 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToLocaleInterface
      */
-    public function getLocaleFacade()
+    public function getLocaleFacade(): ContentProductGuiToLocaleInterface
     {
         return $this->getProvidedDependency(ContentProductGuiDependencyProvider::FACADE_LOCALE);
     }
