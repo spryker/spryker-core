@@ -1,3 +1,0 @@
-parameters:
-    ignoreErrors:
-        - '#.+ Generated\\Shared\\Transfer\\ContentProductAbstractListTransfer::setIdProductAbstracts\(\) expects array<int>|null, array<int, null> given.#'

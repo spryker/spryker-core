@@ -14,6 +14,9 @@ use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface;
 use Spryker\Zed\ContentProductGui\Communication\Form\ProductAbstractListContentTermForm;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
+/**
+ * @method \Spryker\Zed\ContentProductGui\Communication\ContentProductGuiCommunicationFactory getFactory()
+ */
 class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPluginInterface
 {
     /**
@@ -67,10 +70,6 @@ class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPlu
 
         if ($params !== null) {
             $contentProductAbstractListTransfer->fromArray($params);
-        }
-
-        if (!$contentProductAbstractListTransfer->getIdProductAbstracts()) {
-            $contentProductAbstractListTransfer->setIdProductAbstracts([null]);
         }
 
         return $contentProductAbstractListTransfer;

@@ -55,6 +55,7 @@ class CreateContentController extends AbstractController
                 )
             );
         }
+        $error = $contentForm->getErrors();
         $contentTabs = $this->getFactory()->createContentTabs();
 
         return $this->viewResponse([

@@ -2,10 +2,10 @@
 {% for idProductAbstract in form.idProductAbstracts %}
     {{ form_row(idProductAbstract) }}
 {% endfor %}
+{{ form.vars.tables.productAbstractSelectedTable | raw }}
+    <h2>{{ 'Add more products' | trans }}</h2>
+{{ form.vars.tables.productAbstractViewTable | raw }}
+    <input type="button" id="add-selected-product-abstract-{{ form.parent.vars.name }}" class="btn btn-outline btn-create pull-right" value="Add Selected">
 </div>
-<button type="button"
-        class="add-abstract-product-id btn-create"
-        data-list="#localized-contents-{{ form.parent.vars.name }}"><i class="fa fa-plus"></i> Add id</button>
-
 <link rel="stylesheet" href="/assets/css/spryker-zed-abstract-product-add.css" />
 <script src="/assets/js/spryker-zed-abstract-product-add.js"></script>

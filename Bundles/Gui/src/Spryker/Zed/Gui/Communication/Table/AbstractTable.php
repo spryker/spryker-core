@@ -72,6 +72,11 @@ abstract class AbstractTable
     /**
      * @var string
      */
+    protected $baseUrl;
+
+    /**
+     * @var string
+     */
     protected $defaultUrl = 'table';
 
     /**
@@ -561,6 +566,7 @@ abstract class AbstractTable
             'tableId' => $this->getTableIdentifier(),
             'class' => $this->tableClass,
             'url' => $this->defaultUrl,
+            'baseUrl' => $this->baseUrl,
             'header' => [],
         ];
 

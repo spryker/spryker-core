@@ -132,7 +132,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     protected function getAvailableLocales(): array
     {
         $defaultLocale = new LocaleTransfer();
-        $defaultLocale->setLocaleName('Default locale');
+        $defaultLocale->setLocaleName('Default for all locales');
 
         $locales = $this->localeFacade
             ->getLocaleCollection();

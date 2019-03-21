@@ -9,15 +9,19 @@ namespace Spryker\Zed\ContentProductGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
+/**
+ * @method \Spryker\Zed\ContentProductGui\Communication\ContentProductGuiCommunicationFactory getFactory()
+ */
 class ProductAbstractListContentTermForm extends AbstractType
 {
     public const FIELD_ID_ABSTRACT_PRODUCTS = 'idProductAbstracts';
@@ -57,6 +61,28 @@ class ProductAbstractListContentTermForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['tables']['productAbstractViewTable'] = $this->getFactory()->createProductAbstractViewTable(
+            $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
+            $view->vars['value']->getIdProductAbstracts(),
+            $view->parent->vars['name']
+        )->render();
+
+        $view->vars['tables']['productAbstractSelectedTable'] = $this->getFactory()->createProductAbstractSelectedTable(
+            $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
+            $view->vars['value']->getIdProductAbstracts(),
+            $view->parent->vars['name']
+        )->render();
+    }
+
+    /**
      * @return string
      */
     public function getBlockPrefix(): string
@@ -83,7 +109,7 @@ class ProductAbstractListContentTermForm extends AbstractType
     protected function addIdProductAbstractsField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_ABSTRACT_PRODUCTS, CollectionType::class, [
-            'entry_type' => TextType::class,
+            'entry_type' => HiddenType::class,
             'label' => false,
             'prototype' => true,
             'allow_add' => true,
