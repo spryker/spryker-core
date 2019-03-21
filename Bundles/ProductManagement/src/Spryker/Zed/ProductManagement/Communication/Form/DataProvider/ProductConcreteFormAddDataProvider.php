@@ -183,7 +183,7 @@ class ProductConcreteFormAddDataProvider
                 StockForm::FIELD_HIDDEN_STOCK_PRODUCT_ID => 0,
                 StockForm::FIELD_IS_NEVER_OUT_OF_STOCK => false,
                 StockForm::FIELD_TYPE => $stockTypEntity->getName(),
-                StockForm::FIELD_QUANTITY => 0.00,
+                StockForm::FIELD_QUANTITY => 0,
             ];
         }
 
