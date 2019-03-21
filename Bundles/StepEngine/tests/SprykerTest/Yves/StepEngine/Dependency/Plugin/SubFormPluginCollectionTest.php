@@ -71,7 +71,7 @@ class SubFormPluginCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface
      */
     private function getSubFormPlugin()
     {

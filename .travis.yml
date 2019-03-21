@@ -19,7 +19,7 @@ before_install:
   - phpenv config-rm xdebug.ini
 
 install:
-  - composer install --no-interaction --prefer-dist --no-autoloader
+  - composer install --no-interaction --prefer-dist --optimize-autoloader
 
 script:
   - vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p
