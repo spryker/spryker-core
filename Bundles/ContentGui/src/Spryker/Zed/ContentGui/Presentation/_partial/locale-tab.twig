@@ -9,7 +9,7 @@
                 {% else %}
                     {{ form_widget(localizedContentForm.parameters) }}
                 {% endif %}
-                <input type="button" data-tab="#localized-content-block-{{ localizedContentForm.vars.name }}" class="btn btn-outline btn-view clear-fields" value="{{ 'Clear locale' | trans }}" />
+                <input type="button" data-tab="#localized-content-block-{{ localizedContentForm.vars.name }}" class="btn btn-outline btn-view clear-fields pull-right" value="{{ 'Clear locale' | trans }}" />
             </div>
         {% endif %}
     {% endfor %}
