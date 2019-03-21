@@ -18,6 +18,8 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class ProductAbstractViewTable extends AbstractTable
 {
     public const TABLE_IDENTIFIER = 'product-abstract-view-table';
+    public const TABLE_CLASS = 'product-abstract-view-table gui-table-data';
+    public const BASE_URL = '/content-product-gui/abstract-product/';
 
     public const COL_ID_PRODUCT_ABSTRACT = 'ID';
     public const COL_SKU = 'SKU';
@@ -84,12 +86,11 @@ class ProductAbstractViewTable extends AbstractTable
         if (($this->idProductAbstracts)) {
             $urlSuffix = '?' . http_build_query([AbstractProductController::PARAM_IDS => $this->idProductAbstracts]);
         }
-        $this->baseUrl = '/content-product-gui/abstract-product/';
+        $this->baseUrl = static::BASE_URL;
         $this->defaultUrl = static::TABLE_IDENTIFIER . $urlSuffix;
+        $this->tableClass = static::TABLE_CLASS;
 
-        $this->setTableIdentifier(static::TABLE_IDENTIFIER . $this->identifierPostfix);
-
-        $this->disableSearch();
+        $this->setTableIdentifier(sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierPostfix));
 
         $config->setHeader([
             static::COL_ID_PRODUCT_ABSTRACT => static::COL_ID_PRODUCT_ABSTRACT,
