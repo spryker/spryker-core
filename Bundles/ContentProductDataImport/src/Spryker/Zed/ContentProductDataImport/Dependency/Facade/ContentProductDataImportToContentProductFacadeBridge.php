@@ -10,7 +10,7 @@ namespace Spryker\Zed\ContentProductDataImport\Dependency\Facade;
 use Generated\Shared\Transfer\ContentProductAbstractListTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 
-class ContentProductDataImportToContentProductFacadeIBridge implements ContentProductDataImportToContentProductFacadeInterface
+class ContentProductDataImportToContentProductFacadeBridge implements ContentProductDataImportToContentProductFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ContentProduct\Business\ContentProductFacadeInterface

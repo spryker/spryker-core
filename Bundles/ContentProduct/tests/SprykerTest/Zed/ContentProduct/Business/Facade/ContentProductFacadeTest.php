@@ -26,6 +26,11 @@ use Spryker\Zed\ContentProduct\ContentProductConfig;
 class ContentProductFacadeTest extends Test
 {
     /**
+     * @uses \Spryker\Zed\ContentProduct\Business\Validator\ContentProductAbstractListValidator::ERROR_MESSAGE_NUMBER_OF_PRODUCTS
+     */
+    protected const ERROR_MESSAGE_NUMBER_OF_PRODUCTS = 'Number of products is too long, max {count}, please check row with key:"{key}", column:"{column}"';
+
+    /**
      * @var \SprykerTest\Zed\ContentProduct\ContentProductBusinessTester
      */
     protected $tester;
@@ -49,6 +54,31 @@ class ContentProductFacadeTest extends Test
         $this->assertInstanceOf(ContentValidationResponseTransfer::class, $contentValidationResponseTransfer);
         $this->assertTrue($contentValidationResponseTransfer->getIsSuccess());
         $this->assertCount(0, $contentValidationResponseTransfer->getParameterMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateContentProductAbstractListFail(): void
+    {
+        $products = [];
+
+        for ($i = 1; $i <= ContentProductConfig::MAX_NUMBER_PRODUCTS_IN_PRODUCT_ABSTRACT_LIST + 1; $i++) {
+            $products[] = $i;
+        }
+
+        $contentProductAbstractListTransfer = (new ContentProductAbstractListTransfer())
+            ->setIdProductAbstracts($products);
+
+        $contentValidationResponseTransfer = $this->getFacade()->validateContentProductAbstractList($contentProductAbstractListTransfer);
+
+        $this->assertInstanceOf(ContentValidationResponseTransfer::class, $contentValidationResponseTransfer);
+        $this->assertFalse($contentValidationResponseTransfer->getIsSuccess());
+        $messageTransfer = $contentValidationResponseTransfer->getParameterMessages()
+            ->offsetGet(0)
+            ->getMessages()
+            ->offsetGet(0);
+        $this->assertEquals(static::ERROR_MESSAGE_NUMBER_OF_PRODUCTS, $messageTransfer->getValue());
     }
 
     /**
