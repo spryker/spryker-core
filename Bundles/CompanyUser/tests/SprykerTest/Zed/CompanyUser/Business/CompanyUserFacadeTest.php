@@ -465,4 +465,26 @@ class CompanyUserFacadeTest extends Test
         $this->getFacade()->getCompanyUserById($idCompanyUser);
         $this->assertSame($customerTransfer, $this->tester->getLocator()->customer()->facade()->getCustomer($customerTransfer));
     }
+
+    /**
+     * @return void
+     */
+    public function testFindCompanyUserByIdShouldReturnTransfer(): void
+    {
+        // Assign
+        $companyTransfer = $this->tester->haveCompany(['is_active' => true]);
+        $customerTransfer = (new CustomerBuilder())->build();
+        $companyUserTransfer = $this->tester->haveCompanyUser(
+            [
+                'customer' => $customerTransfer,
+                'fk_company' => $companyTransfer->getIdCompany(),
+            ]
+        );
+
+        // Act
+        $foundCompanyUserTransfer = $this->getFacade()->findCompanyUserById($companyUserTransfer->getIdCompanyUser());
+
+        // Assert
+        $this->assertNotNull($foundCompanyUserTransfer->getIdCompanyUser());
+    }
 }

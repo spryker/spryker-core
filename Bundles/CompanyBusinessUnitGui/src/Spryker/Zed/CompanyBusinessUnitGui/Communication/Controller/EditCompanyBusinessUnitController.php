@@ -29,6 +29,8 @@ class EditCompanyBusinessUnitController extends AbstractController
     protected const MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_SUCCESS = 'Company Business Unit "%s" has been updated.';
     protected const MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_ERROR = 'Company Business Unit "%s" has not been updated. A Business Unit cannot be set as a child to an own child Business Unit, please check the Business Unit hierarchy.';
 
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_NOT_FOUND = 'Company Business Unit not found.';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -40,9 +42,17 @@ class EditCompanyBusinessUnitController extends AbstractController
         $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL, static::URL_BUSINESS_UNIT_LIST);
 
         $dataProvider = $this->getFactory()->createCompanyBusinessUnitFormDataProvider();
+        $companyBusinessUnitTransfer = $dataProvider->getData($idCompanyBusinessUnit);
+
+        if (!$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()) {
+            $this->addErrorMessage(static::MESSAGE_COMPANY_BUSINESS_UNIT_NOT_FOUND);
+
+            return $this->redirectResponse(static::URL_BUSINESS_UNIT_LIST);
+        }
+
         $form = $this->getFactory()
             ->getCompanyBusinessUnitEditForm(
-                $dataProvider->getData($idCompanyBusinessUnit),
+                $companyBusinessUnitTransfer,
                 $dataProvider->getOptions($idCompanyBusinessUnit)
             )
             ->handleRequest($request);

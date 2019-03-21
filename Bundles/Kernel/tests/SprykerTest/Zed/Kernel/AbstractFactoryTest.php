@@ -96,7 +96,7 @@ class AbstractFactoryTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
      */
     protected function getDependencyInjectorResolverMock()
     {
@@ -120,7 +120,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\AbstractFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\AbstractFactory
      */
     protected function getFactoryMock(array $methods)
     {

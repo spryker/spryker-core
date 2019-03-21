@@ -29,7 +29,17 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating
+     * - Resource name, this will be used for key generating.
+     *
+     * @api
+     */
+    public const PRODUCT_ABSTRACT_PACKAGING_RESOURCE_NAME = 'product_abstract_packaging';
+
+    /**
+     * Specification:
+     * - Resource name, this will be used for key generating.
+     *
+     * @deprecated Use ProductPackagingUnitStorageConfig::PRODUCT_ABSTRACT_PACKAGING_RESOURCE_NAME instead.
      *
      * @api
      */

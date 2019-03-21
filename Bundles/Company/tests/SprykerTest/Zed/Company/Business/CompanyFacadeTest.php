@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Company\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Spryker\Zed\Company\Persistence\CompanyRepository;
 
@@ -39,6 +40,31 @@ class CompanyFacadeTest extends Test
         $companyTransfer = $this->tester->haveCompany(['is_active' => false]);
         $foundCompanyTransfer = $this->getFacade()->getCompanyById($companyTransfer);
         $this->assertNotNull($foundCompanyTransfer->getIdCompany());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCompanyByIdReturnsTransfer(): void
+    {
+        //Arrange
+        $companyTransfer = $this->tester->haveCompany();
+
+        //Act
+        $companyTransfer = $this->getFacade()->findCompanyById($companyTransfer->getIdCompany());
+
+        //Assert
+        $this->assertInstanceOf(CompanyTransfer::class, $companyTransfer);
+        $this->assertNotNull($companyTransfer->getIdCompany());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCompanyByIdReturnsNull(): void
+    {
+        $companyTransfer = $this->getFacade()->findCompanyById(-1);
+        $this->assertNull($companyTransfer);
     }
 
     /**

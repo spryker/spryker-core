@@ -18,6 +18,7 @@ interface CompanyUserFacadeInterface
 {
     /**
      * Specification:
+     * - Executes CompanyUserSavePreCheckPluginInterface check plugins before company user create.
      * - Creates a company user
      *
      * @api
@@ -30,6 +31,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Executes CompanyUserSavePreCheckPluginInterface check plugins before initial company user create.
      * - Creates an initial company user
      *
      * @api
@@ -42,6 +44,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Executes CompanyUserSavePreCheckPluginInterface check plugins before company user update.
      * - Updates a company user
      *
      * @api
@@ -108,7 +111,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves company user collection according provided filter.
+     * - Retrieves user companies which can filtered by company ID, user ID and/or active flag.
      * - Ignores company users with anonymised customers.
      *
      * @api
@@ -211,4 +214,18 @@ interface CompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds company user by ID.
+     * - Executes CompanyUserHydrationPluginInterface plugins if company user exists.
+     * - Returns null if company user does not exist.
+     *
+     * @api
+     *
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer;
 }
