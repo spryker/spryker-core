@@ -10,7 +10,6 @@ namespace Spryker\Zed\QuoteRequest\Persistence;
 use DateTime;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
-use Generated\Shared\Transfer\SpyQuoteRequestEntityTransfer;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequest;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -22,6 +21,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRequestEntityManagerInterface
 {
+    protected const COLUMN_STATUS = 'Status';
+
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
@@ -109,6 +110,6 @@ class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRe
             ->getQuoteRequestPropelQuery()
             ->filterByStatus(SharedQuoteRequestConfig::STATUS_READY)
             ->filterByValidUntil($validUntil, Criteria::LESS_EQUAL)
-            ->update([ucfirst(SpyQuoteRequestEntityTransfer::STATUS) => SharedQuoteRequestConfig::STATUS_CLOSED]);
+            ->update([static::COLUMN_STATUS => SharedQuoteRequestConfig::STATUS_CLOSED]);
     }
 }
