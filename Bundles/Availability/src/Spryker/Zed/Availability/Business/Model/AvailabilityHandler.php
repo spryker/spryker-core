@@ -206,11 +206,11 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             return true;
         }
 
-        if ($this->utilQuantityService->isQuantitiesEqual($currentQuantity, 0) && $quantityWithReservedItems > $currentQuantity) {
+        if ($this->utilQuantityService->isQuantityEqual($currentQuantity, 0) && $quantityWithReservedItems > $currentQuantity) {
             return true;
         }
 
-        if (!$this->utilQuantityService->isQuantitiesEqual($currentQuantity, 0) && $this->utilQuantityService->isQuantitiesEqual($quantityWithReservedItems, 0)) {
+        if (!$this->utilQuantityService->isQuantityEqual($currentQuantity, 0) && $this->utilQuantityService->isQuantityEqual($quantityWithReservedItems, 0)) {
             return true;
         }
 
