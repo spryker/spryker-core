@@ -11,10 +11,14 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use DateInterval;
 use DateTime;
+use Generated\Shared\DataBuilder\ProductConcreteBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestFilterBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestVersionFilterBuilder;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
@@ -64,10 +68,10 @@ class QuoteRequestFacadeTest extends Unit
         $customerTransfer = $this->tester->haveCustomer();
 
         $this->companyUserTransfer = $this->tester->createCompanyUser($customerTransfer);
-        $this->quoteTransfer = $this->tester->createQuote(
-            $customerTransfer,
-            $this->tester->haveProduct()
-        );
+        $this->quoteTransfer = (new QuoteBuilder())
+            ->withCustomer([CustomerTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference()])
+            ->withItem([ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(), ItemTransfer::UNIT_PRICE => 1])
+            ->build();
     }
 
     /**
@@ -371,7 +375,7 @@ class QuoteRequestFacadeTest extends Unit
         $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_IN_PROGRESS)
             ->setIsHidden(true)
             ->setQuoteInProgress($this->quoteTransfer)
-            ->setValidUntil((new DateTime())->add(new DateInterval("PT1H"))->format('Y-m-d H:i:s'));
+            ->setValidUntil((new DateTime())->add(new DateInterval("PT1H")));
 
         $this->tester->getFacade()->updateQuoteRequest($quoteRequestTransfer);
 

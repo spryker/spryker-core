@@ -31,6 +31,7 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.validation.error.wrong_valid_until';
+    protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION = 'quote_request.checkout.validation.error.wrong_version';
 
     /**
      * @var \Spryker\Zed\QuoteRequest\QuoteRequestConfig
@@ -201,8 +202,12 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
         }
 
-        if (!$quoteRequestTransfer->getValidUntil()
-            || (new DateTime($quoteRequestTransfer->getValidUntil()) < new DateTime('now'))) {
+        if (!$quoteRequestTransfer->getQuoteInProgress() || !$quoteRequestTransfer->getQuoteInProgress()->getItems()->count()) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION);
+        }
+
+        if ($quoteRequestTransfer->getValidUntil()
+            && (new DateTime($quoteRequestTransfer->getValidUntil()) < new DateTime('now'))) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL);
         }
 
@@ -224,7 +229,9 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
      */
     protected function addQuoteRequestVersion(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestVersionTransfer
     {
-        $quoteRequestTransfer->requireQuoteInProgress();
+        $quoteRequestTransfer->requireQuoteInProgress()
+            ->getQuoteInProgress()
+            ->requireItems();
 
         $quoteRequestVersionTransfer = (new QuoteRequestVersionTransfer())
             ->setQuote($quoteRequestTransfer->getQuoteInProgress());

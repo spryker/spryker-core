@@ -190,11 +190,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      */
     protected function executeUpdateQuoteRequestTransaction(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestTransfer = $this->cleanUpQuoteInProgress($quoteRequestTransfer);
-        $quoteRequestTransfer->setQuoteInProgress(
-            $this->cartFacade->reloadItems($quoteRequestTransfer->getQuoteInProgress())
-        );
-
+        $quoteRequestTransfer = $this->reloadQuoteRequestItems($quoteRequestTransfer);
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
         return (new QuoteRequestResponseTransfer())
@@ -265,11 +261,31 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    protected function cleanUpQuoteInProgress(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
+    protected function reloadQuoteRequestItems(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
     {
         if (!$quoteRequestTransfer->getQuoteInProgress()) {
             return $quoteRequestTransfer;
         }
+
+        if ($quoteRequestTransfer->getQuoteInProgress()->getItems()->count()) {
+            $quoteRequestTransfer->setQuoteInProgress(
+                $this->cartFacade->reloadItems($quoteRequestTransfer->getQuoteInProgress())
+            );
+        }
+
+        $this->cleanUpQuoteInProgress($quoteRequestTransfer);
+
+        return $quoteRequestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    protected function cleanUpQuoteInProgress(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
+    {
+        $quoteRequestTransfer->requireQuoteInProgress();
 
         $quoteRequestTransfer->getQuoteInProgress()
             ->setQuoteRequestReference(null)
