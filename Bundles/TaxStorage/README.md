@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/tax-storage.svg)](https://travis-ci.org/spryker/tax-storage)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/tax-storage/badge.svg)](https://coveralls.io/github/spryker/tax-storage)
 
-{{ADD DESCRIPTION HERE}}
+Main responsible module for dealing with tax on the memory storage level.
 
 ## Installation
 
