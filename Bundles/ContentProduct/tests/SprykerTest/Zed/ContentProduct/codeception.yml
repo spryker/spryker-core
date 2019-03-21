@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\ContentProductDataImport
+namespace: SprykerTest\Zed\ContentProduct
 
 paths:
     tests: .
@@ -13,8 +13,8 @@ coverage:
 
 suites:
     Communication:
-        path: Communication
-        class_name: ContentProductDataImportCommunicationTester
+        path: Business
+        class_name: ContentProductBusinessTester
         modules:
             enabled:
                 - Asserts
@@ -23,5 +23,3 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                - \SprykerTest\Zed\ContentProductDataImport\Helper\ContentProductDataImportHelper
