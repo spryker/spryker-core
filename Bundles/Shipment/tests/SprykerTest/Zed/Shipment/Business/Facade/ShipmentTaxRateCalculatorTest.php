@@ -174,6 +174,9 @@ class ShipmentTaxRateCalculatorTest extends Test
         $defaultCountryIso2Code = static::DEFAULT_TAX_COUNTRY_ISO_2_CODE;
         $defaultTaxRate = 0.00;
 
+        /**
+         * @todo Insert product into DB and load back from DB.
+         */
         $idProductAbstract = 141;
         $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
         $itemBuilder = $this->createItemTransferBuilder([
@@ -207,6 +210,9 @@ class ShipmentTaxRateCalculatorTest extends Test
         $defaultCountryIso2Code = static::DEFAULT_TAX_COUNTRY_ISO_2_CODE;
         $defaultTaxRate = 0.00;
 
+        /**
+         * @todo Insert product into DB and load back from DB.
+         */
         $idProductAbstract = 141;
         $addressBuilder = (new AddressBuilder(['iso2Code' => 'MARS']));
         $itemBuilder = $this->createItemTransferBuilder([
@@ -240,6 +246,9 @@ class ShipmentTaxRateCalculatorTest extends Test
         $defaultCountryIso2Code = static::DEFAULT_TAX_COUNTRY_ISO_2_CODE;
         $defaultTaxRate = 66.00;
 
+        /**
+         * @todo Insert product into DB and load back from DB.
+         */
         $idProductAbstract = 141;
         $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
         $itemBuilder = $this->createItemTransferBuilder([
@@ -272,6 +281,9 @@ class ShipmentTaxRateCalculatorTest extends Test
         $defaultCountryIso2Code = static::DEFAULT_TAX_COUNTRY_ISO_2_CODE;
         $defaultTaxRate = 0.00;
 
+        /**
+         * @todo Insert product into DB and load back from DB.
+         */
         $idProductAbstract1 = 141;
         $addressBuilder1 = (new AddressBuilder(['iso2Code' => 'FR']));
         $itemBuilder1 = $this->createItemTransferBuilder([
@@ -285,6 +297,9 @@ class ShipmentTaxRateCalculatorTest extends Test
                     ->withAnotherMethod()
             );
 
+        /**
+         * @todo Insert product into DB and load back from DB.
+         */
         $idProductAbstract2 = 142;
         $addressBuilder2 = (new AddressBuilder(['iso2Code' => 'DE']));
         $itemBuilder2 = $this->createItemTransferBuilder([
@@ -318,6 +333,9 @@ class ShipmentTaxRateCalculatorTest extends Test
         $defaultCountryIso2Code = static::DEFAULT_TAX_COUNTRY_ISO_2_CODE;
         $defaultTaxRate = 0.00;
 
+        /**
+         * @todo Insert product into DB and load back from DB.
+         */
         $idProductAbstract = 141;
         $addressBuilder = (new AddressBuilder(['iso2Code' => 'MARS']));
         $itemBuilder = $this->createItemTransferBuilder([

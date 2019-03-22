@@ -29,6 +29,16 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected $taxFacade;
 
     /**
+     * @var string
+     */
+    protected $defaultTaxCountryIso2Code;
+
+    /**
+     * @var float
+     */
+    protected $defaultTaxRate;
+
+    /**
      * @param \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface $taxQueryContainer
      * @param \Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface $taxFacade
      */
@@ -49,7 +59,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         $allIdProductAbstracts = $this->getAllIdAbstractProducts($quoteTransfer);
 
         if (!$countryIso2Code) {
-            $countryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code();
+            $countryIso2Code = $this->getDefaultTaxCountryIso2Code();
         }
 
         $taxRates = $this->findTaxRatesByAllIdProductAbstractsAndCountryIso2Code($allIdProductAbstracts, $countryIso2Code);
@@ -64,7 +74,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     protected function getShippingCountryIso2Code(QuoteTransfer $quoteTransfer)
     {
         if ($quoteTransfer->getShippingAddress() === null) {
-            return $this->taxFacade->getDefaultTaxCountryIso2Code();
+            return $this->getDefaultTaxCountryIso2Code();
         }
 
         return $quoteTransfer->getShippingAddress()->getIso2Code();
@@ -112,7 +122,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
             }
         }
 
-        return $this->taxFacade->getDefaultTaxRate();
+        return $this->getDefaultTaxRate();
     }
 
     /**
@@ -126,5 +136,29 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         return $this->taxQueryContainer->queryTaxSetByIdProductAbstractAndCountryIso2Code($allIdProductAbstracts, $countryIso2Code)
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultTaxCountryIso2Code(): string
+    {
+        if ($this->defaultTaxCountryIso2Code === null) {
+            $this->defaultTaxCountryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code();
+        }
+
+        return $this->defaultTaxCountryIso2Code;
+    }
+
+    /**
+     * @return float
+     */
+    protected function getDefaultTaxRate(): string
+    {
+        if ($this->defaultTaxRate === null) {
+            $this->defaultTaxRate = $this->taxFacade->getDefaultTaxRate();
+        }
+
+        return $this->defaultTaxRate;
     }
 }

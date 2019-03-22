@@ -14,21 +14,34 @@ use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\SequenceNumberSettingsBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
+use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrier;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Tax\TaxConstants;
+use Spryker\Zed\Product\ProductDependencyProvider;
+use Spryker\Zed\Tax\TaxDependencyProvider;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorBusinessFactory;
+use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractAfterCreatePlugin;
+use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractAfterUpdatePlugin;
+use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractReadPlugin;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxBridge;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
+use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -52,14 +65,27 @@ class ProductItemTaxRateCalculatorTest extends Test
     protected $tester;
 
     /**
+     * @var \Orm\Zed\Tax\Persistence\SpyTaxSetTax[]
+     */
+    protected $taxSetEntityList;
+
+    /**
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
 
-        $this->createShipmentMethodWithTaxSet(20.00, 'FR');
-        $this->createShipmentMethodWithTaxSet(15.00, 'DE');
+        $this->tester->setDependency(
+            ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE,
+            $this->getProductAbstractAfterCreatePlugins()
+        );
+
+        SpyTaxRateQuery::create()->update(['Rate' => '1']);
+
+        $this->taxSetEntityList = [];
+        $this->taxSetEntityList['FR'] = $this->haveTaxRateWithTaxSetInDb(20.00, 'FR');
+        $this->taxSetEntityList['DE'] = $this->haveTaxRateWithTaxSetInDb(15.00, 'DE');
     }
 
     /**
@@ -79,13 +105,18 @@ class ProductItemTaxRateCalculatorTest extends Test
         array $expectedValues
     ): void {
         // Arrange
-        $taxProductConnectorFacade = $this->tester->getTaxProductConnectorFacadeWithMockedFactory(
-            $this->createTaxProductConnectorBusinessFactory(),
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $productAbstractTransfer = $this->haveProductWithTaxSetInDb($quoteTransfer->getShippingAddress()->getIso2Code());
+            $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+        }
+
+        $this->tester->setDependency(
+            TaxProductConnectorDependencyProvider::FACADE_TAX,
             $this->createTaxProductConnectorToTaxFacadeBridgeMock($defaultCountryIso2Code, $defaultTaxRate)
         );
 
         // Act
-        $taxProductConnectorFacade->calculateProductItemTaxRate($quoteTransfer);
+        $this->tester->getFacade()->calculateProductItemTaxRate($quoteTransfer);
 
         // Assert
         $this->assertItemsForTaxes($quoteTransfer, $expectedValues);
@@ -108,13 +139,18 @@ class ProductItemTaxRateCalculatorTest extends Test
         array $expectedValues
     ): void {
         // Arrange
-        $taxProductConnectorFacade = $this->tester->getTaxProductConnectorFacadeWithMockedFactory(
-            $this->createTaxProductConnectorBusinessFactory(),
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $productAbstractTransfer = $this->haveProductWithTaxSetInDb($itemTransfer->getShipment()->getShippingAddress()->getIso2Code());
+            $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+        }
+
+        $this->tester->setDependency(
+            TaxProductConnectorDependencyProvider::FACADE_TAX,
             $this->createTaxProductConnectorToTaxFacadeBridgeMock($defaultCountryIso2Code, $defaultTaxRate)
         );
 
         // Act
-        $taxProductConnectorFacade->calculateProductItemTaxRate($quoteTransfer);
+        $this->tester->getFacade()->calculateProductItemTaxRate($quoteTransfer);
 
         // Assert
         $this->assertItemsForTaxes($quoteTransfer, $expectedValues);
@@ -126,7 +162,7 @@ class ProductItemTaxRateCalculatorTest extends Test
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $defaultCountryIso2Code
      * @param float $defaultTaxRate
-     * @param array $expectedValues
+     * @param array $expectedValue
      *
      * @return void
      */
@@ -137,13 +173,23 @@ class ProductItemTaxRateCalculatorTest extends Test
         array $expectedValues
     ): void {
         // Arrange
-        $taxProductConnectorFacade = $this->tester->getTaxProductConnectorFacadeWithMockedFactory(
-            $this->createTaxProductConnectorBusinessFactory(),
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $productAbstractTransfer = $this->haveProductWithTaxSetInDb($defaultCountryIso2Code);
+            $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+        }
+
+        $this->tester->setDependency(
+            TaxProductConnectorDependencyProvider::FACADE_TAX,
             $this->createTaxProductConnectorToTaxFacadeBridgeMock($defaultCountryIso2Code, $defaultTaxRate)
         );
 
+        $this->tester->setDependency(
+            TaxDependencyProvider::STORE_CONFIG,
+            $this->createTaxStoreMock($defaultCountryIso2Code)
+        );
+
         // Act
-        $taxProductConnectorFacade->calculateProductItemTaxRate($quoteTransfer);
+        $this->tester->getFacade()->calculateProductItemTaxRate($quoteTransfer);
 
         // Assert
         $this->assertItemsForTaxes($quoteTransfer, $expectedValues);
@@ -158,11 +204,11 @@ class ProductItemTaxRateCalculatorTest extends Test
     protected function assertItemsForTaxes(QuoteTransfer $quoteTransfer, array $expectedValues): void
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!isset($expectedValues[$itemTransfer->getIdProductAbstract()])) {
+            if (!isset($expectedValues[$itemTransfer->getSku()])) {
                 continue;
             }
 
-            $expectedTaxRate = $expectedValues[$itemTransfer->getIdProductAbstract()];
+            $expectedTaxRate = $expectedValues[$itemTransfer->getSku()];
             $this->assertEqualsWithDelta($expectedTaxRate, $itemTransfer->getTaxRate(), static::FLOAT_COMPARISION_DELTA,
                 'tax rate should be ' . $expectedTaxRate . ' for product ID ' . $itemTransfer->getIdProductAbstract()
                 . ', ' . $itemTransfer->getTaxRate() . ' given.'
@@ -211,12 +257,9 @@ class ProductItemTaxRateCalculatorTest extends Test
         $defaultCountryIso2Code = static::DEFAULT_TAX_COUNTRY_ISO_2_CODE;
         $defaultTaxRate = 66.00;
 
-        $idProductAbstract = 141;
         $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
         $itemBuilder = $this->createItemTransferBuilder([
-            'unitNetPrice' => 10000,
-            'sumNetPrice' => 10000,
-            'idProductAbstract' => $idProductAbstract,
+            'sku' => 'france_20',
         ]);
 
         $quoteTransfer = (new QuoteBuilder())
@@ -228,7 +271,7 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$idProductAbstract => 20.00]];
+        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, ['france_20' => 20.00]];
     }
 
     /**
@@ -239,12 +282,9 @@ class ProductItemTaxRateCalculatorTest extends Test
         $defaultCountryIso2Code = static::DEFAULT_TAX_COUNTRY_ISO_2_CODE;
         $defaultTaxRate = 66.00;
 
-        $idProductAbstract = 141;
         $addressBuilder = (new AddressBuilder(['iso2Code' => $defaultCountryIso2Code]));
         $itemBuilder = $this->createItemTransferBuilder([
-            'unitGrossPrice' => 10000,
-            'sumGrossPrice' => 10000,
-            'idProductAbstract' => $idProductAbstract,
+            'sku' => 'moon_0',
         ]);
 
         $quoteTransfer = (new QuoteBuilder())
@@ -256,7 +296,7 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$idProductAbstract => $defaultTaxRate]];
+        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, ['moon_0' => $defaultTaxRate]];
     }
 
     /**
@@ -267,24 +307,18 @@ class ProductItemTaxRateCalculatorTest extends Test
         $defaultCountryIso2Code = static::DEFAULT_TAX_COUNTRY_ISO_2_CODE;
         $defaultTaxRate = 66.00;
 
-        $idProductAbstract1 = 141;
         $addressBuilder1 = (new AddressBuilder(['iso2Code' => 'FR']));
         $itemBuilder1 = $this->createItemTransferBuilder([
-            'unitNetPrice' => 10000,
-            'sumNetPrice' => 10000,
-            'idProductAbstract' => $idProductAbstract1,
+            'sku' => 'france_20',
         ])
             ->withAnotherShipment(
                 (new ShipmentBuilder())
                 ->withAnotherShippingAddress($addressBuilder1)
             );
 
-        $idProductAbstract2 = 142;
         $addressBuilder2 = (new AddressBuilder(['iso2Code' => 'DE']));
         $itemBuilder2 = $this->createItemTransferBuilder([
-            'unitNetPrice' => 10000,
-            'sumNetPrice' => 10000,
-            'idProductAbstract' => $idProductAbstract2,
+            'sku' => 'germany_15',
         ])
             ->withAnotherShipment(
                 (new ShipmentBuilder())
@@ -300,7 +334,7 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$idProductAbstract1 => 20.00, $idProductAbstract2 => 15.00]];
+        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, ['france_20' => 20.00, 'germany_15' => 15.00]];
     }
 
     /**
@@ -309,13 +343,10 @@ class ProductItemTaxRateCalculatorTest extends Test
     protected function getDataWithoutQuoteAndItemLevelShippingAddressesToFrance(): array
     {
         $defaultCountryIso2Code = 'FR';
-        $defaultTaxRate = 66.00;
+        $defaultTaxRate = 0.00;
 
-        $idProductAbstract = 141;
         $itemBuilder = $this->createItemTransferBuilder([
-            'unitNetPrice' => 10000,
-            'sumNetPrice' => 10000,
-            'idProductAbstract' => $idProductAbstract,
+            'sku' => 'france_20',
         ]);
 
         $quoteTransfer = (new QuoteBuilder())
@@ -326,7 +357,7 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$idProductAbstract => 20.00]];
+        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, ['france_20' => 20.00]];
     }
 
     /**
@@ -335,13 +366,10 @@ class ProductItemTaxRateCalculatorTest extends Test
     protected function getDataWithoutQuoteAndItemLevelShippingAddressesToGermany(): array
     {
         $defaultCountryIso2Code = 'DE';
-        $defaultTaxRate = 66.00;
+        $defaultTaxRate = 0.00;
 
-        $idProductAbstract = 141;
         $itemBuilder = $this->createItemTransferBuilder([
-            'unitGrossPrice' => 10000,
-            'sumGrossPrice' => 10000,
-            'idProductAbstract' => $idProductAbstract,
+            'sku' => 'germany_15',
         ]);
 
         $quoteTransfer = (new QuoteBuilder())
@@ -352,7 +380,7 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$idProductAbstract => 15.00]];
+        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, ['germany_15' => 15.00]];
     }
 
     /**
@@ -361,13 +389,10 @@ class ProductItemTaxRateCalculatorTest extends Test
     protected function getDataWithoutQuoteAndItemLevelShippingAddressesToMoon(): array
     {
         $defaultCountryIso2Code = static::DEFAULT_TAX_COUNTRY_ISO_2_CODE;
-        $defaultTaxRate = 66.00;
+        $defaultTaxRate = 0.00;
 
-        $idProductAbstract = 141;
         $itemBuilder = $this->createItemTransferBuilder([
-            'unitGrossPrice' => 10000,
-            'sumGrossPrice' => 10000,
-            'idProductAbstract' => $idProductAbstract,
+            'sku' => 'moon_0',
         ]);
 
         $quoteTransfer = (new QuoteBuilder())
@@ -378,7 +403,7 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$idProductAbstract => $defaultTaxRate]];
+        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, ['moon_0' => $defaultTaxRate]];
     }
 
     /**
@@ -389,16 +414,6 @@ class ProductItemTaxRateCalculatorTest extends Test
     protected function createItemTransferBuilder(array $seed = []): ItemBuilder
     {
         return (new ItemBuilder($seed));
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\TaxProductConnector\TaxProductConnectorBusinessFactory
-     */
-    protected function createTaxProductConnectorBusinessFactory(): TaxProductConnectorBusinessFactory
-    {
-        return $this->getMockBuilder(TaxProductConnectorBusinessFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 
     /**
@@ -427,18 +442,33 @@ class ProductItemTaxRateCalculatorTest extends Test
     }
 
     /**
+     * @param string $defaultCountryIso2Code
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Store
+     */
+    protected function createTaxStoreMock(string $defaultCountryIso2Code): Store
+    {
+        $storeMock = $this->getMockBuilder(Store::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $storeMock
+            ->expects($this->any())
+            ->method('getCurrentCountry')
+            ->willReturn($defaultCountryIso2Code);
+
+        return $storeMock;
+    }
+
+    /**
      * @param float $taxRate
      * @param string $iso2Code
      *
-     * @return void
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetTax
      */
-    protected function createShipmentMethodWithTaxSet(float $taxRate, string $iso2Code): void
+    protected function haveTaxRateWithTaxSetInDb(float $taxRate, string $iso2Code): SpyTaxSet
     {
         $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($iso2Code);
-
-        $taxRateEntity0 = new SpyTaxRate();
-        $taxRateEntity0->setFkCountry($countryEntity->getIdCountry());
-        $taxRateEntity0->delete();
 
         $taxRateEntity1 = new SpyTaxRate();
         $taxRateEntity1->setRate($taxRate);
@@ -476,17 +506,34 @@ class ProductItemTaxRateCalculatorTest extends Test
         $taxSetTaxRateEntity->setFkTaxRate($taxRateExemptEntity->getIdTaxRate());
         $taxSetTaxRateEntity->save();
 
-//        $shipmentCarrierEntity = new SpyShipmentCarrier();
-//        $shipmentCarrierEntity->setName('name carrier');
-//        $shipmentCarrierEntity->save();
-//
-//        $shipmentMethodEntity = new SpyShipmentMethod();
-//        $shipmentMethodEntity->setFkShipmentCarrier($shipmentCarrierEntity->getIdShipmentCarrier());
-//        $shipmentMethodEntity->setFkTaxSet($taxSetEntity->getIdTaxSet());
-//        $shipmentMethodEntity->setName('test shipment method');
-//        $shipmentMethodEntity->save();
+        return $taxSetEntity;
+    }
 
-//        return $shipmentMethodEntity;
-        return;
+    /**
+     * @param string $countryIso2Code
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function haveProductWithTaxSetInDb(string $countryIso2Code): ProductAbstractTransfer
+    {
+        $productAbstractOverride = [];
+        if (isset($this->taxSetEntityList[$countryIso2Code])) {
+            $taxSetEntity = $this->taxSetEntityList[$countryIso2Code];
+            $productAbstractOverride[ProductAbstractTransfer::ID_TAX_SET] = $taxSetEntity->getIdTaxSet();
+        }
+
+        $productAbstractTransfer = $this->tester->haveProductAbstract($productAbstractOverride);
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
+     */
+    protected function getProductAbstractAfterCreatePlugins()
+    {
+        return [
+            new TaxSetProductAbstractAfterCreatePlugin(),
+        ];
     }
 }

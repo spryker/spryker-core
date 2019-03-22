@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer;
@@ -144,62 +143,45 @@ class TaxRateCalculationTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransferWithShippingAddress(): QuoteTransfer
+    protected function createQuoteTransferWithShippingAddress()
     {
         $quoteTransfer = $this->createQuoteTransfer();
+
+        $this->createItemTransfers($quoteTransfer);
 
         $addressTransfer = new AddressTransfer();
         $addressTransfer->setIso2Code('AT');
 
-        $this->createItemTransfers($quoteTransfer, $addressTransfer);
+        $quoteTransfer->setShippingAddress($addressTransfer);
 
         return $quoteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
      *
      * @return void
      */
-    protected function createItemTransfers(QuoteTransfer $quoteTransfer, ?AddressTransfer $addressTransfer = null): void
+    protected function createItemTransfers(QuoteTransfer $quoteTransfer)
     {
-        $itemTransfer1 = $this->createProductItemTransfer(1, $addressTransfer);
+        $itemTransfer1 = $this->createProductItemTransfer(1);
         $quoteTransfer->addItem($itemTransfer1);
 
-        $itemTransfer2 = $this->createProductItemTransfer(2, $addressTransfer);
+        $itemTransfer2 = $this->createProductItemTransfer(2);
         $quoteTransfer->addItem($itemTransfer2);
     }
 
     /**
      * @param int $id
-     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createProductItemTransfer(int $id, ?AddressTransfer $addressTransfer = null): ItemTransfer
+    protected function createProductItemTransfer($id)
     {
         $itemTransfer = $this->createItemTransfer();
         $itemTransfer->setIdProductAbstract($id);
-        $shipment = $this->createShipment($addressTransfer);
-        $itemTransfer->setShipment($shipment);
 
         return $itemTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer|null $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
-     */
-    protected function createShipment(?AddressTransfer $addressTransfer = null): ShipmentTransfer
-    {
-        $shipment = $this->createShipmentTransfer();
-        if ($addressTransfer !== null) {
-            $shipment->setShippingAddress($addressTransfer);
-        }
-
-        return $shipment;
     }
 
     /**
@@ -216,14 +198,6 @@ class TaxRateCalculationTest extends Unit
     protected function createItemTransfer()
     {
         return new ItemTransfer();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
-     */
-    protected function createShipmentTransfer(): ShipmentTransfer
-    {
-        return new ShipmentTransfer();
     }
 
     /**

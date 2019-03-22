@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\Shipment\Business\Model;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -40,8 +39,7 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
  */
 class ShipmentTaxRateCalculationTest extends Unit
 {
-    public const ZERO_TAX_RATE = 0.0;
-    public const DEFAULT_TAX_RATE = 19.0;
+    public const DEFAULT_TAX_RATE = 19;
     public const DEFAULT_TAX_COUNTRY = 'DE';
 
     /**
@@ -49,27 +47,24 @@ class ShipmentTaxRateCalculationTest extends Unit
      */
     public function testSetTaxRateWhenExemptTaxRateUsedShouldSetZeroTaxRate()
     {
-        $shipmentMethodEntity = $this->createShipmentMethodWithTaxSet(static::DEFAULT_TAX_RATE, static::DEFAULT_TAX_COUNTRY);
+        $shipmentMethodEntity = $this->createShipmentMethodWithTaxSet(20, 'DE');
 
         $quoteTransfer = new QuoteTransfer();
-        $itemTransfer = new ItemTransfer();
+
         $addressTransfer = new AddressTransfer();
         $addressTransfer->setIso2Code('GB');
+        $quoteTransfer->setShippingAddress($addressTransfer);
+
         $shipmentTransfer = new ShipmentTransfer();
         $shipmentMethodTransfer = new ShipmentMethodTransfer();
-        $expense = new ExpenseTransfer();
-
         $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
-        $shipmentTransfer->setShippingAddress($addressTransfer);
-        $itemTransfer->setShipment($shipmentTransfer);
-        $quoteTransfer->addItem($itemTransfer);
-        $quoteTransfer->addExpense($expense);
+        $quoteTransfer->setShipment($shipmentTransfer);
 
         $shipmentFacadeTest = $this->createShipmentFacade();
         $shipmentFacadeTest->calculateShipmentTaxRate($quoteTransfer);
 
-        $this->assertEquals(self::ZERO_TAX_RATE, $shipmentMethodTransfer->getTaxRate());
+        $this->assertEquals('0.0', $shipmentMethodTransfer->getTaxRate());
     }
 
     /**
@@ -77,26 +72,24 @@ class ShipmentTaxRateCalculationTest extends Unit
      */
     public function testSetTaxRateWhenExemptTaxRateUsedAndCountryMatchingShouldUseCountryRate()
     {
-        $shipmentMethodEntity = $this->createShipmentMethodWithTaxSet(static::DEFAULT_TAX_RATE, static::DEFAULT_TAX_COUNTRY);
+        $shipmentMethodEntity = $this->createShipmentMethodWithTaxSet(20, 'DE');
+
         $quoteTransfer = new QuoteTransfer();
-        $itemTransfer = new ItemTransfer();
+
         $addressTransfer = new AddressTransfer();
-        $addressTransfer->setIso2Code(static::DEFAULT_TAX_COUNTRY);
+        $addressTransfer->setIso2Code('DE');
+        $quoteTransfer->setShippingAddress($addressTransfer);
+
         $shipmentTransfer = new ShipmentTransfer();
         $shipmentMethodTransfer = new ShipmentMethodTransfer();
-        $expense = new ExpenseTransfer();
-
         $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
-        $shipmentTransfer->setShippingAddress($addressTransfer);
-        $itemTransfer->setShipment($shipmentTransfer);
-        $quoteTransfer->addItem($itemTransfer);
-        $quoteTransfer->addExpense($expense);
+        $quoteTransfer->setShipment($shipmentTransfer);
 
         $shipmentFacadeTest = $this->createShipmentFacade();
         $shipmentFacadeTest->calculateShipmentTaxRate($quoteTransfer);
 
-        $this->assertEquals(static::DEFAULT_TAX_RATE, $shipmentMethodTransfer->getTaxRate());
+        $this->assertEquals('20.00', $shipmentMethodTransfer->getTaxRate());
     }
 
     /**
@@ -309,16 +302,13 @@ class ShipmentTaxRateCalculationTest extends Unit
         $shipmentTransfer = new ShipmentTransfer();
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
+        $quoteTransfer->setShipment($shipmentTransfer);
+
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->setName($shipmentMethodTransfer->getName());
         $expenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
 
         $quoteTransfer->addExpense($expenseTransfer);
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setShipment($shipmentTransfer);
-
-        $quoteTransfer->addItem($itemTransfer);
 
         return $quoteTransfer;
     }
