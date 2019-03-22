@@ -157,7 +157,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
             $value = explode(':', $item);
 
             if (count($value) > 1) {
-                $reservation = $this->sumQuantities($reservation, $value[1]);
+                $reservation = $this->sumQuantities($reservation, (float)$value[1]);
             }
         }
 

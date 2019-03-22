@@ -16,6 +16,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface;
+use Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToUtilQuantityServiceInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -45,18 +46,26 @@ class AvailabilityAbstractTable extends AbstractTable
     protected $omsFacade;
 
     /**
+     * @var \Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstractAvailabilityGui
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface $omsFacade
+     * @param \Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         SpyProductAbstractQuery $queryProductAbstractAvailabilityGui,
         StoreTransfer $storeTransfer,
-        AvailabilityGuiToOmsFacadeInterface $omsFacade
+        AvailabilityGuiToOmsFacadeInterface $omsFacade,
+        AvailabilityGuiToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->queryProductAbstractAvailability = $queryProductAbstractAvailabilityGui;
         $this->storeTransfer = $storeTransfer;
         $this->omsFacade = $omsFacade;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -245,10 +254,24 @@ class AvailabilityAbstractTable extends AbstractTable
 
             [$sku, $quantity] = $itemParts;
 
-            $reservation += (float)$quantity;
-            $reservation += $this->omsFacade->getReservationsFromOtherStores($sku, $this->storeTransfer);
+            $reservation = $this->sumQuantities($reservation, (float)$quantity);
+            $reservation = $this->sumQuantities(
+                $reservation,
+                $this->omsFacade->getReservationsFromOtherStores($sku, $this->storeTransfer)
+            );
         }
 
         return $reservation;
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 }

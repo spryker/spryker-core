@@ -13,8 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
@@ -25,8 +25,6 @@ class StockSubForm extends AbstractType
     public const FIELD_QUANTITY = 'quantity';
     public const FIELD_STOCK_TYPE = 'stockType';
     public const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
-
-    protected const PATTERN_QUANTITY = '/^\d*\.?\d{0,2}$/';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -52,7 +50,7 @@ class StockSubForm extends AbstractType
             'label' => 'Quantity',
             'constraints' => [
                 new Required(),
-                new Regex(['pattern' => static::PATTERN_QUANTITY]),
+                new Type('numeric'),
             ],
         ]);
 
