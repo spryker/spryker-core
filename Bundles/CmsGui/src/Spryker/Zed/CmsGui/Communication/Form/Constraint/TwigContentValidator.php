@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsGui\Communication\Form\Constraint;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use Twig_Error_Syntax;
+use Twig\Error\SyntaxError;
 
 class TwigContentValidator extends ConstraintValidator
 {
@@ -36,7 +36,7 @@ class TwigContentValidator extends ConstraintValidator
 
         try {
             $this->validateTwigContent($value, $constraint);
-        } catch (Twig_Error_Syntax $exception) {
+        } catch (SyntaxError $exception) {
             $this->context->buildViolation(
                 sprintf(
                     'Invalid twig template: %s',

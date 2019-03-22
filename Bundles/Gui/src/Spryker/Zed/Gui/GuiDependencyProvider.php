@@ -76,7 +76,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Twig_SimpleFunction[]
+     * @return \Twig\TwigFunction[]
      */
     protected function getTwigFunctions()
     {
@@ -104,7 +104,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Twig_SimpleFilter[]
+     * @return \Twig\TwigFilter[]
      */
     protected function getTwigFilters()
     {

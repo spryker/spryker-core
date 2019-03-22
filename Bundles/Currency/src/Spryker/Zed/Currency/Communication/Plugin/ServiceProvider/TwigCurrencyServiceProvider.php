@@ -10,8 +10,8 @@ namespace Spryker\Zed\Currency\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
  * @deprecated Use `Spryker\Zed\Currency\Communication\Plugin\Twig\CurrencyTwigPlugin` instead.
@@ -38,7 +38,7 @@ class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProvi
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) {
+            $app->extend('twig', function (Environment $twig) {
                 $twig->addFunction($this->getCurrencySymbolFunction());
 
                 return $twig;
@@ -62,11 +62,11 @@ class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProvi
     }
 
     /**
-     * @return \Twig_SimpleFunction
+     * @return \Twig\TwigFunction
      */
     protected function getCurrencySymbolFunction()
     {
-        return new Twig_SimpleFunction(static::CURRENCY_SYMBOL_FUNCTION_NAME, function ($isoCode = null) {
+        return new TwigFunction(static::CURRENCY_SYMBOL_FUNCTION_NAME, function ($isoCode = null) {
             return $this->getCurrencySymbol($isoCode);
         });
     }

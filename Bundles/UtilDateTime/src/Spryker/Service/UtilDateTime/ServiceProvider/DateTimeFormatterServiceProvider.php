@@ -11,7 +11,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Service\UtilDateTime\Model\DateTimeFormatterTwigExtension;
 use Spryker\Service\UtilDateTime\UtilDateTimeService;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @deprecated Use `\Spryker\Service\UtilDateTime\Plugin\Twig\DateTimeFormatterTwigPlugin` instead.
@@ -28,7 +28,7 @@ class DateTimeFormatterServiceProvider implements ServiceProviderInterface
         $utilDateTimeService = new UtilDateTimeService();
 
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) use ($utilDateTimeService) {
+            $app->extend('twig', function (Environment $twig) use ($utilDateTimeService) {
                 $twig->addExtension(new DateTimeFormatterTwigExtension($utilDateTimeService));
 
                 return $twig;
