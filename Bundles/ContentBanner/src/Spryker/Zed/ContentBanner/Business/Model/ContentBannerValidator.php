@@ -12,10 +12,6 @@ use Generated\Shared\Transfer\ContentParameterMessageTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ContentBanner\Dependency\External\ContentBannerToValidationAdapterInterface;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
-use Symfony\Component\Validator\Constraints\Url;
 
 class ContentBannerValidator implements ContentBannerValidatorInterface
 {
@@ -25,11 +21,20 @@ class ContentBannerValidator implements ContentBannerValidatorInterface
     protected $validationAdapter;
 
     /**
-     * @param \Spryker\Zed\ContentBanner\Dependency\External\ContentBannerToValidationAdapterInterface $validationAdapter
+     * @var \Spryker\Zed\ContentBanner\Business\Model\ContentBannerConstraintsProviderInterface
      */
-    public function __construct(ContentBannerToValidationAdapterInterface $validationAdapter)
-    {
+    protected $constraintsProvider;
+
+    /**
+     * @param \Spryker\Zed\ContentBanner\Dependency\External\ContentBannerToValidationAdapterInterface $validationAdapter
+     * @param \Spryker\Zed\ContentBanner\Business\Model\ContentBannerConstraintsProviderInterface $constraintsProvider
+     */
+    public function __construct(
+        ContentBannerToValidationAdapterInterface $validationAdapter,
+        ContentBannerConstraintsProviderInterface $constraintsProvider
+    ) {
         $this->validationAdapter = $validationAdapter;
+        $this->constraintsProvider = $constraintsProvider;
     }
 
     /**
@@ -44,18 +49,18 @@ class ContentBannerValidator implements ContentBannerValidatorInterface
         $properties = $contentBannerTransfer->toArray(true, true);
         $contentValidationResponseTransfer = new ContentValidationResponseTransfer();
 
-        foreach ($this->getConstraintsMap() as $key => $value) {
+        foreach ($this->constraintsProvider->getConstraintsMap() as $parameter => $constraintCollection) {
             $violations = $validator->validate(
-                $properties[$key],
-                $value
+                $properties[$parameter],
+                $constraintCollection
             );
             if (count($violations) !== 0) {
                 $contentParameterMessageTransfer = new ContentParameterMessageTransfer();
-                $contentParameterMessageTransfer->setParameter($key);
+                $contentParameterMessageTransfer->setParameter($parameter);
 
                 foreach ($violations as $violation) {
                     $contentParameterMessageTransfer->addMessage(
-                        (new MessageTransfer())->setValue($violation->getMessage())
+                        (new MessageTransfer())->setValue($violation->getMessage())->setParameters($violation->getParameters())
                     );
                 }
                 $contentValidationResponseTransfer->addParameterMessages($contentParameterMessageTransfer);
@@ -63,84 +68,6 @@ class ContentBannerValidator implements ContentBannerValidatorInterface
             }
         }
 
-        $contentValidationResponseTransfer->setIsSuccess($isSuccess);
-
-        return $contentValidationResponseTransfer;
-    }
-
-    /**
-     * @return array
-     */
-    private function getConstraintsMap(): array
-    {
-        return [
-            ContentBannerTransfer::TITLE => $this->getTitleConstraints(),
-            ContentBannerTransfer::SUBTITLE => $this->getSubtitleConstraints(),
-            ContentBannerTransfer::IMAGE_URL => $this->getImageUrlConstraints(),
-            ContentBannerTransfer::CLICK_URL => $this->getClickUrlConstraints(),
-            ContentBannerTransfer::ALT_TEXT => $this->getAltTextConstraints(),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    private function getTitleConstraints(): array
-    {
-        return [
-            new Required(),
-            new NotBlank(),
-            new Length(['max' => 64]),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    private function getSubtitleConstraints(): array
-    {
-        return [
-            new Required(),
-            new NotBlank(),
-            new Length(['max' => 128]),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    private function getImageUrlConstraints(): array
-    {
-        return [
-            new Required(),
-            new NotBlank(),
-            new Length(['max' => 1028]),
-            new Url(),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    private function getClickUrlConstraints(): array
-    {
-        return [
-            new Required(),
-            new NotBlank(),
-            new Length(['max' => 1028]),
-            new Url(),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    private function getAltTextConstraints(): array
-    {
-        return [
-            new Required(),
-            new NotBlank(),
-            new Length(['max' => 125]),
-        ];
+        return $contentValidationResponseTransfer->setIsSuccess($isSuccess);
     }
 }

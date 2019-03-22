@@ -28,14 +28,19 @@ class PrepareLocalizedItemsStep implements DataImportStepInterface
 
         foreach ($dataSet[AddLocalesStep::KEY_LOCALES] as $localeName => $idLocale) {
             $attributes = [];
+            $localeNotEmpty = false;
             $contentBanner = new ContentBannerTransfer();
             $properties = $contentBanner->toArray();
 
             foreach (array_keys($properties) as $attributeName) {
-                $attributes[$attributeName] = $dataSet[$attributeName . '.' . $localeName];
+                if (!empty($dataSet[$attributeName . '.' . $localeName])) {
+                    $attributes[$attributeName] = $dataSet[$attributeName . '.' . $localeName];
+                    $localeNotEmpty = true;
+                }
             }
-
-            $localizedAttributes[$idLocale] = $contentBanner->fromArray($attributes);
+            if ($localeNotEmpty) {
+                $localizedAttributes[$idLocale] = $contentBanner->fromArray($attributes);
+            }
         }
 
         $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_ITEMS] = $localizedAttributes;

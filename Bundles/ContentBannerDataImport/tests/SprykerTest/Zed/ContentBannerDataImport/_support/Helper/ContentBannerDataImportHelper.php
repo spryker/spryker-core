@@ -30,7 +30,7 @@ class ContentBannerDataImportHelper extends Module
     public function assertDatabaseTableContainsData(): void
     {
         $contentQuery = $this->getContentQuery();
-        $this->assertTrue($contentQuery->count() > 0, 'Expected at least one entry in the database table but database table is empty.');
+        $this->assertTrue($contentQuery->exists(), 'Expected at least one entry in the database table but database table is empty.');
     }
 
     /**

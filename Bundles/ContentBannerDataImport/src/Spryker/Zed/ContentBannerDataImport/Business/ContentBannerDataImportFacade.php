@@ -28,6 +28,6 @@ class ContentBannerDataImportFacade extends AbstractFacade implements ContentBan
     public function importBanners(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFactory()->createContentBannerDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()->getContentBannerDataImport()->import($dataImporterConfigurationTransfer);
     }
 }

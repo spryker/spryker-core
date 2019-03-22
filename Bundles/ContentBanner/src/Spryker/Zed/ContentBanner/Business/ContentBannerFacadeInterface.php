@@ -13,6 +13,10 @@ use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 interface ContentBannerFacadeInterface
 {
     /**
+     * Specification:
+     * - Validate Content Banner.
+     * - Returns ContentValidationResponseTransfer with success status and error messages if validation failed.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ContentBannerTransfer $contentBannerTransfer

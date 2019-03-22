@@ -41,9 +41,9 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $contentBannerEntity = $this->updateOrCreateContentBanner($dataSet);
+        $contentBannerEntity = $this->saveContentBanner($dataSet);
 
-        $this->updateOrCreateContentBannerLocalizedItems(
+        $this->saveContentBannerLocalizedItems(
             $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_ITEMS],
             $contentBannerEntity->getIdContent()
         );
@@ -59,7 +59,7 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
      *
      * @return \Orm\Zed\Content\Persistence\SpyContent
      */
-    private function updateOrCreateContentBanner(DataSetInterface $dataSet): SpyContent
+    private function saveContentBanner(DataSetInterface $dataSet): SpyContent
     {
         $contentBannerEntity = SpyContentQuery::create()
             ->filterByKey($dataSet[ContentBannerDataSetInterface::CONTENT_BANNER_KEY])
@@ -82,11 +82,11 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
      *
      * @return void
      */
-    private function updateOrCreateContentBannerLocalizedItems(array $localizedItems, int $idContentBanner): void
+    private function saveContentBannerLocalizedItems(array $localizedItems, int $idContentBanner): void
     {
         $defaultLocaleIsPresent = false;
         foreach ($localizedItems as $localeId => $attributes) {
-            if (empty($localeId)) {
+            if (!$localeId) {
                 $localeId = null;
                 $defaultLocaleIsPresent = true;
             }

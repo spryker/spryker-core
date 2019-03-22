@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ContentBannerDataImport\Business\Model\Step;
 
+use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 use Spryker\Zed\ContentBannerDataImport\Business\Model\DataSet\ContentBannerDataSetInterface;
 use Spryker\Zed\ContentBannerDataImport\Dependency\Facade\ContentBannerDataImportToContentBannerInterface;
+use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
@@ -18,6 +20,8 @@ class CheckLocalizedItemsStep implements DataImportStepInterface
      * @var \Spryker\Zed\ContentBannerDataImport\Dependency\Facade\ContentBannerDataImportToContentBannerInterface
      */
     protected $contentBanner;
+
+    private const ERROR_MESSAGE = 'Failed to import locale id [%s]: %s';
 
     /**
      * @param \Spryker\Zed\ContentBannerDataImport\Dependency\Facade\ContentBannerDataImportToContentBannerInterface $contentBanner
@@ -30,6 +34,8 @@ class CheckLocalizedItemsStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
+     *
      * @return void
      */
     public function execute(DataSetInterface $dataSet): void
@@ -38,11 +44,36 @@ class CheckLocalizedItemsStep implements DataImportStepInterface
         foreach ($dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_ITEMS] as $idLocale => $attributes) {
             $validationResult = $this->contentBanner->validateContentBanner($attributes);
 
-            if ($validationResult->getIsSuccess()) {
-                $validatedItems[$idLocale] = $attributes;
+            if (!$validationResult->getIsSuccess()) {
+                $errorMessages = $this->getErrorMessages($validationResult);
+
+                throw new InvalidDataException(
+                    sprintf(
+                        static::ERROR_MESSAGE,
+                        $idLocale,
+                        implode(';', $errorMessages)
+                    )
+                );
             }
+            $validatedItems[$idLocale] = $attributes;
         }
 
         $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_ITEMS] = $validatedItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ContentValidationResponseTransfer $contentValidationResponseTransfer
+     *
+     * @return array
+     */
+    private function getErrorMessages(ContentValidationResponseTransfer $contentValidationResponseTransfer): array
+    {
+        $messages = [];
+        foreach ($contentValidationResponseTransfer->getParameterMessages() as $parameterMessages) {
+            foreach ($parameterMessages->getMessages() as $parameterMessage) {
+                $messages[] = '[' . $parameterMessages->getParameter() . '] ' . $parameterMessage->getValue();
+            }
+        }
+        return $messages;
     }
 }

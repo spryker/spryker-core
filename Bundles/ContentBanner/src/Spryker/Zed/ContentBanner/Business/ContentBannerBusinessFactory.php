@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ContentBanner\Business;
 
+use Spryker\Zed\ContentBanner\Business\Model\ContentBannerConstraintsProvider;
+use Spryker\Zed\ContentBanner\Business\Model\ContentBannerConstraintsProviderInterface;
 use Spryker\Zed\ContentBanner\Business\Model\ContentBannerValidator;
 use Spryker\Zed\ContentBanner\Business\Model\ContentBannerValidatorInterface;
 use Spryker\Zed\ContentBanner\ContentBannerDependencyProvider;
@@ -23,7 +25,10 @@ class ContentBannerBusinessFactory extends AbstractBusinessFactory
      */
     public function createContentBannerValidator(): ContentBannerValidatorInterface
     {
-        return new ContentBannerValidator($this->getValidatorAdapter());
+        return new ContentBannerValidator(
+            $this->getValidatorAdapter(),
+            $this->createContentBannerConstraintsProvider()
+        );
     }
 
     /**
@@ -32,5 +37,13 @@ class ContentBannerBusinessFactory extends AbstractBusinessFactory
     public function getValidatorAdapter(): ContentBannerToValidationAdapterInterface
     {
         return $this->getProvidedDependency(ContentBannerDependencyProvider::ADAPTER_VALIDATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentBanner\Business\Model\ContentBannerConstraintsProviderInterface
+     */
+    public function createContentBannerConstraintsProvider(): ContentBannerConstraintsProviderInterface
+    {
+        return new ContentBannerConstraintsProvider();
     }
 }

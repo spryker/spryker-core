@@ -15,30 +15,17 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class ContentKeyToIdStep implements DataImportStepInterface
 {
     /**
-     * @var array
-     */
-    protected $idContentBannerCache = [];
-
-    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @return void
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $contentBannerKey = $dataSet[ContentBannerDataSetInterface::CONTENT_BANNER_KEY];
-        if (!isset($this->idContentBannerCache[$contentBannerKey])) {
-            $contentQuery = new SpyContentQuery();
-            $contentEntity = $contentQuery
-                ->findOneByKey($contentBannerKey);
+        $contentEntity = (new SpyContentQuery())
+            ->findOneByKey($dataSet[ContentBannerDataSetInterface::CONTENT_BANNER_KEY]);
 
-            if ($contentEntity) {
-                $this->idContentBannerCache[$contentBannerKey] = $contentEntity->getIdContent();
-            }
-        }
-
-        if (isset($this->idContentBannerCache[$contentBannerKey])) {
-            $dataSet[ContentBannerDataSetInterface::ID_CONTENT_BANNER] = $this->idContentBannerCache[$contentBannerKey];
+        if ($contentEntity) {
+            $dataSet[ContentBannerDataSetInterface::CONTENT_BANNER_ID] = $contentEntity->getIdContent();
         }
     }
 }

@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ContentBannerFacade extends AbstractFacade implements ContentBannerFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ContentBannerTransfer $contentBannerTransfer
