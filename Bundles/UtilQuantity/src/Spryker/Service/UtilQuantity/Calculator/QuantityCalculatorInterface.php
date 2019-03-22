@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Cart\Dependency\Service;
+namespace Spryker\Service\UtilQuantity\Calculator;
 
-interface CartToUtilQuantityServiceInterface
+interface QuantityCalculatorInterface
 {
     /**
      * @param float $firstQuantity

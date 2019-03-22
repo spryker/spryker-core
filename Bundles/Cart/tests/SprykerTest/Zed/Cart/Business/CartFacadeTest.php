@@ -17,11 +17,6 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Spryker\Service\UtilQuantity\UtilQuantityConfig;
-use Spryker\Service\UtilQuantity\UtilQuantityService;
-use Spryker\Service\UtilQuantity\UtilQuantityServiceFactory;
-use Spryker\Zed\Cart\CartDependencyProvider;
-use Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceBridge;
 
 /**
  * Auto-generated group annotations
@@ -60,22 +55,6 @@ class CartFacadeTest extends Unit
     {
         parent::setUp();
 
-        $utilQuantityConfigMock = $this->getMockBuilder(UtilQuantityConfig::class)
-            ->setMethods(['getQuantityRoundingPrecision'])
-            ->getMock();
-
-        $utilQuantityConfigMock->method('getQuantityRoundingPrecision')
-            ->will($this->returnValue(2));
-
-        $utilQuantityServiceFactory = new UtilQuantityServiceFactory();
-        $utilQuantityServiceFactory->setConfig($utilQuantityConfigMock);
-        $utilQuantityService = new UtilQuantityService();
-        $utilQuantityService->setFactory($utilQuantityServiceFactory);
-
-        $utilQuantityServiceBridge = new CartToUtilQuantityServiceBridge($utilQuantityService);
-
-        $this->tester->setDependency(CartDependencyProvider::SERVICE_UTIL_QUANTITY, $utilQuantityServiceBridge);
-
         $this->cartFacade = $this->tester->getFacade();
 
         $this->setTestData();
@@ -104,7 +83,7 @@ class CartFacadeTest extends Unit
         return [
             'int stock' => $this->getDataForAddToCartIncreaseCartQuantity(1, 2, 3.0),
             'float stock' => $this->getDataForAddToCartIncreaseCartQuantity(1.1, 2.2, 3.3),
-            'float stock high precision' => $this->getDataForAddToCartIncreaseCartQuantity(1.111111111, 2.100000002, 3.21),
+            'float stock high precision' => $this->getDataForAddToCartIncreaseCartQuantity(1.111111111, 2.100000002, 3.211111113),
         ];
     }
 
@@ -158,7 +137,7 @@ class CartFacadeTest extends Unit
         return [
             'int stock' => $this->getDataForAddToCartDecreaseCartQuantity(3, 1, 2.0),
             'float stock' => $this->getDataForAddToCartDecreaseCartQuantity(3.1, 2.2, 0.9),
-            'float stock high precision' => $this->getDataForAddToCartDecreaseCartQuantity(3.111111111, 2.000000001, 1.11),
+            'float stock high precision' => $this->getDataForAddToCartDecreaseCartQuantity(3.111111111, 2.1, 1.011111111),
         ];
     }
 

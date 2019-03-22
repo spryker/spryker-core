@@ -11,13 +11,31 @@ interface UtilQuantityServiceInterface
 {
     /**
      * Specification:
-     * - rounds given quantity.
+     * - get max precision of input quantities.
+     * - sum quantities.
+     * - rounds result with previously calculated precision.
      *
      * @api
      *
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    public function roundQuantity(float $quantity): float;
+    public function sumQuantities(float $firstQuantity, float $secondQuantity): float;
+
+    /**
+     * Specification:
+     * - get max precision of input quantities.
+     * - subtract quantities.
+     * - rounds result with previously calculated precision.
+     *
+     * @api
+     *
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    public function subtractQuantities(float $firstQuantity, float $secondQuantity): float;
 }
