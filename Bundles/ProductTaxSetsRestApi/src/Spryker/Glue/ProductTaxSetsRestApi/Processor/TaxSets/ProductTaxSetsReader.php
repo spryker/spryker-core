@@ -7,29 +7,31 @@
 
 namespace Spryker\Glue\ProductTaxSetsRestApi\Processor\TaxSets;
 
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer;
-use Generated\Shared\Transfer\TaxSetResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
-use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiApiToTaxProductConnectorClientInterface;
+use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxProductStorageClientInterface;
+use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxStorageClientInterface;
 use Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapperInterface;
 use Spryker\Glue\ProductTaxSetsRestApi\ProductTaxSetsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
 {
-    protected const TAX_SET_RESPONSE_ERROR_ABSTRACT_PRODUCT_NOT_FOUND = 'Could not get tax set, product abstract with id "0" not found.';
+    /**
+     * @var \Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxProductStorageClientInterface
+     */
+    protected $taxProductStorageClient;
 
     /**
-     * @var \Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiApiToTaxProductConnectorClientInterface
+     * @var \Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxStorageClientInterface
      */
-    protected $taxProductConnectorClient;
+    protected $taxStorageClient;
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -42,18 +44,21 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
     protected $taxSetsResourceMapper;
 
     /**
-     * @param \Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiApiToTaxProductConnectorClientInterface $taxProductConnectorClient
+     * @param \Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxProductStorageClientInterface $taxProductStorageClient
+     * @param \Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxStorageClientInterface $taxStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapperInterface $taxSetResourceMapper
+     * @param \Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapperInterface $taxSetsResourceMapper
      */
     public function __construct(
-        ProductTaxSetsRestApiApiToTaxProductConnectorClientInterface $taxProductConnectorClient,
+        ProductTaxSetsRestApiToTaxProductStorageClientInterface $taxProductStorageClient,
+        ProductTaxSetsRestApiToTaxStorageClientInterface $taxStorageClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        ProductTaxSetsResourceMapperInterface $taxSetResourceMapper
+        ProductTaxSetsResourceMapperInterface $taxSetsResourceMapper
     ) {
-        $this->taxProductConnectorClient = $taxProductConnectorClient;
+        $this->taxProductStorageClient = $taxProductStorageClient;
+        $this->taxStorageClient = $taxStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->taxSetsResourceMapper = $taxSetResourceMapper;
+        $this->taxSetsResourceMapper = $taxSetsResourceMapper;
     }
 
     /**
@@ -70,20 +75,10 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
             return $this->createAbstractProductNotFoundError();
         }
 
-        $taxSetResponseTransfer = $this->taxProductConnectorClient->getTaxSetForProductAbstract(
-            (new ProductAbstractTransfer())->setSku($parentResource->getId())
-        );
-
-        if ($taxSetResponseTransfer->getError()) {
-            if ($taxSetResponseTransfer->getError() === static::TAX_SET_RESPONSE_ERROR_ABSTRACT_PRODUCT_NOT_FOUND) {
-                return $this->createAbstractProductNotFoundError();
-            }
-
-            return $this->createTaxSetsNotFoundError($taxSetResponseTransfer);
+        $restResource = $this->findAbstractProductTaxSetsByAbstractProductSku($parentResource->getId(), $restRequest);
+        if (!$restResource) {
+            return $this->createTaxSetsNotFoundError();
         }
-
-        $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxSetTransferToRestTaxSetsAttributesTransfer($taxSetResponseTransfer->getTaxSet());
-        $restResource = $this->formatRestResource($restTaxSetTransfer, $taxSetResponseTransfer->getTaxSet()->getUuid(), $parentResource->getId());
 
         return $restResponse->addResource($restResource);
     }
@@ -96,16 +91,22 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
      */
     public function findAbstractProductTaxSetsByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $taxSetResponseTransfer = $this->taxProductConnectorClient->getTaxSetForProductAbstract(
-            (new ProductAbstractTransfer())->setSku($abstractProductSku)
-        );
-        if ($taxSetResponseTransfer->getError()) {
+        $taxProductStorageTransfer = $this->taxProductStorageClient->findTaxProductStorage($abstractProductSku);
+        if ($taxProductStorageTransfer === null || $taxProductStorageTransfer->getIdTaxSet() === null) {
             return null;
         }
 
-        $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxSetTransferToRestTaxSetsAttributesTransfer($taxSetResponseTransfer->getTaxSet());
+        $taxStorageTransfer = $this->taxStorageClient->findTaxSetCollectionStorage($taxProductStorageTransfer->getIdTaxSet());
+        if ($taxStorageTransfer === null) {
+            return null;
+        }
 
-        return $this->formatRestResource($restTaxSetTransfer, $taxSetResponseTransfer->getTaxSet()->getUuid(), $abstractProductSku);
+        $restProductTaxSetsAttributesTransfer = $this->taxSetsResourceMapper->mapTaxSetStorageTransferToRestProductTaxSetsAttributesTransfer(
+            $taxStorageTransfer,
+            new RestProductTaxSetsAttributesTransfer()
+        );
+
+        return $this->formatRestResource($restProductTaxSetsAttributesTransfer, $taxStorageTransfer->getUuid(), $abstractProductSku);
     }
 
     /**
@@ -151,18 +152,16 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TaxSetResponseTransfer $taxSetResponseTransfer
-     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createTaxSetsNotFoundError(TaxSetResponseTransfer $taxSetResponseTransfer): RestResponseInterface
+    protected function createTaxSetsNotFoundError(): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(ProductTaxSetsRestApiConfig::RESPONSE_CODE_CANT_FIND_PRODUCT_TAX_SETS)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail($taxSetResponseTransfer->getError());
+            ->setDetail(ProductTaxSetsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_PRODUCT_TAX_SETS);
 
         return $restResponse->addError($restErrorTransfer);
     }

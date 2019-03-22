@@ -9,26 +9,24 @@ namespace Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestProductTaxRateTransfer;
 use Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
+use Generated\Shared\Transfer\TaxSetStorageTransfer;
 
 class ProductTaxSetsResourceMapper implements ProductTaxSetsResourceMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
+     * @param \Generated\Shared\Transfer\TaxSetStorageTransfer $taxSetStorageTransfer
+     * @param \Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer $restProductTaxSetsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer
      */
-    public function mapTaxSetTransferToRestTaxSetsAttributesTransfer(TaxSetTransfer $taxSetTransfer): RestProductTaxSetsAttributesTransfer
+    public function mapTaxSetStorageTransferToRestProductTaxSetsAttributesTransfer(TaxSetStorageTransfer $taxSetStorageTransfer, RestProductTaxSetsAttributesTransfer $restProductTaxSetsAttributesTransfer): RestProductTaxSetsAttributesTransfer
     {
-        $restTaxSetTransfer = (new RestProductTaxSetsAttributesTransfer())->fromArray($taxSetTransfer->toArray(), true);
-        foreach ($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
-            $restProductTaxRateTransfer = (new RestProductTaxRateTransfer())->fromArray($taxRateTransfer->toArray(), true);
-            if ($taxRateTransfer->getCountry()) {
-                $restProductTaxRateTransfer->setCountry($taxRateTransfer->getCountry()->getIso2Code());
-            }
-            $restTaxSetTransfer->addRestProductTaxRate($restProductTaxRateTransfer);
+        $restProductTaxSetsAttributesTransfer->fromArray($taxSetStorageTransfer->toArray(), true);
+        foreach ($taxSetStorageTransfer->getTaxRates() as $taxRateStorageTransfer) {
+            $restProductTaxRateTransfer = (new RestProductTaxRateTransfer())->fromArray($taxRateStorageTransfer->toArray(), true);
+            $restProductTaxSetsAttributesTransfer->addRestProductTaxRate($restProductTaxRateTransfer);
         }
 
-        return $restTaxSetTransfer;
+        return $restProductTaxSetsAttributesTransfer;
     }
 }

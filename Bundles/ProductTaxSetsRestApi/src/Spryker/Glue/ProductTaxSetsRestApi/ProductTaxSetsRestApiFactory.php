@@ -8,7 +8,8 @@
 namespace Spryker\Glue\ProductTaxSetsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiApiToTaxProductConnectorClientInterface;
+use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxProductStorageClientInterface;
+use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxStorageClientInterface;
 use Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapper;
 use Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapperInterface;
 use Spryker\Glue\ProductTaxSetsRestApi\Processor\TaxSets\ProductTaxSetsReader;
@@ -17,11 +18,16 @@ use Spryker\Glue\ProductTaxSetsRestApi\Processor\TaxSets\ProductTaxSetsReaderInt
 class ProductTaxSetsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiApiToTaxProductConnectorClientInterface
+     * @return \Spryker\Glue\ProductTaxSetsRestApi\Processor\TaxSets\ProductTaxSetsReaderInterface
      */
-    public function getTaxProductConnectorClient(): ProductTaxSetsRestApiApiToTaxProductConnectorClientInterface
+    public function createTaxSetsReader(): ProductTaxSetsReaderInterface
     {
-        return $this->getProvidedDependency(ProductTaxSetsRestApiDependencyProvider::CLIENT_TAX_PRODUCT_CONNECTOR);
+        return new ProductTaxSetsReader(
+            $this->getTaxProductStorageClient(),
+            $this->getTaxStorageClient(),
+            $this->getResourceBuilder(),
+            $this->createTaxSetsResourceMapper()
+        );
     }
 
     /**
@@ -33,14 +39,18 @@ class ProductTaxSetsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductTaxSetsRestApi\Processor\TaxSets\ProductTaxSetsReaderInterface
+     * @return \Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxProductStorageClientInterface
      */
-    public function createTaxSetsReader(): ProductTaxSetsReaderInterface
+    public function getTaxProductStorageClient(): ProductTaxSetsRestApiToTaxProductStorageClientInterface
     {
-        return new ProductTaxSetsReader(
-            $this->getTaxProductConnectorClient(),
-            $this->getResourceBuilder(),
-            $this->createTaxSetsResourceMapper()
-        );
+        return $this->getProvidedDependency(ProductTaxSetsRestApiDependencyProvider::CLIENT_TAX_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxStorageClientInterface
+     */
+    public function getTaxStorageClient(): ProductTaxSetsRestApiToTaxStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductTaxSetsRestApiDependencyProvider::CLIENT_TAX_STORAGE);
     }
 }
