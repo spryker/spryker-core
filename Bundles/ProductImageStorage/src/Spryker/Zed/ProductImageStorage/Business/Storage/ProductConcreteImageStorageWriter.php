@@ -198,7 +198,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     {
         $productLocalizedAttributes = $this->repository->getProductLocalizedAttributesWithProductByIdProductIn($productIds);
         $productFks = array_column($productLocalizedAttributes, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT);
-        $productImageSets = $this->repository->getProductImageSetsByIdProductIn($productFks);
+        $productImageSets = $this->repository->getProductImageSetsByFkProductIn($productFks);
         $productImageSetsIndexedByFkProduct = $this->indexImageSetsByProduct($productImageSets);
 
         $imageSets = [];

@@ -35,20 +35,15 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
      *
      * @return array
      */
     protected function setProductImages(array $productAbstractIds, array $payloadTransfers): array
     {
-        $query = $this->getQueryContainer()->queryAllProductImageSetsByProductAbstractIds($productAbstractIds);
-
-        $imageSets = [];
-        $imageSetCollection = $query->find();
-        foreach ($imageSetCollection as $imageSetItem) {
-            $imageSets[$imageSetItem->getFkProductAbstract()][$imageSetItem->getFkLocale()][] = $imageSetItem;
-        }
+        [$imageSets, $defaultProductImageSets] = $this->getImageSets($productAbstractIds);
+        $imageSets = $this->setDefaultImageSetsToMissedImageSets($imageSets, $defaultProductImageSets);
 
         foreach ($payloadTransfers as $payloadTransfer) {
             if (!isset($imageSets[$payloadTransfer->getIdProductAbstract()])) {
@@ -60,5 +55,63 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
         }
 
         return $payloadTransfers;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array[]
+     */
+    protected function getImageSets(array $productAbstractIds): array
+    {
+        $imageSetCollection = $this->getQueryContainer()
+            ->queryAllProductImageSetsByProductAbstractIds($productAbstractIds)
+            ->find();
+
+        $imageSets = [];
+        $defaultProductImageSets = [];
+
+        foreach ($imageSetCollection as $imageSetItem) {
+            $imageSets[$imageSetItem->getFkProductAbstract()][$imageSetItem->getFkLocale()][] = $imageSetItem;
+
+            if ($imageSetItem->getFkLocale() !== null) {
+                continue;
+            }
+
+            $defaultProductImageSets[$imageSetItem->getFkProductAbstract()][] = $imageSetItem;
+        }
+
+        return [
+            $imageSets,
+            $defaultProductImageSets,
+        ];
+    }
+
+    /**
+     * @param array[] $imageSets
+     * @param array[] $defaultProductImageSets
+     *
+     * @return array[]
+     */
+    protected function setDefaultImageSetsToMissedImageSets(array $imageSets, array $defaultProductImageSets): array
+    {
+        $productAbstractIds = array_keys($imageSets);
+
+        $abstractProducts = $this->getQueryContainer()
+            ->queryProductAbstractWithLocalizedAttributesByIds($productAbstractIds)
+            ->find();
+
+        foreach ($abstractProducts as $abstractProduct) {
+            $productAbstractId = $abstractProduct->getFkProductAbstract();
+            $localeId = $abstractProduct->getFkLocale();
+
+            if (isset($imageSets[$productAbstractId][$localeId])) {
+                continue;
+            }
+
+            $imageSets[$productAbstractId][$localeId] = $defaultProductImageSets[$productAbstractId];
+        }
+
+        return $imageSets;
     }
 }

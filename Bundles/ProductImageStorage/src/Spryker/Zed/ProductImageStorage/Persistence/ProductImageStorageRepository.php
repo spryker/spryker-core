@@ -18,9 +18,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductImageStorageRepository extends AbstractRepository implements ProductImageStorageRepositoryInterface
 {
     /**
-     * @param int[] $productIds
+     * @param array $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductLocalizedAttributesEntityTransfer[]
+     * @return array
      */
     public function getProductLocalizedAttributesWithProductByIdProductIn(array $productIds): array
     {
@@ -39,11 +39,11 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * @param int[] $productIds
+     * @param int[] $productFks
      *
      * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
      */
-    public function getProductImageSetsByIdProductIn(array $productIds): array
+    public function getProductImageSetsByFkProductIn(array $productFks): array
     {
         $productImageSetsQuery = $this->getFactory()
             ->getProductImageSetQuery()
@@ -52,17 +52,17 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
             ->useSpyProductImageSetToProductImageQuery()
                 ->innerJoinWithSpyProductImage()
             ->endUse()
-            ->filterByFkProduct_In($productIds);
+            ->filterByFkProduct_In($productFks);
 
         return $this->buildQueryFromCriteria($productImageSetsQuery)->find();
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array $productAbstractFks
      *
      * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
      */
-    public function getProductImageSetsByIdAbstractProductIn(array $productAbstractIds): array
+    public function getProductImageSetsByFkAbstractProductIn(array $productAbstractFks): array
     {
         $productImageSetsQuery = $this->getFactory()
             ->getProductImageSetQuery()
@@ -71,7 +71,7 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
             ->useSpyProductImageSetToProductImageQuery()
                 ->innerJoinWithSpyProductImage()
             ->endUse()
-            ->filterByFkProductAbstract_In($productAbstractIds);
+            ->filterByFkProductAbstract_In($productAbstractFks);
 
         return $this->buildQueryFromCriteria($productImageSetsQuery)->find();
     }
@@ -87,7 +87,7 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
             ->getProductImageSetQuery()
             ->innerJoinWithSpyProductImageSetToProductImage()
             ->useSpyProductImageSetToProductImageQuery()
-                ->innerJoinWithSpyProductImage()
+            ->innerJoinWithSpyProductImage()
             ->endUse()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->filterByFkLocale(null, Criteria::ISNULL);
