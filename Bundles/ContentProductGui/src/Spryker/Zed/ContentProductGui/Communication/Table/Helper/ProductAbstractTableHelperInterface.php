@@ -37,7 +37,7 @@ interface ProductAbstractTableHelperInterface
      *
      * @return string
      */
-    public function getSelectField(SpyProductAbstract $productAbstractEntity);
+    public function getAddButtonField(SpyProductAbstract $productAbstractEntity);
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractStore[] $spyProductAbstractStories

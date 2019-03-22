@@ -138,7 +138,7 @@ class ProductAbstractViewTable extends AbstractTable
             static::COL_NAME => $productAbstractEntity->getSpyProductAbstractLocalizedAttributess()->getFirst()->getName(),
             static::COL_STORIES => $this->productAbstractTableHelper->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),
             static::COL_STATUS => $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity),
-            static::COL_SELECTED => $this->productAbstractTableHelper->getSelectField($productAbstractEntity),
+            static::COL_SELECTED => $this->productAbstractTableHelper->getAddButtonField($productAbstractEntity),
         ];
     }
 }

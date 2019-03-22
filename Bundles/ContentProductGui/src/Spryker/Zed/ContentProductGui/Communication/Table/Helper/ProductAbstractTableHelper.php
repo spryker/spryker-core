@@ -63,12 +63,10 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
      */
     public function getDeleteButton(SpyProductAbstract $productAbstractEntity)
     {
-        $checkbox_html = sprintf(
-            '<button type="button" id="selected-product-abstract-checkbox-%1$d" data-id="%1$s" class="safe-submit btn btn-xs btn-outline btn-danger"><i class="fa fa-trash"></i></button>',
+        return sprintf(
+            '<button type="button" data-id="%1$s" class="js-delete-product-abstract btn btn-xs btn-outline btn-danger"><i class="fa fa-trash"></i></button>',
             $productAbstractEntity->getIdProductAbstract()
         );
-
-        return $checkbox_html;
     }
 
     /**
@@ -76,14 +74,12 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
      *
      * @return string
      */
-    public function getSelectField(SpyProductAbstract $productAbstractEntity)
+    public function getAddButtonField(SpyProductAbstract $productAbstractEntity)
     {
-        $checkbox_html = sprintf(
-            '<input id="view-product-abstract-checkbox-%1$d" class="view-product-abstract-checkbox" type="checkbox" data-id="%1$s">',
+        return sprintf(
+            '<button type="button" data-id="%1$s" class="btn btn-sm btn-outline btn-create js-add-product-abstract"><i class="fa fa-plus"></i>Add to list</button>',
             $productAbstractEntity->getIdProductAbstract()
         );
-
-        return $checkbox_html;
     }
 
     /**
