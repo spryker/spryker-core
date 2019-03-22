@@ -130,11 +130,11 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestAsReady(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
             ->createUserQuoteRequestWriter()
-            ->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+            ->markQuoteRequestAsReady($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -146,11 +146,11 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestAsInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
             ->createUserQuoteRequestWriter()
-            ->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+            ->markQuoteRequestAsInProgress($quoteRequestCriteriaTransfer);
     }
 
     /**

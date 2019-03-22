@@ -46,9 +46,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function sendQuoteRequestToCustomerAction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestAsReadyAction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getFacade()->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+        return $this->getFacade()->markQuoteRequestAsReady($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -56,9 +56,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestInProgressAction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestAsInProgressAction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getFacade()->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        return $this->getFacade()->markQuoteRequestAsInProgress($quoteRequestCriteriaTransfer);
     }
 
     /**

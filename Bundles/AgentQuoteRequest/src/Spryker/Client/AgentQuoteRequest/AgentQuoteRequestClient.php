@@ -60,9 +60,9 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestAsInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getZedStub()->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        return $this->getZedStub()->markQuoteRequestAsInProgress($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -74,9 +74,9 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestAsReady(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getZedStub()->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+        return $this->getZedStub()->markQuoteRequestAsReady($quoteRequestCriteriaTransfer);
     }
 
     /**

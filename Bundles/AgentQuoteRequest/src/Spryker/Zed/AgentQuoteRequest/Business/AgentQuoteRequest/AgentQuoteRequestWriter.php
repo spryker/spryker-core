@@ -52,9 +52,9 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestAsInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        return $this->quoteRequestFacade->markQuoteRequestAsInProgress($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -62,8 +62,8 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestAsReady(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+        return $this->quoteRequestFacade->markQuoteRequestAsReady($quoteRequestCriteriaTransfer);
     }
 }

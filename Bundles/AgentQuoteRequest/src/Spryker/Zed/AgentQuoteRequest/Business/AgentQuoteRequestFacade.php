@@ -63,11 +63,11 @@ class AgentQuoteRequestFacade extends AbstractFacade implements AgentQuoteReques
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestAsInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
             ->createAgentQuoteRequestWriter()
-            ->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+            ->markQuoteRequestAsInProgress($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -79,11 +79,11 @@ class AgentQuoteRequestFacade extends AbstractFacade implements AgentQuoteReques
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestAsReady(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
             ->createAgentQuoteRequestWriter()
-            ->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+            ->markQuoteRequestAsReady($quoteRequestCriteriaTransfer);
     }
 
     /**

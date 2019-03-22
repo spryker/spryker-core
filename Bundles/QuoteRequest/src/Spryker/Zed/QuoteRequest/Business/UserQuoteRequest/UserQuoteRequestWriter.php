@@ -142,10 +142,10 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestAsReady(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($quoteRequestCriteriaTransfer) {
-            return $this->executeSendQuoteRequestToCustomerTransaction($quoteRequestCriteriaTransfer);
+            return $this->executeMarkQuoteRequestAsReadyTransaction($quoteRequestCriteriaTransfer);
         });
     }
 
@@ -154,7 +154,7 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function markQuoteRequestAsInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 
@@ -187,7 +187,7 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    protected function executeSendQuoteRequestToCustomerTransaction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    protected function executeMarkQuoteRequestAsReadyTransaction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 

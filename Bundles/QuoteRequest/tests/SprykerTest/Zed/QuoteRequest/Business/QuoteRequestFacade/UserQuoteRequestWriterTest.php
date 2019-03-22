@@ -190,7 +190,7 @@ class UserQuoteRequestWriterTest extends Unit
     /**
      * @return void
      */
-    public function testMarkQuoteRequestInProgressChangesQuoteRequestStatusToInProgress(): void
+    public function testMarkQuoteRequestAsInProgressChangesQuoteRequestStatusToInProgress(): void
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
@@ -215,7 +215,7 @@ class UserQuoteRequestWriterTest extends Unit
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
 
         // Act
-        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->markQuoteRequestAsInProgress($quoteRequestCriteriaTransfer);
 
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
@@ -228,7 +228,7 @@ class UserQuoteRequestWriterTest extends Unit
     /**
      * @return void
      */
-    public function testMarkQuoteRequestInProgressChangesQuoteRequestStatusToInProgressWithoutReference(): void
+    public function testMarkQuoteRequestAsInProgressChangesQuoteRequestStatusToInProgressWithoutReference(): void
     {
         // Arrange
 
@@ -236,13 +236,13 @@ class UserQuoteRequestWriterTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->userQuoteRequestWriter->markQuoteRequestInProgress(new QuoteRequestCriteriaTransfer());
+        $this->userQuoteRequestWriter->markQuoteRequestAsInProgress(new QuoteRequestCriteriaTransfer());
     }
 
     /**
      * @return void
      */
-    public function testMarkQuoteRequestInProgressChangesQuoteRequestStatusToInProgressWithWrongReference(): void
+    public function testMarkQuoteRequestAsInProgressChangesQuoteRequestStatusToInProgressWithWrongReference(): void
     {
         // Arrange
         $this->userQuoteRequestWriter->expects($this->any())
@@ -253,7 +253,7 @@ class UserQuoteRequestWriterTest extends Unit
             ->setQuoteRequestReference(static::FAKE_QUOTE_REQUEST_REFERENCE);
 
         // Act
-        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->markQuoteRequestAsInProgress($quoteRequestCriteriaTransfer);
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -267,7 +267,7 @@ class UserQuoteRequestWriterTest extends Unit
     /**
      * @return void
      */
-    public function testMarkQuoteRequestInProgressChangesQuoteRequestStatusToInProgressWithAlreadyInProgressStatus(): void
+    public function testMarkQuoteRequestAsInProgressChangesQuoteRequestStatusToInProgressWithAlreadyInProgressStatus(): void
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
@@ -282,7 +282,7 @@ class UserQuoteRequestWriterTest extends Unit
             ->setQuoteRequestReference(static::FAKE_QUOTE_REQUEST_REFERENCE);
 
         // Act
-        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->markQuoteRequestAsInProgress($quoteRequestCriteriaTransfer);
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -296,7 +296,7 @@ class UserQuoteRequestWriterTest extends Unit
     /**
      * @return void
      */
-    public function testMarkQuoteRequestInProgressChangesQuoteRequestStatusToInProgressWithoutLatestVersion(): void
+    public function testMarkQuoteRequestAsInProgressChangesQuoteRequestStatusToInProgressWithoutLatestVersion(): void
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
@@ -314,13 +314,13 @@ class UserQuoteRequestWriterTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->userQuoteRequestWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        $this->userQuoteRequestWriter->markQuoteRequestAsInProgress($quoteRequestCriteriaTransfer);
     }
 
     /**
      * @return void
      */
-    public function testMarkQuoteRequestInProgressChangesQuoteRequestStatusToInProgressWithoutQuoteInLatestVersion(): void
+    public function testMarkQuoteRequestAsInProgressChangesQuoteRequestStatusToInProgressWithoutQuoteInLatestVersion(): void
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
@@ -340,13 +340,13 @@ class UserQuoteRequestWriterTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->userQuoteRequestWriter->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        $this->userQuoteRequestWriter->markQuoteRequestAsInProgress($quoteRequestCriteriaTransfer);
     }
 
     /**
      * @return void
      */
-    public function testSendQuoteRequestToCustomerCreatesLatestVersionWithReadyStatus(): void
+    public function testMarkQuoteRequestAsReadyCreatesLatestVersionWithReadyStatus(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
@@ -367,7 +367,7 @@ class UserQuoteRequestWriterTest extends Unit
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
 
         // Act
-        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->markQuoteRequestAsReady($quoteRequestCriteriaTransfer);
         $storedQuoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
 
         // Assert
@@ -380,7 +380,7 @@ class UserQuoteRequestWriterTest extends Unit
     /**
      * @return void
      */
-    public function testSendQuoteRequestToCustomerWithoutQuoteRequestReference(): void
+    public function testMarkQuoteRequestAsReadyWithoutQuoteRequestReference(): void
     {
         // Arrange
 
@@ -388,13 +388,13 @@ class UserQuoteRequestWriterTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->userQuoteRequestWriter->sendQuoteRequestToCustomer(new QuoteRequestCriteriaTransfer());
+        $this->userQuoteRequestWriter->markQuoteRequestAsReady(new QuoteRequestCriteriaTransfer());
     }
 
     /**
      * @return void
      */
-    public function testSendQuoteRequestToCustomerWithoutQuoteRequest(): void
+    public function testMarkQuoteRequestAsReadyWithoutQuoteRequest(): void
     {
         // Arrange
         $this->userQuoteRequestWriter->expects($this->any())
@@ -405,7 +405,7 @@ class UserQuoteRequestWriterTest extends Unit
             ->setQuoteRequestReference(static::FAKE_QUOTE_REQUEST_REFERENCE);
 
         // Act
-        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->markQuoteRequestAsReady($quoteRequestCriteriaTransfer);
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -419,7 +419,7 @@ class UserQuoteRequestWriterTest extends Unit
     /**
      * @return void
      */
-    public function testSendQuoteRequestToCustomerWithWrongQuoteRequestStatus(): void
+    public function testMarkQuoteRequestAsReadyWithWrongQuoteRequestStatus(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
@@ -440,7 +440,7 @@ class UserQuoteRequestWriterTest extends Unit
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
 
         // Act
-        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->markQuoteRequestAsReady($quoteRequestCriteriaTransfer);
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -454,7 +454,7 @@ class UserQuoteRequestWriterTest extends Unit
     /**
      * @return void
      */
-    public function testSendQuoteRequestToCustomerWithoutQuoteRequestValidUntil(): void
+    public function testMarkQuoteRequestAsReadyWithoutQuoteRequestValidUntil(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
@@ -475,7 +475,7 @@ class UserQuoteRequestWriterTest extends Unit
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
 
         // Act
-        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->markQuoteRequestAsReady($quoteRequestCriteriaTransfer);
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -489,7 +489,7 @@ class UserQuoteRequestWriterTest extends Unit
     /**
      * @return void
      */
-    public function testSendQuoteRequestToCustomerWithWrongQuoteRequestValidUntil(): void
+    public function testMarkQuoteRequestAsReadyWithWrongQuoteRequestValidUntil(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
@@ -510,7 +510,7 @@ class UserQuoteRequestWriterTest extends Unit
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
 
         // Act
-        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->userQuoteRequestWriter->markQuoteRequestAsReady($quoteRequestCriteriaTransfer);
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
