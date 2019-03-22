@@ -71,7 +71,6 @@ class ProductAbstractListContentTermForm extends AbstractType
     {
         $view->vars['tables']['productAbstractViewTable'] = $this->getFactory()->createProductAbstractViewTable(
             $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
-            $view->vars['value']->getIdProductAbstracts(),
             $view->parent->vars['name']
         );
         $view->vars['tables']['productAbstractSelectedTable'] = $this->getFactory()->createProductAbstractSelectedTable(

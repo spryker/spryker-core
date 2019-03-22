@@ -28,22 +28,19 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param array $idProductAbstracts
      * @param string|null $identifierPostfix
      *
      * @return \Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractViewTable
      */
     public function createProductAbstractViewTable(
         LocaleTransfer $localeTransfer,
-        array $idProductAbstracts,
         ?string $identifierPostfix = null
     ): ProductAbstractViewTable {
         return new ProductAbstractViewTable(
             $this->getProductQueryContainer(),
             $this->createProductAbstractTableHelper(),
             $localeTransfer,
-            $identifierPostfix,
-            $idProductAbstracts
+            $identifierPostfix
         );
     }
 

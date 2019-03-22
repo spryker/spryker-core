@@ -73,17 +73,14 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     * @param int[] $idProductAbstracts
      *
      * @return string
      */
-    public function getSelectField(SpyProductAbstract $productAbstractEntity, array $idProductAbstracts)
+    public function getSelectField(SpyProductAbstract $productAbstractEntity)
     {
-        $checked = ($idProductAbstracts !== null && in_array($productAbstractEntity->getIdProductAbstract(), $idProductAbstracts)) ? 'checked' : '';
         $checkbox_html = sprintf(
-            '<input id="view-product-abstract-checkbox-%1$d" class="view-product-abstract-checkbox" type="checkbox" data-id="%1$s" %2$s>',
-            $productAbstractEntity->getIdProductAbstract(),
-            $checked
+            '<input id="view-product-abstract-checkbox-%1$d" class="view-product-abstract-checkbox" type="checkbox" data-id="%1$s">',
+            $productAbstractEntity->getIdProductAbstract()
         );
 
         return $checkbox_html;

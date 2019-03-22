@@ -48,10 +48,7 @@ class AbstractProductController extends AbstractController
 
         return $this->jsonResponse(
             $this->getFactory()
-                ->createProductAbstractViewTable(
-                    $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
-                    $idProductAbstracts
-                )
+                ->createProductAbstractViewTable($this->getFactory()->getLocaleFacade()->getCurrentLocale())
                 ->fetchData()
         );
     }

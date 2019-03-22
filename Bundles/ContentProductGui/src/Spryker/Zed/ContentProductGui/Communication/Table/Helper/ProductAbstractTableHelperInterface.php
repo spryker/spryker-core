@@ -34,11 +34,10 @@ interface ProductAbstractTableHelperInterface
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     * @param int[] $idProductAbstracts
      *
      * @return string
      */
-    public function getSelectField(SpyProductAbstract $productAbstractEntity, array $idProductAbstracts);
+    public function getSelectField(SpyProductAbstract $productAbstractEntity);
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractStore[] $spyProductAbstractStories

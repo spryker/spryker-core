@@ -9,7 +9,6 @@ namespace Spryker\Zed\ContentProductGui\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Spryker\Zed\ContentProductGui\Communication\Controller\AbstractProductController;
 use Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
 use Spryker\Zed\ContentProductGui\Dependency\QueryContainer\ContentProductGuiToProductInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -50,29 +49,21 @@ class ProductAbstractViewTable extends AbstractTable
     protected $identifierPostfix;
 
     /**
-     * @var array
-     */
-    protected $idProductAbstracts;
-
-    /**
      * @param \Spryker\Zed\ContentProductGui\Dependency\QueryContainer\ContentProductGuiToProductInterface $productQueryContainer
      * @param \Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface $productAbstractTableHelper
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string|null $identifierPostfix
-     * @param array $idProductAbstracts
      */
     public function __construct(
         ContentProductGuiToProductInterface $productQueryContainer,
         ProductAbstractTableHelperInterface $productAbstractTableHelper,
         LocaleTransfer $localeTransfer,
-        ?string $identifierPostfix,
-        array $idProductAbstracts
+        ?string $identifierPostfix
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->productAbstractTableHelper = $productAbstractTableHelper;
         $this->localeTransfer = $localeTransfer;
         $this->identifierPostfix = $identifierPostfix;
-        $this->idProductAbstracts = $idProductAbstracts;
     }
 
     /**
@@ -82,12 +73,8 @@ class ProductAbstractViewTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $urlSuffix = '';
-        if (($this->idProductAbstracts)) {
-            $urlSuffix = '?' . http_build_query([AbstractProductController::PARAM_IDS => $this->idProductAbstracts]);
-        }
         $this->baseUrl = static::BASE_URL;
-        $this->defaultUrl = static::TABLE_IDENTIFIER . $urlSuffix;
+        $this->defaultUrl = static::TABLE_IDENTIFIER;
         $this->tableClass = static::TABLE_CLASS;
 
         $this->setTableIdentifier(sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierPostfix));
@@ -151,7 +138,7 @@ class ProductAbstractViewTable extends AbstractTable
             static::COL_NAME => $productAbstractEntity->getSpyProductAbstractLocalizedAttributess()->getFirst()->getName(),
             static::COL_STORIES => $this->productAbstractTableHelper->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),
             static::COL_STATUS => $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity),
-            static::COL_SELECTED => $this->productAbstractTableHelper->getSelectField($productAbstractEntity, $this->idProductAbstracts),
+            static::COL_SELECTED => $this->productAbstractTableHelper->getSelectField($productAbstractEntity),
         ];
     }
 }
