@@ -73,9 +73,11 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
                 $this->createInvalidDataImportException(static::EXCEPTION_ERROR_MESSAGE_SKUS_TO_IDS, $parameters);
             }
 
-            $productAbstractIds = array_merge($productAbstractIds, $productAbstractIdsFromDb);
-            $this->addProductAbstractIdsToCache($productAbstractSkus, $productAbstractIds);
+            $productAbstractIds += $productAbstractIdsFromDb;
+            $this->addProductAbstractIdsToCache($filteredProductAbstractSkus, $productAbstractIds);
         }
+
+        $productAbstractIds = $this->sortProductAbstractIds($productAbstractSkus, $productAbstractIds);
 
         return $productAbstractIds;
     }
@@ -130,10 +132,16 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
     {
         $productAbstractEntity = SpyProductAbstractQuery::create()
             ->filterBySku_In($productAbstractSkus)
-            ->select(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
+            ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_SKU])
             ->find();
 
-        return $productAbstractEntity->toArray();
+        $productAbstractIds = [];
+
+        foreach ($productAbstractEntity->toArray() as $productAbstract) {
+            $productAbstractIds[$productAbstract[SpyProductAbstractTableMap::COL_SKU]] = $productAbstract[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT];
+        }
+
+        return $productAbstractIds;
     }
 
     /**
@@ -166,5 +174,22 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
         $errorMessage = strtr($message, $parameters);
 
         throw new InvalidDataException($errorMessage);
+    }
+
+    /**
+     * @param string[] $productAbstractSkus
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    protected function sortProductAbstractIds(array $productAbstractSkus, array $productAbstractIds): array
+    {
+        $cortedProductAbstractIds = [];
+
+        foreach ($productAbstractSkus as $productAbstractSku) {
+            $cortedProductAbstractIds[] = $productAbstractIds[$productAbstractSku];
+        }
+
+        return $cortedProductAbstractIds;
     }
 }
