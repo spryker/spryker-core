@@ -19,19 +19,19 @@ interface TaxStorageRepositoryInterface
     /**
      * @param int[] $taxSetIds
      *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSet[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Tax\Persistence\SpyTaxSet[]
      */
     public function findTaxSetsByIds(array $taxSetIds): iterable;
 
     /**
      * @param int[] $taxSetIds
      *
-     * @return \Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
      */
     public function findTaxSetStoragesByIds(array $taxSetIds): iterable;
 
     /**
-     * @return \Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
      */
     public function findAllTaxSetSorage(): iterable;
 }

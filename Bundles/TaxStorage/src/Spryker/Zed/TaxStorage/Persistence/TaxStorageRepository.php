@@ -41,15 +41,14 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
     /**
      * @param int[] $taxSetIds
      *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSet[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Tax\Persistence\SpyTaxSet[]
      */
     public function findTaxSetsByIds(array $taxSetIds): iterable
     {
         $spyTaxSets = $this->getFactory()
             ->createTaxSetQuery()
             ->filterByIdTaxSet($taxSetIds, Criteria::IN)
-            ->find()
-            ->getArrayCopy();
+            ->find();
 
         return $spyTaxSets;
     }
@@ -57,28 +56,26 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
     /**
      * @param int[] $taxSetIds
      *
-     * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
      */
     public function findTaxSetStoragesByIds(array $taxSetIds): iterable
     {
         $spyTaxSetStorage = $this->getFactory()
             ->createTaxSetStorageQuery()
             ->filterByFkTaxSet($taxSetIds, Criteria::IN)
-            ->find()
-            ->getArrayCopy();
+            ->find();
 
         return $spyTaxSetStorage;
     }
 
     /**
-     * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
      */
     public function findAllTaxSetSorage(): iterable
     {
         $spyTaxSetStorage = $this->getFactory()
             ->createTaxSetStorageQuery()
-            ->find()
-            ->getArrayCopy();
+            ->find();
 
         return $spyTaxSetStorage;
     }
