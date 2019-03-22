@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface;
+use Spryker\Zed\AvailabilityCartConnector\Dependency\Service\AvailabilityCartConnectorToUtilQuantityServiceInterface;
 
 class CheckCartAvailability implements CheckCartAvailabilityInterface
 {
@@ -28,11 +29,20 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     protected $availabilityFacade;
 
     /**
-     * @param \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade
+     * @var \Spryker\Zed\AvailabilityCartConnector\Dependency\Service\AvailabilityCartConnectorToUtilQuantityServiceInterface
      */
-    public function __construct(AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade)
-    {
+    protected $utilQuantityService;
+
+    /**
+     * @param \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade
+     * @param \Spryker\Zed\AvailabilityCartConnector\Dependency\Service\AvailabilityCartConnectorToUtilQuantityServiceInterface $utilQuantityService
+     */
+    public function __construct(
+        AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade,
+        AvailabilityCartConnectorToUtilQuantityServiceInterface $utilQuantityService
+    ) {
         $this->availabilityFacade = $availabilityFacade;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -54,7 +64,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
                 $itemsInCart,
                 $itemTransfer->getSku()
             );
-            $currentItemQuantity += $itemTransfer->getQuantity();
+            $currentItemQuantity = $this->sumQuantities($currentItemQuantity, $itemTransfer->getQuantity());
 
             $isSellable = $this->isProductSellable($itemTransfer, $currentItemQuantity, $storeTransfer);
 
@@ -72,6 +82,17 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
+    }
+
+    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $sku
      *
@@ -80,11 +101,13 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     protected function calculateCurrentCartQuantityForGivenSku(ArrayObject $items, $sku)
     {
         $quantity = 0;
+
         foreach ($items as $itemTransfer) {
             if ($itemTransfer->getSku() !== $sku) {
                 continue;
             }
-            $quantity += $itemTransfer->getQuantity();
+
+            $quantity = $this->sumQuantities($quantity, $itemTransfer->getQuantity());
         }
 
         return $quantity;
