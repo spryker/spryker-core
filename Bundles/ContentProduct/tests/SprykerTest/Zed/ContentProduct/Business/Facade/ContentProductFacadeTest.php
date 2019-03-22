@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ContentProduct\Business\Facade;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ContentProductAbstractListTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
+use Spryker\Zed\ContentProduct\ContentProductConfig;
 
 /**
  * Auto-generated group annotations
@@ -34,7 +35,7 @@ class ContentProductFacadeTest extends Test
      */
     public function testValidateContentProductAbstractListNuberOfProducts(): void
     {
-        $products = range(1, 100);
+        $products = range(1, $this->getConfig()->getMaxNumberProductsInAbstractList());
 
         $contentProductAbstractListTransfer = (new ContentProductAbstractListTransfer())
             ->setIdProductAbstracts($products);
@@ -49,9 +50,9 @@ class ContentProductFacadeTest extends Test
     /**
      * @return void
      */
-    public function testValidateContentProductAbstractListNuberOfProductsFail(): void
+    public function testValidateContentProductAbstractListNumberOfProductsFail(): void
     {
-        $products = range(1, 101);
+        $products = range(1, $this->getConfig()->getMaxNumberProductsInAbstractList() + 1);
 
         $contentProductAbstractListTransfer = (new ContentProductAbstractListTransfer())
             ->setIdProductAbstracts($products);
@@ -64,5 +65,13 @@ class ContentProductFacadeTest extends Test
             ->offsetGet(0)
             ->getParameter();
         $this->assertEquals($parameter, ContentProductAbstractListTransfer::ID_PRODUCT_ABSTRACTS);
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentProduct\ContentProductConfig
+     */
+    protected function getConfig(): ContentProductConfig
+    {
+        return new ContentProductConfig();
     }
 }

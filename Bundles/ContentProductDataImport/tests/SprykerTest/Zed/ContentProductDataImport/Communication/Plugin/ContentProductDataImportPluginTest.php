@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\ContentProductDataImport\Communication\Plugin\ContentProductAbstractListDataImportPlugin;
 use Spryker\Zed\ContentProductDataImport\ContentProductDataImportConfig;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
  * Auto-generated group annotations
@@ -26,6 +27,8 @@ use Spryker\Zed\ContentProductDataImport\ContentProductDataImportConfig;
  */
 class ContentProductDataImportPluginTest extends Unit
 {
+    protected const EXCEPTION_ERROR_MESSAGE = 'Found not valid skus in the row with key:"apl1", column:"skus.default"';
+
     /**
      * @var \SprykerTest\Zed\ContentProductDataImport\ContentProductDataImportCommunicationTester
      */
@@ -48,6 +51,30 @@ class ContentProductDataImportPluginTest extends Unit
         $dataImporterReportTransfer = $contentProductAbstractListDataImportPlugin->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
+
+        $this->tester->assertDatabaseTableContainsData();
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportAbstractProductListsDataWrongSkus(): void
+    {
+        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->expectExceptionObject(new DataImportException(static::EXCEPTION_ERROR_MESSAGE));
+
+        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/content_product_abstract_list_wrong_skus.csv');
+
+        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
+            ->setThrowException(true);
+
+        $contentProductAbstractListDataImportPlugin = new ContentProductAbstractListDataImportPlugin();
+        $dataImporterReportTransfer = $contentProductAbstractListDataImportPlugin->import($dataImportConfigurationTransfer);
+
+        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
+        $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
 
         $this->tester->assertDatabaseTableContainsData();
     }
