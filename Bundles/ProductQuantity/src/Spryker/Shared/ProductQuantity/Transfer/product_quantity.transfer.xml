@@ -14,7 +14,7 @@
 
     <transfer name="Item">
         <property name="sku" type="string" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
     </transfer>
 
     <transfer name="CartChange">
