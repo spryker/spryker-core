@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductInterface;
+use Spryker\Zed\DiscountPromotion\Dependency\Service\DiscountPromotionToUtilQuantityServiceInterface;
 use Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface;
 
 class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorStrategyInterface
@@ -36,19 +37,27 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
     protected $promotionAvailabilityCalculator;
 
     /**
+     * @var \Spryker\Zed\DiscountPromotion\Dependency\Service\DiscountPromotionToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductInterface $productFacade
      * @param \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer
      * @param \Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\PromotionAvailabilityCalculatorInterface $promotionAvailabilityCalculator
+     * @param \Spryker\Zed\DiscountPromotion\Dependency\Service\DiscountPromotionToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         DiscountPromotionToProductInterface $productFacade,
         DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer,
-        PromotionAvailabilityCalculatorInterface $promotionAvailabilityCalculator
+        PromotionAvailabilityCalculatorInterface $promotionAvailabilityCalculator,
+        DiscountPromotionToUtilQuantityServiceInterface $utilQuantityService
     ) {
 
         $this->productFacade = $productFacade;
         $this->discountPromotionQueryContainer = $discountPromotionQueryContainer;
         $this->promotionAvailabilityCalculator = $promotionAvailabilityCalculator;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -79,7 +88,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             $discountPromotionEntity->getQuantity()
         );
 
-        if (!$promotionMaximumQuantity) {
+        if ($this->isQuantityEqual($promotionMaximumQuantity, 0)) {
             return [];
         }
 
@@ -106,6 +115,17 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
         $discountableItemTransfer = $this->createPromotionDiscountableItemTransfer($promotionItemInQuote, $adjustedQuantity);
 
         return [$discountableItemTransfer];
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
     }
 
     /**
