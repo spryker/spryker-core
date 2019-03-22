@@ -10,6 +10,8 @@ namespace Spryker\Glue\ProductTaxSetsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxProductStorageClientInterface;
 use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxStorageClientInterface;
+use Spryker\Glue\ProductTaxSetsRestApi\Processor\Expander\ProductTaxSetsRelationshipExpander;
+use Spryker\Glue\ProductTaxSetsRestApi\Processor\Expander\ProductTaxSetsRelationshipExpanderInterface;
 use Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapper;
 use Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapperInterface;
 use Spryker\Glue\ProductTaxSetsRestApi\Processor\TaxSets\ProductTaxSetsReader;
@@ -28,6 +30,14 @@ class ProductTaxSetsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createTaxSetsResourceMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductTaxSetsRestApi\Processor\Expander\ProductTaxSetsRelationshipExpanderInterface
+     */
+    public function createProductTaxSetsRelationshipExpander(): ProductTaxSetsRelationshipExpanderInterface
+    {
+        return new ProductTaxSetsRelationshipExpander($this->createTaxSetsReader());
     }
 
     /**

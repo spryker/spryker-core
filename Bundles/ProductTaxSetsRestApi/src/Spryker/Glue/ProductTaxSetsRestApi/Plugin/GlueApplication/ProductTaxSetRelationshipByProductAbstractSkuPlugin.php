@@ -1,23 +1,26 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsProductTaxSetsResourceRelationship\Plugin;
+namespace Spryker\Glue\ProductTaxSetsRestApi\Plugin\GlueApplication;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
+use Spryker\Glue\ProductTaxSetsRestApi\ProductTaxSetsRestApiConfig;
 
 /**
- * @method \Spryker\Glue\ProductsProductTaxSetsResourceRelationship\ProductsProductTaxSetsResourceRelationshipFactory getFactory()
+ * @method \Spryker\Glue\ProductTaxSetsRestApi\ProductTaxSetsRestApiFactory getFactory()
  */
-class ProductsProductTaxSetsResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ProductTaxSetRelationshipByProductAbstractSkuPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritdoc}
+     *  - Adds product-tax-sets resource as a relationship by the resource id.
+     *  - Identifier of passed resources should contain abstract product sku.
      *
      * @api
      *
@@ -29,8 +32,8 @@ class ProductsProductTaxSetsResourceRelationshipPlugin extends AbstractPlugin im
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createProductsTaxSetsResourceRelationshipExpander()
-            ->addResourceRelationships($resources, $restRequest);
+            ->createProductTaxSetsRelationshipExpander()
+            ->addResourceRelationshipsByResourceId($resources, $restRequest);
     }
 
     /**
@@ -42,6 +45,6 @@ class ProductsProductTaxSetsResourceRelationshipPlugin extends AbstractPlugin im
      */
     public function getRelationshipResourceType(): string
     {
-        return 'product-tax-sets';
+        return ProductTaxSetsRestApiConfig::RESOURCE_TAX_SETS;
     }
 }
