@@ -42,14 +42,15 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
     public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            if (!$resource->getAttributes()->offsetExists(static::KEY_NODES)
-                || !is_iterable($resource->getAttributes()->offsetGet(static::KEY_NODES))
+            $resourceAttributes = $resource->getAttributes();
+            if (!$resourceAttributes->offsetExists(static::KEY_NODES)
+                || !is_iterable($resourceAttributes->offsetGet(static::KEY_NODES))
             ) {
                 continue;
             }
 
             $categoryNodeIds = [];
-            foreach ($resource->getAttributes()->offsetGet(static::KEY_NODES) as $restNavigationNodeTransfer) {
+            foreach ($resourceAttributes->offsetGet(static::KEY_NODES) as $restNavigationNodeTransfer) {
                 $categoryNodeIds = $this->getAllCategoryNodeIds($restNavigationNodeTransfer, $categoryNodeIds);
             }
 
@@ -129,11 +130,14 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
         RestNavigationNodeTransfer $restNavigationNodeTransfer,
         array $categoryNodeIds
     ): array {
-        if ($restNavigationNodeTransfer->getChildren()->count()) {
-            foreach ($restNavigationNodeTransfer->getChildren() as $child) {
-                $categoryNodeIds[] = $child->getResourceId();
-                $categoryNodeIds = $this->getCategoryNodeChildrenIds($child, $categoryNodeIds);
-            }
+        $navigationNodeChildren = $restNavigationNodeTransfer->getChildren();
+        if (!$navigationNodeChildren->count()) {
+            return $categoryNodeIds;
+        }
+
+        foreach ($navigationNodeChildren as $navigationNodeChild) {
+            $categoryNodeIds[] = $navigationNodeChild->getResourceId();
+            $categoryNodeIds = $this->getCategoryNodeChildrenIds($navigationNodeChild, $categoryNodeIds);
         }
 
         return $categoryNodeIds;
