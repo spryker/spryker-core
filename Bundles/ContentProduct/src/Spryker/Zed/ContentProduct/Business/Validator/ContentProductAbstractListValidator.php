@@ -42,11 +42,11 @@ class ContentProductAbstractListValidator implements ContentProductAbstractListV
         $contentValidationResponseTransfer = (new ContentValidationResponseTransfer())
             ->setIsSuccess(true);
 
-        $сontentParameterMessageTransfer = $this->checkNumberOfProducts($contentProductAbstractListTransfer);
+        $contentParameterMessageTransfer = $this->checkNumberOfProducts($contentProductAbstractListTransfer);
 
-        if ($сontentParameterMessageTransfer->getMessages()->count()) {
+        if ($contentParameterMessageTransfer->getMessages()->count()) {
             $contentValidationResponseTransfer->setIsSuccess(false)
-                ->addParameterMessages($сontentParameterMessageTransfer);
+                ->addParameterMessages($contentParameterMessageTransfer);
         }
 
         return $contentValidationResponseTransfer;
