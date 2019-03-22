@@ -10,28 +10,28 @@ namespace Spryker\Zed\TaxStorage\Persistence;
 interface TaxStorageRepositoryInterface
 {
     /**
-     * @param array $taxRateIds
+     * @param int[] $taxRateIds
      *
-     * @return array
+     * @return int[]
      */
-    public function findTaxSetIdsByTaxRateIds(array $taxRateIds): array;
+    public function findTaxSetIdsByTaxRateIds(array $taxRateIds): iterable;
 
     /**
-     * @param array $taxSetIds
+     * @param int[] $taxSetIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Tax\Persistence\SpyTaxSet[]
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSet[]
      */
     public function findTaxSetsByIds(array $taxSetIds): iterable;
 
     /**
-     * @param array $taxSetIds
+     * @param int[] $taxSetIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
+     * @return \Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
      */
     public function findTaxSetStoragesByIds(array $taxSetIds): iterable;
 
     /**
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
+     * @return \Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
      */
     public function findAllTaxSetSorage(): iterable;
 }

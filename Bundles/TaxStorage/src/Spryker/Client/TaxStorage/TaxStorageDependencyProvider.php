@@ -15,6 +15,7 @@ use Spryker\Client\TaxStorage\Dependency\Service\TaxStorageToSynchronizationServ
 class TaxStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**

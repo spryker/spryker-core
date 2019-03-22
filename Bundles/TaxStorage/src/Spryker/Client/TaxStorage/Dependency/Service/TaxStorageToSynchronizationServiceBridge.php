@@ -29,7 +29,7 @@ class TaxStorageToSynchronizationServiceBridge implements TaxStorageToSynchroniz
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
-    public function getStorageKeyBuilder($resourceName): SynchronizationKeyGeneratorPluginInterface
+    public function getStorageKeyBuilder($resourceName)
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }

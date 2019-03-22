@@ -19,6 +19,10 @@ class TaxStorageClient extends AbstractClient implements TaxStorageClientInterfa
      * {@inheritdoc}
      *
      * @api
+     *
+     * @param int $idTaxSet
+     *
+     * @return \Generated\Shared\Transfer\TaxSetStorageTransfer|null
      */
     public function findTaxSetCollectionStorage(int $idTaxSet): ?TaxSetStorageTransfer
     {

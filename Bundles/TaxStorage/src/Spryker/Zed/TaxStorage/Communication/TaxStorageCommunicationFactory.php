@@ -14,6 +14,7 @@ use Spryker\Zed\TaxStorage\TaxStorageDependencyProvider;
 /**
  * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManager getEntityManager()
  * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepository getRepository()
+ * @method \Spryker\Zed\TaxStorage\TaxStorageConfig getConfig()
  * @method \Spryker\Zed\TaxStorage\Business\TaxStorageFacade getFacade()
  */
 class TaxStorageCommunicationFactory extends AbstractCommunicationFactory

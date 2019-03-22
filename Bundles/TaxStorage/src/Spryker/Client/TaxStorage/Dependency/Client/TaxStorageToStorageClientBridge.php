@@ -27,7 +27,7 @@ class TaxStorageToStorageClientBridge implements TaxStorageToStorageClientInterf
      *
      * @api
      */
-    public function get(string $key)
+    public function get($key)
     {
         return $this->storageClient->get($key);
     }

@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class TaxStorageFacade extends AbstractFacade implements TaxStorageFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $taxSetIds
@@ -29,6 +31,8 @@ class TaxStorageFacade extends AbstractFacade implements TaxStorageFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $taxSetIds
@@ -41,6 +45,8 @@ class TaxStorageFacade extends AbstractFacade implements TaxStorageFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $taxRateIds

@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapperInterface;
 use Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface;
 use Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface;
+use Spryker\Zed\TaxStorage\TaxStorageConfig;
 
 class TaxStoragePublisher implements TaxStoragePublisherInterface
 {
@@ -33,20 +34,27 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
      * @var \Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapperInterface
      */
     protected $taxStorageMapper;
+    /**
+     * @var \Spryker\Zed\TaxStorage\TaxStorageConfig
+     */
+    protected $taxStorageConfig;
 
     /**
      * @param \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface $taxStorageRepository
      * @param \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface $entityManager
      * @param \Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapperInterface $taxStorageMapper
+     * @param \Spryker\Zed\TaxStorage\TaxStorageConfig $taxStorageConfig
      */
     public function __construct(
         TaxStorageRepositoryInterface $taxStorageRepository,
         TaxStorageEntityManagerInterface $entityManager,
-        TaxStorageMapperInterface $taxStorageMapper
+        TaxStorageMapperInterface $taxStorageMapper,
+        TaxStorageConfig $taxStorageConfig
     ) {
         $this->taxStorageRepository = $taxStorageRepository;
         $this->taxStorageEntityManager = $entityManager;
         $this->taxStorageMapper = $taxStorageMapper;
+        $this->taxStorageConfig = $taxStorageConfig;
     }
 
     /**
@@ -104,7 +112,13 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
     protected function storeDataSet(iterable $spyTaxSets, iterable $spyTaxSetStorages): void
     {
         foreach ($spyTaxSets as $spyTaxSet) {
-            $this->createDataSet($spyTaxSet, $spyTaxSetStorages[$spyTaxSet->getIdTaxSet()] ?? null);
+            if (isset($spyTaxSetStorages[$spyTaxSet->getIdTaxSet()])) {
+                $spyTaxSetStorage = $spyTaxSetStorages[$spyTaxSet->getIdTaxSet()];
+            } else {
+                $spyTaxSetStorage = (new SpyTaxSetStorage())
+                    ->setFkTaxSet($spyTaxSet->getIdTaxSet());
+            }
+            $this->createDataSet($spyTaxSet, $spyTaxSetStorage);
         }
     }
 
@@ -128,11 +142,6 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
      */
     protected function createDataSet(SpyTaxSet $spyTaxSet, ?SpyTaxSetStorage $spyTaxSetStorage = null): void
     {
-        if ($spyTaxSetStorage === null) {
-            $spyTaxSetStorage = new SpyTaxSetStorage();
-            $spyTaxSetStorage->setFkTaxSet($spyTaxSet->getIdTaxSet());
-        }
-
         $taxSetStorageTransfer = new TaxSetStorageTransfer();
         $taxSetStorageTransfer->setId($spyTaxSet->getIdTaxSet());
         $taxSetStorageTransfer->fromArray($spyTaxSet->toArray(), true);
@@ -140,6 +149,9 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
             $this->taxStorageMapper->mapSpyTaxRatesToTransfer($spyTaxSet->getSpyTaxRates())
         );
         $spyTaxSetStorage->setData($taxSetStorageTransfer->toArray());
+        $spyTaxSetStorage->isSendingToQueue(
+            $this->taxStorageConfig->isSendingToQueue()
+        );
 
         $this->taxStorageEntityManager->saveTaxSetStorage($spyTaxSetStorage);
     }

@@ -20,6 +20,8 @@ class TaxSetStorageUnpublishListener extends AbstractPlugin implements EventBulk
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers

@@ -16,6 +16,7 @@ use Spryker\Zed\TaxStorage\Business\TaxStoragePublisher\TaxStoragePublisherInter
 /**
  * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepository getRepository()
  * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManager getEntityManager()
+ * @method \Spryker\Zed\TaxStorage\TaxStorageConfig getConfig()
  */
 class TaxStorageBusinessFactory extends AbstractBusinessFactory
 {
@@ -27,7 +28,8 @@ class TaxStorageBusinessFactory extends AbstractBusinessFactory
         return new TaxStoragePublisher(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createTaxStorageMapper()
+            $this->createTaxStorageMapper(),
+            $this->getConfig()
         );
     }
 

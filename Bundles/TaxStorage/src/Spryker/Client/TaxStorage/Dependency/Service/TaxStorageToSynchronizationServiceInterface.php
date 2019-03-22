@@ -16,5 +16,5 @@ interface TaxStorageToSynchronizationServiceInterface
      *
      * @return \Spryker\Client\TaxStorage\Dependency\Service\SynchronizationKeyGeneratorPluginInterface
      */
-    public function getStorageKeyBuilder($resourceName): SynchronizationKeyGeneratorPluginInterface;
+    public function getStorageKeyBuilder($resourceName);
 }

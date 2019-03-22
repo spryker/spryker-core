@@ -56,13 +56,13 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
     public function getData(array $ids = []): array
     {
         $synchronizationDataTransfers = [];
-        $spyTaxSetStorages = $this->getRepository()->findTaxSetStoragesByIds($ids);
+        $spyTaxSetStoragesEntities = $this->getRepository()->findTaxSetStoragesByIds($ids);
 
-        if (empty($ids)) {
-            $spyTaxSetStorages = $this->getRepository()->findAllTaxSetSorage();
+        if (count($ids) === 0) {
+            $spyTaxSetStoragesEntities = $this->getRepository()->findAllTaxSetSorage();
         }
 
-        foreach ($spyTaxSetStorages as $spyTaxSetStorage) {
+        foreach ($spyTaxSetStoragesEntities as $spyTaxSetStorage) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
             $synchronizationDataTransfer->setData($spyTaxSetStorage->getData());
             $synchronizationDataTransfer->setKey($spyTaxSetStorage->getKey());
@@ -105,6 +105,6 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return null;
+        return $this->getFactory()->getConfig()->getTaxSynchronizationPoolName();
     }
 }
