@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener;
 
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\PublishingExtension\Dependency\PublisherPluginInterface;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
@@ -17,13 +18,11 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
  */
-class GlossaryKeyStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class GlossaryTranslationPublisher extends AbstractPlugin implements PublisherPluginInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -34,8 +33,8 @@ class GlossaryKeyStorageUnpublishListener extends AbstractPlugin implements Even
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY);
 
-        $this->getFacade()->unpublish($glossaryKeyIds);
+        $this->getFacade()->publish($glossaryKeyIds);
     }
 }

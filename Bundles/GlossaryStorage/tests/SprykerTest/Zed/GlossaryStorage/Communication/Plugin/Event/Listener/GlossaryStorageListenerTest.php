@@ -18,10 +18,10 @@ use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\GlossaryStorage\Business\GlossaryStorageBusinessFactory;
 use Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacade;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyStorageListener;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyStoragePublishListener;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyStorageUnpublishListener;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryTranslationStorageListener;
+use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyUnpublisher;
+use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyUnpublisher;
+use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyUnpublisher;
+use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryTranslationPublisher;
 use SprykerTest\Zed\GlossaryStorage\GlossaryStorageConfigMock;
 
 /**
@@ -69,7 +69,7 @@ class GlossaryStorageListenerTest extends Unit
         $this->cleanUpGlossaryStorage(static::ID_GLOSSARY);
         $beforeCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
 
-        $glossaryKeyStorageListener = new GlossaryKeyStorageListener();
+        $glossaryKeyStorageListener = new GlossaryKeyUnpublisher();
         $glossaryKeyStorageListener->setFacade($this->getGlossaryStorageFacade());
 
         $eventTransfers = [
@@ -92,7 +92,7 @@ class GlossaryStorageListenerTest extends Unit
         $this->cleanUpGlossaryStorage(static::ID_GLOSSARY);
         $beforeCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
 
-        $glossaryKeyStoragePublishListener = new GlossaryKeyStoragePublishListener();
+        $glossaryKeyStoragePublishListener = new GlossaryKeyUnpublisher();
         $glossaryKeyStoragePublishListener->setFacade($this->getGlossaryStorageFacade());
 
         $eventTransfers = [
@@ -112,7 +112,7 @@ class GlossaryStorageListenerTest extends Unit
     public function testGlossaryKeyStorageUnpublishListener(): void
     {
         // Prepare
-        $glossaryKeyStorageUnpublishListener = new GlossaryKeyStorageUnpublishListener();
+        $glossaryKeyStorageUnpublishListener = new GlossaryKeyUnpublisher();
         $glossaryKeyStorageUnpublishListener->setFacade($this->getGlossaryStorageFacade());
 
         $eventTransfers = [
@@ -135,7 +135,7 @@ class GlossaryStorageListenerTest extends Unit
         $this->cleanUpGlossaryStorage(static::ID_GLOSSARY);
         $beforeCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
 
-        $glossaryTranslationStorageListener = new GlossaryTranslationStorageListener();
+        $glossaryTranslationStorageListener = new GlossaryTranslationPublisher();
         $glossaryTranslationStorageListener->setFacade($this->getGlossaryStorageFacade());
 
         $eventTransfers = [
@@ -157,7 +157,7 @@ class GlossaryStorageListenerTest extends Unit
     public function testGlossaryTranslationStorageListenerDeletesDataForInactiveTranslations(): void
     {
         // Prepare
-        $glossaryTranslationStorageListener = new GlossaryTranslationStorageListener();
+        $glossaryTranslationStorageListener = new GlossaryTranslationPublisher();
         $glossaryTranslationStorageListener->setFacade($this->getGlossaryStorageFacade());
         $idGlossaryKey = $this->tester->haveTranslation([
             KeyTranslationTransfer::GLOSSARY_KEY => 'test-key',
@@ -197,7 +197,7 @@ class GlossaryStorageListenerTest extends Unit
     public function testGlossaryTranslationStorageListenerDeletesDataForEmptyTranslations(): void
     {
         // Prepare
-        $glossaryTranslationStorageListener = new GlossaryTranslationStorageListener();
+        $glossaryTranslationStorageListener = new GlossaryTranslationPublisher();
         $glossaryTranslationStorageListener->setFacade($this->getGlossaryStorageFacade());
         $idGlossaryKey = $this->tester->haveTranslation([
             KeyTranslationTransfer::GLOSSARY_KEY => 'test-key',

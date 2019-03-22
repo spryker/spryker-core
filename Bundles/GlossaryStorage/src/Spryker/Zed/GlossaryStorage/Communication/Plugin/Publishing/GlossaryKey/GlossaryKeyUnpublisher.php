@@ -10,6 +10,7 @@ namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\PublishingExtension\Dependency\PublisherPluginInterface;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
@@ -17,18 +18,15 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
  */
-class GlossaryKeyStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class GlossaryKeyUnpublisher extends AbstractPlugin implements PublisherPluginInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array $eventTransfers
      * @param string $eventName
      *
+     * @throws \Propel\Runtime\Exception\PropelException
      * @return void
      */
     public function handleBulk(array $eventTransfers, $eventName)
@@ -36,6 +34,6 @@ class GlossaryKeyStoragePublishListener extends AbstractPlugin implements EventB
         $this->preventTransaction();
         $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()->publish($glossaryKeyIds);
+        $this->getFacade()->unpublish($glossaryKeyIds);
     }
 }
