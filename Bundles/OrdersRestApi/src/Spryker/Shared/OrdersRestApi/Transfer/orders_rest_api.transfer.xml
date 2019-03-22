@@ -28,7 +28,7 @@
         <property name="sku" type="string"/>
         <property name="sumPrice" type="int"/>
         <property name="sumPriceToPayAggregation" type="int"/>
-        <property name="quantity" type="int"/>
+        <property name="quantity" type="float"/>
         <property name="metadata" type="RestOrderItemMetadata"/>
         <property name="calculatedDiscounts" type="RestCalculatedDiscount[]" singular="calculatedDiscount"/>
         <property name="unitGrossPrice" type="int" />

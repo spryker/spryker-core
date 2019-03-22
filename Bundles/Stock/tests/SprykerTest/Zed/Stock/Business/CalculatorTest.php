@@ -36,6 +36,11 @@ class CalculatorTest extends Unit
     private $productEntity;
 
     /**
+     * @var \Orm\Zed\Product\Persistence\SpyProduct
+     */
+    protected $floatProductEntity;
+
+    /**
      * @return void
      */
     public function setUp()
@@ -49,12 +54,28 @@ class CalculatorTest extends Unit
     }
 
     /**
+     * @dataProvider calculateStockProvider
+     *
+     * @param string $sku
+     * @param float $expected
+     *
      * @return void
      */
-    public function testCalculateStock()
+    public function testCalculateStock(string $sku, float $expected): void
     {
-        $stock = $this->stockFacade->calculateStockForProduct($this->productEntity->getSku());
-        $this->assertSame(30, $stock);
+        $stock = $this->stockFacade->calculateStockForProduct($sku);
+        $this->assertSame($expected, $stock);
+    }
+
+    /**
+     * @return array
+     */
+    public function calculateStockProvider(): array
+    {
+        return [
+            'int stock' => ['test2', 30.0],
+            'float stock' => ['test3', 30.2],
+        ];
     }
 
     /**
@@ -79,7 +100,16 @@ class CalculatorTest extends Unit
             ->setAttributes('{}')
             ->save();
 
+        $floatProduct = SpyProductQuery::create()
+            ->filterBySku('test3')
+            ->findOneOrCreate();
+
+        $floatProduct->setFkProductAbstract($productAbstract->getIdProductAbstract())
+            ->setAttributes('{}')
+            ->save();
+
         $this->productEntity = $product;
+        $this->floatProductEntity = $floatProduct;
 
         $stockType1 = SpyStockQuery::create()
             ->filterByName('warehouse1')
@@ -101,6 +131,15 @@ class CalculatorTest extends Unit
             ->setFkProduct($this->productEntity->getIdProduct())
             ->save();
 
+        $floatStockProduct1 = SpyStockProductQuery::create()
+            ->filterByFkStock($stockType1->getIdStock())
+            ->filterByFkProduct($this->floatProductEntity->getIdProduct())
+            ->findOneOrCreate();
+        $floatStockProduct1->setFkStock($stockType1->getIdStock())
+            ->setQuantity(10.1)
+            ->setFkProduct($this->floatProductEntity->getIdProduct())
+            ->save();
+
         $stockProduct2 = SpyStockProductQuery::create()
             ->filterByFkStock($stockType2->getIdStock())
             ->filterByFkProduct($this->productEntity->getIdProduct())
@@ -108,6 +147,15 @@ class CalculatorTest extends Unit
         $stockProduct2->setFkStock($stockType2->getIdStock())
             ->setQuantity(20)
             ->setFkProduct($this->productEntity->getIdProduct())
+            ->save();
+
+        $stockProduct2 = SpyStockProductQuery::create()
+            ->filterByFkStock($stockType2->getIdStock())
+            ->filterByFkProduct($this->floatProductEntity->getIdProduct())
+            ->findOneOrCreate();
+        $stockProduct2->setFkStock($stockType2->getIdStock())
+            ->setQuantity(20.1)
+            ->setFkProduct($this->floatProductEntity->getIdProduct())
             ->save();
     }
 
@@ -140,6 +188,16 @@ class CalculatorTest extends Unit
             ->setFkProduct($this->productEntity->getIdProduct())
             ->save();
 
+        $floatStockProduct1 = SpyStockProductQuery::create()
+            ->filterByFkStock($stockType1->getIdStock())
+            ->filterByFkProduct($this->floatProductEntity->getIdProduct())
+            ->findOneOrCreate();
+
+        $floatStockProduct1->setFkStock($stockType1->getIdStock())
+            ->setQuantity(10.1)
+            ->setFkProduct($this->floatProductEntity->getIdProduct())
+            ->save();
+
         $stockProduct2 = SpyStockProductQuery::create()
             ->filterByFkStock($stockType2->getIdStock())
             ->filterByFkProduct($this->productEntity->getIdProduct())
@@ -148,6 +206,16 @@ class CalculatorTest extends Unit
         $stockProduct2->setFkStock($stockType2->getIdStock())
             ->setQuantity(20)
             ->setFkProduct($this->productEntity->getIdProduct())
+            ->save();
+
+        $floatStockProduct2 = SpyStockProductQuery::create()
+            ->filterByFkStock($stockType2->getIdStock())
+            ->filterByFkProduct($this->floatProductEntity->getIdProduct())
+            ->findOneOrCreate();
+
+        $floatStockProduct2->setFkStock($stockType2->getIdStock())
+            ->setQuantity(20.1)
+            ->setFkProduct($this->floatProductEntity->getIdProduct())
             ->save();
     }
 }
