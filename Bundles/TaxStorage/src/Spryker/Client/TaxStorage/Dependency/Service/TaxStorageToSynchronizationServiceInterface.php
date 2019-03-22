@@ -7,14 +7,12 @@
 
 namespace Spryker\Client\TaxStorage\Dependency\Service;
 
-use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
-
 interface TaxStorageToSynchronizationServiceInterface
 {
     /**
      * @param string $resourceName
      *
-     * @return \Spryker\Client\TaxStorage\Dependency\Service\SynchronizationKeyGeneratorPluginInterface
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
     public function getStorageKeyBuilder($resourceName);
 }

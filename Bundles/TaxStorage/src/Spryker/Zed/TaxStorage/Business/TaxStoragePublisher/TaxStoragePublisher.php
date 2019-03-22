@@ -34,6 +34,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
      * @var \Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapperInterface
      */
     protected $taxStorageMapper;
+
     /**
      * @var \Spryker\Zed\TaxStorage\TaxStorageConfig
      */

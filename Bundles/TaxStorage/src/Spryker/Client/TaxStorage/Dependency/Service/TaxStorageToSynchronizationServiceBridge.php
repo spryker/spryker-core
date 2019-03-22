@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\TaxStorage\Dependency\Service;
 
-use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
-
 class TaxStorageToSynchronizationServiceBridge implements TaxStorageToSynchronizationServiceInterface
 {
     /**

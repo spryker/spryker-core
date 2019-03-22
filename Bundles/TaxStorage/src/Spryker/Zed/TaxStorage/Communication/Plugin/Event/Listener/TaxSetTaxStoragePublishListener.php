@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
+ * @method \Spryker\Zed\TaxStorage\TaxStorageConfig getConfig()
  * @method \Spryker\Zed\TaxStorage\Business\TaxStorageFacade getFacade()
  * @method \Spryker\Zed\TaxStorage\Communication\TaxStorageCommunicationFactory getFactory()
  */
