@@ -126,4 +126,19 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
     public function queryTouchEntriesByItemTypeAndItemEventAndItemIds(string $itemType, string $itemEvent, array $itemIds): SpyTouchQuery;
+
+    /**
+     * Specification:
+     * - Returns set of `spy_touch` entries filtered by item type, item ids and with the same item event.
+     * - If there are no records with same item event, returns record if there are only one record with provided item type and item id.
+     *
+     * @api
+     *
+     * @param string $itemType
+     * @param string $itemEvent
+     * @param array $itemIds
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    public function queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent(string $itemType, string $itemEvent, array $itemIds): SpyTouchQuery;
 }

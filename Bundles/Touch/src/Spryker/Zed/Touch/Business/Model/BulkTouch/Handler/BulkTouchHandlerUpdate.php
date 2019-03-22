@@ -9,6 +9,10 @@ namespace Spryker\Zed\Touch\Business\Model\BulkTouch\Handler;
 
 use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Orm\Zed\Touch\Persistence\SpyTouch;
+use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
 {
@@ -22,20 +26,34 @@ class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
     public function bulkTouch($itemType, $itemEvent, array $itemIds)
     {
         $updated = 0;
-        $itemIds = $this->filter->filter($itemIds, $itemType, $itemEvent);
+        $itemIds = $this->filter->filter($itemIds, $itemType);
         $itemIdChunks = array_chunk($itemIds, self::BULK_UPDATE_CHUNK_SIZE);
-        $originalItemEvent = $itemEvent;
-        $itemEvent = $this->getItemEventValueFor($itemEvent);
 
         foreach ($itemIdChunks as $itemIdChunk) {
-            $touchQuery = $this->touchQueryContainer->queryTouchEntriesByItemTypeAndItemEventAndItemIds($itemType, $originalItemEvent, $itemIdChunk);
-            $updated += $touchQuery->update([
-                $this->getTouchedColumnName() => new DateTime(),
-                $this->getItemEventColumnName() => $itemEvent,
-            ]);
+            $touchEntities = $this->touchQueryContainer
+                ->queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent($itemType, $itemEvent, $itemIdChunk)
+                ->find();
+            foreach ($touchEntities as $touchEntity) {
+                $this->updateTouchEntityWithItemEvent($touchEntity, $itemEvent);
+
+                $updated++;
+            }
         }
 
         return $updated;
+    }
+
+    /**
+     * @param \Orm\Zed\Touch\Persistence\SpyTouch $touchEntity
+     * @param string $itemEvent
+     *
+     * @return void
+     */
+    protected function updateTouchEntityWithItemEvent(SpyTouch $touchEntity, string $itemEvent): void
+    {
+        $touchEntity->setTouched(new DateTime());
+        $touchEntity->setItemEvent($itemEvent);
+        $touchEntity->save();
     }
 
     /**
