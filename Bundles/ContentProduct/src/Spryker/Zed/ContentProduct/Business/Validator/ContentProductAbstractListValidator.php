@@ -15,7 +15,7 @@ use Spryker\Zed\ContentProduct\ContentProductConfig;
 
 class ContentProductAbstractListValidator implements ContentProductAbstractListValidatorInterface
 {
-    protected const ERROR_MESSAGE_NUMBER_OF_PRODUCTS = 'The number of products is too big, max {number}.';
+    protected const ERROR_MESSAGE_MAX_NUMBER_OF_PRODUCTS = 'The number of products is too big, max {number}.';
     protected const ERROR_MESSAGE_PARAMETER_COUNT = '{number}';
 
     /**
@@ -59,9 +59,9 @@ class ContentProductAbstractListValidator implements ContentProductAbstractListV
      */
     protected function checkNumberOfProducts(ContentProductAbstractListTransfer $contentProductAbstractListTransfer): ContentParameterMessageTransfer
     {
-        if (count($contentProductAbstractListTransfer->getIdProductAbstracts()) > $this->config->getMaxNumberProductsInAbstractList()) {
-            $message = (new MessageTransfer())->setValue(static::ERROR_MESSAGE_NUMBER_OF_PRODUCTS)
-                ->setParameters([static::ERROR_MESSAGE_PARAMETER_COUNT => $this->config->getMaxNumberProductsInAbstractList()]);
+        if (count($contentProductAbstractListTransfer->getIdProductAbstracts()) > $this->config->getMaxProductsInProductAbstractList()) {
+            $message = (new MessageTransfer())->setValue(static::ERROR_MESSAGE_MAX_NUMBER_OF_PRODUCTS)
+                ->setParameters([static::ERROR_MESSAGE_PARAMETER_COUNT => $this->config->getMaxProductsInProductAbstractList()]);
 
             return (new ContentParameterMessageTransfer())->setParameter(ContentProductAbstractListTransfer::ID_PRODUCT_ABSTRACTS)
                 ->addMessages($message);

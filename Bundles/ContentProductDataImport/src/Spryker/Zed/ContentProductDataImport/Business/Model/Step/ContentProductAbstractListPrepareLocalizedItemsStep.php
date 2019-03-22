@@ -19,7 +19,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportStepInterface
 {
-    protected const ERROR_MESSAGE_SUFIX = 'Check please row with key: {key}, column: {column}';
+    protected const ERROR_MESSAGE_SUFFIX = 'Check please row with key: {key}, column: {column}';
     protected const EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN = '{column}';
     protected const EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY = '{key}';
 
@@ -55,9 +55,9 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
         $contentLocalizedItems = [];
 
         foreach ($dataSet[AddLocalesStep::KEY_LOCALES] as $localeName => $idLocale) {
-            $idsLocaleKey = ContentProductAbstractListDataSetInterface::COLUMN_IDS . '.' . $localeName;
+            $localeKeyIds = ContentProductAbstractListDataSetInterface::COLUMN_IDS . '.' . $localeName;
 
-            if (!isset($dataSet[$idsLocaleKey]) || !$dataSet[$idsLocaleKey]) {
+            if (!isset($dataSet[$localeKeyIds]) || !$dataSet[$localeKeyIds]) {
                 continue;
             }
 
@@ -65,7 +65,7 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
             $localizedItem[SpyContentLocalizedTableMap::COL_FK_CONTENT] = $dataSet[ContentProductAbstractListDataSetInterface::COLUMN_ID_CONTENT];
 
             $contentProductAbstractListTransfer = (new ContentProductAbstractListTransfer())
-                ->setIdProductAbstracts($dataSet[$idsLocaleKey]);
+                ->setIdProductAbstracts($dataSet[$localeKeyIds]);
 
             $contentValidationResponseTransfer = $this->contentProductFacade->validateContentProductAbstractList($contentProductAbstractListTransfer);
 
@@ -80,7 +80,7 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
                     static::EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN => $skusLocaleColumn,
                     static::EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY => $rowKey,
                 ]);
-                $message = $messageTransfer->getValue() . ' ' . static::ERROR_MESSAGE_SUFIX;
+                $message = $messageTransfer->getValue() . ' ' . static::ERROR_MESSAGE_SUFFIX;
                 $this->createInvalidDataImportException($message, $parameters);
             }
 

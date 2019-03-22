@@ -14,7 +14,7 @@ interface ContentProductFacadeInterface
 {
     /**
      * Specification:
-     * - Validate number of abstract products into ContentProductAbstractListTransfer.
+     * - Validates data in ContentProductAbstractListTransfer.
      * - Returns ContentValidationResponseTransfer with success status and error messages if validation failed.
      *
      * @api

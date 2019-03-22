@@ -37,7 +37,7 @@ class ContentProductDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testImportAbstractProductListsData(): void
+    public function testImportProductAbstractListsData(): void
     {
         $this->tester->ensureDatabaseTableIsEmpty();
 
@@ -58,7 +58,7 @@ class ContentProductDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testImportAbstractProductListsDataWrongSkus(): void
+    public function testImportProductAbstractListsDataWrongSkus(): void
     {
         $this->tester->ensureDatabaseTableIsEmpty();
         $this->expectExceptionObject(new DataImportException(static::EXCEPTION_ERROR_MESSAGE));

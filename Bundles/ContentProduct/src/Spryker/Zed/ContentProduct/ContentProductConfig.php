@@ -16,7 +16,7 @@ class ContentProductConfig extends AbstractBundleConfig
     /**
      * @return int
      */
-    public function getMaxNumberProductsInAbstractList(): int
+    public function getMaxProductsInProductAbstractList(): int
     {
         return static::MAX_NUMBER_PRODUCTS_IN_PRODUCT_ABSTRACT_LIST;
     }

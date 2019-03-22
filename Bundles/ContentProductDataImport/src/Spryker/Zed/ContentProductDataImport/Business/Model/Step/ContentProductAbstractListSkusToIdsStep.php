@@ -43,8 +43,8 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
                 continue;
             }
 
-            $idsLocaleKey = ContentProductAbstractListDataSetInterface::COLUMN_IDS . '.' . $localeName;
-            $dataSet[$idsLocaleKey] = $this->getProductAbstractIds($dataSet, $skusLocaleKey);
+            $localeKeyIds = ContentProductAbstractListDataSetInterface::COLUMN_IDS . '.' . $localeName;
+            $dataSet[$localeKeyIds] = $this->getProductAbstractIds($dataSet, $skusLocaleKey);
         }
     }
 
@@ -70,7 +70,7 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
                     static::EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY => $rowKey,
                 ];
 
-                $this->creteInvalidDataImportException(static::EXCEPTION_ERROR_MESSAGE_SKUS_TO_IDS, $parameters);
+                $this->createInvalidDataImportException(static::EXCEPTION_ERROR_MESSAGE_SKUS_TO_IDS, $parameters);
             }
 
             $productAbstractIds = array_merge($productAbstractIds, $productAbstractIdsFromDb);
@@ -161,7 +161,7 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
      *
      * @return void
      */
-    protected function creteInvalidDataImportException(string $message, array $parameters)
+    protected function createInvalidDataImportException(string $message, array $parameters)
     {
         $errorMessage = strtr($message, $parameters);
 

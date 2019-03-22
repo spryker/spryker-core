@@ -33,9 +33,9 @@ class ContentProductFacadeTest extends Test
     /**
      * @return void
      */
-    public function testValidateContentProductAbstractListNuberOfProducts(): void
+    public function testValidateContentProductAbstractListIsSuccessful(): void
     {
-        $products = range(1, $this->getConfig()->getMaxNumberProductsInAbstractList());
+        $products = range(1, $this->getConfig()->getMaxProductsInProductAbstractList());
 
         $contentProductAbstractListTransfer = (new ContentProductAbstractListTransfer())
             ->setIdProductAbstracts($products);
@@ -52,7 +52,7 @@ class ContentProductFacadeTest extends Test
      */
     public function testValidateContentProductAbstractListNumberOfProductsFail(): void
     {
-        $products = range(1, $this->getConfig()->getMaxNumberProductsInAbstractList() + 1);
+        $products = range(1, $this->getConfig()->getMaxProductsInProductAbstractList() + 1);
 
         $contentProductAbstractListTransfer = (new ContentProductAbstractListTransfer())
             ->setIdProductAbstracts($products);
