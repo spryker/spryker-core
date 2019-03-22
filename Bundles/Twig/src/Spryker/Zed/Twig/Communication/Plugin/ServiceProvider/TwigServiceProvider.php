@@ -19,10 +19,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Twig\Environment;
+use Twig\Loader\ChainLoader;
+use Twig\Loader\FilesystemLoader;
 use Twig\RuntimeLoader\FactoryRuntimeLoader;
-use Twig_Environment;
-use Twig_Loader_Chain;
-use Twig_Loader_Filesystem;
 
 /**
  * @method \Spryker\Zed\Twig\TwigConfig getConfig()
@@ -52,7 +52,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         });
 
         $app['twig.loader'] = $app->share(function ($app) {
-            return new Twig_Loader_Chain(
+            return new ChainLoader(
                 [
                     $app['twig.loader.zed'],
                     $app['twig.loader.filesystem'],
@@ -69,7 +69,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         $app['twig'] = $app->share(
             $app->extend(
                 'twig',
-                function (Twig_Environment $twig) use ($app) {
+                function (Environment $twig) use ($app) {
                     foreach ($app['twig.global.variables'] as $name => $value) {
                         $twig->addGlobal($name, $value);
                     }
@@ -156,7 +156,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         }
         $path = $guiDirectory . '/src/Spryker/Zed/Gui/Presentation/Form/Type';
 
-        $this->app->extend('twig.loader.filesystem', function (Twig_Loader_Filesystem $loader) use ($path) {
+        $this->app->extend('twig.loader.filesystem', function (FilesystemLoader $loader) use ($path) {
             $loader->addPath($path);
 
             return $loader;

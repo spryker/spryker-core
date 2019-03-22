@@ -8,14 +8,14 @@
 namespace Spryker\Zed\Twig\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Twig_Environment;
-use Twig_ExtensionInterface;
+use Twig\Environment;
+use Twig\Extension\ExtensionInterface;
 
 /**
  * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
  * @method \Spryker\Zed\Twig\Business\TwigFacadeInterface getFacade()
  */
-abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twig_ExtensionInterface
+abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements ExtensionInterface
 {
     /**
      * Initializes the runtime environment.
@@ -24,11 +24,11 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
      *
      * @api
      *
-     * @param \Twig_Environment $environment The current Twig_Environment instance
+     * @param \Twig\Environment $environment The current Environment instance
      *
      * @return void
      */
-    public function initRuntime(Twig_Environment $environment)
+    public function initRuntime(Environment $environment)
     {
     }
 
@@ -37,7 +37,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
      *
      * @api
      *
-     * @return array An array of Twig_TokenParserInterface or Twig_TokenParserBrokerInterface instances
+     * @return array An array of TokenParserInterface or TokenParserBrokerInterface instances
      */
     public function getTokenParsers()
     {
@@ -49,7 +49,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
      *
      * @api
      *
-     * @return \Twig_NodeVisitorInterface[] An array of Twig_NodeVisitorInterface instances
+     * @return \Twig\NodeVisitor\NodeVisitorInterface[] An array of NodeVisitorInterface instances
      */
     public function getNodeVisitors()
     {
