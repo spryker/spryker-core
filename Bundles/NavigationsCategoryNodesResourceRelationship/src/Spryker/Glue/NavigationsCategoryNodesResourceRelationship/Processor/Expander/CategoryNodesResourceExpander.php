@@ -48,33 +48,39 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
                 continue;
             }
 
+            $categoryNodeIds = [];
             foreach ($resource->getAttributes()->offsetGet(static::KEY_NODES) as $restNavigationNodeTransfer) {
-                $this->addResourceRelationship($resource, $restRequest, $restNavigationNodeTransfer);
+                $categoryNodeIds = $this->getAllCategoryNodeIds($restNavigationNodeTransfer, $categoryNodeIds);
             }
+
+            $this->addResourceRelationship($resource, $restRequest, $categoryNodeIds);
         }
     }
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer $restNavigationNodeTransfer
+     * @param int[] $categoryNodeIds
      *
      * @return void
      */
     protected function addResourceRelationship(
         RestResourceInterface $resource,
         RestRequestInterface $restRequest,
-        RestNavigationNodeTransfer $restNavigationNodeTransfer
+        array $categoryNodeIds
     ): void {
-        if (!$this->isCategoryNavigationNode($restNavigationNodeTransfer)) {
+        if (!count($categoryNodeIds)) {
             return;
         }
-        $categoryNode = $this->categoriesResource->findCategoryNodeById(
-            $restNavigationNodeTransfer->offsetGet(static::KEY_RESOURCE_ID),
-            $restRequest->getMetadata()->getLocale()
-        );
-        if ($categoryNode) {
-            $resource->addRelationship($categoryNode);
+
+        foreach ($categoryNodeIds as $categoryNodeId) {
+            $categoryNode = $this->categoriesResource->findCategoryNodeById(
+                $categoryNodeId,
+                $restRequest->getMetadata()->getLocale()
+            );
+            if ($categoryNode) {
+                $resource->addRelationship($categoryNode);
+            }
         }
     }
 
@@ -93,5 +99,43 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer $restNavigationNodeTransfer
+     * @param int[] $categoryNodeIds
+     *
+     * @return array
+     */
+    protected function getAllCategoryNodeIds(
+        RestNavigationNodeTransfer $restNavigationNodeTransfer,
+        array $categoryNodeIds
+    ): array {
+        if ($this->isCategoryNavigationNode($restNavigationNodeTransfer)) {
+            $categoryNodeIds[] = $restNavigationNodeTransfer->offsetGet(static::KEY_RESOURCE_ID);
+            $categoryNodeIds = $this->getCategoryNodeChildrenIds($restNavigationNodeTransfer, $categoryNodeIds);
+        }
+
+        return $categoryNodeIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer $restNavigationNodeTransfer
+     * @param int[] $categoryNodeIds
+     *
+     * @return array
+     */
+    protected function getCategoryNodeChildrenIds(
+        RestNavigationNodeTransfer $restNavigationNodeTransfer,
+        array $categoryNodeIds
+    ): array {
+        if ($restNavigationNodeTransfer->getChildren()->count()) {
+            foreach ($restNavigationNodeTransfer->getChildren() as $child) {
+                $categoryNodeIds[] = $child->getResourceId();
+                $categoryNodeIds = $this->getCategoryNodeChildrenIds($child, $categoryNodeIds);
+            }
+        }
+
+        return $categoryNodeIds;
     }
 }
