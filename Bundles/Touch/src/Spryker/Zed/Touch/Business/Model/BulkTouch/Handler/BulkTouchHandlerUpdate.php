@@ -10,9 +10,6 @@ namespace Spryker\Zed\Touch\Business\Model\BulkTouch\Handler;
 use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
-use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
 {
