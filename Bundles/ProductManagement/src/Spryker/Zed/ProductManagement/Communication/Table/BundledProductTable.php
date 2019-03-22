@@ -262,11 +262,11 @@ class BundledProductTable extends AbstractTable
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity
      *
-     * @return int
+     * @return float
      */
     protected function getAvailability(SpyProduct $productConcreteEntity)
     {
-        $availability = 0;
+        $availability = 0.0;
         if (!$productConcreteEntity->getIsNeverOutOfStock()) {
             $availability = $this->availabilityFacade->calculateStockForProduct($productConcreteEntity->getSku());
         }
