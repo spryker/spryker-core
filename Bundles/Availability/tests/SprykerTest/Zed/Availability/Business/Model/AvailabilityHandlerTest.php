@@ -20,6 +20,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
+use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceBridge;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 
 /**
@@ -35,6 +36,11 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 class AvailabilityHandlerTest extends Unit
 {
     public const PRODUCT_SKU = 'sku-123-321';
+
+    /**
+     * @var \SprykerTest\Zed\Availability\AvailabilityBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -133,7 +139,10 @@ class AvailabilityHandlerTest extends Unit
             $touchFacade,
             $availabilityQueryContainer,
             $availabilityToProductFacade,
-            $availabilityToStoreFacade
+            $availabilityToStoreFacade,
+            new AvailabilityToUtilQuantityServiceBridge(
+                $this->tester->getLocator()->utilQuantity()->service()
+            )
         );
     }
 
@@ -174,11 +183,11 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @param int $availabilityQuantity
+     * @param float $availabilityQuantity
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
-    protected function createAvailabilityQueryContainerMock($availabilityQuantity = 0)
+    protected function createAvailabilityQueryContainerMock($availabilityQuantity = 0.0)
     {
         $availabilityContainerMock = $this->getMockBuilder(AvailabilityQueryContainerInterface::class)
             ->getMock();

@@ -37,6 +37,7 @@ use Spryker\Zed\Calculation\Business\Model\CheckoutGrandTotalPreCondition;
 use Spryker\Zed\Calculation\Business\Model\Executor\OrderCalculatorExecutor;
 use Spryker\Zed\Calculation\Business\Model\Executor\QuoteCalculatorExecutor;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
+use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -106,7 +107,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSumNetPriceCalculator()
     {
-        return new SumNetPriceCalculator();
+        return new SumNetPriceCalculator($this->getUtilPriceService());
     }
 
     /**
@@ -132,7 +133,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createSumGrossPriceCalculator()
     {
-        return new SumGrossPriceCalculator();
+        return new SumGrossPriceCalculator($this->getUtilPriceService());
     }
 
     /**
@@ -148,7 +149,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountAmountAggregator()
     {
-        return new DiscountAmountAggregatorForGrossAmount();
+        return new DiscountAmountAggregatorForGrossAmount($this->getUtilPriceService());
     }
 
     /**
@@ -156,7 +157,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountAmountAggregatorForGenericAmount()
     {
-        return new DiscountAmountAggregator();
+        return new DiscountAmountAggregator($this->getUtilPriceService());
     }
 
     /**
@@ -333,5 +334,13 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     public function getUtilTextService()
     {
         return $this->getProvidedDependency(CalculationDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface
+     */
+    public function getUtilPriceService(): CalculationToUtilPriceServiceInterface
+    {
+        return $this->getProvidedDependency(CalculationDependencyProvider::SERVICE_UTIL_PRICE);
     }
 }

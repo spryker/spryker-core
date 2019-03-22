@@ -30,20 +30,20 @@ interface WriterInterface
     /**
      * @param string $sku
      * @param string $stockType
-     * @param int $decrementBy
+     * @param float $decrementBy
      *
      * @return void
      */
-    public function decrementStock($sku, $stockType, $decrementBy = 1);
+    public function decrementStock($sku, $stockType, $decrementBy = 1.0);
 
     /**
      * @param string $sku
      * @param string $stockType
-     * @param int $incrementBy
+     * @param float $incrementBy
      *
      * @return void
      */
-    public function incrementStock($sku, $stockType, $incrementBy = 1);
+    public function incrementStock($sku, $stockType, $incrementBy = 1.0);
 
     /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct

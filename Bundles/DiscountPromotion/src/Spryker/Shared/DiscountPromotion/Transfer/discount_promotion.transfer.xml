@@ -31,7 +31,7 @@
     </transfer>
 
     <transfer name="DiscountableItem">
-        <property name="quantity" type="int"/>
+        <property name="quantity" type="float"/>
         <property name="unitGrossPrice" type="int"/>
         <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
         <property name="originalItem" type="Item" />
