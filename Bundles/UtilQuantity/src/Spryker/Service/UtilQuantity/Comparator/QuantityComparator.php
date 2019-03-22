@@ -7,22 +7,10 @@
 
 namespace Spryker\Service\UtilQuantity\Comparator;
 
-use Spryker\Service\UtilQuantity\Rounder\QuantityRounderInterface;
 
 class QuantityComparator implements QuantityComparatorInterface
 {
-    /**
-     * @var \Spryker\Service\UtilQuantity\Rounder\QuantityRounderInterface
-     */
-    protected $quantityRounder;
-
-    /**
-     * @param \Spryker\Service\UtilQuantity\Rounder\QuantityRounderInterface $quantityRounder
-     */
-    public function __construct(QuantityRounderInterface $quantityRounder)
-    {
-        $this->quantityRounder = $quantityRounder;
-    }
+    protected const EPSILON = 0.00001;
 
     /**
      * @param float $firstQuantity
@@ -32,6 +20,6 @@ class QuantityComparator implements QuantityComparatorInterface
      */
     public function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
     {
-        return $this->quantityRounder->roundQuantity($firstQuantity) === $this->quantityRounder->roundQuantity($secondQuantity);
+        
     }
 }

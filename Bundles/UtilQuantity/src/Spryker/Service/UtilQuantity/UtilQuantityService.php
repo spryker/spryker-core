@@ -19,15 +19,33 @@ class UtilQuantityService extends AbstractService implements UtilQuantityService
      *
      * @api
      *
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    public function roundQuantity(float $quantity): float
+    public function sumQuantities(float $firstQuantity, float $secondQuantity): float
     {
         return $this->getFactory()
-            ->createQuantityRounder()
-            ->roundQuantity($quantity);
+            ->createQuantityCalculator()
+            ->sumQuantities($firstQuantity, $secondQuantity);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    public function subtractQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->getFactory()
+            ->createQuantityCalculator()
+            ->subtractQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
