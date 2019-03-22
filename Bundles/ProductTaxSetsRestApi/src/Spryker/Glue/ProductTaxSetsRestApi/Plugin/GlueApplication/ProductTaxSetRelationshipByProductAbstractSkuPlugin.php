@@ -45,6 +45,6 @@ class ProductTaxSetRelationshipByProductAbstractSkuPlugin extends AbstractPlugin
      */
     public function getRelationshipResourceType(): string
     {
-        return ProductTaxSetsRestApiConfig::RESOURCE_TAX_SETS;
+        return ProductTaxSetsRestApiConfig::RESOURCE_PRODUCT_TAX_SETS;
     }
 }

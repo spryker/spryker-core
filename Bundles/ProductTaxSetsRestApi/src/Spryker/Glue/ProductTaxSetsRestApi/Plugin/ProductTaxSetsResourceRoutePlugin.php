@@ -46,7 +46,7 @@ class ProductTaxSetsResourceRoutePlugin extends AbstractPlugin implements Resour
      */
     public function getResourceType(): string
     {
-        return ProductTaxSetsRestApiConfig::RESOURCE_TAX_SETS;
+        return ProductTaxSetsRestApiConfig::RESOURCE_PRODUCT_TAX_SETS;
     }
 
     /**
@@ -58,7 +58,7 @@ class ProductTaxSetsResourceRoutePlugin extends AbstractPlugin implements Resour
      */
     public function getController(): string
     {
-        return 'product-tax-sets-resource';
+        return ProductTaxSetsRestApiConfig::CONTROLLER_RESOURCE_PRODUCT_TAX_SETS;
     }
 
     /**

@@ -14,7 +14,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxProductStorageClientInterface;
 use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxStorageClientInterface;
 use Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapperInterface;
@@ -70,7 +69,7 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
+        $parentResource = $restRequest->findParentResourceByType(ProductTaxSetsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
         if (!$parentResource) {
             return $this->createAbstractProductNotFoundError();
         }
@@ -119,16 +118,16 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
     protected function formatRestResource(RestProductTaxSetsAttributesTransfer $restTaxSetsAttributesTransfer, string $uuid, string $parentResourceId): RestResourceInterface
     {
         $restResource = $this->restResourceBuilder->createRestResource(
-            ProductTaxSetsRestApiConfig::RESOURCE_TAX_SETS,
+            ProductTaxSetsRestApiConfig::RESOURCE_PRODUCT_TAX_SETS,
             $uuid,
             $restTaxSetsAttributesTransfer
         );
 
         $selfLink = sprintf(
             '%s/%s/%s',
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            ProductTaxSetsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             $parentResourceId,
-            ProductTaxSetsRestApiConfig::RESOURCE_TAX_SETS
+            ProductTaxSetsRestApiConfig::RESOURCE_PRODUCT_TAX_SETS
         );
 
         $restResource->addLink(RestLinkInterface::LINK_SELF, $selfLink);
@@ -144,9 +143,9 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $errorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT)
+            ->setCode(ProductTaxSetsRestApiConfig::RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT);
+            ->setDetail(ProductTaxSetsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT);
 
         return $restResponse->addError($errorTransfer);
     }
