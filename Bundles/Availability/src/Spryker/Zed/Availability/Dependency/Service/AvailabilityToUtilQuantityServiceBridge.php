@@ -5,20 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilQuantity;
+namespace Spryker\Zed\Availability\Dependency\Service;
 
-use Spryker\Service\Kernel\AbstractService;
-
-/**
- * @method \Spryker\Service\UtilQuantity\UtilQuantityServiceFactory getFactory()
- */
-class UtilQuantityService extends AbstractService implements UtilQuantityServiceInterface
+class AvailabilityToUtilQuantityServiceBridge implements AvailabilityToUtilQuantityServiceInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
+     * @var \Spryker\Service\UtilQuantity\UtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
+     * @param \Spryker\Service\UtilQuantity\UtilQuantityServiceInterface $utilQuantityService
+     */
+    public function __construct($utilQuantityService)
+    {
+        $this->utilQuantityService = $utilQuantityService;
+    }
+
+    /**
      * @param float $firstQuantity
      * @param float $secondQuantity
      *
@@ -26,16 +30,10 @@ class UtilQuantityService extends AbstractService implements UtilQuantityService
      */
     public function sumQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->getFactory()
-            ->createQuantityCalculator()
-            ->sumQuantities($firstQuantity, $secondQuantity);
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param float $firstQuantity
      * @param float $secondQuantity
      *
@@ -43,16 +41,10 @@ class UtilQuantityService extends AbstractService implements UtilQuantityService
      */
     public function subtractQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->getFactory()
-            ->createQuantityCalculator()
-            ->subtractQuantities($firstQuantity, $secondQuantity);
+        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param float $firstQuantity
      * @param float $secondQuantity
      *
@@ -60,8 +52,6 @@ class UtilQuantityService extends AbstractService implements UtilQuantityService
      */
     public function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
     {
-        return $this->getFactory()
-            ->createQuantityComparator()
-            ->isQuantityEqual($firstQuantity, $secondQuantity);
+        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
     }
 }

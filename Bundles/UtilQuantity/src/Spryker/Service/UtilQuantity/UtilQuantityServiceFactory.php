@@ -10,6 +10,8 @@ namespace Spryker\Service\UtilQuantity;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\UtilQuantity\Calculator\QuantityCalculator;
 use Spryker\Service\UtilQuantity\Calculator\QuantityCalculatorInterface;
+use Spryker\Service\UtilQuantity\Comparator\QuantityComparator;
+use Spryker\Service\UtilQuantity\Comparator\QuantityComparatorInterface;
 
 class UtilQuantityServiceFactory extends AbstractServiceFactory
 {
@@ -19,5 +21,13 @@ class UtilQuantityServiceFactory extends AbstractServiceFactory
     public function createQuantityCalculator(): QuantityCalculatorInterface
     {
         return new QuantityCalculator();
+    }
+
+    /**
+     * @return \Spryker\Service\UtilQuantity\Comparator\QuantityComparatorInterface
+     */
+    public function createQuantityComparator(): QuantityComparatorInterface
+    {
+        return new QuantityComparator();
     }
 }
