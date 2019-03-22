@@ -147,16 +147,17 @@ class Sellable implements SellableInterface
         $physicalItems = $this->stockFacade->calculateProductStockForStore($sku, $storeTransfer);
         $reservedItems = $this->omsFacade->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
 
-        return $this->roundQuantity($physicalItems - $reservedItems);
+        return $this->subtractQuantities($physicalItems, $reservedItems);
     }
 
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    protected function roundQuantity(float $quantity): float
+    protected function subtractQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->utilQuantityService->roundQuantity($quantity);
+        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
     }
 }

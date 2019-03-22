@@ -7,7 +7,6 @@
 
 namespace Spryker\Service\UtilQuantity\Comparator;
 
-
 class QuantityComparator implements QuantityComparatorInterface
 {
     protected const EPSILON = 0.00001;
@@ -20,6 +19,6 @@ class QuantityComparator implements QuantityComparatorInterface
      */
     public function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
     {
-        
+        return abs($firstQuantity - $secondQuantity) < static::EPSILON;
     }
 }

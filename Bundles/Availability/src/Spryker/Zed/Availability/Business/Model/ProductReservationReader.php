@@ -157,21 +157,22 @@ class ProductReservationReader implements ProductReservationReaderInterface
             $value = explode(':', $item);
 
             if (count($value) > 1) {
-                $reservation += $value[1];
+                $reservation = $this->sumQuantities($reservation, $value[1]);
             }
         }
 
-        return $this->roundQuantity($reservation);
+        return $reservation;
     }
 
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    protected function roundQuantity(float $quantity): float
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->utilQuantityService->roundQuantity($quantity);
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 
     /**

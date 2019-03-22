@@ -102,8 +102,9 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
             if (!isset($result[$sku])) {
                 $result[$sku] = 0;
             }
-            $result[$sku] = $this->roundQuantity(
-                $result[$sku] + $itemTransfer->getQuantity()
+            $result[$sku] = $this->sumQuantities(
+                $result[$sku],
+                $itemTransfer->getQuantity()
             );
         }
 
@@ -111,13 +112,14 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     }
 
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    protected function roundQuantity(float $quantity): float
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->utilQuantityService->roundQuantity($quantity);
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 
     /**

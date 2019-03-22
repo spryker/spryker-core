@@ -51,13 +51,15 @@ class SellableTest extends Unit
     }
 
     /**
+     * @dataProvider isProductSellableWhenProductHaveInStockShouldReturnIsSellableDataProvider
+     *
+     * @param int|float $reservedItems
+     * @param int|float $existingStock
+     *
      * @return void
      */
-    public function testIsProductSellableWhenProductHaveInStockShouldReturnIsSellable()
+    public function testIsProductSellableWhenProductHaveInStockShouldReturnIsSellable($reservedItems, $existingStock): void
     {
-        $reservedItems = 5;
-        $existingStock = 10;
-
         $stockFacadeMock = $this->createStockFacadeMock();
         $stockFacadeMock->method('isNeverOutOfStockForStore')
             ->with(self::SKU_PRODUCT)
@@ -68,7 +70,8 @@ class SellableTest extends Unit
             ->willReturn($existingStock);
 
         $omsFacadeMock = $this->createOmsFacadeMock();
-        $omsFacadeMock->method('sumReservedProductQuantitiesForSku')
+
+        $omsFacadeMock->method('getOmsReservedProductQuantityForSku')
             ->with(self::SKU_PRODUCT)
             ->willReturn($reservedItems);
 
@@ -76,6 +79,18 @@ class SellableTest extends Unit
         $isSellable = $sellable->isProductSellable(self::SKU_PRODUCT, 1);
 
         $this->assertTrue($isSellable);
+    }
+
+    /**
+     * @return array
+     */
+    public function isProductSellableWhenProductHaveInStockShouldReturnIsSellableDataProvider(): array
+    {
+        return [
+            'int stock' => [5, 10],
+            'float stcok' => [5.5, 9.8],
+            'float stock high precision' => [1.4444444444444, 2.5],
+        ];
     }
 
     /**

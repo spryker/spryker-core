@@ -20,6 +20,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
+use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceBridge;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 
 /**
@@ -138,7 +139,10 @@ class AvailabilityHandlerTest extends Unit
             $touchFacade,
             $availabilityQueryContainer,
             $availabilityToProductFacade,
-            $availabilityToStoreFacade
+            $availabilityToStoreFacade,
+            new AvailabilityToUtilQuantityServiceBridge(
+                $this->tester->getLocator()->utilQuantity()->service()
+            )
         );
     }
 

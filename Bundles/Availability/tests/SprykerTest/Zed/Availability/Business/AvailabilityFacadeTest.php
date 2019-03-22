@@ -22,12 +22,6 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
-use Spryker\Service\UtilQuantity\UtilQuantityConfig;
-use Spryker\Service\UtilQuantity\UtilQuantityService;
-use Spryker\Service\UtilQuantity\UtilQuantityServiceFactory;
-use Spryker\Service\UtilQuantity\UtilQuantityServiceInterface;
-use Spryker\Zed\Availability\AvailabilityDependencyProvider;
-use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceBridge;
 
 /**
  * Auto-generated group annotations
@@ -298,30 +292,10 @@ class AvailabilityFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Service\UtilQuantity\UtilQuantityServiceInterface
-     */
-    protected function createUtilQuantityService(): UtilQuantityServiceInterface
-    {
-        $utilQuantityConfigMock = $this->getMockBuilder(UtilQuantityConfig::class)->setMethods([
-            'getQuantityRoundingPrecision',
-        ])->getMock();
-        $utilQuantityConfigMock->method('getQuantityRoundingPrecision')->willReturn(2);
-        $utilQuantityFactory = new UtilQuantityServiceFactory();
-        $utilQuantityFactory->setConfig($utilQuantityConfigMock);
-        $utilQuantityService = new UtilQuantityService();
-        $utilQuantityService->setFactory($utilQuantityFactory);
-
-        return $utilQuantityService;
-    }
-
-    /**
      * @return \Spryker\Zed\Availability\Business\AvailabilityFacade
      */
     protected function createAvailabilityFacade()
     {
-        $utilQuantityService = new AvailabilityToUtilQuantityServiceBridge($this->createUtilQuantityService());
-        $this->tester->setDependency(AvailabilityDependencyProvider::SERVICE_UTIL_QUANTITY, $utilQuantityService);
-
         return $this->tester->getFacade();
     }
 
