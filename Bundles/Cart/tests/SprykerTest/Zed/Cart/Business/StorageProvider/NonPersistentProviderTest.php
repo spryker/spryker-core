@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
+use Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceBridge;
 use SprykerTest\Zed\Cart\Business\Mocks\CartItemAddTripleStrategy;
 
 /**
@@ -35,16 +36,23 @@ class NonPersistentProviderTest extends Unit
     private $provider;
 
     /**
+     * @var \SprykerTest\Zed\Cart\CartBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
-        $this->provider = new NonPersistentProvider([], []);
+        $this->provider = new NonPersistentProvider([], [], new CartToUtilQuantityServiceBridge(
+            $this->tester->getLocator()->utilQuantity()->service()
+        ));
     }
 
     /**
-     * @dataProvider itemQuantitiesDataProvider
+     * @dataProvider twoItemQuantitiesDataProvider
      *
      * @param int|float $existingQuantity
      * @param int|float $newQuantity
@@ -69,7 +77,7 @@ class NonPersistentProviderTest extends Unit
 
         $this->assertSame($itemId, $changedItem->getId());
         $this->assertSame(
-            $existingQuantity + $newQuantity,
+            (float)$existingQuantity + $newQuantity,
             $changedItem->getQuantity()
         );
     }
@@ -155,7 +163,7 @@ class NonPersistentProviderTest extends Unit
 
         $addedItem = $changedItems[$skuIndex[$newItemId]];
         $this->assertSame($newItemId, $addedItem->getId());
-        $this->assertSame($newFirstItemQuantity + $newSecondItemQuantity, $addedItem->getQuantity());
+        $this->assertSame((float)$newFirstItemQuantity + $newSecondItemQuantity, $addedItem->getQuantity());
 
         $existingItem = $changedItems[$skuIndex[$existingItemId]];
         $this->assertSame($existingItemId, $existingItem->getId());
@@ -398,7 +406,9 @@ class NonPersistentProviderTest extends Unit
         $provider = new NonPersistentProvider([
             new CartItemAddTripleStrategy(),
         ], [
-        ]);
+        ], new CartToUtilQuantityServiceBridge(
+            $this->tester->getLocator()->utilQuantity()->service()
+        ));
 
         $existingItemId = '123';
         $newItemId = '321';

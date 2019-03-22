@@ -10,9 +10,18 @@ namespace Spryker\Zed\Cart\Dependency\Service;
 interface CartToUtilQuantityServiceInterface
 {
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    public function roundQuantity(float $quantity): float;
+    public function sumQuantities(float $firstQuantity, float $secondQuantity): float;
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    public function subtractQuantities(float $firstQuantity, float $secondQuantity): float;
 }

@@ -177,14 +177,27 @@ class NonPersistentProvider implements StorageProviderInterface
             $existingItemTransfer = $existingItems[$itemIndex];
         }
 
-        $changedQuantity = $existingItemTransfer->getQuantity() - $itemTransfer->getQuantity();
-        $changedQuantity = $this->utilQuantityService->roundQuantity($changedQuantity);
+        $changedQuantity = $this->subtractQuantities(
+            $existingItemTransfer->getQuantity(),
+            $itemTransfer->getQuantity()
+        );
 
         if ($changedQuantity > 0) {
             $existingItemTransfer->setQuantity($changedQuantity);
         } else {
             unset($existingItems[$itemIndex]);
         }
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function subtractQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
@@ -201,10 +214,23 @@ class NonPersistentProvider implements StorageProviderInterface
         }
 
         $existingItemTransfer = $existingItems[$index];
-        $changedQuantity = $existingItemTransfer->getQuantity() + $itemTransfer->getQuantity();
-        $changedQuantity = $this->utilQuantityService->roundQuantity($changedQuantity);
+        $changedQuantity = $this->sumQuantities(
+            $existingItemTransfer->getQuantity(),
+            $itemTransfer->getQuantity()
+        );
 
         $existingItemTransfer->setQuantity($changedQuantity);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
