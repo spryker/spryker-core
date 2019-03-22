@@ -124,7 +124,7 @@
         <property name="displayName" type="string"/>
         <property name="description" type="string"/>
         <property name="voucherCode" type="string"/>
-        <property name="quantity" type="float"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
 </transfers>
