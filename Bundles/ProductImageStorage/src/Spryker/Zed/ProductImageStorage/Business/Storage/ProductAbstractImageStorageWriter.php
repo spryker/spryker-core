@@ -58,7 +58,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -67,7 +67,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
         $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $imageSets = [];
         $productAbstractImageSetsBulk = $this->getImageSetsIndexedByProductAbstractIdAndLocale(
-            $this->repository->getProductImageSetsByIdAbstractProductIn($productAbstractIds)
+            $this->repository->getProductImageSetsByFkAbstractProductIn($productAbstractIds)
         );
         $defaultProductAbstractImageSetsBulk = $this->getImageSetsIndexedByProductAbstractId(
             $this->repository->getDefaultAbstractProductImageSetsByIdAbstractProductIn($productAbstractIds)
@@ -115,7 +115,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
             $this->repository->getDefaultAbstractProductImageSetsByIdAbstractProductIn($productAbstractIds)
         );
         $productAbstractImageSetsBulk = $this->getImageSetsIndexedByProductAbstractIdAndLocale(
-            $this->repository->getProductImageSetsByIdAbstractProductIn($productAbstractIds)
+            $this->repository->getProductImageSetsByFkAbstractProductIn($productAbstractIds)
         );
         $productAbstractImageStorageEntities = $this->findProductAbstractImageStorageEntitiesByProductAbstractIds($productAbstractIds);
 
