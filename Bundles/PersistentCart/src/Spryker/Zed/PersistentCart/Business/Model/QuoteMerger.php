@@ -129,18 +129,22 @@ class QuoteMerger implements QuoteMergerInterface
     protected function increaseExistingItem(array $existingItems, int $index, ItemTransfer $itemTransfer): void
     {
         $existingItemTransfer = $existingItems[$index];
-        $changedQuantity = $existingItemTransfer->getQuantity() + $itemTransfer->getQuantity();
+        $changedQuantity = $this->sumQuantities(
+            $existingItemTransfer->getQuantity(),
+            $itemTransfer->getQuantity()
+        );
 
-        $existingItemTransfer->setQuantity($this->roundQuantity($changedQuantity));
+        $existingItemTransfer->setQuantity($changedQuantity);
     }
 
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    protected function roundQuantity(float $quantity): float
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->utilQuantityService->roundQuantity($quantity);
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 }

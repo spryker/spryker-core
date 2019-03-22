@@ -159,7 +159,7 @@ class CartOperation implements CartOperationInterface
             return $this->quoteItemOperation->removeItems([$quoteItemTransfer], $quoteTransfer);
         }
 
-        $delta = abs($this->roundQuantity($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity()));
+        $delta = abs($this->subtractQuantities($quoteItemTransfer->getQuantity(), $itemTransfer->getQuantity()));
 
         if ($delta == 0) {
             $quoteResponseTransfer = new QuoteResponseTransfer();
@@ -308,12 +308,13 @@ class CartOperation implements CartOperationInterface
     }
 
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    protected function roundQuantity(float $quantity): float
+    protected function subtractQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->utilQuantityService->roundQuantity($quantity);
+        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
     }
 }

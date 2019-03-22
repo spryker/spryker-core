@@ -65,9 +65,9 @@ class QuoteMergerTest extends Unit
     /**
      * @dataProvider hydrateQuantityDataProvider
      *
-     * @param $firstQuantity
-     * @param $secondQuantity
-     * @param $thirdQuantity
+     * @param int|float $firstQuantity
+     * @param int|float $secondQuantity
+     * @param int|float $thirdQuantity
      *
      * @return void
      */
@@ -90,16 +90,16 @@ class QuoteMergerTest extends Unit
         }
 
         $existingItem = $changedItems[$skuIndex[static::EXISTING_ITEM_SKU]];
-        $this->assertEquals($existingItem->getQuantity(), $this->quantityUtilService->roundQuantity($firstQuantity + $secondQuantity));
+        $this->assertEquals($existingItem->getQuantity(), $firstQuantity + $secondQuantity);
 
         $newItem = $changedItems[$skuIndex[static::NEW_ITEM_SKU]];
         $this->assertEquals($newItem->getQuantity(), $thirdQuantity);
     }
 
     /**
-     * @param $firstQuantity
-     * @param $secondQuantity
-     * @param $thirdQuantity
+     * @param int|float $firstQuantity
+     * @param int|float $secondQuantity
+     * @param int|float $thirdQuantity
      *
      * @return \Generated\Shared\Transfer\QuoteMergeRequestTransfer
      */
