@@ -118,9 +118,9 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
      *
      * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
      */
-    public function findCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
+    public function getCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
     {
-        return $this->getZedStub()->findCompanyUsersByQuery($customerQueryTransfer);
+        return $this->getZedStub()->getCompanyUsersByQuery($customerQueryTransfer);
     }
 
     /**

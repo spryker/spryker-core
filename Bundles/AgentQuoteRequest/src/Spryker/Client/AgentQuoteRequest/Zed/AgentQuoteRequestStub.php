@@ -150,11 +150,11 @@ class AgentQuoteRequestStub implements AgentQuoteRequestStubInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
      */
-    public function findCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
+    public function getCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer $companyUserAutocompleteResponseTransfer */
         $companyUserAutocompleteResponseTransfer = $this->zedRequestClient->call(
-            '/agent-quote-request/gateway/find-company-users-by-query',
+            '/agent-quote-request/gateway/get-company-users-by-query',
             $customerQueryTransfer
         );
 

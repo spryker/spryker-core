@@ -21,7 +21,7 @@ interface AgentQuoteRequestFacadeInterface
      * Specification:
      * - Creates "Request for Quote" for the provided company user with "in-progress" status.
      * - Generates unique reference number.
-     * - Sets hidden visibility for customer.
+     * - Sets hidden visibility for RfQ.
      *
      * @api
      *
@@ -57,7 +57,7 @@ interface AgentQuoteRequestFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
      */
-    public function findCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer;
+    public function getCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer;
 
     /**
      * Specification:

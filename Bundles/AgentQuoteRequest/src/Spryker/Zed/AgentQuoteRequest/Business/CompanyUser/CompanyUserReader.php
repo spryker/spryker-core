@@ -32,11 +32,11 @@ class CompanyUserReader implements CompanyUserReaderInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
      */
-    public function findCompanyUsersByQuery(CompanyUserQueryTransfer $companyUserQueryTransfer): CompanyUserAutocompleteResponseTransfer
+    public function getCompanyUsersByQuery(CompanyUserQueryTransfer $companyUserQueryTransfer): CompanyUserAutocompleteResponseTransfer
     {
-        $companyUsers = $this->agentQuoteRequestRepository->findCompanyUsersByQuery($companyUserQueryTransfer);
+        $companyUserTransfers = $this->agentQuoteRequestRepository->getCompanyUsersByQuery($companyUserQueryTransfer);
 
         return (new CompanyUserAutocompleteResponseTransfer())
-            ->setCompanyUsers(new ArrayObject($companyUsers));
+            ->setCompanyUsers(new ArrayObject($companyUserTransfers));
     }
 }

@@ -76,8 +76,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
      */
-    public function findCompanyUsersByQueryAction(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
+    public function getCompanyUsersByQueryAction(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
     {
-        return $this->getFacade()->findCompanyUsersByQuery($customerQueryTransfer);
+        return $this->getFacade()->getCompanyUsersByQuery($customerQueryTransfer);
     }
 }

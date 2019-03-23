@@ -207,13 +207,13 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
         }
 
         if ($quoteRequestTransfer->getValidUntil()
-            && (new DateTime($quoteRequestTransfer->getValidUntil()) < new DateTime('now'))) {
+            && (new DateTime($quoteRequestTransfer->getValidUntil()) < new DateTime())) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL);
         }
 
-        $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_READY);
-        $quoteRequestTransfer->setIsHidden(false);
-        $quoteRequestTransfer->setLatestVersion($this->addQuoteRequestVersion($quoteRequestTransfer));
+        $quoteRequestTransfer->setIsHidden(false)
+            ->setStatus(SharedQuoteRequestConfig::STATUS_READY)
+            ->setLatestVersion($this->addQuoteRequestVersion($quoteRequestTransfer));
 
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
