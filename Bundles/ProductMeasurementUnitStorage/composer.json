@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/event-behavior": "^1.5.0",
+    "spryker/event-behavior": "^1.8.0",
     "spryker/kernel": "^3.21.0",
     "spryker/product-measurement-unit": "^1.0.1 || ^2.0.0",
     "spryker/quick-order-extension": "^1.0.0",
