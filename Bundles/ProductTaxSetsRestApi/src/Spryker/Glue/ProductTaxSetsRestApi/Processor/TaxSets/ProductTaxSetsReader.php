@@ -91,7 +91,7 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
     public function findAbstractProductTaxSetsByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         $taxProductStorageTransfer = $this->taxProductStorageClient->findTaxProductStorage($abstractProductSku);
-        if ($taxProductStorageTransfer === null || $taxProductStorageTransfer->getIdTaxSet() === null) {
+        if ($taxProductStorageTransfer === null) {
             return null;
         }
 
