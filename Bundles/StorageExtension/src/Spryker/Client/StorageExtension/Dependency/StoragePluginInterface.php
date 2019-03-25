@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Storage\Redis;
+namespace Spryker\Client\StorageExtension\Dependency;
 
-/**
- * @deprecated Use Spryker\Client\StorageExtension\Dependency\StoragePluginInterface instead.
- */
-interface ServiceInterface
+interface StoragePluginInterface
 {
     /**
+     * Specification:
+     * - Sets key to hold the value with an optional time-to-live parameter.
+     *
      * @api
      *
      * @param string $key
@@ -26,6 +26,10 @@ interface ServiceInterface
     public function set($key, $value, $ttl = null);
 
     /**
+     * Specification:
+     * - Sets multiple values.
+     * - Accepts a key-value array as an argument.
+     *
      * @api
      *
      * @param array $items
@@ -35,6 +39,9 @@ interface ServiceInterface
     public function setMulti(array $items);
 
     /**
+     * Specification:
+     * - Deletes a value under specified key.
+     *
      * @api
      *
      * @param string $key
@@ -44,6 +51,10 @@ interface ServiceInterface
     public function delete($key);
 
     /**
+     * Specification:
+     * - Deletes multiple values at a time.
+     * - Accepts an array of keys for values to be deleted.
+     *
      * @api
      *
      * @param array $keys
@@ -53,6 +64,9 @@ interface ServiceInterface
     public function deleteMulti(array $keys);
 
     /**
+     * Specification:
+     * - Deletes all values.
+     *
      * @api
      *
      * @return int
@@ -60,6 +74,9 @@ interface ServiceInterface
     public function deleteAll();
 
     /**
+     * Specification:
+     * - Gets value of a key.
+     *
      * @api
      *
      * @param string $key
@@ -69,6 +86,9 @@ interface ServiceInterface
     public function get($key);
 
     /**
+     * Specification:
+     * - Gets multiple values for multiple keys.
+     *
      * @api
      *
      * @param array $keys
@@ -78,6 +98,9 @@ interface ServiceInterface
     public function getMulti(array $keys);
 
     /**
+     * Specification:
+     * - Gets statistics about the server.
+     *
      * @api
      *
      * @return array
@@ -85,6 +108,9 @@ interface ServiceInterface
     public function getStats();
 
     /**
+     * Specification:
+     * - Gets a list of all the keys available in a storage.
+     *
      * @api
      *
      * @return array
@@ -92,6 +118,9 @@ interface ServiceInterface
     public function getAllKeys();
 
     /**
+     * Specification:
+     * - Gets all keys filtered by pattern.
+     *
      * @api
      *
      * @param string $pattern
@@ -101,6 +130,9 @@ interface ServiceInterface
     public function getKeys($pattern);
 
     /**
+     * Specification:
+     * - Resets access statistics.
+     *
      * @api
      *
      * @return void
@@ -108,6 +140,9 @@ interface ServiceInterface
     public function resetAccessStats();
 
     /**
+     * Specification:
+     * - Gets access statistics.
+     *
      * @api
      *
      * @return array
@@ -115,6 +150,9 @@ interface ServiceInterface
     public function getAccessStats();
 
     /**
+     * Specification:
+     * - Gets amount of items in the storage.
+     *
      * @api
      *
      * @return int
@@ -122,9 +160,14 @@ interface ServiceInterface
     public function getCountItems();
 
     /**
+     * Specification:
+     * - Enables or disables debug mode.
+     *
+     * @api
+     *
      * @param bool $debug
      *
-     * @return $this
+     * @return void
      */
     public function setDebug($debug);
 }

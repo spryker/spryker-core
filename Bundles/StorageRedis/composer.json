@@ -1,20 +1,16 @@
 {
-  "name": "spryker/heartbeat",
+  "name": "spryker/storage-redis",
   "type": "library",
-  "description": "Heartbeat module",
+  "description": "StorageRedis module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/application": "^3.4.0",
-    "spryker/config": "^3.0.0",
-    "spryker/elastica": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/storage": "^3.8.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/redis": "2.0.0",
+    "spryker/storage-extension": "1.0.0"
   },
   "require-dev": {
-    "spryker/propel": "*",
+    "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -31,7 +27,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {

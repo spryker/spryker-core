@@ -5,16 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Storage\Redis;
+namespace Spryker\Client\StorageRedis\Redis;
 
-/**
- * @deprecated Use Spryker\Client\StorageExtension\Dependency\StoragePluginInterface instead.
- */
-interface ServiceInterface
+interface StorageRedisWrapperInterface
 {
     /**
-     * @api
-     *
      * @param string $key
      * @param mixed $value
      * @param int|null $ttl
@@ -23,108 +18,84 @@ interface ServiceInterface
      *
      * @return mixed
      */
-    public function set($key, $value, $ttl = null);
+    public function set(string $key, $value, ?int $ttl = null);
 
     /**
-     * @api
-     *
      * @param array $items
      *
      * @return void
      */
-    public function setMulti(array $items);
+    public function setMulti(array $items): void;
 
     /**
-     * @api
-     *
      * @param string $key
      *
      * @return mixed
      */
-    public function delete($key);
+    public function delete(string $key);
 
     /**
-     * @api
-     *
      * @param array $keys
      *
      * @return void
      */
-    public function deleteMulti(array $keys);
+    public function deleteMulti(array $keys): void;
 
     /**
-     * @api
-     *
      * @return int
      */
-    public function deleteAll();
+    public function deleteAll(): int;
 
     /**
-     * @api
-     *
      * @param string $key
      *
      * @return mixed
      */
-    public function get($key);
+    public function get(string $key);
 
     /**
-     * @api
-     *
      * @param array $keys
      *
      * @return array
      */
-    public function getMulti(array $keys);
+    public function getMulti(array $keys): array;
 
     /**
-     * @api
-     *
      * @return array
      */
-    public function getStats();
+    public function getStats(): array;
 
     /**
-     * @api
-     *
      * @return array
      */
-    public function getAllKeys();
+    public function getAllKeys(): array;
 
     /**
-     * @api
-     *
      * @param string $pattern
      *
      * @return array
      */
-    public function getKeys($pattern);
+    public function getKeys(string $pattern): array;
 
     /**
-     * @api
-     *
      * @return void
      */
-    public function resetAccessStats();
+    public function resetAccessStats(): void;
 
     /**
-     * @api
-     *
      * @return array
      */
-    public function getAccessStats();
+    public function getAccessStats(): array;
 
     /**
-     * @api
-     *
      * @return int
      */
-    public function getCountItems();
+    public function getCountItems(): int;
 
     /**
      * @param bool $debug
      *
-     * @return $this
+     * @return void
      */
-    public function setDebug($debug);
+    public function setDebug(bool $debug): void;
 }
