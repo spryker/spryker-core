@@ -11,9 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Service\ManualOrderEntryGui\ManualOrderEntryGuiServiceInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProductFormHandler implements FormHandlerInterface
@@ -29,23 +29,23 @@ class ProductFormHandler implements FormHandlerInterface
     protected $productFacade;
 
     /**
-     * @var \Spryker\Service\ManualOrderEntryGui\ManualOrderEntryGuiServiceInterface
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface
      */
-    protected $service;
+    protected $utilQuantityService;
 
     /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface $productFacade
-     * @param \Spryker\Service\ManualOrderEntryGui\ManualOrderEntryGuiServiceInterface $service
+     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ManualOrderEntryGuiToCartFacadeInterface $cartFacade,
         ManualOrderEntryGuiToProductFacadeInterface $productFacade,
-        ManualOrderEntryGuiServiceInterface $service
+        ManualOrderEntryGuiToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->cartFacade = $cartFacade;
         $this->productFacade = $productFacade;
-        $this->service = $service;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -91,8 +91,9 @@ class ProductFormHandler implements FormHandlerInterface
         $items = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (isset($items[$itemTransfer->getSku()])) {
-                $newQuantity = $this->service->round(
-                    $items[$itemTransfer->getSku()]->getQuantity() + $itemTransfer->getQuantity()
+                $newQuantity = $this->sumQuantities(
+                    $items[$itemTransfer->getSku()]->getQuantity(),
+                    $itemTransfer->getQuantity()
                 );
                 $items[$itemTransfer->getSku()]->setQuantity($newQuantity);
                 continue;
@@ -117,6 +118,17 @@ class ProductFormHandler implements FormHandlerInterface
     }
 
     /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $newProduct
      * @param array $addedSkus
      *
@@ -125,7 +137,7 @@ class ProductFormHandler implements FormHandlerInterface
     protected function isProductInvalid(ItemTransfer $newProduct, array $addedSkus): bool
     {
         return $newProduct->getSku() === ''
-            || $newProduct->getQuantity() <= 0.0
+            || $newProduct->getQuantity() <= 0
             || in_array($newProduct->getSku(), $addedSkus)
             || !$this->productFacade->hasProductConcrete($newProduct->getSku());
     }

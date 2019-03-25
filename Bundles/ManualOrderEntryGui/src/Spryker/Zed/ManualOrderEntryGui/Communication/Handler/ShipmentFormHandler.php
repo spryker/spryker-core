@@ -70,7 +70,7 @@ class ShipmentFormHandler implements FormHandlerInterface
         $shipmentExpenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
         $shipmentExpenseTransfer->setUnitNetPrice(0);
         $shipmentExpenseTransfer->setUnitGrossPrice($shipmentMethodTransfer->getStoreCurrencyPrice());
-        $shipmentExpenseTransfer->setQuantity(1.0);
+        $shipmentExpenseTransfer->setQuantity(1);
 
         return $shipmentExpenseTransfer;
     }

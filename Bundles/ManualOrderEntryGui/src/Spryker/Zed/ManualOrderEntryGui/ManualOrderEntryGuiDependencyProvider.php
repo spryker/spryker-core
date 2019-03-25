@@ -23,6 +23,7 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProdu
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerBridge;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceBridge;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiConfig getConfig()
@@ -50,7 +51,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     public const PLUGINS_MANUAL_ORDER_ENTRY_FORM = 'PLUGINS_MANUAL_ORDER_ENTRY_FORM';
     public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
 
-    public const SERVICE_MANUAL_ORDER_ENTRY_GUI = 'SERVICE_MANUAL_ORDER_ENTRY_GUI';
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -77,7 +78,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addCustomerQueryContainer($container);
         $container = $this->addManualOrderEntryFormPlugins($container);
         $container = $this->addQuoteExpanderPlugins($container);
-        $container = $this->addManualOrderEntryGuiService($container);
+        $container = $this->addUtilQuantityService($container);
 
         return $container;
     }
@@ -87,10 +88,12 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addManualOrderEntryGuiService(Container $container): Container
+    protected function addUtilQuantityService(Container $container): Container
     {
-        $container[static::SERVICE_MANUAL_ORDER_ENTRY_GUI] = function (Container $container) {
-            return $container->getLocator()->manualOrderEntryGui()->service();
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new ManualOrderEntryGuiToUtilQuantityServiceBridge(
+                $container->getLocator()->utilQuantity()->service()
+            );
         };
 
         return $container;

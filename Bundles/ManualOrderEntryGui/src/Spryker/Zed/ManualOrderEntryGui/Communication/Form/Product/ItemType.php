@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
@@ -34,7 +35,6 @@ class ItemType extends AbstractType
     protected const ERROR_MESSAGE_QUANTITY = 'Invalid Quantity.';
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
-    protected const PATTERN_QUANTITY = self::PATTERN_MONEY;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -128,7 +128,7 @@ class ItemType extends AbstractType
             'label' => 'Quantity',
             'required' => false,
             'constraints' => [
-                $this->createNumberConstraint($options),
+                $this->createQuantityConstraint($options),
             ],
         ]);
 
@@ -153,14 +153,14 @@ class ItemType extends AbstractType
     /**
      * @param array $options
      *
-     * @return \Symfony\Component\Validator\Constraints\Regex
+     * @return \Symfony\Component\Validator\Constraints\Type
      */
-    protected function createNumberConstraint(array $options): Regex
+    protected function createQuantityConstraint(array $options): Constraint
     {
         $validationGroup = $this->getValidationGroup($options);
 
-        return new Regex([
-            'pattern' => static::PATTERN_QUANTITY,
+        return new Type([
+            'type' => 'numeric',
             'message' => static::ERROR_MESSAGE_QUANTITY,
             'groups' => $validationGroup,
         ]);

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Service\ManualOrderEntryGui\ManualOrderEntryGuiServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Controller\CreateController;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
@@ -60,6 +59,7 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProdu
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -95,11 +95,11 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Service\ManualOrderEntryGui\ManualOrderEntryGuiServiceInterface
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToUtilQuantityServiceInterface
      */
-    public function getManualOrderEntryGuiService(): ManualOrderEntryGuiServiceInterface
+    public function getUtilQuantityService(): ManualOrderEntryGuiToUtilQuantityServiceInterface
     {
-        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::SERVICE_MANUAL_ORDER_ENTRY_GUI);
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 
     /**
@@ -586,7 +586,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return new ProductFormHandler(
             $this->getCartFacade(),
             $this->getProductFacade(),
-            $this->getManualOrderEntryGuiService()
+            $this->getUtilQuantityService()
         );
     }
 
