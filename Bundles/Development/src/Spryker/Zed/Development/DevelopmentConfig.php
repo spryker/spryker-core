@@ -269,6 +269,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Elastica\\' => 'spryker/elastica',
             'Symfony\\Component\\' => 'spryker/symfony',
             'Twig_' => 'spryker/twig',
+            'Twig\\' => 'spryker/twig',
             'Zend\\' => 'spryker/zend',
             'phpDocumentor\\GraphViz\\' => 'spryker/graphviz',
             'Egulias\\EmailValidator\\' => 'spryker/egulias',

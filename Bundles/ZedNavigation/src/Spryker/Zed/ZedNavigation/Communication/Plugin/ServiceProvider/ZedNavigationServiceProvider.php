@@ -12,8 +12,8 @@ use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ZedNavigation\Communication\Plugin\ZedNavigation;
 use Symfony\Component\HttpFoundation\Request;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
  * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface getFacade()
@@ -38,7 +38,7 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
     public function register(Application $application)
     {
         $application['twig'] = $application->share(
-            $application->extend('twig', function (Twig_Environment $twig) use ($application) {
+            $application->extend('twig', function (Environment $twig) use ($application) {
                 $twig->addFunction($this->getNavigationFunction($application));
                 $twig->addFunction($this->getBreadcrumbFunction($application));
 
@@ -52,11 +52,11 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
     /**
      * @param \Silex\Application $application
      *
-     * @return \Twig_SimpleFunction
+     * @return \Twig\TwigFunction
      */
     protected function getNavigationFunction(Application $application)
     {
-        $navigation = new Twig_SimpleFunction('navigation', function () use ($application) {
+        $navigation = new TwigFunction('navigation', function () use ($application) {
             $navigation = $this->buildNavigation($application);
 
             return $navigation;
@@ -68,11 +68,11 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
     /**
      * @param \Silex\Application $application
      *
-     * @return \Twig_SimpleFunction
+     * @return \Twig\TwigFunction
      */
     protected function getBreadcrumbFunction(Application $application)
     {
-        $navigation = new Twig_SimpleFunction('breadcrumb', function () use ($application) {
+        $navigation = new TwigFunction('breadcrumb', function () use ($application) {
             $navigation = $this->buildNavigation($application);
 
             return $navigation['path'];

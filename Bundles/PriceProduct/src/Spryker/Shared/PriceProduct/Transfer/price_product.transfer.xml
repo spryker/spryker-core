@@ -15,6 +15,8 @@
         <property name="priceType"  type="PriceType" />
         <property name="moneyValue" type="MoneyValue" />
         <property name="priceDimension" type="PriceProductDimension" />
+        <property name="groupKey" type="string" />
+        <property name="isMergeable" type="bool" />
     </transfer>
 
     <transfer name="MoneyValue">

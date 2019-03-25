@@ -28,5 +28,6 @@ dependency.json export-ignore
 .editorconfig export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
-phpstan.neon
-phpstan.json
+phpstan.neon export-ignore
+phpstan.json export-ignore
+tooling.yml export-ignore

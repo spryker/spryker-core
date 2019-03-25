@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * Auto-generated group annotations
@@ -74,12 +74,12 @@ class BundleGeneratorTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Twig_Environment
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Twig\Environment
      */
     protected function createTwigEnvironmentMock()
     {
         return $this
-            ->getMockBuilder(Twig_Environment::class)
+            ->getMockBuilder(Environment::class)
             ->disableOriginalConstructor()
             ->getMock();
     }
