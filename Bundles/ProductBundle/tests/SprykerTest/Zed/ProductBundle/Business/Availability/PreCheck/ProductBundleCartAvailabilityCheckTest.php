@@ -193,7 +193,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
             'float quantity' => $this->getDataForQuoteTransferWithCartChangeItemTransfer(
                 static::FLOAT_QUANTITY,
                 $this->fixtures['bundle-sku'],
-                16.00
+                15.5
             ),
         ];
 
@@ -203,6 +203,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     /**
      * @param float|int $quantity
      * @param string $bundleSku
+     * @param $expectedValue
      *
      * @return array
      */

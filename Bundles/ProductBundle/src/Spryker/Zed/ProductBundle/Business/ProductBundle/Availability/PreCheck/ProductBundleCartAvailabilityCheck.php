@@ -93,11 +93,12 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $sku
      *
-     * @return int
+     * @return float
      */
     protected function getAccumulatedItemQuantityForBundledProductsByGivenSku(ArrayObject $items, $sku)
     {
-        $quantity = 0;
+        $quantity = 0.0;
+
         foreach ($items as $itemTransfer) {
             if (!$itemTransfer->getRelatedBundleItemIdentifier()) {
                 continue;
@@ -106,14 +107,15 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
             if ($itemTransfer->getSku() !== $sku) {
                 continue;
             }
-            $quantity += $itemTransfer->getQuantity();
+
+            $quantity = $this->sumQuantities($quantity, $itemTransfer->getQuantity());
         }
 
-        return $this->roundQuantity($quantity);
+        return $quantity;
     }
 
     /**
-     * @param int $stock
+     * @param float $stock
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
@@ -121,11 +123,12 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     protected function createItemIsNotAvailableMessageTransfer($stock, $sku)
     {
         $translationKey = $this->getItemAvailabilityTranslationKey($stock);
+
         return $this->createCartMessageTransfer($stock, $translationKey, $sku);
     }
 
     /**
-     * @param int $stock
+     * @param float $stock
      * @param string $translationKey
      * @param string $sku
      *
@@ -144,7 +147,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     }
 
     /**
-     * @param int $stock
+     * @param float $stock
      *
      * @return string
      */
@@ -187,7 +190,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     protected function calculateRegularItemAvailability(
         ItemTransfer $itemTransfer,
@@ -204,7 +207,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
             $itemTransfer->getSku()
         );
 
-        $availabilityAfterBundling = $itemAvailability - $bundledItemsQuantity;
+        $availabilityAfterBundling = $this->subtractQuantities($itemAvailability, $bundledItemsQuantity);
 
         return $availabilityAfterBundling;
     }
@@ -323,6 +326,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         }
 
         $availability = $this->calculateRegularItemAvailability($itemTransfer, $itemsInCart, $storeTransfer);
+
         return $this->createItemIsNotAvailableMessageTransfer($availability, $itemTransfer->getSku());
     }
 }

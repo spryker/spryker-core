@@ -335,7 +335,8 @@ class ProductBundleFacadeTest extends Unit
         $availabilityQueryContainer = $this->createAvailabilityQueryContainer();
         $bundledProductAvailability = $availabilityQueryContainer->querySpyAvailabilityBySku(self::SKU_BUNDLED_2, self::ID_STORE)->findOne();
 
-        $bundledProductAvailability->setQuantity(0)
+        $bundledProductAvailability
+            ->setQuantity(0)
             ->save();
 
         $productBundleFacade->updateAffectedBundlesAvailability(self::SKU_BUNDLED_2);

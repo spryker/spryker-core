@@ -101,19 +101,24 @@ class ChangeRequestExpander implements ChangeRequestExpanderInterface
             if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
                 continue;
             }
-            $bundleItemQuantity += $bundleItemTransfer->getQuantity();
+
+            $bundleItemQuantity = $this->sumQuantities(
+                $bundleItemQuantity,
+                $bundleItemTransfer->getQuantity()
+            );
         }
 
-        return $this->roundQuantity($bundleItemQuantity);
+        return $bundleItemQuantity;
     }
 
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    protected function roundQuantity(float $quantity): float
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->utilQuantityService->roundQuantity($quantity);
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 }

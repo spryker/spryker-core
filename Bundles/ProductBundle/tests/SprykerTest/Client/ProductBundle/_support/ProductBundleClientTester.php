@@ -8,6 +8,10 @@
 namespace SprykerTest\Client\ProductBundle;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Inherited Methods
@@ -20,7 +24,7 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -28,7 +32,19 @@ class ProductBundleClientTester extends Actor
 {
     use _generated\ProductBundleClientTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function haveQuote(): QuoteTransfer
+    {
+        return (new QuoteBuilder())->build();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function haveCustomer(): CustomerTransfer
+    {
+        return (new CustomerBuilder())->build();
+    }
 }

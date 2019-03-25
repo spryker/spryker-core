@@ -197,8 +197,11 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
             if (!isset($groupedBundleQuantity[$bundleGroupKey])) {
                 $groupedBundleQuantity[$bundleGroupKey] = $bundleItemTransfer->getQuantity();
             } else {
-                $summaryQuantity = $groupedBundleQuantity[$bundleGroupKey] + $bundleItemTransfer->getQuantity();
-                $groupedBundleQuantity[$bundleGroupKey] = $this->roundQuantity($summaryQuantity);
+                $summaryQuantity = $this->sumQuantities(
+                    $groupedBundleQuantity[$bundleGroupKey],
+                    $bundleItemTransfer->getQuantity()
+                );
+                $groupedBundleQuantity[$bundleGroupKey] = $summaryQuantity;
             }
         }
 
@@ -254,9 +257,11 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
             $currentBundledItems[$currentBundleIdentifer] = clone $bundledItemTransfer;
         } else {
             $currentBundleItemTransfer = $currentBundledItems[$currentBundleIdentifer];
-            $summaryQuantity = $currentBundleItemTransfer->getQuantity() + $bundledItemTransfer->getQuantity();
-            $roundedQuantity = $this->roundQuantity($summaryQuantity);
-            $currentBundleItemTransfer->setQuantity($roundedQuantity);
+            $summaryQuantity = $this->sumQuantities(
+                $currentBundleItemTransfer->getQuantity(),
+                $bundledItemTransfer->getQuantity()
+            );
+            $currentBundleItemTransfer->setQuantity($summaryQuantity);
         }
 
         return $currentBundledItems;
@@ -333,12 +338,13 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     }
 
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    protected function roundQuantity(float $quantity): float
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->utilQuantityService->roundQuantity($quantity);
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 }

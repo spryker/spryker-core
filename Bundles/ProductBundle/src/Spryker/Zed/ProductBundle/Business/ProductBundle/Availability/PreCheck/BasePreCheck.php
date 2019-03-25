@@ -102,9 +102,12 @@ class BasePreCheck
 
             $sku = $bundledProductConcreteEntity->getSku();
             $totalBundledItemQuantity = $productBundleEntity->getQuantity() * $itemTransfer->getQuantity();
-            if ($this->checkIfItemIsSellable($items, $sku, $storeTransfer, $totalBundledItemQuantity) && $bundledProductConcreteEntity->getIsActive()) {
+            $isItemSellable = $this->checkIfItemIsSellable($items, $sku, $storeTransfer, $totalBundledItemQuantity);
+
+            if ($isItemSellable && $bundledProductConcreteEntity->getIsActive()) {
                 continue;
             }
+
             $unavailableBundleItems[] = [
                 static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $itemTransfer->getSku(),
                 static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $sku,
@@ -129,8 +132,7 @@ class BasePreCheck
         $itemQuantity = 0.0
     ) {
         $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($items, $sku);
-        $currentItemQuantity += $itemQuantity;
-        $currentItemQuantity = $this->roundQuantity($currentItemQuantity);
+        $currentItemQuantity = $this->sumQuantities($currentItemQuantity, $itemQuantity);
 
         return $this->availabilityFacade->isProductSellableForStore($sku, $currentItemQuantity, $storeTransfer);
     }
@@ -149,19 +151,31 @@ class BasePreCheck
                 continue;
             }
 
-            $quantity += $itemTransfer->getQuantity();
+            $quantity = $this->sumQuantities($quantity, $itemTransfer->getQuantity());
         }
 
-        return $this->roundQuantity($quantity);
+        return $quantity;
     }
 
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    protected function roundQuantity(float $quantity): float
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->utilQuantityService->roundQuantity($quantity);
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function subtractQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
     }
 }
