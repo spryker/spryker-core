@@ -49,10 +49,9 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
                 continue;
             }
 
-            $categoryNodeIds = [];
-            foreach ($resourceAttributes->offsetGet(static::KEY_NODES) as $restNavigationNodeTransfer) {
-                $categoryNodeIds = $this->getAllCategoryNodeIds($restNavigationNodeTransfer, $categoryNodeIds);
-            }
+            $categoryNodeIds = $this->getAllCategoryNodeIds(
+                $resourceAttributes->offsetGet(static::KEY_NODES)->getArrayCopy()
+            );
 
             $this->addResourceRelationship($resource, $restRequest, $categoryNodeIds);
         }
@@ -99,33 +98,34 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer $restNavigationNodeTransfer
-     * @param int[] $categoryNodeIds
+     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer[] $restNavigationNodes
      *
      * @return array
      */
     protected function getAllCategoryNodeIds(
-        RestNavigationNodeTransfer $restNavigationNodeTransfer,
-        array $categoryNodeIds
+        array $restNavigationNodes
     ): array {
-        if ($this->isCategoryNavigationNode($restNavigationNodeTransfer)) {
-            $categoryNodeIds[] = $restNavigationNodeTransfer->getResourceId();
-            $categoryNodeIds = array_merge($this->getCategoryNodeChildrenIds($restNavigationNodeTransfer), $categoryNodeIds);
+        $categoryNodeIds = [];
+        foreach ($restNavigationNodes as $restNavigationNode) {
+            if ($this->isCategoryNavigationNode($restNavigationNode)) {
+                $categoryNodeIds[] = $restNavigationNode->getResourceId();
+                $categoryNodeIds = array_merge($this->getCategoryNodeChildrenIds($restNavigationNode), $categoryNodeIds);
+            }
         }
 
         return $categoryNodeIds;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer $restNavigationNodeTransfer
+     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer $restNavigationNode
      *
      * @return array
      */
     protected function getCategoryNodeChildrenIds(
-        RestNavigationNodeTransfer $restNavigationNodeTransfer
+        RestNavigationNodeTransfer $restNavigationNode
     ): array {
-        $navigationNodeChildren = $restNavigationNodeTransfer->getChildren();
         $categoryNodeIds = [];
+        $navigationNodeChildren = $restNavigationNode->getChildren();
         foreach ($navigationNodeChildren as $navigationNodeChild) {
             $categoryNodeIds[] = $navigationNodeChild->getResourceId();
             $categoryNodeIds = array_merge($this->getCategoryNodeChildrenIds($navigationNodeChild), $categoryNodeIds);
