@@ -116,19 +116,21 @@ class Reservation implements ReservationInterface
             $reservationQuantity = $reservationEntity->getReservationQuantity();
         }
 
-        $reservationQuantity += $this->getReservationsFromOtherStores($sku, $storeTransfer);
-
-        return $this->roundQuantity($reservationQuantity);
+        return $this->sumQuantities(
+            $reservationQuantity,
+            $this->getReservationsFromOtherStores($sku, $storeTransfer)
+        );
     }
 
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    protected function roundQuantity(float $quantity): float
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->utilQuantityService->roundQuantity($quantity);
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
@@ -148,10 +150,13 @@ class Reservation implements ReservationInterface
             if ($omsProductReservationStoreEntity->getStore() === $currentStoreTransfer->getName()) {
                 continue;
             }
-            $reservationQuantity += $omsProductReservationStoreEntity->getReservationQuantity();
+            $reservationQuantity = $this->sumQuantities(
+                $reservationQuantity,
+                $omsProductReservationStoreEntity->getReservationQuantity()
+            );
         }
 
-        return $this->roundQuantity($reservationQuantity);
+        return $reservationQuantity;
     }
 
     /**

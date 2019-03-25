@@ -10,9 +10,10 @@ namespace Spryker\Zed\Oms\Dependency\Service;
 interface OmsToUtilQuantityServiceInterface
 {
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    public function roundQuantity(float $quantity): float;
+    public function sumQuantities(float $firstQuantity, float $secondQuantity): float;
 }

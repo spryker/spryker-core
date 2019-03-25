@@ -13,17 +13,6 @@ use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Spryker\Service\UtilQuantity\UtilQuantityConfig;
-use Spryker\Service\UtilQuantity\UtilQuantityService;
-use Spryker\Service\UtilQuantity\UtilQuantityServiceFactory;
-use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
-use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Oms\Business\OmsBusinessFactory;
-use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeBridge;
-use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkBridge;
-use Spryker\Zed\Oms\Dependency\Service\OmsToUtilQuantityServiceBridge;
-use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextBridge;
-use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -190,49 +179,7 @@ class OmsFacadeReservationsTest extends Unit
      */
     protected function createOmsFacade()
     {
-        $utilQuantityConfigMock = $this->getMockBuilder(UtilQuantityConfig::class)
-            ->setMethods([
-                'getQuantityRoundingPrecision',
-            ])->getMock();
-        $utilQuantityConfigMock->method('getQuantityRoundingPrecision')
-            ->will($this->returnValue(2));
-        $utilQuantityFactory = new UtilQuantityServiceFactory();
-        $utilQuantityFactory->setConfig($utilQuantityConfigMock);
-        $utilQuantityService = new UtilQuantityService();
-        $utilQuantityService->setFactory($utilQuantityFactory);
-
-        $omsFacade = $this->tester->getFacade();
-        $omsBusinessFactory = new OmsBusinessFactory();
-        $container = new Container();
-        $container[OmsDependencyProvider::SERVICE_UTIL_QUANTITY] = function () use ($utilQuantityService) {
-            return new OmsToUtilQuantityServiceBridge($utilQuantityService);
-        };
-        $container[OmsDependencyProvider::FACADE_STORE] = function () {
-            return new OmsToStoreFacadeBridge(
-                $this->tester->getLocator()->store()->facade()
-            );
-        };
-        $container[OmsDependencyProvider::COMMAND_PLUGINS] = [];
-        $container[OmsDependencyProvider::CONDITION_PLUGINS] = [];
-        $container[OmsDependencyProvider::PLUGIN_GRAPH] = function () {
-            return new GraphPlugin();
-        };
-        $container[OmsDependencyProvider::FACADE_UTIL_TEXT] = function () {
-            return new OmsToUtilTextBridge(
-                $this->tester->getLocator()->utilText()->service()
-            );
-        };
-        $container[OmsDependencyProvider::PLUGINS_RESERVATION] = [];
-        $container[OmsDependencyProvider::SERVICE_UTIL_NETWORK] = function () {
-            return new OmsToUtilNetworkBridge(
-                $this->tester->getLocator()->utilNetwork()->service()
-            );
-        };
-        $container[OmsDependencyProvider::PLUGINS_RESERVATION_EXPORT] = [];
-        $omsBusinessFactory->setContainer($container);
-        $omsFacade->setFactory($omsBusinessFactory);
-
-        return $omsFacade;
+        return $this->tester->getFacade();
     }
 
     /**
