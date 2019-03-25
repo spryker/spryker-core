@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
+    protected const ROUTE_PRODUCT_LABEL_EDIT = '/product-label-gui/edit?id-product-label=%d';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -28,13 +30,15 @@ class CreateController extends AbstractController
     public function indexAction(Request $request)
     {
         $productLabelAggregateForm = $this->createProductLabelAggregateForm();
-        $isFormSuccessfullyHandled = $this->handleProductLabelAggregateForm(
+        $idProductLabel = $this->handleProductLabelAggregateForm(
             $request,
             $productLabelAggregateForm
         );
 
-        if ($isFormSuccessfullyHandled) {
-            return $this->redirectResponse('/product-label-gui');
+        if ($idProductLabel) {
+            return $this->redirectResponse(
+                sprintf(static::ROUTE_PRODUCT_LABEL_EDIT, $idProductLabel)
+            );
         }
 
         return $this->viewResponse([
@@ -68,14 +72,14 @@ class CreateController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $aggregateForm
      *
-     * @return bool
+     * @return int|null
      */
     protected function handleProductLabelAggregateForm(Request $request, FormInterface $aggregateForm)
     {
         $aggregateForm->handleRequest($request);
 
         if (!$aggregateForm->isValid()) {
-            return false;
+            return null;
         }
 
         /** @var \Generated\Shared\Transfer\ProductLabelAggregateFormTransfer $aggregateFormTransfer */
@@ -93,7 +97,7 @@ class CreateController extends AbstractController
             '%d' => $productLabelTransfer->getIdProductLabel(),
         ]);
 
-        return true;
+        return $productLabelTransfer->getIdProductLabel();
     }
 
     /**
