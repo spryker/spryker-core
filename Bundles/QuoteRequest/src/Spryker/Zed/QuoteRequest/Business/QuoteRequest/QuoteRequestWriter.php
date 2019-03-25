@@ -146,8 +146,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     public function closeQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         $quoteRequestCriteriaTransfer
-            ->requireQuoteRequestReference()
-            ->requireIdCompanyUser();
+            ->requireQuoteRequestReference();
 
         $quoteRequestTransfer = $this->findQuoteRequestTransfer($quoteRequestCriteriaTransfer);
 

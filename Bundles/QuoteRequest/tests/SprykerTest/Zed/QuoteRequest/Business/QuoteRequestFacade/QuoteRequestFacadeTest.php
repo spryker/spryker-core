@@ -248,7 +248,6 @@ class QuoteRequestFacadeTest extends Unit
         );
 
         $quoteRequestFilterTransfer = (new QuoteRequestCriteriaTransfer())
-            ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
 
         // Act

@@ -37,17 +37,10 @@ class CloseQuoteRequestCheckoutPostSaveHookPlugin extends AbstractPlugin impleme
             return;
         }
 
-        $companyUserTransfer = $quoteTransfer->getCustomer()->getCompanyUserTransfer();
-
-        if (!$companyUserTransfer) {
-            return;
-        }
-
         if ($quoteTransfer->getQuoteRequestReference()) {
             $this->getFacade()->closeQuoteRequest(
                 (new QuoteRequestCriteriaTransfer())
                     ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference())
-                    ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
             );
         }
     }
