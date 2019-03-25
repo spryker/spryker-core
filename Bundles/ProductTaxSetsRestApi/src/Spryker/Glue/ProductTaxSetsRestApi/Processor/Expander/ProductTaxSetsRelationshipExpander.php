@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -29,9 +29,9 @@ class ProductTaxSetsRelationshipExpander implements ProductTaxSetsRelationshipEx
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array
+     * @return void
      */
-    public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): array
+    public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
             $productTaxSetsResource = $this->productTaxSetsReader->findAbstractProductTaxSetsByAbstractProductSku(
@@ -42,7 +42,5 @@ class ProductTaxSetsRelationshipExpander implements ProductTaxSetsRelationshipEx
                 $resource->addRelationship($productTaxSetsResource);
             }
         }
-
-        return $resources;
     }
 }

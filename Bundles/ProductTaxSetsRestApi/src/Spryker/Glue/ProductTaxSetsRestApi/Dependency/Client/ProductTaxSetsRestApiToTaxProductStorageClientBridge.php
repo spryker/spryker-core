@@ -14,14 +14,14 @@ class ProductTaxSetsRestApiToTaxProductStorageClientBridge implements ProductTax
     /**
      * @var \Spryker\CLient\TaxProductStorage\TaxProductStorageCLientInterface
      */
-    protected $taxProductStorageCLient;
+    protected $taxProductStorageClient;
 
     /**
      * @param \Spryker\CLient\TaxProductStorage\TaxProductStorageCLientInterface $taxProductStorageClient
      */
     public function __construct($taxProductStorageClient)
     {
-        $this->taxProductStorageCLient = $taxProductStorageClient;
+        $this->taxProductStorageClient = $taxProductStorageClient;
     }
 
     /**
@@ -31,6 +31,6 @@ class ProductTaxSetsRestApiToTaxProductStorageClientBridge implements ProductTax
      */
     public function findTaxProductStorage(string $productAbstractSku): ?TaxProductStorageTransfer
     {
-        return $this->taxProductStorageCLient->findTaxProductStorage($productAbstractSku);
+        return $this->taxProductStorageClient->findTaxProductStorage($productAbstractSku);
     }
 }

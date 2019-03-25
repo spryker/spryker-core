@@ -14,7 +14,7 @@ class ProductTaxSetsRestApiConfig extends AbstractBundleConfig
     /**
      * @see \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS
      */
-    public const RESOURCE_ABSTRACT_PRODUCTS = 'abstract=products';
+    public const RESOURCE_ABSTRACT_PRODUCTS = 'abstract-products';
     public const RESOURCE_PRODUCT_TAX_SETS = 'product-tax-sets';
 
     public const CONTROLLER_RESOURCE_PRODUCT_TAX_SETS = 'product-tax-sets-resource';

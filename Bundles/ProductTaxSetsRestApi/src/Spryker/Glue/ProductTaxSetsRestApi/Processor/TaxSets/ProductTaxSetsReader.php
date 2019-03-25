@@ -40,24 +40,24 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
     /**
      * @var \Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapperInterface
      */
-    protected $taxSetsResourceMapper;
+    protected $productTaxSetsResourceMapper;
 
     /**
      * @param \Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxProductStorageClientInterface $taxProductStorageClient
      * @param \Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxStorageClientInterface $taxStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapperInterface $taxSetsResourceMapper
+     * @param \Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapperInterface $productTaxSetsResourceMapper
      */
     public function __construct(
         ProductTaxSetsRestApiToTaxProductStorageClientInterface $taxProductStorageClient,
         ProductTaxSetsRestApiToTaxStorageClientInterface $taxStorageClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        ProductTaxSetsResourceMapperInterface $taxSetsResourceMapper
+        ProductTaxSetsResourceMapperInterface $productTaxSetsResourceMapper
     ) {
         $this->taxProductStorageClient = $taxProductStorageClient;
         $this->taxStorageClient = $taxStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->taxSetsResourceMapper = $taxSetsResourceMapper;
+        $this->productTaxSetsResourceMapper = $productTaxSetsResourceMapper;
     }
 
     /**
@@ -100,7 +100,7 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
             return null;
         }
 
-        $restProductTaxSetsAttributesTransfer = $this->taxSetsResourceMapper->mapTaxSetStorageTransferToRestProductTaxSetsAttributesTransfer(
+        $restProductTaxSetsAttributesTransfer = $this->productTaxSetsResourceMapper->mapTaxSetStorageTransferToRestProductTaxSetsAttributesTransfer(
             $taxStorageTransfer,
             new RestProductTaxSetsAttributesTransfer()
         );

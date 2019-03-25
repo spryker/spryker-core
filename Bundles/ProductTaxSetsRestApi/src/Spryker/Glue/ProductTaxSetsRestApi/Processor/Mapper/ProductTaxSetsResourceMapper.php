@@ -19,8 +19,10 @@ class ProductTaxSetsResourceMapper implements ProductTaxSetsResourceMapperInterf
      *
      * @return \Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer
      */
-    public function mapTaxSetStorageTransferToRestProductTaxSetsAttributesTransfer(TaxSetStorageTransfer $taxSetStorageTransfer, RestProductTaxSetsAttributesTransfer $restProductTaxSetsAttributesTransfer): RestProductTaxSetsAttributesTransfer
-    {
+    public function mapTaxSetStorageTransferToRestProductTaxSetsAttributesTransfer(
+        TaxSetStorageTransfer $taxSetStorageTransfer,
+        RestProductTaxSetsAttributesTransfer $restProductTaxSetsAttributesTransfer
+    ): RestProductTaxSetsAttributesTransfer {
         $restProductTaxSetsAttributesTransfer->fromArray($taxSetStorageTransfer->toArray(), true);
         foreach ($taxSetStorageTransfer->getTaxRates() as $taxRateStorageTransfer) {
             $restProductTaxRateTransfer = (new RestProductTaxRateTransfer())->fromArray($taxRateStorageTransfer->toArray(), true);
