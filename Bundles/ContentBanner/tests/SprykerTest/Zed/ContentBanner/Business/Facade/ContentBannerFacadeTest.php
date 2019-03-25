@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ContentBannerTransfer;
  * @group ContentBanner
  * @group Business
  * @group Facade
+ * @group Facade
  * @group ContentBannerFacadeTest
  * Add your own group annotations below this line
  */
