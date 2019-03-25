@@ -804,4 +804,29 @@ class PriceProductFacadeTest extends Unit
         return (new PriceProductCriteriaTransfer())
             ->setPriceDimension($priceProductDimensionTransfer);
     }
+
+    /**
+     * @return void
+     */
+    public function testPriceProductShouldBeRemoved()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceProductTransfer = $this->createProductWithAmount(
+            100,
+            90,
+            '',
+            '',
+            self::USD_ISO_CODE
+        );
+        $priceProductFacade->removePriceProductStore($priceProductTransfer);
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setCurrencyIsoCode(self::USD_ISO_CODE)
+            ->setSku($priceProductTransfer->getSkuProduct());
+
+        $priceProduct = $priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
+
+        $this->assertNull($priceProduct);
+    }
 }
