@@ -239,6 +239,52 @@ class QuoteRequestFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCloseQuoteRequestChangesQuoteRequestStatusToClosed(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->tester->createQuoteRequest(
+            $this->tester->createQuoteRequestVersion($this->quoteTransfer),
+            $this->companyUserTransfer
+        );
+
+        $quoteRequestFilterTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
+
+        // Act
+        $quoteRequestResponseTransfer = $this->tester
+            ->getFacade()
+            ->closeQuoteRequest($quoteRequestFilterTransfer);
+
+        // Assert
+        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
+        $this->assertEquals(
+            SharedQuoteRequestConfig::STATUS_CLOSED,
+            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCloseQuoteRequestNotSuccessfulWithInvalidQuoteRequestReference(): void
+    {
+        $quoteRequestFilterTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
+            ->setQuoteRequestReference(static::FAKE_QUOTE_REQUEST_VERSION_REFERENCE);
+
+        // Act
+        $quoteRequestResponseTransfer = $this->tester
+            ->getFacade()
+            ->closeQuoteRequest($quoteRequestFilterTransfer);
+
+        // Assert
+        $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
     public function testCheckCheckoutQuoteRequestValidatesQuoteWithWrongQuoteRequestVersionReference(): void
     {
         // Arrange
