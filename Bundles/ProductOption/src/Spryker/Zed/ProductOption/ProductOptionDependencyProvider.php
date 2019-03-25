@@ -22,6 +22,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeBridge
 use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryQueryContainerBridge;
 use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesQueryContainerBridge;
 use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingServiceBridge;
+use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilPriceServiceBridge;
 use Spryker\Zed\ProductOption\Exception\MissingMoneyCollectionFormTypePluginException;
 
 /**
@@ -45,6 +46,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_PRICE = 'SERVICE_UTIL_PRICE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -73,6 +75,23 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreFacade($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addEventFacade($container);
+        $container = $this->addUtilPriceService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilPriceService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_PRICE] = function (Container $container) {
+            return new ProductOptionToUtilPriceServiceBridge(
+                $container->getLocator()->utilPrice()->service()
+            );
+        };
 
         return $container;
     }

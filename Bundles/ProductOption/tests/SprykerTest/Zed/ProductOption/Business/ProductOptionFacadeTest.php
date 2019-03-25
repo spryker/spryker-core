@@ -9,8 +9,12 @@ namespace SprykerTest\Zed\ProductOption\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\AddressBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
@@ -18,7 +22,12 @@ use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\ProductOption\ProductOptionConstants;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
@@ -75,6 +84,179 @@ class ProductOptionFacadeTest extends Unit
 
         $this->assertEquals($productOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
         $this->assertEquals($productOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
+    }
+
+    /**
+     * @dataProvider hydrateDataProvider
+     *
+     * @param int|float $quantity
+     * @param int $expectedResult
+     *
+     * @return void
+     */
+    public function testHydrateShouldCorrectlyCalculateUnitPrice($quantity, int $expectedResult): void
+    {
+        $orderTransfer = $this->prepareOrderTransfer($quantity);
+
+        $hydratedOrderTransfer = $this->createProductOptionFacade()
+            ->hydrateSalesOrderProductOptions($orderTransfer);
+
+        $productOptionTransfer = $hydratedOrderTransfer->getItems()[0]->getProductOptions()[0];
+        $this->assertEquals($expectedResult, $productOptionTransfer->getUnitPrice());
+    }
+
+    /**
+     * @dataProvider hydrateDataProvider
+     *
+     * @param int|float $quantity
+     * @param int $expectedResult
+     *
+     * @return void
+     */
+    public function testHydrateShouldCorrectlyCalculateUnitGrossPrice($quantity, int $expectedResult): void
+    {
+        $orderTransfer = $this->prepareOrderTransfer($quantity);
+
+        $hydratedOrderTransfer = $this->createProductOptionFacade()
+            ->hydrateSalesOrderProductOptions($orderTransfer);
+
+        $productOptionTransfer = $hydratedOrderTransfer->getItems()[0]->getProductOptions()[0];
+        $this->assertEquals($expectedResult, $productOptionTransfer->getUnitGrossPrice());
+    }
+
+    /**
+     * @dataProvider hydrateDataProvider
+     *
+     * @param int|float $quantity
+     * @param int $expectedResult
+     *
+     * @return void
+     */
+    public function testHydrateShouldCorrectlyCalculateUnitNetPrice($quantity, int $expectedResult): void
+    {
+        $orderTransfer = $this->prepareOrderTransfer($quantity);
+
+        $hydratedOrderTransfer = $this->createProductOptionFacade()
+            ->hydrateSalesOrderProductOptions($orderTransfer);
+
+        $productOptionTransfer = $hydratedOrderTransfer->getItems()[0]->getProductOptions()[0];
+        $this->assertEquals($expectedResult, $productOptionTransfer->getUnitNetPrice());
+    }
+
+    /**
+     * @dataProvider hydrateDataProvider
+     *
+     * @param int|float $quantity
+     * @param int $expectedResult
+     *
+     * @return void
+     */
+    public function testHydrateShouldCorrectlyCalculateUnitDiscountAmountAggregation($quantity, int $expectedResult): void
+    {
+        $orderTransfer = $this->prepareOrderTransfer($quantity);
+
+        $hydratedOrderTransfer = $this->createProductOptionFacade()
+            ->hydrateSalesOrderProductOptions($orderTransfer);
+
+        $productOptionTransfer = $hydratedOrderTransfer->getItems()[0]->getProductOptions()[0];
+        $this->assertEquals($expectedResult, $productOptionTransfer->getUnitDiscountAmountAggregation());
+    }
+
+    /**
+     * @return array
+     */
+    public function hydrateDataProvider(): array
+    {
+        return [
+            'int data' => [2, 50],
+            'float data' => [0.5, 200],
+        ];
+    }
+
+    /**
+     * @dataProvider hydrateDataProvider
+     *
+     * @param int|float $quantity
+     * @param int $expectedResult
+     *
+     * @return void
+     */
+    public function testHydrateShouldCorrectlyCalculateUnitTaxAmount($quantity, int $expectedResult): void
+    {
+        $orderTransfer = $this->prepareOrderTransfer($quantity);
+
+        $hydratedOrderTransfer = $this->createProductOptionFacade()
+            ->hydrateSalesOrderProductOptions($orderTransfer);
+
+        $productOptionTransfer = $hydratedOrderTransfer->getItems()[0]->getProductOptions()[0];
+        $this->assertEquals($expectedResult, $productOptionTransfer->getUnitTaxAmount());
+    }
+
+    /**
+     * @param int|float $quantity
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function prepareOrderTransfer($quantity): OrderTransfer
+    {
+        $salesEntity = new SpySalesOrder();
+        $salesEntity->setOrderReference('test');
+        $salesEntity->setFkLocale(1);
+        $billingAddressTransfer = (new AddressBuilder())->seed([
+            AddressTransfer::EMAIL => 'test@example.com',
+            AddressTransfer::FK_COUNTRY => 1,
+        ])->build();
+        $salesOrderAddressBilling = new SpySalesOrderAddress();
+        $salesOrderAddressBilling->fromArray($billingAddressTransfer->toArray());
+        $salesOrderAddressBilling->save();
+        $salesEntity->setFkSalesOrderAddressBilling($salesOrderAddressBilling->getIdSalesOrderAddress());
+
+        $shippingAddressTransfer = (new AddressBuilder())->seed([
+            AddressTransfer::EMAIL => 'test@example.com',
+            AddressTransfer::FK_COUNTRY => 1,
+        ])->build();
+        $salesOrderAddressShipping = new SpySalesOrderAddress();
+        $salesOrderAddressShipping->fromArray($shippingAddressTransfer->toArray());
+        $salesOrderAddressShipping->save();
+        $salesEntity->setFkSalesOrderAddressShipping($salesOrderAddressShipping->getIdSalesOrderAddress());
+        $salesEntity->save();
+
+        $omsOrderItemStateEntity = new SpyOmsOrderItemState();
+        $omsOrderItemStateEntity->setName('test');
+        $omsOrderItemStateEntity->save();
+
+        $salesOrderItem = new SpySalesOrderItem();
+        $itemTransfer = (new ItemBuilder())->seed([
+            ItemTransfer::QUANTITY => $quantity,
+        ])->build();
+        $salesOrderItem->fromArray($itemTransfer->toArray());
+        $salesOrderItem->setFkSalesOrder($salesEntity->getIdSalesOrder());
+        $salesOrderItem->setFkOmsOrderItemState(1);
+        $salesOrderItem->setGrossPrice(100);
+        $salesOrderItem->setNetPrice(100);
+        $salesOrderItem->setFkOmsOrderItemState($omsOrderItemStateEntity->getIdOmsOrderItemState());
+        $salesOrderItem->save();
+
+        $salesProductOption = new SpySalesOrderItemOption();
+        $salesProductOption->setPrice(100);
+        $salesProductOption->setGrossPrice(100);
+        $salesProductOption->setNetPrice(100);
+        $salesProductOption->setDiscountAmountAggregation(100);
+        $salesProductOption->setTaxAmount(100);
+        $salesProductOption->setGroupName('test');
+        $salesProductOption->setSku('test-sku');
+        $salesProductOption->setTaxRate(1);
+        $salesProductOption->setValue('test');
+        $salesProductOption->setFkSalesOrderItem($salesOrderItem->getIdSalesOrderItem());
+        $salesProductOption->save();
+
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->setIdSalesOrder($salesEntity->getIdSalesOrder());
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->fromArray($salesOrderItem->toArray(), true);
+        $orderTransfer->addItem($itemTransfer);
+
+        return $orderTransfer;
     }
 
     /**
