@@ -24,7 +24,8 @@
     "spryker/customer": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/checkout": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins.",
