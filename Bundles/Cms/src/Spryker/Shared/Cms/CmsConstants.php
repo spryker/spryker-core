@@ -21,14 +21,5 @@ interface CmsConstants
     public const RESOURCE_TYPE_CATEGORY_NODE = 'category';
     public const RESOURCE_TYPE_STATIC = 'static';
 
-    /**
-     * @deprecated Please use `YVES_THEMES` instead.
-     */
     public const YVES_THEME = 'YVES_THEME';
-
-    /**
-     * Specification:
-     * - Returns an array with activated Themes.
-     */
-    public const YVES_THEMES = 'YVES_THEMES';
 }
