@@ -43,7 +43,7 @@ class ShoppingListSubtotalCalculatorTest extends Unit
     public function testCalculateShoppingListSubtotalShouldCalculatePricesCorrectly(): void
     {
         // Arrange
-        $productViewTransferCollection = [
+        $shoppingListItemProductViewTransfers = [
             (new ProductViewTransfer())->setPrice(1)->setQuantity(1),
             (new ProductViewTransfer())->setPrice(2)->setQuantity(2),
             (new ProductViewTransfer())->setPrice(3)->setQuantity(3),
@@ -54,7 +54,7 @@ class ShoppingListSubtotalCalculatorTest extends Unit
         $expectedShoppingListSubtotal = 55;
 
         // Act
-        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($productViewTransferCollection);
+        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViewTransfers);
 
         // Assert
         $this->assertSame($calculatedShoppingListSubtotal, $expectedShoppingListSubtotal);
@@ -66,7 +66,7 @@ class ShoppingListSubtotalCalculatorTest extends Unit
     public function testCalculateShoppingListSubtotalShouldSkipItemsWithoutPriceOrQuantity(): void
     {
         // Arrange
-        $productViewTransferCollection = [
+        $shoppingListItemProductViewTransfers = [
             (new ProductViewTransfer())->setPrice(null)->setQuantity(1),
             (new ProductViewTransfer())->setPrice(2)->setQuantity(2),
             (new ProductViewTransfer())->setPrice(3)->setQuantity(null),
@@ -77,7 +77,7 @@ class ShoppingListSubtotalCalculatorTest extends Unit
         $expectedShoppingListSubtotal = 20;
 
         // Act
-        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($productViewTransferCollection);
+        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViewTransfers);
 
         // Assert
         $this->assertSame($calculatedShoppingListSubtotal, $expectedShoppingListSubtotal);

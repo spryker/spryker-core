@@ -402,14 +402,14 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransferCollection
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViewTransfers
      *
      * @return int
      */
-    public function calculateShoppingListSubtotal(array $productViewTransferCollection): int
+    public function calculateShoppingListSubtotal(array $shoppingListItemProductViewTransfers): int
     {
         return $this->getFactory()
             ->createShoppingListSubtotalCalculator()
-            ->calculateShoppingListSubtotal($productViewTransferCollection);
+            ->calculateShoppingListSubtotal($shoppingListItemProductViewTransfers);
     }
 }
