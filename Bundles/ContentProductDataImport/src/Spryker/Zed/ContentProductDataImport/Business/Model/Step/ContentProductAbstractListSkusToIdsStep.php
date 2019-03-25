@@ -184,12 +184,12 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
      */
     protected function sortProductAbstractIds(array $productAbstractSkus, array $productAbstractIds): array
     {
-        $cortedProductAbstractIds = [];
+        $sortedProductAbstractIds = [];
 
         foreach ($productAbstractSkus as $productAbstractSku) {
-            $cortedProductAbstractIds[] = $productAbstractIds[$productAbstractSku];
+            $sortedProductAbstractIds[] = $productAbstractIds[$productAbstractSku];
         }
 
-        return $cortedProductAbstractIds;
+        return $sortedProductAbstractIds;
     }
 }
