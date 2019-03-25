@@ -9,31 +9,17 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSa
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilQuantityServiceInterface;
 
 class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitValueInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilQuantityServiceInterface
-     */
-    protected $utilQuantityService;
-
-    /**
-     * @param \Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilQuantityServiceInterface $utilQuantityService
-     */
-    public function __construct(ProductMeasurementUnitToUtilQuantityServiceInterface $utilQuantityService)
-    {
-        $this->utilQuantityService = $utilQuantityService;
-    }
-
     /**
      * @see ProductMeasurementSalesUnitValue::calculateNormalizedValue()
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return float
+     * @return int
      */
-    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): float
+    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): int
     {
         $itemTransfer
             ->requireQuantitySalesUnit()
@@ -62,16 +48,30 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
      * @param float $unitToAvailabilityConversion
      * @param int $unitPrecision
      *
-     * @return float
+     * @return int
      */
     protected function calculateNormalizedValue(
         float $availabilityValue,
         float $unitToAvailabilityConversion,
         int $unitPrecision
-    ): float {
-        $calculatedNormalizedValue = $availabilityValue / $unitToAvailabilityConversion * $unitPrecision;
+    ): int {
+        return (int)round(
+            $this->calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision)
+        );
+    }
 
-        return $this->roundQuantity($calculatedNormalizedValue);
+    /**
+     * @see ProductMeasurementSalesUnitValue::calculateNormalizedValue()
+     *
+     * @param float $availabilityValue
+     * @param float $unitToAvailabilityConversion
+     * @param int $unitPrecision
+     *
+     * @return float
+     */
+    protected function calculateFloatNormalizedValue(float $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): float
+    {
+        return $availabilityValue / $unitToAvailabilityConversion * $unitPrecision;
     }
 
     /**
@@ -92,15 +92,5 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
         }
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param float $sumQuantities
-     *
-     * @return float
-     */
-    protected function roundQuantity(float $sumQuantities): float
-    {
-        return $this->utilQuantityService->roundQuantity($sumQuantities);
     }
 }

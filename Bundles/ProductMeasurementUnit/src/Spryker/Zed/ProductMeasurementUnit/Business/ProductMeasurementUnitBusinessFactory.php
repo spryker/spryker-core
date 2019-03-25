@@ -27,7 +27,6 @@ use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasure
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface;
-use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitDependencyProvider;
 
 /**
@@ -42,7 +41,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductMeasurementSalesUnitValue(): ProductMeasurementSalesUnitValueInterface
     {
-        return new ProductMeasurementSalesUnitValue($this->getUtilQuantityService());
+        return new ProductMeasurementSalesUnitValue();
     }
 
     /**
@@ -137,13 +136,5 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
         return new ProductMeasurementUnitTranslationExpander(
             $this->getGlossaryFacade()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilQuantityServiceInterface
-     */
-    public function getUtilQuantityService(): ProductMeasurementUnitToUtilQuantityServiceInterface
-    {
-        return $this->getProvidedDependency(ProductMeasurementUnitDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }
