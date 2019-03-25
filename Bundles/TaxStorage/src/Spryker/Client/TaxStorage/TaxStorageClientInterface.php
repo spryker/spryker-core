@@ -13,7 +13,7 @@ interface TaxStorageClientInterface
 {
     /**
      * Specification:
-     * - Get TaxSet with connected TaxRates from Redis.
+     * - Gets TaxSet with connected TaxRates from Redis.
      *
      * @api
      *

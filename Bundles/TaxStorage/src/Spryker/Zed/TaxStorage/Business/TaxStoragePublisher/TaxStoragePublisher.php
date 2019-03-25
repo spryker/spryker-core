@@ -71,7 +71,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
             ->findTaxSetStoragesByIds($taxSetIds)
             ->toKeyIndex('FkTaxSet');
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($spyTaxSets, $spyTaxSetStorage) {
+        $this->getTransactionHandler()->handleTransaction(function () use ($spyTaxSets, $spyTaxSetStorage): void {
             $this->storeDataSet($spyTaxSets, $spyTaxSetStorage);
         });
     }
@@ -86,7 +86,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
         $spyTaxSetStorages = $this->taxStorageRepository
             ->findTaxSetStoragesByIds($taxSetIds);
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($spyTaxSetStorages) {
+        $this->getTransactionHandler()->handleTransaction(function () use ($spyTaxSetStorages): void {
             $this->executeUnpublishTransaction($spyTaxSetStorages);
         });
     }
@@ -113,12 +113,8 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
     protected function storeDataSet(iterable $spyTaxSets, iterable $spyTaxSetStorages): void
     {
         foreach ($spyTaxSets as $spyTaxSet) {
-            if (isset($spyTaxSetStorages[$spyTaxSet->getIdTaxSet()])) {
-                $spyTaxSetStorage = $spyTaxSetStorages[$spyTaxSet->getIdTaxSet()];
-            } else {
-                $spyTaxSetStorage = (new SpyTaxSetStorage())
+            $spyTaxSetStorage = $spyTaxSetStorages[$spyTaxSet->getIdTaxSet()] ?? (new SpyTaxSetStorage())
                     ->setFkTaxSet($spyTaxSet->getIdTaxSet());
-            }
             $this->createDataSet($spyTaxSet, $spyTaxSetStorage);
         }
     }
