@@ -12,22 +12,11 @@ use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
-use Spryker\Shared\Testify\Locator\TestifyConfiguratorInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Testify\Locator\Business\BusinessLocator as Locator;
+use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 
 class BusinessHelper extends Module
 {
-    /**
-     * @var array
-     */
-    protected $config = [
-        'projectNamespaces' => [],
-        'coreNamespaces' => [
-            'Spryker',
-        ],
-    ];
-
     /**
      * @var array
      */
@@ -42,27 +31,6 @@ class BusinessHelper extends Module
      * @var array
      */
     protected $mockedFactoryMethods = [];
-
-    /**
-     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
-     */
-    public function getLocator()
-    {
-        return new Locator($this->config['projectNamespaces'], $this->config['coreNamespaces'], $this->createClosure());
-    }
-
-    /**
-     * @param string $key
-     * @param mixed $value
-     *
-     * @return $this
-     */
-    public function setDependency($key, $value)
-    {
-        $this->dependencies[$key] = $value;
-
-        return $this;
-    }
 
     /**
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
@@ -85,7 +53,7 @@ class BusinessHelper extends Module
 
         $moduleName = lcfirst($namespaceParts[2]);
 
-        return $this->getLocator()->$moduleName()->facade($this->createClosure());
+        return $this->getLocator()->$moduleName()->facade();
     }
 
     /**
@@ -145,21 +113,7 @@ class BusinessHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf('\%1$s\%2$s\%3$s\%3$sBusinessFactory', $namespaceParts[0], $namespaceParts[1], $namespaceParts[2]);
-    }
-
-    /**
-     * @param array $config
-     *
-     * @throws \Exception
-     *
-     * @return void
-     */
-    protected function assertModuleSettings(array $config)
-    {
-        if (!isset($config['organization']) || !isset($config['application']) || !isset($config['module'])) {
-            throw new Exception(sprintf('You need to configure "%s" in your suite codeception.yml with "organization, application and module" at least one of them seems to be not set.', static::class));
-        }
+        return sprintf('\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory', rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
     }
 
     /**
@@ -176,32 +130,6 @@ class BusinessHelper extends Module
     protected function getConfigHelper(): ConfigHelper
     {
         return $this->getModule('\\' . ConfigHelper::class);
-    }
-
-    /**
-     * @return \Closure
-     */
-    private function createClosure()
-    {
-        $dependencies = $this->getDependencies();
-        $callback = function (TestifyConfiguratorInterface $configurator) use ($dependencies) {
-            foreach ($dependencies as $key => $value) {
-                $configurator->getContainer()->set($key, $value);
-            }
-        };
-
-        return $callback;
-    }
-
-    /**
-     * @return array
-     */
-    private function getDependencies()
-    {
-        $dependencies = $this->dependencies;
-        $this->dependencies = [];
-
-        return $dependencies;
     }
 
     /**

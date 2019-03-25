@@ -51,10 +51,14 @@ class CmsConfig extends AbstractBundleConfig
      */
     public function getTemplateRealPaths(string $templateRelativePath): array
     {
-        return [
-            $this->getAbsolutePath($templateRelativePath, 'Yves'),
-            $this->getAbsolutePath($templateRelativePath, 'Shared'),
-        ];
+        $templatePaths = [];
+
+        foreach ($this->getThemeNames() as $themeName) {
+            $templatePaths[] = $this->getAbsolutePath($templateRelativePath, 'Yves', $themeName);
+            $templatePaths[] = $this->getAbsolutePath($templateRelativePath, 'Shared', $themeName);
+        }
+
+        return $templatePaths;
     }
 
     /**
@@ -68,10 +72,11 @@ class CmsConfig extends AbstractBundleConfig
     /**
      * @param string $templateRelativePath
      * @param string $twigLayer
+     * @param string $themeName
      *
      * @return string
      */
-    protected function getAbsolutePath(string $templateRelativePath, string $twigLayer): string
+    protected function getAbsolutePath(string $templateRelativePath, string $twigLayer, string $themeName = 'default'): string
     {
         $templateRelativePath = str_replace(static::CMS_TWIG_TEMPLATE_PREFIX, '', $templateRelativePath);
 
@@ -80,8 +85,18 @@ class CmsConfig extends AbstractBundleConfig
             APPLICATION_SOURCE_DIR,
             $this->get(CmsConstants::PROJECT_NAMESPACE),
             $twigLayer,
-            $this->get(CmsConstants::YVES_THEME),
+            $themeName,
             $templateRelativePath
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getThemeNames(): array
+    {
+        return [
+            $this->get(CmsConstants::YVES_THEME, 'default'),
+        ];
     }
 }

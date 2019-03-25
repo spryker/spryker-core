@@ -7,10 +7,13 @@
 
 namespace SprykerTest\Shared\Testify\Helper;
 
+use ArrayObject;
 use Codeception\Configuration;
 use Codeception\Module;
 use Codeception\Step;
+use Codeception\TestInterface;
 use ReflectionClass;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Shared\Kernel\KernelConstants;
@@ -28,6 +31,47 @@ class LocatorHelper extends Module
             'Spryker',
         ],
     ];
+
+    /**
+     * @var array
+     */
+    protected $configCache;
+
+    /**
+     * @return void
+     */
+    public function _initialize()
+    {
+        Config::init();
+        $reflectionProperty = $this->getConfigReflectionProperty();
+        $this->configCache = $reflectionProperty->getValue()->getArrayCopy();
+    }
+
+    /**
+     * @return \ReflectionProperty
+     */
+    protected function getConfigReflectionProperty()
+    {
+        $reflection = new ReflectionClass(Config::class);
+        $reflectionProperty = $reflection->getProperty('config');
+        $reflectionProperty->setAccessible(true);
+
+        return $reflectionProperty;
+    }
+
+    /**
+     * @param string $key
+     * @param array|bool|float|int|string $value
+     *
+     * @return void
+     */
+    public function setConfig($key, $value)
+    {
+        $configProperty = $this->getConfigReflectionProperty();
+        $config = $configProperty->getValue();
+        $config[$key] = $value;
+        $configProperty->setValue($config);
+    }
 
     /**
      * @param array $settings
@@ -80,17 +124,8 @@ class LocatorHelper extends Module
      */
     private function configureNamespacesForClassResolver()
     {
-        $configModule = $this->getConfigModule();
-        $configModule->setConfig(KernelConstants::PROJECT_NAMESPACES, $this->config['projectNamespaces']);
-        $configModule->setConfig(KernelConstants::CORE_NAMESPACES, $this->config['coreNamespaces']);
-    }
-
-    /**
-     * @return \SprykerTest\Shared\Testify\Helper\ConfigHelper
-     */
-    protected function getConfigModule(): ConfigHelper
-    {
-        return $this->getModule('\\' . ConfigHelper::class);
+        $this->setConfig(KernelConstants::PROJECT_NAMESPACES, $this->config['projectNamespaces']);
+        $this->setConfig(KernelConstants::CORE_NAMESPACES, $this->config['coreNamespaces']);
     }
 
     /**
@@ -111,5 +146,32 @@ class LocatorHelper extends Module
         $bundleName = lcfirst(end($namespaceParts));
 
         return $this->getLocator()->$bundleName()->facade();
+    }
+
+    /**
+     * @param \Codeception\TestInterface $test
+     *
+     * @return void
+     */
+    public function _after(TestInterface $test)
+    {
+        $this->resetConfig();
+    }
+
+    /**
+     * @return void
+     */
+    public function _afterSuite()
+    {
+        $this->resetConfig();
+    }
+
+    /**
+     * @return void
+     */
+    private function resetConfig()
+    {
+        $reflectionProperty = $this->getConfigReflectionProperty();
+        $reflectionProperty->setValue(new ArrayObject($this->configCache));
     }
 }
