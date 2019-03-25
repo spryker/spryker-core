@@ -10,7 +10,7 @@ namespace Spryker\Zed\Chart\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @method \Spryker\Zed\Chart\Communication\ChartCommunicationFactory getFactory()
@@ -27,7 +27,7 @@ class TwigChartFunctionServiceProvider extends AbstractPlugin implements Service
     public function register(Application $app): void
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) {
+            $app->extend('twig', function (Environment $twig) {
                 return $this->registerChartTwigFunctions($twig);
             })
         );
@@ -43,11 +43,11 @@ class TwigChartFunctionServiceProvider extends AbstractPlugin implements Service
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      *
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
-    protected function registerChartTwigFunctions(Twig_Environment $twig): Twig_Environment
+    protected function registerChartTwigFunctions(Environment $twig): Environment
     {
         foreach ($this->getChartTwigFunctions() as $function) {
             $twig->addFunction($function->getName(), $function);

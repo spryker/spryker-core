@@ -9,8 +9,8 @@ namespace Spryker\Yves\ProductLabel\Twig;
 
 use Spryker\Client\ProductLabel\ProductLabelClientInterface;
 use Spryker\Shared\Twig\TwigExtension;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 class ProductLabelTwigExtension extends TwigExtension
 {
@@ -49,11 +49,11 @@ class ProductLabelTwigExtension extends TwigExtension
     }
 
     /**
-     * @return \Twig_SimpleFunction
+     * @return \Twig\TwigFunction
      */
     protected function createProductAbstractLabelsFunction()
     {
-        return new Twig_SimpleFunction(
+        return new TwigFunction(
             static::FUNCTION_PRODUCT_ABSTRACT_LABELS,
             [$this, 'renderProductAbstractLabels'],
             [
@@ -64,11 +64,11 @@ class ProductLabelTwigExtension extends TwigExtension
     }
 
     /**
-     * @return \Twig_SimpleFunction
+     * @return \Twig\TwigFunction
      */
     protected function createProductLabelsFunction()
     {
-        return new Twig_SimpleFunction(
+        return new TwigFunction(
             static::FUNCTION_PRODUCT_LABELS,
             [$this, 'renderProductLabels'],
             [
@@ -79,13 +79,13 @@ class ProductLabelTwigExtension extends TwigExtension
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param int $idProductAbstract
      * @param string $templateName
      *
      * @return string
      */
-    public function renderProductAbstractLabels(Twig_Environment $twig, $idProductAbstract, $templateName)
+    public function renderProductAbstractLabels(Environment $twig, $idProductAbstract, $templateName)
     {
         $productLabelTransferCollection = $this
             ->productLabelClient
@@ -101,13 +101,13 @@ class ProductLabelTwigExtension extends TwigExtension
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param array $idProductLabels
      * @param string $templateName
      *
      * @return string
      */
-    public function renderProductLabels(Twig_Environment $twig, array $idProductLabels, $templateName)
+    public function renderProductLabels(Environment $twig, array $idProductLabels, $templateName)
     {
         $productLabelTransferCollection = $this
             ->productLabelClient
