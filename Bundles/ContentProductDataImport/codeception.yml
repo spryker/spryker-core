@@ -1,8 +1,8 @@
-namespace: ContentProduct
+namespace: ContentProductDataImport
 actor: Tester
 
 include:
-    - tests/SprykerTest/Zed/ContentProduct
+    - tests/SprykerTest/Zed/ContentProductDataImport
 
 paths:
     tests: tests
