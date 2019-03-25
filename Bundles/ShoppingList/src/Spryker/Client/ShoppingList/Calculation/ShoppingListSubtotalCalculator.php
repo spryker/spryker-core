@@ -22,7 +22,7 @@ class ShoppingListSubtotalCalculator implements ShoppingListSubtotalCalculatorIn
                 continue;
             }
 
-            $shoppingListSubtotal += ($productViewTransfer->getPrice() * $productViewTransfer->getQuantity());
+            $shoppingListSubtotal += $productViewTransfer->getPrice() * $productViewTransfer->getQuantity();
         }
 
         return $shoppingListSubtotal;
