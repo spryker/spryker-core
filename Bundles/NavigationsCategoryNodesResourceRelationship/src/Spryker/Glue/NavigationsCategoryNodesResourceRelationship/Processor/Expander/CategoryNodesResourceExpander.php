@@ -50,11 +50,50 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
             }
 
             $categoryNodeIds = $this->getCategoryNodeIds(
-                $resourceAttributes->offsetGet(static::KEY_NODES)->getArrayCopy()
+                (array)$resourceAttributes->offsetGet(static::KEY_NODES)
             );
 
             $this->addResourceRelationship($resource, $restRequest, $categoryNodeIds);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer[] $restNavigationNodes
+     *
+     * @return array
+     */
+    protected function getCategoryNodeIds(
+        array $restNavigationNodes
+    ): array {
+        $categoryNodeIds = [];
+        foreach ($restNavigationNodes as $restNavigationNode) {
+            if ($this->isCategoryNavigationNode($restNavigationNode)) {
+                $categoryNodeIds[] = $restNavigationNode->getResourceId();
+                $categoryNodeIds = array_merge(
+                    $this->getCategoryNodeIds((array)$restNavigationNode->getChildren()),
+                    $categoryNodeIds
+                );
+            }
+        }
+
+        return $categoryNodeIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer $restNavigationNodeTransfer
+     *
+     * @return bool
+     */
+    protected function isCategoryNavigationNode(RestNavigationNodeTransfer $restNavigationNodeTransfer): bool
+    {
+        if ($restNavigationNodeTransfer->offsetExists(static::KEY_RESOURCE_ID)
+            && $restNavigationNodeTransfer->offsetExists(static::KEY_NODE_TYPE)
+            && $restNavigationNodeTransfer->offsetGet(static::KEY_NODE_TYPE) === static::NODE_TYPE_VALUE_CATEGORY
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -78,62 +117,5 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
                 $resource->addRelationship($categoryNode);
             }
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer $restNavigationNodeTransfer
-     *
-     * @return bool
-     */
-    protected function isCategoryNavigationNode(RestNavigationNodeTransfer $restNavigationNodeTransfer): bool
-    {
-        if ($restNavigationNodeTransfer->offsetExists(static::KEY_RESOURCE_ID)
-            && $restNavigationNodeTransfer->offsetExists(static::KEY_NODE_TYPE)
-            && $restNavigationNodeTransfer->offsetGet(static::KEY_NODE_TYPE) === static::NODE_TYPE_VALUE_CATEGORY
-        ) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer[] $restNavigationNodes
-     *
-     * @return array
-     */
-    protected function getCategoryNodeIds(
-        array $restNavigationNodes
-    ): array {
-        return $this->getIds($restNavigationNodes);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer $restNavigationNode
-     *
-     * @return array
-     */
-    protected function getCategoryNodeChildrenIds(
-        RestNavigationNodeTransfer $restNavigationNode
-    ): array {
-        return $this->getIds($restNavigationNode->getChildren()->getArrayCopy());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer[] $restNavigationNodes
-     *
-     * @return array
-     */
-    protected function getIds(array $restNavigationNodes): array
-    {
-        $categoryNodeIds = [];
-        foreach ($restNavigationNodes as $restNavigationNode) {
-            if ($this->isCategoryNavigationNode($restNavigationNode)) {
-                $categoryNodeIds[] = $restNavigationNode->getResourceId();
-                $categoryNodeIds = array_merge($this->getCategoryNodeChildrenIds($restNavigationNode), $categoryNodeIds);
-            }
-        }
-
-        return $categoryNodeIds;
     }
 }
