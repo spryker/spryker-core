@@ -60,7 +60,7 @@ class ContentBannerValidator implements ContentBannerValidatorInterface
 
                 foreach ($violations as $violation) {
                     $contentParameterMessageTransfer->addMessage(
-                        (new MessageTransfer())->setValue($violation->getMessage())->setParameters($violation->getParameters())
+                        (new MessageTransfer())->setValue($violation->getMessage())
                     );
                 }
                 $contentValidationResponseTransfer->addParameterMessages($contentParameterMessageTransfer);

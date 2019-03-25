@@ -58,12 +58,37 @@ class ContentBannerDataImportPluginTest extends Unit
      *
      * @return void
      */
-    public function testImportWithInvalidDataThrowsException(): void
+    public function testImportWithInvalidDefaultLocaleDataThrowsException(): void
     {
         $this->tester->ensureDatabaseTableIsEmpty();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/content_banner_invalid.csv');
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/content_banner_invalid(missing_values_for_default_locale).csv');
+
+        $dataImportConfigurationTransfer = (new DataImporterConfigurationTransfer())
+            ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
+            ->setThrowException(true);
+
+        $contentBannerDataImportPlugin = new ContentBannerDataImportPlugin();
+        $dataImporterReportTransfer = $contentBannerDataImportPlugin->import($dataImportConfigurationTransfer);
+
+        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
+        $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
+
+        $this->tester->assertDatabaseTableContainsData();
+    }
+
+    /**
+     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
+     *
+     * @return void
+     */
+    public function testImportWithMissingPropertyThrowsException(): void
+    {
+        $this->tester->ensureDatabaseTableIsEmpty();
+
+        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/content_banner_invalid(missing_property).csv');
 
         $dataImportConfigurationTransfer = (new DataImporterConfigurationTransfer())
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)

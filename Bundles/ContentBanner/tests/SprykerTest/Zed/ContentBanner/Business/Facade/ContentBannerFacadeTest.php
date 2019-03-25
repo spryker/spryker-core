@@ -47,19 +47,64 @@ class ContentBannerFacadeTest extends Test
     /**
      * @return void
      */
-    public function testValidateContentBannerValidationFails(): void
+    public function testValidateContentBannerWithLongTitleValidationFails(): void
     {
         $contentBannerTransfer = (new ContentBannerTransfer())
             ->setTitle('Very long text string Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-               Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                 anim id est laborum.')
+             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')
             ->setAltText('SampleTest')
             ->setClickUrl('http://some.url')
             ->setImageUrl('http://image.url')
             ->setSubtitle('subtitle text');
+        $validationResult = $this->tester->getFacade()->validateContentBanner($contentBannerTransfer);
+
+        $this->assertFalse($validationResult->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateContentBannerWithInvalidClickUrlValidationFails(): void
+    {
+        $contentBannerTransfer = (new ContentBannerTransfer())
+            ->setTitle('Sample text')
+            ->setAltText('SampleTest')
+            ->setClickUrl('invalid url')
+            ->setImageUrl('http://image.url')
+            ->setSubtitle('subtitle text');
+        $validationResult = $this->tester->getFacade()->validateContentBanner($contentBannerTransfer);
+
+        $this->assertFalse($validationResult->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateContentBannerWithEmptySubtitleValidationFails(): void
+    {
+        $contentBannerTransfer = (new ContentBannerTransfer())
+            ->setTitle('Sample text')
+            ->setAltText('SampleTest')
+            ->setClickUrl('http://some.url')
+            ->setImageUrl('http://image.url')
+            ->setSubtitle('');
+        $validationResult = $this->tester->getFacade()->validateContentBanner($contentBannerTransfer);
+
+        $this->assertFalse($validationResult->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateContentBannerWithVeryLongSubtitleValidationFails(): void
+    {
+        $contentBannerTransfer = (new ContentBannerTransfer())
+            ->setTitle('Sample text')
+            ->setAltText('SampleTest')
+            ->setClickUrl('http://some.url')
+            ->setImageUrl('http://image.url')
+            ->setSubtitle('Very long text string Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
         $validationResult = $this->tester->getFacade()->validateContentBanner($contentBannerTransfer);
 
         $this->assertFalse($validationResult->getIsSuccess());
