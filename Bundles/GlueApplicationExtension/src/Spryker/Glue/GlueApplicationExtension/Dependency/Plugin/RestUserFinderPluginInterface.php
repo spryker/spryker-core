@@ -20,7 +20,7 @@ interface RestUserFinderPluginInterface
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return null|\Generated\Shared\Transfer\RestUserTransfer
+     * @return \Generated\Shared\Transfer\RestUserTransfer|null
      */
     public function findUser(RestRequestInterface $restRequest): ?RestUserTransfer;
 }
