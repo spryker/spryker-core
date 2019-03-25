@@ -10,6 +10,7 @@ namespace Spryker\Zed\QuoteRequest;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationBridge;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartBridge;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserBridge;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberBridge;
 use Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceBridge;
@@ -22,6 +23,7 @@ class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+    public const FACADE_CART = 'FACADE_CART';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
@@ -35,6 +37,7 @@ class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSequenceNumberFacade($container);
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addCalculationFacade($container);
+        $container = $this->addCartFacade($container);
 
         return $container;
     }
@@ -89,6 +92,20 @@ class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CALCULATION] = function (Container $container) {
             return new QuoteRequestToCalculationBridge($container->getLocator()->calculation()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCartFacade(Container $container): Container
+    {
+        $container[static::FACADE_CART] = function (Container $container) {
+            return new QuoteRequestToCartBridge($container->getLocator()->cart()->facade());
         };
 
         return $container;
