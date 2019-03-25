@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Stock\Persistence;
 
+use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface StockQueryContainerInterface extends QueryContainerInterface
@@ -145,4 +146,13 @@ interface StockQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryStockByIdProductAndTypes($idProduct, array $types);
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function queryStockAmountByProducts(string $sku): SpyStockProductQuery;
 }

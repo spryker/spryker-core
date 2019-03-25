@@ -28,12 +28,11 @@ class Calculator implements CalculatorInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProduct($sku)
     {
-        $productEntities = $this->reader->getStocksProduct($sku);
-        return $this->calculateTotalQuantity($productEntities);
+        return $this->reader->getProductStockAmount($sku);
     }
 
     /**

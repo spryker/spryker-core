@@ -193,7 +193,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float|int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -222,7 +222,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float|int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -251,7 +251,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float|int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

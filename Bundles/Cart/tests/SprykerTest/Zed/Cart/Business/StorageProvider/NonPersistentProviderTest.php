@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
+use Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceBridge;
 use SprykerTest\Zed\Cart\Business\Mocks\CartItemAddTripleStrategy;
 
 /**
@@ -35,22 +36,32 @@ class NonPersistentProviderTest extends Unit
     private $provider;
 
     /**
+     * @var \SprykerTest\Zed\Cart\CartBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
-        $this->provider = new NonPersistentProvider([], []);
+        $this->provider = new NonPersistentProvider([], [], new CartToUtilQuantityServiceBridge(
+            $this->tester->getLocator()->utilQuantity()->service()
+        ));
     }
 
     /**
+     * @dataProvider twoItemQuantitiesDataProvider
+     *
+     * @param int|float $existingQuantity
+     * @param int|float $newQuantity
+     *
      * @return void
      */
-    public function testAddExistingItem()
+    public function testAddExistingItem($existingQuantity, $newQuantity): void
     {
         $itemId = '123';
-        $existingQuantity = 1;
-        $newQuantity = 3;
 
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
         $newItem = $this->createItem($itemId, $newQuantity);
@@ -66,20 +77,23 @@ class NonPersistentProviderTest extends Unit
 
         $this->assertSame($itemId, $changedItem->getId());
         $this->assertSame(
-            $existingQuantity + $newQuantity,
+            (float)$existingQuantity + $newQuantity,
             $changedItem->getQuantity()
         );
     }
 
     /**
+     * @dataProvider twoItemQuantitiesDataProvider
+     *
+     * @param int|float $existingQuantity
+     * @param int|float $newQuantity
+     *
      * @return void
      */
-    public function testAddNewItem()
+    public function testAddNewItem($existingQuantity, $newQuantity): void
     {
         $itemId = '123';
         $newId = '321';
-        $existingQuantity = 1;
-        $newQuantity = 3;
 
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
 
@@ -110,15 +124,21 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
+     * @dataProvider thereItemQuantitiesDataProvider
+     *
+     * @param int|float $existingItemQuantity
+     * @param int|float $newFirstItemQuantity
+     * @param int|float $newSecondItemQuantity
+     *
      * @return void
      */
-    public function testAddDoubleNewItem()
-    {
+    public function testAddDoubleNewItem(
+        $existingItemQuantity,
+        $newFirstItemQuantity,
+        $newSecondItemQuantity
+    ): void {
         $existingItemId = '123';
         $newItemId = '321';
-        $existingItemQuantity = 1;
-        $newFirstItemQuantity = 3;
-        $newSecondItemQuantity = 4;
 
         $quoteTransfer = $this->createQuoteWithItem($existingItemId, $existingItemQuantity);
 
@@ -143,7 +163,7 @@ class NonPersistentProviderTest extends Unit
 
         $addedItem = $changedItems[$skuIndex[$newItemId]];
         $this->assertSame($newItemId, $addedItem->getId());
-        $this->assertSame($newFirstItemQuantity + $newSecondItemQuantity, $addedItem->getQuantity());
+        $this->assertSame((float)$newFirstItemQuantity + $newSecondItemQuantity, $addedItem->getQuantity());
 
         $existingItem = $changedItems[$skuIndex[$existingItemId]];
         $this->assertSame($existingItemId, $existingItem->getId());
@@ -151,13 +171,27 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
+     * @return array
+     */
+    public function thereItemQuantitiesDataProvider(): array
+    {
+        return [
+            'int stock' => [1, 3, 4],
+            'float stock' => [1.1, 3.3, 4.4],
+        ];
+    }
+
+    /**
+     * @dataProvider twoItemQuantitiesDataProvider
+     *
+     * @param int|float $existingQuantity
+     * @param int|float $reduceQuantity
+     *
      * @return void
      */
-    public function testRemoveExistingItem()
+    public function testRemoveExistingItem($existingQuantity, $reduceQuantity): void
     {
         $itemId = '123';
-        $existingQuantity = 1;
-        $reduceQuantity = 1;
 
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
         $newItem = $this->createItem($itemId, $reduceQuantity);
@@ -170,13 +204,16 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
+     * @dataProvider twoItemQuantitiesDataProvider
+     *
+     * @param int|float $existingQuantity
+     * @param int|float $reduceQuantity
+     *
      * @return void
      */
-    public function testRemoveNotExistingItem()
+    public function testRemoveNotExistingItem($existingQuantity, $reduceQuantity): void
     {
         $itemId = '123';
-        $existingQuantity = 1;
-        $reduceQuantity = 1;
         $deleteItemId = '321';
 
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
@@ -194,13 +231,16 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
+     * @dataProvider twoItemQuantitiesDataProvider
+     *
+     * @param int|float $existingQuantity
+     * @param int|float $reduceQuantity
+     *
      * @return void
      */
-    public function testReduceWithMoreThenExists()
+    public function testReduceWithMoreThenExists($existingQuantity, $reduceQuantity): void
     {
         $itemId = '123';
-        $existingQuantity = 1;
-        $reduceQuantity = 3;
 
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
         $newItem = $this->createItem($itemId, $reduceQuantity);
@@ -213,17 +253,31 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
+     * @return array
+     */
+    public function twoItemQuantitiesDataProvider(): array
+    {
+        return [
+            'int stock' => [1, 3],
+            'float stock' => [1.1, 3.3],
+        ];
+    }
+
+    /**
+     * @dataProvider twoWithNegativeItemQuantitiesDataProvider
+     *
      * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
      * @expectedExceptionMessage Could not change the quantity of cart item "123" to "-3".
      *
+     * @param int|float $existingQuantity
+     * @param int|float $newQuantity
+     *
      * @return void
      */
-    public function testIncreaseWithNegativeValue()
+    public function testIncreaseWithNegativeValue($existingQuantity, $newQuantity): void
     {
         $itemId = '123';
         $newId = '123';
-        $existingQuantity = 1;
-        $newQuantity = -3;
 
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
 
@@ -236,17 +290,31 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
+     * @return array
+     */
+    public function twoWithNegativeItemQuantitiesDataProvider(): array
+    {
+        return [
+            'int stock' => [1, -3],
+            'float stock' => [1.1, -3.3],
+        ];
+    }
+
+    /**
+     * @dataProvider twoWithZeroItemQuantitiesDataProvider
+     *
      * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
      * @expectedExceptionMessage Could not change the quantity of cart item "123" to "0".
      *
+     * @param int|float $existingQuantity
+     * @param int|float $newQuantity
+     *
      * @return void
      */
-    public function testIncreaseWithZeroValue()
+    public function testIncreaseWithZeroValue($existingQuantity, $newQuantity): void
     {
         $itemId = '123';
         $newId = '123';
-        $existingQuantity = 1;
-        $newQuantity = 0;
 
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
 
@@ -259,40 +327,31 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
+     * @return array
+     */
+    public function twoWithZeroItemQuantitiesDataProvider(): array
+    {
+        return [
+            'int stock' => [1, 0],
+            'float stock' => [1.1, 0.0],
+        ];
+    }
+
+    /**
+     * @dataProvider twoWithNegativeItemQuantitiesDataProvider
+     *
      * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
      * @expectedExceptionMessage Could not change the quantity of cart item "123" to "-3".
      *
-     * @return void
-     */
-    public function testDecreaseWithNegativeValue()
-    {
-        $itemId = '123';
-        $newId = '123';
-        $existingQuantity = 1;
-        $newQuantity = -3;
-
-        $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
-
-        $newItem = $this->createItem($newId, $newQuantity);
-        $cartChangeTransfer = new CartChangeTransfer();
-        $cartChangeTransfer->addItem($newItem);
-        $cartChangeTransfer->setQuote($quoteTransfer);
-
-        $this->provider->removeItems($cartChangeTransfer);
-    }
-
-    /**
-     * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
-     * @expectedExceptionMessage Could not change the quantity of cart item "123" to "0".
+     * @param int|float $existingQuantity
+     * @param int|float $newQuantity
      *
      * @return void
      */
-    public function testDecreaseWithZeroValue()
+    public function testDecreaseWithNegativeValue($existingQuantity, $newQuantity): void
     {
         $itemId = '123';
         $newId = '123';
-        $existingQuantity = 1;
-        $newQuantity = 0;
 
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
 
@@ -305,23 +364,56 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
+     * @dataProvider twoWithZeroItemQuantitiesDataProvider
+     *
+     * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
+     * @expectedExceptionMessage Could not change the quantity of cart item "123" to "0".
+     *
+     * @param int|float $existingQuantity
+     * @param int|float $newQuantity
+     *
      * @return void
      */
-    public function testWithCustomCartAddItemStrategy(): void
+    public function testDecreaseWithZeroValue($existingQuantity, $newQuantity): void
     {
+        $itemId = '123';
+        $newId = '123';
+
+        $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
+
+        $newItem = $this->createItem($newId, $newQuantity);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->addItem($newItem);
+        $cartChangeTransfer->setQuote($quoteTransfer);
+
+        $this->provider->removeItems($cartChangeTransfer);
+    }
+
+    /**
+     * @dataProvider thereItemQuantitiesDataProvider
+     *
+     * @param int|float $existingItemQuantity
+     * @param int|float $newFirstItemQuantity
+     * @param int|float $newSecondItemQuantity
+     *
+     * @return void
+     */
+    public function testWithCustomCartAddItemStrategy(
+        $existingItemQuantity,
+        $newFirstItemQuantity,
+        $newSecondItemQuantity
+    ): void {
         $provider = new NonPersistentProvider([
             new CartItemAddTripleStrategy(),
         ], [
-        ]);
+        ], new CartToUtilQuantityServiceBridge(
+            $this->tester->getLocator()->utilQuantity()->service()
+        ));
 
         $existingItemId = '123';
         $newItemId = '321';
-        $existingItemQuantity = 1;
-        $newFirstItemQuantity = 3;
-        $newSecondItemQuantity = 4;
 
         $quoteTransfer = $this->createQuoteWithItem($existingItemId, $existingItemQuantity);
-        $orignalItemTransfer = $quoteTransfer->getItems()->offsetGet(0);
 
         $newFirstItem = $this->createItem($newItemId, $newFirstItemQuantity);
         $newSecondItem = $this->createItem($newItemId, $newSecondItemQuantity);
