@@ -15,6 +15,8 @@ use Spryker\Zed\MerchantRelationshipProductList\Persistence\Propel\Mapper\Mercha
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductList\MerchantRelationshipProductListConfig getConfig()
+ * @method \Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListRepositoryInterface getRepository()
  */
 class MerchantRelationshipProductListPersistenceFactory extends AbstractPersistenceFactory
 {

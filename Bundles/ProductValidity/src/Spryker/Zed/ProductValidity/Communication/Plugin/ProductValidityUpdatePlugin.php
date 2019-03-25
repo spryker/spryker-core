@@ -13,6 +13,7 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
 
 /**
  * @method \Spryker\Zed\ProductValidity\Business\ProductValidityFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface getQueryContainer()
  */
 class ProductValidityUpdatePlugin extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {

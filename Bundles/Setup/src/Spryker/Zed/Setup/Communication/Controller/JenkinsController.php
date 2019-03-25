@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @deprecated Will be removed in 1.0.0.
+ * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
+ * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */
 class JenkinsController extends AbstractController
 {

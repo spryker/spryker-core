@@ -27,9 +27,9 @@ class ProductListSearchToProductListFacadeBridge implements ProductListSearchToP
      *
      * @return int[]
      */
-    public function getProductAbstractBlacklistIdsIdProductAbstract(int $idProductAbstract): array
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
     {
-        return $this->productListFacade->getProductAbstractBlacklistIdsByIdProductAbstract($idProductAbstract);
+        return $this->productListFacade->getProductBlacklistIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -37,9 +37,9 @@ class ProductListSearchToProductListFacadeBridge implements ProductListSearchToP
      *
      * @return int[]
      */
-    public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
+    public function getProductWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
     {
-        return $this->productListFacade->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
+        return $this->productListFacade->getProductWhitelistIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -50,5 +50,37 @@ class ProductListSearchToProductListFacadeBridge implements ProductListSearchToP
     public function getProductAbstractIdsByProductListIds(array $productListIds): array
     {
         return $this->productListFacade->getProductAbstractIdsByProductListIds($productListIds);
+    }
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductListIds(array $productListIds): array
+    {
+        return $this->productListFacade->getProductConcreteIdsByProductListIds($productListIds);
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return int[]
+     */
+    public function getProductWhitelistIdsByIdProduct(int $idProduct): array
+    {
+        return $this->productListFacade
+            ->getProductWhitelistIdsByIdProduct($idProduct);
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return int[]
+     */
+    public function getProductBlacklistIdsByIdProduct(int $idProduct): array
+    {
+        return $this->productListFacade
+            ->getProductBlacklistIdsByIdProduct($idProduct);
     }
 }

@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\CompanyUserGui\Communication\CompanyUserGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig getConfig()
  */
 class CustomerCompanyAttachForm extends AbstractType
 {
@@ -63,7 +64,7 @@ class CustomerCompanyAttachForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyField(FormBuilderInterface $builder, array $choices): self
+    protected function addCompanyField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
             'label' => 'Company',
@@ -87,7 +88,7 @@ class CustomerCompanyAttachForm extends AbstractType
      *
      * @return $this
      */
-    protected function executeAttachCustomerFormExpanderPlugins(FormBuilderInterface $builder): self
+    protected function executeAttachCustomerFormExpanderPlugins(FormBuilderInterface $builder)
     {
         foreach ($this->getFactory()->getCompanyUserAttachCustomerFormExpanderPlugins() as $attachCustomerFormExpanderPlugin) {
             $builder = $attachCustomerFormExpanderPlugin->expand($builder);

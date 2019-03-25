@@ -15,6 +15,7 @@ use Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig;
 
 /**
  * @method \Spryker\Zed\ShoppingListDataImport\Business\ShoppingListDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig getConfig()
  */
 class ShoppingListCompanyUserDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

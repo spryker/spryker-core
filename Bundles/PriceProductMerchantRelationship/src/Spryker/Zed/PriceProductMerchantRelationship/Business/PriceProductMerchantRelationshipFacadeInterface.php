@@ -17,9 +17,9 @@ interface PriceProductMerchantRelationshipFacadeInterface
 {
     /**
      * Specification:
-     *  - Saves price for given product price configuration
-     *  - Creates spy_price_product_store entry if does not exist,
-     *  - Creates connection between spy_price_product_store and spy_price_product_business_unit
+     *  - For BC reasons: Creates spy_price_product_store entry if does not exist.
+     *  - Saves connection between spy_price_product_store and spy_price_product_merchant_relationship.
+     *  - Creates connection between spy_price_product_store and spy_price_product_business_unit.
      *
      * @api
      *
@@ -65,7 +65,8 @@ interface PriceProductMerchantRelationshipFacadeInterface
 
     /**
      * Specification:
-     *  - Adds specific dimension type to the PriceProductDimensionTransfer
+     *  - Sets price dimension type as merchant relationship.
+     *  - Sets price dimension name using the merchant relationship name.
      *
      * @api
      *

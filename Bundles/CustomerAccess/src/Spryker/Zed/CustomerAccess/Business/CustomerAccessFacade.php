@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CustomerAccess\Business\CustomerAccessBusinessFactory getFactory()
+ * @method \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessRepositoryInterface getRepository()
  */
 class CustomerAccessFacade extends AbstractFacade implements CustomerAccessFacadeInterface
 {

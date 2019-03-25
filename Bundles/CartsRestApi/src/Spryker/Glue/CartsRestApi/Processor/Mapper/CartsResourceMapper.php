@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestCartsDiscountsTransfer;
 use Generated\Shared\Transfer\RestCartsTotalsTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -66,6 +67,22 @@ class CartsResourceMapper implements CartsResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCartsAttributesTransfer
+     */
+    public function mapQuoteTransferToRestCartsAttributesTransfer(QuoteTransfer $quoteTransfer): RestCartsAttributesTransfer
+    {
+        $restCartsAttributesTransfer = new RestCartsAttributesTransfer();
+
+        $this->setBaseCartData($quoteTransfer, $restCartsAttributesTransfer);
+        $this->setTotals($quoteTransfer, $restCartsAttributesTransfer);
+        $this->setDiscounts($quoteTransfer, $restCartsAttributesTransfer);
+
+        return $restCartsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $cartResource
      *
      * @return void
@@ -79,7 +96,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
                 $this->cartItemsResourceMapper->mapCartItemAttributes($itemTransfer)
             );
             $itemResource->addLink(
-                'self',
+                RestLinkInterface::LINK_SELF,
                 CartsRestApiConfig::RESOURCE_CARTS . '/' . $cartResource->getId() . '/' . CartsRestApiConfig::RESOURCE_CART_ITEMS . '/' . $itemTransfer->getGroupKey()
             );
 

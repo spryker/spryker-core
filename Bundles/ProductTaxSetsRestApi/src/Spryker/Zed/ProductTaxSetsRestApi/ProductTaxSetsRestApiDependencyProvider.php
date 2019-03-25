@@ -11,6 +11,9 @@ use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\ProductTaxSetsRestApi\ProductTaxSetsRestApiConfig getConfig()
+ */
 class ProductTaxSetsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_TAX_SET = 'PROPEL_QUERY_TAX_SET';

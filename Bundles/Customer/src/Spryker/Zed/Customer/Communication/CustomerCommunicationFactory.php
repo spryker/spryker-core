@@ -23,6 +23,9 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  */
 class CustomerCommunicationFactory extends AbstractCommunicationFactory
 {

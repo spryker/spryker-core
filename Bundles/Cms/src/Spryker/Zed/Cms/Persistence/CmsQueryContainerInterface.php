@@ -7,13 +7,19 @@
 
 namespace Spryker\Zed\Cms\Persistence;
 
+use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
-/**
- * @method \Orm\Zed\Cms\Persistence\SpyCmsPageQuery queryPagesWithTemplates()
- * @method \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery queryNodeByCategoryName(string $categoryName, int $idLocale)
- */
 interface CmsQueryContainerInterface extends QueryContainerInterface
 {
     /**
@@ -21,7 +27,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
-    public function queryTemplates();
+    public function queryTemplates(): SpyCmsTemplateQuery;
 
     /**
      * @api
@@ -30,7 +36,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
-    public function queryTemplateByPath($path);
+    public function queryTemplateByPath(string $path): SpyCmsTemplateQuery;
 
     /**
      * @api
@@ -39,7 +45,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
-    public function queryTemplateById($id);
+    public function queryTemplateById(int $id): SpyCmsTemplateQuery;
 
     /**
      * @api
@@ -48,7 +54,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function queryUrlByIdWithRedirect($idUrl);
+    public function queryUrlByIdWithRedirect(int $idUrl): SpyUrlQuery;
 
     /**
      * @api
@@ -57,7 +63,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function queryUrlById($idUrl);
+    public function queryUrlById(int $idUrl): SpyUrlQuery;
 
     /**
      * @api
@@ -66,7 +72,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function queryPageWithTemplatesAndUrlByIdPage($idCmsPage);
+    public function queryPageWithTemplatesAndUrlByIdPage(int $idCmsPage): SpyCmsPageQuery;
 
     /**
      * @api
@@ -75,14 +81,14 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappingWithKeyById($idMapping);
+    public function queryGlossaryKeyMappingWithKeyById(int $idMapping): SpyCmsGlossaryKeyMappingQuery;
 
     /**
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function queryPages();
+    public function queryPages(): SpyCmsPageQuery;
 
     /**
      * @api
@@ -91,7 +97,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function queryPageById($id);
+    public function queryPageById(int $id): SpyCmsPageQuery;
 
     /**
      * @api
@@ -101,7 +107,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMapping($idPage, $placeholder);
+    public function queryGlossaryKeyMapping(int $idPage, string $placeholder): SpyCmsGlossaryKeyMappingQuery;
 
     /**
      * @api
@@ -110,14 +116,14 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappingById($idMapping);
+    public function queryGlossaryKeyMappingById(int $idMapping): SpyCmsGlossaryKeyMappingQuery;
 
     /**
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappings();
+    public function queryGlossaryKeyMappings(): SpyCmsGlossaryKeyMappingQuery;
 
     /**
      * @api
@@ -126,7 +132,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappingsByPageId($idCmsPage);
+    public function queryGlossaryKeyMappingsByPageId(int $idCmsPage): SpyCmsGlossaryKeyMappingQuery;
 
     /**
      * @api
@@ -135,14 +141,14 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
-    public function queryLocaleById($idLocale);
+    public function queryLocaleById(int $idLocale): SpyLocaleQuery;
 
     /**
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
      */
-    public function queryCmsPageLocalizedAttributes();
+    public function queryCmsPageLocalizedAttributes(): SpyCmsPageLocalizedAttributesQuery;
 
     /**
      * @api
@@ -152,7 +158,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappingsWithKeyByPageId($idCmsPage, $fkLocale);
+    public function queryGlossaryKeyMappingsWithKeyByPageId(int $idCmsPage, int $fkLocale): SpyCmsGlossaryKeyMappingQuery;
 
     /**
      * @api
@@ -161,7 +167,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
      */
-    public function queryCmsPageLocalizedAttributesByFkPage($idPage);
+    public function queryCmsPageLocalizedAttributesByFkPage(int $idPage): SpyCmsPageLocalizedAttributesQuery;
 
     /**
      * @api
@@ -171,7 +177,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
      */
-    public function queryCmsPageLocalizedAttributesByFkPageAndFkLocale($idPage, $idLocale);
+    public function queryCmsPageLocalizedAttributesByFkPageAndFkLocale(int $idPage, int $idLocale): SpyCmsPageLocalizedAttributesQuery;
 
     /**
      * @api
@@ -180,7 +186,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
-    public function queryKey($key);
+    public function queryKey(string $key): SpyGlossaryKeyQuery;
 
     /**
      * @api
@@ -189,7 +195,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
-    public function queryKeyWithTranslationByKey($key);
+    public function queryKeyWithTranslationByKey(string $key);
 
     /**
      * @api
@@ -198,7 +204,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryPagesWithTemplatesForSelectedLocale($idLocale);
+    public function queryPagesWithTemplatesForSelectedLocale(int $idLocale): ModelCriteria;
 
     /**
      * @api
@@ -208,7 +214,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function queryPageWithUrlByIdCmsPageAndLocaleName($idCmsPage, $localName);
+    public function queryPageWithUrlByIdCmsPageAndLocaleName(int $idCmsPage, string $localName): SpyCmsPageQuery;
 
     /**
      * @api
@@ -217,7 +223,14 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryPagesWithTemplatesForSelectedLocaleAndVersion($idLocale);
+    public function queryPagesWithTemplatesForSelectedLocaleAndVersion(int $idLocale): ModelCriteria;
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryLocalizedPagesWithTemplates(): SpyCmsPageQuery;
 
     /**
      * @api
@@ -226,7 +239,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
-    public function queryTranslationWithKeyByValue($value);
+    public function queryTranslationWithKeyByValue(string $value): SpyGlossaryTranslationQuery;
 
     /**
      * @api
@@ -236,7 +249,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappingByPlaceholdersAndIdPage(array $placeholders, $idCmsPage);
+    public function queryGlossaryKeyMappingByPlaceholdersAndIdPage(array $placeholders, int $idCmsPage): SpyCmsGlossaryKeyMappingQuery;
 
     /**
      * @api
@@ -245,7 +258,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function queryCmsPageWithAllRelationsByIdPage($idPage);
+    public function queryCmsPageWithAllRelationsByIdPage(int $idPage): SpyCmsPageQuery;
 
     /**
      * @api
@@ -255,7 +268,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
-    public function queryCmsVersionByIdPage($idPage, $versionOrder = Criteria::DESC);
+    public function queryCmsVersionByIdPage(int $idPage, string $versionOrder = Criteria::DESC): SpyCmsVersionQuery;
 
     /**
      * @api
@@ -264,14 +277,14 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
-    public function queryCmsVersionById($idCmsVersion);
+    public function queryCmsVersionById(int $idCmsVersion): SpyCmsVersionQuery;
 
     /**
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
-    public function queryAllCmsVersions();
+    public function queryAllCmsVersions(): SpyCmsVersionQuery;
 
     /**
      * @api
@@ -281,7 +294,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
-    public function queryCmsVersionByIdPageAndVersion($idPage, $version);
+    public function queryCmsVersionByIdPageAndVersion(int $idPage, int $version): SpyCmsVersionQuery;
 
     /**
      * @api
@@ -290,7 +303,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappingsByFkGlossaryKeys(array $idGlossaryKeys);
+    public function queryGlossaryKeyMappingsByFkGlossaryKeys(array $idGlossaryKeys): SpyCmsGlossaryKeyMappingQuery;
 
     /**
      * @api
@@ -299,7 +312,7 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function queryResourceUrlByCmsPageId($idCmsPage);
+    public function queryResourceUrlByCmsPageId(int $idCmsPage): SpyUrlQuery;
 
     /**
      * @api
@@ -309,19 +322,19 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
-    public function queryKeyWithTranslationByKeyAndLocale($key, $localeId);
+    public function queryKeyWithTranslationByKeyAndLocale(string $key, int $localeId);
 
     /**
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function queryPageWithTemplatesAndUrls();
+    public function queryPageWithTemplatesAndUrls(): SpyCmsPageQuery;
 
     /**
      * @api
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function queryUrlsWithRedirect();
+    public function queryUrlsWithRedirect(): SpyUrlQuery;
 }

@@ -11,6 +11,9 @@ use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\StateMachine\StateMachineConfig getConfig()
+ */
 class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_STATE_MACHINE_HANDLERS = 'PLUGINS_STATE_MACHINE_HANDLERS';

@@ -13,9 +13,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
+ * @deprecated Use `\Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityStoragePublishListener` and `Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityStorageUnPublishListener` instead.
+ *
  * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\AvailabilityStorage\Communication\AvailabilityStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\AvailabilityStorage\AvailabilityStorageConfig getConfig()
  */
 class AvailabilityStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

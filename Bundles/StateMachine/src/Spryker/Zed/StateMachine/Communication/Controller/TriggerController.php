@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\StateMachine\Communication\StateMachineCommunicationFactory getFactory()
  */
 class TriggerController extends AbstractController
 {

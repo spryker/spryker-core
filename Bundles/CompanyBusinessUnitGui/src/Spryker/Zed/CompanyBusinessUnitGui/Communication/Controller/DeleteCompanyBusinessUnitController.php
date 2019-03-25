@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\Business\CompanyBusinessUnitGuiFacadeInterface getFacade()
  */
 class DeleteCompanyBusinessUnitController extends AbstractController
 {
@@ -52,22 +53,20 @@ class DeleteCompanyBusinessUnitController extends AbstractController
             ->delete($companyBusinessUnitTransfer);
 
         if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(sprintf(
-                static::MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_DELETE,
-                $companyBusinessUnitResponseTransfer
+            $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_DELETE, [
+                '%s' => $companyBusinessUnitResponseTransfer
                     ->getCompanyBusinessUnitTransfer()
-                    ->getName()
-            ));
+                    ->getName(),
+            ]);
 
             return $this->redirectResponse($redirectUrl);
         }
 
-        $this->addErrorMessage(sprintf(
-            static::MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_DELETE,
-            $companyBusinessUnitResponseTransfer
+        $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_DELETE, [
+            '%s' => $companyBusinessUnitResponseTransfer
                 ->getCompanyBusinessUnitTransfer()
-                ->getName()
-        ));
+                ->getName(),
+        ]);
 
         return $this->redirectResponse($redirectUrl);
     }

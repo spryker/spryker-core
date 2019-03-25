@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @deprecated Use Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole instead.
  *
  * @method \Spryker\Zed\Cache\Business\CacheFacadeInterface getFacade()
+ * @method \Spryker\Zed\Cache\Communication\CacheCommunicationFactory getFactory()
  */
 class DeleteAllCachesConsole extends Console
 {

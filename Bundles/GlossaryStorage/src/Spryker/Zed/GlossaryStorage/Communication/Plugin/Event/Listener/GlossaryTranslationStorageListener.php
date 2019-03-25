@@ -16,6 +16,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
  */
 class GlossaryTranslationStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

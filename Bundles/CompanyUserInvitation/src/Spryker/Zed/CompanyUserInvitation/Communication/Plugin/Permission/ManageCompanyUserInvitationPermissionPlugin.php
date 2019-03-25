@@ -13,6 +13,7 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterfa
 /**
  * @method \Spryker\Zed\CompanyUserInvitation\Business\CompanyUserInvitationFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyUserInvitation\Communication\CompanyUserInvitationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyUserInvitation\CompanyUserInvitationConfig getConfig()
  */
 class ManageCompanyUserInvitationPermissionPlugin extends AbstractPlugin implements PermissionPluginInterface
 {

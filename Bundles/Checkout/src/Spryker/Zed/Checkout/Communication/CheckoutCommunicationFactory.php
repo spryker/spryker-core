@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Checkout\CheckoutConfig getConfig()
+ * @method \Spryker\Zed\Checkout\Business\CheckoutFacadeInterface getFacade()
  */
 class CheckoutCommunicationFactory extends AbstractCommunicationFactory
 {

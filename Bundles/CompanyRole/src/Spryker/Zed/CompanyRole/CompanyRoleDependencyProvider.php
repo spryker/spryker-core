@@ -11,6 +11,9 @@ use Spryker\Zed\CompanyRole\Dependency\Facade\CompanyRoleToPermissionFacadeBridg
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CompanyRole\CompanyRoleConfig getConfig()
+ */
 class CompanyRoleDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PERMISSION = 'FACADE_PERMISSION';

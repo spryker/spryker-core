@@ -17,6 +17,8 @@ use Spryker\Zed\ProductGroupStorage\Communication\Plugin\Event\Listener\ProductA
 /**
  * @method \Spryker\Zed\ProductGroupStorage\Communication\ProductGroupStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductGroupStorage\Business\ProductGroupStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductGroupStorage\ProductGroupStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductGroupStorage\Persistence\ProductGroupStorageQueryContainerInterface getQueryContainer()
  */
 class ProductGroupStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

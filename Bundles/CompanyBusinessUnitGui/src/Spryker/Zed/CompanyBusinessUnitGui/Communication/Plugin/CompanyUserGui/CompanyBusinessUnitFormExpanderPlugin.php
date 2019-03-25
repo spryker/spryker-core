@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\CompanyBusinessUnitGui\Business\CompanyBusinessUnitGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiConfig getConfig()
  */
 class CompanyBusinessUnitFormExpanderPlugin extends AbstractPlugin implements CompanyUserFormExpanderPluginInterface
 {

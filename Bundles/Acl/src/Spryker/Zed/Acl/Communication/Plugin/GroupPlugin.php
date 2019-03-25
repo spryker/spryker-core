@@ -13,6 +13,8 @@ use Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface;
 /**
  * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Acl\AclConfig getConfig()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
  */
 class GroupPlugin extends AbstractPlugin implements GroupPluginInterface
 {

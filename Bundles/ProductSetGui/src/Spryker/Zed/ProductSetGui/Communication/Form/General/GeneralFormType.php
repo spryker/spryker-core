@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductSetGui\ProductSetGuiConfig getConfig()
  */
 class GeneralFormType extends AbstractType
 {
@@ -101,7 +102,7 @@ class GeneralFormType extends AbstractType
     protected function addProductSetKeyField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_PRODUCT_SET_KEY, TextType::class, [
-            'label' => 'Product Set Key *',
+            'label' => 'Product Set Key',
             'required' => true,
             'constraints' => [
                 new NotBlank(),

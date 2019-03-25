@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Agent\Business\AgentBusinessFactory getFactory()
+ * @method \Spryker\Zed\Agent\Persistence\AgentRepositoryInterface getRepository()
  */
 class AgentFacade extends AbstractFacade implements AgentFacadeInterface
 {

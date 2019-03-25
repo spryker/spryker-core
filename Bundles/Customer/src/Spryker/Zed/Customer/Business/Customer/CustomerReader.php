@@ -71,6 +71,7 @@ class CustomerReader implements CustomerReaderInterface
             ->setHasCustomer(false);
 
         if ($customerTransfer) {
+            $customerTransfer->setAddresses($this->addressManager->getAddresses($customerTransfer));
             $customerResponseTransfer->setCustomerTransfer($customerTransfer)
                 ->setHasCustomer(true)
                 ->setIsSuccess(true);

@@ -15,6 +15,9 @@ use Spryker\Zed\ShoppingListStorage\ShoppingListStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ShoppingListStorage\ShoppingListStorageConfig getConfig()
+ * @method \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageFacadeInterface getFacade()
  */
 class ShoppingListStorageCommunicationFactory extends AbstractCommunicationFactory
 {

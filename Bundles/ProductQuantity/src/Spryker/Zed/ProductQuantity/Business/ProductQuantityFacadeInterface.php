@@ -14,6 +14,7 @@ interface ProductQuantityFacadeInterface
 {
     /**
      * Specification:
+     * - Checks if the quantity is positive.
      * - Validates product quantities if they fulfill all quantity restriction rules during item addition.
      *
      * @api
@@ -57,4 +58,30 @@ interface ProductQuantityFacadeInterface
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
     public function findProductQuantityTransfers(): array;
+
+    /**
+     * Specification:
+     * - Adjusts cart item quantity according to product quantity restrictions.
+     * - Adds notification messages about adjustment.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function normalizeCartChangeTransferItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Checks if cart change transfer has normalizable items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $normalizableFields
+     *
+     * @return bool
+     */
+    public function hasCartChangeTransferNormalizableItems(CartChangeTransfer $cartChangeTransfer, array $normalizableFields): bool;
 }

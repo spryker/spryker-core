@@ -15,6 +15,8 @@ use Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Due to conflict with customer access module. Use \Spryker\Zed\CartPermissionConnector\Communication\Plugin\Cart\AlterCartUpToAmountPermissionPlugin instead.
+ *
  * For Zed PermissionDependencyProvider::getPermissionPlugins() and
  * CartDependencyProvider::getTerminationPlugins() registration
  *

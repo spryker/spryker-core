@@ -14,6 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProduct\Communication\PriceProductCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface getRepository()
  */
 class PriceProductStoreOptimizeConsole extends Console
 {

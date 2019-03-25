@@ -11,6 +11,9 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\ProductsProductPricesResourceRelationship\Dependency\RestResource\ProductsProductPricesResourceRelationToProductPricesRestApiBridge;
 
+/**
+ * @method \Spryker\Glue\ProductsProductPricesResourceRelationship\ProductsProductPricesResourceRelationshipConfig getConfig()
+ */
 class ProductsProductPricesResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const RESOURCE_PRODUCT_PRICES = 'RESOURCE_PRODUCT_PRICES';

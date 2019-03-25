@@ -20,6 +20,7 @@ interface PriceProductMerchantRelationshipDataSetInterface
 
     public const ID_CURRENCY = 'id_currency';
     public const ID_PRICE_PRODUCT = 'id_price_product';
+    public const ID_PRICE_PRODUCT_STORE = 'id_price_product_store';
     public const ID_MERCHANT_RELATIONSHIP = 'id_merchant_relationship';
     public const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     public const ID_PRODUCT_CONCRETE = 'id_product';

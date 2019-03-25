@@ -17,6 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiConfig getConfig()
  */
 class ProductCollectionType extends AbstractType
 {
@@ -56,7 +57,7 @@ class ProductCollectionType extends AbstractType
      *
      * @return $this
      */
-    protected function addProductsEmptyField(FormBuilderInterface $builder, array $options): self
+    protected function addProductsEmptyField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_PRODUCTS, CollectionType::class, [
             'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::PRODUCTS,
@@ -79,7 +80,7 @@ class ProductCollectionType extends AbstractType
      *
      * @return $this
      */
-    protected function addIsProductPostedField(FormBuilderInterface $builder, array $options): self
+    protected function addIsProductPostedField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_IS_PRODUCT_POSTED, HiddenType::class, [
             'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::IS_PRODUCT_POSTED,

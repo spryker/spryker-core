@@ -15,6 +15,9 @@ use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductF
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToProductLabelBridge;
 use Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerBridge;
 
+/**
+ * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
+ */
 class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';

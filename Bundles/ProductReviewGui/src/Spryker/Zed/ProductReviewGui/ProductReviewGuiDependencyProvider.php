@@ -15,6 +15,9 @@ use Spryker\Zed\ProductReviewGui\Dependency\QueryContainer\ProductReviewGuiToPro
 use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilDateTimeBridge as ServiceProductReviewGuiToDateTimeBridge;
 use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilSanitizeBridge as ServiceProductReviewGuiToUtilSanitizeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductReviewGui\ProductReviewGuiConfig getConfig()
+ */
 class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT_REVIEW = 'FACADE_PRODUCT_REVIEW';

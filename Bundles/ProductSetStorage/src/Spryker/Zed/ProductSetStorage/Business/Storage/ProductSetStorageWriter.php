@@ -17,6 +17,7 @@ use Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInt
 class ProductSetStorageWriter implements ProductSetStorageWriterInterface
 {
     public const COL_ID_PRODUCT_SET = 'id_product_set';
+    public const COL_IS_ACTIVE = 'is_active';
 
     /**
      * @var \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface
@@ -83,7 +84,10 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
             $idProductSet = $spyProductSetLocalizedEntity['SpyProductSet'][static::COL_ID_PRODUCT_SET];
             $localeName = $spyProductSetLocalizedEntity['SpyLocale']['locale_name'];
             if (isset($spyProductSetStorageEntities[$idProductSet][$localeName])) {
-                $this->storeDataSet($spyProductSetLocalizedEntity, $spyProductSetStorageEntities[$idProductSet][$localeName]);
+                $this->storeDataSet(
+                    $spyProductSetLocalizedEntity,
+                    $spyProductSetStorageEntities[$idProductSet][$localeName]
+                );
 
                 continue;
             }
@@ -98,8 +102,21 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
      *
      * @return void
      */
-    protected function storeDataSet(array $spyProductSetLocalizedEntity, ?SpyProductSetStorage $spyProductSetStorageEntity = null)
-    {
+    protected function storeDataSet(
+        array $spyProductSetLocalizedEntity,
+        ?SpyProductSetStorage $spyProductSetStorageEntity = null
+    ) {
+
+        if (!$spyProductSetLocalizedEntity['SpyProductSet'][static::COL_IS_ACTIVE]) {
+            if (!$spyProductSetStorageEntity) {
+                return;
+            }
+
+            $spyProductSetStorageEntity->delete();
+
+            return;
+        }
+
         $productSetStorageTransfer = new ProductSetDataStorageTransfer();
         if ($spyProductSetStorageEntity === null) {
             $spyProductSetStorageEntity = new SpyProductSetStorage();

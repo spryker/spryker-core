@@ -11,6 +11,9 @@ use Spryker\Zed\CategoryDataFeed\Dependency\QueryContainer\CategoryDataFeedToCat
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CategoryDataFeed\CategoryDataFeedConfig getConfig()
+ */
 class CategoryDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CATEGORY_QUERY_CONTAINER = 'CATEGORY_QUERY_CONTAINER';

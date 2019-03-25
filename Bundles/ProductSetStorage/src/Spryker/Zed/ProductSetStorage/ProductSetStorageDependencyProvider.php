@@ -13,6 +13,9 @@ use Spryker\Zed\ProductSetStorage\Dependency\Facade\ProductSetStorageToEventBeha
 use Spryker\Zed\ProductSetStorage\Dependency\QueryContainer\ProductSetStorageToProductImageQueryContainerBridge;
 use Spryker\Zed\ProductSetStorage\Dependency\QueryContainer\ProductSetStorageToProductSetQueryContainerBridge;
 
+/**
+ * @method \Spryker\Zed\ProductSetStorage\ProductSetStorageConfig getConfig()
+ */
 class ProductSetStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';

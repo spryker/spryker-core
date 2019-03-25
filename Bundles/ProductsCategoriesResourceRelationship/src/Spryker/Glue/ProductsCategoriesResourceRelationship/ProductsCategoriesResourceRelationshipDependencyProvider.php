@@ -13,6 +13,9 @@ use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\Produc
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductStorageClientBridge;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiResourceBridge;
 
+/**
+ * @method \Spryker\Glue\ProductsCategoriesResourceRelationship\ProductsCategoriesResourceRelationshipConfig getConfig()
+ */
 class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const RESOURCE_CATEGORY = 'RESOURCE_CATEGORY';

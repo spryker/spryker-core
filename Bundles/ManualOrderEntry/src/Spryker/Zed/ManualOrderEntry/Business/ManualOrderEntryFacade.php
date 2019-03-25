@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntry\Business\ManualOrderEntryBusinessFactory getFactory()
+ * @method \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryRepositoryInterface getRepository()
  */
 class ManualOrderEntryFacade extends AbstractFacade implements ManualOrderEntryFacadeInterface
 {

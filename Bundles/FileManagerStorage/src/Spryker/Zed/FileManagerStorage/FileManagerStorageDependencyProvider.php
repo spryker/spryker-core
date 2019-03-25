@@ -12,6 +12,9 @@ use Spryker\Zed\FileManagerStorage\Dependency\Facade\FileManagerStorageToLocaleF
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\FileManagerStorage\FileManagerStorageConfig getConfig()
+ */
 class FileManagerStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';

@@ -13,6 +13,9 @@ use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductBr
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\DiscountPromotion\DiscountPromotionConfig getConfig()
+ */
 class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';

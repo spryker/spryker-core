@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer;
 use Generated\Shared\Transfer\TaxSetResponseTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -129,7 +130,7 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
             ProductTaxSetsRestApiConfig::RESOURCE_TAX_SETS
         );
 
-        $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $selfLink);
+        $restResource->addLink(RestLinkInterface::LINK_SELF, $selfLink);
 
         return $restResource;
     }

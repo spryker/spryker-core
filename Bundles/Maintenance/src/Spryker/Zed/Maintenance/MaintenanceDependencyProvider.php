@@ -9,6 +9,9 @@ namespace Spryker\Zed\Maintenance;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\Maintenance\MaintenanceConfig getConfig()
+ */
 class MaintenanceDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

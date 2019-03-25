@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\CompanyUnitAddress\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyUnitAddressBuilder;
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use SprykerTest\Zed\Country\Helper\CountryDataHelper;
 
@@ -31,9 +32,29 @@ class CompanyUnitAddressDataHelper extends Module
         $companyUnitAddressTransferBuilder = new CompanyUnitAddressBuilder($seed);
         $companyUnitAddressTransfer = $companyUnitAddressTransferBuilder->build();
 
+        $this->ensureCompanyUnitAddressWithKeyDoesNotExist($companyUnitAddressTransfer->getKey());
         $this->getCompanyUnitAddressFacade()->create($companyUnitAddressTransfer);
 
         return $companyUnitAddressTransfer;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return void
+     */
+    public function ensureCompanyUnitAddressWithKeyDoesNotExist(string $key): void
+    {
+        $companyUnitAddressQuery = $this->getCompanyUnitAddressQuery();
+        $companyUnitAddressQuery->filterByKey($key)->delete();
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    protected function getCompanyUnitAddressQuery(): SpyCompanyUnitAddressQuery
+    {
+        return SpyCompanyUnitAddressQuery::create();
     }
 
     /**

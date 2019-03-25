@@ -37,7 +37,7 @@
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
 
-        <unique name="spy_product_label_localized_attributes-fk_product_label-fk_locale">
+        <unique name="spy_product_label_localized_attributes-fk_product_label-fk_loc">
             <unique-column name="fk_product_label"/>
             <unique-column name="fk_locale"/>
         </unique>

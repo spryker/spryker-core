@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
  */
 class EditController extends AbstractController
 {
@@ -105,10 +107,9 @@ class EditController extends AbstractController
             $this->storeRelatedProduct($aggregateFormTransfer->getProductAbstractRelations());
         }
 
-        $this->addSuccessMessage(sprintf(
-            'Product label #%d successfully updated.',
-            $productLabelTransfer->getIdProductLabel()
-        ));
+        $this->addSuccessMessage('Product label #%d successfully updated.', [
+            '%d' => $productLabelTransfer->getIdProductLabel(),
+        ]);
 
         return true;
     }

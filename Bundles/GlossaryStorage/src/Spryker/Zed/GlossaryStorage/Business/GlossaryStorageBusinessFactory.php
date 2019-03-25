@@ -8,7 +8,6 @@
 namespace Spryker\Zed\GlossaryStorage\Business;
 
 use Spryker\Zed\GlossaryStorage\Business\Storage\GlossaryTranslationStorageWriter;
-use Spryker\Zed\GlossaryStorage\GlossaryStorageDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -24,16 +23,7 @@ class GlossaryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new GlossaryTranslationStorageWriter(
             $this->getQueryContainer(),
-            $this->getUtilSanitizeService(),
             $this->getConfig()->isSendingToQueue()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilSanitizeServiceInterface
-     */
-    protected function getUtilSanitizeService()
-    {
-        return $this->getProvidedDependency(GlossaryStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 }

@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  */
 class InstallConsole extends Console
 {

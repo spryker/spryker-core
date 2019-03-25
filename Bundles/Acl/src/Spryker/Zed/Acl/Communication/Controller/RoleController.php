@@ -28,6 +28,8 @@ class RoleController extends AbstractController
     public const ACL_ROLE_LIST_URL = '/acl/role/index';
     public const ROLE_UPDATE_URL = '/acl/role/update?id-role=%d';
 
+    protected const MESSAGE_ROLE_NOT_FOUND = "Role couldn't be found";
+
     /**
      * @return array
      */
@@ -104,9 +106,16 @@ class RoleController extends AbstractController
         }
 
         $dataProvider = $this->getFactory()->createAclRoleFormDataProvider();
+        $formData = $dataProvider->getData($idAclRole);
+
+        if (!$formData) {
+            $this->addErrorMessage(static::MESSAGE_ROLE_NOT_FOUND);
+
+            return $this->redirectResponse(static::ACL_ROLE_LIST_URL);
+        }
 
         $roleForm = $this->getFactory()
-            ->createRoleForm($dataProvider->getData($idAclRole))
+            ->createRoleForm($formData)
             ->handleRequest($request);
 
         $this->handleRoleForm($request, $roleForm);
@@ -122,7 +131,7 @@ class RoleController extends AbstractController
             'roleForm' => $roleForm->createView(),
             'ruleSetForm' => $ruleSetForm->createView(),
             'ruleSetTable' => $ruleSetTable->render(),
-            'roleTransfer' => $this->getFacade()->getRoleById($idAclRole),
+            'roleTransfer' => $this->getFacade()->findRoleById($idAclRole),
         ];
     }
 

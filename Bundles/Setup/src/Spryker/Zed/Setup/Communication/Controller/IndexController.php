@@ -9,6 +9,10 @@ namespace Spryker\Zed\Setup\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
+/**
+ * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
+ * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
+ */
 class IndexController extends AbstractController
 {
     /**

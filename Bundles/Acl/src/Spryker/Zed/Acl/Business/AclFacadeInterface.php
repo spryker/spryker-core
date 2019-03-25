@@ -102,6 +102,18 @@ interface AclFacadeInterface
     public function getRoleById($id);
 
     /**
+     * Specification:
+     * - Finds role by provided id if it exists.
+     *
+     * @api
+     *
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer|null
+     */
+    public function findRoleById(int $id): ?RoleTransfer;
+
+    /**
      * @api
      *
      * @param string $name

@@ -16,6 +16,8 @@ use Spryker\Zed\Offer\Persistence\Mapper\OfferMapperInterface;
 
 /**
  * @method \Spryker\Zed\Offer\OfferConfig getConfig()
+ * @method \Spryker\Zed\Offer\Persistence\OfferEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Offer\Persistence\OfferRepositoryInterface getRepository()
  */
 class OfferPersistenceFactory extends AbstractPersistenceFactory
 {

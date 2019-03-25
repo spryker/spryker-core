@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Installer\Business\InstallerFacadeInterface getFacade()
+ * @method \Spryker\Zed\Installer\Communication\InstallerCommunicationFactory getFactory()
  */
 class InitializeDatabaseConsole extends Console
 {

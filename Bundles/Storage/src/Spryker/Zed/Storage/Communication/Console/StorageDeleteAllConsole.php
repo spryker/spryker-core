@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Storage\Business\StorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\Storage\Communication\StorageCommunicationFactory getFactory()
  */
 class StorageDeleteAllConsole extends Console
 {

@@ -58,6 +58,21 @@ class ExporterPluginResolver
     }
 
     /**
+     * @return string[]
+     */
+    public function getAvailableResourceNames(): array
+    {
+        $resourceNames = [];
+        foreach ($this->synchronizationDataPlugins as $plugin) {
+            $resourceNames[] = $plugin->getResourceName();
+        }
+
+        sort($resourceNames);
+
+        return $resourceNames;
+    }
+
+    /**
      * @param string[] $resources
      *
      * @return array

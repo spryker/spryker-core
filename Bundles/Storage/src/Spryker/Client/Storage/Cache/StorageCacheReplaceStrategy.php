@@ -53,6 +53,6 @@ class StorageCacheReplaceStrategy implements StorageCacheStrategyInterface
      */
     protected function isUpdateNeeded($status)
     {
-        return $this->storageCacheStrategyHelper->isNewKey($status) || $this->storageCacheStrategyHelper->isUsedKey($status);
+        return $this->storageCacheStrategyHelper->isNewKey($status) || $this->storageCacheStrategyHelper->isUnusedKey($status);
     }
 }

@@ -11,6 +11,9 @@ use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToCollector
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsBlockCollector\CmsBlockCollectorConfig getConfig()
+ */
 class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COLLECTOR = 'CMS_BLOCK_COLLECTOR:FACADE_COLLECTOR';

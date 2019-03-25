@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\Auth\AuthConfig getConfig()
  * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
  */
 class AuthCommunicationFactory extends AbstractCommunicationFactory
 {

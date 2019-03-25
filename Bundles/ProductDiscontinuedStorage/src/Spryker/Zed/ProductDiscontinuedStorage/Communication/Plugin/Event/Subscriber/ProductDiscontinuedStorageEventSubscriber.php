@@ -12,11 +12,13 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductDiscontinued\Dependency\ProductDiscontinuedEvents;
 use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedNoteStorageListener;
-use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStorageListener;
+use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStoragePublishListener;
+use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStorageUnpublishListener;
 
 /**
  * @method \Spryker\Zed\ProductDiscontinuedStorage\Communication\ProductDiscontinuedStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig getConfig()
  */
 class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -69,7 +71,7 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     protected function addProductDiscontinuedPublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH, new ProductDiscontinuedStorageListener());
+            ->addListenerQueued(ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH, new ProductDiscontinuedStoragePublishListener());
     }
 
     /**
@@ -80,7 +82,7 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     protected function addProductDiscontinuedUnpublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_UNPUBLISH, new ProductDiscontinuedStorageListener());
+            ->addListenerQueued(ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_UNPUBLISH, new ProductDiscontinuedStorageUnpublishListener());
     }
 
     /**
@@ -91,7 +93,7 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     protected function addProductDiscontinuedCreateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_CREATE, new ProductDiscontinuedStorageListener());
+            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_CREATE, new ProductDiscontinuedStoragePublishListener());
     }
 
     /**
@@ -102,7 +104,7 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     protected function addProductDiscontinuedUpdateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_UPDATE, new ProductDiscontinuedStorageListener());
+            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_UPDATE, new ProductDiscontinuedStoragePublishListener());
     }
 
     /**
@@ -113,7 +115,7 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     protected function addProductDiscontinuedDeleteListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_DELETE, new ProductDiscontinuedStorageListener());
+            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_DELETE, new ProductDiscontinuedStorageUnpublishListener());
     }
 
     /**

@@ -187,4 +187,24 @@ class TaxReader implements TaxReaderInterface
     {
         return !$this->taxRepository->isTaxSetNameAndIdUnique($name, $idTaxSet);
     }
+
+    /**
+     * @param int $idTaxRate
+     *
+     * @return \Generated\Shared\Transfer\TaxRateTransfer|null
+     */
+    public function findTaxRate(int $idTaxRate): ?TaxRateTransfer
+    {
+        return $this->taxRepository->findTaxRate($idTaxRate);
+    }
+
+    /**
+     * @param int $idTaxSet
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer|null
+     */
+    public function findTaxSet(int $idTaxSet): ?TaxSetTransfer
+    {
+        return $this->taxRepository->findTaxSet($idTaxSet);
+    }
 }

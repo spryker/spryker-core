@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Money\MoneyConfig getConfig()
  */
 class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface
 {

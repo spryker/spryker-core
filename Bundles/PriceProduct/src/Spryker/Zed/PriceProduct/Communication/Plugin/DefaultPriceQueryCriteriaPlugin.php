@@ -17,6 +17,7 @@ use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCrite
  * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface getRepository()
  * @method \Spryker\Zed\PriceProduct\Communication\PriceProductCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface getQueryContainer()
  */
 class DefaultPriceQueryCriteriaPlugin extends AbstractPlugin implements PriceDimensionQueryCriteriaPluginInterface
 {

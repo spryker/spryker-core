@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsPageSearch\Communication\Plugin\Event\Subscriber;
 
 use Spryker\Zed\Cms\Dependency\CmsEvents;
 use Spryker\Zed\CmsPageSearch\Communication\Plugin\Event\Listener\CmsPageSearchListener;
+use Spryker\Zed\CmsPageSearch\Communication\Plugin\Event\Listener\CmsPageStoreSearchListener;
 use Spryker\Zed\CmsPageSearch\Communication\Plugin\Event\Listener\CmsPageUrlSearchListener;
 use Spryker\Zed\CmsPageSearch\Communication\Plugin\Event\Listener\CmsPageVersionSearchListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
@@ -19,6 +20,8 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 /**
  * @method \Spryker\Zed\CmsPageSearch\Communication\CmsPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsPageSearch\Business\CmsPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsPageSearch\CmsPageSearchConfig getConfig()
+ * @method \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface getQueryContainer()
  */
 class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -40,6 +43,9 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
         $this->addCmsPageUrlCreateSearchListener($eventCollection);
         $this->addCmsPageUrlUpdateSearchListener($eventCollection);
         $this->addCmsPageUrlDeleteSearchListener($eventCollection);
+        $this->addCmsPageStoreCreateStorageListener($eventCollection);
+        $this->addCmsPageStoreUpdateStorageListener($eventCollection);
+        $this->addCmsPageStoreDeleteStorageListener($eventCollection);
 
         return $eventCollection;
     }
@@ -132,5 +138,35 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
     protected function addCmsPageUrlDeleteSearchListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new CmsPageUrlSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsPageStoreCreateStorageListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_CREATE, new CmsPageStoreSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsPageStoreUpdateStorageListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_UPDATE, new CmsPageStoreSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsPageStoreDeleteStorageListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_DELETE, new CmsPageStoreSearchListener());
     }
 }

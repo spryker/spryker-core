@@ -13,6 +13,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterf
 
 /**
  * @method \Spryker\Zed\ShoppingListNote\Business\ShoppingListNoteFacade getFacade()
+ * @method \Spryker\Zed\ShoppingListNote\ShoppingListNoteConfig getConfig()
  */
 class ShoppingListItemNoteExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {

@@ -13,6 +13,9 @@ use Spryker\Client\ProductAlternativeStorage\Dependency\Client\ProductAlternativ
 use Spryker\Client\ProductAlternativeStorage\Dependency\Client\ProductAlternativeStorageToStorageClientBridge;
 use Spryker\Client\ProductAlternativeStorage\Dependency\Service\ProductAlternativeStorageToSynchronizationServiceBridge;
 
+/**
+ * @method \Spryker\Client\ProductAlternativeStorage\ProductAlternativeStorageConfig getConfig()
+ */
 class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';

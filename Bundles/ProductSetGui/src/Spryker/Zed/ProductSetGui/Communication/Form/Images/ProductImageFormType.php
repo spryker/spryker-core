@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductSetGui\ProductSetGuiConfig getConfig()
  */
 class ProductImageFormType extends AbstractType
 {
@@ -126,7 +127,7 @@ class ProductImageFormType extends AbstractType
     protected function addImageSmallField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IMAGE_SMALL, TextType::class, [
-            'label' => 'Small Image URL *',
+            'label' => 'Small Image URL',
             'required' => true,
             'constraints' => [
                 new NotBlank(),
@@ -148,7 +149,7 @@ class ProductImageFormType extends AbstractType
     protected function addImageBigField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IMAGE_LARGE, TextType::class, [
-            'label' => 'Large Image URL *',
+            'label' => 'Large Image URL',
             'required' => true,
             'constraints' => [
                 new NotBlank(),

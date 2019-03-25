@@ -25,6 +25,7 @@ use Spryker\Zed\Log\LogDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Log\LogConfig getConfig()
+ * @method \Spryker\Zed\Log\Business\LogFacadeInterface getFacade()
  */
 class LogCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -168,7 +169,13 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createBufferedStreamHandler()
     {
-        return new BufferHandler($this->createStreamHandler());
+        return new BufferHandler(
+            $this->createStreamHandler(),
+            $this->getConfig()->getBufferLimit(),
+            Logger::ERROR,
+            $this->getConfig()->getIsBubble(),
+            $this->getConfig()->getIsFlushOnOverflow()
+        );
     }
 
     /**

@@ -19,6 +19,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
+ */
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
@@ -27,7 +30,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_MAIL = 'FACADE_MAIL';
 
     /**
-     * @deprecated use SERVICE_UTIL_DATE_TIME instead
+     * @deprecated Use SERVICE_UTIL_DATE_TIME instead.
      */
     public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';

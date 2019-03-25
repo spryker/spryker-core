@@ -51,9 +51,16 @@ class ProductAlternativeWriterStep extends PublishAwareStep implements DataImpor
                 $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_CONCRETE_ALTERNATIVE]
             );
         $productAlternativeEntity->save();
+
+        $fkProductConcreteAlternative = $productAlternativeEntity->getFkProductConcreteAlternative();
+
+        if (!$fkProductConcreteAlternative) {
+            return;
+        }
+
         $this->addPublishEvents(
             ProductAlternativeEvents::PRODUCT_REPLACEMENT_CONCRETE_PUBLISH,
-            $productAlternativeEntity->getFkProductConcreteAlternative()
+            $fkProductConcreteAlternative
         );
         $this->addPublishEvents(
             ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
@@ -77,9 +84,16 @@ class ProductAlternativeWriterStep extends PublishAwareStep implements DataImpor
                 $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_ABSTRACT_ALTERNATIVE]
             );
         $productAlternativeEntity->save();
+
+        $fkProductAbstractAlternative = $productAlternativeEntity->getFkProductAbstractAlternative();
+
+        if (!$fkProductAbstractAlternative) {
+            return;
+        }
+
         $this->addPublishEvents(
             ProductAlternativeEvents::PRODUCT_REPLACEMENT_ABSTRACT_PUBLISH,
-            $productAlternativeEntity->getFkProductAbstractAlternative()
+            $fkProductAbstractAlternative
         );
         $this->addPublishEvents(
             ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,

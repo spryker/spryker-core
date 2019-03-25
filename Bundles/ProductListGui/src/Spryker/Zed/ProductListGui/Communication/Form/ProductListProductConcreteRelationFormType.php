@@ -14,6 +14,10 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\ProductListGui\ProductListGuiConfig getConfig()
+ * @method \Spryker\Zed\ProductListGui\Communication\ProductListGuiCommunicationFactory getFactory()
+ */
 class ProductListProductConcreteRelationFormType extends AbstractType
 {
     public const FIELD_ID_PRODUCT_LIST = ProductListProductConcreteRelationTransfer::ID_PRODUCT_LIST;
@@ -62,7 +66,7 @@ class ProductListProductConcreteRelationFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addIdProductListField(FormBuilderInterface $builder): self
+    protected function addIdProductListField(FormBuilderInterface $builder)
     {
         $builder->add(
             static::FIELD_ID_PRODUCT_LIST,
@@ -77,7 +81,7 @@ class ProductListProductConcreteRelationFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addProductIdsField(FormBuilderInterface $builder): self
+    protected function addProductIdsField(FormBuilderInterface $builder)
     {
         $builder->add(static::PRODUCT_IDS, HiddenType::class);
 
@@ -89,7 +93,7 @@ class ProductListProductConcreteRelationFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addUploadFileField(FormBuilderInterface $builder): self
+    protected function addUploadFileField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FILE_UPLOAD, FileType::class, [
             'label' => 'Import Product List',

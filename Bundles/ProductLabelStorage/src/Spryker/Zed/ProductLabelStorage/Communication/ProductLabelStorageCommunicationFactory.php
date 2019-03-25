@@ -13,6 +13,7 @@ use Spryker\Zed\ProductLabelStorage\ProductLabelStorageDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface getFacade()
  */
 class ProductLabelStorageCommunicationFactory extends AbstractCommunicationFactory
 {

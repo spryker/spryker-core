@@ -28,4 +28,11 @@ interface OauthRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer|null
      */
     public function findScopeByIdentifier(string $identifier): ?SpyOauthScopeEntityTransfer;
+
+    /**
+     * @param string[] $customerScopes
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     */
+    public function getScopesByIdentifiers(array $customerScopes): array;
 }

@@ -7,10 +7,11 @@
 
 namespace Spryker\Yves\Session;
 
+use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 use Spryker\Shared\Session\Model\SessionStorage;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptions;
-use Spryker\Shared\Session\SessionConstants;
+use Spryker\Shared\Session\SessionConfig;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Session\Model\SessionHandlerFactory;
 
@@ -46,9 +47,9 @@ class SessionFactory extends AbstractFactory
     {
         $sessionHandlerPool = new SessionStorageHandlerPool();
         $sessionHandlerPool
-            ->addHandler($this->createSessionHandlerRedis(), SessionConstants::SESSION_HANDLER_REDIS)
-            ->addHandler($this->createSessionHandlerRedisLocking(), SessionConstants::SESSION_HANDLER_REDIS_LOCKING)
-            ->addHandler($this->createSessionHandlerFile(), SessionConstants::SESSION_HANDLER_FILE);
+            ->addHandler($this->createSessionHandlerRedis(), SessionConfig::SESSION_HANDLER_REDIS)
+            ->addHandler($this->createSessionHandlerRedisLocking(), SessionConfig::SESSION_HANDLER_REDIS_LOCKING)
+            ->addHandler($this->createSessionHandlerFile(), SessionConfig::SESSION_HANDLER_FILE);
 
         return $sessionHandlerPool;
     }
@@ -59,7 +60,8 @@ class SessionFactory extends AbstractFactory
     protected function createSessionHandlerRedis()
     {
         return $this->createSessionHandlerFactory()->createSessionHandlerRedis(
-            $this->getConfig()->getSessionHandlerRedisDataSourceName()
+            $this->getConfig()->getSessionHandlerRedisConnectionParameters(),
+            $this->getConfig()->getSessionHandlerRedisConnectionOptions()
         );
     }
 
@@ -69,7 +71,8 @@ class SessionFactory extends AbstractFactory
     protected function createSessionHandlerRedisLocking()
     {
         return $this->createSessionHandlerFactory()->createRedisLockingSessionHandler(
-            $this->getConfig()->getSessionHandlerRedisDataSourceName()
+            $this->getConfig()->getSessionHandlerRedisConnectionParameters(),
+            $this->getConfig()->getSessionHandlerRedisConnectionOptions()
         );
     }
 
@@ -88,6 +91,14 @@ class SessionFactory extends AbstractFactory
      */
     protected function createSessionHandlerFactory()
     {
-        return new SessionHandlerFactory($this->getConfig()->getSessionLifeTime());
+        return new SessionHandlerFactory($this->getConfig()->getSessionLifeTime(), $this->getMonitoringService());
+    }
+
+    /**
+     * @return \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
+     */
+    public function getMonitoringService(): SessionToMonitoringServiceInterface
+    {
+        return $this->getProvidedDependency(SessionDependencyProvider::MONITORING_SERVICE);
     }
 }

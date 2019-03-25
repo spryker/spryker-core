@@ -16,6 +16,7 @@ use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping;
 use Spryker\Shared\CmsBlock\CmsBlockConfig;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockMappingAmbiguousException;
+use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException;
 use Spryker\Zed\CmsBlock\Business\Exception\MissingCmsBlockGlossaryKeyMapping;
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToEventFacadeInterface;
@@ -135,7 +136,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
             $idCmsBlockGlossaryMapping = $this->saveCmsGlossaryKeyMapping($glossaryPlaceholder);
             $glossaryPlaceholder->setIdCmsBlockGlossaryKeyMapping($idCmsBlockGlossaryMapping);
 
-            $this->triggerSyncEvents($glossaryPlaceholder->getFkCmsBlock());
+            $this->touchActiveCmsBlock($glossaryPlaceholder->getFkCmsBlock());
         }
     }
 
@@ -144,10 +145,32 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return void
      */
-    protected function triggerSyncEvents(int $idCmsBlock): void
+    protected function touchActiveCmsBlock(int $idCmsBlock): void
     {
-        $this->touchFacade->touchActive(CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK, $idCmsBlock);
-        $this->eventFacade->trigger(CmsBlockEvents::CMS_BLOCK_PUBLISH, (new EventEntityTransfer())->setId($idCmsBlock));
+        if ($this->isCmsBlockActive($idCmsBlock)) {
+            $this->touchFacade->touchActive(CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK, $idCmsBlock);
+            $this->eventFacade->trigger(CmsBlockEvents::CMS_BLOCK_PUBLISH, (new EventEntityTransfer())->setId($idCmsBlock));
+        }
+    }
+
+    /**
+     * @param int $idCmsBlock
+     *
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException
+     *
+     * @return bool
+     */
+    protected function isCmsBlockActive(int $idCmsBlock): bool
+    {
+        $cmsBlock = $this->cmsBlockQueryContainer
+            ->queryCmsBlockById($idCmsBlock)
+            ->findOne();
+
+        if (!$cmsBlock) {
+            throw new CmsBlockNotFoundException(sprintf('CMS block not found for id %s.', $idCmsBlock));
+        }
+
+        return $cmsBlock->isActive();
     }
 
     /**

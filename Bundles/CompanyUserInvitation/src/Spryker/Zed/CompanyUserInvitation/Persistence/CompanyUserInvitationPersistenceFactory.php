@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CompanyUserInvitation\CompanyUserInvitationConfig getConfig()
+ * @method \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface getRepository()
  */
 class CompanyUserInvitationPersistenceFactory extends AbstractPersistenceFactory
 {

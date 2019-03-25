@@ -9,6 +9,9 @@ namespace Spryker\Zed\Heartbeat;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\Heartbeat\HeartbeatConfig getConfig()
+ */
 class HeartbeatDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

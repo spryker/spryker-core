@@ -10,34 +10,39 @@ namespace Spryker\Client\ProductSetStorage\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
+use Spryker\Client\ProductSetStorage\ProductSetStorageConfig;
 use Spryker\Shared\ProductSet\ProductSetConfig;
 
 class ProductSetStorageMapper implements ProductSetStorageMapperInterface
 {
     /**
-     * @param array $ProductSetStorageStorageData
+     * @param array $productSetStorageStorageData
      *
      * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer
      */
-    public function mapDataToTransfer(array $ProductSetStorageStorageData)
+    public function mapDataToTransfer(array $productSetStorageStorageData)
     {
-        $ProductSetStorageStorageTransfer = $this->mapProductSetStorageTransfer($ProductSetStorageStorageData);
-        $ProductSetStorageStorageTransfer = $this->mapProductImages($ProductSetStorageStorageTransfer);
+        if (ProductSetStorageConfig::isCollectorCompatibilityMode()) {
+            $productSetStorageStorageData = $this->formatProductSetCollectorData($productSetStorageStorageData);
+        }
 
-        return $ProductSetStorageStorageTransfer;
+        $productSetStorageStorageTransfer = $this->mapProductSetStorageTransfer($productSetStorageStorageData);
+        $productSetStorageStorageTransfer = $this->mapProductImages($productSetStorageStorageTransfer);
+
+        return $productSetStorageStorageTransfer;
     }
 
     /**
-     * @param array $ProductSetStorageData
+     * @param array $productSetStorageData
      *
      * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer
      */
-    protected function mapProductSetStorageTransfer(array $ProductSetStorageData)
+    protected function mapProductSetStorageTransfer(array $productSetStorageData)
     {
-        $ProductSetStorageStorageTransfer = new ProductSetDataStorageTransfer();
-        $ProductSetStorageStorageTransfer->fromArray($ProductSetStorageData, true);
+        $productSetStorageStorageTransfer = new ProductSetDataStorageTransfer();
+        $productSetStorageStorageTransfer->fromArray($productSetStorageData, true);
 
-        return $ProductSetStorageStorageTransfer;
+        return $productSetStorageStorageTransfer;
     }
 
     /**
@@ -73,5 +78,28 @@ class ProductSetStorageMapper implements ProductSetStorageMapperInterface
         $productSetDataStorageTransfer->setImageSets(new ArrayObject($imageSetTransfers));
 
         return $productSetDataStorageTransfer;
+    }
+
+    /**
+     * @param array $productSetStorageData
+     *
+     * @return array
+     */
+    private function formatProductSetCollectorData(array $productSetStorageData): array
+    {
+        $productSetStorageData['product_abstract_ids'] = $productSetStorageData['id_product_abstracts'];
+        unset($productSetStorageData['id_product_abstracts'], $productSetStorageData['images']);
+
+        $imageSets = [];
+        foreach ($productSetStorageData['image_sets'] as $imageSetName => $images) {
+            $imageSets[] = [
+                'name' => $imageSetName,
+                'images' => $images,
+            ];
+        }
+
+        $productSetStorageData['image_sets'] = $imageSets;
+
+        return $productSetStorageData;
     }
 }

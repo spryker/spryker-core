@@ -55,6 +55,18 @@ interface UserFacadeInterface
     public function getUserById($idUser);
 
     /**
+     * Specification:
+     * - Returns user by id if it exists.
+     *
+     * @api
+     *
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    public function findUserById(int $idUser): ?UserTransfer;
+
+    /**
      * @api
      *
      * @param int $idUser

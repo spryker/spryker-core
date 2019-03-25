@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
  * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface getRepository()
+ * @method \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface getFacade()
  */
 class PriceProductCommunicationFactory extends AbstractCommunicationFactory
 {

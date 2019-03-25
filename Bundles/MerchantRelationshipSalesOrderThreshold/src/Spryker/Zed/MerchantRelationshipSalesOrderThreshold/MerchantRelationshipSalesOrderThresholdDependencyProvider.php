@@ -13,6 +13,9 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Dependency\Facade\Mercha
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Dependency\Facade\MerchantRelationshipSalesOrderThresholdToSalesOrderThresholdFacadeBridge;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Dependency\Facade\MerchantRelationshipSalesOrderThresholdToStoreFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\MerchantRelationshipSalesOrderThresholdConfig getConfig()
+ */
 class MerchantRelationshipSalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SALES_ORDER_THRESHOLD = 'FACADE_SALES_ORDER_THRESHOLD';

@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\Nopayment\NopaymentConfig getConfig()
  * @method \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Nopayment\Business\NopaymentFacadeInterface getFacade()
  */
 class NopaymentCommunicationFactory extends AbstractCommunicationFactory
 {

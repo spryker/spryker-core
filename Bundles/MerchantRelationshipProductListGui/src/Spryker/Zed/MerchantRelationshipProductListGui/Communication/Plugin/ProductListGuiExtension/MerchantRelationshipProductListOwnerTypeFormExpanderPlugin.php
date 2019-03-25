@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductListGui\Communication\MerchantRelationshipProductListGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductListGuiConfig getConfig()
  */
 class MerchantRelationshipProductListOwnerTypeFormExpanderPlugin extends AbstractPlugin implements ProductListOwnerTypeFormExpanderPluginInterface
 {

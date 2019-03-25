@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CartNote\Business\CartNoteBusinessFactory getFactory()
+ * @method \Spryker\Zed\CartNote\Persistence\CartNoteEntityManagerInterface getEntityManager()
  */
 class CartNoteFacade extends AbstractFacade implements CartNoteFacadeInterface
 {

@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Log\Communication\LogCommunicationFactory getFactory()
  * @method \Spryker\Zed\Log\Business\LogFacadeInterface getFacade()
+ * @method \Spryker\Zed\Log\LogConfig getConfig()
  */
 class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInterface
 {

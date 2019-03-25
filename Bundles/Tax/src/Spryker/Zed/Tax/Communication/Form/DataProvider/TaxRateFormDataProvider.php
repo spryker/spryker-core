@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Tax\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\TaxRateTransfer;
+use Spryker\Zed\Tax\Business\TaxFacadeInterface;
 use Spryker\Zed\Tax\Communication\Form\TaxRateForm;
 use Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface;
 
@@ -19,26 +20,39 @@ class TaxRateFormDataProvider
     protected $countryFacade;
 
     /**
+     * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
+     */
+    protected $taxFacade;
+
+    /**
      * @var \Generated\Shared\Transfer\TaxRateTransfer
      */
     protected $taxRateTransfer;
 
     /**
      * @param \Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface $countryFacade
+     * @param \Spryker\Zed\Tax\Business\TaxFacadeInterface $taxFacade
      * @param \Generated\Shared\Transfer\TaxRateTransfer|null $taxRateTransfer
      */
-    public function __construct(TaxToCountryBridgeInterface $countryFacade, ?TaxRateTransfer $taxRateTransfer = null)
+    public function __construct(TaxToCountryBridgeInterface $countryFacade, TaxFacadeInterface $taxFacade, ?TaxRateTransfer $taxRateTransfer = null)
     {
         $this->countryFacade = $countryFacade;
+        $this->taxFacade = $taxFacade;
         $this->taxRateTransfer = $taxRateTransfer;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\TaxRateTransfer
+     * @param int|null $idTaxRate
+     *
+     * @return \Generated\Shared\Transfer\TaxRateTransfer|null
      */
-    public function getData()
+    public function getData(?int $idTaxRate = null)
     {
-        return $this->taxRateTransfer;
+        if (!$idTaxRate) {
+            return $this->taxRateTransfer;
+        }
+
+        return $this->taxFacade->findTaxRate($idTaxRate);
     }
 
     /**

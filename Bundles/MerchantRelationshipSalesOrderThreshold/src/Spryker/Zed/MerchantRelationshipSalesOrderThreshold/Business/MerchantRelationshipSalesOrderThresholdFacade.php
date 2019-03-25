@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipSalesOrderThresholdBusinessFactory getFactory()
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdRepositoryInterface getRepository()
  */
 class MerchantRelationshipSalesOrderThresholdFacade extends AbstractFacade implements MerchantRelationshipSalesOrderThresholdFacadeInterface
 {

@@ -14,6 +14,7 @@ use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 /**
  * @method \Spryker\Zed\Offer\Business\OfferFacadeInterface getFacade()
  * @method \Spryker\Zed\Offer\Communication\OfferCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Offer\OfferConfig getConfig()
  */
 class OfferSavingHydratorPlugin extends AbstractPlugin implements OfferHydratorPluginInterface
 {

@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductDiscountConnector\Persistence\ProductDiscountConnectorQueryContainerInterface getQueryContainer()
  */
 class ProductAttributeCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface, DiscountRuleWithAttributesPluginInterface
 {

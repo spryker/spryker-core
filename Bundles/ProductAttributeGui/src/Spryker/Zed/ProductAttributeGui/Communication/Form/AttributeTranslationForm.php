@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\ProductAttributeGui\Communication\ProductAttributeGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductAttributeGui\ProductAttributeGuiConfig getConfig()
  */
 class AttributeTranslationForm extends AbstractType
 {

@@ -10,6 +10,9 @@ namespace Spryker\Zed\SalesSplit;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\SalesSplit\SalesSplitConfig getConfig()
+ */
 class SalesSplitDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SALES_QUERY_CONTAINER = 'SALES_QUERY_CONTAINER';

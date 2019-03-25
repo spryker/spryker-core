@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
  */
 class OfferQuoteExpanderPlugin extends AbstractPlugin implements QuoteExpanderPluginInterface
 {

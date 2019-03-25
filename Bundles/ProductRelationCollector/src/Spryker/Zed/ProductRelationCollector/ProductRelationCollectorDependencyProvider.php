@@ -14,6 +14,9 @@ use Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollec
 use Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorCollectorToProductImageBridge;
 use Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorToProductRelationBridge;
 
+/**
+ * @method \Spryker\Zed\ProductRelationCollector\ProductRelationCollectorConfig getConfig()
+ */
 class ProductRelationCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';

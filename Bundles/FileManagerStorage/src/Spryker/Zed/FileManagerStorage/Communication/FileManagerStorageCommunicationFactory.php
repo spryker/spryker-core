@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\FileManagerStorage\FileManagerStorageConfig getConfig()
+ * @method \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\FileManagerStorage\Business\FileManagerStorageFacadeInterface getFacade()
  */
 class FileManagerStorageCommunicationFactory extends AbstractCommunicationFactory
 {

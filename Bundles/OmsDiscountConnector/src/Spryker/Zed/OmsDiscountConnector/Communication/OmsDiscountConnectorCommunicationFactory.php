@@ -12,6 +12,7 @@ use Spryker\Zed\OmsDiscountConnector\OmsDiscountConnectorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\OmsDiscountConnector\OmsDiscountConnectorConfig getConfig()
+ * @method \Spryker\Zed\OmsDiscountConnector\Business\OmsDiscountConnectorFacadeInterface getFacade()
  */
 class OmsDiscountConnectorCommunicationFactory extends AbstractCommunicationFactory
 {

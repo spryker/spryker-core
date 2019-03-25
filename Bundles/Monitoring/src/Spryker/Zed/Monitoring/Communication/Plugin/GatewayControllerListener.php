@@ -16,6 +16,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
  * @method \Spryker\Zed\Monitoring\Business\MonitoringFacadeInterface getFacade()
+ * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
  */
 class GatewayControllerListener extends AbstractPlugin implements EventSubscriberInterface
 {

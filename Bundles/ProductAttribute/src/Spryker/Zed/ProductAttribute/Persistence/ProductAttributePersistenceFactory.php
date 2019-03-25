@@ -18,6 +18,7 @@ use Spryker\Zed\ProductAttribute\Persistence\Mapper\ProductAttributeMapperInterf
 /**
  * @method \Spryker\Zed\ProductAttribute\ProductAttributeConfig getConfig()
  * @method \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeRepositoryInterface getRepository()
  */
 class ProductAttributePersistenceFactory extends AbstractPersistenceFactory
 {

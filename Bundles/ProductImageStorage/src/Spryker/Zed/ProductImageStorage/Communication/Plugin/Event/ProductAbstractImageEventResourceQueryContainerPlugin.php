@@ -18,6 +18,7 @@ use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
  * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductImageStorage\Business\ProductImageStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductImageStorage\Communication\ProductImageStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductImageStorage\ProductImageStorageConfig getConfig()
  */
 class ProductAbstractImageEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {

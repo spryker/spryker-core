@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
  * @method \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer save(\Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer $customerNoteEntityTransfer)
+ * @method \Spryker\Zed\CustomerNote\Persistence\CustomerNotePersistenceFactory getFactory()
  */
 class CustomerNoteEntityManager extends AbstractEntityManager implements CustomerNoteEntityManagerInterface
 {

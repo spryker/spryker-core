@@ -12,8 +12,9 @@ interface FilterInterface
     /**
      * @param array $ids
      * @param string $itemType
+     * @param string $itemEvent
      *
      * @return array
      */
-    public function filter(array $ids, $itemType);
+    public function filter(array $ids, string $itemType, string $itemEvent): array;
 }

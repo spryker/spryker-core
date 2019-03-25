@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Oauth\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
@@ -148,6 +149,67 @@ class OauthFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testFindClientByIdentifier(): void
+    {
+        $oauthClientTransfer = (new OauthClientTransfer())
+            ->setIdentifier('identifier')
+            ->setName('client name')
+            ->setSecret('secret')
+            ->setIsConfidential(true)
+            ->setRedirectUri('url');
+
+        $this->getOauthFacade()->saveClient($oauthClientTransfer);
+
+        $oauthClientTransfer = $this->getOauthFacade()->findClientByIdentifier($oauthClientTransfer);
+
+        $this->assertNotNull($oauthClientTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindScopeByIdentifier(): void
+    {
+        $oauthScopeTransfer = (new OauthScopeTransfer())
+            ->setIdentifier('identifier')
+            ->setDescription('test scope');
+
+        $this->getOauthFacade()->saveScope($oauthScopeTransfer);
+
+        $oauthScopeTransfer = $this->getOauthFacade()->findScopeByIdentifier($oauthScopeTransfer);
+
+        $this->assertNotEmpty($oauthScopeTransfer->getIdOauthScope());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindScopesByIdentifiers(): void
+    {
+        $identifiers = ['identifier', 'test_identifier'];
+
+        $this->getOauthFacade()->saveScope(
+            (new OauthScopeTransfer())
+            ->setIdentifier($identifiers[0])
+            ->setDescription('scope')
+        );
+
+        $this->getOauthFacade()->saveScope(
+            (new OauthScopeTransfer())
+                ->setIdentifier($identifiers[1])
+                ->setDescription('test scope')
+        );
+
+        $oauthScopeTransfers = $this->getOauthFacade()->getScopesByIdentifiers($identifiers);
+
+        foreach ($oauthScopeTransfers as $oauthScopeTransfer) {
+            $this->assertNotEmpty($oauthScopeTransfer->getIdOauthScope());
+        }
+    }
+
+    /**
+     * @return void
+     */
     protected function setUserProviderPluginMock(): void
     {
         $userProviderPluginMock = $this->getMockBuilder(OauthUserProviderPluginInterface::class)
@@ -157,7 +219,14 @@ class OauthFacadeTest extends Unit
         $userProviderPluginMock->method('getUser')->willReturnCallback(
             function (OauthUserTransfer $oauthUserTransfer) {
                 $oauthUserTransfer->setIsSuccess(true)
-                    ->setUserIdentifier(1);
+                    ->setUserIdentifier(
+                        json_encode(
+                            (new CustomerIdentifierTransfer())
+                                ->setCustomerReference('DE--test')
+                                ->setIdCustomer(999)
+                                ->toArray()
+                        )
+                    );
 
                 return $oauthUserTransfer;
             }

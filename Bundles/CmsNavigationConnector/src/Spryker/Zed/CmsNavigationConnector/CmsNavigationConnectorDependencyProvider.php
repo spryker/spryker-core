@@ -13,6 +13,9 @@ use Spryker\Zed\CmsNavigationConnector\Dependency\QueryContainer\CmsNavigationCo
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsNavigationConnector\CmsNavigationConnectorConfig getConfig()
+ */
 class CmsNavigationConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_NAVIGATION = 'FACADE_NAVIGATION';

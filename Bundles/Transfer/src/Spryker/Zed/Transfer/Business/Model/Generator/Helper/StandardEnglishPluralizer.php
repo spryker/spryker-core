@@ -20,7 +20,6 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator\Helper;
  *
  * @author paul.hanssen
  */
-
 class StandardEnglishPluralizer implements PluralizerInterface
 {
     /**

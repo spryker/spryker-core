@@ -13,6 +13,8 @@ use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 
 /**
  * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
+ * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
  */
 class PaymentOrderHydratePlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {

@@ -6,6 +6,7 @@
 >
 
     <transfer name="ProductOptionGroup">
+        <property name="fkTaxSet" dataBuilderRule="=1" />
         <property name="active" dataBuilderRule="=true" />
         <property name="name" dataBuilderRule="word" />
     </transfer>

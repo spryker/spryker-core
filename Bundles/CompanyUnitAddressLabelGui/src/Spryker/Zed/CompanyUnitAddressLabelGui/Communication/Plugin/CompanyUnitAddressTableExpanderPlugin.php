@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyUnitAddressLabelGui\Communication\CompanyUnitAddressLabelGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyUnitAddressLabelGui\CompanyUnitAddressLabelGuiConfig getConfig()
  */
 class CompanyUnitAddressTableExpanderPlugin extends AbstractPlugin implements
     CompanyUnitAddressTableConfigExpanderPluginInterface,

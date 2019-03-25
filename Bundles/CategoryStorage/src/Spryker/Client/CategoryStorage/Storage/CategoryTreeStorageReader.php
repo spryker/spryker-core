@@ -10,8 +10,10 @@ namespace Spryker\Client\CategoryStorage\Storage;
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryTreeStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\CategoryStorage\CategoryStorageConfig;
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface;
 use Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 
 class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
@@ -43,8 +45,7 @@ class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
      */
     public function getCategories($locale)
     {
-        $categoryTreeKey = $this->generateKey($locale);
-        $categories = $this->storageClient->get($categoryTreeKey);
+        $categories = $this->getStorageData($locale);
         if (!$categories) {
             return new ArrayObject();
         }
@@ -53,6 +54,52 @@ class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
         $categoryTreeStorageTransfer->fromArray($categories, true);
 
         return $categoryTreeStorageTransfer->getCategoryNodesStorage();
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    protected function getStorageData(string $localeName)
+    {
+        if (CategoryStorageConfig::isCollectorCompatibilityMode()) {
+            $clientLocatorClassName = Locator::class;
+            /** @var \Spryker\Client\CategoryExporter\CategoryExporterClientInterface $categoryExporterClient */
+            $categoryExporterClient = $clientLocatorClassName::getInstance()->categoryExporter()->client();
+            $collectorData = $categoryExporterClient->getNavigationCategories($localeName);
+            $collectorCategories = [
+                'category_nodes_storage' => $this->filterCollectorDataRecursive($collectorData),
+            ];
+
+            return $collectorCategories;
+        }
+
+        $categoryTreeKey = $this->generateKey($localeName);
+        $categories = $this->storageClient->get($categoryTreeKey);
+
+        return $categories;
+    }
+
+    /**
+     * @param array $categories
+     *
+     * @return array
+     */
+    protected function filterCollectorDataRecursive(array $categories): array
+    {
+        $filteredCategories = [];
+        foreach ($categories as $category) {
+            if (empty($category['parents'])) {
+                unset($category['parents']);
+            }
+            if (isset($category['children'])) {
+                $category['children'] = $this->filterCollectorDataRecursive($category['children']);
+            }
+            $filteredCategories[] = $category;
+        }
+
+        return $filteredCategories;
     }
 
     /**

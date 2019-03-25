@@ -11,6 +11,9 @@ use Spryker\Zed\CompanyUnitAddressLabelGui\Dependency\Facade\CompanyUnitAddressL
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CompanyUnitAddressLabelGui\CompanyUnitAddressLabelGuiConfig getConfig()
+ */
 class CompanyUnitAddressLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COMPANY_UNIT_ADDRESS_LABEL = 'FACADE_COMPANY_UNIT_ADDRESS_LABEL';

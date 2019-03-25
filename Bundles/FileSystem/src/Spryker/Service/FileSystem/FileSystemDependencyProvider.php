@@ -13,6 +13,9 @@ use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemWriterPlugin;
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 
+/**
+ * @method \Spryker\Service\FileSystem\FileSystemConfig getConfig()
+ */
 class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_READER = 'plugin reader';

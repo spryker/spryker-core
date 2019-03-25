@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
  */
 class IndexController extends AbstractController
 {

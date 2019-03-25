@@ -21,7 +21,7 @@ class ZedRequestFactory extends AbstractFactory
     /**
      * @var \Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface|null
      */
-    private static $zedClient;
+    protected static $zedClient;
 
     /**
      * @return \Spryker\Client\ZedRequest\Messenger\MessengerInterface

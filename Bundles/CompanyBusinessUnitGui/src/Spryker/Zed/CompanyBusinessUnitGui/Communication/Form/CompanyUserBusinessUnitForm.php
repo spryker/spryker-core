@@ -12,6 +12,11 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiConfig getConfig()
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\Business\CompanyBusinessUnitGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
+ */
 class CompanyUserBusinessUnitForm extends AbstractType
 {
     public const OPTION_VALUES_BUSINESS_UNITS_CHOICES = 'company_business_unit_choices';
@@ -51,7 +56,7 @@ class CompanyUserBusinessUnitForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyBusinessUnitCollectionField(FormBuilderInterface $builder, array $options): self
+    protected function addCompanyBusinessUnitCollectionField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_FK_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
             'label' => 'Business Unit',

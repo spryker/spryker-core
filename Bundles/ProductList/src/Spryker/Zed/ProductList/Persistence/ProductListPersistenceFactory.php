@@ -18,6 +18,8 @@ use Spryker\Zed\ProductList\ProductListDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductList\ProductListConfig getConfig()
+ * @method \Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductList\Persistence\ProductListRepositoryInterface getRepository()
  */
 class ProductListPersistenceFactory extends AbstractPersistenceFactory
 {

@@ -6,6 +6,7 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Response;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -70,7 +71,7 @@ class ResponseBuilder implements ResponseBuilderInterface
             $restRequest
         );
 
-        $data = $this->resourcesToArray($restResponse->getResources(), $restRequest);
+        $data = $this->resourcesToArray($restResponse->getResources(), $restRequest, $mainResourceType);
 
         if ($this->isSingleObjectRequest($restRequest, $data)) {
             $response[RestResponseInterface::RESPONSE_DATA] = $data[0];
@@ -81,7 +82,7 @@ class ResponseBuilder implements ResponseBuilderInterface
 
         $included = $this->responseRelationship->processIncluded($restResponse->getResources(), $restRequest);
         if ($included) {
-            $response[RestResponseInterface::RESPONSE_INCLUDED] = $this->resourcesToArray($included, $restRequest);
+            $response[RestResponseInterface::RESPONSE_INCLUDED] = $this->resourcesToArray($included, $restRequest, $mainResourceType);
         }
 
         if ($restRequest->getPage()) {
@@ -109,26 +110,30 @@ class ResponseBuilder implements ResponseBuilderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $currentResourceType
      *
      * @return array
      */
-    protected function resourcesToArray(array $resources, RestRequestInterface $restRequest): array
+    protected function resourcesToArray(array $resources, RestRequestInterface $restRequest, string $currentResourceType): array
     {
         $data = [];
+
         foreach ($resources as $resource) {
-            if (!$resource->hasLink(RestResourceInterface::RESOURCE_LINKS_SELF)) {
+            if (!$resource->hasLink(RestLinkInterface::LINK_SELF)) {
                 $link = $resource->getType();
                 if ($resource->getId()) {
                     $link .= '/' . $resource->getId();
                 }
-                $resource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $link);
+                $resource->addLink(RestLinkInterface::LINK_SELF, $link);
             }
+            $includeRelations = $currentResourceType === $resource->getType() || $this->responseRelationship->hasRelationship($resource->getType(), $restRequest);
             $data[] = $this->resourceToArray(
                 $resource,
-                $this->responseRelationship->hasRelationship($resource->getType(), $restRequest),
+                $includeRelations,
                 $restRequest
             );
         }
+
         return $data;
     }
 
@@ -144,7 +149,6 @@ class ResponseBuilder implements ResponseBuilderInterface
         bool $includeRelations,
         RestRequestInterface $restRequest
     ): array {
-
         $data = $restResource->toArray($includeRelations);
 
         if (count($restRequest->getFields()) > 0 && isset($restRequest->getFields()[$restResource->getType()])) {
@@ -153,6 +157,8 @@ class ResponseBuilder implements ResponseBuilderInterface
                 array_flip($restRequest->getFields()[$restResource->getType()]->getAttributes())
             );
         }
+
+        $data = $this->filterRelationships($restRequest, $data);
 
         if (isset($data[RestResourceInterface::RESOURCE_LINKS])) {
             $data[RestResourceInterface::RESOURCE_LINKS] = $this->formatLinks(
@@ -171,15 +177,17 @@ class ResponseBuilder implements ResponseBuilderInterface
     protected function formatLinks(array $links): array
     {
         $formattedLinks = [];
+
         foreach ($links as $key => $link) {
             if (is_array($link)) {
-                $link['href'] = $this->domainName . '/' . $link['href'];
-                $formattedLinks[$key] = $link;
+                $formattedLinks[$key] = $this->domainName . '/' . $link[$key];
+
                 continue;
             }
 
             $formattedLinks[$key] = $this->domainName . '/' . $link;
         }
+
         return $formattedLinks;
     }
 
@@ -200,10 +208,38 @@ class ResponseBuilder implements ResponseBuilderInterface
                 $linkParts[] = $parentResource->getId();
             }
             $linkParts[] = $restRequest->getResource()->getType();
+            $queryString = $restRequest->getQueryString();
+            if (strlen($queryString)) {
+                $queryString = '?' . $queryString;
+            }
+
             return $this->formatLinks([
-                RestResourceInterface::RESOURCE_LINKS_SELF => implode('/', $linkParts),
+                RestLinkInterface::LINK_SELF => implode('/', $linkParts) . $queryString,
             ]);
         }
+
         return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function filterRelationships(RestRequestInterface $restRequest, array $data): array
+    {
+        if ($restRequest->getExcludeRelationship()) {
+            unset($data[RestResourceInterface::RESOURCE_RELATIONSHIPS]);
+        }
+
+        if (count($restRequest->getInclude()) && array_key_exists(RestResourceInterface::RESOURCE_RELATIONSHIPS, $data)) {
+            $data[RestResourceInterface::RESOURCE_RELATIONSHIPS] = array_intersect_key(
+                $data[RestResourceInterface::RESOURCE_RELATIONSHIPS],
+                $restRequest->getInclude()
+            );
+        }
+
+        return $data;
     }
 }

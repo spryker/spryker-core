@@ -76,6 +76,10 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
                 continue;
             }
 
+            if (!isset($productAbstractImageSetsBulk[$spyProductAbstractLocalizedEntity->getFkProductAbstract()][$spyProductAbstractLocalizedEntity->getFkLocale()])) {
+                continue;
+            }
+
             $imageSets[$idProductAbstract][$spyProductAbstractLocalizedEntity->getIdAbstractAttributes()] = $this->generateProductAbstractImageSets(
                 $productAbstractImageSetsBulk[$spyProductAbstractLocalizedEntity->getFkProductAbstract()][$spyProductAbstractLocalizedEntity->getFkLocale()]
             );
@@ -134,6 +138,10 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
             if (isset($spyProductAbstractImageStorageEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, $imagesSets, $spyProductAbstractImageStorageEntities[$idProduct][$localeName]);
 
+                continue;
+            }
+
+            if (!isset($imagesSets[$idProduct][$spyProductAbstractLocalizedEntity->getIdAbstractAttributes()])) {
                 continue;
             }
 

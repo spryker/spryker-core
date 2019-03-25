@@ -5,9 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-require('jquery');
-
 /**
  * @param {string} validFromSelector
  * @param {string} validToSelector

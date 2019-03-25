@@ -13,6 +13,7 @@ use Spryker\Zed\WishlistsRestApi\WishlistsRestApiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\WishlistsRestApi\WishlistsRestApiConfig getConfig()
+ * @method \Spryker\Zed\WishlistsRestApi\Persistence\WishlistsRestApiEntityManagerInterface getEntityManager()
  */
 class WishlistsRestApiPersistenceFactory extends AbstractPersistenceFactory
 {

@@ -8,11 +8,12 @@
 namespace Spryker\Zed\CmsUserConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
-use Spryker\Zed\Cms\Dependency\Plugin\CmsVersionPostSavePluginInterface;
+use Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionPostSavePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CmsUserConnector\Business\CmsUserConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsUserConnector\CmsUserConnectorConfig getConfig()
  */
 class UserCmsVersionPostSavePlugin extends AbstractPlugin implements CmsVersionPostSavePluginInterface
 {

@@ -9,13 +9,15 @@ namespace Spryker\Zed\CompanyUnitAddress\Persistence;
 
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressToCompanyBusinessUnitQuery;
-use Spryker\Zed\CompanyUnitAddress\Persistence\Mapper\CompanyUnitAddressMapper;
-use Spryker\Zed\CompanyUnitAddress\Persistence\Mapper\CompanyUnitAddressMapperInterface;
+use Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CompanyUnitAddressMapper;
+use Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CompanyUnitAddressMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressConfig getConfig()
+ * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface getRepository()
  */
 class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -28,7 +30,7 @@ class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Persistence\Mapper\CompanyUnitAddressMapperInterface
+     * @return \Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CompanyUnitAddressMapperInterface
      */
     public function createCompanyUniAddressMapper(): CompanyUnitAddressMapperInterface
     {

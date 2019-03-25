@@ -15,6 +15,9 @@ use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToSto
 use Spryker\Zed\ProductOptionStorage\Dependency\QueryContainer\ProductOptionStorageToProductOptionQueryContainerBridge;
 use Spryker\Zed\ProductOptionStorage\Dependency\QueryContainer\ProductOptionStorageToProductQueryContainerBridge;
 
+/**
+ * @method \Spryker\Zed\ProductOptionStorage\ProductOptionStorageConfig getConfig()
+ */
 class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';

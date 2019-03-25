@@ -3,6 +3,10 @@
 
     <table name="spy_company_unit_address" idMethod="native" phpName="SpyCompanyUnitAddress" identifierQuoting="true">
         <column name="key" type="VARCHAR" size="255" description="Key is used for DataImport as identifier for existing entities. This should never be changed."/>
+
+        <unique name="spy_company_unit_address-unique-key">
+            <unique-column name="key"/>
+        </unique>
     </table>
 
 </database>

@@ -17,6 +17,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Money\Dependency\Facade\MoneyToCurrencyBridge;
 use Spryker\Zed\Money\Dependency\Facade\MoneyToStoreBridge;
 
+/**
+ * @method \Spryker\Zed\Money\MoneyConfig getConfig()
+ */
 class MoneyDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const STORE = 'store';

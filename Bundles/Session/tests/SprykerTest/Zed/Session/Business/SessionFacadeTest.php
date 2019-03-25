@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Session\Business;
 
 use Codeception\Test\Unit;
 use Silex\Application;
+use Spryker\Shared\Session\SessionConfig;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Session\Business\Exception\NotALockingSessionHandlerException;
 use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider;
@@ -109,7 +110,7 @@ class SessionFacadeTest extends Unit
     public function supportingLockSessionHandler()
     {
         return [
-            [SessionConstants::SESSION_HANDLER_REDIS_LOCKING],
+            [SessionConfig::SESSION_HANDLER_REDIS_LOCKING],
         ];
     }
 
@@ -119,8 +120,8 @@ class SessionFacadeTest extends Unit
     public function notSupportingLockSessionHandler()
     {
         return [
-            [SessionConstants::SESSION_HANDLER_REDIS],
-            [SessionConstants::SESSION_HANDLER_FILE],
+            [SessionConfig::SESSION_HANDLER_REDIS],
+            [SessionConfig::SESSION_HANDLER_FILE],
         ];
     }
 }

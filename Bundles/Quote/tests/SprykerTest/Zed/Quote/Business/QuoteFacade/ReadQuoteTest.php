@@ -34,12 +34,14 @@ class ReadQuoteTest extends Unit
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
+        $storeTransfer = $quoteTransfer->getStore();
 
         // Act
-        $quoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomer($customerTransfer);
+        $quoteResponseTransfer = $this->tester->getFacade()->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
 
         // Assert
         $this->assertTrue($quoteResponseTransfer->getIsSuccessful(), 'Quote response transfer should have ben successful.');

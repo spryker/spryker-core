@@ -14,6 +14,9 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\Kernel\Plugin\Pimple;
 
+/**
+ * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()
+ */
 class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_RESOURCE_ROUTES = 'PLUGIN_RESOURCE_ROUTES';
@@ -26,6 +29,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_FORMAT_RESPONSE_HEADERS = 'PLUGIN_FORMAT_RESPONSE_HEADERS';
     public const PLUGIN_CONTROLLER_BEFORE_ACTION = 'PLUGIN_CONTROLLER_BEFORE_ACTION';
     public const PLUGIN_CONTROLLER_AFTER_ACTION = 'PLUGIN_CONTROLLER_AFTER_ACTION';
+    public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const CLIENT_STORE = 'CLIENT_STORE';
@@ -52,6 +56,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFormatResponseHeadersPlugins($container);
         $container = $this->addControllerBeforeActionPlugins($container);
         $container = $this->addControllerAfterActionPlugins($container);
+        $container = $this->addApplicationPlugins($container);
 
         return $container;
     }
@@ -236,6 +241,28 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addApplicationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_APPLICATION, function (Container $container): array {
+            return $this->getApplicationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    protected function getApplicationPlugins(): array
+    {
+        return [];
     }
 
     /**

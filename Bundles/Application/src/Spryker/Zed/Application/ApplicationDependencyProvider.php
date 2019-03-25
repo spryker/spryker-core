@@ -27,6 +27,9 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorSer
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
+ */
 class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_ENCODING = 'util encoding service';
@@ -34,6 +37,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_PROVIDER_API = 'SERVICE_PROVIDER_API';
     public const INTERNAL_CALL_SERVICE_PROVIDER = 'INTERNAL_CALL_SERVICE_PROVIDER';
     public const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
+    public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -58,6 +62,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addApiServiceProviders($container);
         $container = $this->addInternalCallServiceProviders($container);
         $container = $this->addInternalCallServiceProvidersWithAuthentication($container);
+        $container = $this->addApplicationPlugins($container);
 
         return $container;
     }
@@ -179,6 +184,20 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addApplicationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_APPLICATION, function (Container $container): array {
+            return $this->getApplicationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getApiServiceProviders(Container $container)
@@ -202,6 +221,14 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getInternalCallServiceProvidersWithAuthentication(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    protected function getApplicationPlugins(): array
     {
         return [];
     }

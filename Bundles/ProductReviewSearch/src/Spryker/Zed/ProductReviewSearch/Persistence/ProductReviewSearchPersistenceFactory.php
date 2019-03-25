@@ -15,6 +15,7 @@ use Spryker\Zed\ProductReviewSearch\ProductReviewSearchDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductReviewSearch\ProductReviewSearchConfig getConfig()
  * @method \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchRepositoryInterface getRepository()
  */
 class ProductReviewSearchPersistenceFactory extends AbstractPersistenceFactory
 {

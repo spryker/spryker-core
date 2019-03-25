@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsBlockGui\CmsBlockGuiConfig getConfig()
+ */
 class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CMS_BLOCK = 'CMS_BLOCK_GUI:FACADE_CMS_BLOCK';
@@ -149,7 +152,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
     protected function getTwigEnvironment()
     {

@@ -13,6 +13,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSave
 
 /**
  * @method \Spryker\Zed\ShoppingListNote\Business\ShoppingListNoteFacade getFacade()
+ * @method \Spryker\Zed\ShoppingListNote\ShoppingListNoteConfig getConfig()
  */
 class ShoppingListItemNotePostSavePlugin extends AbstractPlugin implements ShoppingListItemPostSavePluginInterface
 {

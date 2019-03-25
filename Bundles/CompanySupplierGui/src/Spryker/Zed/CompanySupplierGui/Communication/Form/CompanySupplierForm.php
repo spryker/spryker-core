@@ -16,6 +16,9 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\CompanySupplierGui\Communication\CompanySupplierGuiCommunicationFactory getFactory()
+ */
 class CompanySupplierForm extends AbstractType
 {
     public const OPTION_VALUES_COMPANY_SUPPLIER = 'OPTION_VALUES_COMPANY_SUPPLIER';
@@ -27,7 +30,7 @@ class CompanySupplierForm extends AbstractType
      *
      * @return $this
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): self
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addCompanySuppliersSelectField($builder, $options);
 

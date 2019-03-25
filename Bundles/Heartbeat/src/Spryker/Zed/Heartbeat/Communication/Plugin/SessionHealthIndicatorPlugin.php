@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Heartbeat\Business\HeartbeatFacadeInterface getFacade()
  * @method \Spryker\Zed\Heartbeat\Communication\HeartbeatCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Heartbeat\HeartbeatConfig getConfig()
  */
 class SessionHealthIndicatorPlugin extends AbstractPlugin implements HealthIndicatorInterface
 {

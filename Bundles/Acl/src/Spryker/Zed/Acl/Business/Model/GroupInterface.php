@@ -83,7 +83,7 @@ interface GroupInterface
     public function hasGroup($idGroup);
 
     /**
-     * @param int $name
+     * @param string $name
      *
      * @return bool
      */

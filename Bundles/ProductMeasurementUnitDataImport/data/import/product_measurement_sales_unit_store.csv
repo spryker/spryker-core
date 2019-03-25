@@ -9,8 +9,11 @@ sales_unit_3,DE
 sales_unit_3,US
 sales_unit_3,AT
 sales_unit_4,DE
+sales_unit_4,US
 sales_unit_4,AT
+sales_unit_5,DE
 sales_unit_5,US
+sales_unit_5,AT
 sales_unit_6,DE
 sales_unit_6,US
 sales_unit_6,AT
@@ -71,9 +74,3 @@ sales_unit_24,AT
 sales_unit_25,DE
 sales_unit_25,US
 sales_unit_25,AT
-sales_unit_26,DE
-sales_unit_26,US
-sales_unit_26,AT
-sales_unit_27,DE
-sales_unit_27,US
-sales_unit_27,AT

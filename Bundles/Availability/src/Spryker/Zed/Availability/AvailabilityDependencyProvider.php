@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Availability;
 
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockBridge;
@@ -16,8 +17,12 @@ use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductBrid
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
+ */
 class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_EVENT = 'FACADE_EVENT';
     public const FACADE_OMS = 'FACADE_OMS';
     public const FACADE_STOCK = 'FACADE_STOCK';
     public const FACADE_TOUCH = 'FACADE_TOUCH';
@@ -38,6 +43,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTouchFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addEventFacade($container);
 
         return $container;
     }
@@ -63,6 +69,22 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             return new AvailabilityToStoreFacadeBridge($container->getLocator()->store()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventFacade(Container $container): Container
+    {
+        $container[static::FACADE_EVENT] = function (Container $container) {
+            return new AvailabilityToEventFacadeBridge(
+                $container->getLocator()->event()->facade()
+            );
         };
 
         return $container;

@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductQuantity\Business\ProductQuantityBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductQuantity\Persistence\ProductQuantityEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductQuantity\Persistence\ProductQuantityRepositoryInterface getRepository()
  */
 class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFacadeInterface
 {
@@ -76,5 +78,38 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
         return $this->getFactory()
             ->createProductQuantityReader()
             ->findProductQuantityTransfers();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function normalizeCartChangeTransferItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createCartChangeTransferQuantityNormalizer()
+            ->normalizeCartChangeTransferItems($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $normalizableFields
+     *
+     * @return bool
+     */
+    public function hasCartChangeTransferNormalizableItems(CartChangeTransfer $cartChangeTransfer, array $normalizableFields): bool
+    {
+        return $this->getFactory()
+            ->createCartChangeTransferNormalizerPreChecker()
+            ->hasNormalizableItems($cartChangeTransfer, $normalizableFields);
     }
 }

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class DataBuilderClassGenerator implements GeneratorInterface
 {
@@ -20,7 +20,7 @@ class DataBuilderClassGenerator implements GeneratorInterface
     protected $targetDirectory;
 
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     protected $twig;
 
@@ -31,18 +31,17 @@ class DataBuilderClassGenerator implements GeneratorInterface
     {
         $this->targetDirectory = $targetDirectory;
 
-        $loader = new Twig_Loader_Filesystem(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
-        $this->twig = new Twig_Environment($loader, []);
+        $loader = new FilesystemLoader(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
+        $this->twig = new Environment($loader, []);
     }
 
     /**
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface $definition
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinitionInterface $definition
      *
      * @return string
      */
     public function generate(DefinitionInterface $definition)
     {
-        /** @var \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinition $definition */
         $twigData = $this->getTwigData($definition);
         $fileName = $definition->getName() . '.php';
         $fileContent = $this->twig->render('builder.php.twig', $twigData);
@@ -57,7 +56,7 @@ class DataBuilderClassGenerator implements GeneratorInterface
     }
 
     /**
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinition $dataBuilderDefinition
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinitionInterface $dataBuilderDefinition
      *
      * @return array
      */

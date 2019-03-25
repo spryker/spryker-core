@@ -23,6 +23,15 @@ interface ProductPackagingUnitEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @return void
+     */
+    public function saveProductPackagingUnitTypeByName(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
      * @return bool
      */
     public function deleteProductPackagingUnitType(

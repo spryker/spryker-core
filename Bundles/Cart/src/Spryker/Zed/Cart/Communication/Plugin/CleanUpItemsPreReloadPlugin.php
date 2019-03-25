@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Cart\Business\CartFacadeInterface getFacade()
  * @method \Spryker\Zed\Cart\Communication\CartCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Cart\CartConfig getConfig()
  */
 class CleanUpItemsPreReloadPlugin extends AbstractPlugin implements PreReloadItemsPluginInterface
 {

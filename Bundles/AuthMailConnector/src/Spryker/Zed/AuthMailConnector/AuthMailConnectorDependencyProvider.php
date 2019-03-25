@@ -11,6 +11,9 @@ use Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailBridg
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig getConfig()
+ */
 class AuthMailConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MAIL = 'mail facade';
@@ -20,9 +23,22 @@ class AuthMailConnectorDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_MAIL] = function (Container $container) {
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addMailFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMailFacade(Container $container): Container
+    {
+        $container[static::FACADE_MAIL] = function (Container $container) {
             return new AuthMailConnectorToMailBridge($container->getLocator()->mail()->facade());
         };
 

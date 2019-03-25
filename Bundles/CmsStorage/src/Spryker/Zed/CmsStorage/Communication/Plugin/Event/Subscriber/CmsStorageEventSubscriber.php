@@ -8,8 +8,11 @@
 namespace Spryker\Zed\CmsStorage\Communication\Plugin\Event\Subscriber;
 
 use Spryker\Zed\Cms\Dependency\CmsEvents;
-use Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener\CmsPageStorageListener;
-use Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener\CmsPageUrlStorageListener;
+use Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener\CmsPageStoragePublishListener;
+use Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener\CmsPageStorageUnpublishListener;
+use Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener\CmsPageStoreStorageListener;
+use Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener\CmsPageUrlStoragePublishListener;
+use Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener\CmsPageUrlStorageUnpublishListener;
 use Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener\CmsPageVersionStorageListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
@@ -19,6 +22,8 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 /**
  * @method \Spryker\Zed\CmsStorage\Communication\CmsStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsStorage\Business\CmsStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsStorage\CmsStorageConfig getConfig()
+ * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface getQueryContainer()
  */
 class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -40,6 +45,9 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
         $this->addCmsPageUrlCreateStorageListener($eventCollection);
         $this->addCmsPageUrlUpdateStorageListener($eventCollection);
         $this->addCmsPageUrlDeleteStorageListener($eventCollection);
+        $this->addCmsPageStoreCreateStorageListener($eventCollection);
+        $this->addCmsPageStoreUpdateStorageListener($eventCollection);
+        $this->addCmsPageStoreDeleteStorageListener($eventCollection);
 
         return $eventCollection;
     }
@@ -51,7 +59,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPagePublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::CMS_VERSION_PUBLISH, new CmsPageStorageListener());
+        $eventCollection->addListenerQueued(CmsEvents::CMS_VERSION_PUBLISH, new CmsPageStoragePublishListener());
     }
 
     /**
@@ -61,7 +69,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::CMS_VERSION_UNPUBLISH, new CmsPageStorageListener());
+        $eventCollection->addListenerQueued(CmsEvents::CMS_VERSION_UNPUBLISH, new CmsPageStorageUnpublishListener());
     }
 
     /**
@@ -71,7 +79,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_CREATE, new CmsPageStorageListener());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_CREATE, new CmsPageStoragePublishListener());
     }
 
     /**
@@ -81,7 +89,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE, new CmsPageStorageListener());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE, new CmsPageStoragePublishListener());
     }
 
     /**
@@ -91,7 +99,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE, new CmsPageStorageListener());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE, new CmsPageStorageUnpublishListener());
     }
 
     /**
@@ -111,7 +119,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageUrlCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new CmsPageUrlStorageListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new CmsPageUrlStoragePublishListener());
     }
 
     /**
@@ -121,7 +129,7 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageUrlUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new CmsPageUrlStorageListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new CmsPageUrlStoragePublishListener());
     }
 
     /**
@@ -131,6 +139,36 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addCmsPageUrlDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new CmsPageUrlStorageListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new CmsPageUrlStorageUnpublishListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsPageStoreCreateStorageListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_CREATE, new CmsPageStoreStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsPageStoreUpdateStorageListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_UPDATE, new CmsPageStoreStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsPageStoreDeleteStorageListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_DELETE, new CmsPageStoreStorageListener());
     }
 }

@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\Application\Communication;
 
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Application\Application as SprykerApplication;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Application\ApplicationConfig;
 use Spryker\Zed\Application\ApplicationDependencyProvider;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
@@ -29,28 +32,50 @@ class ZedBootstrap
      */
     protected $application;
 
+    /**
+     * @var \Spryker\Shared\Application\Application|null
+     */
+    protected $sprykerApplication;
+
+    /**
+     * @var \Spryker\Zed\Application\ApplicationConfig
+     */
+    protected $config;
+
     public function __construct()
     {
         $this->application = $this->getBaseApplication();
+
+        if ($this->application instanceof ContainerInterface) {
+            $this->sprykerApplication = new SprykerApplication($this->application);
+        }
+
+        $this->config = new ApplicationConfig();
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Communication\Application
+     * @return \Spryker\Shared\Application\Application|\Spryker\Shared\Kernel\Communication\Application
      */
     public function boot()
     {
-        $store = Store::getInstance();
-        $this->application['debug'] = Config::get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
-        $this->application['locale'] = $store->getCurrentLocale();
+        $this->application['debug'] = function () {
+            return Config::get(ApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
+        };
 
-        if (Config::get(ApplicationConstants::ENABLE_WEB_PROFILER, false)) {
-            $this->application['profiler.cache_dir'] = APPLICATION_ROOT_DIR . '/data/' . $store->getStoreName() . '/cache/profiler';
-        }
+        $this->application['locale'] = Store::getInstance()->getCurrentLocale();
 
         $this->enableHttpMethodParameterOverride();
         $this->setUp();
 
-        return $this->application;
+        $this->application->boot();
+
+        if ($this->sprykerApplication === null) {
+            return $this->application;
+        }
+
+        $this->sprykerApplication->boot();
+
+        return $this->sprykerApplication;
     }
 
     /**
@@ -74,6 +99,28 @@ class ZedBootstrap
         }
 
         $this->registerServiceProvider();
+
+        if ($this->sprykerApplication !== null) {
+            $this->setupApplication();
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupApplication(): void
+    {
+        foreach ($this->getApplicationPlugins() as $applicationPlugin) {
+            $this->sprykerApplication->registerApplicationPlugin($applicationPlugin);
+        }
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    protected function getApplicationPlugins(): array
+    {
+        return $this->getProvidedDependency(ApplicationDependencyProvider::PLUGINS_APPLICATION);
     }
 
     /**
@@ -185,9 +232,9 @@ class ZedBootstrap
     protected function optimizeApp()
     {
         $application = $this->application;
-        $application['resolver'] = $this->application->share(function () use ($application) {
+        $application['resolver'] = function () use ($application) {
             return new ZedFragmentControllerResolver($application);
-        });
+        };
     }
 
     /**

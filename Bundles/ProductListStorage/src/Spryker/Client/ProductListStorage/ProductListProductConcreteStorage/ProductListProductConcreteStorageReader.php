@@ -38,13 +38,13 @@ class ProductListProductConcreteStorageReader implements ProductListProductConcr
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer|null
      */
-    public function findProductConcreteProductListStorage(int $idProductConcrete): ?ProductConcreteProductListStorageTransfer
+    public function findProductConcreteProductListStorage(int $idProduct): ?ProductConcreteProductListStorageTransfer
     {
-        $key = $this->generateKey($idProductConcrete);
+        $key = $this->generateKey($idProduct);
         $productConcreteProductListStorageData = $this->storageClient->get($key);
 
         if (!$productConcreteProductListStorageData) {
@@ -55,14 +55,14 @@ class ProductListProductConcreteStorageReader implements ProductListProductConcr
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return string
      */
-    protected function generateKey(int $idProductConcrete): string
+    protected function generateKey(int $idProduct): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference((string)$idProductConcrete);
+            ->setReference((string)$idProduct);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductListStorageConfig::PRODUCT_LIST_CONCRETE_RESOURCE_NAME)

@@ -18,6 +18,8 @@ use Spryker\Zed\ProductRelationStorage\Communication\Plugin\Event\Listener\Produ
 /**
  * @method \Spryker\Zed\ProductRelationStorage\Communication\ProductRelationStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductRelationStorage\ProductRelationStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface getQueryContainer()
  */
 class ProductRelationStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

@@ -16,6 +16,9 @@ use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToProdu
 use Spryker\Zed\ProductReviewSearch\Dependency\QueryContainer\ProductReviewSearchToProductReviewQueryContainerBridge;
 use Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilEncodingBridge;
 
+/**
+ * @method \Spryker\Zed\ProductReviewSearch\ProductReviewSearchConfig getConfig()
+ */
 class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';

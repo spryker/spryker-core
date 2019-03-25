@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Category\CategoryConfig getConfig()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  */
 class CategoryUrlPathPrefixUpdaterPlugin extends AbstractPlugin implements CategoryUrlPathPluginInterface
 {

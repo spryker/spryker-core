@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,6 +7,7 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\JsonApi;
 
+use ArrayObject;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class RestResource implements RestResourceInterface
@@ -21,7 +23,7 @@ class RestResource implements RestResourceInterface
     protected $type;
 
     /**
-     * @var array
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface[]
      */
     protected $links = [];
 
@@ -34,6 +36,11 @@ class RestResource implements RestResourceInterface
      * @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
      */
     protected $attributes;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
+     */
+    protected $payload;
 
     /**
      * @param string $type
@@ -86,16 +93,7 @@ class RestResource implements RestResourceInterface
      */
     public function addLink(string $name, string $resourceUri, array $meta = []): RestResourceInterface
     {
-        if (!$meta) {
-            $this->links[$name] = $resourceUri;
-
-            return $this;
-        }
-
-        $this->links[$name] = [
-            'href' => $resourceUri,
-            'meta' => $meta,
-        ];
+        $this->links[] = new RestLink($name, $resourceUri, $meta);
 
         return $this;
     }
@@ -107,7 +105,13 @@ class RestResource implements RestResourceInterface
      */
     public function hasLink(string $name): bool
     {
-        return isset($this->links[$name]);
+        foreach ($this->links as $link) {
+            if ($name === $link->getName()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -155,12 +159,10 @@ class RestResource implements RestResourceInterface
         ];
 
         if ($this->attributes) {
-            $response[RestResourceInterface::RESOURCE_ATTRIBUTES] = $this->attributes->toArray(true, true);
+            $response[RestResourceInterface::RESOURCE_ATTRIBUTES] = $this->transformTransferToArray($this->attributes);
         }
 
-        if ($this->links) {
-            $response[RestResourceInterface::RESOURCE_LINKS] = $this->links;
-        }
+        $response = $this->addLinksDataToResponse($response);
 
         if (!$includeRelations) {
             return $response;
@@ -169,6 +171,42 @@ class RestResource implements RestResourceInterface
         $relationships = $this->toArrayRelationships();
         if ($relationships) {
             $response[RestResourceInterface::RESOURCE_RELATIONSHIPS] = $relationships;
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $payload
+     *
+     * @return $this
+     */
+    public function setPayload(?AbstractTransfer $payload)
+    {
+        $this->payload = $payload;
+        return $this;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
+     */
+    public function getPayload(): ?AbstractTransfer
+    {
+        return $this->payload;
+    }
+
+    /**
+     * @param array $response
+     *
+     * @return array
+     */
+    protected function addLinksDataToResponse(array $response): array
+    {
+        if ($this->links) {
+            $response[RestResourceInterface::RESOURCE_LINKS] = [];
+            foreach ($this->links as $link) {
+                $response[RestResourceInterface::RESOURCE_LINKS] += $link->toArray();
+            }
         }
 
         return $response;
@@ -193,5 +231,40 @@ class RestResource implements RestResourceInterface
             }
         }
         return $relationships;
+    }
+
+    /**
+     * Used for preventing have empty object instead of empty arrays in the response.
+     * Converts transfer object to array.
+     * Replaces empty ArrayObjects to empty arrays.
+     *
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
+     *
+     * @return array
+     */
+    private function transformTransferToArray(AbstractTransfer $transfer): array
+    {
+        $transferData = $transfer->toArray(true, true);
+
+        return $this->transformEmptyArrayObjectToArray($transferData);
+    }
+
+    /**
+     * @param array $transferData
+     *
+     * @return array
+     */
+    private function transformEmptyArrayObjectToArray(array $transferData): array
+    {
+        foreach ($transferData as $key => $item) {
+            if (is_array($item)) {
+                $transferData[$key] = $this->transformEmptyArrayObjectToArray($item);
+            }
+            if (($item instanceof ArrayObject) && count($item) === 0) {
+                $transferData[$key] = [];
+            }
+        }
+
+        return $transferData;
     }
 }

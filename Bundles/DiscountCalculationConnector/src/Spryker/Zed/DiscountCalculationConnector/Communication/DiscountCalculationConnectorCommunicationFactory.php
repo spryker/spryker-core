@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorConfig getConfig()
+ * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacadeInterface getFacade()
  */
 class DiscountCalculationConnectorCommunicationFactory extends AbstractCommunicationFactory
 {

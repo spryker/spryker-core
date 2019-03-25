@@ -7,15 +7,17 @@
 
 namespace Spryker\Client\ProductListStorage\ProductViewVariantRestrictionExpander;
 
-use Generated\Shared\Transfer\AttributeMapStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
 use Spryker\Client\ProductListStorage\ProductConcreteRestriction\ProductConcreteRestrictionReaderInterface;
+use Spryker\Shared\ProductListStorage\ProductListStorageConfig;
 
+/**
+ * @see \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter
+ */
 class ProductViewVariantRestrictionExpander implements ProductViewVariantRestrictionExpanderInterface
 {
-    protected const PATTERN_ATTRIBUTE_KEY_VALUE_KEY = '%s:%s';
-    protected const ID_PRODUCT_CONCRETE = 'id_product_concrete';
-
     /**
      * @var \Spryker\Client\ProductListStorage\ProductConcreteRestriction\ProductConcreteRestrictionReaderInterface
      */
@@ -31,91 +33,265 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     }
 
     /**
+     * @see \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter::filterAbstractProductVariantsData()
+     *
+     * @deprecated Will be removed without replacement. Not recommended to use with spryker/product-storage ^1.4.0.
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     public function expandProductVariantData(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
-        $attributeMapStorageTransfer = $productViewTransfer->getAttributeMap();
-        if (!$attributeMapStorageTransfer) {
+        $productViewTransfer
+            ->requireAttributeMap()
+            ->getAttributeMap()
+                ->requireProductConcreteIds();
+
+        $restrictedProductConcreteIds = $this->getRestrictedProductConcreteIds($productViewTransfer->getAttributeMap()->getProductConcreteIds());
+
+        if (empty($restrictedProductConcreteIds)) {
             return $productViewTransfer;
         }
 
-        $this->filterRestrictedConcreteProducts($productViewTransfer->getAttributeMap());
+        $productConcreteIds = $this->filterProductConcreteIds($productViewTransfer->getAttributeMap()->getProductConcreteIds(), $restrictedProductConcreteIds);
+        $attributeVariants = $this->filterAttributeVariants($productViewTransfer->getAttributeMap()->getAttributeVariants(), $restrictedProductConcreteIds);
+        $superAttributes = $this->filterSuperAttributes($productViewTransfer->getAttributeMap()->getSuperAttributes(), $attributeVariants);
+        $availableAttributes = $this->getAvailableAttributes($productViewTransfer, $attributeVariants);
+
+        $productViewTransfer
+            ->setAvailableAttributes($availableAttributes)
+            ->getAttributeMap()
+                ->setProductConcreteIds($productConcreteIds)
+                ->setAttributeVariants($attributeVariants)
+                ->setSuperAttributes($superAttributes);
 
         return $productViewTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AttributeMapStorageTransfer $attributeMapStorageTransfer
+     * @param array $attributeVariants
+     * @param int[] $restrictedProductConcreteIds
      *
-     * @return void
+     * @return array
      */
-    protected function filterRestrictedConcreteProducts(AttributeMapStorageTransfer $attributeMapStorageTransfer): void
+    protected function filterAttributeVariants(array $attributeVariants, array $restrictedProductConcreteIds): array
     {
-        $superAttributes = $attributeMapStorageTransfer->getSuperAttributes();
-        $attributeVariants = $attributeMapStorageTransfer->getAttributeVariants();
-        $productConcreteIds = $attributeMapStorageTransfer->getProductConcreteIds();
+        $attributeVariantsIterator = $this->createRecursiveIterator($attributeVariants);
 
-        $notRestrictedAttributes = [];
-        $notRestrictedAttributeVariants = [];
-        $notRestrictedProductConcreteIds = [];
-        foreach ($superAttributes as $attributeKey => $attribute) {
-            foreach ($attribute as $valueKey => $value) {
-                $idProductConcrete = $this->findIdProductConcreteByAttributeValueKey(
-                    $this->getAttributeValueKey($attributeKey, $value),
-                    $attributeVariants
-                );
-
-                if (!$idProductConcrete || $this->productConcreteRestrictionReader->isProductConcreteRestricted($idProductConcrete)) {
-                    continue;
-                }
-
-                $notRestrictedAttributes[$attributeKey][] = $value;
-                $notRestrictedAttributeVariants[$this->getAttributeValueKey($attributeKey, $value)][static::ID_PRODUCT_CONCRETE] = $idProductConcrete;
-                $notRestrictedProductConcreteIds[$this->getSkuByIdProductConcrete($idProductConcrete, $productConcreteIds)] = $idProductConcrete;
+        $unRestrictedAttributeVariants = [];
+        foreach ($attributeVariantsIterator as $attributeVariantKey => $attributeVariantValue) {
+            if (!$attributeVariantsIterator->callHasChildren()) {
+                continue;
             }
+
+            if (!array_key_exists(ProductListStorageConfig::VARIANT_LEAF_NODE_ID, $attributeVariantValue)) {
+                continue;
+            }
+
+            if ($this->isRestrictedAttributeVariant($attributeVariantValue, $restrictedProductConcreteIds)) {
+                continue;
+            }
+
+            $attributeVariantPath = $this->buildAttributeVariantPath($attributeVariantsIterator, $attributeVariantKey, $attributeVariantValue);
+            $unRestrictedAttributeVariants = array_merge_recursive($unRestrictedAttributeVariants, $attributeVariantPath);
         }
-        $attributeMapStorageTransfer->setSuperAttributes($notRestrictedAttributes);
-        $attributeMapStorageTransfer->setAttributeVariants($notRestrictedAttributeVariants);
-        $attributeMapStorageTransfer->setProductConcreteIds($notRestrictedProductConcreteIds);
+
+        return $unRestrictedAttributeVariants;
     }
 
     /**
-     * @param int $idProductConcrete
-     * @param array $productConcreteIds
+     * @param array $superAttributes
+     * @param array $filteredAttributeVariants
      *
-     * @return string
+     * @return array
      */
-    protected function getSkuByIdProductConcrete(int $idProductConcrete, array $productConcreteIds): string
+    protected function filterSuperAttributes(array $superAttributes, array $filteredAttributeVariants): array
     {
-        return (string)array_search($idProductConcrete, $productConcreteIds);
+        $filteredSuperAttributes = [];
+        $filteredAttributeVariantsIterator = $this->createRecursiveIterator($filteredAttributeVariants);
+        foreach ($filteredAttributeVariantsIterator as $filteredAttributeVariantKey => $filteredAttributeVariant) {
+            if (!$filteredAttributeVariantsIterator->callHasChildren()) {
+                continue;
+            }
+
+            [$attributeKey, $attributeValue] = explode(ProductListStorageConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $filteredAttributeVariantKey);
+            $filteredSuperAttributes[$attributeKey][$attributeValue] = $attributeValue;
+        }
+
+        return array_replace(array_fill_keys(array_keys($superAttributes), []), $filteredSuperAttributes);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     * @param int[] $restrictedProductConcreteIds
+     *
+     * @return int[]
+     */
+    protected function filterProductConcreteIds(array $productConcreteIds, array $restrictedProductConcreteIds): array
+    {
+        return array_diff($productConcreteIds, $restrictedProductConcreteIds);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    protected function getRestrictedProductConcreteIds(array $productConcreteIds): array
+    {
+        return array_reduce($productConcreteIds, function (array $restrictedProductConcreteIds, int $productConcreteId) {
+            if ($this->productConcreteRestrictionReader->isProductConcreteRestricted($productConcreteId)) {
+                $restrictedProductConcreteIds[] = $productConcreteId;
+            }
+
+            return $restrictedProductConcreteIds;
+        }, []);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param array $unRestrictedAttributeVariants
+     *
+     * @return array
+     */
+    protected function getAvailableAttributes(ProductViewTransfer $productViewTransfer, array $unRestrictedAttributeVariants): array
+    {
+        $availableAttributes = $this->getAvailableAttributesForSelectedOptions($unRestrictedAttributeVariants, $productViewTransfer->getSelectedAttributes());
+
+        foreach ($productViewTransfer->getAvailableAttributes() as $attributeKey => $attributeValues) {
+            $availableValues = $this->getAvailableAttributeValues($attributeKey, $attributeValues, $unRestrictedAttributeVariants);
+
+            if (isset($availableAttributes[$attributeKey])) {
+                $availableAttributes[$attributeKey] = array_intersect($availableAttributes[$attributeKey], $availableValues);
+                continue;
+            }
+
+            $availableAttributes[$attributeKey] = $attributeValues;
+        }
+
+        return $availableAttributes;
+    }
+
+    /**
+     * @param array $unRestrictedAttributeVariants
+     * @param array $selectedAttributes
+     *
+     * @return array
+     */
+    protected function getAvailableAttributesForSelectedOptions(array $unRestrictedAttributeVariants, array $selectedAttributes = []): array
+    {
+        $availableAttributes = $availableAttributesForSelectedOptions = [];
+
+        foreach ($selectedAttributes as $key => $selectedAttribute) {
+            $selectedAttributeKey = $this->getAttributeKeyValue($key, $selectedAttributes[$key]);
+
+            if (isset($unRestrictedAttributeVariants[$selectedAttributeKey])) {
+                $availableAttributes = array_merge($availableAttributes, array_keys($unRestrictedAttributeVariants[$selectedAttributeKey]));
+            }
+        }
+
+        foreach ($availableAttributes as $availableAttributeKey) {
+            [$availableAttributeKey, $availableAttributeValue] = explode(ProductListStorageConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $availableAttributeKey);
+            $availableAttributesForSelectedOptions[$availableAttributeKey][] = $availableAttributeValue;
+        }
+
+        return $availableAttributesForSelectedOptions;
     }
 
     /**
      * @param string $attributeKey
-     * @param string $attributeName
+     * @param array $attributeValues
+     * @param array $unRestrictedAttributeVariants
      *
-     * @return string
+     * @return array
      */
-    protected function getAttributeValueKey(string $attributeKey, string $attributeName): string
+    protected function getAvailableAttributeValues(
+        string $attributeKey,
+        array $attributeValues,
+        array $unRestrictedAttributeVariants
+    ): array {
+        $availableAttributeValues = [];
+
+        foreach ($attributeValues as $attributeValue) {
+            $attributeKeyValue = $this->getAttributeKeyValue($attributeKey, $attributeValue);
+
+            if ($this->isAttributeKeyValueAvailable($attributeKeyValue, $unRestrictedAttributeVariants)) {
+                $availableAttributeValues[] = $attributeValue;
+            }
+        }
+
+        return $availableAttributeValues;
+    }
+
+    /**
+     * @param string $attributeKeyValue
+     * @param array $unRestrictedAttributeVariants
+     *
+     * @return bool
+     */
+    protected function isAttributeKeyValueAvailable(string $attributeKeyValue, array $unRestrictedAttributeVariants): bool
     {
-        return sprintf(
-            static::PATTERN_ATTRIBUTE_KEY_VALUE_KEY,
-            $attributeKey,
-            $attributeName
+        return array_key_exists($attributeKeyValue, $unRestrictedAttributeVariants);
+    }
+
+    /**
+     * @param \RecursiveIteratorIterator $iterator
+     * @param string $attributeVariantKey
+     * @param array $attributeVariantValue
+     *
+     * @return array
+     */
+    protected function buildAttributeVariantPath(
+        RecursiveIteratorIterator $iterator,
+        string $attributeVariantKey,
+        array $attributeVariantValue
+    ): array {
+        $attributeVariantPath[$attributeVariantKey] = $attributeVariantValue;
+        for ($i = $iterator->getDepth() - 1; $i >= 0; $i--) {
+            $attributeVariantPath = [
+                $iterator->getSubIterator($i)->key() => $attributeVariantPath,
+            ];
+        }
+
+        return $attributeVariantPath;
+    }
+
+    /**
+     * @param array $attributeVariantValue
+     * @param int[] $restrictedProductIds
+     *
+     * @return bool
+     */
+    protected function isRestrictedAttributeVariant(array $attributeVariantValue, array $restrictedProductIds): bool
+    {
+        return in_array($attributeVariantValue[ProductListStorageConfig::VARIANT_LEAF_NODE_ID], $restrictedProductIds);
+    }
+
+    /**
+     * @param array $attributeVariants
+     *
+     * @return \RecursiveIteratorIterator
+     */
+    protected function createRecursiveIterator(array $attributeVariants): RecursiveIteratorIterator
+    {
+        return new RecursiveIteratorIterator(
+            new RecursiveArrayIterator($attributeVariants),
+            RecursiveIteratorIterator::SELF_FIRST
         );
     }
 
     /**
-     * @param string $attributeValueKey
-     * @param array $attributeVariants
+     * @param string $attributeKey
+     * @param string $attributeValue
      *
-     * @return int|null
+     * @return string
      */
-    protected function findIdProductConcreteByAttributeValueKey(string $attributeValueKey, array $attributeVariants): ?int
+    protected function getAttributeKeyValue(string $attributeKey, string $attributeValue): string
     {
-        return $attributeVariants[$attributeValueKey][static::ID_PRODUCT_CONCRETE] ?? null;
+        return implode(ProductListStorageConfig::ATTRIBUTE_MAP_PATH_DELIMITER, [
+            $attributeKey,
+            $attributeValue,
+        ]);
     }
 }

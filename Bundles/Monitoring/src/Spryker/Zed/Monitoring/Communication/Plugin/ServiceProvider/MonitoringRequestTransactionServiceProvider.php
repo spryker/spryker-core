@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
  */
 class MonitoringRequestTransactionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

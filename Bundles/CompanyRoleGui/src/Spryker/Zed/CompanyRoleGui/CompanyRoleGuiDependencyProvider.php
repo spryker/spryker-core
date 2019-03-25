@@ -15,6 +15,9 @@ use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToPermissionFacad
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CompanyRoleGui\CompanyRoleGuiConfig getConfig()
+ */
 class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COMPANY = 'FACADE_COMPANY';

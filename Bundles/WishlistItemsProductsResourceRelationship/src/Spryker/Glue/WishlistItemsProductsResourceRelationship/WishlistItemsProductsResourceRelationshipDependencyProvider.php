@@ -11,6 +11,9 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\WishlistItemsProductsResourceRelationship\Dependency\RestResource\WishlistItemsProductsResourceRelationshipToProductsRestApiBridge;
 
+/**
+ * @method \Spryker\Glue\WishlistItemsProductsResourceRelationship\WishlistItemsProductsResourceRelationshipConfig getConfig()
+ */
 class WishlistItemsProductsResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const RESOURCE_PRODUCTS = 'RESOURCE_PRODUCTS';

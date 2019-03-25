@@ -386,6 +386,9 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @module Customer
+     * @module CompanyUser
+     *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
@@ -394,6 +397,11 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     {
         $shoppingListsCompanyUsers = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
+                ->useSpyCompanyUserQuery()
+                    ->useCustomerQuery()
+                        ->filterByAnonymizedAt(null)
+                    ->endUse()
+                ->endUse()
             ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
             ->find();
 
@@ -494,11 +502,9 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function isCompanyBusinessUnitSharedWithShoppingLists(int $idCompanyBusinessUnit): bool
     {
-        $existsSpyCompanyBusinessUnit = $this->getFactory()
+        return $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->exists();
-
-        return $existsSpyCompanyBusinessUnit;
     }
 }

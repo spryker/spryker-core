@@ -17,6 +17,7 @@ use Spryker\Zed\ProductResourceAliasStorage\Communication\Plugin\Event\Listener\
 /**
  * @method \Spryker\Zed\ProductResourceAliasStorage\Business\ProductResourceAliasStorageFacade getFacade()
  * @method \Spryker\Zed\ProductResourceAliasStorage\Communication\ProductResourceAliasStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductResourceAliasStorage\ProductResourceAliasStorageConfig getConfig()
  */
 class ProductResourceAliasStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

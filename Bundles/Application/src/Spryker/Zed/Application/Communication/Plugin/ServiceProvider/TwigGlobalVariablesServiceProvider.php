@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
  */
 class TwigGlobalVariablesServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -33,7 +34,7 @@ class TwigGlobalVariablesServiceProvider extends AbstractPlugin implements Servi
                     'environment' => APPLICATION_ENV,
                     'store' => Store::getInstance()->getStoreName(),
                     'title' => Config::get(KernelConstants::PROJECT_NAMESPACE) . ' | Zed | ' . ucfirst(APPLICATION_ENV),
-                    'currentController' => get_class($this),
+                    'currentController' => static::class,
                 ];
 
                 return $variables;

@@ -10,6 +10,10 @@ namespace Spryker\Zed\CustomerNote\Persistence;
 use Orm\Zed\CustomerNote\Persistence\SpyCustomerNoteQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\CustomerNote\Persistence\CustomerNoteEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CustomerNote\Persistence\CustomerNoteRepositoryInterface getRepository()
+ */
 class CustomerNotePersistenceFactory extends AbstractPersistenceFactory
 {
     /**

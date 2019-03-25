@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
  * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface getRepository()
  */
 class CustomerPersistenceFactory extends AbstractPersistenceFactory
 {

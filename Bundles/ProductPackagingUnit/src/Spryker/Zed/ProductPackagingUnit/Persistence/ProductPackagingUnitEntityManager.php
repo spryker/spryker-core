@@ -39,6 +39,23 @@ class ProductPackagingUnitEntityManager extends AbstractEntityManager implements
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @return void
+     */
+    public function saveProductPackagingUnitTypeByName(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): void {
+        $productPackagingUnitTypeEntity = $this->getFactory()
+            ->createProductPackagingUnitTypeQuery()
+            ->filterByName($productPackagingUnitTypeTransfer->getName())
+            ->findOneOrCreate();
+
+        $productPackagingUnitTypeEntity->fromArray($productPackagingUnitTypeTransfer->modifiedToArray());
+        $productPackagingUnitTypeEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
      * @return bool
      */
     public function deleteProductPackagingUnitType(

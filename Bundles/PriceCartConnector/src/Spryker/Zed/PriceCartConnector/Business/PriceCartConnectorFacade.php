@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceCartConnector\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -41,6 +42,20 @@ class PriceCartConnectorFacade extends AbstractFacade implements PriceCartConnec
      */
     public function validatePrices(CartChangeTransfer $cartChangeTransfer)
     {
-         return $this->getFactory()->createPriceProductValidator()->validatePrices($cartChangeTransfer);
+        return $this->getFactory()->createPriceProductValidator()->validatePrices($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function filterItemsWithoutPrice(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()->createItemsWithoutPriceFilter()->filterItems($quoteTransfer);
     }
 }

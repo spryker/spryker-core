@@ -17,11 +17,12 @@ use Spryker\Zed\Twig\TwigDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Twig\TwigConfig getConfig()
+ * @method \Spryker\Zed\Twig\Business\TwigFacadeInterface getFacade()
  */
 class TwigCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Twig_LoaderInterface
+     * @return \Twig\Loader\LoaderInterface
      */
     public function createFilesystemLoader()
     {

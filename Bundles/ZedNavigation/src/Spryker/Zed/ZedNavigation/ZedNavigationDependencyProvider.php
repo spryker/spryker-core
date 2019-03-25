@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingBridge;
 
+/**
+ * @method \Spryker\Zed\ZedNavigation\ZedNavigationConfig getConfig()
+ */
 class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const URL_BUILDER = 'url builder';

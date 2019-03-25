@@ -120,6 +120,7 @@
         <property name="nameDashed" type="string"/>
         <property name="organization" type="Organization"/>
         <property name="application" type="Application"/>
+        <property name="applications" type="Application[]" singular="application"/>
         <property name="path" type="string"/>
         <property name="isStandalone" type="bool"/>
     </transfer>

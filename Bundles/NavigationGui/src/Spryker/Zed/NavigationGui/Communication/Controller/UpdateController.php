@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
  */
 class UpdateController extends AbstractController
 {
@@ -26,9 +27,18 @@ class UpdateController extends AbstractController
     {
         $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
         $navigationFormDataProvider = $this->getFactory()->createNavigationFormDataProvider();
+
+        $navigationFormData = $navigationFormDataProvider->getData($idNavigation);
+
+        if ($navigationFormData === null) {
+            $this->addErrorMessage("Navigation with id %s doesn't exist", ['%s' => $idNavigation]);
+
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
+        }
+
         $navigationForm = $this->getFactory()
             ->getUpdateNavigationForm(
-                $navigationFormDataProvider->getData($idNavigation),
+                $navigationFormData,
                 $navigationFormDataProvider->getOptions()
             )
             ->handleRequest($request);
@@ -39,7 +49,7 @@ class UpdateController extends AbstractController
                 ->getNavigationFacade()
                 ->updateNavigation($navigationTransfer);
 
-            $this->addSuccessMessage(sprintf('Navigation element %d was updated successfully.', $idNavigation));
+            $this->addSuccessMessage('Navigation element %d was updated successfully.', ['%d' => $idNavigation]);
 
             return $this->redirectResponse('/navigation-gui');
         }

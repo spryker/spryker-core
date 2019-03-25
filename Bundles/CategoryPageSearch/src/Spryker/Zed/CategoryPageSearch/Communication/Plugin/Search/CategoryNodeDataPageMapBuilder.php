@@ -18,6 +18,8 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 /**
  * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
+ * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
  */
 class CategoryNodeDataPageMapBuilder extends AbstractPlugin implements NamedPageMapInterface
 {

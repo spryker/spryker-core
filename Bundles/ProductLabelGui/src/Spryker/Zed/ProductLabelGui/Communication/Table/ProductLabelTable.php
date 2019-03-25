@@ -210,11 +210,7 @@ class ProductLabelTable extends AbstractTable
         $statusName = $isActive ? 'Active' : 'Inactive';
         $statusCssClass = $isActive ? 'label-info' : 'label-danger';
 
-        return sprintf(
-            '<span class="label %s">%s</span>',
-            $statusCssClass,
-            $statusName
-        );
+        return $this->generateLabel($statusName, $statusCssClass);
     }
 
     /**

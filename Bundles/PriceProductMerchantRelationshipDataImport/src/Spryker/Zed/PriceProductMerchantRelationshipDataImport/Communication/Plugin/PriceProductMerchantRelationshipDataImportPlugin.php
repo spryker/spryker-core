@@ -15,6 +15,7 @@ use Spryker\Zed\PriceProductMerchantRelationshipDataImport\PriceProductMerchantR
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductMerchantRelationshipDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipDataImport\PriceProductMerchantRelationshipDataImportConfig getConfig()
  */
 class PriceProductMerchantRelationshipDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

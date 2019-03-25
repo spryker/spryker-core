@@ -27,7 +27,7 @@ class Locator extends AbstractLocatorLocator
                 new ResourceLocator(),
             ];
         }
-        $bundleProxy->setLocator($this->locator);
+        $bundleProxy->setLocators($this->locator);
 
         return $bundleProxy;
     }

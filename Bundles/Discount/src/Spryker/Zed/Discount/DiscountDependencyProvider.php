@@ -33,6 +33,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
+ */
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MESSENGER = 'MESSENGER_FACADE';

@@ -16,6 +16,8 @@ use Spryker\Zed\ProductCategoryFilterStorage\Communication\Plugin\Event\Listener
 /**
  * @method \Spryker\Zed\ProductCategoryFilterStorage\Communication\ProductCategoryFilterStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategoryFilterStorage\Business\ProductCategoryFilterStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductCategoryFilterStorage\ProductCategoryFilterStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductCategoryFilterStorage\Persistence\ProductCategoryFilterStorageQueryContainerInterface getQueryContainer()
  */
 class ProductCategoryFilterStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

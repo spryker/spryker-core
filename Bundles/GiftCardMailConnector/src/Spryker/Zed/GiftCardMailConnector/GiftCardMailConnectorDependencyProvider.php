@@ -14,6 +14,9 @@ use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToS
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\GiftCardMailConnector\GiftCardMailConnectorConfig getConfig()
+ */
 class GiftCardMailConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MAIL = 'FACADE_MAIL';

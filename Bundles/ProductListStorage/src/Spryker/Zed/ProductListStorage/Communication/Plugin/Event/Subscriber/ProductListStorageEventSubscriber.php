@@ -26,6 +26,7 @@ use Spryker\Zed\ProductListStorage\Communication\Plugin\Event\Listener\ProductLi
 /**
  * @method \Spryker\Zed\ProductListStorage\Communication\ProductListStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductListStorage\Business\ProductListStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductListStorage\ProductListStorageConfig getConfig()
  */
 class ProductListStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

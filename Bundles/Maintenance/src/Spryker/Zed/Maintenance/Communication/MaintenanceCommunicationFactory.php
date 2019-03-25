@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Maintenance\MaintenanceConfig getConfig()
+ * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacadeInterface getFacade()
  */
 class MaintenanceCommunicationFactory extends AbstractCommunicationFactory
 {

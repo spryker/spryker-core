@@ -13,9 +13,12 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
+ * @deprecated Use `\Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteStoragePublishListener` and `\Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteStorageUnpublishListener` instead.
+ *
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductStorage\ProductStorageConfig getConfig()
  */
 class ProductConcreteStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

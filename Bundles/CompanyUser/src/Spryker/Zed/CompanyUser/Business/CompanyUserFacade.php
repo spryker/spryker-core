@@ -224,4 +224,51 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
             ->createCompanyUserStatusHandler()
             ->disableCompanyUser($companyUserTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyUser()
+            ->deleteCompanyUser($companyUserTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getActiveCompanyUsersByCustomerReference(
+        CustomerTransfer $customerTransfer
+    ): CompanyUserCollectionTransfer {
+        return $this->getFactory()
+            ->createCompanyUser()
+            ->getActiveCompanyUsersByCustomerReference($customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer
+    {
+        return $this->getFactory()->createCompanyUser()->findCompanyUserById($idCompanyUser);
+    }
 }

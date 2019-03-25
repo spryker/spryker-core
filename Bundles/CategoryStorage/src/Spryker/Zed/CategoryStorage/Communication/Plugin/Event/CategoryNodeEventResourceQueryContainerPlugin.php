@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  */
 class CategoryNodeEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {

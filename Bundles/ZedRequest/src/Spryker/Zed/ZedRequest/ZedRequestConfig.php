@@ -48,7 +48,7 @@ class ZedRequestConfig extends AbstractBundleConfig
             $fileName .= '_' . $bundleControllerAction;
         }
 
-        return $fileName . '.log';
+        return basename($fileName . '.log');
     }
 
     /**

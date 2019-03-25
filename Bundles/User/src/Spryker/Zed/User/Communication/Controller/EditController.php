@@ -40,6 +40,8 @@ class EditController extends AbstractController
     public const MESSAGE_USER_DELETE_ERROR = 'User was not deleted.';
     public const MESSAGE_ID_USER_EXTRACT_ERROR = 'Missing user id!';
 
+    protected const MESSAGE_USER_NOT_FOUND = "User couldn't be found";
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -99,10 +101,17 @@ class EditController extends AbstractController
         }
 
         $dataProvider = $this->getFactory()->createUserUpdateFormDataProvider();
+        $providerData = $dataProvider->getData($idUser);
+
+        if ($providerData === null) {
+            $this->addErrorMessage(static::MESSAGE_USER_NOT_FOUND);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
 
         $userForm = $this->getFactory()
             ->createUpdateUserForm(
-                $dataProvider->getData($idUser),
+                $providerData,
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
@@ -187,6 +196,43 @@ class EditController extends AbstractController
         $this->addErrorMessage(static::MESSAGE_USER_DEACTIVATE_ERROR);
 
         return $this->redirectResponse(static::USER_LISTING_URL);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function confirmDeleteAction(Request $request)
+    {
+        $idUser = $this->castId($request->query->get(static::PARAM_ID_USER));
+
+        if (!$idUser) {
+            $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
+
+        if ($this->isCurrentUser($idUser)) {
+            $this->addErrorMessage(static::MESSAGE_USER_DELETE_ERROR);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
+
+        $userTransfer = $this->getFacade()->findUserById($idUser);
+
+        if (!$userTransfer) {
+            $this->addErrorMessage(static::MESSAGE_USER_NOT_FOUND);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
+
+        $userDeleteConfirmForm = $this->getFactory()->getUserDeleteConfirmForm();
+
+        return $this->viewResponse([
+            'userDeleteConfirmForm' => $userDeleteConfirmForm->createView(),
+            'user' => $userTransfer,
+        ]);
     }
 
     /**

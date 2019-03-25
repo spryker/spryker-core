@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Tax\TaxConfig getConfig()
  */
 class TaxSetForm extends AbstractType
 {
@@ -160,6 +161,10 @@ class TaxSetForm extends AbstractType
     {
         return new Callback([
             'callback' => function ($name, ExecutionContextInterface $context) {
+                if (empty($name)) {
+                    return;
+                }
+
                 /** @var \Symfony\Component\Form\Form $form */
                 $form = $context->getObject();
                 $idTaxSet = $form->getParent()->getData()->getIdTaxSet();

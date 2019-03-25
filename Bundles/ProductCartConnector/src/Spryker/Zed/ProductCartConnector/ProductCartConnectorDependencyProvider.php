@@ -13,6 +13,9 @@ use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLoc
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToMessengerFacadeBridge;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductBridge;
 
+/**
+ * @method \Spryker\Zed\ProductCartConnector\ProductCartConnectorConfig getConfig()
+ */
 class ProductCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';

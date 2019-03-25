@@ -12,6 +12,9 @@ use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUser
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\BusinessOnBehalf\BusinessOnBehalfConfig getConfig()
+ */
 class BusinessOnBehalfDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';

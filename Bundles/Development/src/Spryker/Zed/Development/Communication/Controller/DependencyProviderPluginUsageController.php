@@ -74,13 +74,12 @@ class DependencyProviderPluginUsageController extends AbstractController
 
         $streamCsv = function () use ($dependencyProviderPluginUsages) {
             $resource = fopen('php://output', 'w');
-            $header = ['organization', 'application', 'module', 'dependency_provider_class_name', 'plugin_organization', 'plugin_application', 'plugin_module', 'plugin_class_name'];
+            $header = ['organization', 'module', 'dependency_provider_class_name', 'plugin_organization', 'plugin_application', 'plugin_module', 'plugin_class_name'];
             fputcsv($resource, $header);
             foreach ($dependencyProviderPluginUsages->getDependencyProvider() as $dependencyProviderTransfer) {
                 foreach ($dependencyProviderTransfer->getUsedPlugins() as $pluginTransfer) {
                     $row = [
                         'organization' => $dependencyProviderTransfer->getModule()->getOrganization()->getName(),
-                        'application' => $dependencyProviderTransfer->getModule()->getApplication()->getName(),
                         'module' => $dependencyProviderTransfer->getModule()->getName(),
                         'dependency_provider_class_name' => $dependencyProviderTransfer->getFullyQualifiedClassName(),
                         'plugin_organization' => $pluginTransfer->getModule()->getOrganization()->getName(),

@@ -18,8 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Dataset\Business\DatasetFacade getFacade()
  * @method \Spryker\Zed\Dataset\Communication\DatasetCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface getRepository()
  */
-
 class EditController extends AbstractController
 {
     protected const URL_PARAM_ID_DATASET = 'id-dataset';

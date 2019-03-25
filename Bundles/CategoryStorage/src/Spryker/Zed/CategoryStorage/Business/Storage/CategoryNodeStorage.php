@@ -207,7 +207,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
         $categoryNodeStorageTransfer->setIsActive($categoryNode->getCategory()->getIsActive());
         $categoryNodeStorageTransfer->setMetaTitle($attribute->getMetaTitle());
         $categoryNodeStorageTransfer->setMetaDescription($attribute->getMetaDescription());
-        $categoryNodeStorageTransfer->setMetaKeywords($attribute->getMetaDescription());
+        $categoryNodeStorageTransfer->setMetaKeywords($attribute->getMetaKeywords());
         $categoryNodeStorageTransfer->setImage($attribute->getCategoryImageName());
         $categoryNodeStorageTransfer->setTemplatePath($categoryNode->getCategory()->getCategoryTemplate()->getTemplatePath());
         $categoryNodeStorageTransfer->setOrder($categoryNode->getNodeOrder());

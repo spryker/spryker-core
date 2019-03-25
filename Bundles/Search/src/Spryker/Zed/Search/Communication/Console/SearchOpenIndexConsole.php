@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
  */
 class SearchOpenIndexConsole extends Console
 {

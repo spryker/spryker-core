@@ -14,7 +14,6 @@ use Spryker\Shared\ErrorHandler\ErrorHandler;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Shared\ErrorHandler\ErrorLoggerInterface;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
-use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
 /**
  * Auto-generated group annotations
@@ -141,7 +140,7 @@ class ErrorHandlerTest extends Unit
      * @param \Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface $errorRenderer
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\ErrorHandler\ErrorHandler
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\ErrorHandler\ErrorHandler
      */
     protected function getErrorHandlerMock(
         ErrorLoggerInterface $errorLogger,
@@ -165,25 +164,23 @@ class ErrorHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\ErrorHandler\ErrorLogger
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\ErrorHandler\ErrorLogger
      */
     protected function getErrorLoggerMock()
     {
         $loggerMock = $this->getLoggerMock();
-        $newRelicApiMock = $this->getNewRelicApiMock();
 
         $errorLoggerMock = $this->getMockBuilder(ErrorLogger::class)
-            ->setMethods(['getLogger', 'createNewRelicApi', 'log'])
+            ->setMethods(['getLogger', 'log'])
             ->getMock();
 
         $errorLoggerMock->method('getLogger')->willReturn($loggerMock);
-        $errorLoggerMock->method('createNewRelicApi')->willReturn($newRelicApiMock);
 
         return $errorLoggerMock;
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
     protected function getLoggerMock()
     {
@@ -194,18 +191,7 @@ class ErrorHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelicApi\NewRelicApiInterface
-     */
-    protected function getNewRelicApiMock()
-    {
-        $newRelicApiMock = $this->getMockBuilder(NewRelicApiInterface::class)
-            ->getMock();
-
-        return $newRelicApiMock;
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface
      */
     protected function getErrorRendererMock()
     {

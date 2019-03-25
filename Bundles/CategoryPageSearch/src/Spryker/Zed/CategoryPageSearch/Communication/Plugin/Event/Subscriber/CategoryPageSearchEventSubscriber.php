@@ -8,10 +8,14 @@
 namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Subscriber;
 
 use Spryker\Zed\Category\Dependency\CategoryEvents;
-use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeSearchListener;
-use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryPageSearchListener;
-use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateSearchListener;
-use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeSearchPublishListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryAttributeSearchUnpublishListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryPageSearchPublishListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryPageSearchUnpublishListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateSearchPublishListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateSearchUnpublishListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchPublishListener;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchUnpublishListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -19,6 +23,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
+ * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
  */
 class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -56,7 +62,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCategoryNodeCategoryTemplateSearchCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_CREATE, new CategoryNodeCategoryTemplateSearchListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_CREATE, new CategoryNodeCategoryTemplateSearchPublishListener());
     }
 
     /**
@@ -66,7 +72,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCategoryNodeCategoryTemplateSearchUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_UPDATE, new CategoryNodeCategoryTemplateSearchListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_UPDATE, new CategoryNodeCategoryTemplateSearchPublishListener());
     }
 
     /**
@@ -76,7 +82,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCategoryNodeCategoryTemplateSearchDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_DELETE, new CategoryNodeCategoryTemplateSearchListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_DELETE, new CategoryNodeCategoryTemplateSearchUnpublishListener());
     }
 
     /**
@@ -86,7 +92,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCategoryNodeCategoryAttributeSearchCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE, new CategoryNodeCategoryAttributeSearchListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE, new CategoryNodeCategoryAttributeSearchPublishListener());
     }
 
     /**
@@ -96,7 +102,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCategoryNodeCategoryAttributeSearchUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE, new CategoryNodeCategoryAttributeSearchListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE, new CategoryNodeCategoryAttributeSearchPublishListener());
     }
 
     /**
@@ -106,7 +112,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCategoryNodeCategoryAttributeSearchDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE, new CategoryNodeCategoryAttributeSearchListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE, new CategoryNodeCategoryAttributeSearchUnpublishListener());
     }
 
     /**
@@ -116,7 +122,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCategoryNodeCategoryPageSearchCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_CREATE, new CategoryNodeCategoryPageSearchListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_CREATE, new CategoryNodeCategoryPageSearchPublishListener());
     }
 
     /**
@@ -126,7 +132,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCategoryNodeCategoryPageSearchUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_UPDATE, new CategoryNodeCategoryPageSearchListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_UPDATE, new CategoryNodeCategoryPageSearchPublishListener());
     }
 
     /**
@@ -136,7 +142,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCategoryNodeCategoryPageSearchDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_DELETE, new CategoryNodeCategoryPageSearchListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_DELETE, new CategoryNodeCategoryPageSearchUnpublishListener());
     }
 
     /**
@@ -146,7 +152,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCategoryPageSearchPublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_NODE_PUBLISH, new CategoryNodeSearchListener());
+        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_NODE_PUBLISH, new CategoryNodeSearchPublishListener());
     }
 
     /**
@@ -156,7 +162,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCategoryPageSearchUnPublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_NODE_UNPUBLISH, new CategoryNodeSearchListener());
+        $eventCollection->addListenerQueued(CategoryEvents::CATEGORY_NODE_UNPUBLISH, new CategoryNodeSearchUnpublishListener());
     }
 
     /**
@@ -166,7 +172,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCategoryNodeSearchCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_CREATE, new CategoryNodeSearchListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_CREATE, new CategoryNodeSearchPublishListener());
     }
 
     /**
@@ -176,7 +182,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCategoryNodeSearchUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_UPDATE, new CategoryNodeSearchListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_UPDATE, new CategoryNodeSearchPublishListener());
     }
 
     /**
@@ -186,6 +192,6 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addCategoryNodeSearchDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new CategoryNodeSearchListener());
+        $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new CategoryNodeSearchUnpublishListener());
     }
 }

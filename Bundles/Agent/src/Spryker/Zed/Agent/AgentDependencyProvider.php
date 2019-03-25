@@ -12,6 +12,9 @@ use Orm\Zed\User\Persistence\SpyUserQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Agent\AgentConfig getConfig()
+ */
 class AgentDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_USER = 'PROPEL_QUERY_USER';

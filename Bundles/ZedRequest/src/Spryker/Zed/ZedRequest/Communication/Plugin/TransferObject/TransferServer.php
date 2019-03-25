@@ -76,6 +76,8 @@ class TransferServer
     }
 
     /**
+     * This method intended to be used in development environment only!
+     *
      * @return void
      */
     public function activateRepeating()

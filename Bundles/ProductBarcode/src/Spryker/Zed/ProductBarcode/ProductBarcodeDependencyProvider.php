@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductBarcode\Dependency\Service\ProductBarcodeToBarcodeServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductBarcode\ProductBarcodeConfig getConfig()
+ */
 class ProductBarcodeDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_BARCODE = 'SERVICE_BARCODE';

@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
  */
 class KernelLogServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

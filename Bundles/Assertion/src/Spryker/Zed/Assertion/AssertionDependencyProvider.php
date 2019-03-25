@@ -9,6 +9,9 @@ namespace Spryker\Zed\Assertion;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\Assertion\AssertionConfig getConfig()
+ */
 class AssertionDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

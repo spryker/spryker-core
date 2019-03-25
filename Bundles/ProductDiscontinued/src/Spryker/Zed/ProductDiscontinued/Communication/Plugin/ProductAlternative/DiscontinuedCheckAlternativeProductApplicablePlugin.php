@@ -13,6 +13,7 @@ use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProduct
 /**
  * @method \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedBusinessFactory getFactory()
  * @method \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig getConfig()
  */
 class DiscontinuedCheckAlternativeProductApplicablePlugin extends AbstractPlugin implements AlternativeProductApplicablePluginInterface
 {

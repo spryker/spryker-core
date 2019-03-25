@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsGui;
 
+use Spryker\Zed\CmsGui\Communication\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsBridge;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsGlossaryFacadeBridge;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleBridge;
@@ -14,9 +15,13 @@ use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlBridge;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerBridge;
 use Spryker\Zed\CmsGui\Dependency\Service\CmsGuiToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
+ */
 class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'locale facade';
@@ -33,6 +38,7 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGINS_CMS_PAGE_TABLE_EXPANDER = 'PLUGINS_CMS_PAGE_TABLE_EXPANDER';
     public const PLUGINS_CREATE_GLOSSARY_EXPANDER = 'PLUGINS_CREATE_GLOSSARY_EXPANDER';
+    public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -71,12 +77,13 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addCmsPageTableExpanderPlugins($container);
         $container = $this->addCreateGlossaryExpanderPlugins($container);
+        $container = $this->addStoreRelationFormTypePlugin($container);
 
         return $container;
     }
 
     /**
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
     protected function getTwigEnvironment()
     {
@@ -126,5 +133,36 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCreateGlossaryExpanderPlugins()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreRelationFormTypePlugin(Container $container): Container
+    {
+        $container[static::PLUGIN_STORE_RELATION_FORM_TYPE] = function () {
+            return $this->getStoreRelationFormTypePlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\CmsGui\Communication\Exception\MissingStoreRelationFormTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function getStoreRelationFormTypePlugin(): FormTypeInterface
+    {
+        throw new MissingStoreRelationFormTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure StoreRelationFormType ' .
+                'in your own CmsGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
+                'to be able to manage cms pages.',
+                FormTypeInterface::class
+            )
+        );
     }
 }

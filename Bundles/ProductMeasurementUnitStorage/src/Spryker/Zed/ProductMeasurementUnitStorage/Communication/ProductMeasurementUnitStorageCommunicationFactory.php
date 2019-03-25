@@ -13,6 +13,9 @@ use Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageDepen
 
 /**
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductMeasurementUnitStorage\Business\ProductMeasurementUnitStorageFacadeInterface getFacade()
  */
 class ProductMeasurementUnitStorageCommunicationFactory extends AbstractCommunicationFactory
 {

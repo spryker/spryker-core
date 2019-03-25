@@ -14,6 +14,8 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface;
 /**
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProduct\Communication\PriceProductCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface getQueryContainer()
  */
 class PriceProductAbstractAfterUpdatePlugin extends AbstractPlugin implements ProductAbstractPluginUpdateInterface
 {

@@ -15,6 +15,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginIn
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
  */
 class PackagingUnitSplittableItemTransformerStrategyPlugin extends AbstractPlugin implements ItemTransformerStrategyPluginInterface
 {

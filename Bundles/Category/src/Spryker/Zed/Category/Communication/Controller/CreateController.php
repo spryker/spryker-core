@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  */
 class CreateController extends AbstractController
 {
@@ -51,6 +52,7 @@ class CreateController extends AbstractController
         return $this->viewResponse([
             'categoryForm' => $form->createView(),
             'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
+            'categoryFormTabs' => $this->getFactory()->createCategoryFormTabs()->createView(),
         ]);
     }
 

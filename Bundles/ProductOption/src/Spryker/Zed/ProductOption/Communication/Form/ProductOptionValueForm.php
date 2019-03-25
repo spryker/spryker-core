@@ -23,6 +23,7 @@ use Symfony\Component\Validator\Constraints\Regex;
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
  */
 class ProductOptionValueForm extends AbstractType
 {

@@ -13,6 +13,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface getRepository()
  */
 class CheckTimeoutConsole extends Console
 {

@@ -13,6 +13,7 @@ use Spryker\Zed\ProductTaxSetsRestApi\ProductTaxSetsRestApiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductTaxSetsRestApi\ProductTaxSetsRestApiConfig getConfig()
+ * @method \Spryker\Zed\ProductTaxSetsRestApi\Persistence\ProductTaxSetsRestApiEntityManagerInterface getEntityManager()
  */
 class ProductTaxSetsRestApiPersistenceFactory extends AbstractPersistenceFactory
 {

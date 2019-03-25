@@ -51,9 +51,11 @@ class CategoryDataHelper extends Module
      */
     public function haveLocalizedCategory(array $seedData = [])
     {
+        $parentNode = $this->getCategoryFacade()->getAllNodesByIdCategory(2)[0];
+
         $seedData = $seedData + [
             'categoryNode' => $this->generateCategoryNodeTransfer(),
-            'parentCategoryNode' => $this->generateCategoryNodeTransfer(),
+            'parentCategoryNode' => $parentNode,
         ];
 
         $categoryTransfer = $this->generateLocalizedCategoryTransfer($seedData);
@@ -117,7 +119,9 @@ class CategoryDataHelper extends Module
     protected function generateLocalizedCategoryTransfer(array $seedData = [])
     {
         $categoryTransfer = $this->generateCategoryTransfer($seedData);
-        $categoryLocalizedAttributes = (new CategoryLocalizedAttributesBuilder($seedData))->build();
+        $categoryLocalizedAttributes = (new CategoryLocalizedAttributesBuilder($seedData))->withLocale()->build();
+        $locale = $this->getLocator()->locale()->facade()->getCurrentLocale();
+        $categoryLocalizedAttributes->setLocale($locale);
         $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributes);
 
         return $categoryTransfer;

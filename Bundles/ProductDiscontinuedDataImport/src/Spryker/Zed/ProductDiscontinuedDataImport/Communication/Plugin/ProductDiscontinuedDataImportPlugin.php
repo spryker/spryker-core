@@ -14,6 +14,7 @@ use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfi
 
 /**
  * @method \Spryker\Zed\ProductDiscontinuedDataImport\Business\ProductDiscontinuedDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfig getConfig()
  */
 class ProductDiscontinuedDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

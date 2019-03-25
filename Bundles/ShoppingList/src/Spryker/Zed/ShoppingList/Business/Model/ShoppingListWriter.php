@@ -27,6 +27,8 @@ class ShoppingListWriter implements ShoppingListWriterInterface
 
     protected const DUPLICATE_NAME_SHOPPING_LIST = 'customer.account.shopping_list.error.duplicate_name';
     protected const CANNOT_UPDATE_SHOPPING_LIST = 'customer.account.shopping_list.error.cannot_update';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED = 'customer.account.shopping_list.delete.failed';
+    protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
 
     /**
      * @var \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface
@@ -119,8 +121,12 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     {
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
 
-        if (!$shoppingListTransfer || !$this->checkWritePermission($shoppingListTransfer)) {
-            return (new ShoppingListResponseTransfer())->setIsSuccess(false);
+        if (!$shoppingListTransfer) {
+            return $this->createShoppingListErrorResponseTransfer(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
+        }
+
+        if (!$this->checkWritePermission($shoppingListTransfer)) {
+            return $this->createShoppingListErrorResponseTransfer(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED);
         }
 
         return $this->getTransactionHandler()->handleTransaction(
@@ -128,6 +134,20 @@ class ShoppingListWriter implements ShoppingListWriterInterface
                 return $this->executeRemoveShoppingListTransaction($shoppingListTransfer);
             }
         );
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    protected function createShoppingListErrorResponseTransfer(string $message): ShoppingListResponseTransfer
+    {
+        $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
+        $shoppingListResponseTransfer->addError($message);
+        $shoppingListResponseTransfer->setIsSuccess(false);
+
+        return $shoppingListResponseTransfer;
     }
 
     /**

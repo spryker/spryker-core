@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceDataFeed\Dependency\QueryContainer\PriceDataFeedToPriceBridge;
 
+/**
+ * @method \Spryker\Zed\PriceDataFeed\PriceDataFeedConfig getConfig()
+ */
 class PriceDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PRICE_PRODUCT_QUERY_CONTAINER = 'PRICE_QUERY_CONTAINER';

@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Chart\ChartConfig getConfig()
+ * @method \Spryker\Zed\Chart\Business\ChartFacadeInterface getFacade()
  */
 class ChartCommunicationFactory extends AbstractCommunicationFactory
 {

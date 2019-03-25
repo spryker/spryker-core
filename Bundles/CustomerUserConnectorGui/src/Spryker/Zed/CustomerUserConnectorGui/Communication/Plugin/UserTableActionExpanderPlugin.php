@@ -17,6 +17,7 @@ use Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInt
 
 /**
  * @method \Spryker\Zed\CustomerUserConnectorGui\Communication\CustomerUserConnectorGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerUserConnectorGui\CustomerUserConnectorGuiConfig getConfig()
  */
 class UserTableActionExpanderPlugin extends AbstractPlugin implements UserTableActionExpanderPluginInterface
 {

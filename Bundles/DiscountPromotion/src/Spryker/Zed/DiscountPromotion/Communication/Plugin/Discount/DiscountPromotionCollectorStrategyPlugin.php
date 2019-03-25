@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DiscountPromotion\DiscountPromotionConfig getConfig()
+ * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface getQueryContainer()
  */
 class DiscountPromotionCollectorStrategyPlugin extends AbstractPlugin implements CollectorStrategyPluginInterface
 {

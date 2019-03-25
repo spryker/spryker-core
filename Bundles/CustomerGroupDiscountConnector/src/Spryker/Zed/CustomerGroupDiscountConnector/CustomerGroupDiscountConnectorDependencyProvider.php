@@ -12,6 +12,9 @@ use Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDi
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CustomerGroupDiscountConnector\CustomerGroupDiscountConnectorConfig getConfig()
+ */
 class CustomerGroupDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';

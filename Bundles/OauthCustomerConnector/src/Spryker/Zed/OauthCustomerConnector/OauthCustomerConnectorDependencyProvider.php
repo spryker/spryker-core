@@ -13,11 +13,17 @@ use Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorT
 use Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorToOauthFacadeBridge;
 use Spryker\Zed\OauthCustomerConnector\Dependency\Service\OauthCustomerConnectorToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig getConfig()
+ */
 class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const FACADE_OAUTH = 'FACADE_OAUTH';
+
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    public const PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER = 'PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,6 +35,7 @@ class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addCustomerFacade($container);
         $container = $this->addOauthFacade($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addOauthCustomerIdentifierExpanderPlugins($container);
 
         return $container;
     }
@@ -73,5 +80,27 @@ class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyP
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOauthCustomerIdentifierExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER] = function () {
+            return $this->getOauthCustomerIdentifierExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface[]
+     */
+    protected function getOauthCustomerIdentifierExpanderPlugins(): array
+    {
+        return [];
     }
 }

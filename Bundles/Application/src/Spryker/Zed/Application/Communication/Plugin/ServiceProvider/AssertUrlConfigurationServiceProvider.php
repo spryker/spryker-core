@@ -51,7 +51,7 @@ class AssertUrlConfigurationServiceProvider extends AbstractPlugin implements Se
      */
     protected function assertMatchingHostName(Request $request)
     {
-        $hostName = $request->getHttpHost();
+        $hostName = $request->getHost();
         if (!$hostName) {
             return;
         }

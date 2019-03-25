@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\PriceProduct\Communication\PriceProductCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface getFacade()
+ * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface getQueryContainer()
  */
 class PriceInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {

@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductReviewStorage\Dependency\Facade\ProductReviewStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\ProductReviewStorage\Dependency\QueryContainer\ProductReviewStorageToProductReviewQueryContainerBridge;
 
+/**
+ * @method \Spryker\Zed\ProductReviewStorage\ProductReviewStorageConfig getConfig()
+ */
 class ProductReviewStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';

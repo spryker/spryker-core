@@ -15,11 +15,6 @@ use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
 class PriceProductDefaultWriter implements PriceProductDefaultWriterInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface
-     */
-    protected $priceProductStoreWriter;
-
-    /**
      * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface
      */
     protected $priceProductRepository;
@@ -30,16 +25,13 @@ class PriceProductDefaultWriter implements PriceProductDefaultWriterInterface
     protected $priceProductEntityManager;
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface $priceProductStoreWriter
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface $priceProductRepository
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface $priceProductEntityManager
      */
     public function __construct(
-        PriceProductStoreWriterInterface $priceProductStoreWriter,
         PriceProductRepositoryInterface $priceProductRepository,
         PriceProductEntityManagerInterface $priceProductEntityManager
     ) {
-        $this->priceProductStoreWriter = $priceProductStoreWriter;
         $this->priceProductRepository = $priceProductRepository;
         $this->priceProductEntityManager = $priceProductEntityManager;
     }
@@ -51,7 +43,6 @@ class PriceProductDefaultWriter implements PriceProductDefaultWriterInterface
      */
     public function persistPriceProductDefault(PriceProductTransfer $priceProductTransfer): SpyPriceProductDefaultEntityTransfer
     {
-        $priceProductTransfer = $this->priceProductStoreWriter->persistPriceProductStore($priceProductTransfer);
         $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
         $idPriceProductDefault = $priceProductTransfer->getPriceDimension()->getIdPriceProductDefault();
 

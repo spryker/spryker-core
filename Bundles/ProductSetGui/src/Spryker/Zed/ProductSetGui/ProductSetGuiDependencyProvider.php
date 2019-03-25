@@ -19,6 +19,9 @@ use Spryker\Zed\ProductSetGui\Dependency\QueryContainer\ProductSetGuiToProductBr
 use Spryker\Zed\ProductSetGui\Dependency\QueryContainer\ProductSetGuiToProductSetBridge as ProductSetGuiToProductSetQueryContainerBridge;
 use Spryker\Zed\ProductSetGui\Dependency\Service\ProductSetGuiToUtilEncodingBridge;
 
+/**
+ * @method \Spryker\Zed\ProductSetGui\ProductSetGuiConfig getConfig()
+ */
 class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT_SET = 'FACADE_ProductSet';

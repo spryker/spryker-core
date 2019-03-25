@@ -44,7 +44,7 @@ interface ProductListRepositoryInterface
      *
      * @return int[]
      */
-    public function getAbstractProductBlacklistIds(int $idProductAbstract): array;
+    public function getProductBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int $idProductAbstract
@@ -61,23 +61,64 @@ interface ProductListRepositoryInterface
     public function getCategoryWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
-     * @param int $idProductConcrete
+     * @param string[] $productConcreteSkus
+     * @param int[] $blackListIds
      *
-     * @return int[]
+     * @return string[]
      */
-    public function getConcreteProductBlacklistIds(int $idProductConcrete): array;
+    public function getProductConcreteSkusInBlacklists(array $productConcreteSkus, array $blackListIds): array;
 
     /**
-     * @param int $idProductConcrete
+     * @param string[] $productConcreteSkus
+     * @param int[] $whiteListIds
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusInWhitelists(array $productConcreteSkus, array $whiteListIds): array;
+
+    /**
+     * @param int $idProduct
+     * @param string $listType
      *
      * @return int[]
      */
-    public function getConcreteProductWhitelistIds(int $idProductConcrete): array;
+    public function getProductConcreteProductListIdsForType(int $idProduct, string $listType): array;
+
+    /**
+     * @param int $idProduct
+     * @param string $listType
+     *
+     * @return int[]
+     */
+    public function getProductConcreteProductListIdsRelatedToCategoriesForType(int $idProduct, string $listType): array;
+
+    /**
+     * @module Product
+     *
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsRelatedToProductConcrete(array $productListIds): array;
 
     /**
      * @param int[] $productListIds
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByProductListIds(array $productListIds): array;
+    public function getProductAbstractIdsRelatedToCategories(array $productListIds): array;
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsRelatedToProductLists(array $productListIds): array;
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsRelatedToProductListsCategories(array $productListIds): array;
 }

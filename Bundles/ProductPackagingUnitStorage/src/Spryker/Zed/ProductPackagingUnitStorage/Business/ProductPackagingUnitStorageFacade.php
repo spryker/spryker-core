@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface getRepository()
  */
 class ProductPackagingUnitStorageFacade extends AbstractFacade implements ProductPackagingUnitStorageFacadeInterface
 {
@@ -60,5 +62,21 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
         return $this->getFactory()
             ->getProductPackagingUnitFacade()
             ->findProductAbstractIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function getProductAbstractPackagingStorageTransfersByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->createProductPackagingStorageReader()
+            ->getProductAbstractPackagingStorageTransfer($productAbstractIds);
     }
 }

@@ -12,6 +12,9 @@ use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchroni
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
+/**
+ * @method \Spryker\Client\GlossaryStorage\GlossaryStorageConfig getConfig()
+ */
 class GlossaryStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';

@@ -30,7 +30,7 @@ class Locator extends AbstractLocatorLocator
                 new ServiceLocator(),
             ];
         }
-        $bundleProxy->setLocator($this->locator);
+        $bundleProxy->setLocators($this->locator);
 
         return $bundleProxy;
     }

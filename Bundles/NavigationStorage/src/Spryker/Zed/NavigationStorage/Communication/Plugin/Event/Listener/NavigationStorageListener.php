@@ -13,9 +13,12 @@ use Spryker\Zed\Navigation\Dependency\NavigationEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
+ * @deprecated Use `\Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationStoragePublishListener` and `\Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationStorageUnpublishListener` instead.
+ *
  * @method \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\NavigationStorage\Communication\NavigationStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\NavigationStorage\Business\NavigationStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\NavigationStorage\NavigationStorageConfig getConfig()
  */
 class NavigationStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

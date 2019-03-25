@@ -36,11 +36,16 @@ class UserFormDataProvider
     /**
      * @param int $idUser
      *
-     * @return array
+     * @return array|null
      */
     public function getData($idUser)
     {
-        $userTransfer = $this->userFacade->getUserById($idUser);
+        $userTransfer = $this->userFacade->findUserById($idUser);
+
+        if ($userTransfer === null) {
+            return null;
+        }
+
         $formData = $userTransfer->toArray();
         $formData = $this->populateSelectedAclGroups($idUser, $formData);
 

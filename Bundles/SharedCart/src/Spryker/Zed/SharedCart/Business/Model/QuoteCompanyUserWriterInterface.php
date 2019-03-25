@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SharedCart\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
 
 interface QuoteCompanyUserWriterInterface
 {
@@ -17,4 +18,18 @@ interface QuoteCompanyUserWriterInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function updateQuoteCompanyUsers(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function deleteShareRelationsForCompanyUserId(int $idCompanyUser): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return void
+     */
+    public function addQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void;
 }

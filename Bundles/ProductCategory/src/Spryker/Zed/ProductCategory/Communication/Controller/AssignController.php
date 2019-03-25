@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface getRepository()
  */
 class AssignController extends AbstractController
 {
@@ -32,7 +34,7 @@ class AssignController extends AbstractController
         $categoryEntity = $this->getCategoryEntity($idCategory);
 
         if (!$categoryEntity) {
-            return new RedirectResponse('/category/root');
+            return new RedirectResponse($this->getFactory()->getCategoryFacade()->getCategoryListUrl());
         }
 
         $form = $this->getForm($idCategory);
@@ -54,12 +56,16 @@ class AssignController extends AbstractController
         $categoryProductsTable = $this->getCategoryProductsTable($idCategory, $localeTransfer);
         $productsTable = $this->getProductsTable($idCategory, $localeTransfer);
 
+        $categoryFacade = $this->getFactory()->getCategoryFacade();
+        $categoryPath = $categoryFacade->getNodePath($idCategory, $localeTransfer);
+
         return $this->viewResponse([
             'idCategory' => $idCategory,
             'form' => $form->createView(),
             'productCategoriesTable' => $categoryProductsTable->render(),
             'productsTable' => $productsTable->render(),
             'currentCategory' => $categoryEntity->toArray(),
+            'categoryPath' => $categoryPath,
             'currentLocale' => $localeTransfer->getLocaleName(),
         ]);
     }
@@ -77,7 +83,7 @@ class AssignController extends AbstractController
             ->findOne();
 
         if (!$categoryEntity) {
-            $this->addErrorMessage(sprintf('The category with id "%s" does not exist.', $idCategory));
+            $this->addErrorMessage('The category with id "%s" does not exist.', ['%s' => $idCategory]);
             return null;
         }
 

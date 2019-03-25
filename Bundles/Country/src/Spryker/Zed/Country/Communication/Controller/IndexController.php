@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\Country\Communication\CountryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Country\Persistence\CountryRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Country\Business\CountryFacadeInterface getFacade()
  */
 class IndexController extends AbstractController
 {

@@ -10,6 +10,9 @@ namespace Spryker\Zed\Price;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Price\PriceConfig getConfig()
+ */
 class PriceDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

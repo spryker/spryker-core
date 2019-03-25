@@ -11,13 +11,14 @@ use Generated\Shared\Transfer\MoneyTransfer;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Twig\Environment;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
-use Twig_Environment;
-use Twig_SimpleFilter;
 
 /**
  * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Money\MoneyConfig getConfig()
  */
 class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -32,7 +33,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) {
+            $app->extend('twig', function (Environment $twig) {
                 $twig->addFilter($this->getFilter());
                 $twig->addFunction($this->getMoneyFormTableFunction($twig));
 
@@ -51,13 +52,13 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @return \Twig_SimpleFilter
+     * @return \Twig\TwigFilter
      */
     protected function getFilter()
     {
         $moneyFacade = $this->getFacade();
 
-        $filter = new Twig_SimpleFilter('money', function ($money, $withSymbol = true, $isoCode = null) use ($moneyFacade) {
+        $filter = new TwigFilter('money', function ($money, $withSymbol = true, $isoCode = null) use ($moneyFacade) {
             if (!($money instanceof MoneyTransfer)) {
                 if (is_int($money)) {
                     $money = $moneyFacade->fromInteger($money, $isoCode);
@@ -83,11 +84,11 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      *
      * @return \Twig\TwigFunction
      */
-    public function getMoneyFormTableFunction(Twig_Environment $twig)
+    public function getMoneyFormTableFunction(Environment $twig)
     {
         $options = ['is_safe' => ['html']];
 

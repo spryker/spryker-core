@@ -55,7 +55,7 @@ class ProductPackagingUnitTypeInstaller implements ProductPackagingUnitTypeInsta
         $productInfrastructuralPackagingUnitTypes = $this->config->getInfrastructuralPackagingUnitTypes();
 
         foreach ($productInfrastructuralPackagingUnitTypes as $productInfrastructuralPackagingUnitTypeTransfer) {
-            $this->entityManager->saveProductPackagingUnitType($productInfrastructuralPackagingUnitTypeTransfer);
+            $this->entityManager->saveProductPackagingUnitTypeByName($productInfrastructuralPackagingUnitTypeTransfer);
         }
     }
 }

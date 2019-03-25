@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\WishlistsRestApi\Business\WishlistsRestApiBusinessFactory getFactory()
+ * @method \Spryker\Zed\WishlistsRestApi\Persistence\WishlistsRestApiEntityManagerInterface getEntityManager()
  */
 class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiFacadeInterface
 {
@@ -18,6 +19,8 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @return void
      */

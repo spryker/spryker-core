@@ -15,6 +15,7 @@ use Spryker\Zed\SalesStatistics\SalesStatisticsDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesStatistics\SalesStatisticsConfig getConfig()
+ * @method \Spryker\Zed\SalesStatistics\Persistence\SalesStatisticsRepositoryInterface getRepository()
  */
 class SalesStatisticsPersistenceFactory extends AbstractPersistenceFactory
 {

@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Spryker\Zed\Country\CountryConfig getConfig()
  * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Country\Persistence\CountryRepositoryInterface getRepository()
  */
 class CountryPersistenceFactory extends AbstractPersistenceFactory
 {

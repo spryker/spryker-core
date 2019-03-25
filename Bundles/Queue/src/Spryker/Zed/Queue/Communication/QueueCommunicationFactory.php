@@ -13,6 +13,7 @@ use Spryker\Zed\Queue\Communication\Table\QueueProcessTable;
 /**
  * @method \Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Queue\QueueConfig getConfig()
+ * @method \Spryker\Zed\Queue\Business\QueueFacadeInterface getFacade()
  */
 class QueueCommunicationFactory extends AbstractCommunicationFactory
 {

@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductAbstractDataFeed\Dependency\QueryContainer\ProductAbstractDataFeedToProductBridge;
 
+/**
+ * @method \Spryker\Zed\ProductAbstractDataFeed\ProductAbstractDataFeedConfig getConfig()
+ */
 class ProductAbstractDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PRODUCT_QUERY_CONTAINER = 'PRODUCT_QUERY_CONTAINER';

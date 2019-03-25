@@ -13,6 +13,8 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface;
 
 /**
  * @method \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig getConfig()
+ * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface getQueryContainer()
  */
 class TaxSetProductAbstractAfterUpdatePlugin extends AbstractPlugin implements ProductAbstractPluginUpdateInterface
 {

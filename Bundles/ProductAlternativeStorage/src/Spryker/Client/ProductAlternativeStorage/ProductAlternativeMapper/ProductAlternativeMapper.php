@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductAlternativeStorage\ProductAlternativeMapper;
 
-use Generated\Shared\Transfer\AttributeMapStorageTransfer;
 use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductAlternativeStorage\Dependency\Client\ProductAlternativeStorageToProductStorageClientInterface;
@@ -175,17 +174,10 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      */
     protected function findConcreteProductViewTransfer(int $idProduct, string $localeName): ?ProductViewTransfer
     {
-        $productConcreteStorageData = $this->productStorageClient
-            ->findProductConcreteStorageData($idProduct, $localeName);
-        if (empty($productConcreteStorageData)) {
-            return null;
-        }
-        $productConcreteStorageData[ProductAlternativeStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP] = new AttributeMapStorageTransfer();
-
         $productViewTransfer = $this->productStorageClient
-            ->mapProductStorageData($productConcreteStorageData, $localeName);
+            ->findProductConcreteViewTransfer($idProduct, $localeName);
 
-        if ($productViewTransfer->getAvailable()) {
+        if ($productViewTransfer && $productViewTransfer->getAvailable()) {
             return $productViewTransfer;
         }
 
@@ -193,21 +185,14 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     }
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    protected function findAbstractProductViewTransfer(int $idProduct, string $localeName): ?ProductViewTransfer
+    protected function findAbstractProductViewTransfer(int $idProductAbstract, string $localeName): ?ProductViewTransfer
     {
-        $productAbstractStorageData = $this->productStorageClient
-            ->getProductAbstractStorageData($idProduct, $localeName);
-        if (empty($productAbstractStorageData)) {
-            return null;
-        }
-
-        return $this->productStorageClient
-            ->mapProductStorageData($productAbstractStorageData, $localeName);
+        return $this->productStorageClient->findProductAbstractViewTransfer($idProductAbstract, $localeName);
     }
 
     /**
@@ -221,7 +206,12 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
         $productConcreteIds = [];
         foreach ($abstractProductIds as $idProductAbstract) {
             $productAbstractStorageData = $this->productStorageClient
-                ->getProductAbstractStorageData($idProductAbstract, $localeName);
+                ->findProductAbstractStorageData($idProductAbstract, $localeName);
+
+            if (empty($productAbstractStorageData)) {
+                continue;
+            }
+
             $productConcreteIds = array_merge(
                 $productConcreteIds,
                 $productAbstractStorageData[ProductAlternativeStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::PRODUCT_CONCRETE_IDS] ?? []

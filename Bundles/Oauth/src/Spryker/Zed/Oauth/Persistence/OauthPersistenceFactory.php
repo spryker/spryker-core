@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Oauth\OauthConfig getConfig()
+ * @method \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface getRepository()
  */
 class OauthPersistenceFactory extends AbstractPersistenceFactory
 {

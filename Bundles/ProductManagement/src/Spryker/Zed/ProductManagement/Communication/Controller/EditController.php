@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,6 +23,7 @@ class EditController extends AddController
     public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     public const PARAM_ID_PRODUCT = 'id-product';
     public const PARAM_PRODUCT_TYPE = 'type';
+    protected const PARAM_PRICE_DIMENSION = 'price-dimension';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -39,7 +41,9 @@ class EditController extends AddController
             ->findProductAbstractById($idProductAbstract);
 
         if (!$productAbstractTransfer) {
-            $this->addErrorMessage(sprintf('The product [%s] you are trying to edit, does not exist.', $idProductAbstract));
+            $this->addErrorMessage('The product [%s] you are trying to edit, does not exist.', [
+                '%s' => $idProductAbstract,
+            ]);
 
             return new RedirectResponse('/product-management');
         }
@@ -48,7 +52,7 @@ class EditController extends AddController
         $form = $this
             ->getFactory()
             ->createProductFormEdit(
-                $dataProvider->getData($idProductAbstract),
+                $dataProvider->getData($idProductAbstract, $request->query->get(static::PARAM_PRICE_DIMENSION)),
                 $dataProvider->getOptions($idProductAbstract)
             )
             ->handleRequest($request);
@@ -75,16 +79,11 @@ class EditController extends AddController
                     ->getProductFacade()
                     ->touchProductAbstract($idProductAbstract);
 
-                $this->addSuccessMessage(sprintf(
-                    'The product [%s] was saved successfully.',
-                    $productAbstractTransfer->getSku()
-                ));
+                $this->addSuccessMessage('The product [%s] was saved successfully.', ['%s' => $productAbstractTransfer->getSku()]);
 
-                return $this->redirectResponse(sprintf(
-                    '/product-management/edit?%s=%d',
-                    self::PARAM_ID_PRODUCT_ABSTRACT,
-                    $idProductAbstract
-                ));
+                return $this->redirectResponse(
+                    urldecode(Url::generate('/product-management/edit', $request->query->all())->build())
+                );
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
@@ -107,6 +106,7 @@ class EditController extends AddController
             'variantTable' => $variantTable->render(),
             'idProduct' => null,
             'idProductAbstract' => $idProductAbstract,
+            'priceDimension' => $request->get(static::PARAM_PRICE_DIMENSION, []),
             'productFormEditTabs' => $this->getFactory()->createProductFormEditTabs()->createView(),
         ]);
     }
@@ -131,7 +131,7 @@ class EditController extends AddController
             ->findProductConcreteById($idProduct);
 
         if (!$productTransfer) {
-            $this->addErrorMessage(sprintf('The product [%s] you are trying to edit, does not exist.', $idProduct));
+            $this->addErrorMessage('The product [%s] you are trying to edit, does not exist.', ['%s' => $idProduct]);
 
             return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
         }
@@ -147,7 +147,7 @@ class EditController extends AddController
         $form = $this
             ->getFactory()
             ->createProductVariantFormEdit(
-                $dataProvider->getData($idProductAbstract, $idProduct),
+                $dataProvider->getData($idProductAbstract, $idProduct, $request->query->get(static::PARAM_PRICE_DIMENSION)),
                 $dataProvider->getOptions($idProductAbstract, $type)
             )
             ->handleRequest($request);
@@ -177,19 +177,13 @@ class EditController extends AddController
                     ->getProductFacade()
                     ->touchProductConcrete($idProduct);
 
-                $this->addSuccessMessage(sprintf(
-                    'The product [%s] was saved successfully.',
-                    $productConcreteTransfer->getSku()
-                ));
+                $this->addSuccessMessage('The product [%s] was saved successfully.', [
+                    '%s' => $productConcreteTransfer->getSku(),
+                ]);
 
-                return $this->redirectResponse(sprintf(
-                    '/product-management/edit/variant?%s=%d&%s=%d&type=%s',
-                    self::PARAM_ID_PRODUCT_ABSTRACT,
-                    $idProductAbstract,
-                    self::PARAM_ID_PRODUCT,
-                    $idProduct,
-                    $type
-                ));
+                return $this->redirectResponse(
+                    urldecode(Url::generate('/product-management/edit/variant', $request->query->all())->build())
+                );
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
@@ -203,6 +197,7 @@ class EditController extends AddController
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
             'idProduct' => $idProduct,
             'idProductAbstract' => $idProductAbstract,
+            'priceDimension' => $request->get(static::PARAM_PRICE_DIMENSION, []),
             'productConcreteFormEditTabs' => $this->getFactory()->createProductConcreteFormEditTabs()->createView(),
             'bundledProductTable' => $bundledProductTable->render(),
             'type' => $type,

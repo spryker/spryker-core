@@ -9,11 +9,18 @@ namespace Spryker\Glue\ProductsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToGlossaryStorageClientBridge;
 use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientBridge;
 
+/**
+ * @method \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig getConfig()
+ */
 class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+
+    public const PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER = 'PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -22,7 +29,11 @@ class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
+
+        $container = $this->addGlossaryStorageClient($container);
         $container = $this->addProductStorageClient($container);
+        $container = $this->addConcreteProductsResourceExpanderPlugins($container);
 
         return $container;
     }
@@ -39,5 +50,41 @@ class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+            return new ProductsRestApiToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addConcreteProductsResourceExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER] = function () {
+            return $this->getConcreteProductsResourceExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\ConcreteProductsResourceExpanderPluginInterface[]
+     */
+    protected function getConcreteProductsResourceExpanderPlugins(): array
+    {
+        return [];
     }
 }

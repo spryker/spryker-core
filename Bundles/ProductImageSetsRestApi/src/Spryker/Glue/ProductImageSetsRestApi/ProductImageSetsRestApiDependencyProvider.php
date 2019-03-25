@@ -12,6 +12,9 @@ use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductImageStorageClientBridge;
 use Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductStorageClientBridge;
 
+/**
+ * @method \Spryker\Glue\ProductImageSetsRestApi\ProductImageSetsRestApiConfig getConfig()
+ */
 class ProductImageSetsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PRODUCT_IMAGE_STORAGE = 'CLIENT_PRODUCT_IMAGE_STORAGE';

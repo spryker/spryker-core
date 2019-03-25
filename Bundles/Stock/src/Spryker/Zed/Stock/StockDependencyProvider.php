@@ -13,6 +13,9 @@ use Spryker\Zed\Stock\Dependency\Facade\StockToProductBridge;
 use Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeBridge;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchBridge;
 
+/**
+ * @method \Spryker\Zed\Stock\StockConfig getConfig()
+ */
 class StockDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_TOUCH = 'FACADE_TOUCH';

@@ -15,6 +15,8 @@ use Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInter
 /**
  * @method \Spryker\Zed\Nopayment\Business\NopaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\Nopayment\Communication\NopaymentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Nopayment\NopaymentConfig getConfig()
+ * @method \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface getQueryContainer()
  */
 class PriceToPayPaymentMethodFilterPlugin extends AbstractPlugin implements PaymentMethodFilterPluginInterface
 {

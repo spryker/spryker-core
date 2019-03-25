@@ -63,7 +63,6 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         ProductPageSearchMapperInterface $productPageSearchMapper,
         ProductPageSearchWriterInterface $productPageSearchWriter
     ) {
-
         $this->queryContainer = $queryContainer;
         $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
         $this->productPageDataLoaderPlugins = $productPageDataLoaderPlugins;
@@ -178,7 +177,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             $productAbstractLocalizedEntity = $pairedEntity[static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY];
             $productAbstractPageSearchEntity = $pairedEntity[static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY];
 
-            if ($productAbstractLocalizedEntity === null || !$this->isActive($productAbstractLocalizedEntity)) {
+            if ($productAbstractLocalizedEntity === null || !$this->isActual($productAbstractLocalizedEntity)) {
                 $this->deleteProductAbstractPageSearchEntity($productAbstractPageSearchEntity);
 
                 continue;
@@ -246,10 +245,27 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      *
      * @return bool
      */
-    protected function isActive(array $productAbstractLocalizedEntity)
+    protected function isActual(array $productAbstractLocalizedEntity): bool
     {
         foreach ($productAbstractLocalizedEntity['SpyProductAbstract']['SpyProducts'] as $spyProduct) {
-            if ($spyProduct['is_active']) {
+            if ($spyProduct['is_active'] && $this->isSearchable($spyProduct, $productAbstractLocalizedEntity['fk_locale'])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array $spyProduct
+     * @param int $idLocale
+     *
+     * @return bool
+     */
+    protected function isSearchable(array $spyProduct, int $idLocale): bool
+    {
+        foreach ($spyProduct['SpyProductSearches'] as $spyProductSearch) {
+            if ($spyProductSearch['fk_locale'] === $idLocale && $spyProductSearch['is_searchable'] === true) {
                 return true;
             }
         }

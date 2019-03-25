@@ -14,6 +14,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 /**
  * @method \Spryker\Zed\GiftCardMailConnector\Business\GiftCardMailConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\GiftCardMailConnector\Communication\GiftCardMailConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\GiftCardMailConnector\GiftCardMailConnectorConfig getConfig()
  */
 class GiftCardUsageMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {

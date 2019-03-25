@@ -19,6 +19,8 @@ use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
 /**
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
  * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface getRepository()
  */
 class PriceProductPersistenceFactory extends AbstractPersistenceFactory
 {

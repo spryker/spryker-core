@@ -108,7 +108,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      */
     protected function findProductAbstractBlacklistIds(int $idProductAbstract): array
     {
-        return $this->productListFacade->getProductAbstractBlacklistIdsIdProductAbstract($idProductAbstract);
+        return $this->productListFacade->getProductBlacklistIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -118,7 +118,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      */
     protected function findProductAbstractWhitelistIds(int $idProductAbstract): array
     {
-        return $this->productListFacade->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
+        return $this->productListFacade->getProductWhitelistIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**

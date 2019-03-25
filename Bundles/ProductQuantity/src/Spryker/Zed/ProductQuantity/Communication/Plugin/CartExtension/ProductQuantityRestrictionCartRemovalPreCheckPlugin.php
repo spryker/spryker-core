@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\ProductQuantity\Business\ProductQuantityFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductQuantity\Communication\ProductQuantityCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductQuantity\ProductQuantityConfig getConfig()
  */
 class ProductQuantityRestrictionCartRemovalPreCheckPlugin extends AbstractPlugin implements CartRemovalPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface
 {

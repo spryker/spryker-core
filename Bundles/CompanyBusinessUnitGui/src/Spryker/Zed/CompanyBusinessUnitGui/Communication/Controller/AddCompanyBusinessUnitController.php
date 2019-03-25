@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\Business\CompanyBusinessUnitGuiFacadeInterface getFacade()
  */
 class AddCompanyBusinessUnitController extends AbstractController
 {
@@ -48,20 +49,18 @@ class AddCompanyBusinessUnitController extends AbstractController
                 ->create($companyBusinessUnitTransfer);
 
             if (!$companyResponseTransfer->getIsSuccessful()) {
-                $this->addErrorMessage(sprintf(
-                    static::MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_CREATE,
-                    $companyBusinessUnitTransfer->getName()
-                ));
+                $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_CREATE, [
+                    '%s' => $companyBusinessUnitTransfer->getName(),
+                ]);
 
                 return $this->viewResponse([
                     'form' => $form->createView(),
                 ]);
             }
 
-            $this->addSuccessMessage(sprintf(
-                static::MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_CREATE,
-                $companyBusinessUnitTransfer->getName()
-            ));
+            $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_CREATE, [
+                '%s' => $companyBusinessUnitTransfer->getName(),
+            ]);
 
             return $this->redirectResponse($redirectUrl);
         }

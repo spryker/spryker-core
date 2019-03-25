@@ -177,7 +177,7 @@ class ProductOptionTable extends AbstractTable
     protected function createViewButton($idProductAbstract)
     {
         $viewProductOptionUrl = Url::generate(
-            '/product/index/view',
+            '/product-management/view',
             [
                 self::URL_PARAM_ID_PRODUCT_ABSTRACT => $idProductAbstract,
             ]

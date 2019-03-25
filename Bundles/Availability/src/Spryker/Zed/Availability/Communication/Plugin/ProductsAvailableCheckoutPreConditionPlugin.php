@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
  * @method \Spryker\Zed\Availability\Communication\AvailabilityCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface getQueryContainer()
  */
 class ProductsAvailableCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {

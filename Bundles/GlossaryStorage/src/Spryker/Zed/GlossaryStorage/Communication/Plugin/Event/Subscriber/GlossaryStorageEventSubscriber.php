@@ -10,13 +10,16 @@ namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Subscriber;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyStorageListener;
+use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyStoragePublishListener;
+use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyStorageUnpublishListener;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryTranslationStorageListener;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
+ * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  */
 class GlossaryStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -47,7 +50,7 @@ class GlossaryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addGlossaryKeyPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(GlossaryEvents::GLOSSARY_KEY_PUBLISH, new GlossaryKeyStorageListener());
+        $eventCollection->addListenerQueued(GlossaryEvents::GLOSSARY_KEY_PUBLISH, new GlossaryKeyStoragePublishListener());
     }
 
     /**
@@ -57,7 +60,7 @@ class GlossaryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addGlossaryKeyUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(GlossaryEvents::GLOSSARY_KEY_UNPUBLISH, new GlossaryKeyStorageListener());
+        $eventCollection->addListenerQueued(GlossaryEvents::GLOSSARY_KEY_UNPUBLISH, new GlossaryKeyStorageUnpublishListener());
     }
 
     /**
@@ -67,7 +70,7 @@ class GlossaryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addGlossaryKeyCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_CREATE, new GlossaryKeyStorageListener());
+        $eventCollection->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_CREATE, new GlossaryKeyStoragePublishListener());
     }
 
     /**
@@ -77,7 +80,7 @@ class GlossaryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addGlossaryKeyUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE, new GlossaryKeyStorageListener());
+        $eventCollection->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE, new GlossaryKeyStoragePublishListener());
     }
 
     /**
@@ -87,7 +90,7 @@ class GlossaryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     protected function addGlossaryKeyDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_DELETE, new GlossaryKeyStorageListener());
+        $eventCollection->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_DELETE, new GlossaryKeyStorageUnpublishListener());
     }
 
     /**

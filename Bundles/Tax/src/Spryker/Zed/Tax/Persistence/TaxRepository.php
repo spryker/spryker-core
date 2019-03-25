@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Tax\Persistence;
 
+use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -43,5 +45,43 @@ class TaxRepository extends AbstractRepository implements TaxRepositoryInterface
             ->filterByIdTaxSet($idTaxSet, Criteria::NOT_EQUAL);
 
         return !$query->exists();
+    }
+
+    /**
+     * @param int $idTaxRate
+     *
+     * @return \Generated\Shared\Transfer\TaxRateTransfer|null
+     */
+    public function findTaxRate(int $idTaxRate): ?TaxRateTransfer
+    {
+         $taxRateEntity = $this->getFactory()->createTaxRateQuery()->findOneByIdTaxRate($idTaxRate);
+
+        if ($taxRateEntity === null) {
+            return $taxRateEntity;
+        }
+
+         return $this->getFactory()->createTaxRateMapper()->mapTaxRateEntityToTaxRateTransfer(
+             $taxRateEntity,
+             new TaxRateTransfer()
+         );
+    }
+
+    /**
+     * @param int $idTaxSet
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer|null
+     */
+    public function findTaxSet(int $idTaxSet): ?TaxSetTransfer
+    {
+        $taxSetEntity = $this->getFactory()->createTaxSetQuery()->findOneByIdTaxSet($idTaxSet);
+
+        if ($taxSetEntity === null) {
+            return $taxSetEntity;
+        }
+
+        return $this->getFactory()->createTaxSetMapper()->mapTaxSetEntityToTaxSetTransfer(
+            $taxSetEntity,
+            new TaxSetTransfer()
+        );
     }
 }

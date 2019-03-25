@@ -17,6 +17,7 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategoryStorage\Communication\ProductCategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageConfig getConfig()
  */
 class CategoryUrlStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

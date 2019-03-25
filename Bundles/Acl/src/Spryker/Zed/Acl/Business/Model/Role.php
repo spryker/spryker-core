@@ -145,6 +145,7 @@ class Role implements RoleInterface
     protected function addGroupRoles(RolesTransfer $rolesTransfer, $idAclGroup)
     {
         $groupRoles = $this->getGroupRoles($idAclGroup);
+
         foreach ($groupRoles as $groupRole) {
             $rolesTransfer->addRole($groupRole);
         }
@@ -184,6 +185,25 @@ class Role implements RoleInterface
 
         if ($aclRoleEntity === null) {
             throw new EmptyEntityException();
+        }
+
+        $roleTransfer = new RoleTransfer();
+        $roleTransfer->fromArray($aclRoleEntity->toArray(), true);
+
+        return $roleTransfer;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer|null
+     */
+    public function findRoleById(int $id): ?RoleTransfer
+    {
+        $aclRoleEntity = $this->queryContainer->queryRoleById($id)->findOne();
+
+        if ($aclRoleEntity === null) {
+            return null;
         }
 
         $roleTransfer = new RoleTransfer();

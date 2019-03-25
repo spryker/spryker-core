@@ -12,6 +12,7 @@ use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Synchronization\SynchronizationConfig getConfig()
+ * @method \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface getFacade()
  */
 class SynchronizationCommunicationFactory extends AbstractCommunicationFactory
 {

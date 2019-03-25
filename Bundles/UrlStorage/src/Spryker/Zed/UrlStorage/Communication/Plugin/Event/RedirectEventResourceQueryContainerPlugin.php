@@ -18,6 +18,7 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\UrlStorage\Business\UrlStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\UrlStorage\Communication\UrlStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\UrlStorage\UrlStorageConfig getConfig()
  */
 class RedirectEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {

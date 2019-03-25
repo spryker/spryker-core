@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
+ */
 class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';

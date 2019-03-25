@@ -13,8 +13,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 
 /**
+ * @deprecated Use `\Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingLeadProductStoragePublishListener` and `\Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingLeadProductStorageUnpublishListener` instead.
+ *
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
  */
 class ProductPackagingLeadProductStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

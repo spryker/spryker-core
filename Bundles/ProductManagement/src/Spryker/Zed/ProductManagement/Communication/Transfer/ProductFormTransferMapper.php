@@ -34,7 +34,6 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
-use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -61,11 +60,6 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface
-     */
-    protected $utilTextService;
-
-    /**
      * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface[]
      */
     protected $productFormTransferMapperExpanderPlugins;
@@ -79,7 +73,6 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface $utilTextService
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface[] $productFormTransferMapperExpanderPlugins
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface $productConcreteSuperAttributeFilterHelperInterface
@@ -88,7 +81,6 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         ProductQueryContainerInterface $productQueryContainer,
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductManagementToLocaleInterface $localeFacade,
-        ProductManagementToUtilTextInterface $utilTextService,
         LocaleProvider $localeProvider,
         array $productFormTransferMapperExpanderPlugins,
         ProductConcreteSuperAttributeFilterHelperInterface $productConcreteSuperAttributeFilterHelperInterface
@@ -96,7 +88,6 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $this->productQueryContainer = $productQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->localeFacade = $localeFacade;
-        $this->utilTextService = $utilTextService;
         $this->localeProvider = $localeProvider;
         $this->productFormTransferMapperExpanderPlugins = $productFormTransferMapperExpanderPlugins;
         $this->productConcreteSuperAttributeFilterHelperInterface = $productConcreteSuperAttributeFilterHelperInterface;
@@ -131,7 +122,9 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $imageSetCollection = $this->buildProductImageSetCollection($form);
         $productAbstractTransfer->setImageSets(new ArrayObject($imageSetCollection));
         $productAbstractTransfer->setStoreRelation($formData[ProductFormAdd::FORM_STORE_RELATION]);
-        $productAbstractTransfer->setPrices($formData[ProductFormAdd::FIELD_PRICES]);
+
+        $priceProducts = $this->updatePricesDimension($formData);
+        $productAbstractTransfer->setPrices($priceProducts);
 
         return $productAbstractTransfer;
     }
@@ -193,7 +186,8 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         }
 
         $formData = $form->getData();
-        $productConcreteTransfer->setPrices($formData[ProductFormAdd::FIELD_PRICES]);
+        $priceProducts = $this->updatePricesDimension($formData);
+        $productConcreteTransfer->setPrices($priceProducts);
 
         $stockCollection = $this->buildProductStockCollectionTransfer($form);
         $productConcreteTransfer->setStocks(new ArrayObject($stockCollection));
@@ -216,6 +210,43 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     }
 
     /**
+     * @param array $formData
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function updatePricesDimension(array $formData): ArrayObject
+    {
+        $priceProducts = $formData[ProductFormAdd::FIELD_PRICES];
+
+        if (!$formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
+            return $priceProducts;
+        }
+
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
+
+        if (!$priceProductDimensionTransfer->getType()) {
+            return $priceProducts;
+        }
+
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
+        foreach ($priceProducts as $priceProductTransfer) {
+            $priceDimension = $priceProductTransfer->getPriceDimension();
+
+            if (!$priceDimension) {
+                $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
+                continue;
+            }
+
+            $priceProductTransfer->setPriceDimension(
+                $priceDimension->fromArray($priceProductDimensionTransfer->modifiedToArray())
+            );
+        }
+
+        return $priceProducts;
+    }
+
+    /**
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
@@ -225,7 +256,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->fromArray($data, true)
             ->setIdProductAbstract($data[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT])
-            ->setSku($this->utilTextService->generateSlug($data[ProductFormAdd::FIELD_SKU]))
+            ->setSku($data[ProductFormAdd::FIELD_SKU])
             ->setIdTaxSet($data[ProductFormAdd::FIELD_TAX_RATE]);
 
         return $productAbstractTransfer;

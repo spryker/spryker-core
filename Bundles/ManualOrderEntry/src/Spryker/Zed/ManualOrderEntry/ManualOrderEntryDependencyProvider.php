@@ -9,6 +9,9 @@ namespace Spryker\Zed\ManualOrderEntry;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\ManualOrderEntry\ManualOrderEntryConfig getConfig()
+ */
 class ManualOrderEntryDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

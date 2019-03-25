@@ -15,6 +15,9 @@ use Spryker\Zed\ShoppingListStorage\Dependency\Facade\ShoppingListStorageToCompa
 use Spryker\Zed\ShoppingListStorage\Dependency\Facade\ShoppingListStorageToCompanyUserFacadeBridge;
 use Spryker\Zed\ShoppingListStorage\Dependency\Facade\ShoppingListStorageToEventBehaviorFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ShoppingListStorage\ShoppingListStorageConfig getConfig()
+ */
 class ShoppingListStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';

@@ -13,6 +13,9 @@ use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsCollector\CmsCollectorConfig getConfig()
+ */
 class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';

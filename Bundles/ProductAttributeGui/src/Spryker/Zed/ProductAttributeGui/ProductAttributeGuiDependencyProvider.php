@@ -14,6 +14,9 @@ use Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToProdu
 use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerBridge;
 use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductBridge;
 
+/**
+ * @method \Spryker\Zed\ProductAttributeGui\ProductAttributeGuiConfig getConfig()
+ */
 class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';

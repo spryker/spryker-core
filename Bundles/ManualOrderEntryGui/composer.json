@@ -10,7 +10,7 @@
     "spryker/checkout": "^4.1.0",
     "spryker/currency": "^3.1.0",
     "spryker/customer": "^7.1.0",
-    "spryker/discount": "^6.1.0",
+    "spryker/discount": "^6.1.0 || ^7.0.0",
     "spryker/gui": "^3.1.0",
     "spryker/kernel": "^3.18.0",
     "spryker/manual-order-entry": "^1.0.0",

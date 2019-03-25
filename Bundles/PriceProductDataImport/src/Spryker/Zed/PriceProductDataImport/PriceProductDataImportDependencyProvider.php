@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProductDataImport\Dependency\Facade\PriceProductDataImportToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductDataImport\Dependency\Service\PriceProductDataImportToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Zed\PriceProductDataImport\PriceProductDataImportConfig getConfig()
+ */
 class PriceProductDataImportDependencyProvider extends DataImportDependencyProvider
 {
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';

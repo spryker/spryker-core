@@ -1,21 +1,24 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Products Lists' %}
-
-{% block head_title -%}
-    {{ widget_title }}
-{%- endblock %}
+{% set widget_title = 'Overview of Product lists' %}
+{% set widget_subtitle = 'List of Product lists' %}
 
 {% block section_title widget_title | trans %}
 
 {% block action %}
     {{ parent() }}
-    {{ createActionButton('/product-list-gui/create', 'Add list' | trans) }}
+    {{ createActionButton('/product-list-gui/create', 'Create Product List' | trans) }}
 {% endblock %}
 
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_title -%}
+
+            <h5>{{ widget_subtitle | trans }}</h5>
+
+        {%- endblock %}
 
         {% block widget_content %}
 

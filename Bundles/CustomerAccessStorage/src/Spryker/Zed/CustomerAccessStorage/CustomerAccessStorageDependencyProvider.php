@@ -11,6 +11,9 @@ use Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccessQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CustomerAccessStorage\CustomerAccessStorageConfig getConfig()
+ */
 class CustomerAccessStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_CUSTOMER_ACCESS = 'QUERY_CUSTOMER_ACCESS';

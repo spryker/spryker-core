@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 /**
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
+ * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  */
 class CategoryStorageCommunicationFactory extends AbstractCommunicationFactory
 {

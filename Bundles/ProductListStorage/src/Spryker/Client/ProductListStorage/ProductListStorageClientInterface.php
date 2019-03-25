@@ -30,11 +30,11 @@ interface ProductListStorageClientInterface
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer|null
      */
-    public function findProductConcreteProductListStorage(int $idProductConcrete): ?ProductConcreteProductListStorageTransfer;
+    public function findProductConcreteProductListStorage(int $idProduct): ?ProductConcreteProductListStorageTransfer;
 
     /**
      * Specification:
@@ -54,9 +54,9 @@ interface ProductListStorageClientInterface
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return bool
      */
-    public function isProductConcreteRestricted(int $idProductConcrete): bool;
+    public function isProductConcreteRestricted(int $idProduct): bool;
 }

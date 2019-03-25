@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiConfig getConfig()
  */
 class ItemType extends AbstractType
 {
@@ -85,7 +86,7 @@ class ItemType extends AbstractType
      *
      * @return $this
      */
-    protected function addSkuField(FormBuilderInterface $builder, array $options): self
+    protected function addSkuField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_SKU, TextType::class, [
             'label' => 'SKU',
@@ -101,7 +102,7 @@ class ItemType extends AbstractType
      *
      * @return $this
      */
-    protected function addUnitGrossPriceField(FormBuilderInterface $builder, array $options): self
+    protected function addUnitGrossPriceField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_UNIT_GROSS_PRICE, TextType::class, [
             'label' => 'Unit Gross Price',
@@ -120,7 +121,7 @@ class ItemType extends AbstractType
      *
      * @return $this
      */
-    protected function addQuantityField(FormBuilderInterface $builder, array $options): self
+    protected function addQuantityField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_QUANTITY, TextType::class, [
             'label' => 'Quantity',
@@ -139,7 +140,7 @@ class ItemType extends AbstractType
      *
      * @return $this
      */
-    protected function addForcedUnitGrossPriceField(FormBuilderInterface $builder, array $options): self
+    protected function addForcedUnitGrossPriceField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_FORCED_UNIT_GROSS_PRICE, HiddenType::class, [
             'data' => 1,

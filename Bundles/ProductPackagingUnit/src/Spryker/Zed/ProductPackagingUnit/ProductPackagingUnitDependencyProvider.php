@@ -20,6 +20,9 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSal
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilTextServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
+ */
 class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';

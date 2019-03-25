@@ -101,6 +101,13 @@ interface UserInterface
     /**
      * @param int $id
      *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    public function findUserById(int $id): ?UserTransfer;
+
+    /**
+     * @param int $id
+     *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
      * @return \Generated\Shared\Transfer\UserTransfer

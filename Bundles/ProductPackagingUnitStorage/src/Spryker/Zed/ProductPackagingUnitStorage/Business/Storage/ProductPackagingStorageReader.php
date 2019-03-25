@@ -31,9 +31,9 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     protected $productPackagingUnitFacade;
 
     /**
-     * @see \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES.
+     * Default values for packaging unit storage values.
      *
-     * default values for packaging unit storage values.
+     * @see \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES
      */
     protected const PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES = [
         ProductPackagingUnitAmountTransfer::DEFAULT_AMOUNT => 1,
@@ -81,12 +81,12 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
      */
-    public function getProductAbstractPackagingUnitStorageEntities(array $productAbstractIds): array
+    public function getProductAbstractPackagingStorageEntities(array $productAbstractIds): array
     {
         return $this->productPackagingUnitStorageRepository
-            ->findProductAbstractPackagingUnitStorageByProductAbstractIds($productAbstractIds);
+            ->findProductAbstractPackagingStorageEntitiesByProductAbstractIds($productAbstractIds);
     }
 
     /**

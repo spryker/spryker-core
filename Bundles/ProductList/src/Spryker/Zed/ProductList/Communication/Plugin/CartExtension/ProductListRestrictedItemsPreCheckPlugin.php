@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductList\Business\ProductListFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductList\ProductListConfig getConfig()
+ * @method \Spryker\Zed\ProductList\Communication\ProductListCommunicationFactory getFactory()
  */
 class ProductListRestrictedItemsPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface
 {

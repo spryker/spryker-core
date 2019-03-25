@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductBridge as FacadeWishlistToProductBridge;
 use Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductBridge as QueryContainerWishlistToProductBridge;
 
+/**
+ * @method \Spryker\Zed\Wishlist\WishlistConfig getConfig()
+ */
 class WishlistDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';

@@ -50,6 +50,11 @@ class PriceProductConfig extends AbstractSharedConfig
     ];
 
     /**
+     * Price dimension name default
+     */
+    protected const PRICE_DIMENSION_DEFAULT_NAME = 'Default';
+
+    /**
      * @return string
      */
     public function getPriceTypeDefaultName(): string
@@ -87,5 +92,13 @@ class PriceProductConfig extends AbstractSharedConfig
     public function getPriceModeIdentifierForGrossType(): string
     {
         return static::PRICE_GROSS_MODE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceDimensionDefaultName(): string
+    {
+        return static::PRICE_DIMENSION_DEFAULT_NAME;
     }
 }

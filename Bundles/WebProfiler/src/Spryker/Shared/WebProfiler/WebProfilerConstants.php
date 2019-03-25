@@ -15,6 +15,16 @@ interface WebProfilerConstants
     /**
      * Specification:
      * - Enable/disable web profiler.
+     *
+     * @api
      */
     public const ENABLE_WEB_PROFILER = 'WEBPROFILER:ENABLE_WEB_PROFILER';
+
+    /**
+     * Specification:
+     * - Path to profiler cache directory.
+     *
+     * @api
+     */
+    public const PROFILER_CACHE_DIRECTORY = 'WEBPROFILER:PROFILER_CACHE_DIRECTORY';
 }

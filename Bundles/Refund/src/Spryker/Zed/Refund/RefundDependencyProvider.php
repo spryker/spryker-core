@@ -15,6 +15,9 @@ use Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToMoneyBridge;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesBridge;
 
+/**
+ * @method \Spryker\Zed\Refund\RefundConfig getConfig()
+ */
 class RefundDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MONEY = 'money facade';

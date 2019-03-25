@@ -37,15 +37,15 @@ class ProductListStorageClient extends AbstractClient implements ProductListStor
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer|null
      */
-    public function findProductConcreteProductListStorage(int $idProductConcrete): ?ProductConcreteProductListStorageTransfer
+    public function findProductConcreteProductListStorage(int $idProduct): ?ProductConcreteProductListStorageTransfer
     {
         return $this->getFactory()
             ->createProductListProductConcreteStorageReader()
-            ->findProductConcreteProductListStorage($idProductConcrete);
+            ->findProductConcreteProductListStorage($idProduct);
     }
 
     /**
@@ -69,14 +69,14 @@ class ProductListStorageClient extends AbstractClient implements ProductListStor
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return bool
      */
-    public function isProductConcreteRestricted(int $idProductConcrete): bool
+    public function isProductConcreteRestricted(int $idProduct): bool
     {
         return $this->getFactory()
             ->createProductConcreteRestrictionReader()
-            ->isProductConcreteRestricted($idProductConcrete);
+            ->isProductConcreteRestricted($idProduct);
     }
 }

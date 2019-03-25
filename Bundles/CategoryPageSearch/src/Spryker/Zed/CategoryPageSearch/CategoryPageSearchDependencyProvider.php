@@ -16,6 +16,9 @@ use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEn
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
+ */
 class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';

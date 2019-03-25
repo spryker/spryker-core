@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\ProductPacka
 
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitAmount;
@@ -23,9 +24,14 @@ use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPac
 
 class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    protected const PRODUCT_HEAP_LIMIT = 500;
+    protected const HEAP_LIMIT = 500;
     protected const PRODUCT_CONCRETE_ID = 'PRODUCT_CONCRETE_ID';
     protected const PRODUCT_ABSTRACT_ID = 'PRODUCT_ABSTRACT_ID';
+
+    /**
+     * @uses \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES
+     */
+    protected const DEFAULT_AMOUNT_DEFAULT_VALUE = 1;
 
     /**
      * @var int[] Keys are product packaging unit type names.
@@ -42,6 +48,16 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected static $productHeapSize = 0;
 
+    /**
+     * @var bool[] Keys are product SKUs, values boolean representing if this product have a MeasurementSalesUnit or not.
+     */
+    protected static $productMeasurementSalesUnitHeap = [];
+
+    /**
+     * @var int
+     */
+    protected static $productMeasurementSalesUnitHeapSize = 0;
+
     public function __construct()
     {
         $this->initIdProductPackagingUnitTypeHeap();
@@ -57,6 +73,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     public function execute(DataSetInterface $dataSet): void
     {
+        $this->assertHaveProductMeasurementSalesUnit($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]);
         $dataSet = $this->normalizeDataSet($dataSet);
         $productPackagingUnitTypeId = $this->getIdProductPackagingUnitTypeByName($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_TYPE_NAME]);
         $productConcreteId = $this->getIdProductBySku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]);
@@ -73,7 +90,9 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
 
         $productPackagingUnitEntity->save();
 
-        $this->persistAmount($dataSet, $productPackagingUnitEntity);
+        if ($this->hasAmount($dataSet)) {
+            $this->persistAmount($dataSet, $productPackagingUnitEntity);
+        }
 
         $this->addPublishEvents(ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_PUBLISH, $this->getIdProductAbstractByProductSku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]));
     }
@@ -108,6 +127,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     {
         $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT] = (bool)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT];
         $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_HAS_LEAD_PRODUCT] = (bool)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_HAS_LEAD_PRODUCT];
+        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE] = (bool)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE];
 
         if ($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT]) {
             $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_HAS_LEAD_PRODUCT] = false;
@@ -125,7 +145,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function normalizeAmount(DataSetInterface $dataSet): DataSetInterface
     {
-        $isVariable = (bool)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE];
+        $isVariable = $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE];
         $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE] = $isVariable;
 
         $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] = (int)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT];
@@ -158,15 +178,6 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function persistAmount(DataSetInterface $dataSet, SpyProductPackagingUnit $productPackagingUnitEntity): void
     {
-        $haveAmount = $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] > 1 ||
-            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN] > 0 ||
-            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX] > 0 ||
-            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] > 0;
-
-        if (!$haveAmount || $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT]) {
-            return;
-        }
-
         $productPackagingUnitAmountEntity = $productPackagingUnitEntity->getSpyProductPackagingUnitAmounts()->getFirst();
 
         if ($productPackagingUnitAmountEntity === null) {
@@ -182,6 +193,30 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
             ->setAmountMax($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX])
             ->setAmountInterval($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL])
             ->save();
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return bool
+     */
+    protected function hasAmount(DataSetInterface $dataSet): bool
+    {
+        if ($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT]) {
+            return false;
+        }
+
+        if ($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE]) {
+            return true;
+        }
+
+        if (empty($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT]) ||
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] === static::DEFAULT_AMOUNT_DEFAULT_VALUE
+        ) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -231,6 +266,47 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      *
      * @return void
      */
+    protected function assertHaveProductMeasurementSalesUnit(string $productSku): void
+    {
+        $this->addProductMeasurementSalesUnitCheckToHeap($productSku);
+
+        if (static::$productMeasurementSalesUnitHeap[$productSku]) {
+            return;
+        }
+
+        throw new EntityNotFoundException(sprintf("Product measurement sales unit was not found for SKU '%s'", $productSku));
+    }
+
+    /**
+     * @param string $productSku
+     *
+     * @return void
+     */
+    protected function addProductMeasurementSalesUnitCheckToHeap(string $productSku): void
+    {
+        if (isset(static::$productMeasurementSalesUnitHeap[$productSku])) {
+            return;
+        }
+
+        if (static::$productMeasurementSalesUnitHeapSize >= static::HEAP_LIMIT) {
+            $this->clearProductMeasurementSalesUnitHeap();
+        }
+
+        $productConcreteId = $this->getIdProductBySku($productSku);
+
+        static::$productMeasurementSalesUnitHeapSize++;
+        static::$productMeasurementSalesUnitHeap[$productSku] = $this->getProductMeasurementSalesUnitQuery()
+            ->filterByFkProduct($productConcreteId)
+            ->exists();
+    }
+
+    /**
+     * @param string $productSku
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return void
+     */
     protected function addProductToProductHeapBySku(string $productSku): void
     {
         if (isset(static::$productHeap[$productSku])) {
@@ -255,7 +331,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function addProductToProductHeap(SpyProduct $productEntity): void
     {
-        if (static::$productHeapSize >= static::PRODUCT_HEAP_LIMIT) {
+        if (static::$productHeapSize >= static::HEAP_LIMIT) {
             $this->clearProductHeap();
         }
 
@@ -269,7 +345,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     /**
      * @return void
      */
-    protected function clearProductHeap()
+    protected function clearProductHeap(): void
     {
         static::$productHeapSize = 0;
         static::$productHeap = [];
@@ -278,7 +354,16 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     /**
      * @return void
      */
-    protected function initIdProductPackagingUnitTypeHeap()
+    protected function clearProductMeasurementSalesUnitHeap(): void
+    {
+        static::$productMeasurementSalesUnitHeapSize = 0;
+        static::$productMeasurementSalesUnitHeap = [];
+    }
+
+    /**
+     * @return void
+     */
+    protected function initIdProductPackagingUnitTypeHeap(): void
     {
         $productPackagingUnitTypeEntities = $this->getProductPackagingUnitTypeQuery()->find();
 
@@ -327,5 +412,13 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     protected function getProductPackagingUnitTypeQuery(): SpyProductPackagingUnitTypeQuery
     {
         return SpyProductPackagingUnitTypeQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitQuery
+     */
+    protected function getProductMeasurementSalesUnitQuery(): SpyProductMeasurementSalesUnitQuery
+    {
+        return SpyProductMeasurementSalesUnitQuery::create();
     }
 }

@@ -11,6 +11,9 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\ProductsProductTaxSetsResourceRelationship\Dependency\RestResource\ProductsProductTaxSetsResourceRelationshipToTaxSetsRestApiResourceBridge;
 
+/**
+ * @method \Spryker\Glue\ProductsProductTaxSetsResourceRelationship\ProductsProductTaxSetsResourceRelationshipConfig getConfig()
+ */
 class ProductsProductTaxSetsResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const RESOURCE_TAX_SETS = 'RESOURCE_TAX_SETS';

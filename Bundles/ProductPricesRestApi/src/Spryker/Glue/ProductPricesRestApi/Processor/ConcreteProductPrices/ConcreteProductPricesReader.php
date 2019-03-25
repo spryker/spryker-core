@@ -9,6 +9,7 @@ namespace Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -135,7 +136,7 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
      * @param string $sku
      * @param \Generated\Shared\Transfer\RestProductPricesAttributesTransfer $restProductPricesAttributesTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
     protected function buildProductPricesResource(string $sku, RestProductPricesAttributesTransfer $restProductPricesAttributesTransfer): ?RestResourceInterface
     {
@@ -151,7 +152,7 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
             $sku,
             ProductPricesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_PRICES
         );
-        $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $restResourceSelfLink);
+        $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
 
         return $restResource;
     }

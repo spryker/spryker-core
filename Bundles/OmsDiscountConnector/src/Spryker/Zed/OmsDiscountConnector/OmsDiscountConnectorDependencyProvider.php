@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\OmsDiscountConnector\Dependency\Facade\OmsDiscountConnectorToDiscountBridge;
 
+/**
+ * @method \Spryker\Zed\OmsDiscountConnector\OmsDiscountConnectorConfig getConfig()
+ */
 class OmsDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_DISCOUNT = 'facade discount';

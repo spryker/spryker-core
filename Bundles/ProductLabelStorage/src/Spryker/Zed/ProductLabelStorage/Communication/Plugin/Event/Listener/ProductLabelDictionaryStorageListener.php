@@ -14,9 +14,12 @@ use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
+ * @deprecated Use `\Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStoragePublishListener` and `\Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStorageUnpublishListener` instead.
+ *
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelStorage\Communication\ProductLabelStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
  */
 class ProductLabelDictionaryStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

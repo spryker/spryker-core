@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Category\Business\CategoryBusinessFactory getFactory()
+ * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  */
 class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
 {
@@ -670,5 +671,49 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
         return $this->getFactory()
             ->createCategory()
             ->getAllCategoryCollection($localeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategoryById(int $idCategory): ?CategoryTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createCategoryReader()
+            ->findCategoryById($idCategory);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer): string
+    {
+        return $this->getRepository()->getCategoryNodePath($idNode, $localeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCategoryListUrl(): string
+    {
+        return $this->getFactory()->getConfig()->getDefaultRedirectUrl();
     }
 }

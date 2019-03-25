@@ -13,6 +13,9 @@ use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientBri
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCurrencyClientBridge;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToStoreClientBridge;
 
+/**
+ * @method \Spryker\Glue\StoresRestApi\StoresRestApiConfig getConfig()
+ */
 class StoresRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_COUNTRY = 'CLIENT_COUNTRY';

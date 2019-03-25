@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\OfferGui\Communication\Plugin\ManualOrderEntryGui\OfferQuoteExpanderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
+ */
 class PlaceOrderController extends AbstractController
 {
     public const PARAM_ID_OFFER = 'id-offer';

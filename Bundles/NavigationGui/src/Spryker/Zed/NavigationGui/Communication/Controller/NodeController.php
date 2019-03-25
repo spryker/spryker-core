@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
  */
 class NodeController extends AbstractController
 {
@@ -55,10 +56,9 @@ class NodeController extends AbstractController
                 ->getNavigationFacade()
                 ->createNavigationNode($navigationNodeTransfer);
 
-            $this->addSuccessMessage(sprintf(
-                'Navigation node "%s" was created successfully.',
-                $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()->getArrayCopy()[0]->getTitle()
-            ));
+            $this->addSuccessMessage('Navigation node "%s" was created successfully.', [
+                '%s' => $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()->getArrayCopy()[0]->getTitle(),
+            ]);
 
             $queryParams = [
                 static::PARAM_ID_NAVIGATION => $idNavigation,
@@ -111,10 +111,9 @@ class NodeController extends AbstractController
                 ->getNavigationFacade()
                 ->updateNavigationNode($navigationNodeTransfer);
 
-            $this->addSuccessMessage(sprintf(
-                'Navigation node "%s" was updated successfully.',
-                $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()->getArrayCopy()[0]->getTitle()
-            ));
+            $this->addSuccessMessage('Navigation node "%s" was updated successfully.', [
+                '%s' => $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()->getArrayCopy()[0]->getTitle(),
+            ]);
 
             $queryParams = [
                 static::PARAM_ID_NAVIGATION => $idNavigation,
@@ -153,10 +152,9 @@ class NodeController extends AbstractController
             ->getNavigationFacade()
             ->deleteNavigationNode($navigationNodeTransfer);
 
-        $this->addSuccessMessage(sprintf(
-            'Navigation node "%s" was deleted successfully.',
-            $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()->getArrayCopy()[0]->getTitle()
-        ));
+        $this->addSuccessMessage('Navigation node "%s" was deleted successfully.', [
+            '%s' => $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()->getArrayCopy()[0]->getTitle(),
+        ]);
 
         $queryParams = [
             static::PARAM_ID_NAVIGATION => $idNavigation,

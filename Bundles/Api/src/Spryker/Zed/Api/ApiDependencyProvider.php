@@ -10,6 +10,9 @@ namespace Spryker\Zed\Api;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Api\ApiConfig getConfig()
+ */
 class ApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_ENCODING = 'SERVICE_ENCODING';

@@ -16,6 +16,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginI
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
  */
 class ProductPackagingUnitOrderItemExpanderPreSavePlugin extends AbstractPlugin implements OrderItemExpanderPreSavePluginInterface
 {

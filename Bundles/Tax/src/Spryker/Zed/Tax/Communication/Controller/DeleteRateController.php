@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
  */
 class DeleteRateController extends AbstractController
 {
@@ -43,7 +46,7 @@ class DeleteRateController extends AbstractController
         $idTaxRate = $this->castId($request->query->getInt(static::PARAM_REQUEST_ID_TAX_RATE));
 
         $this->getFacade()->deleteTaxRate($idTaxRate);
-        $this->addSuccessMessage(sprintf('Tax rate %d was deleted successfully.', $idTaxRate));
+        $this->addSuccessMessage('Tax rate %d was deleted successfully.', ['%d' => $idTaxRate]);
 
         return $this->redirectResponse(Url::generate('/tax/rate/list')->build());
     }

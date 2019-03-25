@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @method \Spryker\Zed\Dataset\Business\DatasetFacadeInterface getFacade()
  * @method \Spryker\Zed\Dataset\Communication\DatasetCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface getRepository()
  */
 class IndexController extends AbstractController
 {

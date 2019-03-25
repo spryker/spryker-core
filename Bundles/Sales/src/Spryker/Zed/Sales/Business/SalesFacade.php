@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Sales\Business\SalesBusinessFactory getFactory()
+ * @method \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
  */
 class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 {

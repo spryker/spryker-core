@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\ProductAttributeGui\Communication\ProductAttributeGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductAttributeGui\ProductAttributeGuiConfig getConfig()
  */
 class AttributeKeyForm extends AbstractType
 {

@@ -51,6 +51,7 @@ class ProductListFacadeTest extends Unit
     {
         // Assign
         $categoryTransfer = $this->tester->haveCategory();
+        /** @var \Generated\Shared\Transfer\ProductListTransfer $productListTransfer */
         $productListTransfer = (new ProductListBuilder())->withProductListCategoryRelation()->build();
         $productListTransfer->getProductListCategoryRelation()->addCategoryIds($categoryTransfer->getIdCategory());
 
@@ -68,6 +69,8 @@ class ProductListFacadeTest extends Unit
     {
         // Assign
         $productTransfer = $this->tester->haveProduct();
+
+        /** @var \Generated\Shared\Transfer\ProductListTransfer $productListTransfer */
         $productListTransfer = (new ProductListBuilder())->withProductListProductConcreteRelation()->build();
         $productListTransfer->getProductListProductConcreteRelation()->addProductIds($productTransfer->getIdProductConcrete());
 
@@ -109,6 +112,27 @@ class ProductListFacadeTest extends Unit
         // Act
         $this->getFacade()->deleteProductList($productListTransfer);
         $this->getFacade()->saveProductList($productListTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteIdsByProductListIds()
+    {
+        // Arrange
+        $productTransfer = $this->tester->haveProduct();
+
+        /** @var \Generated\Shared\Transfer\ProductListTransfer $productListTransfer */
+        $productListTransfer = (new ProductListBuilder())->withProductListProductConcreteRelation()->build();
+        $productListTransfer->getProductListProductConcreteRelation()->addProductIds($productTransfer->getIdProductConcrete());
+        $this->getFacade()->saveProductList($productListTransfer);
+
+        // Act
+        $productConcreteIds = $this->getFacade()->getProductConcreteIdsByProductListIds([$productListTransfer->getIdProductList()]);
+
+        // Assert
+        $this->assertIsArray($productConcreteIds);
+        $this->assertEquals([$productTransfer->getIdProductConcrete()], $productConcreteIds);
     }
 
     /**

@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CategoryDataImport\Business\CategoryDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\CategoryDataImport\CategoryDataImportConfig getConfig()
  */
 class CategoryDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

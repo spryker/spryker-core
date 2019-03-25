@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\FileManagerStorage\FileManagerStorageConfig getConfig()
+ * @method \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageRepositoryInterface getRepository()
  */
 class FileManagerStoragePersistenceFactory extends AbstractPersistenceFactory
 {

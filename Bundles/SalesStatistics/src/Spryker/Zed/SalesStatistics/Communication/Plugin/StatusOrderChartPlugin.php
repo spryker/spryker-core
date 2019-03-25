@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\SalesStatistics\Communication\SalesStatisticsCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesStatistics\Business\SalesStatisticsFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesStatistics\SalesStatisticsConfig getConfig()
  */
 class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterface, DashboardPluginInterface
 {

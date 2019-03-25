@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductQuantityStorage\Dependency\Facade\ProductQuantityStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\ProductQuantityStorage\Dependency\Facade\ProductQuantityStorageToProductQuantityFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductQuantityStorage\ProductQuantityStorageConfig getConfig()
+ */
 class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';

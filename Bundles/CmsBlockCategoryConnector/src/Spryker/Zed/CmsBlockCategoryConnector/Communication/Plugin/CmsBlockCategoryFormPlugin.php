@@ -14,6 +14,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Communication\CmsBlockCategoryConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig getConfig()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer()
  */
 class CmsBlockCategoryFormPlugin extends AbstractPlugin implements CmsBlockFormPluginInterface
 {

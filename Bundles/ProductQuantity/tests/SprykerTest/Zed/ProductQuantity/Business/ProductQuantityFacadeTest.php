@@ -196,6 +196,8 @@ class ProductQuantityFacadeTest extends Unit
             [true, 5, 2, 7, 7,    7], // min, max, interval matches new quantity
             [true, 0, 1, 1, null, 1], // empty quote
 
+            [false, 0, 0, 1, null, 1], // general rule 0 qty
+            [false, 0, -4, 1, null, 1], // general rule negative qty
             [false, 5, 2, 8, null, 1], // min above new quantity
             [false, 5, 2, 1, 6,    1], // max below new quantity
             [false, 5, 2, 1, null, 4], // shifted interval does not match new quantity
@@ -242,6 +244,8 @@ class ProductQuantityFacadeTest extends Unit
         return [
             [true, 0, 1],
             [true, 2, 4],
+            [false, 0, 0],
+            [false, 0, -1],
         ];
     }
 
@@ -280,5 +284,93 @@ class ProductQuantityFacadeTest extends Unit
 
         // Assert
         $this->assertSame($expectedCount, $actualCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testNormalizeCartChangeTransferMinimumAdjustment(): void
+    {
+        $expectedQuantity = 2;
+        $productTransfer = $this->tester->createProductWithSpecificProductQuantity($expectedQuantity, 100, 2);
+        $expectedSku = $productTransfer->getSku();
+
+        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
+        $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer($cartChangeTransfer, $expectedSku, 1);
+        $cartChangeTransfer->getItems()[0]->addNormalizableField('quantity');
+
+        $cartChangeTransfer = $this->productQuantityFacade->normalizeCartChangeTransferItems($cartChangeTransfer);
+
+        $this->assertSame($expectedQuantity, $cartChangeTransfer->getItems()[0]->getQuantity());
+        $this->assertSame($expectedSku, $cartChangeTransfer->getItems()[0]->getSku());
+    }
+
+    /**
+     * @return void
+     */
+    public function testNormalizeCartChangeTransferMaximumAdjustment(): void
+    {
+        $expectedQuantity = 100;
+        $productTransfer = $this->tester->createProductWithSpecificProductQuantity(2, $expectedQuantity, 2);
+        $expectedSku = $productTransfer->getSku();
+
+        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
+        $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer($cartChangeTransfer, $expectedSku, 200);
+        $cartChangeTransfer->getItems()[0]->addNormalizableField('quantity');
+
+        $cartChangeTransfer = $this->productQuantityFacade->normalizeCartChangeTransferItems($cartChangeTransfer);
+
+        $this->assertSame($expectedQuantity, $cartChangeTransfer->getItems()[0]->getQuantity());
+        $this->assertSame($expectedSku, $cartChangeTransfer->getItems()[0]->getSku());
+    }
+
+    /**
+     * @return void
+     */
+    public function testNormalizeCartChangeTransferStepAdjustment(): void
+    {
+        $expectedQuantity = 4;
+        $productTransfer = $this->tester->createProductWithSpecificProductQuantity(2, 100, 2);
+        $expectedSku = $productTransfer->getSku();
+
+        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
+        $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer($cartChangeTransfer, $expectedSku, 3);
+        $cartChangeTransfer->getItems()[0]->addNormalizableField('quantity');
+
+        $cartChangeTransfer = $this->productQuantityFacade->normalizeCartChangeTransferItems($cartChangeTransfer);
+
+        $this->assertSame($expectedQuantity, $cartChangeTransfer->getItems()[0]->getQuantity());
+        $this->assertSame($expectedSku, $cartChangeTransfer->getItems()[0]->getSku());
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasCartChangeTransferNormalizableItemsShouldReturnTrue(): void
+    {
+        $normalizableField = 'quantity';
+
+        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
+        $cartChangeTransfer = $this->tester->addEmptyItemTransferToCartChangeTransfer($cartChangeTransfer);
+        $cartChangeTransfer->getItems()[0]->addNormalizableField($normalizableField);
+
+        $actualResult = $this->productQuantityFacade->hasCartChangeTransferNormalizableItems($cartChangeTransfer, [$normalizableField]);
+
+        $this->assertEquals(true, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasCartChangeTransferNormalizableItemsShouldReturnFalse(): void
+    {
+        $normalizableField = 'quantity';
+
+        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
+        $cartChangeTransfer = $this->tester->addEmptyItemTransferToCartChangeTransfer($cartChangeTransfer);
+
+        $actualResult = $this->productQuantityFacade->hasCartChangeTransferNormalizableItems($cartChangeTransfer, [$normalizableField]);
+
+        $this->assertEquals(false, $actualResult);
     }
 }

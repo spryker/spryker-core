@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+
 class ProductManagementToPriceProductBridge implements ProductManagementToPriceProductInterface
 {
     /**
@@ -66,5 +68,40 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
     public function getPriceModeIdentifierForBothType()
     {
         return $this->priceProductFacade->getPriceModeIdentifierForBothType();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesWithoutPriceExtraction(
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array {
+        return $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction(
+            $idProductAbstract,
+            $priceProductCriteriaTransfer
+        );
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePricesWithoutPriceExtraction(
+        int $idProductConcrete,
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array {
+        return $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
+            $idProductConcrete,
+            $idProductAbstract,
+            $priceProductCriteriaTransfer
+        );
     }
 }

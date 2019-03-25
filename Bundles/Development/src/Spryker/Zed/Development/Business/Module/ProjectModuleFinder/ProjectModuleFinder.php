@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ApplicationTransfer;
 use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
+use Spryker\Zed\Development\Business\Module\ModuleMatcher\ModuleMatcherInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -23,11 +24,18 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
     protected $config;
 
     /**
-     * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     * @var \Spryker\Zed\Development\Business\Module\ModuleMatcher\ModuleMatcherInterface
      */
-    public function __construct(DevelopmentConfig $config)
+    protected $moduleMatcher;
+
+    /**
+     * @param \Spryker\Zed\Development\DevelopmentConfig $config
+     * @param \Spryker\Zed\Development\Business\Module\ModuleMatcher\ModuleMatcherInterface $moduleMatcher
+     */
+    public function __construct(DevelopmentConfig $config, ModuleMatcherInterface $moduleMatcher)
     {
         $this->config = $config;
+        $this->moduleMatcher = $moduleMatcher;
     }
 
     /**
@@ -47,12 +55,18 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
 
         foreach ($this->getProjectModuleFinder($projectDirectories) as $directoryInfo) {
             $moduleTransfer = $this->getModuleTransfer($directoryInfo);
+            if (isset($moduleCollection[$this->buildOrganizationModuleKey($moduleTransfer)])) {
+                $moduleTransfer = $moduleCollection[$this->buildOrganizationModuleKey($moduleTransfer)];
+            }
 
-            if ($moduleFilterTransfer !== null && !$this->matches($moduleTransfer, $moduleFilterTransfer)) {
+            $applicationTransfer = $this->buildApplicationTransferFromDirectoryInformation($directoryInfo);
+            $moduleTransfer->addApplication($applicationTransfer);
+
+            if ($moduleFilterTransfer !== null && !$this->moduleMatcher->matches($moduleTransfer, $moduleFilterTransfer)) {
                 continue;
             }
 
-            $moduleCollection[$this->buildOrganizationModuleKey($moduleTransfer)][] = $moduleTransfer;
+            $moduleCollection[$this->buildOrganizationModuleKey($moduleTransfer)] = $moduleTransfer;
         }
 
         ksort($moduleCollection);
@@ -109,7 +123,10 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
      */
     protected function getModuleTransfer(SplFileInfo $directoryInfo): ModuleTransfer
     {
-        return $this->buildModuleTransferFromDirectoryInformation($directoryInfo);
+        $moduleTransfer = $this->buildModuleTransferFromDirectoryInformation($directoryInfo);
+        $moduleTransfer->setOrganization($this->buildOrganizationTransferFromDirectoryInformation($directoryInfo));
+
+        return $moduleTransfer;
     }
 
     /**
@@ -119,39 +136,23 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
      */
     protected function buildModuleTransferFromDirectoryInformation(SplFileInfo $directoryInfo): ModuleTransfer
     {
-        $organizationName = $this->getOrganizationNameFromDirectory($directoryInfo);
-        $applicationName = $this->getApplicationNameFromDirectory($directoryInfo);
         $moduleName = $this->getModuleNameFromDirectory($directoryInfo);
-
-        return $this->buildModuleTransfer($organizationName, $applicationName, $moduleName);
-    }
-
-    /**
-     * @param string $organizationName
-     * @param string $applicationName
-     * @param string $moduleName
-     *
-     * @return \Generated\Shared\Transfer\ModuleTransfer
-     */
-    protected function buildModuleTransfer(string $organizationName, string $applicationName, string $moduleName): ModuleTransfer
-    {
         $moduleTransfer = new ModuleTransfer();
         $moduleTransfer
             ->setName($moduleName)
-            ->setPath(dirname(APPLICATION_SOURCE_DIR) . DIRECTORY_SEPARATOR)
-            ->setOrganization($this->buildOrganizationTransfer($organizationName))
-            ->setApplication($this->buildApplicationTransfer($applicationName));
+            ->setPath(dirname(APPLICATION_SOURCE_DIR) . DIRECTORY_SEPARATOR);
 
         return $moduleTransfer;
     }
 
     /**
-     * @param string $organizationName
+     * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
      *
      * @return \Generated\Shared\Transfer\OrganizationTransfer
      */
-    protected function buildOrganizationTransfer(string $organizationName): OrganizationTransfer
+    protected function buildOrganizationTransferFromDirectoryInformation(SplFileInfo $directoryInfo): OrganizationTransfer
     {
+        $organizationName = $this->getOrganizationNameFromDirectory($directoryInfo);
         $organizationTransfer = new OrganizationTransfer();
         $organizationTransfer
             ->setName($organizationName)
@@ -161,15 +162,15 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
     }
 
     /**
-     * @param string $applicationName
+     * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
      *
      * @return \Generated\Shared\Transfer\ApplicationTransfer
      */
-    protected function buildApplicationTransfer(string $applicationName): ApplicationTransfer
+    protected function buildApplicationTransferFromDirectoryInformation(SplFileInfo $directoryInfo): ApplicationTransfer
     {
+        $applicationName = $this->getApplicationNameFromDirectory($directoryInfo);
         $applicationTransfer = new ApplicationTransfer();
-        $applicationTransfer
-            ->setName($applicationName);
+        $applicationTransfer->setName($applicationName);
 
         return $applicationTransfer;
     }
@@ -222,104 +223,5 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
     protected function buildOrganizationModuleKey(ModuleTransfer $moduleTransfer): string
     {
         return sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
-     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
-     *
-     * @return bool
-     */
-    protected function matches(ModuleTransfer $moduleTransfer, ModuleFilterTransfer $moduleFilterTransfer): bool
-    {
-        $accepted = true;
-
-        if (!$this->matchesOrganization($moduleFilterTransfer, $moduleTransfer->getOrganization())) {
-            $accepted = false;
-        }
-        if (!$this->matchesApplication($moduleFilterTransfer, $moduleTransfer->getApplication())) {
-            $accepted = false;
-        }
-        if (!$this->matchesModule($moduleFilterTransfer, $moduleTransfer)) {
-            $accepted = false;
-        }
-
-        return $accepted;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
-     * @param \Generated\Shared\Transfer\OrganizationTransfer $organizationTransfer
-     *
-     * @return bool
-     */
-    protected function matchesOrganization(ModuleFilterTransfer $moduleFilterTransfer, OrganizationTransfer $organizationTransfer): bool
-    {
-        if ($moduleFilterTransfer->getOrganization() === null) {
-            return true;
-        }
-
-        return $this->match($moduleFilterTransfer->getOrganization()->getName(), $organizationTransfer->getName());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
-     * @param \Generated\Shared\Transfer\ApplicationTransfer $applicationTransfer
-     *
-     * @return bool
-     */
-    protected function matchesApplication(ModuleFilterTransfer $moduleFilterTransfer, ApplicationTransfer $applicationTransfer): bool
-    {
-        if ($moduleFilterTransfer->getApplication() === null) {
-            return true;
-        }
-
-        return $this->match($moduleFilterTransfer->getApplication()->getName(), $applicationTransfer->getName());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
-     *
-     * @return bool
-     */
-    protected function matchesModule(ModuleFilterTransfer $moduleFilterTransfer, ModuleTransfer $moduleTransfer): bool
-    {
-        if ($moduleFilterTransfer->getModule() === null) {
-            return true;
-        }
-
-        return $this->match($moduleFilterTransfer->getModule()->getName(), $moduleTransfer->getName());
-    }
-
-    /**
-     * @param string $search
-     * @param string $given
-     *
-     * @return bool
-     */
-    protected function match(string $search, string $given): bool
-    {
-        if ($search === $given) {
-            return true;
-        }
-
-        if (mb_strpos($search, '*') !== 0) {
-            $search = '^' . $search;
-        }
-
-        if (mb_strpos($search, '*') === 0) {
-            $search = mb_substr($search, 1);
-        }
-
-        if (mb_substr($search, -1) !== '*') {
-            $search .= '$';
-        }
-
-        if (mb_substr($search, -1) === '*') {
-            $search = mb_substr($search, 0, mb_strlen($search) - 1);
-        }
-
-        return preg_match(sprintf('/%s/', $search), $given);
     }
 }

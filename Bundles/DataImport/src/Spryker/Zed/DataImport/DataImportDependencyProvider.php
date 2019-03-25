@@ -15,6 +15,9 @@ use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\DataImport\DataImportConfig getConfig()
+ */
 class DataImportDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_TOUCH = 'touch facade';

@@ -107,4 +107,14 @@ interface SynchronizationFacadeInterface
      * @return void
      */
     public function executeResolvedPluginsBySources(array $resources);
+
+    /**
+     * Specification:
+     *  - Returns sorted resource names list from plugins configured in SynchronizationDependencyProvider::getSynchronizationDataPlugins().
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getAvailableResourceNames(): array;
 }

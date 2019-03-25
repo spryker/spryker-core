@@ -43,7 +43,7 @@ class EditController extends BaseOptionController
                 ]
             )->build();
 
-            $this->addSuccessMessage('Product option group modifed.');
+            $this->addSuccessMessage('Product option group modified.');
 
             return $this->redirectResponse($redirectUrl);
         }

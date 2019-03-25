@@ -9,9 +9,12 @@ namespace Spryker\Zed\ProductCategory\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCategory\Business\Manager\ProductCategoryManager;
+use Spryker\Zed\ProductCategory\Business\Model\CategoryReader;
+use Spryker\Zed\ProductCategory\Business\Model\CategoryReaderInterface;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
  * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface getQueryContainer()
  */
@@ -52,5 +55,16 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     protected function getCategoryFacade()
     {
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CATEGORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategory\Business\Model\CategoryReaderInterface
+     */
+    public function createCategoryReader(): CategoryReaderInterface
+    {
+        return new CategoryReader(
+            $this->getRepository(),
+            $this->getCategoryFacade()
+        );
     }
 }

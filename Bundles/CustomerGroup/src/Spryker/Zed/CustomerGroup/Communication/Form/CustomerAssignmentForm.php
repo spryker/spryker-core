@@ -18,6 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerGroup\Communication\CustomerGroupCommunicationFactory getFactory()
  * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CustomerGroup\CustomerGroupConfig getConfig()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupRepositoryInterface getRepository()
  */
 class CustomerAssignmentForm extends AbstractType
 {

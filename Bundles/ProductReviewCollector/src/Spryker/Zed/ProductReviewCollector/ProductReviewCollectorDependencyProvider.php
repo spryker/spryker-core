@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToCollectorBridge;
 use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToSearchBridge;
 
+/**
+ * @method \Spryker\Zed\ProductReviewCollector\ProductReviewCollectorConfig getConfig()
+ */
 class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const STORE = 'STORE';

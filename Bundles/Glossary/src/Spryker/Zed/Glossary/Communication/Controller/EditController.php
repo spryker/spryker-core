@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
  */
 class EditController extends AbstractController
 {
@@ -30,6 +31,7 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $idGlossaryKey = $this->castId($request->query->get(static::URL_PARAMETER_GLOSSARY_KEY));
+
         $formData = $this
             ->getFactory()
             ->createTranslationDataProvider()
@@ -37,6 +39,12 @@ class EditController extends AbstractController
                 $idGlossaryKey,
                 $this->getFactory()->getEnabledLocales()
             );
+
+        if ($formData === []) {
+            $this->addErrorMessage("Glossary with id %s doesn't exist", ['%s' => $idGlossaryKey]);
+
+            return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
+        }
 
         $glossaryForm = $this
             ->getFactory()
@@ -53,7 +61,7 @@ class EditController extends AbstractController
             $glossaryFacade = $this->getFacade();
 
             if ($glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer)) {
-                $this->addSuccessMessage(sprintf(static::MESSAGE_UPDATE_SUCCESS, $idGlossaryKey));
+                $this->addSuccessMessage(static::MESSAGE_UPDATE_SUCCESS, ['%d' => $idGlossaryKey]);
                 return $this->redirectResponse('/glossary');
             }
 

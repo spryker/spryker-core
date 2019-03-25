@@ -9,7 +9,7 @@ namespace Spryker\Shared\Session\Business\Handler;
 
 use Couchbase;
 use SessionHandlerInterface;
-use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
+use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 
 class SessionHandlerCouchbase implements SessionHandlerInterface
 {
@@ -60,12 +60,12 @@ class SessionHandlerCouchbase implements SessionHandlerInterface
     protected $lifetime;
 
     /**
-     * @var \Spryker\Shared\NewRelicApi\NewRelicApiInterface
+     * @var \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface
      */
-    protected $newRelicApi;
+    protected $monitoringService;
 
     /**
-     * @param \Spryker\Shared\NewRelicApi\NewRelicApiInterface $newRelicApi
+     * @param \Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface $monitoringService
      * @param array $hosts
      * @param string|null $user
      * @param string|null $password
@@ -74,7 +74,7 @@ class SessionHandlerCouchbase implements SessionHandlerInterface
      * @param int $lifetime
      */
     public function __construct(
-        NewRelicApiInterface $newRelicApi,
+        SessionToMonitoringServiceInterface $monitoringService,
         $hosts = ['127.0.0.1:8091'],
         $user = null,
         $password = null,
@@ -82,7 +82,7 @@ class SessionHandlerCouchbase implements SessionHandlerInterface
         $persistent = true,
         $lifetime = 600
     ) {
-        $this->newRelicApi = $newRelicApi;
+        $this->monitoringService = $monitoringService;
         $this->hosts = $hosts;
         $this->user = $user;
         $this->password = $password;
@@ -131,7 +131,7 @@ class SessionHandlerCouchbase implements SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->getAndTouch($key, $this->lifetime);
-        $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
         return $result ? json_decode($result, true) : '';
     }
@@ -152,7 +152,7 @@ class SessionHandlerCouchbase implements SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->set($key, json_encode($sessionData), $this->lifetime);
-        $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
         return $result ? true : false;
     }
@@ -168,7 +168,7 @@ class SessionHandlerCouchbase implements SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->delete($key);
-        $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
         return true;
     }

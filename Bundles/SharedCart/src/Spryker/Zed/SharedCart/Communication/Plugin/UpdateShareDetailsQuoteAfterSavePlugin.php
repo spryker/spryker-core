@@ -14,6 +14,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 /**
  * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  */
 class UpdateShareDetailsQuoteAfterSavePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {

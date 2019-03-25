@@ -13,9 +13,12 @@ use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
+ * @deprecated Use `\Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchPublishListener` and `\Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchUnpublishListener` instead.
+ *
  * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetPageSearch\Communication\ProductSetPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductSetPageSearch\ProductSetPageSearchConfig getConfig()
  */
 class ProductSetPageSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

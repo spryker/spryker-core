@@ -14,6 +14,8 @@ use Spryker\Zed\ShoppingListNote\Persistence\Propel\Mapper\ShoppingListItemNoteM
 
 /**
  * @method \Spryker\Zed\ShoppingListNote\ShoppingListNoteConfig getConfig()
+ * @method \Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteRepositoryInterface getRepository()
  */
 class ShoppingListNotePersistenceFactory extends AbstractPersistenceFactory
 {

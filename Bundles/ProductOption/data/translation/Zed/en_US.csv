@@ -1,0 +1,43 @@
+Activate,Activate
+"Add option","Add option"
+"All products","All products"
+"Assigned products","Assigned products"
+"Could not activate option.","Could not activate option."
+"Create a product option by defining option values with translation key, sku and price. By adding more than 1 option value bellow, you will create an option group. With an option group your customer can choose one option from this group.","Create a product option by defining option values with translation key, sku and price. By adding more than 1 option value bellow, you will create an option group. With an option group your customer can choose one option from this group."
+"Create product option","Create product option"
+"Created at","Created at"
+Deactivate,Deactivate
+"Deselect all on the page","Deselect all on the page"
+Edit,Edit
+"Edit product option","Edit product option"
+"General information","General Information"
+"Gross Price","Gross price"
+"Group name","Group name"
+"Group name translation key","Group name translation key"
+ID,ID
+"List of product options","List of product options"
+Name,Name
+"Net Price","Net price"
+"Option group ID","Option group ID"
+"Option name","Option name"
+"Option name translation key","Option name translation key"
+"Option successfully activated.","Option successfully activated."
+"Option successfully deactivated.","Option successfully deactivated."
+"Option Values","Option Values"
+"Product option group created.","Product option group created."
+"Product option group modified.","Product option group modified."
+"Product option list","Product option list"
+Products,Products
+"Products to be assigned","Products to be assigned"
+"Products to be deassigned","Products to be deassigned"
+"Products with this option","Products with this option"
+Save,Save
+"Select all on the page","Select all on the page"
+Selected,Selected
+SKU,SKU
+Sku,SKU
+"Tax set","Tax Set"
+Translation,Translation
+"Translation key","Translation key"
+"Updated at","Updated at"
+"View product option","View product option"

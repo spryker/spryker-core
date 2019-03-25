@@ -13,7 +13,11 @@ use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToGlossaryBri
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleBridge;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductBridge;
 use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilEncodingBridge;
+use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductAttribute\ProductAttributeConfig getConfig()
+ */
 class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
@@ -21,6 +25,7 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -33,6 +38,7 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addLocaleFacade($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addProductFacade($container);
+        $container = $this->addUtilSanitizeService($container);
 
         return $container;
     }
@@ -88,6 +94,20 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductAttributeToProductBridge($container->getLocator()->product()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilSanitizeService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+            return new ProductAttributeToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
         };
 
         return $container;

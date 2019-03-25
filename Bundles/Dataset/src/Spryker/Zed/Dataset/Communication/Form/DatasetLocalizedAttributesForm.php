@@ -16,6 +16,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\Dataset\DatasetConfig getConfig()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Dataset\Business\DatasetFacadeInterface getFacade()
+ * @method \Spryker\Zed\Dataset\Communication\DatasetCommunicationFactory getFactory()
+ */
 class DatasetLocalizedAttributesForm extends AbstractType
 {
     public const FIELD_TITLE = 'title';

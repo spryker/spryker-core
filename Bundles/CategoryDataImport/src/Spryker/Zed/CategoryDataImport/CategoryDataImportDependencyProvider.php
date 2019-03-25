@@ -9,6 +9,9 @@ namespace Spryker\Zed\CategoryDataImport;
 
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\CategoryDataImport\CategoryDataImportConfig getConfig()
+ */
 class CategoryDataImportDependencyProvider extends DataImportDependencyProvider
 {
 }

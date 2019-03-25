@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
  */
 class CmsPageAttributesFormType extends AbstractType
 {

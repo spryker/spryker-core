@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
  */
 class DeleteController extends AbstractController
 {
@@ -35,10 +36,9 @@ class DeleteController extends AbstractController
             ->getProductSetFacade()
             ->deleteProductSet($productSetTransfer);
 
-        $this->addSuccessMessage(sprintf(
-            'Product Set #%d deleted successfully.',
-            $productSetTransfer->getIdProductSet()
-        ));
+        $this->addSuccessMessage('Product Set #%d deleted successfully.', [
+            '%d' => $productSetTransfer->getIdProductSet(),
+        ]);
 
         return $this->redirectResponse(
             Url::generate('/product-set-gui')->build()

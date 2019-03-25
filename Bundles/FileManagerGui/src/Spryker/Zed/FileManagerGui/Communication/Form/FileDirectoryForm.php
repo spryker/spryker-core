@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\FileManagerGui\FileManagerGuiConfig getConfig()
  */
 class FileDirectoryForm extends AbstractType
 {

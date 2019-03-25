@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductBusinessFactory getFactory()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface getRepository()
  */
 class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInterface
 {
@@ -493,5 +495,22 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
         return $this->getFactory()
             ->createPriceProductAbstractReader()
             ->findIdProductAbstractForPriceProduct($priceProductTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(array $productAbstractIds, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array
+    {
+        return $this->getFactory()
+            ->createPriceProductAbstractReader()
+            ->findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria($productAbstractIds, $priceProductCriteriaTransfer);
     }
 }

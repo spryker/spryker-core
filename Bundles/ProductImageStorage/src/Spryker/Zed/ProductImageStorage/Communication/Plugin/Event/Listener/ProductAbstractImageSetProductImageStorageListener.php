@@ -9,16 +9,25 @@ namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
+ * @deprecated Use `\Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductAbstractImageSetProductImageStoragePublishListener` and `\Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductAbstractImageSetProductImageStorageUnpublishListener` instead.
+ *
  * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductImageStorage\Communication\ProductImageStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductImageStorage\Business\ProductImageStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductImageStorage\ProductImageStorageConfig getConfig()
  */
 class ProductAbstractImageSetProductImageStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
+
+    protected const PUBLISH_EVENTS = [
+        ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE,
+        ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_CREATE,
+    ];
 
     /**
      * @api
@@ -34,6 +43,12 @@ class ProductAbstractImageSetProductImageStorageListener extends AbstractPlugin 
         $productImageSetToProductImageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
         $productAbstractIds = $this->getQueryContainer()->queryProductAbstractIdsByProductImageSetToProductImageIds($productImageSetToProductImageIds)->find()->getData();
 
-        $this->getFacade()->publishProductAbstractImages($productAbstractIds);
+        if ($eventName === ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE) {
+            $this->getFacade()->unpublishProductAbstractImages($productAbstractIds);
+        }
+
+        if (in_array($eventName, static::PUBLISH_EVENTS)) {
+            $this->getFacade()->publishProductAbstractImages($productAbstractIds);
+        }
     }
 }

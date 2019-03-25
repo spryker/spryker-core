@@ -2,8 +2,11 @@ concrete_sku,is_lead_product,has_lead_product,packaging_unit_type_name,default_a
 218_123,1,,packaging_unit_type.item.name,,,,,
 217_123,1,,packaging_unit_type.item.name,,,,,
 218_1233,0,0,packaging_unit_type.pack_mixed.name,5,1,3,5,2
-218_1234,0,0,packaging_unit_type.box.name,5,1,3,5,2
+218_1234,0,1,packaging_unit_type.box.name,100,1,100,1000,10
 218_1230,0,1,packaging_unit_type.pack_20.name,20,0,0,0,0
 218_1231,0,1,packaging_unit_type.pack_100.name,100,0,0,0,0
 218_1232,0,1,packaging_unit_type.pack_500.name,500,0,0,0,0
 217_1231,0,0,packaging_unit_type.ring_500.name,1,0,,,
+215_123,1,,packaging_unit_type.item.name,,,,,
+215_124,0,0,packaging_unit_type.ring_500.name,1,0,,,
+216_123,1,,packaging_unit_type.item.name,,,,,

@@ -7,7 +7,8 @@
     "phpdocumentor/graphviz": "^1.0.4",
     "everon/criteria-builder": "^1.1.5",
     "moneyphp/money": "^3.0.0",
-    "fzaninotto/faker": "^1.6"
+    "fzaninotto/faker": "^1.6",
+    "mikey179/vfsStream": "^1.6"
   },
   "require-dev": {
     "spryker/code-sniffer": "dev-master"
@@ -109,7 +110,6 @@
     "spryker/elastica": "*",
     "spryker/error-handler": "*",
     "spryker/event": "*",
-    "spryker/event-journal": "*",
     "spryker/file-system": "*",
     "spryker/flysystem": "*",
     "spryker/flysystem-aws3v3-filesystem": "*",
@@ -144,8 +144,6 @@
     "spryker/navigation-collector": "*",
     "spryker/navigation-gui": "*",
     "spryker/navigation-storage": "*",
-    "spryker/new-relic": "*",
-    "spryker/new-relic-api": "*",
     "spryker/newsletter": "*",
     "spryker/nopayment": "*",
     "spryker/oauth": "*",
@@ -157,7 +155,7 @@
     "spryker/oms-discount-connector": "*",
     "spryker/payment": "*",
     "spryker/payment-cart-connector": "*",
-    "spryker/pimple": "*",
+    "spryker/container": "*",
     "spryker/price": "*",
     "spryker/price-cart-connector": "*",
     "spryker/price-product": "*",
@@ -191,7 +189,6 @@
     "spryker/product-management": "*",
     "spryker/product-measurement-unit": "*",
     "spryker/product-measurement-unit-data-import": "*",
-    "spryker/product-measurement-unit-gui": "*",
     "spryker/product-measurement-unit-storage": "*",
     "spryker/product-new": "*",
     "spryker/product-option": "*",
@@ -225,7 +222,6 @@
     "spryker/queue": "*",
     "spryker/quote": "*",
     "spryker/ramsey-uuid": "*",
-    "spryker/ratepay": "*",
     "spryker/redis": "*",
     "spryker/refund": "*",
     "spryker/sales": "*",

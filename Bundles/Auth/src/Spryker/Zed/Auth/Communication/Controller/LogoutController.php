@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 /**
  * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
  * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
+ * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface getQueryContainer()
  */
 class LogoutController extends AbstractController
 {

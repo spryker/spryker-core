@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Intl\Intl;
 
+/**
+ * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
+ */
 class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_STORE = 'STORE_FACADE';

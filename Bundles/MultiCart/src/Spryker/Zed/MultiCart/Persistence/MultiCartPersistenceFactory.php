@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\MultiCart\MultiCartConfig getConfig()
+ * @method \Spryker\Zed\MultiCart\Persistence\MultiCartEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\MultiCart\Persistence\MultiCartRepositoryInterface getRepository()
  */
 class MultiCartPersistenceFactory extends AbstractPersistenceFactory
 {

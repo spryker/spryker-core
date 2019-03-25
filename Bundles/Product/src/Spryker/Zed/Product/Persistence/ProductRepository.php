@@ -9,10 +9,12 @@ namespace Spryker\Zed\Product\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -23,6 +25,36 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 {
     public const KEY_FILTERED_PRODUCTS_RESULT = 'result';
     public const KEY_FILTERED_PRODUCTS_PRODUCT_NAME = 'name';
+
+    /**
+     * @param string $productConcreteSku
+     *
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer|null
+     */
+    public function findProductConcreteBySku(string $productConcreteSku): ?SpyProductEntityTransfer
+    {
+        $productQuery = $this->getFactory()
+            ->createProductQuery()
+            ->joinWithSpyProductAbstract()
+            ->filterBySku($productConcreteSku);
+
+        return $this->buildQueryFromCriteria($productQuery)->findOne();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer|null
+     */
+    public function findProductConcreteById(int $idProductConcrete): ?SpyProductEntityTransfer
+    {
+        $productQuery = $this->getFactory()
+            ->createProductQuery()
+            ->joinWithSpyProductAbstract()
+            ->filterByIdProduct($idProductConcrete);
+
+        return $this->buildQueryFromCriteria($productQuery)->findOne();
+    }
 
     /**
      * @param string $search
@@ -217,5 +249,79 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         }
 
         return $formattedResults;
+    }
+
+    /**
+     * @module Locale
+     * @module Store
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByProductIds(array $productIds): array
+    {
+        if (empty($productIds)) {
+            return [];
+        }
+
+        $query = $this->getFactory()
+            ->createProductQuery()
+            ->filterByIdProduct_In($productIds)
+            ->joinWithSpyProductAbstract()
+            ->joinWithSpyProductLocalizedAttributes()
+            ->useSpyProductLocalizedAttributesQuery()
+                ->joinWithLocale()
+            ->endUse()
+            ->useSpyProductAbstractQuery()
+                ->joinWithSpyProductAbstractStore()
+                ->useSpyProductAbstractStoreQuery()
+                    ->joinWithSpyStore()
+                ->endUse()
+            ->endUse();
+
+        $productConcreteEntities = $query->find();
+
+        return $this->getProductConcreteTransfersMappedFromProductConcreteEntities($productConcreteEntities);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array
+    {
+        if (empty($productAbstractIds)) {
+            return [];
+        }
+
+        $query = $this->getFactory()
+            ->createProductQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds);
+
+        $productConcreteEntities = $query->find();
+
+        return $this->getProductConcreteTransfersMappedFromProductConcreteEntities($productConcreteEntities);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $productConcreteEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function getProductConcreteTransfersMappedFromProductConcreteEntities(ObjectCollection $productConcreteEntities): array
+    {
+        $productConcreteTransfers = [];
+        $productMapper = $this->getFactory()->createProductMapper();
+
+        foreach ($productConcreteEntities as $productConcreteEntity) {
+            $productConcreteTransfers[] = $productMapper->mapProductConcreteEntityToTransfer(
+                $productConcreteEntity,
+                new ProductConcreteTransfer()
+            );
+        }
+
+        return $productConcreteTransfers;
     }
 }

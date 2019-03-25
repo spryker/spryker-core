@@ -56,7 +56,7 @@
             <reference local="fk_product_packaging_unit" foreign="id_product_packaging_unit"/>
         </foreign-key>
 
-        <unique name="spy_product_packaging_unit_amount-unique-fk_product_packaging_unit">
+        <unique name="spy_product_packaging_unit_amount-unique-fk_product_pu">
             <unique-column name="fk_product_packaging_unit"/>
         </unique>
 

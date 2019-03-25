@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\FileManager\Business\FileManagerBusinessFactory getFactory()
+ * @method \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface getRepository()
  */
 class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInterface
 {

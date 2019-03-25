@@ -9,6 +9,9 @@ namespace Spryker\Zed\CmsContentWidgetProductGroupConnector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\CmsContentWidgetProductGroupConnector\CmsContentWidgetProductGroupConnectorConfig getConfig()
+ */
 class CmsContentWidgetProductGroupConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

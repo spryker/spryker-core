@@ -14,6 +14,7 @@ use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInt
 /**
  * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  */
 class QuotePermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
 {

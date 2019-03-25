@@ -14,6 +14,9 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\Produc
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelBridge;
 
+/**
+ * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig getConfig()
+ */
 class ProductAlternativeProductLabelConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';

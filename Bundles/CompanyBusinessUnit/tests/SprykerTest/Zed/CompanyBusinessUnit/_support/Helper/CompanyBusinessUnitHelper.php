@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -37,6 +38,8 @@ class CompanyBusinessUnitHelper extends Module
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
 
+        $this->ensureCompanyBusinessUnitWithKeyDoesNotExist($companyBusinessUnitTransfer->getKey());
+
         return $this->getCompanyBusinessUnitFacade()
             ->create($companyBusinessUnitTransfer)
             ->getCompanyBusinessUnitTransfer();
@@ -57,6 +60,8 @@ class CompanyBusinessUnitHelper extends Module
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
 
+        $this->ensureCompanyBusinessUnitWithKeyDoesNotExist($companyBusinessUnitTransfer->getKey());
+
         return $this->getCompanyBusinessUnitFacade()
             ->create($companyBusinessUnitTransfer)
             ->getCompanyBusinessUnitTransfer();
@@ -75,6 +80,21 @@ class CompanyBusinessUnitHelper extends Module
         $customerFacade->addCustomer($companyTransfer);
 
         return $customerFacade->getCustomer($companyTransfer);
+    }
+
+    /**
+     * @param string $reference
+     *
+     * @return void
+     */
+    public function ensureCustomerWithReferenceDoesNotExist($reference): void
+    {
+        $customerFacade = $this->getLocator()->customer()->facade();
+        $customerTransfer = $customerFacade->findByReference($reference);
+
+        if ($customerTransfer) {
+            $customerFacade->deleteCustomer($customerTransfer);
+        }
     }
 
     /**
@@ -114,5 +134,24 @@ class CompanyBusinessUnitHelper extends Module
             ->facade()
             ->create($companyTransfer)
             ->getCompanyTransfer();
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return void
+     */
+    protected function ensureCompanyBusinessUnitWithKeyDoesNotExist(string $key): void
+    {
+        $companyBusinessUnitQuery = $this->getCompanyBusinessUnitQuery();
+        $companyBusinessUnitQuery->filterByKey($key)->delete();
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
+     */
+    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
+    {
+        return SpyCompanyBusinessUnitQuery::create();
     }
 }

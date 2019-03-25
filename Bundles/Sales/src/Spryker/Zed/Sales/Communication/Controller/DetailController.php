@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
  */
 class DetailController extends AbstractController
 {
@@ -33,10 +34,7 @@ class DetailController extends AbstractController
         $orderTransfer = $this->getFacade()->findOrderByIdSalesOrder($idSalesOrder);
 
         if ($orderTransfer === null) {
-            $this->addErrorMessage(sprintf(
-                'Sales order #%d not found.',
-                $idSalesOrder
-            ));
+            $this->addErrorMessage('Sales order #%d not found.', ['%d' => $idSalesOrder]);
 
             return $this->redirectResponse(Url::generate('/sales')->build());
         }

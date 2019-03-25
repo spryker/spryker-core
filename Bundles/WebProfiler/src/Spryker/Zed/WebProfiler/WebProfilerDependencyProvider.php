@@ -10,6 +10,9 @@ namespace Spryker\Zed\WebProfiler;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\WebProfiler\WebProfilerConfig getConfig()
+ */
 class WebProfilerDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_WEB_PROFILER = 'PLUGINS_WEB_PROFILER';

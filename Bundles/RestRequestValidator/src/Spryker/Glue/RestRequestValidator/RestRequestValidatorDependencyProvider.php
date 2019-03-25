@@ -15,6 +15,9 @@ use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorTo
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToValidationAdapter;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapter;
 
+/**
+ * @method \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig getConfig()
+ */
 class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const ADAPTER_FILESYSTEM = 'ADAPTER_FILESYSTEM';

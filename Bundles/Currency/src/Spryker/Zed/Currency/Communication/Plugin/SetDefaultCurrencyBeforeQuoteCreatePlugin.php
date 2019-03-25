@@ -13,6 +13,8 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 
 /**
  * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
+ * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
+ * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
  */
 class SetDefaultCurrencyBeforeQuoteCreatePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {

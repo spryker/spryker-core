@@ -14,9 +14,6 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProd
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductAbstractStorageWriterInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductConcreteStorageWriter;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductConcreteStorageWriterInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToStoreFacadeInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface getEntityManager()
@@ -54,26 +51,6 @@ class PriceProductMerchantRelationshipStorageBusinessFactory extends AbstractBus
      */
     public function createPriceGrouper(): PriceGrouperInterface
     {
-        return new PriceGrouper(
-            $this->getPriceProductFacade(),
-            $this->getStoreFacade(),
-            $this->getConfig()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface
-     */
-    public function getPriceProductFacade(): PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface
-    {
-        return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::FACADE_PRICE_PRODUCT);
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToStoreFacadeInterface
-     */
-    public function getStoreFacade(): PriceProductMerchantRelationshipStorageToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::FACADE_STORE);
+        return new PriceGrouper();
     }
 }

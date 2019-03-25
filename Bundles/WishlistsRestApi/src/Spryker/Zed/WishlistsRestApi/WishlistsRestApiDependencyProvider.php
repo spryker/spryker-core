@@ -11,6 +11,9 @@ use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\WishlistsRestApi\WishlistsRestApiConfig getConfig()
+ */
 class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_WISHLIST = 'PROPEL_QUERY_WISHLIST';

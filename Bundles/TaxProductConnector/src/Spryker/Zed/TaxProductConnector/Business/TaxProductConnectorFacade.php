@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorRepositoryInterface getRepository()
  */
 class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConnectorFacadeInterface
 {

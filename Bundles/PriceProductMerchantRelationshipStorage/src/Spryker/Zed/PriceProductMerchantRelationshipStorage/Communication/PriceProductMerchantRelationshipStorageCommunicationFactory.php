@@ -9,11 +9,13 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig getConfig()
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\PriceProductMerchantRelationshipStorageFacadeInterface getFacade()
  */
 class PriceProductMerchantRelationshipStorageCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -23,13 +25,5 @@ class PriceProductMerchantRelationshipStorageCommunicationFactory extends Abstra
     public function getEventBehaviorFacade(): PriceProductMerchantRelationshipStorageToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface
-     */
-    public function getPriceProductFacade(): PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface
-    {
-        return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 }

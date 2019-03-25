@@ -20,6 +20,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Money\MoneyConfig getConfig()
+ * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()
  */
 class MoneyCollectionType extends AbstractCollectionType
 {

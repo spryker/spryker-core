@@ -15,6 +15,8 @@ use Spryker\Zed\ProductDiscontinued\Persistence\Propel\Mapper\ProductDiscontinue
 
 /**
  * @method \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig getConfig()
+ * @method \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface getRepository()
  */
 class ProductDiscontinuedPersistenceFactory extends AbstractPersistenceFactory
 {

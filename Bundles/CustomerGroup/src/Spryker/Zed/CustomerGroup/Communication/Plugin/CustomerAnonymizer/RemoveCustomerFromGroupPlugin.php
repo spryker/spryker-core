@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerGroup\Communication\CustomerGroupCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerGroup\CustomerGroupConfig getConfig()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface getQueryContainer()
  */
 class RemoveCustomerFromGroupPlugin extends AbstractPlugin implements CustomerAnonymizerPluginInterface
 {

@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @method \Spryker\Zed\Cache\CacheConfig getConfig()
+ */
 class CacheDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SYMFONY_FILE_SYSTEM = 'symfony_file_system';

@@ -23,6 +23,7 @@ use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiConfig getConfig()
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\Business\CompanyBusinessUnitGuiFacadeInterface getFacade()
  */
 class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFactory
 {

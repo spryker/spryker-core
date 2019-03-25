@@ -9,6 +9,9 @@ namespace Spryker\Zed\Country;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\Country\CountryConfig getConfig()
+ */
 class CountryDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

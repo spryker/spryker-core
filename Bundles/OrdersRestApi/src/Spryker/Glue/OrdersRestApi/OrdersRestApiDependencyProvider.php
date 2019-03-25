@@ -11,6 +11,9 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientBridge;
 
+/**
+ * @method \Spryker\Glue\OrdersRestApi\OrdersRestApiConfig getConfig()
+ */
 class OrdersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_SALES = 'CLIENT_SALES';

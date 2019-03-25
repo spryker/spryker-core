@@ -9,19 +9,24 @@ namespace SprykerTest\Zed\PriceProductStorage\Communication\Plugin\Event\Listene
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorageQuery;
 use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\PriceProductStorage\Business\PriceProductStorageBusinessFactory;
 use Spryker\Zed\PriceProductStorage\Business\PriceProductStorageFacade;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductConcreteEntityStoragePublishListener;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductConcreteEntityStorageUnpublishListener;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductConcretePublishStorageListener;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductConcreteStorageListener;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductConcreteStoragePublishListener;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductConcreteStorageUnpublishListener;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductStoreConcreteStorageListener;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceTypeProductConcreteStorageListener;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceTypeProductConcreteStoragePublishListener;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceTypeProductConcreteStorageUnpublishListener;
 use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainer;
 use SprykerTest\Zed\PriceProductStorage\PriceProductStorageConfigMock;
 
@@ -45,6 +50,11 @@ class PriceProductConcreteStorageListenerTest extends Unit
     protected $tester;
 
     /**
+     * @var \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected $priceProductTransfer;
+
+    /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
      * @return void
@@ -57,26 +67,35 @@ class PriceProductConcreteStorageListenerTest extends Unit
             throw new SkippedTestError('Warning: not in suite environment');
         }
 
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $priceProductOverride = [
+            PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+            PriceProductTransfer::SKU_PRODUCT => $productConcreteTransfer->getSku(),
+            PriceProductTransfer::ID_PRICE_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
+        ];
+
+        $this->priceProductTransfer = $this->tester->havePriceProduct($priceProductOverride);
     }
 
     /**
      * @return void
      */
-    public function testPriceProductConcretePublishStorageListenerStoreData()
+    public function testPriceProductConcretePublishStorageListenerStoreData(): void
     {
-        SpyPriceProductConcreteStorageQuery::create()->filterByFkProduct(1)->delete();
+        // Prepare
+        SpyPriceProductConcreteStorageQuery::create()->filterByFkProduct($this->priceProductTransfer->getIdProduct())->delete();
         $beforeCount = SpyPriceProductConcreteStorageQuery::create()->count();
 
         $priceProductConcretePublishStorageListener = new PriceProductConcretePublishStorageListener();
         $priceProductConcretePublishStorageListener->setFacade($this->getPriceProductStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($this->priceProductTransfer->getIdProduct()),
         ];
+
+        // Action
         $priceProductConcretePublishStorageListener->handleBulk($eventTransfers, PriceProductEvents::PRICE_CONCRETE_PUBLISH);
 
         // Assert
@@ -86,9 +105,52 @@ class PriceProductConcreteStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testPriceProductConcreteStorageListenerStoreData()
+    public function testPriceProductConcretePublishStoragePublishListener(): void
     {
-        SpyPriceProductConcreteStorageQuery::create()->filterByFkProduct(1)->delete();
+        // Prepare
+        SpyPriceProductConcreteStorageQuery::create()->filterByFkProduct($this->priceProductTransfer->getIdProduct())->delete();
+        $beforeCount = SpyPriceProductConcreteStorageQuery::create()->count();
+
+        $priceProductConcreteStoragePublishListener = new PriceProductConcreteStoragePublishListener();
+        $priceProductConcreteStoragePublishListener->setFacade($this->getPriceProductStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->priceProductTransfer->getIdProduct()),
+        ];
+
+        // Action
+        $priceProductConcreteStoragePublishListener->handleBulk($eventTransfers, PriceProductEvents::PRICE_CONCRETE_PUBLISH);
+
+        // Assert
+        $this->assertPriceProductConcreteStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPriceProductConcretePublishStorageUnPublishListener(): void
+    {
+        // Prepare
+        $priceProductConcreteStorageUnpublishListener = new PriceProductConcreteStorageUnpublishListener();
+        $priceProductConcreteStorageUnpublishListener->setFacade($this->getPriceProductStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->priceProductTransfer->getIdProduct()),
+        ];
+
+        // Action
+        $priceProductConcreteStorageUnpublishListener->handleBulk($eventTransfers, PriceProductEvents::PRICE_CONCRETE_UNPUBLISH);
+
+        // Assert
+        $this->assertSame(0, SpyPriceProductConcreteStorageQuery::create()->filterByFkProduct($this->priceProductTransfer->getIdProduct())->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPriceProductConcreteStorageListenerStoreData(): void
+    {
+        SpyPriceProductConcreteStorageQuery::create()->filterByFkProduct($this->priceProductTransfer->getIdProduct())->delete();
         $beforeCount = SpyPriceProductConcreteStorageQuery::create()->count();
 
         $priceProductConcreteStorageListener = new PriceProductConcreteStorageListener();
@@ -96,7 +158,7 @@ class PriceProductConcreteStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyPriceProductTableMap::COL_FK_PRODUCT => 1,
+                SpyPriceProductTableMap::COL_FK_PRODUCT => $this->priceProductTransfer->getIdProduct(),
             ]),
         ];
         $priceProductConcreteStorageListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_CREATE);
@@ -108,10 +170,63 @@ class PriceProductConcreteStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testPriceProductStoreConcreteStorageListenerStoreData()
+    public function testPriceProductConcreteEntityStoragePublishListener(): void
     {
+        // Prepare
+        SpyPriceProductConcreteStorageQuery::create()->filterByFkProduct($this->priceProductTransfer->getIdProduct())->delete();
+        $beforeCount = SpyPriceProductConcreteStorageQuery::create()->count();
+
+        $priceProductConcreteEntityStoragePublishListener = new PriceProductConcreteEntityStoragePublishListener();
+        $priceProductConcreteEntityStoragePublishListener->setFacade($this->getPriceProductStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyPriceProductTableMap::COL_FK_PRODUCT => $this->priceProductTransfer->getIdProduct(),
+            ]),
+        ];
+
+        // Action
+        $priceProductConcreteEntityStoragePublishListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_CREATE);
+
+        // Assert
+        $this->assertPriceProductConcreteStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPriceProductConcreteEntityStorageUnpublishListener(): void
+    {
+        // Prepare
+        $priceProductConcreteStorageListener = new PriceProductConcreteEntityStorageUnpublishListener();
+        $priceProductConcreteStorageListener->setFacade($this->getPriceProductStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyPriceProductTableMap::COL_FK_PRODUCT => $this->priceProductTransfer->getIdProduct(),
+            ]),
+        ];
+
+        // Action
+        $priceProductConcreteStorageListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE);
+
+        // Assert
+        $this->assertSame(0, SpyPriceProductConcreteStorageQuery::create()->filterByFkProduct($this->priceProductTransfer->getIdProduct())->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPriceProductStoreConcreteStorageListenerStoreData(): void
+    {
+        // Prepare
+        $priceProductIds = [
+            $this->priceProductTransfer->getIdPriceProduct(),
+        ];
+
         $priceProductQueryContainer = new PriceProductStorageQueryContainer();
-        $productConcreteIds = $priceProductQueryContainer->queryAllProductIdsByPriceProductIds([52])->find()->getData();
+        $productConcreteIds = $priceProductQueryContainer->queryAllProductIdsByPriceProductIds($priceProductIds)->find()->getData();
+
         SpyPriceProductConcreteStorageQuery::create()->filterByFkProduct_In($productConcreteIds)->delete();
         $beforeCount = SpyPriceProductConcreteStorageQuery::create()->count();
 
@@ -120,36 +235,102 @@ class PriceProductConcreteStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT => 52,
+                SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT => $this->priceProductTransfer->getIdPriceProduct(),
             ]),
         ];
+
+        // Action
         $priceProductStoreConcreteStorageListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE);
 
         // Assert
         $priceProductConcreteStorageCount = SpyPriceProductConcreteStorageQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 1, $priceProductConcreteStorageCount);
+        $this->assertGreaterThan($beforeCount, $priceProductConcreteStorageCount);
     }
 
     /**
      * @return void
      */
-    public function testPriceTypeProductConcreteStorageListenerStoreData()
+    public function testPriceTypeProductConcreteStorageListenerStoreData(): void
     {
+        // Prepare
+        $priceTypeIds = [
+            $this->priceProductTransfer->getFkPriceType(),
+        ];
+
         $priceProductQueryContainer = new PriceProductStorageQueryContainer();
-        $productConcreteIds = $priceProductQueryContainer->queryAllProductIdsByPriceTypeIds([1])->find()->getData();
+        $productConcreteIds = $priceProductQueryContainer->queryAllProductIdsByPriceTypeIds($priceTypeIds)->find()->getData();
         SpyPriceProductConcreteStorageQuery::create()->filterByFkProduct_In($productConcreteIds)->delete();
+        $beforeCount = SpyPriceProductConcreteStorageQuery::create()->count();
 
         $priceTypeProductConcreteStorageListener = new PriceTypeProductConcreteStorageListener();
         $priceTypeProductConcreteStorageListener->setFacade($this->getPriceProductStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($this->priceProductTransfer->getFkPriceType()),
         ];
+
+        // Action
         $priceTypeProductConcreteStorageListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_TYPE_CREATE);
 
         // Assert
         $priceProductConcreteStorageCount = SpyPriceProductConcreteStorageQuery::create()->count();
-        $this->assertGreaterThanOrEqual(74, $priceProductConcreteStorageCount);
+        $this->assertGreaterThan($beforeCount, $priceProductConcreteStorageCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPriceTypeProductConcreteStoragePublishListener(): void
+    {
+        // Prepare
+        $priceTypeIds = [
+            $this->priceProductTransfer->getFkPriceType(),
+        ];
+
+        $priceProductQueryContainer = new PriceProductStorageQueryContainer();
+        $productConcreteIds = $priceProductQueryContainer->queryAllProductIdsByPriceTypeIds($priceTypeIds)->find()->getData();
+        SpyPriceProductConcreteStorageQuery::create()->filterByFkProduct_In($productConcreteIds)->delete();
+        $beforeCount = SpyPriceProductConcreteStorageQuery::create()->count();
+
+        $priceTypeProductConcreteStoragePublishListener = new PriceTypeProductConcreteStoragePublishListener();
+        $priceTypeProductConcreteStoragePublishListener->setFacade($this->getPriceProductStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->priceProductTransfer->getFkPriceType()),
+        ];
+
+        // Action
+        $priceTypeProductConcreteStoragePublishListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_TYPE_CREATE);
+
+        // Assert
+        $priceProductConcreteStorageCount = SpyPriceProductConcreteStorageQuery::create()->count();
+        $this->assertGreaterThan($beforeCount, $priceProductConcreteStorageCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPriceTypeProductConcreteStorageUnpublishListener(): void
+    {
+        // Prepare
+        $priceTypeProductConcreteStorageListener = new PriceTypeProductConcreteStorageUnpublishListener();
+        $priceTypeProductConcreteStorageListener->setFacade($this->getPriceProductStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->priceProductTransfer->getFkPriceType()),
+        ];
+
+        // Action
+        $priceTypeProductConcreteStorageListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE);
+
+        // Assert
+        $priceProductQueryContainer = new PriceProductStorageQueryContainer();
+        $productConcreteIds = $priceProductQueryContainer->queryAllProductIdsByPriceTypeIds([$this->priceProductTransfer->getFkPriceType()])
+            ->find()
+            ->getData();
+        SpyPriceProductConcreteStorageQuery::create()->filterByFkProduct_In($productConcreteIds);
+
+        $this->assertSame(0, SpyPriceProductConcreteStorageQuery::create()->filterByFkProduct_In($productConcreteIds)->count());
     }
 
     /**
@@ -166,18 +347,18 @@ class PriceProductConcreteStorageListenerTest extends Unit
         return $facade;
     }
 
-        /**
-         * @param int $beforeCount
-         *
-         * @return void
-         */
-    protected function assertPriceProductConcreteStorage($beforeCount)
+    /**
+     * @param int $beforeCount
+     *
+     * @return void
+     */
+    protected function assertPriceProductConcreteStorage(int $beforeCount): void
     {
         $priceProductConcreteStorageCount = SpyPriceProductConcreteStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $priceProductConcreteStorageCount);
-        $spyPriceProductConcreteStorage = SpyPriceProductConcreteStorageQuery::create()->orderByIdPriceProductConcreteStorage()->findOneByFkProduct(1);
+        $this->assertGreaterThan($beforeCount, $priceProductConcreteStorageCount);
+        $spyPriceProductConcreteStorage = SpyPriceProductConcreteStorageQuery::create()->orderByIdPriceProductConcreteStorage()->findOneByFkProduct($this->priceProductTransfer->getIdProduct());
         $this->assertNotNull($spyPriceProductConcreteStorage);
         $data = $spyPriceProductConcreteStorage->getData();
-        $this->assertSame(2, count($data['prices']));
+        $this->assertSame(1, count($data['prices']));
     }
 }

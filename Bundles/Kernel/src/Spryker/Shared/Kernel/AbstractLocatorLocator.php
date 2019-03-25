@@ -7,10 +7,6 @@
 
 namespace Spryker\Shared\Kernel;
 
-/**
- * Class AbstractLocatorLocator
- */
-
 abstract class AbstractLocatorLocator implements LocatorLocatorInterface
 {
     /**

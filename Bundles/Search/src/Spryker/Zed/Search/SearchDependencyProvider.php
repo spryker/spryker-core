@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingBridge;
 
+/**
+ * @method \Spryker\Zed\Search\SearchConfig getConfig()
+ */
 class SearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_SEARCH = 'search client';

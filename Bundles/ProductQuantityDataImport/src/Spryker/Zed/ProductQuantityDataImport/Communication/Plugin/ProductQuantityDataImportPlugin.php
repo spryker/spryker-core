@@ -15,6 +15,7 @@ use Spryker\Zed\ProductQuantityDataImport\ProductQuantityDataImportConfig;
 
 /**
  * @method \Spryker\Zed\ProductQuantityDataImport\Business\ProductQuantityDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductQuantityDataImport\ProductQuantityDataImportConfig getConfig()
  */
 class ProductQuantityDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {

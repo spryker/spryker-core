@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
+ * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
  */
 class CommentController extends AbstractController
 {
@@ -84,7 +86,7 @@ class CommentController extends AbstractController
             $this->getFacade()->saveComment($commentTransfer);
 
             $this->addSuccessMessage('Comment successfully added');
-            return $this->redirectResponse($request->headers->get('referer'));
+            return $this->redirectResponseExternal($request->headers->get('referer'));
         }
 
         foreach ($form->getErrors(true) as $error) {

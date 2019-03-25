@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductSetGui\ProductSetGuiConfig getConfig()
  */
 class LocalizedProductImageSetFormType extends AbstractType
 {
@@ -86,7 +87,7 @@ class LocalizedProductImageSetFormType extends AbstractType
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'required' => true,
-            'label' => 'Image Set Name *',
+            'label' => 'Image Set Name',
             'constraints' => [
                 new NotBlank(),
                 new Regex(

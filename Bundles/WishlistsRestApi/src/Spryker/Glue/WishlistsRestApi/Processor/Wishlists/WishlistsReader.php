@@ -110,27 +110,27 @@ class WishlistsReader implements WishlistsReaderInterface
      */
     public function getWishlistsByCustomerReference(string $customerReference): array
     {
-        $response = [];
+        $restResources = [];
 
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
-        $customerWishlistCollectionTransfer = $this->wishlistClient->getWishlistCollection($customerTransfer);
+        $wishlistCollectionTransfer = $this->wishlistClient->getWishlistCollection($customerTransfer);
 
-        $customerWishlists = $customerWishlistCollectionTransfer->getWishlists();
+        $wishlistTransfers = $wishlistCollectionTransfer->getWishlists();
 
-        foreach ($customerWishlists as $wishlistTransfer) {
-            $restWishlistsAttributes = $this->wishlistsResourceMapper
+        foreach ($wishlistTransfers as $wishlistTransfer) {
+            $restWishlistsAttributesTransfer = $this->wishlistsResourceMapper
                 ->mapWishlistTransferToRestWishlistsAttributes($wishlistTransfer);
 
             $wishlistResource = $this->restResourceBuilder->createRestResource(
                 WishlistsRestApiConfig::RESOURCE_WISHLISTS,
-                $restWishlistsAttributes->getName(),
-                $restWishlistsAttributes
+                $wishlistTransfer->getUuid(),
+                $restWishlistsAttributesTransfer
             );
 
-            $response[] = $wishlistResource;
+            $restResources[] = $wishlistResource;
         }
 
-        return $response;
+        return $restResources;
     }
 
     /**
@@ -150,16 +150,16 @@ class WishlistsReader implements WishlistsReaderInterface
             $restWishlistsAttributesTransfer
         );
 
-        foreach ($wishlistOverviewResponseTransfer->getItems() as $itemTransfer) {
-            $restWishlistsItemAttributesTransfer = $this->wishlistsItemResourceMapper->mapWishlistItemTransferToRestWishlistItemsAttributes($itemTransfer);
+        foreach ($wishlistOverviewResponseTransfer->getItems() as $wishlistItemTransfer) {
+            $restWishlistsItemAttributesTransfer = $this->wishlistsItemResourceMapper->mapWishlistItemTransferToRestWishlistItemsAttributes($wishlistItemTransfer);
 
-            $itemResource = $this->restResourceBuilder->createRestResource(
+            $wishlistItemResource = $this->restResourceBuilder->createRestResource(
                 WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
                 $restWishlistsItemAttributesTransfer->getSku(),
                 $restWishlistsItemAttributesTransfer
             );
 
-            $wishlistResource->addRelationship($itemResource);
+            $wishlistResource->addRelationship($wishlistItemResource);
         }
 
         return $wishlistResource;
@@ -176,12 +176,12 @@ class WishlistsReader implements WishlistsReaderInterface
 
         $wishlistTransfer = $this->findWishlistByUuid($idWishlist);
         if ($wishlistTransfer === null) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
+            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
                 ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NOT_FOUND)
                 ->setStatus(Response::HTTP_NOT_FOUND)
                 ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NOT_FOUND);
 
-            return $restResponse->addError($restErrorTransfer);
+            return $restResponse->addError($restErrorMessageTransfer);
         }
 
         $wishlistResource = $this->getWishistResource($wishlistTransfer);

@@ -13,6 +13,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDe
 
 /**
  * @method \Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOptionConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\ShoppingListProductOptionConnector\ShoppingListProductOptionConnectorConfig getConfig()
  */
 class ShoppingListItemProductOptionBeforeDeletePlugin extends AbstractPlugin implements ShoppingListItemBeforeDeletePluginInterface
 {

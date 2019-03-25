@@ -9,6 +9,9 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipDataImport;
 
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipDataImport\PriceProductMerchantRelationshipDataImportConfig getConfig()
+ */
 class PriceProductMerchantRelationshipDataImportDependencyProvider extends DataImportDependencyProvider
 {
 }

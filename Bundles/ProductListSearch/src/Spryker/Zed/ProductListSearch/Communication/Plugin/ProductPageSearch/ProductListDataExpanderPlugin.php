@@ -17,6 +17,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
  *
  * @method \Spryker\Zed\ProductListSearch\Communication\ProductListSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
  */
 class ProductListDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
@@ -35,8 +36,8 @@ class ProductListDataExpanderPlugin extends AbstractPlugin implements ProductPag
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void
     {
         $idProductAbstract = $this->getIdProductAbstract($productData);
-        $blacklistIds = $this->getFactory()->getProductListFacade()->getProductAbstractBlacklistIdsIdProductAbstract($idProductAbstract);
-        $whitelistIds = $this->getFactory()->getProductListFacade()->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
+        $blacklistIds = $this->getFactory()->getProductListFacade()->getProductBlacklistIdsByIdProductAbstract($idProductAbstract);
+        $whitelistIds = $this->getFactory()->getProductListFacade()->getProductWhitelistIdsByIdProductAbstract($idProductAbstract);
         $productAbstractPageSearchTransfer->setProductListMap(null);
 
         if (count($blacklistIds) || count($whitelistIds)) {

@@ -17,6 +17,7 @@
         <column name="discount_type" type="VARCHAR" size="255"/>
         <column name="decision_rule_query_string" type="VARCHAR" required="false"/>
         <column name="collector_query_string" type="VARCHAR" required="false"/>
+        <column name="minimum_item_amount" type="INTEGER" required="true" default="1"/>
 
         <behavior name="timestampable"/>
 

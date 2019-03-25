@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
@@ -61,27 +62,25 @@ class CustomerAddressReader implements CustomerAddressReaderInterface
             return $restResource;
         }
 
-        $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
-
-        foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
+        foreach ($customerResponseTransfer->getCustomerTransfer()->getAddresses()->getAddresses() as $addressTransfer) {
             $restAddressAttributesTransfer = $this->addressesResourceMapper
                 ->mapAddressTransferToRestAddressAttributesTransfer(
                     $addressTransfer,
                     $customerResponseTransfer->getCustomerTransfer()
                 );
 
-            $restResource = $this->restResourceBuilder->createRestResource(
+            $addressRestResource = $this->restResourceBuilder->createRestResource(
                 CustomersRestApiConfig::RESOURCE_ADDRESSES,
                 $addressTransfer->getUuid(),
                 $restAddressAttributesTransfer
             );
 
-            $restResource->addLink(
-                RestResourceInterface::RESOURCE_LINKS_SELF,
+            $addressRestResource->addLink(
+                RestLinkInterface::LINK_SELF,
                 $this->createSelfLink($customerTransfer, $addressTransfer)
             );
 
-            $restResource->addRelationship($restResource);
+            $restResource->addRelationship($addressRestResource);
         }
 
         return $restResource;

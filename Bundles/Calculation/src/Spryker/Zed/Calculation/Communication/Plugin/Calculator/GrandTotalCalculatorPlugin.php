@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Calculation\Business\CalculationFacadeInterface getFacade()
  * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Calculation\CalculationConfig getConfig()
  */
 class GrandTotalCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {

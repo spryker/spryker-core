@@ -50,6 +50,20 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createQuoteWithReloadedItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteCreator()->createQuoteWithReloadedItems($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -57,5 +71,21 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createQuoteUpdater()->updateQuote($quoteUpdateRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return string
+     */
+    public function generateGuestCartCustomerReference(string $customerReference): string
+    {
+        return $this->getFactory()
+            ->createGuestCartCustomerReferenceGenerator()
+            ->generateGuestCartCustomerReference($customerReference);
     }
 }

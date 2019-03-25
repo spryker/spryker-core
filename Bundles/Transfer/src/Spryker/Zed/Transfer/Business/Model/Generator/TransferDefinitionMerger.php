@@ -141,7 +141,7 @@ class TransferDefinitionMerger implements MergerInterface
                         throw new Exception(sprintf(
                             static::ERROR_MESSAGE_ATTRIBUTES_NOT_IDENTICAL,
                             $transferName,
-                            $propertyName,
+                            $property['name'],
                             $property[$propertyName],
                             $propertyValue
                         ));

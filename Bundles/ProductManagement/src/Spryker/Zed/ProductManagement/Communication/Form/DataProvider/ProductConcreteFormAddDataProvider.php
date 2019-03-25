@@ -147,14 +147,17 @@ class ProductConcreteFormAddDataProvider
     }
 
     /**
+     * @param array|null $priceDimension
+     *
      * @return array
      */
-    public function getData()
+    public function getData(?array $priceDimension = null)
     {
         $data = [
             ProductConcreteFormAdd::FIELD_ID_PRODUCT_ABSTRACT => null,
             ProductConcreteFormAdd::FIELD_SKU => null,
             ProductConcreteFormAdd::FORM_PRICE_AND_STOCK => $this->getDefaultStockFields(),
+            ProductConcreteFormAdd::FORM_PRICE_DIMENSION => $priceDimension,
         ];
 
         $data = array_merge($data, $this->getGeneralAttributesDefaultFields());

@@ -20,12 +20,12 @@ class ProductConcreteRestrictionPlugin extends AbstractPlugin implements Product
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return bool
      */
-    public function isRestricted(int $idProductConcrete): bool
+    public function isRestricted(int $idProduct): bool
     {
-        return $this->getClient()->isProductConcreteRestricted($idProductConcrete);
+        return $this->getClient()->isProductConcreteRestricted($idProduct);
     }
 }

@@ -14,6 +14,7 @@ interface ZedRequestFacadeInterface
 {
     /**
      * Specification:
+     * - Method intended to be used in development environment only!
      * - Returns the request data from last yves to zed request
      * - If mvc given then it returns the data matching to the mvc argument
      * - mvc must be like `bundle_controller_action`

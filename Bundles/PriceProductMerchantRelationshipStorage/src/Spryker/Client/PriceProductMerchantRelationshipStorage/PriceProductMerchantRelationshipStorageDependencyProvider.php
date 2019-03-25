@@ -12,8 +12,12 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToCustomerClientBridge;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStorageClientBridge;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStoreClientBridge;
+use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipStorageToPriceProductServiceBridge;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipToSynchronizationServiceBridge;
 
+/**
+ * @method \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig getConfig()
+ */
 class PriceProductMerchantRelationshipStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
@@ -22,6 +26,7 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -34,6 +39,7 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
         $container = $this->addStoreClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addSynchronizationService($container);
+        $container = $this->addPriceProductService($container);
 
         return $container;
     }
@@ -89,6 +95,20 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new PriceProductMerchantRelationshipStorageToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceProductService(Container $container): Container
+    {
+        $container[static::SERVICE_PRICE_PRODUCT] = function (Container $container) {
+            return new PriceProductMerchantRelationshipStorageToPriceProductServiceBridge($container->getLocator()->priceProduct()->service());
         };
 
         return $container;

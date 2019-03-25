@@ -21,8 +21,12 @@ use Spryker\Zed\Oauth\Business\Model\League\RepositoryBuilder;
 use Spryker\Zed\Oauth\Business\Model\League\RepositoryBuilderInterface;
 use Spryker\Zed\Oauth\Business\Model\League\ResourceServerBuilder;
 use Spryker\Zed\Oauth\Business\Model\League\ResourceServerBuilderInterface;
+use Spryker\Zed\Oauth\Business\Model\OauthClientReader;
+use Spryker\Zed\Oauth\Business\Model\OauthClientReaderInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthClientWriter;
 use Spryker\Zed\Oauth\Business\Model\OauthClientWriterInterface;
+use Spryker\Zed\Oauth\Business\Model\OauthScopeReader;
+use Spryker\Zed\Oauth\Business\Model\OauthScopeReaderInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeWriter;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeWriterInterface;
 use Spryker\Zed\Oauth\OauthConfig;
@@ -137,5 +141,25 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     public function getScopeProviderPlugins(): array
     {
         return $this->getProvidedDependency(OauthDependencyProvider::PLUGIN_SCOPE_PROVIDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Business\Model\OauthScopeReaderInterface
+     */
+    public function createOauthScopeReader(): OauthScopeReaderInterface
+    {
+        return new OauthScopeReader(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Business\Model\OauthClientReaderInterface
+     */
+    public function createOauthClientReader(): OauthClientReaderInterface
+    {
+        return new OauthClientReader(
+            $this->getRepository()
+        );
     }
 }
