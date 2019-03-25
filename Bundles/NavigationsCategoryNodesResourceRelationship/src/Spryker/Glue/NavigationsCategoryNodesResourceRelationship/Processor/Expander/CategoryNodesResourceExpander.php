@@ -42,40 +42,41 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
     public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            if (!$resource->getAttributes()->offsetExists(static::KEY_NODES)
-                || !is_iterable($resource->getAttributes()->offsetGet(static::KEY_NODES))
+            $resourceAttributes = $resource->getAttributes();
+            if (!$resourceAttributes->offsetExists(static::KEY_NODES)
+                || !is_iterable($resourceAttributes->offsetGet(static::KEY_NODES))
             ) {
                 continue;
             }
 
-            foreach ($resource->getAttributes()->offsetGet(static::KEY_NODES) as $restNavigationNodeTransfer) {
-                $this->addResourceRelationship($resource, $restRequest, $restNavigationNodeTransfer);
-            }
+            $categoryNodeIds = $this->getCategoryNodeIds(
+                (array)$resourceAttributes->offsetGet(static::KEY_NODES)
+            );
+
+            $this->addResourceRelationship($resource, $restRequest, $categoryNodeIds);
         }
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer $restNavigationNodeTransfer
+     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer[] $restNavigationNodes
      *
-     * @return void
+     * @return array
      */
-    protected function addResourceRelationship(
-        RestResourceInterface $resource,
-        RestRequestInterface $restRequest,
-        RestNavigationNodeTransfer $restNavigationNodeTransfer
-    ): void {
-        if (!$this->isCategoryNavigationNode($restNavigationNodeTransfer)) {
-            return;
+    protected function getCategoryNodeIds(
+        array $restNavigationNodes
+    ): array {
+        $categoryNodeIds = [];
+        foreach ($restNavigationNodes as $restNavigationNode) {
+            if ($this->isCategoryNavigationNode($restNavigationNode)) {
+                $categoryNodeIds[] = $restNavigationNode->getResourceId();
+                $categoryNodeIds = array_merge(
+                    $this->getCategoryNodeIds((array)$restNavigationNode->getChildren()),
+                    $categoryNodeIds
+                );
+            }
         }
-        $categoryNode = $this->categoriesResource->findCategoryNodeById(
-            $restNavigationNodeTransfer->offsetGet(static::KEY_RESOURCE_ID),
-            $restRequest->getMetadata()->getLocale()
-        );
-        if ($categoryNode) {
-            $resource->addRelationship($categoryNode);
-        }
+
+        return $categoryNodeIds;
     }
 
     /**
@@ -93,5 +94,28 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
         }
 
         return false;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param int[] $categoryNodeIds
+     *
+     * @return void
+     */
+    protected function addResourceRelationship(
+        RestResourceInterface $resource,
+        RestRequestInterface $restRequest,
+        array $categoryNodeIds
+    ): void {
+        foreach ($categoryNodeIds as $categoryNodeId) {
+            $categoryNode = $this->categoriesResource->findCategoryNodeById(
+                $categoryNodeId,
+                $restRequest->getMetadata()->getLocale()
+            );
+            if ($categoryNode) {
+                $resource->addRelationship($categoryNode);
+            }
+        }
     }
 }
