@@ -1,42 +1,46 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Service\Oauth\Jwt;
 
 use Generated\Shared\Transfer\JwtTokenTransfer;
+use Spryker\Service\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
 
 class JwtTokenParser implements JwtTokenParserInterface
 {
-    /**
-     * @var \Spryker\Service\Oauth\Jwt\JwtTokenDecoderInterface
-     */
-    protected $jwtTokenDecoder;
+    protected const KEY_ALG = 'alg';
 
     /**
-     * @param $jwtTokenDecoder
+     * @var \Spryker\Service\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface
      */
-    public function  __construct(JwtTokenDecoderInterface $jwtTokenDecoder)
+    protected $utilEncodingService;
+
+    /**
+     * @param \Spryker\Service\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
+     */
+    public function __construct(OauthToUtilEncodingServiceInterface $utilEncodingService)
     {
-        $this->jwtTokenDecoder = $jwtTokenDecoder;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
      * @param string $jwtToken
      *
-     * @return \Generated\Shared\Transfer\JwtTokenTransfer
+     * @return \Generated\Shared\Transfer\JwtTokenTransfer|null
      */
-    public function parse(string $jwtToken): JwtTokenTransfer
+    public function parse(string $jwtToken): ?JwtTokenTransfer
     {
         $data = $this->splitJwt($jwtToken);
         if (!$data) {
             return null;
         }
 
-        $header = $this->parseHeader($data[0]);
-        $claims = $this->parseClaims($data[1]);
+        $header = $this->parseTokenData($data[0]);
+        $claims = $this->parseTokenData($data[1]);
         $signature = $this->parseSignature($header, $data[2]);
 
         foreach ($claims as $name => $value) {
@@ -45,16 +49,14 @@ class JwtTokenParser implements JwtTokenParserInterface
             }
         }
 
-        if ($signature === null) {
+        if (!$signature) {
             unset($data[2]);
         }
 
-        return $this->mapJwtTokenTransfer($header, $claims, $signature, $data);
+        return $this->createJwtTokenTransfer($header, $claims, $signature, $data);
     }
 
     /**
-     * Splits the JWT string into an array
-     *
      * @param string $jwt
      *
      * @return array|null
@@ -75,62 +77,60 @@ class JwtTokenParser implements JwtTokenParserInterface
     }
 
     /**
-     * Parses the header from a string
-     *
      * @param string $data
      *
      * @return array
      */
-    protected function parseHeader($data): array
+    protected function parseTokenData(string $data): array
     {
-        $header = $this->jwtTokenDecoder->jsonDecode($this->jwtTokenDecoder->base64UrlDecode($data));
-
-        return $header;
+        return $this->utilEncodingService->decodeJson($this->decodeBase64Url($data), true);
     }
 
     /**
-     * Parses the claim set from a string
-     *
-     * @param string $data
-     *
-     * @return array
-     */
-    protected function parseClaims($data): array
-    {
-        $claims = $this->jwtTokenDecoder->jsonDecode($this->jwtTokenDecoder->base64UrlDecode($data));
-
-        return $claims;
-    }
-
-    /**
-     * Returns the signature from given data
-     *
      * @param array $header
      * @param string $data
      *
-     * @return string
+     * @return string|null
      */
-    protected function parseSignature(array $header, $data): string
+    protected function parseSignature(array $header, $data): ?string
     {
-        if ($data == '' || !isset($header['alg']) || $header['alg'] == 'none') {
+        if ($data == '' || !isset($header[static::KEY_ALG]) || $header[static::KEY_ALG] == 'none') {
             return null;
         }
 
-        $hash = $this->jwtTokenDecoder->base64UrlDecode($data);
+        $hash = $this->decodeBase64Url($data);
 
         return $hash;
     }
 
     /**
-     * @param $headers
-     * @param $claims
-     * @param $signature
-     * @param $payload
+     * @param string $data
+     *
+     * @return string
+     */
+    protected function decodeBase64Url(string $data): string
+    {
+        if ($remainder = strlen($data) % 4) {
+            $data .= str_repeat('=', 4 - $remainder);
+        }
+
+        return base64_decode(strtr($data, '-_', '+/'));
+    }
+
+    /**
+     * @param array $headers
+     * @param array $claims
+     * @param string|null $signature
+     * @param array $payload
      *
      * @return \Generated\Shared\Transfer\JwtTokenTransfer
      */
-    protected function mapJwtTokenTransfer($headers, $claims, $signature, $payload): JwtTokenTransfer
-    {
+    protected function createJwtTokenTransfer(
+        array $headers,
+        array $claims,
+        ?string $signature,
+        array $payload
+    ): JwtTokenTransfer {
         return (new JwtTokenTransfer())
             ->setHeaders($headers)
             ->setClaims($claims)

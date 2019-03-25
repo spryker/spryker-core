@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -8,8 +9,6 @@ namespace Spryker\Service\Oauth;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
-use Spryker\Service\Oauth\Jwt\JwtTokenDecoder;
-use Spryker\Service\Oauth\Jwt\JwtTokenDecoderInterface;
 use Spryker\Service\Oauth\Jwt\JwtTokenParser;
 use Spryker\Service\Oauth\Jwt\JwtTokenParserInterface;
 use Spryker\Service\Oauth\Jwt\TokenDataExtractor;
@@ -33,16 +32,6 @@ class OauthServiceFactory extends AbstractServiceFactory
     public function createJwtTokenParser(): JwtTokenParserInterface
     {
         return new JwtTokenParser(
-            $this->createJwtTokenDecoder()
-        );
-    }
-
-    /**
-     * @return \Spryker\Service\Oauth\Jwt\JwtTokenDecoderInterface
-     */
-    public function createJwtTokenDecoder(): JwtTokenDecoderInterface
-    {
-        return new JwtTokenDecoder(
             $this->getUtilEncodingService()
         );
     }

@@ -11,7 +11,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 class UserProvider implements UserProviderInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface
+     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface[]
      */
     protected $restUserFinderPlugins;
 
@@ -38,15 +38,15 @@ class UserProvider implements UserProviderInterface
             $restUserTransfer = $restUserFinderPlugin->findUser($restRequest);
             if ($restUserTransfer) {
                 $restRequest->setUser(
-                    $restUserTransfer->getSurrogateIdentifier(),
-                    $restUserTransfer->getNaturalIdentifier(),
+                    (string)$restUserTransfer->getSurrogateIdentifier(),
+                    (string)$restUserTransfer->getNaturalIdentifier(),
                     $restUserTransfer->getScopes()
                 );
 
                 $restRequest->setRestUser($restUserTransfer);
             }
 
-            break;
+            return $restRequest;
         }
 
         return $restRequest;

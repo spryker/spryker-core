@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Oauth\Dependency\Service;
+namespace Spryker\Glue\AuthRestApi\Dependency\Service;
 
-class OauthToUtilEncodingServiceBridge implements OauthToUtilEncodingServiceInterface
+class AuthRestApiToUtilEncodingServiceBridge implements AuthRestApiToUtilEncodingServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface

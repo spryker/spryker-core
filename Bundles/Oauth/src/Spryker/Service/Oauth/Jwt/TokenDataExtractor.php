@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -37,8 +38,11 @@ class TokenDataExtractor implements TokenDataExtractorInterface
     public function extractAccessTokenData(string $accessToken): OauthAccessTokenDataTransfer
     {
         $jwtToken = $this->jwtTokenParser->parse($accessToken);
+        if (!$jwtToken) {
+            return new OauthAccessTokenDataTransfer();
+        }
 
-        return $this->mapJwtTokenToOauthTokenDataTransfer($jwtToken);
+        return $this->createJwtTokenToOauthTokenDataTransfer($jwtToken);
     }
 
     /**
@@ -46,7 +50,7 @@ class TokenDataExtractor implements TokenDataExtractorInterface
      *
      * @return \Generated\Shared\Transfer\OauthAccessTokenDataTransfer
      */
-    protected function mapJwtTokenToOauthTokenDataTransfer(JwtTokenTransfer $jwtTokenTransfer): OauthAccessTokenDataTransfer
+    protected function createJwtTokenToOauthTokenDataTransfer(JwtTokenTransfer $jwtTokenTransfer): OauthAccessTokenDataTransfer
     {
         return (new OauthAccessTokenDataTransfer())
             ->setOauthAccessTokenId($jwtTokenTransfer->getClaims()[static::JWT_CLAIM_JTI] ?? null)

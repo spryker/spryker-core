@@ -9,6 +9,7 @@ namespace Spryker\Glue\AuthRestApi;
 
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientBridge;
 use Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToOauthServiceBridge;
+use Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToUtilEncodingServiceBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -18,7 +19,9 @@ use Spryker\Glue\Kernel\Container;
 class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_OAUTH = 'CLIENT_OAUTH';
+
     public const SERVICE_OAUTH = 'SERVICE_OAUTH';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     public const PLUGINS_REST_USER_EXPANDER = 'PLUGINS_REST_USER_EXPANDER';
 
@@ -32,6 +35,7 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideDependencies($container);
         $container = $this->addOauthClient($container);
         $container = $this->addOauthService($container);
+        $container = $this->addUtilEncodingService($container);
         $container = $this->addRestUserExpanderPlugins($container);
 
         return $container;
@@ -72,6 +76,22 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new AuthRestApiToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
     protected function addRestUserExpanderPlugins(Container $container): Container
     {
         $container[static::PLUGINS_REST_USER_EXPANDER] = function () {
@@ -82,7 +102,7 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserExpanderPluginInterface[]
+     * @return \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserMapperPluginInterface[]
      */
     protected function getRestUserExpanderPlugins(): array
     {
