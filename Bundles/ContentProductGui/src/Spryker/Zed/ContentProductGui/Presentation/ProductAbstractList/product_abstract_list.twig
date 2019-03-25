@@ -1,5 +1,12 @@
-<div class="id-product-abstract-fields" id="localized-contents-{{ form.parent.vars.name }}" data-prototype="{{ form_row(form.idProductAbstracts.vars.prototype)|e }}">
-    <div class="product-abstract-list">
+{% set deleteButtonTemplate = "<button type=\"button\" class=\"btn btn-xs btn-outline btn-danger js-delete-product-abstract\"><i class=\"fa fa-trash\"></i></button>" %}
+
+<div
+    class="id-product-abstract-fields"
+    id="localized-contents-{{ form.parent.vars.name }}"
+    data-prototype="{{ form_row(form.idProductAbstracts.vars.prototype) | e }}"
+    data-delete-button="{{ deleteButtonTemplate | e }}"
+>
+    <div class="js-selected-products-wrapper">
         {% for idProductAbstract in form.idProductAbstracts %}
             {{ form_row(idProductAbstract) }}
         {% endfor %}

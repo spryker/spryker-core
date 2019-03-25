@@ -7,6 +7,6 @@
 
 if (!window.ContentProductAbstractList) {
     require('../sass/main.scss');
-    require('./modules/add');
+    require('./modules/add-product-table');
     window.ContentProductAbstractList = true;
 }
