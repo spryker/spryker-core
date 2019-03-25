@@ -40,35 +40,35 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     protected const FLOAT_QUANTITY = 3.1;
 
     /**
-     * @dataProvider quoteTransferWithCartChangeItemTransferDataProvider
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $cartChangeItemTransfer
-     * @param float|int $expectedQuantity
+     * return void
      *
      * @return void
      */
-    public function testCheckCartAvailabilityWhenBundledItemsAvailableShouldReturnEmptyMessageContainer(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $cartChangeItemTransfer,
-        $expectedQuantity
-    ) {
+    public function testCheckCartAvailabilityWhenBundledItemsAvailableShouldReturnEmptyMessageContainer()
+    {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock
             ->expects($this->once())
             ->method('isProductSellableForStore')
             ->withConsecutive(
-                [$this->equalTo($this->fixtures['bundledProductSku']), $this->equalTo($expectedQuantity)]
+                [$this->equalTo($this->fixtures['bundledProductSku']), $this->equalTo(15)]
             )
             ->willReturn(true);
 
         $productBundleAvailabilityCheckMock = $this->createProductBundleCartAvailabilityCheckMock($availabilityFacadeMock);
+
         $this->setupFindBundledProducts($this->fixtures, $productBundleAvailabilityCheckMock);
+
+        $quoteTransfer = $this->createTestQuoteTransfer();
 
         $cartChangeTransfer = new CartChangeTransfer();
         $cartChangeTransfer->setQuote($quoteTransfer);
 
-        $cartChangeTransfer->addItem($cartChangeItemTransfer);
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku($this->fixtures['bundle-sku']);
+        $itemTransfer->setQuantity(3);
+        $cartChangeTransfer->addItem($itemTransfer);
+
         $cartPreCheckResponseTransfer = $productBundleAvailabilityCheckMock->checkCartAvailability($cartChangeTransfer);
 
         $this->assertCount(0, $cartPreCheckResponseTransfer->getMessages());
@@ -76,7 +76,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     }
 
     /**
-     * @dataProvider quoteTransferWithCartChangeItemTransferDataProvider
+     * @dataProvider bundledItemsNotAvailableDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $cartChangeItemTransfer
@@ -231,5 +231,53 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
         $cartChangeItemTransfer->setQuantity($quantity);
 
         return [$quoteTransfer, $cartChangeItemTransfer, $expectedValue];
+    }
+
+    /**
+     * @return array
+     */
+    public function bundledItemsNotAvailableDataProvider(): array
+    {
+        $quoteTransferWithCartChangeItemTransferDataProvider = [
+            'int quantity' => $this->getDataForBundledItemsNotAvailableDataProvider(
+                static::INT_QUANTITY,
+                $this->fixtures['bundle-sku']
+            ),
+            'float quantity' => $this->getDataForBundledItemsNotAvailableDataProvider(
+                static::FLOAT_QUANTITY,
+                $this->fixtures['bundle-sku']
+            ),
+        ];
+
+        return $quoteTransferWithCartChangeItemTransferDataProvider;
+    }
+
+    /**
+     * @param float|int $quantity
+     * @param string $bundleSku
+     *
+     * @return array
+     */
+    protected function getDataForBundledItemsNotAvailableDataProvider($quantity, string $bundleSku): array
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku($bundleSku);
+        $itemTransfer->setQuantity($quantity);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        $bundleItemTransfer = new ItemTransfer();
+        $bundleItemTransfer->setSku($bundleSku);
+
+        $quoteTransfer->addBundleItem($bundleItemTransfer);
+
+        $cartChangeItemTransfer = new ItemTransfer();
+        $cartChangeItemTransfer->setSku($bundleSku);
+        $cartChangeItemTransfer->setQuantity($quantity);
+
+        return [$quoteTransfer, $cartChangeItemTransfer];
     }
 }

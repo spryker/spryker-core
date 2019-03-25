@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\ProductBundle\Business\Availability\PreCheck;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\StoreBuilder;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
@@ -21,7 +23,6 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabil
 class PreCheckMocks extends Unit
 {
     public const ID_STORE = 1;
-
     /**
      * @var array
      */
@@ -35,7 +36,7 @@ class PreCheckMocks extends Unit
     ];
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface
      */
     protected function createAvailabilityFacadeMock()
     {
@@ -43,7 +44,29 @@ class PreCheckMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createTestQuoteTransfer()
+    {
+        $quoteTransfer = new QuoteTransfer();
+
+        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku($this->fixtures['bundle-sku']);
+        $itemTransfer->setQuantity(5);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku($this->fixtures['bundle-sku']);
+
+        $quoteTransfer->addBundleItem($itemTransfer);
+        return $quoteTransfer;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
      */
     protected function createAvailabilityQueryContainerMock()
     {
@@ -52,7 +75,7 @@ class PreCheckMocks extends Unit
 
     /**
      * @param array $fixtures
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\BasePreCheck|\PHPUnit_Framework_MockObject_MockObject $productBundleAvailabilityCheckMock
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\BasePreCheck|\PHPUnit\Framework\MockObject\MockObject $productBundleAvailabilityCheckMock
      *
      * @return void
      */
@@ -80,7 +103,7 @@ class PreCheckMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
      */
     protected function createStoreFacadeMock()
     {
@@ -88,7 +111,7 @@ class PreCheckMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
      */
     protected function buildStoreFacadeMock()
     {
