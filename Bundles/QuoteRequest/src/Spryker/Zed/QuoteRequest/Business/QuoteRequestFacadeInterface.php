@@ -68,7 +68,6 @@ interface QuoteRequestFacadeInterface
     /**
      * Specification:
      * - Looks up one "Request for Quote" by provided quote request reference.
-     * - Expects the related company user to be provided.
      * - Sets status to "Closed".
      *
      * @api

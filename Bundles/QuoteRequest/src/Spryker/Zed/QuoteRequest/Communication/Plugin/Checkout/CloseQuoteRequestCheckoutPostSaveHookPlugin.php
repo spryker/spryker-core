@@ -37,11 +37,10 @@ class CloseQuoteRequestCheckoutPostSaveHookPlugin extends AbstractPlugin impleme
             return;
         }
 
-        if ($quoteTransfer->getQuoteRequestReference()) {
-            $this->getFacade()->closeQuoteRequest(
-                (new QuoteRequestCriteriaTransfer())
-                    ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference())
-            );
-        }
+        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference());
+
+        $this->getFacade()
+            ->closeQuoteRequest($quoteRequestCriteriaTransfer);
     }
 }
