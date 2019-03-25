@@ -23,7 +23,11 @@ interface AgentQuoteRequestClientInterface
      * - Makes Zed request.
      * - Creates "Request for Quote" for the provided company user with "in-progress" status.
      * - Generates unique reference number.
-     * - Sets hidden visibility for customer.
+     * - Generates 1st version for the "Request for Quote" entity.
+     * - Generates version reference based on unique reference number and version number.
+     * - Stores empty metadata.
+     * - Stores empty quote.
+     * - Sets hidden visibility for latest version.
      *
      * @api
      *
@@ -36,9 +40,43 @@ interface AgentQuoteRequestClientInterface
     /**
      * Specification:
      * - Makes Zed request.
+     * - Finds a "Request for Quote" by QuoteRequestTransfer::idQuoteRequest in the transfer.
+     * - Expects "Request for Quote" status to be "draft", "in-progress".
+     * - Updates valid_until, is_hidden fields in RfQ entity.
+     * - Updates metadata in latest version.
+     * - Updates quote in latest version.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
      * - Looks up one "Request for Quote" by provided quote request reference.
-     * - Expects "Request for Quote" status to not be "canceled".
-     * - Sets status to "Cancelled".
+     * - Expects "Request for Quote" status to be "waiting", "ready".
+     * - Creates latest version from previous version.
+     * - Sets status to "in-progress".
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function reviseQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Looks up one "Request for Quote" by provided quote request reference.
+     * - Expects the related company user to be provided.
+     * - Expects "Request for Quote" status to be "draft", "waiting", "ready".
+     * - Sets status to "cancelled".
      *
      * @api
      *
@@ -51,33 +89,10 @@ interface AgentQuoteRequestClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Looks up one "Request for Quote" by provided quote request reference.
-     * - Expects "Request for Quote" status to be "waiting".
-     * - Requires latest version inside QuoteRequestTransfer.
-     * - Requires quote inside QuoteRequestVersionTransfer.
-     * - Sets status to "in-progress".
-     * - Copies latest version quote to quoteInProgress property.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
-
-    /**
-     * Specification:
-     * - Makes Zed request.
-     * - Expects quoter request reference to be provided.
+     * - Expects quote request reference to be provided.
      * - Retrieves "Request for Quote" entity filtered by reference.
-     * - Expects "Request for Quote" status to be "in-progress".
-     * - Expects "Request for Quote" quoteInProgress property exists.
-     * - Expects "Request for Quote" validUntil property greater than current time.
-     * - Changes status from "in-progress" to "ready".
-     * - Resets isHidden flag to false.
-     * - Creates version from quoteInProgress property.
-     * - Sets latest version.
+     * - Expects "Request for Quote" status to be "draft", "in-progress".
+     * - Changes status to "ready".
      *
      * @api
      *
@@ -136,9 +151,8 @@ interface AgentQuoteRequestClientInterface
     /**
      * Specification:
      * - Expects "Request for Quote" status to be "in-progress".
-     * - Expects quoteInProgress property in QuoteRequestTransfer.
      * - Sets quoteRequestReference to Quote transfer.
-     * - Replaces current customer quote by quoteInProgress from quote request.
+     * - Replaces current customer quote by quote from latest version.
      * - Avoids database strategy.
      *
      * @api
@@ -147,7 +161,7 @@ interface AgentQuoteRequestClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function convertQuoteRequestToQuoteInProgress(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer;
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
@@ -164,8 +178,7 @@ interface AgentQuoteRequestClientInterface
 
     /**
      * Specification:
-     * - Checks start editable status from config.
-     * - If "Request for Quote" in waiting status - return true.
+     * - If "Request for Quote" in waiting or ready status - return true.
      *
      * @api
      *
@@ -173,11 +186,10 @@ interface AgentQuoteRequestClientInterface
      *
      * @return bool
      */
-    public function isQuoteRequestCanStartEditable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+    public function isQuoteRequestRevisable(QuoteRequestTransfer $quoteRequestTransfer): bool;
 
     /**
      * Specification:
-     * - Checks editable status from config.
      * - If "Request for Quote" in in-progress status - return true.
      *
      * @api

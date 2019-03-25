@@ -6,7 +6,6 @@
     <transfer name="QuoteRequestCriteria">
         <property name="quoteRequestReference" type="string" />
         <property name="idCompanyUser" type="int" />
-        <property name="withHidden" type="bool" />
     </transfer>
 
     <transfer name="QuoteRequestResponse">
@@ -32,14 +31,13 @@
         <property name="idQuoteRequest" type="int" />
         <property name="companyUser" type="CompanyUser" />
         <property name="quoteRequestReference" type="string" />
-        <property name="metadata" type="array" />
         <property name="status" type="string" />
-        <property name="isHidden" type="bool" />
+        <property name="isLatestVersionHidden" type="bool" />
         <property name="validUntil" type="string" />
-        <property name="createdAt" type="string" />
-        <property name="quoteInProgress" type="Quote" />
         <property name="latestVersion" type="QuoteRequestVersion" />
+        <property name="latestVisibleVersion" type="QuoteRequestVersion" />
         <property name="versionReferences" type="string[]" />
+        <property name="createdAt" type="string" />
     </transfer>
 
     <transfer name="QuoteRequestVersion">
@@ -49,12 +47,12 @@
         <property name="versionReference" type="string" />
         <property name="quoteRequest" type="QuoteRequest" />
         <property name="quote" type="Quote" />
+        <property name="metadata" type="array" />
     </transfer>
 
     <transfer name="QuoteRequestFilter">
         <property name="companyUser" type="CompanyUser" />
         <property name="quoteRequestReference" type="string" />
-        <property name="withHidden" type="bool" />
         <property name="excludedStatuses" type="array" />
         <property name="pagination" type="Pagination" />
     </transfer>

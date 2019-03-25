@@ -23,7 +23,7 @@ interface QuoteRequestCheckerInterface
      *
      * @return bool
      */
-    public function isQuoteRequestCanStartEditable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+    public function isQuoteRequestRevisable(QuoteRequestTransfer $quoteRequestTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer

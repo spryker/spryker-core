@@ -43,14 +43,17 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function convertQuoteRequestToQuoteInProgress(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
         if (!$this->quoteRequestChecker->isQuoteRequestEditable($quoteRequestTransfer)) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS);
         }
 
-        $quoteTransfer = $quoteRequestTransfer->getQuoteInProgress() ?? $this->quoteClient->getQuote();
-        $quoteTransfer->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
+        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote() ?? $this->quoteClient->getQuote();
+
+        $quoteTransfer
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
+            ->setName($quoteRequestTransfer->getQuoteRequestReference());
 
         $this->quoteClient->setQuote($quoteTransfer);
 

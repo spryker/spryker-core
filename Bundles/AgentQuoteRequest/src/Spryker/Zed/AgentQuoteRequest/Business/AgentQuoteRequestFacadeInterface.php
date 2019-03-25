@@ -33,6 +33,20 @@ interface AgentQuoteRequestFacadeInterface
 
     /**
      * Specification:
+     * - Creates "Request for Quote" for the provided company user with "in-progress" status.
+     * - Generates unique reference number.
+     * - Sets hidden visibility for RfQ.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
      * - Looks up one "Request for Quote" by provided quote request reference.
      * - Expects "Request for Quote" status to not be "canceled".
      * - Sets status to "Cancelled".
