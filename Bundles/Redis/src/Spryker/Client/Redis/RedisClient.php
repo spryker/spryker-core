@@ -24,9 +24,9 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      * @param string $connectionKey
      * @param string $key
      *
-     * @return string
+     * @return string|null
      */
-    public function get(string $connectionKey, string $key)
+    public function get(string $connectionKey, string $key): ?string
     {
         return $this->getConnection($connectionKey)->get($key);
     }
@@ -41,11 +41,11 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      * @param int $seconds
      * @param mixed $value
      *
-     * @return int
+     * @return bool
      */
-    public function setex(string $connectionKey, string $key, int $seconds, $value)
+    public function setex(string $connectionKey, string $key, int $seconds, $value): bool
     {
-        return $this->getConnection($connectionKey)->setex($key, $seconds, $value);
+        return (bool)$this->getConnection($connectionKey)->setex($key, $seconds, $value);
     }
 
     /**
@@ -60,11 +60,11 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      * @param int|null $expireTTL
      * @param mixed|null $flag
      *
-     * @return mixed
+     * @return bool
      */
-    public function set(string $connectionKey, string $key, $value, $expireResolution = null, ?int $expireTTL = null, $flag = null)
+    public function set(string $connectionKey, string $key, $value, $expireResolution = null, ?int $expireTTL = null, $flag = null): bool
     {
-        return $this->getConnection($connectionKey)->set($key, $value, $expireResolution, $expireTTL, $flag);
+        return (bool)$this->getConnection($connectionKey)->set($key, $value, $expireResolution, $expireTTL, $flag);
     }
 
     /**
@@ -77,7 +77,7 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      *
      * @return int
      */
-    public function del(string $connectionKey, array $keys)
+    public function del(string $connectionKey, array $keys): int
     {
         return $this->getConnection($connectionKey)->del($keys);
     }
@@ -93,11 +93,11 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      * @param mixed|null $keyOrArg1
      * @param mixed|null $keyOrArgN
      *
-     * @return mixed
+     * @return bool
      */
-    public function eval(string $connectionKey, $script, $numkeys, $keyOrArg1 = null, $keyOrArgN = null)
+    public function eval(string $connectionKey, $script, $numkeys, $keyOrArg1 = null, $keyOrArgN = null): bool
     {
-        return $this->getConnection($connectionKey)->eval($script, $numkeys, $keyOrArg1, $keyOrArgN);
+        return (bool)$this->getConnection($connectionKey)->eval($script, $numkeys, $keyOrArg1, $keyOrArgN);
     }
 
     /**
@@ -109,7 +109,7 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      *
      * @return void
      */
-    public function connect(string $connectionKey)
+    public function connect(string $connectionKey): void
     {
         $this->getConnection($connectionKey)->connect();
     }
@@ -123,7 +123,7 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      *
      * @return void
      */
-    public function disconnect(string $connectionKey)
+    public function disconnect(string $connectionKey): void
     {
         $this->getConnection($connectionKey)->disconnect();
     }
@@ -152,7 +152,7 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      *
      * @return array
      */
-    public function mget(string $connectionKey, array $keys)
+    public function mget(string $connectionKey, array $keys): array
     {
         return $this->getConnection($connectionKey)->mget($keys);
     }
@@ -165,9 +165,9 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      * @param string $connectionKey
      * @param array $dictionary
      *
-     * @return mixed
+     * @return bool
      */
-    public function mset(string $connectionKey, array $dictionary)
+    public function mset(string $connectionKey, array $dictionary): bool
     {
         return $this->getConnection($connectionKey)->mset($dictionary);
     }
@@ -182,7 +182,7 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      *
      * @return array
      */
-    public function info(string $connectionKey, $section = null)
+    public function info(string $connectionKey, $section = null): array
     {
         return $this->getConnection($connectionKey)->info($section);
     }
@@ -197,7 +197,7 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      *
      * @return array
      */
-    public function keys(string $connectionKey, $pattern)
+    public function keys(string $connectionKey, $pattern): array
     {
         return $this->getConnection($connectionKey)->keys($pattern);
     }

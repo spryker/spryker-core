@@ -21,9 +21,9 @@ interface RedisClientInterface
      * @param string $connectionKey
      * @param string $key
      *
-     * @return string
+     * @return string|null
      */
-    public function get(string $connectionKey, string $key);
+    public function get(string $connectionKey, string $key): ?string;
 
     /**
      * Specification:
@@ -37,9 +37,9 @@ interface RedisClientInterface
      * @param int $seconds
      * @param mixed $value
      *
-     * @return int
+     * @return bool
      */
-    public function setex(string $connectionKey, string $key, int $seconds, $value);
+    public function setex(string $connectionKey, string $key, int $seconds, $value): bool;
 
     /**
      * Specification:
@@ -55,9 +55,9 @@ interface RedisClientInterface
      * @param int|null $expireTTL
      * @param mixed|null $flag
      *
-     * @return mixed
+     * @return bool
      */
-    public function set(string $connectionKey, string $key, $value, $expireResolution = null, ?int $expireTTL = null, $flag = null);
+    public function set(string $connectionKey, string $key, $value, $expireResolution = null, ?int $expireTTL = null, $flag = null): bool;
 
     /**
      * Specification:
@@ -71,7 +71,7 @@ interface RedisClientInterface
      *
      * @return int
      */
-    public function del(string $connectionKey, array $keys);
+    public function del(string $connectionKey, array $keys): int;
 
     /**
      * Specification:
@@ -86,9 +86,9 @@ interface RedisClientInterface
      * @param mixed|null $keyOrArg1
      * @param mixed|null $keyOrArgN
      *
-     * @return mixed
+     * @return bool
      */
-    public function eval(string $connectionKey, $script, $numkeys, $keyOrArg1 = null, $keyOrArgN = null);
+    public function eval(string $connectionKey, $script, $numkeys, $keyOrArg1 = null, $keyOrArgN = null): bool;
 
     /**
      * Specification:
@@ -100,7 +100,7 @@ interface RedisClientInterface
      *
      * @return void
      */
-    public function connect(string $connectionKey);
+    public function connect(string $connectionKey): void;
 
     /**
      * Specification:
@@ -112,7 +112,7 @@ interface RedisClientInterface
      *
      * @return void
      */
-    public function disconnect(string $connectionKey);
+    public function disconnect(string $connectionKey): void;
 
     /**
      * Specification:
@@ -138,7 +138,7 @@ interface RedisClientInterface
      *
      * @return array
      */
-    public function mget(string $connectionKey, array $keys);
+    public function mget(string $connectionKey, array $keys): array;
 
     /**
      * Specification:
@@ -150,9 +150,9 @@ interface RedisClientInterface
      * @param string $connectionKey
      * @param array $dictionary
      *
-     * @return mixed
+     * @return bool
      */
-    public function mset(string $connectionKey, array $dictionary);
+    public function mset(string $connectionKey, array $dictionary): bool;
 
     /**
      * Specification:
@@ -166,7 +166,7 @@ interface RedisClientInterface
      *
      * @return array
      */
-    public function info(string $connectionKey, $section = null);
+    public function info(string $connectionKey, $section = null): array;
 
     /**
      * Specification:
@@ -180,7 +180,7 @@ interface RedisClientInterface
      *
      * @return array
      */
-    public function keys(string $connectionKey, $pattern);
+    public function keys(string $connectionKey, $pattern): array;
 
     /**
      * Specification:
