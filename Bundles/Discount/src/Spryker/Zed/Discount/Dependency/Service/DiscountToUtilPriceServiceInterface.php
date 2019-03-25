@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilQuantity\Rounder;
+namespace Spryker\Zed\Discount\Dependency\Service;
 
-interface QuantityRounderInterface
+interface DiscountToUtilPriceServiceInterface
 {
     /**
-     * @param float $quantity
+     * @param float $price
      *
-     * @return float
+     * @return int
      */
-    public function roundQuantity(float $quantity): float;
+    public function roundPrice(float $price): int;
 }

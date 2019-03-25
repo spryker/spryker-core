@@ -56,7 +56,7 @@
     </transfer>
 
     <transfer name="DiscountableItem">
-        <property name="quantity" type="int"/>
+        <property name="quantity" type="float"/>
         <property name="unitGrossPrice" type="int" deprecated="use unitPrice instead"/>
         <property name="unitPrice" type="int"/>
         <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
@@ -68,7 +68,7 @@
         <property name="discount" type="Discount"/>
         <property name="totalDiscountAmount" type="int"/>
         <property name="totalAmount" type="int"/>
-        <property name="quantity" type="int"/>
+        <property name="quantity" type="float"/>
         <property name="roundingError" type="float"/>
     </transfer>
 
@@ -142,7 +142,7 @@
 
     <transfer name="DiscountCondition">
         <property name="decisionRuleQueryString" type="string" />
-        <property name="minimumItemAmount" type="int" />
+        <property name="minimumItemAmount" type="float" />
     </transfer>
 
     <transfer name="DiscountVoucher">

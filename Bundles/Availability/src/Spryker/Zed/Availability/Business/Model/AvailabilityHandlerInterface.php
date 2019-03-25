@@ -27,7 +27,7 @@ interface AvailabilityHandlerInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return int
      */
@@ -35,7 +35,7 @@ interface AvailabilityHandlerInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int

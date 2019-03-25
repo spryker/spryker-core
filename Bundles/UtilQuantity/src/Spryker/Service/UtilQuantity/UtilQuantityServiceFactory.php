@@ -8,19 +8,26 @@
 namespace Spryker\Service\UtilQuantity;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
-use Spryker\Service\UtilQuantity\Rounder\QuantityRounder;
-use Spryker\Service\UtilQuantity\Rounder\QuantityRounderInterface;
+use Spryker\Service\UtilQuantity\Calculator\QuantityCalculator;
+use Spryker\Service\UtilQuantity\Calculator\QuantityCalculatorInterface;
+use Spryker\Service\UtilQuantity\Comparator\QuantityComparator;
+use Spryker\Service\UtilQuantity\Comparator\QuantityComparatorInterface;
 
-/**
- * @method \Spryker\Service\UtilQuantity\UtilQuantityConfig getConfig()
- */
 class UtilQuantityServiceFactory extends AbstractServiceFactory
 {
     /**
-     * @return \Spryker\Service\UtilQuantity\Rounder\QuantityRounderInterface
+     * @return \Spryker\Service\UtilQuantity\Calculator\QuantityCalculatorInterface
      */
-    public function createQuantityRounder(): QuantityRounderInterface
+    public function createQuantityCalculator(): QuantityCalculatorInterface
     {
-        return new QuantityRounder($this->getConfig());
+        return new QuantityCalculator();
+    }
+
+    /**
+     * @return \Spryker\Service\UtilQuantity\Comparator\QuantityComparatorInterface
+     */
+    public function createQuantityComparator(): QuantityComparatorInterface
+    {
+        return new QuantityComparator();
     }
 }

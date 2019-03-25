@@ -31,11 +31,11 @@ interface CartsRestApiToCartClientInterface
     /**
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1);
+    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1.0);
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
