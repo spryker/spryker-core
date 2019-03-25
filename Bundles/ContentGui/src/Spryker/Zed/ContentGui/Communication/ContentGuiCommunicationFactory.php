@@ -29,7 +29,10 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createContentTable(): ContentTable
     {
-        return new ContentTable($this->getPropelContentQuery());
+        return new ContentTable(
+            $this->getPropelContentQuery(),
+            $this->getContentPlugins()
+        );
     }
 
     /**

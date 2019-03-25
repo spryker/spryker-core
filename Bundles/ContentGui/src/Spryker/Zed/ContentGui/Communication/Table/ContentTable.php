@@ -21,11 +21,20 @@ class ContentTable extends AbstractTable
     private $contentQuery;
 
     /**
-     * @param \Orm\Zed\Content\Persistence\SpyContentQuery $contentQuery
+     * @var string[]
      */
-    public function __construct(SpyContentQuery $contentQuery)
-    {
+    private $enabledContentTypesCache = [];
+
+    /**
+     * @param \Orm\Zed\Content\Persistence\SpyContentQuery $contentQuery
+     * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[] $contentPlugins
+     */
+    public function __construct(
+        SpyContentQuery $contentQuery,
+        array $contentPlugins
+    ) {
         $this->contentQuery = $contentQuery;
+        $this->populateEnabledContentTypesCache($contentPlugins);
     }
 
     /**
@@ -115,6 +124,10 @@ class ContentTable extends AbstractTable
      */
     protected function buildLinks(array $content): string
     {
+        if (!$this->isContentTypeEnabled($content[ContentTableConstants::COL_CONTENT_TYPE_KEY])) {
+            return '';
+        }
+
         $buttons = [];
 
         $urlParams = [
@@ -128,6 +141,28 @@ class ContentTable extends AbstractTable
         );
 
         return implode(' ', $buttons);
+    }
+
+    /**
+     * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[] $contentPlugins
+     *
+     * @return void
+     */
+    protected function populateEnabledContentTypesCache(array $contentPlugins): void
+    {
+        foreach ($contentPlugins as $contentPlugin) {
+            $this->enabledContentTypesCache[] = $contentPlugin->getTypeKey();
+        }
+    }
+
+    /**
+     * @param string $contentTypeKey
+     *
+     * @return bool
+     */
+    protected function isContentTypeEnabled(string $contentTypeKey): bool
+    {
+        return in_array($contentTypeKey, $this->enabledContentTypesCache);
     }
 
     /**
