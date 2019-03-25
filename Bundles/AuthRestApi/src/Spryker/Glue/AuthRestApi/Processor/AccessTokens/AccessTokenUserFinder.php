@@ -6,36 +6,46 @@
 
 namespace Spryker\Glue\AuthRestApi\Processor\AccessTokens;
 
-use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
-use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\OauthAccessTokenDataTransfer;
 use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
-use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
+use Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToOauthServiceInterface;
+use Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToUtilEncodingServiceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class AccessTokenUserFinder implements AccessTokenUserFinderInterface
 {
-    /**
-     * @var \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface
-     */
-    protected $oauthClient;
+    protected const KEY_CUSTOMER_REFERENCE = 'customer_reference';
+    protected const KEY_ID_CUSTOMER = 'id_customer';
 
     /**
-     * @var \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserExpanderPluginInterface[]
+     * @var \Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToOauthServiceInterface
      */
-    protected $restUserExpanderPlugins;
+    protected $oauthService;
 
     /**
-     * @param \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface $oauthClient
-     * @param \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserExpanderPluginInterface[] $restUserExpanderPlugins
+     * @var \Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
+     * @var \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserMapperPluginInterface[]
+     */
+    protected $restUserMapperPlugins;
+
+    /**
+     * @param \Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToOauthServiceInterface $oauthService
+     * @param \Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserMapperPluginInterface[] $restUserExpanderPlugins
      */
     public function __construct(
-        AuthRestApiToOauthClientInterface $oauthClient,
+        AuthRestApiToOauthServiceInterface $oauthService,
+        AuthRestApiToUtilEncodingServiceInterface $utilEncodingService,
         array $restUserExpanderPlugins
     ) {
-        $this->oauthClient = $oauthClient;
-        $this->restUserExpanderPlugins = $restUserExpanderPlugins;
+        $this->oauthService = $oauthService;
+        $this->utilEncodingService = $utilEncodingService;
+        $this->restUserMapperPlugins = $restUserExpanderPlugins;
     }
 
     /**
@@ -51,30 +61,23 @@ class AccessTokenUserFinder implements AccessTokenUserFinderInterface
             return null;
         }
 
-        $authAccessTokenValidationResponseTransfer = $this->findUserByAccessToken((string)$authorizationToken);
+        $oauthAccessTokenDataTransfer = $this->findUserByAccessToken((string)$authorizationToken);
 
-        return $this->findRestUserTransfer($restRequest, $authAccessTokenValidationResponseTransfer);
+        return $this->findRestUserTransfer($restRequest, $oauthAccessTokenDataTransfer);
     }
 
     /**
      * @param string $authorizationToken
      *
-     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\OauthAccessTokenDataTransfer
      */
-    protected function findUserByAccessToken(string $authorizationToken): OauthAccessTokenValidationResponseTransfer
+    protected function findUserByAccessToken(string $authorizationToken): OauthAccessTokenDataTransfer
     {
         [$type, $accessToken] = $this->extractToken($authorizationToken);
 
-        $authAccessTokenValidationRequestTransfer = new OauthAccessTokenValidationRequestTransfer();
-        $authAccessTokenValidationRequestTransfer
-            ->setAccessToken($accessToken)
-            ->setType($type);
+        $oauthTokenData = $this->oauthService->extractAccessTokenData($accessToken);
 
-        $authAccessTokenValidationResponseTransfer = $this->oauthClient->validateAccessToken(
-            $authAccessTokenValidationRequestTransfer
-        );
-
-        return $authAccessTokenValidationResponseTransfer;
+        return $oauthTokenData;
     }
 
     /**
@@ -88,56 +91,45 @@ class AccessTokenUserFinder implements AccessTokenUserFinderInterface
     }
 
     /**
-     * @param string $detail
-     * @param int $status
-     * @param string $code
-     *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
-    protected function createErrorMessageTransfer(
-        string $detail,
-        int $status,
-        string $code
-    ): RestErrorMessageTransfer {
-
-        return (new RestErrorMessageTransfer())
-            ->setDetail($detail)
-            ->setStatus($status)
-            ->setCode($code);
-    }
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer $oauthAccessTokenValidationResponseTransfer
+     * @param \Generated\Shared\Transfer\OauthAccessTokenDataTransfer $oauthAccessTokenDataTransfer
      *
      * @return \Generated\Shared\Transfer\RestUserTransfer|null
      */
     protected function findRestUserTransfer(
         RestRequestInterface $restRequest,
-        OauthAccessTokenValidationResponseTransfer $oauthAccessTokenValidationResponseTransfer
+        OauthAccessTokenDataTransfer $oauthAccessTokenDataTransfer
     ): ?RestUserTransfer {
-        if (!$oauthAccessTokenValidationResponseTransfer->getIsValid()) {
+        if (!$oauthAccessTokenDataTransfer->getOauthUserId()) {
             return null;
         }
 
-        $customerIdentifier = json_decode($oauthAccessTokenValidationResponseTransfer->getOauthUserId(), true);
-
-        return $this->mapRestUserTransfer($customerIdentifier, $restRequest);
+        return $this->mapRestUserTransfer($oauthAccessTokenDataTransfer, $restRequest);
     }
 
     /**
-     * @param array $customerIdentifier
+     * @param \Generated\Shared\Transfer\OauthAccessTokenDataTransfer $oauthAccessTokenDataTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\RestUserTransfer
      */
-    protected function mapRestUserTransfer(array $customerIdentifier, RestRequestInterface $restRequest): RestUserTransfer
-    {
-        $restUserTransfer = (new RestUserTransfer())
-            ->fromArray($customerIdentifier, true);
+    protected function mapRestUserTransfer(
+        OauthAccessTokenDataTransfer $oauthAccessTokenDataTransfer,
+        RestRequestInterface $restRequest
+    ): RestUserTransfer {
+        $customerIdentifier = $this->utilEncodingService->decodeJson(
+            $oauthAccessTokenDataTransfer->getOauthUserId(),
+            true
+        );
 
-        foreach ($this->restUserExpanderPlugins as $restUserExpanderPlugin) {
-            $restUserTransfer = $restUserExpanderPlugin->expand($restUserTransfer, $restRequest);
+        $restUserTransfer = (new RestUserTransfer())
+            ->fromArray($customerIdentifier, true)
+            ->setNaturalIdentifier($customerIdentifier[static::KEY_CUSTOMER_REFERENCE])
+            ->setSurrogateIdentifier($customerIdentifier[static::KEY_ID_CUSTOMER])
+            ->setScopes($oauthAccessTokenDataTransfer->getOauthScopes());
+
+        foreach ($this->restUserMapperPlugins as $restUserMapperPlugin) {
+            $restUserTransfer = $restUserMapperPlugin->map($restUserTransfer, $restRequest);
         }
 
         return $restUserTransfer;

@@ -10,7 +10,7 @@ namespace Spryker\Glue\OauthCompanyUser\Processor\RestUser;
 use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface RestUserExpanderInterface
+interface RestUserMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestUserTransfer $restUserTransfer
@@ -18,5 +18,5 @@ interface RestUserExpanderInterface
      *
      * @return \Generated\Shared\Transfer\RestUserTransfer
      */
-    public function expand(RestUserTransfer $restUserTransfer, RestRequestInterface $restRequest): RestUserTransfer;
+    public function map(RestUserTransfer $restUserTransfer, RestRequestInterface $restRequest): RestUserTransfer;
 }

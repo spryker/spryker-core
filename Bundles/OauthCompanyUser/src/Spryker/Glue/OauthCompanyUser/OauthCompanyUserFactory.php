@@ -9,17 +9,17 @@ namespace Spryker\Glue\OauthCompanyUser;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\OauthCompanyUser\Dependency\Client\OauthCompanyUserToCompanyUserStorageClientInterface;
-use Spryker\Glue\OauthCompanyUser\Processor\RestUser\RestUserExpander;
-use Spryker\Glue\OauthCompanyUser\Processor\RestUser\RestUserExpanderInterface;
+use Spryker\Glue\OauthCompanyUser\Processor\RestUser\RestUserMapper;
+use Spryker\Glue\OauthCompanyUser\Processor\RestUser\RestUserMapperInterface;
 
 class OauthCompanyUserFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\OauthCompanyUser\Processor\RestUser\RestUserExpanderInterface
+     * @return \Spryker\Glue\OauthCompanyUser\Processor\RestUser\RestUserMapperInterface
      */
-    public function createRestUserExpander(): RestUserExpanderInterface
+    public function createRestUserMapper(): RestUserMapperInterface
     {
-        return new RestUserExpander($this->getCompanyUserStorageClient());
+        return new RestUserMapper($this->getCompanyUserStorageClient());
     }
 
     /**

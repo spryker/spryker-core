@@ -8,18 +8,18 @@
 namespace Spryker\Glue\OauthCompanyUser\Plugin\AuthRestApi;
 
 use Generated\Shared\Transfer\RestUserTransfer;
-use Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserExpanderPluginInterface;
+use Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserMapperPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Glue\OauthCompanyUser\OauthCompanyUserFactory getFactory()
  */
-class CompanyUserRestUserExpanderPlugin extends AbstractPlugin implements RestUserExpanderPluginInterface
+class CompanyUserRestUserMapperPlugin extends AbstractPlugin implements RestUserMapperPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Expands rest user identifier with company user data.
+     * - Maps company user data to the rest user identifier.
      *
      * @api
      *
@@ -28,10 +28,10 @@ class CompanyUserRestUserExpanderPlugin extends AbstractPlugin implements RestUs
      *
      * @return \Generated\Shared\Transfer\RestUserTransfer
      */
-    public function expand(RestUserTransfer $restUserTransfer, RestRequestInterface $restRequest): RestUserTransfer
+    public function map(RestUserTransfer $restUserTransfer, RestRequestInterface $restRequest): RestUserTransfer
     {
         return $this->getFactory()
-            ->createRestUserExpander()
-            ->expand($restUserTransfer, $restRequest);
+            ->createRestUserMapper()
+            ->map($restUserTransfer, $restRequest);
     }
 }

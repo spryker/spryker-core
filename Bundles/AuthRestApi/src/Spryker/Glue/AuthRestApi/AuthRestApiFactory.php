@@ -8,14 +8,14 @@
 namespace Spryker\Glue\AuthRestApi;
 
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
+use Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToOauthServiceInterface;
+use Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToUtilEncodingServiceInterface;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokensReader;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokensReaderInterface;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenUserFinder;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenUserFinderInterface;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidator;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidatorInterface;
-use Spryker\Glue\AuthRestApi\Processor\AccessTokens\Validator\RestRequestAccessTokenValidator;
-use Spryker\Glue\AuthRestApi\Processor\AccessTokens\Validator\RestRequestAccessTokenValidatorInterface;
 use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensReader;
 use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensReaderInterface;
 use Spryker\Glue\AuthRestApi\Processor\ResponseFormatter\AuthenticationErrorResponseHeadersFormatter;
@@ -55,7 +55,7 @@ class AuthRestApiFactory extends AbstractFactory
      */
     public function createAccessTokenValidator(): AccessTokenValidatorInterface
     {
-        return new AccessTokenValidator($this->getOauthClient(), $this->getRestUserExpanderPlugins());
+        return new AccessTokenValidator($this->getOauthClient());
     }
 
     /**
@@ -72,17 +72,10 @@ class AuthRestApiFactory extends AbstractFactory
     public function createAccessTokenUserFinder(): AccessTokenUserFinderInterface
     {
         return new AccessTokenUserFinder(
-            $this->getOauthClient(),
+            $this->getOauthService(),
+            $this->getUtilEncodingService(),
             $this->getRestUserExpanderPlugins()
         );
-    }
-
-    /**
-     * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\Validator\RestRequestAccessTokenValidatorInterface
-     */
-    public function createRestRequestAccessTokenValidator(): RestRequestAccessTokenValidatorInterface
-    {
-        return new RestRequestAccessTokenValidator();
     }
 
     /**
@@ -94,7 +87,23 @@ class AuthRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserExpanderPluginInterface[]
+     * @return \Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToOauthServiceInterface
+     */
+    public function getOauthService(): AuthRestApiToOauthServiceInterface
+    {
+        return $this->getProvidedDependency(AuthRestApiDependencyProvider::SERVICE_OAUTH);
+    }
+
+    /**
+     * @return \Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): AuthRestApiToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(AuthRestApiDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserMapperPluginInterface[]
      */
     public function getRestUserExpanderPlugins(): array
     {

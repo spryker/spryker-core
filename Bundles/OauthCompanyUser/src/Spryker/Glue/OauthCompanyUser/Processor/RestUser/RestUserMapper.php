@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\OauthCompanyUser\Dependency\Client\OauthCompanyUserToCompanyUserStorageClientInterface;
 
-class RestUserExpander implements RestUserExpanderInterface
+class RestUserMapper implements RestUserMapperInterface
 {
     protected const MAPPING_TYPE_UUID = 'uuid';
 
@@ -34,7 +34,7 @@ class RestUserExpander implements RestUserExpanderInterface
      *
      * @return \Generated\Shared\Transfer\RestUserTransfer
      */
-    public function expand(RestUserTransfer $restUserTransfer, RestRequestInterface $restRequest): RestUserTransfer
+    public function map(RestUserTransfer $restUserTransfer, RestRequestInterface $restRequest): RestUserTransfer
     {
         $uuidCompanyUser = (string)$restUserTransfer->getIdCompanyUser();
         if (!$uuidCompanyUser) {
