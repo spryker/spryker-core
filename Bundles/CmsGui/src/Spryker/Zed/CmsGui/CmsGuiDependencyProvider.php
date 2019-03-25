@@ -83,7 +83,7 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
     protected function getTwigEnvironment()
     {

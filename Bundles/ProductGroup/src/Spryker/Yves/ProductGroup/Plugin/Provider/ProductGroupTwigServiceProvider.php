@@ -10,7 +10,7 @@ namespace Spryker\Yves\ProductGroup\Plugin\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @method \Spryker\Yves\ProductGroup\ProductGroupFactory getFactory()
@@ -27,7 +27,7 @@ class ProductGroupTwigServiceProvider extends AbstractPlugin implements ServiceP
         $twigExtension = $this->getFactory()->createProductGroupTwigExtension();
 
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) use ($twigExtension) {
+            $app->extend('twig', function (Environment $twig) use ($twigExtension) {
                 $twig->addExtension($twigExtension);
 
                 return $twig;
