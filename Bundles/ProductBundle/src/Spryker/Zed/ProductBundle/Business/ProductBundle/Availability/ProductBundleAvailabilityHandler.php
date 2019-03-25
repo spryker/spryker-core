@@ -307,7 +307,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      */
     protected function isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)
     {
-        return ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0);
+        return ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity === 0);
     }
 
     /**
