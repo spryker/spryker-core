@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ContentBannerTransfer;
 
 /**
  * Auto-generated group annotations
- *
  * @group SprykerTest
  * @group Zed
  * @group ContentBanner

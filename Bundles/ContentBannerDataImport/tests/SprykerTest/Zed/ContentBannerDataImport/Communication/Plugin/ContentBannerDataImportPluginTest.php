@@ -15,13 +15,11 @@ use Spryker\Zed\ContentBannerDataImport\Communication\Plugin\ContentBannerDataIm
 
 /**
  * Auto-generated group annotations
- *
  * @group SprykerTest
  * @group Zed
  * @group ContentBannerDataImport
  * @group Communication
  * @group Plugin
- * @group DataImport
  * @group ContentBannerDataImportPluginTest
  * Add your own group annotations below this line
  */
