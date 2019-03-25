@@ -8,14 +8,7 @@
 namespace SprykerTest\Zed\ProductQuantity\Business;
 
 use Codeception\Test\Unit;
-use Spryker\Service\UtilQuantity\UtilQuantityConfig;
-use Spryker\Service\UtilQuantity\UtilQuantityService;
-use Spryker\Service\UtilQuantity\UtilQuantityServiceFactory;
-use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductQuantity\Business\ProductQuantityBusinessFactory;
 use Spryker\Zed\ProductQuantity\Business\ProductQuantityFacadeInterface;
-use Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceBridge;
-use Spryker\Zed\ProductQuantity\ProductQuantityDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -54,29 +47,7 @@ class ProductQuantityFacadeTest extends Unit
      */
     protected function createProductQuantityFacade(): ProductQuantityFacadeInterface
     {
-        $utilQuantityConfigMock = $this->getMockBuilder(UtilQuantityConfig::class)
-            ->setMethods([
-                'getQuantityRoundingPrecision',
-            ])
-            ->getMock();
-        $utilQuantityConfigMock->method('getQuantityRoundingPrecision')->will($this->returnValue(2));
-        $utilQuantityServiceFactory = new UtilQuantityServiceFactory();
-        $utilQuantityServiceFactory->setConfig($utilQuantityConfigMock);
-        $utilQuantityService = new UtilQuantityService();
-        $utilQuantityService->setFactory($utilQuantityServiceFactory);
-
-        $container = new Container();
-        $container[ProductQuantityDependencyProvider::SERVICE_UTIL_QUANTITY] = function () use ($utilQuantityService) {
-            return new ProductQuantityToUtilQuantityServiceBridge(
-                $utilQuantityService
-            );
-        };
-        $productQuantityBusinessFactory = new ProductQuantityBusinessFactory();
-        $productQuantityBusinessFactory->setContainer($container);
-        $productQuantityFacade = $this->tester->getFacade();
-        $productQuantityFacade->setFactory($productQuantityBusinessFactory);
-
-        return $productQuantityFacade;
+        return $this->tester->getFacade();
     }
 
     /**
@@ -136,7 +107,6 @@ class ProductQuantityFacadeTest extends Unit
             [true, 5.5, 2.5, 3, 3,    3],
             [true, 5, 5, 2, 4,    3], // can remove all items regardless rules
             [true, 5.5, 5.5, 2, 4,    3],
-
             [false, 5, 6, 1, null, 1], // general rule
             [false, 5.5, 6.5, 1, null, 1],
             [false, 5, 2, 4, null, 1], // min above new quantity
