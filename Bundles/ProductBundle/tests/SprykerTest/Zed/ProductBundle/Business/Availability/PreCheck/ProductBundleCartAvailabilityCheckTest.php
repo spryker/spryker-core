@@ -203,7 +203,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     /**
      * @param float|int $quantity
      * @param string $bundleSku
-     * @param $expectedValue
+     * @param float|int $expectedValue
      *
      * @return array
      */

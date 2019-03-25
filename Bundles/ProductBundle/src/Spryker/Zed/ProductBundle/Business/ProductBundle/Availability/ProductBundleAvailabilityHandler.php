@@ -251,7 +251,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
         }
 
         $isBundledItemUnavailable = (
-            !$bundledProductAvailabilityEntity->getQuantity()
+            $this->isQuantityEqual($bundledProductAvailabilityEntity->getQuantity(), 0)
             && !$bundledProductAvailabilityEntity->getIsNeverOutOfStock()
         );
 
@@ -308,5 +308,16 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     protected function isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)
     {
         return ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
     }
 }

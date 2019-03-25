@@ -193,7 +193,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         usort(
             $options,
             function (ProductOptionTransfer $productOptionLeft, ProductOptionTransfer $productOptionRight) {
-                return $productOptionLeft->getSku() <=> $productOptionRight->getSku();
+                return ($productOptionLeft->getSku() < $productOptionRight->getSku()) ? -1 : 1;
             }
         );
 

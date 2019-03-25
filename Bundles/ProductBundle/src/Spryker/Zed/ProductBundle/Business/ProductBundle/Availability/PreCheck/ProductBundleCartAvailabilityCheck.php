@@ -207,9 +207,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
             $itemTransfer->getSku()
         );
 
-        $availabilityAfterBundling = $this->subtractQuantities($itemAvailability, $bundledItemsQuantity);
-
-        return $availabilityAfterBundling;
+        return $this->subtractQuantities($itemAvailability, $bundledItemsQuantity);
     }
 
     /**
