@@ -23,11 +23,6 @@ use Spryker\Client\ShoppingList\Calculation\ShoppingListSubtotalCalculator;
 class ShoppingListSubtotalCalculatorTest extends Unit
 {
     /**
-     * @var \SprykerTest\Client\ShoppingList\ShoppingListClientTester
-     */
-    protected $tester;
-
-    /**
      * @var \Spryker\Client\ShoppingList\Calculation\ShoppingListSubtotalCalculatorInterface
      */
     protected $shoppingListSubtotalCalculator;
@@ -47,7 +42,8 @@ class ShoppingListSubtotalCalculatorTest extends Unit
      */
     public function testCalculateShoppingListSubtotalShouldCalculatePricesCorrectly(): void
     {
-        $shoppingListItems = [
+        // Arrange
+        $productViewTransferCollection = [
             (new ProductViewTransfer())->setPrice(1)->setQuantity(1),
             (new ProductViewTransfer())->setPrice(2)->setQuantity(2),
             (new ProductViewTransfer())->setPrice(3)->setQuantity(3),
@@ -57,18 +53,20 @@ class ShoppingListSubtotalCalculatorTest extends Unit
 
         $expectedShoppingListSubtotal = 55;
 
-        $this->assertSame(
-            $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItems),
-            $expectedShoppingListSubtotal
-        );
+        // Act
+        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($productViewTransferCollection);
+
+        // Assert
+        $this->assertSame($calculatedShoppingListSubtotal, $expectedShoppingListSubtotal);
     }
 
     /**
      * @return void
      */
-    public function testCalculateShoppingListSubtotalShouldSkipItemsWithoutPriceOrQuantityDuringSubtotalCalculation(): void
+    public function testCalculateShoppingListSubtotalShouldSkipItemsWithoutPriceOrQuantity(): void
     {
-        $shoppingListItems = [
+        // Arrange
+        $productViewTransferCollection = [
             (new ProductViewTransfer())->setPrice(null)->setQuantity(1),
             (new ProductViewTransfer())->setPrice(2)->setQuantity(2),
             (new ProductViewTransfer())->setPrice(3)->setQuantity(null),
@@ -78,9 +76,10 @@ class ShoppingListSubtotalCalculatorTest extends Unit
 
         $expectedShoppingListSubtotal = 20;
 
-        $this->assertSame(
-            $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItems),
-            $expectedShoppingListSubtotal
-        );
+        // Act
+        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($productViewTransferCollection);
+
+        // Assert
+        $this->assertSame($calculatedShoppingListSubtotal, $expectedShoppingListSubtotal);
     }
 }
