@@ -77,7 +77,7 @@ class QuoteRequestToQuoteConverter implements QuoteRequestToQuoteConverterInterf
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function convertQuoteRequestToEditableQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
         if (!$this->quoteRequestChecker->isQuoteRequestDraft($quoteRequestTransfer)) {
             return $this->getErrorResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS);
