@@ -255,12 +255,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      */
     public function queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent(string $itemType, string $itemEvent, array $itemIds): SpyTouchQuery
     {
-        $params = [];
-        $subQuery = $this->getFactory()->createTouchQuery()->select('COUNT(*)')->addAlias('alias', SpyTouchTableMap::TABLE_NAME)
-            ->where('alias.item_id = ' . SpyTouchTableMap::COL_ITEM_ID)
-            ->where('alias.item_type = ' . SpyTouchTableMap::COL_ITEM_TYPE)
-        ->createSelectSql($params);
-        $subQuery = str_replace('SELECT  FROM `spy_touch`', '(SELECT COUNT(*) FROM `spy_touch` AS `alias`', $subQuery) . ') = 1';
+        $subQuery = '(SELECT COUNT(*) FROM spy_touch as alias WHERE alias.item_id = spy_touch.item_id AND alias.item_type = spy_touch.item_type) = 1';
 
         $query = $this->queryTouchEntriesByItemTypeAndItemIds($itemType, $itemIds)
             ->condition('cond1', SpyTouchTableMap::COL_ITEM_EVENT . ' = ?', $itemEvent)
