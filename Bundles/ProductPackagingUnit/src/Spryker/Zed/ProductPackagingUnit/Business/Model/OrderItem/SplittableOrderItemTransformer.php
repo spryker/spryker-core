@@ -57,7 +57,7 @@ class SplittableOrderItemTransformer implements SplittableOrderItemTransformerIn
     {
         $transformedItemTransfer = new ItemTransfer();
         $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
-        $transformedItemTransfer->setQuantity(1.0);
+        $transformedItemTransfer->setQuantity(1);
         $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
         $transformedItemTransfer->setAmount($this->roundPrice($amountPerQuantity));
         $transformedProductOptions = new ArrayObject();

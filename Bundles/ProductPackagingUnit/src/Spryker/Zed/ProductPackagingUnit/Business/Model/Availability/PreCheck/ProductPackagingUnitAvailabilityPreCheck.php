@@ -68,7 +68,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
 
         foreach ($items as $item) {
             if ($leadProductSku === $item->getSku()) { // Lead product is in cart as an individual item
-                $quantity += $item->getQuantity();
+                $quantity = $this->sumQuantities($quantity, $item->getQuantity());
                 continue;
             }
 
@@ -78,20 +78,22 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
 
             if ($item->getAmountLeadProduct()->getProduct()->getSku() === $leadProductSku) { // Item in cart has the searched lead product
                 $quantity += $item->getAmount();
+                $quantity = $this->sumQuantities($quantity, $item->getAmount());
             }
         }
 
-        return $this->roundQuantity($quantity);
+        return $quantity;
     }
 
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    protected function roundQuantity(float $quantity): float
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->utilQuantityService->roundQuantity($quantity);
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 
     /**

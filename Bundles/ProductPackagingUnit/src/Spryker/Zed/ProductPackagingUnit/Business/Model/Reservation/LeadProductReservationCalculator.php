@@ -60,18 +60,17 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
         $sumReservedLeadProductQuantity = $this->omsFacade
             ->sumReservedProductQuantitiesForSku($leadProductSku, $storeTransfer);
 
-        $reservedAmount = $sumReservedLeadProductAmount + $sumReservedLeadProductQuantity;
-
-        return $this->roundQuantity($reservedAmount);
+        return $this->sumQuantities($sumReservedLeadProductAmount, $sumReservedLeadProductQuantity);
     }
 
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    protected function roundQuantity(float $quantity): float
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->utilQuantityService->roundQuantity($quantity);
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 }

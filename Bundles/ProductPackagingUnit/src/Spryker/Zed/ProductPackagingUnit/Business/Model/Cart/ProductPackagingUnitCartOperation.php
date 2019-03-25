@@ -36,9 +36,12 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
     {
         foreach ($quoteTransfer->getItems() as $currentItemTransfer) {
             if ($this->getItemIdentifier($currentItemTransfer) === $this->getItemIdentifier($itemTransfer)) {
-                $newQuantity = $currentItemTransfer->getQuantity() + $itemTransfer->getQuantity();
+                $newQuantity = $this->sumQuantities(
+                    $currentItemTransfer->getQuantity(),
+                    $itemTransfer->getQuantity()
+                );
 
-                $currentItemTransfer->setQuantity($this->roundQuantity($newQuantity));
+                $currentItemTransfer->setQuantity($newQuantity);
 
                 $currentItemTransfer->setAmount(
                     $currentItemTransfer->getAmount() + $itemTransfer->getAmount()
@@ -54,13 +57,25 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
     }
 
     /**
-     * @param float $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
      * @return float
      */
-    protected function roundQuantity(float $quantity): float
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->utilQuantityService->roundQuantity($quantity);
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function subtractQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
@@ -73,8 +88,10 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
     {
         foreach ($quoteTransfer->getItems() as $itemIndex => $currentItemTransfer) {
             if ($this->getItemIdentifier($currentItemTransfer) === $this->getItemIdentifier($itemTransfer)) {
-                $newQuantity = $currentItemTransfer->getQuantity() - $itemTransfer->getQuantity();
-                $newQuantity = $this->roundQuantity($newQuantity);
+                $newQuantity = $this->subtractQuantities(
+                    $currentItemTransfer->getQuantity(),
+                    $itemTransfer->getQuantity()
+                );
                 $newAmount = $currentItemTransfer->getAmount() - $itemTransfer->getAmount();
 
                 if ($newQuantity <= 0 || $newAmount < 1) {
