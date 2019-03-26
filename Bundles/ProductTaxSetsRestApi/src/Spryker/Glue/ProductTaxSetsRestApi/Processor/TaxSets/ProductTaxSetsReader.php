@@ -88,8 +88,10 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findAbstractProductTaxSetsByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
-    {
+    public function findAbstractProductTaxSetsByAbstractProductSku(
+        string $abstractProductSku,
+        RestRequestInterface $restRequest
+    ): ?RestResourceInterface {
         $taxProductStorageTransfer = $this->taxProductStorageClient->findTaxProductStorage($abstractProductSku);
         if ($taxProductStorageTransfer === null) {
             return null;
@@ -115,8 +117,11 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function formatRestResource(RestProductTaxSetsAttributesTransfer $restTaxSetsAttributesTransfer, string $uuid, string $parentResourceId): RestResourceInterface
-    {
+    protected function formatRestResource(
+        RestProductTaxSetsAttributesTransfer $restTaxSetsAttributesTransfer,
+        string $uuid,
+        string $parentResourceId
+    ): RestResourceInterface {
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductTaxSetsRestApiConfig::RESOURCE_PRODUCT_TAX_SETS,
             $uuid,

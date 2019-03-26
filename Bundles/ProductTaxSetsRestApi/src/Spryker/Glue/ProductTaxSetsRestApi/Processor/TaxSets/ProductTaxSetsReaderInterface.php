@@ -26,5 +26,8 @@ interface ProductTaxSetsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findAbstractProductTaxSetsByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface;
+    public function findAbstractProductTaxSetsByAbstractProductSku(
+        string $abstractProductSku,
+        RestRequestInterface $restRequest
+    ): ?RestResourceInterface;
 }
