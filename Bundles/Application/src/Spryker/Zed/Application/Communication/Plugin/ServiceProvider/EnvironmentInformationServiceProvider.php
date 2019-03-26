@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig\Environment;
 
 /**
+ * @deprecated Will be removed without replacement in the next major.
+ * If you use `environmentInfo` function in your twig files, please add it on your own.
+ *
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
