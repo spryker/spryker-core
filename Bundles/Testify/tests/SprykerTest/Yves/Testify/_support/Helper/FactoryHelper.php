@@ -12,29 +12,12 @@ use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
-use Spryker\Shared\Testify\Locator\TestifyConfiguratorInterface;
-use Spryker\Zed\Testify\Locator\Business\BusinessLocator as Locator;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 
 class FactoryHelper extends Module
 {
     /**
-     * @var array
-     */
-    protected $config = [
-        'projectNamespaces' => [],
-        'coreNamespaces' => [
-            'Spryker',
-        ],
-    ];
-
-    /**
-     * @var array
-     */
-    protected $dependencies = [];
-
-    /**
-     * @var \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|null
+     * @var \Spryker\Yves\Kernel\AbstractFactory|null
      */
     protected $factoryStub;
 
@@ -42,27 +25,6 @@ class FactoryHelper extends Module
      * @var array
      */
     protected $mockedFactoryMethods = [];
-
-    /**
-     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Yves\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
-     */
-    public function getLocator()
-    {
-        return new Locator($this->config['projectNamespaces'], $this->config['coreNamespaces'], $this->createClosure());
-    }
-
-    /**
-     * @param string $key
-     * @param mixed $value
-     *
-     * @return $this
-     */
-    public function setDependency($key, $value)
-    {
-        $this->dependencies[$key] = $value;
-
-        return $this;
-    }
 
     /**
      * @param string $methodName
@@ -138,32 +100,6 @@ class FactoryHelper extends Module
     protected function getConfigHelper(): ConfigHelper
     {
         return $this->getModule('\\' . ConfigHelper::class);
-    }
-
-    /**
-     * @return \Closure
-     */
-    private function createClosure()
-    {
-        $dependencies = $this->getDependencies();
-        $callback = function (TestifyConfiguratorInterface $configurator) use ($dependencies) {
-            foreach ($dependencies as $key => $value) {
-                $configurator->getContainer()->set($key, $value);
-            }
-        };
-
-        return $callback;
-    }
-
-    /**
-     * @return array
-     */
-    private function getDependencies()
-    {
-        $dependencies = $this->dependencies;
-        $this->dependencies = [];
-
-        return $dependencies;
     }
 
     /**
