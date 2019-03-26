@@ -9,7 +9,9 @@ namespace SprykerTest\Zed\PriceProductSchedule\Business\Facade;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 
 /**
@@ -41,25 +43,31 @@ class PriceProductSchedulePriceTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
-            $productConcreteTransfer,
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
-            ],
-            null,
-            null,
-            100
+                PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+                    PriceProductTransfer::MONEY_VALUE => [
+                        MoneyValueTransfer::GROSS_AMOUNT => 100,
+                    ],
+                ],
+            ]
         );
         $activeFrom2 = new DateTime();
         $activeFrom2->modify('-1 hour');
 
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
-            $productConcreteTransfer,
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom2,
-            ],
-            null,
-            null,
-            100
+                PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+                    PriceProductTransfer::MONEY_VALUE => [
+                        MoneyValueTransfer::GROSS_AMOUNT => 200,
+                    ],
+                ],
+            ]
         );
 
         $priceProductScheduleFacade = $this->tester->getFacade();
@@ -83,26 +91,34 @@ class PriceProductSchedulePriceTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
-            $productConcreteTransfer,
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
-            ],
-            null,
-            100,
-            100
+                PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+                    PriceProductTransfer::MONEY_VALUE => [
+                        MoneyValueTransfer::GROSS_AMOUNT => 100,
+                        MoneyValueTransfer::NET_AMOUNT => 100,
+                    ],
+                ],
+            ]
         );
 
         $activeFrom2 = new DateTime();
         $activeFrom2->modify('-1 hour');
 
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
-            $productConcreteTransfer,
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom2,
-            ],
-            null,
-            100,
-            200
+                PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+                    PriceProductTransfer::MONEY_VALUE => [
+                        MoneyValueTransfer::GROSS_AMOUNT => 100,
+                        MoneyValueTransfer::NET_AMOUNT => 200,
+                    ],
+                ],
+            ]
         );
 
         $priceProductScheduleFacade = $this->tester->getFacade();

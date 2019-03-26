@@ -99,18 +99,21 @@ class PriceProductDataHelper extends Module
             ->setType($config->getPriceDimensionDefault());
 
         $defaultPriceTypeName = $this->getPriceProductFacade()->getDefaultPriceTypeName();
-
-        $priceTypeId = $this->getPriceTypeId($defaultPriceTypeName);
+        $idPriceType = $this->getPriceTypeId($defaultPriceTypeName);
 
         $priceTypeTransfer = (new PriceTypeTransfer())
             ->setName($defaultPriceTypeName)
-            ->setIdPriceType($priceTypeId);
+            ->setIdPriceType($idPriceType);
+
+        if (isset($priceProductOverride[PriceProductTransfer::PRICE_TYPE])) {
+            $priceTypeTransfer = $priceProductOverride[PriceProductTransfer::PRICE_TYPE];
+        }
 
         $priceProductDefaultData = [
             PriceProductTransfer::PRICE_TYPE_NAME => $defaultPriceTypeName,
             PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer,
             PriceProductTransfer::PRICE_DIMENSION => $priceDimensionTransfer,
-            PriceProductTransfer::FK_PRICE_TYPE => $priceTypeId,
+            PriceProductTransfer::FK_PRICE_TYPE => $priceTypeTransfer->getIdPriceType(),
         ];
 
         $priceProductTransfer = (new PriceProductBuilder($priceProductDefaultData))

@@ -9,9 +9,10 @@ namespace SprykerTest\Zed\PriceProductSchedule\Business\Facade;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
-use SprykerTest\Shared\PriceProductSchedule\Helper\PriceProductScheduleDataHelper;
 
 /**
  * Auto-generated group annotations
@@ -26,6 +27,8 @@ use SprykerTest\Shared\PriceProductSchedule\Helper\PriceProductScheduleDataHelpe
  */
 class PriceProductScheduleApplyTest extends Unit
 {
+    public const CHF_ISO_CODE = 'CHF';
+
     /**
      * @var \SprykerTest\Zed\PriceProductSchedule\PriceProductScheduleBusinessTester
      */
@@ -38,7 +41,12 @@ class PriceProductScheduleApplyTest extends Unit
     {
         $productConcreteTransfer = $this->tester->haveProduct();
 
-        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule($productConcreteTransfer);
+        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule([
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+            ],
+        ]);
 
         $priceProductScheduleFacade = $this->tester->getFacade();
 
@@ -57,8 +65,16 @@ class PriceProductScheduleApplyTest extends Unit
         $otherStore = $this->tester->haveStore();
         $productConcreteTransfer = $this->tester->haveProduct();
 
-        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule($productConcreteTransfer, [],
-            $otherStore);
+        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule([
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+                PriceProductTransfer::MONEY_VALUE => [
+                    MoneyValueTransfer::FK_STORE => $otherStore->getIdStore(),
+                ],
+            ],
+        ]);
+
         $priceProductScheduleFacade = $this->tester->getFacade();
 
         $priceProductScheduleFacade->applyScheduledPrices();
@@ -75,21 +91,34 @@ class PriceProductScheduleApplyTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
-            $productConcreteTransfer,
             [
                 PriceProductScheduleTransfer::ACTIVE_TO => new DateTime(),
                 PriceProductScheduleTransfer::IS_CURRENT => true,
+                PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+                ],
             ]
         );
 
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
-            $productConcreteTransfer,
             [
                 PriceProductScheduleTransfer::ACTIVE_TO => new DateTime(),
+                PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+                ],
             ]
         );
 
-        $priceProductScheduleTransfer3 = $this->tester->havePriceProductSchedule($productConcreteTransfer);
+        $priceProductScheduleTransfer3 = $this->tester->havePriceProductSchedule(
+            [
+                PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+                ],
+            ]
+        );
 
         $priceProductScheduleFacade = $this->tester->getFacade();
         $priceProductScheduleFacade->applyScheduledPrices();
@@ -111,15 +140,30 @@ class PriceProductScheduleApplyTest extends Unit
     {
         $productConcreteTransfer1 = $this->tester->haveProduct();
 
-        $priceProductScheduleTransfer1 = $this->tester->havePriceProductSchedule($productConcreteTransfer1);
+        $priceProductScheduleTransfer1 = $this->tester->havePriceProductSchedule([
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer1->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer1->getFkProductAbstract(),
+            ],
+        ]);
 
         $productConcreteTransfer2 = $this->tester->haveProduct();
 
-        $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule($productConcreteTransfer2);
+        $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule([
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer2->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer2->getFkProductAbstract(),
+            ],
+        ]);
 
         $productConcreteTransfer3 = $this->tester->haveProduct();
 
-        $priceProductScheduleTransfer3 = $this->tester->havePriceProductSchedule($productConcreteTransfer3);
+        $priceProductScheduleTransfer3 = $this->tester->havePriceProductSchedule([
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer3->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer3->getFkProductAbstract(),
+            ],
+        ]);
 
         $priceProductScheduleFacade = $this->tester->getFacade();
         $priceProductScheduleFacade->applyScheduledPrices();
@@ -141,16 +185,38 @@ class PriceProductScheduleApplyTest extends Unit
     {
         $productConcreteTransfer = $this->tester->haveProduct();
 
-        $priceProductScheduleTransfer1 = $this->tester->havePriceProductSchedule($productConcreteTransfer, [], null,
-            null, null);
+        $priceProductScheduleTransfer1 = $this->tester->havePriceProductSchedule([
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+            ],
+        ]);
 
-        $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule($productConcreteTransfer, [], null,
-            null, null, PriceProductScheduleDataHelper::CHF_ISO_CODE);
+        $otherCurrency = $this->tester->getLocator()->currency()->facade()->fromIsoCode(static::CHF_ISO_CODE);
+
+        $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule([
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+                PriceProductTransfer::MONEY_VALUE => [
+                    MoneyValueTransfer::FK_CURRENCY => $otherCurrency->getIdCurrency(),
+                    MoneyValueTransfer::CURRENCY => $otherCurrency,
+                ],
+            ],
+        ]);
 
         $productConcreteTransfer3 = $this->tester->haveProduct();
 
-        $priceProductScheduleTransfer3 = $this->tester->havePriceProductSchedule($productConcreteTransfer3, [], null,
-            null, null, PriceProductScheduleDataHelper::CHF_ISO_CODE, PriceProductScheduleDataHelper::PRICE_TYPE_ID);
+        $priceProductScheduleTransfer3 = $this->tester->havePriceProductSchedule([
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer3->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer3->getFkProductAbstract(),
+                PriceProductTransfer::MONEY_VALUE => [
+                    MoneyValueTransfer::FK_CURRENCY => $otherCurrency->getIdCurrency(),
+                    MoneyValueTransfer::CURRENCY => $otherCurrency,
+                ],
+            ],
+        ]);
 
         $priceProductScheduleFacade = $this->tester->getFacade();
         $priceProductScheduleFacade->applyScheduledPrices();
