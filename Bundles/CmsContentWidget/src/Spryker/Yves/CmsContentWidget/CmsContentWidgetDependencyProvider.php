@@ -37,7 +37,7 @@ class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
     protected function getTwigEnvironment()
     {

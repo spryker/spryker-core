@@ -10,7 +10,7 @@ namespace Spryker\Yves\CmsBlock\Twig\Plugin;
 use Silex\Application;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
-use Twig_SimpleFunction;
+use Twig\TwigFunction;
 
 /**
  * @deprecated Use `Spryker\Yves\CmsBlock\Plugin\Twig\CmsBlockPlaceholderTwigPlugin` instead.
@@ -25,12 +25,12 @@ class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPlug
     /**
      * @param \Silex\Application $application
      *
-     * @return \Twig_SimpleFunction[]
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions(Application $application)
     {
         return [
-            new Twig_SimpleFunction('spyCmsBlockPlaceholder', function (array $context, $identifier) use ($application) {
+            new TwigFunction('spyCmsBlockPlaceholder', function (array $context, $identifier) use ($application) {
                 $placeholders = $context['placeholders'];
 
                 $translation = '';

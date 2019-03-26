@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Testify\Bootstrap;
 
+use ReflectionClass;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\HttpFragmentServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
@@ -53,7 +54,7 @@ class ZedBootstrap
     }
 
     /**
-     * @return mixed
+     * @return \Spryker\Shared\Application\Application
      */
     public function boot()
     {
@@ -66,6 +67,8 @@ class ZedBootstrap
     private function getApplication(): Application
     {
         $container = $this->getContainer();
+        $container = $this->cleanupStatics($container);
+
         $application = new Application($container);
         $application = $this->registerApplicationPlugins($application);
 
@@ -77,6 +80,24 @@ class ZedBootstrap
         $application->boot();
 
         return $application;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    protected function cleanupStatics(ContainerInterface $container): ContainerInterface
+    {
+        $reflectionClass = (new ReflectionClass($container));
+
+        foreach (['globalServices', 'globalServiceIdentifier', 'globalServiceIdentifier', 'aliases'] as $property) {
+            $reflectionProperty = $reflectionClass->getProperty($property);
+            $reflectionProperty->setAccessible(true);
+            $reflectionProperty->setValue([]);
+        }
+
+        return $container;
     }
 
     /**

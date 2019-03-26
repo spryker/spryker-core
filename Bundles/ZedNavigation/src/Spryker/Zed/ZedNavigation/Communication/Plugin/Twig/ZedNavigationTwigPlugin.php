@@ -168,6 +168,8 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      */
     protected function removeUriSuffix(string $path): string
     {
-        return preg_replace('/' . static::URI_SUFFIX_INDEX . '|' . static::URI_SUFFIX_SLASH . '/m', '', $path);
+        $pattern = sprintf('/%s|%s/m', static::URI_SUFFIX_INDEX, static::URI_SUFFIX_SLASH);
+
+        return preg_replace($pattern, '', $path);
     }
 }

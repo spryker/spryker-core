@@ -97,7 +97,7 @@ class TwigEventSubscriber implements EventSubscriberInterface
     {
         $route = $this->getRoute($controller, $params);
 
-        return '@' . $route . '.twig';
+        return sprintf('@%s.twig', $route);
     }
 
     /**
