@@ -14,14 +14,14 @@ class NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceBri
     /**
      * @var \Spryker\Glue\CategoriesRestApi\CategoriesRestApiResourceInterface
      */
-    protected $categoriesResource;
+    protected $categoriesRestApiResource;
 
     /**
-     * @param \Spryker\Glue\CategoriesRestApi\CategoriesRestApiResourceInterface $categoriesResource
+     * @param \Spryker\Glue\CategoriesRestApi\CategoriesRestApiResourceInterface $categoriesRestApiResource
      */
-    public function __construct($categoriesResource)
+    public function __construct($categoriesRestApiResource)
     {
-        $this->categoriesResource = $categoriesResource;
+        $this->categoriesRestApiResource = $categoriesRestApiResource;
     }
 
     /**
@@ -32,6 +32,6 @@ class NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceBri
      */
     public function findCategoryNodeById(int $nodeId, string $locale): ?RestResourceInterface
     {
-        return $this->categoriesResource->findCategoryNodeById($nodeId, $locale);
+        return $this->categoriesRestApiResource->findCategoryNodeById($nodeId, $locale);
     }
 }

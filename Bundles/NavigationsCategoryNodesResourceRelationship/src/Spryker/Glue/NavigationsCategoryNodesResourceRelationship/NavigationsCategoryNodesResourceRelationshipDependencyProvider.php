@@ -26,7 +26,7 @@ class NavigationsCategoryNodesResourceRelationshipDependencyProvider extends Abs
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addCategoriesResource($container);
+        $container = $this->addCategoriesRestApiResource($container);
 
         return $container;
     }
@@ -36,7 +36,7 @@ class NavigationsCategoryNodesResourceRelationshipDependencyProvider extends Abs
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addCategoriesResource(Container $container): Container
+    protected function addCategoriesRestApiResource(Container $container): Container
     {
         $container[static::RESOURCE_CATEGORIES_REST_API] = function (Container $container) {
             return new NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceBridge(

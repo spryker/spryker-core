@@ -19,14 +19,14 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
     /**
      * @var \Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestResource\NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface
      */
-    protected $categoriesResource;
+    protected $categoriesRestApiResource;
 
     /**
-     * @param \Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestResource\NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface $categoriesResource
+     * @param \Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestResource\NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface $categoriesRestApiResource
      */
-    public function __construct(NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface $categoriesResource)
+    public function __construct(NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface $categoriesRestApiResource)
     {
-        $this->categoriesResource = $categoriesResource;
+        $this->categoriesRestApiResource = $categoriesRestApiResource;
     }
 
     /**
@@ -86,7 +86,7 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
         $locale = $restRequest->getMetadata()->getLocale();
 
         foreach ($categoryNodeIds as $categoryNodeId) {
-            $categoryNodeResource = $this->categoriesResource->findCategoryNodeById(
+            $categoryNodeResource = $this->categoriesRestApiResource->findCategoryNodeById(
                 $categoryNodeId,
                 $locale
             );
