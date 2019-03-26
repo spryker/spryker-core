@@ -81,7 +81,7 @@ class TableConfiguration
     /**
      * @var bool
      */
-    protected $dataProcessing = true;
+    protected $processing = true;
 
     /**
      * @var bool
@@ -92,6 +92,11 @@ class TableConfiguration
      * @var bool
      */
     protected $paging = true;
+
+    /**
+     * @var bool
+     */
+    protected $ordering = true;
 
     /**
      * @return array
@@ -365,19 +370,19 @@ class TableConfiguration
     /**
      * @return bool
      */
-    public function isDataProcessing()
+    public function isProcessing()
     {
-        return $this->dataProcessing;
+        return $this->processing;
     }
 
     /**
-     * @param bool $dataProcessing
+     * @param bool $processing
      *
      * @return void
      */
-    public function setDataProcessing($dataProcessing)
+    public function setProcessing($processing)
     {
-        $this->dataProcessing = $dataProcessing;
+        $this->processing = $processing;
     }
 
     /**
@@ -414,5 +419,23 @@ class TableConfiguration
     public function setPaging($paging)
     {
         $this->paging = $paging;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOrdering()
+    {
+        return $this->ordering;
+    }
+
+    /**
+     * @param bool $ordering
+     *
+     * @return void
+     */
+    public function setOrdering($ordering)
+    {
+        $this->ordering = $ordering;
     }
 }
