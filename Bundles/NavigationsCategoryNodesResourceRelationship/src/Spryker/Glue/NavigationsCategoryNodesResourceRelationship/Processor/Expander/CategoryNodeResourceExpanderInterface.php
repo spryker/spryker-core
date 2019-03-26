@@ -9,13 +9,13 @@ namespace Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Processor\Ex
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CategoryNodesResourceExpanderInterface
+interface CategoryNodeResourceExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return void
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): void;
+    public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): array;
 }

@@ -19,8 +19,8 @@ class CategoryNodeByResourceIdResourceRelationshipPlugin extends AbstractPlugin 
 {
     /**
      * {@inheritdoc}
-     *  - Adds information about recursive navigation tree traversal and where resourceId is placed.
-     *  - Checks whether type of the node is category.
+     *  - Adds category node resource as a relationship.
+     *  - Collects list of category ids from nodes of navigation resource recursively.
      *
      * @api
      *
@@ -32,7 +32,7 @@ class CategoryNodeByResourceIdResourceRelationshipPlugin extends AbstractPlugin 
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createCategoryNodesResourceExpander()
+            ->createCategoryNodeResourceExpander()
             ->addResourceRelationshipsByResourceId($resources, $restRequest);
     }
 
