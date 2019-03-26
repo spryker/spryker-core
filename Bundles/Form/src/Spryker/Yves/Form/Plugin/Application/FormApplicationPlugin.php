@@ -1,0 +1,77 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Yves\Form\Plugin\Application;
+
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
+use Spryker\Yves\Kernel\AbstractPlugin;
+use Symfony\Component\Form\FormFactoryBuilderInterface;
+use Symfony\Component\Form\ResolvedFormTypeFactory;
+use Symfony\Component\Form\ResolvedFormTypeFactoryInterface;
+
+/**
+ * @method \Spryker\Yves\Form\FormFactory getFactory()
+ * @method \Spryker\Yves\Form\FormConfig getConfig()
+ */
+class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
+{
+    public const SERVICE_FORM_FACTORY = 'form.factory';
+
+    public const SERVICE_FORM_FACTORY_ALIAS = 'FORM_FACTORY';
+
+    /**
+     * {@inheritdoc}
+     * - Adds `form.factory` service.
+     * - Adds global `FORM_FACTORY` service as an alias for `form.factory`.
+     *
+     * @api
+     *
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    public function provide(ContainerInterface $container): ContainerInterface
+    {
+        $container->set(static::SERVICE_FORM_FACTORY, function (ContainerInterface $container) {
+            $formFactoryBuilder = $this->getFactory()
+                ->createFormFactoryBuilder()
+                ->setResolvedTypeFactory($this->createResolvedFormTypeFactory());
+
+            $formFactoryBuilder = $this->extendForm($formFactoryBuilder, $container);
+
+            return $formFactoryBuilder->getFormFactory();
+        });
+
+        $container->configure(static::SERVICE_FORM_FACTORY, ['alias' => static::SERVICE_FORM_FACTORY_ALIAS, 'isGlobal' => true]);
+
+        return $container;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\ResolvedFormTypeFactoryInterface
+     */
+    protected function createResolvedFormTypeFactory(): ResolvedFormTypeFactoryInterface
+    {
+        return new ResolvedFormTypeFactory();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormFactoryBuilderInterface $formFactoryBuilder
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Symfony\Component\Form\FormFactoryBuilderInterface
+     */
+    protected function extendForm(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
+    {
+        foreach ($this->getFactory()->getFormPlugins() as $formExtensionPlugin) {
+            $formFactoryBuilder = $formExtensionPlugin->extend($formFactoryBuilder, $container);
+        }
+
+        return $formFactoryBuilder;
+    }
+}

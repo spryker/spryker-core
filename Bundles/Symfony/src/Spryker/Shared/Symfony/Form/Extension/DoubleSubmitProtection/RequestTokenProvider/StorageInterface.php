@@ -7,12 +7,15 @@
 
 namespace Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider;
 
+/**
+ * @deprecated Use `Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInterface` instead.
+ */
 interface StorageInterface
 {
     /**
      * @param string $formName
      *
-     * @return bool
+     * @return string
      */
     public function getToken($formName);
 
@@ -27,7 +30,7 @@ interface StorageInterface
      * @param string $formName
      * @param string $token
      *
-     * @return string
+     * @return void
      */
     public function setToken($formName, $token);
 }

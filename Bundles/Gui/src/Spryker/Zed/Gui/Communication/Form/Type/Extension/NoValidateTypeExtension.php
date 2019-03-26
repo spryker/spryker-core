@@ -12,6 +12,9 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
+/**
+ * @deprecated Use `Spryker\Shared\Gui\Form\Type\Extension\NoValidateTypeExtension` instead.
+ */
 class NoValidateTypeExtension extends AbstractTypeExtension
 {
     /**
