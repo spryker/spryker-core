@@ -61,7 +61,8 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     public function createQuoteRequestCleaner(): QuoteRequestCleanerInterface
     {
         return new QuoteRequestCleaner(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 

@@ -152,30 +152,6 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function closeQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
-    {
-        $quoteRequestCriteriaTransfer
-            ->requireQuoteRequestReference();
-
-        $quoteRequestTransfer = $this->findQuoteRequestTransfer($quoteRequestCriteriaTransfer);
-
-        if (!$quoteRequestTransfer) {
-            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
-        }
-
-        $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_CLOSED);
-        $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
-
-        return (new QuoteRequestResponseTransfer())
-            ->setQuoteRequest($quoteRequestTransfer)
-            ->setIsSuccessful(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
     public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($quoteRequestCriteriaTransfer) {
@@ -253,9 +229,11 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      */
     protected function executeUpdateQuoteRequestTransaction(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestTransfer->setQuoteInProgress(
-            $this->cartFacade->reloadItems($quoteRequestTransfer->getQuoteInProgress())
-        );
+        if ($quoteRequestTransfer->getQuoteInProgress()) {
+            $quoteRequestTransfer->setQuoteInProgress(
+                $this->cartFacade->reloadItems($quoteRequestTransfer->getQuoteInProgress())
+            );
+        }
 
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 

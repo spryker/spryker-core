@@ -252,34 +252,19 @@ class QuoteRequestFacadeTest extends Unit
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
 
         // Act
-        $quoteRequestResponseTransfer = $this->tester
+         $this->tester
             ->getFacade()
             ->closeQuoteRequest($quoteRequestFilterTransfer);
 
         // Assert
-        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
+        $quoteRequestCollection = $this->tester->getFacade()
+            ->getQuoteRequestCollectionByFilter((new QuoteRequestFilterTransfer())
+                ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference()));
+
         $this->assertEquals(
             SharedQuoteRequestConfig::STATUS_CLOSED,
-            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
+            $quoteRequestCollection->getQuoteRequests()[0]->getStatus()
         );
-    }
-
-    /**
-     * @return void
-     */
-    public function testCloseQuoteRequestNotSuccessfulWithInvalidQuoteRequestReference(): void
-    {
-        $quoteRequestFilterTransfer = (new QuoteRequestCriteriaTransfer())
-            ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
-            ->setQuoteRequestReference(static::FAKE_QUOTE_REQUEST_VERSION_REFERENCE);
-
-        // Act
-        $quoteRequestResponseTransfer = $this->tester
-            ->getFacade()
-            ->closeQuoteRequest($quoteRequestFilterTransfer);
-
-        // Assert
-        $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
     }
 
     /**

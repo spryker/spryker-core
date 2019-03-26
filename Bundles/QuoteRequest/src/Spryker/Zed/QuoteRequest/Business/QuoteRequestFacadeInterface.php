@@ -74,9 +74,9 @@ interface QuoteRequestFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     * @return void
      */
-    public function closeQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
+    public function closeQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): void;
 
     /**
      * Specification:
