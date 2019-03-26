@@ -73,7 +73,7 @@ class AgentQuoteRequestStub implements AgentQuoteRequestStubInterface
     {
         /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
         $quoteRequestResponseTransfer = $this->zedRequestClient->call(
-            '/agent-quote-request/gateway/mark-quote-request-in-progress',
+            '/agent-quote-request/gateway/mark-quote-request-as-in-progress',
             $quoteRequestCriteriaTransfer
         );
 
@@ -89,7 +89,7 @@ class AgentQuoteRequestStub implements AgentQuoteRequestStubInterface
     {
         /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
         $quoteRequestResponseTransfer = $this->zedRequestClient->call(
-            '/agent-quote-request/gateway/send-quote-request-to-customer',
+            '/agent-quote-request/gateway/mark-quote-request-as-ready',
             $quoteRequestCriteriaTransfer
         );
 
