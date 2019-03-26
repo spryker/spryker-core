@@ -92,6 +92,7 @@ interface AgentQuoteRequestClientInterface
      * - Expects quote request reference to be provided.
      * - Retrieves "Request for Quote" entity filtered by reference.
      * - Expects "Request for Quote" status to be "draft", "in-progress".
+     * - Updates field is_latest_version_hidden to false.
      * - Changes status to "ready".
      *
      * @api
@@ -150,8 +151,7 @@ interface AgentQuoteRequestClientInterface
 
     /**
      * Specification:
-     * - Expects "Request for Quote" status to be "in-progress".
-     * - Sets quoteRequestReference to Quote transfer.
+     * - Expects "Request for Quote" status to be "in-progress" or "draft".
      * - Replaces current customer quote by quote from latest version.
      * - Avoids database strategy.
      *
@@ -190,7 +190,7 @@ interface AgentQuoteRequestClientInterface
 
     /**
      * Specification:
-     * - If "Request for Quote" in in-progress status - return true.
+     * - If "Request for Quote" in in-progress or draft status - return true.
      *
      * @api
      *

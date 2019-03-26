@@ -118,7 +118,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     {
         return $this->getFactory()
             ->createUserQuoteRequestWriter()
-            ->reviseUserQuoteRequest($quoteRequestCriteriaTransfer);
+            ->reviseQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
     /**

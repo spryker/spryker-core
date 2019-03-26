@@ -32,13 +32,13 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function updateQuoteRequestAction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function updateQuoteRequestAction(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getFacade()->updateQuoteRequest($quoteRequestCriteriaTransfer);
+        return $this->getFacade()->updateQuoteRequest($quoteRequestTransfer);
     }
 
     /**
@@ -66,9 +66,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestInProgressAction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function reviseQuoteRequestAction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getFacade()->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        return $this->getFacade()->reviseQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
     /**

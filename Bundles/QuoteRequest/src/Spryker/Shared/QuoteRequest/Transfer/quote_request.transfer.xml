@@ -36,7 +36,6 @@
         <property name="validUntil" type="string" />
         <property name="latestVersion" type="QuoteRequestVersion" />
         <property name="latestVisibleVersion" type="QuoteRequestVersion" />
-        <property name="versionReferences" type="string[]" />
         <property name="createdAt" type="string" />
     </transfer>
 

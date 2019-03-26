@@ -53,6 +53,7 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
 
         $quoteTransfer
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
+            ->setQuoteRequestVersionReference(null)
             ->setName($quoteRequestTransfer->getQuoteRequestReference());
 
         $this->quoteClient->setQuote($quoteTransfer);

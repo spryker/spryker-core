@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface;
@@ -160,16 +161,16 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
         }
 
-        if ($this->isQuoteRequestCanSend($quoteRequestTransfer)) {
+        if (!$this->isQuoteRequestCanSend($quoteRequestTransfer)) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
         }
 
         if (!$quoteRequestTransfer->getLatestVersion()->getQuote()->getItems()->count()) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS);
-
         }
 
         $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_READY);
+        $quoteRequestTransfer->setIsLatestVersionHidden(false);
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
         return (new QuoteRequestResponseTransfer())
@@ -318,6 +319,7 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
             ->requireQuoteRequestReference();
 
         $quoteRequestVersionTransfer = (new QuoteRequestVersionTransfer())
+            ->setQuote(new QuoteTransfer())
             ->setVersion($this->quoteRequestConfig->getInitialVersion())
             ->setFkQuoteRequest($quoteRequestTransfer->getIdQuoteRequest());
 
@@ -351,8 +353,7 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
         $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestCriteriaTransfer->getQuoteRequestReference())
-            ->setWithHidden(true);
+            ->setQuoteRequestReference($quoteRequestCriteriaTransfer->getQuoteRequestReference());
 
         $quoteRequestTransfers = $this->quoteRequestRepository
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)

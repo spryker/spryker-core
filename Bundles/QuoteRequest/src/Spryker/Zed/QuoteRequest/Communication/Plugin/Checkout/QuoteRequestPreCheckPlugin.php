@@ -38,6 +38,6 @@ class QuoteRequestPreCheckPlugin extends AbstractPlugin implements CheckoutPreCo
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        return $this->getFacade()->checkCheckoutQuoteRequest($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->checkQuoteRequest($quoteTransfer, $checkoutResponseTransfer);
     }
 }

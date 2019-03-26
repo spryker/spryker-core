@@ -34,8 +34,7 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
     public function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer
     {
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestReference)
-            ->setWithHidden(true);
+            ->setQuoteRequestReference($quoteRequestReference);
 
         $quoteRequestTransfers = $this->quoteRequestClient
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)

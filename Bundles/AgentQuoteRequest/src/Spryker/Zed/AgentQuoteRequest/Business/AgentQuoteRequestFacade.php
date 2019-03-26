@@ -43,6 +43,22 @@ class AgentQuoteRequestFacade extends AbstractFacade implements AgentQuoteReques
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getFactory()
+            ->createAgentQuoteRequestWriter()
+            ->updateQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -63,11 +79,11 @@ class AgentQuoteRequestFacade extends AbstractFacade implements AgentQuoteReques
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function reviseQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
             ->createAgentQuoteRequestWriter()
-            ->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+            ->reviseQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
     /**

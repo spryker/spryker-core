@@ -38,6 +38,16 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestFacade->updateUserQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -52,9 +62,9 @@ class AgentQuoteRequestWriter implements AgentQuoteRequestWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function reviseQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->markQuoteRequestInProgress($quoteRequestCriteriaTransfer);
+        return $this->quoteRequestFacade->reviseUserQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
     /**

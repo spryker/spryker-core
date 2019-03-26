@@ -145,8 +145,7 @@ interface QuoteRequestClientInterface
 
     /**
      * Specification:
-     * - Checks convertible status from config.
-     * - If "Request for Quote" convertible - return true.
+     * - If "Request for Quote" in ready status - return true.
      *
      * @api
      *

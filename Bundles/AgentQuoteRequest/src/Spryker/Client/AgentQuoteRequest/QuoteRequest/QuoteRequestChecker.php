@@ -54,6 +54,7 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
      */
     public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS;
+        return $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS
+            || $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_DRAFT;
     }
 }

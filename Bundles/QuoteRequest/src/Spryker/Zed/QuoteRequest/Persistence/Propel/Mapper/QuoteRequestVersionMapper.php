@@ -94,8 +94,9 @@ class QuoteRequestVersionMapper
         unset($data['quote']);
         unset($data['metadata']);
 
+        $quoteRequestVersionEntity->fromArray($data);
+
         $quoteRequestVersionEntity
-            ->fromArray($data)
             ->setQuote($this->encodeQuoteData($quoteRequestVersionTransfer->getQuote()))
             ->setMetadata($this->encodeMetadata($quoteRequestVersionTransfer));
 
