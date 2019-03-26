@@ -28,25 +28,38 @@ class CmsBlockPlaceholderTwigPlugin extends AbstractTwigExtensionPlugin
     {
         return [
             new TwigFunction(static::SPY_CMS_BLOCK_PLACEHOLDER_TWIG_FUNCTION, function (array $context, $identifier) {
-                $placeholders = $context['placeholders'];
-
-                $translation = '';
-                if (isset($placeholders[$identifier])) {
-                    $translation = $placeholders[$identifier];
-                }
-
-                if ($this->isGlossaryKey($translation)) {
-                    $translator = $this->getTranslator();
-                    $translation = $translator->trans($translation);
-                }
-
-                if ($this->isGlossaryKey($translation)) {
-                    $translation = '';
-                }
+                $translation = $this->getTranslation($identifier, $context);
 
                 return $this->renderCmsTwigContent($translation, $identifier, $context);
             }, ['needs_context' => true]),
         ];
+    }
+
+    /**
+     * @param string $identifier
+     * @param array $context
+     *
+     * @return string
+     */
+    protected function getTranslation(string $identifier, array $context): string
+    {
+        $placeholders = $context['placeholders'];
+
+        $translation = '';
+        if (isset($placeholders[$identifier])) {
+            $translation = $placeholders[$identifier];
+        }
+
+        if ($this->isGlossaryKey($translation)) {
+            $translator = $this->getTranslator();
+            $translation = $translator->trans($translation);
+        }
+
+        if ($this->isGlossaryKey($translation)) {
+            $translation = '';
+        }
+
+        return $translation;
     }
 
     /**
