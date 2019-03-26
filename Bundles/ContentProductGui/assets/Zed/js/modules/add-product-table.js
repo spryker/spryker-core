@@ -11,18 +11,21 @@ var ProductListContentItem = function(
     productTableSelector,
     hiddenInputsWrapperSelector,
     addProductButtonSelector,
-    removeProductButtonSelector
+    removeProductButtonSelector,
+    clearAllFieldsSelector
 ) {
     this.tablesWrapperSelector = tablesWrapperSelector;
     this.hiddenInputsWrapperSelector = hiddenInputsWrapperSelector;
     this.assignedTables = $(assignedTableSelector);
     this.productsTables = $(productTableSelector);
+    this.clearAllFieldsButton = $(clearAllFieldsSelector);
     this.addProductButtonSelector = addProductButtonSelector;
     this.removeProductButtonSelector = removeProductButtonSelector;
 
     this.mapEvents = function() {
         this.productsTables.on('click', this.addProductButtonSelector, this.addProductButtonHandler.bind(this));
         this.assignedTables.on('click', this.removeProductButtonSelector, this.removeProductButtonHandler.bind(this));
+        this.clearAllFieldsButton.on('click', this.clearAllFieldsButtonsHandler.bind(this));
     };
 
     this.addProductButtonHandler = function(event) {
@@ -47,6 +50,17 @@ var ProductListContentItem = function(
         this.removeHiddenInput(assignedTable, productId);
         this.removeProduct(assignedTable, tableRow, productId);
     }
+
+    this.clearAllFieldsButtonsHandler = function(event) {
+        event.preventDefault();
+
+        var button = $(event.currentTarget);
+        var indexOfclickedButton = this.clearAllFieldsButton.index(button);
+        var assignedTable = this.getCurrentAssignedTable(indexOfclickedButton);
+
+        this.removeAllHiddenInputs(assignedTable);
+        assignedTable.dataTable().api().clear().draw();
+    };
 
     this.addProduct = function(productTable, productId, indexOfActiveTable) {
         var rowData = this.getRowData(productTable, productId);
@@ -82,6 +96,12 @@ var ProductListContentItem = function(
         var hiddenInput = this.getHiddenInput(hiddenInputsWrapper, productId);
 
         hiddenInput.remove();
+    };
+
+    this.removeAllHiddenInputs = function(assignedTable) {
+        var hiddenInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(assignedTable));
+
+        hiddenInputsWrapper.empty();
     };
 
     this.replaceHiddenInputId = function(hiddenInputTemplate, productId, indexOfActiveTable) {
@@ -138,6 +158,7 @@ $(document).ready(function () {
         '.product-abstract-view-table',
         '.js-selected-products-wrapper',
         '.js-add-product-abstract',
-        '.js-delete-product-abstract'
+        '.js-delete-product-abstract',
+        '.clear-fields'
     );
 });
