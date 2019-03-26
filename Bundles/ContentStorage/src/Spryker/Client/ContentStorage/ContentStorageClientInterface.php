@@ -38,7 +38,7 @@ interface ContentStorageClientInterface
      * @param int $idContent
      * @param string $localeName
      *
-     * @return array|null
+     * @return \Generated\Shared\Transfer\UnexecutedContentStorageTransfer|null
      */
     public function findUnexecutedContentById(int $idContent, string $localeName): ?UnexecutedContentStorageTransfer;
 }

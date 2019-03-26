@@ -8,8 +8,8 @@
 namespace Spryker\Client\ContentStorage\ContentStorage;
 
 use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
-use Generated\Shared\Transfer\UnexecutedContentStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Generated\Shared\Transfer\UnexecutedContentStorageTransfer;
 use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface;
 use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface;
 use Spryker\Client\ContentStorage\Resolver\ContentResolverInterface;
@@ -74,7 +74,7 @@ class ContentStorageReader implements ContentStorageReaderInterface
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\UnexecutedContentStorageTransfer|null|null
+     * @return \Generated\Shared\Transfer\UnexecutedContentStorageTransfer|null
      */
     public function findUnexecutedContentById(int $idContent, string $localeName): ?UnexecutedContentStorageTransfer
     {

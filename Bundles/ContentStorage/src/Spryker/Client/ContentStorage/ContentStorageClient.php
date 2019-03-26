@@ -43,12 +43,12 @@ class ContentStorageClient extends AbstractClient implements ContentStorageClien
      * @param int $idContent
      * @param string $localeName
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\UnexecutedContentStorageTransfer|null
      */
     public function findUnexecutedContentById(int $idContent, string $localeName): ?UnexecutedContentStorageTransfer
     {
         return $this->getFactory()
             ->createContentStorage()
-            ->findContentById($idContent, $localeName);
+            ->findUnexecutedContentById($idContent, $localeName);
     }
 }
