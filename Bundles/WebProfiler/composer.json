@@ -21,7 +21,7 @@
   },
   "suggest": {
     "spryker/config": "If you want to use ServiceProvider plugins.",
-    "spryker/container": "If you want to use Applucation plugins.",
+    "spryker/container": "If you want to use Application plugins.",
     "spryker/silex": "If you want to use ServiceProvider plugins."
   },
   "autoload": {
