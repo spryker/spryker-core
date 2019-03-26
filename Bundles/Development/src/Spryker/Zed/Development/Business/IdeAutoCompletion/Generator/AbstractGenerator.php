@@ -9,12 +9,12 @@ namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Generator;
 
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionConstants;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
-use Twig_Environment;
+use Twig\Environment;
 
 abstract class AbstractGenerator implements GeneratorInterface
 {
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     protected $twig;
 
@@ -24,10 +24,10 @@ abstract class AbstractGenerator implements GeneratorInterface
     protected $options;
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param array $options
      */
-    public function __construct(Twig_Environment $twig, array $options)
+    public function __construct(Environment $twig, array $options)
     {
         $this->twig = $twig;
         $this->options = $options;
