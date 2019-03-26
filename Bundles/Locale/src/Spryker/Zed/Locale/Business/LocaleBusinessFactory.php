@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\Locale\Business;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Locale\Business\Internal\Install\LocaleInstaller;
 use Spryker\Zed\Locale\Business\Manager\LocaleManager;
+use Spryker\Zed\Locale\LocaleDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Locale\LocaleConfig getConfig()
@@ -47,5 +49,13 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
         );
 
         return $installer;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore(): Store
+    {
+        return $this->getProvidedDependency(LocaleDependencyProvider::STORE);
     }
 }
