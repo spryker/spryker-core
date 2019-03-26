@@ -229,9 +229,11 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      */
     protected function executeUpdateQuoteRequestTransaction(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestTransfer->setQuoteInProgress(
-            $this->cartFacade->reloadItems($quoteRequestTransfer->getQuoteInProgress())
-        );
+        if ($quoteRequestTransfer->getQuoteInProgress()) {
+            $quoteRequestTransfer->setQuoteInProgress(
+                $this->cartFacade->reloadItems($quoteRequestTransfer->getQuoteInProgress())
+            );
+        }
 
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 

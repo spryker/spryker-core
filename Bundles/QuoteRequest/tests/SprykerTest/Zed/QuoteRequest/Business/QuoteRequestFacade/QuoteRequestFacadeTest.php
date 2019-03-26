@@ -240,6 +240,36 @@ class QuoteRequestFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCloseQuoteRequestChangesQuoteRequestStatusToClosed(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->tester->createQuoteRequest(
+            $this->tester->createQuoteRequestVersion($this->quoteTransfer),
+            $this->companyUserTransfer
+        );
+
+        $quoteRequestFilterTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
+
+        // Act
+         $this->tester
+            ->getFacade()
+            ->closeQuoteRequest($quoteRequestFilterTransfer);
+
+        // Assert
+        $quoteRequestCollection = $this->tester->getFacade()
+            ->getQuoteRequestCollectionByFilter((new QuoteRequestFilterTransfer())
+                ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference()));
+
+        $this->assertEquals(
+            SharedQuoteRequestConfig::STATUS_CLOSED,
+            $quoteRequestCollection->getQuoteRequests()[0]->getStatus()
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testCheckCheckoutQuoteRequestValidatesQuoteWithWrongQuoteRequestVersionReference(): void
     {
         // Arrange
