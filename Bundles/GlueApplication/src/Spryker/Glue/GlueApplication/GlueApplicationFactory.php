@@ -341,14 +341,6 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\Route\ProtectedRouteValidatorInterface
-     */
-    public function createProtectedRouteValidator(): ProtectedRouteValidatorInterface
-    {
-        return new ProtectedRouteValidator();
-    }
-
-    /**
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
      */
     public function getValidateRestRequestPlugins(): array
