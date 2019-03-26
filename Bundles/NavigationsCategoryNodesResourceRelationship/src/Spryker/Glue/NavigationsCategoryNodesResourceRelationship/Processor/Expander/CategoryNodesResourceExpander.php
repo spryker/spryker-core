@@ -69,11 +69,11 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
         foreach ($restNavigationNodes as $restNavigationNode) {
             if ($this->isCategoryNavigationNode($restNavigationNode)) {
                 $categoryNodeIds[] = $restNavigationNode->getResourceId();
-                $categoryNodeIds = array_merge(
-                    $this->getCategoryNodeIds((array)$restNavigationNode->getChildren()),
-                    $categoryNodeIds
-                );
             }
+            $categoryNodeIds = array_merge(
+                $this->getCategoryNodeIds((array)$restNavigationNode->getChildren()),
+                $categoryNodeIds
+            );
         }
 
         return $categoryNodeIds;
