@@ -69,10 +69,10 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
      */
     public function isAnyProductConcreteDiscontinued(array $productIds): bool
     {
-        return ($this->getFactory()
-                ->createProductDiscontinuedQuery()
-                ->filterByFkProduct_In($productIds)
-                ->count() > 0);
+        return $this->getFactory()
+            ->createProductDiscontinuedQuery()
+            ->filterByFkProduct_In($productIds)
+            ->exists();
     }
 
     /**

@@ -39,13 +39,6 @@ interface ProductDiscontinuedReaderInterface
     public function areAllConcreteProductsDiscontinued(array $productIds): bool;
 
     /**
-     * @param int[] $productConcreteIds
-     *
-     * @return bool
-     */
-    public function isAnyProductConcreteDiscontinued(array $productConcreteIds): bool;
-
-    /**
      * @return int[]
      */
     public function findProductAbstractIdsWithDiscontinuedConcrete(): array;

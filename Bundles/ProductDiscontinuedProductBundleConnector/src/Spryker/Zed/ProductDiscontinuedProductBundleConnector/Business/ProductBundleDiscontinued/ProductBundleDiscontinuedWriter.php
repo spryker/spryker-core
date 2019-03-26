@@ -98,13 +98,7 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
             return $bundledProductConcreteIds;
         }
 
-        $productForBundleTransfers = $productConcreteTransfer->getProductBundle()->getBundledProducts();
-
-        if (!$productForBundleTransfers->count()) {
-            return $bundledProductConcreteIds;
-        }
-
-        foreach ($productForBundleTransfers as $productForBundleTransfer) {
+        foreach ($productConcreteTransfer->getProductBundle()->getBundledProducts() as $productForBundleTransfer) {
             $bundledProductConcreteIds[] = $productForBundleTransfer->getIdProductConcrete();
         }
 

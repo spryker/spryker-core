@@ -108,8 +108,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
      */
     public function isAnyProductConcreteDiscontinued(array $productConcreteIds): bool
     {
-        return $this->getFactory()
-            ->createProductDiscontinuedReader()
+        return $this->getRepository()
             ->isAnyProductConcreteDiscontinued($productConcreteIds);
     }
 

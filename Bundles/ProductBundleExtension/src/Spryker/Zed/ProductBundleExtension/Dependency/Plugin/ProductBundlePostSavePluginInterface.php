@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductBundleExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-interface PostSaveProductBundlePluginInterface
+interface ProductBundlePostSavePluginInterface
 {
     /**
      * Specification:

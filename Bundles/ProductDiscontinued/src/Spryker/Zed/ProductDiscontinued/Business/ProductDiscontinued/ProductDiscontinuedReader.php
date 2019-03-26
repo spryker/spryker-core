@@ -47,16 +47,6 @@ class ProductDiscontinuedReader implements ProductDiscontinuedReaderInterface
     }
 
     /**
-     * @param int[] $productConcreteIds
-     *
-     * @return bool
-     */
-    public function isAnyProductConcreteDiscontinued(array $productConcreteIds): bool
-    {
-        return $this->productDiscontinuedRepository->isAnyProductConcreteDiscontinued($productConcreteIds);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer

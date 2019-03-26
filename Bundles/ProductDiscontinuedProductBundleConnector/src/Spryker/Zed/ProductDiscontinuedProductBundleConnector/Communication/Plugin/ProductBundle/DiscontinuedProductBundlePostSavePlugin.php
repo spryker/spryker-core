@@ -9,13 +9,13 @@ namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Communication\Pl
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductBundleExtension\Dependency\Plugin\PostSaveProductBundlePluginInterface;
+use Spryker\Zed\ProductBundleExtension\Dependency\Plugin\ProductBundlePostSavePluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductDiscontinuedProductBundleConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\ProductDiscontinuedProductBundleConnectorConfig getConfig()
  */
-class PostSaveProductBundleDiscontinuedPlugin extends AbstractPlugin implements PostSaveProductBundlePluginInterface
+class DiscontinuedProductBundlePostSavePlugin extends AbstractPlugin implements ProductBundlePostSavePluginInterface
 {
     /**
      * {@inheritdoc}
