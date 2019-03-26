@@ -23,6 +23,10 @@ class TypeUpdater implements UpdaterInterface
     {
         $composerJson[static::KEY_TYPE] = 'library';
 
+        if (preg_match('/\/([a-z]+)-behavior/', $composerJson['name'])) {
+            $composerJson[static::KEY_TYPE] = 'propel-behavior';
+        }
+
         return $composerJson;
     }
 }

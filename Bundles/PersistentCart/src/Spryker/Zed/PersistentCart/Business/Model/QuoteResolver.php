@@ -181,7 +181,7 @@ class QuoteResolver implements QuoteResolverInterface
      */
     protected function isQuoteReadAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
-        return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0
+        return $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()
             || $this->isAnonymousCustomerQuote($quoteTransfer->getCustomerReference())
             || ($customerTransfer->getCompanyUserTransfer()
                 && $this->can('ReadSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())

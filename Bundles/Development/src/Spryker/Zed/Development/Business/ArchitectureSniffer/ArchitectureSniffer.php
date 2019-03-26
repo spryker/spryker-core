@@ -10,6 +10,7 @@ namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 use Exception;
 use PHPMD\RuleSetFactory;
 use PHPMD\TextUI\CommandLineOptions;
+use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
 use Zend\Config\Reader\ReaderInterface;
@@ -19,6 +20,10 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     public const OPTION_PRIORITY = 'priority';
     public const OPTION_STRICT = 'strict';
     public const OPTION_DRY_RUN = 'dry-run';
+
+    protected const SOURCE_FOLDER_NAME = 'src';
+    protected const OPTION_MODULE = 'module';
+    protected const OPTION_IGNORE_ERRORS = 'ignoreErrors';
 
     /**
      * @var string
@@ -31,20 +36,23 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected $xmlReader;
 
     /**
-     * @var int
+     * @var \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface
      */
-    protected $defaultPriority;
+    protected $configurationBuilder;
 
     /**
      * @param \Zend\Config\Reader\ReaderInterface $xmlReader
      * @param string $command
-     * @param int $defaultPriority
+     * @param \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface $configurationBuilder
      */
-    public function __construct(ReaderInterface $xmlReader, $command, $defaultPriority)
-    {
+    public function __construct(
+        ReaderInterface $xmlReader,
+        $command,
+        SnifferConfigurationBuilderInterface $configurationBuilder
+    ) {
         $this->xmlReader = $xmlReader;
         $this->command = $command;
-        $this->defaultPriority = $defaultPriority;
+        $this->configurationBuilder = $configurationBuilder;
     }
 
     /**
@@ -92,6 +100,20 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     public function run($directory, array $options = [])
     {
+        $options = $this->configurationBuilder->getConfiguration($directory, $options);
+
+        if ($options === []) {
+            return $this->formatResult($options);
+        }
+
+        if ($this->isCoreModule($options)) {
+            $directory = $this->addSourcePathForCoreModulePath($directory);
+        }
+
+        if (!file_exists($directory)) {
+            return $this->formatResult($options);
+        }
+
         $output = $this->runCommand($directory, $options);
         $results = $this->xmlReader->fromString($output);
 
@@ -99,6 +121,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
             $results = [];
         }
 
+        $results = $this->getResultsWithoutIgnoredErrors($results, $options);
         $fileViolations = $this->formatResult($results);
 
         return $fileViolations;
@@ -126,8 +149,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     {
         $command = str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $this->command);
 
-        $priority = !empty($options[static::OPTION_PRIORITY]) ? $options[static::OPTION_PRIORITY] : $this->defaultPriority;
-        $command .= ' --minimumpriority ' . $priority;
+        $command .= ' --minimumpriority ' . $options[static::OPTION_PRIORITY];
 
         if (!empty($options[static::OPTION_STRICT])) {
             $command .= ' --strict';
@@ -227,5 +249,124 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
             }
         }
         return $fileViolations;
+    }
+
+    /**
+     * @param string $directory
+     *
+     * @return string
+     */
+    protected function addSourcePathForCoreModulePath(string $directory): string
+    {
+        return $directory . static::SOURCE_FOLDER_NAME . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return bool
+     */
+    protected function isCoreModule(array $options): bool
+    {
+        if (!isset($options[static::OPTION_MODULE])) {
+            return false;
+        }
+
+        $module = $options[static::OPTION_MODULE];
+
+        return mb_strpos($module, '.') !== false;
+    }
+
+    /**
+     * @param array $results
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function getResultsWithoutIgnoredErrors(array $results, array $options): array
+    {
+        if ($results === []) {
+            return $results;
+        }
+
+        $ignoreErrorPatterns = $options[static::OPTION_IGNORE_ERRORS];
+
+        if ($ignoreErrorPatterns === []) {
+            return $results;
+        }
+
+        if (!array_key_exists('file', $results)) {
+            return $results;
+        }
+
+        if (array_key_exists('violation', $results['file'])) {
+            $results['file'] = $this->filterOutIgnoredErrors($results['file'], $ignoreErrorPatterns);
+
+            return $results;
+        }
+
+        $fileResults = [];
+
+        foreach ($results['file'] as $index => $fileResult) {
+            $fileResults[$index] = $this->filterOutIgnoredErrors($fileResult, $ignoreErrorPatterns);
+        }
+
+        $results['file'] = $fileResults;
+
+        return $results;
+    }
+
+    /**
+     * @param array $fileResult
+     * @param string[] $ignoreErrorPatterns
+     *
+     * @return array
+     */
+    protected function filterOutIgnoredErrors(array $fileResult, array $ignoreErrorPatterns): array
+    {
+        if (!array_key_exists('violation', $fileResult)) {
+            return $fileResult;
+        }
+
+        if (array_key_exists('_', $fileResult['violation'])) {
+            $violation = $fileResult['violation'];
+
+            if (!$this->isViolationMatchWithIgnoreErrorPatterns($violation, $ignoreErrorPatterns)) {
+                $fileResult['violation'] = $violation;
+            }
+
+            return $fileResult;
+        }
+
+        $violations = [];
+
+        foreach ($fileResult['violation'] as $index => $violation) {
+            if (!$this->isViolationMatchWithIgnoreErrorPatterns($violation, $ignoreErrorPatterns)) {
+                $violations[$index] = $violation;
+            }
+        }
+
+        $fileResult['violation'] = $violations;
+
+        return $fileResult;
+    }
+
+    /**
+     * @param array $violation
+     * @param string[] $ignoreErrorPatterns
+     *
+     * @return bool
+     */
+    protected function isViolationMatchWithIgnoreErrorPatterns(array $violation, array $ignoreErrorPatterns): bool
+    {
+        $violationMessage = trim($violation['_']);
+
+        foreach ($ignoreErrorPatterns as $ignoreErrorPattern) {
+            if (preg_match($ignoreErrorPattern, $violationMessage)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

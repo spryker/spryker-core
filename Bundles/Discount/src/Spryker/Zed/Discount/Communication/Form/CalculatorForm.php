@@ -32,6 +32,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface getRepository()
  */
 class CalculatorForm extends AbstractType
 {
@@ -74,10 +75,14 @@ class CalculatorForm extends AbstractType
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
+                $formData = $form->getData();
+                if (!$formData) {
+                    return [Constraint::DEFAULT_GROUP];
+                }
                 return [
                     Constraint::DEFAULT_GROUP,
-                    $form->getData()->getCollectorStrategyType(),
-                    $this->getCalculatorInputType($form->getData()->getCalculatorPlugin()),
+                    $formData->getCollectorStrategyType(),
+                    $this->getCalculatorInputType($formData->getCalculatorPlugin()),
                 ];
             },
         ]);

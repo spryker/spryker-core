@@ -13,6 +13,9 @@ use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStora
 use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToStorageClientBridge;
 use Spryker\Client\ProductRelationStorage\Dependency\Service\ProductRelationStorageToSynchronizationServiceBridge;
 
+/**
+ * @method \Spryker\Client\ProductRelationStorage\ProductRelationStorageConfig getConfig()
+ */
 class ProductRelationStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';

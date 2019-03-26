@@ -8,9 +8,11 @@
 namespace Spryker\Client\ProductSetStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductSetStorage\Dependency\Client\ProductSetStorageToStorageClientInterface;
 use Spryker\Client\ProductSetStorage\Dependency\Service\ProductSetStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductSetStorage\Mapper\ProductSetStorageMapperInterface;
+use Spryker\Client\ProductSetStorage\ProductSetStorageConfig;
 use Spryker\Shared\ProductSetStorage\ProductSetStorageConstants;
 
 class ProductSetStorageReader implements ProductSetStorageReaderInterface
@@ -53,6 +55,45 @@ class ProductSetStorageReader implements ProductSetStorageReaderInterface
      */
     public function getProductSetByIdProductSet($idProductAbstract, $localeName)
     {
+        $productSet = $this->getStorageData($idProductAbstract, $localeName);
+
+        if (!$productSet) {
+            return null;
+        }
+
+        return $this->productSetStorageMapper->mapDataToTransfer($productSet);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    protected function getStorageData(int $idProductAbstract, string $localeName): ?array
+    {
+        if (ProductSetStorageConfig::isCollectorCompatibilityMode()) {
+            $clientLocatorClassName = Locator::class;
+            /** @var \Spryker\Client\ProductSet\ProductSetClientInterface $productSetClient */
+            $productSetClient = $clientLocatorClassName::getInstance()->productSet()->client();
+            $collectorData = $productSetClient->findProductSetByIdProductSet($idProductAbstract);
+
+            $collectorData = $collectorData->toArray();
+            $collectorData['product_abstract_ids'] = $collectorData['id_product_abstracts'];
+            unset($collectorData['id_product_abstracts'], $collectorData['images']);
+
+            $imageSets = [];
+            foreach ($collectorData['image_sets'] as $imageSetName => $images) {
+                $imageSets[] = [
+                    'name' => $imageSetName,
+                    'images' => $images,
+                ];
+            }
+
+            $collectorData['image_sets'] = $imageSets;
+
+            return $collectorData;
+        }
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setReference($idProductAbstract)
@@ -64,10 +105,6 @@ class ProductSetStorageReader implements ProductSetStorageReaderInterface
 
         $productSet = $this->storageClient->get($key);
 
-        if (!$productSet) {
-            return null;
-        }
-
-        return $this->productSetStorageMapper->mapDataToTransfer($productSet);
+        return $productSet;
     }
 }

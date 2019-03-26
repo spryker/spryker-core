@@ -18,6 +18,24 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class AccessTokensResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Creates access token for user."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
+     *          "responses": {
+     *              "401": "Failed to authenticate user.",
+     *              "403": "Unauthorized request."
+     *          },
+     *          "isIdNullable": true
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer
      *

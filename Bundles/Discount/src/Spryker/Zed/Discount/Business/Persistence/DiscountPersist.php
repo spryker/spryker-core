@@ -312,6 +312,7 @@ class DiscountPersist implements DiscountPersistInterface
         $discountEntity->setCalculatorPlugin($discountConfiguratorTransfer->getDiscountCalculator()->getCalculatorPlugin());
         $discountEntity->setCollectorQueryString($discountConfiguratorTransfer->getDiscountCalculator()->getCollectorQueryString());
         $discountEntity->setDecisionRuleQueryString($discountConfiguratorTransfer->getDiscountCondition()->getDecisionRuleQueryString());
+        $discountEntity->setMinimumItemAmount($discountConfiguratorTransfer->getDiscountCondition()->getMinimumItemAmount());
     }
 
     /**

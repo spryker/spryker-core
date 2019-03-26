@@ -289,6 +289,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @api
      *
+     * @deprecated Use checkProductOptionGroupExistenceByProductOptionValueId() instead
+     *
      * @param int $idProductOptionValue
      *
      * @return bool
@@ -298,5 +300,21 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
         return $this->getFactory()
             ->createProductOptionValueReader()
             ->checkProductOptionValueExistence($idProductOptionValue);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function checkProductOptionGroupExistenceByProductOptionValueId(int $idProductOptionValue): bool
+    {
+        return $this->getFactory()
+            ->createProductOptionGroupReader()
+            ->checkProductOptionGroupExistenceByProductOptionValueId($idProductOptionValue);
     }
 }

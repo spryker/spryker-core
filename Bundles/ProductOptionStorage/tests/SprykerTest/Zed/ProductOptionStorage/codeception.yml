@@ -17,10 +17,13 @@ suites:
         class_name: ProductOptionStorageCommunicationTester
         modules:
             enabled:
-                - Asserts
-                - \SprykerTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+            - Asserts
+            - \SprykerTest\Shared\Testify\Helper\Environment
+            - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+            - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+            - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+            - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+            - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+            - \SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper
+            - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+            - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper

@@ -8,9 +8,12 @@
 namespace Spryker\Client\NavigationStorage\Storage;
 
 use Generated\Shared\Transfer\NavigationStorageTransfer;
+use Generated\Shared\Transfer\NavigationTreeNodeTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\NavigationStorage\Dependency\Client\NavigationStorageToStorageClientInterface;
 use Spryker\Client\NavigationStorage\Dependency\Service\NavigationStorageToSynchronizationServiceInterface;
+use Spryker\Client\NavigationStorage\NavigationStorageConfig;
 use Spryker\Shared\NavigationStorage\NavigationStorageConstants;
 
 class NavigationStorage implements NavigationStorageInterface
@@ -48,6 +51,10 @@ class NavigationStorage implements NavigationStorageInterface
      */
     public function findNavigationTreeByNavigationKey($navigationKey, $localeName)
     {
+        if (NavigationStorageConfig::isCollectorCompatibilityMode()) {
+            return $this->getNavigationTreeFromCollectorData($navigationKey, $localeName);
+        }
+
         $storageKey = $this->generateKey($navigationKey, $localeName);
         $navigationTreeData = $this->storageClient->get($storageKey);
 
@@ -56,6 +63,58 @@ class NavigationStorage implements NavigationStorageInterface
         }
 
         return $this->mapNavigationTree($navigationTreeData);
+    }
+
+    /**
+     * @param string $navigationKey
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\NavigationStorageTransfer
+     */
+    protected function getNavigationTreeFromCollectorData(string $navigationKey, string $localeName): NavigationStorageTransfer
+    {
+        $clientLocatorClass = Locator::class;
+        /** @var \Spryker\Client\Navigation\NavigationClientInterface $navigationClient */
+        $navigationClient = $clientLocatorClass::getInstance()->navigation()->client();
+        $navigationTreeTransfer = $navigationClient->findNavigationTreeByKey($navigationKey, $localeName);
+
+        if (!$navigationTreeTransfer) {
+            return new NavigationStorageTransfer();
+        }
+
+        $nodes = [];
+        foreach ($navigationTreeTransfer->getNodes() as $nodeTransfer) {
+            $nodes[] = $this->formatCollectorData($nodeTransfer);
+        }
+        $navigationTreeData = $navigationTreeTransfer->getNavigation()->toArray();
+        $navigationTreeData['nodes'] = $nodes;
+
+        return $this->mapNavigationTree($navigationTreeData);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationTreeNodeTransfer $navigationTreeNodeTransfer
+     *
+     * @return array
+     */
+    protected function formatCollectorData(NavigationTreeNodeTransfer $navigationTreeNodeTransfer): array
+    {
+        $nodeArray = $navigationTreeNodeTransfer->getNavigationNode()->toArray();
+        $localizedAttributes = [];
+        foreach ($navigationTreeNodeTransfer->getNavigationNode()->getNavigationNodeLocalizedAttributes() as $navigationNodeLocalizedAttributeTransfer) {
+            $localizedAttributes = $navigationNodeLocalizedAttributeTransfer->toArray();
+        }
+        $nodeArray = array_merge($nodeArray, $localizedAttributes);
+
+        if ($navigationTreeNodeTransfer->getChildren()->count() > 0) {
+            $childNodes = [];
+            foreach ($navigationTreeNodeTransfer->getChildren() as $navigationTreeNodeTransfer) {
+                $childNodes[] = $this->formatCollectorData($navigationTreeNodeTransfer);
+            }
+            $nodeArray['children'] = $childNodes;
+        }
+
+        return $nodeArray;
     }
 
     /**

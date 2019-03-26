@@ -47,8 +47,8 @@ class ProductOptionCartConnectorToProductOptionFacadeBridge implements ProductOp
      *
      * @return bool
      */
-    public function checkProductOptionValueExistence(int $idProductOptionValue): bool
+    public function checkProductOptionGroupExistenceByProductOptionValueId(int $idProductOptionValue): bool
     {
-        return $this->productOptionFacade->checkProductOptionValueExistence($idProductOptionValue);
+        return $this->productOptionFacade->checkProductOptionGroupExistenceByProductOptionValueId($idProductOptionValue);
     }
 }

@@ -12,6 +12,9 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageBridge;
 use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceBridge;
 
+/**
+ * @method \Spryker\Client\UrlStorage\UrlStorageConfig getConfig()
+ */
 class UrlStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';

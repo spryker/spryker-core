@@ -142,7 +142,6 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
         $priceProductTransfer->setIdProduct($idProductConcrete);
         $priceProductTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract());
         $priceProductTransfer = $this->priceProductStoreWriter->persistPriceProductStore($priceProductTransfer);
-        $priceProductTransfer = $this->executePriceDimensionConcreteSaverPlugins($priceProductTransfer);
 
         return $priceProductTransfer;
     }

@@ -12,6 +12,9 @@ use Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToS
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
+/**
+ * @method \Spryker\Client\AvailabilityStorage\AvailabilityStorageConfig getConfig()
+ */
 class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';

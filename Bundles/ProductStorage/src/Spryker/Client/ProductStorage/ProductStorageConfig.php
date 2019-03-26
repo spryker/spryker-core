@@ -25,4 +25,15 @@ class ProductStorageConfig extends AbstractBundleConfig
      * @uses \Spryker\Shared\Product\ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER
      */
     public const ATTRIBUTE_MAP_PATH_DELIMITER = ':';
+
+    /**
+     * To be able to work with data exported with collectors to redis, we need to bring this module into compatibility
+     * mode. If this is turned on the ProductClient will be used instead.
+     *
+     * @return bool
+     */
+    public static function isCollectorCompatibilityMode(): bool
+    {
+        return false;
+    }
 }

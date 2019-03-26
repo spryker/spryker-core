@@ -47,6 +47,7 @@ interface MerchantRelationshipFacadeInterface
     /**
      * Specification:
      * - Removes related business units by assigneeCompanyBusinessUnitCollection.
+     * - Executes pre-delete plugin stack MerchantRelationshipPreDeletePluginInterface.
      * - Finds a merchant relationship record by ID in DB.
      * - Removes the merchant relationship record.
      *
@@ -95,4 +96,17 @@ interface MerchantRelationshipFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
     public function getMerchantRelationshipCollection(): array;
+
+    /**
+     * Specification:
+     * - Finds a merchant relationship by merchant relationship id in provided transfer.
+     * - Returns MerchantRelationshipTransfer if found, NULL otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
+     */
+    public function findMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer;
 }

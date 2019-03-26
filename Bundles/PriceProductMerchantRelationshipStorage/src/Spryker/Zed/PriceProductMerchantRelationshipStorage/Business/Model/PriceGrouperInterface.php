@@ -7,14 +7,25 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
+
 interface PriceGrouperInterface
 {
     /**
-     * @param array $products
-     * @param string $productPrimaryIdentifier
-     * @param string $productSkuIdentifier
+     * @see \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface::groupPriceProductCollection()
      *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     * Specification:
+     *  - Groups provided transfers by currency, price mode and price type.
+     *  - Merges the grouped prices with provided existing price data (optional).
+     *  - Filters empty prices.
+     *
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
+     * @param array $pricesData
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
      */
-    public function getGroupedPrices(array $products, string $productPrimaryIdentifier, string $productSkuIdentifier): array;
+    public function groupPricesData(
+        PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer,
+        array $pricesData = []
+    ): PriceProductMerchantRelationshipStorageTransfer;
 }

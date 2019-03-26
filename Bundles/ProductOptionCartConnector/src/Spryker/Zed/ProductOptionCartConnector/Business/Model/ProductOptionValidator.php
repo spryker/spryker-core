@@ -16,7 +16,7 @@ use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartCo
 
 class ProductOptionValidator implements ProductOptionValidatorInterface
 {
-    protected const MESSAGE_PARAM_ID = '%id%';
+    protected const MESSAGE_PARAM_NAME = '%name%';
     protected const MESSAGE_ERROR_PRODUCT_OPTION_EXISTS = 'cart.item.option.pre.check.validation.error.exists';
 
     /**
@@ -69,7 +69,7 @@ class ProductOptionValidator implements ProductOptionValidatorInterface
             return static::$idProductOptionCache[$idProductOptionValue];
         }
 
-        static::$idProductOptionCache[$idProductOptionValue] = $this->productOptionFacade->checkProductOptionValueExistence($idProductOptionValue);
+        static::$idProductOptionCache[$idProductOptionValue] = $this->productOptionFacade->checkProductOptionGroupExistenceByProductOptionValueId($idProductOptionValue);
 
         return static::$idProductOptionCache[$idProductOptionValue];
     }
@@ -117,7 +117,7 @@ class ProductOptionValidator implements ProductOptionValidatorInterface
 
             $message = $this->createViolationMessage(static::MESSAGE_ERROR_PRODUCT_OPTION_EXISTS);
             $message->setParameters([
-                static::MESSAGE_PARAM_ID => $productOptionTransfer->getIdProductOptionValue(),
+                static::MESSAGE_PARAM_NAME => $itemTransfer->getName(),
             ]);
 
             $cartPreCheckResponseTransfer->addMessage($message);

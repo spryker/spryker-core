@@ -12,6 +12,9 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageBridge;
 use Spryker\Client\ProductImageStorage\Dependency\Service\ProductImageStorageToSynchronizationServiceBridge;
 
+/**
+ * @method \Spryker\Client\ProductImageStorage\ProductImageStorageConfig getConfig()
+ */
 class ProductImageStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';

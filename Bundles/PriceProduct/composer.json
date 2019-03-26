@@ -20,6 +20,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
+    "spryker/price-product-storage": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
@@ -28,7 +29,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\PriceProduct\\Helper\\": "tests/SprykerTest/Shared/PriceProduct/_support/Helper/"
     }
   },
   "autoload-dev": {

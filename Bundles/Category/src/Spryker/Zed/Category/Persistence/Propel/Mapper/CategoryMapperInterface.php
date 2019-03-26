@@ -26,6 +26,14 @@ interface CategoryMapperInterface
     public function mapCategory(SpyCategory $spyCategory, CategoryTransfer $categoryTransfer): CategoryTransfer;
 
     /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $spyCategory
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function mapCategoryWithRelations(SpyCategory $spyCategory, CategoryTransfer $categoryTransfer): CategoryTransfer;
+
+    /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $spyCategoryNode
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      *

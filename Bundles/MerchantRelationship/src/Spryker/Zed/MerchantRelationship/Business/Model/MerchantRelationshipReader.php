@@ -103,4 +103,18 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
 
         return $merchantRelationships;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
+     */
+    public function findMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer
+    {
+        $merchantRelationshipTransfer->requireIdMerchantRelationship();
+
+        return $this->repository->getMerchantRelationshipById(
+            $merchantRelationshipTransfer->getIdMerchantRelationship()
+        );
+    }
 }

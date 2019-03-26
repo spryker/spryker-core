@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductListGuiConfig getConfig()
  * @method \Spryker\Zed\MerchantRelationshipProductListGui\Communication\MerchantRelationshipProductListGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantRelationshipProductListGui\Persistence\MerchantRelationshipProductListGuiRepositoryInterface getRepository()
  */
 class MerchantRelationshipChoiceFormType extends AbstractType
 {
@@ -28,7 +29,7 @@ class MerchantRelationshipChoiceFormType extends AbstractType
      *
      * @return $this
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): self
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addFkMerchantRelationshipField($builder, $options);
 

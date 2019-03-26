@@ -82,6 +82,18 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     }
 
     /**
+     * @param int $idProductOptionValue
+     *
+     * @return bool
+     */
+    public function checkProductOptionGroupExistenceByProductOptionValueId(int $idProductOptionValue): bool
+    {
+        return $this->productOptionQueryContainer
+            ->queryProductOptionGroupByProductOptionValueId($idProductOptionValue)
+            ->exists();
+    }
+
+    /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
      *
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer

@@ -214,7 +214,7 @@ class CartHandler implements CartHandlerInterface
      */
     protected function addErrorMessages(): void
     {
-        foreach ($this->shoppingListStub->getLastResponseErrorMessages() as $messageTransfer) {
+        foreach ($this->shoppingListStub->getResponsesErrorMessages() as $messageTransfer) {
             $this->messengerClient->addErrorMessage($messageTransfer->getValue());
         }
     }

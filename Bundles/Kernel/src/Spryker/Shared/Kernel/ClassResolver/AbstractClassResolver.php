@@ -209,6 +209,6 @@ abstract class AbstractClassResolver
      */
     protected function buildCacheKey()
     {
-        return get_class($this) . '-' . $this->classInfo->getCallerClassName();
+        return static::class . '-' . $this->classInfo->getCallerClassName();
     }
 }

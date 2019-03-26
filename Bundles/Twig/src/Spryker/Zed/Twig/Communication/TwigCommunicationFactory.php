@@ -22,7 +22,7 @@ use Spryker\Zed\Twig\TwigDependencyProvider;
 class TwigCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Twig_LoaderInterface
+     * @return \Twig\Loader\LoaderInterface
      */
     public function createFilesystemLoader()
     {

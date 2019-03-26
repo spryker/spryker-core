@@ -10,19 +10,20 @@ namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdDataProvider;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdDataProviderResolver;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdDataProviderResolverInterface;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\HardThresholdFormMapper;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdFormMapperInterface;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdMapperResolver;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdMapperResolverInterface;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\ThresholdType;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Constraint\ThresholdStrategyConstraint;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\MerchantRelationshipThresholdDataProvider;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\MerchantRelationshipThresholdDataProviderResolver;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\MerchantRelationshipThresholdDataProviderResolverInterface;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\Resolver\MerchantRelationshipThresholdFormMapperResolver;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\Resolver\MerchantRelationshipThresholdFormMapperResolverInterface;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\MerchantRelationshipThresholdType;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinder;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Table\MerchantRelationshipSalesOrderThresholdTable;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToCompanyFacadeInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToCurrencyFacadeInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeInterface;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipFacadeInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipSalesOrderThresholdFacadeInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToMoneyFacadeInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToStoreFacadeInterface;
@@ -60,21 +61,22 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
         $formDataProvider = $this->createThresholdFormDataProvider();
 
         return $this->getFormFactory()->create(
-            ThresholdType::class,
+            MerchantRelationshipThresholdType::class,
             $formDataProvider->getData($idMerchantRelationship, $storeTransfer, $currencyTransfer),
-            $formDataProvider->getOptions()
+            $formDataProvider->getOptions($currencyTransfer)
         );
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdDataProvider
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\MerchantRelationshipThresholdDataProvider
      */
-    public function createThresholdFormDataProvider(): ThresholdDataProvider
+    public function createThresholdFormDataProvider(): MerchantRelationshipThresholdDataProvider
     {
-        return new ThresholdDataProvider(
+        return new MerchantRelationshipThresholdDataProvider(
             $this->getMerchantRelationshipSalesOrderThresholdFacade(),
             $this->getCurrencyFacade(),
-            $this->createSoftThresholdDataProviderResolver()
+            $this->createMerchantRelationshipThresholdDataProviderResolver(),
+            $this->getSalesOrderThresholdFormExpanderPlugins()
         );
     }
 
@@ -90,36 +92,36 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdFormMapperInterface
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\Resolver\MerchantRelationshipThresholdFormMapperResolverInterface
      */
-    public function createHardThresholdFormMapper(): ThresholdFormMapperInterface
+    public function createMerchantRelationshipThresholdFormMapperResolver(): MerchantRelationshipThresholdFormMapperResolverInterface
     {
-        return new HardThresholdFormMapper(
+        return new MerchantRelationshipThresholdFormMapperResolver(
             $this->getLocaleFacade(),
-            $this->createStoreCurrencyFinder()
+            $this->getConfig(),
+            $this->getSalesOrderThresholdFormExpanderPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdMapperResolverInterface
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\MerchantRelationshipThresholdDataProviderResolverInterface
      */
-    public function createSoftThresholdFormMapperResolver(): ThresholdMapperResolverInterface
+    public function createMerchantRelationshipThresholdDataProviderResolver(): MerchantRelationshipThresholdDataProviderResolverInterface
     {
-        return new ThresholdMapperResolver(
-            $this->getLocaleFacade(),
-            $this->createStoreCurrencyFinder(),
-            $this->getConfig()
+        return new MerchantRelationshipThresholdDataProviderResolver(
+            $this->getConfig(),
+            $this->getSalesOrderThresholdFormExpanderPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdDataProviderResolverInterface
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Constraint\ThresholdStrategyConstraint
      */
-    public function createSoftThresholdDataProviderResolver(): ThresholdDataProviderResolverInterface
+    public function createThresholdStrategyConstraint(): ThresholdStrategyConstraint
     {
-        return new ThresholdDataProviderResolver(
-            $this->getConfig()
-        );
+        return new ThresholdStrategyConstraint([
+            ThresholdStrategyConstraint::OPTION_SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS => $this->getSalesOrderThresholdFormExpanderPlugins(),
+        ]);
     }
 
     /**
@@ -160,5 +162,29 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
     public function getMerchantRelationshipSalesOrderThresholdFacade(): MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipSalesOrderThresholdFacadeInterface
     {
         return $this->getProvidedDependency(MerchantRelationshipSalesOrderThresholdGuiDependencyProvider::FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipFacadeInterface
+     */
+    public function getMerchantRelationshipFacade(): MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantRelationshipSalesOrderThresholdGuiDependencyProvider::FACADE_MERCHANT_RELATIONSHIP);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToCompanyFacadeInterface
+     */
+    public function getCompanyFacade(): MerchantRelationshipSalesOrderThresholdGuiToCompanyFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantRelationshipSalesOrderThresholdGuiDependencyProvider::FACADE_COMPANY);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]
+     */
+    public function getSalesOrderThresholdFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantRelationshipSalesOrderThresholdGuiDependencyProvider::SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS);
     }
 }

@@ -29,6 +29,7 @@ use Symfony\Component\Form\Extension\DataCollector\FormDataCollector;
 use Symfony\Component\Form\Extension\DataCollector\FormDataExtractor;
 use Symfony\Component\Form\Extension\DataCollector\Proxy\ResolvedTypeFactoryDataCollectorProxy;
 use Symfony\Component\Form\Extension\DataCollector\Type\DataCollectorTypeExtension;
+use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
 use Symfony\Component\HttpKernel\DataCollector\ConfigDataCollector;
 use Symfony\Component\HttpKernel\DataCollector\EventDataCollector;
 use Symfony\Component\HttpKernel\DataCollector\ExceptionDataCollector;
@@ -76,6 +77,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
                 ['router',    '@WebProfiler/Collector/router.html.twig'],
                 ['memory',    '@WebProfiler/Collector/memory.html.twig'],
                 ['form',      '@WebProfiler/Collector/form.html.twig'],
+                ['ajax',      '@WebProfiler/Collector/ajax.html.twig'],
             ];
             if (class_exists(ProfilerExtension::class)) {
                 $templates[] = ['twig', '@WebProfiler/Collector/twig.html.twig'];
@@ -109,6 +111,9 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
                 }),
                 'memory' => $app->share(function ($app) {
                     return new MemoryDataCollector();
+                }),
+                'ajax' => $app->share(function ($app) {
+                    return new AjaxDataCollector();
                 }),
             ];
         });
@@ -152,7 +157,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         }
 
         $app['web_profiler.controller.profiler'] = $app->share(function ($app) {
-            return new ProfilerController($app['url_generator'], $app['profiler'], $app['twig'], $app['data_collector.templates'], $app['web_profiler.debug_toolbar.position']);
+            return new ProfilerController($app['url_generator'], $app['profiler'], $app['twig'], $app['data_collector.templates']);
         });
 
         $app['web_profiler.controller.router'] = $app->share(function ($app) {
@@ -164,7 +169,9 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         });
 
         $app['web_profiler.toolbar.listener'] = $app->share(function ($app) {
-            return new WebDebugToolbarListener($app['twig'], $app['web_profiler.debug_toolbar.intercept_redirects'], $app['web_profiler.debug_toolbar.position'], $app['url_generator']);
+            $mode = $app['web_profiler.debug_toolbar.enable'] ? WebDebugToolbarListener::ENABLED : WebDebugToolbarListener::DISABLED;
+
+            return new WebDebugToolbarListener($app['twig'], $app['web_profiler.debug_toolbar.intercept_redirects'], $mode);
         });
 
         $app['profiler'] = $app->share(function ($app) {
@@ -272,11 +279,12 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
 
         $dispatcher->addSubscriber($app['profiler.listener']);
 
+        $app->mount($app['profiler.mount_prefix'], $this->connect($app));
+
         if ($app['web_profiler.debug_toolbar.enable']) {
             $dispatcher->addSubscriber($app['web_profiler.toolbar.listener']);
         }
 
         $dispatcher->addSubscriber($app['profiler']->get('request'));
-        $app->mount($app['profiler.mount_prefix'], $this->connect($app));
     }
 }

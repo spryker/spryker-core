@@ -7,9 +7,12 @@
 
 namespace Spryker\Client\ProductImageStorage\Storage;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractImageStorageTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageInterface;
-use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
+use Spryker\Client\ProductImageStorage\ProductImageStorageConfig;
+use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig as ProductImageStorageConstants;
 
 class ProductAbstractImageStorageReader implements ProductAbstractImageStorageReaderInterface
 {
@@ -41,7 +44,32 @@ class ProductAbstractImageStorageReader implements ProductAbstractImageStorageRe
      */
     public function findProductImageAbstractStorageTransfer($idProductAbstract, $locale)
     {
-        $key = $this->productImageStorageKeyGenerator->generateKey(ProductImageStorageConfig::PRODUCT_ABSTRACT_IMAGE_RESOURCE_NAME, $idProductAbstract, $locale);
+        if (ProductImageStorageConfig::isCollectorCompatibilityMode()) {
+            $clientLocatorClassName = Locator::class;
+            /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
+            $productClient = $clientLocatorClassName::getInstance()->product()->client();
+            $collectorData = $productClient->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
+
+            $imageSets = $collectorData['imageSets'];
+
+            $formattedImageSets = new ArrayObject();
+            foreach ($imageSets as $imageSetName => $images) {
+                $formattedImageSets[] = [
+                    'name' => $imageSetName,
+                    'images' => $images,
+                ];
+            }
+            $imageData = [
+                'id_product_abstract' => $idProductAbstract,
+                'image_sets' => $formattedImageSets,
+            ];
+            $productImageStorageTransfer = new ProductAbstractImageStorageTransfer();
+            $productImageStorageTransfer->fromArray($imageData, true);
+
+            return $productImageStorageTransfer;
+        }
+
+        $key = $this->productImageStorageKeyGenerator->generateKey(ProductImageStorageConstants::PRODUCT_ABSTRACT_IMAGE_RESOURCE_NAME, $idProductAbstract, $locale);
 
         return $this->findProductImageProductStorageTransfer($key);
     }

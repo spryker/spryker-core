@@ -17,6 +17,7 @@
     "spryker/touch": "^3.0.0 || ^4.0.0"
   },
   "require-dev": {
+    "spryker/cms-block-product-connector": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
