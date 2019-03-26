@@ -7,9 +7,7 @@
 
 namespace Spryker\Glue\GlueApplication\Plugin\Rest\ServiceProvider;
 
-use RuntimeException;
 use Silex\Application;
-use Silex\ServiceControllerResolver;
 use Silex\ServiceProviderInterface;
 use Spryker\Glue\GlueApplication\Plugin\Rest\GlueRouterPlugin;
 use Spryker\Glue\Kernel\AbstractPlugin;
@@ -23,16 +21,10 @@ class GlueRoutingServiceProvider extends AbstractPlugin implements ServiceProvid
     /**
      * @param \Silex\Application $app
      *
-     * @throws \RuntimeException
-     *
      * @return void
      */
     public function register(Application $app)
     {
-        if (!($app['resolver'] instanceof ServiceControllerResolver)) {
-            throw new RuntimeException('Register ServiceControllerServiceProvider first.');
-        }
-
         $app['url_matcher'] = $app->share(function () use ($app) {
             /** @var \Symfony\Cmf\Component\Routing\ChainRouter $chainRouter */
             $chainRouter = $app['routers'];

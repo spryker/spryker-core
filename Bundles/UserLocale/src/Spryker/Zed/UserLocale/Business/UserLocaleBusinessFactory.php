@@ -10,6 +10,8 @@ namespace Spryker\Zed\UserLocale\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\UserLocale\Business\UserExpander\UserExpander;
 use Spryker\Zed\UserLocale\Business\UserExpander\UserExpanderInterface;
+use Spryker\Zed\UserLocale\Business\UserLocaleReader\UserLocaleReader;
+use Spryker\Zed\UserLocale\Business\UserLocaleReader\UserLocaleReaderInterface;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleFacadeBridgeInterface;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserFacadeBridgeInterface;
 use Spryker\Zed\UserLocale\UserLocaleDependencyProvider;
@@ -43,5 +45,13 @@ class UserLocaleBusinessFactory extends AbstractBusinessFactory
         return new UserExpander(
             $this->getLocaleFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\UserLocale\Business\UserLocaleReader\UserLocaleReaderInterface
+     */
+    public function createUserLocaleReader(): UserLocaleReaderInterface
+    {
+        return new UserLocaleReader($this->getUserFacade(), $this->getLocaleFacade());
     }
 }
