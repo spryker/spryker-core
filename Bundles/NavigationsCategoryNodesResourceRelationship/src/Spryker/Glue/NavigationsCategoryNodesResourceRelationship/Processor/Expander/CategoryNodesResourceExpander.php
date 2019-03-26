@@ -49,8 +49,8 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
                 continue;
             }
 
-            $categoryNodeIds = $this->getCategoryNodeIds(
-                (array)$resourceAttributes->offsetGet(static::KEY_NODES)
+            $categoryNodeIds = array_unique(
+                $this->getCategoryNodeIds((array)$resourceAttributes->offsetGet(static::KEY_NODES))
             );
 
             $this->addResourceRelationship($resource, $restRequest, $categoryNodeIds);
