@@ -14,10 +14,6 @@ use Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestRes
 
 class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInterface
 {
-    protected const KEY_RESOURCE_ID = 'resourceId';
-    protected const KEY_NODE_TYPE = 'nodeType';
-    protected const KEY_NODES = 'nodes';
-
     protected const NODE_TYPE_VALUE_CATEGORY = 'category';
 
     /**
@@ -47,7 +43,7 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
                 continue;
             }
 
-            $categoryNodeIds = $this->getCategoryNodeIds((array)$resourceAttributes->offsetGet(static::KEY_NODES));
+            $categoryNodeIds = $this->getCategoryNodeIds($resourceAttributes->getNodes()->getArrayCopy());
 
             $this->addResourceRelationship($resource, $restRequest, array_unique($categoryNodeIds));
         }
@@ -63,7 +59,7 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
     ): array {
         $categoryNodeIds = [];
         foreach ($navigationNodes as $navigationNode) {
-            if ($navigationNode->offsetGet(static::KEY_NODE_TYPE) === static::NODE_TYPE_VALUE_CATEGORY) {
+            if ($navigationNode->getNodeType() === static::NODE_TYPE_VALUE_CATEGORY) {
                 $categoryNodeIds[] = $navigationNode->getResourceId();
             }
             $categoryNodeIds = array_merge(
