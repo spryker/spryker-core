@@ -21,11 +21,11 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class DoubleSubmitFormType extends AbstractTypeExtension
 {
-    public const OPTION_KEY_ERROR_MESSAGE = 'double_submit_error';
-    public const OPTION_KEY_TOKEN_FIELD_NAME = 'token_field_name';
+    protected const OPTION_KEY_ERROR_MESSAGE = 'double_submit_error';
+    protected const OPTION_KEY_TOKEN_FIELD_NAME = 'token_field_name';
 
-    public const DEFAULT_TOKEN_FIELD_NAME = '_requestToken';
-    public const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
+    protected const DEFAULT_TOKEN_FIELD_NAME = '_requestToken';
+    protected const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
 
     /**
      * @var \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface $tokenProvider
@@ -80,10 +80,6 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     {
         $eventSubscriber = $this->createFormEventSubscriber();
 
-        $eventSubscriber
-            ->setErrorMessage($options[static::OPTION_KEY_ERROR_MESSAGE])
-            ->setFieldName($options[static::OPTION_KEY_TOKEN_FIELD_NAME]);
-
         $builder->addEventSubscriber($eventSubscriber);
     }
 
@@ -96,7 +92,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
      */
     public function finishView(FormView $view, FormInterface $form, array $options): void
     {
-        if ($view->parent || !$form->isRoot()) {
+        if ($view->parent || !$form->isRoot() || !isset($options[static::OPTION_KEY_TOKEN_FIELD_NAME])) {
             return;
         }
 
@@ -145,6 +141,8 @@ class DoubleSubmitFormType extends AbstractTypeExtension
         return new FormEventSubscriber(
             $this->tokenGenerator,
             $this->storage,
+            static::DEFAULT_TOKEN_FIELD_NAME,
+            static::DEFAULT_ERROR_MESSAGE,
             $this->translator,
             $this->translationDomain
         );

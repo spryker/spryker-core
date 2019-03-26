@@ -7,8 +7,8 @@
 
 namespace Spryker\Yves\Form;
 
-use Spryker\Shared\Form\Plugin\FormExtension\HttpFoundationFormPlugin;
-use Spryker\Shared\Validator\Plugin\FormExtension\ValidatorFormPlugin;
+use Spryker\Shared\Form\Plugin\Form\HttpFoundationFormPlugin;
+use Spryker\Shared\Validator\Plugin\Form\ValidatorFormPlugin;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 

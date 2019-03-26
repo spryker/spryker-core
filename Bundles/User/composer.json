@@ -22,12 +22,14 @@
     "spryker/sales": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
+    "spryker/twig": "*",
     "spryker/zed-navigation": "*"
   },
   "suggest": {
     "spryker/container": "If you want to use UserTwigPlugin.",
     "spryker/installer": "If you want to use Installer plugin.",
-    "spryker/silex": "If you want to use ServiceProvider."
+    "spryker/silex": "If you want to use ServiceProvider.",
+    "spryker/twig": "If you want to use UserTwigPlugin."
   },
   "autoload": {
     "psr-4": {

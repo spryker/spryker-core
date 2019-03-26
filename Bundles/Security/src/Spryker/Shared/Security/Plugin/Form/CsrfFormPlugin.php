@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Security\Plugin\FormExtension;
+namespace Spryker\Shared\Security\Plugin\Form;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface;
@@ -48,7 +48,7 @@ class CsrfFormPlugin implements FormPluginInterface
     {
         return new CsrfExtension(
             $container->get(static::SERVICE_CSRF_PROVIDER),
-            $this->getTranslatorService($container)
+            $this->getTranslator($container)
         );
     }
 
@@ -57,7 +57,7 @@ class CsrfFormPlugin implements FormPluginInterface
      *
      * @return \Symfony\Component\Translation\TranslatorInterface|null
      */
-    protected function getTranslatorService(ContainerInterface $container): ?TranslatorInterface
+    protected function getTranslator(ContainerInterface $container): ?TranslatorInterface
     {
         return $container->has(static::SERVICE_TRANSLATOR) ? $container->get(static::SERVICE_TRANSLATOR) : null;
     }

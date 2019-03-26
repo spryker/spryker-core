@@ -196,14 +196,15 @@ class FormEventSubscriber implements EventSubscriberInterface
      */
     protected function getTranslatedErrorMessage()
     {
+        $errorMessage = $this->errorMessage;
         if ($this->translator !== null) {
-            return $this->translator->trans(
-                $this->getErrorMessage(),
+            $errorMessage = $this->translator->trans(
+                $this->errorMessage,
                 $this->translationOptions,
                 $this->translationDomain
             );
         }
 
-        return $this->getErrorMessage();
+        return $errorMessage;
     }
 }

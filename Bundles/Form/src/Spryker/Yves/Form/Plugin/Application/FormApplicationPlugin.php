@@ -11,8 +11,6 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
-use Symfony\Component\Form\ResolvedFormTypeFactory;
-use Symfony\Component\Form\ResolvedFormTypeFactoryInterface;
 
 /**
  * @method \Spryker\Yves\Form\FormFactory getFactory()
@@ -39,8 +37,7 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     {
         $container->set(static::SERVICE_FORM_FACTORY, function (ContainerInterface $container) {
             $formFactoryBuilder = $this->getFactory()
-                ->createFormFactoryBuilder()
-                ->setResolvedTypeFactory($this->createResolvedFormTypeFactory());
+                ->createFormFactoryBuilder();
 
             $formFactoryBuilder = $this->extendForm($formFactoryBuilder, $container);
 
@@ -53,14 +50,6 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     }
 
     /**
-     * @return \Symfony\Component\Form\ResolvedFormTypeFactoryInterface
-     */
-    protected function createResolvedFormTypeFactory(): ResolvedFormTypeFactoryInterface
-    {
-        return new ResolvedFormTypeFactory();
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormFactoryBuilderInterface $formFactoryBuilder
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
@@ -68,8 +57,8 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      */
     protected function extendForm(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
     {
-        foreach ($this->getFactory()->getFormPlugins() as $formExtensionPlugin) {
-            $formFactoryBuilder = $formExtensionPlugin->extend($formFactoryBuilder, $container);
+        foreach ($this->getFactory()->getFormPlugins() as $formPlugin) {
+            $formFactoryBuilder = $formPlugin->extend($formFactoryBuilder, $container);
         }
 
         return $formFactoryBuilder;

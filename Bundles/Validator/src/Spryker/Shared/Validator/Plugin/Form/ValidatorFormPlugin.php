@@ -5,18 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Form\Plugin\FormExtension;
+namespace Spryker\Shared\Validator\Plugin\Form;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface;
-use Symfony\Component\Form\Extension\HttpFoundation\Type\FormTypeHttpFoundationExtension;
+use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
 
-class HttpFoundationFormPlugin implements FormPluginInterface
+class ValidatorFormPlugin implements FormPluginInterface
 {
+    protected const SERVICE_VALIDATOR = 'validator';
+
     /**
      * {@inheritdoc}
-     * - Adds the basic Symfony HttpFoundation extension.
+     * - Adds form validator extension to forms.
      *
      * @api
      *
@@ -27,10 +29,22 @@ class HttpFoundationFormPlugin implements FormPluginInterface
      */
     public function extend(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
     {
-        $formFactoryBuilder->addTypeExtension(
-            new FormTypeHttpFoundationExtension()
+        $formFactoryBuilder->addExtension(
+            $this->createValidatorExtension($container)
         );
 
         return $formFactoryBuilder;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Symfony\Component\Form\Extension\Validator\ValidatorExtension
+     */
+    protected function createValidatorExtension(ContainerInterface $container): ValidatorExtension
+    {
+        return new ValidatorExtension(
+            $container->get(static::SERVICE_VALIDATOR)
+        );
     }
 }

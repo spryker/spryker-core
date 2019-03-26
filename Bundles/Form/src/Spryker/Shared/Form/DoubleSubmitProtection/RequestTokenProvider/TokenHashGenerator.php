@@ -10,21 +10,19 @@ namespace Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider;
 class TokenHashGenerator implements TokenGeneratorInterface
 {
     /**
-     * @var string $algorithm
+     * @var string
      */
     protected $algorithm;
 
     /**
      * @param string $algorithm
      */
-    public function __construct($algorithm = self::DEFAULT_ALGORITHM)
+    public function __construct(string $algorithm = self::DEFAULT_ALGORITHM)
     {
         $this->algorithm = $algorithm;
     }
 
     /**
-     * Generates and returns random token
-     *
      * @return string
      */
     public function generateToken(): string
@@ -33,13 +31,13 @@ class TokenHashGenerator implements TokenGeneratorInterface
     }
 
     /**
-     * @param string $expected
-     * @param string $actual
+     * @param string $expectedToken
+     * @param string $actualToken
      *
      * @return bool
      */
-    public function checkTokenEquals(string $expected, string $actual): bool
+    public function checkTokenEquals(string $expectedToken, string $actualToken): bool
     {
-        return hash_equals($expected, $actual);
+        return hash_equals($expectedToken, $actualToken);
     }
 }

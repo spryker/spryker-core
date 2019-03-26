@@ -13,8 +13,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/container": "If you want to use the form extension plugins.",
-    "spryker/symfony": "If you want to use the form extension plugins."
+    "spryker/container": "If you want to use the FormPluginInterface.",
+    "spryker/symfony": "If you want to use the FormPluginInterface."
   },
   "autoload": {
     "psr-4": {

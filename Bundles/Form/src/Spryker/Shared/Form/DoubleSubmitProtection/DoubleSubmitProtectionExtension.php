@@ -11,6 +11,7 @@ use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInter
 use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface;
 use Spryker\Shared\Form\DoubleSubmitProtection\Type\DoubleSubmitFormType;
 use Symfony\Component\Form\AbstractExtension;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class DoubleSubmitProtectionExtension extends AbstractExtension
 {
@@ -43,7 +44,7 @@ class DoubleSubmitProtectionExtension extends AbstractExtension
     public function __construct(
         TokenGeneratorInterface $tokenGenerator,
         StorageInterface $tokenStorage,
-        $translator = null,
+        ?TranslatorInterface $translator = null,
         ?string $translationDomain = null
     ) {
         $this->tokenGenerator = $tokenGenerator;
