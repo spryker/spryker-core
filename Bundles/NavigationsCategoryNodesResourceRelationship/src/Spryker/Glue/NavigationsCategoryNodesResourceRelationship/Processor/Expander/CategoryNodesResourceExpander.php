@@ -63,7 +63,7 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
                 $categoryNodeIds[] = $navigationNode->getResourceId();
             }
             $categoryNodeIds = array_merge(
-                $this->getCategoryNodeIds((array)$navigationNode->getChildren()),
+                $this->getCategoryNodeIds($navigationNode->getChildren()->getArrayCopy()),
                 $categoryNodeIds
             );
         }
