@@ -115,6 +115,11 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
         ShipmentGroupTransfer $shipmentGroupTransfer,
         TaxSetTransfer $taxSetTransfer
     ): ShipmentGroupTransfer {
+        $shipmentGroupTransfer
+            ->getShipment()
+            ->getMethod()
+            ->setTaxRate($taxSetTransfer->getEffectiveRate());
+
         foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
             $itemTransfer
                 ->getShipment()

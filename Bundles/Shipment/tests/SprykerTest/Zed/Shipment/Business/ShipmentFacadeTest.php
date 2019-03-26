@@ -521,10 +521,20 @@ class ShipmentFacadeTest extends Test
         $itemTransfer2 = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
             ->setShipment($this->tester->createShipmentTransfer());
 
+        $expenseTransfer1 = $this->tester->createShipmentExpenseTransfer()
+            ->setShipment($itemTransfer1->getShipment());
+        $expenseTransfer2 = $this->tester->createShipmentExpenseTransfer()
+            ->setShipment($itemTransfer2->getShipment());
+
         $quoteTransfer = (new QuoteTransfer())
             ->addItem($itemTransfer1)
-            ->addItem($itemTransfer2);
+            ->addItem($itemTransfer2)
+            ->addExpense($expenseTransfer1)
+            ->addExpense($expenseTransfer2);
 
+        /**
+         * @todo Need refactoring of checking using DB.
+         */
         try {
             $this->tester->getShipmentFacade()->saveOrderShipment($quoteTransfer, $orderSaverTransfer);
         } catch (Exception $e) {
@@ -540,14 +550,17 @@ class ShipmentFacadeTest extends Test
         $orderSaverTransfer = $this->tester->createOrderSaverTransfer();
 
         $itemTransfer1 = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
-            ->setShipment($this->tester->createShipmentTransfer()->setExpense(null));
+            ->setShipment($this->tester->createShipmentTransfer());
         $itemTransfer2 = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
-            ->setShipment($this->tester->createShipmentTransfer()->setExpense(null));
+            ->setShipment($this->tester->createShipmentTransfer());
 
         $quoteTransfer = (new QuoteTransfer())
             ->addItem($itemTransfer1)
             ->addItem($itemTransfer2);
 
+        /**
+         * @todo Need refactoring of checking using DB. Not exceptions.
+         */
         $this->expectException(RequiredTransferPropertyException::class);
         $this->expectExceptionMessageRegExp('/^Missing required property "expense" for transfer/');
 
@@ -562,7 +575,7 @@ class ShipmentFacadeTest extends Test
         $orderSaverTransfer = $this->tester->createOrderSaverTransfer();
 
         $itemTransfer1 = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
-            ->setShipment($this->tester->createShipmentTransfer()->setExpense(null));
+            ->setShipment($this->tester->createShipmentTransfer());
         $itemTransfer2 = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
             ->setShipment($itemTransfer1->getShipment());
 
@@ -570,6 +583,9 @@ class ShipmentFacadeTest extends Test
             ->addItem($itemTransfer1)
             ->addItem($itemTransfer2);
 
+        /**
+         * @todo Need refactoring of checking using DB. Not exceptions.
+         */
         $this->expectException(RequiredTransferPropertyException::class);
         $this->expectExceptionMessageRegExp('/^Missing required property "expense" for transfer/');
 
@@ -587,8 +603,16 @@ class ShipmentFacadeTest extends Test
         $itemTransfer = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
             ->setShipment($this->tester->createShipmentTransfer());
 
-        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+        $expenseTransfer = $this->tester->createShipmentExpenseTransfer()
+            ->setShipment($itemTransfer->getShipment());
 
+        $quoteTransfer = (new QuoteTransfer())
+            ->addItem($itemTransfer)
+            ->addExpense($expenseTransfer);
+
+        /**
+         * @todo Need refactoring of checking using DB.
+         */
         try {
             $this->tester->getShipmentFacade()->saveOrderShipment($quoteTransfer, $orderSaverTransfer);
         } catch (Exception $e) {
@@ -604,10 +628,13 @@ class ShipmentFacadeTest extends Test
         $orderSaverTransfer = $this->tester->createOrderSaverTransfer();
 
         $itemTransfer = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
-            ->setShipment($this->tester->createShipmentTransfer()->setExpense(null));
+            ->setShipment($this->tester->createShipmentTransfer());
 
         $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
 
+        /**
+         * @todo Need refactoring of checking using DB. Not exceptions.
+         */
         $this->expectException(RequiredTransferPropertyException::class);
         $this->expectExceptionMessageRegExp('/^Missing required property "expense" for transfer/');
 
@@ -625,10 +652,14 @@ class ShipmentFacadeTest extends Test
             ->setShippingAddress(null)
             ->setMethod(null);
 
-        $itemTransfer = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())->setShipment($shipmentTransfer);
+        $itemTransfer = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
+            ->setShipment($shipmentTransfer);
 
         $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
 
+        /**
+         * @todo Need refactoring of checking using DB. Not exceptions.
+         */
         $this->expectException(RequiredTransferPropertyException::class);
         $this->expectExceptionMessageRegExp('/^Missing required property "method" for transfer/');
         $this->expectExceptionMessageRegExp('/^Missing required property "address" for transfer/');
@@ -646,8 +677,16 @@ class ShipmentFacadeTest extends Test
         $itemTransfer = $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder());
         $itemTransfer->setShipment($this->tester->createShipmentTransfer()->setShippingAddress(null));
 
-        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+        $expenseTransfer = $this->tester->createShipmentExpenseTransfer()
+            ->setShipment($itemTransfer->getShipment());
 
+        $quoteTransfer = (new QuoteTransfer())
+            ->addItem($itemTransfer)
+            ->addExpense($expenseTransfer);
+
+        /**
+         * @todo Need refactoring of checking using DB. Not exceptions.
+         */
         $this->expectException(RequiredTransferPropertyException::class);
         $this->expectExceptionMessageRegExp('/^Missing required property "address" for transfer/');
 
@@ -661,10 +700,13 @@ class ShipmentFacadeTest extends Test
     {
         $orderSaverTransfer = $this->tester->createOrderSaverTransfer();
 
-        $quoteTransfer = (new QuoteTransfer())->addItem(
-            $this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder())
-        );
+        $quoteTransfer = (new QuoteTransfer())
+            ->addItem($this->tester->createItemTransfer($orderSaverTransfer->getIdSalesOrder()))
+            ->addExpense($this->tester->createShipmentExpenseTransfer());
 
+        /**
+         * @todo Need refactoring of checking using DB. Not exceptions.
+         */
         $this->expectException(RequiredTransferPropertyException::class);
         $this->expectExceptionMessageRegExp('/^Missing required property "shipment" for transfer/');
 

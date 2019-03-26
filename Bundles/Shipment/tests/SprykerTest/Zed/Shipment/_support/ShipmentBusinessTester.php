@@ -149,15 +149,20 @@ class ShipmentBusinessTester extends Actor
     {
         $addressTransfer = (new AddressTransfer())->setIso2Code('DE');
 
-        $expenseTransfer = (new ExpenseTransfer())
+        return (new ShipmentTransfer())
+            ->setShippingAddress($addressTransfer)
+            ->setMethod($this->haveShipmentMethod());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function createShipmentExpenseTransfer(): ExpenseTransfer
+    {
+        return (new ExpenseTransfer())
             ->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE)
             ->setUnitGrossPrice(1)
             ->setQuantity(1);
-
-        return (new ShipmentTransfer())
-            ->setShippingAddress($addressTransfer)
-            ->setMethod($this->haveShipmentMethod())
-            ->setExpense($expenseTransfer);
     }
 
     /**

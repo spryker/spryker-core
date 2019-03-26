@@ -57,8 +57,6 @@ class ProductItemTaxRateCalculatorTest extends Test
 {
     protected const FLOAT_COMPARISION_DELTA = 0.001;
 
-    protected const DEFAULT_TAX_COUNTRY_ISO_2_CODE = 'MOON';
-
     /**
      * @var \SprykerTest\Zed\TaxProductConnector\TaxProductConnectorBusinessTester
      */
@@ -254,12 +252,13 @@ class ProductItemTaxRateCalculatorTest extends Test
      */
     protected function getDataWithQuoteLevelShippingAddressToFrance(): array
     {
-        $defaultCountryIso2Code = static::DEFAULT_TAX_COUNTRY_ISO_2_CODE;
+        $defaultCountryIso2Code = 'MOON';
         $defaultTaxRate = 66.00;
 
+        $skuProductAbstract = 'france_20';
         $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
         $itemBuilder = $this->createItemTransferBuilder([
-            'sku' => 'france_20',
+            'sku' => $skuProductAbstract,
         ]);
 
         $quoteTransfer = (new QuoteBuilder())
@@ -271,7 +270,7 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, ['france_20' => 20.00]];
+        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$skuProductAbstract => 20.00]];
     }
 
     /**
@@ -279,12 +278,13 @@ class ProductItemTaxRateCalculatorTest extends Test
      */
     protected function getDataWithQuoteLevelShippingAddressToMoon(): array
     {
-        $defaultCountryIso2Code = static::DEFAULT_TAX_COUNTRY_ISO_2_CODE;
+        $defaultCountryIso2Code = 'MOON';
         $defaultTaxRate = 66.00;
 
+        $skuProductAbstract = 'moon_0';
         $addressBuilder = (new AddressBuilder(['iso2Code' => $defaultCountryIso2Code]));
         $itemBuilder = $this->createItemTransferBuilder([
-            'sku' => 'moon_0',
+            'sku' => $skuProductAbstract,
         ]);
 
         $quoteTransfer = (new QuoteBuilder())
@@ -296,7 +296,7 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, ['moon_0' => $defaultTaxRate]];
+        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$skuProductAbstract => $defaultTaxRate]];
     }
 
     /**
@@ -304,21 +304,23 @@ class ProductItemTaxRateCalculatorTest extends Test
      */
     protected function getDataWithItemLevelShippingAddressesToFranceAndGermany(): array
     {
-        $defaultCountryIso2Code = static::DEFAULT_TAX_COUNTRY_ISO_2_CODE;
+        $defaultCountryIso2Code = 'MOON';
         $defaultTaxRate = 66.00;
 
+        $skuProductAbstract1 = 'france_20';
         $addressBuilder1 = (new AddressBuilder(['iso2Code' => 'FR']));
         $itemBuilder1 = $this->createItemTransferBuilder([
-            'sku' => 'france_20',
+            'sku' => $skuProductAbstract1,
         ])
             ->withAnotherShipment(
                 (new ShipmentBuilder())
                 ->withAnotherShippingAddress($addressBuilder1)
             );
 
+        $skuProductAbstract2 = 'germany_15';
         $addressBuilder2 = (new AddressBuilder(['iso2Code' => 'DE']));
         $itemBuilder2 = $this->createItemTransferBuilder([
-            'sku' => 'germany_15',
+            'sku' => $skuProductAbstract2,
         ])
             ->withAnotherShipment(
                 (new ShipmentBuilder())
@@ -334,7 +336,7 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, ['france_20' => 20.00, 'germany_15' => 15.00]];
+        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$skuProductAbstract1 => 20.00, $skuProductAbstract2 => 15.00]];
     }
 
     /**
@@ -345,8 +347,9 @@ class ProductItemTaxRateCalculatorTest extends Test
         $defaultCountryIso2Code = 'FR';
         $defaultTaxRate = 0.00;
 
+        $skuProductAbstract = 'france_20';
         $itemBuilder = $this->createItemTransferBuilder([
-            'sku' => 'france_20',
+            'sku' => $skuProductAbstract,
         ]);
 
         $quoteTransfer = (new QuoteBuilder())
@@ -357,7 +360,7 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, ['france_20' => 20.00]];
+        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$skuProductAbstract => 20.00]];
     }
 
     /**
@@ -368,8 +371,9 @@ class ProductItemTaxRateCalculatorTest extends Test
         $defaultCountryIso2Code = 'DE';
         $defaultTaxRate = 0.00;
 
+        $skuProductAbstract = 'germany_15';
         $itemBuilder = $this->createItemTransferBuilder([
-            'sku' => 'germany_15',
+            'sku' => $skuProductAbstract,
         ]);
 
         $quoteTransfer = (new QuoteBuilder())
@@ -380,7 +384,7 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, ['germany_15' => 15.00]];
+        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$skuProductAbstract => 15.00]];
     }
 
     /**
@@ -388,11 +392,12 @@ class ProductItemTaxRateCalculatorTest extends Test
      */
     protected function getDataWithoutQuoteAndItemLevelShippingAddressesToMoon(): array
     {
-        $defaultCountryIso2Code = static::DEFAULT_TAX_COUNTRY_ISO_2_CODE;
+        $defaultCountryIso2Code = 'MOON';
         $defaultTaxRate = 0.00;
 
+        $skuProductAbstract = 'moon_0';
         $itemBuilder = $this->createItemTransferBuilder([
-            'sku' => 'moon_0',
+            'sku' => $skuProductAbstract,
         ]);
 
         $quoteTransfer = (new QuoteBuilder())
@@ -403,7 +408,7 @@ class ProductItemTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, ['moon_0' => $defaultTaxRate]];
+        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$skuProductAbstract => $defaultTaxRate]];
     }
 
     /**
@@ -530,7 +535,7 @@ class ProductItemTaxRateCalculatorTest extends Test
     /**
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
      */
-    protected function getProductAbstractAfterCreatePlugins()
+    protected function getProductAbstractAfterCreatePlugins(): array
     {
         return [
             new TaxSetProductAbstractAfterCreatePlugin(),

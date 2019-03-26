@@ -125,8 +125,8 @@ class ShippingAddressSaveTest extends Test
      */
     protected function getDataWithQuoteLevelShippingAddress(): array
     {
-        $itemBuilder1 = $this->createItemTransferBuilder(['unitPrice' => 1001]);
-        $itemBuilder2 = $this->createItemTransferBuilder(['unitPrice' => 2002]);
+        $itemBuilder1 = $this->createItemTransferBuilder();
+        $itemBuilder2 = $this->createItemTransferBuilder();
 
         $quoteTransfer = (new QuoteBuilder())
             ->withShippingAddress()
@@ -146,8 +146,8 @@ class ShippingAddressSaveTest extends Test
      */
     protected function getDataWithoutQuoteLevelShippingAddress(): array
     {
-        $itemBuilder1 = $this->createItemTransferBuilder(['unitPrice' => 1001]);
-        $itemBuilder2 = $this->createItemTransferBuilder(['unitPrice' => 2002]);
+        $itemBuilder1 = $this->createItemTransferBuilder();
+        $itemBuilder2 = $this->createItemTransferBuilder();
 
         $quoteTransfer = (new QuoteBuilder())
             ->withAnotherBillingAddress()
