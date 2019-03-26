@@ -32,8 +32,8 @@ class ContentProductDataImportBusinessFactory extends DataImportBusinessFactory
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker->addStep($this->createContentProductAbstractListContentKeyToIdStep());
         $dataSetStepBroker->addStep($this->createAddLocalesStep());
+        $dataSetStepBroker->addStep($this->createContentProductAbstractListContentKeyToIdStep());
         $dataSetStepBroker->addStep($this->createContentProductAbstractListSkusToIdsStep());
         $dataSetStepBroker->addStep($this->createContentProductAbstractListPrepareLocalizedItemsStep());
         $dataSetStepBroker->addStep($this->createContentProductAbstractListWriterStep());

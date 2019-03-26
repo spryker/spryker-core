@@ -17,7 +17,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
 {
-    protected const LOCALE_NAME_DEFAULT = 'default';
     protected const EXCEPTION_ERROR_MESSAGE_SKUS_TO_IDS = 'Found not valid skus in the row with key:"{key}", column:"{column}"';
     protected const EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN = '{column}';
     protected const EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY = '{key}';
@@ -34,8 +33,6 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet)
     {
-        $dataSet[AddLocalesStep::KEY_LOCALES] = array_merge($dataSet[AddLocalesStep::KEY_LOCALES], [static::LOCALE_NAME_DEFAULT => null]);
-
         foreach ($dataSet[AddLocalesStep::KEY_LOCALES] as $localeName => $idLocale) {
             $skusLocaleKey = ContentProductAbstractListDataSetInterface::COLUMN_SKUS . '.' . $localeName;
 
