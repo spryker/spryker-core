@@ -15,11 +15,11 @@ use Spryker\Glue\NavigationsCategoryNodesResourceRelationship\NavigationsCategor
 /**
  * @method \Spryker\Glue\NavigationsCategoryNodesResourceRelationship\NavigationsCategoryNodesResourceRelationshipFactory getFactory()
  */
-class CategoryNodeByIdResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class CategoryNodeByResourceIdResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritdoc}
-     *  - Adds category node resource as relationship.
+     *  - Adds information about recursive navigation tree traversal and where resourceId is placed.
      *  - Checks whether type of the node is category.
      *
      * @api

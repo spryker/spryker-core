@@ -49,29 +49,31 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
                 continue;
             }
 
-            $categoryNodeIds = array_unique(
-                $this->getCategoryNodeIds((array)$resourceAttributes->offsetGet(static::KEY_NODES))
-            );
+            $categoryNodeIds = $this->getCategoryNodeIds((array)$resourceAttributes->offsetGet(static::KEY_NODES));
 
-            $this->addResourceRelationship($resource, $restRequest, $categoryNodeIds);
+            $this->addResourceRelationship($resource, $restRequest, array_unique($categoryNodeIds));
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer[] $restNavigationNodes
+     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer[] $navigationNodes
      *
      * @return array
      */
     protected function getCategoryNodeIds(
-        array $restNavigationNodes
+        array $navigationNodes
     ): array {
         $categoryNodeIds = [];
-        foreach ($restNavigationNodes as $restNavigationNode) {
-            if ($this->isCategoryNavigationNode($restNavigationNode)) {
-                $categoryNodeIds[] = $restNavigationNode->getResourceId();
+        foreach ($navigationNodes as $navigationNode) {
+            if (!$navigationNode->offsetExists(static::KEY_RESOURCE_ID)) {
+                continue;
+            }
+
+            if ($this->isCategoryNavigationNode($navigationNode)) {
+                $categoryNodeIds[] = $navigationNode->getResourceId();
             }
             $categoryNodeIds = array_merge(
-                $this->getCategoryNodeIds((array)$restNavigationNode->getChildren()),
+                $this->getCategoryNodeIds((array)$navigationNode->getChildren()),
                 $categoryNodeIds
             );
         }
@@ -86,8 +88,7 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
      */
     protected function isCategoryNavigationNode(RestNavigationNodeTransfer $restNavigationNodeTransfer): bool
     {
-        if ($restNavigationNodeTransfer->offsetExists(static::KEY_RESOURCE_ID)
-            && $restNavigationNodeTransfer->offsetExists(static::KEY_NODE_TYPE)
+        if ($restNavigationNodeTransfer->offsetExists(static::KEY_NODE_TYPE)
             && $restNavigationNodeTransfer->offsetGet(static::KEY_NODE_TYPE) === static::NODE_TYPE_VALUE_CATEGORY
         ) {
             return true;
@@ -108,13 +109,15 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
         RestRequestInterface $restRequest,
         array $categoryNodeIds
     ): void {
+        $locale = $restRequest->getMetadata()->getLocale();
+
         foreach ($categoryNodeIds as $categoryNodeId) {
-            $categoryNode = $this->categoriesResource->findCategoryNodeById(
+            $categoryNodeResource = $this->categoriesResource->findCategoryNodeById(
                 $categoryNodeId,
-                $restRequest->getMetadata()->getLocale()
+                $locale
             );
-            if ($categoryNode) {
-                $resource->addRelationship($categoryNode);
+            if ($categoryNodeResource) {
+                $resource->addRelationship($categoryNodeResource);
             }
         }
     }

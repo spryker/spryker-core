@@ -19,14 +19,14 @@ class NavigationsCategoryNodesResourceRelationshipFactory extends AbstractFactor
      */
     public function createCategoryNodesResourceExpander(): CategoryNodesResourceExpanderInterface
     {
-        return new CategoryNodesResourceExpander($this->getCategoriesResource());
+        return new CategoryNodesResourceExpander($this->getCategoriesRestApiResource());
     }
 
     /**
      * @return \Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestResource\NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface
      */
-    public function getCategoriesResource(): NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface
+    public function getCategoriesRestApiResource(): NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface
     {
-        return $this->getProvidedDependency(NavigationsCategoryNodesResourceRelationshipDependencyProvider::RESOURCE_CATEGORIES);
+        return $this->getProvidedDependency(NavigationsCategoryNodesResourceRelationshipDependencyProvider::RESOURCE_CATEGORIES_REST_API);
     }
 }

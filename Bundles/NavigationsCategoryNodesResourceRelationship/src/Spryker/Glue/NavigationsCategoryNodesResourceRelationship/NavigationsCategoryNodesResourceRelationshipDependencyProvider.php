@@ -16,7 +16,7 @@ use Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestRes
  */
 class NavigationsCategoryNodesResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const RESOURCE_CATEGORIES = 'RESOURCE_CATEGORIES';
+    public const RESOURCE_CATEGORIES_REST_API = 'RESOURCE_CATEGORIES_REST_API';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -38,7 +38,7 @@ class NavigationsCategoryNodesResourceRelationshipDependencyProvider extends Abs
      */
     protected function addCategoriesResource(Container $container): Container
     {
-        $container[static::RESOURCE_CATEGORIES] = function (Container $container) {
+        $container[static::RESOURCE_CATEGORIES_REST_API] = function (Container $container) {
             return new NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceBridge(
                 $container->getLocator()->categoriesRestApi()->resource()
             );
