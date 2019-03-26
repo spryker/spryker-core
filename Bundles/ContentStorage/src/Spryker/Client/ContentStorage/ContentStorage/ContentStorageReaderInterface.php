@@ -8,6 +8,7 @@
 namespace Spryker\Client\ContentStorage\ContentStorage;
 
 use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
+use Generated\Shared\Transfer\UnexecutedContentStorageTransfer;
 
 interface ContentStorageReaderInterface
 {
@@ -18,4 +19,13 @@ interface ContentStorageReaderInterface
      * @return \Generated\Shared\Transfer\ExecutedContentStorageTransfer|null
      */
     public function findContentById(int $idContent, string $localeName): ?ExecutedContentStorageTransfer;
+
+
+    /**
+     * @param int $idContent
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findUnexecutedContentById(int $idContent, string $localeName): ?UnexecutedContentStorageTransfer;
 }

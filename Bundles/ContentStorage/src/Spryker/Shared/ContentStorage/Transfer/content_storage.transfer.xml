@@ -25,6 +25,12 @@
         <property name="content" type="array" />
     </transfer>
 
+    <transfer name="UnexecutedContentStorage">
+        <property name="idContent" type="int" />
+        <property name="term" type="string" />
+        <property name="content" type="array" />
+    </transfer>
+
     <transfer name="LocalizedContent">
         <property name="idContentLocalized" type="int" />
         <property name="localeName" type="string" />
