@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Processor\Expander;
 
-use Generated\Shared\Transfer\RestNavigationNodeTransfer;
+use Generated\Shared\Transfer\RestNavigationAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestResource\NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceInterface;
@@ -43,9 +43,7 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
     {
         foreach ($resources as $resource) {
             $resourceAttributes = $resource->getAttributes();
-            if (!$resourceAttributes->offsetExists(static::KEY_NODES)
-                || !is_iterable($resourceAttributes->offsetGet(static::KEY_NODES))
-            ) {
+            if (!($resourceAttributes instanceof RestNavigationAttributesTransfer)) {
                 continue;
             }
 
@@ -65,11 +63,7 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
     ): array {
         $categoryNodeIds = [];
         foreach ($navigationNodes as $navigationNode) {
-            if (!$navigationNode->offsetExists(static::KEY_RESOURCE_ID)) {
-                continue;
-            }
-
-            if ($this->isCategoryNavigationNode($navigationNode)) {
+            if ($navigationNode->offsetGet(static::KEY_NODE_TYPE) === static::NODE_TYPE_VALUE_CATEGORY) {
                 $categoryNodeIds[] = $navigationNode->getResourceId();
             }
             $categoryNodeIds = array_merge(
@@ -79,22 +73,6 @@ class CategoryNodesResourceExpander implements CategoryNodesResourceExpanderInte
         }
 
         return $categoryNodeIds;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestNavigationNodeTransfer $restNavigationNodeTransfer
-     *
-     * @return bool
-     */
-    protected function isCategoryNavigationNode(RestNavigationNodeTransfer $restNavigationNodeTransfer): bool
-    {
-        if ($restNavigationNodeTransfer->offsetExists(static::KEY_NODE_TYPE)
-            && $restNavigationNodeTransfer->offsetGet(static::KEY_NODE_TYPE) === static::NODE_TYPE_VALUE_CATEGORY
-        ) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
