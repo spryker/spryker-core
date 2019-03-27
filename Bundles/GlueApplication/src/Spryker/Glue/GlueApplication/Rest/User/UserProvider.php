@@ -44,9 +44,9 @@ class UserProvider implements UserProviderInterface
                 );
 
                 $restRequest->setRestUser($restUserTransfer);
-            }
 
-            return $restRequest;
+                return $restRequest;
+            }
         }
 
         return $restRequest;
