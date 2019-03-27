@@ -19,11 +19,12 @@
         <property name="quoteRequestReference" type="string" />
         <property name="status" type="string" />
         <property name="latestVersion" type="QuoteRequestVersion" />
-        <property name="quoteInProgress" type="Quote" />
+        <property name="latestVisibleVersion" type="QuoteRequestVersion" />
     </transfer>
 
     <transfer name="QuoteRequestVersion">
         <property name="quote" type="Quote" />
+        <property name="metadata" type="array" />
     </transfer>
 
     <transfer name="QuoteRequestResponse">
@@ -48,7 +49,6 @@
 
     <transfer name="QuoteRequestFilter">
         <property name="quoteRequestReference" type="string" />
-        <property name="withHidden" type="bool" />
         <property name="excludedStatuses" type="array" />
         <property name="pagination" type="Pagination" />
     </transfer>

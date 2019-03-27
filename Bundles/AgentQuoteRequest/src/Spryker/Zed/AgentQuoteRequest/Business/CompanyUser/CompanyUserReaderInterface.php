@@ -17,5 +17,5 @@ interface CompanyUserReaderInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
      */
-    public function findCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer;
+    public function getCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer;
 }

@@ -10,7 +10,6 @@ namespace Spryker\Client\AgentQuoteRequest\Zed;
 use Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserQueryTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
@@ -49,6 +48,22 @@ class AgentQuoteRequestStub implements AgentQuoteRequestStubInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
+        $quoteRequestResponseTransfer = $this->zedRequestClient->call(
+            '/agent-quote-request/gateway/update-quote-request',
+            $quoteRequestTransfer
+        );
+
+        return $quoteRequestResponseTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -69,11 +84,11 @@ class AgentQuoteRequestStub implements AgentQuoteRequestStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestAsInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function reviseQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
         $quoteRequestResponseTransfer = $this->zedRequestClient->call(
-            '/agent-quote-request/gateway/mark-quote-request-as-in-progress',
+            '/agent-quote-request/gateway/revise-quote-request',
             $quoteRequestCriteriaTransfer
         );
 
@@ -85,11 +100,11 @@ class AgentQuoteRequestStub implements AgentQuoteRequestStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestAsReady(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
         $quoteRequestResponseTransfer = $this->zedRequestClient->call(
-            '/agent-quote-request/gateway/mark-quote-request-as-ready',
+            '/agent-quote-request/gateway/send-quote-request-to-customer',
             $quoteRequestCriteriaTransfer
         );
 
@@ -114,47 +129,15 @@ class AgentQuoteRequestStub implements AgentQuoteRequestStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function cancelByReference(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
-        $quoteRequestResponseTransfer = $this->zedRequestClient->call(
-            '/agent-quote-request/gateway/cancel-by-reference',
-            $quoteRequestFilterTransfer
-        );
-
-        return $quoteRequestResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function setQuoteRequestEditable(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
-        $quoteRequestResponseTransfer = $this->zedRequestClient->call(
-            '/agent-quote-request/gateway/set-quote-request-editable',
-            $quoteRequestFilterTransfer
-        );
-
-        return $quoteRequestResponseTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $customerQueryTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
      */
-    public function findCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
+    public function getCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer $companyUserAutocompleteResponseTransfer */
         $companyUserAutocompleteResponseTransfer = $this->zedRequestClient->call(
-            '/agent-quote-request/gateway/find-company-users-by-query',
+            '/agent-quote-request/gateway/get-company-users-by-query',
             $customerQueryTransfer
         );
 

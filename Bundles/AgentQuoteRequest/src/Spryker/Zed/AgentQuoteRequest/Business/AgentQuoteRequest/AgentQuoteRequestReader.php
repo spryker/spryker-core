@@ -52,8 +52,7 @@ class AgentQuoteRequestReader implements AgentQuoteRequestReaderInterface
     ): QuoteRequestCollectionTransfer {
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setExcludedStatuses($quoteRequestOverviewFilterTransfer->getExcludedStatuses())
-            ->setPagination($quoteRequestOverviewFilterTransfer->getPagination())
-            ->setWithHidden(true);
+            ->setPagination($quoteRequestOverviewFilterTransfer->getPagination());
 
         return $this->quoteRequestFacade->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
     }
@@ -70,8 +69,7 @@ class AgentQuoteRequestReader implements AgentQuoteRequestReaderInterface
         }
 
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestOverviewFilterTransfer->getQuoteRequestReference())
-            ->setWithHidden(true);
+            ->setQuoteRequestReference($quoteRequestOverviewFilterTransfer->getQuoteRequestReference());
 
         $quoteRequestTransfers = $this->quoteRequestFacade
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)

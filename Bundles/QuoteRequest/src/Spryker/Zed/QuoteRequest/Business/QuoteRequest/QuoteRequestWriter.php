@@ -136,10 +136,6 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      */
     public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestCriteriaTransfer
-            ->requireQuoteRequestReference()
-            ->requireIdCompanyUser();
-
         $quoteRequestTransfer = $this->findQuoteRequestTransfer($quoteRequestCriteriaTransfer);
 
         if (!$quoteRequestTransfer) {
@@ -202,8 +198,26 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      */
     protected function executeUpdateQuoteRequestTransaction(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestTransfer = $this->cleanUpQuoteInProgress($quoteRequestTransfer);
-        $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
+        $quoteRequestTransfer->requireQuoteRequestReference()
+            ->requireCompanyUser()
+            ->getCompanyUser()
+            ->requireIdCompanyUser();
+
+        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
+            ->setIdCompanyUser($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser());
+
+        $currentQuoteRequestTransfer = $this->findQuoteRequestTransfer($quoteRequestCriteriaTransfer);
+
+        if (!$currentQuoteRequestTransfer) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
+        }
+
+        if (!$this->isQuoteRequestEditable($currentQuoteRequestTransfer)) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
+        }
+
+        $this->quoteRequestEntityManager->updateQuoteRequestVersion($quoteRequestTransfer->getLatestVersion());
 
         return (new QuoteRequestResponseTransfer())
             ->setQuoteRequest($quoteRequestTransfer)
@@ -255,8 +269,11 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      */
     protected function findQuoteRequestTransfer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer
     {
+        $quoteRequestCriteriaTransfer
+            ->requireQuoteRequestReference()
+            ->requireIdCompanyUser();
+
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setWithHidden($quoteRequestCriteriaTransfer->getWithHidden())
             ->setQuoteRequestReference($quoteRequestCriteriaTransfer->getQuoteRequestReference())
             ->setCompanyUser((new CompanyUserTransfer())->setIdCompanyUser($quoteRequestCriteriaTransfer->getIdCompanyUser()));
 
@@ -266,24 +283,6 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->getArrayCopy();
 
         return array_shift($quoteRequestTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
-     */
-    protected function cleanUpQuoteInProgress(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer
-    {
-        if (!$quoteRequestTransfer->getQuoteInProgress()) {
-            return $quoteRequestTransfer;
-        }
-
-        $quoteRequestTransfer->getQuoteInProgress()
-            ->setQuoteRequestReference(null)
-            ->setQuoteRequestVersionReference(null);
-
-        return $quoteRequestTransfer;
     }
 
     /**
@@ -307,6 +306,16 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     protected function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return in_array($quoteRequestTransfer->getStatus(), $this->quoteRequestConfig->getCancelableStatuses());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_DRAFT;
     }
 
     /**
@@ -347,10 +356,9 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         $cleanQuoteTransfer = $this->clearSourcePrices($quoteRequestTransfer->getLatestVersion()->getQuote());
         $cleanQuoteTransfer = $this->calculationFacade->recalculate($cleanQuoteTransfer);
 
-        $quoteRequestTransfer->setQuoteInProgress($cleanQuoteTransfer)
-            ->setStatus(SharedQuoteRequestConfig::STATUS_DRAFT)
+        $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_DRAFT)
             ->setLatestVersion(
-                $this->addQuoteRequestVersion($quoteRequestTransfer)
+                $this->addQuoteRequestVersion($cleanQuoteTransfer)
             );
 
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
@@ -384,9 +392,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->requireQuote();
 
         $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_WAITING)
-            ->setQuoteInProgress($quoteRequestTransfer->getLatestVersion()->getQuote());
-
-        $quoteRequestTransfer->setLatestVersion($this->addQuoteRequestVersion($quoteRequestTransfer));
+            ->setLatestVersion($this->addQuoteRequestVersion($quoteRequestTransfer));
 
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
@@ -402,10 +408,9 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      */
     protected function addQuoteRequestVersion(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestVersionTransfer
     {
-        $quoteRequestTransfer->requireQuoteInProgress();
-
         $quoteRequestVersionTransfer = (new QuoteRequestVersionTransfer())
-            ->setQuote($quoteRequestTransfer->getQuoteInProgress())
+            ->setQuote($quoteRequestTransfer->getLatestVersion()->getQuote())
+            ->setMetadata($quoteRequestTransfer->getLatestVersion()->getMetadata())
             ->setVersion($quoteRequestTransfer->getLatestVersion()->getVersion() + 1)
             ->setFkQuoteRequest($quoteRequestTransfer->getIdQuoteRequest());
 

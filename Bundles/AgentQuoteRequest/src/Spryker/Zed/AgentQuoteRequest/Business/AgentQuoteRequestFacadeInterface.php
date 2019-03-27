@@ -21,7 +21,11 @@ interface AgentQuoteRequestFacadeInterface
      * Specification:
      * - Creates "Request for Quote" for the provided company user with "in-progress" status.
      * - Generates unique reference number.
-     * - Sets hidden visibility for customer.
+     * - Generates 1st version for the "Request for Quote" entity.
+     * - Generates version reference based on unique reference number and version number.
+     * - Stores empty metadata.
+     * - Stores empty quote.
+     * - Sets hidden visibility for latest version.
      *
      * @api
      *
@@ -33,9 +37,25 @@ interface AgentQuoteRequestFacadeInterface
 
     /**
      * Specification:
+     * - Finds a "Request for Quote" by QuoteRequestTransfer::idQuoteRequest in the transfer.
+     * - Expects "Request for Quote" status to be "draft", "in-progress".
+     * - Updates valid_until, is_hidden fields in RfQ entity.
+     * - Updates metadata in latest version.
+     * - Updates quote in latest version.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
      * - Looks up one "Request for Quote" by provided quote request reference.
-     * - Expects "Request for Quote" status to not be "canceled".
-     * - Sets status to "Cancelled".
+     * - Expects "Request for Quote" status to not be "canceled", "closed".
+     * - Sets status to "cancelled".
      *
      * @api
      *
@@ -47,26 +67,10 @@ interface AgentQuoteRequestFacadeInterface
 
     /**
      * Specification:
-     * - Returns CompanyUserAutocompleteResponseTransfer with list of company users found by query.
-     * - Search works by first name, last name and email.
-     * - If company users by query are not exist, collection will be empty.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $customerQueryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
-     */
-    public function findCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer;
-
-    /**
-     * Specification:
      * - Looks up one "Request for Quote" by provided quote request reference.
-     * - Expects "Request for Quote" status to be "waiting".
-     * - Requires latest version inside QuoteRequestTransfer.
-     * - Requires quote inside QuoteRequestVersionTransfer.
+     * - Expects "Request for Quote" status to be "waiting", "ready".
+     * - Creates latest version from previous version.
      * - Sets status to "in-progress".
-     * - Copies latest version quote to quoteInProgress property.
      *
      * @api
      *
@@ -74,19 +78,15 @@ interface AgentQuoteRequestFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestAsInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
+    public function reviseQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
 
     /**
      * Specification:
-     * - Expects quoter request reference to be provided.
+     * - Expects quote request reference to be provided.
      * - Retrieves "Request for Quote" entity filtered by reference.
-     * - Expects "Request for Quote" status to be "in-progress".
-     * - Expects "Request for Quote" quoteInProgress property exists.
-     * - Expects "Request for Quote" validUntil property exists and greater than current time.
-     * - Changes status from "in-progress" to "ready".
-     * - Resets isHidden flag to false.
-     * - Creates version from quoteInProgress property.
-     * - Sets latest version.
+     * - Expects "Request for Quote" status to be "draft", "in-progress".
+     * - Updates field is_latest_version_hidden to false.
+     * - Changes status to "ready".
      *
      * @api
      *
@@ -94,7 +94,7 @@ interface AgentQuoteRequestFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestAsReady(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
+    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
 
     /**
      * Specification:
@@ -111,4 +111,18 @@ interface AgentQuoteRequestFacadeInterface
     public function getQuoteRequestOverviewCollection(
         QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
     ): QuoteRequestOverviewCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns CompanyUserAutocompleteResponseTransfer with list of company users found by query.
+     * - Search works by first name, last name and email.
+     * - If company users by query are not exist, collection will be empty.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $customerQueryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
+     */
+    public function getCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer;
 }

@@ -22,6 +22,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class QuoteRequestRepository extends AbstractRepository implements QuoteRequestRepositoryInterface
 {
+    protected const NUMBER_OF_VERSIONS = 'number_of_versions';
+
     /**
      * @module Customer
      * @module CompanyUser
@@ -88,10 +90,6 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
         SpyQuoteRequestQuery $quoteRequestQuery,
         QuoteRequestFilterTransfer $quoteRequestFilterTransfer
     ): SpyQuoteRequestQuery {
-        if (!$quoteRequestFilterTransfer->getWithHidden()) {
-            $quoteRequestQuery->filterByIsHidden(false);
-        }
-
         if ($quoteRequestFilterTransfer->getExcludedStatuses()) {
             $quoteRequestQuery->filterByStatus($quoteRequestFilterTransfer->getExcludedStatuses(), Criteria::NOT_IN);
         }

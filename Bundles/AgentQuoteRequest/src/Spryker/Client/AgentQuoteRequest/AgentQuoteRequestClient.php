@@ -42,6 +42,34 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getZedStub()->updateQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function reviseQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getZedStub()->reviseQuoteRequest($quoteRequestCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -60,23 +88,9 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function markQuoteRequestAsInProgress(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getZedStub()->markQuoteRequestAsInProgress($quoteRequestCriteriaTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function markQuoteRequestAsReady(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
-    {
-        return $this->getZedStub()->markQuoteRequestAsReady($quoteRequestCriteriaTransfer);
+        return $this->getZedStub()->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -118,9 +132,9 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
      *
      * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
      */
-    public function findCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
+    public function getCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
     {
-        return $this->getZedStub()->findCompanyUsersByQuery($customerQueryTransfer);
+        return $this->getZedStub()->getCompanyUsersByQuery($customerQueryTransfer);
     }
 
     /**
@@ -132,11 +146,11 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function convertQuoteRequestToQuoteInProgress(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteRequestConverter()
-            ->convertQuoteRequestToQuoteInProgress($quoteRequestTransfer);
+            ->convertQuoteRequestToQuote($quoteRequestTransfer);
     }
 
     /**
@@ -164,11 +178,11 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
      *
      * @return bool
      */
-    public function isQuoteRequestCanStartEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
+    public function isQuoteRequestRevisable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $this->getFactory()
             ->createQuoteRequestChecker()
-            ->isQuoteRequestCanStartEditable($quoteRequestTransfer);
+            ->isQuoteRequestRevisable($quoteRequestTransfer);
     }
 
     /**

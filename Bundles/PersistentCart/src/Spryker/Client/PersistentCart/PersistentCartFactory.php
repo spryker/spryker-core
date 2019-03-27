@@ -15,6 +15,8 @@ use Spryker\Client\PersistentCart\GuestCartCustomerReferenceGenerator\GuestCartC
 use Spryker\Client\PersistentCart\GuestCartCustomerReferenceGenerator\GuestCartCustomerReferenceGeneratorInterface;
 use Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerLoginQuoteSync;
 use Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerLoginQuoteSyncInterface;
+use Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerQuoteCleaner;
+use Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerQuoteCleanerInterface;
 use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\ChangeRequestExtendPluginExecutor;
 use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\ChangeRequestExtendPluginExecutorInterface;
 use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutor;
@@ -140,6 +142,19 @@ class PersistentCartFactory extends AbstractFactory
     public function createCustomerLoginQuoteSync(): CustomerLoginQuoteSyncInterface
     {
         return new CustomerLoginQuoteSync(
+            $this->createZedPersistentCartStub(),
+            $this->getQuoteClient(),
+            $this->createQuoteUpdatePluginExecutor(),
+            $this->getZedRequestClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerQuoteCleanerInterface
+     */
+    public function createCustomerQuoteCleaner(): CustomerQuoteCleanerInterface
+    {
+        return new CustomerQuoteCleaner(
             $this->createZedPersistentCartStub(),
             $this->getQuoteClient(),
             $this->createQuoteUpdatePluginExecutor(),

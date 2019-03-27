@@ -16,7 +16,6 @@ use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInter
 class QuoteRequestToQuoteConverter implements QuoteRequestToQuoteConverterInterface
 {
     protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
-    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
 
     /**
      * @var \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface
@@ -59,14 +58,12 @@ class QuoteRequestToQuoteConverter implements QuoteRequestToQuoteConverterInterf
             return $this->getErrorResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS);
         }
 
-        if (!$quoteRequestTransfer->getLatestVersion()) {
-            return $this->getErrorResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND);
-        }
-
         $latestQuoteRequestVersionTransfer = $quoteRequestTransfer->getLatestVersion();
         $quoteTransfer = $latestQuoteRequestVersionTransfer->getQuote();
 
+        $quoteTransfer->setName($latestQuoteRequestVersionTransfer->getVersionReference());
         $quoteTransfer->setQuoteRequestVersionReference($latestQuoteRequestVersionTransfer->getVersionReference());
+
         $quoteTransfer = $this->quoteClient->lockQuote($quoteTransfer);
 
         return $this->persistentCartClient->persistCustomerQuote($quoteTransfer);

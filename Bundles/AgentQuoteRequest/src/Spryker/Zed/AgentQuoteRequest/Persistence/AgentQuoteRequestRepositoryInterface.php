@@ -14,7 +14,7 @@ interface AgentQuoteRequestRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $companyUserQueryTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function findCompanyUsersByQuery(CompanyUserQueryTransfer $companyUserQueryTransfer): array;
+    public function getCompanyUsersByQuery(CompanyUserQueryTransfer $companyUserQueryTransfer): array;
 }

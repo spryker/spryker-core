@@ -26,7 +26,7 @@ use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface;
 use Spryker\Zed\QuoteRequest\Business\UserQuoteRequest\UserQuoteRequestWriter;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
-use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
+use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManager;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 use Spryker\Zed\QuoteRequest\QuoteRequestConfig;
 
@@ -594,7 +594,7 @@ class UserQuoteRequestWriterTest extends Unit
             ->setMethods(['findQuoteRequestTransfer', 'findCustomerReference', 'addQuoteRequestVersion'])
             ->setConstructorArgs([
                 $this->createQuoteRequestConfigMock(),
-                $this->createQuoteRequestEntityManagerInterfaceMock(),
+                $this->createQuoteRequestEntityManagerMock(),
                 $this->createQuoteRequestRepositoryInterfaceMock(),
                 $this->createQuoteRequestReferenceGeneratorInterfaceMock(),
                 $this->createQuoteRequestToCompanyUserInterfaceMock(),
@@ -613,31 +613,29 @@ class UserQuoteRequestWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteRequestEntityManagerInterfaceMock(): MockObject
+    protected function createQuoteRequestEntityManagerMock(): MockObject
     {
-        $quoteRequestEntityManagerInterface = $this->getMockBuilder(QuoteRequestEntityManagerInterface::class)
+        $quoteRequestEntityManager = $this->getMockBuilder(QuoteRequestEntityManager::class)
             ->setMethods([
                 'createQuoteRequest',
                 'updateQuoteRequest',
-                'createQuoteRequestVersion',
-                'updateQuoteRequestVersion',
             ])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $quoteRequestEntityManagerInterface
+        $quoteRequestEntityManager
             ->method('updateQuoteRequest')
             ->willReturnCallback(function (QuoteRequestTransfer $quoteRequestTransfer) {
                 return $quoteRequestTransfer;
             });
 
-        $quoteRequestEntityManagerInterface
+        $quoteRequestEntityManager
             ->method('createQuoteRequest')
             ->willReturnCallback(function (QuoteRequestTransfer $quoteRequestTransfer) {
                 return $quoteRequestTransfer;
             });
 
-        return $quoteRequestEntityManagerInterface;
+        return $quoteRequestEntityManager;
     }
 
     /**
