@@ -60,12 +60,11 @@ class ConnectionProviderTest extends Unit
      *
      * @return void
      */
-    public function testThrowsExceptionWhenReinitializingConnection(): void
+    public function testInvalidRedisConfigurationThrowsException(): void
     {
         $this->resetConnectionPool();
 
         $configurationTransfer = $this->getRedisConfigurationTransfer('');
-        $this->connectionProvider->setupConnection(static::CONNECTION_KEY_SESSION, $configurationTransfer);
         $this->connectionProvider->setupConnection(static::CONNECTION_KEY_SESSION, $configurationTransfer);
     }
 
@@ -86,7 +85,7 @@ class ConnectionProviderTest extends Unit
     /**
      * @return void
      */
-    public function testCanPrepareDifferentConnectionsForDifferentKeys(): void
+    public function testCanPrepareDifferentConnectionsForDifferentConnectionKeys(): void
     {
         $this->resetConnectionPool();
 
@@ -100,6 +99,24 @@ class ConnectionProviderTest extends Unit
         $storageConnection = $this->connectionProvider->getConnection(static::CONNECTION_KEY_STORAGE);
 
         $this->assertNotSame($sessionConnection, $storageConnection);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDoesNotSetUpNewConnectionForTheSameConnectionKey(): void
+    {
+        $this->resetConnectionPool();
+
+        $sessionConfigurationTransfer = $this->getRedisConfigurationTransfer();
+
+        $this->connectionProvider->setupConnection(static::CONNECTION_KEY_SESSION, $sessionConfigurationTransfer);
+        $connection1 = $this->connectionProvider->getConnection(static::CONNECTION_KEY_SESSION);
+
+        $this->connectionProvider->setupConnection(static::CONNECTION_KEY_SESSION, $sessionConfigurationTransfer);
+        $connection2 = $this->connectionProvider->getConnection(static::CONNECTION_KEY_SESSION);
+
+        $this->assertSame($connection1, $connection2);
     }
 
     /**

@@ -78,7 +78,7 @@ class ConnectionProvider implements ConnectionProviderInterface
             return $redisConfigurationTransfer->getConnectionParameters();
         }
 
-        if ($redisConfigurationTransfer->getDataSourceName()) {
+        if (!empty($redisConfigurationTransfer->getDataSourceName())) {
             return $redisConfigurationTransfer->getDataSourceName();
         }
 

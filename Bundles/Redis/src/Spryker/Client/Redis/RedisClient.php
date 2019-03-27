@@ -64,7 +64,9 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      */
     public function set(string $connectionKey, string $key, $value, $expireResolution = null, ?int $expireTTL = null, $flag = null): bool
     {
-        return (bool)$this->getConnection($connectionKey)->set($key, $value, $expireResolution, $expireTTL, $flag);
+        return isset($expireTTL)
+            ? (bool)$this->getConnection($connectionKey)->set($key, $value, $expireResolution, $expireTTL, $flag)
+            : (bool)$this->getConnection($connectionKey)->set($key, $value);
     }
 
     /**
