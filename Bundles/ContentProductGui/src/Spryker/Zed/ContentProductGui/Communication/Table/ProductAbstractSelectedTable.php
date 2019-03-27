@@ -124,6 +124,7 @@ class ProductAbstractSelectedTable extends AbstractTable
         $tableConfiguration = parent::newTableConfiguration();
         $tableConfiguration->setServerSide(false);
         $tableConfiguration->setPaging(false);
+        $tableConfiguration->setOrdering(false);
 
         return $tableConfiguration;
     }
@@ -137,17 +138,21 @@ class ProductAbstractSelectedTable extends AbstractTable
     {
         $results = [];
         if ($this->idProductAbstracts) {
+            $idProductAbstracts = array_values($this->idProductAbstracts);
             $query = $this->productQueryContainer->queryProductAbstract()
-                ->filterByIdProductAbstract_In($this->idProductAbstracts)
+                ->filterByIdProductAbstract_In($idProductAbstracts)
                 ->useSpyProductAbstractLocalizedAttributesQuery()
                     ->filterByFkLocale($this->localeTransfer->getIdLocale())
                 ->endUse();
 
             $queryResults = $this->runQuery($query, $config, true);
 
+            /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
             foreach ($queryResults as $productAbstractEntity) {
-                $results[] = $this->formatRow($productAbstractEntity);
+                $index = array_search($productAbstractEntity->getIdProductAbstract(), $idProductAbstracts);
+                $results[$index] = $this->formatRow($productAbstractEntity);
             }
+            ksort($results);
         }
 
         return $results;

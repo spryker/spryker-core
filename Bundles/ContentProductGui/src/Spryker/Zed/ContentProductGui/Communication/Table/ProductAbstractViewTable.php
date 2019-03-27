@@ -20,13 +20,19 @@ class ProductAbstractViewTable extends AbstractTable
     public const TABLE_CLASS = 'product-abstract-view-table gui-table-data';
     public const BASE_URL = '/content-product-gui/abstract-product/';
 
-    public const COL_ID_PRODUCT_ABSTRACT = 'ID';
-    public const COL_SKU = 'SKU';
+    public const HEADER_NAME = 'Name';
+    public const HEADER_SKU = 'SKU';
+    public const HEADER_ID_PRODUCT_ABSTRACT = 'ID';
+
+    public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const COL_SKU = 'sku';
     public const COL_IMAGE = 'Image';
-    public const COL_NAME = 'Name';
+    public const COL_NAME = 'name';
     public const COL_STORIES = 'Stories';
     public const COL_STATUS = 'Status';
     public const COL_SELECTED = 'Selected';
+
+    public const COL_ALIAS_NAME = 'name';
 
     /**
      * @var \Spryker\Zed\ContentProductGui\Dependency\QueryContainer\ContentProductGuiToProductInterface
@@ -80,13 +86,19 @@ class ProductAbstractViewTable extends AbstractTable
         $this->setTableIdentifier(sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierPostfix));
 
         $config->setHeader([
-            static::COL_ID_PRODUCT_ABSTRACT => static::COL_ID_PRODUCT_ABSTRACT,
-            static::COL_SKU => static::COL_SKU,
+            static::COL_ID_PRODUCT_ABSTRACT => static::HEADER_ID_PRODUCT_ABSTRACT,
+            static::COL_SKU => static::HEADER_SKU,
             static::COL_IMAGE => static::COL_IMAGE,
-            static::COL_NAME => static::COL_NAME,
+            static::COL_NAME => static::HEADER_NAME,
             static::COL_STORIES => static::COL_STORIES,
             static::COL_STATUS => static::COL_STATUS,
             static::COL_SELECTED => static::COL_SELECTED,
+        ]);
+
+        $config->setSearchable([
+            static::COL_ID_PRODUCT_ABSTRACT,
+            static::COL_SKU,
+            static::COL_NAME,
         ]);
 
         $config->setRawColumns([

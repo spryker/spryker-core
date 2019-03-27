@@ -70,6 +70,9 @@ class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPlu
 
         if ($params !== null) {
             $contentProductAbstractListTransfer->fromArray($params);
+            $contentProductAbstractListTransfer->setIdProductAbstracts(
+                array_values($contentProductAbstractListTransfer->getIdProductAbstracts())
+            );
         }
 
         return $contentProductAbstractListTransfer;
