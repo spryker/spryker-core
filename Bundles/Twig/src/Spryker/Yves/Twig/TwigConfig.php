@@ -8,12 +8,14 @@
 namespace Spryker\Yves\Twig;
 
 use ReflectionClass;
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 
+/**
+ * @method \Spryker\Shared\Twig\TwigConfig getSharedConfig()
+ */
 class TwigConfig extends AbstractBundleConfig
 {
     /**
@@ -35,20 +37,43 @@ class TwigConfig extends AbstractBundleConfig
      */
     protected function addProjectTemplatePaths(array $paths)
     {
-        $namespaces = $this->get(KernelConstants::PROJECT_NAMESPACES);
+        $namespaces = $this->getProjectNamespaces();
         $storeName = $this->getStoreName();
-        $themeNames = $this->getThemeNames();
+
+        $themeName = $this->getThemeName();
+        $themeNameDefault = $this->getThemeNameDefault();
 
         foreach ($namespaces as $namespace) {
-            foreach ($themeNames as $themeName) {
+            if ($themeName !== '' && $themeName !== $themeNameDefault) {
                 $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s' . $storeName . '/Theme/' . $themeName;
                 $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s/Theme/' . $themeName;
                 $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Shared/%s' . $storeName . '/Theme/' . $themeName;
                 $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Shared/%s/Theme/' . $themeName;
             }
+
+            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s' . $storeName . '/Theme/' . $themeNameDefault;
+            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Yves/%s/Theme/' . $themeNameDefault;
+            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Shared/%s' . $storeName . '/Theme/' . $themeNameDefault;
+            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Shared/%s/Theme/' . $themeNameDefault;
         }
 
         return $paths;
+    }
+
+    /**
+     * @return array
+     */
+    public function getProjectNamespaces(): array
+    {
+        return $this->getSharedConfig()->getProjectNamespaces();
+    }
+
+    /**
+     * @return array
+     */
+    public function getCoreNamespaces(): array
+    {
+        return $this->getSharedConfig()->getCoreNamespaces();
     }
 
     /**
@@ -58,39 +83,30 @@ class TwigConfig extends AbstractBundleConfig
      */
     protected function addCoreTemplatePaths(array $paths)
     {
-        $namespaces = $this->get(KernelConstants::CORE_NAMESPACES);
-        $themeNames = $this->getThemeNames();
+        $namespaces = $this->getCoreNamespaces();
 
         foreach ($namespaces as $namespace) {
-            foreach ($themeNames as $themeName) {
-                $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Yves/%s/Theme/' . $themeName;
-                $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Shared/%s/Theme/' . $themeName;
-            }
+            $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Yves/%s/Theme/' . $this->getThemeNameDefault();
+            $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Shared/%s/Theme/' . $this->getThemeNameDefault();
         }
 
         return $paths;
     }
 
     /**
-     * @return string[]
+     * @return string
      */
-    protected function getThemeNames(): array
+    public function getThemeName(): string
     {
-        $themes = [
-            $this->get(TwigConstants::YVES_THEME, 'default'),
-        ];
-
-        return $themes;
+        return $this->getSharedConfig()->getYvesThemeName();
     }
 
     /**
-     * @deprecated Please use `getThemeNames()` instead.
-     *
-     * @return array
+     * @return string
      */
-    protected function getThemeName()
+    public function getThemeNameDefault(): string
     {
-        return $this->getThemeNames();
+        return $this->getSharedConfig()->getYvesThemeNameDefault();
     }
 
     /**

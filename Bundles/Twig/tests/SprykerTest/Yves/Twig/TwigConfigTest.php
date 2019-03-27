@@ -28,24 +28,83 @@ class TwigConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetTemplatePathsShouldReturnAnArrayWithOnlyDefaultTemplatePaths()
+    public function testGetTemplatePathsShouldReturnOnlyDefaultTemplatePaths()
     {
+        $this->tester->mockConfigMethod('getProjectNamespaces', ['Foo']);
         $twigConfig = $this->tester->getModuleConfig();
 
         $templatePaths = $twigConfig->getTemplatePaths();
-        $this->assertCount(4, $templatePaths);
+
+        $this->tester->assertPathsInOrder(
+            $templatePaths,
+            [
+                $this->tester->getDefaultPathProjectWithStore(),
+                $this->tester->getDefaultPathProjectWithoutStore(),
+                $this->tester->getDefaultPathProjectSharedWithStore(),
+                $this->tester->getDefaultPathProjectSharedWithoutStore(),
+                $this->tester->getPathSprykerShop(),
+                $this->tester->getPathSprykerShopShared(),
+                $this->tester->getPathSpryker(),
+                $this->tester->getPathSprykerShared(),
+            ]
+        );
     }
 
     /**
      * @return void
      */
-    public function testGetTemplatePathsShouldReturnAnArrayShouldReturnCustomAndDefaultTemplatePaths()
+    public function testGetTemplatePathsShouldReturnOnlyDefaultTemplatePathsWhenThemeNameEqualsDefaultThemeName()
     {
-        $this->tester->mockConfigMethod('getThemeNames', ['custom', 'default']);
+        $this->tester->mockConfigMethod('getThemeName', 'default');
+        $this->tester->mockConfigMethod('getProjectNamespaces', ['Foo']);
         $twigConfig = $this->tester->getModuleConfig();
 
         $templatePaths = $twigConfig->getTemplatePaths();
-        $this->assertCount(8, $templatePaths);
+
+        $this->tester->assertPathsInOrder(
+            $templatePaths,
+            [
+                $this->tester->getDefaultPathProjectWithStore(),
+                $this->tester->getDefaultPathProjectWithoutStore(),
+                $this->tester->getDefaultPathProjectSharedWithStore(),
+                $this->tester->getDefaultPathProjectSharedWithoutStore(),
+                $this->tester->getPathSprykerShop(),
+                $this->tester->getPathSprykerShopShared(),
+                $this->tester->getPathSpryker(),
+                $this->tester->getPathSprykerShared(),
+            ]
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetTemplatePathsShouldReturnCustomAndDefaultTemplatePaths()
+    {
+        $this->tester->mockConfigMethod('getThemeName', 'custom');
+        $this->tester->mockConfigMethod('getProjectNamespaces', ['Foo']);
+
+        $twigConfig = $this->tester->getModuleConfig();
+
+        $templatePaths = $twigConfig->getTemplatePaths();
+
+        $this->tester->assertPathsInOrder(
+            $templatePaths,
+            [
+                $this->tester->getCustomPathProjectWithStore(),
+                $this->tester->getCustomPathProjectWithoutStore(),
+                $this->tester->getCustomPathProjectSharedWithStore(),
+                $this->tester->getCustomPathProjectSharedWithoutStore(),
+                $this->tester->getDefaultPathProjectWithStore(),
+                $this->tester->getDefaultPathProjectWithoutStore(),
+                $this->tester->getDefaultPathProjectSharedWithStore(),
+                $this->tester->getDefaultPathProjectSharedWithoutStore(),
+                $this->tester->getPathSprykerShop(),
+                $this->tester->getPathSprykerShopShared(),
+                $this->tester->getPathSpryker(),
+                $this->tester->getPathSprykerShared(),
+            ]
+        );
     }
 
     /**
@@ -64,5 +123,13 @@ class TwigConfigTest extends Unit
     {
         $twigConfig = new TwigConfig();
         $this->assertIsBool($twigConfig->isPathCacheEnabled());
+    }
+
+    /**
+     * @return \Spryker\Yves\Twig\TwigConfig
+     */
+    public function getModuleConfig()
+    {
+        return $this->tester->getModuleConfig();
     }
 }
