@@ -17,9 +17,27 @@ interface ContentBannerClientInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\ContentBannerTransfer $contentBannerTransfer
      *
      * @return array
      */
     public function execute(ContentBannerTransfer $contentBannerTransfer): array;
+
+    /**
+     * Specification:
+     * - Fetches Unexecuted Banner by ID.
+     * - Executes the term for the banner, resulting in the banner.
+     *
+     * @api
+     *
+     * @param int $idContent
+     * @param string $localeName
+     *
+     * @throws \Spryker\Client\ContentBanner\Exception\MissingBannerTermException
+     *
+     * @return \Generated\Shared\Transfer\ExecutedBannerTransfer
+     */
+    public function getExecutedBannerById(int $idContent, string $localeName): ?ExecutedBannerTransfer;
 }

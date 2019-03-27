@@ -20,4 +20,12 @@ class ContentBannerFactory extends AbstractFactory
     {
         return new BannerTermExecutor();
     }
+
+    /**
+     * @return \Spryker\Client\ContentBanner\Dependency\Client\ContentBannerToContentStorageClientInterface
+     */
+    public function getContentStorageClient(): ContentStorageToStorageClientInterface
+    {
+        return $this->getProvidedDependency(ContentBannerDependencyProvider::CLIENT_CONTENT_STORAGE);
+    }
 }
