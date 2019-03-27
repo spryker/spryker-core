@@ -30,7 +30,7 @@ interface ContentStorageClientInterface
 
     /**
      * Specification:
-     * - Retrieves content by ID through a storage client dependency
+     * - Retrieves content by ID through a storage client dependency.
      * - Returns the pre-executed ("raw") representation.
      *
      * @api
