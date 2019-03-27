@@ -46,6 +46,8 @@ use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter\Pric
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Reader;
 use Spryker\Zed\PriceProduct\Business\Model\ReaderInterface;
+use Spryker\Zed\PriceProduct\Business\Model\Remover;
+use Spryker\Zed\PriceProduct\Business\Model\RemoverInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Writer;
 use Spryker\Zed\PriceProduct\Business\Model\WriterInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
@@ -319,6 +321,16 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductDefaultWriter(
             $this->getRepository(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\RemoverInterface
+     */
+    public function createRemover(): RemoverInterface
+    {
+        return new Remover(
             $this->getEntityManager()
         );
     }

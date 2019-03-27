@@ -65,4 +65,32 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
     ): SpyPriceProductDefaultEntityTransfer {
         return $this->save($spyPriceProductDefaultEntityTransfer);
     }
+
+    /**
+     * @param int $idPriceProduct
+     *
+     * @return void
+     */
+    public function deletePriceProduct(int $idPriceProduct): void
+    {
+        $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByIdPriceProduct($idPriceProduct)
+            ->findOne()
+            ->delete();
+    }
+
+    /**
+     * @param int $idPriceProductDefault
+     *
+     * @return void
+     */
+    public function deletePriceProductDefault(int $idPriceProductDefault): void
+    {
+        $this->getFactory()
+            ->createPriceProductDefaultQuery()
+            ->filterByIdPriceProductDefault($idPriceProductDefault)
+            ->findOne()
+            ->delete();
+    }
 }

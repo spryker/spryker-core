@@ -34,4 +34,18 @@ interface PriceProductEntityManagerInterface
     public function savePriceProductDefaultEntity(
         SpyPriceProductDefaultEntityTransfer $spyPriceProductDefaultEntityTransfer
     ): SpyPriceProductDefaultEntityTransfer;
+
+    /**
+     * @param int $idPriceProduct
+     *
+     * @return void
+     */
+    public function deletePriceProduct(int $idPriceProduct): void;
+
+    /**
+     * @param int $idPriceProductDefault
+     *
+     * @return void
+     */
+    public function deletePriceProductDefault(int $idPriceProductDefault): void;
 }
