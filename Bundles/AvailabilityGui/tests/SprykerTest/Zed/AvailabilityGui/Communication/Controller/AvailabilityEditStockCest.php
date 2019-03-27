@@ -24,8 +24,6 @@ use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
 class AvailabilityEditStockCest
 {
     /**
-     * @group her
-     *
      * @dataProvider stockProvider
      *
      * @param \SprykerTest\Zed\AvailabilityGui\AvailabilityGuiCommunicationTester $i
