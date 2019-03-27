@@ -82,7 +82,7 @@ class ProductType extends AbstractType
             'constraints' => [
                 $this->createQuantityConstraint($options),
             ],
-            'data' => 1.0,
+            'data' => 1,
         ]);
 
         return $this;
