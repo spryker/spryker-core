@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Twig;
 
+use ReflectionClass;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Symfony\Bridge\Twig\Extension\FormExtension;
 
 class TwigConfig extends AbstractBundleConfig
 {
@@ -155,5 +157,25 @@ class TwigConfig extends AbstractBundleConfig
     public function getPermissionMode(): int
     {
         return $this->get(TwigConstants::DIRECTORY_PERMISSION, 0777);
+    }
+
+    /**
+     * @return array
+     */
+    public function getTwigOptions(): array
+    {
+        return $this->get(TwigConstants::ZED_TWIG_OPTIONS, []);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFormTemplateDirectories(): array
+    {
+        $reflectedFormExtension = new ReflectionClass(FormExtension::class);
+
+        return [
+            dirname($reflectedFormExtension->getFileName()) . '/../Resources/views/Form',
+        ];
     }
 }
