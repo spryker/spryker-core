@@ -17,6 +17,8 @@ use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 
 class CommunicationHelper extends Module
 {
+    protected const COMMUNICATION_FACTORY_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Communication\%3$sCommunicationFactory';
+
     /**
      * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|null
      */
@@ -78,15 +80,12 @@ class CommunicationHelper extends Module
     public function getFactory()
     {
         if ($this->factoryStub !== null) {
-            return $this->factoryStub;
+            return $this->injectConfig($this->factoryStub);
         }
 
         $moduleFactory = $this->createFactory();
-        if ($this->hasConfigHelper()) {
-            $moduleFactory->setConfig($this->getConfig());
-        }
 
-        return $moduleFactory;
+        return $this->injectConfig($moduleFactory);
     }
 
     /**
@@ -107,7 +106,21 @@ class CommunicationHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf('\%1$s\%2$s\%3$s\Communication\%3$sCommunicationFactory', rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
+        return sprintf(static::COMMUNICATION_FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|object $moduleFactory
+     *
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
+     */
+    protected function injectConfig($moduleFactory)
+    {
+        if ($this->hasConfigHelper()) {
+            $moduleFactory->setConfig($this->getConfig());
+        }
+
+        return $moduleFactory;
     }
 
     /**

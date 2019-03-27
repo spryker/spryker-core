@@ -19,6 +19,8 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class ConfigHelper extends Module
 {
+    protected const CONFIG_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\%3$sConfig';
+
     /**
      * @var array
      */
@@ -159,7 +161,7 @@ class ConfigHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf('\%1$s\%2$s\%3$s\%3$sConfig', rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
+        return sprintf(static::CONFIG_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
     }
 
     /**

@@ -16,6 +16,8 @@ use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 
 class FactoryHelper extends Module
 {
+    protected const FACTORY_CLASS_NAME_PATTERN = '\%1$s\Yves\%2$s\%2$sFactory';
+
     /**
      * @var \Spryker\Yves\Kernel\AbstractFactory|null
      */
@@ -83,7 +85,7 @@ class FactoryHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf('\%1$s\Yves\%2$s\%2$sFactory', $namespaceParts[0], $namespaceParts[2]);
+        return sprintf(static::FACTORY_CLASS_NAME_PATTERN, $namespaceParts[0], $namespaceParts[2]);
     }
 
     /**

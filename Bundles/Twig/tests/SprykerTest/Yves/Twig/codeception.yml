@@ -1,9 +1,5 @@
 namespace: SprykerTest\Yves\Twig
 
-organization: Spryker
-application: Yves
-module: Twig
-
 paths:
     tests: .
     data: ../../../_data

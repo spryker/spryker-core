@@ -19,7 +19,7 @@ class TwigConfig extends AbstractSharedConfig
      */
     public function getYvesThemeName(): string
     {
-        return $this->get(TwigConstants::YVES_THEME, 'custom');
+        return $this->get(TwigConstants::YVES_THEME, '');
     }
 
     /**

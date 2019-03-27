@@ -18,6 +18,8 @@ use Spryker\Zed\Testify\Locator\Business\BusinessLocator as Locator;
 
 class BusinessHelper extends Module
 {
+    protected const BUSINESS_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory';
+
     /**
      * @var array
      */
@@ -144,7 +146,7 @@ class BusinessHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf('\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory', rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
+        return sprintf(static::BUSINESS_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
     }
 
     /**

@@ -15,6 +15,7 @@ class CmsConfig extends AbstractBundleConfig
     protected const CMS_TWIG_TEMPLATE_PREFIX = '@Cms';
     protected const CMS_PLACEHOLDER_PATTERN = '/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
     protected const CMS_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
+    protected const THEME_NAME_DEFAULT = 'default';
 
     /**
      * @return string
@@ -76,7 +77,7 @@ class CmsConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    protected function getAbsolutePath(string $templateRelativePath, string $twigLayer, string $themeName = 'default'): string
+    protected function getAbsolutePath(string $templateRelativePath, string $twigLayer, string $themeName = self::THEME_NAME_DEFAULT): string
     {
         $templateRelativePath = str_replace(static::CMS_TWIG_TEMPLATE_PREFIX, '', $templateRelativePath);
 
@@ -120,6 +121,6 @@ class CmsConfig extends AbstractBundleConfig
      */
     protected function getThemeNameDefault(): string
     {
-        return 'default';
+        return static::THEME_NAME_DEFAULT;
     }
 }

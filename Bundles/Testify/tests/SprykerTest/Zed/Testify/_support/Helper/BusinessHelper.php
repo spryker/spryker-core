@@ -17,6 +17,8 @@ use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 
 class BusinessHelper extends Module
 {
+    protected const BUSINESS_FACTORY_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory';
+
     /**
      * @var array
      */
@@ -84,15 +86,12 @@ class BusinessHelper extends Module
     public function getFactory()
     {
         if ($this->factoryStub !== null) {
-            return $this->factoryStub;
+            return $this->injectConfig($this->factoryStub);
         }
 
         $moduleFactory = $this->createModuleFactory();
-        if ($this->hasModule('\\' . ConfigHelper::class)) {
-            $moduleFactory->setConfig($this->getConfig());
-        }
 
-        return $moduleFactory;
+        return $this->injectConfig($moduleFactory);
     }
 
     /**
@@ -113,7 +112,21 @@ class BusinessHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf('\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory', rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
+        return sprintf(static::BUSINESS_FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|object $businessFactory
+     *
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     */
+    protected function injectConfig($businessFactory)
+    {
+        if ($this->hasModule('\\' . ConfigHelper::class)) {
+            $businessFactory->setConfig($this->getConfig());
+        }
+
+        return $businessFactory;
     }
 
     /**
