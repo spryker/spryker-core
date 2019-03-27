@@ -87,7 +87,7 @@ class ContentStorageReader implements ContentStorageReaderInterface
 
         return (new UnexecutedContentStorageTransfer())
             ->setIdContent($idContent)
-            ->setTerm(ContentStorageConfig::TERM_KEY)
+            ->setTerm($content[ContentStorageConfig::TERM_KEY])
             ->setContent($content[ContentStorageConfig::CONTENT_KEY]);
     }
 
