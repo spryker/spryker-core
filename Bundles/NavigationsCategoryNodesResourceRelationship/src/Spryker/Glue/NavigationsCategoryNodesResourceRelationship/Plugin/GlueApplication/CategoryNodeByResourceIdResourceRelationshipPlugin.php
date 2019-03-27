@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Plugin;
+namespace Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Plugin\GlueApplication;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
