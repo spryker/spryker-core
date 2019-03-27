@@ -9,7 +9,6 @@ namespace Spryker\Zed\Touch\Business\Model\BulkTouch\Handler;
 
 use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
-use Orm\Zed\Touch\Persistence\SpyTouch;
 
 class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
 {
@@ -25,32 +24,23 @@ class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
         $updated = 0;
         $itemIds = $this->filter->filter($itemIds, $itemType);
         $itemIdChunks = array_chunk($itemIds, self::BULK_UPDATE_CHUNK_SIZE);
+        $enumValueOfItemEvent = $this->getItemEventValueFor($itemEvent);
 
         foreach ($itemIdChunks as $itemIdChunk) {
-            $touchEntities = $this->touchQueryContainer
+            $touchIds = $this->touchQueryContainer
                 ->queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent($itemType, $itemEvent, $itemIdChunk)
-                ->find();
-            foreach ($touchEntities as $touchEntity) {
-                $this->updateTouchEntityWithItemEvent($touchEntity, $itemEvent);
+                ->select(SpyTouchTableMap::COL_ID_TOUCH)
+                ->find()
+                ->getArrayCopy();
 
-                $updated++;
-            }
+            $touchUpdateQuery = $this->touchQueryContainer->queryTouchEntriesByTouchIds($touchIds);
+            $updated += $touchUpdateQuery->update([
+                $this->getTouchedColumnName() => new DateTime(),
+                $this->getItemEventColumnName() => $enumValueOfItemEvent,
+            ]);
         }
 
         return $updated;
-    }
-
-    /**
-     * @param \Orm\Zed\Touch\Persistence\SpyTouch $touchEntity
-     * @param string $itemEvent
-     *
-     * @return void
-     */
-    protected function updateTouchEntityWithItemEvent(SpyTouch $touchEntity, string $itemEvent): void
-    {
-        $touchEntity->setTouched(new DateTime());
-        $touchEntity->setItemEvent($itemEvent);
-        $touchEntity->save();
     }
 
     /**

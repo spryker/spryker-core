@@ -255,13 +255,38 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      */
     public function queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent(string $itemType, string $itemEvent, array $itemIds): SpyTouchQuery
     {
-        $subQuery = '(SELECT COUNT(*) FROM spy_touch as alias WHERE alias.item_id = spy_touch.item_id AND alias.item_type = spy_touch.item_type) = 1';
-
         $query = $this->queryTouchEntriesByItemTypeAndItemIds($itemType, $itemIds)
-            ->condition('cond1', SpyTouchTableMap::COL_ITEM_EVENT . ' = ?', $itemEvent)
-            ->condition('cond2', $subQuery)
-            ->combine(['cond1', 'cond2'], Criteria::LOGICAL_OR);
+            ->condition('itemEventFilterCondition', SpyTouchTableMap::COL_ITEM_EVENT . ' = ?', $itemEvent)
+            ->condition('isUniqueTouchItemCondition', $this->getTouchCounterSubQuery())
+            ->combine(['itemEventFilterCondition', 'isUniqueTouchItemCondition'], Criteria::LOGICAL_OR);
 
         return $query;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $touchIds
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    public function queryTouchEntriesByTouchIds(array $touchIds): SpyTouchQuery
+    {
+        $query = $this->getFactory()->createTouchQuery()
+            ->filterByIdTouch_In($touchIds);
+
+        return $query;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTouchCounterSubQuery(): string
+    {
+        $subQuery = '(SELECT COUNT(*) FROM spy_touch as alias WHERE alias.item_id = spy_touch.item_id AND alias.item_type = spy_touch.item_type) = 1';
+
+        return $subQuery;
     }
 }
