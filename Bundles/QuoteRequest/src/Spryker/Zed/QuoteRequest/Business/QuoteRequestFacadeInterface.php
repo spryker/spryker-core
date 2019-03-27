@@ -84,16 +84,16 @@ interface QuoteRequestFacadeInterface
 
     /**
      * Specification:
-     * - Looks up one "Request for Quote" by provided quote request reference.
+     * - Looks up one "Request for Quote" by provided quote request version reference.
      * - Sets status to "Closed".
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param string $quoteRequestVersionReference
      *
      * @return void
      */
-    public function closeQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): void;
+    public function closeQuoteRequest(string $quoteRequestVersionReference): void;
 
     /**
      * Specification:

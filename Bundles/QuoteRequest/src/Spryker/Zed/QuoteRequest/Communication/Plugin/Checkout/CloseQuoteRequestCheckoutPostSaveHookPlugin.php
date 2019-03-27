@@ -8,7 +8,6 @@
 namespace Spryker\Zed\QuoteRequest\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -22,7 +21,7 @@ class CloseQuoteRequestCheckoutPostSaveHookPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritdoc}
-     * - If quote contains quote request reference - marks quote request as closed.
+     * - If quote contains quote request version reference - marks quote request as closed.
      *
      * @api
      *
@@ -33,14 +32,11 @@ class CloseQuoteRequestCheckoutPostSaveHookPlugin extends AbstractPlugin impleme
      */
     public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        if (!$quoteTransfer->getQuoteRequestReference()) {
+        if (!$quoteTransfer->getQuoteRequestVersionReference()) {
             return;
         }
 
-        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
-            ->setQuoteRequestReference($quoteTransfer->getQuoteRequestReference());
-
         $this->getFacade()
-            ->closeQuoteRequest($quoteRequestCriteriaTransfer);
+            ->closeQuoteRequest($quoteTransfer->getQuoteRequestVersionReference());
     }
 }

@@ -94,15 +94,15 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param string $quoteRequestVersionReference
      *
      * @return void
      */
-    public function closeQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): void
+    public function closeQuoteRequest(string $quoteRequestVersionReference): void
     {
         $this->getFactory()
             ->createQuoteRequestCleaner()
-            ->closeQuoteRequest($quoteRequestCriteriaTransfer);
+            ->closeQuoteRequest($quoteRequestVersionReference);
     }
 
     /**

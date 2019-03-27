@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
@@ -110,8 +111,14 @@ class QuoteRequestVersionMapper
      */
     protected function getQuoteRequest(SpyQuoteRequestVersion $quoteRequestVersion): QuoteRequestTransfer
     {
-        return (new QuoteRequestTransfer())
-            ->fromArray($quoteRequestVersion->getSpyQuoteRequest()->toArray(), true);
+        $quoteRequestEntity = $quoteRequestVersion->getSpyQuoteRequest();
+        $quoteRequestTransfer = (new QuoteRequestTransfer())
+            ->fromArray($quoteRequestEntity->toArray(), true)
+            ->setCompanyUser(
+                (new CompanyUserTransfer())->setIdCompanyUser($quoteRequestEntity->getFkCompanyUser())
+            );
+
+        return $quoteRequestTransfer;
     }
 
     /**
