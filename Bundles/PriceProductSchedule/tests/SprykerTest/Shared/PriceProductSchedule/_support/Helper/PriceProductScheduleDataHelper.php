@@ -209,7 +209,7 @@ class PriceProductScheduleDataHelper extends Module
     /**
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
      */
-    protected function getPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
+    public function getPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
     {
         return new SpyPriceProductScheduleQuery();
     }

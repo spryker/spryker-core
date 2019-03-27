@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 
 /**
  * Auto-generated group annotations
@@ -34,32 +33,52 @@ class PriceProductScheduleApplyTest extends Unit
     protected $tester;
 
     /**
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface
+     */
+    protected $priceProductScheduleFacade;
+
+    /**
+     * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
+     */
+    protected $currencyFacade;
+
+    /**
      * @return void
      */
-    public function testActivePriceProductScheduleShouldApply()
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->priceProductScheduleFacade = $this->tester->getFacade();
+        $this->currencyFacade = $this->tester->getLocator()->currency()->facade();
+    }
+
+    /**
+     * @return void
+     */
+    public function testActivePriceProductScheduleShouldApply(): void
     {
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
-                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
             ],
         ]);
 
         // Act
-        $this->tester->getFacade()->applyScheduledPrices();
+        $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity->isCurrent());
     }
 
     /**
      * @return void
      */
-    public function testPriceProductScheduleInTheDifferentStoreShouldNotApply()
+    public function testPriceProductScheduleInTheDifferentStoreShouldNotApply(): void
     {
         // Assign
         $otherStore = $this->tester->haveStore();
@@ -67,8 +86,7 @@ class PriceProductScheduleApplyTest extends Unit
 
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
-                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_STORE => $otherStore->getIdStore(),
                 ],
@@ -76,25 +94,24 @@ class PriceProductScheduleApplyTest extends Unit
         ]);
 
         // Act
-        $this->tester->getFacade()->applyScheduledPrices();
+        $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity->isCurrent());
     }
 
     /**
      * @return void
      */
-    public function testPriceProductScheduleShouldApplyForDifferentProducts()
+    public function testPriceProductScheduleShouldApplyForDifferentProducts(): void
     {
         // Assign
         $productConcreteTransfer1 = $this->tester->haveProduct();
 
         $priceProductScheduleTransfer1 = $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer1->getFkProductAbstract(),
-                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer1->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer1->getIdProductConcrete(),
             ],
         ]);
 
@@ -102,8 +119,7 @@ class PriceProductScheduleApplyTest extends Unit
 
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer2->getFkProductAbstract(),
-                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer2->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer2->getIdProductConcrete(),
             ],
         ]);
 
@@ -111,29 +127,28 @@ class PriceProductScheduleApplyTest extends Unit
 
         $priceProductScheduleTransfer3 = $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer3->getFkProductAbstract(),
-                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer3->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer3->getIdProductConcrete(),
             ],
         ]);
 
         // Act
-        $this->tester->getFacade()->applyScheduledPrices();
+        $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity1 = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer1->getIdPriceProductSchedule());
+        $priceProductScheduleEntity1 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer1->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity1->isCurrent());
 
-        $priceProductScheduleEntity2 = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
+        $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity2->isCurrent());
 
-        $priceProductScheduleEntity3 = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer3->getIdPriceProductSchedule());
+        $priceProductScheduleEntity3 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer3->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity3->isCurrent());
     }
 
     /**
      * @return void
      */
-    public function testPriceProductScheduleWithDifferentProductsCurrenciesAndPriceTypesShouldApply()
+    public function testPriceProductScheduleWithDifferentProductsCurrenciesAndPriceTypesShouldApply(): void
     {
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
@@ -141,16 +156,14 @@ class PriceProductScheduleApplyTest extends Unit
         $priceProductScheduleTransfer1 = $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
-                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
             ],
         ]);
 
-        $otherCurrency = $this->tester->getLocator()->currency()->facade()->fromIsoCode(static::CHF_ISO_CODE);
+        $otherCurrency = $this->currencyFacade->fromIsoCode(static::CHF_ISO_CODE);
 
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
-                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_CURRENCY => $otherCurrency->getIdCurrency(),
                     MoneyValueTransfer::CURRENCY => $otherCurrency,
@@ -163,7 +176,6 @@ class PriceProductScheduleApplyTest extends Unit
         $priceProductScheduleTransfer3 = $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer3->getFkProductAbstract(),
-                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer3->getFkProductAbstract(),
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_CURRENCY => $otherCurrency->getIdCurrency(),
                     MoneyValueTransfer::CURRENCY => $otherCurrency,
@@ -171,25 +183,138 @@ class PriceProductScheduleApplyTest extends Unit
             ],
         ]);
 
+        $productConcreteTransfer4 = $this->tester->haveProduct();
+
+        $priceProductScheduleTransfer4 = $this->tester->havePriceProductSchedule([
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer4->getIdProductConcrete(),
+                PriceProductTransfer::MONEY_VALUE => [
+                    MoneyValueTransfer::FK_CURRENCY => $otherCurrency->getIdCurrency(),
+                    MoneyValueTransfer::CURRENCY => $otherCurrency,
+                ],
+            ],
+        ]);
+
+
         // Act
-        $this->tester->getFacade()->applyScheduledPrices();
+        $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity1 = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer1->getIdPriceProductSchedule());
+        $priceProductScheduleEntity1 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer1->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity1->isCurrent());
 
-        $priceProductScheduleEntity2 = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
+        $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity2->isCurrent());
 
-        $priceProductScheduleEntity3 = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer3->getIdPriceProductSchedule());
+        $priceProductScheduleEntity3 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer3->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity3->isCurrent());
+
+        $priceProductScheduleEntity4 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer4->getIdPriceProductSchedule());
+        $this->assertTrue($priceProductScheduleEntity4->isCurrent());
     }
 
     /**
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     * @return void
      */
-    protected function getPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
+    public function testPriceProductScheduleShouldApplyForDifferentAbstractProducts(): void
     {
-        return new SpyPriceProductScheduleQuery();
+        // Assign
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
+            [
+                PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+                ],
+            ]
+        );
+
+        $productConcreteTransfer2 = $this->tester->haveProduct();
+        $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
+            [
+                PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer2->getFkProductAbstract(),
+                ],
+            ]
+        );
+
+        //Act
+        $this->priceProductScheduleFacade->applyScheduledPrices();
+
+        //Assert
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $this->assertTrue($priceProductScheduleEntity->isCurrent());
+
+        $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
+        $this->assertTrue($priceProductScheduleEntity2->isCurrent());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPriceProductScheduleShouldApplyForDifferentConcreteProducts(): void
+    {
+        // Assign
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
+            [
+                PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                ],
+            ]
+        );
+
+        $productConcreteTransfer2 = $this->tester->haveProduct();
+        $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
+            [
+                PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer2->getIdProductConcrete(),
+                ],
+            ]
+        );
+
+        //Act
+        $this->priceProductScheduleFacade->applyScheduledPrices();
+
+        //Assert
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $this->assertTrue($priceProductScheduleEntity->isCurrent());
+
+        $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
+        $this->assertTrue($priceProductScheduleEntity2->isCurrent());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPriceProductScheduleShouldApplyForDifferentProductTypes(): void
+    {
+        // Assign
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
+            [
+                PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+                ],
+            ]
+        );
+
+        $productConcreteTransfer2 = $this->tester->haveProduct();
+        $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
+            [
+                PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer2->getIdProductConcrete(),
+                ],
+            ]
+        );
+
+        //Act
+        $this->priceProductScheduleFacade->applyScheduledPrices();
+
+        //Assert
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $this->assertTrue($priceProductScheduleEntity->isCurrent());
+
+        $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
+        $this->assertTrue($priceProductScheduleEntity2->isCurrent());
     }
 }

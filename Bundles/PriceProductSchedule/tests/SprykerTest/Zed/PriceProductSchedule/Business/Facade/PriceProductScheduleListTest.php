@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\PriceProductSchedule\Business\Facade;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 
 /**
  * Auto-generated group annotations
@@ -31,9 +30,24 @@ class PriceProductScheduleListTest extends Unit
     protected $tester;
 
     /**
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface
+     */
+    protected $priceProductScheduleFacade;
+
+    /**
      * @return void
      */
-    public function testPriceProductScheduleFromPriceProductScheduleListShouldNotApply()
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->priceProductScheduleFacade = $this->tester->getFacade();
+    }
+
+    /**
+     * @return void
+     */
+    public function testPriceProductScheduleFromPriceProductScheduleListShouldNotApply(): void
     {
         // Assign
         $priceProductScheduleList = $this->tester->havePriceProductScheduleList(false);
@@ -43,25 +57,16 @@ class PriceProductScheduleListTest extends Unit
             [
                 PriceProductScheduleTransfer::PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleList,
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
                 ],
             ]
         );
 
         // Act
-        $this->tester->getFacade()->applyScheduledPrices();
+        $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity->isCurrent());
-    }
-
-    /**
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    protected function getPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
-    {
-        return new SpyPriceProductScheduleQuery();
     }
 }

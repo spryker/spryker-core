@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
-use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
@@ -42,9 +41,30 @@ class PriceProductScheduleFallbackTest extends Unit
     protected $tester;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
+     */
+    protected $priceProductFacade;
+
+    /**
+     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @return void
      */
-    public function testProductPriceShouldBeRevertedAfterPriceProductScheduleIsOver()
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->priceProductFacade = $this->tester->getFacade();
+        $this->storeFacade = $this->tester->getLocator()->store()->facade();
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductPriceShouldBeRevertedAfterPriceProductScheduleIsOver(): void
     {
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
@@ -62,8 +82,7 @@ class PriceProductScheduleFallbackTest extends Unit
             PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('-1 hour'),
             PriceProductScheduleTransfer::IS_CURRENT => true,
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
-                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
             ],
         ]);
 
@@ -71,22 +90,22 @@ class PriceProductScheduleFallbackTest extends Unit
         $this->getFacadeMock()->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity->isCurrent());
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setStoreName($this->tester->getLocator()->store()->facade()->getCurrentStore()->getName())
+            ->setStoreName($this->storeFacade->getCurrentStore()->getName())
             ->setCurrency($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getCurrency())
             ->setIdProduct($productConcreteTransfer->getIdProductConcrete());
 
-        $priceProductTransfer = $this->tester->getLocator()->priceProduct()->facade()->findPriceProductFor($priceProductFilterTransfer);
+        $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
         $this->assertEquals(static::DEFAULT_PRICE_TYPE_ID, $priceProductTransfer->getFkPriceType());
     }
 
     /**
      * @return void
      */
-    public function testProductPriceShouldBeRemovedIfFallbackPriceTypeNotConfigured()
+    public function testProductPriceShouldBeRemovedIfFallbackPriceTypeNotConfigured(): void
     {
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
@@ -95,8 +114,7 @@ class PriceProductScheduleFallbackTest extends Unit
             PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('-1 hour'),
             PriceProductScheduleTransfer::IS_CURRENT => true,
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
-                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
             ],
         ]);
 
@@ -104,15 +122,15 @@ class PriceProductScheduleFallbackTest extends Unit
         $this->getNotConfiguredFacadeMock()->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity->isCurrent());
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setStoreName($this->tester->getLocator()->store()->facade()->getCurrentStore()->getName())
+            ->setStoreName($this->storeFacade->getCurrentStore()->getName())
             ->setCurrency($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getCurrency())
             ->setIdProduct($productConcreteTransfer->getIdProductConcrete());
 
-        $priceProductTransfer = $this->tester->getLocator()->priceProduct()->facade()->findPriceProductFor($priceProductFilterTransfer);
+        $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
         $this->assertNull(static::DEFAULT_PRICE_TYPE_ID, $priceProductTransfer);
     }
 
@@ -129,14 +147,6 @@ class PriceProductScheduleFallbackTest extends Unit
             PriceProductTransfer::ID_PRICE_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
         ];
-    }
-
-    /**
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    protected function getPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
-    {
-        return new SpyPriceProductScheduleQuery();
     }
 
     /**
