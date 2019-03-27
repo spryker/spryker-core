@@ -33,8 +33,9 @@ class PriceProductScheduleListTest extends Unit
     /**
      * @return void
      */
-    public function testInactiveScheduleList()
+    public function testPriceProductScheduleFromPriceProductScheduleListShouldNotApply()
     {
+        // Assign
         $priceProductScheduleList = $this->tester->havePriceProductScheduleList(false);
         $productConcreteTransfer = $this->tester->haveProduct();
 
@@ -48,11 +49,11 @@ class PriceProductScheduleListTest extends Unit
             ]
         );
 
-        $priceProductScheduleFacade = $this->tester->getFacade();
+        // Act
+        $this->tester->getFacade()->applyScheduledPrices();
 
-        $priceProductScheduleFacade->applyScheduledPrices();
+        // Assert
         $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-
         $this->assertFalse($priceProductScheduleEntity->isCurrent());
     }
 

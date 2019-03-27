@@ -19,7 +19,6 @@ use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
-use SprykerTest\Shared\PriceProductSchedule\Helper\PriceProductScheduleDataHelper;
 
 /**
  * Auto-generated group annotations
@@ -34,6 +33,9 @@ use SprykerTest\Shared\PriceProductSchedule\Helper\PriceProductScheduleDataHelpe
  */
 class PriceProductScheduleFallbackTest extends Unit
 {
+    public const DEFAULT_PRICE_TYPE_ID = 1;
+    public const PRICE_TYPE_ID = 2;
+
     /**
      * @var \SprykerTest\Zed\PriceProductSchedule\PriceProductScheduleBusinessTester
      */
@@ -42,12 +44,13 @@ class PriceProductScheduleFallbackTest extends Unit
     /**
      * @return void
      */
-    public function testScheduledDateRangeIsOver()
+    public function testProductPriceShouldBeRevertedAfterPriceProductScheduleIsOver()
     {
+        // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $priceTypeTransfer = (new PriceTypeTransfer())
-            ->setIdPriceType(PriceProductScheduleDataHelper::PRICE_TYPE_ID)
-            ->setName('test');
+            ->setIdPriceType(static::PRICE_TYPE_ID)
+            ->setName('ORIGINAL');
 
         $priceProductOverride = [
             PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer,
@@ -55,10 +58,8 @@ class PriceProductScheduleFallbackTest extends Unit
 
         $this->tester->havePriceProduct(array_merge($priceProductOverride, $this->getPriceProductOverrideData($productConcreteTransfer)));
 
-        $activeTo = new DateTime();
-        $activeTo->modify('-1 hour');
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule([
-            PriceProductScheduleTransfer::ACTIVE_TO => $activeTo,
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('-1 hour'),
             PriceProductScheduleTransfer::IS_CURRENT => true,
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
@@ -66,9 +67,10 @@ class PriceProductScheduleFallbackTest extends Unit
             ],
         ]);
 
-        $priceProductScheduleFacade = $this->tester->getFacade();
-        $priceProductScheduleFacade->applyScheduledPrices();
+        // Act
+        $this->getFacadeMock()->applyScheduledPrices();
 
+        // Assert
         $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity->isCurrent());
 
@@ -76,21 +78,21 @@ class PriceProductScheduleFallbackTest extends Unit
             ->setStoreName($this->tester->getLocator()->store()->facade()->getCurrentStore()->getName())
             ->setCurrency($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getCurrency())
             ->setIdProduct($productConcreteTransfer->getIdProductConcrete());
+
         $priceProductTransfer = $this->tester->getLocator()->priceProduct()->facade()->findPriceProductFor($priceProductFilterTransfer);
-        $this->assertEquals(PriceProductScheduleDataHelper::PRICE_TYPE_ID, $priceProductTransfer->getFkPriceType());
+        $this->assertEquals(static::DEFAULT_PRICE_TYPE_ID, $priceProductTransfer->getFkPriceType());
     }
 
     /**
      * @return void
      */
-    public function testProductHasNoPriceForFallbackPriceType()
+    public function testProductPriceShouldBeRemovedIfFallbackPriceTypeNotConfigured()
     {
+        // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
 
-        $activeTo = new DateTime();
-        $activeTo->modify('-1 hour');
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule([
-            PriceProductScheduleTransfer::ACTIVE_TO => $activeTo,
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('-1 hour'),
             PriceProductScheduleTransfer::IS_CURRENT => true,
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
@@ -98,9 +100,10 @@ class PriceProductScheduleFallbackTest extends Unit
             ],
         ]);
 
-        $priceProductScheduleFacade = $this->getFacadeMock();
-        $priceProductScheduleFacade->applyScheduledPrices();
+        // Act
+        $this->getNotConfiguredFacadeMock()->applyScheduledPrices();
 
+        // Assert
         $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity->isCurrent());
 
@@ -110,7 +113,7 @@ class PriceProductScheduleFallbackTest extends Unit
             ->setIdProduct($productConcreteTransfer->getIdProductConcrete());
 
         $priceProductTransfer = $this->tester->getLocator()->priceProduct()->facade()->findPriceProductFor($priceProductFilterTransfer);
-        $this->assertNull(PriceProductScheduleDataHelper::PRICE_TYPE_ID, $priceProductTransfer);
+        $this->assertNull(static::DEFAULT_PRICE_TYPE_ID, $priceProductTransfer);
     }
 
     /**
@@ -182,6 +185,48 @@ class PriceProductScheduleFallbackTest extends Unit
 
         $configMock->method('findFallbackPriceType')
             ->willReturn(PriceProductScheduleConfig::PRICE_TYPE_ORIGINAL);
+
+        return $configMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface
+     */
+    protected function getNotConfiguredFacadeMock(): PriceProductScheduleFacadeInterface
+    {
+        /** @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade $facade */
+        $facade = $this->tester->getFacade();
+        $facade->setFactory($this->getNotConfiguredFactoryMock());
+
+        return $facade;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory
+     */
+    protected function getNotConfiguredFactoryMock()
+    {
+        $factoryMock = $this->getMockBuilder(PriceProductScheduleBusinessFactory::class)
+            ->setMethods(['getConfig'])
+            ->getMock();
+
+        $factoryMock->method('getConfig')
+            ->willReturn($this->getNotConfiguredConfigMock());
+
+        return $factoryMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
+     */
+    protected function getNotConfiguredConfigMock()
+    {
+        $configMock = $this->getMockBuilder(PriceProductScheduleConfig::class)
+            ->setMethods(['findFallbackPriceType'])
+            ->getMock();
+
+        $configMock->method('findFallbackPriceType')
+            ->willReturn(null);
 
         return $configMock;
     }

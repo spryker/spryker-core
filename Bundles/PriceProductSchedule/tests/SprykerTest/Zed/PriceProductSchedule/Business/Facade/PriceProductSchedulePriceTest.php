@@ -35,16 +35,14 @@ class PriceProductSchedulePriceTest extends Unit
     /**
      * @return void
      */
-    public function testActiveScheduledDateRangesWithEqualDurationAndDifferentGrossPrices()
+    public function testPriceProductScheduleWithLowestGrossPriceShouldApply()
     {
-        $activeFrom = new DateTime();
-        $activeFrom->modify('-1 hour');
-
+        // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
+                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime())->modify('-1 hour'),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
@@ -54,12 +52,10 @@ class PriceProductSchedulePriceTest extends Unit
                 ],
             ]
         );
-        $activeFrom2 = new DateTime();
-        $activeFrom2->modify('-1 hour');
 
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom2,
+                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime())->modify('-1 hour'),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
@@ -70,9 +66,10 @@ class PriceProductSchedulePriceTest extends Unit
             ]
         );
 
-        $priceProductScheduleFacade = $this->tester->getFacade();
-        $priceProductScheduleFacade->applyScheduledPrices();
+        // Act
+        $this->tester->getFacade()->applyScheduledPrices();
 
+        // Assert
         $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity->isCurrent());
 
@@ -83,16 +80,14 @@ class PriceProductSchedulePriceTest extends Unit
     /**
      * @return void
      */
-    public function testTwoActiveScheduledDateRangesWithEqualDurationAndDifferentNetPrices()
+    public function testPriceProductScheduleWithLowestNetPriceShouldApply()
     {
-        $activeFrom = new DateTime();
-        $activeFrom->modify('-1 hour');
-
+        // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
+                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime())->modify('-1 hour'),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
@@ -104,12 +99,9 @@ class PriceProductSchedulePriceTest extends Unit
             ]
         );
 
-        $activeFrom2 = new DateTime();
-        $activeFrom2->modify('-1 hour');
-
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom2,
+                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime())->modify('-1 hour'),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
@@ -121,9 +113,10 @@ class PriceProductSchedulePriceTest extends Unit
             ]
         );
 
-        $priceProductScheduleFacade = $this->tester->getFacade();
-        $priceProductScheduleFacade->applyScheduledPrices();
+        // Act
+        $this->tester->getFacade()->applyScheduledPrices();
 
+        // Assert
         $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity->isCurrent());
 

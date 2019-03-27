@@ -26,71 +26,54 @@ use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
  */
 class PriceProductScheduleDateTest extends Unit
 {
+    protected const DATE_FORMAT = 'Y-m-d H:m:i';
+
     /**
      * @var \SprykerTest\Zed\PriceProductSchedule\PriceProductScheduleBusinessTester
      */
     protected $tester;
 
     /**
+     * @dataProvider priceProductScheduleShouldApplyForActiveDateRangesDataProvider
+     *
+     * @param string $activeFrom
+     * @param string $activeTo
+     *
      * @return void
      */
-    public function testActiveScheduledDateRange()
+    public function testPriceProductScheduleShouldApplyForActiveDateRanges(string $activeFrom, string $activeTo)
     {
+        // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
                 PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
             ],
+            PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
+            PriceProductScheduleTransfer::ACTIVE_TO => $activeTo,
         ]);
 
-        $priceProductScheduleFacade = $this->tester->getFacade();
+        // Act
+        $this->tester->getFacade()->applyScheduledPrices();
 
-        $priceProductScheduleFacade->applyScheduledPrices();
+        // Assert
         $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-
         $this->assertTrue($priceProductScheduleEntity->isCurrent());
     }
 
     /**
+     * @dataProvider priceProductScheduleShouldNotApplyForNotActiveDateRangesDataProvider
+     *
+     * @param string $activeFrom
+     * @param string $activeTo
+     *
      * @return void
      */
-    public function testActiveScheduledDates()
+    public function testPriceProductScheduleShouldNotApplyForNotActiveDateRanges(string $activeFrom, string $activeTo)
     {
+        // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
-
-        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
-            [
-                PriceProductScheduleTransfer::ACTIVE_FROM => new DateTime(),
-                PriceProductScheduleTransfer::ACTIVE_TO => new DateTime(),
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
-                ],
-            ]
-        );
-
-        $priceProductScheduleFacade = $this->tester->getFacade();
-
-        $priceProductScheduleFacade->applyScheduledPrices();
-        $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-
-        $this->assertTrue($priceProductScheduleEntity->isCurrent());
-    }
-
-    /**
-     * @return void
-     */
-    public function testScheduledDateRangeInFuture()
-    {
-        $activeFrom = new DateTime();
-        $activeFrom->modify('+5 days');
-
-        $activeTo = new DateTime();
-        $activeTo->modify('+10 days');
-
-        $productConcreteTransfer = $this->tester->haveProduct();
-
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
@@ -102,53 +85,21 @@ class PriceProductScheduleDateTest extends Unit
             ]
         );
 
-        $priceProductScheduleFacade = $this->tester->getFacade();
+        // Act
+        $this->tester->getFacade()->applyScheduledPrices();
 
-        $priceProductScheduleFacade->applyScheduledPrices();
+        // Assert
         $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-
         $this->assertFalse($priceProductScheduleEntity->isCurrent());
     }
 
     /**
      * @return void
      */
-    public function testScheduledDateRangeInPast()
+    public function testActivePriceProductScheduleShouldStayActive()
     {
-        $activeFrom = new DateTime();
-        $activeFrom->modify('-15 days');
-
-        $activeTo = new DateTime();
-        $activeTo->modify('-5 days');
-
+        // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
-
-        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
-            [
-                PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
-                PriceProductScheduleTransfer::ACTIVE_TO => $activeTo,
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
-                ],
-            ]
-        );
-
-        $priceProductScheduleFacade = $this->tester->getFacade();
-
-        $priceProductScheduleFacade->applyScheduledPrices();
-        $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-
-        $this->assertFalse($priceProductScheduleEntity->isCurrent());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCurrentSchedule()
-    {
-        $productConcreteTransfer = $this->tester->haveProduct();
-
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::IS_CURRENT => true,
@@ -159,24 +110,26 @@ class PriceProductScheduleDateTest extends Unit
             ]
         );
 
-        $priceProductScheduleFacade = $this->tester->getFacade();
+        // Act
+        $this->tester->getFacade()->applyScheduledPrices();
 
-        $priceProductScheduleFacade->applyScheduledPrices();
+        // Assert
         $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-
         $this->assertTrue($priceProductScheduleEntity->isCurrent());
     }
 
     /**
+     * @dataProvider priceProductScheduleShouldStayActiveForLessDurationDataProvider
+     *
+     * @param string $activeFrom
+     * @param string $activeFrom2
+     *
      * @return void
      */
-    public function testActiveScheduledDateRangesOneWithLessDuration()
+    public function testPriceProductScheduleShouldStayActiveForLessDuration(string $activeFrom, string $activeFrom2)
     {
-        $activeFrom = new DateTime();
-        $activeFrom->modify('-1 hour');
-
+        // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
-
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
@@ -188,9 +141,6 @@ class PriceProductScheduleDateTest extends Unit
             ]
         );
 
-        $activeFrom2 = new DateTime();
-        $activeFrom2->modify('-2 hour');
-
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom2,
@@ -201,9 +151,10 @@ class PriceProductScheduleDateTest extends Unit
             ]
         );
 
-        $priceProductScheduleFacade = $this->tester->getFacade();
-        $priceProductScheduleFacade->applyScheduledPrices();
+        //Act
+        $this->tester->getFacade()->applyScheduledPrices();
 
+        //Assert
         $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity->isCurrent());
 
@@ -212,15 +163,17 @@ class PriceProductScheduleDateTest extends Unit
     }
 
     /**
+     * @dataProvider priceProductScheduleShouldApplyForLowestDurationDataProvider
+     *
+     * @param string $activeFrom
+     * @param string $activeFrom2
+     *
      * @return void
      */
-    public function testActiveScheduledDateRangesOneWithLowestDuration()
+    public function testPriceProductScheduleShouldApplyForLowestDuration(string $activeFrom, string $activeFrom2)
     {
-        $activeFrom = new DateTime();
-        $activeFrom->modify('-1 hour');
-
+        // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
-
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
@@ -231,23 +184,20 @@ class PriceProductScheduleDateTest extends Unit
             ]
         );
 
-        $activeFrom2 = new DateTime();
-        $activeFrom2->modify('-2 hour');
-
-        $productConcreteTransfer2 = $this->tester->haveProduct();
-
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom2,
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer2->getFkProductAbstract(),
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer2->getFkProductAbstract(),
+                    PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
                 ],
             ]
         );
-        $priceProductScheduleFacade = $this->tester->getFacade();
-        $priceProductScheduleFacade->applyScheduledPrices();
 
+        //Act
+        $this->tester->getFacade()->applyScheduledPrices();
+
+        // Assert
         $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity->isCurrent());
 
@@ -258,10 +208,10 @@ class PriceProductScheduleDateTest extends Unit
     /**
      * @return void
      */
-    public function testActiveScheduledDateRangeEndsRightNow()
+    public function testEndedPriceProductScheduleShouldBeEnabledAndTheNewOneShouldApply()
     {
+        // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
-
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::ACTIVE_TO => new DateTime(),
@@ -292,9 +242,10 @@ class PriceProductScheduleDateTest extends Unit
             ]
         );
 
-        $priceProductScheduleFacade = $this->tester->getFacade();
-        $priceProductScheduleFacade->applyScheduledPrices();
+        // Act
+        $this->tester->getFacade()->applyScheduledPrices();
 
+        // Assert
         $priceProductScheduleEntity = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity->isCurrent());
 
@@ -303,6 +254,74 @@ class PriceProductScheduleDateTest extends Unit
 
         $priceProductScheduleEntity3 = $this->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer3->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity3->isCurrent());
+    }
+
+    /**
+     * @return array
+     */
+    public function priceProductScheduleShouldApplyForActiveDateRangesDataProvider(): array
+    {
+        return [
+            'active scheduled date range' => [
+                (new DateTime())->modify('-5 days')->format(static::DATE_FORMAT),
+                (new DateTime())->modify('+5 days')->format(static::DATE_FORMAT)
+            ],
+            'active scheduled current dates' => [
+                (new DateTime())->format('Y-m-d H:m:i'),
+                (new DateTime())->format('Y-m-d H:m:i')
+            ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function priceProductScheduleShouldNotApplyForNotActiveDateRangesDataProvider(): array
+    {
+        return [
+            'scheduled date range in future' => [
+                (new DateTime())->modify('+5 days')->format(static::DATE_FORMAT),
+                (new DateTime())->modify('+10 days')->format(static::DATE_FORMAT)
+            ],
+            'scheduled date range in past' => [
+                (new DateTime())->modify('-10 days')->format(static::DATE_FORMAT),
+                (new DateTime())->modify('-5 days')->format(static::DATE_FORMAT)
+            ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function priceProductScheduleShouldStayActiveForLessDurationDataProvider(): array
+    {
+        return [
+            'with one hour range' => [
+                (new DateTime())->modify('-1 hour')->format(static::DATE_FORMAT),
+                (new DateTime())->modify('-2 hour')->format(static::DATE_FORMAT)
+            ],
+            'with 10 days range' => [
+                (new DateTime())->modify('-5 days')->format(static::DATE_FORMAT),
+                (new DateTime())->modify('-10 days')->format(static::DATE_FORMAT)
+            ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function priceProductScheduleShouldApplyForLowestDurationDataProvider(): array
+    {
+        return [
+            'with one hour range' => [
+                (new DateTime())->modify('-1 hour')->format(static::DATE_FORMAT),
+                (new DateTime())->modify('-2 hour')->format(static::DATE_FORMAT)
+            ],
+            'with 10 days range' => [
+                (new DateTime())->modify('-5 days')->format(static::DATE_FORMAT),
+                (new DateTime())->modify('-10 days')->format(static::DATE_FORMAT)
+            ]
+        ];
     }
 
     /**

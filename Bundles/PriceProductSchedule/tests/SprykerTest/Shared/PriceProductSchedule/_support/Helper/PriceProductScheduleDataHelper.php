@@ -40,9 +40,6 @@ class PriceProductScheduleDataHelper extends Module
     public const NET_PRICE = 100;
     public const GROSS_PRICE = 80;
 
-    public const DEFAULT_PRICE_TYPE_ID = 1;
-    public const PRICE_TYPE_ID = 2;
-
     public const ABSTRACT_ID_PRODUCT = 1;
     public const CONCRETE_ID_PRODUCT = 1;
 
@@ -115,6 +112,8 @@ class PriceProductScheduleDataHelper extends Module
         $this->getDataCleanupHelper()->_addCleanup(function () use ($spyPriceProductScheduleEntity) {
             $this->cleanupPriceProductSchedule($spyPriceProductScheduleEntity->getIdPriceProductSchedule());
         });
+
+        $priceProductScheduleTransfer->setIdPriceProductSchedule($spyPriceProductScheduleEntity->getIdPriceProductSchedule());
 
         return $priceProductScheduleTransfer;
     }
