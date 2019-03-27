@@ -110,6 +110,22 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequestQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestWriter()
+            ->updateQuoteRequestQuote($quoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -181,6 +197,38 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     {
         return $this->getRepository()
             ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function markQuoteRequestAsDraft(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestWriter()
+            ->markQuoteRequestAsDraft($quoteRequestCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function markQuoteRequestAsWaiting(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestWriter()
+            ->markQuoteRequestAsWaiting($quoteRequestCriteriaTransfer);
     }
 
     /**

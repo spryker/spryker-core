@@ -53,7 +53,7 @@ class QuoteRequestConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertQuoteRequestToEditableQuoteWithConvertibleQuoteRequest(): void
+    public function testConvertQuoteRequestToQuoteWithConvertibleQuoteRequest(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())

@@ -64,6 +64,22 @@ class QuoteRequestStub implements QuoteRequestStubInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequestQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
+        $quoteRequestResponseTransfer = $this->zedRequestClient->call(
+            '/quote-request/gateway/update-quote-request-quote',
+            $quoteRequestTransfer
+        );
+
+        return $quoteRequestResponseTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -93,6 +109,38 @@ class QuoteRequestStub implements QuoteRequestStubInterface
         );
 
         return $quoteRequestCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function markQuoteRequestAsDraft(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
+        $quoteRequestResponseTransfer = $this->zedRequestClient->call(
+            '/quote-request/gateway/mark-quote-request-as-draft',
+            $quoteRequestCriteriaTransfer
+        );
+
+        return $quoteRequestResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function markQuoteRequestAsWaiting(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
+        $quoteRequestResponseTransfer = $this->zedRequestClient->call(
+            '/quote-request/gateway/mark-quote-request-as-waiting',
+            $quoteRequestCriteriaTransfer
+        );
+
+        return $quoteRequestResponseTransfer;
     }
 
     /**

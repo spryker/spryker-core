@@ -24,4 +24,11 @@ interface QuoteRequestCheckerInterface
      * @return bool
      */
     public function isQuoteRequestReady(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestDraft(QuoteRequestTransfer $quoteRequestTransfer): bool;
 }

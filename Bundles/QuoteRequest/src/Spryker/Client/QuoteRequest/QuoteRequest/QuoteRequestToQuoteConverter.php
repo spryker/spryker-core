@@ -70,6 +70,28 @@ class QuoteRequestToQuoteConverter implements QuoteRequestToQuoteConverterInterf
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    {
+        if (!$this->quoteRequestChecker->isQuoteRequestDraft($quoteRequestTransfer)) {
+            return $this->getErrorResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS);
+        }
+
+        $latestQuoteRequestVersionTransfer = $quoteRequestTransfer->requireLatestVersion()
+            ->getLatestVersion();
+
+        $quoteTransfer = $latestQuoteRequestVersionTransfer->getQuote()
+            ->setQuoteRequestVersionReference($latestQuoteRequestVersionTransfer->getVersionReference())
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
+            ->setName($quoteRequestTransfer->getQuoteRequestReference());
+
+        return $this->persistentCartClient->persistCustomerQuote($quoteTransfer);
+    }
+
+    /**
      * @param string $message
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

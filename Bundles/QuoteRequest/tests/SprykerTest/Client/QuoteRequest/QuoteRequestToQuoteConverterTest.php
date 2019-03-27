@@ -64,7 +64,7 @@ class QuoteRequestToQuoteConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertQuoteRequestToQuoteWithConvertibleQuoteRequest(): void
+    public function testConvertQuoteRequestToLockedQuoteWithConvertibleQuoteRequest(): void
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
@@ -83,7 +83,7 @@ class QuoteRequestToQuoteConverterTest extends Unit
         $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
 
         // Act
-        $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToQuote($quoteRequestTransfer);
+        $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
 
         // Assert
         $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
@@ -92,7 +92,7 @@ class QuoteRequestToQuoteConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertQuoteRequestToQuoteWithWrongStatus(): void
+    public function testConvertQuoteRequestToLockedQuoteWithWrongStatus(): void
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
@@ -100,7 +100,7 @@ class QuoteRequestToQuoteConverterTest extends Unit
         ]))->build();
 
         // Act
-        $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToQuote($quoteRequestTransfer);
+        $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
@@ -113,7 +113,7 @@ class QuoteRequestToQuoteConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertQuoteRequestToQuoteWithoutLatestQuoteRequestVersion(): void
+    public function testConvertQuoteRequestToLockedQuoteWithoutLatestQuoteRequestVersion(): void
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
@@ -121,7 +121,7 @@ class QuoteRequestToQuoteConverterTest extends Unit
         ]))->build();
 
         // Act
-        $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToQuote($quoteRequestTransfer);
+        $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());

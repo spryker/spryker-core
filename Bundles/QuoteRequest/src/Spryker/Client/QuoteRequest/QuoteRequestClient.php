@@ -56,6 +56,20 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequestQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getZedStub()->updateQuoteRequestQuote($quoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -133,6 +147,22 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestToQuoteConverter()
+            ->convertQuoteRequestToQuote($quoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
      * @return bool
      */
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
@@ -151,11 +181,59 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @return bool
      */
+    public function isQuoteRequestDraft(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteRequestChecker()
+            ->isQuoteRequestDraft($quoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
     public function isQuoteRequestReady(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $this->getFactory()
             ->createQuoteRequestChecker()
             ->isQuoteRequestReady($quoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function markQuoteRequestAsDraft(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestStub()
+            ->markQuoteRequestAsDraft($quoteRequestCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function markQuoteRequestAsWaiting(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestStub()
+            ->markQuoteRequestAsWaiting($quoteRequestCriteriaTransfer);
     }
 
     /**
