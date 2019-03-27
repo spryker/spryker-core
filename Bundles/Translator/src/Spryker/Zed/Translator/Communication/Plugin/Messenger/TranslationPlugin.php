@@ -9,7 +9,7 @@ namespace Spryker\Zed\Translator\Communication\Plugin\Messenger;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface;
-use Spryker\Zed\Translator\Business\Translator\TranslatorInterface;
+use Spryker\Zed\Translator\Business\Translator\Translator;
 
 /**
  * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
@@ -29,10 +29,13 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
      */
     public function hasKey($keyName): bool
     {
-        /** @var \Symfony\Component\Translation\MessageCatalogueInterface $catalogue */
-        $catalogue = $this->getTranslator()->getCatalogue($this->getLocaleName());
+        $translator = $this->getTranslator();
 
-        return $catalogue->defines($keyName);
+        if ($translator instanceof Translator) {
+            return $translator->getCatalogue($this->getLocaleName())->has($keyName);
+        }
+
+        return $translator->has($keyName, $this->getLocaleName());
     }
 
     /**
@@ -59,9 +62,11 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
     }
 
     /**
-     * @return \Spryker\Zed\Translator\Business\Translator\TranslatorInterface
+     * deprecated `\Spryker\Zed\Translator\Business\Translator\Translator` should not be used anymore.
+     *
+     * @return \Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface|\Spryker\Zed\Translator\Business\Translator\Translator
      */
-    protected function getTranslator(): TranslatorInterface
+    protected function getTranslator()
     {
         return $this->getFactory()->getApplication()['translator'];
     }

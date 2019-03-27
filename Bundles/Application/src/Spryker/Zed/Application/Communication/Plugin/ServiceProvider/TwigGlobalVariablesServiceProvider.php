@@ -15,6 +15,10 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use `\Spryker\Zed\Application\Communication\Plugin\Twig\ApplicationTwigPlugin` instead.
+ * The global twig variables `currentController` and `store` are removed in the `ApplicationTwigPlugin`.
+ * If you have those in your twig files, please add them on your own.
+ *
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
