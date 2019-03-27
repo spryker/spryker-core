@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ContentBannersRestApi\Mapper;
 
+use Generated\Shared\Transfer\BannerTypeTransfer;
 use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
 use Generated\Shared\Transfer\RestContentBannerAttributesTransfer;
 
@@ -23,5 +24,18 @@ class ContentBannerMapper implements ContentBannerMapperInterface
         RestContentBannerAttributesTransfer $restContentBannerAttributesTransfer
     ): RestContentBannerAttributesTransfer {
         return $restContentBannerAttributesTransfer->fromArray($executedContentStorageTransfer->getContent(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\BannerTypeTransfer $bannerTypeTransfer
+     * @param \Generated\Shared\Transfer\RestContentBannerAttributesTransfer $restContentBannerAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestContentBannerAttributesTransfer
+     */
+    public function mapBannerTypeTransferToRestContentBannerAttributes(
+        BannerTypeTransfer $bannerTypeTransfer,
+        RestContentBannerAttributesTransfer $restContentBannerAttributesTransfer
+    ): RestContentBannerAttributesTransfer {
+        return $restContentBannerAttributesTransfer->fromArray($bannerTypeTransfer->toArray(), true);
     }
 }

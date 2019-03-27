@@ -7,13 +7,15 @@
 
 namespace Spryker\Client\ContentBanner\Dependency\Client;
 
+use Generated\Shared\Transfer\ContentQueryTransfer;
+
 interface ContentBannerToContentStorageClientInterface
 {
     /**
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\UnexecutedContentStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ContentQueryTransfer|null
      */
-    public function findUnexecutedContentById(int $idContent, string $localeName);
+    public function findContentQueryById(int $idContent, string $localeName): ?ContentQueryTransfer;
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ContentBanner;
 
+use Generated\Shared\Transfer\BannerTermTransfer;
+use Generated\Shared\Transfer\BannerTypeTransfer;
 use Generated\Shared\Transfer\ContentBannerTransfer;
 use Spryker\Client\ContentBanner\Exception\MissingBannerTermException;
 use Spryker\Client\Kernel\AbstractClient;
@@ -45,22 +47,27 @@ class ContentBannerClient extends AbstractClient implements ContentBannerClientI
      *
      * @throws \Spryker\Client\ContentBanner\Exception\MissingBannerTermException
      *
-     * @return \Generated\Shared\Transfer\ExecutedBannerTransfer|null
+     * @return \Generated\Shared\Transfer\BannerTypeTransfer|null
      */
-    public function getExecutedBannerById(int $idContent, string $localeName): ?ExecutedBannerTransfer
+    public function findBannerById(int $idContent, string $localeName): ?BannerTypeTransfer
     {
-        $unexecutedContent = $this->getFactory()
-            ->getContentStorageClient()->findUnexecutedContentById($idContent, $localeName);
+        $bannerQuery = $this->getFactory()
+            ->getContentStorageClient()
+            ->findContentQueryById($idContent, $localeName);
 
-        $term = $unexecutedContent->getTerm();
+        if (!$bannerQuery) {
+            return null;
+        }
+
+        $term = $bannerQuery->getTerm();
 
         if ($term === ContentBannerConfig::CONTENT_TERM_BANNER) {
-            $contentBannerTransfer = new ContentBannerTransfer();
-            $contentBannerTransfer->fromArray($unexecutedContent->getContent(), true);
+            $bannerTermTransfer = new BannerTermTransfer();
+            $bannerTermTransfer->fromArray($bannerQuery->getQueryParameters(), true);
 
             return $this->getFactory()
-                ->createBannerTermExecutor()
-                ->execute($contentBannerTransfer);
+                ->createBannerTermQuery()
+                ->execute($bannerTermTransfer);
         }
 
         throw new MissingBannerTermException(sprintf('There is no ContentBanner Term which can work with the term %s.', $termKey));

@@ -7,31 +7,31 @@
 
 namespace Spryker\Glue\ContentBannersRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
+use Generated\Shared\Transfer\BannerTypeTransfer;
 
-class ContentBannersRestApiToContentStorageClientBridge implements ContentBannersRestApiToContentStorageClientInterface
+class ContentBannersRestApiToContentBannerClientBridge implements ContentBannersRestApiToContentBannerClientInterface
 {
     /**
-     * @var \Spryker\Client\ContentStorage\ContentStorageClientInterface
+     * @var \Spryker\Client\ContentBanner\ContentBannerClientInterface
      */
-    protected $contentStorageClient;
+    protected $contentBannerClient;
 
     /**
-     * @param \Spryker\Client\ContentStorage\ContentStorageClientInterface $contentStorageClient
+     * @param \Spryker\Client\ContentBanner\ContentBannerClientInterface $contentBannerClient
      */
-    public function __construct($contentStorageClient)
+    public function __construct($contentBannerClient)
     {
-        $this->contentStorageClient = $contentStorageClient;
+        $this->contentBannerClient = $contentBannerClient;
     }
 
     /**
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ExecutedContentStorageTransfer|null
+     * @return \Generated\Shared\Transfer\BannerTypeTransfer|null
      */
-    public function findContentById(int $idContent, string $localeName): ?ExecutedContentStorageTransfer
+    public function findBannerById(int $idContent, string $localeName): ?BannerTypeTransfer
     {
-        return $this->contentStorageClient->findContentById($idContent, $localeName);
+        return $this->contentBannerClient->findBannerById($idContent, $localeName);
     }
 }
