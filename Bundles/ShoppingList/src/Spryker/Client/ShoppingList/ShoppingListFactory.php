@@ -85,9 +85,7 @@ class ShoppingListFactory extends AbstractFactory
      */
     public function createShoppingListSubtotalCalculator(): ShoppingListSubtotalCalculatorInterface
     {
-        return new ShoppingListSubtotalCalculator(
-            $this->getShoppingListItemSubtotalPriceExpanderPlugins()
-        );
+        return new ShoppingListSubtotalCalculator();
     }
 
     /**
@@ -160,13 +158,5 @@ class ShoppingListFactory extends AbstractFactory
     public function getAddItemShoppingListItemMapperPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER);
-    }
-
-    /**
-     * @return array
-     */
-    public function getShoppingListItemSubtotalPriceExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_SUBTOTAL_PRICE_EXPANDER);
     }
 }

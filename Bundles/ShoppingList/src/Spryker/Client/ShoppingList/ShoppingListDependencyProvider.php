@@ -28,7 +28,6 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER = 'PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER';
     public const PLUGINS_QUOTE_ITEM_TO_ITEM_MAPPER = 'PLUGINS_QUOTE_ITEM_TO_ITEM_MAPPER';
     public const PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER = 'PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER';
-    public const PLUGINS_SHOPPING_LIST_ITEM_SUBTOTAL_PRICE_EXPANDER = 'PLUGINS_SHOPPING_LIST_ITEM_SUBTOTAL_PRICE_EXPANDER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -47,7 +46,6 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
         $container = $this->addShoppingListItemToItemMapperPlugins($container);
         $container = $this->addQuoteItemToItemMapperPlugins($container);
         $container = $this->addAddItemShoppingListItemMapperPlugins($container);
-        $container = $this->addShoppingListItemSubtotalPriceExpanderPlugins($container);
 
         return $container;
     }
@@ -179,20 +177,6 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addShoppingListItemSubtotalPriceExpanderPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_SHOPPING_LIST_ITEM_SUBTOTAL_PRICE_EXPANDER] = function () {
-            return $this->getShoppingListItemSubtotalPriceExpanderPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
      * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
      */
     protected function getShoppingListItemToItemMapperPlugins(): array
@@ -212,14 +196,6 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface[]
      */
     protected function getAddItemShoppingListItemMapperPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemSubtotalPriceExpanderPluginInterface[]
-     */
-    protected function getShoppingListItemSubtotalPriceExpanderPlugins(): array
     {
         return [];
     }

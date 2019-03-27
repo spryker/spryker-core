@@ -12,8 +12,6 @@ use Spryker\Client\ShoppingListProductOptionConnector\Mapper\QuoteItemToItemMapp
 use Spryker\Client\ShoppingListProductOptionConnector\Mapper\QuoteItemToItemMapperInterface;
 use Spryker\Client\ShoppingListProductOptionConnector\Mapper\ShoppingListItemToItemMapper;
 use Spryker\Client\ShoppingListProductOptionConnector\Mapper\ShoppingListItemToItemMapperInterface;
-use Spryker\Client\ShoppingListProductOptionConnector\ProductOptionSubtotal\ProductOptionSubtotalCalculator;
-use Spryker\Client\ShoppingListProductOptionConnector\ProductOptionSubtotal\ProductOptionSubtotalCalculatorInterface;
 
 class ShoppingListProductOptionConnectorFactory extends AbstractFactory
 {
@@ -31,13 +29,5 @@ class ShoppingListProductOptionConnectorFactory extends AbstractFactory
     public function createShoppingListItemToItemMapper(): ShoppingListItemToItemMapperInterface
     {
         return new ShoppingListItemToItemMapper();
-    }
-
-    /**
-     * @return \Spryker\Client\ShoppingListProductOptionConnector\ProductOptionSubtotal\ProductOptionSubtotalCalculatorInterface
-     */
-    public function createProductOptionSubtotalCalculator(): ProductOptionSubtotalCalculatorInterface
-    {
-        return new ProductOptionSubtotalCalculator();
     }
 }
