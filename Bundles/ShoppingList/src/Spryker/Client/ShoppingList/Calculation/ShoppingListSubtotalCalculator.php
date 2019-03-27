@@ -33,7 +33,10 @@ class ShoppingListSubtotalCalculator implements ShoppingListSubtotalCalculatorIn
     {
         $shoppingListSubtotal = 0;
         foreach ($shoppingListItemProductViewTransfers as $shoppingListItemProductViewTransfer) {
-            if (!$shoppingListItemProductViewTransfer->getPrice() || !$shoppingListItemProductViewTransfer->getQuantity()) {
+            if (!$shoppingListItemProductViewTransfer->getPrice()
+                || !$shoppingListItemProductViewTransfer->getQuantity()
+                || !$shoppingListItemProductViewTransfer->getAvailable()
+            ) {
                 continue;
             }
 
