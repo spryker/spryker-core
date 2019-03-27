@@ -95,8 +95,31 @@ class CmsConfig extends AbstractBundleConfig
      */
     public function getThemeNames(): array
     {
+        if ($this->getThemeName() === '' || $this->getThemeName() === $this->getThemeNameDefault()) {
+            return [
+                $this->getThemeNameDefault()
+            ];
+        }
+
         return [
-            $this->get(CmsConstants::YVES_THEME, 'default'),
+            $this->getThemeName(),
+            $this->getThemeNameDefault(),
         ];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getThemeName(): string
+    {
+        return $this->get(CmsConstants::YVES_THEME, '');
+    }
+
+    /**
+     * @return string
+     */
+    protected function getThemeNameDefault(): string
+    {
+        return 'default';
     }
 }
