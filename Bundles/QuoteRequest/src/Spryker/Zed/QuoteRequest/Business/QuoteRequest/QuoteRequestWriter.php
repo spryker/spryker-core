@@ -268,7 +268,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         $latestQuoteRequestVersionTransfer = $this->addQuoteRequestVersion($quoteRequestTransfer);
 
         $quoteRequestTransfer
-            ->setStatus(SharedQuoteRequestConfig::STATUS_IN_PROGRESS)
+            ->setStatus(SharedQuoteRequestConfig::STATUS_DRAFT)
             ->setLatestVersion($latestQuoteRequestVersionTransfer)
             ->setLatestVisibleVersion($latestQuoteRequestVersionTransfer);
 
