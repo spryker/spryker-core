@@ -54,10 +54,10 @@ use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
  * @group Shipment
  * @group Business
  * @group Facade
- * @group ShipmentTaxRateCalculatorTest
+ * @group ShipmentOrderSaverTest
  * Add your own group annotations below this line
  */
-class ShipmentTaxRateCalculatorTest extends Test
+class ShipmentOrderSaverTest extends Test
 {
     protected const FLOAT_COMPARISION_DELTA = 0.001;
 
@@ -78,99 +78,196 @@ class ShipmentTaxRateCalculatorTest extends Test
     {
         parent::setUp();
 
-        $this->tester->setDependency(
-            ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE,
-            $this->getProductAbstractAfterCreatePlugins()
-        );
-
-        SpyTaxRateQuery::create()->update(['Rate' => '1']);
-
-        $this->shipmentMethodEntityList = [];
-        $this->shipmentMethodEntityList['FR'] = $this->createShipmentMethodWithTaxSet(20.00, 'FR');
-        $this->shipmentMethodEntityList['DE'] = $this->createShipmentMethodWithTaxSet(15.00, 'DE');
+//        $this->tester->setDependency(
+//            ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE,
+//            $this->getProductAbstractAfterCreatePlugins()
+//        );
+//
+//        SpyTaxRateQuery::create()->update(['Rate' => '1']);
+//
+//        $this->shipmentMethodEntityList = [];
+//        $this->shipmentMethodEntityList['FR'] = $this->createShipmentMethodWithTaxSet(20.00, 'FR');
+//        $this->shipmentMethodEntityList['DE'] = $this->createShipmentMethodWithTaxSet(15.00, 'DE');
     }
 
     /**
-     * @dataProvider taxRateCalculationShouldUseQuoteShippingAddressAndShipmentDataProvider
+     * @dataProvider shipmentOrderSaverShouldUseQuoteShipmentDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $defaultCountryIso2Code
-     * @param float $defaultTaxRate
-     * @param float $expectedValue
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
-    public function testTaxRateCalculationShouldUseQuoteShippingAddressAndShipment(
+    public function testShipmentOrderSaverShouldUseQuoteShipment(
         QuoteTransfer $quoteTransfer,
-        string $defaultCountryIso2Code,
-        float $defaultTaxRate,
-        float $expectedValue
+        SaveOrderTransfer $saveOrderTransfer
     ): void {
-        // Arrange
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productAbstractTransfer = $this->haveProductWithTaxSetInDb($quoteTransfer->getShippingAddress()->getIso2Code());
-            $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
-        }
-
-        $shipmentMethodEntity = $this->findShipmentMethodEntityByAddressIso2Code($quoteTransfer->getShipment()->getShippingAddress());
-        $this->mapShipmentMethodEntityToTransfer($quoteTransfer->getShipment()->getMethod(), $shipmentMethodEntity);
-
-        $this->tester->setDependency(
-            ShipmentDependencyProvider::FACADE_TAX,
-            $this->createShipmentToTaxFacadeBridgeMock($defaultCountryIso2Code, $defaultTaxRate)
-        );
-
-        $shipmentFacade = $this->tester->getFacade();
-
-        // Act
-        $shipmentFacade->calculateShipmentTaxRate($quoteTransfer);
-
-        // Assert
-        $this->assertShipmentMethodTaxeRate($quoteTransfer->getShipment()->getMethod(), $expectedValue);
+//        // Arrange
+//        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+//            $productAbstractTransfer = $this->haveProductWithTaxSetInDb($quoteTransfer->getShippingAddress()->getIso2Code());
+//            $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+//        }
+//
+//        $shipmentMethodEntity = $this->findShipmentMethodEntityByAddressIso2Code($quoteTransfer->getShipment()->getShippingAddress());
+//        $this->mapShipmentMethodEntityToTransfer($quoteTransfer->getShipment()->getMethod(), $shipmentMethodEntity);
+//
+//        $this->tester->setDependency(
+//            ShipmentDependencyProvider::FACADE_TAX,
+//            $this->createShipmentToTaxFacadeBridgeMock($defaultCountryIso2Code, $defaultTaxRate)
+//        );
+//
+//        $shipmentFacade = $this->tester->getFacade();
+//
+//        // Act
+//        $shipmentFacade->calculateShipmentTaxRate($quoteTransfer);
+//
+//        // Assert
+//        $this->assertShipmentMethodTaxeRate($quoteTransfer->getShipment()->getMethod(), $expectedValue);
     }
 
     /**
-     * @dataProvider taxRateCalculationShouldUseItemShippingAddressAndShipmentDataProvider
+     * @dataProvider shipmentOrderSaverShouldUseQuoteShipmentAndExpenseDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $defaultCountryIso2Code
-     * @param float $defaultTaxRate
-     * @param array $expectedValues
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
-    public function testTaxRateCalculationShouldUseItemShippingAddressAndShipment(
+    public function testShipmentOrderSaverShouldUseQuoteShipmentAndExpense(
         QuoteTransfer $quoteTransfer,
-        string $defaultCountryIso2Code,
-        float $defaultTaxRate,
-        array $expectedValues
+        SaveOrderTransfer $saveOrderTransfer
     ): void {
-        // Arrange
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productAbstractTransfer = $this->haveProductWithTaxSetInDb($itemTransfer->getShipment()->getShippingAddress()->getIso2Code());
-            $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+//        // Arrange
+//        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+//            $productAbstractTransfer = $this->haveProductWithTaxSetInDb($quoteTransfer->getShippingAddress()->getIso2Code());
+//            $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+//        }
+//
+//        $shipmentMethodEntity = $this->findShipmentMethodEntityByAddressIso2Code($quoteTransfer->getShipment()->getShippingAddress());
+//        $this->mapShipmentMethodEntityToTransfer($quoteTransfer->getShipment()->getMethod(), $shipmentMethodEntity);
+//
+//        $this->tester->setDependency(
+//            ShipmentDependencyProvider::FACADE_TAX,
+//            $this->createShipmentToTaxFacadeBridgeMock($defaultCountryIso2Code, $defaultTaxRate)
+//        );
+//
+//        $shipmentFacade = $this->tester->getFacade();
+//
+//        // Act
+//        $shipmentFacade->calculateShipmentTaxRate($quoteTransfer);
+//
+//        // Assert
+//        $this->assertShipmentMethodTaxeRate($quoteTransfer->getShipment()->getMethod(), $expectedValue);
+    }
 
-            $shipmentMethodEntity = $this->findShipmentMethodEntityByAddressIso2Code($itemTransfer->getShipment()->getShippingAddress());
-            $this->mapShipmentMethodEntityToTransfer($itemTransfer->getShipment()->getMethod(), $shipmentMethodEntity);
-        }
+    /**
+     * @dataProvider shipmentOrderSaverShouldUseQuoteShipmentAndShippingAddressDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function testShipmentOrderSaverShouldUseQuoteShipmentAndShippingAddress(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): void {
+//        // Arrange
+//        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+//            $productAbstractTransfer = $this->haveProductWithTaxSetInDb($quoteTransfer->getShippingAddress()->getIso2Code());
+//            $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+//        }
+//
+//        $shipmentMethodEntity = $this->findShipmentMethodEntityByAddressIso2Code($quoteTransfer->getShipment()->getShippingAddress());
+//        $this->mapShipmentMethodEntityToTransfer($quoteTransfer->getShipment()->getMethod(), $shipmentMethodEntity);
+//
+//        $this->tester->setDependency(
+//            ShipmentDependencyProvider::FACADE_TAX,
+//            $this->createShipmentToTaxFacadeBridgeMock($defaultCountryIso2Code, $defaultTaxRate)
+//        );
+//
+//        $shipmentFacade = $this->tester->getFacade();
+//
+//        // Act
+//        $shipmentFacade->calculateShipmentTaxRate($quoteTransfer);
+//
+//        // Assert
+//        $this->assertShipmentMethodTaxeRate($quoteTransfer->getShipment()->getMethod(), $expectedValue);
+    }
 
-        $this->tester->setDependency(
-            ShipmentDependencyProvider::FACADE_TAX,
-            $this->createShipmentToTaxFacadeBridgeMock($defaultCountryIso2Code, $defaultTaxRate)
-        );
+    /**
+     * @dataProvider shipmentOrderSaverShouldUseQuoteShipmentAndItemsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function testShipmentOrderSaverShouldUseQuoteShipmentAndItems(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): void {
+//        // Arrange
+//        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+//            $productAbstractTransfer = $this->haveProductWithTaxSetInDb($quoteTransfer->getShippingAddress()->getIso2Code());
+//            $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+//        }
+//
+//        $shipmentMethodEntity = $this->findShipmentMethodEntityByAddressIso2Code($quoteTransfer->getShipment()->getShippingAddress());
+//        $this->mapShipmentMethodEntityToTransfer($quoteTransfer->getShipment()->getMethod(), $shipmentMethodEntity);
+//
+//        $this->tester->setDependency(
+//            ShipmentDependencyProvider::FACADE_TAX,
+//            $this->createShipmentToTaxFacadeBridgeMock($defaultCountryIso2Code, $defaultTaxRate)
+//        );
+//
+//        $shipmentFacade = $this->tester->getFacade();
+//
+//        // Act
+//        $shipmentFacade->calculateShipmentTaxRate($quoteTransfer);
+//
+//        // Assert
+//        $this->assertShipmentMethodTaxeRate($quoteTransfer->getShipment()->getMethod(), $expectedValue);
+    }
 
-        $this->tester->setDependency(
-            TaxDependencyProvider::STORE_CONFIG,
-            $this->createTaxStoreMock($defaultCountryIso2Code)
-        );
-
-        $shipmentFacade = $this->tester->getFacade();
-
-        // Act
-        $shipmentFacade->calculateShipmentTaxRate($quoteTransfer);
-
-        // Assert
-        $this->assertItemsForTaxes($quoteTransfer, $expectedValues);
+    /**
+     * @dataProvider shipmentOrderSaverShouldUseMultipleShipmentsWithMultipleShipmentsArePersistedDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function testShipmentOrderSaverShouldUseMultipleShipmentsWithMultipleShipmentsArePersisted(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): void {
+//        // Arrange
+//        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+//            $productAbstractTransfer = $this->haveProductWithTaxSetInDb($itemTransfer->getShipment()->getShippingAddress()->getIso2Code());
+//            $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+//
+//            $shipmentMethodEntity = $this->findShipmentMethodEntityByAddressIso2Code($itemTransfer->getShipment()->getShippingAddress());
+//            $this->mapShipmentMethodEntityToTransfer($itemTransfer->getShipment()->getMethod(), $shipmentMethodEntity);
+//        }
+//
+//        $this->tester->setDependency(
+//            ShipmentDependencyProvider::FACADE_TAX,
+//            $this->createShipmentToTaxFacadeBridgeMock($defaultCountryIso2Code, $defaultTaxRate)
+//        );
+//
+//        $this->tester->setDependency(
+//            TaxDependencyProvider::STORE_CONFIG,
+//            $this->createTaxStoreMock($defaultCountryIso2Code)
+//        );
+//
+//        $shipmentFacade = $this->tester->getFacade();
+//
+//        // Act
+//        $shipmentFacade->calculateShipmentTaxRate($quoteTransfer);
+//
+//        // Assert
+//        $this->assertItemsForTaxes($quoteTransfer, $expectedValues);
     }
 
     /**
@@ -213,13 +310,54 @@ class ShipmentTaxRateCalculatorTest extends Test
     /**
      * @return array
      */
-    public function taxRateCalculationShouldUseQuoteShippingAddressAndShipmentDataProvider(): array
+    public function shipmentOrderSaverShouldUseQuoteShipmentDataProvider(): array
     {
         return [
-            'address: France; expected tax rate: 20%' => $this->getDataWithQuoteLevelShippingAddressAndShipmentToFrance(),
-            'address: Moon; expected tax rate: 0%' => $this->getDataWithQuoteLevelShippingAddressAndShipmentToMoon(),
+            'France; expected: shipment in DB' => $this->getDataWithQuoteLevelShipmentToFrance(),
         ];
     }
+
+    /**
+     * @return array
+     */
+    public function shipmentOrderSaverShouldUseQuoteShipmentAndExpenseDataProvider(): array
+    {
+        return [
+            'France, expense set; expected: shipment and expense in DB' => $this->getDataWithQuoteLevelShipmentToFranceWithExpense(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function shipmentOrderSaverShouldUseQuoteShipmentAndShippingAddressDataProvider(): array
+    {
+        return [
+            'France, address already persisted in DB; expected: shipment with shipping address in DB' => $this->getDataWithQuoteLevelShipmentAndShippingAddressToFrance(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function shipmentOrderSaverShouldUseQuoteShipmentAndItemsDataProvider(): array
+    {
+        return [
+            'France, 2 items; expected: shipment connected to order items in DB' => $this->getDataWithQuoteLevelShipmentAnd2ItemsToFrance(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function shipmentOrderSaverShouldUseMultipleShipmentsWithMultipleShipmentsArePersistedDataProvider(): array
+    {
+        return [
+            'France 1 item; expected: 1 order shipment in DB' => $this->getDataWithMultipleShipmentsAnd1ItemToFrance(),
+            'France 2 items, Germany 1 item; expected: 2 order shipments in DB' => $this->getDataWithMultipleShipmentsAnd2ItemsToFranceAnd1ItemToGermany(),
+        ];
+    }
+
 
     /**
      * @return array
@@ -233,168 +371,157 @@ class ShipmentTaxRateCalculatorTest extends Test
         ];
     }
 
-    /**
-     * @return array
-     */
-    protected function getDataWithQuoteLevelShippingAddressAndShipmentToFrance(): array
-    {
-        $defaultCountryIso2Code = 'MOON';
-        $defaultTaxRate = 0.00;
-
-        $skuProductAbstract = 'france_20';
-        $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
-        $itemBuilder = $this->createItemTransferBuilder([
-            'sku' => 'france_20',
-        ]);
-
-        $shipmentTransfer = (new ShipmentBuilder())
-            ->withAnotherShippingAddress($addressBuilder)
-            ->withAnotherMethod()
-            ->build();
-
-        $expenseTransfer = (new ExpenseBuilder([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
-        ]))->build();
-
-        $quoteTransfer = (new QuoteBuilder())
-            ->withAnotherShippingAddress($addressBuilder)
-            ->withAnotherBillingAddress()
-            ->withAnotherItem($itemBuilder)
-            ->withTotals()
-            ->withCustomer()
-            ->withCurrency()
-            ->build();
-
-        $expenseTransfer->setShipment($shipmentTransfer);
-        $quoteTransfer->setShipment($shipmentTransfer);
-        $quoteTransfer->addExpense($expenseTransfer);
-
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, 20.00];
-    }
 
     /**
      * @return array
      */
-    protected function getDataWithQuoteLevelShippingAddressAndShipmentToMoon(): array
+    protected function getDataWithQuoteLevelShipmentToFrance(): array
     {
-        $defaultCountryIso2Code = 'MOON';
-        $defaultTaxRate = 0.00;
-
-        $skuProductAbstract = 'mars_0';
-        $addressBuilder = (new AddressBuilder(['iso2Code' => 'MARS']));
-        $itemBuilder = $this->createItemTransferBuilder([
-            'sku' => $skuProductAbstract,
-        ]);
-
-        $shipmentTransfer = (new ShipmentBuilder())
-            ->withAnotherShippingAddress($addressBuilder)
-            ->withAnotherMethod(
-                new ShipmentMethodBuilder([
-                    'idShipmentMethod' => -999999,
-                    'taxRate' => 0,
-                ])
-            )
-            ->build();
-
-        $expenseTransfer = (new ExpenseBuilder([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
-        ]))->build();
-
-        $quoteTransfer = (new QuoteBuilder())
-            ->withAnotherShippingAddress($addressBuilder)
-            ->withAnotherBillingAddress()
-            ->withAnotherItem($itemBuilder)
-            ->withTotals()
-            ->withCustomer()
-            ->withCurrency()
-            ->build();
-
-        $expenseTransfer->setShipment($shipmentTransfer);
-        $quoteTransfer->setShipment($shipmentTransfer);
-        $quoteTransfer->addExpense($expenseTransfer);
-
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, $defaultTaxRate];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDataWithItemLevelShippingAddressesToFranceWithTaxRate20(): array
-    {
-        $defaultCountryIso2Code = 'MOON';
-        $defaultTaxRate = 66.00;
-
-        $skuProductAbstract = 'france_20';
         $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
 
-        $shipmentTransfer = (new ShipmentBuilder())
+        $shipmentBuilder = (new ShipmentBuilder())
             ->withAnotherShippingAddress($addressBuilder)
-            ->withAnotherMethod()
-            ->build();
-
-        $expenseTransfer = (new ExpenseBuilder([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
-        ]))->build();
-
-        $itemTransfer = $this->createItemTransferBuilder([
-            'sku' => $skuProductAbstract,
-        ])->build();
+            ->withAnotherMethod();
 
         $quoteTransfer = (new QuoteBuilder())
+            ->withAnotherShipment($shipmentBuilder)
+            ->withAnotherShippingAddress($addressBuilder)
             ->withAnotherBillingAddress()
             ->withTotals()
             ->withCustomer()
             ->withCurrency()
             ->build();
 
-        $expenseTransfer->setShipment($shipmentTransfer);
-        $quoteTransfer->addExpense($expenseTransfer);
-        $itemTransfer->setShipment($shipmentTransfer);
-        $quoteTransfer->addItem($itemTransfer);
-
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$skuProductAbstract => 20.00]];
+        return [$quoteTransfer, new SaveOrderTransfer()];
     }
 
     /**
      * @return array
      */
-    protected function getDataWithItemLevelShippingAddressesToFranceWithTaxRate20AndGermanyWithTaxRate15(): array
+    protected function getDataWithQuoteLevelShipmentToFranceWithExpense(): array
     {
-        $defaultCountryIso2Code = 'MOON';
-        $defaultTaxRate = 0.00;
+        $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
 
-        $skuProductAbstract1 = 'france_20';
+        $shipmentBuilder = (new ShipmentBuilder())
+            ->withAnotherShippingAddress($addressBuilder)
+            ->withAnotherMethod();
+
+        $expenseBuilder = (new ExpenseBuilder([
+            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+        ]))
+            ->withAnotherShipment($shipmentBuilder);
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withAnotherShipment($shipmentBuilder)
+            ->withAnotherExpense($expenseBuilder)
+            ->withAnotherShippingAddress($addressBuilder)
+            ->withAnotherBillingAddress()
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        return [$quoteTransfer, new SaveOrderTransfer()];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataWithQuoteLevelShipmentAndShippingAddressToFrance(): array
+    {
+        $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
+
+        $shipmentBuilder = (new ShipmentBuilder())
+            ->withAnotherShippingAddress($addressBuilder)
+            ->withAnotherMethod();
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withAnotherShipment($shipmentBuilder)
+            ->withAnotherItem()
+            ->withAnotherItem()
+            ->withAnotherShippingAddress($addressBuilder)
+            ->withAnotherBillingAddress()
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        return [$quoteTransfer, new SaveOrderTransfer()];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataWithQuoteLevelShipmentAnd2ItemsToFrance(): array
+    {
+        $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
+
+        $shipmentBuilder = (new ShipmentBuilder())
+            ->withAnotherShippingAddress($addressBuilder)
+            ->withAnotherMethod();
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withAnotherShipment($shipmentBuilder)
+            ->withAnotherItem()
+            ->withAnotherItem()
+            ->withAnotherShippingAddress($addressBuilder)
+            ->withAnotherBillingAddress()
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        return [$quoteTransfer, new SaveOrderTransfer()];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataWithMultipleShipmentsAnd1ItemToFrance(): array
+    {
+        $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
+
+        $shipmentBuilder = (new ShipmentBuilder())
+            ->withAnotherShippingAddress($addressBuilder)
+            ->withAnotherMethod();
+
+        $itemBuilder = (new ItemBuilder())
+            ->withAnotherShipment($shipmentBuilder);
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withAnotherItem($itemBuilder)
+            ->withAnotherBillingAddress()
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        return [$quoteTransfer, new SaveOrderTransfer()];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataWithMultipleShipmentsAnd2ItemsToFranceAnd1ItemToGermany(): array
+    {
         $addressBuilder1 = (new AddressBuilder(['iso2Code' => 'FR']));
-
         $shipmentTransfer1 = (new ShipmentBuilder())
             ->withAnotherShippingAddress($addressBuilder1)
             ->withAnotherMethod()
             ->build();
+        $itemTransfer1 = (new ItemBuilder())->build();
+        $itemTransfer1->setShipment($shipmentTransfer1);
 
-        $expenseTransfer1 = (new ExpenseBuilder([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
-        ]))->build();
+        $itemTransfer2 = (new ItemBuilder())->build();
+        $itemTransfer2->setShipment($shipmentTransfer1);
 
-        $itemTransfer1 = $this->createItemTransferBuilder([
-            'sku' => $skuProductAbstract1,
-        ])->build();
-
-
-        $skuProductAbstract2 = 'germany_15';
         $addressBuilder2 = (new AddressBuilder(['iso2Code' => 'DE']));
-
         $shipmentTransfer2 = (new ShipmentBuilder())
             ->withAnotherShippingAddress($addressBuilder2)
             ->withAnotherMethod()
             ->build();
-
-        $expenseTransfer2 = (new ExpenseBuilder([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
-        ]))->build();
-
-        $itemTransfer2 = $this->createItemTransferBuilder([
-            'sku' => $skuProductAbstract2,
-        ])->build();
+        $itemTransfer3 = (new ItemBuilder())->build();
+        $itemTransfer3->setShipment($shipmentTransfer2);
 
         $quoteTransfer = (new QuoteBuilder())
             ->withAnotherBillingAddress()
@@ -403,61 +530,11 @@ class ShipmentTaxRateCalculatorTest extends Test
             ->withCurrency()
             ->build();
 
-        $expenseTransfer1->setShipment($shipmentTransfer1);
-        $quoteTransfer->addExpense($expenseTransfer1);
-        $itemTransfer1->setShipment($shipmentTransfer1);
         $quoteTransfer->addItem($itemTransfer1);
-
-        $expenseTransfer2->setShipment($shipmentTransfer2);
-        $quoteTransfer->addExpense($expenseTransfer2);
-        $itemTransfer2->setShipment($shipmentTransfer2);
         $quoteTransfer->addItem($itemTransfer2);
+        $quoteTransfer->addItem($itemTransfer3);
 
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$skuProductAbstract1 => 20.00, $skuProductAbstract2 => 15.00]];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDataWithItemLevelShippingAddressesToMarsWithTaxRateUndefined(): array
-    {
-        $defaultCountryIso2Code = 'MOON';
-        $defaultTaxRate = 0.00;
-
-        $skuProductAbstract = 'mars_0';
-        $addressBuilder = (new AddressBuilder(['iso2Code' => 'MARS']));
-
-        $shipmentTransfer = (new ShipmentBuilder())
-            ->withAnotherShippingAddress($addressBuilder)
-            ->withAnotherMethod(
-                new ShipmentMethodBuilder([
-                    'idShipmentMethod' => -999999,
-                    'taxRate' => 0,
-                ])
-            )
-            ->build();
-
-        $expenseTransfer = (new ExpenseBuilder([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
-        ]))->build();
-
-        $itemTransfer = $this->createItemTransferBuilder([
-            'sku' => $skuProductAbstract,
-        ])->build();
-
-        $quoteTransfer = (new QuoteBuilder())
-            ->withAnotherBillingAddress()
-            ->withTotals()
-            ->withCustomer()
-            ->withCurrency()
-            ->build();
-
-        $expenseTransfer->setShipment($shipmentTransfer);
-        $quoteTransfer->addExpense($expenseTransfer);
-        $itemTransfer->setShipment($shipmentTransfer);
-        $quoteTransfer->addItem($itemTransfer);
-
-        return [$quoteTransfer, $defaultCountryIso2Code, $defaultTaxRate, [$skuProductAbstract => 0.00]];
+        return [$quoteTransfer, new SaveOrderTransfer()];
     }
 
     /**
