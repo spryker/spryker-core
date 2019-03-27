@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Glue\AuthRestApi\AuthRestApiFactory getFactory()
  */
-class RestRequestAccessTokenValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
+class AccessTokenRestRequestValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -32,7 +32,7 @@ class RestRequestAccessTokenValidatorPlugin extends AbstractPlugin implements Re
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         return $this->getFactory()
-            ->createRestRequestAccessTokenValidator()
+            ->createOauthAccessTokenValidator()
             ->validate($httpRequest, $restRequest);
     }
 }

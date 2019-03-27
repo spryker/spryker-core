@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-interface RestRequestAccessTokenValidatorInterface
+interface OauthAccessTokenValidatorInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
