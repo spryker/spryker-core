@@ -97,7 +97,7 @@ class CmsConfig extends AbstractBundleConfig
     {
         if ($this->getThemeName() === '' || $this->getThemeName() === $this->getThemeNameDefault()) {
             return [
-                $this->getThemeNameDefault()
+                $this->getThemeNameDefault(),
             ];
         }
 
