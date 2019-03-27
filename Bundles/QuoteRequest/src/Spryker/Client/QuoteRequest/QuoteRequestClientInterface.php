@@ -56,16 +56,18 @@ interface QuoteRequestClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Finds a company by QuoteRequestTransfer::idQuoteRequest in the transfer.
-     * - Creates new quote request version from QuoteRequestTransfer::quoteInProgress.
+     * - Looks up one "Request for Quote" by provided quote request reference.
+     * - Expects "Request for Quote" status to be "ready".
+     * - Creates latest version from previous version.
+     * - Sets status to "draft".
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function updateQuoteRequestQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+    public function reviseQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
 
     /**
      * Specification:
@@ -82,6 +84,22 @@ interface QuoteRequestClientInterface
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Expects quote request reference to be provided.
+     * - Retrieves "Request for Quote" entity filtered by reference.
+     * - Expects "Request for Quote" status to be "draft".
+     * - Changes status to "waiting".
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function sendQuoteRequestToUser(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
 
     /**
      * Specification:
@@ -182,7 +200,7 @@ interface QuoteRequestClientInterface
      *
      * @return bool
      */
-    public function isQuoteRequestDraft(QuoteRequestTransfer $quoteRequestTransfer): bool;
+    public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool;
 
     /**
      * Specification:
@@ -195,44 +213,4 @@ interface QuoteRequestClientInterface
      * @return bool
      */
     public function isQuoteRequestReady(QuoteRequestTransfer $quoteRequestTransfer): bool;
-
-    /**
-     * Specification:
-     * - Makes Zed request.
-     * - Looks up one "Request for Quote" by provided quote request reference.
-     * - Expects "Request for Quote" status to be "ready".
-     * - Requires latest version inside QuoteRequestTransfer.
-     * - Requires quote inside QuoteRequestVersionTransfer.
-     * - Sets status to "draft".
-     * - Copies latest version quote to quoteInProgress property.
-     * - Clears source prices for quoteInProgress.
-     * - Recalculates quoteInProgress.
-     * - Creates new quote request version from quoteInProgress.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function markQuoteRequestAsDraft(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
-
-    /**
-     * Specification:
-     * - Makes Zed request.
-     * - Looks up one "Request for Quote" by provided quote request reference.
-     * - Expects "Request for Quote" status to be "draft".
-     * - Requires latest version inside QuoteRequestTransfer.
-     * - Requires quote inside QuoteRequestVersionTransfer.
-     * - Sets status to "waiting".
-     * - Copies latest version quote to quoteInProgress property.
-     * - Creates new quote request version from quoteInProgress.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function markQuoteRequestAsWaiting(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
 }

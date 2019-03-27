@@ -49,7 +49,7 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
             return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS);
         }
 
-        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote() ?? $this->quoteClient->getQuote();
+        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
 
         $quoteTransfer
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())

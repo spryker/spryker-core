@@ -55,6 +55,21 @@ interface QuoteRequestFacadeInterface
     /**
      * Specification:
      * - Looks up one "Request for Quote" by provided quote request reference.
+     * - Expects "Request for Quote" status to be "ready".
+     * - Creates latest version from previous version.
+     * - Sets status to "draft".
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function reviseQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Looks up one "Request for Quote" by provided quote request reference.
      * - Expects the related company user to be provided.
      * - Expects "Request for Quote" status to be "draft", "waiting", "ready".
      * - Sets status to "cancelled".
@@ -66,6 +81,21 @@ interface QuoteRequestFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expects quote request reference to be provided.
+     * - Retrieves "Request for Quote" entity filtered by reference.
+     * - Expects "Request for Quote" status to be "draft".
+     * - Changes status to "waiting".
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function sendQuoteRequestToUser(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
 
     /**
      * Specification:
@@ -100,19 +130,6 @@ interface QuoteRequestFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     public function updateUserQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
-
-    /**
-     * Specification:
-     * - Finds a "Request for Quote" by QuoteRequestTransfer::idQuoteRequest in the transfer.
-     * - Creates new quote request version from QuoteRequestTransfer::quoteInProgress.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function updateQuoteRequestQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
 
     /**
      * Specification:
@@ -186,44 +203,6 @@ interface QuoteRequestFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer
      */
     public function getQuoteRequestVersionCollectionByFilter(QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer): QuoteRequestVersionCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Looks up one "Request for Quote" by provided quote request reference.
-     * - Expects "Request for Quote" status to be "ready".
-     * - Requires latest version inside QuoteRequestTransfer.
-     * - Requires quote inside QuoteRequestVersionTransfer.
-     * - Sets status to "draft".
-     * - Copies latest version quote to quoteInProgress property.
-     * - Clears source prices for quoteInProgress.
-     * - Recalculates quoteInProgress.
-     * - Creates new quote request version from quoteInProgress.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function markQuoteRequestAsDraft(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
-
-    /**
-     * Specification:
-     * - Looks up one "Request for Quote" by provided quote request reference.
-     * - Expects "Request for Quote" status to be "draft".
-     * - Requires latest version inside QuoteRequestTransfer.
-     * - Requires quote inside QuoteRequestVersionTransfer.
-     * - Sets status to "waiting".
-     * - Copies latest version quote to quoteInProgress property.
-     * - Creates new quote request version from quoteInProgress.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function markQuoteRequestAsWaiting(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
 
     /**
      * Specification:

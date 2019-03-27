@@ -17,4 +17,11 @@ interface QuoteRequestToQuoteClientInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function setQuote(QuoteTransfer $quoteTransfer);
 }
