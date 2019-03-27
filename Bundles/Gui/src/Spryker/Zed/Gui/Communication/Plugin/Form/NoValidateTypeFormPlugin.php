@@ -5,14 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Gui\Plugin\FormExtension;
+namespace Spryker\Zed\Gui\Communication\Plugin\Form;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface;
-use Spryker\Shared\Gui\Form\Type\Extension\NoValidateTypeExtension;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
 
-class NoValidateTypeFormPlugin implements FormPluginInterface
+/**
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Gui\GuiConfig getConfig()
+ */
+class NoValidateTypeFormPlugin extends AbstractPlugin implements FormPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -28,7 +32,7 @@ class NoValidateTypeFormPlugin implements FormPluginInterface
     public function extend(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
     {
         $formFactoryBuilder->addTypeExtension(
-            new NoValidateTypeExtension()
+            $this->getFactory()->createNoValidateFormTypeExtension()
         );
 
         return $formFactoryBuilder;

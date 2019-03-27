@@ -1,23 +1,20 @@
 {
-  "name": "spryker/validator",
+  "name": "spryker/validator-extension",
   "type": "library",
-  "description": "Validator module",
+  "description": "ValidatorExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/application-extension": "^1.0.0",
-    "spryker/form-extension": "^1.0.0",
-    "spryker/kernel": "^3.32.0",
-    "spryker/symfony": "^3.2.2",
-    "spryker/validator-extension": "^1.0.0"
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
+    "spryker/symfony": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/container": "If you want to use the form extension plugins."
+    "spryker/container": "If you want to use the ValidatorPluginInterface.",
+    "spryker/symfony": "If you want to use the ValidatorPluginInterface."
   },
   "autoload": {
     "psr-4": {

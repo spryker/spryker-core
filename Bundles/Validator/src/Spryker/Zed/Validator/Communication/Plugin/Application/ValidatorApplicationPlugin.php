@@ -5,24 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Validator\Plugin\Application;
+namespace Spryker\Zed\Validator\Communication\Plugin\Application;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
-use Symfony\Component\Validator\Mapping\Factory\LazyLoadingMetadataFactory;
-use Symfony\Component\Validator\Mapping\Factory\MetadataFactoryInterface;
-use Symfony\Component\Validator\Mapping\Loader\StaticMethodLoader;
-use Symfony\Component\Validator\Validation;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Validator\ValidatorBuilderInterface;
 
-class ValidatorApplicationPlugin implements ApplicationPluginInterface
+/**
+ * @method \Spryker\Zed\Validator\Communication\ValidatorCommunicationFactory getFactory()
+ */
+class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
     protected const SERVICE_VALIDATOR = 'validator';
     protected const SERVICE_VALIDATOR_SERVICE_IDS = 'validator.validator_service_ids';
-
-    protected const TRANSLATION_DOMAIN = 'validators';
-
-    protected const SERVICE_TRANSLATOR = 'translator';
 
     /**
      * {@inheritdoc}
@@ -42,34 +38,28 @@ class ValidatorApplicationPlugin implements ApplicationPluginInterface
         });
 
         $container->setGlobal(static::SERVICE_VALIDATOR, function (ContainerInterface $container) {
-            return $this->createValidatorBuilder($container)->getValidator();
+            $validatorBuilder = $this->getFactory()->createValidationBuilder();
+
+            $validatorBuilder = $this->extendValidator($validatorBuilder, $container);
+
+            return $validatorBuilder->getValidator();
         });
 
         return $container;
     }
 
     /**
+     * @param \Symfony\Component\Validator\ValidatorBuilderInterface $validatorBuilder
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Symfony\Component\Validator\ValidatorBuilderInterface
      */
-    protected function createValidatorBuilder(ContainerInterface $container): ValidatorBuilderInterface
+    protected function extendValidator(ValidatorBuilderInterface $validatorBuilder, ContainerInterface $container): ValidatorBuilderInterface
     {
-        $builder = Validation::createValidatorBuilder();
-        $builder->setMetadataFactory($this->createValidatorMappingMetadataFactory());
-        if ($container->has(static::SERVICE_TRANSLATOR)) {
-            $builder->setTranslationDomain(static::TRANSLATION_DOMAIN);
-            $builder->setTranslator($container->get(static::SERVICE_TRANSLATOR));
+        foreach ($this->getFactory()->getValidatorPlugins() as $validatorPlugin) {
+            $validatorBuilder = $validatorPlugin->extend($validatorBuilder, $container);
         }
 
-        return $builder;
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Mapping\Factory\MetadataFactoryInterface
-     */
-    protected function createValidatorMappingMetadataFactory(): MetadataFactoryInterface
-    {
-        return new LazyLoadingMetadataFactory(new StaticMethodLoader());
+        return $validatorBuilder;
     }
 }

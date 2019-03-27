@@ -14,7 +14,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Csrf\TokenStorage\ClearableTokenStorageInterface;
 use Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage;
 
-class SecurityApplicationPlugin implements ApplicationPluginInterface
+class CsrfFormApplicationPlugin implements ApplicationPluginInterface
 {
     protected const SERVICE_CSRF_PROVIDER = 'form.csrf_provider';
     protected const SERVICE_SESSION = 'session';
