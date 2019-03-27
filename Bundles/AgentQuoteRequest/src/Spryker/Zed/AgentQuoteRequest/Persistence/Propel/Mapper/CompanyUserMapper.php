@@ -16,15 +16,15 @@ use Propel\Runtime\Collection\Collection;
 class CompanyUserMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\Collection $companyUsersEntities
+     * @param \Propel\Runtime\Collection\Collection $companyUsers
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    public function mapCompanyUserEntityCollectionToTransfers(Collection $companyUsersEntities): array
+    public function mapCompanyUserCollectionToTransfers(Collection $companyUsers): array
     {
         $companyUserTransfers = [];
 
-        foreach ($companyUsersEntities as $companyUser) {
+        foreach ($companyUsers as $companyUser) {
             $customerTransfer = (new CustomerTransfer())
                 ->setFirstName($companyUser[SpyCustomerTableMap::COL_FIRST_NAME])
                 ->setLastName($companyUser[SpyCustomerTableMap::COL_LAST_NAME])

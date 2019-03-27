@@ -52,6 +52,6 @@ class AgentQuoteRequestRepository extends AbstractRepository implements AgentQuo
 
         return $this->getFactory()
             ->createCompanyUserMapper()
-            ->mapCompanyUserEntityCollectionToTransfers($companyUsersQuery->find());
+            ->mapCompanyUserCollectionToTransfers($companyUsersQuery->find());
     }
 }
