@@ -10,9 +10,6 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @deprecated Use \Spryker\Glue\AuthRestApi\Processor\AccessTokens\RestRequestAccessTokenValidatorInterface instead.
- */
 interface AccessTokenValidatorInterface
 {
     /**

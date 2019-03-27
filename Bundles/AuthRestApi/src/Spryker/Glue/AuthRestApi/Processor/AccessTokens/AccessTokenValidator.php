@@ -15,9 +15,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @deprecated Use \Spryker\Glue\AuthRestApi\Processor\AccessTokens\RestRequestAccessTokenValidator instead.
- */
 class AccessTokenValidator implements AccessTokenValidatorInterface
 {
     protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
