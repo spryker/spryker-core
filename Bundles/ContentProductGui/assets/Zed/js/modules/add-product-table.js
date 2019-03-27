@@ -18,7 +18,7 @@ var ProductListContentItem = function(
     this.hiddenInputsWrapperSelector = hiddenInputsWrapperSelector;
     this.assignedTables = $(assignedTableSelector);
     this.productsTables = $(productTableSelector);
-    this.clearAllFieldsButton = $(clearAllFieldsSelector);
+    this.clearAllFieldsButton = $(clearAllFieldsSelector).removeClass(clearAllFieldsSelector.substring(1));
     this.addProductButtonSelector = addProductButtonSelector;
     this.removeProductButtonSelector = removeProductButtonSelector;
 
