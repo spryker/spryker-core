@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\ContentStorage\ContentStorage;
 
+use Generated\Shared\Transfer\ContentQueryTransfer;
 use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Generated\Shared\Transfer\UnexecutedContentStorageTransfer;
 use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface;
 use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface;
 use Spryker\Client\ContentStorage\Resolver\ContentResolverInterface;
@@ -74,9 +74,9 @@ class ContentStorageReader implements ContentStorageReaderInterface
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\UnexecutedContentStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ContentQueryTransfer|null
      */
-    public function findUnexecutedContentById(int $idContent, string $localeName): ?UnexecutedContentStorageTransfer
+    public function findContentQueryById(int $idContent, string $localeName): ?ContentQueryTransfer
     {
         $storageKey = $this->generateKey((string)$idContent, $localeName);
         $content = $this->storageClient->get($storageKey);
@@ -85,10 +85,10 @@ class ContentStorageReader implements ContentStorageReaderInterface
             return null;
         }
 
-        return (new UnexecutedContentStorageTransfer())
+        return (new ContentQueryTransfer())
             ->setIdContent($idContent)
             ->setTerm($content[ContentStorageConfig::TERM_KEY])
-            ->setContent($content[ContentStorageConfig::CONTENT_KEY]);
+            ->setQueryParameters($content[ContentStorageConfig::CONTENT_KEY]);
     }
 
     /**

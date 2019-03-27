@@ -25,10 +25,10 @@
         <property name="content" type="array" />
     </transfer>
 
-    <transfer name="UnexecutedContentStorage">
+    <transfer name="ContentQuery">
         <property name="idContent" type="int" />
         <property name="term" type="string" />
-        <property name="content" type="array" />
+        <property name="queryParameters" type="array" />
     </transfer>
 
     <transfer name="LocalizedContent">

@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\ContentStorage;
 
+use Generated\Shared\Transfer\ContentQueryTransfer;
 use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
-use Generated\Shared\Transfer\UnexecutedContentStorageTransfer;
 
 interface ContentStorageClientInterface
 {
@@ -31,14 +31,14 @@ interface ContentStorageClientInterface
     /**
      * Specification:
      * - Retrieves content by ID through a storage client dependency.
-     * - Returns the pre-executed ("raw") representation.
+     * - Returns the query representation.
      *
      * @api
      *
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\UnexecutedContentStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ContentQueryTransfer|null
      */
-    public function findUnexecutedContentById(int $idContent, string $localeName): ?UnexecutedContentStorageTransfer;
+    public function findContentQueryById(int $idContent, string $localeName): ?ContentQueryTransfer;
 }
