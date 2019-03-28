@@ -15,6 +15,11 @@ class ProductAlternativeProductLabelConnectorConfig extends AbstractBundleConfig
     protected const PRODUCT_ALTERNATIVES_LABEL_FRONT_END_REFERENCE = 'alternatives';
 
     /**
+     * Specification:
+     * - Label unique key.
+     *
+     * @api
+     *
      * @return string
      */
     public function getProductAlternativesLabelName(): string
@@ -23,6 +28,11 @@ class ProductAlternativeProductLabelConnectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Label type.
+     *
+     * @api
+     *
      * @return string
      */
     public function getProductAlternativesLabelFrontEndReference(): string

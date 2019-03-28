@@ -15,6 +15,11 @@ class ProductDiscontinuedProductLabelConnectorConfig extends AbstractBundleConfi
     protected const PRODUCT_DISCONTINUE_LABEL_FRONT_END_REFERENCE = 'discontinued';
 
     /**
+     * Specification:
+     * - Label unique key.
+     *
+     * @api
+     *
      * @return string
      */
     public function getProductDiscontinueLabelName(): string
@@ -23,6 +28,11 @@ class ProductDiscontinuedProductLabelConnectorConfig extends AbstractBundleConfi
     }
 
     /**
+     * Specification:
+     * - Label type.
+     *
+     * @api
+     *
      * @return string
      */
     public function getProductDiscontinueLabelFrontEndReference(): string
