@@ -24,10 +24,10 @@
     <transfer name="ProductPackagingUnitAmount">
         <property name="idProductPackagingUnitAmount" type="int" />
         <property name="isVariable" type="bool" />
-        <property name="defaultAmount" type="int" />
-        <property name="amountMin" type="int" />
-        <property name="amountMax" type="int" />
-        <property name="amountInterval" type="int" />
+        <property name="defaultAmount" type="float" />
+        <property name="amountMin" type="float" />
+        <property name="amountMax" type="float" />
+        <property name="amountInterval" type="float" />
     </transfer>
 
     <transfer name="ProductPackagingLeadProduct">
