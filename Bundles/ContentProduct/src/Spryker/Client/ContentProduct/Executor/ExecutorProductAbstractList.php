@@ -29,7 +29,8 @@ class ExecutorProductAbstractList implements ExecutorProductAbstractListInterfac
         }
 
         $executedProductAbstractListTransfer = new ExecutedProductAbstractListTransfer();
-        $executedProductAbstractListTransfer->fromArray($contentTypeContextTransfer->toArray());
+        $executedProductAbstractListTransfer->setIdContent($contentTypeContextTransfer->getIdContent());
+        $executedProductAbstractListTransfer->setType(ContentProductConfig::CONTENT_TYPE_PRODUCT_ABSTRACT_LIST);
         $executedProductAbstractListTransfer->setContentProductAbstractList(
             $this->getProductAbstractListTransfer($contentTypeContextTransfer)
         );
