@@ -20,11 +20,10 @@ use Spryker\Zed\PersistentCart\Business\PersistentCartFacadeInterface;
  * @group Zed
  * @group PersistentCart
  * @group Business
- * @group Facade
- * @group PersistentCartFacadeTest
+ * @group ItemQuantityTest
  * Add your own group annotations below this line
  */
-class PersistentCartFacadeTest extends Unit
+class ItemQuantityTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\PersistentCart\PersistentCartBusinessTester
