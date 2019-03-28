@@ -10,6 +10,7 @@ namespace Spryker\Zed\DiscountPromotion;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityBridge;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleBridge;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductBridge;
+use Spryker\Zed\DiscountPromotion\Dependency\Service\DiscountPromotionToUtilQuantityServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -22,6 +23,8 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
 
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -32,6 +35,23 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductFacade($container);
         $container = $this->addAvailabilityFacade($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addUtilQuantityService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilQuantityService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new DiscountPromotionToUtilQuantityServiceBridge(
+                $container->getLocator()->utilQuantity()->service()
+            );
+        };
 
         return $container;
     }
