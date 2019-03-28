@@ -14,6 +14,7 @@ use Spryker\Zed\SalesQuantity\Business\Discount\DiscountableItem\DiscountableIte
 use Spryker\Zed\SalesQuantity\Business\Order\Item\ItemQuantityValidator;
 use Spryker\Zed\SalesQuantity\Business\Order\Item\ItemTransformer;
 use Spryker\Zed\SalesQuantity\Business\Order\Item\ItemTransformerInterface;
+use Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilPriceServiceInterface;
 use Spryker\Zed\SalesQuantity\SalesQuantityDependencyProvider;
 
 /**
@@ -52,7 +53,7 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountableItemTransformer(): DiscountableItemTransformerInterface
     {
-        return new DiscountableItemTransformer();
+        return new DiscountableItemTransformer($this->getUtilPriceService());
     }
 
     /**
@@ -61,5 +62,13 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
     public function createItemQuantityValidator()
     {
         return new ItemQuantityValidator($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesQuantity\Dependency\Service\SalesQuantityToUtilPriceServiceInterface
+     */
+    public function getUtilPriceService(): SalesQuantityToUtilPriceServiceInterface
+    {
+        return $this->getProvidedDependency(SalesQuantityDependencyProvider::SERVICE_UTIL_PRICE);
     }
 }
