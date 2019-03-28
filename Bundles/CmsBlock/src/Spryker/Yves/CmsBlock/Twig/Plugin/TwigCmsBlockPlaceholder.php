@@ -13,6 +13,8 @@ use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
 use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `Spryker\Yves\CmsBlock\Plugin\Twig\CmsBlockPlaceholderTwigPlugin` instead.
+ *
  * @method \Spryker\Client\CmsBlock\CmsBlockClientInterface getClient()
  * @method \Spryker\Yves\CmsBlock\CmsBlockFactory getFactory()
  */

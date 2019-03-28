@@ -16,6 +16,8 @@ use Twig\Environment;
 use Twig\RuntimeLoader\FactoryRuntimeLoader;
 
 /**
+ * @deprecated Use \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin instead.
+ *
  * @method \Spryker\Yves\Twig\TwigFactory getFactory()
  */
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
