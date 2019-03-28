@@ -29,18 +29,34 @@ use Spryker\Zed\SalesSplit\Business\Model\Validation\Validator;
 class ValidatorTest extends Unit
 {
     /**
+     * @dataProvider invalidQuantityProvider
+     *
+     * @param int|float $quantity
+     * @param int|float $quantityToSplit
+     *
      * @return void
      */
-    public function testInvalidQuantity()
+    public function testInvalidQuantity($quantity, $quantityToSplit): void
     {
         $validator = $this->getValidator();
-        $spySalesOrderItem = $this->getSalesOrderItem(1);
+        $spySalesOrderItem = $this->getSalesOrderItem($quantity);
 
-        $validateResponse = $validator->isValid($spySalesOrderItem, 666);
+        $validateResponse = $validator->isValid($spySalesOrderItem, $quantityToSplit);
         $validationMessages = $validator->getMessages();
 
         $this->assertFalse($validateResponse);
         $this->assertEquals(Messages::VALIDATE_QUANTITY_MESSAGE, $validationMessages[0]);
+    }
+
+    /**
+     * @return array
+     */
+    public function invalidQuantityProvider(): array
+    {
+        return [
+            'int stock' => [1, 666],
+            'float stock' => [2.8561, 700.64524],
+        ];
     }
 
     /**
@@ -105,16 +121,32 @@ class ValidatorTest extends Unit
     }
 
     /**
+     * @dataProvider validOrderItemProvider
+     *
+     * @param int|float $quantityToSplit
+     *
      * @return void
      */
-    public function testValidOrderItem()
+    public function testValidOrderItem($quantityToSplit): void
     {
         $validator = $this->getValidator();
         $spySalesOrderItem = $this->getSalesOrderItem();
 
-        $validateResponse = $validator->isValid($spySalesOrderItem, 1);
+        $validateResponse = $validator->isValid($spySalesOrderItem, $quantityToSplit);
 
         $this->assertTrue($validateResponse);
+    }
+
+    /**
+     * @return array
+     */
+    public function validOrderItemProvider(): array
+    {
+        return [
+            'int stock' => [1],
+            'float stock' => [1.4],
+            '0 < float stock < 1' => [0.3],
+        ];
     }
 
     /**

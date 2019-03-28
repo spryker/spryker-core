@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\OmsAvailabilityReservationRequestBuilder;
 use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 
 /**
@@ -33,29 +34,57 @@ class OmsFacadeReservationsTest extends Unit
     /**
      * Import from store AT to store DE
      *
+     * @dataProvider importReservationShouldHaveAmountInReservationTotalsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $availabilityReservationRequestTransfer
+     * @param float $expectedResult
+     *
      * @return void
      */
-    public function testImportReservationShouldHaveAmountInReservationTotals()
-    {
+    public function testImportReservationShouldHaveAmountInReservationTotals(
+        StoreTransfer $storeTransfer,
+        OmsAvailabilityReservationRequestTransfer $availabilityReservationRequestTransfer,
+        float $expectedResult
+    ) {
         $omsFacade = $this->createOmsFacade();
-
-       //origin store
-        $storeTransfer = $this->createStoreTransfer()->setName('AT');
-
-        $availabilityReservationRequestTransfer = (new OmsAvailabilityReservationRequestBuilder([
-           OmsAvailabilityReservationRequestTransfer::SKU => 123,
-           OmsAvailabilityReservationRequestTransfer::VERSION => 1,
-           OmsAvailabilityReservationRequestTransfer::ORIGIN_STORE => $storeTransfer,
-           OmsAvailabilityReservationRequestTransfer::RESERVATION_AMOUNT => 1,
-        ]))->build();
 
         $omsFacade->importReservation($availabilityReservationRequestTransfer);
 
        //other store
-        $storeTransfer = $this->createStoreTransfer()->setName('DE');
+        $storeTransfer = $storeTransfer->setName('DE');
         $reservedAmount = $omsFacade->getOmsReservedProductQuantityForSku(123, $storeTransfer);
 
-        $this->assertSame(1, $reservedAmount);
+        $this->assertSame($expectedResult, $reservedAmount);
+    }
+
+    /**
+     * @return array
+     */
+    public function importReservationShouldHaveAmountInReservationTotalsDataProvider(): array
+    {
+        return [
+            'int stock' => $this->getDataForImportReservationShouldHaveAmountInReservationTotals(1),
+            'float stock' => $this->getDataForImportReservationShouldHaveAmountInReservationTotals(0.1),
+        ];
+    }
+
+    /**
+     * @param int|float $quantity
+     *
+     * @return array
+     */
+    protected function getDataForImportReservationShouldHaveAmountInReservationTotals($quantity): array
+    {
+        $storeTransfer = $this->createStoreTransfer()->setName('AT');
+        $availabilityReservationRequestTransfer = (new OmsAvailabilityReservationRequestBuilder([
+            OmsAvailabilityReservationRequestTransfer::SKU => 123,
+            OmsAvailabilityReservationRequestTransfer::VERSION => 1,
+            OmsAvailabilityReservationRequestTransfer::ORIGIN_STORE => $storeTransfer,
+            OmsAvailabilityReservationRequestTransfer::RESERVATION_AMOUNT => $quantity,
+        ]))->build();
+
+        return [$storeTransfer, $availabilityReservationRequestTransfer, $quantity];
     }
 
     /**
@@ -93,26 +122,56 @@ class OmsFacadeReservationsTest extends Unit
     /**
      * Import from store AT to store DE
      *
+     * @dataProvider getReservationsFromOtherStoresShouldReturnReservationsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $availabilityReservationRequestTransfer
+     * @param float $expectedResult
+     *
      * @return void
      */
-    public function testGetReservationsFromOtherStoresShouldReturnReservations()
-    {
+    public function testGetReservationsFromOtherStoresShouldReturnReservations(
+        StoreTransfer $storeTransfer,
+        OmsAvailabilityReservationRequestTransfer $availabilityReservationRequestTransfer,
+        float $expectedResult
+    ): void {
         $omsFacade = $this->createOmsFacade();
-        $storeTransfer = $this->createStoreTransfer()->setName('AT');
 
+        $omsFacade->importReservation($availabilityReservationRequestTransfer);
+
+        $storeTransfer = $storeTransfer->setName('DE');
+        $reserved = $omsFacade->getReservationsFromOtherStores(123, $storeTransfer);
+
+        $this->assertSame($expectedResult, $reserved);
+    }
+
+    /**
+     * @return array
+     */
+    public function getReservationsFromOtherStoresShouldReturnReservationsDataProvider(): array
+    {
+        return [
+            'int stock' => $this->getDataForGetReservationsFromOtherStoresShouldReturnReservations(1),
+            'float stock' => $this->getDataForGetReservationsFromOtherStoresShouldReturnReservations(0.1),
+        ];
+    }
+
+    /**
+     * @param int|float $quantity
+     *
+     * @return array
+     */
+    protected function getDataForGetReservationsFromOtherStoresShouldReturnReservations($quantity): array
+    {
+        $storeTransfer = $this->createStoreTransfer()->setName('AT');
         $availabilityReservationRequestTransfer = (new OmsAvailabilityReservationRequestBuilder([
             OmsAvailabilityReservationRequestTransfer::SKU => 123,
             OmsAvailabilityReservationRequestTransfer::VERSION => 1,
             OmsAvailabilityReservationRequestTransfer::ORIGIN_STORE => $storeTransfer,
-            OmsAvailabilityReservationRequestTransfer::RESERVATION_AMOUNT => 1,
+            OmsAvailabilityReservationRequestTransfer::RESERVATION_AMOUNT => $quantity,
         ]))->build();
 
-        $omsFacade->importReservation($availabilityReservationRequestTransfer);
-
-        $storeTransfer = $this->createStoreTransfer()->setName('DE');
-        $reserved = $omsFacade->getReservationsFromOtherStores(123, $storeTransfer);
-
-        $this->assertSame(1, $reserved);
+        return [$storeTransfer, $availabilityReservationRequestTransfer, (float)$quantity];
     }
 
     /**
