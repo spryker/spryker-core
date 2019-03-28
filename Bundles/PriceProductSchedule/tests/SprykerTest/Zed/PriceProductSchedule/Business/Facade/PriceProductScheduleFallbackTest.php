@@ -34,6 +34,7 @@ class PriceProductScheduleFallbackTest extends Unit
 {
     public const DEFAULT_PRICE_TYPE_ID = 1;
     public const PRICE_TYPE_ID = 2;
+    public const PRICE_TYPE_NAME_ORIGINAL = 'ORIGINAL';
 
     /**
      * @var \SprykerTest\Zed\PriceProductSchedule\PriceProductScheduleBusinessTester
@@ -76,7 +77,7 @@ class PriceProductScheduleFallbackTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
         $priceTypeTransfer = (new PriceTypeTransfer())
             ->setIdPriceType(static::PRICE_TYPE_ID)
-            ->setName('ORIGINAL');
+            ->setName(static::PRICE_TYPE_NAME_ORIGINAL);
 
         $priceProductOverride = [
             PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer,
