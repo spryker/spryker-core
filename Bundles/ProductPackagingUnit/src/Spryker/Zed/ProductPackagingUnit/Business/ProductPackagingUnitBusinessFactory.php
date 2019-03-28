@@ -344,7 +344,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     */
     public function createProductPackagingUnitAmountSalesUnitValue(): ProductPackagingUnitAmountSalesUnitValueInterface
     {
-        return new ProductPackagingUnitAmountSalesUnitValue();
+        return new ProductPackagingUnitAmountSalesUnitValue($this->getUtilPriceService());
     }
 
     /**

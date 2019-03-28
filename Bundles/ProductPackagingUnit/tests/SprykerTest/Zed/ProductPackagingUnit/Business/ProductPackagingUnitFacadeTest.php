@@ -673,22 +673,22 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function itemAdditionAmounts(): array
     {
         return [
-            [true, 1, 2, 1, 1, null, 1, true], // general rule
-            [true, 1, 2, 1.5, 1, null, 1, true],
-            [true, 1, 7, 1, 7, null, 1, true], // min equals new amount
-            [true, 1.5, 7, 1.5, 1, null, 1.5, true],
-            [true, 1, 5, 1, 5, 5,    1, true], // max equals new amount
-            [true, 1, 3, 1.5, 2, 3,    1, true],
-            [true, 1, 7, 1, 0, null, 7, true], // interval matches new amount
-            [true, 1, 7, 1.5, 0, null, 4, true],
-            [false, 1, 5, 1, 7, 7,    7, true], // min, max, interval matches new amount
-            [false, 1.5, 5, 1.5, 7, 7,    7, true],
-            [false, 1, 5, 1, 8, null, 1, true], // min above new amount
-            [false, 1.5, 5, 1.5, 8, null, 1, true],
-            [false, 1, 5, 1, 1, 3,    1, true], // max below new amount
-            [false, 1, 5, 1.5, 1, 2,    1, true],
-            [false, 1, 5, 1, 1, null, 3, true], // interval does not match new amount
-            [false, 1, 5, 1.5, 1, null, 3, true],
+            'general rule int stock' => [true, 1, 2, 1, 1, null, 1, true],
+            'general rule float stock' => [true, 1, 2, 1.5, 1, null, 1, true],
+            'min equals new amount int stock' => [true, 1, 7, 1, 7, null, 1, true],
+            'min equals new amount float stock' => [true, 1.5, 7, 1.5, 1, null, 1.5, true],
+            'max equals new amount int stock' => [true, 1, 5, 1, 5, 5,    1, true],
+            'max equals new amount float stock' => [true, 1, 3, 1.5, 2, 3,    1, true],
+            'interval matches new amount int stock' => [true, 1, 7, 1, 0, null, 7, true],
+            'interval matches new amount float stock' => [true, 1, 7, 1.5, 0, null, 4, true],
+            'min, max, interval matches new amount int stock' => [false, 1, 5, 1, 7, 7,    7, true],
+            'min, max, interval matches new amount float stock' => [false, 1.5, 5, 1.5, 7, 7,    7, true],
+            'min above new amount int stock' => [false, 1, 5, 1, 8, null, 1, true],
+            'min above new amount float stock' => [false, 1.5, 5, 1.5, 8, null, 1, true],
+            'max below new amount int stock' => [false, 1, 5, 1, 1, 3,    1, true],
+            'max below new amount float stock' => [false, 1, 5, 1.5, 1, 2,    1, true],
+            'interval does not match new amount int stock' => [false, 1, 5, 1, 1, null, 3, true], // interval does not match new amount
+            'interval does not match new amount float stock' => [false, 1, 5, 1.5, 1, null, 3, true],
         ];
     }
 
