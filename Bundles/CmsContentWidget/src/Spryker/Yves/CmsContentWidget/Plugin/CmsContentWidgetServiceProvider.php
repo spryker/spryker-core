@@ -15,6 +15,8 @@ use Twig\Environment;
 use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `\Spryker\Yves\CmsContentWidget\Plugin\Twig\CmsContentWidgetTwigPlugin` instead.
+ *
  * @method \Spryker\Yves\CmsContentWidget\CmsContentWidgetFactory getFactory()
  */
 class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceProviderInterface
