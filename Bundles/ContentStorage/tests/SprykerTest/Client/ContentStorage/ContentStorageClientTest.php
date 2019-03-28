@@ -8,7 +8,7 @@
 namespace SprykerTest\Client\ContentStorage;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ContentQueryTransfer;
+use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Spryker\Client\ContentStorage\ContentStorageClient;
 use Spryker\Client\ContentStorage\ContentStorageDependencyProvider;
 use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface;
@@ -42,7 +42,7 @@ class ContentStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testFindContentQueryByIdReturnsValidTransfer()
+    public function testFindContentTypeContextByIdReturnsValidTransfer()
     {
         // Arrange
         $content = [
@@ -53,10 +53,10 @@ class ContentStorageClientTest extends Unit
 
         // Act
         $systemUnderTest = $this->createContentStorageClient()
-            ->findContentQueryById(static::ID_CONTENT_ITEM, static::LOCALE);
+            ->findContentTypeContext(static::ID_CONTENT_ITEM, static::LOCALE);
 
         // Assert
-        $this->assertEquals(ContentQueryTransfer::class, get_class($systemUnderTest));
+        $this->assertEquals(ContentTypeContextTransfer::class, get_class($systemUnderTest));
     }
 
     /**

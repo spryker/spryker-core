@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ContentStorage;
 
-use Generated\Shared\Transfer\ContentQueryTransfer;
+use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
 
 interface ContentStorageClientInterface
@@ -31,14 +31,14 @@ interface ContentStorageClientInterface
     /**
      * Specification:
      * - Retrieves content by ID through a storage client dependency.
-     * - Returns the query representation.
+     * - Returns the context needed to generate a content type.
      *
      * @api
      *
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ContentQueryTransfer|null
+     * @return \Generated\Shared\Transfer\ContentTypeContextTransfer|null
      */
-    public function findContentQueryById(int $idContent, string $localeName): ?ContentQueryTransfer;
+    public function findContentTypeContext(int $idContent, string $localeName): ?ContentTypeContextTransfer;
 }
