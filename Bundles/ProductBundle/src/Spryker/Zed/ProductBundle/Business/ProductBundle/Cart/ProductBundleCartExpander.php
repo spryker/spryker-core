@@ -152,7 +152,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         for ($i = 0; $i < $quantity; $i++) {
             $bundleItemTransfer = new ItemTransfer();
             $bundleItemTransfer->fromArray($itemTransfer->toArray(), true);
-            $bundleItemTransfer->setQuantity(1.0);
+            $bundleItemTransfer->setQuantity(1);
 
             $bundleItemIdentifier = $this->buildBundleIdentifier($bundleItemTransfer);
             $bundleItemTransfer->setBundleItemIdentifier($bundleItemIdentifier);

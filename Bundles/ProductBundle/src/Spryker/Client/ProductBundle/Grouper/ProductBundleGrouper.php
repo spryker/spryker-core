@@ -196,13 +196,15 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
 
             if (!isset($groupedBundleQuantity[$bundleGroupKey])) {
                 $groupedBundleQuantity[$bundleGroupKey] = $bundleItemTransfer->getQuantity();
-            } else {
-                $summaryQuantity = $this->sumQuantities(
-                    $groupedBundleQuantity[$bundleGroupKey],
-                    $bundleItemTransfer->getQuantity()
-                );
-                $groupedBundleQuantity[$bundleGroupKey] = $summaryQuantity;
+
+                continue;
             }
+
+            $summaryQuantity = $this->sumQuantities(
+                $groupedBundleQuantity[$bundleGroupKey],
+                $bundleItemTransfer->getQuantity()
+            );
+            $groupedBundleQuantity[$bundleGroupKey] = $summaryQuantity;
         }
 
         return $groupedBundleQuantity;
@@ -255,14 +257,16 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
 
         if (!isset($currentBundledItems[$currentBundleIdentifer])) {
             $currentBundledItems[$currentBundleIdentifer] = clone $bundledItemTransfer;
-        } else {
-            $currentBundleItemTransfer = $currentBundledItems[$currentBundleIdentifer];
-            $summaryQuantity = $this->sumQuantities(
-                $currentBundleItemTransfer->getQuantity(),
-                $bundledItemTransfer->getQuantity()
-            );
-            $currentBundleItemTransfer->setQuantity($summaryQuantity);
+
+            return $currentBundledItems;
         }
+
+        $currentBundleItemTransfer = $currentBundledItems[$currentBundleIdentifer];
+        $summaryQuantity = $this->sumQuantities(
+            $currentBundleItemTransfer->getQuantity(),
+            $bundledItemTransfer->getQuantity()
+        );
+        $currentBundleItemTransfer->setQuantity($summaryQuantity);
 
         return $currentBundledItems;
     }

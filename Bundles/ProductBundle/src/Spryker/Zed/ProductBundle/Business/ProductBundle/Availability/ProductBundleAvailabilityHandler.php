@@ -250,12 +250,8 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             return false;
         }
 
-        $isBundledItemUnavailable = (
-            $this->isQuantityEqual($bundledProductAvailabilityEntity->getQuantity(), 0)
-            && !$bundledProductAvailabilityEntity->getIsNeverOutOfStock()
-        );
-
-        return $isBundledItemUnavailable;
+        return $this->isQuantityEqual($bundledProductAvailabilityEntity->getQuantity(), 0)
+            && !$bundledProductAvailabilityEntity->getIsNeverOutOfStock();
     }
 
     /**
@@ -288,10 +284,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             return 0;
         }
 
-        $bundledItemQuantity = (int)floor(
-            $bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity()
-        );
-
+        $bundledItemQuantity = (int)floor($bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity());
         if ($this->isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)) {
             return $bundledItemQuantity;
         }
@@ -307,7 +300,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      */
     protected function isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)
     {
-        return ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity === 0);
+        return $bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity === 0;
     }
 
     /**
