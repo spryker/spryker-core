@@ -123,16 +123,18 @@ class ProductMeasurementUnitFacadeTest extends Unit
     {
         // round(1st / 2nd * 3rd) = 4th
         return [
-            [7, 1.25, 1000, 5600],
-            [7, 1.25, 100, 560],
-            [7, 1.25, 10, 56],
-            [7, 1.25, 1, 6],
-            [10, 5, 1, 2],
-            [13, 7, 1000, 1857],
-            [13, 7, 100, 186],
-            [13, 7, 10, 19],
-            [13, 7, 1, 2],
-            [7.5, 1.25, 1000, 6000],
+            '7 breads in cart represented as 56 kg (1 qty = 1.25kg)' => [7, 1.25, 1000, 5600],
+            '7 breads in cart represented as 5.6 kg (1 qty = 1.25kg)' => [7, 1.25, 100, 560],
+            '7 breads in cart represented as 0.56 kg (1 qty = 1.25kg)' => [7, 1.25, 10, 56],
+            '7 breads in cart represented as 0.06 kg (1 qty = 1.25kg)' => [7, 1.25, 1, 6],
+            '10 breads in cart represented as 0.06 kg (1 qty = 1.25kg)' => [10, 5, 1, 2],
+            '13 breads in cart represented as 1.857 kg (1 qty = 7kg)' => [13, 7, 1000, 1857],
+            '13 breads in cart represented as 1.86 kg (1 qty = 0.7kg)' => [13, 7, 100, 186],
+            '13 breads in cart represented as 0.019 kg (1 qty = 0.07kg)' => [13, 7, 10, 19],
+            '13 breads in cart represented as 0.002 kg (1 qty = 0.007kg)' => [13, 7, 1, 2],
+            'quarter bread in cart represented as 0 kg (1 qty = 1kg)' => [0.25, 1, 1, 0],
+            'quarter bread in cart represented as 0.25 kg (1 qty = 1kg)' => [0.25, 1, 100, 25],
+            'half bread in cart represented as 1 kg (1 qty = 1kg)' => [0.5, 1, 1, 1],
         ];
     }
 

@@ -40,9 +40,9 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
      *
      * @example
      * 8 quantity is ordered (availability value),
-     * to be displayed sales unit is KG with a unit precision of 100 (exchanged value can be displayed up by utilQuantityService decimals),
+     * to be displayed sales unit is KG with a unit precision of 100 (exchanged value can be displayed up to 2 decimals),
      * and 2 KG represents 1 quantity (unit to availability conversion ratio is 0.5).
-     * The retrieved normalized unit value is 16.00 (16.00 KG when displayed).
+     * The retrieved normalized unit value is 1600 (16.00 KG when displayed).
      *
      * @param float $availabilityValue
      * @param float $unitToAvailabilityConversion
