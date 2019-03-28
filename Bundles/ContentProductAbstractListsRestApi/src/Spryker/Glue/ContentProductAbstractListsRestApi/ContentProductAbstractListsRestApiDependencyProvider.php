@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ContentProductAbstractListsRestApi;
 
-use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentStorageClientBridge;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Resource\ContentProductAbstractListsRestApiToProductsRestApiResourceBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
@@ -17,7 +16,7 @@ use Spryker\Glue\Kernel\Container;
  */
 class ContentProductAbstractListsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_CONTENT_STORAGE = 'CLIENT_CONTENT_STORAGE';
+    public const CLIENT_CONTENT_PRODUCT = 'CLIENT_CONTENT_PRODUCT';
     public const RESOURCE_PRODUCTS_REST_API = 'RESOURCE_PRODUCTS_REST_API';
 
     /**
@@ -27,7 +26,7 @@ class ContentProductAbstractListsRestApiDependencyProvider extends AbstractBundl
      */
     public function provideDependencies(Container $container): Container
     {
-        $container = $this->addContentStorageClient($container);
+        $container = $this->addContentProductClient($container);
         $container = $this->addProductsRestApiResource($container);
 
         return $container;
@@ -38,11 +37,11 @@ class ContentProductAbstractListsRestApiDependencyProvider extends AbstractBundl
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addContentStorageClient(Container $container): Container
+    protected function addContentProductClient(Container $container): Container
     {
-        $container[static::CLIENT_CONTENT_STORAGE] = function (Container $container) {
-            return new ContentProductAbstractListsRestApiToContentStorageClientBridge(
-                $container->getLocator()->contentStorage()->client()
+        $container[static::CLIENT_CONTENT_PRODUCT] = function (Container $container) {
+            return new ContentProductAbstractListsRestApiToContentProductClientBridge(
+                $container->getLocator()->contentProduct()->client()
             );
         };
         return $container;

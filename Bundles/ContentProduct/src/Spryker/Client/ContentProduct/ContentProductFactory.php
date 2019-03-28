@@ -7,17 +7,15 @@
 
 namespace Spryker\Client\ContentProduct;
 
-use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermExecutor;
-use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermExecutorInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ContentProductFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ContentProduct\Executor\ProductAbstractListTermExecutorInterface
+     * @return \Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface
      */
-    public function createProductAbstractListTermExecutor(): ProductAbstractListTermExecutorInterface
+    public function getContentStorageClient(): ContentProductToContentStorageClientInterface
     {
-        return new ProductAbstractListTermExecutor();
+        return $this->getProvidedDependency(ContentProductDependencyProvider::CLIENT_CONTENT_STORAGE);
     }
 }

@@ -7,7 +7,7 @@
         <property name="sku" type="string"/>
     </transfer>
 
-    <transfer name="ExecutedContentStorage">
+    <transfer name="ExecutedProductAbstractList">
         <property name="idContent" type="int" />
         <property name="type" type="string" />
         <property name="content" type="array" />

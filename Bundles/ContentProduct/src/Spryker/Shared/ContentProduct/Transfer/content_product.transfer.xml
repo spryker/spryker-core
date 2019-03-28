@@ -6,6 +6,18 @@
         <property name="idProductAbstracts" type="int[]" />
     </transfer>
 
+    <transfer name="ExecutedProductAbstractList">
+        <property name="idContent" type="int" />
+        <property name="type" type="string" />
+        <property name="ContentProductAbstractList" type="ContentProductAbstractList" />
+    </transfer>
+
+    <transfer name="ContentQuery">
+        <property name="idContent" type="int" />
+        <property name="term" type="string" />
+        <property name="queryParameters" type="array" />
+    </transfer>
+
     <transfer name="ContentValidationResponse">
         <property name="isSuccess" type="bool" />
         <property name="parameterMessages" type="ContentParameterMessage[]" />

@@ -8,8 +8,9 @@
 namespace Spryker\Glue\ContentProductAbstractListsRestApi\Processor;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException;
 use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
-use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentStorageClientInterface;
+use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Resource\ContentProductAbstractListsRestApiToProductsRestApiResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -29,9 +30,9 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentStorageClientInterface
+     * @var \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface
      */
-    protected $contentStorageClient;
+    protected $contentProductClient;
 
     /**
      * @var \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Resource\ContentProductAbstractListsRestApiToProductsRestApiResourceInterface
@@ -40,16 +41,16 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentStorageClientInterface $contentStorageClient
+     * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface $contentProductClient
      * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Resource\ContentProductAbstractListsRestApiToProductsRestApiResourceInterface $productsRestApiResource
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        ContentProductAbstractListsRestApiToContentStorageClientInterface $contentStorageClient,
+        ContentProductAbstractListsRestApiToContentProductClientInterface $contentProductClient,
         ContentProductAbstractListsRestApiToProductsRestApiResourceInterface $productsRestApiResource
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->contentStorageClient = $contentStorageClient;
+        $this->contentProductClient = $contentProductClient;
         $this->productsRestApiResource = $productsRestApiResource;
     }
 
@@ -69,20 +70,20 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
             return $this->addContentItemIdNotSpecifiedError($restResponse);
         }
 
-        $executedContentStorageTransfer = $this->contentStorageClient->findContentById(
-            (int)$parentResource->getId(),
-            $restRequest->getMetadata()->getLocale()
-        );
-
-        if (!$executedContentStorageTransfer) {
-            return $this->addContentItemtNotFoundError($restResponse);
-        }
-
-        if ($executedContentStorageTransfer->getType() !== static::CONTENT_TYPE_PRODUCT_ABSTRACT_LIST) {
+        try {
+            $executedProductAbstractListTransfer = $this->contentProductClient->getExecutedProductAbstractListById(
+                (int)$parentResource->getId(),
+                $restRequest->getMetadata()->getLocale()
+            );
+        } catch (InvalidProductAbstractListTypeException $exception) {
             return $this->addContentTypeInvalidError($restResponse);
         }
 
-        $idProductAbstracts = $executedContentStorageTransfer->getContent();
+        if (!$executedProductAbstractListTransfer) {
+            return $this->addContentItemtNotFoundError($restResponse);
+        }
+
+        $idProductAbstracts = $executedProductAbstractListTransfer->getContentProductAbstractList()->getIdProductAbstracts();
         foreach ($idProductAbstracts as $idProductAbstract) {
             $abstractProductResource = $this->productsRestApiResource->findProductAbstractById($idProductAbstract, $restRequest);
 
