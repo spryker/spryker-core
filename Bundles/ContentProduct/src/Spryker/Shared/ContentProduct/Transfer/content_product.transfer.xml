@@ -12,10 +12,10 @@
         <property name="ContentProductAbstractList" type="ContentProductAbstractList" />
     </transfer>
 
-    <transfer name="ContentQuery">
+    <transfer name="ContentTypeContext">
         <property name="idContent" type="int" />
         <property name="term" type="string" />
-        <property name="queryParameters" type="array" />
+        <property name="parameters" type="array" />
     </transfer>
 
     <transfer name="ContentValidationResponse">

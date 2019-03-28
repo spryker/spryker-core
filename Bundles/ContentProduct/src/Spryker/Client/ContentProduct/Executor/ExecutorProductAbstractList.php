@@ -8,7 +8,7 @@
 namespace Spryker\Client\ContentProduct\Executor;
 
 use Generated\Shared\Transfer\ContentProductAbstractListTransfer;
-use Generated\Shared\Transfer\ContentQueryTransfer;
+use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Generated\Shared\Transfer\ExecutedProductAbstractListTransfer;
 use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException;
 use Spryker\Shared\ContentProduct\ContentProductConfig;
@@ -16,36 +16,36 @@ use Spryker\Shared\ContentProduct\ContentProductConfig;
 class ExecutorProductAbstractList implements ExecutorProductAbstractListInterface
 {
     /**
-     * @param \Spryker\Client\ContentProduct\Executor\ContentQueryTransfer $contentQueryTransfer
+     * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
      *
      * @throws \Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException
      *
-     * @return ExecutedProductAbstractListTransfer\|null
+     * @return \Generated\Shared\Transfer\ExecutedProductAbstractListTransfer|null
      */
-    public function execute(ContentQueryTransfer $contentQueryTransfer): ?ExecutedProductAbstractListTransfer
+    public function execute(ContentTypeContextTransfer $contentTypeContextTransfer): ?ExecutedProductAbstractListTransfer
     {
-        if ($contentQueryTransfer->getTerm() !== ContentProductConfig::CONTENT_TERM_PRODUCT_ABSTRACT_LIST) {
+        if ($contentTypeContextTransfer->getTerm() !== ContentProductConfig::CONTENT_TERM_PRODUCT_ABSTRACT_LIST) {
             throw new InvalidProductAbstractListTypeException();
         }
 
         $executedProductAbstractListTransfer = new ExecutedProductAbstractListTransfer();
-        $executedProductAbstractListTransfer->fromArray($contentQueryTransfer->toArray());
+        $executedProductAbstractListTransfer->fromArray($contentTypeContextTransfer->toArray());
         $executedProductAbstractListTransfer->setContentProductAbstractList(
-            $this->getProductAbstractListTransfer($contentQueryTransfer)
+            $this->getProductAbstractListTransfer($contentTypeContextTransfer)
         );
 
         return $executedProductAbstractListTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentQueryTransfer $contentQueryTransfer
+     * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
      *
      * @return \Generated\Shared\Transfer\ContentProductAbstractListTransfer
      */
-    protected function getProductAbstractListTransfer(ContentQueryTransfer $contentQueryTransfer): ContentProductAbstractListTransfer
+    protected function getProductAbstractListTransfer(ContentTypeContextTransfer $contentTypeContextTransfer): ContentProductAbstractListTransfer
     {
         $contentProductAbstractListTransfer = new ContentProductAbstractListTransfer();
-        $contentProductAbstractListTransfer->fromArray($contentQueryTransfer->getQueryParameters());
+        $contentProductAbstractListTransfer->fromArray($contentTypeContextTransfer->getParameters());
 
         return $contentProductAbstractListTransfer;
     }

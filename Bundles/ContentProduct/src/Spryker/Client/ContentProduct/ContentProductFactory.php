@@ -7,10 +7,21 @@
 
 namespace Spryker\Client\ContentProduct;
 
+use Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface;
+use Spryker\Client\ContentProduct\Executor\ExecutorProductAbstractList;
+use Spryker\Client\ContentProduct\Executor\ExecutorProductAbstractListInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ContentProductFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\ContentProduct\Executor\ExecutorProductAbstractListInterface
+     */
+    public function createExecutorProductAbstractList(): ExecutorProductAbstractListInterface
+    {
+        return new ExecutorProductAbstractList();
+    }
+
     /**
      * @return \Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface
      */

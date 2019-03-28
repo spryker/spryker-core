@@ -7,16 +7,17 @@
 
 namespace Spryker\Client\ContentProduct\Executor;
 
+use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Generated\Shared\Transfer\ExecutedProductAbstractListTransfer;
 
 interface ExecutorProductAbstractListInterface
 {
     /**
-     * @param \Spryker\Client\ContentProduct\Executor\ContentQueryTransfer $contentQueryTransfer
+     * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
      *
      * @throws \Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException
      *
-     * @return \Spryker\Client\ContentProduct\Executor\ExecutedProductAbstractListTransfer|null
+     * @return \Generated\Shared\Transfer\ExecutedProductAbstractListTransfer|null
      */
-    public function execute(ContentQueryTransfer $contentQueryTransfer): ?ExecutedProductAbstractListTransfer;
+    public function execute(ContentTypeContextTransfer $contentTypeContextTransfer): ?ExecutedProductAbstractListTransfer;
 }

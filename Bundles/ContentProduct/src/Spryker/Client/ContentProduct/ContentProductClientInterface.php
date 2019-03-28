@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ContentProduct;
 
+use Generated\Shared\Transfer\ExecutedProductAbstractListTransfer;
+
 interface ContentProductClientInterface
 {
     /**

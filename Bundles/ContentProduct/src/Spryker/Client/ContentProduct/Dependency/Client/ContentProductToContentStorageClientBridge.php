@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ContentProduct\Dependency\Client;
 
-use Generated\Shared\Transfer\ContentQueryTransfer;
+use Generated\Shared\Transfer\ContentTypeContextTransfer;
 
 class ContentProductToContentStorageClientBridge implements ContentProductToContentStorageClientInterface
 {
@@ -28,10 +28,10 @@ class ContentProductToContentStorageClientBridge implements ContentProductToCont
      * @param int $id
      * @param string $locale
      *
-     * @return array|null
+     * @return \Generated\Shared\Transfer\ContentTypeContextTransfer|null
      */
-    public function findContentQueryById(int $id, string $locale): ?ContentQueryTransfer
+    public function findContentTypeContext(int $id, string $locale): ?ContentTypeContextTransfer
     {
-        return $this->contentStorageClient->findContentQueryById($id, $locale);
+        return $this->contentStorageClient->findContentTypeContext($id, $locale);
     }
 }

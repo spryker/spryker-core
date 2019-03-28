@@ -29,14 +29,14 @@ class ContentProductClient extends AbstractClient implements ContentProductClien
      */
     public function getExecutedProductAbstractListById(int $idContent, string $localeName): ?ExecutedProductAbstractListTransfer
     {
-        $contentQueryTransfer = $this->getFactory()->getContentStorageClient()->findContentQueryById($idContent, $localeName);
+        $contentTypeContextTransfer = $this->getFactory()->getContentStorageClient()->findContentTypeContext($idContent, $localeName);
 
-        if (!$contentQueryTransfer) {
+        if (!$contentTypeContextTransfer) {
             return null;
         }
 
         return $this->getFactory()
             ->createExecutorProductAbstractList()
-            ->execute($contentQueryTransfer);
+            ->execute($contentTypeContextTransfer);
     }
 }
