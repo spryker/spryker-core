@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\WebProfiler;
 
+use ReflectionClass;
 use Spryker\Shared\WebProfiler\WebProfilerConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener;
 
 class WebProfilerConfig extends AbstractBundleConfig
 {
@@ -18,5 +20,17 @@ class WebProfilerConfig extends AbstractBundleConfig
     public function isWebProfilerEnabled()
     {
         return $this->get(WebProfilerConstants::ENABLE_WEB_PROFILER, false);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getWebProfilerTemplatePaths(): array
+    {
+        $reflectionClass = new ReflectionClass(WebDebugToolbarListener::class);
+
+        return [
+            dirname(dirname((string)$reflectionClass->getFileName())) . '/Resources/views',
+        ];
     }
 }

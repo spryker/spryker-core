@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\Url\Business\UrlBusinessFactory getFactory()
+ * @method \Spryker\Zed\Url\Persistence\UrlRepositoryInterface getRepository()
  */
 class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 {
@@ -81,6 +82,22 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     */
+    public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer
+    {
+        return $this->getFactory()
+            ->createUrlReader()
+            ->findUrlCaseInsensitive($urlTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
      *
      * @return bool
@@ -105,11 +122,43 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @return bool
      */
+    public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool
+    {
+        return $this->getFactory()
+            ->createUrlReader()
+            ->hasUrlCaseInsensitive($urlTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
     public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer)
     {
         return $this->getFactory()
             ->createUrlReader()
             ->hasUrlOrRedirectedUrl($urlTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return bool
+     */
+    public function hasUrlOrRedirectedUrlCaseInsensitive(UrlTransfer $urlTransfer): bool
+    {
+        return $this->getFactory()
+            ->createUrlReader()
+            ->hasUrlOrRedirectedUrlCaseInsensitive($urlTransfer);
     }
 
     /**

@@ -108,9 +108,11 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
+     * - Gets quote collection filtered by criteria.
      * - Filters by FilterTransfer when provided.
      * - Filters by customer reference when provided.
      * - Filters by store ID when provided.
+     * - Executes quote QuoteExpanderPluginInterface plugins.
      *
      * @api
      *
@@ -158,4 +160,40 @@ interface QuoteFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Locks quote by setting `isLocked` transfer property to true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     *  - Unlocks quote by setting `isLocked` transfer property to false.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Returns true if quote is locked.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
 }

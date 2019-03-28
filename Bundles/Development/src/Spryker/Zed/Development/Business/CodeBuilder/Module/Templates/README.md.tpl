@@ -12,4 +12,4 @@ composer require {namespaceDashed}/{moduleDashed}
 
 ## Documentation
 
-[Spryker Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)
+[Spryker Documentation](https://documentation.spryker.com/module_guide/overview.htm)

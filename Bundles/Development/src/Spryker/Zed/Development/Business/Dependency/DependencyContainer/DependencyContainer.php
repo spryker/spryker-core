@@ -23,9 +23,9 @@ class DependencyContainer implements DependencyContainerInterface
     /**
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
-     * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
+     * @return $this
      */
-    public function initialize(ModuleTransfer $moduleTransfer): DependencyContainerInterface
+    public function initialize(ModuleTransfer $moduleTransfer)
     {
         $this->dependencyCollectionTransfer = new DependencyCollectionTransfer();
         $this->dependencyCollectionTransfer->setModule($moduleTransfer);
@@ -39,9 +39,9 @@ class DependencyContainer implements DependencyContainerInterface
      * @param bool $isOptional
      * @param bool $isTest
      *
-     * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
+     * @return $this
      */
-    public function addDependency(string $module, string $type, bool $isOptional = false, bool $isTest = false): DependencyContainerInterface
+    public function addDependency(string $module, string $type, bool $isOptional = false, bool $isTest = false)
     {
         $dependencyTransfer = new DependencyTransfer();
         $dependencyTransfer

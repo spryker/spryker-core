@@ -17,4 +17,11 @@ interface DiscountRepositoryInterface
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findVouchersExceedingUsageLimitByCodes(array $codes): ObjectCollection;
+
+    /**
+     * @param string[] $codes
+     *
+     * @return int
+     */
+    public function getCountOfVouchersExceedingUsageLimitByCodes(array $codes): int;
 }

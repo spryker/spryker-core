@@ -1,0 +1,31 @@
+{
+  "name": "spryker/content-banner-gui",
+  "type": "library",
+  "description": "ContentBannerGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/content-gui-extension": "^1.0.0",
+    "spryker/kernel": "^3.8.0",
+    "spryker/symfony": "^3.1.5"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

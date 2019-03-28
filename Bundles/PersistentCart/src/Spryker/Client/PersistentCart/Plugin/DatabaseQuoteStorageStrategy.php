@@ -289,7 +289,9 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     /**
      * Specification:
      *  - Makes zed request.
+     *  - Reloads quote from storage.
      *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - If quote is locked returns quote, ignores following steps.
      *  - Adds changes as notices to messages.
      *  - Checks error messages.
      *  - Recalculates quote totals.
@@ -366,12 +368,21 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      */
     protected function updateQuote(QuoteResponseTransfer $quoteResponseTransfer)
     {
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $sessionQuoteTransfer = $this->getQuoteClient()->getQuote();
-        $sessionQuoteTransfer->fromArray(
-            $quoteResponseTransfer->getQuoteTransfer()->modifiedToArray(),
-            true
-        );
-        $this->getQuoteClient()->setQuote($sessionQuoteTransfer);
+
+        if (!$quoteTransfer) {
+            return new QuoteTransfer();
+        }
+
+        if ($quoteTransfer->getIdQuote() === $sessionQuoteTransfer->getIdQuote()) {
+            $quoteTransfer = $sessionQuoteTransfer->fromArray(
+                $quoteTransfer->modifiedToArray(),
+                true
+            );
+        }
+
+        $this->getQuoteClient()->setQuote($quoteTransfer);
         $this->executeUpdateQuotePlugins($quoteResponseTransfer);
 
         return $sessionQuoteTransfer;

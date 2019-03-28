@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductBundle\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -20,6 +20,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CartBundleAvailabilityPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Checks if bundled items in CartChangeTransfer are available.
+     * - Sets error message if they were not.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
