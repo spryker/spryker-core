@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Availability\AvailabilityConfig;
+use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface;
 
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
 {
@@ -29,13 +30,23 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     protected $availabilityConfig;
 
     /**
+     * @var \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      * @param \Spryker\Zed\Availability\AvailabilityConfig $availabilityConfig
+     * @param \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface $utilQuantityService
      */
-    public function __construct(SellableInterface $sellable, AvailabilityConfig $availabilityConfig)
-    {
+    public function __construct(
+        SellableInterface $sellable,
+        AvailabilityConfig $availabilityConfig,
+        AvailabilityToUtilQuantityServiceInterface $utilQuantityService
+    ) {
         $this->sellable = $sellable;
         $this->availabilityConfig = $availabilityConfig;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -91,10 +102,24 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
             if (!isset($result[$sku])) {
                 $result[$sku] = 0;
             }
-            $result[$sku] += $itemTransfer->getQuantity();
+            $result[$sku] = $this->sumQuantities(
+                $result[$sku],
+                $itemTransfer->getQuantity()
+            );
         }
 
         return $result;
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
