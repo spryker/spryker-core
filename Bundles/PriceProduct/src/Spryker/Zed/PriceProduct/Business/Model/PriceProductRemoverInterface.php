@@ -9,7 +9,7 @@ namespace Spryker\Zed\PriceProduct\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 
-interface RemoverInterface
+interface PriceProductRemoverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct

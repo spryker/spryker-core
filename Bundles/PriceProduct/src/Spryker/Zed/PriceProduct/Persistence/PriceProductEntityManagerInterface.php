@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Persistence;
 
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
 
 /**
@@ -48,4 +49,11 @@ interface PriceProductEntityManagerInterface
      * @return void
      */
     public function deletePriceProductDefault(int $idPriceProductDefault): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    public function deletePriceProductStoreByPriceProductTransfer(PriceProductTransfer $priceProductTransfer): void;
 }

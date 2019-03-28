@@ -19,6 +19,8 @@ use Spryker\Zed\PriceProduct\Business\Model\PriceGrouper;
 use Spryker\Zed\PriceProduct\Business\Model\PriceGrouperInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilder;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface;
+use Spryker\Zed\PriceProduct\Business\Model\PriceProductRemover;
+use Spryker\Zed\PriceProduct\Business\Model\PriceProductRemoverInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeMapper;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReader;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
@@ -46,8 +48,6 @@ use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter\Pric
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Reader;
 use Spryker\Zed\PriceProduct\Business\Model\ReaderInterface;
-use Spryker\Zed\PriceProduct\Business\Model\Remover;
-use Spryker\Zed\PriceProduct\Business\Model\RemoverInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Writer;
 use Spryker\Zed\PriceProduct\Business\Model\WriterInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
@@ -326,11 +326,11 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Business\Model\RemoverInterface
+     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceProductRemoverInterface
      */
-    public function createRemover(): RemoverInterface
+    public function createPriceProductRemover(): PriceProductRemoverInterface
     {
-        return new Remover(
+        return new PriceProductRemover(
             $this->getEntityManager()
         );
     }

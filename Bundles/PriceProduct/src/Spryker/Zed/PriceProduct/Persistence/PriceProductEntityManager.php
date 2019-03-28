@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProduct\Persistence;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -67,6 +68,24 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    public function deletePriceProductStoreByPriceProductTransfer(PriceProductTransfer $priceProductTransfer): void
+    {
+        $this->getFactory()
+            ->createPriceProductStoreQuery()
+            ->filterByFkCurrency($priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency())
+            ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
+            ->filterByFkStore($priceProductTransfer->getMoneyValue()->getFkStore())
+            ->filterByGrossPrice($priceProductTransfer->getMoneyValue()->getGrossAmount())
+            ->filterByNetPrice($priceProductTransfer->getMoneyValue()->getNetAmount())
+            ->find()
+            ->delete();
+    }
+
+    /**
      * @param int $idPriceProduct
      *
      * @return void
@@ -75,8 +94,7 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
     {
         $this->getFactory()
             ->createPriceProductQuery()
-            ->filterByIdPriceProduct($idPriceProduct)
-            ->findOne()
+            ->findByIdPriceProduct($idPriceProduct)
             ->delete();
     }
 
@@ -89,8 +107,7 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
     {
         $this->getFactory()
             ->createPriceProductDefaultQuery()
-            ->filterByIdPriceProductDefault($idPriceProductDefault)
-            ->findOne()
+            ->findByIdPriceProductDefault($idPriceProductDefault)
             ->delete();
     }
 }

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface;
 
-class Remover implements RemoverInterface
+class PriceProductRemover implements PriceProductRemoverInterface
 {
     use LoggerTrait;
 
@@ -38,11 +38,9 @@ class Remover implements RemoverInterface
         $priceProductTransfer
             ->requireIdPriceProduct();
 
+        $this->entityManager->deletePriceProductStoreByPriceProductTransfer($priceProductTransfer);
+        $this->entityManager->deletePriceProductDefault($priceProductTransfer->getPriceDimension()->getIdPriceProductDefault());
         $this->entityManager->deletePriceProduct($priceProductTransfer->getIdPriceProduct());
-
-        $idPriceProductDefault = $priceProductTransfer->getPriceDimension()->getIdPriceProductDefault();
-
-        $this->entityManager->deletePriceProductDefault($idPriceProductDefault);
 
         $this->getLogger()->warning(sprintf('Price for product with id "%s" was deleted', $priceProductTransfer->getIdPriceProduct()));
     }

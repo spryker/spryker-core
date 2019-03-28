@@ -526,7 +526,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     public function removePriceProductStore(PriceProductTransfer $priceProductTransfer): void
     {
         $this->getFactory()
-            ->createRemover()
+            ->createPriceProductRemover()
             ->removePriceProductStore($priceProductTransfer);
     }
 }
