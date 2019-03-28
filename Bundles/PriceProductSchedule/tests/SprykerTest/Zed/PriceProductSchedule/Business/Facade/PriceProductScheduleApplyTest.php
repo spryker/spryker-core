@@ -50,7 +50,7 @@ class PriceProductScheduleApplyTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -200,7 +200,6 @@ class PriceProductScheduleApplyTest extends Unit
                 ],
             ],
         ]);
-
 
         // Act
         $this->priceProductScheduleFacade->applyScheduledPrices();

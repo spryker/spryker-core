@@ -45,7 +45,7 @@ class PriceProductScheduleDateTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -316,12 +316,12 @@ class PriceProductScheduleDateTest extends Unit
         return [
             'active scheduled date range' => [
                 (new DateTime())->modify('-5 days')->format(static::DATE_FORMAT),
-                (new DateTime())->modify('+5 days')->format(static::DATE_FORMAT)
+                (new DateTime())->modify('+5 days')->format(static::DATE_FORMAT),
             ],
             'active scheduled current dates' => [
                 (new DateTime())->format('Y-m-d H:m:i'),
-                (new DateTime())->format('Y-m-d H:m:i')
-            ]
+                (new DateTime())->format('Y-m-d H:m:i'),
+            ],
         ];
     }
 
@@ -333,12 +333,12 @@ class PriceProductScheduleDateTest extends Unit
         return [
             'scheduled date range in future' => [
                 (new DateTime())->modify('+5 days')->format(static::DATE_FORMAT),
-                (new DateTime())->modify('+10 days')->format(static::DATE_FORMAT)
+                (new DateTime())->modify('+10 days')->format(static::DATE_FORMAT),
             ],
             'scheduled date range in past' => [
                 (new DateTime())->modify('-10 days')->format(static::DATE_FORMAT),
-                (new DateTime())->modify('-5 days')->format(static::DATE_FORMAT)
-            ]
+                (new DateTime())->modify('-5 days')->format(static::DATE_FORMAT),
+            ],
         ];
     }
 
@@ -350,12 +350,12 @@ class PriceProductScheduleDateTest extends Unit
         return [
             'with one hour range' => [
                 (new DateTime())->modify('-1 hour')->format(static::DATE_FORMAT),
-                (new DateTime())->modify('-2 hour')->format(static::DATE_FORMAT)
+                (new DateTime())->modify('-2 hour')->format(static::DATE_FORMAT),
             ],
             'with 10 days range' => [
                 (new DateTime())->modify('-5 days')->format(static::DATE_FORMAT),
-                (new DateTime())->modify('-10 days')->format(static::DATE_FORMAT)
-            ]
+                (new DateTime())->modify('-10 days')->format(static::DATE_FORMAT),
+            ],
         ];
     }
 
@@ -367,12 +367,12 @@ class PriceProductScheduleDateTest extends Unit
         return [
             'with one hour range' => [
                 (new DateTime())->modify('-2 hour')->format(static::DATE_FORMAT),
-                (new DateTime())->modify('-1 hour')->format(static::DATE_FORMAT)
+                (new DateTime())->modify('-1 hour')->format(static::DATE_FORMAT),
             ],
             'with 10 days range' => [
                 (new DateTime())->modify('-10 days')->format(static::DATE_FORMAT),
-                (new DateTime())->modify('-5 days')->format(static::DATE_FORMAT)
-            ]
+                (new DateTime())->modify('-5 days')->format(static::DATE_FORMAT),
+            ],
         ];
     }
 
@@ -384,12 +384,12 @@ class PriceProductScheduleDateTest extends Unit
         return [
             'with one hour range' => [
                 (new DateTime())->modify('-1 hour')->format(static::DATE_FORMAT),
-                (new DateTime())->modify('-2 hour')->format(static::DATE_FORMAT)
+                (new DateTime())->modify('-2 hour')->format(static::DATE_FORMAT),
             ],
             'with 10 days range' => [
                 (new DateTime())->modify('-5 days')->format(static::DATE_FORMAT),
-                (new DateTime())->modify('-10 days')->format(static::DATE_FORMAT)
-            ]
+                (new DateTime())->modify('-10 days')->format(static::DATE_FORMAT),
+            ],
         ];
     }
 }

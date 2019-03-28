@@ -109,7 +109,7 @@ class PriceProductScheduleDataHelper extends Module
 
         $spyPriceProductScheduleEntity->save();
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($spyPriceProductScheduleEntity) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($spyPriceProductScheduleEntity): void {
             $this->cleanupPriceProductSchedule($spyPriceProductScheduleEntity->getIdPriceProductSchedule());
         });
 
@@ -123,7 +123,7 @@ class PriceProductScheduleDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
      */
-    public function havePriceProductScheduleList($isActive = true): PriceProductScheduleListTransfer
+    public function havePriceProductScheduleList(?bool $isActive = true): PriceProductScheduleListTransfer
     {
         $priceProductScheduleListTransfer = (new PriceProductScheduleListBuilder([
             PriceProductScheduleListTransfer::IS_ACTIVE => $isActive,
@@ -135,7 +135,7 @@ class PriceProductScheduleDataHelper extends Module
         $spyPriceProductScheduleListEntity->save();
 
         $priceProductScheduleListTransfer->setIdPriceProductScheduleList($spyPriceProductScheduleListEntity->getIdPriceProductScheduleList());
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($spyPriceProductScheduleListEntity) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($spyPriceProductScheduleListEntity): void {
             $this->cleanupPriceProductScheduleList($spyPriceProductScheduleListEntity->getIdPriceProductScheduleList());
         });
 
