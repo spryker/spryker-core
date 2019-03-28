@@ -222,6 +222,6 @@ class QuoteResolver implements QuoteResolverInterface
     {
         $anonymousPrefix = $this->persistentCartConfig->getPersistentCartAnonymousPrefix();
 
-        return strncasecmp($anonymousPrefix, $customerReference, strlen($anonymousPrefix)) == 0;
+        return strncasecmp($anonymousPrefix, $customerReference, strlen($anonymousPrefix)) === 0;
     }
 }

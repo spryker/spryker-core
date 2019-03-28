@@ -131,6 +131,17 @@ class CartOperation implements CartOperationInterface
     }
 
     /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -155,13 +166,13 @@ class CartOperation implements CartOperationInterface
 
             return $quoteResponseTransfer;
         }
-        if ($itemTransfer->getQuantity() == 0) {
+        if ($this->isQuantityEqual($itemTransfer->getQuantity(), 0)) {
             return $this->quoteItemOperation->removeItems([$quoteItemTransfer], $quoteTransfer);
         }
 
         $delta = abs($this->subtractQuantities($quoteItemTransfer->getQuantity(), $itemTransfer->getQuantity()));
 
-        if ($delta == 0) {
+        if ($this->isQuantityEqual($delta, 0)) {
             $quoteResponseTransfer = new QuoteResponseTransfer();
             $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
             $quoteResponseTransfer->setIsSuccessful(false);

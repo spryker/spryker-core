@@ -43,4 +43,15 @@ class PersistentCartToUtilQuantityServiceBridge implements PersistentCartToUtilQ
     {
         return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
     }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
+    }
 }
