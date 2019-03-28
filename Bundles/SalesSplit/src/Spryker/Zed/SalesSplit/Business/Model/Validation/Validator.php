@@ -18,7 +18,7 @@ class Validator implements ValidatorInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
-     * @param int $quantityToSplit
+     * @param float $quantityToSplit
      *
      * @return bool
      */
@@ -42,13 +42,13 @@ class Validator implements ValidatorInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
-     * @param int $quantityToSplit
+     * @param float $quantityToSplit
      *
      * @return bool
      */
     protected function isValidQuantity(SpySalesOrderItem $salesOrderItem, $quantityToSplit)
     {
-        if ($quantityToSplit < 1 || $salesOrderItem->getQuantity() <= $quantityToSplit) {
+        if ($quantityToSplit <= 0 || $salesOrderItem->getQuantity() <= $quantityToSplit) {
             $this->messages[] = Messages::VALIDATE_QUANTITY_MESSAGE;
 
             return false;

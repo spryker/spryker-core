@@ -11,7 +11,7 @@ interface OrderItemSplitInterface
 {
     /**
      * @param int $idSalesOrderItem
-     * @param int $quantityToSplit
+     * @param float $quantityToSplit
      *
      * @throws \Exception
      *
