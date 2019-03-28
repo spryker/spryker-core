@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Touch\Business\Model;
 
 use Codeception\Test\Unit;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Touch\Business\TouchBusinessFactory;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
@@ -25,6 +26,8 @@ use Spryker\Zed\Touch\TouchDependencyProvider;
  */
 class TouchRecordTest extends Unit
 {
+    protected const TYPE_CATEGORY = 'category';
+
     /**
      * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
@@ -57,9 +60,115 @@ class TouchRecordTest extends Unit
      */
     public function testSaveTouchRecordKeepsOneRecordIfKeyChangeFalse(): void
     {
-        $this->touchRecord->saveTouchRecord('category', 'active', 1, false);
-        $this->touchRecord->saveTouchRecord('category', 'deleted', 1, false);
+        // Assign
+        $idItem = 100000;
 
-        $this->assertCount(1, $this->touchQueryContainer->queryUpdateTouchEntry('category', 1));
+        // Act
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $idItem, false);
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $idItem, false);
+
+        // Assert
+        $this->assertCount(1, $this->touchQueryContainer->queryUpdateTouchEntry(static::TYPE_CATEGORY, $idItem));
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveTouchRecordKeepsOneRecordIfKeyChangeTrue(): void
+    {
+        // Assign
+        $idItem = 200000;
+
+        // Act
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $idItem, true);
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $idItem, true);
+
+        // Assert
+        $this->assertCount(1, $this->touchQueryContainer->queryUpdateTouchEntry(static::TYPE_CATEGORY, $idItem));
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveTouchRecordKeepsTwoRecordsIfKeyChangeTrueAndEventActive(): void
+    {
+        // Assign
+        $idItem = 300000;
+
+        // Act
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $idItem, false);
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $idItem, true);
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $idItem, false);
+
+        // Assert
+        $this->assertCount(2, $this->touchQueryContainer->queryUpdateTouchEntry(static::TYPE_CATEGORY, $idItem));
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveTouchRecordKeepsOneRecordIfKeyChangeFalseMultipleTimes(): void
+    {
+        // Assign
+        $idItem = 400000;
+
+        // Act
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $idItem, false);
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $idItem, false);
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $idItem, false);
+
+        // Assert
+        $this->assertCount(1, $this->touchQueryContainer->queryUpdateTouchEntry(static::TYPE_CATEGORY, $idItem));
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveTouchRecordKeepsOneRecordIfKeyChangeTrueMultipleTimes(): void
+    {
+        // Assign
+        $idItem = 500000;
+
+        // Act
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $idItem, true);
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $idItem, true);
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $idItem, true);
+
+        // Assert
+        $this->assertCount(1, $this->touchQueryContainer->queryUpdateTouchEntry(static::TYPE_CATEGORY, $idItem));
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveTouchRecordKeepsOneRecordIfKeyChangeFalseMultipleEvents(): void
+    {
+        // Assign
+        $idItem = 600000;
+
+        // Act
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $idItem, false);
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $idItem, false);
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, $idItem, false);
+
+        // Assert
+        $this->assertCount(1, $this->touchQueryContainer->queryUpdateTouchEntry(static::TYPE_CATEGORY, $idItem));
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveTouchRecordKeepsOneRecordIfKeyChangeFalseMultipleEventsOrder(): void
+    {
+        // Assign
+        $idItem = 700000;
+
+        // Act
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, $idItem, false);
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $idItem, false);
+        $this->touchRecord->saveTouchRecord(static::TYPE_CATEGORY, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $idItem, false);
+
+        // Assert
+        $this->assertCount(1, $this->touchQueryContainer->queryUpdateTouchEntry(static::TYPE_CATEGORY, $idItem));
     }
 }
