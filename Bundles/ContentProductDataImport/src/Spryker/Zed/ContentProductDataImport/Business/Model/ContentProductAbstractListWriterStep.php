@@ -25,6 +25,11 @@ class ContentProductAbstractListWriterStep extends PublishAwareStep implements D
      */
     public function execute(DataSetInterface $dataSet)
     {
+        SpyContentLocalizedQuery::create()
+            ->filterByFkContent($dataSet[ContentProductAbstractListDataSetInterface::COLUMN_ID_CONTENT])
+            ->find()
+            ->delete();
+
         foreach ($dataSet[ContentProductAbstractListDataSetInterface::CONTENT_LOCALIZED_ITEMS] as $localizedItem) {
             $contentLocalizedEntity = SpyContentLocalizedQuery::create()
                 ->filterByFkContent($dataSet[ContentProductAbstractListDataSetInterface::COLUMN_ID_CONTENT])
