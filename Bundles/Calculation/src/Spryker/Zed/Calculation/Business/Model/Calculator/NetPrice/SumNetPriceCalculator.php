@@ -54,9 +54,8 @@ class SumNetPriceCalculator implements CalculatorInterface
                 continue;
             }
 
-            $sumNetPrice = $this->roundPrice(
-                $expenseTransfer->getUnitNetPrice() * $expenseTransfer->getQuantity()
-            );
+            $sumNetPrice = $expenseTransfer->getUnitNetPrice() * $expenseTransfer->getQuantity();
+
             $expenseTransfer->setSumNetPrice($sumNetPrice);
         }
     }
