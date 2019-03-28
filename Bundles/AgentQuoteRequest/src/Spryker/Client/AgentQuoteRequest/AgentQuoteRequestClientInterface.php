@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\AgentQuoteRequest;
 
-use Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer;
-use Generated\Shared\Transfer\CompanyUserQueryTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
@@ -133,21 +131,6 @@ interface AgentQuoteRequestClientInterface
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
     public function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer;
-
-    /**
-     * Specification:
-     * - Makes Zed request.
-     * - Returns CompanyUserAutocompleteResponseTransfer with list of company users found by query.
-     * - Search works by first name, last name and email.
-     * - If company users by query are not exist, collection will be empty.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $customerQueryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
-     */
-    public function getCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer;
 
     /**
      * Specification:

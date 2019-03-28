@@ -9,6 +9,7 @@ namespace Spryker\Client\CompanyUser\Zed;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserQueryTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -72,4 +73,11 @@ interface CompanyUserStubInterface
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function getActiveCompanyUsersByCustomerReference(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $customerQueryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getCompanyUserCollectionByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserCollectionTransfer;
 }

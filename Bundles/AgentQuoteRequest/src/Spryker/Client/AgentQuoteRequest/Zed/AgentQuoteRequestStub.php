@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\AgentQuoteRequest\Zed;
 
-use Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer;
-use Generated\Shared\Transfer\CompanyUserQueryTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
@@ -126,21 +124,5 @@ class AgentQuoteRequestStub implements AgentQuoteRequestStubInterface
         );
 
         return $quoteRequestOverviewCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $customerQueryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer
-     */
-    public function getCompanyUsersByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserAutocompleteResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\CompanyUserAutocompleteResponseTransfer $companyUserAutocompleteResponseTransfer */
-        $companyUserAutocompleteResponseTransfer = $this->zedRequestClient->call(
-            '/agent-quote-request/gateway/get-company-users-by-query',
-            $customerQueryTransfer
-        );
-
-        return $companyUserAutocompleteResponseTransfer;
     }
 }

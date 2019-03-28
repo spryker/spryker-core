@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyUser\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserQueryTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
@@ -284,5 +285,41 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->endUse();
 
         return $query->count();
+    }
+
+    /**
+     * @module Company
+     * @module Customer
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $companyUserQueryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getCompanyUserCollectionByQuery(CompanyUserQueryTransfer $companyUserQueryTransfer): CompanyUserCollectionTransfer
+    {
+        $queryPattern = $companyUserQueryTransfer->getQuery() . '%';
+
+        $companyUsersQuery = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->joinWithCompany()
+            ->joinWithCustomer()
+            ->useCustomerQuery()
+                ->filterByEmail_Like($queryPattern)
+                ->_or()
+                ->filterByLastName_Like($queryPattern)
+                ->_or()
+                ->filterByFirstName_Like($queryPattern)
+                ->setIgnoreCase(true)
+            ->endUse();
+
+        if ($companyUserQueryTransfer->getLimit()) {
+            $companyUsersQuery->limit($companyUserQueryTransfer->getLimit());
+        }
+
+        $collection = $this->buildQueryFromCriteria($companyUsersQuery)->find();
+
+        return $this->getFactory()
+            ->createCompanyUserMapper()
+            ->mapCompanyUserCollection($collection);
     }
 }

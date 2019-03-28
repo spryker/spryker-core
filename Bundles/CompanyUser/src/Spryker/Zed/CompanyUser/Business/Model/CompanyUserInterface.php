@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUser\Business\Model;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserQueryTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -87,4 +88,11 @@ interface CompanyUserInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $companyUserQueryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getCompanyUserCollectionByQuery(CompanyUserQueryTransfer $companyUserQueryTransfer): CompanyUserCollectionTransfer;
 }
