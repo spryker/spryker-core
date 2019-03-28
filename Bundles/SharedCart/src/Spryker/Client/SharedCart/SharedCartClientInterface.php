@@ -9,6 +9,7 @@ namespace Spryker\Client\SharedCart;
 
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
@@ -121,4 +122,17 @@ interface SharedCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function dismissSharedCart(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Sends Zed Request find quote permission group by id.
+     *  - If quote permission group not found, returns QuotePermissionGroupResponseTransfer with `isSuccess=false`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
+     */
+    public function findQuotePermissionGroupById(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): QuotePermissionGroupResponseTransfer;
 }
