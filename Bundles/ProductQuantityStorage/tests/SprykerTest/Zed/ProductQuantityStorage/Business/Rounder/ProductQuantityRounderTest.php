@@ -25,32 +25,148 @@ use Spryker\Client\ProductQuantityStorage\Rounder\ProductQuantityRounder;
 class ProductQuantityRounderTest extends Unit
 {
     /**
+     * @dataProvider getNearestQuantityWithMinMaxAndIntervalDataProvider
+     *
+     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer $productQuantityStorageTransfer
+     * @param int|float $quantity
+     * @param int|float $expectedResult
+     *
      * @return void
      */
-    public function testGetNearestQuantity(): void
-    {
+    public function testGetNearestQuantityWithMinMaxAndInterval(
+        ProductQuantityStorageTransfer $productQuantityStorageTransfer,
+        $quantity,
+        $expectedResult
+    ): void {
         $productQuantityRounderMock = $this->createProductQuantityRounderMock();
 
-        $this->assertInstanceOf(ProductQuantityRounder::class, $productQuantityRounderMock);
+        $this->assertEquals(
+            $expectedResult,
+            $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, $quantity)
+        );
+    }
 
-        $productQuantityStorageTransfer = $this->createProductQuantityStorageTransfer(1, 5, 100);
-        $this->assertEquals(1, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, 0));
-        $this->assertEquals(1, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, 1));
-        $this->assertEquals(1, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, 3));
-        $this->assertEquals(6, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, 4));
-        $this->assertEquals(96, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, 100));
-        $this->assertEquals(96, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, 200));
+    /**
+     * @return array
+     */
+    public function getNearestQuantityWithMinMaxAndIntervalDataProvider(): array
+    {
+        return [
+            'int quantity < min' => $this->getDataForGetNearestQuantityWithMinMaxAndInterval(1, 100, 5, 0, 1),
+            'int quantity = min' => $this->getDataForGetNearestQuantityWithMinMaxAndInterval(1, 100, 5, 1, 1),
+            'int quantity nearer to min then to min+interval' => $this->getDataForGetNearestQuantityWithMinMaxAndInterval(1, 100, 5, 3, 1),
+            'int quantity nearer to min+interval then to min' => $this->getDataForGetNearestQuantityWithMinMaxAndInterval(1, 100, 5, 4, 6),
+            'int quantity > last interval' => $this->getDataForGetNearestQuantityWithMinMaxAndInterval(1, 100, 5, 100, 96),
+            'int quantity > max' => $this->getDataForGetNearestQuantityWithMinMaxAndInterval(1, 100, 5, 200, 96),
+        ];
+    }
 
-        $productQuantityStorageTransfer = $this->createProductQuantityStorageTransfer(null, null, 30);
-        $this->assertEquals(1, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, 0));
-        $this->assertEquals(10, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, 10));
-        $this->assertEquals(30, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, 31));
+    /**
+     * @param int|float $min
+     * @param int|float $max
+     * @param int|float $interval
+     * @param int|float $quantity
+     * @param int|float $expectedResult
+     *
+     * @return array
+     */
+    protected function getDataForGetNearestQuantityWithMinMaxAndInterval($min, $max, $interval, $quantity, $expectedResult)
+    {
+        $productQuantityStorageTransfer = $this->createProductQuantityStorageTransfer($min, $interval, $max);
 
-        $productQuantityStorageTransfer = $this->createProductQuantityStorageTransfer(5, null, 30);
-        $this->assertEquals(5, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, 0));
-        $this->assertEquals(11, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, 11));
-        $this->assertEquals(30, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, 30));
-        $this->assertEquals(30, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, 45));
+        return [$productQuantityStorageTransfer, $quantity, $expectedResult];
+    }
+
+    /**
+     * @dataProvider getNearestQuantityMaxDataProvider
+     *
+     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer $productQuantityStorageTransfer
+     * @param int|float $quantity
+     * @param int|float $expectedResult
+     *
+     * @return void
+     */
+    public function testGetNearestQuantityWithMax(
+        ProductQuantityStorageTransfer $productQuantityStorageTransfer,
+        $quantity,
+        $expectedResult
+    ): void {
+        $productQuantityRounderMock = $this->createProductQuantityRounderMock();
+
+        $this->assertEquals($expectedResult, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, $quantity));
+    }
+
+    /**
+     * @return array
+     */
+    public function getNearestQuantityMaxDataProvider(): array
+    {
+        return [
+            'int quantity = 0' => $this->getDataForGetNearestQuantityWithMax(30, 0, 1),
+            '0 < int quantity < max' => $this->getDataForGetNearestQuantityWithMax(30, 10, 10),
+            'int quantity > max' => $this->getDataForGetNearestQuantityWithMax(30, 31, 30),
+        ];
+    }
+
+    /**
+     * @param int|float $max
+     * @param int|float $quantity
+     * @param int|float $expectedResult
+     *
+     * @return array
+     */
+    protected function getDataForGetNearestQuantityWithMax($max, $quantity, $expectedResult): array
+    {
+        $productQuantityStorageTransfer = $this->createProductQuantityStorageTransfer(null, null, $max);
+
+        return [$productQuantityStorageTransfer, $quantity, $expectedResult];
+    }
+
+    /**
+     * @dataProvider getNearestQuantityWithMinAndMaxDataProvider
+     *
+     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer $productQuantityStorageTransfer
+     * @param int|float $quantity
+     * @param int|float $expectedResult
+     *
+     * @return void
+     */
+    public function testGetNearestQuantityWithMinAndMax(
+        ProductQuantityStorageTransfer $productQuantityStorageTransfer,
+        $quantity,
+        $expectedResult
+    ): void {
+        $productQuantityRounderMock = $this->createProductQuantityRounderMock();
+
+        $this->assertEquals($expectedResult, $productQuantityRounderMock->getNearestQuantity($productQuantityStorageTransfer, $quantity));
+    }
+
+    /**
+     * @return array
+     */
+    public function getNearestQuantityWithMinAndMaxDataProvider(): array
+    {
+        return [
+            'int quantity < min' => $this->getDataForGetNearestQuantityWithMinAndMax(5, 30, 0, 5),
+            'min < int quantity < max' => $this->getDataForGetNearestQuantityWithMinAndMax(5, 30, 11, 11),
+            'int quantity = max' => $this->getDataForGetNearestQuantityWithMinAndMax(5, 30, 30, 30),
+            'int quantity > max' => $this->getDataForGetNearestQuantityWithMinAndMax(5, 30, 31, 30),
+        ];
+    }
+
+    /**
+     * @param int|float $min
+     * @param int|float $max
+     * @param int|float $quantity
+     * @param int|float $expectedResult
+     *
+     * @return array
+     */
+    protected function getDataForGetNearestQuantityWithMinAndMax($min, $max, $quantity, $expectedResult): array
+    {
+        $productQuantityStorageTransfer = $this->createProductQuantityStorageTransfer($min, null, $max);
+
+        return [$productQuantityStorageTransfer, $quantity, $expectedResult];
     }
 
     /**
