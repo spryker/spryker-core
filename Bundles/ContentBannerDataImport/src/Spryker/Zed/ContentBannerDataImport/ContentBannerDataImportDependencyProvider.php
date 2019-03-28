@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ContentBannerDataImport;
 
 use Spryker\Zed\ContentBannerDataImport\Dependency\Facade\ContentBannerDataImportToContentBannerBridge;
+use Spryker\Zed\ContentBannerDataImport\Dependency\Facade\ContentBannerDataImportToContentBridge;
 use Spryker\Zed\ContentBannerDataImport\Dependency\Service\ContentBannerDataImportToUtilEncodingBridge;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -17,6 +18,7 @@ use Spryker\Zed\Kernel\Container;
  */
 class ContentBannerDataImportDependencyProvider extends DataImportDependencyProvider
 {
+    public const FACADE_CONTENT = 'FACADE_CONTENT';
     public const FACADE_CONTENT_BANNER = 'FACADE_CONTENT_BANNER';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -28,6 +30,7 @@ class ContentBannerDataImportDependencyProvider extends DataImportDependencyProv
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addContentFacade($container);
         $container = $this->addContentBannerFacade($container);
         $container = $this->provideUtilEncodingService($container);
 
@@ -43,6 +46,20 @@ class ContentBannerDataImportDependencyProvider extends DataImportDependencyProv
     {
         $container[static::FACADE_CONTENT_BANNER] = function (Container $container) {
             return new ContentBannerDataImportToContentBannerBridge($container->getLocator()->contentBanner()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addContentFacade(Container $container): Container
+    {
+        $container[static::FACADE_CONTENT] = function (Container $container) {
+            return new ContentBannerDataImportToContentBridge($container->getLocator()->content()->facade());
         };
 
         return $container;

@@ -84,6 +84,50 @@ class ContentFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testValidateSuccess(): void
+    {
+        $contentTransfer = $this->tester->haveContent();
+        $contentTransfer->setName('Test name');
+        $contentTransfer->setDescription('Test description');
+
+        $validationResponse = $this->getFacade()->validateContent($contentTransfer);
+
+        $this->assertTrue($validationResponse->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateFailsOnEmptyName(): void
+    {
+        $contentTransfer = $this->tester->haveContent();
+        $contentTransfer->setName('');
+        $contentTransfer->setDescription('Test description');
+
+        $validationResponse = $this->getFacade()->validateContent($contentTransfer);
+
+        $this->assertFalse($validationResponse->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateFailsOnVeryLongDescription()
+    {
+        $contentTransfer = $this->tester->haveContent();
+        $contentTransfer->setName('Test name');
+        $contentTransfer->setDescription('Test description. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
+
+        $validationResponse = $this->getFacade()->validateContent($contentTransfer);
+
+        $this->assertFalse($validationResponse->getIsSuccess());
+    }
+
+    /**
      * @return \Spryker\Zed\Content\Business\ContentFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getFacade()
