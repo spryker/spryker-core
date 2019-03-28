@@ -81,24 +81,24 @@ class ProductBundleCartExpanderTest extends Unit
 
         $bundledItemTransfer = $updatedAddToCartItems[0];
         $this->assertSame(150, $bundledItemTransfer->getUnitGrossPrice());
-        $this->assertSame(1.0, $bundledItemTransfer->getQuantity());
+        $this->assertSame(1, $bundledItemTransfer->getQuantity());
         $this->assertEquals($bundleItemTransfer->getBundleItemIdentifier(), $bundledItemTransfer->getRelatedBundleItemIdentifier());
 
         $bundledItemTransfer = $updatedAddToCartItems[1];
         $this->assertSame(150, $bundledItemTransfer->getUnitGrossPrice());
-        $this->assertSame(1.0, $bundledItemTransfer->getQuantity());
+        $this->assertSame(1, $bundledItemTransfer->getQuantity());
         $this->assertEquals($bundleItemTransfer->getBundleItemIdentifier(), $bundledItemTransfer->getRelatedBundleItemIdentifier());
 
         $bundleItemTransfer = $bundleItems[1];
 
         $bundledItemTransfer = $updatedAddToCartItems[2];
         $this->assertSame(150, $bundledItemTransfer->getUnitGrossPrice());
-        $this->assertSame(1.0, $bundledItemTransfer->getQuantity());
+        $this->assertSame(1, $bundledItemTransfer->getQuantity());
         $this->assertEquals($bundleItemTransfer->getBundleItemIdentifier(), $bundledItemTransfer->getRelatedBundleItemIdentifier());
 
         $bundledItemTransfer = $updatedAddToCartItems[3];
         $this->assertSame(150, $bundledItemTransfer->getUnitGrossPrice());
-        $this->assertSame(1.0, $bundledItemTransfer->getQuantity());
+        $this->assertSame(1, $bundledItemTransfer->getQuantity());
         $this->assertEquals($bundleItemTransfer->getBundleItemIdentifier(), $bundledItemTransfer->getRelatedBundleItemIdentifier());
     }
 
