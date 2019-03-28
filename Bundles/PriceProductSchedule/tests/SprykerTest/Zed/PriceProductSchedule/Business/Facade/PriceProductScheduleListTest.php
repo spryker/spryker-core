@@ -35,6 +35,11 @@ class PriceProductScheduleListTest extends Unit
     protected $priceProductScheduleFacade;
 
     /**
+     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected $spyPriceProductScheduleQuery;
+
+    /**
      * @return void
      */
     public function setUp()
@@ -42,6 +47,7 @@ class PriceProductScheduleListTest extends Unit
         parent::setUp();
 
         $this->priceProductScheduleFacade = $this->tester->getFacade();
+        $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
     }
 
     /**
@@ -66,7 +72,7 @@ class PriceProductScheduleListTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity->isCurrent());
     }
 }

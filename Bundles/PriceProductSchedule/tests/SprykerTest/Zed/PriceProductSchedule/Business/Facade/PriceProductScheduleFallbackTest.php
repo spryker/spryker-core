@@ -51,6 +51,11 @@ class PriceProductScheduleFallbackTest extends Unit
     protected $storeFacade;
 
     /**
+     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected $spyPriceProductScheduleQuery;
+
+    /**
      * @return void
      */
     public function setUp()
@@ -59,6 +64,7 @@ class PriceProductScheduleFallbackTest extends Unit
 
         $this->priceProductFacade = $this->tester->getFacade();
         $this->storeFacade = $this->tester->getLocator()->store()->facade();
+        $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
     }
 
     /**
@@ -90,7 +96,7 @@ class PriceProductScheduleFallbackTest extends Unit
         $this->getFacadeMock()->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity->isCurrent());
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
@@ -122,7 +128,7 @@ class PriceProductScheduleFallbackTest extends Unit
         $this->getNotConfiguredFacadeMock()->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity->isCurrent());
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
