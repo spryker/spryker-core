@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\AgentQuoteRequest\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
+use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Propel\Runtime\Collection\Collection;
@@ -30,7 +34,12 @@ class CompanyUserMapper
                 ->setLastName($companyUser[SpyCustomerTableMap::COL_LAST_NAME])
                 ->setEmail($companyUser[SpyCustomerTableMap::COL_EMAIL]);
 
+            $companyTransfer = (new CompanyTransfer())->setName($companyUser[SpyCompanyTableMap::COL_NAME]);
+            $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())->setName($companyUser[SpyCompanyBusinessUnitTableMap::COL_NAME]);
+
             $companyUserTransfer = (new CompanyUserTransfer())
+                ->setCompany($companyTransfer)
+                ->setCompanyBusinessUnit($companyBusinessUnitTransfer)
                 ->setIdCompanyUser($companyUser[SpyCompanyUserTableMap::COL_ID_COMPANY_USER])
                 ->setCustomer($customerTransfer);
 

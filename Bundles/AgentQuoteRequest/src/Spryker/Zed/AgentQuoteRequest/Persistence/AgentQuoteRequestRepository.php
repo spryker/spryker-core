@@ -8,6 +8,8 @@
 namespace Spryker\Zed\AgentQuoteRequest\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserQueryTransfer;
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
+use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -18,6 +20,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class AgentQuoteRequestRepository extends AbstractRepository implements AgentQuoteRequestRepositoryInterface
 {
     /**
+     * @modules Company
+     * @modules CompanyBusinessUnit
      * @modules Customer
      *
      * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $companyUserQueryTransfer
@@ -30,7 +34,8 @@ class AgentQuoteRequestRepository extends AbstractRepository implements AgentQuo
 
         $companyUsersQuery = $this->getFactory()
             ->getCompanyUserPropelQuery()
-            ->joinWithCustomer()
+            ->joinWithCompanyBusinessUnit()
+            ->joinWithCompany()
             ->useCustomerQuery()
                 ->filterByEmail_Like($queryPattern)
                 ->_or()
@@ -41,6 +46,8 @@ class AgentQuoteRequestRepository extends AbstractRepository implements AgentQuo
             ->endUse()
             ->select([
                 SpyCompanyUserTableMap::COL_ID_COMPANY_USER,
+                SpyCompanyTableMap::COL_NAME,
+                SpyCompanyBusinessUnitTableMap::COL_NAME,
                 SpyCustomerTableMap::COL_FIRST_NAME,
                 SpyCustomerTableMap::COL_LAST_NAME,
                 SpyCustomerTableMap::COL_EMAIL,
