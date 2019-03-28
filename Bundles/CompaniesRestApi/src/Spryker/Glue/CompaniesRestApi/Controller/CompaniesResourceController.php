@@ -7,9 +7,12 @@
 
 namespace Spryker\Glue\CompaniesRestApi\Controller;
 
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Glue\CompaniesRestApi\CompaniesRestApiFactory getFactory()
@@ -29,6 +32,14 @@ class CompaniesResourceController extends AbstractController
      *          "responses": {
      *              "400": "Company id is missing.",
      *              "404": "Company not found."
+     *          }
+     *     },
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves company collection."
+     *          ],
+     *          "responses": {
+     *              "501": "Not implemented."
      *          }
      *     }
      * })

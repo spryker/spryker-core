@@ -81,7 +81,7 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Mailer\MailHandler
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Mailer\MailHandler
      */
     protected function getMailerWhichIsNotExecuted()
     {
@@ -101,7 +101,7 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
      */
     protected function getMailTypeCollectionMock()
     {
@@ -111,7 +111,7 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
      */
     protected function getMailTypeCollectionWithoutMailMock()
     {
@@ -122,7 +122,7 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
      */
     protected function getMailTypeCollectionWithMailMock()
     {
@@ -134,7 +134,7 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface
      */
     protected function getMailProviderCollectionMock()
     {
@@ -144,7 +144,7 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface
      */
     protected function getMailProviderCollectionWithProviderMock()
     {
@@ -168,7 +168,7 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface
      */
     protected function getProviderMock()
     {
@@ -178,7 +178,7 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface
      */
     protected function getMailBuilderMock()
     {
@@ -189,7 +189,7 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface
      */
     protected function getMailTypeMock()
     {

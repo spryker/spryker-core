@@ -39,6 +39,14 @@ class CompaniesRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CompaniesRestApi\Processor\Company\Relationship\CompanyResourceRelationshipExpanderInterface
+     */
+    public function createCompanyResourceRelationshipExpander(): CompanyResourceRelationshipExpanderInterface
+    {
+        return new CompanyResourceRelationshipExpander($this->getResourceBuilder(), $this->createCompanyMapper());
+    }
+
+    /**
      * @return \Spryker\Glue\CompaniesRestApi\Processor\Company\CompanyRestResponseBuilderInterface
      */
     public function createCompanyRestResponseBuilder(): CompanyRestResponseBuilderInterface

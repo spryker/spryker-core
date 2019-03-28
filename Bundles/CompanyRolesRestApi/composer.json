@@ -6,10 +6,11 @@
   "require": {
     "php": ">=7.1",
     "spryker/company-role": "^1.2.1",
-    "spryker/glue-application": "^1.9.2",
+    "spryker/glue-application": "^1.14.0",
     "spryker/glue-application-extension": "^1.1.1",
     "spryker/kernel": "^3.29.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/symfony": "^3.0.0",
+    "spryker/uuid-behavior": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

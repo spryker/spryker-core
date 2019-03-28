@@ -12,4 +12,12 @@
         <property name="uuid" type="string" />
     </transfer>
 
+    <transfer name="CompanyRoleCollection">
+        <property name="roles" type="CompanyRole[]" singular="role"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="companyRoleCollection" type="CompanyRoleCollection"/>
+    </transfer>
+
 </transfers>

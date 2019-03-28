@@ -36,7 +36,8 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *  - Adds items.
      *  - Makes zed request.
      *  - Stores quote in session internally after zed request.
-     *  - Returns update quote.
+     *  - Returns updated quote if quote is not locked.
+     *  - Adds messenger error message and returns unchanged QuoteTransfer if quote is locked.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $params
@@ -92,7 +93,8 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *  - Makes zed request.
      *  - Adds only items, that passed cart validation.
      *  - Stores quote in session internally after zed request.
-     *  - Returns update quote.
+     *  - Returns update quote if quote is not locked.
+     *  - Adds messenger error message and returns unchanged QuoteTransfer if quote is locked.
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param array $params
@@ -304,6 +306,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *  - Check error messages
      *  - Stores quote in session internally after zed request.
      *  - Returns update quote.
+     *  - Returns with unchanged QuoteTransfer and 'isSuccessful=true' when cart is locked.
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
@@ -337,7 +340,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
         $quoteResponseTransfer = new QuoteResponseTransfer();
         $quoteResponseTransfer->setIsSuccessful(false);
         $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        if (count($this->getFactory()->getZedRequestClient()->getLastResponseErrorMessages()) === 0) {
+        if (count($this->getFactory()->getZedRequestClient()->getResponsesErrorMessages()) === 0) {
             $quoteResponseTransfer->setIsSuccessful(true);
             $this->getQuoteClient()->setQuote($quoteTransfer);
         }

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
 use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface;
 
@@ -36,6 +37,14 @@ use Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface;
 class ShoppingListDataImportCommunicationTester extends Actor
 {
     use _generated\ShoppingListDataImportCommunicationTesterActions;
+
+    /**
+     * @return void
+     */
+    public function ensureShoppingListDatabaseTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getShoppingListQuery());
+    }
 
     /**
      * @return \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface
@@ -130,5 +139,13 @@ class ShoppingListDataImportCommunicationTester extends Actor
     protected function getCustomerFacade(): CustomerFacadeInterface
     {
         return $this->getLocator()->customer()->facade();
+    }
+
+    /**
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery
+     */
+    protected function getShoppingListQuery(): SpyShoppingListQuery
+    {
+        return SpyShoppingListQuery::create();
     }
 }

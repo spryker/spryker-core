@@ -47,6 +47,13 @@ interface CompanyRepositoryInterface
     public function getCompanies(): CompanyCollectionTransfer;
 
     /**
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer|null
+     */
+    public function findCompanyById(int $idCompany): ?CompanyTransfer;
+
+    /**
      * @param string $uuid
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer|null

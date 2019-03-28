@@ -19,6 +19,17 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class CompanyBusinessUnitsRestApiFactory extends AbstractFactory
 {
     /**
+     * @return \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Relationship\CompanyBusinessUnitResourceRelationshipExpanderInterface
+     */
+    public function createCompanyBusinessUnitResourceRelationshipExpander(): CompanyBusinessUnitResourceRelationshipExpanderInterface
+    {
+        return new CompanyBusinessUnitResourceRelationshipExpander(
+            $this->getResourceBuilder(),
+            $this->createCompanyBusinessUnitMapper()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\CompanyBusinessUnitReader
      */
     public function createCompanyBusinessUnitReader(): CompanyBusinessUnitReaderInterface

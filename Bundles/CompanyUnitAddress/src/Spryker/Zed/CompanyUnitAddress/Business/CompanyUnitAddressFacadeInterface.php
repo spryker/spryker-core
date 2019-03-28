@@ -100,6 +100,20 @@ interface CompanyUnitAddressFacadeInterface
 
     /**
      * Specification:
+     * - Finds a company unit address by id.
+     * - Returns null if unit adress does not exist.
+     * - Expands company business unit with extra data using plugins (CompanyUnitAddressHydratePluginInterface).
+     *
+     * @api
+     *
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer;
+
+    /**
+     * Specification:
      * - Retrieves a company unit address by uuid.
      * - Requires uuid field to be set in CompanyUnitAddressTransfer taken as parameter.
      *

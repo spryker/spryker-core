@@ -19,6 +19,17 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class CompanyRolesRestApiFactory extends AbstractFactory
 {
     /**
+     * @return \Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Relationship\CompanyRoleResourceRelationshipExpanderInterface
+     */
+    public function createCompanyRoleResourceRelationshipExpander(): CompanyRoleResourceRelationshipExpanderInterface
+    {
+        return new CompanyRoleResourceRelationshipExpander(
+            $this->getResourceBuilder(),
+            $this->createCompanyRoleMapper()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\CompanyRoleReader
      */
     public function createCompanyRoleReader(): CompanyRoleReaderInterface

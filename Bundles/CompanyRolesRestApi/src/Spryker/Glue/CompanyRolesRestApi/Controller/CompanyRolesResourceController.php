@@ -30,6 +30,14 @@ class CompanyRolesResourceController extends AbstractController
      *              "400": "Company role id is missing.",
      *              "404": "Company role not found."
      *          }
+     *     },
+     *    "getCollection": {
+     *          "summary": [
+     *              "Retrieves company role collection."
+     *          ],
+     *          "responses": {
+     *              "501": "Not implemented."
+     *          }
      *     }
      * })
      *

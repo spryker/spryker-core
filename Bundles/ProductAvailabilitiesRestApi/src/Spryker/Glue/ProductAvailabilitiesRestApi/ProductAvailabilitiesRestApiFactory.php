@@ -13,6 +13,10 @@ use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\AbstractProductAvailabil
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\AbstractProductAvailability\AbstractProductAvailabilitiesReaderInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\ConcreteProductAvailability\ConcreteProductAvailabilitiesReader;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\ConcreteProductAvailability\ConcreteProductAvailabilitiesReaderInterface;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Expander\AbstractProductAvailabilitiesRelationshipExpander;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Expander\AbstractProductAvailabilitiesRelationshipExpanderInterface;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Expander\ConcreteProductAvailabilitiesRelationshipExpander;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Expander\ConcreteProductAvailabilitiesRelationshipExpanderInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\AbstractProductAvailabilitiesResourceMapper;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\AbstractProductAvailabilitiesResourceMapperInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\ConcreteProductAvailabilitiesResourceMapper;
@@ -44,6 +48,22 @@ class ProductAvailabilitiesRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createConcreteProductsAvailabilitiesResourceMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Expander\AbstractProductAvailabilitiesRelationshipExpanderInterface
+     */
+    public function createAbstractProductAvailabilitiesRelationshipExpander(): AbstractProductAvailabilitiesRelationshipExpanderInterface
+    {
+        return new AbstractProductAvailabilitiesRelationshipExpander($this->createAbstractProductAvailabilitiesReader());
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Expander\ConcreteProductAvailabilitiesRelationshipExpanderInterface
+     */
+    public function createConcreteProductAvailabilitiesRelationshipExpander(): ConcreteProductAvailabilitiesRelationshipExpanderInterface
+    {
+        return new ConcreteProductAvailabilitiesRelationshipExpander($this->createConcreteProductsAvailabilitiesReader());
     }
 
     /**

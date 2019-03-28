@@ -28,12 +28,13 @@ abstract class AbstractIdFilter implements FilterInterface
     /**
      * @param string $itemType
      * @param array $itemIdChunk
+     * @param string $itemEvent
      *
      * @return array
      */
-    protected function getIdCollection($itemType, array $itemIdChunk)
+    protected function getIdCollection(string $itemType, array $itemIdChunk, string $itemEvent)
     {
-        $touchQuery = $this->touchQueryContainer->queryTouchEntriesByItemTypeAndItemIds($itemType, $itemIdChunk);
+        $touchQuery = $this->touchQueryContainer->queryTouchEntriesByItemTypeAndItemEventAndItemIds($itemType, $itemEvent, $itemIdChunk);
 
         return $touchQuery->select([SpyTouchTableMap::COL_ITEM_ID])->find()->toArray();
     }

@@ -312,6 +312,14 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesErrorMessages(): array
+    {
+        return $this->zedRequestClient->getResponsesErrorMessages();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer

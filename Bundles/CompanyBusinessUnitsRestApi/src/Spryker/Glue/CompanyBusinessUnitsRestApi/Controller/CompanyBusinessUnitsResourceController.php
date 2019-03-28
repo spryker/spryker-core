@@ -30,6 +30,14 @@ class CompanyBusinessUnitsResourceController extends AbstractController
      *              "400": "Company business unit id is missing.",
      *              "404": "Company business unit not found."
      *          }
+     *     },
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves company business units collection."
+     *          ],
+     *          "responses": {
+     *              "501": "Not implemented."
+     *          }
      *     }
      * })
      *

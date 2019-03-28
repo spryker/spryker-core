@@ -84,7 +84,7 @@ class ProductOptionGroupReaderTest extends MockProvider
      *
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup|null $productOptionGroupEntity
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
     protected function getQueryContainerMock(?SpyProductOptionGroup $productOptionGroupEntity = null)
     {
