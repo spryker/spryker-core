@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publishing\GlossaryKey;
 
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\PublishingExtension\Dependency\PublisherPluginInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublishingPluginInterface;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
@@ -18,7 +17,7 @@ use Spryker\Zed\PublishingExtension\Dependency\PublisherPluginInterface;
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
  */
-class GlossaryKeyUnpublisher extends AbstractPlugin implements PublisherPluginInterface
+class GlossaryKeyUnpublisher extends AbstractPlugin implements PublishingPluginInterface
 {
     use DatabaseTransactionHandlerTrait;
 

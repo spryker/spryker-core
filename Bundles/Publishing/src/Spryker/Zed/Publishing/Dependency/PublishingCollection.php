@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Publishing\Dependency;
 
 use ArrayIterator;
-use Spryker\Zed\PublishingExtension\Dependency\PublisherCollectionInterface;
-use Spryker\Zed\PublishingExtension\Dependency\PublisherPluginInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublishingCollectionInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublishingPluginInterface;
 
-class PublisherCollection implements PublisherCollectionInterface
+class PublishingCollection implements PublishingCollectionInterface
 {
     /**
      * @var array
@@ -20,11 +20,11 @@ class PublisherCollection implements PublisherCollectionInterface
 
     /**
      * @param string $eventName
-     * @param PublisherPluginInterface $eventHandler
+     * @param PublishingPluginInterface $eventHandler
      *
-     * @return $this|PublisherCollectionInterface
+     * @return $this|PublishingCollectionInterface
      */
-    public function addPublisher(string $eventName, PublisherPluginInterface $eventHandler)
+    public function addPublishingPlugin(string $eventName, PublishingPluginInterface $eventHandler)
     {
         $this->add($eventName, $eventHandler);
 
@@ -43,14 +43,14 @@ class PublisherCollection implements PublisherCollectionInterface
 
     /**
      * @param $eventName
-     * @param PublisherPluginInterface $eventHandler
+     * @param PublishingPluginInterface $eventHandler
      * @param bool $isHandledInQueue
      * @param int $priority
      * @param null $queuePoolName
      *
      * @return void
      */
-    protected function add($eventName, PublisherPluginInterface $eventHandler)
+    protected function add($eventName, PublishingPluginInterface $eventHandler)
     {
         if (!$this->has($eventName)) {
             $this->eventListeners[$eventName] = [];
@@ -71,7 +71,7 @@ class PublisherCollection implements PublisherCollectionInterface
         if (!isset($this->eventListeners[$eventName]) || count($this->eventListeners[$eventName]) === 0) {
             throw new \Exception(
                 sprintf(
-                    'Could not find publisher for event "%s". You have to add it to PublishingDependencyProvider.',
+                    'Could not find publishing for event "%s". You have to add it to PublishingDependencyProvider.',
                     $eventName
                 )
             );

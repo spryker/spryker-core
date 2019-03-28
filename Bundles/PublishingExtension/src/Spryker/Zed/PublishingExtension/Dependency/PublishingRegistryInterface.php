@@ -6,13 +6,13 @@
 
 namespace Spryker\Zed\PublishingExtension\Dependency;
 
-interface PublisherRegistryInterface
+interface PublishingRegistryInterface
 {
 
     /**
-     * @param PublisherCollectionInterface $publisherCollection
+     * @param PublishingCollectionInterface $publishingCollection
      *
-     * @return PublisherCollectionInterface
+     * @return PublishingCollectionInterface
      */
-    public function getRegisteredPublishers(PublisherCollectionInterface $publisherCollection);
+    public function getRegisteredPublishingCollection(PublishingCollectionInterface $publishingCollection);
 }

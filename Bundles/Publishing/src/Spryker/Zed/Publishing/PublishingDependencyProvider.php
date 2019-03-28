@@ -4,14 +4,14 @@ namespace Spryker\Zed\Publishing;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Publisher\Dependency\PublisherRegistryCollection;
+use Spryker\Zed\Publishing\Dependency\PublishingRegistryCollection;
 
 class PublishingDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    public function getPublisherRegistryCollection()
+    public function getPublishingRegistryCollection()
     {
-        return new PublisherRegistryCollection();
+        return new PublishingRegistryCollection();
     }
 
 }

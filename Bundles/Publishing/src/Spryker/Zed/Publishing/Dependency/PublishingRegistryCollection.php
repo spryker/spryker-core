@@ -5,28 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Publisher\Dependency;
+namespace Spryker\Zed\Publishing\Dependency;
 
 use ArrayIterator;
-use Spryker\Zed\PublishingExtension\Dependency\PublisherRegistryCollectionInterface;
-use Spryker\Zed\PublishingExtension\Dependency\PublisherRegistryInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublishingRegistryCollectionInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublishingRegistryInterface;
 
-class PublisherRegistryCollection implements PublisherRegistryCollectionInterface
+class PublishingRegistryCollection implements PublishingRegistryCollectionInterface
 {
 
     /**
-     * @var PublisherRegistryInterface[]
+     * @var PublishingRegistryInterface[]
      */
     protected $registryCollection = [];
 
     /**
-     * @param \Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface $publisherRegistry
+     * @param \Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface $publishingRegistry
      *
      * @return void
      */
-    public function add(PublisherRegistryInterface $publisherRegistry)
+    public function add(PublishingRegistryInterface $publishingRegistry)
     {
-        $this->registryCollection[] = $publisherRegistry;
+        $this->registryCollection[] = $publishingRegistry;
     }
 
     /**
@@ -50,7 +50,7 @@ class PublisherRegistryCollection implements PublisherRegistryCollectionInterfac
      *
      * @param mixed $offset
      *
-     * @return array|PublisherRegistryInterface
+     * @return array|PublishingRegistryInterface
      */
     public function offsetGet($offset)
     {

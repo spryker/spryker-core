@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Publishing\Availability;
 
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\PublishingExtension\Dependency\PublishingPluginInterface;
 
 /**
  * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
@@ -17,7 +17,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityStorage\AvailabilityStorageConfig getConfig()
  */
-class AvailabilityStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class AvailabilityAbstractUnpublisher extends AbstractPlugin implements PublishingPluginInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -36,6 +36,6 @@ class AvailabilityStoragePublishListener extends AbstractPlugin implements Event
         $this->preventTransaction();
         $availabilityIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()->publish($availabilityIds);
+        $this->getFacade()->unpublish($availabilityIds);
     }
 }

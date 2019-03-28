@@ -6,20 +6,16 @@
 
 namespace Spryker\Zed\Publishing\Communication\Plugin\Event;
 
+use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Publishing\AvailabilityStoragePublishingRegistry;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Subscriber\GlossaryStoragePublisherRegistry;
+use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publishing\GlossaryStoragePublishingRegistry;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Publisher\Dependency\PublisherRegistryCollection;
-use Spryker\Zed\PublishingExtension\Dependency\PublisherCollectionInterface;
+use Spryker\Zed\Publishing\Dependency\PublishingCollection;
+use Spryker\Zed\Publishing\Dependency\PublishingRegistryCollection;
 
 class PublishingSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
-    /**
-     * @var PublisherCollectionInterface
-     */
-    protected $publisherCollection = [];
 
     /**
      * @api
@@ -30,16 +26,24 @@ class PublishingSubscriber extends AbstractPlugin implements EventSubscriberInte
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-
         // This will come from DP
-        $publisherRegistryCollection = new PublisherRegistryCollection();
-        $publisherRegistryCollection->add( new GlossaryStoragePublisherRegistry());
+        $publishingRegistryCollection = new PublishingRegistryCollection();
+        $publishingRegistryCollection->add( new GlossaryStoragePublishingRegistry());
+        $publishingRegistryCollection->add( new AvailabilityStoragePublishingRegistry());
+        $publishingListeners = [];
 
-        foreach ($publisherRegistryCollection as $publisherRegistry) {
-            $this->publisherCollection += $publisherRegistry->getRegisteredPublishers($this->publisherCollection);
+        foreach ($publishingRegistryCollection as $publishingRegistry) {
+            $publishingListeners[] = $publishingRegistry->getRegisteredPublishingCollection(new PublishingCollection());
         }
 
-        // TODO: remove this debug output
-        dump($this->publisherCollection);die;
+        foreach ($publishingListeners as $publishingEventCollection) {
+            foreach ($publishingEventCollection as $eventName => $listeners) {
+                foreach ($listeners as $listener) {
+                    $eventCollection->addListenerQueued($eventName, $listener);
+                }
+            }
+        }
+
+        return $eventCollection;
     }
 }

@@ -7,13 +7,13 @@
 namespace Spryker\Zed\PublishingExtension\Dependency;
 
 
-interface PublisherRegistryCollectionInterface
+interface PublishingRegistryCollectionInterface extends \ArrayAccess, \IteratorAggregate
 {
 
     /**
-     * @param PublisherRegistryInterface $publisherRegistry
+     * @param PublishingRegistryInterface $publishingRegistry
      *
      * @return mixed
      */
-    public function add(PublisherRegistryInterface $publisherRegistry);
+    public function add(PublishingRegistryInterface $publishingRegistry);
 }
