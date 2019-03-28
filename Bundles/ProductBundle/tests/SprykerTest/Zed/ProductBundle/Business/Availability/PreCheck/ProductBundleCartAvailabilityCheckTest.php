@@ -36,9 +36,6 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
 {
     public const ID_STORE = 1;
 
-    protected const INT_QUANTITY = 3;
-    protected const FLOAT_QUANTITY = 3.1;
-
     /**
      * return void
      *
@@ -186,12 +183,12 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     {
         $quoteTransferWithCartChangeItemTransferDataProvider = [
             'int quantity' => $this->getDataForQuoteTransferWithCartChangeItemTransfer(
-                static::INT_QUANTITY,
+                3,
                 $this->fixtures['bundle-sku'],
                 15
             ),
             'float quantity' => $this->getDataForQuoteTransferWithCartChangeItemTransfer(
-                static::FLOAT_QUANTITY,
+                3.1,
                 $this->fixtures['bundle-sku'],
                 15.5
             ),
@@ -240,11 +237,11 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     {
         $quoteTransferWithCartChangeItemTransferDataProvider = [
             'int quantity' => $this->getDataForBundledItemsNotAvailableDataProvider(
-                static::INT_QUANTITY,
+                3,
                 $this->fixtures['bundle-sku']
             ),
             'float quantity' => $this->getDataForBundledItemsNotAvailableDataProvider(
-                static::FLOAT_QUANTITY,
+                3.1,
                 $this->fixtures['bundle-sku']
             ),
         ];

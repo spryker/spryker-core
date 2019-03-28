@@ -50,9 +50,6 @@ class ProductBundleFacadeTest extends Unit
     public const BUNDLED_PRODUCT_PRICE_2 = 100;
     public const ID_STORE = 1;
 
-    protected const INT_QUANTITY = 1;
-    protected const FLOAT_QUANTITY = 1.5;
-
     /**
      * @return void
      */
@@ -175,8 +172,8 @@ class ProductBundleFacadeTest extends Unit
     public function preCheckCartAvailabilityWhenBundleAvailableDataProvider(): array
     {
         return [
-            'int stock' => $this->getDataForPreCheckCartAvailabilityWhenBundleAvailable(static::INT_QUANTITY),
-            'float stock' => $this->getDataForPreCheckCartAvailabilityWhenBundleAvailable(static::FLOAT_QUANTITY),
+            'int stock' => $this->getDataForPreCheckCartAvailabilityWhenBundleAvailable(1),
+            'float stock' => $this->getDataForPreCheckCartAvailabilityWhenBundleAvailable(1.5),
         ];
     }
 

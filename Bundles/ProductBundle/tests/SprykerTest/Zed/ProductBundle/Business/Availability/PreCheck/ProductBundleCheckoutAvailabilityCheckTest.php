@@ -34,9 +34,6 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
 {
     public const ID_STORE = 1;
 
-    protected const INT_QUANTITY = 5;
-    protected const FLOAT_QUANTITY = 5.1;
-
     /**
      * @dataProvider quoteTransferDataProvider
      *
@@ -158,11 +155,11 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
     {
         return [
             'int quantity' => $this->getDataForQuoteTransfer(
-                static::INT_QUANTITY,
+                5,
                 $this->fixtures['bundle-sku']
             ),
             'float quantity' => $this->getDataForQuoteTransfer(
-                static::FLOAT_QUANTITY,
+                5.1,
                 $this->fixtures['bundle-sku']
             ),
         ];

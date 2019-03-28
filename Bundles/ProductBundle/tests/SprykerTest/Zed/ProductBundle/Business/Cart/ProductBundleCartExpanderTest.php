@@ -39,9 +39,6 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleCartExpanderTest extends Unit
 {
-    protected const INT_QUANTITY = 2;
-    protected const FLOAT_QUANTITY = 2.1;
-
     /**
      * @var array
      */
@@ -185,13 +182,13 @@ class ProductBundleCartExpanderTest extends Unit
     {
         $cartChangeTransfer = [
             'int quantity' => $this->getDataForCartChangeTransfer(
-                static::INT_QUANTITY,
+                2,
                 $this->fixtures['bundledProductSku'],
                 4,
                 2
             ),
             'float quantity' => $this->getDataForCartChangeTransfer(
-                static::FLOAT_QUANTITY,
+                2.1,
                 $this->fixtures['bundledProductSku'],
                 6,
                 3
