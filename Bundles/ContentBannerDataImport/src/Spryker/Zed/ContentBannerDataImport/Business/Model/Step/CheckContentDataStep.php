@@ -39,7 +39,7 @@ class CheckContentDataStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet)
     {
-        $contentTransfer = (new ContentTransfer())->fromArray($dataSet->getArrayCopy());
+        $contentTransfer = (new ContentTransfer())->fromArray($dataSet->getArrayCopy(), true);
         $validationResult = $this->contentFacade->validateContent($contentTransfer);
 
         if (!$validationResult->getIsSuccess()) {
@@ -67,6 +67,7 @@ class CheckContentDataStep implements DataImportStepInterface
                 $messages[] = '[' . $parameterMessages->getParameter() . '] ' . $parameterMessage->getValue();
             }
         }
+
         return $messages;
     }
 }

@@ -25,7 +25,7 @@ use Generated\Shared\Transfer\LocalizedContentTransfer;
 class ContentFacadeTest extends Test
 {
     private const NAME = 'New name';
-    private const PARAMENTERS = '{"sku"}';
+    private const PARAMETERS = '{"sku"}';
 
     /**
      * @var \SprykerTest\Zed\Content\ContentBusinessTester
@@ -70,7 +70,7 @@ class ContentFacadeTest extends Test
         $contentTransfer = $this->tester->haveContent();
 
         $contentTransfer->setName(static::NAME);
-        $contentTransfer->getLocalizedContents()[0]->setParameters(static::PARAMENTERS);
+        $contentTransfer->getLocalizedContents()[0]->setParameters(static::PARAMETERS);
 
         $this->getFacade()->update($contentTransfer);
 
