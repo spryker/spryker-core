@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ContentBanner\Dependency\Client;
 
-use Generated\Shared\Transfer\ContentQueryTransfer;
+use Generated\Shared\Transfer\ContentTypeContextTransfer;
 
 interface ContentBannerToContentStorageClientInterface
 {
@@ -15,7 +15,7 @@ interface ContentBannerToContentStorageClientInterface
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ContentQueryTransfer|null
+     * @return \Generated\Shared\Transfer\ContentTypeContextTransfer|null
      */
-    public function findContentQueryById(int $idContent, string $localeName): ?ContentQueryTransfer;
+    public function findContentTypeContext(int $idContent, string $localeName): ?ContentTypeContextTransfer;
 }

@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ContentBanner\TermQuery;
+namespace Spryker\Client\ContentBanner\Executor;
 
 use Generated\Shared\Transfer\BannerTermTransfer;
 use Generated\Shared\Transfer\BannerTypeTransfer;
 
-interface BannerTermQueryInterface
+interface BannerTermToBannerTypeExecutorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\BannerTerm $bannerTerm

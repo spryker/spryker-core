@@ -8,10 +8,10 @@
 namespace Spryker\Client\ContentBanner;
 
 use Spryker\Client\ContentBanner\Dependency\Client\ContentBannerToContentStorageClientInterface;
-use Spryker\Client\ContentBanner\Executor\BannerTermExecutor;
+use Spryker\Client\ContentBanner\Executor\BannerTermToBannerTypeExecutor;
+use Spryker\Client\ContentBanner\Executor\BannerTermToBannerTypeExecutorInterface;
 use Spryker\Client\ContentBanner\Executor\ContentTermExecutorInterface;
-use Spryker\Client\ContentBanner\TermQuery\BannerTermQuery;
-use Spryker\Client\ContentBanner\TermQuery\BannerTermQueryInterface;
+use Spryker\Client\ContentBanner\TermExecutor\BannerTermExecutor;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ContentBannerFactory extends AbstractFactory
@@ -25,11 +25,11 @@ class ContentBannerFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ContentBanner\TermQuery\BannerTermQueryInterface
+     * @return \Spryker\Client\ContentBanner\Executor\BannerTermToBannerTypeExecutor
      */
-    public function createBannerTermQuery(): BannerTermQueryInterface
+    public function createBannerTermToBannerTypeExecutor(): BannerTermToBannerTypeExecutorInterface
     {
-        return new BannerTermQuery();
+        return new BannerTermToBannerTypeExecutor();
     }
 
     /**

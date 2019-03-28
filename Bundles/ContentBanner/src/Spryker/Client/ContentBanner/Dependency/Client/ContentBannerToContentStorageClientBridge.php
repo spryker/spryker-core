@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ContentBanner\Dependency\Client;
 
-use Generated\Shared\Transfer\ContentQueryTransfer;
+use Generated\Shared\Transfer\ContentTypeContextTransfer;
 
 class ContentBannerToContentStorageClientBridge implements ContentBannerToContentStorageClientInterface
 {
@@ -28,10 +28,10 @@ class ContentBannerToContentStorageClientBridge implements ContentBannerToConten
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ContentQueryTransfer|null
+     * @return \Generated\Shared\Transfer\ContentTypeContextTransfer|null
      */
-    public function findContentQueryById(int $idContent, string $localeName): ?ContentQueryTransfer
+    public function findContentTypeContext(int $idContent, string $localeName): ?ContentTypeContextTransfer
     {
-        return $this->contentStorageClient->findContentQueryById($idContent, $localeName);
+        return $this->contentStorageClient->findContentTypeContext($idContent, $localeName);
     }
 }
