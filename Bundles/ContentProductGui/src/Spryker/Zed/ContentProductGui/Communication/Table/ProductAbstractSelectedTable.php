@@ -28,6 +28,7 @@ class ProductAbstractSelectedTable extends AbstractTable
     public const COL_STORIES = 'Stories';
     public const COL_STATUS = 'Status';
     public const COL_DELETE = 'Delete';
+    public const COL_ORDER = 'Order';
 
     /**
      * @var \Spryker\Zed\ContentProductGui\Dependency\QueryContainer\ContentProductGuiToProductInterface
@@ -101,6 +102,7 @@ class ProductAbstractSelectedTable extends AbstractTable
             static::COL_NAME => static::COL_NAME,
             static::COL_STORIES => static::COL_STORIES,
             static::COL_STATUS => static::COL_STATUS,
+            static::COL_ORDER => static::COL_ORDER,
             static::COL_DELETE => static::COL_DELETE,
         ]);
 
@@ -108,6 +110,7 @@ class ProductAbstractSelectedTable extends AbstractTable
             static::COL_IMAGE,
             static::COL_STORIES,
             static::COL_STATUS,
+            static::COL_ORDER,
             static::COL_DELETE,
         ]);
 
@@ -150,7 +153,7 @@ class ProductAbstractSelectedTable extends AbstractTable
             /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
             foreach ($queryResults as $productAbstractEntity) {
                 $index = array_search($productAbstractEntity->getIdProductAbstract(), $idProductAbstracts);
-                $results[$index] = $this->formatRow($productAbstractEntity);
+                $results[$index] = $this->formatRow($index, $queryResults->count(), $productAbstractEntity);
             }
             ksort($results);
         }
@@ -159,11 +162,13 @@ class ProductAbstractSelectedTable extends AbstractTable
     }
 
     /**
+     * @param int $currentPosition
+     * @param int $totalResults
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return array
      */
-    protected function formatRow(SpyProductAbstract $productAbstractEntity)
+    protected function formatRow(int $currentPosition, int $totalResults, SpyProductAbstract $productAbstractEntity)
     {
         $idProductAbstract = $productAbstractEntity->getIdProductAbstract();
 
@@ -174,7 +179,57 @@ class ProductAbstractSelectedTable extends AbstractTable
             static::COL_NAME => $productAbstractEntity->getSpyProductAbstractLocalizedAttributess()->getFirst()->getName(),
             static::COL_STORIES => $this->productAbstractTableHelper->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),
             static::COL_STATUS => $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity),
+            static::COL_ORDER => $this->getOrderButtons($currentPosition, $totalResults, $productAbstractEntity),
             static::COL_DELETE => $this->productAbstractTableHelper->getDeleteButton($productAbstractEntity),
         ];
+    }
+
+    /**
+     * @param int $currentPosition
+     * @param int $totalResults
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return string
+     */
+    protected function getOrderButtons(int $currentPosition, int $totalResults, SpyProductAbstract $productAbstractEntity)
+    {
+        $orderButtons = [];
+
+        if ($currentPosition === 0) {
+            return $this->getOrderDownButton($productAbstractEntity->getIdProductAbstract());
+        }
+
+        if ($currentPosition === $totalResults - 1) {
+            return $this->getOrderUpButton($productAbstractEntity->getIdProductAbstract());
+        }
+
+        return $this->getOrderUpButton($productAbstractEntity->getIdProductAbstract())
+            . $this->getOrderDownButton($productAbstractEntity->getIdProductAbstract());
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return string
+     */
+    protected function getOrderUpButton(int $idProductAbstract)
+    {
+        return sprintf(
+            '<button type="button" data-id="%s" class="js-reorder-product-abstract-up btn btn-xs btn-outline btn-info block"><i class="fa fa-arrow-up"></i></button>',
+            $idProductAbstract
+        );
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return string
+     */
+    protected function getOrderDownButton(int $idProductAbstract)
+    {
+        return sprintf(
+            '<button type="button" data-id="%s" class="js-reorder-product-abstract-down btn btn-xs btn-outline btn-info block"><i class="fa fa-arrow-down"></i></button>',
+            $idProductAbstract
+        );
     }
 }
