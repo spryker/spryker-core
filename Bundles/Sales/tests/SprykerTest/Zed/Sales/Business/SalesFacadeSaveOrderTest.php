@@ -453,15 +453,12 @@ class SalesFacadeSaveOrderTest extends Unit
     }
 
     /**
-     * @dataProvider createSalesExpenseSaveExpenseDataProvider
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     *
      * @return void
      */
-    public function testCreateSalesExpenseSavesExpense(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer): void
+    public function testCreateSalesExpenseSavesExpense(): void
     {
+        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $expenseTransfer = $this->createExpenseTransfer();
         // Assign
         $saveOrderTransfer = $this->createSaveOrderTransfer();
         $this->salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
@@ -474,39 +471,6 @@ class SalesFacadeSaveOrderTest extends Unit
         // Assert
         $this->assertNotNull($savedExpenseTransfer->getIdSalesExpense());
         $this->assertEquals($savedExpenseTransfer->toArray(), $expenseTransfer->toArray());
-    }
-
-    /**
-     * @return array
-     */
-    public function createSalesExpenseSaveExpenseDataProvider(): array
-    {
-        return [
-            'int stock' => $this->getIntDataForCreateSalesExpenseSaveExpense(),
-            'float stock' => $this->getFloatDataDataForCreateSalesExpenseSaveExpense(),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getIntDataForCreateSalesExpenseSaveExpense(): array
-    {
-        return [
-            $this->getValidBaseQuoteTransfer(),
-            $this->createExpenseTransfer(),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getFloatDataDataForCreateSalesExpenseSaveExpense(): array
-    {
-        return [
-            $this->createValidBaseQuoteWithFloatQuantity(),
-            $this->createExpenseTransferWithFloatQuantity(),
-        ];
     }
 
     /**

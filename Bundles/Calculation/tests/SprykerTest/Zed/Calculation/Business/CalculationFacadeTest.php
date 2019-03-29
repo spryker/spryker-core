@@ -134,19 +134,18 @@ class CalculationFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider calculatePriceShouldSetDefaultStorePriceValuesDataProvider
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function testCalculatePriceShouldSetDefaultStorePriceValuesForExpense(QuoteTransfer $quoteTransfer): void
+    public function testCalculatePriceShouldSetDefaultStorePriceValuesForExpense(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
                 new PriceCalculatorPlugin(),
             ]
         );
+        $quoteTransfer = $this->getDataForCalculatePriceShouldSetDefaultStorePriceValues(2, 1);
 
         $calculationFacade->recalculateQuote($quoteTransfer);
 
@@ -169,23 +168,12 @@ class CalculationFacadeTest extends Unit
     }
 
     /**
-     * @return array
-     */
-    public function calculatePriceShouldSetDefaultStorePriceValuesDataProvider(): array
-    {
-        return [
-            'int stock' => $this->getIntDataForCalculatePriceShouldSetDefaultStorePriceValues(2, 1),
-            'float stock' => $this->getFloatDataForCalculatePriceShouldSetDefaultStorePriceValues(2.5, 1.5),
-        ];
-    }
-
-    /**
-     * @param int $productQuantity
+     * @param int|float $productQuantity
      * @param int $expenseQuantity
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function getIntDataForCalculatePriceShouldSetDefaultStorePriceValues(int $productQuantity, int $expenseQuantity): array
+    protected function getDataForCalculatePriceShouldSetDefaultStorePriceValues($productQuantity, int $expenseQuantity): QuoteTransfer
     {
         $quoteTransfer = (new QuoteBuilder())->seed([
             QuoteTransfer::PRICE_MODE => CalculationPriceMode::PRICE_MODE_GROSS,
@@ -212,43 +200,7 @@ class CalculationFacadeTest extends Unit
 
         $quoteTransfer->addExpense($expenseTransfer);
 
-        return [$quoteTransfer];
-    }
-
-    /**
-     * @param float $productQuantity
-     * @param float $expenseQuantity
-     *
-     * @return array
-     */
-    protected function getFloatDataForCalculatePriceShouldSetDefaultStorePriceValues(float $productQuantity, float $expenseQuantity): array
-    {
-        $quoteTransfer = (new QuoteBuilder())->seed([
-            QuoteTransfer::PRICE_MODE => CalculationPriceMode::PRICE_MODE_GROSS,
-        ])->build();
-
-        $itemTransfer = (new ItemBuilder())->seed([
-            ItemTransfer::QUANTITY => $productQuantity,
-            ItemTransfer::UNIT_GROSS_PRICE => 100,
-        ])->build();
-
-        $productOptionTransfer = (new ProductOptionBuilder())->seed([
-            ProductOptionTransfer::QUANTITY => $productQuantity,
-            ProductOptionTransfer::UNIT_GROSS_PRICE => 10,
-        ])->build();
-
-        $itemTransfer->addProductOption($productOptionTransfer);
-
-        $quoteTransfer->addItem($itemTransfer);
-
-        $expenseTransfer = (new ExpenseBuilder())->seed([
-            ExpenseTransfer::QUANTITY => $expenseQuantity,
-            ExpenseTransfer::UNIT_GROSS_PRICE => 100,
-        ])->build();
-
-        $quoteTransfer->addExpense($expenseTransfer);
-
-        return [$quoteTransfer];
+        return $quoteTransfer;
     }
 
     /**

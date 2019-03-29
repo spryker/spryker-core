@@ -37,6 +37,11 @@ class QuoteMergerTest extends Unit
     private $cartMerger;
 
     /**
+     * @var \Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface
+     */
+    private $quantityUtilService;
+
+    /**
      * @var \SprykerTest\Zed\PersistentCart\PersistentCartBusinessTester
      */
     protected $tester;
@@ -47,19 +52,30 @@ class QuoteMergerTest extends Unit
     protected function setUp()
     {
         parent::setUp();
+
         $factory = $this->createPersistentCartBusinessFactoryMock();
+        $this->quantityUtilService = $factory->getUtilQuantityService();
+
         $this->cartMerger = new QuoteMerger(
-            $factory->getCartAddItemStrategyPlugins()
+            $factory->getCartAddItemStrategyPlugins(),
+            $this->quantityUtilService
         );
     }
 
     /**
+     * @dataProvider hydrateQuantityDataProvider
+     *
+     * @param int|float $firstQuantity
+     * @param int|float $secondQuantity
+     * @param int|float $thirdQuantity
+     * @param int|float $sumFirstAndSecondQuantity
+     *
      * @return void
      */
-    public function testMergeSourceAndTargetQuote(): void
+    public function testMergeSourceAndTargetQuote($firstQuantity, $secondQuantity, $thirdQuantity, $sumFirstAndSecondQuantity): void
     {
         // Assign
-        $quoteMergeRequestTransfer = $this->createQuoteMergeRequestTransfer();
+        $quoteMergeRequestTransfer = $this->createQuoteMergeRequestTransfer($firstQuantity, $secondQuantity, $thirdQuantity);
 
         // Act
         $quoteTransfer = $this->cartMerger->merge($quoteMergeRequestTransfer);
@@ -75,16 +91,20 @@ class QuoteMergerTest extends Unit
         }
 
         $existingItem = $changedItems[$skuIndex[static::EXISTING_ITEM_SKU]];
-        $this->assertEquals($existingItem->getQuantity(), 2);
+        $this->assertEquals($existingItem->getQuantity(), $sumFirstAndSecondQuantity);
 
         $newItem = $changedItems[$skuIndex[static::NEW_ITEM_SKU]];
-        $this->assertEquals($newItem->getQuantity(), 1);
+        $this->assertEquals($newItem->getQuantity(), $thirdQuantity);
     }
 
     /**
+     * @param int|float $firstQuantity
+     * @param int|float $secondQuantity
+     * @param int|float $thirdQuantity
+     *
      * @return \Generated\Shared\Transfer\QuoteMergeRequestTransfer
      */
-    protected function createQuoteMergeRequestTransfer(): QuoteMergeRequestTransfer
+    protected function createQuoteMergeRequestTransfer($firstQuantity, $secondQuantity, $thirdQuantity): QuoteMergeRequestTransfer
     {
         return (new QuoteMergeRequestTransfer())
             ->setSourceQuote(
@@ -92,7 +112,7 @@ class QuoteMergerTest extends Unit
                     ->addItem(
                         (new ItemTransfer())
                             ->setSku(static::EXISTING_ITEM_SKU)
-                            ->setQuantity(1)
+                            ->setQuantity($firstQuantity)
                     )->setCurrency(
                         (new CurrencyTransfer())
                             ->setCode('EUR')
@@ -103,12 +123,12 @@ class QuoteMergerTest extends Unit
                     ->addItem(
                         (new ItemTransfer())
                             ->setSku(static::EXISTING_ITEM_SKU)
-                            ->setQuantity(1)
+                            ->setQuantity($secondQuantity)
                     )
                     ->addItem(
                         (new ItemTransfer())
                             ->setSku(static::NEW_ITEM_SKU)
-                            ->setQuantity(1)
+                            ->setQuantity($thirdQuantity)
                     )->setCurrency(
                         (new CurrencyTransfer())
                             ->setCode('USD')
@@ -132,5 +152,16 @@ class QuoteMergerTest extends Unit
         }
 
         return $mockObject;
+    }
+
+    /**
+     * @return array
+     */
+    public function hydrateQuantityDataProvider(): array
+    {
+        return [
+            'integer quantity' => [5, 3, 2, 8],
+            'decimal quantity' => [2.6, 3.5, 4.24, 6.1],
+        ];
     }
 }

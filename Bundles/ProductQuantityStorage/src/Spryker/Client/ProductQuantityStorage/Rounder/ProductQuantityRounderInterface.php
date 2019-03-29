@@ -13,9 +13,9 @@ interface ProductQuantityRounderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer $productQuantityStorageTransfer
-     * @param int $quantity
+     * @param float $quantity
      *
-     * @return int
+     * @return float
      */
-    public function getNearestQuantity(ProductQuantityStorageTransfer $productQuantityStorageTransfer, int $quantity): int;
+    public function getNearestQuantity(ProductQuantityStorageTransfer $productQuantityStorageTransfer, float $quantity): float;
 }
