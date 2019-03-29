@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Oms\Business\OmsBusinessFactory getFactory()
+ * @method \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface getRepository()
  */
 class OmsFacade extends AbstractFacade implements OmsFacadeInterface
 {

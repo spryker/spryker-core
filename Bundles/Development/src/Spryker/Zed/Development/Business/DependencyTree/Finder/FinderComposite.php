@@ -17,9 +17,9 @@ class FinderComposite implements FinderCompositeInterface
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface $finder
      *
-     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderCompositeInterface
+     * @return $this
      */
-    public function addFinder(FinderInterface $finder): FinderCompositeInterface
+    public function addFinder(FinderInterface $finder)
     {
         $this->finder[] = $finder;
 

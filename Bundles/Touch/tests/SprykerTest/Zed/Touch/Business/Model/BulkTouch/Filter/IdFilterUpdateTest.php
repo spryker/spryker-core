@@ -25,8 +25,10 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
  */
 class IdFilterUpdateTest extends Unit
 {
+    public const ITEM_EVENT_ACTIVE = 'active';
+
     /**
-     * @var \Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterUpdate|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterUpdate|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $idFilterUpdate;
 
@@ -56,7 +58,7 @@ class IdFilterUpdateTest extends Unit
             ->method('getIdCollection')
             ->willReturn($ids);
 
-        $result = $this->idFilterUpdate->filter($ids, 'foo');
+        $result = $this->idFilterUpdate->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
         $this->assertSame($ids, $result);
     }
 
@@ -73,7 +75,7 @@ class IdFilterUpdateTest extends Unit
             ->method('getIdCollection')
             ->willReturn(range(1, IdFilterUpdate::CHUNK_SIZE));
 
-        $result = $this->idFilterUpdate->filter($ids, 'foo');
+        $result = $this->idFilterUpdate->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
         $this->assertCount($countAboveChunkSize, $result);
     }
 
@@ -89,7 +91,7 @@ class IdFilterUpdateTest extends Unit
             ->method('getIdCollection')
             ->willReturn([]);
 
-        $result = $this->idFilterUpdate->filter($ids, 'foo');
+        $result = $this->idFilterUpdate->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
         $this->assertSame([], $result);
     }
 }

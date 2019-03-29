@@ -23,6 +23,11 @@ class PriceModeResolver implements PriceModeResolverInterface
     protected $priceConfig;
 
     /**
+     * @var string|null
+     */
+    protected static $priceModeCache;
+
+    /**
      * @param \Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\Price\PriceConfig $priceConfig
      */
@@ -37,12 +42,12 @@ class PriceModeResolver implements PriceModeResolverInterface
      */
     public function getCurrentPriceMode()
     {
-        $quoteTransfer = $this->quoteClient->getQuote();
+        if (static::$priceModeCache === null) {
+            $quoteTransfer = $this->quoteClient->getQuote();
 
-        if ($quoteTransfer->getPriceMode()) {
-            return $quoteTransfer->getPriceMode();
+            static::$priceModeCache = $quoteTransfer->getPriceMode() ?: $this->priceConfig->getDefaultPriceMode();
         }
 
-        return $this->priceConfig->getDefaultPriceMode();
+        return static::$priceModeCache;
     }
 }

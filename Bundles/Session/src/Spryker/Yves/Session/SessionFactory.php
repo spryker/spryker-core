@@ -60,7 +60,8 @@ class SessionFactory extends AbstractFactory
     protected function createSessionHandlerRedis()
     {
         return $this->createSessionHandlerFactory()->createSessionHandlerRedis(
-            $this->getConfig()->getSessionHandlerRedisDataSourceName()
+            $this->getConfig()->getSessionHandlerRedisConnectionParameters(),
+            $this->getConfig()->getSessionHandlerRedisConnectionOptions()
         );
     }
 
@@ -70,7 +71,8 @@ class SessionFactory extends AbstractFactory
     protected function createSessionHandlerRedisLocking()
     {
         return $this->createSessionHandlerFactory()->createRedisLockingSessionHandler(
-            $this->getConfig()->getSessionHandlerRedisDataSourceName()
+            $this->getConfig()->getSessionHandlerRedisConnectionParameters(),
+            $this->getConfig()->getSessionHandlerRedisConnectionOptions()
         );
     }
 

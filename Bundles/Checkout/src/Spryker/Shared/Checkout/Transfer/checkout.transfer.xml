@@ -77,5 +77,14 @@
         <property name="orderReference" type="string" />
     </transfer>
 
+    <transfer name="QuoteValidationResponse">
+        <property name="isSuccessful" type="bool" />
+        <property name="messages" type="Message[]"  singular="message" />
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
 </transfers>
 
