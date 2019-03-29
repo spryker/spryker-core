@@ -134,8 +134,7 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
             return false;
         }
 
-        if (!$quoteRequestTransfer->getValidUntil()
-            || (new DateTime($quoteRequestTransfer->getValidUntil()) < new DateTime('now'))) {
+        if ($quoteRequestTransfer->getValidUntil() && (new DateTime($quoteRequestTransfer->getValidUntil()) < new DateTime())) {
             $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL);
 
             return false;

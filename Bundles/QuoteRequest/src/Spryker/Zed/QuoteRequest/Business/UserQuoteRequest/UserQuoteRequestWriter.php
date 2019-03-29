@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteRequest\Business\UserQuoteRequest;
 
+use DateTime;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
@@ -32,6 +33,7 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS = 'quote_request.validation.error.empty_quote_items';
+    protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.update.validation.error.wrong_valid_until';
 
     /**
      * @var \Spryker\Zed\QuoteRequest\QuoteRequestConfig
@@ -169,6 +171,10 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS);
         }
 
+        if ($quoteRequestTransfer->getValidUntil() && (new DateTime($quoteRequestTransfer->getValidUntil()) < new DateTime())) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL);
+        }
+
         $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_READY);
         $quoteRequestTransfer->setIsLatestVersionHidden(false);
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
@@ -240,8 +246,9 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
         }
 
         $latestQuoteRequestVersionTransfer = $this->reloadQuoteRequestVersionItems($quoteRequestTransfer->getLatestVersion());
-        $latestQuoteRequestVersionTransfer = $this->quoteRequestEntityManager
-            ->updateQuoteRequestVersion($latestQuoteRequestVersionTransfer);
+        $latestQuoteRequestVersionTransfer = $this->quoteRequestEntityManager->updateQuoteRequestVersion(
+            $this->cleanUpQuoteRequestVersionQuote($latestQuoteRequestVersionTransfer)
+        );
 
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
@@ -373,6 +380,22 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
         if ($quoteRequestVersionTransfer->getQuote()->getItems()->count()) {
             $quoteRequestVersionTransfer->setQuote($this->cartFacade->reloadItems($quoteRequestVersionTransfer->getQuote()));
         }
+
+        return $quoteRequestVersionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
+     */
+    protected function cleanUpQuoteRequestVersionQuote(QuoteRequestVersionTransfer $quoteRequestVersionTransfer): QuoteRequestVersionTransfer
+    {
+        $quoteTransfer = $quoteRequestVersionTransfer->getQuote()
+            ->setQuoteRequestVersionReference(null)
+            ->setQuoteRequestReference(null);
+
+        $quoteRequestVersionTransfer->setQuote($quoteTransfer);
 
         return $quoteRequestVersionTransfer;
     }
