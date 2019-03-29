@@ -34,7 +34,7 @@ class ContentProductAbstractListWriterStep extends PublishAwareStep implements D
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $contentEntity = $this->saveContentEntity($dataSet);
 
