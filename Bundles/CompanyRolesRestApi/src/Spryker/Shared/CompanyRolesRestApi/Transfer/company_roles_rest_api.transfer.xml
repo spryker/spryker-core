@@ -20,4 +20,8 @@
         <property name="companyRoleCollection" type="CompanyRoleCollection"/>
     </transfer>
 
+    <transfer name="CompanyRoleResponse">
+        <property name="companyRoleCollection" type="CompanyRoleCollection"/>
+    </transfer>
+
 </transfers>

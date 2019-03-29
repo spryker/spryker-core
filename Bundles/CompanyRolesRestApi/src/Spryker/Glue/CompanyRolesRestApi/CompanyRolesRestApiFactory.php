@@ -8,12 +8,14 @@
 namespace Spryker\Glue\CompanyRolesRestApi;
 
 use Spryker\Glue\CompanyRolesRestApi\Dependency\Client\CompanyRolesRestApiToCompanyRoleClientInterface;
-use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\CompanyRoleMapper;
-use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\CompanyRoleMapperInterface;
-use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\CompanyRoleReader;
-use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\CompanyRoleReaderInterface;
-use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\CompanyRoleRestResponseBuilder;
-use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\CompanyRoleRestResponseBuilderInterface;
+use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Mapper\CompanyRoleMapper;
+use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Mapper\CompanyRoleMapperInterface;
+use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Reader\CompanyRoleReader;
+use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Reader\CompanyRoleReaderInterface;
+use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Relationship\CompanyRoleResourceRelationshipExpander;
+use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Relationship\CompanyRoleResourceRelationshipExpanderInterface;
+use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\RestResponseBuilder\CompanyRoleRestResponseBuilder;
+use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\RestResponseBuilder\CompanyRoleRestResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CompanyRolesRestApiFactory extends AbstractFactory
@@ -30,19 +32,19 @@ class CompanyRolesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\CompanyRoleReader
+     * @return \Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Reader\CompanyRoleReaderInterface
      */
     public function createCompanyRoleReader(): CompanyRoleReaderInterface
     {
         return new CompanyRoleReader(
-            $this->createCompanyRoleMapper(),
             $this->getCompanyRoleClient(),
+            $this->createCompanyRoleMapper(),
             $this->createCompanyRoleRestResponseBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\CompanyRoleMapperInterface
+     * @return \Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Mapper\CompanyRoleMapperInterface
      */
     public function createCompanyRoleMapper(): CompanyRoleMapperInterface
     {
@@ -50,7 +52,7 @@ class CompanyRolesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\CompanyRoleRestResponseBuilderInterface
+     * @return \Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\RestResponseBuilder\CompanyRoleRestResponseBuilderInterface
      */
     public function createCompanyRoleRestResponseBuilder(): CompanyRoleRestResponseBuilderInterface
     {

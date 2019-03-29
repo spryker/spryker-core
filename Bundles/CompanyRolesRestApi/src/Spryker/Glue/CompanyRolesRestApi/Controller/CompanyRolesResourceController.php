@@ -7,9 +7,12 @@
 
 namespace Spryker\Glue\CompanyRolesRestApi\Controller;
 
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiFactory getFactory()
@@ -47,6 +50,14 @@ class CompanyRolesResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
+        if (!$restRequest->getResource()->getId()) {
+            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+                ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
+                ->setDetail(CompanyRolesRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
+
+            return $this->getFactory()->getResourceBuilder()->createRestResponse()->addError($restErrorMessageTransfer);
+        }
+
         return $this->getFactory()->createCompanyRoleReader()->getCompanyRole($restRequest);
     }
 }

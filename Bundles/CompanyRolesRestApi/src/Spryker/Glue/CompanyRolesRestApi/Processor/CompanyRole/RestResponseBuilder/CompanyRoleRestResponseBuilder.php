@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole;
+namespace Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\RestResponseBuilder;
 
 use Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -31,17 +31,17 @@ class CompanyRoleRestResponseBuilder implements CompanyRoleRestResponseBuilderIn
     }
 
     /**
-     * @param string $uuid
+     * @param string $companyRoleUuid
      * @param \Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyRoleRestResponse(
-        string $uuid,
+        string $companyRoleUuid,
         RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
     ): RestResponseInterface {
         return $this->restResourceBuilder->createRestResponse()
-            ->addResource($this->buildCompanyRoleRestResource($restCompanyRoleAttributesTransfer, $uuid));
+            ->addResource($this->buildCompanyRoleRestResource($restCompanyRoleAttributesTransfer, $companyRoleUuid));
     }
 
     /**
@@ -72,17 +72,17 @@ class CompanyRoleRestResponseBuilder implements CompanyRoleRestResponseBuilderIn
 
     /**
      * @param \Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
-     * @param string $uuid
+     * @param string $companyRoleUuid
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     protected function buildCompanyRoleRestResource(
         RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer,
-        string $uuid
+        string $companyRoleUuid
     ): RestResourceInterface {
         $restResource = $this->restResourceBuilder->createRestResource(
             CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES,
-            $uuid,
+            $companyRoleUuid,
             $restCompanyRoleAttributesTransfer
         );
 

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole;
+namespace Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\RestResponseBuilder;
 
 use Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -13,13 +13,13 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface CompanyRoleRestResponseBuilderInterface
 {
     /**
-     * @param string $uuid
+     * @param string $companyRoleUuid
      * @param \Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyRoleRestResponse(
-        string $uuid,
+        string $companyRoleUuid,
         RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
     ): RestResponseInterface;
 
