@@ -10,8 +10,8 @@ namespace Spryker\Glue\CompaniesRestApi\Processor\Company\Reader;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\RestCompanyAttributesTransfer;
 use Spryker\Glue\CompaniesRestApi\Dependency\Client\CompaniesRestApiToCompanyClientInterface;
-use Spryker\Glue\CompaniesRestApi\Processor\Company\CompanyRestResponseBuilderInterface;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface;
+use Spryker\Glue\CompaniesRestApi\Processor\Company\RestResponseBuilder\CompanyRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -28,14 +28,14 @@ class CompanyReader implements CompanyReaderInterface
     protected $companyMapperInterface;
 
     /**
-     * @var \Spryker\Glue\CompaniesRestApi\Processor\Company\CompanyRestResponseBuilderInterface
+     * @var \Spryker\Glue\CompaniesRestApi\Processor\Company\RestResponseBuilder\CompanyRestResponseBuilderInterface
      */
     protected $companyRestResponseBuilder;
 
     /**
      * @param \Spryker\Glue\CompaniesRestApi\Dependency\Client\CompaniesRestApiToCompanyClientInterface $companyClient
      * @param \Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface $companyMapperInterface
-     * @param \Spryker\Glue\CompaniesRestApi\Processor\Company\CompanyRestResponseBuilderInterface $companyRestResponseBuilder
+     * @param \Spryker\Glue\CompaniesRestApi\Processor\Company\RestResponseBuilder\CompanyRestResponseBuilderInterface $companyRestResponseBuilder
      */
     public function __construct(
         CompaniesRestApiToCompanyClientInterface $companyClient,

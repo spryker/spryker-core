@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompaniesRestApi\Processor\Company;
+namespace Spryker\Glue\CompaniesRestApi\Processor\Company\RestResponseBuilder;
 
 use Generated\Shared\Transfer\RestCompanyAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
