@@ -8,9 +8,8 @@
 namespace SprykerTest\Client\ContentStorage;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ContentProductAbstractListTransfer;
+use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
-use Generated\Shared\Transfer\ExecutedProductAbstractListTransfer;
 use Spryker\Client\ContentProduct\ContentProductClient;
 use Spryker\Client\ContentProduct\ContentProductDependencyProvider;
 use Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface;
@@ -35,6 +34,16 @@ class ContentProductClientTest extends Unit
     /**
      * @var int
      */
+    public const ID_PRODUCT_ABSTRACT = 1;
+
+    /**
+     * @var string
+     */
+    public const WRONG_TERM = 'TERM';
+
+    /**
+     * @var string
+     */
     public const LOCALE = 'zh-CN';
 
     /**
@@ -51,17 +60,16 @@ class ContentProductClientTest extends Unit
         $contentTypeContextTransfer = new ContentTypeContextTransfer();
         $contentTypeContextTransfer->getIdContent(static::ID_CONTENT_ITEM);
         $contentTypeContextTransfer->setTerm(ContentProductConfig::CONTENT_TERM_PRODUCT_ABSTRACT_LIST);
-        $contentTypeContextTransfer->getParameters(['id_product_abstracts' => [12]]);
+        $contentTypeContextTransfer->getParameters(['id_product_abstracts' => [static::ID_PRODUCT_ABSTRACT]]);
 
         $this->setProductStorageClientReturn($contentTypeContextTransfer);
 
         // Act
         $systemUnderTest = $this->createContentProductClient()
-            ->getExecutedProductAbstractListById(static::ID_CONTENT_ITEM, static::LOCALE);
+            ->getContentProductAbstractListType(static::ID_CONTENT_ITEM, static::LOCALE);
 
         // Assert
-        $this->assertEquals(ExecutedProductAbstractListTransfer::class, get_class($systemUnderTest));
-        $this->assertEquals(ContentProductAbstractListTransfer::class, get_class($systemUnderTest->getContentProductAbstractList()));
+        $this->assertEquals(ContentProductAbstractListTypeTransfer::class, get_class($systemUnderTest));
     }
 
     /**
@@ -72,8 +80,8 @@ class ContentProductClientTest extends Unit
         // Arrange
         $contentTypeContextTransfer = new ContentTypeContextTransfer();
         $contentTypeContextTransfer->getIdContent(static::ID_CONTENT_ITEM);
-        $contentTypeContextTransfer->setTerm('TERM');
-        $contentTypeContextTransfer->getParameters(['id_product_abstracts' => [12]]);
+        $contentTypeContextTransfer->setTerm(static::WRONG_TERM);
+        $contentTypeContextTransfer->getParameters(['id_product_abstracts' => [static::ID_PRODUCT_ABSTRACT]]);
 
         $this->setProductStorageClientReturn($contentTypeContextTransfer);
 
@@ -82,7 +90,7 @@ class ContentProductClientTest extends Unit
 
         // Act
         $systemUnderTest = $this->createContentProductClient()
-            ->getExecutedProductAbstractListById(static::ID_CONTENT_ITEM, static::LOCALE);
+            ->getContentProductAbstractListType(static::ID_CONTENT_ITEM, static::LOCALE);
     }
 
     /**
@@ -94,7 +102,7 @@ class ContentProductClientTest extends Unit
 
         // Act
         $systemUnderTest = $this->createContentProductClient()
-            ->getExecutedProductAbstractListById(static::ID_CONTENT_ITEM, static::LOCALE);
+            ->getContentProductAbstractListType(static::ID_CONTENT_ITEM, static::LOCALE);
 
         // Assert
         $this->assertNull($systemUnderTest);

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ContentProduct;
 
-use Generated\Shared\Transfer\ExecutedProductAbstractListTransfer;
+use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -23,20 +23,20 @@ class ContentProductClient extends AbstractClient implements ContentProductClien
      * @param int $idContent
      * @param string $localeName
      *
-     * @throws \Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException
-     *
-     * @return \Generated\Shared\Transfer\ExecutedProductAbstractListTransfer|null
+     * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer|null
      */
-    public function getExecutedProductAbstractListById(int $idContent, string $localeName): ?ExecutedProductAbstractListTransfer
+    public function getContentProductAbstractListType(int $idContent, string $localeName): ?ContentProductAbstractListTypeTransfer
     {
-        $contentTypeContextTransfer = $this->getFactory()->getContentStorageClient()->findContentTypeContext($idContent, $localeName);
+        $contentTypeContextTransfer = $this->getFactory()
+            ->getContentStorageClient()
+            ->findContentTypeContext($idContent, $localeName);
 
         if (!$contentTypeContextTransfer) {
             return null;
         }
 
         return $this->getFactory()
-            ->createExecutorProductAbstractList()
-            ->execute($contentTypeContextTransfer);
+            ->createProductAbstractListTermToProductAbstractListTypeExecutor()
+            ->execute($this->getFactory()->createContentProductAbstractResolver()->resolve($contentTypeContextTransfer));
     }
 }

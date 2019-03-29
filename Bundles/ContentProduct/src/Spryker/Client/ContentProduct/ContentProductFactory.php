@@ -8,18 +8,28 @@
 namespace Spryker\Client\ContentProduct;
 
 use Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface;
-use Spryker\Client\ContentProduct\Executor\ExecutorProductAbstractList;
-use Spryker\Client\ContentProduct\Executor\ExecutorProductAbstractListInterface;
+use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermToProductAbstractListTypeExecutor;
+use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermToProductAbstractListTypeExecutorInterface;
+use Spryker\Client\ContentProduct\Resolver\ContentProductAbstractResolver;
+use Spryker\Client\ContentProduct\Resolver\ContentProductAbstractResolverInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ContentProductFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ContentProduct\Executor\ExecutorProductAbstractListInterface
+     * @return \Spryker\Client\ContentProduct\Executor\ProductAbstractListTermToProductAbstractListTypeExecutorInterface
      */
-    public function createExecutorProductAbstractList(): ExecutorProductAbstractListInterface
+    public function createProductAbstractListTermToProductAbstractListTypeExecutor(): ProductAbstractListTermToProductAbstractListTypeExecutorInterface
     {
-        return new ExecutorProductAbstractList();
+        return new ProductAbstractListTermToProductAbstractListTypeExecutor();
+    }
+
+    /**
+     * @return \Spryker\Client\ContentProduct\Resolver\ContentProductAbstractResolverInterface
+     */
+    public function createContentProductAbstractResolver(): ContentProductAbstractResolverInterface
+    {
+        return new ContentProductAbstractResolver();
     }
 
     /**

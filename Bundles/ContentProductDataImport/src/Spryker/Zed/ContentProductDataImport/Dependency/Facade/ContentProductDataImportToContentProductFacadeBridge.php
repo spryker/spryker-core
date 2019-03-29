@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentProductDataImport\Dependency\Facade;
 
-use Generated\Shared\Transfer\ContentProductAbstractListTransfer;
+use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 
 class ContentProductDataImportToContentProductFacadeBridge implements ContentProductDataImportToContentProductFacadeInterface
@@ -26,13 +26,13 @@ class ContentProductDataImportToContentProductFacadeBridge implements ContentPro
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentProductAbstractListTransfer $contentProductAbstractListTransfer
+     * @param \Generated\Shared\Transfer\ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
      *
      * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
      */
     public function validateContentProductAbstractList(
-        ContentProductAbstractListTransfer $contentProductAbstractListTransfer
+        ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
     ): ContentValidationResponseTransfer {
-        return $this->contentProductFacade->validateContentProductAbstractList($contentProductAbstractListTransfer);
+        return $this->contentProductFacade->validateContentProductAbstractList($contentProductAbstractListTermTransfer);
     }
 }

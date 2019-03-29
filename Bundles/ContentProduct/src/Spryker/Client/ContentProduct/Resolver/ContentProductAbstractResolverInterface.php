@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ContentProduct\Executor;
+namespace Spryker\Client\ContentProduct\Resolver;
 
+use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
-use Generated\Shared\Transfer\ExecutedProductAbstractListTransfer;
 
-interface ExecutorProductAbstractListInterface
+interface ContentProductAbstractResolverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
      *
      * @throws \Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException
      *
-     * @return \Generated\Shared\Transfer\ExecutedProductAbstractListTransfer|null
+     * @return \Generated\Shared\Transfer\ContentProductAbstractListTermTransfer
      */
-    public function execute(ContentTypeContextTransfer $contentTypeContextTransfer): ?ExecutedProductAbstractListTransfer;
+    public function resolve(ContentTypeContextTransfer $contentTypeContextTransfer): ContentProductAbstractListTermTransfer;
 }

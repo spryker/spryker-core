@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentProductDataImport\Business\Model\Step;
 
-use Generated\Shared\Transfer\ContentProductAbstractListTransfer;
+use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
 use Orm\Zed\Content\Persistence\Map\SpyContentLocalizedTableMap;
 use Spryker\Zed\ContentProductDataImport\Business\Model\DataSet\ContentProductAbstractListDataSetInterface;
 use Spryker\Zed\ContentProductDataImport\Dependency\Facade\ContentProductDataImportToContentProductFacadeInterface;
@@ -64,10 +64,10 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
             $localizedItem[SpyContentLocalizedTableMap::COL_FK_LOCALE] = $idLocale ?? $idLocale;
             $localizedItem[SpyContentLocalizedTableMap::COL_FK_CONTENT] = $dataSet[ContentProductAbstractListDataSetInterface::COLUMN_ID_CONTENT];
 
-            $contentProductAbstractListTransfer = (new ContentProductAbstractListTransfer())
+            $contentProductAbstractListTermTransfer = (new ContentProductAbstractListTermTransfer())
                 ->setIdProductAbstracts($dataSet[$localeKeyIds]);
 
-            $contentValidationResponseTransfer = $this->contentProductFacade->validateContentProductAbstractList($contentProductAbstractListTransfer);
+            $contentValidationResponseTransfer = $this->contentProductFacade->validateContentProductAbstractList($contentProductAbstractListTermTransfer);
 
             if (!$contentValidationResponseTransfer->getIsSuccess()) {
                 $messageTransfer = $contentValidationResponseTransfer->getParameterMessages()
@@ -85,7 +85,7 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
             }
 
             $localizedItem[SpyContentLocalizedTableMap::COL_PARAMETERS] = $this->utilEncodingService->encodeJson(
-                $contentProductAbstractListTransfer->toArray()
+                $contentProductAbstractListTermTransfer->toArray()
             );
 
             $contentLocalizedItems[] = $localizedItem;

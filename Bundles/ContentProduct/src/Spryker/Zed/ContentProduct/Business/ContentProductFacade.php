@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentProduct\Business;
 
-use Generated\Shared\Transfer\ContentProductAbstractListTransfer;
+use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -21,13 +21,13 @@ class ContentProductFacade extends AbstractFacade implements ContentProductFacad
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ContentProductAbstractListTransfer $contentProductAbstractListTransfer
+     * @param \Generated\Shared\Transfer\ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
      *
      * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
      */
     public function validateContentProductAbstractList(
-        ContentProductAbstractListTransfer $contentProductAbstractListTransfer
+        ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
     ): ContentValidationResponseTransfer {
-        return $this->getFactory()->createContentProductAbstractListValidator()->validate($contentProductAbstractListTransfer);
+        return $this->getFactory()->createContentProductAbstractListValidator()->validate($contentProductAbstractListTermTransfer);
     }
 }

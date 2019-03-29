@@ -71,7 +71,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         }
 
         try {
-            $executedProductAbstractListTransfer = $this->contentProductClient->getExecutedProductAbstractListById(
+            $contentProductAbstractListTypeTransfer = $this->contentProductClient->getContentProductAbstractListType(
                 (int)$parentResource->getId(),
                 $restRequest->getMetadata()->getLocale()
             );
@@ -79,11 +79,11 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
             return $this->addContentTypeInvalidError($restResponse);
         }
 
-        if (!$executedProductAbstractListTransfer) {
+        if (!$contentProductAbstractListTypeTransfer) {
             return $this->addContentItemtNotFoundError($restResponse);
         }
 
-        $idProductAbstracts = $executedProductAbstractListTransfer->getContentProductAbstractList()->getIdProductAbstracts();
+        $idProductAbstracts = $contentProductAbstractListTypeTransfer->getIdProductAbstracts();
         foreach ($idProductAbstracts as $idProductAbstract) {
             $abstractProductResource = $this->productsRestApiResource->findProductAbstractById($idProductAbstract, $restRequest);
 

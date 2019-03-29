@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\ExecutedProductAbstractListTransfer;
+use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
 
 class ContentProductAbstractListsRestApiToContentProductClientBridge implements ContentProductAbstractListsRestApiToContentProductClientInterface
 {
@@ -28,10 +28,10 @@ class ContentProductAbstractListsRestApiToContentProductClientBridge implements 
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ExecutedProductAbstractListTransfer|null
+     * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer|null
      */
-    public function getExecutedProductAbstractListById(int $idContent, string $localeName): ?ExecutedProductAbstractListTransfer
+    public function getContentProductAbstractListType(int $idContent, string $localeName): ?ContentProductAbstractListTypeTransfer
     {
-        return $this->contentProductClient->getExecutedProductAbstractListById($idContent, $localeName);
+        return $this->contentProductClient->getContentProductAbstractListType($idContent, $localeName);
     }
 }

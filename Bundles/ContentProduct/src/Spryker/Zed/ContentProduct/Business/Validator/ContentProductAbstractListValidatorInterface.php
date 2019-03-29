@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\ContentProduct\Business\Validator;
 
-use Generated\Shared\Transfer\ContentProductAbstractListTransfer;
+use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 
 interface ContentProductAbstractListValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ContentProductAbstractListTransfer $contentProductAbstractListTransfer
+     * @param \Generated\Shared\Transfer\ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
      *
      * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
      */
     public function validate(
-        ContentProductAbstractListTransfer $contentProductAbstractListTransfer
+        ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
     ): ContentValidationResponseTransfer;
 }

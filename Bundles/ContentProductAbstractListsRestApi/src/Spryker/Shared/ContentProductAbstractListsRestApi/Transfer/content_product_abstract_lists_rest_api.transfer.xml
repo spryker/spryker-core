@@ -6,14 +6,8 @@
     <transfer name="AbstractProductsRestAttributes">
     </transfer>
 
-    <transfer name="ContentProductAbstractList">
+    <transfer name="ContentProductAbstractListType">
         <property name="idProductAbstracts" type="int[]" />
-    </transfer>
-
-    <transfer name="ExecutedProductAbstractList">
-        <property name="idContent" type="int" />
-        <property name="type" type="string" />
-        <property name="ContentProductAbstractList" type="ContentProductAbstractList" />
     </transfer>
 
     <transfer name="RestErrorMessage">
