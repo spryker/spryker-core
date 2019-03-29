@@ -18,10 +18,6 @@ use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\GlossaryStorage\Business\GlossaryStorageBusinessFactory;
 use Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacade;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyUnpublisher;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyUnpublisher;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyUnpublisher;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryTranslationPublisher;
 use SprykerTest\Zed\GlossaryStorage\GlossaryStorageConfigMock;
 
 /**

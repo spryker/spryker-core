@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event;
+namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\EventBehaviour;
 
-use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
-use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
+use Spryker\Shared\GlossaryStorage\GlossaryStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
+use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
- * @method \Spryker\Zed\AvailabilityStorage\Communication\AvailabilityStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\AvailabilityStorage\AvailabilityStorageConfig getConfig()
+ * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
  */
-class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
+class GlossaryEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -31,7 +31,7 @@ class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin imple
      */
     public function getResourceName(): string
     {
-        return AvailabilityStorageConstants::AVAILABILITY_RESOURCE_NAME;
+        return GlossaryStorageConstants::RESOURCE_NAME;
     }
 
     /**
@@ -45,7 +45,7 @@ class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin imple
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryAvailabilityAbstractWithRelationsByIds($ids);
+        $query = $this->getQueryContainer()->queryGlossaryKeysByIds($ids);
 
         if (empty($ids)) {
             $query->clear();
@@ -63,7 +63,7 @@ class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin imple
      */
     public function getEventName(): string
     {
-        return AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH;
+        return GlossaryEvents::GLOSSARY_KEY_PUBLISH;
     }
 
     /**
@@ -75,6 +75,6 @@ class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin imple
      */
     public function getIdColumnName(): ?string
     {
-        return SpyAvailabilityAbstractTableMap::COL_ID_AVAILABILITY_ABSTRACT;
+        return SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY;
     }
 }
