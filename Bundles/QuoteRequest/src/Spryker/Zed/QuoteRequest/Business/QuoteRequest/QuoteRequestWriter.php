@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
@@ -63,12 +64,18 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     protected $calculationFacade;
 
     /**
+     * @var \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface
+     */
+    protected $cartFacade;
+
+    /**
      * @param \Spryker\Zed\QuoteRequest\QuoteRequestConfig $quoteRequestConfig
      * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface $quoteRequestEntityManager
      * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $quoteRequestRepository
      * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator
      * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface $companyUserFacade
      * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface $calculationFacade
+     * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface $cartFacade
      */
     public function __construct(
         QuoteRequestConfig $quoteRequestConfig,
@@ -76,7 +83,8 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         QuoteRequestRepositoryInterface $quoteRequestRepository,
         QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator,
         QuoteRequestToCompanyUserInterface $companyUserFacade,
-        QuoteRequestToCalculationInterface $calculationFacade
+        QuoteRequestToCalculationInterface $calculationFacade,
+        QuoteRequestToCartInterface $cartFacade
     ) {
         $this->quoteRequestConfig = $quoteRequestConfig;
         $this->quoteRequestEntityManager = $quoteRequestEntityManager;
@@ -84,6 +92,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         $this->quoteRequestReferenceGenerator = $quoteRequestReferenceGenerator;
         $this->companyUserFacade = $companyUserFacade;
         $this->calculationFacade = $calculationFacade;
+        $this->cartFacade = $cartFacade;
     }
 
     /**
@@ -340,6 +349,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         );
 
         $quoteRequestVersionTransfer = $this->cleanUpQuoteRequestVersionQuote($quoteRequestVersionTransfer);
+        $quoteRequestVersionTransfer = $this->reloadQuoteRequestVersionItems($quoteRequestVersionTransfer);
 
         return $this->quoteRequestEntityManager->createQuoteRequestVersion($quoteRequestVersionTransfer);
     }
@@ -355,10 +365,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->setQuoteRequestVersionReference(null)
             ->setQuoteRequestReference(null);
 
-        $quoteTransfer = $this->clearSourcePrices($quoteTransfer);
-        $quoteTransfer = $this->calculationFacade->recalculate($quoteTransfer);
-
-        $quoteRequestVersionTransfer->setQuote($quoteTransfer);
+        $quoteRequestVersionTransfer->setQuote($this->clearSourcePrices($quoteTransfer));
 
         return $quoteRequestVersionTransfer;
     }
@@ -449,6 +456,20 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         return (new QuoteRequestResponseTransfer())
             ->setIsSuccessful(false)
             ->addMessage((new MessageTransfer())->setValue($message));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
+     */
+    protected function reloadQuoteRequestVersionItems(QuoteRequestVersionTransfer $quoteRequestVersionTransfer): QuoteRequestVersionTransfer
+    {
+        if ($quoteRequestVersionTransfer->getQuote()->getItems()->count()) {
+            $quoteRequestVersionTransfer->setQuote($this->cartFacade->reloadItems($quoteRequestVersionTransfer->getQuote()));
+        }
+
+        return $quoteRequestVersionTransfer;
     }
 
     /**

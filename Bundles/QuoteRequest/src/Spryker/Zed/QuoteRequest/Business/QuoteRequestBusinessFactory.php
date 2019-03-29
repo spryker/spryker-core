@@ -42,7 +42,8 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createQuoteRequestReferenceGenerator(),
             $this->getCompanyUserFacade(),
-            $this->getCalculationFacade()
+            $this->getCalculationFacade(),
+            $this->getCartFacade()
         );
     }
 
