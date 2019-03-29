@@ -41,7 +41,24 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
         RestCompanyAttributesTransfer $restCompanyAttributesTransfer
     ): RestResponseInterface {
         return $this->restResourceBuilder->createRestResponse()
-            ->addResource($this->buildCompanyRestResponse($restCompanyAttributesTransfer, $companyUuid));
+            ->addResource($this->buildCompanyRestResource($restCompanyAttributesTransfer, $companyUuid));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCompanyAttributesTransfer $restCompanyAttributesTransfer
+     * @param string $companyUuid
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function buildCompanyRestResource(
+        RestCompanyAttributesTransfer $restCompanyAttributesTransfer,
+        string $companyUuid
+    ): RestResourceInterface {
+        return $this->restResourceBuilder->createRestResource(
+            CompaniesRestApiConfig::RESOURCE_COMPANIES,
+            $companyUuid,
+            $restCompanyAttributesTransfer
+        );
     }
 
     /**
@@ -68,22 +85,5 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
             ->setDetail(CompaniesRestApiConfig::RESPONSE_DETAIL_COMPANY_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCompanyAttributesTransfer $restCompanyAttributesTransfer
-     * @param string $companyUuid
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    protected function buildCompanyRestResponse(
-        RestCompanyAttributesTransfer $restCompanyAttributesTransfer,
-        string $companyUuid
-    ): RestResourceInterface {
-        return $this->restResourceBuilder->createRestResource(
-            CompaniesRestApiConfig::RESOURCE_COMPANIES,
-            $companyUuid,
-            $restCompanyAttributesTransfer
-        );
     }
 }

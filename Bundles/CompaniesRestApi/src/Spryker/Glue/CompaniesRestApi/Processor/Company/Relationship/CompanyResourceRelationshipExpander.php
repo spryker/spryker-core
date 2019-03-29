@@ -7,11 +7,12 @@
 
 namespace Spryker\Glue\CompaniesRestApi\Processor\Company\Relationship;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\RestCompanyAttributesTransfer;
 use Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyResourceRelationshipExpander implements CompanyResourceRelationshipExpanderInterface
@@ -27,15 +28,23 @@ class CompanyResourceRelationshipExpander implements CompanyResourceRelationship
     protected $companyMapper;
 
     /**
+     * @var \Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface $companyMapper
+     * @param \Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig $config
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        CompanyMapperInterface $companyMapper
+        CompanyMapperInterface $companyMapper,
+        CompaniesRestApiConfig $config
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->companyMapper = $companyMapper;
+        $this->config = $config;
     }
 
     /**
@@ -48,11 +57,14 @@ class CompanyResourceRelationshipExpander implements CompanyResourceRelationship
     {
         foreach ($resources as $resource) {
             /**
-             * @var \Generated\Shared\Transfer\CompanyUserTransfer|null $payload
+             * @var \Generated\Shared\Transfer\CompanyUserTransfer|\Generated\Shared\Transfer\CompanyRoleTransfer|\Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $payload
              */
             $payload = $resource->getPayload();
-            if ($payload === null || !($payload instanceof CompanyUserTransfer)) {
-                continue;
+
+            foreach ($this->config->getExtendableResourceTransfers() as $extendableResourceTransfer) {
+                if ($payload === null || !($payload instanceof $extendableResourceTransfer)) {
+                    continue;
+                }
             }
 
             $companyTransfer = $payload->getCompany();
@@ -60,21 +72,29 @@ class CompanyResourceRelationshipExpander implements CompanyResourceRelationship
                 continue;
             }
 
-            $restCompanyAttributesTransfer = $this->companyMapper
-                ->mapCompanyTransferToRestCompanyAttributesTransfer(
-                    $companyTransfer,
-                    new RestCompanyAttributesTransfer()
-                );
-
-            $companyResource = $this->restResourceBuilder->createRestResource(
-                CompaniesRestApiConfig::RESOURCE_COMPANIES,
-                $companyTransfer->getUuid(),
-                $restCompanyAttributesTransfer
-            );
-
-            $resource->addRelationship($companyResource);
+            $resource->addRelationship($this->createCompanyResource($companyTransfer));
         }
 
         return $resources;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function createCompanyResource(CompanyTransfer $companyTransfer): RestResourceInterface
+    {
+        $restCompanyAttributesTransfer = $this->companyMapper
+            ->mapCompanyTransferToRestCompanyAttributesTransfer(
+                $companyTransfer,
+                new RestCompanyAttributesTransfer()
+            );
+
+        return $this->restResourceBuilder->createRestResource(
+            CompaniesRestApiConfig::RESOURCE_COMPANIES,
+            $companyTransfer->getUuid(),
+            $restCompanyAttributesTransfer
+        );
     }
 }

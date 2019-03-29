@@ -74,6 +74,10 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
             );
 
         return $this->companyBusinessUnitRestResponseBuilder
-            ->createCompanyBusinessUnitRestResponse($companyBusinessUnitUuid, $restCompanyBusinessUnitAttributesTransfer);
+            ->createCompanyBusinessUnitRestResponse(
+                $companyBusinessUnitUuid,
+                $restCompanyBusinessUnitAttributesTransfer,
+                $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()
+            );
     }
 }

@@ -20,7 +20,8 @@ class CompanyByCompanyUserResourceRelationshipPlugin extends AbstractPlugin impl
     /**
      * {@inheritdoc}
      *  - Adds company resource as relationship.
-     *  - Requires CompanyUserTransfer be provided in resource payload.
+     *  - Requires a transfer defined in CompaniesRestApiConfig::EXTENDABLE_RESOURCE_TRANSFERS
+     *    to be provided in resource payload.
      *
      * @api
      *
