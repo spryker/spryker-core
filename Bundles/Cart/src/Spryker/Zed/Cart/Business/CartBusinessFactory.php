@@ -16,6 +16,7 @@ use Spryker\Zed\Cart\Business\Model\QuoteValidator;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\CartDependencyProvider;
+use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -32,12 +33,14 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->createStorageProvider(),
             $this->getCalculatorFacade(),
             $this->getMessengerFacade(),
+            $this->getQuoteFacade(),
             $this->getItemExpanderPlugins(),
             $this->getCartPreCheckPlugins(),
             $this->getPostSavePlugins(),
             $this->getTerminationPlugins(),
             $this->getCartRemovalPreCheckPlugins(),
-            $this->getPostReloadItemsPlugins()
+            $this->getPostReloadItemsPlugins(),
+            $this->getCartBeforePreCheckNormalizerPlugins()
         );
 
         $operation->setPreReloadLoadPlugins($this->getPreReloadItemsPlugins());
@@ -53,7 +56,8 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return new QuoteValidator(
             $this->createCartOperation(),
             $this->createQuoteChangeObserver(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
+            $this->getQuoteFacade()
         );
     }
 
@@ -93,6 +97,14 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface
+     */
+    public function getQuoteFacade(): CartToQuoteFacadeInterface
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::FACADE_QUOTE);
+    }
+
+    /**
      * @return \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface
      */
     protected function getMessengerFacade()
@@ -114,6 +126,14 @@ class CartBusinessFactory extends AbstractBusinessFactory
     protected function getCartPreCheckPlugins()
     {
         return $this->getProvidedDependency(CartDependencyProvider::CART_PRE_CHECK_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface[]
+     */
+    public function getCartBeforePreCheckNormalizerPlugins(): array
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS);
     }
 
     /**

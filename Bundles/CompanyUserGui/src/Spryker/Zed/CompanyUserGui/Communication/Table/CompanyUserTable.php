@@ -15,6 +15,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface;
 use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
+use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -36,15 +37,31 @@ class CompanyUserTable extends AbstractTable
     protected $companyUserTableExpanderPluginExecutor;
 
     /**
+     * @var \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionExpanderPluginInterface[]
+     */
+    protected $companyUserTableActionLinksExpanderPlugins;
+
+    /**
+     * @var null|\Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface
+     */
+    protected $companyUserTableDeleteActionPlugin;
+
+    /**
      * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $companyUserQuery
      * @param \Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface $companyUserTableExpanderPluginExecutor
+     * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableActionExpanderPluginInterface[] $companyUserTableActionLinksExpanderPlugins
+     * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface|null $companyUserTableDeleteActionPlugin
      */
     public function __construct(
         SpyCompanyUserQuery $companyUserQuery,
-        CompanyUserTableExpanderPluginExecutorInterface $companyUserTableExpanderPluginExecutor
+        CompanyUserTableExpanderPluginExecutorInterface $companyUserTableExpanderPluginExecutor,
+        array $companyUserTableActionLinksExpanderPlugins,
+        ?CompanyUserTableDeleteActionPluginInterface $companyUserTableDeleteActionPlugin
     ) {
         $this->companyUserQuery = $companyUserQuery;
         $this->companyUserTableExpanderPluginExecutor = $companyUserTableExpanderPluginExecutor;
+        $this->companyUserTableActionLinksExpanderPlugins = $companyUserTableActionLinksExpanderPlugins;
+        $this->companyUserTableDeleteActionPlugin = $companyUserTableDeleteActionPlugin;
     }
 
     /**
@@ -175,7 +192,7 @@ class CompanyUserTable extends AbstractTable
     {
         return $companyUserQuery->joinCustomer()
             ->useCustomerQuery()
-                ->filterByAnonymizedAt(null, Criteria::EQUAL)
+            ->filterByAnonymizedAt(null, Criteria::EQUAL)
             ->endUse()
             ->withColumn(
                 'CONCAT(' . SpyCustomerTableMap::COL_FIRST_NAME . ', \' \', ' . SpyCustomerTableMap::COL_LAST_NAME . ')',
@@ -198,7 +215,9 @@ class CompanyUserTable extends AbstractTable
             $this->generateCompanyUserDeleteButton($companyUserDataItem),
         ];
 
-        return implode($actionButtons);
+        $actionButtons = $this->expandLinks($companyUserDataItem, $actionButtons);
+
+        return implode(' ', $actionButtons);
     }
 
     /**
@@ -209,10 +228,10 @@ class CompanyUserTable extends AbstractTable
     protected function generateCompanyUserStatusLabel(array $companyUserDataItem): string
     {
         if ($companyUserDataItem[SpyCompanyUserTableMap::COL_IS_ACTIVE]) {
-            return '<span class="label label-info">Active</span>';
+            return $this->generateLabel('Active', 'label-info');
         }
 
-        return '<span class="label label-danger">Disabled</span>';
+        return $this->generateLabel('Disabled', 'label-danger');
     }
 
     /**
@@ -261,11 +280,39 @@ class CompanyUserTable extends AbstractTable
      */
     protected function generateCompanyUserDeleteButton(array $companyUserDataItem): string
     {
+        $deleteUrl = CompanyUserGuiConfig::URL_CONFIRM_DELETE_COMPANY_USER;
+
+        if ($this->companyUserTableDeleteActionPlugin !== null) {
+            $deleteUrl = $this->companyUserTableDeleteActionPlugin->getPath();
+        }
+
         return $this->generateRemoveButton(
-            Url::generate(CompanyUserGuiConfig::URL_CONFIRM_DELETE_COMPANY_USER, [
+            Url::generate($deleteUrl, [
                 CompanyUserGuiConfig::PARAM_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
             ]),
             'Delete'
         );
+    }
+
+    /**
+     * @param array $companyUserDataItem
+     * @param string[] $buttons
+     *
+     * @return string[]
+     */
+    protected function expandLinks(array $companyUserDataItem, array $buttons): array
+    {
+        foreach ($this->companyUserTableActionLinksExpanderPlugins as $companyUserTableActionExpanderPlugin) {
+            $buttonTransfer = $companyUserTableActionExpanderPlugin->expand($companyUserDataItem, $buttons);
+
+            $buttons[] = $this->generateButton(
+                $buttonTransfer->getUrl(),
+                $buttonTransfer->getTitle(),
+                $buttonTransfer->getDefaultOptions(),
+                $buttonTransfer->getCustomOptions()
+            );
+        }
+
+        return $buttons;
     }
 }

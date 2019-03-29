@@ -7,25 +7,28 @@
 
 namespace Spryker\Zed\Api\Communication\Plugin\ServiceProvider;
 
-use RuntimeException;
 use Silex\Application;
-use Silex\ServiceControllerResolver;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Api\Business\Model\Router\ApiRouter;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-class ApiRoutingServiceProvider implements ServiceProviderInterface
+/**
+ * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\Api\ApiConfig getConfig()
+ * @method \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface getQueryContainer()
+ */
+class ApiRoutingServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
      * @param \Spryker\Shared\Kernel\Communication\Application $app
-     *
-     * @throws \RuntimeException
      *
      * @return void
      */
     public function register(Application $app)
     {
-        if (!($app['resolver'] instanceof ServiceControllerResolver)) {
-            throw new RuntimeException('Register ServiceControllerServiceProvider first.');
+        if (!$this->getConfig()->isApiEnabled()) {
+            return;
         }
 
         $app->addRouter(new ApiRouter($app));

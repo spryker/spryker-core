@@ -67,7 +67,7 @@ class TransferValidatorTest extends Unit
     }
 
     /**
-     * @return \Symfony\Component\Console\Logger\ConsoleLogger|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Symfony\Component\Console\Logger\ConsoleLogger|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMessengerMock()
     {

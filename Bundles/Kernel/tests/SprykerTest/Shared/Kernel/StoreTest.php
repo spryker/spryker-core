@@ -112,7 +112,7 @@ class StoreTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Store
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Store
      */
     protected function createStoreMock()
     {

@@ -1,0 +1,16 @@
+{% block category_image_collection_widget %}
+    <div class="image-collection">
+        <div class="hr-line-dashed"></div>
+        <div class="row">
+            <div class="col-lg-2">
+                {{ form_widget(form.imagePreview) }}
+            </div>
+            <div class="col-lg-9">
+                {{ form_rest(form) }}
+            </div>
+            <div class="col-lg-1">
+                {{ removeActionButton('#', '', {'class': 'remove-image-collection'}) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

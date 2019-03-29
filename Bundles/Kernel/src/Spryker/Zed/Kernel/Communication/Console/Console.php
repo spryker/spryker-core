@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Kernel\Communication\Console;
 
 use RuntimeException;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -46,11 +45,6 @@ class Console extends SymfonyCommand
      * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private $factory;
-
-    /**
-     * @var \Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    private $facade;
 
     /**
      * @var \Spryker\Zed\Kernel\Container
@@ -141,16 +135,6 @@ class Console extends SymfonyCommand
     private function getFactoryResolver()
     {
         return new FactoryResolver();
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Business\AbstractFacade $facade
-     *
-     * @return void
-     */
-    public function setFacade(AbstractFacade $facade)
-    {
-        $this->facade = $facade;
     }
 
     /**

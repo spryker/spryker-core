@@ -29,4 +29,12 @@ class CartCurrencyConnectorToZedRequestClientBridge implements CartCurrencyConne
     {
         return $this->zedRequestClient->getLastResponseErrorMessages();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesErrorMessages(): array
+    {
+        return $this->zedRequestClient->getResponsesErrorMessages();
+    }
 }

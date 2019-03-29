@@ -35,7 +35,7 @@ class EditController extends AbstractController
         $categoryTransfer = $this->getFacade()->findCategoryById($idCategory);
 
         if ($categoryTransfer === null) {
-            $this->addErrorMessage(sprintf('Category with id %s doesn\'t exist', $request->get('id-category')));
+            $this->addErrorMessage("Category with id %s doesn't exist", ['%s' => $request->get('id-category')]);
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
@@ -62,6 +62,7 @@ class EditController extends AbstractController
             'categoryForm' => $form->createView(),
             'currentLocale' => $this->getFactory()->getCurrentLocale()->getLocaleName(),
             'idCategory' => $this->castId($request->query->get(CategoryConstants::PARAM_ID_CATEGORY)),
+            'categoryFormTabs' => $this->getFactory()->createCategoryFormTabs()->createView(),
         ]);
     }
 

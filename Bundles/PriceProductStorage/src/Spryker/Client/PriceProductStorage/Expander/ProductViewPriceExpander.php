@@ -9,7 +9,7 @@ namespace Spryker\Client\PriceProductStorage\Expander;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface;
+use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductClientInterface;
 use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface;
@@ -27,7 +27,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     protected $priceConcreteStorageReader;
 
     /**
-     * @var \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
+     * @var \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductClientInterface
      */
     protected $priceProductClient;
 
@@ -39,13 +39,13 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     /**
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface $priceAbstractStorageReader
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface $priceConcreteStorageReader
-     * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface $priceProductClient
+     * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductClientInterface $priceProductClient
      * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface $priceProductService
      */
     public function __construct(
         PriceAbstractStorageReaderInterface $priceAbstractStorageReader,
         PriceConcreteStorageReaderInterface $priceConcreteStorageReader,
-        PriceProductStorageToPriceProductInterface $priceProductClient,
+        PriceProductStorageToPriceProductClientInterface $priceProductClient,
         PriceProductStorageToPriceProductServiceInterface $priceProductService
     ) {
         $this->priceAbstractStorageReader = $priceAbstractStorageReader;

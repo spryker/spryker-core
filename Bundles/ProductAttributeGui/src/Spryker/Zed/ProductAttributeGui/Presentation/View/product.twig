@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Manage Attributes for Product [' ~ product.sku  ~ ']' %}
+{% set widget_title = 'Manage Attributes for Product' | trans ~ ' [' ~ product.sku  ~ ']' %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
@@ -28,7 +28,8 @@
                 productAttributes: productAttributes,
                 metaAttributes: metaAttributes,
                 idProductAbstract: product.fkProductAbstract,
-                idProductConcrete: product.idProductConcrete
+                idProductConcrete: product.idProductConcrete,
+                csrfForm: csrfForm
             } %}
         {% endblock %}
     {% endembed %}

@@ -41,7 +41,7 @@ class AddVariantController extends AbstractController
             ->findProductAbstractById($idProductAbstract);
 
         if (!$productAbstractTransfer) {
-            $this->addErrorMessage(sprintf('The product [%s] does not exist.', $idProductAbstract));
+            $this->addErrorMessage('The product [%s] does not exist.', ['%s' => $idProductAbstract]);
 
             return new RedirectResponse('/product-management');
         }
@@ -77,10 +77,9 @@ class AddVariantController extends AbstractController
                 ->getProductFacade()
                 ->touchProductConcrete($productConcreteTransfer->getIdProductConcrete());
 
-            $this->addSuccessMessage(sprintf(
-                'The product [%s] was saved successfully.',
-                $productConcreteTransfer->getSku()
-            ));
+            $this->addSuccessMessage('The product [%s] was saved successfully.', [
+                '%s' => $productConcreteTransfer->getSku(),
+            ]);
 
             return $this->createRedirectResponseAfterAdd($productConcreteTransfer->getIdProductConcrete(), $type, $request);
         }

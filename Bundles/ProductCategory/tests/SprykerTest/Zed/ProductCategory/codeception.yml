@@ -33,3 +33,18 @@ suites:
                 - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
                 - \SprykerTest\Zed\Gui\Helper\DataTableActionHelper
                 - \SprykerTest\Zed\ProductCategory\Helper\AssignHelper
+    Business:
+        path: Business
+        class_name: ProductCategoryBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
+                - \SprykerTest\Zed\ProductCategory\Helper\AssignHelper
