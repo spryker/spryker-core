@@ -16,6 +16,11 @@
         <property name="uuid" type="string" />
     </transfer>
 
+    <transfer name="CompanyBusinessUnitResponse">
+        <property name="companyBusinessUnitTransfer" type="CompanyBusinessUnit"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
     <transfer name="CompanyUser">
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
     </transfer>
