@@ -417,8 +417,7 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
      */
     protected function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_IN_PROGRESS
-            || $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_DRAFT;
+        return $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_IN_PROGRESS;
     }
 
     /**
@@ -429,7 +428,8 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
     protected function isQuoteRequestRevisable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_WAITING
-            || $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_READY;
+            || $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_READY
+            || $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_DRAFT;
     }
 
     /**
@@ -439,8 +439,7 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
      */
     protected function isQuoteRequestCanSend(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_IN_PROGRESS
-            || $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_DRAFT;
+        return $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_IN_PROGRESS;
     }
 
     /**

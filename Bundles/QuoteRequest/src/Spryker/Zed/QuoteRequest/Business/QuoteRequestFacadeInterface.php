@@ -147,7 +147,7 @@ interface QuoteRequestFacadeInterface
     /**
      * Specification:
      * - Looks up one "Request for Quote" by provided quote request reference.
-     * - Expects "Request for Quote" status to be "waiting", "ready".
+     * - Expects "Request for Quote" status to be "waiting", "ready", "draft".
      * - Creates latest version from previous version.
      * - Sets status to "in-progress".
      *

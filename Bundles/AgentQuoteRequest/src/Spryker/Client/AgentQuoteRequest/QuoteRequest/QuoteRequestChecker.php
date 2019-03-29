@@ -44,7 +44,8 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
     public function isQuoteRequestRevisable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_WAITING
-            || $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_READY;
+            || $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_READY
+            || $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_DRAFT;
     }
 
     /**
@@ -54,7 +55,6 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
      */
     public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS
-            || $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_DRAFT;
+        return $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS;
     }
 }

@@ -56,7 +56,7 @@ interface AgentQuoteRequestClientInterface
      * Specification:
      * - Makes Zed request.
      * - Looks up one "Request for Quote" by provided quote request reference.
-     * - Expects "Request for Quote" status to be "waiting", "ready".
+     * - Expects "Request for Quote" status to be "waiting", "ready", "draft".
      * - Creates latest version from previous version.
      * - Sets status to "in-progress".
      *
@@ -161,7 +161,7 @@ interface AgentQuoteRequestClientInterface
 
     /**
      * Specification:
-     * - If "Request for Quote" in waiting or ready status - return true.
+     * - If "Request for Quote" in waiting, ready, draft status - return true.
      *
      * @api
      *
@@ -173,7 +173,7 @@ interface AgentQuoteRequestClientInterface
 
     /**
      * Specification:
-     * - If "Request for Quote" in in-progress or draft status - return true.
+     * - If "Request for Quote" in in-progress status - return true.
      *
      * @api
      *
