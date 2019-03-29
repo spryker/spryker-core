@@ -10,8 +10,12 @@ namespace Spryker\Zed\Cms\Communication\Controller;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Url\Persistence\SpyUrl;
+use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
@@ -19,6 +23,7 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Cms\Persistence\CmsRepositoryInterface getRepository()
  */
 class RedirectController extends AbstractController
 {
@@ -34,7 +39,7 @@ class RedirectController extends AbstractController
     /**
      * @return array
      */
-    public function indexAction()
+    public function indexAction(): array
     {
         $redirectTable = $this->getFactory()
             ->createCmsRedirectTable();
@@ -47,7 +52,7 @@ class RedirectController extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction()
+    public function tableAction(): JsonResponse
     {
         $table = $this->getFactory()
             ->createCmsRedirectTable();
@@ -64,7 +69,7 @@ class RedirectController extends AbstractController
     {
         $dataProvider = $this->getFactory()->createCmsRedirectFormDataProvider();
         $form = $this->getFactory()
-            ->createCmsRedirectForm(
+            ->getCmsRedirectForm(
                 $dataProvider->getData()
             )
             ->handleRequest($request);
@@ -106,7 +111,7 @@ class RedirectController extends AbstractController
 
         $dataProvider = $this->getFactory()->createCmsRedirectFormDataProvider();
         $form = $this->getFactory()
-            ->createCmsRedirectForm(
+            ->getCmsRedirectForm(
                 $dataProvider->getData($idUrl)
             )
             ->handleRequest($request);
@@ -144,7 +149,7 @@ class RedirectController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function createUrlTransfer($url, $data)
+    protected function createUrlTransfer(SpyUrl $url, array $data): UrlTransfer
     {
         $urlTransfer = new UrlTransfer();
         $urlTransfer->fromArray($url->toArray(), true);
@@ -162,7 +167,7 @@ class RedirectController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
-    protected function createRedirectTransfer($redirect, $data)
+    protected function createRedirectTransfer(SpyUrlRedirect $redirect, array $data): RedirectTransfer
     {
         $redirectTransfer = (new RedirectTransfer())->fromArray($redirect->toArray());
         $redirectTransfer->setToUrl($data[CmsRedirectForm::FIELD_TO_URL]);
@@ -178,7 +183,7 @@ class RedirectController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Request $request)
+    public function deleteAction(Request $request): RedirectResponse
     {
         if (!$request->isMethod(Request::METHOD_DELETE)) {
             throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');

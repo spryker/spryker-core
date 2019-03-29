@@ -43,4 +43,12 @@ class MultiCartToZedRequestClientBridge implements MultiCartToZedRequestClientIn
     {
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
     }
+
+    /**
+     * @return void
+     */
+    public function addResponseMessagesToMessenger(): void
+    {
+        $this->zedRequestClient->addResponseMessagesToMessenger();
+    }
 }

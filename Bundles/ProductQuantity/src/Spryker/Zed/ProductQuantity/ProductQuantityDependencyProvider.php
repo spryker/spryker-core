@@ -17,6 +17,7 @@ use Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantity
 class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
+    public const SERVICE_PRODUCT_QUANTITY = 'SERVICE_PRODUCT_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -44,6 +45,8 @@ class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
             );
         };
 
+        $container = $this->addProductQuantityService($container);
+
         return $container;
     }
 
@@ -55,6 +58,20 @@ class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductQuantityService(Container $container): Container
+    {
+        $container[static::SERVICE_PRODUCT_QUANTITY] = function (Container $container) {
+            return $container->getLocator()->productQuantity()->service();
+        };
 
         return $container;
     }

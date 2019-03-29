@@ -94,7 +94,7 @@ class CustomerAccess implements CustomerAccessInterface
      *
      * @return string
      */
-    protected function applyCustomerAccessOnCustomerSecuredPattern(
+    public function applyCustomerAccessOnCustomerSecuredPattern(
         CustomerAccessTransfer $customerAccessTransfer,
         string $customerSecuredPattern
     ): string {

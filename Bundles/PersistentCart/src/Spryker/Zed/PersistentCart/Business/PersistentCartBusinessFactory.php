@@ -46,7 +46,8 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteResponseExpander(),
             $this->createQuoteResolver(),
             $this->createQuoteItemOperation(),
-            $this->getUtilQuantityService()
+            $this->getUtilQuantityService(),
+            $this->getQuoteFacade()
         );
     }
 

@@ -81,32 +81,16 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
 
         $resourceIdentifier = $restRequest->getResource()->getId();
 
-        if (empty($resourceIdentifier)) {
+        if (!$resourceIdentifier) {
             return $this->addAbstractSkuNotSpecifiedError($response);
         }
 
-        $abstractProductData = $this->productStorageClient
-            ->findProductAbstractStorageDataByMapping(
-                static::PRODUCT_ABSTRACT_MAPPING_TYPE,
-                $resourceIdentifier,
-                $restRequest->getMetadata()->getLocale()
-            );
+        $restResource = $this->findProductAbstractBySku($resourceIdentifier, $restRequest);
 
-        if (!$abstractProductData) {
+        if (!$restResource) {
             return $this->addAbstractProductNotFoundError($response);
         }
 
-        $restAbstractProductsAttributesTransfer = $this->abstractProductsResourceMapper
-            ->mapAbstractProductsDataToAbstractProductsRestAttributes($abstractProductData);
-
-        $restAbstractProductsAttributesTransfer = $this->abstractProductAttributeTranslationExpander
-            ->addProductAttributeTranslation($restAbstractProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
-
-        $restResource = $this->restResourceBuilder->createRestResource(
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            $restAbstractProductsAttributesTransfer->getSku(),
-            $restAbstractProductsAttributesTransfer
-        );
         $restResource = $this->addConcreteProducts($restResource, $restRequest);
 
         return $response->addResource($restResource);
@@ -131,8 +115,39 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             return null;
         }
 
+        return $this->createRestResourceFromAbstractProductStorageData($abstractProductData, $restRequest);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     */
+    public function findProductAbstractById(int $idProductAbstract, RestRequestInterface $restRequest): ?RestResourceInterface
+    {
+        $abstractProductData = $this->productStorageClient
+            ->findProductAbstractStorageData($idProductAbstract, $restRequest->getMetadata()->getLocale());
+
+        if (!$abstractProductData) {
+            return null;
+        }
+
+        return $this->createRestResourceFromAbstractProductStorageData($abstractProductData, $restRequest);
+    }
+
+    /**
+     * @param array $abstractProductData
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function createRestResourceFromAbstractProductStorageData(array $abstractProductData, RestRequestInterface $restRequest): RestResourceInterface
+    {
         $restAbstractProductsAttributesTransfer = $this->abstractProductsResourceMapper
             ->mapAbstractProductsDataToAbstractProductsRestAttributes($abstractProductData);
+        $restAbstractProductsAttributesTransfer = $this->abstractProductAttributeTranslationExpander
+            ->addProductAttributeTranslation($restAbstractProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
 
         return $this->restResourceBuilder->createRestResource(
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,

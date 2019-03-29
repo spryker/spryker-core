@@ -11,6 +11,7 @@ use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplate;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Url\Persistence\SpyUrl;
+use Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageReader;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
@@ -65,23 +66,23 @@ class CmsPageReaderTest extends CmsMocks
     }
 
     /**
-     * @param \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface|null $cmsUrlBuilderMock
+     * @param \Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface|null $cmsPageMapperMock
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface|null $cmsQueryContainerMock
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface|null $localeFacadeMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageReader
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageReader
      */
     protected function createCmsPageReaderMock(
-        ?CmsPageUrlBuilderInterface $cmsUrlBuilderMock = null,
+        ?CmsPageMapperInterface $cmsPageMapperMock = null,
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
         ?CmsToLocaleInterface $localeFacadeMock = null
     ) {
-        if ($cmsQueryContainerMock === null) {
-            $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
+        if ($cmsPageMapperMock === null) {
+            $cmsPageMapperMock = $this->createCmsPageMapperMock();
         }
 
-        if ($cmsUrlBuilderMock === null) {
-            $cmsUrlBuilderMock = $this->createCmsUrlBuilderMock();
+        if ($cmsQueryContainerMock === null) {
+            $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
         }
 
         if ($localeFacadeMock === null) {
@@ -93,12 +94,12 @@ class CmsPageReaderTest extends CmsMocks
 
         return $this->getMockBuilder(CmsPageReader::class)
             ->setMethods(['findCmsPageEntity'])
-            ->setConstructorArgs([$cmsQueryContainerMock, $cmsUrlBuilderMock, $localeFacadeMock])
+            ->setConstructorArgs([$cmsQueryContainerMock, $cmsPageMapperMock, $localeFacadeMock])
             ->getMock();
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface
      */
     protected function createCmsUrlBuilderMock()
     {
@@ -107,7 +108,7 @@ class CmsPageReaderTest extends CmsMocks
     }
 
     /**
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function buildCmsPageEntity()
     {

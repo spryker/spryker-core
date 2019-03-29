@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductCategory\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -63,5 +64,25 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
             )
             ->groupByFkCategory()
             ->groupBy(SpyCategoryAttributeTableMap::COL_NAME);
+    }
+
+    /**
+     * @module Product
+     *
+     * @param int[] $categoryIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByCategoryIds(array $categoryIds): array
+    {
+        return $this->getFactory()
+            ->createProductCategoryQuery()
+            ->select(SpyProductTableMap::COL_ID_PRODUCT)
+            ->filterByFkCategory_In($categoryIds)
+            ->useSpyProductAbstractQuery()
+                ->innerJoinSpyProduct()
+            ->endUse()
+            ->find()
+            ->toArray();
     }
 }

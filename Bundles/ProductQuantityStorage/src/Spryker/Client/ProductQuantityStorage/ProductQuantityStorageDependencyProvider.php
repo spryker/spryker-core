@@ -10,6 +10,8 @@ namespace Spryker\Client\ProductQuantityStorage;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageClientBridge;
+use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToProductQuantityServiceBridge;
+use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToProductQuantityServiceInterface;
 use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceBridge;
 use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToUtilQuantityServiceBridge;
 
@@ -21,6 +23,7 @@ class ProductQuantityStorageDependencyProvider extends AbstractDependencyProvide
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
+    public const SERVICE_PRODUCT_QUANTITY = 'SERVICE_PRODUCT_QUANTITY';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -49,6 +52,8 @@ class ProductQuantityStorageDependencyProvider extends AbstractDependencyProvide
             );
         };
 
+        $container = $this->addProductQuantityService($container);
+
         return $container;
     }
 
@@ -75,6 +80,20 @@ class ProductQuantityStorageDependencyProvider extends AbstractDependencyProvide
     {
         $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
             return new ProductQuantityStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductQuantityService(Container $container): Container
+    {
+        $container[static::SERVICE_PRODUCT_QUANTITY] = function (Container $container): ProductQuantityStorageToProductQuantityServiceInterface {
+            return new ProductQuantityStorageToProductQuantityServiceBridge($container->getLocator()->productQuantity()->service());
         };
 
         return $container;
