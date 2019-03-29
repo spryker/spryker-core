@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder;
 
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface CompanyBusinessUnitAddressRestResponseBuilderInterface
@@ -22,6 +23,17 @@ interface CompanyBusinessUnitAddressRestResponseBuilderInterface
         string $uuid,
         RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
     ): RestResponseInterface;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
+     * @param string $companyBusinessUnitAddressUuid
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function buildCompanyBusinessUnitAddressRestResource(
+        RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer,
+        string $companyBusinessUnitAddressUuid
+    ): RestResourceInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

@@ -45,6 +45,25 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
+     * @param string $companyBusinessUnitAddressUuid
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function buildCompanyBusinessUnitAddressRestResource(
+        RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer,
+        string $companyBusinessUnitAddressUuid
+    ): RestResourceInterface {
+        $restResource = $this->restResourceBuilder->createRestResource(
+            CompanyBusinessUnitAddressesRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES,
+            $companyBusinessUnitAddressUuid,
+            $restCompanyBusinessUnitAddressAttributesTransfer
+        );
+
+        return $restResource;
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyBusinessUnitAddressIdMissingError(): RestResponseInterface
@@ -68,24 +87,5 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
             ->setDetail(CompanyBusinessUnitAddressesRestApiConfig::RESPONSE_DETAIL_COMPANY_BUSINESS_UNIT_ADDRESS_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
-     * @param string $uuid
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    protected function buildCompanyBusinessUnitAddressRestResource(
-        RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer,
-        string $uuid
-    ): RestResourceInterface {
-        $restResource = $this->restResourceBuilder->createRestResource(
-            CompanyBusinessUnitAddressesRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES,
-            $uuid,
-            $restCompanyBusinessUnitAddressAttributesTransfer
-        );
-
-        return $restResource;
     }
 }

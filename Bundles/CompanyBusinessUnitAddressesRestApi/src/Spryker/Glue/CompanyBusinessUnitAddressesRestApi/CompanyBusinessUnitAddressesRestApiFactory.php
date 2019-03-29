@@ -12,12 +12,25 @@ use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUn
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Mapper\CompanyBusinessUnitAddressMapperInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Reader\CompanyBusinessUnitAddressReader;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Reader\CompanyBusinessUnitAddressReaderInterface;
+use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressResourceRelationshipExpander;
+use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressResourceRelationshipExpanderInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilder;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CompanyBusinessUnitAddressesRestApiFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressResourceRelationshipExpanderInterface
+     */
+    public function createCompanyBusinessUnitAddressResourceRelationshipExpander(): CompanyBusinessUnitAddressResourceRelationshipExpanderInterface
+    {
+        return new CompanyBusinessUnitAddressResourceRelationshipExpander(
+            $this->createCompanyBusinessUnitAddressRestResponseBuilder(),
+            $this->createCompanyBusinessUnitAddressMapper()
+        );
+    }
+
     /**
      * @return \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Reader\CompanyBusinessUnitAddressReaderInterface
      */

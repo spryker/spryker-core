@@ -68,7 +68,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         }
 
         $restCompanyBusinessUnitAddressAttributesTransfer = $this->companyBusinessUnitAddressMapperInterface
-            ->mapCompanyBusinessUnitAddressTransferToRestCompanyBusinessUnitAddressAttributesTransfer(
+            ->mapCompanyUnitAddressTransferToRestCompanyBusinessUnitAddressAttributesTransfer(
                 $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer(),
                 new RestCompanyBusinessUnitAddressAttributesTransfer()
             );

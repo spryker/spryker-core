@@ -18,7 +18,7 @@ class CompanyBusinessUnitAddressMapper implements CompanyBusinessUnitAddressMapp
      *
      * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer
      */
-    public function mapCompanyBusinessUnitAddressTransferToRestCompanyBusinessUnitAddressAttributesTransfer(
+    public function mapCompanyUnitAddressTransferToRestCompanyBusinessUnitAddressAttributesTransfer(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
     ): RestCompanyBusinessUnitAddressAttributesTransfer {
