@@ -55,7 +55,10 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
             $quantity = $max;
         }
 
-        if ($interval && !$this->isQuantityEqual(fmod($this->subtractQuantities($quantity, $min), $interval), 0)) {
+        $quantityMinusMin = $this->subtractQuantities($quantity, $min);
+        $divideQuantityMinusMinByModuleInterval = fmod($quantityMinusMin, $interval);
+
+        if ($interval && !$this->isQuantityEqual($divideQuantityMinusMinByModuleInterval, 0)) {
             $max = $max ?? $this->sumQuantities($quantity, $interval);
 
             $quantity = $this->getNearestQuantityFromAllowed(

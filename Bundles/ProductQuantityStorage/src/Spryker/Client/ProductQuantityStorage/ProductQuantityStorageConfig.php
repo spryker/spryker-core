@@ -14,9 +14,9 @@ class ProductQuantityStorageConfig extends AbstractBundleConfig
     protected const MIN_QUANTITY = 1;
 
     /**
-     * @return int
+     * @return float
      */
-    public function getMinQuantity(): int
+    public function getMinQuantity(): float
     {
         return static::MIN_QUANTITY;
     }
