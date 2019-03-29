@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException;
 use Spryker\Shared\ContentProduct\ContentProductConfig;
 
-class ProductAbstractResolver implements ProductAbstractResolverInterface
+class ContentProductAbstractListTermResolver implements ContentProductAbstractListTermResolverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
