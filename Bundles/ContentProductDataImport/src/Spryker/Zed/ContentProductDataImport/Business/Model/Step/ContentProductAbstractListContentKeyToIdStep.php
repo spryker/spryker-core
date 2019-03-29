@@ -35,6 +35,7 @@ class ContentProductAbstractListContentKeyToIdStep implements DataImportStepInte
     public function execute(DataSetInterface $dataSet)
     {
         if (!$this->isNotEmptyAllSkuFields($dataSet)) {
+            $dataSet[ContentProductAbstractListDataSetInterface::COLUMN_ID_CONTENT] = null;
             return;
         }
 
