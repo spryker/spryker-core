@@ -93,32 +93,32 @@ class ProductQuantityFacadeTest extends Unit
     public function itemRemovalQuantities()
     {
         return [
-            [true, 5, 2, 1, null, 1], // general rule
-            [true, 5.5, 2.5, 1, null, 1],
-            [true, 5, 2, 3, null, 1], // min equals new quantity
-            [true, 5.5, 2.5, 3, null, 1],
-            [true, 5, 2, 1, 3,    1], // max equals new quantity
-            [true, 5.5, 2.5, 1, 3, 1],
-            [true, 5, 2, 1, null, 2], // shifted interval matches new quantity
-            [true, 5.5, 2.5, 1, null, 2],
-            [true, 5, 2, 0, null, 3], // interval matches new quantity
-            [true, 5.5, 2.5, 0, null, 3],
-            [true, 5, 2, 3, 3,    3], // min, max, interval matches new quantity
-            [true, 5.5, 2.5, 3, 3,    3],
-            [true, 5, 5, 2, 4,    3], // can remove all items regardless rules
-            [true, 5.5, 5.5, 2, 4,    3],
-            [false, 5, 6, 1, null, 1], // general rule
-            [false, 5.5, 6.5, 1, null, 1],
-            [false, 5, 2, 4, null, 1], // min above new quantity
-            [false, 5.5, 2.5, 4, null, 1],
-            [false, 5, 2, 1, 2,    1], // max below new quantity
-            [false, 5.5, 2.5, 1, 2,    1],
-            [false, 5, 2, 1, null, 3], // shifted interval does not match new quantity
-            [false, 5.5, 2.5, 1, null, 3],
-            [false, 5, 2, 0, null, 2], // interval does not match new quantity
-            [false, 5.5, 2.5, 0, null, 2],
-            [false, 0, 1, 1, null, 1], // empty quote
-            [false, 0, 1.5, 1, null, 1],
+            'general rule int stock' => [true, 5, 2, 1, null, 1],
+            'general rule float stock' => [true, 5.5, 2.5, 1, null, 1],
+            'min equals new int quantity' => [true, 5, 2, 3, null, 1],
+            'min equals new float quantity' => [true, 5.5, 2.5, 3, null, 1],
+            'max equals new int quantity' => [true, 5, 2, 1, 3,    1],
+            'max equals new float quantity' => [true, 5.5, 2.5, 1, 3, 1],
+            'shifted interval matches new int quantity' => [true, 5, 2, 1, null, 2],
+            'shifted interval matches new float quantity' => [true, 5.5, 2.5, 1, null, 2],
+            'interval matches new int quantity' => [true, 5, 2, 0, null, 3],
+            'interval matches new float quantity' => [true, 5.5, 2.5, 0, null, 3],
+            'min, max, interval matches new int quantity' => [true, 5, 2, 3, 3,    3],
+            'min, max, interval matches new float quantity' => [true, 5.5, 2.5, 3, 3,    3],
+            'can remove all items regardless rules int stock' => [true, 5, 5, 2, 4,    3],
+            'can remove all items regardless rules float stock' => [true, 5.5, 5.5, 2, 4,    3],
+            'general false rule int stock' => [false, 5, 6, 1, null, 1],
+            'general false rule float stock' => [false, 5.5, 6.5, 1, null, 1],
+            'min above new int quantity' => [false, 5, 2, 4, null, 1],
+            'min above new float quantity' => [false, 5.5, 2.5, 4, null, 1],
+            'max below new int quantity' => [false, 5, 2, 1, 2,    1],
+            'max below new float quantity' => [false, 5.5, 2.5, 1, 2,    1],
+            'shifted interval does not match new int quantity' => [false, 5, 2, 1, null, 3],
+            'shifted interval does not match new float quantity' => [false, 5.5, 2.5, 1, null, 3],
+            'interval does not match new int quantity' => [false, 5, 2, 0, null, 2],
+            'interval does not match new float quantity' => [false, 5.5, 2.5, 0, null, 2],
+            'empty quote int stock' => [false, 0, 1, 1, null, 1],
+            'empty quote float stock' => [false, 0, 1.5, 1, null, 1],
         ];
     }
 
@@ -213,32 +213,32 @@ class ProductQuantityFacadeTest extends Unit
     public function itemAdditionQuantities()
     {
         return [
-            [true, 5, 2, 1, null, 1], // general rule
-            [true, 5.5, 2.5, 1, null, 1],
-            [true, 5, 2, 7, null, 1], // min equals new quantity
-            [true, 5.5, 2.5, 8, null, 1],
-            [true, 5, 2, 7, 7,    1], // max equals new quantity
-            [true, 5.5, 2.5, 7, 8,    1],
-            [true, 5, 2, 7, null, 2], // shifted interval matches new quantity
-            [true, 5.5, 2.5, 8, null, 2],
-            [true, 5, 2, 0, null, 7], // interval matches new quantity
-            [true, 5.5, 2.5, 0, null, 8],
-            [true, 5, 2, 7, 7,    7], // min, max, interval matches new quantity
-            [true, 5.5, 2.5, 8, 8,    8],
-            [true, 0, 1, 1, null, 1], // empty quote
-            [true, 0, 1.5, 1, null, 1],
+            'general rule int stock' => [true, 5, 2, 1, null, 1],
+            'general rule float stock' => [true, 5.5, 2.5, 1, null, 1],
+            'min equals new int quantity' => [true, 5, 2, 7, null, 1],
+            'min equals new float quantity' => [true, 5.5, 2.5, 8, null, 1],
+            'max equals new int quantity' => [true, 5, 2, 7, 7,    1],
+            'max equals new float quantity' => [true, 5.5, 2.5, 7, 8,    1],
+            'shifted interval matches new int quantity' => [true, 5, 2, 7, null, 2],
+            'shifted interval matches new float quantity' => [true, 5.5, 2.5, 8, null, 2],
+            'interval matches new int quantity' => [true, 5, 2, 0, null, 7],
+            'interval matches new float quantity' => [true, 5.5, 2.5, 0, null, 8],
+            'min, max, interval matches new int quantity' => [true, 5, 2, 7, 7,    7],
+            'min, max, interval matches new float quantity' => [true, 5.5, 2.5, 8, 8,    8],
+            'empty quote int quantity' => [true, 0, 1, 1, null, 1],
+            'empty quote float quantity' => [true, 0, 1.5, 1, null, 1],
 
-            [false, 0, 0, 1, null, 1], // general rule 0 qty
-            [false, 0, -4, 1, null, 1], // general rule negative qty
-            [false, 0, -4.5, 1, null, 1],
-            [false, 5, 2, 8, null, 1], // min above new quantity
-            [false, 5.5, 2.3, 8, null, 1],
-            [false, 5, 2, 1, 6,    1], // max below new quantity
-            [false, 5.5, 2.5, 1, 6,    1],
-            [false, 5, 2, 1, null, 4], // shifted interval does not match new quantity
-            [false, 5.5, 2.5, 1, null, 4],
-            [false, 5, 2, 0, null, 2], // interval does not match new quantity
-            [false, 5.5, 2.5, 0, null, 3],
+            'general rule 0 qty' => [false, 0, 0, 1, null, 1],
+            'general rule negative int qty' => [false, 0, -4, 1, null, 1],
+            'general rule negative float qty' => [false, 0, -4.5, 1, null, 1],
+            'min above new int quantity' => [false, 5, 2, 8, null, 1],
+            'min above new float quantity' => [false, 5.5, 2.3, 8, null, 1],
+            'max below new int quantity' => [false, 5, 2, 1, 6,    1],
+            'max below new float quantity' => [false, 5.5, 2.5, 1, 6,    1],
+            'shifted interval does not match new int quantity' => [false, 5, 2, 1, null, 4],
+            'shifted interval does not match new float quantity' => [false, 5.5, 2.5, 1, null, 4],
+            'interval does not match new int quantity' => [false, 5, 2, 0, null, 2],
+            'interval does not match new float quantity' => [false, 5.5, 2.5, 0, null, 3],
         ];
     }
 

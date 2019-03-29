@@ -29,7 +29,8 @@ class ProductQuantityBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductQuantityRestrictionValidator(
             $this->createProductQuantityReader(),
-            $this->getUtilQuantityService()
+            $this->getUtilQuantityService(),
+            $this->getConfig()
         );
     }
 

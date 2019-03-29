@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
 use Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface;
+use Spryker\Zed\ProductQuantity\ProductQuantityConfig;
 
 class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionValidatorInterface
 {
@@ -36,15 +37,23 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     protected $utilQuantityService;
 
     /**
+     * @var \Spryker\Zed\ProductQuantity\ProductQuantityConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface $productQuantityReader
      * @param \Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface $utilQuantityService
+     * @param \Spryker\Zed\ProductQuantity\ProductQuantityConfig $config
      */
     public function __construct(
         ProductQuantityReaderInterface $productQuantityReader,
-        ProductQuantityToUtilQuantityServiceInterface $utilQuantityService
+        ProductQuantityToUtilQuantityServiceInterface $utilQuantityService,
+        ProductQuantityConfig $config
     ) {
         $this->productQuantityReader = $productQuantityReader;
         $this->utilQuantityService = $utilQuantityService;
+        $this->config = $config;
     }
 
     /**
@@ -80,8 +89,9 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      */
     protected function validateQuantityIsPositive(string $sku, float $quantity, CartPreCheckResponseTransfer $responseTransfer): bool
     {
-        if ($quantity <= 0) {
-            $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, 0, $quantity, $responseTransfer);
+        $restrictedQuantity = $this->config->getMinimumQuantity();
+        if ($quantity <= $restrictedQuantity) {
+            $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, $restrictedQuantity, $quantity, $responseTransfer);
 
             return false;
         }
@@ -128,7 +138,10 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
             $this->addViolation(static::ERROR_QUANTITY_MIN_NOT_FULFILLED, $sku, $min, $quantity, $responseTransfer);
         }
 
-        if (!$this->isQuantityEqual($quantity, 0) && $this->subtractQuantities($quantity, $min) % $interval !== 0) {
+        $quantityMinusMin = $this->subtractQuantities($quantity, $min);
+        $divideQuantityMinusMinByModuleInterval = fmod($quantityMinusMin, $interval);
+
+        if (!$this->isQuantityEqual($quantity, 0) && !$this->isQuantityEqual($divideQuantityMinusMinByModuleInterval, 0)) {
             $this->addViolation(static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED, $sku, $interval, $quantity, $responseTransfer);
         }
 
@@ -272,8 +285,8 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     protected function getDefaultProductQuantityTransfer(): ProductQuantityTransfer
     {
         return (new ProductQuantityTransfer())
-            ->setQuantityInterval(1)
-            ->setQuantityMin(1);
+            ->setQuantityInterval($this->config->getInterval())
+            ->setQuantityMin($this->config->getMinimumQuantity());
     }
 
     /**
