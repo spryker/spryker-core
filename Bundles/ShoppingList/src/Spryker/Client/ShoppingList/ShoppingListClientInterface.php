@@ -328,9 +328,9 @@ interface ShoppingListClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViewTransfers
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViews
      *
      * @return int
      */
-    public function calculateShoppingListSubtotal(array $shoppingListItemProductViewTransfers): int;
+    public function calculateShoppingListSubtotal(array $shoppingListItemProductViews): int;
 }

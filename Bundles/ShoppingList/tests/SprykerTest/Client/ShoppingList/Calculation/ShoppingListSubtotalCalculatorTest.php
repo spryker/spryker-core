@@ -43,7 +43,7 @@ class ShoppingListSubtotalCalculatorTest extends Unit
     public function testCalculateShoppingListSubtotalShouldCalculatePricesCorrectly(): void
     {
         // Arrange
-        $shoppingListItemProductViewTransfers = [
+        $shoppingListItemProductViews = [
             (new ProductViewTransfer())->setAvailable(true)->setPrice(1)->setQuantity(1),
             (new ProductViewTransfer())->setAvailable(true)->setPrice(2)->setQuantity(2),
             (new ProductViewTransfer())->setAvailable(true)->setPrice(3)->setQuantity(3),
@@ -54,7 +54,7 @@ class ShoppingListSubtotalCalculatorTest extends Unit
         $expectedShoppingListSubtotal = 55;
 
         // Act
-        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViewTransfers);
+        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViews);
 
         // Assert
         $this->assertSame($calculatedShoppingListSubtotal, $expectedShoppingListSubtotal);
@@ -66,7 +66,7 @@ class ShoppingListSubtotalCalculatorTest extends Unit
     public function testCalculateShoppingListSubtotalShouldSkipItemsWithoutPriceOrQuantity(): void
     {
         // Arrange
-        $shoppingListItemProductViewTransfers = [
+        $shoppingListItemProductViews = [
             (new ProductViewTransfer())->setAvailable(true)->setPrice(null)->setQuantity(1),
             (new ProductViewTransfer())->setAvailable(true)->setPrice(2)->setQuantity(2),
             (new ProductViewTransfer())->setAvailable(true)->setPrice(3)->setQuantity(null),
@@ -77,7 +77,7 @@ class ShoppingListSubtotalCalculatorTest extends Unit
         $expectedShoppingListSubtotal = 20;
 
         // Act
-        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViewTransfers);
+        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViews);
 
         // Assert
         $this->assertSame($calculatedShoppingListSubtotal, $expectedShoppingListSubtotal);
@@ -89,7 +89,7 @@ class ShoppingListSubtotalCalculatorTest extends Unit
     public function testCalculateShoppingListSubtotalShouldSkipUnavailableItems(): void
     {
         // Arrange
-        $shoppingListItemProductViewTransfers = [
+        $shoppingListItemProductViews = [
             (new ProductViewTransfer())->setAvailable(true)->setPrice(1)->setQuantity(1),
             (new ProductViewTransfer())->setAvailable(false)->setPrice(2)->setQuantity(2),
             (new ProductViewTransfer())->setAvailable(false)->setPrice(3)->setQuantity(3),
@@ -100,7 +100,7 @@ class ShoppingListSubtotalCalculatorTest extends Unit
         $expectedShoppingListSubtotal = 1;
 
         // Act
-        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViewTransfers);
+        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViews);
 
         // Assert
         $this->assertSame($calculatedShoppingListSubtotal, $expectedShoppingListSubtotal);
