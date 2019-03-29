@@ -5,25 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompaniesRestApi\Processor\Company;
+namespace Spryker\Glue\CompaniesRestApi\Processor\Company\Reader;
 
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\RestCompanyAttributesTransfer;
 use Spryker\Glue\CompaniesRestApi\Dependency\Client\CompaniesRestApiToCompanyClientInterface;
+use Spryker\Glue\CompaniesRestApi\Processor\Company\CompanyRestResponseBuilderInterface;
+use Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyReader implements CompanyReaderInterface
 {
     /**
-     * @var \Spryker\Glue\CompaniesRestApi\Processor\Company\CompanyMapperInterface
-     */
-    protected $companyMapperInterface;
-
-    /**
      * @var \Spryker\Glue\CompaniesRestApi\Dependency\Client\CompaniesRestApiToCompanyClientInterface
      */
     protected $companyClient;
+
+    /**
+     * @var \Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface
+     */
+    protected $companyMapperInterface;
 
     /**
      * @var \Spryker\Glue\CompaniesRestApi\Processor\Company\CompanyRestResponseBuilderInterface
@@ -31,17 +33,17 @@ class CompanyReader implements CompanyReaderInterface
     protected $companyRestResponseBuilder;
 
     /**
-     * @param \Spryker\Glue\CompaniesRestApi\Processor\Company\CompanyMapperInterface $companyMapperInterface
      * @param \Spryker\Glue\CompaniesRestApi\Dependency\Client\CompaniesRestApiToCompanyClientInterface $companyClient
+     * @param \Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface $companyMapperInterface
      * @param \Spryker\Glue\CompaniesRestApi\Processor\Company\CompanyRestResponseBuilderInterface $companyRestResponseBuilder
      */
     public function __construct(
-        CompanyMapperInterface $companyMapperInterface,
         CompaniesRestApiToCompanyClientInterface $companyClient,
+        CompanyMapperInterface $companyMapperInterface,
         CompanyRestResponseBuilderInterface $companyRestResponseBuilder
     ) {
-        $this->companyMapperInterface = $companyMapperInterface;
         $this->companyClient = $companyClient;
+        $this->companyMapperInterface = $companyMapperInterface;
         $this->companyRestResponseBuilder = $companyRestResponseBuilder;
     }
 
@@ -52,28 +54,26 @@ class CompanyReader implements CompanyReaderInterface
      */
     public function getCompany(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $uuid = $restRequest->getResource()->getId();
-        if (!$uuid) {
+        $companyUuid = $restRequest->getResource()->getId();
+        if (!$companyUuid) {
             return $this->companyRestResponseBuilder->createCompanyIdMissingError();
         }
 
         $companyResponseTransfer = $this->companyClient->findCompanyByUuid(
-            (new CompanyTransfer())->setUuid($uuid)
+            (new CompanyTransfer())->setUuid($companyUuid)
         );
 
         if (!$companyResponseTransfer->getIsSuccessful()) {
             return $this->companyRestResponseBuilder->createCompanyNotFoundError();
         }
 
-        $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
-
         $restCompanyAttributesTransfer = $this->companyMapperInterface
             ->mapCompanyTransferToRestCompanyAttributesTransfer(
-                $companyTransfer,
+                $companyResponseTransfer->getCompanyTransfer(),
                 new RestCompanyAttributesTransfer()
             );
 
         return $this->companyRestResponseBuilder
-            ->createCompanyRestResponse($uuid, $restCompanyAttributesTransfer);
+            ->createCompanyRestResponse($companyUuid, $restCompanyAttributesTransfer);
     }
 }

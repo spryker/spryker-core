@@ -13,13 +13,13 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface CompanyRestResponseBuilderInterface
 {
     /**
-     * @param string $uuid
+     * @param string $companyUuid
      * @param \Generated\Shared\Transfer\RestCompanyAttributesTransfer $restCompanyAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyRestResponse(
-        string $uuid,
+        string $companyUuid,
         RestCompanyAttributesTransfer $restCompanyAttributesTransfer
     ): RestResponseInterface;
 

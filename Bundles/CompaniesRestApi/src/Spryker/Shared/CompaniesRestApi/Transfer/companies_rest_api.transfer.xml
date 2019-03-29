@@ -17,4 +17,9 @@
         <property name="company" type="Company" />
     </transfer>
 
+    <transfer name="CompanyResponse">
+        <property name="companyTransfer" type="Company"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
 </transfers>

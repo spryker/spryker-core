@@ -31,17 +31,17 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
     }
 
     /**
-     * @param string $uuid
+     * @param string $companyUuid
      * @param \Generated\Shared\Transfer\RestCompanyAttributesTransfer $restCompanyAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyRestResponse(
-        string $uuid,
+        string $companyUuid,
         RestCompanyAttributesTransfer $restCompanyAttributesTransfer
     ): RestResponseInterface {
         return $this->restResourceBuilder->createRestResponse()
-            ->addResource($this->buildCompanyRestResponse($restCompanyAttributesTransfer, $uuid));
+            ->addResource($this->buildCompanyRestResponse($restCompanyAttributesTransfer, $companyUuid));
     }
 
     /**
@@ -72,20 +72,18 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestCompanyAttributesTransfer $restCompanyAttributesTransfer
-     * @param string $uuid
+     * @param string $companyUuid
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     protected function buildCompanyRestResponse(
         RestCompanyAttributesTransfer $restCompanyAttributesTransfer,
-        string $uuid
+        string $companyUuid
     ): RestResourceInterface {
-        $restResource = $this->restResourceBuilder->createRestResource(
+        return $this->restResourceBuilder->createRestResource(
             CompaniesRestApiConfig::RESOURCE_COMPANIES,
-            $uuid,
+            $companyUuid,
             $restCompanyAttributesTransfer
         );
-
-        return $restResource;
     }
 }
