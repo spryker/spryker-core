@@ -19,4 +19,9 @@
         <property name="uuid" type="string" />
     </transfer>
 
+    <transfer name="CompanyUnitAddressResponse">
+        <property name="companyUnitAddressTransfer" type="CompanyUnitAddress"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
 </transfers>

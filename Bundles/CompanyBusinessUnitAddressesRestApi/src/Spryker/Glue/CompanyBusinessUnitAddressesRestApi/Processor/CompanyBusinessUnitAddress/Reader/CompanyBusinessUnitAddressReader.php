@@ -5,43 +5,45 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress;
+namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Reader;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Dependency\Client\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressClientInterface;
+use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Mapper\CompanyBusinessUnitAddressMapperInterface;
+use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressReaderInterface
 {
     /**
-     * @var \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\CompanyBusinessUnitAddressMapperInterface
-     */
-    protected $companyBusinessUnitAddressMapperInterface;
-
-    /**
      * @var \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Dependency\Client\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressClientInterface
      */
     protected $companyBusinessUnitAddressClient;
 
     /**
-     * @var \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\CompanyBusinessUnitAddressRestResponseBuilderInterface
+     * @var \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Mapper\CompanyBusinessUnitAddressMapperInterface
+     */
+    protected $companyBusinessUnitAddressMapperInterface;
+
+    /**
+     * @var \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilderInterface
      */
     protected $companyBusinessUnitAddressRestResponseBuilder;
 
     /**
-     * @param \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\CompanyBusinessUnitAddressMapperInterface $companyBusinessUnitAddressMapperInterface
      * @param \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Dependency\Client\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressClientInterface $companyBusinessUnitAddressClient
-     * @param \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\CompanyBusinessUnitAddressRestResponseBuilderInterface $companyBusinessUnitAddressRestResponseBuilder
+     * @param \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Mapper\CompanyBusinessUnitAddressMapperInterface $companyBusinessUnitAddressMapperInterface
+     * @param \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilderInterface $companyBusinessUnitAddressRestResponseBuilder
      */
     public function __construct(
-        CompanyBusinessUnitAddressMapperInterface $companyBusinessUnitAddressMapperInterface,
         CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressClientInterface $companyBusinessUnitAddressClient,
+        CompanyBusinessUnitAddressMapperInterface $companyBusinessUnitAddressMapperInterface,
         CompanyBusinessUnitAddressRestResponseBuilderInterface $companyBusinessUnitAddressRestResponseBuilder
     ) {
-        $this->companyBusinessUnitAddressMapperInterface = $companyBusinessUnitAddressMapperInterface;
         $this->companyBusinessUnitAddressClient = $companyBusinessUnitAddressClient;
+        $this->companyBusinessUnitAddressMapperInterface = $companyBusinessUnitAddressMapperInterface;
         $this->companyBusinessUnitAddressRestResponseBuilder = $companyBusinessUnitAddressRestResponseBuilder;
     }
 
@@ -52,13 +54,13 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
      */
     public function getCompanyBusinessUnitAddress(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $uuid = $restRequest->getResource()->getId();
-        if (!$uuid) {
+        $companyBusinessUnitAddressUuid = $restRequest->getResource()->getId();
+        if (!$companyBusinessUnitAddressUuid) {
             return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressIdMissingError();
         }
 
         $companyUnitAddressResponseTransfer = $this->companyBusinessUnitAddressClient->findCompanyBusinessUnitAddressByUuid(
-            (new CompanyUnitAddressTransfer())->setUuid($uuid)
+            (new CompanyUnitAddressTransfer())->setUuid($companyBusinessUnitAddressUuid)
         );
 
         if (!$companyUnitAddressResponseTransfer->getIsSuccessful()) {
@@ -72,6 +74,6 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
             );
 
         return $this->companyBusinessUnitAddressRestResponseBuilder
-            ->createCompanyBusinessUnitAddressRestResponse($uuid, $restCompanyBusinessUnitAddressAttributesTransfer);
+            ->createCompanyBusinessUnitAddressRestResponse($companyBusinessUnitAddressUuid, $restCompanyBusinessUnitAddressAttributesTransfer);
     }
 }

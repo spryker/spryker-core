@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress;
+namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Mapper;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer;
 
-class CompanyBusinessUnitAddressMapper implements CompanyBusinessUnitAddressMapperInterface
+interface CompanyBusinessUnitAddressMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -21,7 +21,5 @@ class CompanyBusinessUnitAddressMapper implements CompanyBusinessUnitAddressMapp
     public function mapCompanyBusinessUnitAddressTransferToRestCompanyBusinessUnitAddressAttributesTransfer(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
-    ): RestCompanyBusinessUnitAddressAttributesTransfer {
-        return $restCompanyBusinessUnitAddressAttributesTransfer->fromArray($companyUnitAddressTransfer->toArray(), true);
-    }
+    ): RestCompanyBusinessUnitAddressAttributesTransfer;
 }

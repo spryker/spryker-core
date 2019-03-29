@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin;
+namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiConfig;
