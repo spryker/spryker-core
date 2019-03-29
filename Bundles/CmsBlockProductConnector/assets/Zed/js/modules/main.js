@@ -12,15 +12,15 @@ $(document).ready( function () {
             dataType: 'json',
             delay: 500,
             cache: true,
-            processResults: function (data) {
-                data.results = data.results.map(function(item) {
+            processResults: function (response) {
+                response.results = response.results.map(function(product) {
                     return {
-                        id: item.sku,
-                        text: item.name + ' (SKU: ' + item.sku + ')'
+                        id: product.sku,
+                        text: product.name + ' (SKU: ' + product.sku + ')'
                     };
                 });
 
-                return data;
+                return response;
             }
         },
         minimumInputLength: 3
