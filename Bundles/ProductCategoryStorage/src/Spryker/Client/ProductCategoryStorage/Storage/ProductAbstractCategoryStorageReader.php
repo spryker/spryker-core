@@ -45,7 +45,7 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
      */
     public function findProductAbstractCategory($idProductAbstract, $locale)
     {
-        $productAbstractCategoryStorageData = $this->getStorageData($idProductAbstract, $locale);
+        $productAbstractCategoryStorageData = $this->findStorageData($idProductAbstract, $locale);
 
         if (!$productAbstractCategoryStorageData) {
             return null;
@@ -60,9 +60,9 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
      * @param int $idProductAbstract
      * @param string $locale
      *
-     * @return array
+     * @return array|null
      */
-    protected function getStorageData(int $idProductAbstract, string $locale): array
+    protected function findStorageData(int $idProductAbstract, string $locale): ?array
     {
         if (ProductCategoryStorageConfig::isCollectorCompatibilityMode()) {
             $clientLocatorClassName = Locator::class;
