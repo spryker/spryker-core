@@ -1,0 +1,8 @@
+parameters:
+    ignoreErrors:
+    - '#Call to an undefined method .+Criteria::.+\(\).#'
+    - '#Call to an undefined method .+DataSetStepBrokerInterface::addStep\(\).#'
+    - '#Call to an undefined method .+DataSetStepBrokerAwareInterface::addDataSetStepBroker\(\).#'
+    - '#Call to an undefined method .+DataSetStepBrokerAwareInterface::import\(\).#'
+    - '#Call to an undefined method .+LocatorLocatorInterface::store\(\).#'
+    - '#Call to an undefined method .+LocatorLocatorInterface::currency\(\).#'
