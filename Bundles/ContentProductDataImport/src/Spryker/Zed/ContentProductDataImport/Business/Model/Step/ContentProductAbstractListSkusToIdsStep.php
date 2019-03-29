@@ -57,10 +57,9 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
         $productAbstractIds = $this->getProductAbstractIdsBySkus($productAbstractSkus);
 
         if (count($productAbstractIds) < count($productAbstractSkus)) {
-            $rowKey = $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY];
             $parameters = [
                 static::EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN => $skusLocaleKey,
-                static::EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY => $rowKey,
+                static::EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY],
             ];
 
             $this->createInvalidDataImportException(static::EXCEPTION_ERROR_MESSAGE_SKUS_TO_IDS, $parameters);
@@ -87,7 +86,7 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
             unset($productAbstractSkus[$key]);
         }
 
-        if (count($productAbstractSkus) < 1) {
+        if (!$productAbstractSkus) {
             return $productAbstractIds;
         }
 
