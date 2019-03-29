@@ -63,7 +63,7 @@ class CustomerQuoteCleaner implements CustomerQuoteCleanerInterface
      */
     public function reloadQuoteForCustomer(CustomerTransfer $customerTransfer): void
     {
-        $this->quoteClient->setQuote(new QuoteTransfer());
+        $this->quoteClient->clearQuote();
 
         if ($this->quoteClient->getStorageStrategy() !== QuoteConfig::STORAGE_STRATEGY_DATABASE) {
             return;

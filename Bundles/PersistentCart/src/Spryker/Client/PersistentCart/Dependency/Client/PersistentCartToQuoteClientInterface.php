@@ -27,4 +27,9 @@ interface PersistentCartToQuoteClientInterface
      * @return string
      */
     public function getStorageStrategy(): string;
+
+    /**
+     * @return void
+     */
+    public function clearQuote();
 }

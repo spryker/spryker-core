@@ -111,6 +111,8 @@ interface PersistentCartClientInterface
 
     /**
      * Specification:
+     * - Empty existing quote and store to session.
+     * - In case of persistent strategy the quote is also deleted from database.
      * - Reloads quote for customer.
      *
      * @api
