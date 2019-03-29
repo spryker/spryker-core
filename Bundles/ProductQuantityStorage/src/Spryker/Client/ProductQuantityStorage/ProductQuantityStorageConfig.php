@@ -11,7 +11,7 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 
 class ProductQuantityStorageConfig extends AbstractBundleConfig
 {
-    protected const MIN_QUANTITY = 1;
+    protected const MIN_QUANTITY = 1.0;
 
     /**
      * @return float
