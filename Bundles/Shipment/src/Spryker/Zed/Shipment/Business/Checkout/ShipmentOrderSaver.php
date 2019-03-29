@@ -99,6 +99,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         $this->addExpensesToOrder($quoteTransfer, $salesOrderEntity, $saveOrderTransfer);
         $this->createSalesShipment($quoteTransfer, $salesOrderEntity, $saveOrderTransfer);
         $this->updateFkShipmentForOrderItems($saveOrderTransfer->getOrderItems(), $shipmentTransfer);
+
     }
 
     /**
