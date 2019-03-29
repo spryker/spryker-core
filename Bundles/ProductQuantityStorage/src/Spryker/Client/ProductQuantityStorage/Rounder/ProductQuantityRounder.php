@@ -8,18 +8,42 @@
 namespace Spryker\Client\ProductQuantityStorage\Rounder;
 
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
+use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToUtilQuantityServiceInterface;
+use Spryker\Client\ProductQuantityStorage\ProductQuantityStorageConfig;
 
 class ProductQuantityRounder implements ProductQuantityRounderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer $productQuantityStorageTransfer
-     * @param int $quantity
-     *
-     * @return int
+     * @var \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageConfig
      */
-    public function getNearestQuantity(ProductQuantityStorageTransfer $productQuantityStorageTransfer, int $quantity): int
+    protected $config;
+
+    /**
+     * @var \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
+     * @param \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageConfig $config
+     * @param \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToUtilQuantityServiceInterface $utilQuantityService
+     */
+    public function __construct(
+        ProductQuantityStorageConfig $config,
+        ProductQuantityStorageToUtilQuantityServiceInterface $utilQuantityService
+    ) {
+        $this->config = $config;
+        $this->utilQuantityService = $utilQuantityService;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductQuantityStorageTransfer $productQuantityStorageTransfer
+     * @param float $quantity
+     *
+     * @return float
+     */
+    public function getNearestQuantity(ProductQuantityStorageTransfer $productQuantityStorageTransfer, float $quantity): float
     {
-        $min = $productQuantityStorageTransfer->getQuantityMin() ?: 1;
+        $min = $productQuantityStorageTransfer->getQuantityMin() ?: $this->config->getMinQuantity();
         $max = $productQuantityStorageTransfer->getQuantityMax();
         $interval = $productQuantityStorageTransfer->getQuantityInterval();
 
@@ -31,12 +55,12 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
             $quantity = $max;
         }
 
-        if ($interval && ($quantity - $min) % $interval !== 0) {
-            $max = $max ?? ($quantity + $interval);
+        if ($interval && !$this->isQuantityEqual(fmod($this->subtractQuantities($quantity, $min), $interval), 0)) {
+            $max = $max ?? $this->sumQuantities($quantity, $interval);
 
             $quantity = $this->getNearestQuantityFromAllowed(
                 $quantity,
-                $this->getAllowedQuantities($min, $max, $interval, $quantity)
+                $this->getAllowedQuantities($min, $max, $interval)
             );
         }
 
@@ -44,20 +68,48 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
     }
 
     /**
-     * @param int $min
-     * @param int $max
-     * @param int $interval
-     * @param int $quantity
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
-     * @return int[]
+     * @return float
      */
-    protected function getAllowedQuantities(int $min, int $max, int $interval, int $quantity): array
+    protected function subtractQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        if ($quantity - $interval > $min) {
-            $min = (int)round(($quantity - $interval) / $interval) * $interval + $min;
-        }
+        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
+    }
 
-        if ($min + $interval > $max) {
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
+    }
+
+    /**
+     * @param float $min
+     * @param float $max
+     * @param float $interval
+     *
+     * @return float[]
+     */
+    protected function getAllowedQuantities(float $min, float $max, float $interval): array
+    {
+        if ($this->sumQuantities($min, $interval) > $max) {
             return [$min];
         }
 
@@ -65,12 +117,12 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
     }
 
     /**
-     * @param int $quantity
-     * @param int[] $allowedQuantities
+     * @param float $quantity
+     * @param float[] $allowedQuantities
      *
-     * @return int
+     * @return float
      */
-    protected function getNearestQuantityFromAllowed(int $quantity, array $allowedQuantities): int
+    protected function getNearestQuantityFromAllowed(float $quantity, array $allowedQuantities): float
     {
         if (count($allowedQuantities) === 1) {
             return reset($allowedQuantities);
@@ -79,7 +131,7 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
         $nearest = null;
 
         foreach ($allowedQuantities as $allowedQuantity) {
-            if ($nearest === null || abs($quantity - $nearest) > abs($allowedQuantity - $quantity)) {
+            if ($nearest === null || abs($this->subtractQuantities($quantity, $nearest)) > abs($this->subtractQuantities($allowedQuantity, $quantity))) {
                 $nearest = $allowedQuantity;
             }
         }
