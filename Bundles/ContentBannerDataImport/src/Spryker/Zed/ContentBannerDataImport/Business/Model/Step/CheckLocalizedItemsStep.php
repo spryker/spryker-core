@@ -74,6 +74,7 @@ class CheckLocalizedItemsStep implements DataImportStepInterface
                 $messages[] = '[' . $parameterMessages->getParameter() . '] ' . $parameterMessage->getValue();
             }
         }
+
         return $messages;
     }
 }
