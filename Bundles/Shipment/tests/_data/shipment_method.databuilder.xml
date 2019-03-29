@@ -33,6 +33,9 @@
 
     <transfer name="Item">
         <property name="sku" dataBuilderRule="isbn10" />
+        <property name="unitPrice" dataBuilderRule="randomNumber(3)" />
+        <property name="sumPrice" dataBuilderRule="randomNumber(3)" />
+        <property name="amount" dataBuilderRule="randomNumber(1)" />
     </transfer>
 
     <transfer name="Address">

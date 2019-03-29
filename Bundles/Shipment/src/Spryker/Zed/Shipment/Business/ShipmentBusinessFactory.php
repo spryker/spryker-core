@@ -157,7 +157,12 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentOrderSaver()
     {
-        return new ShipmentOrderSaver($this->getSalesQueryContainer());
+        return new ShipmentOrderSaver(
+            $this->getSalesQueryContainer(),
+            $this->getEntityManager(),
+            $this->getSalesFacade(),
+            $this->getCustomerFacade()
+        );
     }
 
     /**
@@ -167,7 +172,12 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createCheckoutShipmentOrderSaver()
     {
-        return new CheckoutShipmentOrderSaver($this->getSalesQueryContainer());
+        return new CheckoutShipmentOrderSaver(
+            $this->getSalesQueryContainer(),
+            $this->getEntityManager(),
+            $this->getSalesFacade(),
+            $this->getCustomerFacade()
+        );
     }
 
     /**
