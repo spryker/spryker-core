@@ -74,6 +74,10 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
             );
 
         return $this->companyRoleRestResponseBuilder
-            ->createCompanyRoleRestResponse($companyRoleUuid, $restCompanyRoleAttributesTransfer);
+            ->createCompanyRoleRestResponse(
+                $companyRoleUuid,
+                $restCompanyRoleAttributesTransfer,
+                $companyRoleResponseTransfer->getCompanyRoleTransfer()
+            );
     }
 }

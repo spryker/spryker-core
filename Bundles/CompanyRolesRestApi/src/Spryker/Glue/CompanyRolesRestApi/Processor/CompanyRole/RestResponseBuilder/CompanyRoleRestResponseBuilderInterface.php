@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\RestResponseBuilder;
 
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -15,12 +16,14 @@ interface CompanyRoleRestResponseBuilderInterface
     /**
      * @param string $companyRoleUuid
      * @param \Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer|null $companyRoleTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyRoleRestResponse(
         string $companyRoleUuid,
-        RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
+        RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer,
+        ?CompanyRoleTransfer $companyRoleTransfer = null
     ): RestResponseInterface;
 
     /**
