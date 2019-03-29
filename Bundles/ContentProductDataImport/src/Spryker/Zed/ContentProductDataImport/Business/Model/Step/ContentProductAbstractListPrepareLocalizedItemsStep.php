@@ -19,9 +19,9 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportStepInterface
 {
-    protected const ERROR_MESSAGE_SUFFIX = 'Please check row with key: {key}, column: {column}';
-    protected const EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN = '{column}';
-    protected const EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY = '{key}';
+    protected const ERROR_MESSAGE_SUFFIX = 'Please check row with key: "{key}", column: {column}';
+    protected const ERROR_MESSAGE_PARAMETER_COLUMN = '{column}';
+    protected const ERROR_MESSAGE_PARAMETER_KEY = '{key}';
 
     /**
      * @var \Spryker\Zed\ContentProductDataImport\Dependency\Service\ContentProductDataImportToUtilEncodingServiceInterface
@@ -50,7 +50,7 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $contentLocalizedItems = [];
 
@@ -62,7 +62,6 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
             }
 
             $localizedItem[SpyContentLocalizedTableMap::COL_FK_LOCALE] = $idLocale ?? $idLocale;
-            $localizedItem[SpyContentLocalizedTableMap::COL_FK_CONTENT] = $dataSet[ContentProductAbstractListDataSetInterface::COLUMN_ID_CONTENT];
 
             $contentProductAbstractListTransfer = (new ContentProductAbstractListTransfer())
                 ->setIdProductAbstracts($dataSet[$localeKeyIds]);
@@ -74,11 +73,10 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
                     ->offsetGet(0)
                     ->getMessages()
                     ->offsetGet(0);
-                $skusLocaleColumn = ContentProductAbstractListDataSetInterface::COLUMN_SKUS . '.' . $localeName;
-                $rowKey = $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY];
+
                 $parameters = array_merge($messageTransfer->getParameters(), [
-                    static::EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN => $skusLocaleColumn,
-                    static::EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY => $rowKey,
+                    static::ERROR_MESSAGE_PARAMETER_COLUMN => '[' . ContentProductAbstractListDataSetInterface::COLUMN_SKUS . '.' . $localeName . ']',
+                    static::ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY],
                 ]);
                 $message = $messageTransfer->getValue() . ' ' . static::ERROR_MESSAGE_SUFFIX;
                 $this->createInvalidDataImportException($message, $parameters);
@@ -102,7 +100,7 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
      *
      * @return void
      */
-    protected function createInvalidDataImportException(string $message, array $parameters)
+    protected function createInvalidDataImportException(string $message, array $parameters = []): void
     {
         $errorMessage = strtr($message, $parameters);
 

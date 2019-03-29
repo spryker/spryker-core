@@ -17,9 +17,10 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
 {
-    protected const EXCEPTION_ERROR_MESSAGE_SKUS_TO_IDS = 'Found not valid skus in the row with key:"{key}", column:"{column}"';
-    protected const EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN = '{column}';
-    protected const EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY = '{key}';
+    protected const ERROR_MESSAGE_SKUS_TO_IDS = 'Found not valid skus in the row with key: "{key}", column: {column}';
+    protected const ERROR_MESSAGE_DEFAULT_SKUS = '[skus.default] is required. Please check the row with key: "{key}".';
+    protected const ERROR_MESSAGE_PARAMETER_COLUMN = '{column}';
+    protected const ERROR_MESSAGE_PARAMETER_KEY = '{key}';
 
     /**
      * @var array
@@ -31,8 +32,12 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
+        $this->assureDefaultSkusExists($dataSet);
+
+        $dataSet[AddLocalesStep::KEY_LOCALES] = array_merge($dataSet[AddLocalesStep::KEY_LOCALES], ['default' => null]);
+
         foreach ($dataSet[AddLocalesStep::KEY_LOCALES] as $localeName => $idLocale) {
             $skusLocaleKey = ContentProductAbstractListDataSetInterface::COLUMN_SKUS . '.' . $localeName;
 
@@ -42,6 +47,23 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
 
             $localeKeyIds = ContentProductAbstractListDataSetInterface::COLUMN_IDS . '.' . $localeName;
             $dataSet[$localeKeyIds] = $this->getProductAbstractIds($dataSet, $skusLocaleKey);
+        }
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return void
+     */
+    protected function assureDefaultSkusExists(DataSetInterface $dataSet): void
+    {
+        if (!isset($dataSet[ContentProductAbstractListDataSetInterface::COLUMN_DEFAULT_SKUS])
+            || !$dataSet[ContentProductAbstractListDataSetInterface::COLUMN_DEFAULT_SKUS]) {
+            $parameters = [
+                static::ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY],
+            ];
+
+            $this->createInvalidDataImportException(static::ERROR_MESSAGE_DEFAULT_SKUS, $parameters);
         }
     }
 
@@ -58,11 +80,11 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
 
         if (count($productAbstractIds) < count($productAbstractSkus)) {
             $parameters = [
-                static::EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN => $skusLocaleKey,
-                static::EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY],
+                static::ERROR_MESSAGE_PARAMETER_COLUMN => $skusLocaleKey,
+                static::ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY],
             ];
 
-            $this->createInvalidDataImportException(static::EXCEPTION_ERROR_MESSAGE_SKUS_TO_IDS, $parameters);
+            $this->createInvalidDataImportException(static::ERROR_MESSAGE_SKUS_TO_IDS, $parameters);
         }
 
         return $this->sortProductAbstractIds($productAbstractSkus, $productAbstractIds);
@@ -111,7 +133,7 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
      *
      * @return void
      */
-    protected function createInvalidDataImportException(string $message, array $parameters)
+    protected function createInvalidDataImportException(string $message, array $parameters = []): void
     {
         $errorMessage = strtr($message, $parameters);
 

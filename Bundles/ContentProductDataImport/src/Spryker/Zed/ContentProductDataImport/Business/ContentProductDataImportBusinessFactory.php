@@ -8,10 +8,11 @@
 namespace Spryker\Zed\ContentProductDataImport\Business;
 
 use Spryker\Zed\ContentProductDataImport\Business\Model\ContentProductAbstractListWriterStep;
-use Spryker\Zed\ContentProductDataImport\Business\Model\Step\ContentProductAbstractListContentKeyToIdStep;
+use Spryker\Zed\ContentProductDataImport\Business\Model\Step\ContentProductAbstractListCheckContentDataStep;
 use Spryker\Zed\ContentProductDataImport\Business\Model\Step\ContentProductAbstractListPrepareLocalizedItemsStep;
 use Spryker\Zed\ContentProductDataImport\Business\Model\Step\ContentProductAbstractListSkusToIdsStep;
 use Spryker\Zed\ContentProductDataImport\ContentProductDataImportDependencyProvider;
+use Spryker\Zed\ContentProductDataImport\Dependency\Facade\ContentProductDataImportToContentInterface;
 use Spryker\Zed\ContentProductDataImport\Dependency\Facade\ContentProductDataImportToContentProductFacadeInterface;
 use Spryker\Zed\ContentProductDataImport\Dependency\Service\ContentProductDataImportToUtilEncodingServiceInterface;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
@@ -33,7 +34,7 @@ class ContentProductDataImportBusinessFactory extends DataImportBusinessFactory
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker->addStep($this->createAddLocalesStep());
-        $dataSetStepBroker->addStep($this->createContentProductAbstractListContentKeyToIdStep());
+        $dataSetStepBroker->addStep($this->createContentProductAbstractListCheckContentDataStep());
         $dataSetStepBroker->addStep($this->createContentProductAbstractListSkusToIdsStep());
         $dataSetStepBroker->addStep($this->createContentProductAbstractListPrepareLocalizedItemsStep());
         $dataSetStepBroker->addStep($this->createContentProductAbstractListWriterStep());
@@ -46,9 +47,9 @@ class ContentProductDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createContentProductAbstractListContentKeyToIdStep(): DataImportStepInterface
+    public function createContentProductAbstractListCheckContentDataStep(): DataImportStepInterface
     {
-        return new ContentProductAbstractListContentKeyToIdStep();
+        return new ContentProductAbstractListCheckContentDataStep($this->getContentFacade());
     }
 
     /**
@@ -92,5 +93,13 @@ class ContentProductDataImportBusinessFactory extends DataImportBusinessFactory
     public function getContentProductFacade(): ContentProductDataImportToContentProductFacadeInterface
     {
         return $this->getProvidedDependency(ContentProductDataImportDependencyProvider::FACADE_CONTENT_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentProductDataImport\Dependency\Facade\ContentProductDataImportToContentInterface
+     */
+    public function getContentFacade(): ContentProductDataImportToContentInterface
+    {
+        return $this->getProvidedDependency(ContentProductDataImportDependencyProvider::FACADE_CONTENT);
     }
 }
