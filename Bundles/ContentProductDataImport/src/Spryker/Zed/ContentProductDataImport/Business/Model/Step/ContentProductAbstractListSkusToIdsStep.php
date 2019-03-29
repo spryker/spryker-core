@@ -54,70 +54,18 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
     protected function getProductAbstractIds(DataSetInterface $dataSet, string $skusLocaleKey): array
     {
         $productAbstractSkus = explode(',', $dataSet[$skusLocaleKey]);
-        $productAbstractIds = $this->getCachedProductAbstractIdsBySkus($productAbstractSkus);
-        $filteredProductAbstractSkus = $this->filterCachedProductAbstractSkus($productAbstractSkus);
+        $productAbstractIds = $this->getProductAbstractIdsBySkus($productAbstractSkus);
 
-        if (count($filteredProductAbstractSkus) > 0) {
-            $productAbstractIdsFromDb = $this->getProductAbstractIdsBySkus($filteredProductAbstractSkus);
+        if (count($productAbstractIds) < count($productAbstractSkus)) {
+            $parameters = [
+                static::EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN => $skusLocaleKey,
+                static::EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY],
+            ];
 
-            if (count($productAbstractIdsFromDb) < count($filteredProductAbstractSkus)) {
-                $rowKey = $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY];
-                $parameters = [
-                    static::EXCEPTION_ERROR_MESSAGE_PARAMETER_COLUMN => $skusLocaleKey,
-                    static::EXCEPTION_ERROR_MESSAGE_PARAMETER_KEY => $rowKey,
-                ];
-
-                $this->createInvalidDataImportException(static::EXCEPTION_ERROR_MESSAGE_SKUS_TO_IDS, $parameters);
-            }
-
-            $productAbstractIds += $productAbstractIdsFromDb;
-            $this->addProductAbstractIdsToCache($filteredProductAbstractSkus, $productAbstractIds);
+            $this->createInvalidDataImportException(static::EXCEPTION_ERROR_MESSAGE_SKUS_TO_IDS, $parameters);
         }
 
-        $productAbstractIds = $this->sortProductAbstractIds($productAbstractSkus, $productAbstractIds);
-
-        return $productAbstractIds;
-    }
-
-    /**
-     * @param string[] $productAbstractSkus
-     *
-     * @return array
-     */
-    protected function getCachedProductAbstractIdsBySkus(array $productAbstractSkus): array
-    {
-        $cachedProductAbstractIds = [];
-
-        foreach ($productAbstractSkus as $key => $productAbstractSku) {
-            if (!isset($this->cachedProductAbstractSkusToIds[$productAbstractSku])) {
-                continue;
-            }
-
-            $cachedProductAbstractIds[$productAbstractSku] = $this->cachedProductAbstractSkusToIds[$productAbstractSku];
-            unset($productAbstractSkus[$key]);
-        }
-
-        return $cachedProductAbstractIds;
-    }
-
-    /**
-     * @param string[] $productAbstractSkus
-     *
-     * @return array
-     */
-    protected function filterCachedProductAbstractSkus(array $productAbstractSkus): array
-    {
-        $filteredProductAbstractSkus = [];
-
-        foreach ($productAbstractSkus as $productAbstractSku) {
-            if (isset($this->cachedProductAbstractSkusToIds[$productAbstractSku])) {
-                continue;
-            }
-
-            $filteredProductAbstractSkus[] = $productAbstractSku;
-        }
-
-        return $filteredProductAbstractSkus;
+        return $this->sortProductAbstractIds($productAbstractSkus, $productAbstractIds);
     }
 
     /**
@@ -127,35 +75,32 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
      */
     protected function getProductAbstractIdsBySkus(array $productAbstractSkus): array
     {
+        $productAbstractIds = [];
+
+        foreach ($productAbstractSkus as $key => $productAbstractSku) {
+            if (!isset($this->cachedProductAbstractSkusToIds[$productAbstractSku])) {
+                continue;
+            }
+
+            $productAbstractIds[$productAbstractSku] = $this->cachedProductAbstractSkusToIds[$productAbstractSku];
+            unset($productAbstractSkus[$key]);
+        }
+
+        if (!$productAbstractSkus) {
+            return $productAbstractIds;
+        }
+
         $productAbstractEntity = SpyProductAbstractQuery::create()
             ->filterBySku_In($productAbstractSkus)
             ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_SKU])
             ->find();
 
-        $productAbstractIds = [];
-
         foreach ($productAbstractEntity->toArray() as $productAbstract) {
             $productAbstractIds[$productAbstract[SpyProductAbstractTableMap::COL_SKU]] = $productAbstract[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT];
+            $this->cachedProductAbstractSkusToIds[$productAbstract[SpyProductAbstractTableMap::COL_SKU]] = $productAbstract[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT];
         }
 
         return $productAbstractIds;
-    }
-
-    /**
-     * @param string[] $productAbstractSkus
-     * @param int[] $productAbstractIds
-     *
-     * @return void
-     */
-    protected function addProductAbstractIdsToCache(array $productAbstractSkus, array $productAbstractIds): void
-    {
-        $productAbstractSkus = array_values($productAbstractSkus);
-        $productAbstractIds = array_values($productAbstractIds);
-        $productAbstractIdsToCache = array_combine($productAbstractSkus, $productAbstractIds);
-
-        if (is_array($productAbstractIdsToCache)) {
-            $this->cachedProductAbstractSkusToIds += $productAbstractIdsToCache;
-        }
     }
 
     /**
