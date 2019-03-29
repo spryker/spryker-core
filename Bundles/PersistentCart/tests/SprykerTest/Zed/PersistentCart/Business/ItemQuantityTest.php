@@ -39,7 +39,7 @@ class ItemQuantityTest extends Unit
      *
      * @return void
      */
-    public function testIncreaseItemQuantity(ItemTransfer $itemTransfer, $addQuantity, $resultQuantity): void
+    public function testIncreaseItemQuantityShouldSumQuantities(ItemTransfer $itemTransfer, $addQuantity, $resultQuantity): void
     {
         $quoteTransfer = $this->createPersistentQuote($itemTransfer);
 
@@ -112,7 +112,7 @@ class ItemQuantityTest extends Unit
      *
      * @return void
      */
-    public function testDecreaseItemQuantity(ItemTransfer $itemTransfer, $subtractQuantity, $resultQuantity)
+    public function testDecreaseItemQuantityShouldSubtractQuantities(ItemTransfer $itemTransfer, $subtractQuantity, $resultQuantity)
     {
         $quoteTransfer = $this->createPersistentQuote($itemTransfer);
 
@@ -166,7 +166,7 @@ class ItemQuantityTest extends Unit
      *
      * @return void
      */
-    public function testChangeItemQuantity(ItemTransfer $itemTransfer, $changedQuantity)
+    public function testChangeItemQuantityShouldChangeItemQuantity(ItemTransfer $itemTransfer, $changedQuantity)
     {
         $quoteTransfer = $this->createPersistentQuote($itemTransfer);
 
