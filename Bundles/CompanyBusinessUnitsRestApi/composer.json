@@ -17,8 +17,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
-    "spryker/uuid-behavior": "Used to generate UUIDs for the company business units entities."
+    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
   },
   "autoload": {
     "psr-4": {

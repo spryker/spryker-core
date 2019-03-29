@@ -22,4 +22,6 @@ class CompanyBusinessUnitsRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_COMPANY_BUSINESS_UNIT_ID_IS_MISSING = '1902';
     public const RESPONSE_DETAIL_COMPANY_BUSINESS_UNIT_ID_IS_MISSING = 'Company business unit id is missing.';
+
+    public const RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED = 'Endpoint is not implemented.';
 }

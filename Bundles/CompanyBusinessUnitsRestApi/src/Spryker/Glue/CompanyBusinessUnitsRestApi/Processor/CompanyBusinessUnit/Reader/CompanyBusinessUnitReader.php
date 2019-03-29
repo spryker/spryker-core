@@ -5,18 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit;
+namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Reader;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\Dependency\Client\CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface;
+use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Mapper\CompanyBusinessUnitMapperInterface;
+use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\RestResponseBuilder\CompanyBusinessUnitRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
 {
     /**
-     * @var \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\CompanyBusinessUnitMapperInterface
+     * @var \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Mapper\CompanyBusinessUnitMapperInterface
      */
     protected $companyBusinessUnitMapperInterface;
 
@@ -26,14 +28,14 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
     protected $companyBusinessUnitClient;
 
     /**
-     * @var \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\CompanyBusinessUnitRestResponseBuilderInterface
+     * @var \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\RestResponseBuilder\CompanyBusinessUnitRestResponseBuilderInterface
      */
     protected $companyBusinessUnitRestResponseBuilder;
 
     /**
-     * @param \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\CompanyBusinessUnitMapperInterface $companyBusinessUnitMapperInterface
+     * @param \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Mapper\CompanyBusinessUnitMapperInterface $companyBusinessUnitMapperInterface
      * @param \Spryker\Glue\CompanyBusinessUnitsRestApi\Dependency\Client\CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
-     * @param \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\CompanyBusinessUnitRestResponseBuilderInterface $companyBusinessUnitRestResponseBuilder
+     * @param \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\RestResponseBuilder\CompanyBusinessUnitRestResponseBuilderInterface $companyBusinessUnitRestResponseBuilder
      */
     public function __construct(
         CompanyBusinessUnitMapperInterface $companyBusinessUnitMapperInterface,
@@ -52,13 +54,13 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
      */
     public function getCompanyBusinessUnit(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $uuid = $restRequest->getResource()->getId();
-        if (!$uuid) {
+        $companyBusinessUnitUuid = $restRequest->getResource()->getId();
+        if (!$companyBusinessUnitUuid) {
             return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitIdMissingError();
         }
 
         $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitClient->findCompanyBusinessUnitByUuid(
-            (new CompanyBusinessUnitTransfer())->setUuid($uuid)
+            (new CompanyBusinessUnitTransfer())->setUuid($companyBusinessUnitUuid)
         );
 
         if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()) {
@@ -72,6 +74,6 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
             );
 
         return $this->companyBusinessUnitRestResponseBuilder
-            ->createCompanyBusinessUnitRestResponse($uuid, $restCompanyBusinessUnitAttributesTransfer);
+            ->createCompanyBusinessUnitRestResponse($companyBusinessUnitUuid, $restCompanyBusinessUnitAttributesTransfer);
     }
 }

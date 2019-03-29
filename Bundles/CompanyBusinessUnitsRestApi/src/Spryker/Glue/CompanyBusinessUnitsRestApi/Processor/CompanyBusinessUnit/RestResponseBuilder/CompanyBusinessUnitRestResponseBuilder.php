@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit;
+namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\RestResponseBuilder;
 
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -32,17 +32,17 @@ class CompanyBusinessUnitRestResponseBuilder implements CompanyBusinessUnitRestR
     }
 
     /**
-     * @param string $uuid
+     * @param string $companyBusinessUnitUuid
      * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyBusinessUnitRestResponse(
-        string $uuid,
+        string $companyBusinessUnitUuid,
         RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
     ): RestResponseInterface {
         return $this->restResourceBuilder->createRestResponse()
-            ->addResource($this->buildCompanyBusinessUnitRestResource($restCompanyBusinessUnitAttributesTransfer, $uuid));
+            ->addResource($this->buildCompanyBusinessUnitRestResource($restCompanyBusinessUnitAttributesTransfer, $companyBusinessUnitUuid));
     }
 
     /**
