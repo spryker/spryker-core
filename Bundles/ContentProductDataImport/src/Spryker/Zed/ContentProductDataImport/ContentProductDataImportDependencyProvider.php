@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentProductDataImport;
 
+use Spryker\Zed\ContentProductDataImport\Dependency\Facade\ContentProductDataImportToContentBridge;
 use Spryker\Zed\ContentProductDataImport\Dependency\Facade\ContentProductDataImportToContentProductFacadeBridge;
 use Spryker\Zed\ContentProductDataImport\Dependency\Service\ContentProductDataImportToUtilEncodingServiceBridge;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
@@ -17,6 +18,7 @@ use Spryker\Zed\Kernel\Container;
  */
 class ContentProductDataImportDependencyProvider extends DataImportDependencyProvider
 {
+    public const FACADE_CONTENT = 'FACADE_CONTENT';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const FACADE_CONTENT_PRODUCT = 'FACADE_CONTENT_PRODUCT';
 
@@ -31,6 +33,7 @@ class ContentProductDataImportDependencyProvider extends DataImportDependencyPro
 
         $container = $this->addUtilEncodingService($container);
         $container = $this->addContentProductFacade($container);
+        $container = $this->addContentFacade($container);
 
         return $container;
     }
@@ -64,6 +67,19 @@ class ContentProductDataImportDependencyProvider extends DataImportDependencyPro
             );
         };
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addContentFacade(Container $container): Container
+    {
+        $container[static::FACADE_CONTENT] = function (Container $container) {
+            return new ContentProductDataImportToContentBridge($container->getLocator()->content()->facade());
+        };
         return $container;
     }
 }

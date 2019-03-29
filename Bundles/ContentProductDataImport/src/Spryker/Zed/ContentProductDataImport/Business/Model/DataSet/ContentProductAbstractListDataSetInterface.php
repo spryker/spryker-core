@@ -11,10 +11,10 @@ interface ContentProductAbstractListDataSetInterface
 {
     public const CONTENT_PRODUCT_ABSTRACT_LIST_KEY = 'key';
     public const CONTENT_LOCALIZED_ITEMS = 'content_localized_items';
-    public const COLUMN_ID_CONTENT = 'id_content';
     public const COLUMN_NAME = 'name';
     public const COLUMN_DESCRIPTION = 'description';
     public const COLUMN_SKUS = 'skus';
     public const COLUMN_IDS = 'ids';
     public const COLUMN_LOCALES = 'locales';
+    public const COLUMN_DEFAULT_SKUS = 'skus.default';
 }
