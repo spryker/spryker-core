@@ -8,9 +8,9 @@
     <table name="spy_product_quantity" idMethod="native" allowPkInsert="true">
         <column name="id_product_quantity" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product" type="INTEGER" required="true"/>
-        <column name="quantity_min" type="INTEGER" required="true"/>
-        <column name="quantity_max" type="INTEGER" required="false"/>
-        <column name="quantity_interval" type="INTEGER" required="true"/>
+        <column name="quantity_min" type="FLOAT" required="true"/>
+        <column name="quantity_max" type="FLOAT" required="false"/>
+        <column name="quantity_interval" type="FLOAT" required="true"/>
 
         <behavior name="timestampable" />
 
