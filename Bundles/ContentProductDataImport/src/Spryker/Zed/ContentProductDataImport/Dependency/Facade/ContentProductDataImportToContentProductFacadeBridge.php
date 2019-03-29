@@ -30,9 +30,9 @@ class ContentProductDataImportToContentProductFacadeBridge implements ContentPro
      *
      * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
      */
-    public function validateContentProductAbstractList(
+    public function validateContentProductAbstractListTerm(
         ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
     ): ContentValidationResponseTransfer {
-        return $this->contentProductFacade->validateContentProductAbstractList($contentProductAbstractListTermTransfer);
+        return $this->contentProductFacade->validateContentProductAbstractListTerm($contentProductAbstractListTermTransfer);
     }
 }

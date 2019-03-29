@@ -17,5 +17,5 @@ interface ContentProductAbstractListsRestApiToContentProductClientInterface
      *
      * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer|null
      */
-    public function getContentProductAbstractListType(int $idContent, string $localeName): ?ContentProductAbstractListTypeTransfer;
+    public function findContentProductAbstractListType(int $idContent, string $localeName): ?ContentProductAbstractListTypeTransfer;
 }

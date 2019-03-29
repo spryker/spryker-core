@@ -33,14 +33,14 @@ class ContentProductFacadeTest extends Test
     /**
      * @return void
      */
-    public function testValidateContentProductAbstractListIsSuccessful(): void
+    public function testValidateContentProductAbstractListTermIsSuccessful(): void
     {
         $products = range(1, $this->getConfig()->getMaxProductsInProductAbstractList());
 
         $contentProductAbstractListTermTransfer = (new ContentProductAbstractListTermTransfer())
             ->setIdProductAbstracts($products);
 
-        $contentValidationResponseTransfer = $this->tester->getFacade()->validateContentProductAbstractList($contentProductAbstractListTermTransfer);
+        $contentValidationResponseTransfer = $this->tester->getFacade()->validateContentProductAbstractListTerm($contentProductAbstractListTermTransfer);
 
         $this->assertInstanceOf(ContentValidationResponseTransfer::class, $contentValidationResponseTransfer);
         $this->assertTrue($contentValidationResponseTransfer->getIsSuccess());
@@ -50,14 +50,14 @@ class ContentProductFacadeTest extends Test
     /**
      * @return void
      */
-    public function testValidateContentProductAbstractListNumberOfProductsFail(): void
+    public function testValidateContentProductAbstractListTermNumberOfProductsFail(): void
     {
         $products = range(1, $this->getConfig()->getMaxProductsInProductAbstractList() + 1);
 
         $contentProductAbstractListTermTransfer = (new ContentProductAbstractListTermTransfer())
             ->setIdProductAbstracts($products);
 
-        $contentValidationResponseTransfer = $this->tester->getFacade()->validateContentProductAbstractList($contentProductAbstractListTermTransfer);
+        $contentValidationResponseTransfer = $this->tester->getFacade()->validateContentProductAbstractListTerm($contentProductAbstractListTermTransfer);
 
         $this->assertInstanceOf(ContentValidationResponseTransfer::class, $contentValidationResponseTransfer);
         $this->assertFalse($contentValidationResponseTransfer->getIsSuccess());

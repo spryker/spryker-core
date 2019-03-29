@@ -58,15 +58,15 @@ class ContentProductClientTest extends Unit
     {
         // Arrange
         $contentTypeContextTransfer = new ContentTypeContextTransfer();
-        $contentTypeContextTransfer->getIdContent(static::ID_CONTENT_ITEM);
+        $contentTypeContextTransfer->setIdContent(static::ID_CONTENT_ITEM);
         $contentTypeContextTransfer->setTerm(ContentProductConfig::CONTENT_TERM_PRODUCT_ABSTRACT_LIST);
-        $contentTypeContextTransfer->getParameters(['id_product_abstracts' => [static::ID_PRODUCT_ABSTRACT]]);
+        $contentTypeContextTransfer->setParameters(['id_product_abstracts' => [static::ID_PRODUCT_ABSTRACT]]);
 
         $this->setProductStorageClientReturn($contentTypeContextTransfer);
 
         // Act
         $systemUnderTest = $this->createContentProductClient()
-            ->getContentProductAbstractListType(static::ID_CONTENT_ITEM, static::LOCALE);
+            ->findContentProductAbstractListType(static::ID_CONTENT_ITEM, static::LOCALE);
 
         // Assert
         $this->assertEquals(ContentProductAbstractListTypeTransfer::class, get_class($systemUnderTest));
@@ -79,9 +79,9 @@ class ContentProductClientTest extends Unit
     {
         // Arrange
         $contentTypeContextTransfer = new ContentTypeContextTransfer();
-        $contentTypeContextTransfer->getIdContent(static::ID_CONTENT_ITEM);
+        $contentTypeContextTransfer->setIdContent(static::ID_CONTENT_ITEM);
         $contentTypeContextTransfer->setTerm(static::WRONG_TERM);
-        $contentTypeContextTransfer->getParameters(['id_product_abstracts' => [static::ID_PRODUCT_ABSTRACT]]);
+        $contentTypeContextTransfer->setParameters(['id_product_abstracts' => [static::ID_PRODUCT_ABSTRACT]]);
 
         $this->setProductStorageClientReturn($contentTypeContextTransfer);
 
@@ -90,7 +90,7 @@ class ContentProductClientTest extends Unit
 
         // Act
         $systemUnderTest = $this->createContentProductClient()
-            ->getContentProductAbstractListType(static::ID_CONTENT_ITEM, static::LOCALE);
+            ->findContentProductAbstractListType(static::ID_CONTENT_ITEM, static::LOCALE);
     }
 
     /**
@@ -102,7 +102,7 @@ class ContentProductClientTest extends Unit
 
         // Act
         $systemUnderTest = $this->createContentProductClient()
-            ->getContentProductAbstractListType(static::ID_CONTENT_ITEM, static::LOCALE);
+            ->findContentProductAbstractListType(static::ID_CONTENT_ITEM, static::LOCALE);
 
         // Assert
         $this->assertNull($systemUnderTest);

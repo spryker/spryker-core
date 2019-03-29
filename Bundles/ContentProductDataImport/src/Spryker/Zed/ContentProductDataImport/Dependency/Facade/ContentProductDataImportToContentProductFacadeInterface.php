@@ -17,7 +17,7 @@ interface ContentProductDataImportToContentProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
      */
-    public function validateContentProductAbstractList(
+    public function validateContentProductAbstractListTerm(
         ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
     ): ContentValidationResponseTransfer;
 }

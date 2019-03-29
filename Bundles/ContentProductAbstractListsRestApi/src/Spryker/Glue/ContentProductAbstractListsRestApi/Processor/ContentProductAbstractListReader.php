@@ -71,7 +71,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         }
 
         try {
-            $contentProductAbstractListTypeTransfer = $this->contentProductClient->getContentProductAbstractListType(
+            $contentProductAbstractListTypeTransfer = $this->contentProductClient->findContentProductAbstractListType(
                 (int)$parentResource->getId(),
                 $restRequest->getMetadata()->getLocale()
             );

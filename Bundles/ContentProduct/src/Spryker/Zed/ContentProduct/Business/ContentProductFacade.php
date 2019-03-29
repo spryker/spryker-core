@@ -25,7 +25,7 @@ class ContentProductFacade extends AbstractFacade implements ContentProductFacad
      *
      * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
      */
-    public function validateContentProductAbstractList(
+    public function validateContentProductAbstractListTerm(
         ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
     ): ContentValidationResponseTransfer {
         return $this->getFactory()->createContentProductAbstractListValidator()->validate($contentProductAbstractListTermTransfer);

@@ -67,7 +67,7 @@ class ContentProductAbstractListPrepareLocalizedItemsStep implements DataImportS
             $contentProductAbstractListTermTransfer = (new ContentProductAbstractListTermTransfer())
                 ->setIdProductAbstracts($dataSet[$localeKeyIds]);
 
-            $contentValidationResponseTransfer = $this->contentProductFacade->validateContentProductAbstractList($contentProductAbstractListTermTransfer);
+            $contentValidationResponseTransfer = $this->contentProductFacade->validateContentProductAbstractListTerm($contentProductAbstractListTermTransfer);
 
             if (!$contentValidationResponseTransfer->getIsSuccess()) {
                 $messageTransfer = $contentValidationResponseTransfer->getParameterMessages()
