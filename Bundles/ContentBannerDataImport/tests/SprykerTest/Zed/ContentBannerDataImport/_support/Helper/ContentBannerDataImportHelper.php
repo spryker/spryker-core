@@ -25,6 +25,33 @@ class ContentBannerDataImportHelper extends Module
     }
 
     /**
+     * @param int $locale
+     * @param string $parameter
+     * @param string $value
+     *
+     * @return void
+     */
+    public function assertContentLocalizedParameterHasValue(int $locale, string $parameter, string $value): void
+    {
+        $contentLocalized = $this->getContentLocalizedQuery()->findOneByFkLocale($locale);
+        $parameters = json_decode($contentLocalized->getParameters(), true);
+
+        $this->assertEquals($parameters[$parameter], $value);
+    }
+
+    /**
+     * @param int $locale
+     *
+     * @return void
+     */
+    public function assertContentLocalizedDoesNotExist(int $locale): void
+    {
+        $contentLocalized = $this->getContentLocalizedQuery()->findOneByFkLocale($locale);
+
+        $this->assertNull($contentLocalized);
+    }
+
+    /**
      * @return void
      */
     public function assertDatabaseTableContainsData(): void

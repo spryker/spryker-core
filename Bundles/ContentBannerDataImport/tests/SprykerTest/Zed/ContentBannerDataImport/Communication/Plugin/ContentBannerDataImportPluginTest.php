@@ -106,4 +106,56 @@ class ContentBannerDataImportPluginTest extends Unit
 
         $this->tester->assertDatabaseTableContainsData();
     }
+
+    /**
+     * @return void
+     */
+    public function testUpdateFromDefaultLocale(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty();
+
+        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/content_banner(update_from_default_locale).csv');
+
+        $dataImportConfigurationTransfer = (new DataImporterConfigurationTransfer())
+            ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
+            ->setThrowException(true);
+
+        // Act
+        $dataImporterReportTransfer = (new ContentBannerDataImportPlugin())->import($dataImportConfigurationTransfer);
+
+        // Assert
+        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
+        $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
+
+        $this->tester->assertContentLocalizedParameterHasValue(66, 'alt_text', 'us banner image 1');
+        $this->tester->assertContentLocalizedParameterHasValue(46, 'alt_text', 'de banner image 1');
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateToDefaultLocale(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty();
+
+        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/content_banner(update_to_default_locale).csv');
+
+        $dataImportConfigurationTransfer = (new DataImporterConfigurationTransfer())
+            ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
+            ->setThrowException(true);
+
+        // Act
+        $dataImporterReportTransfer = (new ContentBannerDataImportPlugin())->import($dataImportConfigurationTransfer);
+
+        // Assert
+        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
+        $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
+
+        $this->tester->assertContentLocalizedParameterHasValue(66, 'alt_text', 'us banner image 1');
+        $this->tester->assertContentLocalizedDoesNotExist(46);
+    }
 }
