@@ -17,9 +17,9 @@ interface ContentBannerClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ContentBannerTermTransfer $contentBannerTransfer
+     * @param \Generated\Shared\Transfer\ContentBannerTermTransfer $contentBannerTermTransfer
      *
      * @return array
      */
-    public function execute(ContentBannerTermTransfer $contentBannerTransfer): array;
+    public function execute(ContentBannerTermTransfer $contentBannerTermTransfer): array;
 }

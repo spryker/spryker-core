@@ -18,7 +18,7 @@ class BannerTermExecutor implements ContentTermExecutorInterface
      */
     public function execute(TransferInterface $parameters): array
     {
-        /** @var \Generated\Shared\Transfer\ContentBannerTermTransfer $contentBannerTransfer */
+        /** @var \Generated\Shared\Transfer\ContentBannerTermTransfer $contentBannerTermTransfer */
         $contentBannerTermTransfer = $parameters;
 
         return $contentBannerTermTransfer->toArray();
