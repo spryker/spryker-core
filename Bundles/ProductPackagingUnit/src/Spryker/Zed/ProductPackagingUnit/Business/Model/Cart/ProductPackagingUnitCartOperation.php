@@ -42,9 +42,10 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
                 );
 
                 $currentItemTransfer->setQuantity($newQuantity);
+                $newAmount = $this->sumQuantities($currentItemTransfer->getAmount(), $itemTransfer->getAmount());
 
                 $currentItemTransfer->setAmount(
-                    $currentItemTransfer->getAmount() + $itemTransfer->getAmount()
+                    $newAmount
                 );
 
                 return $quoteTransfer;
@@ -92,7 +93,7 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
                     $currentItemTransfer->getQuantity(),
                     $itemTransfer->getQuantity()
                 );
-                $newAmount = $currentItemTransfer->getAmount() - $itemTransfer->getAmount();
+                $newAmount = $this->subtractQuantities($currentItemTransfer->getAmount(), $itemTransfer->getAmount());
 
                 if ($newQuantity <= 0 || $newAmount < 1) {
                     $quoteTransfer->getItems()->offsetUnset($itemIndex);

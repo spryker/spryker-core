@@ -361,7 +361,9 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitAmountRestrictionValidator(): ProductPackagingUnitAmountRestrictionValidatorInterface
     {
         return new ProductPackagingUnitAmountRestrictionValidator(
-            $this->createProductPackagingUnitReader()
+            $this->createProductPackagingUnitReader(),
+            $this->getUtilPriceService(),
+            $this->getUtilQuantityService()
         );
     }
 

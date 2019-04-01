@@ -79,8 +79,7 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
             ->getProductPackagingUnitAmount()
             ->getDefaultAmount();
 
-        $amountPerQuantity = (int)($itemTransfer->getAmount() / $itemTransfer->getQuantity());
-        $amountPerQuantity = $this->roundPrice($amountPerQuantity);
+        $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
 
         if ($amountPerQuantity === $defaultAmount) {
             return $itemTransfer;

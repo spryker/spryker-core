@@ -71,7 +71,7 @@ class ProductPackagingUnitBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $boxProductConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
-     * @param int $quoteAmount
+     * @param float $quoteAmount
      * @param float $quoteQuantity
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
@@ -79,7 +79,7 @@ class ProductPackagingUnitBusinessTester extends Actor
     public function createCartChangeTransferForProductPackagingUnitValidation(
         ProductConcreteTransfer $boxProductConcreteTransfer,
         ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer,
-        int $quoteAmount,
+        float $quoteAmount,
         float $quoteQuantity
     ): CartChangeTransfer {
         $cartChangeTransfer = (new CartChangeTransfer())
@@ -172,18 +172,18 @@ class ProductPackagingUnitBusinessTester extends Actor
     /**
      * @param string $sku
      * @param float $itemQuantity
-     * @param int $itemAmount
+     * @param float $itemAmount
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
     public function createProductPackagingUnitItemTransfer(
         string $sku,
         float $itemQuantity = 1.0,
-        int $itemAmount = 1
+        float $itemAmount = 1.0
     ): ItemTransfer {
         return (new ItemTransfer())
             ->setSku($sku)
             ->setQuantity($itemQuantity)
-            ->setAmount($itemQuantity);
+            ->setAmount($itemAmount);
     }
 }

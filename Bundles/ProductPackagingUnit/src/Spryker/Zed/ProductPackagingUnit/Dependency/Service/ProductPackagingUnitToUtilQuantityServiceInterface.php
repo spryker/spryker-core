@@ -24,4 +24,12 @@ interface ProductPackagingUnitToUtilQuantityServiceInterface
      * @return float
      */
     public function subtractQuantities(float $firstQuantity, float $secondQuantity): float;
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool;
 }
