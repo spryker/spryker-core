@@ -25,8 +25,8 @@ class ContentBannerFacade extends AbstractFacade implements ContentBannerFacadeI
      *
      * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
      */
-    public function validateContentBanner(ContentBannerTransfer $contentBannerTransfer): ContentValidationResponseTransfer
+    public function validateContentBannerTerm(ContentBannerTransfer $contentBannerTransfer): ContentValidationResponseTransfer
     {
-        return $this->getFactory()->createContentBannerValidator()->validateContentBanner($contentBannerTransfer);
+        return $this->getFactory()->createContentBannerValidator()->validateContentBannerTerm($contentBannerTransfer);
     }
 }

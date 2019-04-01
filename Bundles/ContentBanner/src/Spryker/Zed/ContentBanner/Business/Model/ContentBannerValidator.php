@@ -42,7 +42,7 @@ class ContentBannerValidator implements ContentBannerValidatorInterface
      *
      * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
      */
-    public function validateContentBanner(ContentBannerTransfer $contentBannerTransfer): ContentValidationResponseTransfer
+    public function validateContentBannerTerm(ContentBannerTransfer $contentBannerTransfer): ContentValidationResponseTransfer
     {
         $isSuccess = true;
         $validator = $this->validationAdapter->createValidator();

@@ -42,7 +42,7 @@ class CheckLocalizedItemsStep implements DataImportStepInterface
     {
         $validatedItems = [];
         foreach ($dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_ITEMS] as $idLocale => $attributes) {
-            $validationResult = $this->contentBanner->validateContentBanner($attributes);
+            $validationResult = $this->contentBanner->validateContentBannerTerm($attributes);
 
             if (!$validationResult->getIsSuccess()) {
                 $errorMessages = $this->getErrorMessages($validationResult);

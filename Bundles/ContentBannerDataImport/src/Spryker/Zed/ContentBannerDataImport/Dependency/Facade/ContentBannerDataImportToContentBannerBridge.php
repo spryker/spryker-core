@@ -30,9 +30,9 @@ class ContentBannerDataImportToContentBannerBridge implements ContentBannerDataI
      *
      * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
      */
-    public function validateContentBanner(
+    public function validateContentBannerTerm(
         ContentBannerTransfer $contentBannerTransfer
     ): ContentValidationResponseTransfer {
-        return $this->contentBannerFacade->validateContentBanner($contentBannerTransfer);
+        return $this->contentBannerFacade->validateContentBannerTerm($contentBannerTransfer);
     }
 }

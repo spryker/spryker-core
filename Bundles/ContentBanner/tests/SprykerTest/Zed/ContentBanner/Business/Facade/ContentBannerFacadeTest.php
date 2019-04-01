@@ -39,7 +39,7 @@ class ContentBannerFacadeTest extends Test
             ->setClickUrl('http://some.url')
             ->setImageUrl('http://image.url')
             ->setSubtitle('subtitle text');
-        $validationResult = $this->tester->getFacade()->validateContentBanner($contentBannerTransfer);
+        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTransfer);
 
         $this->assertTrue($validationResult->getIsSuccess());
     }
@@ -56,7 +56,7 @@ class ContentBannerFacadeTest extends Test
             ->setClickUrl('http://some.url')
             ->setImageUrl('http://image.url')
             ->setSubtitle('subtitle text');
-        $validationResult = $this->tester->getFacade()->validateContentBanner($contentBannerTransfer);
+        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTransfer);
 
         $this->assertFalse($validationResult->getIsSuccess());
     }
@@ -72,7 +72,7 @@ class ContentBannerFacadeTest extends Test
             ->setClickUrl('invalid url')
             ->setImageUrl('http://image.url')
             ->setSubtitle('subtitle text');
-        $validationResult = $this->tester->getFacade()->validateContentBanner($contentBannerTransfer);
+        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTransfer);
 
         $this->assertFalse($validationResult->getIsSuccess());
     }
@@ -88,7 +88,7 @@ class ContentBannerFacadeTest extends Test
             ->setClickUrl('http://some.url')
             ->setImageUrl('http://image.url')
             ->setSubtitle('');
-        $validationResult = $this->tester->getFacade()->validateContentBanner($contentBannerTransfer);
+        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTransfer);
 
         $this->assertFalse($validationResult->getIsSuccess());
     }
@@ -105,7 +105,7 @@ class ContentBannerFacadeTest extends Test
             ->setImageUrl('http://image.url')
             ->setSubtitle('Very long text string Lorem ipsum dolor sit amet, consectetur adipiscing elit,
              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
-        $validationResult = $this->tester->getFacade()->validateContentBanner($contentBannerTransfer);
+        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTransfer);
 
         $this->assertFalse($validationResult->getIsSuccess());
     }

@@ -23,5 +23,5 @@ interface ContentBannerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
      */
-    public function validateContentBanner(ContentBannerTransfer $contentBannerTransfer): ContentValidationResponseTransfer;
+    public function validateContentBannerTerm(ContentBannerTransfer $contentBannerTransfer): ContentValidationResponseTransfer;
 }
