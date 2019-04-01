@@ -30,7 +30,7 @@ class ContentBannerDataImportPlugin extends AbstractPlugin implements DataImport
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFacade()->importBanners($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importBannerTerm($dataImporterConfigurationTransfer);
     }
 
     /**
