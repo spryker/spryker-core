@@ -51,6 +51,8 @@ class QuotePermissionGroupReader implements QuotePermissionGroupReaderInterface
      */
     public function findQuotePermissionGroupById(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): QuotePermissionGroupResponseTransfer
     {
+        $quotePermissionGroupTransfer->requireIdQuotePermissionGroup();
+
         $quotePermissionGroupResponseTransfer = new QuotePermissionGroupResponseTransfer();
         $quotePermissionGroupResponseTransfer->setIsSuccessful(false);
 

@@ -18,7 +18,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class CartPermissionGroupsResponseBuilder implements CartPermissionGroupsResponseBuilderInterface
+class CartPermissionGroupResponseBuilder implements CartPermissionGroupResponseBuilderInterface
 {
     /**
      * @var \Spryker\Glue\CartPermissionGroupsRestApi\Processor\Mapper\CartPermissionGroupMapperInterface
@@ -102,7 +102,7 @@ class CartPermissionGroupsResponseBuilder implements CartPermissionGroupsRespons
         return $this->restResourceBuilder->createRestResource(
             CartPermissionGroupsRestApiConfig::RESOURCE_CART_PERMISSION_GROUPS,
             (string)$quotePermissionGroupTransfer->getIdQuotePermissionGroup(),
-            $this->cartPermissionGroupMapper->mapQuotePermissionGroupTransferToRestCartPermissionGroupAttributesTransfer(
+            $this->cartPermissionGroupMapper->mapQuotePermissionGroupTransferToRestCartPermissionGroupsAttributesTransfer(
                 $quotePermissionGroupTransfer,
                 new RestCartPermissionGroupsAttributesTransfer()
             )

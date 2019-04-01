@@ -125,8 +125,8 @@ interface SharedCartClientInterface
 
     /**
      * Specification:
-     *  - Sends Zed Request find quote permission group by id.
-     *  - If quote permission group not found, returns QuotePermissionGroupResponseTransfer with `isSuccess=false`.
+     *  - Sends Zed Request to find quote permission group by id.
+     *  - If quote permission group is not found, returns QuotePermissionGroupResponseTransfer with `isSuccess=false`.
      *
      * @api
      *

@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-interface CartPermissionGroupsResponseBuilderInterface
+interface CartPermissionGroupResponseBuilderInterface
 {
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

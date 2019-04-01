@@ -177,6 +177,7 @@ interface SharedCartFacadeInterface
     /**
      * Specification:
      *  - Finds quote permission group by id.
+     *  - Requires idQuotePermissionGroup field to be set in QuotePermissionGroupTransfer.
      *  - If quote permission group not found, returns QuotePermissionGroupResponseTransfer with `isSuccess=false`.
      *
      * @api

@@ -10,7 +10,7 @@ namespace Spryker\Glue\CartPermissionGroupsRestApi\Processor\CartPermissionGroup
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Spryker\Glue\CartPermissionGroupsRestApi\Dependency\Client\CartPermissionGroupsRestApiToSharedCartClientInterface;
-use Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupsResponseBuilderInterface;
+use Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 class CartPermissionGroupReader implements CartPermissionGroupReaderInterface
@@ -21,20 +21,20 @@ class CartPermissionGroupReader implements CartPermissionGroupReaderInterface
     protected $sharedCartClient;
 
     /**
-     * @var \Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupsResponseBuilderInterface
+     * @var \Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupResponseBuilderInterface
      */
-    protected $cartPermissionGroupsResponseBuilder;
+    protected $cartPermissionGroupResponseBuilder;
 
     /**
      * @param \Spryker\Glue\CartPermissionGroupsRestApi\Dependency\Client\CartPermissionGroupsRestApiToSharedCartClientInterface $sharedCartClient
-     * @param \Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupsResponseBuilderInterface $cartPermissionGroupsResponseBuilder
+     * @param \Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupResponseBuilderInterface $cartPermissionGroupResponseBuilder
      */
     public function __construct(
         CartPermissionGroupsRestApiToSharedCartClientInterface $sharedCartClient,
-        CartPermissionGroupsResponseBuilderInterface $cartPermissionGroupsResponseBuilder
+        CartPermissionGroupResponseBuilderInterface $cartPermissionGroupResponseBuilder
     ) {
         $this->sharedCartClient = $sharedCartClient;
-        $this->cartPermissionGroupsResponseBuilder = $cartPermissionGroupsResponseBuilder;
+        $this->cartPermissionGroupResponseBuilder = $cartPermissionGroupResponseBuilder;
     }
 
     /**
@@ -47,10 +47,10 @@ class CartPermissionGroupReader implements CartPermissionGroupReaderInterface
         );
 
         if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
-            return $this->cartPermissionGroupsResponseBuilder->createEmptyCartPermissionGroupsResponse();
+            return $this->cartPermissionGroupResponseBuilder->createEmptyCartPermissionGroupsResponse();
         }
 
-        return $this->cartPermissionGroupsResponseBuilder->createCartPermissionGroupsCollectionResponse(
+        return $this->cartPermissionGroupResponseBuilder->createCartPermissionGroupsCollectionResponse(
             $quotePermissionGroupResponseTransfer->getQuotePermissionGroups()
         );
     }
@@ -67,10 +67,10 @@ class CartPermissionGroupReader implements CartPermissionGroupReaderInterface
         );
 
         if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
-            return $this->cartPermissionGroupsResponseBuilder->createCartPermissionGroupNotFoundErrorResponse();
+            return $this->cartPermissionGroupResponseBuilder->createCartPermissionGroupNotFoundErrorResponse();
         }
 
-        return $this->cartPermissionGroupsResponseBuilder->createCartPermissionGroupsResponse(
+        return $this->cartPermissionGroupResponseBuilder->createCartPermissionGroupsResponse(
             $quotePermissionGroupResponseTransfer->getQuotePermissionGroups()->offsetGet(0)
         );
     }

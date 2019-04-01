@@ -12,8 +12,8 @@ use Spryker\Glue\CartPermissionGroupsRestApi\Processor\CartPermissionGroup\CartP
 use Spryker\Glue\CartPermissionGroupsRestApi\Processor\CartPermissionGroup\CartPermissionGroupReaderInterface;
 use Spryker\Glue\CartPermissionGroupsRestApi\Processor\Mapper\CartPermissionGroupMapper;
 use Spryker\Glue\CartPermissionGroupsRestApi\Processor\Mapper\CartPermissionGroupMapperInterface;
-use Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupsResponseBuilder;
-use Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupsResponseBuilderInterface;
+use Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupResponseBuilder;
+use Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CartPermissionGroupsRestApiFactory extends AbstractFactory
@@ -27,11 +27,11 @@ class CartPermissionGroupsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupsResponseBuilderInterface
+     * @return \Spryker\Glue\CartPermissionGroupsRestApi\Processor\ResponseBuilder\CartPermissionGroupResponseBuilderInterface
      */
-    public function createCartPermissionGroupsResponseBuilder(): CartPermissionGroupsResponseBuilderInterface
+    public function createCartPermissionGroupResponseBuilder(): CartPermissionGroupResponseBuilderInterface
     {
-        return new CartPermissionGroupsResponseBuilder(
+        return new CartPermissionGroupResponseBuilder(
             $this->createCartPermissionGroupMapper(),
             $this->getResourceBuilder()
         );
@@ -44,7 +44,7 @@ class CartPermissionGroupsRestApiFactory extends AbstractFactory
     {
         return new CartPermissionGroupReader(
             $this->getSharedCartClient(),
-            $this->createCartPermissionGroupsResponseBuilder()
+            $this->createCartPermissionGroupResponseBuilder()
         );
     }
 

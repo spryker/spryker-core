@@ -18,7 +18,7 @@ class CartPermissionGroupMapper implements CartPermissionGroupMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCartPermissionGroupsAttributesTransfer
      */
-    public function mapQuotePermissionGroupTransferToRestCartPermissionGroupAttributesTransfer(
+    public function mapQuotePermissionGroupTransferToRestCartPermissionGroupsAttributesTransfer(
         QuotePermissionGroupTransfer $quotePermissionGroupTransfer,
         RestCartPermissionGroupsAttributesTransfer $restCartPermissionGroupsAttributesTransfer
     ): RestCartPermissionGroupsAttributesTransfer {
