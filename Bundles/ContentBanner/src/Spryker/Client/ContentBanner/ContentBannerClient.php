@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ContentBanner;
 
-use Generated\Shared\Transfer\ContentBannerTermTransfer;
+use Generated\Shared\Transfer\ContentBannerTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -20,14 +20,14 @@ class ContentBannerClient extends AbstractClient implements ContentBannerClientI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ContentBannerTermTransfer $contentBannerTermTransfer
+     * @param \Generated\Shared\Transfer\ContentBannerTransfer $contentBannerTransfer
      *
      * @return array
      */
-    public function execute(ContentBannerTermTransfer $contentBannerTermTransfer): array
+    public function execute(ContentBannerTransfer $contentBannerTransfer): array
     {
         return $this->getFactory()
             ->createBannerTermExecutor()
-            ->execute($contentBannerTermTransfer);
+            ->execute($contentBannerTransfer);
     }
 }

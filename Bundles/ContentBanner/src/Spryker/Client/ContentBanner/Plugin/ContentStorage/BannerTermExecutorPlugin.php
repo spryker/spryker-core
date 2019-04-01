@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ContentBanner\Plugin\ContentStorage;
 
-use Generated\Shared\Transfer\ContentBannerTermTransfer;
+use Generated\Shared\Transfer\ContentBannerTransfer;
 use Spryker\Client\ContentStorageExtension\Dependency\Plugin\ContentTermExecutorPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\ContentBanner\ContentBannerConfig;
@@ -65,13 +65,13 @@ class BannerTermExecutorPlugin extends AbstractPlugin implements ContentTermExec
      *
      * @param array $parameters
      *
-     * @return \Generated\Shared\Transfer\ContentBannerTermTransfer
+     * @return \Generated\Shared\Transfer\ContentBannerTransfer
      */
-    protected function mapParametersToTransferObject(array $parameters): ContentBannerTermTransfer
+    protected function mapParametersToTransferObject(array $parameters): ContentBannerTransfer
     {
-        $contentBannerTermTransfer = new ContentBannerTermTransfer();
-        $contentBannerTermTransfer->fromArray($parameters, true);
+        $contentBannerTransfer = new ContentBannerTransfer();
+        $contentBannerTransfer->fromArray($parameters, true);
 
-        return $contentBannerTermTransfer;
+        return $contentBannerTransfer;
     }
 }
