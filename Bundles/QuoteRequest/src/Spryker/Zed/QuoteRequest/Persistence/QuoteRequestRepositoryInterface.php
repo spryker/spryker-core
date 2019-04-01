@@ -31,4 +31,11 @@ interface QuoteRequestRepositoryInterface
     public function getQuoteRequestVersionCollectionByFilter(
         QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
     ): QuoteRequestVersionCollectionTransfer;
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return int
+     */
+    public function countCustomerQuoteRequests(int $idCompanyUser): int;
 }

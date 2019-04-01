@@ -8,9 +8,7 @@
 namespace Spryker\Zed\QuoteRequest;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
-use Spryker\Shared\QuoteRequest\QuoteRequestConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
@@ -63,26 +61,9 @@ class QuoteRequestConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
-     */
-    public function getQuoteRequestReferenceDefaults()
-    {
-        $sequenceNumberSettingsTransfer = (new SequenceNumberSettingsTransfer())
-            ->setName(QuoteRequestConstants::NAME_QUOTE_REQUEST_REFERENCE);
-
-        $sequenceNumberPrefixParts = [];
-        $sequenceNumberPrefixParts[] = $this->get(QuoteRequestConstants::ENVIRONMENT_PREFIX);
-
-        $prefix = implode($this->getUniqueIdentifierSeparator(), $sequenceNumberPrefixParts) . $this->getUniqueIdentifierSeparator();
-        $sequenceNumberSettingsTransfer->setPrefix($prefix);
-
-        return $sequenceNumberSettingsTransfer;
-    }
-
-    /**
      * @return string
      */
-    protected function getUniqueIdentifierSeparator(): string
+    public function getUniqueIdentifierSeparator(): string
     {
         return '-';
     }

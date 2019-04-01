@@ -9,31 +9,31 @@ namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
-use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
-use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberInterface;
+use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
+use Spryker\Zed\QuoteRequest\QuoteRequestConfig;
 
 class QuoteRequestReferenceGenerator implements QuoteRequestReferenceGeneratorInterface
 {
     /**
-     * @var \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberInterface
+     * @var \Spryker\Zed\QuoteRequest\QuoteRequestConfig
      */
-    protected $facadeSequenceNumber;
+    protected $quoteRequestConfig;
 
     /**
-     * @var \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
+     * @var \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface
      */
-    protected $sequenceNumberSettings;
+    protected $quoteRequestRepository;
 
     /**
-     * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberInterface $sequenceNumberFacade
-     * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
+     * @param \Spryker\Zed\QuoteRequest\QuoteRequestConfig $quoteRequestConfig
+     * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $quoteRequestRepository
      */
     public function __construct(
-        QuoteRequestToSequenceNumberInterface $sequenceNumberFacade,
-        SequenceNumberSettingsTransfer $sequenceNumberSettings
+        QuoteRequestConfig $quoteRequestConfig,
+        QuoteRequestRepositoryInterface $quoteRequestRepository
     ) {
-        $this->facadeSequenceNumber = $sequenceNumberFacade;
-        $this->sequenceNumberSettings = $sequenceNumberSettings;
+        $this->quoteRequestConfig = $quoteRequestConfig;
+        $this->quoteRequestRepository = $quoteRequestRepository;
     }
 
     /**
@@ -44,10 +44,16 @@ class QuoteRequestReferenceGenerator implements QuoteRequestReferenceGeneratorIn
      */
     public function generateQuoteRequestReference(QuoteRequestTransfer $quoteRequestTransfer, string $customerReference)
     {
+        $quoteRequestTransfer->getCompanyUser()->requireIdCompanyUser();
+
+        $customerQuoteRequestCounter = $this->quoteRequestRepository->countCustomerQuoteRequests(
+            $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser()
+        );
+
         return sprintf(
-            '%s-%s',
+            $this->getQuoteRequestFormat(),
             $customerReference,
-            $this->facadeSequenceNumber->generate($this->sequenceNumberSettings)
+            $customerQuoteRequestCounter + 1
         );
     }
 
@@ -62,9 +68,17 @@ class QuoteRequestReferenceGenerator implements QuoteRequestReferenceGeneratorIn
         QuoteRequestVersionTransfer $quoteRequestVersionTransfer
     ): string {
         return sprintf(
-            '%s-%s',
+            $this->getQuoteRequestFormat(),
             $quoteRequestTransfer->getQuoteRequestReference(),
             $quoteRequestVersionTransfer->getVersion()
         );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getQuoteRequestFormat(): string
+    {
+        return '%s' . $this->quoteRequestConfig->getUniqueIdentifierSeparator() . '%s';
     }
 }

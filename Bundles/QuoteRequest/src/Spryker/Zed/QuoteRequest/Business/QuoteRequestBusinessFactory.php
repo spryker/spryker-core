@@ -21,7 +21,6 @@ use Spryker\Zed\QuoteRequest\Business\UserQuoteRequest\UserQuoteRequestWriterInt
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
-use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberInterface;
 use Spryker\Zed\QuoteRequest\QuoteRequestDependencyProvider;
 
 /**
@@ -89,17 +88,9 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     public function createQuoteRequestReferenceGenerator(): QuoteRequestReferenceGeneratorInterface
     {
         return new QuoteRequestReferenceGenerator(
-            $this->getSequenceNumberFacade(),
-            $this->getConfig()->getQuoteRequestReferenceDefaults()
+            $this->getConfig(),
+            $this->getRepository()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberInterface
-     */
-    public function getSequenceNumberFacade(): QuoteRequestToSequenceNumberInterface
-    {
-        return $this->getProvidedDependency(QuoteRequestDependencyProvider::FACADE_SEQUENCE_NUMBER);
     }
 
     /**
