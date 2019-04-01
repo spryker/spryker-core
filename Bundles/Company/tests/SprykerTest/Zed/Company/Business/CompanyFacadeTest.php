@@ -12,7 +12,6 @@ use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
-use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Company\Persistence\CompanyRepository;
 
 /**
@@ -151,44 +150,6 @@ class CompanyFacadeTest extends Test
         $this->tester->haveCompany();
         $companyTypesCollection = $this->getFacade()->getCompanies();
         $this->assertGreaterThan(0, $companyTypesCollection->getCompanies()->count());
-    }
-
-    /**
-     * @return void
-     */
-    public function testFindCompanyByUuidWillFindCompanyWhenItExists(): void
-    {
-        $companyTransfer = $this->tester->haveCompany();
-        $paramCompanyTransfer = (new CompanyTransfer())->setUuid($companyTransfer->getUuid());
-
-        $companyResponseTransfer = $this->getFacade()->findCompanyByUuid($paramCompanyTransfer);
-
-        $this->assertTrue($companyResponseTransfer->getIsSuccessful());
-        $this->assertNotNull($companyResponseTransfer->getCompanyTransfer());
-    }
-
-    /**
-     * @return void
-     */
-    public function testFindCompanyByUuidWillNotFindCompanyWhenItDoesNotExist(): void
-    {
-        $companyTransfer = (new CompanyTransfer())->setUuid(static::NON_EXISTENT_UUID);
-
-        $companyResponseTransfer = $this->getFacade()->findCompanyByUuid($companyTransfer);
-
-        $this->assertFalse($companyResponseTransfer->getIsSuccessful());
-        $this->assertNull($companyResponseTransfer->getCompanyTransfer());
-    }
-
-    /**
-     * @return void
-     */
-    public function testFindCompanyByUuidWillThrowExceptionWhenUuidIsNotProvided(): void
-    {
-        $this->expectException(RequiredTransferPropertyException::class);
-        $companyTransfer = (new CompanyTransfer());
-
-        $this->getFacade()->findCompanyByUuid($companyTransfer);
     }
 
     /**

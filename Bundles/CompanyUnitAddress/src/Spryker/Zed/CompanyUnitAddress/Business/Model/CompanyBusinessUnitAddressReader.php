@@ -91,8 +91,11 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
      */
     public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
     {
+        $companyUnitAddressTransfer->requireUuid();
+
         $companyUnitAddressResponseTransfer = new CompanyUnitAddressResponseTransfer();
-        $companyUnitAddressTransfer = $this->repository->findCompanyBusinessUnitAddressByUuid($companyUnitAddressTransfer);
+        $companyUnitAddressTransfer = $this->repository
+            ->findCompanyBusinessUnitAddressByUuid($companyUnitAddressTransfer->getUuid());
         if (!$companyUnitAddressTransfer) {
             return $companyUnitAddressResponseTransfer->setIsSuccessful(false);
         }

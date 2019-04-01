@@ -94,9 +94,9 @@ interface CompanyRoleRepositoryInterface
     public function findCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): ?CompanyRoleTransfer;
 
     /**
-     * @param string $uuid
+     * @param string $companyRoleUuid
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
      */
-    public function findCompanyRoleByUuid(string $uuid): ?CompanyRoleTransfer;
+    public function findCompanyRoleByUuid(string $companyRoleUuid): ?CompanyRoleTransfer;
 }

@@ -134,30 +134,32 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param string $companyBusinessUnitAddressUuid
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
      */
-    public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): ?CompanyUnitAddressTransfer
+    public function findCompanyBusinessUnitAddressByUuid(string $companyBusinessUnitAddressUuid): ?CompanyUnitAddressTransfer
     {
-        $query = $this->getFactory()
+        /** @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress|null $companyUnitAddressEntity */
+        $companyUnitAddressEntity = $this->getFactory()
             ->createCompanyUnitAddressQuery()
-            ->filterByUuid($companyUnitAddressTransfer->getUuid())
+            ->filterByUuid($companyBusinessUnitAddressUuid)
             ->innerJoinWithCountry()
-            ->leftJoinWithSpyCompanyUnitAddressToCompanyBusinessUnit()
             ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
-                ->leftJoinWithCompanyBusinessUnit()
-            ->endUse();
+                ->leftJoinCompanyBusinessUnit()
+            ->endUse()
+            ->findOne();
 
-        $entityTransfer = $this->buildQueryFromCriteria($query)->find();
-
-        if (!$entityTransfer) {
+        if (!$companyUnitAddressEntity) {
             return null;
         }
 
         return $this->getFactory()
             ->createCompanyUniAddressMapper()
-            ->mapEntityTransferToCompanyUnitAddressTransfer($entityTransfer[0], $companyUnitAddressTransfer);
+            ->mapCompanyUnitAddressEntityToCompanyUnitAddressTransfer(
+                $companyUnitAddressEntity,
+                new CompanyUnitAddressTransfer()
+            );
     }
 
     /**
