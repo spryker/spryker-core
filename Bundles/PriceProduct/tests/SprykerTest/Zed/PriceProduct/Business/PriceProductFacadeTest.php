@@ -808,7 +808,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPriceProductShouldBeRemoved()
+    public function testRemovePriceProductStoreShouldDeletePriceFromDatabase()
     {
         $priceProductFacade = $this->getPriceProductFacade();
 

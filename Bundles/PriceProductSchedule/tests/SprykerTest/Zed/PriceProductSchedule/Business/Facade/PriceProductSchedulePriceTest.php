@@ -62,7 +62,8 @@ class PriceProductSchedulePriceTest extends Unit
 
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime())->modify('-1 hour'),
+                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-1 hour')),
+                PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
                     PriceProductTransfer::MONEY_VALUE => [
@@ -74,7 +75,8 @@ class PriceProductSchedulePriceTest extends Unit
 
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime())->modify('-1 hour'),
+                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-1 hour')),
+                PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
                     PriceProductTransfer::MONEY_VALUE => [
@@ -89,10 +91,10 @@ class PriceProductSchedulePriceTest extends Unit
 
         // Assert
         $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $this->assertTrue($priceProductScheduleEntity->isCurrent());
+        $this->assertTrue($priceProductScheduleEntity->isCurrent(), 'Scheduled price with lowest gross price should have been set as current.');
 
         $priceProductScheduleEntity2 = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
-        $this->assertFalse($priceProductScheduleEntity2->isCurrent());
+        $this->assertFalse($priceProductScheduleEntity2->isCurrent(), 'Scheduled price with biggest gross price should not have been set as current.');
     }
 
     /**
@@ -105,7 +107,8 @@ class PriceProductSchedulePriceTest extends Unit
 
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime())->modify('-1 hour'),
+                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-1 hour')),
+                PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
                     PriceProductTransfer::MONEY_VALUE => [
@@ -118,7 +121,8 @@ class PriceProductSchedulePriceTest extends Unit
 
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime())->modify('-1 hour'),
+                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-1 hour')),
+                PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
                     PriceProductTransfer::MONEY_VALUE => [
@@ -134,9 +138,9 @@ class PriceProductSchedulePriceTest extends Unit
 
         // Assert
         $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $this->assertTrue($priceProductScheduleEntity->isCurrent());
+        $this->assertTrue($priceProductScheduleEntity->isCurrent(), 'Scheduled price with lowest net price should have been set as current.');
 
         $priceProductScheduleEntity2 = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
-        $this->assertFalse($priceProductScheduleEntity2->isCurrent());
+        $this->assertFalse($priceProductScheduleEntity2->isCurrent(), 'Scheduled price with biggest net price should not have been set as current.');
     }
 }

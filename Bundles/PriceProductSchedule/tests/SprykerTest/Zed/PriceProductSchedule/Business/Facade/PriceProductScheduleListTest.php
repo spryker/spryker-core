@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\PriceProductSchedule\Business\Facade;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 
@@ -61,6 +62,8 @@ class PriceProductScheduleListTest extends Unit
 
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
+                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
+                PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleList,
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
@@ -73,6 +76,6 @@ class PriceProductScheduleListTest extends Unit
 
         // Assert
         $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $this->assertFalse($priceProductScheduleEntity->isCurrent());
+        $this->assertFalse($priceProductScheduleEntity->isCurrent(), 'Scheduled price with not active price product schedule list should not have been set as current.');
     }
 }

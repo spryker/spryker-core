@@ -162,7 +162,7 @@ class PriceProductDataHelper extends Module
      *
      * @return int|null
      */
-    protected function getPriceTypeId(string $name): ?int
+    public function getPriceTypeId(string $name): ?int
     {
         $spyPriceTypeEntity = $this->getPriceProductQueryContainer()->queryPriceType($name)->findOne();
 
