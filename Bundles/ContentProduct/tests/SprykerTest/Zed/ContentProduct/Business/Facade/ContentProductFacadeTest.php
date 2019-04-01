@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ContentProduct\Business\Facade;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\ContentProductAbstractListTransfer;
+use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 use Spryker\Zed\ContentProduct\ContentProductConfig;
 
@@ -33,14 +33,14 @@ class ContentProductFacadeTest extends Test
     /**
      * @return void
      */
-    public function testValidateContentProductAbstractListIsSuccessful(): void
+    public function testValidateContentProductAbstractListTermIsSuccessful(): void
     {
         $products = range(1, $this->getConfig()->getMaxProductsInProductAbstractList());
 
-        $contentProductAbstractListTransfer = (new ContentProductAbstractListTransfer())
+        $contentProductAbstractListTermTransfer = (new ContentProductAbstractListTermTransfer())
             ->setIdProductAbstracts($products);
 
-        $contentValidationResponseTransfer = $this->tester->getFacade()->validateContentProductAbstractList($contentProductAbstractListTransfer);
+        $contentValidationResponseTransfer = $this->tester->getFacade()->validateContentProductAbstractListTerm($contentProductAbstractListTermTransfer);
 
         $this->assertInstanceOf(ContentValidationResponseTransfer::class, $contentValidationResponseTransfer);
         $this->assertTrue($contentValidationResponseTransfer->getIsSuccess());
@@ -50,21 +50,21 @@ class ContentProductFacadeTest extends Test
     /**
      * @return void
      */
-    public function testValidateContentProductAbstractListNumberOfProductsFail(): void
+    public function testValidateContentProductAbstractListTermNumberOfProductsFail(): void
     {
         $products = range(1, $this->getConfig()->getMaxProductsInProductAbstractList() + 1);
 
-        $contentProductAbstractListTransfer = (new ContentProductAbstractListTransfer())
+        $contentProductAbstractListTermTransfer = (new ContentProductAbstractListTermTransfer())
             ->setIdProductAbstracts($products);
 
-        $contentValidationResponseTransfer = $this->tester->getFacade()->validateContentProductAbstractList($contentProductAbstractListTransfer);
+        $contentValidationResponseTransfer = $this->tester->getFacade()->validateContentProductAbstractListTerm($contentProductAbstractListTermTransfer);
 
         $this->assertInstanceOf(ContentValidationResponseTransfer::class, $contentValidationResponseTransfer);
         $this->assertFalse($contentValidationResponseTransfer->getIsSuccess());
         $parameter = $contentValidationResponseTransfer->getParameterMessages()
             ->offsetGet(0)
             ->getParameter();
-        $this->assertEquals($parameter, ContentProductAbstractListTransfer::ID_PRODUCT_ABSTRACTS);
+        $this->assertEquals($parameter, ContentProductAbstractListTermTransfer::ID_PRODUCT_ABSTRACTS);
     }
 
     /**

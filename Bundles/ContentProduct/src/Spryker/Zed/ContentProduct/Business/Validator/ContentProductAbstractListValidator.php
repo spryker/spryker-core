@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ContentProduct\Business\Validator;
 
 use Generated\Shared\Transfer\ContentParameterMessageTransfer;
-use Generated\Shared\Transfer\ContentProductAbstractListTransfer;
+use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ContentProduct\ContentProductConfig;
@@ -32,17 +32,17 @@ class ContentProductAbstractListValidator implements ContentProductAbstractListV
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentProductAbstractListTransfer $contentProductAbstractListTransfer
+     * @param \Generated\Shared\Transfer\ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
      *
      * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
      */
     public function validate(
-        ContentProductAbstractListTransfer $contentProductAbstractListTransfer
+        ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
     ): ContentValidationResponseTransfer {
         $contentValidationResponseTransfer = (new ContentValidationResponseTransfer())
             ->setIsSuccess(true);
 
-        $contentParameterMessageTransfer = $this->checkNumberOfProducts($contentProductAbstractListTransfer);
+        $contentParameterMessageTransfer = $this->checkNumberOfProducts($contentProductAbstractListTermTransfer);
 
         if ($contentParameterMessageTransfer->getMessages()->count()) {
             $contentValidationResponseTransfer->setIsSuccess(false)
@@ -53,18 +53,18 @@ class ContentProductAbstractListValidator implements ContentProductAbstractListV
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentProductAbstractListTransfer $contentProductAbstractListTransfer
+     * @param \Generated\Shared\Transfer\ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
      *
      * @return \Generated\Shared\Transfer\ContentParameterMessageTransfer
      */
-    protected function checkNumberOfProducts(ContentProductAbstractListTransfer $contentProductAbstractListTransfer): ContentParameterMessageTransfer
+    protected function checkNumberOfProducts(ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer): ContentParameterMessageTransfer
     {
-        if (count($contentProductAbstractListTransfer->getIdProductAbstracts()) > $this->config->getMaxProductsInProductAbstractList()) {
+        if (count($contentProductAbstractListTermTransfer->getIdProductAbstracts()) > $this->config->getMaxProductsInProductAbstractList()) {
             $message = (new MessageTransfer())->setValue(static::ERROR_MESSAGE_MAX_NUMBER_OF_PRODUCTS)
                 ->setParameters([static::ERROR_MESSAGE_PARAMETER_COUNT => $this->config->getMaxProductsInProductAbstractList()]);
 
-            return (new ContentParameterMessageTransfer())->setParameter(ContentProductAbstractListTransfer::ID_PRODUCT_ABSTRACTS)
-                ->addMessage($message);
+            return (new ContentParameterMessageTransfer())->setParameter(ContentProductAbstractListTermTransfer::ID_PRODUCT_ABSTRACTS)
+                ->addMessages($message);
         }
 
         return new ContentParameterMessageTransfer();

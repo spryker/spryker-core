@@ -7,17 +7,36 @@
 
 namespace Spryker\Client\ContentProduct;
 
-use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermExecutor;
-use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermExecutorInterface;
+use Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface;
+use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermToProductAbstractListTypeExecutor;
+use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermToProductAbstractListTypeExecutorInterface;
+use Spryker\Client\ContentProduct\Resolver\ContentProductAbstractListTermResolver;
+use Spryker\Client\ContentProduct\Resolver\ContentProductAbstractListTermResolverInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ContentProductFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ContentProduct\Executor\ProductAbstractListTermExecutorInterface
+     * @return \Spryker\Client\ContentProduct\Executor\ProductAbstractListTermToProductAbstractListTypeExecutorInterface
      */
-    public function createProductAbstractListTermExecutor(): ProductAbstractListTermExecutorInterface
+    public function createProductAbstractListTermToProductAbstractListTypeExecutor(): ProductAbstractListTermToProductAbstractListTypeExecutorInterface
     {
-        return new ProductAbstractListTermExecutor();
+        return new ProductAbstractListTermToProductAbstractListTypeExecutor();
+    }
+
+    /**
+     * @return \Spryker\Client\ContentProduct\Resolver\ContentProductAbstractListTermResolverInterface
+     */
+    public function createContentProductAbstractListTermResolver(): ContentProductAbstractListTermResolverInterface
+    {
+        return new ContentProductAbstractListTermResolver();
+    }
+
+    /**
+     * @return \Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface
+     */
+    public function getContentStorageClient(): ContentProductToContentStorageClientInterface
+    {
+        return $this->getProvidedDependency(ContentProductDependencyProvider::CLIENT_CONTENT_STORAGE);
     }
 }
