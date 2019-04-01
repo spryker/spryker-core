@@ -10,8 +10,8 @@ namespace Spryker\Client\ContentProduct;
 use Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface;
 use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermToProductAbstractListTypeExecutor;
 use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermToProductAbstractListTypeExecutorInterface;
-use Spryker\Client\ContentProduct\Resolver\ProductAbstractResolver;
-use Spryker\Client\ContentProduct\Resolver\ProductAbstractResolverInterface;
+use Spryker\Client\ContentProduct\Resolver\ContentProductAbstractListTermResolver;
+use Spryker\Client\ContentProduct\Resolver\ContentProductAbstractListTermResolverInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ContentProductFactory extends AbstractFactory
@@ -25,11 +25,11 @@ class ContentProductFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ContentProduct\Resolver\ProductAbstractResolverInterface
+     * @return \Spryker\Client\ContentProduct\Resolver\ContentProductAbstractListTermResolverInterface
      */
-    public function createProductAbstractResolver(): ProductAbstractResolverInterface
+    public function createContentProductAbstractListTermResolver(): ContentProductAbstractListTermResolverInterface
     {
-        return new ProductAbstractResolver();
+        return new ContentProductAbstractListTermResolver();
     }
 
     /**

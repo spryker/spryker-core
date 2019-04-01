@@ -10,7 +10,7 @@ namespace Spryker\Client\ContentProduct\Resolver;
 use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
 
-interface ProductAbstractResolverInterface
+interface ContentProductAbstractListTermResolverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
