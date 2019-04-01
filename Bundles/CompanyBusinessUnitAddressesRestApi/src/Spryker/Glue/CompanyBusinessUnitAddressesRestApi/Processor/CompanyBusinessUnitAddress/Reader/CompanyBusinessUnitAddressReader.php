@@ -63,7 +63,9 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
             (new CompanyUnitAddressTransfer())->setUuid($companyBusinessUnitAddressUuid)
         );
 
-        if (!$companyUnitAddressResponseTransfer->getIsSuccessful()) {
+        if (!$companyUnitAddressResponseTransfer->getIsSuccessful()
+            || !$this->isCurrentCompanyUserAuthorizedToAccessResource($restRequest, $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer())
+        ) {
             return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressNotFoundError();
         }
 
@@ -75,5 +77,20 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
 
         return $this->companyBusinessUnitAddressRestResponseBuilder
             ->createCompanyBusinessUnitAddressRestResponse($companyBusinessUnitAddressUuid, $restCompanyBusinessUnitAddressAttributesTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return bool
+     */
+    protected function isCurrentCompanyUserAuthorizedToAccessResource(
+        RestRequestInterface $restRequest,
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): bool {
+        return $restRequest->getUser()->getRestUser()
+            && $restRequest->getUser()->getRestUser()->getIdCompany()
+            && $restRequest->getUser()->getRestUser()->getIdCompany() === $companyUnitAddressTransfer->getFkCompany();
     }
 }

@@ -63,7 +63,9 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
             (new CompanyBusinessUnitTransfer())->setUuid($companyBusinessUnitUuid)
         );
 
-        if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()) {
+        if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()
+            || !$this->isCurrentCompanyUserAuthorizedToAccessResource($restRequest, $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer())
+        ) {
             return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitNotFoundError();
         }
 
@@ -79,5 +81,20 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
                 $restCompanyBusinessUnitAttributesTransfer,
                 $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()
             );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return bool
+     */
+    protected function isCurrentCompanyUserAuthorizedToAccessResource(
+        RestRequestInterface $restRequest,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): bool {
+        return $restRequest->getUser()->getRestUser()
+            && $restRequest->getUser()->getRestUser()->getIdCompany()
+            && $restRequest->getUser()->getRestUser()->getIdCompany() === $companyBusinessUnitTransfer->getFkCompany();
     }
 }

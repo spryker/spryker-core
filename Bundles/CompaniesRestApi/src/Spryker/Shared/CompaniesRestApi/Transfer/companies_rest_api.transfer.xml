@@ -11,6 +11,7 @@
 
     <transfer name="Company">
         <property name="uuid" type="string" />
+        <property name="idCompany" type="int" />
     </transfer>
 
     <transfer name="CompanyUser">

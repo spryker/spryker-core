@@ -63,7 +63,9 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
             (new CompanyRoleTransfer())->setUuid($companyRoleUuid)
         );
 
-        if (!$companyRoleResponseTransfer->getIsSuccessful()) {
+        if (!$companyRoleResponseTransfer->getIsSuccessful()
+            || !$this->isCurrentCompanyUserAuthorizedToAccessResource($restRequest, $companyRoleResponseTransfer->getCompanyRoleTransfer())
+        ) {
             return $this->companyRoleRestResponseBuilder->createCompanyRoleNotFoundError();
         }
 
@@ -79,5 +81,20 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
                 $restCompanyRoleAttributesTransfer,
                 $companyRoleResponseTransfer->getCompanyRoleTransfer()
             );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return bool
+     */
+    protected function isCurrentCompanyUserAuthorizedToAccessResource(
+        RestRequestInterface $restRequest,
+        CompanyRoleTransfer $companyRoleTransfer
+    ): bool {
+        return $restRequest->getUser()->getRestUser()
+            && $restRequest->getUser()->getRestUser()->getIdCompany()
+            && $restRequest->getUser()->getRestUser()->getIdCompany() === $companyRoleTransfer->getFkCompany();
     }
 }

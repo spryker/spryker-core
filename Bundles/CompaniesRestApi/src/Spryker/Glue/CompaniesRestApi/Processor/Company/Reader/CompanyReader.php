@@ -63,7 +63,9 @@ class CompanyReader implements CompanyReaderInterface
             (new CompanyTransfer())->setUuid($companyUuid)
         );
 
-        if (!$companyResponseTransfer->getIsSuccessful()) {
+        if (!$companyResponseTransfer->getIsSuccessful()
+            || !$this->isCurrentCompanyUserAuthorizedToAccessResource($restRequest, $companyResponseTransfer->getCompanyTransfer())
+        ) {
             return $this->companyRestResponseBuilder->createCompanyNotFoundError();
         }
 
@@ -75,5 +77,20 @@ class CompanyReader implements CompanyReaderInterface
 
         return $this->companyRestResponseBuilder
             ->createCompanyRestResponse($companyUuid, $restCompanyAttributesTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return bool
+     */
+    protected function isCurrentCompanyUserAuthorizedToAccessResource(
+        RestRequestInterface $restRequest,
+        CompanyTransfer $companyTransfer
+    ): bool {
+        return $restRequest->getUser()->getRestUser()
+            && $restRequest->getUser()->getRestUser()->getIdCompany()
+            && $restRequest->getUser()->getRestUser()->getIdCompany() === $companyTransfer->getIdCompany();
     }
 }
