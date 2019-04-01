@@ -9,7 +9,9 @@ namespace Spryker\Glue\ContentBannersRestApi\Processor;
 
 use Generated\Shared\Transfer\RestContentBannerAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Client\ContentBanner\Exception\MissingBannerTermException;
 use Spryker\Glue\ContentBannersRestApi\ContentBannersRestApiConfig;
+use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface;
 use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentStorageClientInterface;
 use Spryker\Glue\ContentBannersRestApi\Mapper\ContentBannerMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -38,18 +40,26 @@ class ContentBannerReader implements ContentBannerReaderInterface
     protected $contentStorageClient;
 
     /**
+     * @var \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface
+     */
+    protected $contentBannerClient;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ContentBannersRestApi\Mapper\ContentBannerMapperInterface $contentBannerMapper
      * @param \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentStorageClientInterface $contentStorageClient
+     * @param \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface $contentBannerClient
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         ContentBannerMapperInterface $contentBannerMapper,
-        ContentBannersRestApiToContentStorageClientInterface $contentStorageClient
+        ContentBannersRestApiToContentStorageClientInterface $contentStorageClient,
+        ContentBannersRestApiToContentBannerClientInterface $contentBannerClient
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->contentBannerMapper = $contentBannerMapper;
         $this->contentStorageClient = $contentStorageClient;
+        $this->contentBannerClient = $contentBannerClient;
     }
 
     /**
@@ -66,21 +76,21 @@ class ContentBannerReader implements ContentBannerReaderInterface
             return $this->addContentBannerIdNotSpecifiedError($response);
         }
 
-        $executedContentStorageTransfer = $this->contentStorageClient->findContentById(
-            (int)$idContentBanner,
-            $restRequest->getMetadata()->getLocale()
-        );
+        try {
+            $executedContentStorageTransfer = $this->contentBannerClient->findBannerById(
+                (int)$idContentBanner,
+                $restRequest->getMetadata()->getLocale()
+            );
+        } catch (MissingBannerTermException $bannerTermException) {
+            return $this->addContentTypeInvalidError($response);
+        }
 
         if (!$executedContentStorageTransfer) {
             return $this->addContentBannerNotFoundError($response);
         }
 
-        if ($executedContentStorageTransfer->getType() !== static::CONTENT_TYPE_BANNER) {
-            return $this->addContentTypeInvalidError($response);
-        }
-
         $restContentBannerAttributes = $this->contentBannerMapper
-            ->mapExecutedContentStorageTransferToRestContentBannerAttributes(
+            ->mapBannerTypeTransferToRestContentBannerAttributes(
                 $executedContentStorageTransfer,
                 new RestContentBannerAttributesTransfer()
             );

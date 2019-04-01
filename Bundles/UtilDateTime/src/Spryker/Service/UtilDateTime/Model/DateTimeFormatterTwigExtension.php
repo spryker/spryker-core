@@ -11,6 +11,9 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Shared\Twig\TwigExtension;
 use Spryker\Shared\Twig\TwigFilter;
 
+/**
+ * @deprecated Use `\Spryker\Service\UtilDateTime\Plugin\Twig\DateTimeFormatterTwigPlugin` instead.
+ */
 class DateTimeFormatterTwigExtension extends TwigExtension
 {
     public const EXTENSION_NAME = 'DateTimeFormatterTwigExtension';

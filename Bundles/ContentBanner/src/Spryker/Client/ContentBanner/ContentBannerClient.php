@@ -7,8 +7,12 @@
 
 namespace Spryker\Client\ContentBanner;
 
+use Generated\Shared\Transfer\BannerTermTransfer;
+use Generated\Shared\Transfer\BannerTypeTransfer;
 use Generated\Shared\Transfer\ContentBannerTransfer;
+use Spryker\Client\ContentBanner\Exception\MissingBannerTermException;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Shared\ContentBanner\ContentBannerConfig;
 
 /**
  * @method \Spryker\Client\ContentBanner\ContentBannerFactory getFactory()
@@ -20,6 +24,8 @@ class ContentBannerClient extends AbstractClient implements ContentBannerClientI
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\ContentBannerTransfer $contentBannerTransfer
      *
      * @return array
@@ -29,5 +35,41 @@ class ContentBannerClient extends AbstractClient implements ContentBannerClientI
         return $this->getFactory()
             ->createBannerTermExecutor()
             ->execute($contentBannerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idContent
+     * @param string $localeName
+     *
+     * @throws \Spryker\Client\ContentBanner\Exception\MissingBannerTermException
+     *
+     * @return \Generated\Shared\Transfer\BannerTypeTransfer|null
+     */
+    public function findBannerById(int $idContent, string $localeName): ?BannerTypeTransfer
+    {
+        $bannerContentTypeContext = $this->getFactory()
+            ->getContentStorageClient()
+            ->findContentTypeContext($idContent, $localeName);
+
+        if (!$bannerContentTypeContext) {
+            return null;
+        }
+
+        $term = $bannerContentTypeContext->getTerm();
+
+        if ($term === ContentBannerConfig::CONTENT_TERM_BANNER) {
+            $bannerTermTransfer = new BannerTermTransfer();
+            $bannerTermTransfer->fromArray($bannerContentTypeContext->getParameters(), true);
+
+            return $this->getFactory()
+                ->createBannerTermToBannerTypeExecutor()
+                ->execute($bannerTermTransfer);
+        }
+
+        throw new MissingBannerTermException(sprintf('There is no ContentBanner Term which can work with the term %s.', $termKey));
     }
 }

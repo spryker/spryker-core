@@ -12,9 +12,11 @@ use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Component\Translation\Translator;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
+ * @deprecated Use `Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin` instead.
+ *
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
@@ -22,14 +24,24 @@ use Twig_Environment;
 class TranslationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
+     * Added for BC reason only.
+     */
+    protected const BC_FEATURE_FLAG_TWIG_TRANSLATOR = 'BC_FEATURE_FLAG_TWIG_TRANSLATOR';
+
+    /**
      * @param \Silex\Application $app
      *
      * @return void
      */
     public function register(Application $app)
     {
+        $app[static::BC_FEATURE_FLAG_TWIG_TRANSLATOR] = true;
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) use ($app) {
+            $app->extend('twig', function (Environment $twig) use ($app) {
+                if (!$app[static::BC_FEATURE_FLAG_TWIG_TRANSLATOR]) {
+                    return $twig;
+                }
+
                 $translator = new Translator($app['locale']);
                 $app['translator'] = $translator;
                 $twig->addExtension(new TranslationExtension($translator));

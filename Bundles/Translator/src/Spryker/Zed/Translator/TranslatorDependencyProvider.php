@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Translator;
 
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Translator\Communication\Plugin\TranslatorPlugin;
 use Spryker\Zed\Translator\Dependency\Facade\TranslatorToLocaleFacadeBridge;
 
 /**
@@ -23,6 +25,8 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
     public const STORE = 'STORE';
 
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
+    public const PLUGIN_TRANSLATOR = 'PLUGIN_TRANSLATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -51,6 +55,7 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addApplication($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addTranslatorPlugin($container);
 
         return $container;
     }
@@ -95,5 +100,27 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslatorPlugin(Container $container): Container
+    {
+        $container->set(static::PLUGIN_TRANSLATOR, function (): TranslatorPluginInterface {
+            return $this->getTranslatorPlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface
+     */
+    protected function getTranslatorPlugin(): TranslatorPluginInterface
+    {
+        return new TranslatorPlugin();
     }
 }

@@ -9,7 +9,7 @@ namespace SprykerTest\Yves\Twig;
 
 use Codeception\Test\Unit;
 use Spryker\Yves\Twig\TwigFactory;
-use Twig_LoaderInterface;
+use Twig\Loader\LoaderInterface;
 
 /**
  * Auto-generated group annotations
@@ -29,6 +29,6 @@ class TwigFactoryTest extends Unit
         $twigFactory = new TwigFactory();
         $filesystemLoader = $twigFactory->createFilesystemLoader();
 
-        $this->assertInstanceOf(Twig_LoaderInterface::class, $filesystemLoader);
+        $this->assertInstanceOf(LoaderInterface::class, $filesystemLoader);
     }
 }

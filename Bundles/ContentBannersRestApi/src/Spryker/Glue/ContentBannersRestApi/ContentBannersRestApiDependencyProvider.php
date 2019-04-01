@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ContentBannersRestApi;
 
+use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientBridge;
 use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentStorageClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
@@ -17,6 +18,7 @@ use Spryker\Glue\Kernel\Container;
 class ContentBannersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CONTENT_STORAGE = 'CLIENT_CONTENT_STORAGE';
+    public const CLIENT_CONTENT_BANNER = 'CLIENT_CONTENT_BANNER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -26,6 +28,7 @@ class ContentBannersRestApiDependencyProvider extends AbstractBundleDependencyPr
     public function provideDependencies(Container $container): Container
     {
         $container = $this->addContentStorageClient($container);
+        $container = $this->addContentBannerClient($container);
 
         return $container;
     }
@@ -38,7 +41,25 @@ class ContentBannersRestApiDependencyProvider extends AbstractBundleDependencyPr
     protected function addContentStorageClient(Container $container): Container
     {
         $container[static::CLIENT_CONTENT_STORAGE] = function (Container $container) {
-            return new ContentBannersRestApiToContentStorageClientBridge($container->getLocator()->contentStorage()->client());
+            return new ContentBannersRestApiToContentStorageClientBridge(
+                $container->getLocator()->contentStorage()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addContentBannerClient(Container $container): Container
+    {
+        $container[static::CLIENT_CONTENT_BANNER] = function (Container $container) {
+            return new ContentBannersRestApiToContentBannerClientBridge(
+                $container->getLocator()->contentBanner()->client()
+            );
         };
 
         return $container;

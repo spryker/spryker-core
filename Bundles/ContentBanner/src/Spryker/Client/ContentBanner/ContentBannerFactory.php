@@ -7,8 +7,11 @@
 
 namespace Spryker\Client\ContentBanner;
 
-use Spryker\Client\ContentBanner\Executor\BannerTermExecutor;
+use Spryker\Client\ContentBanner\Dependency\Client\ContentBannerToContentStorageClientInterface;
+use Spryker\Client\ContentBanner\Executor\BannerTermToBannerTypeExecutor;
+use Spryker\Client\ContentBanner\Executor\BannerTermToBannerTypeExecutorInterface;
 use Spryker\Client\ContentBanner\Executor\ContentTermExecutorInterface;
+use Spryker\Client\ContentBanner\TermExecutor\BannerTermExecutor;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ContentBannerFactory extends AbstractFactory
@@ -19,5 +22,21 @@ class ContentBannerFactory extends AbstractFactory
     public function createBannerTermExecutor(): ContentTermExecutorInterface
     {
         return new BannerTermExecutor();
+    }
+
+    /**
+     * @return \Spryker\Client\ContentBanner\Executor\BannerTermToBannerTypeExecutor
+     */
+    public function createBannerTermToBannerTypeExecutor(): BannerTermToBannerTypeExecutorInterface
+    {
+        return new BannerTermToBannerTypeExecutor();
+    }
+
+    /**
+     * @return \Spryker\Client\ContentBanner\Dependency\Client\ContentBannerToContentStorageClientInterface
+     */
+    public function getContentStorageClient(): ContentBannerToContentStorageClientInterface
+    {
+        return $this->getProvidedDependency(ContentBannerDependencyProvider::CLIENT_CONTENT_STORAGE);
     }
 }
