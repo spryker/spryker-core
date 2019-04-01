@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Content\Dependency\External\ContentToValidationAdapterInterface;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class ContentValidator implements ContentValidatorInterface
 {
@@ -50,24 +51,35 @@ class ContentValidator implements ContentValidatorInterface
         $contentValidationResponseTransfer = new ContentValidationResponseTransfer();
 
         foreach ($this->contentConstraintsProvider->getConstraintsMap() as $parameter => $constraintCollection) {
-            $violations = $validator->validate(
-                $properties[$parameter],
-                $constraintCollection
-            );
-            if (count($violations) !== 0) {
-                $contentParameterMessageTransfer = new ContentParameterMessageTransfer();
-                $contentParameterMessageTransfer->setParameter($parameter);
-
-                foreach ($violations as $violation) {
-                    $contentParameterMessageTransfer->addMessage(
-                        (new MessageTransfer())->setValue($violation->getMessage())
-                    );
-                }
-                $contentValidationResponseTransfer->addParameterMessages($contentParameterMessageTransfer);
+            $violations = $validator->validate($properties[$parameter], $constraintCollection);
+            if (count($violations)) {
+                $contentValidationResponseTransfer->addParameterMessages(
+                    $this->createContentParameterMessageTransfer($parameter, $violations)
+                );
                 $isSuccess = false;
             }
         }
 
         return $contentValidationResponseTransfer->setIsSuccess($isSuccess);
+    }
+
+    /**
+     * @param string $parameter
+     * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
+     *
+     * @return \Generated\Shared\Transfer\ContentParameterMessageTransfer
+     */
+    protected function createContentParameterMessageTransfer(
+        string $parameter,
+        ConstraintViolationListInterface $violations
+    ): ContentParameterMessageTransfer {
+        $contentParameterMessageTransfer = (new ContentParameterMessageTransfer())->setParameter($parameter);
+        foreach ($violations as $violation) {
+            $contentParameterMessageTransfer->addMessage(
+                (new MessageTransfer())->setValue($violation->getMessage())
+            );
+        }
+
+        return $contentParameterMessageTransfer;
     }
 }

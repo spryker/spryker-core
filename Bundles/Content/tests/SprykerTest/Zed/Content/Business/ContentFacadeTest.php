@@ -27,9 +27,6 @@ class ContentFacadeTest extends Test
     private const NAME = 'New name';
     private const PARAMETERS = '{"sku"}';
     private const DESCRIPTION = 'Test description';
-    private const LONG_DESCRIPTION = 'Test description. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
     /**
      * @var \SprykerTest\Zed\Content\ContentBusinessTester
@@ -122,7 +119,7 @@ class ContentFacadeTest extends Test
     {
         $contentTransfer = $this->tester->haveContent();
         $contentTransfer->setName(static::NAME);
-        $contentTransfer->setDescription(static::LONG_DESCRIPTION);
+        $contentTransfer->setDescription(str_repeat(static::DESCRIPTION, 100));
 
         $validationResponse = $this->getFacade()->validateContent($contentTransfer);
 
