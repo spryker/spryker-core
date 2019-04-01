@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface;
 
 class PriceChangeExpander implements PriceChangeExpanderInterface
 {
@@ -31,15 +32,23 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
     protected $utilPriceService;
 
     /**
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ProductPackagingUnitReaderInterface $productPackagingUnitReader,
-        ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService
+        ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService,
+        ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->productPackagingUnitReader = $productPackagingUnitReader;
         $this->utilPriceService = $utilPriceService;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -81,7 +90,7 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
 
         $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
 
-        if ($amountPerQuantity === $defaultAmount) {
+        if ($this->isQuantityEqual($amountPerQuantity, $defaultAmount)) {
             return $itemTransfer;
         }
 
@@ -106,5 +115,16 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
     protected function roundPrice(float $price): int
     {
         return $this->utilPriceService->roundPrice($price);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
     }
 }

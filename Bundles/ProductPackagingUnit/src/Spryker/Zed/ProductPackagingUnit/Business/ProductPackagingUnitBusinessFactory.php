@@ -335,7 +335,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceChangeExpander(
             $this->createProductPackagingUnitReader(),
-            $this->getUtilPriceService()
+            $this->getUtilPriceService(),
+            $this->getUtilQuantityService()
         );
     }
 
