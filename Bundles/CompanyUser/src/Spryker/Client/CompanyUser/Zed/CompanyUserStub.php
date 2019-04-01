@@ -176,16 +176,16 @@ class CompanyUserStub implements CompanyUserStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $customerQueryTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $companyUserQueryTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollectionByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserCollectionTransfer
+    public function getCompanyUserCollectionByQuery(CompanyUserQueryTransfer $companyUserQueryTransfer): CompanyUserCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer */
         $companyUserCollectionTransfer = $this->zedRequestClient->call(
             '/company-user/gateway/get-company-user-collection-by-query',
-            $customerQueryTransfer
+            $companyUserQueryTransfer
         );
 
         return $companyUserCollectionTransfer;

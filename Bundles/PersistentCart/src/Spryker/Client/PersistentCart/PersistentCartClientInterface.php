@@ -111,11 +111,12 @@ interface PersistentCartClientInterface
 
     /**
      * Specification:
+     * - Makes zed request.
+     * - Empty session storage quote if exists.
      * - Retrieves customer quote from database.
-     * - Empty existing quote if exists.
      * - Creates new empty quote if not exists.
      * - Executes QuoteUpdatePluginExecutorInterface plugins.
-     * - Sets quote to session storage.
+     * - Sets quote to quote session storage.
      *
      * @api
      *

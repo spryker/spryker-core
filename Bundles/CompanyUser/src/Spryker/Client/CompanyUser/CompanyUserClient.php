@@ -190,14 +190,14 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $customerQueryTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $companyUserQueryTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollectionByQuery(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserCollectionTransfer
+    public function getCompanyUserCollectionByQuery(CompanyUserQueryTransfer $companyUserQueryTransfer): CompanyUserCollectionTransfer
     {
         return $this->getFactory()
             ->createZedCompanyUserStub()
-            ->getCompanyUserCollectionByQuery($customerQueryTransfer);
+            ->getCompanyUserCollectionByQuery($companyUserQueryTransfer);
     }
 }

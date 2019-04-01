@@ -103,12 +103,12 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $customerQueryTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $companyUserQueryTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollectionByQueryAction(CompanyUserQueryTransfer $customerQueryTransfer): CompanyUserCollectionTransfer
+    public function getCompanyUserCollectionByQueryAction(CompanyUserQueryTransfer $companyUserQueryTransfer): CompanyUserCollectionTransfer
     {
-        return $this->getFacade()->getCompanyUserCollectionByQuery($customerQueryTransfer);
+        return $this->getFacade()->getCompanyUserCollectionByQuery($companyUserQueryTransfer);
     }
 }
