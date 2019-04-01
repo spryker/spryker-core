@@ -77,7 +77,6 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
             }
 
             if ($item->getAmountLeadProduct()->getProduct()->getSku() === $leadProductSku) { // Item in cart has the searched lead product
-                $quantity += $item->getAmount();
                 $quantity = $this->sumQuantities($quantity, $item->getAmount());
             }
         }

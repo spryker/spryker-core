@@ -26,7 +26,7 @@
         <property name="productConcrete" type="ProductConcrete"/>
         <property name="quantity" type="float"/>
         <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
-        <property name="amount" type="int"/>
+        <property name="amount" type="float"/>
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
     </transfer>
 
