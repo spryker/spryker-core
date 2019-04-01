@@ -30,7 +30,7 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     }
 
     /**
-     * @return array
+     * @return \Symfony\Component\Validator\Constraint[]
      */
     private function getTitleConstraints(): array
     {
@@ -42,7 +42,7 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     }
 
     /**
-     * @return array
+     * @return \Symfony\Component\Validator\Constraint[]
      */
     private function getSubtitleConstraints(): array
     {
@@ -54,7 +54,7 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     }
 
     /**
-     * @return array
+     * @return \Symfony\Component\Validator\Constraint[]
      */
     private function getImageUrlConstraints(): array
     {
@@ -67,7 +67,7 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     }
 
     /**
-     * @return array
+     * @return \Symfony\Component\Validator\Constraint[]
      */
     private function getClickUrlConstraints(): array
     {
@@ -80,7 +80,7 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     }
 
     /**
-     * @return array
+     * @return \Symfony\Component\Validator\Constraint[]
      */
     private function getAltTextConstraints(): array
     {
