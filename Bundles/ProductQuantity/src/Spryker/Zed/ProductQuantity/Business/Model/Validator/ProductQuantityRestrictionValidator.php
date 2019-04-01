@@ -134,8 +134,6 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $max = $productQuantityTransfer->getQuantityMax();
         $interval = $productQuantityTransfer->getQuantityInterval();
 
-        dump($quantity);
-
         if (!$this->isQuantityEqual($quantity, 0) && $quantity < $min) {
             $this->addViolation(static::ERROR_QUANTITY_MIN_NOT_FULFILLED, $sku, $min, $quantity, $responseTransfer);
         }
