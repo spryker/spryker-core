@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ShoppingList\PermissionUpdater;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCustomerClientInterface;
 
 class PermissionUpdater implements PermissionUpdaterInterface
@@ -30,8 +31,11 @@ class PermissionUpdater implements PermissionUpdaterInterface
     public function updateCompanyUserPermissions(): void
     {
         $customerTransfer = $this->customerClient->getCustomer();
-        $updatedCustomerTransfer = $this->customerClient->getCustomerByEmail($customerTransfer);
+        $newCustomerTransfer = (new CustomerTransfer())
+            ->setIdCustomer($customerTransfer->getIdCustomer())
+            ->setCompanyUserTransfer($customerTransfer->getCompanyUserTransfer());
 
+        $updatedCustomerTransfer = $this->customerClient->getCustomerByEmail($newCustomerTransfer);
         $this->customerClient->setCustomer($updatedCustomerTransfer);
     }
 }

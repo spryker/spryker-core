@@ -55,7 +55,8 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->createTranslationSaver(),
             $this->createAbstractProductOptionSaver(),
-            $this->createProductOptionValueSaver()
+            $this->createProductOptionValueSaver(),
+            $this->getProductOptionValuesPreRemovePlugins()
         );
     }
 
@@ -254,5 +255,13 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     public function getUtilPriceService(): ProductOptionToUtilPriceServiceInterface
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::SERVICE_UTIL_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[]
+     */
+    protected function getProductOptionValuesPreRemovePlugins(): array
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE);
     }
 }

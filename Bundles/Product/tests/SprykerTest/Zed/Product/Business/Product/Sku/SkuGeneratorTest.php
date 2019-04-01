@@ -104,7 +104,7 @@ class SkuGeneratorTest extends FacadeTestAbstract
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface
      */
     protected function createUtilTextServiceMock()
     {

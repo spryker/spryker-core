@@ -29,6 +29,14 @@ interface CategoryRepositoryInterface
     public function getNodePath(int $idCategoryNode, LocaleTransfer $localeTransfer);
 
     /**
+     * @param int $idNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getCategoryNodePath(int $idNode, LocaleTransfer $localeTransfer): string;
+
+    /**
      * @param string $nodeName
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *

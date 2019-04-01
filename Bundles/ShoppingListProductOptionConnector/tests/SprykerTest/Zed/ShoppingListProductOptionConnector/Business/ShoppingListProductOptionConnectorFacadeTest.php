@@ -11,11 +11,14 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
+use Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionStoragePlugin;
 use Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOptionConnectorBusinessFactory;
 use SprykerTest\Zed\ShoppingListProductOptionConnector\Stub\ShoppingListProductOptionConnectorConfigStub;
@@ -40,17 +43,37 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     /**
      * @var \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    protected $shoppingListItemTransfer;
+    protected $shoppingListItemTransferAssigned;
+
+    /**
+     * @var \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    protected $shoppingListItemTransferUnassigned;
 
     /**
      * @var \Generated\Shared\Transfer\ProductOptionValueTransfer
      */
-    protected $productOptionValueTransfer1;
+    protected $productOptionValueTransferActive;
 
     /**
      * @var \Generated\Shared\Transfer\ProductOptionValueTransfer
      */
-    protected $productOptionValueTransfer2;
+    protected $productOptionValueTransferActive2;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductOptionValueTransfer
+     */
+    protected $productOptionValueTransferInactive;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected $productConcreteTransferAssigned;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected $productConcreteTransferUnassigned;
 
     /**
      * @return void
@@ -60,9 +83,12 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         parent::setUp();
 
         $config = new ShoppingListProductOptionConnectorConfigStub();
+
         $factory = new ShoppingListProductOptionConnectorBusinessFactory();
         $factory->setConfig($config);
-        $this->tester->getFacade()->setFactory($factory);
+
+        $facade = $this->tester->getFacade();
+        $facade->setFactory($factory);
 
         $this->tester->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE, [
             new ShoppingListPermissionStoragePlugin(),
@@ -77,8 +103,8 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     protected function prepareData(): void
     {
         $customerTransfer = $this->tester->haveCustomer();
-        $productTransfer = $this->tester->haveProduct();
-        $productTransfer2 = $this->tester->haveProduct();
+        $this->productConcreteTransferAssigned = $this->tester->haveProduct();
+        $this->productConcreteTransferUnassigned = $this->tester->haveProduct();
         $companyTransfer = $this->tester->haveCompany();
 
         $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
@@ -96,51 +122,132 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
             ShoppingListTransfer::ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
         ]);
 
-        $this->shoppingListItemTransfer = $this->tester->haveShoppingListItem([
+        $this->shoppingListItemTransferAssigned = $this->tester->haveShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
             ShoppingListItemTransfer::QUANTITY => 1,
-            ShoppingListItemTransfer::SKU => $productTransfer->getSku(),
+            ShoppingListItemTransfer::SKU => $this->productConcreteTransferAssigned->getSku(),
         ]);
 
-        $this->productOptionValueTransfer1 = $this->tester->createProductOptionGroupValueTransfer($productTransfer->getSku());
-        $this->productOptionValueTransfer2 = $this->tester->createProductOptionGroupValueTransfer($productTransfer2->getSku());
+        $this->shoppingListItemTransferUnassigned = $this->tester->haveShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $this->productConcreteTransferUnassigned->getSku(),
+        ]);
+
+        // set createProductOptionGroupValue to Active ProductOptionGroup
+        $this->productOptionValueTransferActive = $this->tester->createProductOptionGroupValueTransfer(
+            [
+                ProductOptionValueTransfer::SKU => 'PO_Group_0_Value_1',
+                ProductOptionGroupTransfer::ACTIVE => true,
+            ]
+        );
+        // set createProductOptionGroupValue to Active ProductOptionGroup
+        $this->productOptionValueTransferActive2 = $this->tester->createProductOptionGroupValueTransfer(
+            [
+                ProductOptionValueTransfer::SKU => 'PO_Group_2_Value_1',
+                ProductOptionGroupTransfer::ACTIVE => true,
+            ]
+        );
+        // set createProductOptionGroupValue to Inactive ProductOptionGroup
+        $this->productOptionValueTransferInactive = $this->tester->createProductOptionGroupValueTransfer(
+            [
+                ProductOptionValueTransfer::SKU => 'PO_Group_3',
+                ProductOptionGroupTransfer::ACTIVE => false,
+            ]
+        );
+
+        // Assign Product Abstract to createProductOptionGroupValue with Active ProductOptionGroup
+        $this->getProductOptionFacade()->addProductAbstractToProductOptionGroup($this->productConcreteTransferAssigned->getAbstractSku(), $this->productOptionValueTransferActive->getFkProductOptionGroup());
+        // Assign Product Abstract to createProductOptionGroupValue with Active ProductOptionGroup
+        $this->getProductOptionFacade()->addProductAbstractToProductOptionGroup($this->productConcreteTransferAssigned->getAbstractSku(), $this->productOptionValueTransferActive2->getFkProductOptionGroup());
+        // Assign Product Abstract to createProductOptionGroupValue with Inactive ProductOptionGroup
+        $this->getProductOptionFacade()->addProductAbstractToProductOptionGroup($this->productConcreteTransferAssigned->getAbstractSku(), $this->productOptionValueTransferInactive->getFkProductOptionGroup());
+        /*
+         * $this->shoppingListItemTransferUnassigned have $productTransfer2 that remains unassigned to any ProductOptionGroup
+         */
     }
 
     /**
      * @return void
      */
-    public function testSaveShoppingListItemProductOptionsSavesWithSetUpOptions(): void
+    public function testSaveShoppingListItemProductOptionsAssignedToGroupSavesWithSetUpActiveOptions(): void
     {
-        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-            ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem())
+        // Arrange
+        $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
             ->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransfer1->getIdProductOptionValue()
+                    $this->productOptionValueTransferActive->getIdProductOptionValue()
                 )
             )->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransfer2->getIdProductOptionValue()
+                    $this->productOptionValueTransferActive2->getIdProductOptionValue()
+                )
+            )->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferInactive->getIdProductOptionValue()
                 )
             );
 
         $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
-        $actualResult = $this->tester
-            ->getFacade()
-            ->expandShoppingListItemWithProductOptions(
-                $this->shoppingListItemTransfer
-            );
 
         $expectedResult = [
-            $this->productOptionValueTransfer1->getIdProductOptionValue(),
-            $this->productOptionValueTransfer2->getIdProductOptionValue(),
+            $this->productOptionValueTransferActive->getIdProductOptionValue(),
+            $this->productOptionValueTransferActive2->getIdProductOptionValue(),
         ];
 
+        // Act
+        $actualResult = $this->tester->getFacade()
+            ->expandShoppingListItemWithProductOptions(
+                $this->getAssignedShoppingListItemCopy()
+            );
+
+        // Assert
+        foreach ($actualResult->getProductOptions() as $productOption) {
+            $this->assertContains($productOption->getIdProductOptionValue(), $expectedResult);
+        }
+        $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveShoppingListItemProductOptionsUnassignedToAnyGroupSavesWithoutAnyOfSetUpOptions(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+            ->setIdShoppingListItem($this->shoppingListItemTransferUnassigned->getIdShoppingListItem())
+            ->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferActive->getIdProductOptionValue()
+                )
+            )
+            ->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferActive2->getIdProductOptionValue()
+                )
+            )->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferInactive->getIdProductOptionValue()
+                )
+            );
+
+        $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+
+        $expectedResult = [];
+
+        // Act
+        $actualResult = $this->tester->getFacade()
+            ->expandShoppingListItemWithProductOptions(
+                $this->getUnassignedShoppingListItemCopy()
+            );
+
+        // Assert
         foreach ($actualResult->getProductOptions() as $productOption) {
             $this->assertContains($productOption->getIdProductOptionValue(), $expectedResult);
         }
 
-        // Assert
         $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
     }
 
@@ -149,14 +256,15 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testSaveShoppingListItemProductOptionsSavesWithoutSetUpOptions(): void
     {
-        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-            ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+        // Arrange
+        $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy();
 
         $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
-        $actualResult = $this->tester
-            ->getFacade()
+
+        // Act
+        $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemWithProductOptions(
-                $this->shoppingListItemTransfer
+                $this->getAssignedShoppingListItemCopy()
             );
 
         // Assert
@@ -166,35 +274,41 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveShoppingListItemProductOptionsRemovesOldOptionAndSavesNewOption(): void
+    public function testSaveShoppingListItemProductOptionsAssignedToGroupRemovesOldOptionAndSavesOnlyNewActiveOption(): void
     {
-        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-            ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem())
+        // Arrange
+        $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
             ->addProductOption(
                 (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransfer1->getIdProductOptionValue()
-                )
-            );
-        $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
-
-        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-            ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem())
-            ->addProductOption(
-                (new ProductOptionTransfer())->setIdProductOptionValue(
-                    $this->productOptionValueTransfer2->getIdProductOptionValue()
+                    $this->productOptionValueTransferActive->getIdProductOptionValue()
                 )
             );
 
+        // Act
         $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
 
-        $actualResult = $this->tester
-            ->getFacade()
+        // Arrange
+        $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
+            ->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferActive2->getIdProductOptionValue()
+                )
+            )->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferInactive->getIdProductOptionValue()
+                )
+            );
+
+        // Act
+        $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+
+        $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemWithProductOptions(
-                $this->shoppingListItemTransfer
+                $this->getAssignedShoppingListItemCopy()
             );
 
         $expectedResult = [
-            $this->productOptionValueTransfer2->getIdProductOptionValue(),
+            $this->productOptionValueTransferActive2->getIdProductOptionValue(),
         ];
 
         // Assert
@@ -207,20 +321,63 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandItemWithProductOptions(): void
+    public function testDeleteShoppingListItemProductOptionsByRemovedProductOptionValuesRemovesMarkedForRemovalProductOptions(): void
     {
-        $this->tester->cleanUpShoppingListProductOptionConnectorByIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
-        $this->tester->assureShoppingListProductOptionConnector($this->shoppingListItemTransfer->getIdShoppingListItem(), $this->productOptionValueTransfer1->getIdProductOptionValue());
-        $this->tester->assureShoppingListProductOptionConnector($this->shoppingListItemTransfer->getIdShoppingListItem(), $this->productOptionValueTransfer2->getIdProductOptionValue());
+        // Arrange
+        $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
+            ->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferActive->getIdProductOptionValue()
+                )
+            )
+            ->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferActive2->getIdProductOptionValue()
+                )
+            );
 
-        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-            ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+        // Act
+        $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
 
+        $this->tester->getFacade()
+            ->deleteShoppingListItemProductOptionsByRemovedProductOptionValues(
+                (new ProductOptionGroupTransfer())
+                    ->addProductOptionValuesToBeRemoved($this->productOptionValueTransferActive2->getIdProductOptionValue())
+            );
+
+        $actualResult = $this->tester->getFacade()
+            ->expandShoppingListItemWithProductOptions(
+                $this->getAssignedShoppingListItemCopy()
+            );
+
+        $expectedResult = [
+            $this->productOptionValueTransferActive->getIdProductOptionValue(),
+        ];
+
+        // Assert
+        $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
+        foreach ($actualResult->getProductOptions() as $productOption) {
+            $this->assertContains($productOption->getIdProductOptionValue(), $expectedResult);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandShoppingListItemWithProductOptionsAssignedToGroupExpandsOnlyWithActiveOptions(): void
+    {
+        // Arrange
+        $this->tester->cleanUpShoppingListProductOptionConnectorByIdShoppingListItem($this->shoppingListItemTransferAssigned->getIdShoppingListItem());
+        $this->tester->assureShoppingListProductOptionConnector($this->shoppingListItemTransferAssigned->getIdShoppingListItem(), $this->productOptionValueTransferActive->getIdProductOptionValue());
+        $this->tester->assureShoppingListProductOptionConnector($this->shoppingListItemTransferAssigned->getIdShoppingListItem(), $this->productOptionValueTransferInactive->getIdProductOptionValue());
+
+        $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy();
+
+        // Act
         $actualResult = $this->tester->getFacade()->expandShoppingListItemWithProductOptions($shoppingListItemTransfer);
 
         $expectedResult = [
-            $this->productOptionValueTransfer1->getIdProductOptionValue(),
-            $this->productOptionValueTransfer2->getIdProductOptionValue(),
+            $this->productOptionValueTransferActive->getIdProductOptionValue(),
         ];
 
         // Assert
@@ -235,16 +392,15 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testExpandItemWithProductOption(): void
     {
-        $this->tester->cleanUpShoppingListProductOptionConnectorByIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
-        $this->tester->assureShoppingListProductOptionConnector($this->shoppingListItemTransfer->getIdShoppingListItem(), $this->productOptionValueTransfer1->getIdProductOptionValue());
+        $this->tester->cleanUpShoppingListProductOptionConnectorByIdShoppingListItem($this->shoppingListItemTransferAssigned->getIdShoppingListItem());
+        $this->tester->assureShoppingListProductOptionConnector($this->shoppingListItemTransferAssigned->getIdShoppingListItem(), $this->productOptionValueTransferActive->getIdProductOptionValue());
 
-        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-            ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+        $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy();
 
         $actualResult = $this->tester->getFacade()->expandShoppingListItemWithProductOptions($shoppingListItemTransfer);
 
         $expectedResult = [
-            $this->productOptionValueTransfer1->getIdProductOptionValue(),
+            $this->productOptionValueTransferActive->getIdProductOptionValue(),
         ];
 
         // Assert
@@ -259,10 +415,11 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testExpandItemWithoutProductOption(): void
     {
-        $this->tester->cleanUpShoppingListProductOptionConnectorByIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
-        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-            ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+        // Arrange
+        $this->tester->cleanUpShoppingListProductOptionConnectorByIdShoppingListItem($this->shoppingListItemTransferAssigned->getIdShoppingListItem());
+        $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy();
 
+        // Act
         $actualResult = $this->tester->getFacade()->expandShoppingListItemWithProductOptions($shoppingListItemTransfer);
 
         // Assert
@@ -276,32 +433,29 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
      */
     public function testExpandShoppingListItemWithProductOptions(): void
     {
-        // Prepare
-        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-            ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
-
+        // Arrange
         $shoppingListProductOption1 = (new SpyShoppingListProductOption())
-            ->setFkProductOptionValue($this->productOptionValueTransfer1->getIdProductOptionValue())
-            ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+            ->setFkProductOptionValue($this->productOptionValueTransferActive->getIdProductOptionValue())
+            ->setFkShoppingListItem($this->shoppingListItemTransferAssigned->getIdShoppingListItem());
         $shoppingListProductOption1->save();
 
         $shoppingListProductOption2 = (new SpyShoppingListProductOption())
-            ->setFkProductOptionValue($this->productOptionValueTransfer2->getIdProductOptionValue())
-            ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+            ->setFkProductOptionValue($this->productOptionValueTransferInactive->getIdProductOptionValue())
+            ->setFkShoppingListItem($this->shoppingListItemTransferAssigned->getIdShoppingListItem());
         $shoppingListProductOption2->save();
 
-        // Action
-        $actualResult = $this->tester->getFacade()->expandShoppingListItemWithProductOptions(
-            $shoppingListItemTransfer
-        );
+        // Act
+        $actualResult = $this->tester->getFacade()
+            ->expandShoppingListItemWithProductOptions(
+                $this->getAssignedShoppingListItemCopy()
+            );
 
         $expectedProductOptionValueIds = [
-            $this->productOptionValueTransfer1->getIdProductOptionValue(),
-            $this->productOptionValueTransfer2->getIdProductOptionValue(),
+            $this->productOptionValueTransferActive->getIdProductOptionValue(),
         ];
 
         // Assert
-        $this->assertCount(2, $actualResult->getProductOptions());
+        $this->assertCount(1, $actualResult->getProductOptions());
         foreach ($actualResult->getProductOptions() as $productOption) {
             $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $expectedProductOptionValueIds));
         }
@@ -315,8 +469,8 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
         // Prepare
         $shoppingListItemTransfer = new ShoppingListItemTransfer();
         $productOptionTransfer = (new ProductOptionTransfer())
-            ->setIdProductOptionValue($this->productOptionValueTransfer1->getIdProductOptionValue())
-            ->setValue($this->productOptionValueTransfer1->getValue());
+            ->setIdProductOptionValue($this->productOptionValueTransferActive->getIdProductOptionValue())
+            ->setValue($this->productOptionValueTransferActive->getValue());
         $itemTransfer = (new ItemTransfer())->addProductOption($productOptionTransfer);
 
         // Action
@@ -336,27 +490,139 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     public function testRemoveShoppingListItemProductOptions(): void
     {
         $shoppingListProductOption1 = (new SpyShoppingListProductOption())
-            ->setFkProductOptionValue($this->productOptionValueTransfer1->getIdProductOptionValue())
-            ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+            ->setFkProductOptionValue($this->productOptionValueTransferActive->getIdProductOptionValue())
+            ->setFkShoppingListItem($this->shoppingListItemTransferAssigned->getIdShoppingListItem());
         $shoppingListProductOption1->save();
 
         $shoppingListProductOption2 = (new SpyShoppingListProductOption())
-            ->setFkProductOptionValue($this->productOptionValueTransfer2->getIdProductOptionValue())
-            ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+            ->setFkProductOptionValue($this->productOptionValueTransferInactive->getIdProductOptionValue())
+            ->setFkShoppingListItem($this->shoppingListItemTransferAssigned->getIdShoppingListItem());
         $shoppingListProductOption2->save();
 
-        $this->tester
-            ->getFacade()
+        $this->tester->getFacade()
             ->removeShoppingListItemProductOptions(
-                $this->shoppingListItemTransfer->getIdShoppingListItem()
+                $this->shoppingListItemTransferAssigned->getIdShoppingListItem()
             );
 
-        $actualResult = $this->tester
-            ->getFacade()
+        $actualResult = $this->tester->getFacade()
             ->expandShoppingListItemWithProductOptions(
-                $this->shoppingListItemTransfer
+                $this->getAssignedShoppingListItemCopy()
             );
 
         $this->assertEmpty($actualResult->getProductOptions());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandShoppingListItemWithProductOptionsFirstUnassignedToGroupAndHadHadNotOptionsThenAssignedAgainExpandsAgainWithOption(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = $this->getUnassignedShoppingListItemCopy()
+            ->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferActive->getIdProductOptionValue()
+                )
+            );
+
+        // Act
+        $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+
+        $actualResult = $this->tester->getFacade()
+            ->expandShoppingListItemWithProductOptions(
+                $this->getUnassignedShoppingListItemCopy()
+            );
+
+        // Assert
+        $this->assertEmpty($actualResult->getProductOptions());
+
+        $this->getProductOptionFacade()->addProductAbstractToProductOptionGroup($this->productConcreteTransferUnassigned->getAbstractSku(), $this->productOptionValueTransferActive->getFkProductOptionGroup());
+
+        //Act
+        $actualResult = $this->tester->getFacade()
+            ->expandShoppingListItemWithProductOptions(
+                $this->getUnassignedShoppingListItemCopy()
+            );
+
+        // Assert
+        $expectedResult = [
+            $this->productOptionValueTransferActive->getIdProductOptionValue(),
+        ];
+
+        // Assert
+        $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
+        foreach ($actualResult->getProductOptions() as $productOption) {
+            $this->assertContains($productOption->getIdProductOptionValue(), $expectedResult);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandShoppingListItemWithProductOptionsFirstInactiveGroupHadHadNotOptionsThenActiveAgainExpandsAgainWithOption(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
+            ->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferInactive->getIdProductOptionValue()
+                )
+            );
+
+        // Act
+        $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+
+        $actualResult = $this->tester->getFacade()
+            ->expandShoppingListItemWithProductOptions(
+                $this->getAssignedShoppingListItemCopy()
+            );
+
+        // Assert
+        $this->assertEmpty($actualResult->getProductOptions());
+
+        $this->getProductOptionFacade()->toggleOptionActive($this->productOptionValueTransferInactive->getFkProductOptionGroup(), true);
+
+        //Act
+        $actualResult = $this->tester->getFacade()
+            ->expandShoppingListItemWithProductOptions(
+                $this->getAssignedShoppingListItemCopy()
+            );
+
+        // Assert
+        $expectedResult = [
+            $this->productOptionValueTransferInactive->getIdProductOptionValue(),
+        ];
+
+        // Assert
+        $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
+        foreach ($actualResult->getProductOptions() as $productOption) {
+            $this->assertContains($productOption->getIdProductOptionValue(), $expectedResult);
+        }
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface
+     */
+    protected function getProductOptionFacade(): ProductOptionFacadeInterface
+    {
+        return $this->tester->getLocator()->productOption()->facade();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    protected function getAssignedShoppingListItemCopy(): ShoppingListItemTransfer
+    {
+        return (new ShoppingListItemTransfer())
+            ->fromArray($this->shoppingListItemTransferAssigned->toArray());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    protected function getUnassignedShoppingListItemCopy(): ShoppingListItemTransfer
+    {
+        return (new ShoppingListItemTransfer())
+            ->fromArray($this->shoppingListItemTransferUnassigned->toArray());
     }
 }

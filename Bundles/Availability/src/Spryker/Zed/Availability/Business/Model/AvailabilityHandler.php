@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
+use Generated\Shared\Transfer\AvailabilityNotificationDataTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Spryker\Shared\Availability\AvailabilityConfig;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
+use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
@@ -57,6 +60,11 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected $utilQuantityService;
 
     /**
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface
+     */
+    protected $eventFacade;
+
+    /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface $touchFacade
@@ -64,6 +72,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface $productFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface $utilQuantityService
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface $eventFacade
      */
     public function __construct(
         SellableInterface $sellable,
@@ -72,7 +81,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         AvailabilityQueryContainerInterface $queryContainer,
         AvailabilityToProductInterface $productFacade,
         AvailabilityToStoreFacadeInterface $storeFacade,
-        AvailabilityToUtilQuantityServiceInterface $utilQuantityService
+        AvailabilityToUtilQuantityServiceInterface $utilQuantityService,
+        AvailabilityToEventFacadeInterface $eventFacade
     ) {
         $this->sellable = $sellable;
         $this->stockFacade = $stockFacade;
@@ -81,6 +91,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $this->productFacade = $productFacade;
         $this->storeFacade = $storeFacade;
         $this->utilQuantityService = $utilQuantityService;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -153,17 +164,21 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function saveAndTouchAvailability($sku, $quantity, StoreTransfer $storeTransfer)
     {
-        $currentQuantity = $this->findCurrentPhysicalQuantity($sku, $storeTransfer);
+        $currentQuantity = $this->findCurrentPhysicalQuantity($sku, $storeTransfer) ?? 0;
         $spyAvailabilityEntity = $this->prepareAvailabilityEntityForSave($sku, $quantity, $storeTransfer);
-
         $isNeverOutOfStockModified = $spyAvailabilityEntity->isColumnModified(SpyAvailabilityTableMap::COL_IS_NEVER_OUT_OF_STOCK);
+        $isAvailabilityChanged = $this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified;
 
         $spyAvailabilityEntity->save();
 
         $this->updateAbstractAvailabilityQuantity($spyAvailabilityEntity->getFkAvailabilityAbstract(), $storeTransfer);
 
-        if ($this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified) {
+        if ($isAvailabilityChanged) {
             $this->touchAvailabilityAbstract($spyAvailabilityEntity->getFkAvailabilityAbstract());
+        }
+
+        if ($isAvailabilityChanged && ($quantity > 0 || $spyAvailabilityEntity->getIsNeverOutOfStock() === true)) {
+            $this->triggerProductIsAvailableAgainEvent($sku, $storeTransfer);
         }
 
         return $spyAvailabilityEntity;
@@ -335,5 +350,22 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $availableAbstractEntity->save();
 
         return $availableAbstractEntity;
+    }
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return void
+     */
+    protected function triggerProductIsAvailableAgainEvent(string $sku, StoreTransfer $storeTransfer): void
+    {
+        $availabilityNotificationDataTransfer = (new AvailabilityNotificationDataTransfer())
+            ->setSku($sku)
+            ->setStore($storeTransfer);
+        $this->eventFacade->trigger(
+            AvailabilityEvents::AVAILABILITY_NOTIFICATION,
+            $availabilityNotificationDataTransfer
+        );
     }
 }

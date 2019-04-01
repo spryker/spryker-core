@@ -72,7 +72,7 @@ class CurrencyPersistenceTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface
      */
     protected function createSessionClientMock()
     {
@@ -80,7 +80,7 @@ class CurrencyPersistenceTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Store
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Store
      */
     protected function createStoreMock()
     {

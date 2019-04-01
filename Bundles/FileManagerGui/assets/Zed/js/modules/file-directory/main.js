@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 var fileDirectoryTree = require('./file-directory-tree');
 
 $(document).ready(function() {

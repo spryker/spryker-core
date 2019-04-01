@@ -950,7 +950,7 @@ class DiscountFacadeTest extends Unit
 
     /**
      * @param string $dependencyType
-     * @param \PHPUnit_Framework_MockObject_MockObject $discountRulePluginMock
+     * @param \PHPUnit\Framework\MockObject\MockObject $discountRulePluginMock
      *
      * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
@@ -976,7 +976,7 @@ class DiscountFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createDiscountRuleWithValueOptionsPluginMock()
     {

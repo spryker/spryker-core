@@ -36,10 +36,9 @@ class DeleteController extends AbstractController
             ->getProductReviewFacade()
             ->deleteProductReview($productSetTransfer);
 
-        $this->addSuccessMessage(sprintf(
-            'Product Review #%d deleted successfully.',
-            $productSetTransfer->getIdProductReview()
-        ));
+        $this->addSuccessMessage('Product Review #%d deleted successfully.', [
+            '%d' => $productSetTransfer->getIdProductReview(),
+        ]);
 
         return $this->redirectResponse(
             Url::generate('/product-review-gui')->build()

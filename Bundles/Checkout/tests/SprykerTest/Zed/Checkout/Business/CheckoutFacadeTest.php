@@ -502,7 +502,7 @@ class CheckoutFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\SalesBusinessFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Sales\Business\SalesBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createSalesBusinessFactoryMock()
     {

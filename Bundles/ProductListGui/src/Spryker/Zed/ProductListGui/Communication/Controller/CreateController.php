@@ -32,10 +32,9 @@ class CreateController extends ProductListAbstractController
         );
 
         if ($productListTransfer) {
-            $this->addSuccessMessage(sprintf(
-                static::MESSAGE_PRODUCT_LIST_CREATE_SUCCESS,
-                $productListTransfer->getTitle()
-            ));
+            $this->addSuccessMessage(static::MESSAGE_PRODUCT_LIST_CREATE_SUCCESS, [
+                '%s' => $productListTransfer->getTitle(),
+            ]);
 
             return $this->redirectResponse($this->getEditUrl($productListTransfer->getIdProductList()));
         }

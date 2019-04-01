@@ -25,7 +25,7 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
     }
 
     /**
-     * @deprecated use calculateStockForProductWithStore() instead
+     * @deprecated Use calculateStockForProductWithStore() instead.
      *
      * @param string $sku
      * @param float $quantity
@@ -38,7 +38,7 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
     }
 
     /**
-     * @deprecated use calculateStockForProduct() instead
+     * @deprecated Use calculateStockForProduct() instead.
      *
      * @param string $sku
      *

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface;
@@ -62,6 +63,11 @@ class Reader implements ReaderInterface
     protected $config;
 
     /**
+     * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceProductTypeReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface $priceProductConcreteReader
@@ -69,6 +75,7 @@ class Reader implements ReaderInterface
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
+     * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
      */
     public function __construct(
         PriceProductToProductFacadeInterface $productFacade,
@@ -77,7 +84,8 @@ class Reader implements ReaderInterface
         PriceProductAbstractReaderInterface $priceProductAbstractReader,
         PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder,
         PriceProductMapperInterface $priceProductMapper,
-        PriceProductConfig $config
+        PriceProductConfig $config,
+        PriceProductServiceInterface $priceProductService
     ) {
         $this->productFacade = $productFacade;
         $this->priceProductTypeReader = $priceProductTypeReader;
@@ -86,6 +94,7 @@ class Reader implements ReaderInterface
         $this->priceProductCriteriaBuilder = $priceProductCriteriaBuilder;
         $this->priceProductMapper = $priceProductMapper;
         $this->config = $config;
+        $this->priceProductService = $priceProductService;
     }
 
     /**
@@ -371,25 +380,26 @@ class Reader implements ReaderInterface
      */
     protected function findProductPrice(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
     {
-        $priceProductConcrete = $this->priceProductConcreteReader
-            ->findPriceForProductConcrete($sku, $priceProductCriteriaTransfer);
-
-        if ($priceProductConcrete !== null) {
-            return $priceProductConcrete;
-        }
+        $priceProductConcreteTransfers = $this->priceProductConcreteReader
+            ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
         if ($this->productFacade->hasProductConcrete($sku)) {
             $sku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
         }
 
-        $priceProductAbstract = $this->priceProductAbstractReader
-            ->findPriceForProductAbstract($sku, $priceProductCriteriaTransfer);
+        $priceProductAbstractTransfers = $this->priceProductAbstractReader
+            ->findProductAbstractPricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
-        if (!$priceProductAbstract) {
-            return null;
+        if (!$priceProductConcreteTransfers) {
+            return $this->priceProductService
+                ->resolveProductPriceByPriceProductCriteria($priceProductAbstractTransfers, $priceProductCriteriaTransfer);
         }
 
-        return $priceProductAbstract;
+        $priceProductTransfers = $this->priceProductService
+            ->mergeConcreteAndAbstractPrices($priceProductAbstractTransfers, $priceProductConcreteTransfers);
+
+        return $this->priceProductService
+            ->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
     }
 
     /**
