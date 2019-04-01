@@ -32,6 +32,6 @@ class TaxProductStoragePersistenceFactory extends AbstractPersistenceFactory
      */
     public function getProductAbstractQuery(): SpyProductAbstractQuery
     {
-        return $this->getProvidedDependency(TaxProductStorageDependencyProvider::QUERY_PRODUCT_ABSTRACT);
+        return $this->getProvidedDependency(TaxProductStorageDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
     }
 }

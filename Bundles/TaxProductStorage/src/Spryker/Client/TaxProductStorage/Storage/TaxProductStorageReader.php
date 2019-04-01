@@ -47,7 +47,7 @@ class TaxProductStorageReader implements TaxProductStorageReaderInterface
         $storageKey = $this->generateKey($productAbstractSku);
         $taxProductStorageData = $this->storageClient->get($storageKey);
 
-        if ($taxProductStorageData === null) {
+        if (!$taxProductStorageData) {
             return null;
         }
 

@@ -26,12 +26,15 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
     }
 
     /**
-     * @param \Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage $taxProductStorage
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function deleteTaxProductStorage(SpyTaxProductStorage $taxProductStorage): void
+    public function deleteTaxProductStorageByProductAbstractIds(array $productAbstractIds): void
     {
-        $taxProductStorage->delete();
+        $this->getFactory()
+            ->createTaxProductStorageQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->delete();
     }
 }

@@ -17,7 +17,7 @@ use Spryker\Zed\TaxProductStorage\Dependency\Facade\TaxProductStorageToEventBeha
  */
 class TaxProductStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const QUERY_PRODUCT_ABSTRACT = 'QUERY_PRODUCT_ABSTRACT';
+    public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
 
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
@@ -54,7 +54,7 @@ class TaxProductStorageDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductAbstractQuery(Container $container): Container
     {
-        $container[static::QUERY_PRODUCT_ABSTRACT] = function () {
+        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function () {
             return SpyProductAbstractQuery::create();
         };
 

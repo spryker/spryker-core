@@ -82,8 +82,7 @@ class TaxProductSynchronizationDataPlugin extends AbstractPlugin implements Sync
     }
 
     /**
-     * Specification:
-     *  - Returns synchronization queue name
+     * {@inheritdoc}
      *
      * @api
      *

@@ -19,9 +19,9 @@ interface TaxProductStorageEntityManagerInterface
     public function saveTaxProductStorage(SpyTaxProductStorage $taxProductStorage): void;
 
     /**
-     * @param \Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage $taxProductStorage
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function deleteTaxProductStorage(SpyTaxProductStorage $taxProductStorage): void;
+    public function deleteTaxProductStorageByProductAbstractIds(array $productAbstractIds): void;
 }

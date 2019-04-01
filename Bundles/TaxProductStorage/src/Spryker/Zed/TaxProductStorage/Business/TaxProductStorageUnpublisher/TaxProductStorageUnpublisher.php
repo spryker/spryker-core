@@ -8,29 +8,19 @@
 namespace Spryker\Zed\TaxProductStorage\Business\TaxProductStorageUnpublisher;
 
 use Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageEntityManagerInterface;
-use Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageRepositoryInterface;
 
 class TaxProductStorageUnpublisher implements TaxProductStorageUnpublisherInterface
 {
-    /**
-     * @var \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageRepositoryInterface
-     */
-    protected $taxProductStorageRepository;
-
     /**
      * @var \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageEntityManagerInterface
      */
     protected $taxProductStorageEntityManager;
 
     /**
-     * @param \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageRepositoryInterface $taxProductStorageRepository
      * @param \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageEntityManagerInterface $taxProductStorageEntityManager
      */
-    public function __construct(
-        TaxProductStorageRepositoryInterface $taxProductStorageRepository,
-        TaxProductStorageEntityManagerInterface $taxProductStorageEntityManager
-    ) {
-        $this->taxProductStorageRepository = $taxProductStorageRepository;
+    public function __construct(TaxProductStorageEntityManagerInterface $taxProductStorageEntityManager)
+    {
         $this->taxProductStorageEntityManager = $taxProductStorageEntityManager;
     }
 
@@ -41,9 +31,6 @@ class TaxProductStorageUnpublisher implements TaxProductStorageUnpublisherInterf
      */
     public function unpublish(array $productAbstractIds): void
     {
-        $taxProductStorageEntities = $this->taxProductStorageRepository->findTaxProductStorageEntities($productAbstractIds);
-        foreach ($taxProductStorageEntities as $taxProductStorageEntity) {
-            $this->taxProductStorageEntityManager->deleteTaxProductStorage($taxProductStorageEntity);
-        }
+        $this->taxProductStorageEntityManager->deleteTaxProductStorageByProductAbstractIds($productAbstractIds);
     }
 }

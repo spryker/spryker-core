@@ -22,7 +22,7 @@ class TaxProductStorageUnpublishListener extends AbstractPlugin implements Event
 
     /**
      * {@inheritdoc}
-     *  - Handles product tax sets create and update events.
+     *  - Handles product tax sets delete events.
      *
      * @api
      *
