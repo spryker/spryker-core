@@ -10,7 +10,6 @@ namespace Spryker\Zed\ContentBannerDataImport\Business;
 use Spryker\Zed\ContentBannerDataImport\Business\Model\ContentBannerWriterStep;
 use Spryker\Zed\ContentBannerDataImport\Business\Model\Step\CheckContentDataStep;
 use Spryker\Zed\ContentBannerDataImport\Business\Model\Step\CheckLocalizedItemsStep;
-use Spryker\Zed\ContentBannerDataImport\Business\Model\Step\ContentKeyToIdStep;
 use Spryker\Zed\ContentBannerDataImport\Business\Model\Step\PrepareLocalizedItemsStep;
 use Spryker\Zed\ContentBannerDataImport\ContentBannerDataImportDependencyProvider;
 use Spryker\Zed\ContentBannerDataImport\Dependency\Facade\ContentBannerDataImportToContentBannerInterface;
@@ -33,7 +32,6 @@ class ContentBannerDataImportBusinessFactory extends DataImportBusinessFactory
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getContentBannerDataImporterConfiguration());
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker->addStep($this->createContentKeyToIdStep());
         $dataSetStepBroker->addStep($this->createCheckContentDataStep());
         $dataSetStepBroker->addStep($this->createAddLocalesStep());
         $dataSetStepBroker->addStep($this->createPrepareLocalizedItemsStep());
@@ -43,14 +41,6 @@ class ContentBannerDataImportBusinessFactory extends DataImportBusinessFactory
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;
-    }
-
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
-    public function createContentKeyToIdStep(): DataImportStepInterface
-    {
-        return new ContentKeyToIdStep();
     }
 
     /**
