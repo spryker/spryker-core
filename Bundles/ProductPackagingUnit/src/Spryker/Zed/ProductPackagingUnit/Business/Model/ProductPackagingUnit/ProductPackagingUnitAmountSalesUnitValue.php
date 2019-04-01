@@ -64,7 +64,7 @@ class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAm
         $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
 
         return $this->calculateNormalizedValue(
-            $this->roundPrice($amountPerQuantity),
+            $amountPerQuantity,
             $itemTransfer->getAmountSalesUnit()->getConversion(),
             $itemTransfer->getAmountSalesUnit()->getPrecision()
         );

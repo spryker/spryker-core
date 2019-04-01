@@ -43,7 +43,7 @@ class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroup
         return sprintf(
             static::AMOUNT_GROUP_KEY_FORMAT,
             $itemTransfer->getGroupKey(),
-            $this->roundPrice($amountPerQuantity),
+            $amountPerQuantity,
             $itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit()
         );
     }

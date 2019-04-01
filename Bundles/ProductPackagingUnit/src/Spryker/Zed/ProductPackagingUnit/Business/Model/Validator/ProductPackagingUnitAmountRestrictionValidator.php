@@ -44,16 +44,13 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ProductPackagingUnitReaderInterface $productPackagingUnitReader,
-        ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService,
         ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->productPackagingUnitReader = $productPackagingUnitReader;
-        $this->utilPriceService = $utilPriceService;
         $this->utilQuantityService = $utilQuantityService;
     }
 
@@ -135,7 +132,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return int[]
+     * @return float[]
      */
     protected function getItemAddCartAmountMap(array $itemTransfers, CartChangeTransfer $cartChangeTransfer): array
     {
@@ -145,10 +142,13 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
         foreach ($itemTransfers as $itemTransfer) {
             $productGroupKey = $itemTransfer->getGroupKey();
             $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
-            $cartAmountMap[$productGroupKey] = $this->roundPrice($amountPerQuantity);
+            $cartAmountMap[$productGroupKey] = $amountPerQuantity;
 
             if (isset($quoteAmountMapByGroupKey[$productGroupKey])) {
-                $cartAmountMap[$productGroupKey] += (int)$quoteAmountMapByGroupKey[$productGroupKey];
+                $cartAmountMap[$productGroupKey] = $this->sumQuantities(
+                    $cartAmountMap[$productGroupKey],
+                    $quoteAmountMapByGroupKey[$productGroupKey]
+                );
             }
         }
 
@@ -156,13 +156,14 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     }
 
     /**
-     * @param float $price
+     * @param float $firstQuantity
+     * @param float $secondQuantity
      *
-     * @return int
+     * @return float
      */
-    protected function roundPrice(float $price): int
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
     {
-        return $this->utilPriceService->roundPrice($price);
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
@@ -175,7 +176,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
         $quoteAmountMap = [];
         foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
             $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
-            $quoteAmountMap[$itemTransfer->getGroupKey()] = $this->roundPrice($amountPerQuantity);
+            $quoteAmountMap[$itemTransfer->getGroupKey()] = $amountPerQuantity;
         }
 
         return $quoteAmountMap;
