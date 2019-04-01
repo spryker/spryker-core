@@ -8,8 +8,8 @@
 namespace Spryker\Client\Redis;
 
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
-use Predis\Client;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Redis\Client\Adapter\ClientAdapterInterface;
 
 /**
  * @method \Spryker\Client\Redis\RedisFactory getFactory()
@@ -39,13 +39,13 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      * @param string $connectionKey
      * @param string $key
      * @param int $seconds
-     * @param mixed $value
+     * @param string $value
      *
      * @return bool
      */
-    public function setex(string $connectionKey, string $key, int $seconds, $value): bool
+    public function setex(string $connectionKey, string $key, int $seconds, string $value): bool
     {
-        return (bool)$this->getConnection($connectionKey)->setex($key, $seconds, $value);
+        return $this->getConnection($connectionKey)->setex($key, $seconds, $value);
     }
 
     /**
@@ -55,18 +55,16 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      *
      * @param string $connectionKey
      * @param string $key
-     * @param mixed $value
-     * @param mixed|null $expireResolution
+     * @param string $value
+     * @param string|null $expireResolution
      * @param int|null $expireTTL
-     * @param mixed|null $flag
+     * @param string|null $flag
      *
      * @return bool
      */
-    public function set(string $connectionKey, string $key, $value, $expireResolution = null, ?int $expireTTL = null, $flag = null): bool
+    public function set(string $connectionKey, string $key, string $value, ?string $expireResolution = null, ?int $expireTTL = null, ?string $flag = null): bool
     {
-        return isset($expireTTL)
-            ? (bool)$this->getConnection($connectionKey)->set($key, $value, $expireResolution, $expireTTL, $flag)
-            : (bool)$this->getConnection($connectionKey)->set($key, $value);
+        return $this->getConnection($connectionKey)->set($key, $value, $expireResolution, $expireTTL, $flag);
     }
 
     /**
@@ -90,16 +88,16 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      * @api
      *
      * @param string $connectionKey
-     * @param mixed $script
-     * @param mixed $numkeys
-     * @param mixed|null $keyOrArg1
-     * @param mixed|null $keyOrArgN
+     * @param string $script
+     * @param int $numkeys
+     * @param string|null $keyOrArg1
+     * @param string|null $keyOrArgN
      *
      * @return bool
      */
-    public function eval(string $connectionKey, $script, $numkeys, $keyOrArg1 = null, $keyOrArgN = null): bool
+    public function eval(string $connectionKey, string $script, int $numkeys, ?string $keyOrArg1 = null, ?string $keyOrArgN = null): bool
     {
-        return (bool)$this->getConnection($connectionKey)->eval($script, $numkeys, $keyOrArg1, $keyOrArgN);
+        return $this->getConnection($connectionKey)->eval($script, $numkeys, $keyOrArg1, $keyOrArgN);
     }
 
     /**
@@ -150,7 +148,7 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      * @api
      *
      * @param string $connectionKey
-     * @param array $keys
+     * @param string[] $keys
      *
      * @return array
      */
@@ -180,11 +178,11 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      * @api
      *
      * @param string $connectionKey
-     * @param mixed|null $section
+     * @param string|null $section
      *
      * @return array
      */
-    public function info(string $connectionKey, $section = null): array
+    public function info(string $connectionKey, ?string $section = null): array
     {
         return $this->getConnection($connectionKey)->info($section);
     }
@@ -195,11 +193,11 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      * @api
      *
      * @param string $connectionKey
-     * @param mixed $pattern
+     * @param string $pattern
      *
-     * @return array
+     * @return string[]
      */
-    public function keys(string $connectionKey, $pattern): array
+    public function keys(string $connectionKey, string $pattern): array
     {
         return $this->getConnection($connectionKey)->keys($pattern);
     }
@@ -222,10 +220,10 @@ class RedisClient extends AbstractClient implements RedisClientInterface
     /**
      * @param string $connectionKey
      *
-     * @return \Predis\Client
+     * @return \Spryker\Client\Redis\Client\Adapter\ClientAdapterInterface
      */
-    protected function getConnection(string $connectionKey): Client
+    protected function getConnection(string $connectionKey): ClientAdapterInterface
     {
-        return $this->getFactory()->createConnectionProvider()->getConnection($connectionKey);
+        return $this->getFactory()->createConnectionProvider()->getClient($connectionKey);
     }
 }
