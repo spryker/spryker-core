@@ -73,9 +73,12 @@ class ContentForm extends AbstractType
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => static::LABEL_NAME,
-            'constraints' => $this->getFieldDefaultConstraints([
-                new Length(['max' => 255]),
-            ]),
+            'constraints' => array_merge(
+                $this->getFieldDefaultConstraints(),
+                [
+                    new Length(['max' => 255]),
+                ]
+            ),
         ]);
 
         return $this;
@@ -90,9 +93,12 @@ class ContentForm extends AbstractType
     {
         $builder->add(static::FIELD_DESCRIPTION, TextareaType::class, [
             'label' => static::LABEL_DESCRIPTION,
-            'constraints' => $this->getFieldDefaultConstraints([
-                new Length(['max' => 1024]),
-                ]),
+            'constraints' => array_merge(
+                $this->getFieldDefaultConstraints(),
+                [
+                    new Length(['max' => 1024]),
+                ]
+            ),
         ]);
 
         return $this;
@@ -148,19 +154,14 @@ class ContentForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Validator\Constraint[] $сonstraints
-     *
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    protected function getFieldDefaultConstraints(array $сonstraints = []): array
+    protected function getFieldDefaultConstraints(): array
     {
-        return array_merge(
-            [
+        return [
                 new NotBlank(),
                 new Required(),
-            ],
-            $сonstraints
-        );
+            ];
     }
 
     /**
