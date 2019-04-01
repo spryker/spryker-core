@@ -7,29 +7,29 @@
 
 namespace Spryker\Service\ProductQuantity\Rounder;
 
-use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToUtilQuantityServiceInterface;
-use Spryker\Client\ProductQuantityStorage\ProductQuantityStorageConfig;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
+use Spryker\Service\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface;
+use Spryker\Service\ProductQuantity\ProductQuantityConfig;
 
 class ProductQuantityRounder implements ProductQuantityRounderInterface
 {
     /**
-     * @var \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageConfig
+     * @var \Spryker\Service\ProductQuantity\ProductQuantityConfig
      */
     protected $config;
 
     /**
-     * @var \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToUtilQuantityServiceInterface
+     * @var \Spryker\Service\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface
      */
     protected $utilQuantityService;
 
     /**
-     * @param \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageConfig $config
-     * @param \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToUtilQuantityServiceInterface $utilQuantityService
+     * @param \Spryker\Service\ProductQuantity\ProductQuantityConfig $config
+     * @param \Spryker\Service\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
-        ProductQuantityStorageConfig $config,
-        ProductQuantityStorageToUtilQuantityServiceInterface $utilQuantityService
+        ProductQuantityConfig $config,
+        ProductQuantityToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->config = $config;
         $this->utilQuantityService = $utilQuantityService;
@@ -41,10 +41,9 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
      *
      * @return float
      */
-
     public function getNearestQuantity(ProductQuantityTransfer $productQuantityTransfer, float $quantity): float
     {
-        $min = $productQuantityTransfer->getQuantityMin() ?: $this->config->getMinQuantity();
+        $min = $productQuantityTransfer->getQuantityMin() ?: $this->config->getDefaultMinimumQuantity();
         $max = $productQuantityTransfer->getQuantityMax();
         $interval = $productQuantityTransfer->getQuantityInterval();
 
@@ -62,7 +61,7 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
         if ($interval && !$this->isQuantityEqual($divideQuantityMinusMinByModuleInterval, 0)) {
             $max = $max ?? $this->sumQuantities($quantity, $interval);
 
-            $quantity = $this->getNearestAllowedQuantity(
+            $quantity = $this->getNearestQuantityFromAllowed(
                 $quantity,
                 $this->getAllowedQuantities($min, $max, $interval)
             );

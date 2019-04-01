@@ -10,7 +10,7 @@
     <transfer name="QuickOrderItem">
         <property name="sku" type="string" />
         <property name="productConcrete" type="ProductConcrete" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
     </transfer>
 
     <transfer name="ProductConcrete">
@@ -23,7 +23,7 @@
         <property name="sku" type="string" />
         <property name="id" type="int" />
         <property name="idProductAbstract" type="int" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
     </transfer>
 
     <transfer name="ItemValidation">
