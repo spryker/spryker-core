@@ -90,12 +90,16 @@ class PriceProductScheduleFallbackTest extends Unit
             PriceProductScheduleTransfer::IS_CURRENT => true,
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                PriceProductTransfer::PRICE_TYPE => [
+                    PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                    PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                ],
             ],
         ]);
 
         // Act
         $facade = $this->tester->getFacade();
-        $facade->setFactory($this->getFactoryMock());
+        $facade->setFactory((new PriceProductScheduleBusinessFactory())->setConfig($this->getConfigMock()));
         $facade->applyScheduledPrices();
 
         // Assert
@@ -123,12 +127,16 @@ class PriceProductScheduleFallbackTest extends Unit
             PriceProductScheduleTransfer::IS_CURRENT => true,
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                PriceProductTransfer::PRICE_TYPE => [
+                    PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                    PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                ],
             ],
         ]);
 
         // Act
         $facade = $this->tester->getFacade();
-        $facade->setFactory($this->getNotConfiguredFactoryMock());
+        $facade->setFactory((new PriceProductScheduleBusinessFactory())->setConfig($this->getNotConfiguredConfigMock()));
         $facade->applyScheduledPrices();
 
         // Assert
@@ -166,21 +174,6 @@ class PriceProductScheduleFallbackTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory
-     */
-    protected function getFactoryMock()
-    {
-        $factoryMock = $this->getMockBuilder(PriceProductScheduleBusinessFactory::class)
-            ->setMethods(['getConfig'])
-            ->getMock();
-
-        $factoryMock->method('getConfig')
-            ->willReturn($this->getConfigMock());
-
-        return $factoryMock;
-    }
-
-    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
      */
     protected function getConfigMock()
@@ -193,21 +186,6 @@ class PriceProductScheduleFallbackTest extends Unit
             ->willReturn(PriceProductScheduleConfig::PRICE_TYPE_ORIGINAL);
 
         return $configMock;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory
-     */
-    protected function getNotConfiguredFactoryMock()
-    {
-        $factoryMock = $this->getMockBuilder(PriceProductScheduleBusinessFactory::class)
-            ->setMethods(['getConfig'])
-            ->getMock();
-
-        $factoryMock->method('getConfig')
-            ->willReturn($this->getNotConfiguredConfigMock());
-
-        return $factoryMock;
     }
 
     /**

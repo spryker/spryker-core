@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 
 /**
  * Auto-generated group annotations
@@ -41,6 +42,11 @@ class PriceProductScheduleListTest extends Unit
     protected $spyPriceProductScheduleQuery;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
+     */
+    protected $priceProductFacade;
+
+    /**
      * @return void
      */
     public function setUp(): void
@@ -49,6 +55,7 @@ class PriceProductScheduleListTest extends Unit
 
         $this->priceProductScheduleFacade = $this->tester->getFacade();
         $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
+        $this->priceProductFacade = $this->tester->getLocator()->priceProduct()->facade();
     }
 
     /**
@@ -67,6 +74,10 @@ class PriceProductScheduleListTest extends Unit
                 PriceProductScheduleTransfer::PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleList,
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                    PriceProductTransfer::PRICE_TYPE => [
+                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                    ],
                 ],
             ]
         );

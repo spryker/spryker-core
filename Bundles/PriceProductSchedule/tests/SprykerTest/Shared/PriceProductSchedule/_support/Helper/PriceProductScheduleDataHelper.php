@@ -49,15 +49,8 @@ class PriceProductScheduleDataHelper extends Module
      */
     public function havePriceProductSchedule(array $priceProductScheduleOverrideData = []): PriceProductScheduleTransfer
     {
-        $defaultPriceTypeName = $this->getPriceProductFacade()->getDefaultPriceTypeName();
-
-        $priceTypeData = [
-            PriceTypeTransfer::NAME => $defaultPriceTypeName,
-            PriceTypeTransfer::ID_PRICE_TYPE => $this->getPriceTypeId($defaultPriceTypeName),
-        ];
-
         $priceTypeOverrideData = $priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::PRICE_TYPE] ?? [];
-        $priceTypeTransfer = (new PriceTypeBuilder(array_merge($priceTypeData, $priceTypeOverrideData)))
+        $priceTypeTransfer = (new PriceTypeBuilder($priceTypeOverrideData))
             ->build();
         unset($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::PRICE_TYPE]);
 
@@ -131,22 +124,6 @@ class PriceProductScheduleDataHelper extends Module
         $priceProductScheduleListTransfer->setIdPriceProductScheduleList($spyPriceProductScheduleListEntity->getIdPriceProductScheduleList());
 
         return $priceProductScheduleListTransfer;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return int|null
-     */
-    protected function getPriceTypeId(string $name): ?int
-    {
-        $spyPriceTypeEntity = $this->getPriceProductQueryContainer()->queryPriceType($name)->findOne();
-
-        if (!$spyPriceTypeEntity) {
-            return null;
-        }
-
-        return $spyPriceTypeEntity->getIdPriceType();
     }
 
     /**

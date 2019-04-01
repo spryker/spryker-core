@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 
 /**
  * Auto-generated group annotations
@@ -41,12 +42,18 @@ class PriceProductScheduleDateTest extends Unit
     protected $spyPriceProductScheduleQuery;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
+     */
+    protected $priceProductFacade;
+
+    /**
      * @return void
      */
     public function setUp(): void
     {
         parent::setUp();
 
+        $this->priceProductFacade = $this->tester->getLocator()->priceProduct()->facade();
         $this->priceProductScheduleFacade = $this->tester->getFacade();
         $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
     }
@@ -66,6 +73,10 @@ class PriceProductScheduleDateTest extends Unit
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                PriceProductTransfer::PRICE_TYPE => [
+                    PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                    PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                ],
             ],
             PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
             PriceProductScheduleTransfer::ACTIVE_TO => $activeTo,
@@ -97,6 +108,10 @@ class PriceProductScheduleDateTest extends Unit
                 PriceProductScheduleTransfer::ACTIVE_TO => $activeTo,
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                    PriceProductTransfer::PRICE_TYPE => [
+                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                    ],
                 ],
             ]
         );
@@ -123,6 +138,10 @@ class PriceProductScheduleDateTest extends Unit
                 PriceProductScheduleTransfer::IS_CURRENT => true,
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                    PriceProductTransfer::PRICE_TYPE => [
+                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                    ],
                 ],
             ]
         );
@@ -154,6 +173,10 @@ class PriceProductScheduleDateTest extends Unit
                 PriceProductScheduleTransfer::IS_CURRENT => true,
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                    PriceProductTransfer::PRICE_TYPE => [
+                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                    ],
                 ],
             ]
         );
@@ -164,6 +187,10 @@ class PriceProductScheduleDateTest extends Unit
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+7 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                    PriceProductTransfer::PRICE_TYPE => [
+                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                    ],
                 ],
             ]
         );
@@ -198,6 +225,10 @@ class PriceProductScheduleDateTest extends Unit
                 PriceProductScheduleTransfer::IS_CURRENT => true,
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                    PriceProductTransfer::PRICE_TYPE => [
+                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                    ],
                 ],
             ]
         );
@@ -208,6 +239,10 @@ class PriceProductScheduleDateTest extends Unit
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+4 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                    PriceProductTransfer::PRICE_TYPE => [
+                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                    ],
                 ],
             ]
         );
@@ -241,6 +276,10 @@ class PriceProductScheduleDateTest extends Unit
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                    PriceProductTransfer::PRICE_TYPE => [
+                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                    ],
                 ],
             ]
         );
@@ -251,6 +290,10 @@ class PriceProductScheduleDateTest extends Unit
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                    PriceProductTransfer::PRICE_TYPE => [
+                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                    ],
                 ],
             ]
         );
@@ -280,6 +323,10 @@ class PriceProductScheduleDateTest extends Unit
                 PriceProductScheduleTransfer::IS_CURRENT => true,
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                    PriceProductTransfer::PRICE_TYPE => [
+                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                    ],
                 ],
             ]
         );
@@ -290,6 +337,10 @@ class PriceProductScheduleDateTest extends Unit
                 PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                    PriceProductTransfer::PRICE_TYPE => [
+                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                    ],
                 ],
             ]
         );
@@ -300,6 +351,10 @@ class PriceProductScheduleDateTest extends Unit
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                    PriceProductTransfer::PRICE_TYPE => [
+                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
+                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                    ],
                 ],
             ]
         );
