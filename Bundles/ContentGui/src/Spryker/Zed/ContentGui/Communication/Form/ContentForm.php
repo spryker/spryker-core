@@ -151,7 +151,7 @@ class ContentForm extends AbstractType
         return [
             new NotBlank(),
             new Required(),
-            new Length(['max' => 255]),
+            new Length(['max' => 1024]),
         ];
     }
 
