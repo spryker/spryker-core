@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentBannerDataImport\Dependency\Facade;
 
-use Generated\Shared\Transfer\ContentBannerTransfer;
+use Generated\Shared\Transfer\ContentBannerTermTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 
 class ContentBannerDataImportToContentBannerBridge implements ContentBannerDataImportToContentBannerInterface
@@ -26,13 +26,13 @@ class ContentBannerDataImportToContentBannerBridge implements ContentBannerDataI
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentBannerTransfer $contentBannerTransfer
+     * @param \Generated\Shared\Transfer\ContentBannerTermTransfer $contentBannerTermTransfer
      *
      * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
      */
     public function validateContentBannerTerm(
-        ContentBannerTransfer $contentBannerTransfer
+        ContentBannerTermTransfer $contentBannerTermTransfer
     ): ContentValidationResponseTransfer {
-        return $this->contentBannerFacade->validateContentBannerTerm($contentBannerTransfer);
+        return $this->contentBannerFacade->validateContentBannerTerm($contentBannerTermTransfer);
     }
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentBanner\Business\Model;
 
-use Generated\Shared\Transfer\ContentBannerTransfer;
+use Generated\Shared\Transfer\ContentBannerTermTransfer;
 use Generated\Shared\Transfer\ContentParameterMessageTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -38,15 +38,15 @@ class ContentBannerValidator implements ContentBannerValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentBannerTransfer $contentBannerTransfer
+     * @param \Generated\Shared\Transfer\ContentBannerTermTransfer $contentBannerTermTransfer
      *
      * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
      */
-    public function validateContentBannerTerm(ContentBannerTransfer $contentBannerTransfer): ContentValidationResponseTransfer
+    public function validateContentBannerTerm(ContentBannerTermTransfer $contentBannerTermTransfer): ContentValidationResponseTransfer
     {
         $isSuccess = true;
         $validator = $this->validationAdapter->createValidator();
-        $properties = $contentBannerTransfer->toArray(true, true);
+        $properties = $contentBannerTermTransfer->toArray(true, true);
         $contentValidationResponseTransfer = new ContentValidationResponseTransfer();
 
         foreach ($this->constraintsProvider->getConstraintsMap() as $parameter => $constraintCollection) {

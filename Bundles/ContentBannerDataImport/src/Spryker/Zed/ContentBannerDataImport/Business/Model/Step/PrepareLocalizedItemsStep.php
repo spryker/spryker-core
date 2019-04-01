@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentBannerDataImport\Business\Model\Step;
 
-use Generated\Shared\Transfer\ContentBannerTransfer;
+use Generated\Shared\Transfer\ContentBannerTermTransfer;
 use Spryker\Zed\ContentBannerDataImport\Business\Model\DataSet\ContentBannerDataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -29,7 +29,7 @@ class PrepareLocalizedItemsStep implements DataImportStepInterface
         foreach ($dataSet[AddLocalesStep::KEY_LOCALES] as $localeName => $idLocale) {
             $attributes = [];
             $localeNotEmpty = false;
-            $contentBanner = new ContentBannerTransfer();
+            $contentBanner = new ContentBannerTermTransfer();
             $properties = $contentBanner->toArray();
 
             foreach (array_keys($properties) as $attributeName) {

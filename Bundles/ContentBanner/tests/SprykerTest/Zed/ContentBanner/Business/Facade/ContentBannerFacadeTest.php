@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ContentBanner\Business\Facade;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\ContentBannerTransfer;
+use Generated\Shared\Transfer\ContentBannerTermTransfer;
 
 /**
  * Auto-generated group annotations
@@ -33,13 +33,13 @@ class ContentBannerFacadeTest extends Test
      */
     public function testValidateContentBannerValidationSuccessful(): void
     {
-        $contentBannerTransfer = (new ContentBannerTransfer())
+        $contentBannerTermTransfer = (new ContentBannerTermTransfer())
             ->setTitle('Test')
             ->setAltText('SampleTest')
             ->setClickUrl('http://some.url')
             ->setImageUrl('http://image.url')
             ->setSubtitle('subtitle text');
-        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTransfer);
+        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTermTransfer);
 
         $this->assertTrue($validationResult->getIsSuccess());
     }
@@ -49,14 +49,14 @@ class ContentBannerFacadeTest extends Test
      */
     public function testValidateContentBannerWithLongTitleValidationFails(): void
     {
-        $contentBannerTransfer = (new ContentBannerTransfer())
+        $contentBannerTermTransfer = (new ContentBannerTermTransfer())
             ->setTitle('Very long text string Lorem ipsum dolor sit amet, consectetur adipiscing elit,
              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')
             ->setAltText('SampleTest')
             ->setClickUrl('http://some.url')
             ->setImageUrl('http://image.url')
             ->setSubtitle('subtitle text');
-        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTransfer);
+        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTermTransfer);
 
         $this->assertFalse($validationResult->getIsSuccess());
     }
@@ -66,13 +66,13 @@ class ContentBannerFacadeTest extends Test
      */
     public function testValidateContentBannerWithInvalidClickUrlValidationFails(): void
     {
-        $contentBannerTransfer = (new ContentBannerTransfer())
+        $contentBannerTermTransfer = (new ContentBannerTermTransfer())
             ->setTitle('Sample text')
             ->setAltText('SampleTest')
             ->setClickUrl('invalid url')
             ->setImageUrl('http://image.url')
             ->setSubtitle('subtitle text');
-        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTransfer);
+        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTermTransfer);
 
         $this->assertFalse($validationResult->getIsSuccess());
     }
@@ -82,13 +82,13 @@ class ContentBannerFacadeTest extends Test
      */
     public function testValidateContentBannerWithEmptySubtitleValidationFails(): void
     {
-        $contentBannerTransfer = (new ContentBannerTransfer())
+        $contentBannerTermTransfer = (new ContentBannerTermTransfer())
             ->setTitle('Sample text')
             ->setAltText('SampleTest')
             ->setClickUrl('http://some.url')
             ->setImageUrl('http://image.url')
             ->setSubtitle('');
-        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTransfer);
+        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTermTransfer);
 
         $this->assertFalse($validationResult->getIsSuccess());
     }
@@ -98,14 +98,14 @@ class ContentBannerFacadeTest extends Test
      */
     public function testValidateContentBannerWithVeryLongSubtitleValidationFails(): void
     {
-        $contentBannerTransfer = (new ContentBannerTransfer())
+        $contentBannerTermTransfer = (new ContentBannerTermTransfer())
             ->setTitle('Sample text')
             ->setAltText('SampleTest')
             ->setClickUrl('http://some.url')
             ->setImageUrl('http://image.url')
             ->setSubtitle('Very long text string Lorem ipsum dolor sit amet, consectetur adipiscing elit,
              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
-        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTransfer);
+        $validationResult = $this->tester->getFacade()->validateContentBannerTerm($contentBannerTermTransfer);
 
         $this->assertFalse($validationResult->getIsSuccess());
     }

@@ -7,19 +7,19 @@
 
 namespace Spryker\Client\ContentBanner;
 
-use Generated\Shared\Transfer\ContentBannerTransfer;
+use Generated\Shared\Transfer\ContentBannerTermTransfer;
 
 interface ContentBannerClientInterface
 {
     /**
      * Specification:
-     * - Executes the ContentBanner term.
+     * - Executes the ContentBannerTerm.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ContentBannerTransfer $contentBannerTransfer
+     * @param \Generated\Shared\Transfer\ContentBannerTermTransfer $contentBannerTransfer
      *
      * @return array
      */
-    public function execute(ContentBannerTransfer $contentBannerTransfer): array;
+    public function execute(ContentBannerTermTransfer $contentBannerTransfer): array;
 }

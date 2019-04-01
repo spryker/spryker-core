@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentBanner\Business\Model;
 
-use Generated\Shared\Transfer\ContentBannerTransfer;
+use Generated\Shared\Transfer\ContentBannerTermTransfer;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
@@ -21,11 +21,11 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     public function getConstraintsMap(): array
     {
         return [
-            ContentBannerTransfer::TITLE => $this->getTitleConstraints(),
-            ContentBannerTransfer::SUBTITLE => $this->getSubtitleConstraints(),
-            ContentBannerTransfer::IMAGE_URL => $this->getImageUrlConstraints(),
-            ContentBannerTransfer::CLICK_URL => $this->getClickUrlConstraints(),
-            ContentBannerTransfer::ALT_TEXT => $this->getAltTextConstraints(),
+            ContentBannerTermTransfer::TITLE => $this->getTitleConstraints(),
+            ContentBannerTermTransfer::SUBTITLE => $this->getSubtitleConstraints(),
+            ContentBannerTermTransfer::IMAGE_URL => $this->getImageUrlConstraints(),
+            ContentBannerTermTransfer::CLICK_URL => $this->getClickUrlConstraints(),
+            ContentBannerTermTransfer::ALT_TEXT => $this->getAltTextConstraints(),
         ];
     }
 
