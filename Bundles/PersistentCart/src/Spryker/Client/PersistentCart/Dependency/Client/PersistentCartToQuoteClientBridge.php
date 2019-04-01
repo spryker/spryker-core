@@ -49,12 +49,4 @@ class PersistentCartToQuoteClientBridge implements PersistentCartToQuoteClientIn
     {
         return $this->quoteClient->getStorageStrategy();
     }
-
-    /**
-     * @return void
-     */
-    public function clearQuote()
-    {
-        $this->quoteClient->clearQuote();
-    }
 }

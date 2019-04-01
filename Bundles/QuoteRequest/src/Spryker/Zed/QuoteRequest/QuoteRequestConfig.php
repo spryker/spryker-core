@@ -55,16 +55,32 @@ class QuoteRequestConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
+    public function getRevisableStatuses(): array
+    {
+        return $this->getSharedConfig()->getRevisableStatuses();
+    }
+
+    /**
+     * @return string[]
+     */
     public function getUserCancelableStatuses(): array
     {
         return $this->getSharedConfig()->getUserCancelableStatuses();
     }
 
     /**
+     * @return string[]
+     */
+    public function getUserRevisableStatuses(): array
+    {
+        return $this->getSharedConfig()->getUserRevisableStatuses();
+    }
+
+    /**
      * @return string
      */
-    public function getUniqueIdentifierSeparator(): string
+    public function getQuoteRequestReferenceFormat(): string
     {
-        return '-';
+        return '%s-%s';
     }
 }

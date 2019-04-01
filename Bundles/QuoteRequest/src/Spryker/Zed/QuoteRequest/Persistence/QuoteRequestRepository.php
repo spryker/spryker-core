@@ -22,8 +22,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class QuoteRequestRepository extends AbstractRepository implements QuoteRequestRepositoryInterface
 {
-    protected const NUMBER_OF_VERSIONS = 'number_of_versions';
-
     /**
      * @module Customer
      * @module CompanyUser

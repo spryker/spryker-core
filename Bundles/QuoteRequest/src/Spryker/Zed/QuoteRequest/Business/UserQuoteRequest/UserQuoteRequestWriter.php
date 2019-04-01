@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\QuoteRequest\Business\UserQuoteRequest;
 
-use DateTime;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
@@ -163,25 +162,17 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
         }
 
-        if (!$this->isQuoteRequestCanSend($quoteRequestTransfer)) {
-            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
-        }
+        $quoteRequestResponseTransfer = $this->validateQuoteRequestBeforeSend($quoteRequestTransfer);
 
-        if (!$quoteRequestTransfer->getLatestVersion()->getQuote()->getItems()->count()) {
-            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS);
-        }
-
-        if ($quoteRequestTransfer->getValidUntil() && (new DateTime($quoteRequestTransfer->getValidUntil()) < new DateTime())) {
-            return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL);
+        if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
+            return $quoteRequestResponseTransfer;
         }
 
         $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_READY);
         $quoteRequestTransfer->setIsLatestVersionHidden(false);
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
-        return (new QuoteRequestResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setQuoteRequest($quoteRequestTransfer);
+        return $quoteRequestResponseTransfer->setQuoteRequest($quoteRequestTransfer);
     }
 
     /**
@@ -338,6 +329,29 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    protected function validateQuoteRequestBeforeSend(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        if ($quoteRequestTransfer->getStatus() !== SharedQuoteRequestConfig::STATUS_IN_PROGRESS) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
+        }
+
+        if (!$quoteRequestTransfer->getLatestVersion()->getQuote()->getItems()->count()) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS);
+        }
+
+        if ($quoteRequestTransfer->getValidUntil() && strtotime($quoteRequestTransfer->getValidUntil()) < strtotime('now')) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL);
+        }
+
+        return (new QuoteRequestResponseTransfer())
+            ->setIsSuccessful(true);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return string|null
@@ -427,19 +441,7 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
      */
     protected function isQuoteRequestRevisable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_WAITING
-            || $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_READY
-            || $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_DRAFT;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteRequestCanSend(QuoteRequestTransfer $quoteRequestTransfer): bool
-    {
-        return $quoteRequestTransfer->getStatus() === SharedQuoteRequestConfig::STATUS_IN_PROGRESS;
+        return in_array($quoteRequestTransfer->getStatus(), $this->quoteRequestConfig->getUserRevisableStatuses());
     }
 
     /**
@@ -449,8 +451,11 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
      */
     protected function getErrorResponse(string $message): QuoteRequestResponseTransfer
     {
+        $messageTransfer = (new MessageTransfer())
+            ->setValue($message);
+
         return (new QuoteRequestResponseTransfer())
             ->setIsSuccessful(false)
-            ->addMessage((new MessageTransfer())->setValue($message));
+            ->addMessage($messageTransfer);
     }
 }

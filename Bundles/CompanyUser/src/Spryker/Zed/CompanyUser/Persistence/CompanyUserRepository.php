@@ -316,10 +316,10 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             $companyUsersQuery->limit($companyUserQueryTransfer->getLimit());
         }
 
-        $collection = $this->buildQueryFromCriteria($companyUsersQuery)->find();
+        $companyUserEntityTransferCollection = $this->buildQueryFromCriteria($companyUsersQuery)->find();
 
         return $this->getFactory()
             ->createCompanyUserMapper()
-            ->mapCompanyUserCollection($collection);
+            ->mapCompanyUserCollection($companyUserEntityTransferCollection);
     }
 }

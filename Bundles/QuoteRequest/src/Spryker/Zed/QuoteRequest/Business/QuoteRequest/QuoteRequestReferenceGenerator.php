@@ -51,7 +51,7 @@ class QuoteRequestReferenceGenerator implements QuoteRequestReferenceGeneratorIn
         );
 
         return sprintf(
-            $this->getQuoteRequestFormat(),
+            $this->quoteRequestConfig->getQuoteRequestReferenceFormat(),
             $customerReference,
             $customerQuoteRequestCounter + 1
         );
@@ -68,17 +68,9 @@ class QuoteRequestReferenceGenerator implements QuoteRequestReferenceGeneratorIn
         QuoteRequestVersionTransfer $quoteRequestVersionTransfer
     ): string {
         return sprintf(
-            $this->getQuoteRequestFormat(),
+            $this->quoteRequestConfig->getQuoteRequestReferenceFormat(),
             $quoteRequestTransfer->getQuoteRequestReference(),
             $quoteRequestVersionTransfer->getVersion()
         );
-    }
-
-    /**
-     * @return string
-     */
-    protected function getQuoteRequestFormat(): string
-    {
-        return '%s' . $this->quoteRequestConfig->getUniqueIdentifierSeparator() . '%s';
     }
 }

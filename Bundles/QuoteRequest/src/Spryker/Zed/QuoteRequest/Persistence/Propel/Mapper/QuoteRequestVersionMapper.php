@@ -74,9 +74,12 @@ class QuoteRequestVersionMapper
     ): QuoteRequestVersionTransfer {
         $quoteRequestVersionTransfer = $quoteRequestVersionTransfer
             ->fromArray($quoteRequestVersion->toArray(), true)
-            ->setQuote($this->getQuote($quoteRequestVersion->getQuote()))
             ->setMetadata($this->decodeMetadata($quoteRequestVersion))
             ->setQuoteRequest($this->getQuoteRequest($quoteRequestVersion));
+
+        if ($quoteRequestVersion->getQuote()) {
+            $quoteRequestVersionTransfer->setQuote($this->decodeQuote($quoteRequestVersion->getQuote()));
+        }
 
         return $quoteRequestVersionTransfer;
     }
@@ -122,18 +125,14 @@ class QuoteRequestVersionMapper
     }
 
     /**
-     * @param string|null $quote
+     * @param string $encodedQuoteData
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function getQuote(?string $quote): ?QuoteTransfer
+    protected function decodeQuote(string $encodedQuoteData): QuoteTransfer
     {
-        if (!$quote) {
-            return null;
-        }
-
         return (new QuoteTransfer())
-            ->fromArray($this->decodeQuoteData($quote), true);
+            ->fromArray($this->decodeQuoteData($encodedQuoteData), true);
     }
 
     /**

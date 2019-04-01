@@ -35,12 +35,34 @@ class QuoteRequestConfig extends AbstractSharedConfig
     /**
      * @return string[]
      */
+    public function getRevisableStatuses(): array
+    {
+        return [
+            static::STATUS_READY,
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
     public function getUserCancelableStatuses(): array
     {
         return [
             static::STATUS_DRAFT,
             static::STATUS_WAITING,
             static::STATUS_IN_PROGRESS,
+            static::STATUS_READY,
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getUserRevisableStatuses(): array
+    {
+        return [
+            static::STATUS_DRAFT,
+            static::STATUS_WAITING,
             static::STATUS_READY,
         ];
     }

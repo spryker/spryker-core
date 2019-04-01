@@ -43,9 +43,7 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
      */
     public function isQuoteRequestRevisable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_WAITING
-            || $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_READY
-            || $quoteRequestTransfer->getStatus() === SharedAgentQuoteRequestConfig::STATUS_DRAFT;
+        return in_array($quoteRequestTransfer->getStatus(), $this->agentQuoteRequestConfig->getRevisableStatuses());
     }
 
     /**

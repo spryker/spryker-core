@@ -147,8 +147,11 @@ class QuoteRequestMapper
     {
         $latestQuoteRequestVersionTransfer = (new QuoteRequestVersionTransfer())
             ->fromArray($quoteRequestVersionEntity->toArray(), true)
-            ->setQuote($this->getQuote($quoteRequestVersionEntity->getQuote()))
             ->setMetadata($this->decodeMetadata($quoteRequestVersionEntity));
+
+        if ($quoteRequestVersionEntity->getQuote()) {
+            $latestQuoteRequestVersionTransfer->setQuote($this->decodeQuote($quoteRequestVersionEntity->getQuote()));
+        }
 
         return $latestQuoteRequestVersionTransfer;
     }
@@ -177,18 +180,14 @@ class QuoteRequestMapper
     }
 
     /**
-     * @param string|null $quote
+     * @param string $encodedQuoteData
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function getQuote(?string $quote): ?QuoteTransfer
+    protected function decodeQuote(string $encodedQuoteData): QuoteTransfer
     {
-        if (!$quote) {
-            return null;
-        }
-
         return (new QuoteTransfer())
-            ->fromArray($this->decodeQuoteData($quote), true);
+            ->fromArray($this->decodeQuoteData($encodedQuoteData), true);
     }
 
     /**
