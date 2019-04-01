@@ -64,7 +64,7 @@ class CheckLocalizedItemsStep implements DataImportStepInterface
     /**
      * @param \Generated\Shared\Transfer\ContentValidationResponseTransfer $contentValidationResponseTransfer
      *
-     * @return array
+     * @return string[]
      */
     private function getErrorMessages(ContentValidationResponseTransfer $contentValidationResponseTransfer): array
     {

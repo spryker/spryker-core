@@ -33,8 +33,9 @@ class ContentBannerDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testImportImportsData(): void
+    public function testImporterPopulatesTables(): void
     {
+        // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -43,9 +44,10 @@ class ContentBannerDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
-        $contentBannerDataImportPlugin = new ContentBannerDataImportPlugin();
-        $dataImporterReportTransfer = $contentBannerDataImportPlugin->import($dataImportConfigurationTransfer);
+        // Act
+        $dataImporterReportTransfer = (new ContentBannerDataImportPlugin())->import($dataImportConfigurationTransfer);
 
+        // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
         $this->tester->assertDatabaseTableContainsData();
@@ -58,6 +60,7 @@ class ContentBannerDataImportPluginTest extends Unit
      */
     public function testImportWithInvalidDefaultLocaleDataThrowsException(): void
     {
+        // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -67,9 +70,10 @@ class ContentBannerDataImportPluginTest extends Unit
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
             ->setThrowException(true);
 
-        $contentBannerDataImportPlugin = new ContentBannerDataImportPlugin();
-        $dataImporterReportTransfer = $contentBannerDataImportPlugin->import($dataImportConfigurationTransfer);
+        // Act
+        $dataImporterReportTransfer = (new ContentBannerDataImportPlugin())->import($dataImportConfigurationTransfer);
 
+        // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
 
@@ -83,6 +87,7 @@ class ContentBannerDataImportPluginTest extends Unit
      */
     public function testImportWithMissingPropertyThrowsException(): void
     {
+        // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -92,9 +97,10 @@ class ContentBannerDataImportPluginTest extends Unit
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
             ->setThrowException(true);
 
-        $contentBannerDataImportPlugin = new ContentBannerDataImportPlugin();
-        $dataImporterReportTransfer = $contentBannerDataImportPlugin->import($dataImportConfigurationTransfer);
+        // Act
+        $dataImporterReportTransfer = (new ContentBannerDataImportPlugin())->import($dataImportConfigurationTransfer);
 
+        // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
 

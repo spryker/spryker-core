@@ -12,6 +12,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ContentBannerDataImportConfig extends DataImportConfig
 {
+    public const IMPORT_FILE_NAME = 'content_banner.csv';
     public const IMPORT_TYPE_CONTENT_BANNER = 'content-banner';
 
     /**
@@ -21,7 +22,7 @@ class ContentBannerDataImportConfig extends DataImportConfig
     {
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
-        return $this->buildImporterConfiguration($moduleDataImportDirectory . 'content_banner.csv', static::IMPORT_TYPE_CONTENT_BANNER);
+        return $this->buildImporterConfiguration($moduleDataImportDirectory . static::IMPORT_FILE_NAME, static::IMPORT_TYPE_CONTENT_BANNER);
     }
 
     /**

@@ -32,7 +32,7 @@ class ContentBannerDataImportDependencyProvider extends DataImportDependencyProv
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addContentFacade($container);
         $container = $this->addContentBannerFacade($container);
-        $container = $this->provideUtilEncodingService($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -45,7 +45,9 @@ class ContentBannerDataImportDependencyProvider extends DataImportDependencyProv
     protected function addContentBannerFacade(Container $container): Container
     {
         $container[static::FACADE_CONTENT_BANNER] = function (Container $container) {
-            return new ContentBannerDataImportToContentBannerBridge($container->getLocator()->contentBanner()->facade());
+            return new ContentBannerDataImportToContentBannerBridge(
+                $container->getLocator()->contentBanner()->facade()
+            );
         };
 
         return $container;
@@ -70,7 +72,7 @@ class ContentBannerDataImportDependencyProvider extends DataImportDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function provideUtilEncodingService(Container $container): Container
+    protected function addUtilEncodingService(Container $container): Container
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new ContentBannerDataImportToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
