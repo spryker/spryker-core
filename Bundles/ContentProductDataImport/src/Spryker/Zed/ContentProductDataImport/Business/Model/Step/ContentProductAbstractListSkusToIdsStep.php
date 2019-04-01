@@ -75,7 +75,7 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
      */
     protected function getProductAbstractIds(DataSetInterface $dataSet, string $skusLocaleKey): array
     {
-        $productAbstractSkus = explode(',', $dataSet[$skusLocaleKey]);
+        $productAbstractSkus = array_unique(explode(',', $dataSet[$skusLocaleKey]));
         $productAbstractIds = $this->getProductAbstractIdsBySkus($productAbstractSkus);
 
         if (count($productAbstractIds) < count($productAbstractSkus)) {
