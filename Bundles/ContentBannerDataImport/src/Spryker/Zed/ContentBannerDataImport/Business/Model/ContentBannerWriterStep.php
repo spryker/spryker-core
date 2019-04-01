@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentBannerDataImport\Business\Model;
 
+use Generated\Shared\Transfer\ContentBannerTermTransfer;
 use Orm\Zed\Content\Persistence\SpyContent;
 use Orm\Zed\Content\Persistence\SpyContentLocalizedQuery;
 use Orm\Zed\Content\Persistence\SpyContentQuery;
@@ -102,7 +103,7 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
                 ->findOneOrCreate();
 
             $contentBannerLocalizedItem->setParameters(
-                $this->getEncodedParameters($attributes->toArray())
+                $this->getEncodedParameters($attributes)
             );
 
             $contentBannerLocalizedItem->save();
@@ -114,12 +115,12 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
     }
 
     /**
-     * @param array $parameters
+     * @param \Generated\Shared\Transfer\ContentBannerTermTransfer $contentBannerTermTransfer
      *
      * @return string|null
      */
-    protected function getEncodedParameters(array $parameters)
+    protected function getEncodedParameters(ContentBannerTermTransfer $contentBannerTermTransfer): ?string
     {
-        return $this->utilEncoding->encodeJson($parameters);
+        return $this->utilEncoding->encodeJson($contentBannerTermTransfer->toArray());
     }
 }
