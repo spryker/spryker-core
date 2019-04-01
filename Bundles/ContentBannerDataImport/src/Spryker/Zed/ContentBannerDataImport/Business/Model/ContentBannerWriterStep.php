@@ -102,7 +102,7 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
                 ->findOneOrCreate();
 
             $contentBannerLocalizedItem->setParameters(
-                $this->utilEncoding->encodeJson($attributes->toArray())
+                $this->getEncodedParameters($attributes->toArray())
             );
 
             $contentBannerLocalizedItem->save();
@@ -111,5 +111,15 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
         if (!$defaultLocaleIsPresent) {
             throw new InvalidDataException('Default locale is absent');
         }
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return string|null
+     */
+    protected function getEncodedParameters(array $parameters)
+    {
+        return $this->utilEncoding->encodeJson($parameters);
     }
 }

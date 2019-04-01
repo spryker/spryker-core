@@ -66,8 +66,8 @@ class CheckContentDataStep implements DataImportStepInterface
     {
         $messages = [];
         foreach ($contentValidationResponseTransfer->getParameterMessages() as $parameterMessages) {
-            foreach ($parameterMessages->getMessages() as $parameterMessage) {
-                $messages[] = '[' . $parameterMessages->getParameter() . '] ' . $parameterMessage->getValue();
+            foreach ($parameterMessages->getMessages() as $message) {
+                $messages[] = '[' . $parameterMessages->getParameter() . '] ' . $message->getValue();
             }
         }
 
