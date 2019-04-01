@@ -344,7 +344,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     */
     public function createProductPackagingUnitAmountSalesUnitValue(): ProductPackagingUnitAmountSalesUnitValueInterface
     {
-        return new ProductPackagingUnitAmountSalesUnitValue($this->getUtilPriceService());
+        return new ProductPackagingUnitAmountSalesUnitValue();
     }
 
     /**
@@ -352,7 +352,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductPackagingUnitGroupKeyGenerator(): ProductPackagingUnitGroupKeyGeneratorInterface
     {
-        return new ProductPackagingUnitGroupKeyGenerator($this->getUtilPriceService());
+        return new ProductPackagingUnitGroupKeyGenerator();
     }
 
     /**
@@ -411,7 +411,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createSplittableOrderItemTransformer(): SplittableOrderItemTransformerInterface
     {
-        return new SplittableOrderItemTransformer($this->getUtilPriceService());
+        return new SplittableOrderItemTransformer();
     }
 
     /**

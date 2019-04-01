@@ -9,23 +9,9 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface;
 
 class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAmountSalesUnitValueInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface
-     */
-    protected $utilPriceService;
-
-    /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService
-     */
-    public function __construct(ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService)
-    {
-        $this->utilPriceService = $utilPriceService;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -68,16 +54,6 @@ class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAm
             $itemTransfer->getAmountSalesUnit()->getConversion(),
             $itemTransfer->getAmountSalesUnit()->getPrecision()
         );
-    }
-
-    /**
-     * @param float $price
-     *
-     * @return int
-     */
-    protected function roundPrice(float $price): int
-    {
-        return $this->utilPriceService->roundPrice($price);
     }
 
     /**

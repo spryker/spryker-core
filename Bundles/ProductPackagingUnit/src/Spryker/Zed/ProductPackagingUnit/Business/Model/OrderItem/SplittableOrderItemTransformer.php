@@ -11,23 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface;
 
 class SplittableOrderItemTransformer implements SplittableOrderItemTransformerInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface
-     */
-    protected $utilPriceService;
-
-    /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService
-     */
-    public function __construct(ProductPackagingUnitToUtilPriceServiceInterface $utilPriceService)
-    {
-        $this->utilPriceService = $utilPriceService;
-    }
-
     /**
      * @see \Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer
      *
@@ -59,7 +45,7 @@ class SplittableOrderItemTransformer implements SplittableOrderItemTransformerIn
         $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
         $transformedItemTransfer->setQuantity(1.0);
         $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
-        $transformedItemTransfer->setAmount($amountPerQuantity);
+        $transformedItemTransfer->setAmount((float)$amountPerQuantity);
         $transformedProductOptions = new ArrayObject();
 
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
@@ -68,16 +54,6 @@ class SplittableOrderItemTransformer implements SplittableOrderItemTransformerIn
 
         $transformedItemTransfer->setProductOptions($transformedProductOptions);
         $transformedItemsCollection->addItem($transformedItemTransfer);
-    }
-
-    /**
-     * @param float $price
-     *
-     * @return int
-     */
-    protected function roundPrice(float $price): int
-    {
-        return $this->utilPriceService->roundPrice($price);
     }
 
     /**
