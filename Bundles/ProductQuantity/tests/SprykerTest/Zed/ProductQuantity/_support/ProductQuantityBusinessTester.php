@@ -49,9 +49,9 @@ class ProductQuantityBusinessTester extends Actor
     }
 
     /**
-     * @param int|null $min
-     * @param int|null $max
-     * @param int|null $interval
+     * @param float|null $min
+     * @param float|null $max
+     * @param float|null $interval
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
@@ -85,7 +85,7 @@ class ProductQuantityBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
@@ -103,7 +103,7 @@ class ProductQuantityBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */

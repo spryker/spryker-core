@@ -89,8 +89,8 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      */
     protected function validateQuantityIsPositive(string $sku, float $quantity, CartPreCheckResponseTransfer $responseTransfer): bool
     {
-        $restrictedQuantity = $this->config->getMinimumQuantity();
-        if ($quantity <= $restrictedQuantity) {
+        $restrictedQuantity = $this->config->getDefaultMinimumQuantity();
+        if ($quantity < $restrictedQuantity) {
             $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, $restrictedQuantity, $quantity, $responseTransfer);
 
             return false;
@@ -133,6 +133,8 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $min = $productQuantityTransfer->getQuantityMin();
         $max = $productQuantityTransfer->getQuantityMax();
         $interval = $productQuantityTransfer->getQuantityInterval();
+
+        dump($quantity);
 
         if (!$this->isQuantityEqual($quantity, 0) && $quantity < $min) {
             $this->addViolation(static::ERROR_QUANTITY_MIN_NOT_FULFILLED, $sku, $min, $quantity, $responseTransfer);
@@ -285,8 +287,8 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     protected function getDefaultProductQuantityTransfer(): ProductQuantityTransfer
     {
         return (new ProductQuantityTransfer())
-            ->setQuantityInterval($this->config->getInterval())
-            ->setQuantityMin($this->config->getMinimumQuantity());
+            ->setQuantityInterval($this->config->getDefaultInterval())
+            ->setQuantityMin($this->config->getDefaultMinimumQuantity());
     }
 
     /**

@@ -9,7 +9,7 @@
     </transfer>
 
     <transfer name="PriceProductVolume">
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
         <property name="price" type="int" />
     </transfer>
 

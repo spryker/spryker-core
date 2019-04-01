@@ -27,6 +27,7 @@ class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addProductQuantityService($container);
         $container = $this->addUtilQuantityService($container);
 
         return $container;
@@ -45,7 +46,7 @@ class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
             );
         };
 
-        $container = $this->addProductQuantityService($container);
+//        $container = $this->addProductQuantityService($container);
 
         return $container;
     }

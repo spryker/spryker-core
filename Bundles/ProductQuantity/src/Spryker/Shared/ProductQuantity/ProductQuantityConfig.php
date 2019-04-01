@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductQuantity;
+namespace Spryker\Shared\ProductQuantity;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-/**
- * @method \Spryker\Shared\ProductQuantity\ProductQuantityConfig getSharedConfig()
- */
-class ProductQuantityConfig extends AbstractBundleConfig
+class ProductQuantityConfig extends AbstractSharedConfig
 {
+    protected const DEFAULT_MIN_QUANTITY = 1.0;
+    protected const DEFAULT_INTERVAL = 1.0;
+
     /**
      * @return float
      */
     public function getDefaultMinimumQuantity(): float
     {
-        return $this->getSharedConfig()->getDefaultMinimumQuantity();
+        return static::DEFAULT_MIN_QUANTITY;
     }
 
     /**
@@ -27,6 +27,6 @@ class ProductQuantityConfig extends AbstractBundleConfig
      */
     public function getDefaultInterval(): float
     {
-        return $this->getSharedConfig()->getDefaultInterval();
+        return static::DEFAULT_INTERVAL;
     }
 }

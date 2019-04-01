@@ -8,7 +8,13 @@
 namespace SprykerTest\Zed\ProductQuantity\Business;
 
 use Codeception\Test\Unit;
+use Spryker\Service\Kernel\Container;
+use Spryker\Service\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceBridge as ServiceProductQuantityToUtilQuantityServiceBridge;
+use Spryker\Service\ProductQuantity\ProductQuantityService;
+use Spryker\Service\ProductQuantity\ProductQuantityServiceFactory;
 use Spryker\Zed\ProductQuantity\Business\ProductQuantityFacadeInterface;
+use Spryker\Zed\ProductQuantity\Dependency\Service\ProductQuantityToUtilQuantityServiceBridge;
+use Spryker\Zed\ProductQuantity\ProductQuantityDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -47,6 +53,22 @@ class ProductQuantityFacadeTest extends Unit
      */
     protected function createProductQuantityFacade(): ProductQuantityFacadeInterface
     {
+        $utilQuantityServiceBridge = new ProductQuantityToUtilQuantityServiceBridge(
+            $this->tester->getLocator()->utilQuantity()->service()
+        );
+        $this->tester->setDependency(ProductQuantityDependencyProvider::SERVICE_UTIL_QUANTITY, $utilQuantityServiceBridge);
+        $productQuantityService = new ProductQuantityService();
+        $productQuantityServiceFactory = new ProductQuantityServiceFactory();
+        $container = new Container();
+        $container[ProductQuantityDependencyProvider::SERVICE_UTIL_QUANTITY] = function () {
+            return new ServiceProductQuantityToUtilQuantityServiceBridge(
+                $this->tester->getLocator()->utilQuantity()->service()
+            );
+        };
+        $productQuantityServiceFactory->setContainer($container);
+        $productQuantityService->setFactory($productQuantityServiceFactory);
+        $this->tester->setDependency(ProductQuantityDependencyProvider::SERVICE_PRODUCT_QUANTITY, $productQuantityService);
+
         return $this->tester->getFacade();
     }
 
@@ -226,7 +248,7 @@ class ProductQuantityFacadeTest extends Unit
             'min, max, interval matches new int quantity' => [true, 5, 2, 7, 7,    7],
             'min, max, interval matches new float quantity' => [true, 5.5, 2.5, 8, 8,    8],
             'empty quote int quantity' => [true, 0, 1, 1, null, 1],
-            'empty quote float quantity' => [true, 0, 1.5, 1, null, 1],
+            'empty quote float quantity' => [true, 0, 1.5, 1, null, 0.5],
 
             'general rule 0 qty' => [false, 0, 0, 1, null, 1],
             'general rule negative int qty' => [false, 0, -4, 1, null, 1],
@@ -280,7 +302,7 @@ class ProductQuantityFacadeTest extends Unit
     {
         return [
             [true, 0, 1],
-            [true, 0, 1.5],
+            [true, 0.5, 1.5],
             [true, 2, 4],
             [true, 2.5, 4.5],
             [false, 0, 0],
