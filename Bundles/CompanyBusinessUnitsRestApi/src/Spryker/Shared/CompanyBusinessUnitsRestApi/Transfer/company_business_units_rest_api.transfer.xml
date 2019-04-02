@@ -13,11 +13,21 @@
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
+        <property name="idCompanyBusinessUnit" type="int" />
         <property name="uuid" type="string" />
     </transfer>
 
     <transfer name="CompanyUser">
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="idCompanyBusinessUnit" type="int"/>
     </transfer>
 
 </transfers>
