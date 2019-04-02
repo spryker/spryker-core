@@ -70,6 +70,6 @@ class ContentBannerClient extends AbstractClient implements ContentBannerClientI
                 ->execute($bannerTermTransfer);
         }
 
-        throw new MissingBannerTermException(sprintf('There is no ContentBanner Term which can work with the term %s.', $termKey));
+        throw new MissingBannerTermException(sprintf('There is no ContentBanner Term which can work with the term %s.', $term));
     }
 }
