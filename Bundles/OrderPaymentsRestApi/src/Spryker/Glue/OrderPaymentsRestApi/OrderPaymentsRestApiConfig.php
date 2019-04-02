@@ -18,4 +18,8 @@ class OrderPaymentsRestApiConfig extends AbstractBundleConfig
     public const ACTION_ORDER_PAYMENTS_POST = 'post';
 
     public const RESOURCE_ORDER_PAYMENTS_IS_PROTECTED = true;
+
+    public const RESPONSE_CODE_ORDER_PAYMENT_IS_NOT_UPDATED = '2401';
+
+    public const RESPONSE_MESSAGE_ORDER_PAYMENT_IS_NOT_UPDATED = 'Order payment is not updated.';
 }

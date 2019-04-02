@@ -21,7 +21,7 @@ class OrderPaymentsRestApiClient extends AbstractClient implements OrderPayments
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UpdateOrderPaymentRequestTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\UpdateOrderPaymentRequestTransfer $updateOrderPaymentRequestTransfer
      *
      * @return \Generated\Shared\Transfer\UpdateOrderPaymentResponseTransfer
      */

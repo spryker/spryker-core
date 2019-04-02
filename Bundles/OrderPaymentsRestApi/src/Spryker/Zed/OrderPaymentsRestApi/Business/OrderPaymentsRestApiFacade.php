@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  * @api
  *
  * @method \Spryker\Zed\OrderPaymentsRestApi\Business\OrderPaymentsRestApiBusinessFactory getFactory()
- * @method \Spryker\Zed\OrderPaymentsRestApi\Persistence\OrderPaymentsRestApiEntityManagerInterface getEntityManager()
  */
 class OrderPaymentsRestApiFacade extends AbstractFacade implements OrderPaymentsRestApiFacadeInterface
 {
@@ -31,6 +30,6 @@ class OrderPaymentsRestApiFacade extends AbstractFacade implements OrderPayments
     public function updateOrderPayment(
         UpdateOrderPaymentRequestTransfer $updateOrderPaymentRequestTransfer
     ): UpdateOrderPaymentResponseTransfer {
-        return $this->getFactory()->createOrderPaymentUpdater()->updateOrderPayment();
+        return $this->getFactory()->createOrderPaymentUpdater()->updateOrderPayment($updateOrderPaymentRequestTransfer);
     }
 }
