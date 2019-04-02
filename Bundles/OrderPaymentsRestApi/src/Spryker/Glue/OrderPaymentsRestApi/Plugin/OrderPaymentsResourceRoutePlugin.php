@@ -17,6 +17,7 @@ class OrderPaymentsResourceRoutePlugin extends AbstractPlugin implements Resourc
 {
     /**
      * {@inheritdoc}
+     * - Configures available actions for order-payments resource.
      *
      * @api
      *

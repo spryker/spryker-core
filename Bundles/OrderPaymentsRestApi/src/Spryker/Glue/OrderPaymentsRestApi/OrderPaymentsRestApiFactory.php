@@ -8,6 +8,8 @@
 namespace Spryker\Glue\OrderPaymentsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\OrderPaymentsRestApi\Processor\OrderPayment\OrderPaymentUpdater;
+use Spryker\Glue\OrderPaymentsRestApi\Processor\OrderPayment\OrderPaymentUpdaterInterface;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -16,4 +18,11 @@ use Spryker\Glue\Kernel\AbstractFactory;
  */
 class OrderPaymentsRestApiFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Glue\OrderPaymentsRestApi\Processor\OrderPayment\OrderPaymentUpdaterInterface
+     */
+    public function createOrderPaymentUpdater(): OrderPaymentUpdaterInterface
+    {
+        return new OrderPaymentUpdater();
+    }
 }
