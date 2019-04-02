@@ -13,7 +13,7 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated This class will be removed.
+ * @deprecated Will be removed in the next major version.
  *
  * @method \Spryker\Zed\Calculation\Business\CalculationFacadeInterface getFacade()
  * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()

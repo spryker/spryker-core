@@ -60,6 +60,8 @@ interface CalculationFacadeInterface
     public function removeTotals(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * Specification:
      *  - Checks if the calculated totals in the quote are still valid/consistent.
      *  - If not valid then adds an error code and message to the response
