@@ -20,37 +20,16 @@ class ShoppingListSubtotalCalculator implements ShoppingListSubtotalCalculatorIn
     {
         $shoppingListSubtotal = 0;
         foreach ($shoppingListItemProductViews as $shoppingListItemProductView) {
-            if (!$this->isShoppingListItemPriceIsDefined($shoppingListItemProductView)
-                || !$this->isShoppingListItemQuantityIsDefined($shoppingListItemProductView)
-                || !$this->isShoppingListItemAvailable($shoppingListItemProductView)
-            ) {
+            $shoppingListItemProductView->requireCurrentProductPrice();
+
+            if (!$this->isShoppingListItemAvailable($shoppingListItemProductView)) {
                 continue;
             }
 
-            $shoppingListSubtotal += $shoppingListItemProductView->getPrice() * $shoppingListItemProductView->getQuantity();
+            $shoppingListSubtotal += $shoppingListItemProductView->getCurrentProductPrice()->getSumPrice();
         }
 
         return $shoppingListSubtotal;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $shoppingListItemProductView
-     *
-     * @return bool
-     */
-    protected function isShoppingListItemPriceIsDefined(ProductViewTransfer $shoppingListItemProductView): bool
-    {
-        return $shoppingListItemProductView->getPrice() !== null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $shoppingListItemProductView
-     *
-     * @return bool
-     */
-    protected function isShoppingListItemQuantityIsDefined(ProductViewTransfer $shoppingListItemProductView): bool
-    {
-        return $shoppingListItemProductView->getQuantity() !== null;
     }
 
     /**
