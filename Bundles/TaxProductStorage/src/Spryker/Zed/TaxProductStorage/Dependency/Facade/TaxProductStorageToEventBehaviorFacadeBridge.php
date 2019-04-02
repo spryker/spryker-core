@@ -27,7 +27,7 @@ class TaxProductStorageToEventBehaviorFacadeBridge implements TaxProductStorageT
      *
      * @return array
      */
-    public function getEventTransferIds(array $eventTransfers): array
+    public function getEventTransferIds(array $eventTransfers)
     {
         return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
     }
