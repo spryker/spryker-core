@@ -55,7 +55,7 @@ class PriceProductScheduleWriterStep implements DataImportStepInterface
 
         $priceProductScheduleEntity = $priceProductScheduleQuery->findOneOrCreate();
 
-        if ($priceProductScheduleEntity->isNew()) {
+        if ($priceProductScheduleEntity->isNew() === false) {
             return;
         }
 
