@@ -30,7 +30,7 @@ class ContentProductAbstractListDataImportPlugin extends AbstractPlugin implemen
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
-        return $this->getFacade()->importProductAbstractLists($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importProductAbstractListTerm($dataImporterConfigurationTransfer);
     }
 
     /**

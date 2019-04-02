@@ -23,5 +23,5 @@ interface ContentProductDataImportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importProductAbstractLists(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): DataImporterReportTransfer;
+    public function importProductAbstractListTerm(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): DataImporterReportTransfer;
 }

@@ -64,7 +64,7 @@ class ContentProductAbstractListValidator implements ContentProductAbstractListV
                 ->setParameters([static::ERROR_MESSAGE_PARAMETER_COUNT => $this->config->getMaxProductsInProductAbstractList()]);
 
             return (new ContentParameterMessageTransfer())->setParameter(ContentProductAbstractListTermTransfer::ID_PRODUCT_ABSTRACTS)
-                ->addMessages($message);
+                ->addMessage($message);
         }
 
         return new ContentParameterMessageTransfer();
