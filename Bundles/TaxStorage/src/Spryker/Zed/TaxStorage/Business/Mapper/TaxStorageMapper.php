@@ -38,9 +38,9 @@ class TaxStorageMapper
     /**
      * @param \Orm\Zed\Tax\Persistence\SpyTaxRate[] $spyTaxRates
      *
-     * @return \Generated\Shared\Transfer\TaxRateStorageTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\TaxRateStorageTransfer[]
      */
-    public function mapSpyTaxRatesToTaxRateTransfers(array $spyTaxRates): array
+    protected function mapSpyTaxRatesToTaxRateTransfers(array $spyTaxRates): ArrayObject
     {
         $taxRateTransfers = new ArrayObject();
 

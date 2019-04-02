@@ -142,7 +142,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
         }
         $spyTaxSetStorage = $this->taxStorageMapper
             ->mapSpyTaxSetToTaxSetStorage($spyTaxSet, $spyTaxSetStorage);
-        $spyTaxSetStorage->isSendingToQueue(
+        $spyTaxSetStorage->setIsSendingToQueue(
             $this->taxStorageConfig->isSendingToQueue()
         );
 
