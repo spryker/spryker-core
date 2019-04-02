@@ -9,7 +9,7 @@ namespace Spryker\Zed\ContentProductDataImport\Business;
 
 use Spryker\Zed\ContentProductDataImport\Business\Model\ContentProductAbstractListWriterStep;
 use Spryker\Zed\ContentProductDataImport\Business\Model\Step\ContentProductAbstractListCheckContentDataStep;
-use Spryker\Zed\ContentProductDataImport\Business\Model\Step\ContentProductAbstractListPrepareLocalizedItemsStep;
+use Spryker\Zed\ContentProductDataImport\Business\Model\Step\ContentProductAbstractListPrepareLocalizedTermsStep;
 use Spryker\Zed\ContentProductDataImport\Business\Model\Step\ContentProductAbstractListSkusToIdsStep;
 use Spryker\Zed\ContentProductDataImport\ContentProductDataImportDependencyProvider;
 use Spryker\Zed\ContentProductDataImport\Dependency\Facade\ContentProductDataImportToContentInterface;
@@ -36,7 +36,7 @@ class ContentProductDataImportBusinessFactory extends DataImportBusinessFactory
         $dataSetStepBroker->addStep($this->createAddLocalesStep());
         $dataSetStepBroker->addStep($this->createContentProductAbstractListCheckContentDataStep());
         $dataSetStepBroker->addStep($this->createContentProductAbstractListSkusToIdsStep());
-        $dataSetStepBroker->addStep($this->createContentProductAbstractListPrepareLocalizedItemsStep());
+        $dataSetStepBroker->addStep($this->createContentProductAbstractListPrepareLocalizedTermsStep());
         $dataSetStepBroker->addStep($this->createContentProductAbstractListWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -63,9 +63,9 @@ class ContentProductDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createContentProductAbstractListPrepareLocalizedItemsStep(): DataImportStepInterface
+    public function createContentProductAbstractListPrepareLocalizedTermsStep(): DataImportStepInterface
     {
-        return new ContentProductAbstractListPrepareLocalizedItemsStep(
+        return new ContentProductAbstractListPrepareLocalizedTermsStep(
             $this->getUtilEncodingService(),
             $this->getContentProductFacade()
         );
