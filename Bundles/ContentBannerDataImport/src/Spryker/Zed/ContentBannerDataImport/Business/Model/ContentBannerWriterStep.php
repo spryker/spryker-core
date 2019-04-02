@@ -44,8 +44,8 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
     {
         $contentBannerEntity = $this->saveContentBanner($dataSet);
 
-        $this->saveContentBannerLocalizedItems(
-            $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_ITEMS],
+        $this->saveContentLocalizedBannerTerms(
+            $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_BANNER_TERMS],
             $contentBannerEntity->getIdContent()
         );
 
@@ -60,7 +60,7 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
      *
      * @return \Orm\Zed\Content\Persistence\SpyContent
      */
-    private function saveContentBanner(DataSetInterface $dataSet): SpyContent
+    protected function saveContentBanner(DataSetInterface $dataSet): SpyContent
     {
         $contentBannerEntity = SpyContentQuery::create()
             ->filterByKey($dataSet[ContentBannerDataSetInterface::CONTENT_BANNER_KEY])
@@ -76,34 +76,34 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
     }
 
     /**
-     * @param array $localizedItems
-     * @param int $idContentBanner
+     * @param array $localizedBannerTerms
+     * @param int $idContentBannerTerm
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
      *
      * @return void
      */
-    private function saveContentBannerLocalizedItems(array $localizedItems, int $idContentBanner): void
+    protected function saveContentLocalizedBannerTerms(array $localizedBannerTerms, int $idContentBannerTerm): void
     {
         SpyContentLocalizedQuery::create()
-            ->filterByFkContent($idContentBanner)
+            ->filterByFkContent($idContentBannerTerm)
             ->find()
             ->delete();
 
         $defaultLocaleIsPresent = false;
-        foreach ($localizedItems as $localeId => $attributes) {
+        foreach ($localizedBannerTerms as $localeId => $localizedBannerTerm) {
             if (!$localeId) {
                 $localeId = null;
                 $defaultLocaleIsPresent = true;
             }
 
             $contentBannerLocalizedItem = SpyContentLocalizedQuery::create()
-                ->filterByFkContent($idContentBanner)
+                ->filterByFkContent($idContentBannerTerm)
                 ->filterByFkLocale($localeId)
                 ->findOneOrCreate();
 
             $contentBannerLocalizedItem->setParameters(
-                $this->getEncodedParameters($attributes)
+                $this->getEncodedParameters($localizedBannerTerm)
             );
 
             $contentBannerLocalizedItem->save();

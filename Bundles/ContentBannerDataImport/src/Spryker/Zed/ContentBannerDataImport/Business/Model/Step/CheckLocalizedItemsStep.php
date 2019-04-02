@@ -21,7 +21,7 @@ class CheckLocalizedItemsStep implements DataImportStepInterface
      */
     protected $contentBanner;
 
-    private const ERROR_MESSAGE = 'Failed to import locale id [%s]: %s';
+    protected const ERROR_MESSAGE = 'Failed to import locale id [%s]: %s';
 
     /**
      * @param \Spryker\Zed\ContentBannerDataImport\Dependency\Facade\ContentBannerDataImportToContentBannerInterface $contentBanner
@@ -40,9 +40,9 @@ class CheckLocalizedItemsStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $validatedItems = [];
-        foreach ($dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_ITEMS] as $idLocale => $attributes) {
-            $validationResult = $this->contentBanner->validateContentBannerTerm($attributes);
+        $validatedContentBannerTerms = [];
+        foreach ($dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_BANNER_TERMS] as $localeId => $contentBannerTerm) {
+            $validationResult = $this->contentBanner->validateContentBannerTerm($contentBannerTerm);
 
             if (!$validationResult->getIsSuccess()) {
                 $errorMessages = $this->getErrorMessages($validationResult);
@@ -50,15 +50,15 @@ class CheckLocalizedItemsStep implements DataImportStepInterface
                 throw new InvalidDataException(
                     sprintf(
                         static::ERROR_MESSAGE,
-                        $idLocale,
+                        $localeId,
                         implode(';', $errorMessages)
                     )
                 );
             }
-            $validatedItems[$idLocale] = $attributes;
+            $validatedContentBannerTerms[$localeId] = $contentBannerTerm;
         }
 
-        $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_ITEMS] = $validatedItems;
+        $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_BANNER_TERMS] = $validatedContentBannerTerms;
     }
 
     /**
@@ -66,7 +66,7 @@ class CheckLocalizedItemsStep implements DataImportStepInterface
      *
      * @return string[]
      */
-    private function getErrorMessages(ContentValidationResponseTransfer $contentValidationResponseTransfer): array
+    protected function getErrorMessages(ContentValidationResponseTransfer $contentValidationResponseTransfer): array
     {
         $messages = [];
         foreach ($contentValidationResponseTransfer->getParameterMessages() as $parameterMessages) {

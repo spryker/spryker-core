@@ -22,27 +22,26 @@ class PrepareLocalizedItemsStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $localizedAttributes = [];
+        $localizedBannerTermParameters = [];
 
         $dataSet[AddLocalesStep::KEY_LOCALES] = array_merge($dataSet[AddLocalesStep::KEY_LOCALES], ['default' => null]);
 
-        foreach ($dataSet[AddLocalesStep::KEY_LOCALES] as $localeName => $idLocale) {
-            $attributes = [];
+        foreach ($dataSet[AddLocalesStep::KEY_LOCALES] as $localeName => $localeId) {
+            $bannerTermParamaters = [];
             $localeNotEmpty = false;
             $contentBanner = new ContentBannerTermTransfer();
-            $properties = $contentBanner->toArray();
 
-            foreach (array_keys($properties) as $attributeName) {
-                if (!empty($dataSet[$attributeName . '.' . $localeName])) {
-                    $attributes[$attributeName] = $dataSet[$attributeName . '.' . $localeName];
+            foreach (array_keys($contentBanner->toArray()) as $bannerTermParamaterKey) {
+                if (!empty($dataSet[$bannerTermParamaterKey . '.' . $localeName])) {
+                    $bannerTermParamaters[$bannerTermParamaterKey] = $dataSet[$bannerTermParamaterKey . '.' . $localeName];
                     $localeNotEmpty = true;
                 }
             }
             if ($localeNotEmpty) {
-                $localizedAttributes[$idLocale] = $contentBanner->fromArray($attributes);
+                $localizedBannerTermParameters[$localeId] = $contentBanner->fromArray($bannerTermParamaters);
             }
         }
 
-        $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_ITEMS] = $localizedAttributes;
+        $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_BANNER_TERMS] = $localizedBannerTermParameters;
     }
 }
