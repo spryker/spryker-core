@@ -27,6 +27,14 @@
         <property name="quoteRequestVersions" type="QuoteRequestVersion[]" singular="quoteRequestVersion" />
     </transfer>
 
+    <transfer name="QuoteResponse">
+        <property name="errors" type="QuoteError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
+    </transfer>
+
     <transfer name="QuoteRequest">
         <property name="idQuoteRequest" type="int" />
         <property name="companyUser" type="CompanyUser" />
@@ -64,7 +72,7 @@
     <transfer name="Quote">
         <property name="quoteRequestVersionReference" type="string" />
         <property name="quoteRequestReference" type="string" />
-
+        <property name="name" type="string"/>
         <property name="items" type="Item[]" singular="item" />
         <property name="totals" type="Totals" />
     </transfer>
@@ -80,6 +88,11 @@
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int" />
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit" />
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="CheckoutResponse">

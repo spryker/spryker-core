@@ -27,6 +27,17 @@
         <property name="metadata" type="array" />
     </transfer>
 
+    <transfer name="QuoteRequestFilter">
+        <property name="excludedStatuses" type="array" />
+        <property name="pagination" type="Pagination" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="quoteRequestVersionReference" type="string" />
+        <property name="quoteRequestReference" type="string" />
+        <property name="name" type="string"/>
+    </transfer>
+
     <transfer name="QuoteRequestResponse">
         <property name="quoteRequest" type="QuoteRequest" />
         <property name="isSuccessful" type="bool" />
@@ -40,6 +51,19 @@
     <transfer name="Pagination">
         <property name="page" type="int" />
         <property name="maxPerPage" type="int" />
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteRequestCriteria">
+        <property name="quoteRequestReference" type="string" />
+        <property name="idCompanyUser" type="int" />
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="errors" type="QuoteError[]" singular="error"/>
     </transfer>
 
     <transfer name="QuoteRequestCollection">
