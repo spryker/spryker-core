@@ -18,15 +18,8 @@ class PriceProductScheduleDataImportHelper extends Module
     public function ensureDatabaseTableIsEmpty(): void
     {
         $priceProductScheduleQuery = $this->getPriceProductScheduleQuery();
-        $priceProductScheduleQuery->deleteAll();
-    }
 
-    /**
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    protected function getPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
-    {
-        return SpyPriceProductScheduleQuery::create();
+        $priceProductScheduleQuery->deleteAll();
     }
 
     /**
@@ -35,9 +28,18 @@ class PriceProductScheduleDataImportHelper extends Module
     public function assertDatabaseTableContainsData(): void
     {
         $priceProductScheduleQuery = $this->getPriceProductScheduleQuery();
+
         $this->assertTrue(
             $priceProductScheduleQuery->exists(),
             'Expected at least one entry in the database table but database table is empty.'
         );
+    }
+
+    /**
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected function getPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
+    {
+        return SpyPriceProductScheduleQuery::create();
     }
 }

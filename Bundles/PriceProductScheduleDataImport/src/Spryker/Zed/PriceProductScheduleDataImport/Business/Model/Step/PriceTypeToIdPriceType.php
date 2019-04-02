@@ -25,7 +25,7 @@ class PriceTypeToIdPriceType implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $priceProductType = $dataSet[PriceProductScheduleDataSet::KEY_PRICE_TYPE];
         if (!isset($this->idPriceProductTypeCache[$priceProductType])) {

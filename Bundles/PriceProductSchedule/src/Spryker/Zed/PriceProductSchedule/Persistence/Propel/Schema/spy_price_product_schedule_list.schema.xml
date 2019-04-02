@@ -18,6 +18,11 @@
         </foreign-key>
 
         <id-method-parameter value="spy_price_product_schedule_list_pk_seq"/>
+
+
+        <index name="index-spy_price_product_schedule_list-name">
+            <index-column name="name"/>
+        </index>
     </table>
 
 </database>

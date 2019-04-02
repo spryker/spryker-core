@@ -30,7 +30,7 @@ class ConcreteSkuToIdProductStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $productConcreteSku = $dataSet[PriceProductScheduleDataSet::KEY_CONCRETE_SKU];
         if (empty($productConcreteSku)) {

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductScheduleDataImport\Communication\Plugin;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportConfig;
@@ -25,7 +26,7 @@ class PriceProductScheduleDataImportPlugin extends AbstractPlugin implements Dat
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
+    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFacade()->import($dataImporterConfigurationTransfer);
     }
@@ -35,7 +36,7 @@ class PriceProductScheduleDataImportPlugin extends AbstractPlugin implements Dat
      *
      * @return string
      */
-    public function getImportType()
+    public function getImportType(): string
     {
         return PriceProductScheduleDataImportConfig::IMPORT_TYPE_PRODUCT_PRICE_SCHEDULE;
     }

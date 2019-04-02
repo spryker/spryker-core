@@ -30,7 +30,7 @@ class StoreToIdStoreStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $storeName = $dataSet[PriceProductScheduleDataSet::KEY_STORE];
         if (!isset($this->idStoreCache[$storeName])) {

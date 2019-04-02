@@ -18,7 +18,7 @@ class PreparePriceDataStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         if (empty($dataSet[PriceProductScheduleDataSet::KEY_PRICE_NET])) {
             $dataSet[PriceProductScheduleDataSet::KEY_PRICE_NET] = null;

@@ -38,7 +38,7 @@ class ListNameToIdListWriterStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $listName = $this->config->getPriceProductScheduleListDefaultName();
         if (!isset($this->idPriceProductScheduleListCache[$listName])) {

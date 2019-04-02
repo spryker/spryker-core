@@ -24,7 +24,7 @@ class PriceProductScheduleWriterStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $priceProductScheduleQuery = $this->createPriceProductScheduleQuery()
             ->filterByFkPriceType($dataSet[PriceProductScheduleDataSet::FK_PRICE_TYPE])
@@ -54,6 +54,11 @@ class PriceProductScheduleWriterStep implements DataImportStepInterface
         }
 
         $priceProductScheduleEntity = $priceProductScheduleQuery->findOneOrCreate();
+
+        if ($priceProductScheduleEntity->isNew()) {
+            return;
+        }
+
         $priceProductScheduleEntity
             ->setFkStore($dataSet[PriceProductScheduleDataSet::FK_STORE])
             ->setFkCurrency($dataSet[PriceProductScheduleDataSet::FK_CURRENCY])

@@ -30,7 +30,7 @@ class CurrencyToIdCurrencyStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $currencyCode = $dataSet[PriceProductScheduleDataSet::KEY_CURRENCY];
         if (!isset($this->idCurrencyCache[$currencyCode])) {
