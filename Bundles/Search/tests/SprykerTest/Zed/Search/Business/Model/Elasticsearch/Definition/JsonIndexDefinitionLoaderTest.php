@@ -317,7 +317,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
      * @param \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingMock
      * @param string $suffix
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader
      */
     protected function createJsonIndexDefinitionLoader(
         array $sourceDirectories,
@@ -354,7 +354,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getUtilEncodingMock()
     {

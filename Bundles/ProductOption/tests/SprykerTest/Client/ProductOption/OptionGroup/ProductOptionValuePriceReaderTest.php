@@ -39,12 +39,12 @@ class ProductOptionValuePriceReaderTest extends Unit
     protected $productOptionValuePriceReader;
 
     /**
-     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceClientInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $priceClientMock;
 
     /**
-     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyClientInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $currencyClientMock;
 

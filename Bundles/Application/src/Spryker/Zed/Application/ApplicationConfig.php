@@ -51,4 +51,12 @@ class ApplicationConfig extends AbstractBundleConfig
     {
         return $this->get(ApplicationConstants::ZED_TRUSTED_HOSTS, []);
     }
+
+    /**
+     * @return string
+     */
+    public function getProjectNamespace(): string
+    {
+        return $this->get(ApplicationConstants::PROJECT_NAMESPACE);
+    }
 }

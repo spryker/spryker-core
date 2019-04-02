@@ -78,7 +78,7 @@ interface CartFacadeInterface
 
     /**
      * Specification:
-     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles if quote is not locked.
      *
      * @api
      *

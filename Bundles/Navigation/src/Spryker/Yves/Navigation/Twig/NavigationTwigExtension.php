@@ -10,8 +10,8 @@ namespace Spryker\Yves\Navigation\Twig;
 use Spryker\Client\Navigation\NavigationClientInterface;
 use Spryker\Shared\Twig\TwigExtension;
 use Spryker\Yves\Kernel\Application;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 class NavigationTwigExtension extends TwigExtension
 {
@@ -50,7 +50,7 @@ class NavigationTwigExtension extends TwigExtension
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction(self::FUNCTION_NAME_NAVIGATION, [$this, 'renderNavigation'], [
+            new TwigFunction(self::FUNCTION_NAME_NAVIGATION, [$this, 'renderNavigation'], [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
             ]),
@@ -58,13 +58,13 @@ class NavigationTwigExtension extends TwigExtension
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param string $navigationKey
      * @param string $template
      *
      * @return string
      */
-    public function renderNavigation(Twig_Environment $twig, $navigationKey, $template)
+    public function renderNavigation(Environment $twig, $navigationKey, $template)
     {
         $key = $navigationKey . '-' . $this->getLocale();
 

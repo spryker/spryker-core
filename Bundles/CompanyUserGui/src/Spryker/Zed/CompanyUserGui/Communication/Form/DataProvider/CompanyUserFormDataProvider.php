@@ -70,13 +70,11 @@ class CompanyUserFormDataProvider
     {
         $companyUserTransfer = new CompanyUserTransfer();
 
-        if ($idCompanyUser !== null) {
-            $companyUserTransfer->setIdCompanyUser($idCompanyUser);
-
-            return $this->companyUserFacade->getCompanyUserById($idCompanyUser);
+        if ($idCompanyUser === null) {
+            return $companyUserTransfer;
         }
 
-        return $companyUserTransfer;
+        return $this->companyUserFacade->findCompanyUserById($idCompanyUser) ?? $companyUserTransfer;
     }
 
     /**
