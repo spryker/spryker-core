@@ -32,7 +32,7 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getTitleConstraints(): array
+    protected function getTitleConstraints(): array
     {
         return [
             new Required(),
@@ -44,7 +44,7 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getSubtitleConstraints(): array
+    protected function getSubtitleConstraints(): array
     {
         return [
             new Required(),
@@ -56,7 +56,7 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getImageUrlConstraints(): array
+    protected function getImageUrlConstraints(): array
     {
         return [
             new Required(),
@@ -69,7 +69,7 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getClickUrlConstraints(): array
+    protected function getClickUrlConstraints(): array
     {
         return [
             new Required(),
@@ -82,7 +82,7 @@ class ContentBannerConstraintsProvider implements ContentBannerConstraintsProvid
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getAltTextConstraints(): array
+    protected function getAltTextConstraints(): array
     {
         return [
             new Required(),

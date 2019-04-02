@@ -97,16 +97,16 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
                 $defaultLocaleIsPresent = true;
             }
 
-            $contentBannerLocalizedItem = SpyContentLocalizedQuery::create()
+            $localizedContentBannerEntity = SpyContentLocalizedQuery::create()
                 ->filterByFkContent($idContentBannerTerm)
                 ->filterByFkLocale($localeId)
                 ->findOneOrCreate();
 
-            $contentBannerLocalizedItem->setParameters(
+            $localizedContentBannerEntity->setParameters(
                 $this->getEncodedParameters($localizedBannerTerm)
             );
 
-            $contentBannerLocalizedItem->save();
+            $localizedContentBannerEntity->save();
         }
 
         if (!$defaultLocaleIsPresent) {

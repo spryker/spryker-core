@@ -13,7 +13,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-class PrepareLocalizedItemsStep implements DataImportStepInterface
+class PrepareLocalizedContentBannerTermStep implements DataImportStepInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet

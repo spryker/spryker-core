@@ -9,8 +9,8 @@ namespace Spryker\Zed\ContentBannerDataImport\Business;
 
 use Spryker\Zed\ContentBannerDataImport\Business\Model\ContentBannerWriterStep;
 use Spryker\Zed\ContentBannerDataImport\Business\Model\Step\CheckContentDataStep;
-use Spryker\Zed\ContentBannerDataImport\Business\Model\Step\CheckLocalizedItemsStep;
-use Spryker\Zed\ContentBannerDataImport\Business\Model\Step\PrepareLocalizedItemsStep;
+use Spryker\Zed\ContentBannerDataImport\Business\Model\Step\CheckLocalizedContentBannerTermStep;
+use Spryker\Zed\ContentBannerDataImport\Business\Model\Step\PrepareLocalizedContentBannerTermStep;
 use Spryker\Zed\ContentBannerDataImport\ContentBannerDataImportDependencyProvider;
 use Spryker\Zed\ContentBannerDataImport\Dependency\Facade\ContentBannerDataImportToContentBannerInterface;
 use Spryker\Zed\ContentBannerDataImport\Dependency\Facade\ContentBannerDataImportToContentInterface;
@@ -34,8 +34,8 @@ class ContentBannerDataImportBusinessFactory extends DataImportBusinessFactory
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker->addStep($this->createCheckContentDataStep());
         $dataSetStepBroker->addStep($this->createAddLocalesStep());
-        $dataSetStepBroker->addStep($this->createPrepareLocalizedItemsStep());
-        $dataSetStepBroker->addStep($this->createCheckLocalizedItemsStep());
+        $dataSetStepBroker->addStep($this->createPrepareLocalizedContentBannerTermStep());
+        $dataSetStepBroker->addStep($this->createCheckLocalizedContentBannerTermStep());
         $dataSetStepBroker->addStep($this->createContentBannerWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -46,17 +46,17 @@ class ContentBannerDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createPrepareLocalizedItemsStep(): DataImportStepInterface
+    public function createPrepareLocalizedContentBannerTermStep(): DataImportStepInterface
     {
-        return new PrepareLocalizedItemsStep();
+        return new PrepareLocalizedContentBannerTermStep();
     }
 
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createCheckLocalizedItemsStep(): DataImportStepInterface
+    public function createCheckLocalizedContentBannerTermStep(): DataImportStepInterface
     {
-        return new CheckLocalizedItemsStep($this->getContentBannerFacade());
+        return new CheckLocalizedContentBannerTermStep($this->getContentBannerFacade());
     }
 
     /**

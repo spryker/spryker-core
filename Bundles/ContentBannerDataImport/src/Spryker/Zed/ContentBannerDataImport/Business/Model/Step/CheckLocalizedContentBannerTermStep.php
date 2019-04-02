@@ -14,7 +14,7 @@ use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-class CheckLocalizedItemsStep implements DataImportStepInterface
+class CheckLocalizedContentBannerTermStep implements DataImportStepInterface
 {
     /**
      * @var \Spryker\Zed\ContentBannerDataImport\Dependency\Facade\ContentBannerDataImportToContentBannerInterface
