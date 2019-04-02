@@ -8,9 +8,8 @@
 namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
 use DateTime;
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
@@ -48,15 +47,13 @@ class QuoteRequestCleaner implements QuoteRequestCleanerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param string $quoteRequestVersionReference
      *
      * @return void
      */
-    public function closeQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): void
+    public function closeQuoteRequest(string $quoteRequestVersionReference): void
     {
-        $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
-
-        $quoteRequestTransfer = $this->findQuoteRequestTransfer($quoteRequestCriteriaTransfer);
+        $quoteRequestTransfer = $this->findQuoteRequestTransferByVersionReference($quoteRequestVersionReference);
 
         if (!$quoteRequestTransfer) {
             return;
@@ -67,20 +64,26 @@ class QuoteRequestCleaner implements QuoteRequestCleanerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param string $quoteRequestVersionReference
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    protected function findQuoteRequestTransfer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer
+    protected function findQuoteRequestTransferByVersionReference(string $quoteRequestVersionReference): ?QuoteRequestTransfer
     {
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestCriteriaTransfer->getQuoteRequestReference());
+        $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterTransfer())
+            ->setQuoteRequestVersionReference($quoteRequestVersionReference);
 
-        $quoteRequestTransfers = $this->quoteRequestRepository
-            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
-            ->getQuoteRequests()
+        $quoteRequestVersionTransfers = $this->quoteRequestRepository
+            ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer)
+            ->getQuoteRequestVersions()
             ->getArrayCopy();
 
-        return array_shift($quoteRequestTransfers);
+        $quoteRequestVersionTransfer = array_shift($quoteRequestVersionTransfers);
+
+        if (!$quoteRequestVersionTransfer) {
+            return null;
+        }
+
+        return $quoteRequestVersionTransfer->getQuoteRequest();
     }
 }

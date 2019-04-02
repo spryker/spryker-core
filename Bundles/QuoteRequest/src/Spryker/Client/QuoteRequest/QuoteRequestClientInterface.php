@@ -21,10 +21,11 @@ interface QuoteRequestClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Creates "Request for Quote" for the provided company user with "Waiting" status.
+     * - Creates "Request for Quote" for the provided company user with "draft" status.
      * - Generates unique reference number.
-     * - Generates 1st version for the "Request for Quote" entity.
+     * - Generates version for the "Request for Quote" entity.
      * - Generates version reference based on unique reference number and version number.
+     * - Maps Quote to CalculableObject and runs all calculator plugins before saving.
      * - Stores provided metadata.
      * - Stores provided quote.
      *
@@ -39,8 +40,10 @@ interface QuoteRequestClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Finds a company by QuoteRequestTransfer::idQuoteRequest in the transfer.
-     * - Updates fields in a "Request for Quote" entity.
+     * - Finds a "Request for Quote" by QuoteRequestTransfer::idQuoteRequest in the transfer.
+     * - Expects "Request for Quote" status to be "draft".
+     * - Updates metadata in latest version.
+     * - Updates quote in latest version.
      *
      * @api
      *
@@ -54,9 +57,25 @@ interface QuoteRequestClientInterface
      * Specification:
      * - Makes Zed request.
      * - Looks up one "Request for Quote" by provided quote request reference.
+     * - Expects "Request for Quote" status to be "ready".
+     * - Creates latest version from previous version.
+     * - Sets status to "draft".
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function reviseQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Looks up one "Request for Quote" by provided quote request reference.
      * - Expects the related company user to be provided.
-     * - Expects "Request for Quote" status to be "waiting".
-     * - Sets status to "Cancelled".
+     * - Expects "Request for Quote" status to be "draft", "waiting", "ready".
+     * - Sets status to "cancelled".
      *
      * @api
      *
@@ -69,9 +88,24 @@ interface QuoteRequestClientInterface
     /**
      * Specification:
      * - Makes Zed request.
+     * - Expects quote request reference to be provided.
+     * - Retrieves "Request for Quote" entity filtered by reference.
+     * - Expects "Request for Quote" status to be "draft".
+     * - Changes status to "waiting".
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function sendQuoteRequestToUser(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
      * - Retrieves "Request for Quote" entities filtered by company user.
      * - Filters by quote request reference when provided.
-     * - Excludes hidden "Request for Quote" entities.
      * - Selects latestVersion based on latest version id.
      *
      * @api
@@ -102,7 +136,6 @@ interface QuoteRequestClientInterface
      * - Makes Zed request.
      * - Retrieves "Request for Quote" entities filtered by company user.
      * - Filters by quote request reference.
-     * - Excludes hidden "Request for Quote" entities.
      * - Selects latestVersion based on latest version id.
      *
      * @api
@@ -118,9 +151,23 @@ interface QuoteRequestClientInterface
      * Specification:
      * - Makes Zed request.
      * - Expects "Request for Quote" status to be "ready".
-     * - Expects the related latest version to be provided.
      * - Locks quote.
      * - Replaces current customer quote by quote from latest quote request version.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function convertQuoteRequestToLockedQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Expects "Request for Quote" status to be "draft".
+     * - Replaces current customer quote by quote from latest quote request version.
+     * - Uses latest quote request version reference as quote name.
      *
      * @api
      *
@@ -145,8 +192,19 @@ interface QuoteRequestClientInterface
 
     /**
      * Specification:
-     * - Checks convertible status from config.
-     * - If "Request for Quote" convertible - return true.
+     * - Returns true if quote request status is "draft".
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * Specification:
+     * - If "Request for Quote" in ready status - return true.
      *
      * @api
      *

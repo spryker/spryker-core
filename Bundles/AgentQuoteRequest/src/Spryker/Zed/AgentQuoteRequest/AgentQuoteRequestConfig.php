@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AgentQuoteRequest;
 
+use Spryker\Shared\AgentQuoteRequest\AgentQuoteRequestConfig as SharedAgentQuoteRequestConfig;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
@@ -15,10 +16,10 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class AgentQuoteRequestConfig extends AbstractBundleConfig
 {
     /**
-     * @return string[]
+     * @return string
      */
-    public function getCancelableStatuses(): array
+    public function getInitialStatus(): string
     {
-        return $this->getSharedConfig()->getCancelableStatuses();
+        return SharedAgentQuoteRequestConfig::STATUS_IN_PROGRESS;
     }
 }

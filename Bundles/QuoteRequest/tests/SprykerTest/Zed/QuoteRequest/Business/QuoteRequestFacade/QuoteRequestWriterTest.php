@@ -13,6 +13,7 @@ use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestVersionBuilder;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
@@ -26,7 +27,7 @@ use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
-use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
+use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManager;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 use Spryker\Zed\QuoteRequest\QuoteRequestConfig;
 
@@ -41,6 +42,7 @@ use Spryker\Zed\QuoteRequest\QuoteRequestConfig;
  */
 class QuoteRequestWriterTest extends Unit
 {
+    protected const FAKE_CUSTOMER_REFERENCE = 'FAKE_CUSTOMER_REFERENCE';
     protected const FAKE_ID_QUOTE_REQUEST_VERSION = 'FAKE_ID_QUOTE_REQUEST_VERSION';
 
     /**
@@ -52,6 +54,11 @@ class QuoteRequestWriterTest extends Unit
      * @uses \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+
+    /**
+     * @uses \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND
+     */
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND = 'quote_request.validation.error.company_user_not_found';
 
     /**
      * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter|\PHPUnit_Framework_MockObject_MockObject
@@ -71,7 +78,9 @@ class QuoteRequestWriterTest extends Unit
         parent::setUp();
 
         $this->companyUserTransfer = (new CompanyUserBuilder())
-            ->withCustomer()
+            ->withCustomer([
+                CustomerTransfer::CUSTOMER_REFERENCE => static::FAKE_CUSTOMER_REFERENCE,
+            ])
             ->build()
             ->setIdCompanyUser('');
 
@@ -225,7 +234,7 @@ class QuoteRequestWriterTest extends Unit
         ]))->build();
 
         $this->quoteRequestWriter->expects($this->any())
-            ->method('getCustomerReference')
+            ->method('findCustomerReference')
             ->willReturn($this->companyUserTransfer->getCustomer()->getCustomerReference());
 
         $quoteTransfer = (new QuoteBuilder())
@@ -266,6 +275,32 @@ class QuoteRequestWriterTest extends Unit
     /**
      * @return void
      */
+    public function testCreateQuoteRequestCreatesQuoteRequestWithoutCustomer(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = (new QuoteRequestBuilder([
+            QuoteRequestTransfer::COMPANY_USER => $this->companyUserTransfer,
+        ]))->build();
+
+        $this->quoteRequestWriter->expects($this->any())
+            ->method('findCustomerReference')
+            ->willReturn(null);
+
+        // Act
+        $quoteRequestResponseTransfer = $this->quoteRequestWriter->createQuoteRequest($quoteRequestTransfer);
+
+        // Assert
+        $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $quoteRequestResponseTransfer->getMessages());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND,
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateQuoteRequestCreatesQuoteRequestWithoutQuote(): void
     {
         // Arrange
@@ -274,6 +309,10 @@ class QuoteRequestWriterTest extends Unit
         ]))->build();
 
         $quoteRequestTransfer->setLatestVersion((new QuoteRequestVersionBuilder())->build());
+
+        $this->quoteRequestWriter->expects($this->any())
+            ->method('findCustomerReference')
+            ->willReturn($this->companyUserTransfer->getCustomer()->getCustomerReference());
 
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
@@ -293,7 +332,7 @@ class QuoteRequestWriterTest extends Unit
         ]))->build();
 
         $this->quoteRequestWriter->expects($this->any())
-            ->method('getCustomerReference')
+            ->method('findCustomerReference')
             ->willReturn($this->companyUserTransfer->getCustomer()->getCustomerReference());
 
         $quoteRequestVersionTransfer = (new QuoteRequestVersionBuilder([
@@ -315,20 +354,17 @@ class QuoteRequestWriterTest extends Unit
     protected function createQuoteRequestWriterMock(): MockObject
     {
         $quoteRequestWriter = $this->getMockBuilder(QuoteRequestWriter::class)
-            ->setMethods(['findQuoteRequestTransfer', 'getCustomerReference'])
+            ->setMethods(['findQuoteRequestTransfer', 'findCustomerReference'])
             ->setConstructorArgs([
                 $this->createQuoteRequestConfigMock(),
-                $this->createQuoteRequestEntityManagerInterfaceMock(),
+                $this->createQuoteRequestEntityManagerMock(),
                 $this->createQuoteRequestRepositoryInterfaceMock(),
                 $this->createQuoteRequestReferenceGeneratorInterfaceMock(),
                 $this->createQuoteRequestToCompanyUserInterfaceMock(),
                 $this->createQuoteRequestToCalculationInterfaceMock(),
-                $this->createCartFacadeMock(),
+                $this->createQuoteRequestToCartInterfaceMock(),
             ])
             ->getMock();
-
-        $quoteRequestWriter->method('getCustomerReference')
-            ->willReturn('');
 
         return $quoteRequestWriter;
     }
@@ -336,40 +372,30 @@ class QuoteRequestWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createCartFacadeMock(): MockObject
+    protected function createQuoteRequestEntityManagerMock(): MockObject
     {
-        return $this->createMock(QuoteRequestToCartInterface::class);
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createQuoteRequestEntityManagerInterfaceMock(): MockObject
-    {
-        $quoteRequestEntityManagerInterface = $this->getMockBuilder(QuoteRequestEntityManagerInterface::class)
+        $quoteRequestEntityManagerMock = $this->getMockBuilder(QuoteRequestEntityManager::class)
             ->setMethods([
                 'createQuoteRequest',
                 'updateQuoteRequest',
                 'createQuoteRequestVersion',
-                'updateQuoteRequestVersion',
-                'closeOutdatedQuoteRequests',
             ])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $quoteRequestEntityManagerInterface
+        $quoteRequestEntityManagerMock
             ->method('updateQuoteRequest')
             ->willReturnCallback(function (QuoteRequestTransfer $quoteRequestTransfer) {
                 return $quoteRequestTransfer;
             });
 
-        $quoteRequestEntityManagerInterface
+        $quoteRequestEntityManagerMock
             ->method('createQuoteRequest')
             ->willReturnCallback(function (QuoteRequestTransfer $quoteRequestTransfer) {
                 return $quoteRequestTransfer;
             });
 
-        return $quoteRequestEntityManagerInterface;
+        return $quoteRequestEntityManagerMock;
     }
 
     /**
@@ -443,5 +469,23 @@ class QuoteRequestWriterTest extends Unit
             });
 
         return $quoteRequestToCalculationInterfaceMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createQuoteRequestToCartInterfaceMock(): MockObject
+    {
+        $quoteRequestToCartInterfaceMock = $this->getMockBuilder(QuoteRequestToCartInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $quoteRequestToCartInterfaceMock
+            ->method('reloadItems')
+            ->willReturnCallback(function (QuoteTransfer $quoteTransfer) {
+                return $quoteTransfer;
+            });
+
+        return $quoteRequestToCartInterfaceMock;
     }
 }

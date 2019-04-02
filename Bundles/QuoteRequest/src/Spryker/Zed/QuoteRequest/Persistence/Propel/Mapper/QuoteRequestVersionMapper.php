@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
@@ -72,15 +73,13 @@ class QuoteRequestVersionMapper
         QuoteRequestVersionTransfer $quoteRequestVersionTransfer
     ): QuoteRequestVersionTransfer {
         $quoteRequestVersionTransfer = $quoteRequestVersionTransfer
-            ->fromArray($quoteRequestVersion->toArray(), true);
+            ->fromArray($quoteRequestVersion->toArray(), true)
+            ->setMetadata($this->decodeMetadata($quoteRequestVersion))
+            ->setQuoteRequest($this->getQuoteRequest($quoteRequestVersion));
 
-        $quoteRequestVersionTransfer->setQuote(
-            (new QuoteTransfer())->fromArray($this->decodeQuoteData($quoteRequestVersion->getQuote()), true)
-        );
-
-        $quoteRequestVersionTransfer->setQuoteRequest(
-            (new QuoteRequestTransfer())->fromArray($quoteRequestVersion->getSpyQuoteRequest()->toArray(), true)
-        );
+        if ($quoteRequestVersion->getQuote()) {
+            $quoteRequestVersionTransfer->setQuote($this->decodeQuote($quoteRequestVersion->getQuote()));
+        }
 
         return $quoteRequestVersionTransfer;
     }
@@ -97,13 +96,43 @@ class QuoteRequestVersionMapper
     ): SpyQuoteRequestVersion {
         $data = $quoteRequestVersionTransfer->modifiedToArray();
         unset($data['quote']);
+        unset($data['metadata']);
 
         $quoteRequestVersionEntity->fromArray($data);
-        $quoteRequestVersionEntity->setQuote(
-            $this->encodeQuoteData($quoteRequestVersionTransfer->getQuote())
-        );
+
+        $quoteRequestVersionEntity
+            ->setQuote($this->encodeQuoteData($quoteRequestVersionTransfer->getQuote()))
+            ->setMetadata($this->encodeMetadata($quoteRequestVersionTransfer));
 
         return $quoteRequestVersionEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion $quoteRequestVersion
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    protected function getQuoteRequest(SpyQuoteRequestVersion $quoteRequestVersion): QuoteRequestTransfer
+    {
+        $quoteRequestEntity = $quoteRequestVersion->getSpyQuoteRequest();
+        $quoteRequestTransfer = (new QuoteRequestTransfer())
+            ->fromArray($quoteRequestEntity->toArray(), true)
+            ->setCompanyUser(
+                (new CompanyUserTransfer())->setIdCompanyUser($quoteRequestEntity->getFkCompanyUser())
+            );
+
+        return $quoteRequestTransfer;
+    }
+
+    /**
+     * @param string $encodedQuoteData
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function decodeQuote(string $encodedQuoteData): QuoteTransfer
+    {
+        return (new QuoteTransfer())
+            ->fromArray($this->decodeQuoteData($encodedQuoteData), true);
     }
 
     /**
@@ -114,6 +143,26 @@ class QuoteRequestVersionMapper
     protected function decodeQuoteData(string $data): array
     {
         return $this->encodingService->decodeJson($data, true);
+    }
+
+    /**
+     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion $quoteRequestVersionEntity
+     *
+     * @return array
+     */
+    protected function decodeMetadata(SpyQuoteRequestVersion $quoteRequestVersionEntity): array
+    {
+        return $this->encodingService->decodeJson($quoteRequestVersionEntity->getMetadata(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
+     *
+     * @return string
+     */
+    protected function encodeMetadata(QuoteRequestVersionTransfer $quoteRequestVersionTransfer): string
+    {
+        return $this->encodingService->encodeJson($quoteRequestVersionTransfer->getMetadata(), JSON_OBJECT_AS_ARRAY);
     }
 
     /**

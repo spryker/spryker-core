@@ -12,14 +12,17 @@ use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestCheckerInterface;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestCleaner;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestCleanerInterface;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReader;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGenerator;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriterInterface;
+use Spryker\Zed\QuoteRequest\Business\UserQuoteRequest\UserQuoteRequestWriter;
+use Spryker\Zed\QuoteRequest\Business\UserQuoteRequest\UserQuoteRequestWriterInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
-use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberInterface;
 use Spryker\Zed\QuoteRequest\QuoteRequestDependencyProvider;
 
 /**
@@ -29,6 +32,16 @@ use Spryker\Zed\QuoteRequest\QuoteRequestDependencyProvider;
  */
 class QuoteRequestBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface
+     */
+    public function createQuoteRequestReader(): QuoteRequestReaderInterface
+    {
+        return new QuoteRequestReader(
+            $this->getRepository()
+        );
+    }
+
     /**
      * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriterInterface
      */
@@ -41,6 +54,21 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteRequestReferenceGenerator(),
             $this->getCompanyUserFacade(),
             $this->getCalculationFacade(),
+            $this->getCartFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\UserQuoteRequest\UserQuoteRequestWriterInterface
+     */
+    public function createUserQuoteRequestWriter(): UserQuoteRequestWriterInterface
+    {
+        return new UserQuoteRequestWriter(
+            $this->getConfig(),
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createQuoteRequestReferenceGenerator(),
+            $this->getCompanyUserFacade(),
             $this->getCartFacade()
         );
     }
@@ -72,17 +100,9 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     public function createQuoteRequestReferenceGenerator(): QuoteRequestReferenceGeneratorInterface
     {
         return new QuoteRequestReferenceGenerator(
-            $this->getSequenceNumberFacade(),
-            $this->getConfig()->getQuoteRequestReferenceDefaults()
+            $this->getConfig(),
+            $this->getRepository()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToSequenceNumberInterface
-     */
-    public function getSequenceNumberFacade(): QuoteRequestToSequenceNumberInterface
-    {
-        return $this->getProvidedDependency(QuoteRequestDependencyProvider::FACADE_SEQUENCE_NUMBER);
     }
 
     /**

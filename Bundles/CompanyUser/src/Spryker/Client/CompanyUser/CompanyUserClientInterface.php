@@ -9,6 +9,7 @@ namespace Spryker\Client\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserQueryTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -128,4 +129,19 @@ interface CompanyUserClientInterface
     public function getActiveCompanyUsersByCustomerReference(
         CustomerTransfer $customerTransfer
     ): CompanyUserCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Retrieves company user collection according provided filter.
+     * - Search works by first name, last name and email.
+     * - If company users by query are not exist, collection will be empty.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $companyUserQueryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getCompanyUserCollectionByQuery(CompanyUserQueryTransfer $companyUserQueryTransfer): CompanyUserCollectionTransfer;
 }

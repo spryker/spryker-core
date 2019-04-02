@@ -36,8 +36,7 @@ class AgentQuoteRequestBusinessFactory extends AbstractBusinessFactory
     public function createAgentQuoteRequestWriter(): AgentQuoteRequestWriterInterface
     {
         return new AgentQuoteRequestWriter(
-            $this->getQuoteRequestFacade(),
-            $this->getConfig()
+            $this->getQuoteRequestFacade()
         );
     }
 

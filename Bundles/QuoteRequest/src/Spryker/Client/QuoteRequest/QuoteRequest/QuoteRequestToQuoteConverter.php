@@ -15,8 +15,7 @@ use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInter
 
 class QuoteRequestToQuoteConverter implements QuoteRequestToQuoteConverterInterface
 {
-    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
-    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
+    protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
 
     /**
      * @var \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface
@@ -53,25 +52,46 @@ class QuoteRequestToQuoteConverter implements QuoteRequestToQuoteConverterInterf
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    public function convertQuoteRequestToLockedQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
         if (!$this->quoteRequestChecker->isQuoteRequestReady($quoteRequestTransfer)) {
-            return $this->getErrorResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS);
-        }
-
-        if (!$quoteRequestTransfer->getLatestVersion()) {
-            return $this->getErrorResponse(static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND);
+            return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS);
         }
 
         $latestQuoteRequestVersionTransfer = $quoteRequestTransfer->getLatestVersion();
         $quoteTransfer = $latestQuoteRequestVersionTransfer->getQuote();
 
-        $quoteTransfer->setQuoteRequestVersionReference($latestQuoteRequestVersionTransfer->getVersionReference())
-            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
+        $quoteTransfer->setName($latestQuoteRequestVersionTransfer->getVersionReference());
+        $quoteTransfer->setQuoteRequestVersionReference($latestQuoteRequestVersionTransfer->getVersionReference());
 
         $quoteTransfer = $this->quoteClient->lockQuote($quoteTransfer);
 
         return $this->persistentCartClient->persistCustomerQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    {
+        if (!$this->quoteRequestChecker->isQuoteRequestEditable($quoteRequestTransfer)) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS);
+        }
+
+        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
+
+        $quoteTransfer
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
+            ->setQuoteRequestVersionReference(null)
+            ->setName($quoteRequestTransfer->getQuoteRequestReference());
+
+        $this->quoteClient->setQuote($quoteTransfer);
+
+        return (new QuoteResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setQuoteTransfer($quoteTransfer);
     }
 
     /**

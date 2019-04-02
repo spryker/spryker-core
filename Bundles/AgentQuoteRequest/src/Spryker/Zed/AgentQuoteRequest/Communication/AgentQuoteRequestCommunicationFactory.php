@@ -11,8 +11,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\AgentQuoteRequest\AgentQuoteRequestConfig getConfig()
- * @method \Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\AgentQuoteRequest\Business\AgentQuoteRequestFacadeInterface getFacade()
+ * @method \Spryker\Zed\AgentQuoteRequest\Persistence\AgentQuoteRequestRepositoryInterface getRepository()
  */
 class AgentQuoteRequestCommunicationFactory extends AbstractCommunicationFactory
 {

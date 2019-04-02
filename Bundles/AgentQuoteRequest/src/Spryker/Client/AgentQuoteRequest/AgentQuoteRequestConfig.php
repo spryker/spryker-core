@@ -21,4 +21,12 @@ class AgentQuoteRequestConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getCancelableStatuses();
     }
+
+    /**
+     * @return string[]
+     */
+    public function getRevisableStatuses(): array
+    {
+        return $this->getSharedConfig()->getRevisableStatuses();
+    }
 }

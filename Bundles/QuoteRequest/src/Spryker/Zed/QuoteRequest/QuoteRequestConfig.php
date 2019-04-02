@@ -8,9 +8,7 @@
 namespace Spryker\Zed\QuoteRequest;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
-use Spryker\Shared\QuoteRequest\QuoteRequestConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
@@ -23,7 +21,7 @@ class QuoteRequestConfig extends AbstractBundleConfig
      */
     public function getInitialStatus(): string
     {
-        return SharedQuoteRequestConfig::STATUS_WAITING;
+        return SharedQuoteRequestConfig::STATUS_DRAFT;
     }
 
     /**
@@ -55,27 +53,34 @@ class QuoteRequestConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
+     * @return string[]
      */
-    public function getQuoteRequestReferenceDefaults()
+    public function getRevisableStatuses(): array
     {
-        $sequenceNumberSettingsTransfer = (new SequenceNumberSettingsTransfer())
-            ->setName(QuoteRequestConstants::NAME_QUOTE_REQUEST_REFERENCE);
+        return $this->getSharedConfig()->getRevisableStatuses();
+    }
 
-        $sequenceNumberPrefixParts = [];
-        $sequenceNumberPrefixParts[] = $this->get(QuoteRequestConstants::ENVIRONMENT_PREFIX);
+    /**
+     * @return string[]
+     */
+    public function getUserCancelableStatuses(): array
+    {
+        return $this->getSharedConfig()->getUserCancelableStatuses();
+    }
 
-        $prefix = implode($this->getUniqueIdentifierSeparator(), $sequenceNumberPrefixParts) . $this->getUniqueIdentifierSeparator();
-        $sequenceNumberSettingsTransfer->setPrefix($prefix);
-
-        return $sequenceNumberSettingsTransfer;
+    /**
+     * @return string[]
+     */
+    public function getUserRevisableStatuses(): array
+    {
+        return $this->getSharedConfig()->getUserRevisableStatuses();
     }
 
     /**
      * @return string
      */
-    protected function getUniqueIdentifierSeparator(): string
+    public function getQuoteRequestReferenceFormat(): string
     {
-        return '-';
+        return '%s-%s';
     }
 }

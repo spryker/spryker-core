@@ -53,4 +53,16 @@ class AgentQuoteRequestConfig extends AbstractSharedConfig
             static::STATUS_READY,
         ];
     }
+
+    /**
+     * @return string[]
+     */
+    public function getRevisableStatuses(): array
+    {
+        return [
+            static::STATUS_DRAFT,
+            static::STATUS_WAITING,
+            static::STATUS_READY,
+        ];
+    }
 }

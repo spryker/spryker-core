@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
-
 interface QuoteRequestCleanerInterface
 {
     /**
@@ -17,9 +15,9 @@ interface QuoteRequestCleanerInterface
     public function closeOutdatedQuoteRequests(): void;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param string $quoteRequestVersionReference
      *
      * @return void
      */
-    public function closeQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): void;
+    public function closeQuoteRequest(string $quoteRequestVersionReference): void;
 }

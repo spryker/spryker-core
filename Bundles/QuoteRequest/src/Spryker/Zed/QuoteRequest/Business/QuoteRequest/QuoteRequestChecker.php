@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
-use DateTime;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
@@ -134,8 +133,7 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
             return false;
         }
 
-        if (!$quoteRequestTransfer->getValidUntil()
-            || (new DateTime($quoteRequestTransfer->getValidUntil()) < new DateTime('now'))) {
+        if ($quoteRequestTransfer->getValidUntil() && strtotime($quoteRequestTransfer->getValidUntil()) < time()) {
             $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL);
 
             return false;

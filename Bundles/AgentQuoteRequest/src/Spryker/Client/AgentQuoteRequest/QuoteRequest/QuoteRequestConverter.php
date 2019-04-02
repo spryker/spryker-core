@@ -15,7 +15,6 @@ use Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToQuoteC
 class QuoteRequestConverter implements QuoteRequestConverterInterface
 {
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
-    protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
 
     /**
      * @var \Spryker\Client\AgentQuoteRequest\Dependency\Client\AgentQuoteRequestToQuoteClientInterface
@@ -44,18 +43,18 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function convertQuoteRequestToQuoteInProgress(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
         if (!$this->quoteRequestChecker->isQuoteRequestEditable($quoteRequestTransfer)) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS);
         }
 
-        if (!$quoteRequestTransfer->getQuoteInProgress()) {
-            return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND);
-        }
+        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();
 
-        $quoteTransfer = $quoteRequestTransfer->getQuoteInProgress();
-        $quoteTransfer->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
+        $quoteTransfer
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
+            ->setQuoteRequestVersionReference($quoteRequestTransfer->getLatestVersion()->getVersionReference())
+            ->setName($quoteRequestTransfer->getQuoteRequestReference());
 
         $this->quoteClient->setQuote($quoteTransfer);
 

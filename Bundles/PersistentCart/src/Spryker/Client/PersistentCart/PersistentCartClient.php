@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\PersistentCart;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
@@ -115,5 +116,21 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
         return $this->getFactory()
             ->createGuestCartCustomerReferenceGenerator()
             ->generateGuestCartCustomerReference($customerReference);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    public function reloadQuoteForCustomer(CustomerTransfer $customerTransfer): void
+    {
+        $this->getFactory()
+            ->createCustomerQuoteCleaner()
+            ->reloadQuoteForCustomer($customerTransfer);
     }
 }
