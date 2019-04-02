@@ -10,9 +10,9 @@ namespace SprykerTest\Client\Redis\Connection;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
 use ReflectionProperty;
-use Spryker\Client\Redis\Client\Adapter\ClientAdapterInterface;
-use Spryker\Client\Redis\Client\ClientProvider;
-use Spryker\Client\Redis\Client\Factory\ClientAdapterFactoryInterface;
+use Spryker\Client\Redis\Connection\Adapter\RedisAdapterInterface;
+use Spryker\Client\Redis\Connection\Factory\RedisAdapterFactoryInterface;
+use Spryker\Client\Redis\Connection\RedisAdapterProvider;
 
 /**
  * Auto-generated group annotations
@@ -20,16 +20,16 @@ use Spryker\Client\Redis\Client\Factory\ClientAdapterFactoryInterface;
  * @group Client
  * @group Redis
  * @group Connection
- * @group ConnectionProviderTest
+ * @group RedisAdapterProviderTest
  * Add your own group annotations below this line
  */
-class ConnectionProviderTest extends Unit
+class RedisAdapterProviderTest extends Unit
 {
     protected const CONNECTION_KEY_SESSION = 'session connection key';
     protected const CONNECTION_KEY_STORAGE = 'storage connection key';
 
     /**
-     * @var \Spryker\Client\Redis\Client\ClientProviderInterface
+     * @var \Spryker\Client\Redis\Connection\RedisAdapterProviderInterface
      */
     protected $connectionProvider;
 
@@ -40,7 +40,7 @@ class ConnectionProviderTest extends Unit
     {
         parent::setUp();
 
-        $this->connectionProvider = new ClientProvider(
+        $this->connectionProvider = new RedisAdapterProvider(
             $this->createClientAdapterFactoryMock()
         );
     }
@@ -54,7 +54,7 @@ class ConnectionProviderTest extends Unit
     {
         $this->resetConnectionPool();
 
-        $this->connectionProvider->getClient(static::CONNECTION_KEY_SESSION);
+        $this->connectionProvider->getAdapter(static::CONNECTION_KEY_SESSION);
     }
 
     /**
@@ -65,9 +65,9 @@ class ConnectionProviderTest extends Unit
         $this->resetConnectionPool();
 
         $this->connectionProvider->setupConnection(static::CONNECTION_KEY_SESSION, new RedisConfigurationTransfer());
-        $connection = $this->connectionProvider->getClient(static::CONNECTION_KEY_SESSION);
+        $connection = $this->connectionProvider->getAdapter(static::CONNECTION_KEY_SESSION);
 
-        $this->assertInstanceOf(ClientAdapterInterface::class, $connection);
+        $this->assertInstanceOf(RedisAdapterInterface::class, $connection);
     }
 
     /**
@@ -80,8 +80,8 @@ class ConnectionProviderTest extends Unit
         $this->connectionProvider->setupConnection(static::CONNECTION_KEY_SESSION, new RedisConfigurationTransfer());
         $this->connectionProvider->setupConnection(static::CONNECTION_KEY_STORAGE, new RedisConfigurationTransfer());
 
-        $sessionConnection = $this->connectionProvider->getClient(static::CONNECTION_KEY_SESSION);
-        $storageConnection = $this->connectionProvider->getClient(static::CONNECTION_KEY_STORAGE);
+        $sessionConnection = $this->connectionProvider->getAdapter(static::CONNECTION_KEY_SESSION);
+        $storageConnection = $this->connectionProvider->getAdapter(static::CONNECTION_KEY_STORAGE);
 
         $this->assertNotSame($sessionConnection, $storageConnection);
     }
@@ -96,11 +96,11 @@ class ConnectionProviderTest extends Unit
         $configurationTransfer = new RedisConfigurationTransfer();
 
         $this->connectionProvider->setupConnection(static::CONNECTION_KEY_SESSION, $configurationTransfer);
-        $connection1 = $this->connectionProvider->getClient(static::CONNECTION_KEY_SESSION);
+        $connection1 = $this->connectionProvider->getAdapter(static::CONNECTION_KEY_SESSION);
 
         $this->connectionProvider->setupConnection(static::CONNECTION_KEY_SESSION, $configurationTransfer);
 
-        $connection2 = $this->connectionProvider->getClient(static::CONNECTION_KEY_SESSION);
+        $connection2 = $this->connectionProvider->getAdapter(static::CONNECTION_KEY_SESSION);
 
         $this->assertSame($connection1, $connection2);
     }
@@ -110,20 +110,20 @@ class ConnectionProviderTest extends Unit
      */
     protected function resetConnectionPool(): void
     {
-        $connectionPoolReflection = new ReflectionProperty(ClientProvider::class, 'clientPool');
+        $connectionPoolReflection = new ReflectionProperty(RedisAdapterProvider::class, 'clientPool');
         $connectionPoolReflection->setAccessible(true);
         $connectionPoolReflection->setValue(null, []);
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Redis\Client\Factory\ClientAdapterFactoryInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Redis\Connection\Factory\RedisAdapterFactoryInterface
      */
     protected function createClientAdapterFactoryMock()
     {
-        $clientAdapterFactory = ($this->createMock(ClientAdapterFactoryInterface::class));
+        $clientAdapterFactory = ($this->createMock(RedisAdapterFactoryInterface::class));
         $clientAdapterFactory->method('create')
             ->willReturnCallback(function () {
-                    return $this->createMock(ClientAdapterInterface::class);
+                    return $this->createMock(RedisAdapterInterface::class);
             });
 
         return $clientAdapterFactory;

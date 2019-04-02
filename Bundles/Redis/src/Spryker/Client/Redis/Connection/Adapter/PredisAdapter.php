@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Redis\Client\Adapter;
+namespace Spryker\Client\Redis\Connection\Adapter;
 
 use Predis\Client;
 
-class PredisClientAdapter implements ClientAdapterInterface
+class PredisAdapter implements RedisAdapterInterface
 {
     /**
      * @var \Predis\Client

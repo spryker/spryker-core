@@ -185,7 +185,6 @@ interface RedisClientInterface
     /**
      * Specification:
      * - Initializes a connection with provided configuration, if it was not already initialized.
-     * - Sets the initialized connection as the one to be used for all subsequent requests.
      *
      * @api
      *

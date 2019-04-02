@@ -5,15 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Redis\Client\Factory;
+namespace Spryker\Client\Redis\Connection\Factory;
 
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
+use Generated\Shared\Transfer\RedisCredentialsTransfer;
 use Predis\Client;
-use Spryker\Client\Redis\Client\Adapter\ClientAdapterInterface;
-use Spryker\Client\Redis\Client\Adapter\PredisClientAdapter;
+use Spryker\Client\Redis\Connection\Adapter\PredisAdapter;
+use Spryker\Client\Redis\Connection\Adapter\RedisAdapterInterface;
 use Spryker\Client\Redis\Exception\ConnectionConfigurationException;
 
-class PredisClientAdapterFactory implements ClientAdapterFactoryInterface
+class PredisAdapterFactory implements RedisAdapterFactoryInterface
 {
     protected const CONNECTION_PARAMETERS = 'CONNECTION_PARAMETERS';
     protected const CONNECTION_OPTIONS = 'CONNECTION_OPTIONS';
@@ -21,11 +22,11 @@ class PredisClientAdapterFactory implements ClientAdapterFactoryInterface
     /**
      * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $redisConfigurationTransfer
      *
-     * @return \Spryker\Client\Redis\Client\Adapter\ClientAdapterInterface
+     * @return \Spryker\Client\Redis\Connection\Adapter\RedisAdapterInterface
      */
-    public function create(RedisConfigurationTransfer $redisConfigurationTransfer): ClientAdapterInterface
+    public function create(RedisConfigurationTransfer $redisConfigurationTransfer): RedisAdapterInterface
     {
-        return new PredisClientAdapter(
+        return new PredisAdapter(
             $this->createPredisClient($redisConfigurationTransfer)
         );
     }
@@ -39,7 +40,7 @@ class PredisClientAdapterFactory implements ClientAdapterFactoryInterface
     {
         return new Client(
             $this->getConnectionParameters($redisConfigurationTransfer),
-            $this->getConnectionOptions($redisConfigurationTransfer)
+            $redisConfigurationTransfer->getConnectionOptions()
         );
     }
 
@@ -52,10 +53,14 @@ class PredisClientAdapterFactory implements ClientAdapterFactoryInterface
      */
     protected function getConnectionParameters(RedisConfigurationTransfer $redisConfigurationTransfer)
     {
-        $configurationParameters = $redisConfigurationTransfer->getParameters();
+        $configurationParameters = $redisConfigurationTransfer->getDataSourceNames();
 
-        if (isset($configurationParameters[static::CONNECTION_PARAMETERS])) {
-            return $configurationParameters[static::CONNECTION_OPTIONS];
+        if (!$configurationParameters) {
+            $configurationParameters = $this->getFilteredConnectionCredentials($redisConfigurationTransfer);
+        }
+
+        if ($configurationParameters) {
+            return $configurationParameters;
         }
 
         throw new ConnectionConfigurationException('Redis connection parameters are corrupt. Either DSN string or an array of configuration values should be provided.');
@@ -64,12 +69,22 @@ class PredisClientAdapterFactory implements ClientAdapterFactoryInterface
     /**
      * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $redisConfigurationTransfer
      *
-     * @return array|null
+     * @return array
      */
-    protected function getConnectionOptions(RedisConfigurationTransfer $redisConfigurationTransfer): ?array
+    protected function getFilteredConnectionCredentials(RedisConfigurationTransfer $redisConfigurationTransfer): array
     {
-        $configurationParameters = $redisConfigurationTransfer->getParameters();
+        $connectionCredentialsTransfer = $redisConfigurationTransfer->getConnectionCredentials();
 
-        return isset($configurationParameters[static::CONNECTION_OPTIONS]) ? (array)$configurationParameters[static::CONNECTION_OPTIONS] : null;
+        if (!$connectionCredentialsTransfer) {
+            return [];
+        }
+
+        $connectionCredentials = $connectionCredentialsTransfer->toArray();
+
+        if (isset($connectionCredentials[RedisCredentialsTransfer::PASSWORD]) && !$connectionCredentials[RedisCredentialsTransfer::PASSWORD]) {
+            unset($connectionCredentials[RedisCredentialsTransfer::PASSWORD]);
+        }
+
+        return $connectionCredentials;
     }
 }

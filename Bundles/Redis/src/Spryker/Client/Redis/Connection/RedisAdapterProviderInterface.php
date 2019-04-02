@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Redis\Client;
+namespace Spryker\Client\Redis\Connection;
 
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
-use Spryker\Client\Redis\Client\Adapter\ClientAdapterInterface;
+use Spryker\Client\Redis\Connection\Adapter\RedisAdapterInterface;
 
-interface ClientProviderInterface
+interface RedisAdapterProviderInterface
 {
     /**
      * @param string $connectionKey
@@ -25,7 +25,7 @@ interface ClientProviderInterface
      *
      * @throws \Spryker\Client\Redis\Exception\ConnectionNotInitializedException
      *
-     * @return \Spryker\Client\Redis\Client\Adapter\ClientAdapterInterface
+     * @return \Spryker\Client\Redis\Connection\Adapter\RedisAdapterInterface
      */
-    public function getClient(string $connectionKey): ClientAdapterInterface;
+    public function getAdapter(string $connectionKey): RedisAdapterInterface;
 }
