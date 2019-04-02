@@ -11,11 +11,11 @@ use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSet;
+use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSetInterface;
 
 class PriceProductScheduleWriterStep implements DataImportStepInterface
 {
-    private const EXCEPTION_MESSAGE = 'One of "%s" or "%s" must be in the data set. Given: "%s"';
+    protected const EXCEPTION_MESSAGE = 'One of "%s" or "%s" must be in the data set. Given: "%s"';
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -26,31 +26,31 @@ class PriceProductScheduleWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $priceProductScheduleQuery = $this->createPriceProductScheduleQuery()
-            ->filterByFkPriceType($dataSet[PriceProductScheduleDataSet::FK_PRICE_TYPE])
-            ->filterByFkStore($dataSet[PriceProductScheduleDataSet::FK_STORE])
-            ->filterByFkCurrency($dataSet[PriceProductScheduleDataSet::FK_CURRENCY])
-            ->filterByFkPriceProductScheduleList($dataSet[PriceProductScheduleDataSet::FK_PRICE_PRODUCT_SCHEDULE_LIST])
-            ->filterByNetPrice($dataSet[PriceProductScheduleDataSet::KEY_PRICE_NET])
-            ->filterByGrossPrice($dataSet[PriceProductScheduleDataSet::KEY_PRICE_GROSS])
-            ->filterByActiveFrom($dataSet[PriceProductScheduleDataSet::KEY_INCLUDED_FROM])
-            ->filterByActiveTo($dataSet[PriceProductScheduleDataSet::KEY_INCLUDED_TO]);
-
-        if (empty($dataSet[PriceProductScheduleDataSet::FK_PRODUCT_ABSTRACT]) && empty($dataSet[PriceProductScheduleDataSet::FK_PRODUCT_CONCRETE])) {
+        if (empty($dataSet[PriceProductScheduleDataSetInterface::FK_PRODUCT_ABSTRACT]) && empty($dataSet[PriceProductScheduleDataSetInterface::FK_PRODUCT_CONCRETE])) {
             throw new DataKeyNotFoundInDataSetException(sprintf(
-                self::EXCEPTION_MESSAGE,
-                PriceProductScheduleDataSet::KEY_ABSTRACT_SKU,
-                PriceProductScheduleDataSet::KEY_CONCRETE_SKU,
+                static::EXCEPTION_MESSAGE,
+                PriceProductScheduleDataSetInterface::KEY_ABSTRACT_SKU,
+                PriceProductScheduleDataSetInterface::KEY_CONCRETE_SKU,
                 implode(', ', array_keys($dataSet->getArrayCopy()))
             ));
         }
 
-        if (!empty($dataSet[PriceProductScheduleDataSet::FK_PRODUCT_ABSTRACT])) {
-            $priceProductScheduleQuery->filterByFkProductAbstract($dataSet[PriceProductScheduleDataSet::FK_PRODUCT_ABSTRACT]);
+        $priceProductScheduleQuery = $this->createPriceProductScheduleQuery()
+            ->filterByFkPriceType($dataSet[PriceProductScheduleDataSetInterface::FK_PRICE_TYPE])
+            ->filterByFkStore($dataSet[PriceProductScheduleDataSetInterface::FK_STORE])
+            ->filterByFkCurrency($dataSet[PriceProductScheduleDataSetInterface::FK_CURRENCY])
+            ->filterByFkPriceProductScheduleList($dataSet[PriceProductScheduleDataSetInterface::FK_PRICE_PRODUCT_SCHEDULE_LIST])
+            ->filterByNetPrice($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET])
+            ->filterByGrossPrice($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS])
+            ->filterByActiveFrom($dataSet[PriceProductScheduleDataSetInterface::KEY_INCLUDED_FROM])
+            ->filterByActiveTo($dataSet[PriceProductScheduleDataSetInterface::KEY_INCLUDED_TO]);
+
+        if (!empty($dataSet[PriceProductScheduleDataSetInterface::FK_PRODUCT_ABSTRACT])) {
+            $priceProductScheduleQuery->filterByFkProductAbstract($dataSet[PriceProductScheduleDataSetInterface::FK_PRODUCT_ABSTRACT]);
         }
 
-        if (!empty($dataSet[PriceProductScheduleDataSet::FK_PRODUCT_CONCRETE])) {
-            $priceProductScheduleQuery->filterByFkProduct($dataSet[PriceProductScheduleDataSet::FK_PRODUCT_CONCRETE]);
+        if (!empty($dataSet[PriceProductScheduleDataSetInterface::FK_PRODUCT_CONCRETE])) {
+            $priceProductScheduleQuery->filterByFkProduct($dataSet[PriceProductScheduleDataSetInterface::FK_PRODUCT_CONCRETE]);
         }
 
         $priceProductScheduleEntity = $priceProductScheduleQuery->findOneOrCreate();
@@ -60,13 +60,13 @@ class PriceProductScheduleWriterStep implements DataImportStepInterface
         }
 
         $priceProductScheduleEntity
-            ->setFkStore($dataSet[PriceProductScheduleDataSet::FK_STORE])
-            ->setFkCurrency($dataSet[PriceProductScheduleDataSet::FK_CURRENCY])
-            ->setFkPriceProductScheduleList($dataSet[PriceProductScheduleDataSet::FK_PRICE_PRODUCT_SCHEDULE_LIST])
-            ->setNetPrice($dataSet[PriceProductScheduleDataSet::KEY_PRICE_NET])
-            ->setGrossPrice($dataSet[PriceProductScheduleDataSet::KEY_PRICE_GROSS])
-            ->setActiveFrom($dataSet[PriceProductScheduleDataSet::KEY_INCLUDED_FROM])
-            ->setActiveTo($dataSet[PriceProductScheduleDataSet::KEY_INCLUDED_TO])
+            ->setFkStore($dataSet[PriceProductScheduleDataSetInterface::FK_STORE])
+            ->setFkCurrency($dataSet[PriceProductScheduleDataSetInterface::FK_CURRENCY])
+            ->setFkPriceProductScheduleList($dataSet[PriceProductScheduleDataSetInterface::FK_PRICE_PRODUCT_SCHEDULE_LIST])
+            ->setNetPrice($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET])
+            ->setGrossPrice($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS])
+            ->setActiveFrom($dataSet[PriceProductScheduleDataSetInterface::KEY_INCLUDED_FROM])
+            ->setActiveTo($dataSet[PriceProductScheduleDataSetInterface::KEY_INCLUDED_TO])
             ->setIsCurrent(false)
             ->save();
     }

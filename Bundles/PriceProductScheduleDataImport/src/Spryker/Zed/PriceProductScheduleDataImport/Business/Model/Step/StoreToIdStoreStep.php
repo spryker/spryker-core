@@ -12,7 +12,7 @@ use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSet;
+use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSetInterface;
 
 class StoreToIdStoreStep implements DataImportStepInterface
 {
@@ -32,20 +32,20 @@ class StoreToIdStoreStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $storeName = $dataSet[PriceProductScheduleDataSet::KEY_STORE];
+        $storeName = $dataSet[PriceProductScheduleDataSetInterface::KEY_STORE];
         if (!isset($this->idStoreCache[$storeName])) {
             $idStore = $this->createStoreQuery()
                 ->select(SpyStoreTableMap::COL_ID_STORE)
                 ->findOneByName($storeName);
 
             if ($idStore === null) {
-                throw new EntityNotFoundException(sprintf(self::EXCEPTION_MESSAGE, $storeName));
+                throw new EntityNotFoundException(sprintf(static::EXCEPTION_MESSAGE, $storeName));
             }
 
             $this->idStoreCache[$storeName] = $idStore;
         }
 
-        $dataSet[PriceProductScheduleDataSet::FK_STORE] = $this->idStoreCache[$storeName];
+        $dataSet[PriceProductScheduleDataSetInterface::FK_STORE] = $this->idStoreCache[$storeName];
     }
 
     /**

@@ -33,7 +33,7 @@ class PriceProductScheduleDataImportConfig extends DataImportConfig
      */
     public function getPriceProductScheduleListDefaultName(): string
     {
-        return self::PRICE_PRODUCT_SCHEDULE_LIST_DEFAULT_NAME;
+        return static::PRICE_PRODUCT_SCHEDULE_LIST_DEFAULT_NAME;
     }
 
     /**

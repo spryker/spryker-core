@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet;
 
-interface PriceProductScheduleDataSet
+interface PriceProductScheduleDataSetInterface
 {
     public const KEY_ABSTRACT_SKU = 'abstract_sku';
     public const KEY_CONCRETE_SKU = 'concrete_sku';

@@ -10,7 +10,7 @@ namespace Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSet;
+use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSetInterface;
 use Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportConfig;
 
 class ListNameToIdListWriterStep implements DataImportStepInterface
@@ -21,7 +21,7 @@ class ListNameToIdListWriterStep implements DataImportStepInterface
     protected $config;
 
     /**
-     * @var int[]
+     * @var string[]
      */
     protected $idPriceProductScheduleListCache = [];
 
@@ -48,10 +48,10 @@ class ListNameToIdListWriterStep implements DataImportStepInterface
 
             $priceProductScheduleListEntity->setIsActive(true)->save();
 
-            $this->idPriceProductScheduleListCache[$listName] = (int)$priceProductScheduleListEntity->getIdPriceProductScheduleList();
+            $this->idPriceProductScheduleListCache[$listName] = $priceProductScheduleListEntity->getIdPriceProductScheduleList();
         }
 
-        $dataSet[PriceProductScheduleDataSet::FK_PRICE_PRODUCT_SCHEDULE_LIST] = $this->idPriceProductScheduleListCache[$listName];
+        $dataSet[PriceProductScheduleDataSetInterface::FK_PRICE_PRODUCT_SCHEDULE_LIST] = $this->idPriceProductScheduleListCache[$listName];
     }
 
     /**

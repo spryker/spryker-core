@@ -12,7 +12,7 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSet;
+use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSetInterface;
 
 class ConcreteSkuToIdProductStep implements DataImportStepInterface
 {
@@ -32,7 +32,7 @@ class ConcreteSkuToIdProductStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $productConcreteSku = $dataSet[PriceProductScheduleDataSet::KEY_CONCRETE_SKU];
+        $productConcreteSku = $dataSet[PriceProductScheduleDataSetInterface::KEY_CONCRETE_SKU];
         if (empty($productConcreteSku)) {
             return;
         }
@@ -43,13 +43,13 @@ class ConcreteSkuToIdProductStep implements DataImportStepInterface
                 ->findOneBySku($productConcreteSku);
 
             if ($idProduct === null) {
-                throw new EntityNotFoundException(sprintf(self::EXCEPTION_MESSAGE, $productConcreteSku));
+                throw new EntityNotFoundException(sprintf(static::EXCEPTION_MESSAGE, $productConcreteSku));
             }
 
             $this->idProductCache[$productConcreteSku] = $idProduct;
         }
 
-        $dataSet[PriceProductScheduleDataSet::FK_PRODUCT_CONCRETE] = $this->idProductCache[$productConcreteSku];
+        $dataSet[PriceProductScheduleDataSetInterface::FK_PRODUCT_CONCRETE] = $this->idProductCache[$productConcreteSku];
     }
 
     /**

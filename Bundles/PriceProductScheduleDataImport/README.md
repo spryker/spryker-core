@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/price-product-schedule-data-import.svg)](https://travis-ci.org/spryker/price-product-schedule-data-import)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/price-product-schedule-data-import/badge.svg)](https://coveralls.io/github/spryker/price-product-schedule-data-import)
 
-This module has demo data and importer for price products schedule.
+This module has demo data and importer for price product schedule.
 
 ## Installation
 

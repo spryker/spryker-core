@@ -52,4 +52,26 @@
         <id-method-parameter value="spy_price_product_schedule_pk_seq"/>
     </table>
 
+    <table name="spy_price_product_schedule_list">
+        <column name="id_price_product_schedule_list" type="BIGINT" required="true" primaryKey="true"
+                autoIncrement="true"/>
+        <column name="name" required="true" size="255" type="VARCHAR"/>
+        <column name="is_active" type="BOOLEAN" required="false" defaultValue="false"/>
+        <column name="fk_user" type="INTEGER"/>
+
+        <behavior name="timestampable"/>
+
+        <foreign-key name="spy_price_product_schedule_list-fk_user" foreignTable="spy_user" phpName="User"
+                     refPhpName="PriceProductScheduleList">
+            <reference local="fk_user" foreign="id_user"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_price_product_schedule_list_pk_seq"/>
+
+
+        <index name="index-spy_price_product_schedule_list-name">
+            <index-column name="name"/>
+        </index>
+    </table>
+
 </database>

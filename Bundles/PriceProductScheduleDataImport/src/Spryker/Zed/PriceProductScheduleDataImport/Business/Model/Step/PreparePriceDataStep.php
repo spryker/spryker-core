@@ -9,7 +9,7 @@ namespace Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step;
 
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSet;
+use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSetInterface;
 
 class PreparePriceDataStep implements DataImportStepInterface
 {
@@ -20,20 +20,14 @@ class PreparePriceDataStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        if (empty($dataSet[PriceProductScheduleDataSet::KEY_PRICE_NET])) {
-            $dataSet[PriceProductScheduleDataSet::KEY_PRICE_NET] = null;
-        }
+        $dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET] =
+            empty($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET])
+                ? (int)$dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET]
+                : null;
 
-        if (empty($dataSet[PriceProductScheduleDataSet::KEY_PRICE_GROSS])) {
-            $dataSet[PriceProductScheduleDataSet::KEY_PRICE_GROSS] = null;
-        }
-
-        if (!empty($dataSet[PriceProductScheduleDataSet::KEY_PRICE_NET])) {
-            $dataSet[PriceProductScheduleDataSet::KEY_PRICE_NET] = (int)$dataSet[PriceProductScheduleDataSet::KEY_PRICE_NET];
-        }
-
-        if (!empty($dataSet[PriceProductScheduleDataSet::KEY_PRICE_GROSS])) {
-            $dataSet[PriceProductScheduleDataSet::KEY_PRICE_GROSS] = (int)$dataSet[PriceProductScheduleDataSet::KEY_PRICE_GROSS];
-        }
+        $dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS] =
+            empty($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS])
+                ? (int)$dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS]
+                : null;
     }
 }

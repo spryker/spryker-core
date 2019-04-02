@@ -11,7 +11,7 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSet;
+use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSetInterface;
 
 class PriceTypeToIdPriceType implements DataImportStepInterface
 {
@@ -27,7 +27,7 @@ class PriceTypeToIdPriceType implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $priceProductType = $dataSet[PriceProductScheduleDataSet::KEY_PRICE_TYPE];
+        $priceProductType = $dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_TYPE];
         if (!isset($this->idPriceProductTypeCache[$priceProductType])) {
             $priceProductScheduleEntity = $this->createSpyPriceTypeQuery()
                 ->filterByName($priceProductType)
@@ -41,7 +41,7 @@ class PriceTypeToIdPriceType implements DataImportStepInterface
             $this->idPriceProductTypeCache[$priceProductType] = $priceProductScheduleEntity->getIdPriceType();
         }
 
-        $dataSet[PriceProductScheduleDataSet::FK_PRICE_TYPE] = $this->idPriceProductTypeCache[$priceProductType];
+        $dataSet[PriceProductScheduleDataSetInterface::FK_PRICE_TYPE] = $this->idPriceProductTypeCache[$priceProductType];
     }
 
     /**
