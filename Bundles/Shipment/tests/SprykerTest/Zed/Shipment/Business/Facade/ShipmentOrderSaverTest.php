@@ -6,6 +6,8 @@
 
 namespace SprykerTest\Zed\Shipment\Business\Facade;
 
+use Exception;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use BadMethodCallException;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\AddressBuilder;
@@ -74,30 +76,6 @@ class ShipmentOrderSaverTest extends Test
     protected $tester;
 
     /**
-     * @var \Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]
-     */
-    protected $shipmentMethodEntityList;
-
-    /**
-     * @return void
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-//        $this->tester->setDependency(
-//            ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE,
-//            $this->getProductAbstractAfterCreatePlugins()
-//        );
-//
-//        SpyTaxRateQuery::create()->update(['Rate' => '1']);
-//
-//        $this->shipmentMethodEntityList = [];
-//        $this->shipmentMethodEntityList['FR'] = $this->createShipmentMethodWithTaxSet(20.00, 'FR');
-//        $this->shipmentMethodEntityList['DE'] = $this->createShipmentMethodWithTaxSet(15.00, 'DE');
-    }
-
-    /**
      * @dataProvider shipmentOrderSaverShouldUseQuoteShipmentDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -108,13 +86,7 @@ class ShipmentOrderSaverTest extends Test
         QuoteTransfer $quoteTransfer
     ): void {
         // Arrange
-        $testStateMachineProcessName = 'Test01';
-        $this->tester->configureTestStateMachine([$testStateMachineProcessName]);
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productTransfer = $this->tester->haveProduct($itemTransfer->toArray());
-        }
-        $savedOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName);
+        $savedOrderTransfer = $this->haveOrder($quoteTransfer, 'Test01');
 
         $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder());
         $countShipmentsBefore = $salesShipmentQuery->count();
@@ -140,13 +112,7 @@ class ShipmentOrderSaverTest extends Test
         QuoteTransfer $quoteTransfer
     ): void {
         // Arrange
-        $testStateMachineProcessName = 'Test01';
-        $this->tester->configureTestStateMachine([$testStateMachineProcessName]);
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productTransfer = $this->tester->haveProduct($itemTransfer->toArray());
-        }
-        $savedOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName);
+        $savedOrderTransfer = $this->haveOrder($quoteTransfer, 'Test01');
 
         $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder());
         $salesExpenseQuery = SpySalesExpenseQuery::create()->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder());
@@ -177,13 +143,7 @@ class ShipmentOrderSaverTest extends Test
         QuoteTransfer $quoteTransfer
     ): void {
         // Arrange
-        $testStateMachineProcessName = 'Test01';
-        $this->tester->configureTestStateMachine([$testStateMachineProcessName]);
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productTransfer = $this->tester->haveProduct($itemTransfer->toArray());
-        }
-        $savedOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName);
+        $savedOrderTransfer = $this->haveOrder($quoteTransfer, 'Test01');
 
         $salesAddressQuery = SpySalesOrderAddressQuery::create();
 
@@ -220,13 +180,7 @@ class ShipmentOrderSaverTest extends Test
         QuoteTransfer $quoteTransfer
     ): void {
         // Arrange
-        $testStateMachineProcessName = 'Test01';
-        $this->tester->configureTestStateMachine([$testStateMachineProcessName]);
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productTransfer = $this->tester->haveProduct($itemTransfer->toArray());
-        }
-        $savedOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName);
+        $savedOrderTransfer = $this->haveOrder($quoteTransfer, 'Test01');
 
         $salesAddressQuery = SpySalesOrderAddressQuery::create();
 
@@ -268,18 +222,13 @@ class ShipmentOrderSaverTest extends Test
         int $countOfNewShipments
     ): void {
         // Arrange
-        $testStateMachineProcessName = 'Test01';
-        $this->tester->configureTestStateMachine([$testStateMachineProcessName]);
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productTransfer = $this->tester->haveProduct($itemTransfer->toArray());
-        }
-        $savedOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName);
-
-        $salesAddressQuery = SpySalesOrderAddressQuery::create();
+        $savedOrderTransfer = $this->haveOrder($quoteTransfer, 'Test01');
 
         $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder());
         $countShipmentsBefore = $salesShipmentQuery->count();
+
+        $salesExpenseQuery = SpySalesExpenseQuery::create()->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder());
+        $countExpensesBefore = $salesExpenseQuery->count();
 
         $shipmentFacade = $this->tester->getFacade();
 
@@ -287,20 +236,14 @@ class ShipmentOrderSaverTest extends Test
         $shipmentFacade->saveOrderShipment($quoteTransfer, $savedOrderTransfer);
 
         // Assert
-        $expectedOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($savedOrderTransfer->getIdSalesOrder());
+//        $expectedOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($savedOrderTransfer->getIdSalesOrder());
         $expectedOrderShipmentCount = $countShipmentsBefore + $countOfNewShipments;
         $expectedOrderShipmentEntity = $salesShipmentQuery->findOne();
-        $expectedOrderAddressEntity = $salesAddressQuery
-            ->useSpySalesShipmentQuery()
-            ->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder())
-            ->endUse()
-            ->findOne();
 
         $this->assertEquals($expectedOrderShipmentCount, $salesShipmentQuery->count(), 'Order shipments count mismatch! There is no any shipment has been saved.');
 //        $this->assertNotNull($expectedOrderEntity->getShippingAddress(), '!Order shipment could not be found! Order shipment has been saved incorrectly.');
         $this->assertNotNull($expectedOrderShipmentEntity, 'Order shipment could not be found! Order shipment has been saved incorrectly.');
-        $this->assertNotNull($expectedOrderAddressEntity, 'Order address could not be found! There is no any order address has been saved.');
-        $this->assertEquals($expectedOrderAddressEntity->getIdSalesOrderAddress(), $expectedOrderShipmentEntity->getFkSalesOrderAddress(), 'Order shipment has no any related addresses been saved.');
+        $this->assertEquals($countExpensesBefore, $salesExpenseQuery->count(), 'Order shipment expenses count mismatch! There is no any shipment expense should be saved.');
     }
 
     /**
@@ -316,18 +259,13 @@ class ShipmentOrderSaverTest extends Test
         int $countOfNewShipments
     ): void {
         // Arrange
-        $testStateMachineProcessName = 'Test01';
-        $this->tester->configureTestStateMachine([$testStateMachineProcessName]);
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productTransfer = $this->tester->haveProduct($itemTransfer->toArray());
-        }
-        $savedOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName);
-
-        $salesAddressQuery = SpySalesOrderAddressQuery::create();
+        $savedOrderTransfer = $this->haveOrder($quoteTransfer, 'Test01');
 
         $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder());
         $countShipmentsBefore = $salesShipmentQuery->count();
+
+        $salesExpenseQuery = SpySalesExpenseQuery::create()->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder());
+        $countExpensesBefore = $salesExpenseQuery->count();
 
         $shipmentFacade = $this->tester->getFacade();
 
@@ -335,20 +273,16 @@ class ShipmentOrderSaverTest extends Test
         $shipmentFacade->saveOrderShipment($quoteTransfer, $savedOrderTransfer);
 
         // Assert
-        $expectedOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($savedOrderTransfer->getIdSalesOrder());
+//        $expectedOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($savedOrderTransfer->getIdSalesOrder());
         $expectedOrderShipmentCount = $countShipmentsBefore + $countOfNewShipments;
+        $expectedOrderShipmentExpenseCount = $countExpensesBefore + $countOfNewShipments;
         $expectedOrderShipmentEntity = $salesShipmentQuery->findOne();
-        $expectedOrderAddressEntity = $salesAddressQuery
-            ->useSpySalesShipmentQuery()
-            ->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder())
-            ->endUse()
-            ->findOne();
 
         $this->assertEquals($expectedOrderShipmentCount, $salesShipmentQuery->count(), 'Order shipments count mismatch! There is no any shipment has been saved.');
 //        $this->assertNotNull($expectedOrderEntity->getShippingAddress(), '!Order shipment could not be found! Order shipment has been saved incorrectly.');
         $this->assertNotNull($expectedOrderShipmentEntity, 'Order shipment could not be found! Order shipment has been saved incorrectly.');
-        $this->assertNotNull($expectedOrderAddressEntity, 'Order address could not be found! There is no any order address has been saved.');
-        $this->assertEquals($expectedOrderAddressEntity->getIdSalesOrderAddress(), $expectedOrderShipmentEntity->getFkSalesOrderAddress(), 'Order shipment has no any related addresses been saved.');
+        $this->assertEquals($expectedOrderShipmentExpenseCount, $salesExpenseQuery->count(), 'Order shipment expenses count mismatch! There is no any shipment expense has been saved.');
+        $this->assertEquals($expectedOrderShipmentCount, $salesShipmentQuery->filterByFkSalesExpense(null, Criteria::ISNOTNULL)->count(), 'Order expenses related to shipments count mismatch! There is no expenses related to shipments have been saved.');
     }
 
     /**
@@ -364,18 +298,16 @@ class ShipmentOrderSaverTest extends Test
         int $countOfNewShipments
     ): void {
         // Arrange
-        $testStateMachineProcessName = 'Test01';
-        $this->tester->configureTestStateMachine([$testStateMachineProcessName]);
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productTransfer = $this->tester->haveProduct($itemTransfer->toArray());
-        }
-        $savedOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName);
-
-        $salesAddressQuery = SpySalesOrderAddressQuery::create();
+        $savedOrderTransfer = $this->haveOrder($quoteTransfer, 'Test01');
 
         $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder());
         $countShipmentsBefore = $salesShipmentQuery->count();
+
+        $salesAddressQuery = SpySalesOrderAddressQuery::create();
+        $expectedOrderAddressEntityQuery = $salesAddressQuery
+            ->useSpySalesShipmentQuery()
+            ->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder())
+            ->endUse();
 
         $shipmentFacade = $this->tester->getFacade();
 
@@ -383,14 +315,10 @@ class ShipmentOrderSaverTest extends Test
         $shipmentFacade->saveOrderShipment($quoteTransfer, $savedOrderTransfer);
 
         // Assert
-        $expectedOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($savedOrderTransfer->getIdSalesOrder());
+//        $expectedOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($savedOrderTransfer->getIdSalesOrder());
         $expectedOrderShipmentCount = $countShipmentsBefore + $countOfNewShipments;
         $expectedOrderShipmentEntity = $salesShipmentQuery->findOne();
-        $expectedOrderAddressEntity = $salesAddressQuery
-            ->useSpySalesShipmentQuery()
-            ->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder())
-            ->endUse()
-            ->findOne();
+        $expectedOrderAddressEntity = $expectedOrderAddressEntityQuery->findOne();
 
         $this->assertEquals($expectedOrderShipmentCount, $salesShipmentQuery->count(), 'Order shipments count mismatch! There is no any shipment has been saved.');
 //        $this->assertNotNull($expectedOrderEntity->getShippingAddress(), '!Order shipment could not be found! Order shipment has been saved incorrectly.');
@@ -400,6 +328,8 @@ class ShipmentOrderSaverTest extends Test
     }
 
     /**
+     * @todo Is this test duplicate for testShipmentOrderSaverShouldUseMultipleShipmentsWithMultipleShipmentsArePersisted?
+     *
      * @dataProvider shipmentOrderSaverShouldUseMultipleShipmentsWithItemsDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -412,18 +342,13 @@ class ShipmentOrderSaverTest extends Test
         int $countOfNewShipments
     ): void {
         // Arrange
-        $testStateMachineProcessName = 'Test01';
-        $this->tester->configureTestStateMachine([$testStateMachineProcessName]);
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productTransfer = $this->tester->haveProduct($itemTransfer->toArray());
-        }
-        $savedOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName);
-
-        $salesAddressQuery = SpySalesOrderAddressQuery::create();
+        $savedOrderTransfer = $this->haveOrder($quoteTransfer, 'Test01');
 
         $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder());
         $countShipmentsBefore = $salesShipmentQuery->count();
+
+        $salesExpenseQuery = SpySalesExpenseQuery::create()->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder());
+        $countExpensesBefore = $salesExpenseQuery->count();
 
         $shipmentFacade = $this->tester->getFacade();
 
@@ -431,20 +356,52 @@ class ShipmentOrderSaverTest extends Test
         $shipmentFacade->saveOrderShipment($quoteTransfer, $savedOrderTransfer);
 
         // Assert
-        $expectedOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($savedOrderTransfer->getIdSalesOrder());
+//        $expectedOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($savedOrderTransfer->getIdSalesOrder());
         $expectedOrderShipmentCount = $countShipmentsBefore + $countOfNewShipments;
         $expectedOrderShipmentEntity = $salesShipmentQuery->findOne();
-        $expectedOrderAddressEntity = $salesAddressQuery
-            ->useSpySalesShipmentQuery()
-            ->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder())
-            ->endUse()
-            ->findOne();
 
         $this->assertEquals($expectedOrderShipmentCount, $salesShipmentQuery->count(), 'Order shipments count mismatch! There is no any shipment has been saved.');
 //        $this->assertNotNull($expectedOrderEntity->getShippingAddress(), '!Order shipment could not be found! Order shipment has been saved incorrectly.');
         $this->assertNotNull($expectedOrderShipmentEntity, 'Order shipment could not be found! Order shipment has been saved incorrectly.');
-        $this->assertNotNull($expectedOrderAddressEntity, 'Order address could not be found! There is no any order address has been saved.');
-        $this->assertEquals($expectedOrderAddressEntity->getIdSalesOrderAddress(), $expectedOrderShipmentEntity->getFkSalesOrderAddress(), 'Order shipment has no any related addresses been saved.');
+        $this->assertEquals($countExpensesBefore, $salesExpenseQuery->count(), 'Order shipment expenses count mismatch! There is no any shipment expense should be saved.');
+    }
+
+    /**
+     * @dataProvider shipmentOrderSaverShouldUseMultipleShipmentsWithoutShippingAddressAndMethodDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $expectedCountOfShipments
+     *
+     * @return void
+     */
+    public function testShipmentOrderSaverShouldUseMultipleShipmentsWithoutShippingAddressAndMethod(
+        QuoteTransfer $quoteTransfer,
+        int $countOfNewShipments
+    ): void {
+        // Arrange
+        $savedOrderTransfer = $this->haveOrder($quoteTransfer, 'Test01');
+
+        $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder());
+        $countShipmentsBefore = $salesShipmentQuery->count();
+
+        $salesExpenseQuery = SpySalesExpenseQuery::create()->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder());
+        $countExpensesBefore = $salesExpenseQuery->count();
+
+        $shipmentFacade = $this->tester->getFacade();
+
+        $this->expectException(RequiredTransferPropertyException::class);
+        $this->expectExceptionMessageRegExp('/^Missing required property "\w+" for transfer/');
+
+        // Act
+        $shipmentFacade->saveOrderShipment($quoteTransfer, $savedOrderTransfer);
+
+        // Assert
+        $expectedOrderShipmentCount = $countShipmentsBefore + $countOfNewShipments;
+        $expectedOrderShipmentEntity = $salesShipmentQuery->findOne();
+
+        $this->assertEquals($expectedOrderShipmentCount, $salesShipmentQuery->count(), 'There is no any shipment should be saved.');
+        $this->assertNotNull($expectedOrderShipmentEntity, 'Order shipment should not be saved incorrectly.');
+        $this->assertEquals($countExpensesBefore, $salesExpenseQuery->count(), 'There is no any shipment expense should be saved.');
     }
 
     /**
@@ -495,6 +452,7 @@ class ShipmentOrderSaverTest extends Test
         return [
             'France 1 item; expected: 1 order shipment in DB' => $this->getDataWithMultipleShipmentsAnd1ItemToFrance(),
             'France 2 items, Germany 1 item; expected: 2 order shipments in DB' => $this->getDataWithMultipleShipmentsAnd2ItemsToFranceAnd1ItemToGermany(),
+            'France 3 items; expected: 1 order shipments in DB' => $this->getDataWithMultipleShipmentsAnd3ItemsToFrance(),
         ];
     }
 
@@ -522,6 +480,7 @@ class ShipmentOrderSaverTest extends Test
 
     /**
      * @todo Duplicate for shipmentOrderSaverShouldUseMultipleShipmentsWithMultipleShipmentsArePersistedDataProvider?
+     *
      * @return array
      */
     public function shipmentOrderSaverShouldUseMultipleShipmentsWithItemsDataProvider(): array
@@ -532,6 +491,17 @@ class ShipmentOrderSaverTest extends Test
         ];
     }
 
+    /**
+     * @return array
+     */
+    public function shipmentOrderSaverShouldUseMultipleShipmentsWithoutShippingAddressAndMethodDataProvider(): array
+    {
+        return [
+            '1 item, no shipping address; expected: exception' => $this->getDataWithMultipleShipmentsAnd1ItemWithoutShippingAddress(),
+            '1 item, no shipping method; expected: exception' => $this->getDataWithMultipleShipmentsAnd1ItemWithoutShippingMethod(),
+            '1 item, no shipping address and method; expected: exception' => $this->getDataWithMultipleShipmentsAnd1ItemWithoutShippingAddressAndMethod(),
+        ];
+    }
 
     /**
      * @return array
@@ -707,51 +677,22 @@ class ShipmentOrderSaverTest extends Test
     /**
      * @return array
      */
-    protected function getDataWithMultipleShipmentsAnd1ItemToFranceWithExpense(): array
-    {
-        $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
-
-        $shipmentBuilder = (new ShipmentBuilder())
-            ->withAnotherShippingAddress($addressBuilder)
-            ->withAnotherMethod();
-
-        $itemBuilder = (new ItemBuilder())
-            ->withAnotherShipment($shipmentBuilder);
-
-        $quoteTransfer = (new QuoteBuilder())
-            ->withAnotherItem($itemBuilder)
-            ->withAnotherBillingAddress()
-            ->withTotals()
-            ->withCustomer()
-            ->withCurrency()
-            ->build();
-
-        return [$quoteTransfer, 1];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDataWithMultipleShipmentsAnd2ItemsToFranceAnd1ItemToGermanyWith2Expenses(): array
+    protected function getDataWithMultipleShipmentsAnd3ItemsToFrance(): array
     {
         $addressBuilder1 = (new AddressBuilder(['iso2Code' => 'FR']));
         $shipmentTransfer1 = (new ShipmentBuilder())
             ->withAnotherShippingAddress($addressBuilder1)
             ->withAnotherMethod()
             ->build();
+
         $itemTransfer1 = (new ItemBuilder())->build();
         $itemTransfer1->setShipment($shipmentTransfer1);
 
         $itemTransfer2 = (new ItemBuilder())->build();
         $itemTransfer2->setShipment($shipmentTransfer1);
 
-        $addressBuilder2 = (new AddressBuilder(['iso2Code' => 'DE']));
-        $shipmentTransfer2 = (new ShipmentBuilder())
-            ->withAnotherShippingAddress($addressBuilder2)
-            ->withAnotherMethod()
-            ->build();
         $itemTransfer3 = (new ItemBuilder())->build();
-        $itemTransfer3->setShipment($shipmentTransfer2);
+        $itemTransfer3->setShipment($shipmentTransfer1);
 
         $quoteTransfer = (new QuoteBuilder())
             ->withAnotherBillingAddress()
@@ -763,6 +704,105 @@ class ShipmentOrderSaverTest extends Test
         $quoteTransfer->addItem($itemTransfer1);
         $quoteTransfer->addItem($itemTransfer2);
         $quoteTransfer->addItem($itemTransfer3);
+
+        return [$quoteTransfer, 1];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataWithMultipleShipmentsAnd1ItemToFranceWithExpense(): array
+    {
+        $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
+        $shipmentMethodName = 'test method for SD';
+        $shipmentTransfer = (new ShipmentBuilder())
+            ->withAnotherShippingAddress($addressBuilder)
+            ->withAnotherMethod((new ShipmentMethodBuilder([
+                'name' => $shipmentMethodName,
+            ])))
+            ->build();
+
+        $expenseTransfer = (new ExpenseBuilder([
+            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            'unitGrossPrice' => 1111,
+            'name' => $shipmentMethodName,
+        ]))->build();
+        $expenseTransfer->setShipment($shipmentTransfer);
+
+        $itemTransfer = (new ItemBuilder())->build();
+        $itemTransfer->setShipment($shipmentTransfer);
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withAnotherBillingAddress()
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        $quoteTransfer->addItem($itemTransfer);
+        $quoteTransfer->addExpense($expenseTransfer);
+
+        return [$quoteTransfer, 1];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataWithMultipleShipmentsAnd2ItemsToFranceAnd1ItemToGermanyWith2Expenses(): array
+    {
+        $addressBuilder1 = (new AddressBuilder(['iso2Code' => 'FR']));
+        $shipmentMethodName = 'test method 1 for SD';
+        $shipmentTransfer1 = (new ShipmentBuilder())
+            ->withAnotherShippingAddress($addressBuilder1)
+            ->withAnotherMethod((new ShipmentMethodBuilder([
+                'name' => $shipmentMethodName,
+            ])))
+            ->build();
+
+        $expenseTransfer1 = (new ExpenseBuilder([
+            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            'unitGrossPrice' => 1111,
+            'name' => $shipmentMethodName,
+        ]))->build();
+        $expenseTransfer1->setShipment($shipmentTransfer1);
+
+        $itemTransfer1 = (new ItemBuilder())->build();
+        $itemTransfer1->setShipment($shipmentTransfer1);
+
+        $itemTransfer2 = (new ItemBuilder())->build();
+        $itemTransfer2->setShipment($shipmentTransfer1);
+
+        $addressBuilder2 = (new AddressBuilder(['iso2Code' => 'DE']));
+        $shipmentMethodName = 'test method 2 for SD';
+        $shipmentTransfer2 = (new ShipmentBuilder())
+            ->withAnotherShippingAddress($addressBuilder2)
+            ->withAnotherMethod((new ShipmentMethodBuilder([
+                'name' => $shipmentMethodName,
+            ])))
+            ->build();
+
+        $expenseTransfer2 = (new ExpenseBuilder([
+            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            'unitGrossPrice' => 1111,
+            'name' => $shipmentMethodName,
+        ]))->build();
+        $expenseTransfer2->setShipment($shipmentTransfer2);
+
+        $itemTransfer3 = (new ItemBuilder())->build();
+        $itemTransfer3->setShipment($shipmentTransfer2);
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withAnotherBillingAddress()
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        $quoteTransfer->addItem($itemTransfer1);
+        $quoteTransfer->addExpense($expenseTransfer1);
+        $quoteTransfer->addItem($itemTransfer2);
+        $quoteTransfer->addItem($itemTransfer3);
+        $quoteTransfer->addExpense($expenseTransfer2);
 
         return [$quoteTransfer, 2];
     }
@@ -831,185 +871,96 @@ class ShipmentOrderSaverTest extends Test
     }
 
     /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\DataBuilder\ItemBuilder
+     * @return array
      */
-    protected function createItemTransferBuilder(array $seed = []): ItemBuilder
+    protected function getDataWithMultipleShipmentsAnd1ItemWithoutShippingAddress(): array
     {
-        return (new ItemBuilder($seed));
+        $shipmentBuilder = (new ShipmentBuilder())
+            ->withAnotherMethod();
+
+        $itemTransfer = (new ItemBuilder())
+            ->withAnotherShipment($shipmentBuilder)
+            ->build();
+        $itemTransfer->getShipment()->setShippingAddress(null);
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withAnotherBillingAddress()
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        return [$quoteTransfer, 0];
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\TaxProductConnector\TaxProductConnectorBusinessFactory
+     * @return array
      */
-    protected function createTaxProductConnectorBusinessFactory(): TaxProductConnectorBusinessFactory
+    protected function getDataWithMultipleShipmentsAnd1ItemWithoutShippingMethod(): array
     {
-        return $this->getMockBuilder(TaxProductConnectorBusinessFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
+
+        $shipmentBuilder = (new ShipmentBuilder())
+            ->withAnotherShippingAddress($addressBuilder);
+
+        $itemTransfer = (new ItemBuilder())
+            ->withAnotherShipment($shipmentBuilder)
+            ->build();
+        $itemTransfer->getShipment()->setMethod(null);
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withAnotherBillingAddress()
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        return [$quoteTransfer, 0];
     }
 
     /**
-     * @param string $defaultCountryIso2Code
-     * @param float $defaultTaxRate
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface
+     * @return array
      */
-    protected function createShipmentToTaxFacadeBridgeMock(string $defaultCountryIso2Code, float $defaultTaxRate): ShipmentToTaxInterface
+    protected function getDataWithMultipleShipmentsAnd1ItemWithoutShippingAddressAndMethod(): array
     {
-        $bridgeMock = $this->getMockBuilder(ShipmentToTaxBridge::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $itemTransfer = (new ItemBuilder())
+            ->withAnotherShipment()
+            ->build();
+        $itemTransfer->getShipment()->setMethod(null);
+        $itemTransfer->getShipment()->setShippingAddress(null);
 
-        $bridgeMock
-            ->expects($this->any())
-            ->method('getDefaultTaxCountryIso2Code')
-            ->willReturn($defaultCountryIso2Code);
+        $quoteTransfer = (new QuoteBuilder())
+            ->withAnotherBillingAddress()
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
 
-        $bridgeMock
-            ->expects($this->any())
-            ->method('getDefaultTaxRate')
-            ->willReturn($defaultTaxRate);
+        $quoteTransfer->addItem($itemTransfer);
 
-        return $bridgeMock;
+        return [$quoteTransfer, 0];
     }
 
     /**
-     * @param string $defaultCountryIso2Code
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $testStateMachineProcessName
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Store
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    protected function createTaxStoreMock(string $defaultCountryIso2Code): Store
+    protected function haveOrder(QuoteTransfer $quoteTransfer, string $testStateMachineProcessName): SaveOrderTransfer
     {
-        $storeMock = $this->getMockBuilder(Store::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $testStateMachineProcessName = 'Test01';
+        $this->tester->configureTestStateMachine([$testStateMachineProcessName]);
 
-        $storeMock
-            ->expects($this->any())
-            ->method('getCurrentCountry')
-            ->willReturn($defaultCountryIso2Code);
-
-        return $storeMock;
-    }
-
-    /**
-     * @param float $taxRate
-     * @param string $iso2Code
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod
-     */
-    protected function createShipmentMethodWithTaxSet(float $taxRate, string $iso2Code): SpyShipmentMethod
-    {
-        $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($iso2Code);
-
-        $taxRateEntity1 = new SpyTaxRate();
-        $taxRateEntity1->setRate($taxRate);
-        $taxRateEntity1->setName('test rate 1');
-        $taxRateEntity1->setFkCountry($countryEntity->getIdCountry());
-        $taxRateEntity1->save();
-
-        $taxRateEntity2 = new SpyTaxRate();
-        $taxRateEntity2->setRate(13);
-        $taxRateEntity2->setName('tax rate 2');
-        $taxRateEntity2->setFkCountry($countryEntity->getIdCountry());
-        $taxRateEntity2->save();
-
-        $taxRateExemptEntity = new SpyTaxRate();
-        $taxRateExemptEntity->setRate(0);
-        $taxRateExemptEntity->setName(TaxConstants::TAX_EXEMPT_PLACEHOLDER);
-        $taxRateExemptEntity->save();
-
-        $taxSetEntity = new SpyTaxSet();
-        $taxSetEntity->setName('name of tax set');
-        $taxSetEntity->save();
-
-        $taxSetTaxRateEntity = new SpyTaxSetTax();
-        $taxSetTaxRateEntity->setFkTaxSet($taxSetEntity->getIdTaxSet());
-        $taxSetTaxRateEntity->setFkTaxRate($taxRateEntity1->getIdTaxRate());
-        $taxSetTaxRateEntity->save();
-
-        $taxSetTaxRateEntity = new SpyTaxSetTax();
-        $taxSetTaxRateEntity->setFkTaxSet($taxSetEntity->getIdTaxSet());
-        $taxSetTaxRateEntity->setFkTaxRate($taxRateEntity2->getIdTaxRate());
-        $taxSetTaxRateEntity->save();
-
-        $taxSetTaxRateEntity = new SpyTaxSetTax();
-        $taxSetTaxRateEntity->setFkTaxSet($taxSetEntity->getIdTaxSet());
-        $taxSetTaxRateEntity->setFkTaxRate($taxRateExemptEntity->getIdTaxRate());
-        $taxSetTaxRateEntity->save();
-
-        $shipmentCarrierEntity = new SpyShipmentCarrier();
-        $shipmentCarrierEntity->setName('name carrier');
-        $shipmentCarrierEntity->save();
-
-        $shipmentMethodEntity = new SpyShipmentMethod();
-        $shipmentMethodEntity->setFkShipmentCarrier($shipmentCarrierEntity->getIdShipmentCarrier());
-        $shipmentMethodEntity->setFkTaxSet($taxSetEntity->getIdTaxSet());
-        $shipmentMethodEntity->setName('test shipment method');
-        $shipmentMethodEntity->save();
-
-        return $shipmentMethodEntity;
-    }
-
-    /**
-     * @param string $countryIso2Code
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function haveProductWithTaxSetInDb(string $countryIso2Code): ProductAbstractTransfer
-    {
-        $productAbstractOverride = [];
-        if (isset($this->shipmentMethodEntityList[$countryIso2Code])) {
-            $shipmentMethodEntity = $this->shipmentMethodEntityList[$countryIso2Code];
-            $productAbstractOverride[ProductAbstractTransfer::ID_TAX_SET] = $shipmentMethodEntity->getFkTaxSet();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $productTransfer = $this->tester->haveProduct($itemTransfer->toArray());
         }
+        $savedOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName);
 
-        $productAbstractTransfer = $this->tester->haveProductAbstract($productAbstractOverride);
-
-        return $productAbstractTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod
-     */
-    protected function findShipmentMethodEntityByAddressIso2Code(
-        AddressTransfer $addressTransfer
-    ): ?SpyShipmentMethod {
-        if (!isset($this->shipmentMethodEntityList[$addressTransfer->getIso2Code()])) {
-            return null;
-        }
-
-        return $this->shipmentMethodEntityList[$addressTransfer->getIso2Code()];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param null|\Orm\Zed\Shipment\Persistence\SpyShipmentMethod $spyShipmentMethod
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
-     */
-    protected function mapShipmentMethodEntityToTransfer(
-        ShipmentMethodTransfer $shipmentMethodTransfer,
-        ?SpyShipmentMethod $shipmentMethodEntity
-    ): ShipmentMethodTransfer {
-        if ($shipmentMethodEntity === null) {
-            return $shipmentMethodTransfer;
-        }
-
-        return $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
-     */
-    protected function getProductAbstractAfterCreatePlugins(): array
-    {
-        return [
-            new TaxSetProductAbstractAfterCreatePlugin(),
-        ];
+        return $savedOrderTransfer;
     }
 }
