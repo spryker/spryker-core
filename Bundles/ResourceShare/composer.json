@@ -4,6 +4,8 @@
   "description": "ResourceShare module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/resource-share-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
