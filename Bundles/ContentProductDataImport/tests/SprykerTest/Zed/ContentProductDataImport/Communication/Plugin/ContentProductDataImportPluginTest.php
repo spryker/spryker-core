@@ -39,6 +39,7 @@ class ContentProductDataImportPluginTest extends Unit
      */
     public function testImportProductAbstractListsData(): void
     {
+        // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -47,9 +48,10 @@ class ContentProductDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
-        $contentProductAbstractListDataImportPlugin = new ContentProductAbstractListDataImportPlugin();
-        $dataImporterReportTransfer = $contentProductAbstractListDataImportPlugin->import($dataImportConfigurationTransfer);
+        // Act
+        $dataImporterReportTransfer = (new ContentProductAbstractListDataImportPlugin())->import($dataImportConfigurationTransfer);
 
+        // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
         $this->tester->assertDatabaseTableContainsData();
@@ -60,6 +62,7 @@ class ContentProductDataImportPluginTest extends Unit
      */
     public function testImportProductAbstractListsDataWrongSkus(): void
     {
+        // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
         $this->expectExceptionObject(new DataImportException(static::EXCEPTION_ERROR_MESSAGE));
 
@@ -70,9 +73,10 @@ class ContentProductDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
             ->setThrowException(true);
 
-        $contentProductAbstractListDataImportPlugin = new ContentProductAbstractListDataImportPlugin();
-        $dataImporterReportTransfer = $contentProductAbstractListDataImportPlugin->import($dataImportConfigurationTransfer);
+        // Act
+        $dataImporterReportTransfer = (new ContentProductAbstractListDataImportPlugin())->import($dataImportConfigurationTransfer);
 
+        // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
 
@@ -84,7 +88,85 @@ class ContentProductDataImportPluginTest extends Unit
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
+        // Arrange
         $contentProductAbstractListDataImportPlugin = new ContentProductAbstractListDataImportPlugin();
+
+        // Assert
         $this->assertSame(ContentProductDataImportConfig::IMPORT_TYPE_CONTENT_PRODUCT, $contentProductAbstractListDataImportPlugin->getImportType());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateLocale(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty();
+
+        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/content_product_abstract_list(update).csv');
+
+        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
+
+        // Act
+        $dataImporterReportTransfer = (new ContentProductAbstractListDataImportPlugin())->import($dataImportConfigurationTransfer);
+
+        // Assert
+        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
+        $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
+
+        $this->tester->assertContentLocalizedHasProducts(66, [152, 151]);
+        $this->tester->assertContentLocalizedHasProducts(46, [152, 151]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateLocaleFromDefault(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty();
+
+        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/content_product_abstract_list(update_locale_from_default).csv');
+
+        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
+
+        // Act
+        $dataImporterReportTransfer = (new ContentProductAbstractListDataImportPlugin())->import($dataImportConfigurationTransfer);
+
+        // Assert
+        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
+        $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
+
+        $this->tester->assertContentLocalizedHasProducts(66, [152, 151]);
+        $this->tester->assertContentLocalizedHasProducts(46, [152, 151]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateLocaleToDefault(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty();
+
+        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/content_product_abstract_list(update_locale_to_default).csv');
+
+        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
+
+        // Act
+        $dataImporterReportTransfer = (new ContentProductAbstractListDataImportPlugin())->import($dataImportConfigurationTransfer);
+
+        // Assert
+        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
+        $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
+
+        $this->tester->assertContentLocalizedHasProducts(66, [152, 151]);
+        $this->tester->assertContentLocalizedDoesNotExist(46);
     }
 }

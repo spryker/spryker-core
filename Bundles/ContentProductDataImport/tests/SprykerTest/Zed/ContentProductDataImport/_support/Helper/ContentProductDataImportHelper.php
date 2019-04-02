@@ -13,6 +13,8 @@ use Orm\Zed\Content\Persistence\SpyContentQuery;
 
 class ContentProductDataImportHelper extends Module
 {
+    private const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
+
     /**
      * @return void
      */
@@ -23,6 +25,32 @@ class ContentProductDataImportHelper extends Module
 
         $contentQuery = $this->getContentQuery();
         $contentQuery->deleteAll();
+    }
+
+    /**
+     * @param int $locale
+     * @param array $products
+     *
+     * @return void
+     */
+    public function assertContentLocalizedHasProducts(int $locale, array $products): void
+    {
+        $contentLocalized = $this->getContentLocalizedQuery()->findOneByFkLocale($locale);
+        $parameters = json_decode($contentLocalized->getParameters(), true);
+
+        $this->assertEquals($parameters[static::FIELD_ID_PRODUCT_ABSTRACTS], $products);
+    }
+
+    /**
+     * @param int $locale
+     *
+     * @return void
+     */
+    public function assertContentLocalizedDoesNotExist(int $locale): void
+    {
+        $contentLocalized = $this->getContentLocalizedQuery()->findOneByFkLocale($locale);
+
+        $this->assertNull($contentLocalized);
     }
 
     /**
