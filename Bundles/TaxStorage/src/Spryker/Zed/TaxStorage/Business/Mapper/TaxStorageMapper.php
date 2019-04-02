@@ -22,7 +22,7 @@ class TaxStorageMapper
      *
      * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage
      */
-    public function mapSpyTaxSetToTaxSetStorage(SpyTaxSet $spyTaxSet,  ?SpyTaxSetStorage $spyTaxSetStorage = null): SpyTaxSetStorage
+    public function mapSpyTaxSetToTaxSetStorage(SpyTaxSet $spyTaxSet, ?SpyTaxSetStorage $spyTaxSetStorage = null): SpyTaxSetStorage
     {
         $taxSetStorageTransfer = new TaxSetStorageTransfer();
         $taxSetStorageTransfer->setId($spyTaxSet->getIdTaxSet());

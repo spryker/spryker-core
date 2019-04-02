@@ -14,14 +14,14 @@ interface TaxStorageRepositoryInterface
      *
      * @return int[]
      */
-    public function findTaxSetIdsByTaxRateIds(array $taxRateIds): array ;
+    public function findTaxSetIdsByTaxRateIds(array $taxRateIds): array;
 
     /**
      * @param int[] $taxSetIds
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSet[]
      */
-    public function findTaxSetsByIds(array $taxSetIds): array ;
+    public function findTaxSetsByIds(array $taxSetIds): array;
 
     /**
      * @param int[] $taxSetIds

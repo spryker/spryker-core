@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\TaxStorage\Business\TaxStoragePublisher;
 
-use Generated\Shared\Transfer\TaxSetStorageTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
