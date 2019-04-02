@@ -12,4 +12,29 @@
         <property name="expiryDate" type="string" />
     </transfer>
 
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="ResourceShareResponseTransfer">
+        <property name="isSuccessful" type="bool" />
+        <property name="resourceShare" type="ResourceShare" />
+        <property name="isLoginRequired" type="bool" />
+        <property name="errorMessages" type="Message[]" singular="errorMessage" />
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string" />
+    </transfer>
+
+    <transfer name="UuidGeneratorConfiguration">
+        <property name="module" type="string"/>
+        <property name="table" type="string"/>
+    </transfer>
+
+    <transfer name="UuidGeneratorReport">
+        <property name="table" type="string"/>
+        <property name="count" type="int"/>
+    </transfer>
+
 </transfers>
