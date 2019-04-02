@@ -55,23 +55,6 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container): Container
-    {
-        $container = parent::provideCommunicationLayerDependencies($container);
-        $container = $this->addQuoteFacade($container);
-        $container = $this->addPersistentCartFacade($container);
-        $container = $this->addStoreFacade($container);
-        $container = $this->addQuoteCreatorPlugin($container);
-        $container = $this->addQuoteCollectionReaderPlugin($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
