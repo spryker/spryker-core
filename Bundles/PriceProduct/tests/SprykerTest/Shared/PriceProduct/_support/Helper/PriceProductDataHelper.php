@@ -65,6 +65,22 @@ class PriceProductDataHelper extends Module
     }
 
     /**
+     * @param string $priceTypeName
+     *
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer
+     */
+    public function havePriceType(string $priceTypeName): PriceTypeTransfer
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceTypeId = $priceProductFacade->createPriceType($priceTypeName);
+
+        return (new PriceTypeTransfer())
+            ->setName($priceTypeName)
+            ->setIdPriceType($priceTypeId);
+    }
+
+    /**
      * @param int $idPriceProduct
      *
      * @return void
