@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -89,6 +90,35 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
             ->getQuoteRequestPropelQuery()
             ->filterByFkCompanyUser($idCompanyUser)
             ->count();
+    }
+
+    /**
+     * @param int $idQuoteRequest
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
+     */
+    public function findQuoteRequestLatestVisibleVersion(int $idQuoteRequest): ?QuoteRequestVersionTransfer
+    {
+        $quoteRequestVersionCollection = $this->getFactory()
+            ->getQuoteRequestVersionPropelQuery()
+            ->filterByFkQuoteRequest($idQuoteRequest)
+            ->useSpyQuoteRequestQuery()
+                ->filterByIsLatestVersionHidden(true)
+            ->endUse()
+            ->orderByIdQuoteRequestVersion(Criteria::DESC)
+            ->limit(2)
+            ->find();
+
+        if (!$quoteRequestVersionCollection->offsetExists(1)) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createQuoteRequestVersionMapper()
+            ->mapQuoteRequestVersionEntityToQuoteRequestVersionTransfer(
+                $quoteRequestVersionCollection->offsetGet(1),
+                new QuoteRequestVersionTransfer()
+            );
     }
 
     /**

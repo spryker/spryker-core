@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 
 interface QuoteRequestRepositoryInterface
 {
@@ -38,4 +39,11 @@ interface QuoteRequestRepositoryInterface
      * @return int
      */
     public function countCustomerQuoteRequests(int $idCompanyUser): int;
+
+    /**
+     * @param int $idQuoteRequest
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
+     */
+    public function findQuoteRequestLatestVisibleVersion(int $idQuoteRequest): ?QuoteRequestVersionTransfer;
 }

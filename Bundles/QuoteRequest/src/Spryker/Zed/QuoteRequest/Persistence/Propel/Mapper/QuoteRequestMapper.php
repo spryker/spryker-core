@@ -79,8 +79,7 @@ class QuoteRequestMapper
         $quoteRequestTransfer = $quoteRequestTransfer->fromArray($quoteRequestEntity->toArray(), true);
 
         $quoteRequestTransfer->setCompanyUser($this->getCompanyUserTransfer($quoteRequestEntity))
-            ->setLatestVersion($this->getLatestQuoteRequestVersion($quoteRequestEntity))
-            ->setLatestVisibleVersion($this->findLatestVisibleQuoteRequestVersion($quoteRequestEntity));
+            ->setLatestVersion($this->getLatestQuoteRequestVersion($quoteRequestEntity));
 
         return $quoteRequestTransfer;
     }
@@ -99,30 +98,6 @@ class QuoteRequestMapper
         $quoteRequestEntity->setFkCompanyUser($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser());
 
         return $quoteRequestEntity;
-    }
-
-    /**
-     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequest $quoteRequestEntity
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
-     */
-    protected function findLatestVisibleQuoteRequestVersion(SpyQuoteRequest $quoteRequestEntity): ?QuoteRequestVersionTransfer
-    {
-        if (!$quoteRequestEntity->getIsLatestVersionHidden()) {
-            return $this->getLatestQuoteRequestVersion($quoteRequestEntity);
-        }
-
-        /** @var \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion[] $quoteRequestVersionEntities */
-        $quoteRequestVersionEntities = $quoteRequestEntity->getSpyQuoteRequestVersions()->getArrayCopy();
-
-        end($quoteRequestVersionEntities);
-        $quoteRequestVersionEntity = prev($quoteRequestVersionEntities);
-
-        if (!$quoteRequestVersionEntity) {
-            return null;
-        }
-
-        return $this->mapQuoteRequestVersionTransfer($quoteRequestVersionEntity);
     }
 
     /**
