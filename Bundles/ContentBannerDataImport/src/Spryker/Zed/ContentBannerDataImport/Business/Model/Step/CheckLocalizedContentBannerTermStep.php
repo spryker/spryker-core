@@ -41,7 +41,7 @@ class CheckLocalizedContentBannerTermStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $validatedContentBannerTerms = [];
-        foreach ($dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_BANNER_TERMS] as $localeId => $contentBannerTerm) {
+        foreach ($dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_BANNER_TERMS] as $idLocale => $contentBannerTerm) {
             $validationResult = $this->contentBanner->validateContentBannerTerm($contentBannerTerm);
 
             if (!$validationResult->getIsSuccess()) {
@@ -50,12 +50,12 @@ class CheckLocalizedContentBannerTermStep implements DataImportStepInterface
                 throw new InvalidDataException(
                     sprintf(
                         static::ERROR_MESSAGE,
-                        $localeId,
+                        $idLocale,
                         implode(';', $errorMessages)
                     )
                 );
             }
-            $validatedContentBannerTerms[$localeId] = $contentBannerTerm;
+            $validatedContentBannerTerms[$idLocale] = $contentBannerTerm;
         }
 
         $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_BANNER_TERMS] = $validatedContentBannerTerms;

@@ -26,7 +26,7 @@ class PrepareLocalizedContentBannerTermStep implements DataImportStepInterface
 
         $dataSet[AddLocalesStep::KEY_LOCALES] = array_merge($dataSet[AddLocalesStep::KEY_LOCALES], ['default' => null]);
 
-        foreach ($dataSet[AddLocalesStep::KEY_LOCALES] as $localeName => $localeId) {
+        foreach ($dataSet[AddLocalesStep::KEY_LOCALES] as $localeName => $idLocale) {
             $bannerTermParamaters = [];
             $localeNotEmpty = false;
             $contentBanner = new ContentBannerTermTransfer();
@@ -38,7 +38,7 @@ class PrepareLocalizedContentBannerTermStep implements DataImportStepInterface
                 }
             }
             if ($localeNotEmpty) {
-                $localizedBannerTermParameters[$localeId] = $contentBanner->fromArray($bannerTermParamaters);
+                $localizedBannerTermParameters[$idLocale] = $contentBanner->fromArray($bannerTermParamaters);
             }
         }
 

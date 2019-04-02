@@ -91,15 +91,15 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
             ->delete();
 
         $defaultLocaleIsPresent = false;
-        foreach ($localizedBannerTerms as $localeId => $localizedBannerTerm) {
-            if (!$localeId) {
-                $localeId = null;
+        foreach ($localizedBannerTerms as $idLocale => $localizedBannerTerm) {
+            if (!$idLocale) {
+                $idLocale = null;
                 $defaultLocaleIsPresent = true;
             }
 
             $localizedContentBannerEntity = SpyContentLocalizedQuery::create()
                 ->filterByFkContent($idContentBannerTerm)
-                ->filterByFkLocale($localeId)
+                ->filterByFkLocale($idLocale)
                 ->findOneOrCreate();
 
             $localizedContentBannerEntity->setParameters(
