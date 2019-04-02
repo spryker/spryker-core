@@ -149,7 +149,6 @@ interface QuoteRequestClientInterface
 
     /**
      * Specification:
-     * - Makes Zed request.
      * - Expects "Request for Quote" status to be "ready".
      * - Locks quote.
      * - Replaces current customer quote by quote from latest quote request version.
@@ -164,7 +163,6 @@ interface QuoteRequestClientInterface
 
     /**
      * Specification:
-     * - Makes Zed request.
      * - Expects "Request for Quote" status to be "draft".
      * - Replaces current customer quote by quote from latest quote request version.
      * - Uses latest quote request version reference as quote name.

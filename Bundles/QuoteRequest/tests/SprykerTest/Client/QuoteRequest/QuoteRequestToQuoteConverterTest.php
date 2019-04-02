@@ -64,23 +64,10 @@ class QuoteRequestToQuoteConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertQuoteRequestToLockedQuoteWithConvertibleQuoteRequest(): void
+    public function testConvertQuoteRequestToLockedQuoteWithValidQuoteRequestSuccessful(): void
     {
         // Arrange
-        $quoteRequestTransfer = (new QuoteRequestBuilder([
-            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_READY,
-        ]))->build();
-
-        $quoteTransfer = (new QuoteBuilder())
-            ->withItem([ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(), ItemTransfer::UNIT_PRICE => 1])
-            ->build();
-
-        $quoteRequestVersionTransfer = (new QuoteRequestVersionBuilder([
-            QuoteRequestVersionTransfer::QUOTE_REQUEST => $quoteRequestTransfer,
-            QuoteRequestVersionTransfer::QUOTE => $quoteTransfer,
-        ]))->build();
-
-        $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
+        $quoteRequestTransfer = $this->createValidQuoteRequestTransferInStatus(SharedQuoteRequestConfig::STATUS_READY);
 
         // Act
         $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
@@ -92,7 +79,51 @@ class QuoteRequestToQuoteConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertQuoteRequestToLockedQuoteWithWrongStatus(): void
+    public function testConvertQuoteRequestToQuoteWithValidQuoteRequestSuccessful(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->createValidQuoteRequestTransferInStatus(SharedQuoteRequestConfig::STATUS_DRAFT);
+
+        // Act
+        $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToQuote($quoteRequestTransfer);
+
+        // Assert
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testConvertQuoteRequestToLockedQuoteLocksQuote(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->createValidQuoteRequestTransferInStatus(SharedQuoteRequestConfig::STATUS_READY);
+
+        $quoteClientMock = $this->createQuoteRequestToQuoteClientInterfaceMock();
+
+        $quoteRequestToQuoteConverterMock = $this->getMockBuilder(QuoteRequestToQuoteConverter::class)
+            ->setConstructorArgs([
+                $this->createQuoteRequestToPersistentCartClientInterfaceMock(),
+                $quoteClientMock,
+                $this->createQuoteRequestCheckerMock(),
+            ])
+            ->setMethods(null)
+            ->getMock();
+
+        //Assert
+        $quoteClientMock->method('setQuote')
+            ->willReturnCallback(function (QuoteTransfer $quoteTransfer){
+                $this->assertTrue($quoteTransfer->getIsLocked());
+            });
+
+        // Act
+        $quoteRequestToQuoteConverterMock->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testConvertQuoteRequestToLockedQuoteWithWrongStatusFails(): void
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
@@ -113,7 +144,7 @@ class QuoteRequestToQuoteConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertQuoteRequestToLockedQuoteWithoutLatestQuoteRequestVersion(): void
+    public function testConvertQuoteRequestToQuoteWithWrongStatusFails(): void
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
@@ -121,12 +152,12 @@ class QuoteRequestToQuoteConverterTest extends Unit
         ]))->build();
 
         // Act
-        $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
+        $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToQuote($quoteRequestTransfer);
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertEquals(
-            static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND,
+            static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS,
             $quoteResponseTransfer->getErrors()[0]->getMessage()
         );
     }
@@ -170,15 +201,12 @@ class QuoteRequestToQuoteConverterTest extends Unit
      */
     protected function createQuoteRequestToQuoteClientInterfaceMock(): MockObject
     {
-        $quoteRequestToQuoteClientInterfaceMock = $this->getMockBuilder(QuoteRequestToQuoteClientInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['lockQuote'])
-            ->getMock();
+        $quoteRequestToQuoteClientInterfaceMock = $this->createPartialMock(QuoteRequestToQuoteClientInterface::class, ['lockQuote', 'setQuote']);
 
         $quoteRequestToQuoteClientInterfaceMock->expects($this->any())
             ->method('lockQuote')
             ->willReturnCallback(function (QuoteTransfer $quoteTransfer) {
-                return $quoteTransfer;
+                return $quoteTransfer->setIsLocked(true);
             });
 
         return $quoteRequestToQuoteClientInterfaceMock;
@@ -214,5 +242,30 @@ class QuoteRequestToQuoteConverterTest extends Unit
             ]);
 
         return $quoteRequestConfigMock;
+    }
+
+    /**
+     * @param string $status
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    protected function createValidQuoteRequestTransferInStatus(string $status): QuoteRequestTransfer
+    {
+        $quoteRequestTransfer = (new QuoteRequestBuilder([
+            QuoteRequestTransfer::STATUS => $status,
+        ]))->build();
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem([ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(), ItemTransfer::UNIT_PRICE => 1])
+            ->build();
+
+        $quoteRequestVersionTransfer = (new QuoteRequestVersionBuilder([
+            QuoteRequestVersionTransfer::QUOTE_REQUEST => $quoteRequestTransfer,
+            QuoteRequestVersionTransfer::QUOTE => $quoteTransfer,
+        ]))->build();
+
+        $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
+
+        return $quoteRequestTransfer;
     }
 }
