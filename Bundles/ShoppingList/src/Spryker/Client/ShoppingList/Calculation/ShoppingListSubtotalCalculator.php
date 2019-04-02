@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\ShoppingList\Calculation;
 
-use Generated\Shared\Transfer\ProductViewTransfer;
-
 class ShoppingListSubtotalCalculator implements ShoppingListSubtotalCalculatorInterface
 {
     /**
@@ -22,7 +20,7 @@ class ShoppingListSubtotalCalculator implements ShoppingListSubtotalCalculatorIn
         foreach ($shoppingListItemProductViews as $shoppingListItemProductView) {
             $shoppingListItemProductView->requireCurrentProductPrice();
 
-            if (!$this->isShoppingListItemAvailable($shoppingListItemProductView)) {
+            if ($shoppingListItemProductView->getAvailable() !== true) {
                 continue;
             }
 
@@ -30,15 +28,5 @@ class ShoppingListSubtotalCalculator implements ShoppingListSubtotalCalculatorIn
         }
 
         return $shoppingListSubtotal;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $shoppingListItemProductView
-     *
-     * @return bool
-     */
-    protected function isShoppingListItemAvailable(ProductViewTransfer $shoppingListItemProductView): bool
-    {
-        return $shoppingListItemProductView->getAvailable() === true;
     }
 }
