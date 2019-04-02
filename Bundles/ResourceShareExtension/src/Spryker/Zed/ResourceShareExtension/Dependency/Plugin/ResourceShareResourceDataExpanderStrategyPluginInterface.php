@@ -7,6 +7,19 @@
 
 namespace Spryker\Zed\ResourceShareExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\ResourceShareTransfer;
+
 interface ResourceShareResourceDataExpanderStrategyPluginInterface
 {
+    /**
+     * Specification:
+     * - Expands resource data field with additional data, based on resource type.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer
+     */
+    public function expand(ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer;
 }
