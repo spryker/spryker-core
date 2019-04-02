@@ -14,24 +14,24 @@ interface TaxStorageRepositoryInterface
      *
      * @return int[]
      */
-    public function findTaxSetIdsByTaxRateIds(array $taxRateIds): iterable;
+    public function findTaxSetIdsByTaxRateIds(array $taxRateIds): array ;
 
     /**
      * @param int[] $taxSetIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Tax\Persistence\SpyTaxSet[]
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSet[]
      */
-    public function findTaxSetsByIds(array $taxSetIds): iterable;
+    public function findTaxSetsByIds(array $taxSetIds): array ;
 
     /**
      * @param int[] $taxSetIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
+     * @return \Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
      */
-    public function findTaxSetStoragesByIds(array $taxSetIds): iterable;
+    public function findTaxSetStoragesByIds(array $taxSetIds): array;
 
     /**
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
+     * @return \Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
      */
-    public function findAllTaxSetSorage(): iterable;
+    public function findAllTaxSetStorages(): array;
 }

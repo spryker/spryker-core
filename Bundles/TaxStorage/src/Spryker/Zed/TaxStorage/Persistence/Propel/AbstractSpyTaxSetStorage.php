@@ -2,7 +2,6 @@
 
 namespace Spryker\Zed\TaxStorage\Persistence\Propel;
 
-
 use \DateTime;
 use \Exception;
 use \PDO;
@@ -22,13 +21,6 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
 
-/**
- * Base class that represents a row from the 'spy_tax_set_storage' table.
- *
- *
- *
- * @package    propel.generator.src.Orm.Zed.TaxStorage.Persistence.Base
- */
 abstract class AbstractSpyTaxSetStorage implements ActiveRecordInterface
 {
     /**

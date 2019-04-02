@@ -9,26 +9,48 @@ namespace Spryker\Zed\TaxStorage\Business\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\TaxRateStorageTransfer;
+use Generated\Shared\Transfer\TaxSetStorageTransfer;
+use Orm\Zed\Tax\Persistence\Base\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage;
 
-class TaxStorageMapper implements TaxStorageMapperInterface
+class TaxStorageMapper
 {
+    /**
+     * @param \Orm\Zed\Tax\Persistence\Base\SpyTaxSet $spyTaxSet
+     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage|null $spyTaxSetStorage
+     *
+     * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage
+     */
+    public function mapSpyTaxSetToTaxSetStorage(SpyTaxSet $spyTaxSet,  ?SpyTaxSetStorage $spyTaxSetStorage = null): SpyTaxSetStorage
+    {
+        $taxSetStorageTransfer = new TaxSetStorageTransfer();
+        $taxSetStorageTransfer->setId($spyTaxSet->getIdTaxSet());
+        $taxSetStorageTransfer->fromArray($spyTaxSet->toArray(), true);
+        $taxSetStorageTransfer->setTaxRates(
+            $this->mapSpyTaxRatesToTaxRateTransfers($spyTaxSet->getSpyTaxRates())
+        );
+        $spyTaxSetStorage->setData($taxSetStorageTransfer->toArray());
+
+        return $spyTaxSetStorage;
+    }
+
     /**
      * @param \Orm\Zed\Tax\Persistence\SpyTaxRate[] $spyTaxRates
      *
      * @return \Generated\Shared\Transfer\TaxRateStorageTransfer[]
      */
-    public function mapSpyTaxRatesToTransfer(iterable $spyTaxRates): iterable
+    public function mapSpyTaxRatesToTaxRateTransfers(array $spyTaxRates): array
     {
-        $taxRateTransfer = new ArrayObject();
+        $taxRateTransfers = new ArrayObject();
 
         foreach ($spyTaxRates as $spyTaxRate) {
-            $taxRateTransfer->append(
+            $taxRateTransfers->append(
                 $this->mapSpyTaxRateToTaxRateStorageTransfer($spyTaxRate, new TaxRateStorageTransfer())
             );
         }
 
-        return $taxRateTransfer;
+        return $taxRateTransfers;
     }
 
     /**
@@ -37,7 +59,7 @@ class TaxStorageMapper implements TaxStorageMapperInterface
      *
      * @return \Generated\Shared\Transfer\TaxRateStorageTransfer
      */
-    public function mapSpyTaxRateToTaxRateStorageTransfer(
+    protected function mapSpyTaxRateToTaxRateStorageTransfer(
         SpyTaxRate $spyTaxRate,
         TaxRateStorageTransfer $taxRateStorageTransfer
     ): TaxRateStorageTransfer {

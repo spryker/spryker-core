@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\TaxSetStorageTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapperInterface;
+use Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapper;
 use Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface;
 use Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface;
 use Spryker\Zed\TaxStorage\TaxStorageConfig;
@@ -31,7 +31,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
     protected $taxStorageEntityManager;
 
     /**
-     * @var \Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapperInterface
+     * @var \Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapper
      */
     protected $taxStorageMapper;
 
@@ -43,13 +43,13 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
     /**
      * @param \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface $taxStorageRepository
      * @param \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapperInterface $taxStorageMapper
+     * @param \Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapper $taxStorageMapper
      * @param \Spryker\Zed\TaxStorage\TaxStorageConfig $taxStorageConfig
      */
     public function __construct(
         TaxStorageRepositoryInterface $taxStorageRepository,
         TaxStorageEntityManagerInterface $entityManager,
-        TaxStorageMapperInterface $taxStorageMapper,
+        TaxStorageMapper $taxStorageMapper,
         TaxStorageConfig $taxStorageConfig
     ) {
         $this->taxStorageRepository = $taxStorageRepository;
@@ -68,8 +68,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
         $spyTaxSets = $this->taxStorageRepository
             ->findTaxSetsByIds($taxSetIds);
         $spyTaxSetStorage = $this->taxStorageRepository
-            ->findTaxSetStoragesByIds($taxSetIds)
-            ->toKeyIndex('FkTaxSet');
+            ->findTaxSetStoragesByIds($taxSetIds);
 
         $this->getTransactionHandler()->handleTransaction(function () use ($spyTaxSets, $spyTaxSetStorage): void {
             $this->storeDataSet($spyTaxSets, $spyTaxSetStorage);
@@ -110,7 +109,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
      *
      * @return void
      */
-    protected function storeDataSet(iterable $spyTaxSets, iterable $spyTaxSetStorages): void
+    protected function storeDataSet(array $spyTaxSets, array $spyTaxSetStorages): void
     {
         foreach ($spyTaxSets as $spyTaxSet) {
             $spyTaxSetStorage = $spyTaxSetStorages[$spyTaxSet->getIdTaxSet()] ?? (new SpyTaxSetStorage())
@@ -124,7 +123,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
      *
      * @return void
      */
-    protected function executeUnpublishTransaction(iterable $spyTaxSetStorages): void
+    protected function executeUnpublishTransaction(array $spyTaxSetStorages): void
     {
         foreach ($spyTaxSetStorages as $spyTaxSetStorage) {
             $this->taxStorageEntityManager->deleteTaxSetStorage($spyTaxSetStorage);
@@ -139,13 +138,11 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
      */
     protected function createDataSet(SpyTaxSet $spyTaxSet, ?SpyTaxSetStorage $spyTaxSetStorage = null): void
     {
-        $taxSetStorageTransfer = new TaxSetStorageTransfer();
-        $taxSetStorageTransfer->setId($spyTaxSet->getIdTaxSet());
-        $taxSetStorageTransfer->fromArray($spyTaxSet->toArray(), true);
-        $taxSetStorageTransfer->setTaxRates(
-            $this->taxStorageMapper->mapSpyTaxRatesToTransfer($spyTaxSet->getSpyTaxRates())
-        );
-        $spyTaxSetStorage->setData($taxSetStorageTransfer->toArray());
+        if ($spyTaxSetStorage === null) {
+            $spyTaxSetStorage = new SpyTaxSetStorage();
+        }
+        $spyTaxSetStorage = $this->taxStorageMapper
+            ->mapSpyTaxSetToTaxSetStorage($spyTaxSet, $spyTaxSetStorage);
         $spyTaxSetStorage->isSendingToQueue(
             $this->taxStorageConfig->isSendingToQueue()
         );

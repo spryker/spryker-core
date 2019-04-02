@@ -11,7 +11,7 @@ interface TaxEvents
 {
     /**
      * Specification
-     *  - This event will be used for tax_set publishing
+     *  - This event will be used for tax_set publishing.
      *
      * @api
      */
@@ -19,7 +19,7 @@ interface TaxEvents
 
     /**
      * Specification:
-     *  - This event will be used for tax_set entity creation
+     *  - This event will be used for tax_set entity creation.
      *
      * @api
      */
@@ -27,7 +27,7 @@ interface TaxEvents
 
     /**
      * Specification:
-     * - This event will be used for tax_set entity update
+     * - This event will be used for tax_set entity update.
      *
      * @api
      */
@@ -35,7 +35,7 @@ interface TaxEvents
 
     /**
      * Specification:
-     * - This event will be used for tax_set entity delete
+     * - This event will be used for tax_set entity delete.
      *
      * @api
      */
@@ -43,7 +43,7 @@ interface TaxEvents
 
     /**
      * Specification:
-     * - This event will be used for tax_rate entity update
+     * - This event will be used for tax_rate entity update.
      *
      * @api
      */
@@ -51,7 +51,7 @@ interface TaxEvents
 
     /**
      * Specification:
-     * - This event will be used for tax_rate entity delete
+     * - This event will be used for tax_rate entity delete.
      *
      * @api
      */
@@ -59,7 +59,7 @@ interface TaxEvents
 
     /**
      * Specification:
-     *  - This event will be used for tax_set_tax entity creation
+     *  - This event will be used for tax_set_tax entity creation.
      *
      * @api
      */
@@ -67,7 +67,7 @@ interface TaxEvents
 
     /**
      * Specification:
-     * - This event will be used for tax_set_tax entity delete
+     * - This event will be used for tax_set_tax entity delete.
      *
      * @api
      */

@@ -59,7 +59,7 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
         $spyTaxSetStoragesEntities = $this->getRepository()->findTaxSetStoragesByIds($ids);
 
         if (count($ids) === 0) {
-            $spyTaxSetStoragesEntities = $this->getRepository()->findAllTaxSetSorage();
+            $spyTaxSetStoragesEntities = $this->getRepository()->findAllTaxSetStoragesIndexedById();
         }
 
         foreach ($spyTaxSetStoragesEntities as $spyTaxSetStorage) {

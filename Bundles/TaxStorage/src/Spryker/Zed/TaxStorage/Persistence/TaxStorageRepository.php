@@ -9,7 +9,6 @@ namespace Spryker\Zed\TaxStorage\Persistence;
 
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\TaxStorage\Persistence\TaxStoragePersistenceFactory getFactory()
@@ -17,11 +16,13 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class TaxStorageRepository extends AbstractRepository implements TaxStorageRepositoryInterface
 {
     /**
+     * @module Tax
+     *
      * @param int[] $taxRateIds
      *
      * @return array
      */
-    public function findTaxSetIdsByTaxRateIds(array $taxRateIds): iterable
+    public function findTaxSetIdsByTaxRateIds(array $taxRateIds): array
     {
         $taxRateIds = $this->getFactory()
             ->createTaxSetQuery()
@@ -39,16 +40,19 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
     }
 
     /**
+     * @module Tax
+     *
      * @param int[] $taxSetIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Tax\Persistence\SpyTaxSet[]
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSet[]
      */
-    public function findTaxSetsByIds(array $taxSetIds): iterable
+    public function findTaxSetsByIds(array $taxSetIds): array
     {
         $spyTaxSets = $this->getFactory()
             ->createTaxSetQuery()
-            ->filterByIdTaxSet($taxSetIds, Criteria::IN)
-            ->find();
+            ->filterByIdTaxSet_In($taxSetIds)
+            ->find()
+            ->getArrayCopy();
 
         return $spyTaxSets;
     }
@@ -56,26 +60,28 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
     /**
      * @param int[] $taxSetIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
+     * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
      */
-    public function findTaxSetStoragesByIds(array $taxSetIds): iterable
+    public function findTaxSetStoragesByIds(array $taxSetIds): array
     {
         $spyTaxSetStorage = $this->getFactory()
             ->createTaxSetStorageQuery()
-            ->filterByFkTaxSet($taxSetIds, Criteria::IN)
-            ->find();
+            ->filterByFkTaxSet_In($taxSetIds)
+            ->find()
+            ->toKeyIndex('FkTaxSet');
 
         return $spyTaxSetStorage;
     }
 
     /**
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
+     * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
      */
-    public function findAllTaxSetSorage(): iterable
+    public function findAllTaxSetStorages(): array
     {
         $spyTaxSetStorage = $this->getFactory()
             ->createTaxSetStorageQuery()
-            ->find();
+            ->find()
+            ->getArrayCopy();
 
         return $spyTaxSetStorage;
     }

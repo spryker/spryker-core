@@ -13,7 +13,7 @@ interface TaxStorageClientInterface
 {
     /**
      * Specification:
-     * - Gets TaxSet with connected TaxRates from Redis.
+     * - Finds tax sets with related tax rates data in storage.
      *
      * @api
      *
@@ -21,5 +21,5 @@ interface TaxStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\TaxSetStorageTransfer|null
      */
-    public function findTaxSetCollectionStorage(int $idTaxSet): ?TaxSetStorageTransfer;
+    public function findTaxSetStorage(int $idTaxSet): ?TaxSetStorageTransfer;
 }
