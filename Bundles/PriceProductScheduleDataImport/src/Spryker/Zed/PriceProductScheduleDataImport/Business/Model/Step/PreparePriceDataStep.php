@@ -22,12 +22,12 @@ class PreparePriceDataStep implements DataImportStepInterface
     {
         $dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET] =
             empty($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET])
-                ? (int)$dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET]
-                : null;
+                ? null
+                : (int)$dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET];
 
         $dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS] =
             empty($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS])
-                ? (int)$dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS]
-                : null;
+                ? null
+                : (int)$dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS];
     }
 }
