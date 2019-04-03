@@ -14,7 +14,8 @@
     "spryker/synchronization": "^0.2.0 || ^1.0.0",
     "spryker/synchronization-extension": "^1.0.0",
     "spryker/url": "^3.3.0",
-    "spryker/util-sanitize": "^2.1.0"
+    "spryker/util-sanitize": "^2.1.0",
+    "spryker/synchronization-behavior": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

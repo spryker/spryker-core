@@ -38,6 +38,7 @@ use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorCom
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainer;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\BehaviorDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\CodeceptionDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ComposerScriptDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderComposite;
@@ -383,6 +384,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createExtensionDependencyFinder(),
             $this->createLocatorDependencyFinder(),
             $this->createPersistenceDependencyFinder(),
+            $this->createBehaviorDependencyFinder(),
             $this->createTwigDependencyFinder(),
             $this->createTravisDependencyFinder(),
             $this->createComposerScriptDependencyFinder(),
@@ -449,6 +451,16 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new PersistenceDependencyFinder(
             $this->createPropelSchemaParser()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
+     */
+    public function createBehaviorDependencyFinder(): DependencyFinderInterface
+    {
+        return new BehaviorDependencyFinder(
+            $this->createModuleFinder()
         );
     }
 

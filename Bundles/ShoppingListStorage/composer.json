@@ -12,6 +12,7 @@
     "spryker/kernel": "^3.17.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/shopping-list": "^1.2.0 || ^2.0.0",
+    "spryker/synchronization-behavior": "^1.0.0",
     "spryker/shopping-list-session-extension": "^1.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^1.0.0",
