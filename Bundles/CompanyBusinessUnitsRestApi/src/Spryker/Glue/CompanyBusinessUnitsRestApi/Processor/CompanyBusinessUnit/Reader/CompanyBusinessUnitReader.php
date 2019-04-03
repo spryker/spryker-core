@@ -93,8 +93,8 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         RestRequestInterface $restRequest,
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): bool {
-        return $restRequest->getUser()->getRestUser()
-            && $restRequest->getUser()->getRestUser()->getIdCompany()
-            && $restRequest->getUser()->getRestUser()->getIdCompany() === $companyBusinessUnitTransfer->getFkCompany();
+        return $restRequest->getRestUser()
+            && $restRequest->getRestUser()->getIdCompany()
+            && $restRequest->getRestUser()->getIdCompany() === $companyBusinessUnitTransfer->getFkCompany();
     }
 }

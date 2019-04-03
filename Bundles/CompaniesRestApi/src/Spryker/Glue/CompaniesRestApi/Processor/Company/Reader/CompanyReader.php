@@ -89,8 +89,8 @@ class CompanyReader implements CompanyReaderInterface
         RestRequestInterface $restRequest,
         CompanyTransfer $companyTransfer
     ): bool {
-        return $restRequest->getUser()->getRestUser()
-            && $restRequest->getUser()->getRestUser()->getIdCompany()
-            && $restRequest->getUser()->getRestUser()->getIdCompany() === $companyTransfer->getIdCompany();
+        return $restRequest->getRestUser()
+            && $restRequest->getRestUser()->getIdCompany()
+            && $restRequest->getRestUser()->getIdCompany() === $companyTransfer->getIdCompany();
     }
 }

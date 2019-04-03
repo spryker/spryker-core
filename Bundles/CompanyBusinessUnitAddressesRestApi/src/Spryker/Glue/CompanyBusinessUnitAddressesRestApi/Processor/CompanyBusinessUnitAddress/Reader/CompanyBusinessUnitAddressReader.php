@@ -89,8 +89,8 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         RestRequestInterface $restRequest,
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): bool {
-        return $restRequest->getUser()->getRestUser()
-            && $restRequest->getUser()->getRestUser()->getIdCompany()
-            && $restRequest->getUser()->getRestUser()->getIdCompany() === $companyUnitAddressTransfer->getFkCompany();
+        return $restRequest->getRestUser()
+            && $restRequest->getRestUser()->getIdCompany()
+            && $restRequest->getRestUser()->getIdCompany() === $companyUnitAddressTransfer->getFkCompany();
     }
 }
