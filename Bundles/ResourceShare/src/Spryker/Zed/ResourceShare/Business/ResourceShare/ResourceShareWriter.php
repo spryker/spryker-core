@@ -16,9 +16,6 @@ use Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface;
 
 class ResourceShareWriter implements ResourceShareWriterInterface
 {
-    protected const UUID_MODULE = 'Spryker.ResourceShare';
-    protected const UUID_TABLE = 'spy_resource_share';
-
     protected const ERROR_MESSAGE_RESOURCE_TYPE_IS_NOT_DEFINED = 'Resource type is not defined.';
     protected const ERROR_MESSAGE_RESOURCE_DATA_IS_NOT_DEFINED = 'Resource data is not defined.';
     protected const ERROR_MESSAGE_CUSTOMER_REFERENCE_IS_NOT_DEFINED = 'Customer reference is not defined.';
