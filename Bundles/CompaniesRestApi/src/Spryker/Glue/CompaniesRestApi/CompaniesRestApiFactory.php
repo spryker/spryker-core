@@ -12,6 +12,8 @@ use Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapper;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\Reader\CompanyReader;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\Reader\CompanyReaderInterface;
+use Spryker\Glue\CompaniesRestApi\Processor\Company\Relationship\CompanyByPayloadResourceRelationshipExpander;
+use Spryker\Glue\CompaniesRestApi\Processor\Company\Relationship\CompanyByPayloadResourceRelationshipExpanderInterface;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\Relationship\CompanyResourceRelationshipExpander;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\Relationship\CompanyResourceRelationshipExpanderInterface;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\RestResponseBuilder\CompanyRestResponseBuilder;
@@ -30,8 +32,18 @@ class CompaniesRestApiFactory extends AbstractFactory
     {
         return new CompanyResourceRelationshipExpander(
             $this->getResourceBuilder(),
-            $this->createCompanyMapper(),
-            $this->getConfig()
+            $this->createCompanyMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CompaniesRestApi\Processor\Company\Relationship\CompanyByPayloadResourceRelationshipExpanderInterface
+     */
+    public function createCompanyByPayloadResourceRelationshipExpander(): CompanyByPayloadResourceRelationshipExpanderInterface
+    {
+        return new CompanyByPayloadResourceRelationshipExpander(
+            $this->createCompanyRestResponseBuilder(),
+            $this->createCompanyMapper()
         );
     }
 

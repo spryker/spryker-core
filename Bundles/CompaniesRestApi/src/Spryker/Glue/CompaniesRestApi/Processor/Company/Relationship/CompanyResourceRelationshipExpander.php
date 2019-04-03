@@ -7,14 +7,12 @@
 
 namespace Spryker\Glue\CompaniesRestApi\Processor\Company\Relationship;
 
-use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\RestCompanyAttributesTransfer;
 use Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class CompanyResourceRelationshipExpander implements CompanyResourceRelationshipExpanderInterface
 {
@@ -29,23 +27,15 @@ class CompanyResourceRelationshipExpander implements CompanyResourceRelationship
     protected $companyMapper;
 
     /**
-     * @var \Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig
-     */
-    protected $config;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface $companyMapper
-     * @param \Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig $config
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        CompanyMapperInterface $companyMapper,
-        CompaniesRestApiConfig $config
+        CompanyMapperInterface $companyMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->companyMapper = $companyMapper;
-        $this->config = $config;
     }
 
     /**
@@ -58,11 +48,10 @@ class CompanyResourceRelationshipExpander implements CompanyResourceRelationship
     {
         foreach ($resources as $resource) {
             /**
-             * @var \Generated\Shared\Transfer\CompanyUserTransfer|\Generated\Shared\Transfer\CompanyRoleTransfer|\Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $payload
+             * @var \Generated\Shared\Transfer\CompanyUserTransfer|null $payload
              */
             $payload = $resource->getPayload();
-
-            if (!$payload || !$this->isValidPayloadType($payload)) {
+            if ($payload === null || !($payload instanceof CompanyUserTransfer)) {
                 continue;
             }
 
@@ -71,45 +60,21 @@ class CompanyResourceRelationshipExpander implements CompanyResourceRelationship
                 continue;
             }
 
-            $resource->addRelationship($this->createCompanyResource($companyTransfer));
+            $restCompanyAttributesTransfer = $this->companyMapper
+                ->mapCompanyTransferToRestCompanyAttributesTransfer(
+                    $companyTransfer,
+                    new RestCompanyAttributesTransfer()
+                );
+
+            $companyResource = $this->restResourceBuilder->createRestResource(
+                CompaniesRestApiConfig::RESOURCE_COMPANIES,
+                $companyTransfer->getUuid(),
+                $restCompanyAttributesTransfer
+            );
+
+            $resource->addRelationship($companyResource);
         }
 
         return $resources;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    protected function createCompanyResource(CompanyTransfer $companyTransfer): RestResourceInterface
-    {
-        $restCompanyAttributesTransfer = $this->companyMapper
-            ->mapCompanyTransferToRestCompanyAttributesTransfer(
-                $companyTransfer,
-                new RestCompanyAttributesTransfer()
-            );
-
-        return $this->restResourceBuilder->createRestResource(
-            CompaniesRestApiConfig::RESOURCE_COMPANIES,
-            $companyTransfer->getUuid(),
-            $restCompanyAttributesTransfer
-        );
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $payload
-     *
-     * @return bool
-     */
-    protected function isValidPayloadType(AbstractTransfer $payload): bool
-    {
-        foreach ($this->config->getExtendableResourceTransfers() as $extendableResourceTransfer) {
-            if ($payload instanceof $extendableResourceTransfer) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

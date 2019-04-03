@@ -23,14 +23,4 @@ class CompaniesRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_COMPANY_ID_IS_MISSING = 'Company id is missing.';
 
     public const RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED = 'Endpoint is not implemented.';
-
-    protected const EXTENDABLE_RESOURCE_TRANSFERS = [];
-
-    /**
-     * @return string[]
-     */
-    public function getExtendableResourceTransfers(): array
-    {
-        return static::EXTENDABLE_RESOURCE_TRANSFERS;
-    }
 }
