@@ -63,11 +63,11 @@ class QuoteChangeRequestExpanderTest extends Unit
         ////////////////////// No changes in cart, getBundledItems returns the same count /////////////////////
 
         $howManyShouldStayAfterExpand = 1;
-        $returnedBundledItems = $this->getBundledItems($quoteTransfer, $oneItemInGroupKey, $howManyShouldStayAfterExpand);
+        $returnedBundledItems = $this->getBundledItems($quoteTransfer, $oneItemInGroupKey, null);
         $this->assertCount($howManyShouldStayAfterExpand, $returnedBundledItems);
 
         $howManyShouldStayAfterExpand = 3;
-        $returnedBundledItems = $this->getBundledItems($quoteTransfer, $threeItemsInGroupKey, $howManyShouldStayAfterExpand);
+        $returnedBundledItems = $this->getBundledItems($quoteTransfer, $threeItemsInGroupKey, null);
         $this->assertCount($howManyShouldStayAfterExpand, $returnedBundledItems);
 
         ////////////////////// Remove some items from cart, getBundledItems returns the same count /////////////////////
@@ -76,12 +76,12 @@ class QuoteChangeRequestExpanderTest extends Unit
         $quoteTransfer->setItems($itemsAfterRemove);
 
         $howManyShouldStayAfterExpand = 0;
-        $returnedBundledItems = $this->getBundledItems($quoteTransfer, $oneItemInGroupKey, $howManyShouldStayAfterExpand);
+        $returnedBundledItems = $this->getBundledItems($quoteTransfer, $oneItemInGroupKey, null);
         $this->assertCount($howManyShouldStayAfterExpand, $returnedBundledItems);
 
         $howManyShouldStayAfterExpand = 2;
-        $returnedBundledItems = $this->getBundledItems($quoteTransfer, $threeItemsInGroupKey, $howManyShouldStayAfterExpand);
-        $this->assertCount(2, $returnedBundledItems);
+        $returnedBundledItems = $this->getBundledItems($quoteTransfer, $threeItemsInGroupKey, null);
+        $this->assertCount($howManyShouldStayAfterExpand, $returnedBundledItems);
     }
 
     /**
