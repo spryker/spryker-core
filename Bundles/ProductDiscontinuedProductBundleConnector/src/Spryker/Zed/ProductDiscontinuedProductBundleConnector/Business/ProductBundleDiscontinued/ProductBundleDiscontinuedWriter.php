@@ -57,19 +57,21 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function discontinueProductBundleByBundledProducts(ProductConcreteTransfer $productConcreteTransfer): void
+    public function discontinueProductBundleByBundledProducts(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         $bundledProductConcreteIds = $this->getBundledProductConcreteIds($productConcreteTransfer);
 
         if (!$bundledProductConcreteIds
             || !$this->productDiscontinuedFacade->isAnyProductConcreteDiscontinued($bundledProductConcreteIds)
         ) {
-            return;
+            return $productConcreteTransfer;
         }
 
         $this->discontinueProduct($productConcreteTransfer->getIdProductConcrete());
+
+        return $productConcreteTransfer;
     }
 
     /**

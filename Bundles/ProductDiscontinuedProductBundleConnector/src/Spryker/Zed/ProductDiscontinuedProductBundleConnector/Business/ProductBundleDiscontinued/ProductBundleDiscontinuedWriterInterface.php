@@ -22,7 +22,7 @@ interface ProductBundleDiscontinuedWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function discontinueProductBundleByBundledProducts(ProductConcreteTransfer $productConcreteTransfer): void;
+    public function discontinueProductBundleByBundledProducts(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

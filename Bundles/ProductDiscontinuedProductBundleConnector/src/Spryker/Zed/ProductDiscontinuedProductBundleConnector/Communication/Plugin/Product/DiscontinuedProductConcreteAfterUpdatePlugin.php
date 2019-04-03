@@ -12,10 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
 
 /**
- * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
- * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
- * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\ProductDiscontinuedProductBundleConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductDiscontinuedProductBundleConnectorFacadeInterface getFacade()
  */
 class DiscontinuedProductConcreteAfterUpdatePlugin extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {
