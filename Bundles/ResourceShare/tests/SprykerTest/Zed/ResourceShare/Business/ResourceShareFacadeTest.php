@@ -86,6 +86,78 @@ class ResourceShareFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testGenerateResourceShareShouldCreateResourceShareOnSuccess(): void
+    {
+        // Arrange
+
+        // Act
+
+        // Assert
+    }
+
+    /**
+     * @return void
+     */
+    public function testActivateResourceShareShouldAddErrorMessageWhenResourceIsNotFoundByProvidedUuid(): void
+    {
+        // Arrange
+
+        // Act
+
+        // Assert
+    }
+
+    /**
+     * @return void
+     */
+    public function testActivateResourceShareShouldSetIsLoggedInWhenStrategyPluginRequiresCustomerToBeLoggedIn(): void
+    {
+        // Arrange
+
+        // Act
+
+        // Assert
+    }
+
+    /**
+     * @return void
+     */
+    public function testActivateResourceShareShouldApplyCorrespondingStrategyPluginOnSuccess(): void
+    {
+        // Arrange
+
+        // Act
+
+        // Assert
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetResourceShareByUuidShouldAddErrorMessageWhenResourceIsNotFoundByProvidedUuid(): void
+    {
+        // Arrange
+
+        // Act
+
+        // Assert
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetResourceShareByUuidShouldReturnCorrectResourceShareFromDatabase(): void
+    {
+        // Arrange
+
+        // Act
+
+        // Assert
+    }
+
+    /**
      * @return \Spryker\Zed\ResourceShare\Business\ResourceShareFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getFacade()
