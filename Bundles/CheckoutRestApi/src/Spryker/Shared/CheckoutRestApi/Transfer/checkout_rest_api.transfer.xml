@@ -102,6 +102,7 @@
         <property name="isSuccess" type="bool" />
         <property name="errors" type="RestCheckoutError[]" singular="error" />
         <property name="orderReference" type="string" />
+        <property name="checkoutResponse" type="CheckoutResponse" />
     </transfer>
 
 </transfers>

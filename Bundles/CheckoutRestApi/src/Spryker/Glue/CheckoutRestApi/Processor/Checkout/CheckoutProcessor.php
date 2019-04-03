@@ -10,7 +10,7 @@ namespace Spryker\Glue\CheckoutRestApi\Processor\Checkout;
 use ArrayObject;
 use Generated\Shared\Transfer\RestCheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
-use Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer;
+use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
@@ -45,14 +45,14 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected $checkoutRestApiClient;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface[]
-     */
-    protected $checkoutRequestAttributesValidatorPlugins;
-
-    /**
      * @var \Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface
      */
     protected $checkoutRequestValidator;
+
+    /**
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapperInterface
+     */
+     protected $checkoutResponseMapper;
 
     /**
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
@@ -60,19 +60,22 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface $checkoutRequestAttributesExpander
      * @param \Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface $checkoutRequestValidator
+     * @param \Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapperInterface $checkoutResponseMapper
      */
     public function __construct(
         CheckoutRestApiClientInterface $checkoutRestApiClient,
         RestResourceBuilderInterface $restResourceBuilder,
         CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient,
         CheckoutRequestAttributesExpanderInterface $checkoutRequestAttributesExpander,
-        CheckoutRequestValidatorInterface $checkoutRequestValidator
+        CheckoutRequestValidatorInterface $checkoutRequestValidator,
+        CheckoutResponseMapperInterface $checkoutResponseMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
         $this->checkoutRequestAttributesExpander = $checkoutRequestAttributesExpander;
         $this->checkoutRequestValidator = $checkoutRequestValidator;
+        $this->checkoutResponseMapper = $checkoutResponseMapper;
     }
 
     /**
@@ -96,7 +99,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
             return $this->createPlaceOrderFailedErrorResponse($restCheckoutResponseTransfer->getErrors(), $restRequest->getMetadata()->getLocale());
         }
 
-        return $this->createOrderPlacedResponse($restCheckoutResponseTransfer->getOrderReference());
+        return $this->createOrderPlacedResponse($restCheckoutResponseTransfer);
     }
 
     /**
@@ -141,12 +144,17 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createOrderPlacedResponse(string $orderReference): RestResponseInterface
+    protected function createOrderPlacedResponse(RestCheckoutResponseTransfer $restCheckoutResponseTransfer): RestResponseInterface
     {
+        $restCheckoutResponseAttributesTransfer = $this->checkoutResponseMapper
+            ->mapRestCheckoutResponseTransferToRestCheckoutResponseAttributesTransfer(
+                $restCheckoutResponseTransfer
+            );
+
         $restResource = $this->restResourceBuilder->createRestResource(
             CheckoutRestApiConfig::RESOURCE_CHECKOUT,
             null,
-            (new RestCheckoutResponseAttributesTransfer())->setOrderReference($orderReference)
+            $restCheckoutResponseAttributesTransfer
         );
 
         return $this->restResourceBuilder

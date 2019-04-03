@@ -10,6 +10,7 @@ namespace Spryker\Glue\CheckoutRestApi;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessor;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessorInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReader;
@@ -62,7 +63,8 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->getGlossaryStorageClient(),
             $this->createCheckoutRequestAttributesExpander(),
-            $this->createCheckoutRequestValidator()
+            $this->createCheckoutRequestValidator(),
+            $this->createCheckoutResponseMapper()
         );
     }
 
@@ -83,6 +85,16 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function createCustomerMapper(): CustomerMapperInterface
     {
         return new CustomerMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapper
+     */
+    public function createCheckoutResponseMapper(): CheckoutResponseMapper
+    {
+        return new CheckoutResponseMapper(
+            $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_RESPONSE_MAPPER)
+        );
     }
 
     /**
