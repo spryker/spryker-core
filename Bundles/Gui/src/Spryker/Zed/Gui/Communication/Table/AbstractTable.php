@@ -17,8 +17,8 @@ use Spryker\Service\UtilSanitize\UtilSanitizeService;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 abstract class AbstractTable
 {
@@ -95,7 +95,7 @@ abstract class AbstractTable
     protected $dataTablesTransfer;
 
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     protected $twig;
 
@@ -249,7 +249,7 @@ abstract class AbstractTable
     {
         $callback = function (&$value, $key) use ($safeColumns) {
             if (!in_array($key, $safeColumns)) {
-                $value = twig_escape_filter(new Twig_Environment(new Twig_Loader_Filesystem()), $value);
+                $value = twig_escape_filter(new Environment(new FilesystemLoader()), $value);
             }
 
             return $value;
@@ -362,11 +362,11 @@ abstract class AbstractTable
     /**
      * @throws \LogicException
      *
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
     private function getTwig()
     {
-        /** @var \Twig_Environment $twig */
+        /** @var \Twig\Environment $twig */
         $twig = (new Pimple())
             ->getApplication()['twig'];
 
@@ -374,9 +374,9 @@ abstract class AbstractTable
             throw new LogicException('Twig environment not set up.');
         }
 
-        /** @var \Twig_Loader_Chain $loaderChain */
+        /** @var \Twig\Loader\ChainLoader $loaderChain */
         $loaderChain = $twig->getLoader();
-        $loaderChain->addLoader(new Twig_Loader_Filesystem(
+        $loaderChain->addLoader(new FilesystemLoader(
             $this->getTwigPaths(),
             $this->getTwigRootPath()
         ));
