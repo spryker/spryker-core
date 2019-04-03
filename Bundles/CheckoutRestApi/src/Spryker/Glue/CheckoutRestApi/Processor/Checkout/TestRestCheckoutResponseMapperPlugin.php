@@ -6,7 +6,6 @@
 
 namespace Spryker\Glue\CheckoutRestApi\Processor\Checkout;
 
-
 use Generated\Shared\Transfer\RestCheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
@@ -14,8 +13,16 @@ use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapp
 
 class TestRestCheckoutResponseMapperPlugin implements CheckoutResponseMapperPluginInterface
 {
-    public function mapRestCheckoutResponseTransferToRestCheckoutResponseAttributesTransfer(RestCheckoutResponseTransfer $restCheckoutResponseTransfer, RestCheckoutResponseAttributesTransfer $restCheckoutResponseAttributesTransfer): RestCheckoutResponseAttributesTransfer
-    {
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutResponseTransfer $restCheckoutResponseTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer
+     */
+    public function mapRestCheckoutResponseTransferToRestCheckoutResponseAttributesTransfer(
+        RestCheckoutResponseTransfer $restCheckoutResponseTransfer,
+        RestCheckoutResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
+    ): RestCheckoutResponseAttributesTransfer {
         $restCheckoutResponseTransfer->getErrors()->append(
             (new RestCheckoutErrorTransfer())
                 ->setCode(777)

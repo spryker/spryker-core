@@ -11,6 +11,7 @@ use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStor
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessor;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessorInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapper;
+use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReader;
@@ -88,9 +89,9 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapper
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapperInterface
      */
-    public function createCheckoutResponseMapper(): CheckoutResponseMapper
+    public function createCheckoutResponseMapper(): CheckoutResponseMapperInterface
     {
         return new CheckoutResponseMapper(
             $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_RESPONSE_MAPPER)

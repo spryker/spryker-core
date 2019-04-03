@@ -52,7 +52,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     /**
      * @var \Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapperInterface
      */
-     protected $checkoutResponseMapper;
+    protected $checkoutResponseMapper;
 
     /**
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
@@ -140,7 +140,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     }
 
     /**
-     * @param string $orderReference
+     * @param \Generated\Shared\Transfer\RestCheckoutResponseTransfer $restCheckoutResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */

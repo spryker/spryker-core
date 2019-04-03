@@ -7,13 +7,14 @@
 
 namespace Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin;
 
-
 use Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
 
 interface CheckoutResponseMapperPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\RestCheckoutResponseTransfer $restCheckoutResponseTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
      *

@@ -73,9 +73,9 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Glue\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Glue\Kernel\Container
      */
     protected function addCheckoutResponseMapperPlugins(Container $container): Container
     {
@@ -92,7 +92,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCheckoutResponseMapperPlugins(): array
     {
         return [
-            new TestRestCheckoutResponseMapperPlugin()
+            new TestRestCheckoutResponseMapperPlugin(),
         ];
     }
 }

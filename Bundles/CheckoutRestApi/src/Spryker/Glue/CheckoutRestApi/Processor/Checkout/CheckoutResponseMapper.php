@@ -9,15 +9,17 @@ namespace Spryker\Glue\CheckoutRestApi\Processor\Checkout;
 
 use Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
-use Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface;
 
-class CheckoutResponseMapper implements CheckoutResponseMapperPluginInterface
+class CheckoutResponseMapper implements CheckoutResponseMapperInterface
 {
     /**
      * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface[]
      */
     protected $checkoutResponseMapperPlugins;
 
+    /**
+     * @param array $checkoutResponseMapperPlugins
+     */
     public function __construct(array $checkoutResponseMapperPlugins)
     {
         $this->checkoutResponseMapperPlugins = $checkoutResponseMapperPlugins;
