@@ -10,22 +10,21 @@ namespace Spryker\Client\ShoppingList\Calculation;
 class ShoppingListSubtotalCalculator implements ShoppingListSubtotalCalculatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViewTransfers
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViews
      *
      * @return int
      */
-    public function calculateShoppingListSubtotal(array $shoppingListItemProductViewTransfers): int
+    public function calculateShoppingListSubtotal(array $shoppingListItemProductViews): int
     {
         $shoppingListSubtotal = 0;
-        foreach ($shoppingListItemProductViewTransfers as $shoppingListItemProductViewTransfer) {
-            if (!$shoppingListItemProductViewTransfer->getPrice()
-                || !$shoppingListItemProductViewTransfer->getQuantity()
-                || !$shoppingListItemProductViewTransfer->getAvailable()
-            ) {
+        foreach ($shoppingListItemProductViews as $shoppingListItemProductView) {
+            $shoppingListItemProductView->requireCurrentProductPrice();
+
+            if (!$shoppingListItemProductView->getAvailable()) {
                 continue;
             }
 
-            $shoppingListSubtotal += $shoppingListItemProductViewTransfer->getPrice() * $shoppingListItemProductViewTransfer->getQuantity();
+            $shoppingListSubtotal += $shoppingListItemProductView->getCurrentProductPrice()->getSumPrice();
         }
 
         return $shoppingListSubtotal;

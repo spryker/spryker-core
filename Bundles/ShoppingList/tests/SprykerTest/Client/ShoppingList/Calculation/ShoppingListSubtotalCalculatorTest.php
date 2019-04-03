@@ -8,11 +8,14 @@
 namespace SprykerTest\Client\ShoppingList\Calculation;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ShoppingList\Calculation\ShoppingListSubtotalCalculator;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group ShoppingList
@@ -43,41 +46,21 @@ class ShoppingListSubtotalCalculatorTest extends Unit
     public function testCalculateShoppingListSubtotalShouldCalculatePricesCorrectly(): void
     {
         // Arrange
-        $shoppingListItemProductViewTransfers = [
-            (new ProductViewTransfer())->setAvailable(true)->setPrice(1)->setQuantity(1),
-            (new ProductViewTransfer())->setAvailable(true)->setPrice(2)->setQuantity(2),
-            (new ProductViewTransfer())->setAvailable(true)->setPrice(3)->setQuantity(3),
-            (new ProductViewTransfer())->setAvailable(true)->setPrice(4)->setQuantity(4),
-            (new ProductViewTransfer())->setAvailable(true)->setPrice(5)->setQuantity(5),
+        $shoppingListItemProductViews = [
+            (new ProductViewTransfer())->setAvailable(true)
+                ->setCurrentProductPrice(
+                    $this->createCurrentProductPriceTransferWithSumPrice(1)
+                ),
+            (new ProductViewTransfer())->setAvailable(true)
+                ->setCurrentProductPrice(
+                    $this->createCurrentProductPriceTransferWithSumPrice(2)
+                ),
         ];
 
-        $expectedShoppingListSubtotal = 55;
+        $expectedShoppingListSubtotal = 3;
 
         // Act
-        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViewTransfers);
-
-        // Assert
-        $this->assertSame($calculatedShoppingListSubtotal, $expectedShoppingListSubtotal);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCalculateShoppingListSubtotalShouldSkipItemsWithoutPriceOrQuantity(): void
-    {
-        // Arrange
-        $shoppingListItemProductViewTransfers = [
-            (new ProductViewTransfer())->setAvailable(true)->setPrice(null)->setQuantity(1),
-            (new ProductViewTransfer())->setAvailable(true)->setPrice(2)->setQuantity(2),
-            (new ProductViewTransfer())->setAvailable(true)->setPrice(3)->setQuantity(null),
-            (new ProductViewTransfer())->setAvailable(true)->setPrice(4)->setQuantity(4),
-            (new ProductViewTransfer())->setAvailable(true)->setPrice(null)->setQuantity(null),
-        ];
-
-        $expectedShoppingListSubtotal = 20;
-
-        // Act
-        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViewTransfers);
+        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViews);
 
         // Assert
         $this->assertSame($calculatedShoppingListSubtotal, $expectedShoppingListSubtotal);
@@ -89,20 +72,50 @@ class ShoppingListSubtotalCalculatorTest extends Unit
     public function testCalculateShoppingListSubtotalShouldSkipUnavailableItems(): void
     {
         // Arrange
-        $shoppingListItemProductViewTransfers = [
-            (new ProductViewTransfer())->setAvailable(true)->setPrice(1)->setQuantity(1),
-            (new ProductViewTransfer())->setAvailable(false)->setPrice(2)->setQuantity(2),
-            (new ProductViewTransfer())->setAvailable(false)->setPrice(3)->setQuantity(3),
-            (new ProductViewTransfer())->setAvailable(false)->setPrice(4)->setQuantity(4),
-            (new ProductViewTransfer())->setAvailable(false)->setPrice(5)->setQuantity(5),
+        $shoppingListItemProductViews = [
+            (new ProductViewTransfer())->setAvailable(true)
+                ->setCurrentProductPrice(
+                    $this->createCurrentProductPriceTransferWithSumPrice(1)
+                ),
+            (new ProductViewTransfer())->setAvailable(false)
+                ->setCurrentProductPrice(
+                    $this->createCurrentProductPriceTransferWithSumPrice(2)
+                ),
         ];
 
         $expectedShoppingListSubtotal = 1;
 
         // Act
-        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViewTransfers);
+        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViews);
 
         // Assert
         $this->assertSame($calculatedShoppingListSubtotal, $expectedShoppingListSubtotal);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateShoppingListSubtotalShouldThrowExceptionIfCurrentPriceProductIsNotDefined(): void
+    {
+        // Arrange
+        $shoppingListItemProductViews = [
+            (new ProductViewTransfer())->setAvailable(false),
+        ];
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViews);
+    }
+
+    /**
+     * @param int $sumPrice
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    protected function createCurrentProductPriceTransferWithSumPrice(int $sumPrice): CurrentProductPriceTransfer
+    {
+        return (new CurrentProductPriceTransfer())->setSumPrice($sumPrice);
     }
 }
