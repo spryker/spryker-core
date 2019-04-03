@@ -9,11 +9,13 @@ namespace Spryker\Zed\ResourceShare;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ResourceShare\Dependency\Facade\ResourceShareToUuidFacadeBridge;
+use Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilEncodingServiceBridge;
+use Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilUuidGeneratorServiceBridge;
 
 class ResourceShareDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_UUID = 'FACADE_UUID';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_UUID_GENERATOR = 'SERVICE_UTIL_UUID_GENERATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,7 +25,8 @@ class ResourceShareDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->addUuidFacade($container);
+        $container = $this->addUtilEncodingService($container);
+        $container = $this->addUtilUuidService($container);
 
         return $container;
     }
@@ -33,11 +36,27 @@ class ResourceShareDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUuidFacade(Container $container): Container
+    protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::FACADE_UUID] = function (Container $container) {
-            return new ResourceShareToUuidFacadeBridge(
-                $container->getLocator()->uuid()->facade()
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new ResourceShareToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilUuidService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_UUID_GENERATOR] = function (Container $container) {
+            return new ResourceShareToUtilUuidGeneratorServiceBridge(
+                $container->getLocator()->utilUuidGenerator()->service()
             );
         };
 
