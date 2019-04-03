@@ -10,6 +10,7 @@
         <property name="externalUrl" type="string" />
         <property name="bic" type="string" />
         <property name="iban" type="string" />
+        <property name="defaultBillingAddress" type="string" />
     </transfer>
 
     <transfer name="CompanyBusinessUnit">

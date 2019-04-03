@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Reader;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\Dependency\Client\CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface;
@@ -33,18 +34,26 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
     protected $companyBusinessUnitRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperInterface[]
+     */
+    protected $companyBusinessUnitMapperPlugins;
+
+    /**
      * @param \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Mapper\CompanyBusinessUnitMapperInterface $companyBusinessUnitMapperInterface
      * @param \Spryker\Glue\CompanyBusinessUnitsRestApi\Dependency\Client\CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface $companyBusinessUnitClient
      * @param \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\RestResponseBuilder\CompanyBusinessUnitRestResponseBuilderInterface $companyBusinessUnitRestResponseBuilder
+     * @param \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperInterface[] $companyBusinessUnitMapperPlugins
      */
     public function __construct(
         CompanyBusinessUnitMapperInterface $companyBusinessUnitMapperInterface,
         CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface $companyBusinessUnitClient,
-        CompanyBusinessUnitRestResponseBuilderInterface $companyBusinessUnitRestResponseBuilder
+        CompanyBusinessUnitRestResponseBuilderInterface $companyBusinessUnitRestResponseBuilder,
+        array $companyBusinessUnitMapperPlugins
     ) {
         $this->companyBusinessUnitMapperInterface = $companyBusinessUnitMapperInterface;
         $this->companyBusinessUnitClient = $companyBusinessUnitClient;
         $this->companyBusinessUnitRestResponseBuilder = $companyBusinessUnitRestResponseBuilder;
+        $this->companyBusinessUnitMapperPlugins = $companyBusinessUnitMapperPlugins;
     }
 
     /**
@@ -69,11 +78,10 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
             return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitNotFoundError();
         }
 
-        $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapperInterface
-            ->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
-                $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer(),
-                new RestCompanyBusinessUnitAttributesTransfer()
-            );
+        $restCompanyBusinessUnitAttributesTransfer = $this->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
+            $companyBusinessUnitResponseTransfer,
+            new RestCompanyBusinessUnitAttributesTransfer()
+        );
 
         return $this->companyBusinessUnitRestResponseBuilder
             ->createCompanyBusinessUnitRestResponse(
@@ -81,6 +89,48 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
                 $restCompanyBusinessUnitAttributesTransfer,
                 $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer
+     */
+    protected function mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
+        CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer,
+        RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
+    ): RestCompanyBusinessUnitAttributesTransfer {
+        $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapperInterface
+            ->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
+                $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer(),
+                $restCompanyBusinessUnitAttributesTransfer
+            );
+
+        return $this->executeCompanyBusinessUnitMapperPlugins(
+            $companyBusinessUnitResponseTransfer,
+            $restCompanyBusinessUnitAttributesTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer
+     */
+    protected function executeCompanyBusinessUnitMapperPlugins(
+        CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer,
+        RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
+    ): RestCompanyBusinessUnitAttributesTransfer {
+        foreach ($this->companyBusinessUnitMapperPlugins as $companyBusinessUnitMapperPlugin) {
+            $restCompanyBusinessUnitAttributesTransfer = $companyBusinessUnitMapperPlugin->map(
+                $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer(),
+                $restCompanyBusinessUnitAttributesTransfer
+            );
+        }
+
+        return $restCompanyBusinessUnitAttributesTransfer;
     }
 
     /**

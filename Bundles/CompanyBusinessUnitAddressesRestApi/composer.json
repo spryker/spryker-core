@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/company-unit-address": "^1.8.0",
+    "spryker/company-business-units-rest-api-extension": "^1.0.0",
     "spryker/glue-application": "^1.15.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.29.0",
