@@ -10,9 +10,26 @@ namespace Spryker\Glue\OrderPaymentsRestApi\Processor\OrderPayment;
 use Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer;
 use Generated\Shared\Transfer\UpdateOrderPaymentRequestTransfer;
 use Generated\Shared\Transfer\UpdateOrderPaymentResponseTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Spryker\Glue\OrderPaymentsRestApi\OrderPaymentsRestApiConfig;
 
 class OrderPaymentMapper implements OrderPaymentMapperInterface
 {
+    /**
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     */
+    protected $restResourceBuilder;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     */
+    public function __construct(
+        RestResourceBuilderInterface $restResourceBuilder
+    ) {
+        $this->restResourceBuilder = $restResourceBuilder;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
      *
@@ -35,5 +52,22 @@ class OrderPaymentMapper implements OrderPaymentMapperInterface
     ): RestOrderPaymentsAttributesTransfer {
         return (new RestOrderPaymentsAttributesTransfer())
             ->fromArray($updateOrderPaymentResponseTransfer->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function mapOrderPaymentResource(
+        RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
+    ): RestResourceInterface {
+        $orderPaymentResource = $this->restResourceBuilder->createRestResource(
+            OrderPaymentsRestApiConfig::RESOURCE_ORDER_PAYMENTS,
+            $restOrderPaymentsAttributesTransfer->getPaymentIdentifier(),
+            $restOrderPaymentsAttributesTransfer
+        );
+
+        return $orderPaymentResource;
     }
 }

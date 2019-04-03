@@ -12,6 +12,8 @@ use Spryker\Glue\OrderPaymentsRestApi\Processor\OrderPayment\OrderPaymentMapper;
 use Spryker\Glue\OrderPaymentsRestApi\Processor\OrderPayment\OrderPaymentMapperInterface;
 use Spryker\Glue\OrderPaymentsRestApi\Processor\OrderPayment\OrderPaymentUpdater;
 use Spryker\Glue\OrderPaymentsRestApi\Processor\OrderPayment\OrderPaymentUpdaterInterface;
+use Spryker\Glue\OrderPaymentsRestApi\Processor\RestResponseBuilder\OrderPaymentRestResponseBuilder;
+use Spryker\Glue\OrderPaymentsRestApi\Processor\RestResponseBuilder\OrderPaymentRestResponseBuilderInterface;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -27,7 +29,7 @@ class OrderPaymentsRestApiFactory extends AbstractFactory
     public function createOrderPaymentUpdater(): OrderPaymentUpdaterInterface
     {
         return new OrderPaymentUpdater(
-            $this->getResourceBuilder(),
+            $this->createOrderPaymentRestResponseBuilder(),
             $this->getClient(),
             $this->createOrderPaymentMapper()
         );
@@ -38,6 +40,14 @@ class OrderPaymentsRestApiFactory extends AbstractFactory
      */
     public function createOrderPaymentMapper(): OrderPaymentMapperInterface
     {
-        return new OrderPaymentMapper();
+        return new OrderPaymentMapper($this->getResourceBuilder());
+    }
+
+    /**
+     * @return \Spryker\Glue\OrderPaymentsRestApi\Processor\RestResponseBuilder\OrderPaymentRestResponseBuilderInterface
+     */
+    public function createOrderPaymentRestResponseBuilder(): OrderPaymentRestResponseBuilderInterface
+    {
+        return new OrderPaymentRestResponseBuilder($this->getResourceBuilder());
     }
 }

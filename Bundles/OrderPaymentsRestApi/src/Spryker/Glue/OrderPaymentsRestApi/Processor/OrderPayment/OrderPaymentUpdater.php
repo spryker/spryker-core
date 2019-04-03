@@ -7,21 +7,20 @@
 
 namespace Spryker\Glue\OrderPaymentsRestApi\Processor\OrderPayment;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer;
 use Spryker\Client\OrderPaymentsRestApi\OrderPaymentsRestApiClientInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\OrderPaymentsRestApi\OrderPaymentsRestApiConfig;
+use Spryker\Glue\OrderPaymentsRestApi\Processor\RestResponseBuilder\OrderPaymentRestResponseBuilderInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrderPaymentUpdater implements OrderPaymentUpdaterInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @var \Spryker\Glue\OrderPaymentsRestApi\Processor\RestResponseBuilder\OrderPaymentRestResponseBuilderInterface
      */
-    protected $restResourceBuilder;
+    protected $orderPaymentRestResponseBuilder;
 
     /**
      * @var \Spryker\Client\OrderPaymentsRestApi\OrderPaymentsRestApiClientInterface
@@ -34,16 +33,16 @@ class OrderPaymentUpdater implements OrderPaymentUpdaterInterface
     protected $orderPaymentMapper;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\OrderPaymentsRestApi\Processor\RestResponseBuilder\OrderPaymentRestResponseBuilderInterface $orderPaymentRestResponseBuilder
      * @param \Spryker\Client\OrderPaymentsRestApi\OrderPaymentsRestApiClientInterface $orderPaymentsRestApiClient
      * @param \Spryker\Glue\OrderPaymentsRestApi\Processor\OrderPayment\OrderPaymentMapperInterface $orderPaymentMapper
      */
     public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
+        OrderPaymentRestResponseBuilderInterface $orderPaymentRestResponseBuilder,
         OrderPaymentsRestApiClientInterface $orderPaymentsRestApiClient,
         OrderPaymentMapperInterface $orderPaymentMapper
     ) {
-        $this->restResourceBuilder = $restResourceBuilder;
+        $this->orderPaymentRestResponseBuilder = $orderPaymentRestResponseBuilder;
         $this->orderPaymentsRestApiClient = $orderPaymentsRestApiClient;
         $this->orderPaymentMapper = $orderPaymentMapper;
     }
@@ -58,27 +57,21 @@ class OrderPaymentUpdater implements OrderPaymentUpdaterInterface
         RestRequestInterface $restRequest,
         RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
     ): RestResponseInterface {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
         $updateOrderPaymentRequestTransfer = $this->orderPaymentMapper
             ->mapRestOrderPaymentsAttributesTransferToUpdateOrderPaymentRequestTransfer($restOrderPaymentsAttributesTransfer);
         $updateOrderPaymentResponseTransfer = $this->orderPaymentsRestApiClient->updateOrderPayment($updateOrderPaymentRequestTransfer);
         if (!$updateOrderPaymentResponseTransfer->getIsSuccessful()) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(OrderPaymentsRestApiConfig::RESPONSE_CODE_ORDER_PAYMENT_IS_NOT_UPDATED)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(OrderPaymentsRestApiConfig::RESPONSE_MESSAGE_ORDER_PAYMENT_IS_NOT_UPDATED);
-
-            return $restResponse->addError($restErrorTransfer);
+            return $this->orderPaymentRestResponseBuilder->buildErrorRestResponse(
+                OrderPaymentsRestApiConfig::RESPONSE_CODE_ORDER_PAYMENT_IS_NOT_UPDATED,
+                Response::HTTP_INTERNAL_SERVER_ERROR,
+                OrderPaymentsRestApiConfig::RESPONSE_MESSAGE_ORDER_PAYMENT_IS_NOT_UPDATED
+            );
         }
 
-        $orderPaymentsResource = $this->restResourceBuilder->createRestResource(
-            OrderPaymentsRestApiConfig::RESOURCE_ORDER_PAYMENTS,
-            $restOrderPaymentsAttributesTransfer->getPaymentIdentifier(),
-            $this->orderPaymentMapper
-                ->mapUpdateOrderPaymentResponseTransferToRestOrderPaymentsAttributesTransfer($updateOrderPaymentResponseTransfer)
-        );
+        $restOrderPaymentsAttributesTransfer = $this->orderPaymentMapper
+            ->mapUpdateOrderPaymentResponseTransferToRestOrderPaymentsAttributesTransfer($updateOrderPaymentResponseTransfer);
+        $orderPaymentResource = $this->orderPaymentMapper->mapOrderPaymentResource($restOrderPaymentsAttributesTransfer);
 
-        return $restResponse->addResource($orderPaymentsResource);
+        return $this->orderPaymentRestResponseBuilder->createOrderPaymentRestResponse($orderPaymentResource);
     }
 }

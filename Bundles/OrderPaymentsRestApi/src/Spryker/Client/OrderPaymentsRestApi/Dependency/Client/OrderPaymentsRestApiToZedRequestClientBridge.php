@@ -31,7 +31,7 @@ class OrderPaymentsRestApiToZedRequestClientBridge implements OrderPaymentsRestA
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, ?array $requestOptions = null): TransferInterface
+    public function call(string $url, TransferInterface $object, ?array $requestOptions = null): TransferInterface
     {
         return $this->zedRequestClient->call($url, $object, $requestOptions);
     }

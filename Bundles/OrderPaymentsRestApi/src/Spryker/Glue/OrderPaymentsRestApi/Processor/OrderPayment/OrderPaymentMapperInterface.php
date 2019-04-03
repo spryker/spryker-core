@@ -10,6 +10,7 @@ namespace Spryker\Glue\OrderPaymentsRestApi\Processor\OrderPayment;
 use Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer;
 use Generated\Shared\Transfer\UpdateOrderPaymentRequestTransfer;
 use Generated\Shared\Transfer\UpdateOrderPaymentResponseTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 interface OrderPaymentMapperInterface
 {
@@ -30,4 +31,13 @@ interface OrderPaymentMapperInterface
     public function mapUpdateOrderPaymentResponseTransferToRestOrderPaymentsAttributesTransfer(
         UpdateOrderPaymentResponseTransfer $updateOrderPaymentResponseTransfer
     ): RestOrderPaymentsAttributesTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function mapOrderPaymentResource(
+        RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
+    ): RestResourceInterface;
 }
