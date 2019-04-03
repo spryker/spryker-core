@@ -10,8 +10,6 @@ namespace Spryker\Zed\ProductImageStorage\Persistence;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorageQuery;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductImageStorage\Persistence\Propel\Mapper\ProductImageStorageMapper;
-use Spryker\Zed\ProductImageStorage\Persistence\Propel\Mapper\ProductImageStorageMapperInterface;
 use Spryker\Zed\ProductImageStorage\ProductImageStorageDependencyProvider;
 
 /**
@@ -67,13 +65,5 @@ class ProductImageStoragePersistenceFactory extends AbstractPersistenceFactory
     public function createSpyProductConcreteImageStorageQuery()
     {
         return SpyProductConcreteImageStorageQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductImageStorage\Persistence\Propel\Mapper\ProductImageStorageMapperInterface
-     */
-    public function createProductImageStorageMapper(): ProductImageStorageMapperInterface
-    {
-        return new ProductImageStorageMapper();
     }
 }
