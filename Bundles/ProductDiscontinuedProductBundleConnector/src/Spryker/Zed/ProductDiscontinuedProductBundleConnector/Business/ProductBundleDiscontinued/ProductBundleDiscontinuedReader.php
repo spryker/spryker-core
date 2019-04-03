@@ -46,7 +46,8 @@ class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReader
      */
     public function checkBundledProducts(ProductDiscontinuedTransfer $productDiscontinuedTransfer): ProductDiscontinuedResponseTransfer
     {
-        $productDiscontinuedResponseTransfer = (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(true);
+        $productDiscontinuedResponseTransfer = (new ProductDiscontinuedResponseTransfer())
+            ->setIsSuccessful(true);
         $bundledProductConcreteIds = $this->getBundledProductConcreteIds($productDiscontinuedTransfer);
 
         if (!$bundledProductConcreteIds
@@ -55,7 +56,8 @@ class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReader
             return $productDiscontinuedResponseTransfer;
         }
 
-        $errorMessageTransfer = (new MessageTransfer())->setValue(static::ERROR_MESSAGE_PRODUCT_BUNDLE_DISCONTINUED);
+        $errorMessageTransfer = (new MessageTransfer())
+            ->setValue(static::ERROR_MESSAGE_PRODUCT_BUNDLE_DISCONTINUED);
 
         return $productDiscontinuedResponseTransfer->setIsSuccessful(false)
             ->addMessage($errorMessageTransfer);
@@ -69,16 +71,12 @@ class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReader
     protected function getBundledProductConcreteIds(ProductDiscontinuedTransfer $productDiscontinuedTransfer): array
     {
         $bundledProductConcreteIds = [];
-        $bundledProducts = $this->productBundleFacade->findBundledProductsByIdProductConcrete(
+        $productForBundleTransfers = $this->productBundleFacade->findBundledProductsByIdProductConcrete(
             $productDiscontinuedTransfer->getFkProduct()
         );
 
-        if (!$bundledProducts->count()) {
-            return $bundledProductConcreteIds;
-        }
-
-        foreach ($bundledProducts as $bundledProduct) {
-            $bundledProductConcreteIds[] = $bundledProduct->getIdProductConcrete();
+        foreach ($productForBundleTransfers as $productForBundleTransfer) {
+            $bundledProductConcreteIds[] = $productForBundleTransfer->getIdProductConcrete();
         }
 
         return $bundledProductConcreteIds;

@@ -46,10 +46,6 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param array $productIds
      *
      * @return bool
@@ -63,7 +59,7 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * @param array $productIds
+     * @param int[] $productIds
      *
      * @return bool
      */

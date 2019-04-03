@@ -215,7 +215,6 @@ interface ProductBundleFacadeInterface
     /**
      * Specification:
      * - Persists bundled products within ProductConcrete.
-     * - Executes PostSaveProductBundlePluginInterface plugins after save bundled products.
      * - Updates product bundle available stock.
      *
      * @api
