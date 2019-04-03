@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataLoader;
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 
@@ -42,7 +43,13 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
      */
     protected function setProductImages(array $productAbstractIds, array $payloadTransfers): array
     {
-        [$imageSets, $defaultProductImageSets] = $this->getImageSets($productAbstractIds);
+        $productImageSetCollection = $this->getQueryContainer()
+            ->queryAllProductImageSetsByProductAbstractIds($productAbstractIds)
+            ->find();
+
+        $imageSets = $this->getImageSets($productImageSetCollection);
+        $defaultProductImageSets = $this->getDefaultProductImageSets($productImageSetCollection);
+
         $imageSets = $this->setDefaultImageSetsToMissedImageSets($imageSets, $defaultProductImageSets);
 
         foreach ($payloadTransfers as $payloadTransfer) {
@@ -58,33 +65,39 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetCollection
      *
      * @return array[]
      */
-    protected function getImageSets(array $productAbstractIds): array
+    protected function getImageSets(ObjectCollection $productImageSetCollection): array
     {
-        $imageSetCollection = $this->getQueryContainer()
-            ->queryAllProductImageSetsByProductAbstractIds($productAbstractIds)
-            ->find();
-
         $imageSets = [];
+
+        foreach ($productImageSetCollection as $productImageSet) {
+            $imageSets[$productImageSet->getFkProductAbstract()][$productImageSet->getFkLocale()][] = $productImageSet;
+        }
+
+        return $imageSets;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetCollection
+     *
+     * @return array[]
+     */
+    protected function getDefaultProductImageSets(ObjectCollection $productImageSetCollection): array
+    {
         $defaultProductImageSets = [];
 
-        foreach ($imageSetCollection as $imageSetItem) {
-            $imageSets[$imageSetItem->getFkProductAbstract()][$imageSetItem->getFkLocale()][] = $imageSetItem;
-
-            if ($imageSetItem->getFkLocale() !== null) {
+        foreach ($productImageSetCollection as $productImageSet) {
+            if ($productImageSet->getFkLocale() !== null) {
                 continue;
             }
 
-            $defaultProductImageSets[$imageSetItem->getFkProductAbstract()][] = $imageSetItem;
+            $defaultProductImageSets[$productImageSet->getFkProductAbstract()][] = $productImageSet;
         }
 
-        return [
-            $imageSets,
-            $defaultProductImageSets,
-        ];
+        return $defaultProductImageSets;
     }
 
     /**
