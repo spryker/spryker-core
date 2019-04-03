@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ContentProductDataImport\Business\Model\Step;
 
 use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
+use Generated\Shared\Transfer\ContentValidationResponseTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Orm\Zed\Content\Persistence\Map\SpyContentLocalizedTableMap;
 use Spryker\Zed\ContentProductDataImport\Business\Model\DataSet\ContentProductAbstractListDataSetInterface;
 use Spryker\Zed\ContentProductDataImport\Dependency\Facade\ContentProductDataImportToContentProductFacadeInterface;
@@ -52,44 +54,32 @@ class ContentProductAbstractListPrepareLocalizedTermsStep implements DataImportS
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $contentLocalizedItems = [];
+        $localizedProductAbstractListTermParameters = [];
 
         foreach ($dataSet[AddLocalesStep::KEY_LOCALES] as $localeName => $idLocale) {
-            $localeKeyIds = ContentProductAbstractListDataSetInterface::COLUMN_IDS . '.' . $localeName;
+            $localizedColumnIds = ContentProductAbstractListDataSetInterface::COLUMN_IDS . '.' . $localeName;
 
-            if (!isset($dataSet[$localeKeyIds]) || !$dataSet[$localeKeyIds]) {
+            if (!isset($dataSet[$localizedColumnIds]) || !$dataSet[$localizedColumnIds]) {
                 continue;
             }
 
-            $localizedItem[SpyContentLocalizedTableMap::COL_FK_LOCALE] = $idLocale ?? $idLocale;
-
-            $contentProductAbstractListTermTransfer = (new ContentProductAbstractListTermTransfer())
-                ->setIdProductAbstracts($dataSet[$localeKeyIds]);
-
+            $localizedProductAbstractListTermParameter[SpyContentLocalizedTableMap::COL_FK_LOCALE] = $idLocale ?? $idLocale;
+            $contentProductAbstractListTermTransfer = (new ContentProductAbstractListTermTransfer())->setIdProductAbstracts($dataSet[$localizedColumnIds]);
             $contentValidationResponseTransfer = $this->contentProductFacade->validateContentProductAbstractListTerm($contentProductAbstractListTermTransfer);
 
             if (!$contentValidationResponseTransfer->getIsSuccess()) {
-                $messageTransfer = $contentValidationResponseTransfer->getParameterMessages()
-                    ->offsetGet(0)
-                    ->getMessages()
-                    ->offsetGet(0);
-
-                $parameters = array_merge($messageTransfer->getParameters(), [
-                    static::ERROR_MESSAGE_PARAMETER_COLUMN => '[' . ContentProductAbstractListDataSetInterface::COLUMN_SKUS . '.' . $localeName . ']',
-                    static::ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY],
-                ]);
-                $message = $messageTransfer->getValue() . ' ' . static::ERROR_MESSAGE_SUFFIX;
-                $this->createInvalidDataImportException($message, $parameters);
+                $messageTransfer = $this->getMessageTransfer($contentValidationResponseTransfer);
+                $this->createInvalidDataImportException(
+                    $this->getMessage($messageTransfer),
+                    $this->getParameters($messageTransfer, $dataSet, $localeName)
+                );
             }
 
-            $localizedItem[SpyContentLocalizedTableMap::COL_PARAMETERS] = $this->utilEncodingService->encodeJson(
-                $contentProductAbstractListTermTransfer->toArray()
-            );
-
-            $contentLocalizedItems[] = $localizedItem;
+            $localizedProductAbstractListTermParameter[SpyContentLocalizedTableMap::COL_PARAMETERS] = $this->getEncodedParameters($contentProductAbstractListTermTransfer);
+            $localizedProductAbstractListTermParameters[] = $localizedProductAbstractListTermParameter;
         }
 
-        $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_LOCALIZED_ITEMS] = $contentLocalizedItems;
+        $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_LOCALIZED_PRODUCT_ABSTRACT_LIST_TERMS] = $localizedProductAbstractListTermParameters;
     }
 
     /**
@@ -105,5 +95,53 @@ class ContentProductAbstractListPrepareLocalizedTermsStep implements DataImportS
         $errorMessage = strtr($message, $parameters);
 
         throw new InvalidDataException($errorMessage);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ContentValidationResponseTransfer $contentValidationResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function getMessageTransfer(ContentValidationResponseTransfer $contentValidationResponseTransfer): MessageTransfer
+    {
+        return $contentValidationResponseTransfer->getParameterMessages()
+            ->offsetGet(0)
+            ->getMessages()
+            ->offsetGet(0);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
+     *
+     * @return string|null
+     */
+    protected function getEncodedParameters(ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer): ?string
+    {
+        return $this->utilEncodingService->encodeJson($contentProductAbstractListTermTransfer->toArray());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     *
+     * @return string
+     */
+    protected function getMessage(MessageTransfer $messageTransfer): string
+    {
+        return sprintf('%s %s', $messageTransfer->getValue(), static::ERROR_MESSAGE_SUFFIX);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet $dataSet
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function getParameters(MessageTransfer $messageTransfer, DataSetInterface $dataSet, string $localeName): array
+    {
+        return array_merge($messageTransfer->getParameters(), [
+            static::ERROR_MESSAGE_PARAMETER_COLUMN => sprintf('[%s.%s]', ContentProductAbstractListDataSetInterface::COLUMN_SKUS, $localeName),
+            static::ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY],
+        ]);
     }
 }

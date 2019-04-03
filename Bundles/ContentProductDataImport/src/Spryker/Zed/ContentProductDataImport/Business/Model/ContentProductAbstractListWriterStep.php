@@ -36,27 +36,27 @@ class ContentProductAbstractListWriterStep extends PublishAwareStep implements D
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $contentEntity = $this->saveContentEntity($dataSet);
+        $contentProductAbstractListEntity = $this->saveContentProductAbstractListEntity($dataSet);
 
         SpyContentLocalizedQuery::create()
-            ->filterByFkContent($contentEntity->getIdContent())
+            ->filterByFkContent($contentProductAbstractListEntity->getIdContent())
             ->find()
             ->delete();
 
-        foreach ($dataSet[ContentProductAbstractListDataSetInterface::CONTENT_LOCALIZED_ITEMS] as $localizedItem) {
-            $contentLocalizedEntity = SpyContentLocalizedQuery::create()
-                ->filterByFkContent($contentEntity->getIdContent())
-                ->filterByFkLocale($localizedItem[SpyContentLocalizedTableMap::COL_FK_LOCALE])
+        foreach ($dataSet[ContentProductAbstractListDataSetInterface::CONTENT_LOCALIZED_PRODUCT_ABSTRACT_LIST_TERMS] as $localizedProductAbstractListTermParameters) {
+            $contentLocalizedProductAbstractListEntity = SpyContentLocalizedQuery::create()
+                ->filterByFkContent($contentProductAbstractListEntity->getIdContent())
+                ->filterByFkLocale($localizedProductAbstractListTermParameters[SpyContentLocalizedTableMap::COL_FK_LOCALE])
                 ->findOneOrCreate();
 
-            $contentLocalizedEntity->fromArray($localizedItem, SpyContentLocalizedTableMap::TYPE_COLNAME);
+            $contentLocalizedProductAbstractListEntity->fromArray($localizedProductAbstractListTermParameters, SpyContentLocalizedTableMap::TYPE_COLNAME);
 
-            $contentLocalizedEntity->save();
+            $contentLocalizedProductAbstractListEntity->save();
         }
 
         $this->addPublishEvents(
             ContentEvents::CONTENT_PUBLISH,
-            $contentEntity->getPrimaryKey()
+            $contentProductAbstractListEntity->getPrimaryKey()
         );
     }
 
@@ -65,18 +65,18 @@ class ContentProductAbstractListWriterStep extends PublishAwareStep implements D
      *
      * @return \Orm\Zed\Content\Persistence\SpyContent
      */
-    protected function saveContentEntity(DataSetInterface $dataSet): SpyContent
+    protected function saveContentProductAbstractListEntity(DataSetInterface $dataSet): SpyContent
     {
-        $contentEntity = SpyContentQuery::create()
+        $contentProductAbstractListEntity = SpyContentQuery::create()
             ->filterByKey($dataSet[ContentProductAbstractListDataSetInterface::CONTENT_PRODUCT_ABSTRACT_LIST_KEY])
             ->findOneOrCreate();
 
-        $contentEntity->setName($dataSet[ContentProductAbstractListDataSetInterface::COLUMN_NAME])
+        $contentProductAbstractListEntity->setName($dataSet[ContentProductAbstractListDataSetInterface::COLUMN_NAME])
             ->setDescription($dataSet[ContentProductAbstractListDataSetInterface::COLUMN_DESCRIPTION])
             ->setContentTypeKey(static::CONTENT_TYPE_PRODUCT_ABSTRACT_LIST)
             ->setContentTermKey(static::CONTENT_TERM_PRODUCT_ABSTRACT_LIST)
             ->save();
 
-        return $contentEntity;
+        return $contentProductAbstractListEntity;
     }
 }
