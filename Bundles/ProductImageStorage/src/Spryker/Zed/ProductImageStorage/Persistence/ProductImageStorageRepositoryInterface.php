@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductImageStorage\Persistence;
 
+use ArrayObject;
+
 interface ProductImageStorageRepositoryInterface
 {
     /**
@@ -33,7 +35,7 @@ interface ProductImageStorageRepositoryInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function getDefaultAbstractProductImageSetsByIdAbstractProductIn(array $productAbstractIds): array;
+    public function getDefaultAbstractProductImageSetsByIdAbstractProductIn(array $productAbstractIds): ArrayObject;
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductImageStorage\Persistence;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -79,19 +81,35 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function getDefaultAbstractProductImageSetsByIdAbstractProductIn(array $productAbstractIds): array
+    public function getDefaultAbstractProductImageSetsByIdAbstractProductIn(array $productAbstractIds): ArrayObject
     {
         $productImageSetsQuery = $this->getFactory()
             ->getProductImageSetQuery()
             ->innerJoinWithSpyProductImageSetToProductImage()
             ->useSpyProductImageSetToProductImageQuery()
-            ->innerJoinWithSpyProductImage()
+                ->innerJoinWithSpyProductImage()
             ->endUse()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->filterByFkLocale(null, Criteria::ISNULL);
 
-        return $this->buildQueryFromCriteria($productImageSetsQuery)->find();
+        $productImageSetEntities = $this->buildQueryFromCriteria($productImageSetsQuery)->find();
+
+        $productImageSetTransferCollection = new ArrayObject();
+
+        $productImageStorageMapper = $this->getFactory()->createProductImageStorageMapper();
+
+        foreach ($productImageSetEntities as $productImageSetEntity) {
+            $productImageSetTransferCollection->append(
+                $productImageStorageMapper
+                    ->mapProductImageSetEntityToProductImageSetTransfer(
+                        $productImageSetEntity,
+                        new ProductImageSetTransfer()
+                    )
+            );
+        }
+
+        return $productImageSetTransferCollection;
     }
 }
