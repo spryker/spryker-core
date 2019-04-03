@@ -22,7 +22,7 @@ class RedisAdapterProvider implements RedisAdapterProviderInterface
     /**
      * @var \Spryker\Client\Redis\Connection\Factory\RedisAdapterFactoryInterface $clientAdapterFactory
      */
-    private $clientAdapterFactory;
+    protected $clientAdapterFactory;
 
     /**
      * @param \Spryker\Client\Redis\Connection\Factory\RedisAdapterFactoryInterface $clientFactory

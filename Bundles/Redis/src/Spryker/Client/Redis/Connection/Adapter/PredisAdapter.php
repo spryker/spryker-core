@@ -14,7 +14,7 @@ class PredisAdapter implements RedisAdapterInterface
     /**
      * @var \Predis\Client
      */
-    private $client;
+    protected $client;
 
     /**
      * @param \Predis\Client $client
@@ -74,15 +74,14 @@ class PredisAdapter implements RedisAdapterInterface
 
     /**
      * @param string $script
-     * @param int $numkeys
-     * @param string|null $keyOrArg1
-     * @param string|null $keyOrArgN
+     * @param int $numKeys
+     * @param array $keysOrArgs
      *
      * @return bool
      */
-    public function eval(string $script, int $numkeys, ?string $keyOrArg1 = null, ?string $keyOrArgN = null): bool
+    public function eval(string $script, int $numKeys, ...$keysOrArgs): bool
     {
-        return (bool)$this->client->eval($script, $numkeys, $keyOrArg1, $keyOrArgN);
+        return (bool)$this->client->eval($script, $numKeys, ...$keysOrArgs);
     }
 
     /**
@@ -126,7 +125,7 @@ class PredisAdapter implements RedisAdapterInterface
      */
     public function mset(array $dictionary): bool
     {
-        return $this->client->mset($dictionary);
+        return (bool)$this->client->mset($dictionary);
     }
 
     /**
