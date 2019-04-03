@@ -22,9 +22,8 @@ class OrderPaymentRestResponseBuilder implements OrderPaymentRestResponseBuilder
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder
-    ) {
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    {
         $this->restResourceBuilder = $restResourceBuilder;
     }
 

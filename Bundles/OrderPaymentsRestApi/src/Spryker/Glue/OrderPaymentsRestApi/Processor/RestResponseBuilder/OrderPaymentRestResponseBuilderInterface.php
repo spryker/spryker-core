@@ -13,11 +13,11 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface OrderPaymentRestResponseBuilderInterface
 {
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $cartRestResource
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $orderPaymentResource
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createOrderPaymentRestResponse(RestResourceInterface $cartRestResource): RestResponseInterface;
+    public function createOrderPaymentRestResponse(RestResourceInterface $orderPaymentResource): RestResponseInterface;
 
     /**
      * @param string $errorCode

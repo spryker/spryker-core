@@ -10,6 +10,7 @@ namespace Spryker\Zed\OrderPaymentsRestApi\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\OrderPaymentsRestApi\Business\OrderPayment\OrderPaymentUpdater;
 use Spryker\Zed\OrderPaymentsRestApi\Business\OrderPayment\OrderPaymentUpdaterInterface;
+use Spryker\Zed\OrderPaymentsRestApi\OrderPaymentsRestApiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\OrderPaymentsRestApi\OrderPaymentsRestApiConfig getConfig()
@@ -21,6 +22,14 @@ class OrderPaymentsRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderPaymentUpdater(): OrderPaymentUpdaterInterface
     {
-        return new OrderPaymentUpdater();
+        return new OrderPaymentUpdater($this->getOrderPaymentUpdaterPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\OrderPaymentsRestApiExtension\Dependency\Plugin\OrderPaymentUpdaterPluginInterface[]
+     */
+    protected function getOrderPaymentUpdaterPlugins(): array
+    {
+        return $this->getProvidedDependency(OrderPaymentsRestApiDependencyProvider::ORDER_PAYMENT_UPDATER_PLUGINS);
     }
 }
