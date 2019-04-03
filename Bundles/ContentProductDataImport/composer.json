@@ -2,8 +2,9 @@
   "name": "spryker/content-product-data-import",
   "type": "library",
   "description": "ContentProductDataImport module",
-  "license": "proprietary",
+  "license": "MIT",
   "require": {
+    "php": ">=7.1",
     "spryker/content": "^1.1.0",
     "spryker/content-product": "^1.0.0",
     "spryker/data-import": "^1.3.0",
@@ -18,7 +19,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\ContentProductDataImport\\Helper\\": "tests/SprykerTest/Zed/ContentProductDataImport/_support/Helper/"
     }
   },
   "autoload-dev": {
