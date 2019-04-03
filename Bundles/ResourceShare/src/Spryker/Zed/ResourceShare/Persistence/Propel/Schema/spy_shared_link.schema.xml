@@ -5,7 +5,7 @@
           package="src.Orm.Zed.ResourceShare.Persistence"
 >
 
-    <table name="spy_resource_share" idMethod="native" phpName="ResourceShare">
+    <table name="spy_resource_share" idMethod="native" phpName="SpyResourceShare">
         <column name="id_resource_share" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="customer_reference" required="true" type="VARCHAR" size="255" />
         <column name="uuid" required="true" type="VARCHAR" size="255"/>

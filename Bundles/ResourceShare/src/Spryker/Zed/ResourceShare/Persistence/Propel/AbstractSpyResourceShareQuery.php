@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ResourceShare\Persistence\Propel;
 
-use Orm\Zed\ResourceShare\Persistence\Base\ResourceShareQuery as BaseResourceShareQuery;
+use Orm\Zed\ResourceShare\Persistence\Base\SpyResourceShareQuery as BaseSpyResourceShareQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_resource_share' table.
@@ -19,6 +19,6 @@ use Orm\Zed\ResourceShare\Persistence\Base\ResourceShareQuery as BaseResourceSha
  * long as it does not already exist in the output directory.
  *
  */
-class AbstractSpyResourceShareQuery extends BaseResourceShareQuery
+class AbstractSpyResourceShareQuery extends BaseSpyResourceShareQuery
 {
 }
