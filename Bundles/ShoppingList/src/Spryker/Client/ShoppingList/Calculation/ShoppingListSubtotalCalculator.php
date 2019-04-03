@@ -20,7 +20,7 @@ class ShoppingListSubtotalCalculator implements ShoppingListSubtotalCalculatorIn
         foreach ($shoppingListItemProductViews as $shoppingListItemProductView) {
             $shoppingListItemProductView->requireCurrentProductPrice();
 
-            if ($shoppingListItemProductView->getAvailable() !== true) {
+            if (!$shoppingListItemProductView->getAvailable()) {
                 continue;
             }
 
