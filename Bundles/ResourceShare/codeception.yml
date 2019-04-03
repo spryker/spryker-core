@@ -1,5 +1,9 @@
 namespace: SprykerTest
 
+include:
+    - tests/SprykerTest/Shared/ResourceShare
+    - tests/SprykerTest/Zed/ResourceShare
+
 actor: Tester
 
 paths:
