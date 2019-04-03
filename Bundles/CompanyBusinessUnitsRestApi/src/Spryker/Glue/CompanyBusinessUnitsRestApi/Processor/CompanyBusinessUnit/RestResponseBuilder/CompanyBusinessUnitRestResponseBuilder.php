@@ -54,6 +54,33 @@ class CompanyBusinessUnitRestResponseBuilder implements CompanyBusinessUnitRestR
     }
 
     /**
+     * @param string $companyBusinessUnitUuid
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $companyBusinessUnitTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function buildCompanyBusinessUnitRestResource(
+        string $companyBusinessUnitUuid,
+        RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer,
+        ?CompanyBusinessUnitTransfer $companyBusinessUnitTransfer = null
+    ): RestResourceInterface {
+        $restResource = $this->restResourceBuilder->createRestResource(
+            CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
+            $companyBusinessUnitUuid,
+            $restCompanyBusinessUnitAttributesTransfer
+        );
+
+        if (!$companyBusinessUnitTransfer) {
+            return $restResource;
+        }
+
+        $restResource->setPayload($companyBusinessUnitTransfer);
+
+        return $restResource;
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyBusinessUnitIdMissingError(): RestResponseInterface
@@ -77,32 +104,5 @@ class CompanyBusinessUnitRestResponseBuilder implements CompanyBusinessUnitRestR
             ->setDetail(CompanyBusinessUnitsRestApiConfig::RESPONSE_DETAIL_COMPANY_BUSINESS_UNIT_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param string $companyBusinessUnitUuid
-     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $companyBusinessUnitTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    protected function buildCompanyBusinessUnitRestResource(
-        string $companyBusinessUnitUuid,
-        RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer,
-        ?CompanyBusinessUnitTransfer $companyBusinessUnitTransfer = null
-    ): RestResourceInterface {
-        $restResource = $this->restResourceBuilder->createRestResource(
-            CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
-            $companyBusinessUnitUuid,
-            $restCompanyBusinessUnitAttributesTransfer
-        );
-
-        if (!$companyBusinessUnitTransfer) {
-            return $restResource;
-        }
-
-        $restResource->setPayload($companyBusinessUnitTransfer);
-
-        return $restResource;
     }
 }

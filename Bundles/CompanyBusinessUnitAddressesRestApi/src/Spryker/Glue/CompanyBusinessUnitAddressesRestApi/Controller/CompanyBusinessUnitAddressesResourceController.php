@@ -55,9 +55,14 @@ class CompanyBusinessUnitAddressesResourceController extends AbstractController
                 ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
                 ->setDetail(CompanyBusinessUnitAddressesRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
 
-            return $this->getFactory()->getResourceBuilder()->createRestResponse()->addError($restErrorMessageTransfer);
+            return $this->getFactory()
+                ->getResourceBuilder()
+                ->createRestResponse()
+                ->addError($restErrorMessageTransfer);
         }
 
-        return $this->getFactory()->createCompanyBusinessUnitAddressReader()->getCompanyBusinessUnitAddress($restRequest);
+        return $this->getFactory()
+            ->createCompanyBusinessUnitAddressReader()
+            ->getCompanyBusinessUnitAddress($restRequest);
     }
 }

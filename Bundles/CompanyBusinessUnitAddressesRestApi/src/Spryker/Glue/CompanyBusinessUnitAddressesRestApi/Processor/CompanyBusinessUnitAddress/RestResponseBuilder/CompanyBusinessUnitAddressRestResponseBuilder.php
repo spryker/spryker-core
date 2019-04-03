@@ -31,28 +31,28 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
     }
 
     /**
-     * @param string $uuid
+     * @param string $companyBusinessUnitAddressUuid
      * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyBusinessUnitAddressRestResponse(
-        string $uuid,
+        string $companyBusinessUnitAddressUuid,
         RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
     ): RestResponseInterface {
         return $this->restResourceBuilder->createRestResponse()
-            ->addResource($this->buildCompanyBusinessUnitAddressRestResource($restCompanyBusinessUnitAddressAttributesTransfer, $uuid));
+            ->addResource($this->buildCompanyBusinessUnitAddressRestResource($companyBusinessUnitAddressUuid, $restCompanyBusinessUnitAddressAttributesTransfer));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
      * @param string $companyBusinessUnitAddressUuid
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function buildCompanyBusinessUnitAddressRestResource(
-        RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer,
-        string $companyBusinessUnitAddressUuid
+        string $companyBusinessUnitAddressUuid,
+        RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
     ): RestResourceInterface {
         $restResource = $this->restResourceBuilder->createRestResource(
             CompanyBusinessUnitAddressesRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES,

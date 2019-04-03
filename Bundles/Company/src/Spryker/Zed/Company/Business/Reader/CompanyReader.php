@@ -35,10 +35,11 @@ class CompanyReader implements CompanyReaderInterface
     {
         $companyTransfer->requireUuid();
 
-        $companyResponseTransfer = new CompanyResponseTransfer();
         $companyTransfer = $this->companyRepository->findCompanyByUuid(
             $companyTransfer->getUuid()
         );
+
+        $companyResponseTransfer = new CompanyResponseTransfer();
         if (!$companyTransfer) {
             return $companyResponseTransfer->setIsSuccessful(false);
         }

@@ -55,7 +55,10 @@ class CompaniesResourceController extends AbstractController
                 ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
                 ->setDetail(CompaniesRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
 
-            return $this->getFactory()->getResourceBuilder()->createRestResponse()->addError($restErrorMessageTransfer);
+            return $this->getFactory()
+                ->getResourceBuilder()
+                ->createRestResponse()
+                ->addError($restErrorMessageTransfer);
         }
 
         return $this->getFactory()->createCompanyReader()->getCompany($restRequest);

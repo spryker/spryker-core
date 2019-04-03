@@ -14,25 +14,25 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface CompanyBusinessUnitAddressRestResponseBuilderInterface
 {
     /**
-     * @param string $uuid
+     * @param string $companyBusinessUnitAddressUuid
      * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyBusinessUnitAddressRestResponse(
-        string $uuid,
+        string $companyBusinessUnitAddressUuid,
         RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
     ): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
      * @param string $companyBusinessUnitAddressUuid
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function buildCompanyBusinessUnitAddressRestResource(
-        RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer,
-        string $companyBusinessUnitAddressUuid
+        string $companyBusinessUnitAddressUuid,
+        RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
     ): RestResourceInterface;
 
     /**

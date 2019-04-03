@@ -14,7 +14,7 @@ interface CompanyBusinessUnitMapperInterface
 {
     /**
      * Specification:
-     * - Maps company business unit to rest company unit attributes.
+     * - Maps company business unit transfer to rest company business unit attributes transfer.
      *
      * @api
      *

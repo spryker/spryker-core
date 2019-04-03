@@ -64,7 +64,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
         );
 
         if (!$companyRoleResponseTransfer->getIsSuccessful()
-            || !$this->isCurrentCompanyUserAuthorizedToAccessResource($restRequest, $companyRoleResponseTransfer->getCompanyRoleTransfer())
+            || !$this->isCurrentCompanyUserAuthorizedToAccessCompanyRoleResource($restRequest, $companyRoleResponseTransfer->getCompanyRoleTransfer())
         ) {
             return $this->companyRoleRestResponseBuilder->createCompanyRoleNotFoundError();
         }
@@ -89,7 +89,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
      *
      * @return bool
      */
-    protected function isCurrentCompanyUserAuthorizedToAccessResource(
+    protected function isCurrentCompanyUserAuthorizedToAccessCompanyRoleResource(
         RestRequestInterface $restRequest,
         CompanyRoleTransfer $companyRoleTransfer
     ): bool {

@@ -54,7 +54,7 @@ class CompanyByPayloadResourceRelationshipExpander implements CompanyByPayloadRe
              */
             $payload = $resource->getPayload();
 
-            if ($this->isValidPayload($payload)) {
+            if (!$this->isValidPayload($payload)) {
                 continue;
             }
 
@@ -66,10 +66,12 @@ class CompanyByPayloadResourceRelationshipExpander implements CompanyByPayloadRe
                     new RestCompanyAttributesTransfer()
                 );
 
-            $resource->addRelationship($this->companyRestResponseBuilder->buildCompanyRestResource(
-                $restCompanyAttributesTransfer,
-                $companyTransfer->getUuid()
-            ));
+            $resource->addRelationship(
+                $this->companyRestResponseBuilder->buildCompanyRestResource(
+                    $companyTransfer->getUuid(),
+                    $restCompanyAttributesTransfer
+                )
+            );
         }
 
         return $resources;

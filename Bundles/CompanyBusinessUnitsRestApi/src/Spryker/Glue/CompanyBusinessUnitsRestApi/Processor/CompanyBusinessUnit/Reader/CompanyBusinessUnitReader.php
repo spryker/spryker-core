@@ -73,7 +73,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         );
 
         if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()
-            || !$this->isCurrentCompanyUserAuthorizedToAccessResource($restRequest, $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer())
+            || !$this->isCurrentCompanyUserAuthorizedToAccessCompanyBusinessUnitResource($restRequest, $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer())
         ) {
             return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitNotFoundError();
         }
@@ -139,7 +139,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
      *
      * @return bool
      */
-    protected function isCurrentCompanyUserAuthorizedToAccessResource(
+    protected function isCurrentCompanyUserAuthorizedToAccessCompanyBusinessUnitResource(
         RestRequestInterface $restRequest,
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): bool {

@@ -41,18 +41,18 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
         RestCompanyAttributesTransfer $restCompanyAttributesTransfer
     ): RestResponseInterface {
         return $this->restResourceBuilder->createRestResponse()
-            ->addResource($this->buildCompanyRestResource($restCompanyAttributesTransfer, $companyUuid));
+            ->addResource($this->buildCompanyRestResource($companyUuid, $restCompanyAttributesTransfer));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCompanyAttributesTransfer $restCompanyAttributesTransfer
      * @param string $companyUuid
+     * @param \Generated\Shared\Transfer\RestCompanyAttributesTransfer $restCompanyAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function buildCompanyRestResource(
-        RestCompanyAttributesTransfer $restCompanyAttributesTransfer,
-        string $companyUuid
+        string $companyUuid,
+        RestCompanyAttributesTransfer $restCompanyAttributesTransfer
     ): RestResourceInterface {
         return $this->restResourceBuilder->createRestResource(
             CompaniesRestApiConfig::RESOURCE_COMPANIES,

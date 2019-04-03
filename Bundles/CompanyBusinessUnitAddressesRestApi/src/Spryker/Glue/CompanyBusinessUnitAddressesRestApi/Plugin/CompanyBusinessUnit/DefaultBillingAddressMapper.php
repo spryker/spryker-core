@@ -15,7 +15,7 @@ class DefaultBillingAddressMapper implements CompanyBusinessUnitMapperInterface
 {
     /**
      * {@inheritDoc}
-     * - Maps and replaces defaultBillingAddress id to uuid
+     * - Maps and replaces defaultBillingAddress id to uuid in the RestCompanyBusinessUnitAttributesTransfer.
      * - Searches company unit address collection for defaultBillingAddress uuid.
      *
      * @api

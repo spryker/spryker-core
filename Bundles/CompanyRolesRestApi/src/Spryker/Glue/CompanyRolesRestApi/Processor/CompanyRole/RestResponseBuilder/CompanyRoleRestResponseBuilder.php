@@ -54,6 +54,33 @@ class CompanyRoleRestResponseBuilder implements CompanyRoleRestResponseBuilderIn
     }
 
     /**
+     * @param string $companyRoleUuid
+     * @param \Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer|null $companyRoleTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function buildCompanyRoleRestResource(
+        string $companyRoleUuid,
+        RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer,
+        ?CompanyRoleTransfer $companyRoleTransfer = null
+    ): RestResourceInterface {
+        $restResource = $this->restResourceBuilder->createRestResource(
+            CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES,
+            $companyRoleUuid,
+            $restCompanyRoleAttributesTransfer
+        );
+
+        if (!$companyRoleTransfer) {
+            return $restResource;
+        }
+
+        $restResource->setPayload($companyRoleTransfer);
+
+        return $restResource;
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyRoleIdMissingError(): RestResponseInterface
@@ -77,32 +104,5 @@ class CompanyRoleRestResponseBuilder implements CompanyRoleRestResponseBuilderIn
             ->setDetail(CompanyRolesRestApiConfig::RESPONSE_DETAIL_COMPANY_ROLE_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param string $companyRoleUuid
-     * @param \Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
-     * @param \Generated\Shared\Transfer\CompanyRoleTransfer|null $companyRoleTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    protected function buildCompanyRoleRestResource(
-        string $companyRoleUuid,
-        RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer,
-        ?CompanyRoleTransfer $companyRoleTransfer = null
-    ): RestResourceInterface {
-        $restResource = $this->restResourceBuilder->createRestResource(
-            CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES,
-            $companyRoleUuid,
-            $restCompanyRoleAttributesTransfer
-        );
-
-        if (!$companyRoleTransfer) {
-            return $restResource;
-        }
-
-        $restResource->setPayload($companyRoleTransfer);
-
-        return $restResource;
     }
 }

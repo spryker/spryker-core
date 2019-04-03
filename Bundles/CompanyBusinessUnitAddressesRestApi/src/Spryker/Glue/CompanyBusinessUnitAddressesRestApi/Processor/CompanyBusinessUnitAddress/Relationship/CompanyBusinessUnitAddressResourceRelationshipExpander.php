@@ -53,9 +53,13 @@ class CompanyBusinessUnitAddressResourceRelationshipExpander implements CompanyB
              * @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $payload
              */
             $payload = $resource->getPayload();
-            $addressCollectionTransfer = $payload->getAddressCollection();
 
-            if (!$this->isValidPayloadType($payload) || !$this->hasAddressCollection($addressCollectionTransfer)) {
+            if (!$this->isValidPayloadType($payload)) {
+                continue;
+            }
+
+            $addressCollectionTransfer = $payload->getAddressCollection();
+            if (!$this->hasAddressCollection($addressCollectionTransfer)) {
                 continue;
             }
 
@@ -84,8 +88,8 @@ class CompanyBusinessUnitAddressResourceRelationshipExpander implements CompanyB
             );
 
         return $this->companyBusinessUnitAddressRestResponseBuilder->buildCompanyBusinessUnitAddressRestResource(
-            $restCompanyBusinessUnitAttributesTransfer,
-            $companyUnitAddressTransfer->getUuid()
+            $companyUnitAddressTransfer->getUuid(),
+            $restCompanyBusinessUnitAttributesTransfer
         );
     }
 

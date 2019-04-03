@@ -27,8 +27,6 @@ use Spryker\Zed\Company\Persistence\CompanyRepository;
  */
 class CompanyFacadeTest extends Test
 {
-    protected const NON_EXISTENT_UUID = 'random-non-existent-uuid';
-
     /**
      * @var \SprykerTest\Zed\Company\CompanyBusinessTester
      */
@@ -85,7 +83,6 @@ class CompanyFacadeTest extends Test
      */
     public function testUpdateShouldPersistCompanyChanges()
     {
-        /** @var \Generated\Shared\Transfer\CompanyTransfer $companyTransfer */
         $companyTransfer = (new CompanyBuilder(['is_active' => false]))->build();
 
         $companyTransfer->setIsActive(true);
@@ -121,9 +118,7 @@ class CompanyFacadeTest extends Test
             'idStores' => $storeIds,
         ];
 
-        /** @var \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation */
         $storeRelation = (new StoreRelationBuilder($seed))->build();
-        /** @var \Generated\Shared\Transfer\CompanyTransfer $companyTransfer */
         $companyTransfer = (new CompanyBuilder(['is_active' => false]))->build();
         $companyTransfer->setStoreRelation($storeRelation);
         $companyTransfer = $this->getFacade()->create($companyTransfer)->getCompanyTransfer();
@@ -134,7 +129,6 @@ class CompanyFacadeTest extends Test
             'idStores' => [$this->getCurrentStore()->getIdStore()],
         ];
 
-        /** @var \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation */
         $storeRelation = (new StoreRelationBuilder($seed))->build();
         $companyTransfer->setStoreRelation($storeRelation);
         $companyTransfer = $this->getFacade()->update($companyTransfer)->getCompanyTransfer();
