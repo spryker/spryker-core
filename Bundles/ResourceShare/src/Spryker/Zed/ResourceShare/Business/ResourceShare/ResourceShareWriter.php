@@ -10,8 +10,7 @@ namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
-use Generated\Shared\Transfer\UuidGeneratorConfigurationTransfer;
-use Spryker\Zed\ResourceShare\Dependency\Facade\ResourceShareToUuidFacadeInterface;
+use Spryker\Zed\ResourceShare\Business\Uuid\ResourceShareUuidGeneratorInterface;
 use Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface;
 use Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface;
 
@@ -36,23 +35,23 @@ class ResourceShareWriter implements ResourceShareWriterInterface
     protected $resourceShareRepository;
 
     /**
-     * @var \Spryker\Zed\ResourceShare\Dependency\Facade\ResourceShareToUuidFacadeInterface
+     * @var \Spryker\Zed\ResourceShare\Business\Uuid\ResourceShareUuidGeneratorInterface
      */
-    protected $uuidFacade;
+    protected $resourceShareUuidGenerator;
 
     /**
      * @param \Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface $resourceShareEntityManager
      * @param \Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface $resourceShareRepository
-     * @param \Spryker\Zed\ResourceShare\Dependency\Facade\ResourceShareToUuidFacadeInterface $uuidFacade
+     * @param \Spryker\Zed\ResourceShare\Business\Uuid\ResourceShareUuidGeneratorInterface $resourceShareUuidGenerator
      */
     public function __construct(
         ResourceShareEntityManagerInterface $resourceShareEntityManager,
         ResourceShareRepositoryInterface $resourceShareRepository,
-        ResourceShareToUuidFacadeInterface $uuidFacade
+        ResourceShareUuidGeneratorInterface $resourceShareUuidGenerator
     ) {
         $this->resourceShareEntityManager = $resourceShareEntityManager;
         $this->resourceShareRepository = $resourceShareRepository;
-        $this->uuidFacade = $uuidFacade;
+        $this->resourceShareUuidGenerator = $resourceShareUuidGenerator;
     }
 
     /**
@@ -71,7 +70,7 @@ class ResourceShareWriter implements ResourceShareWriterInterface
             return $resourceShareResponseTransfer;
         }
 
-        $resourceShareTransfer = $this->resourceShareEntityManager->createResourceShare($resourceShareTransfer);
+        $resourceShareTransfer = $this->createResourceShare($resourceShareTransfer);
         if (!$resourceShareTransfer) {
             return $resourceShareResponseTransfer->setIsSuccessful(false)
                 ->addErrorMessage(
@@ -79,25 +78,22 @@ class ResourceShareWriter implements ResourceShareWriterInterface
                 );
         }
 
-        $this->fillEmptyResourceShareUuids();
-        $resourceShareTransfer = $this->resourceShareRepository->findExistingResourceShareForProvidedCustomer(
-            $resourceShareTransfer
-        );
-
         return $resourceShareResponseTransfer->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
     }
 
     /**
-     * @return void
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
      */
-    protected function fillEmptyResourceShareUuids(): void
+    protected function createResourceShare(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer
     {
-        $uuidGeneratorConfigurationTransfer = (new UuidGeneratorConfigurationTransfer())
-            ->setModule(static::UUID_MODULE)
-            ->setTable(static::UUID_TABLE);
+        $resourceShareTransfer->setUuid(
+            $this->resourceShareUuidGenerator->generateResourceShareUuid($resourceShareTransfer)
+        );
 
-        $this->uuidFacade->generateUuids($uuidGeneratorConfigurationTransfer);
+        return $this->resourceShareEntityManager->createResourceShare($resourceShareTransfer);
     }
 
     /**

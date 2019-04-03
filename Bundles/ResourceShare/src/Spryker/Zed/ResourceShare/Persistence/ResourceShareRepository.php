@@ -35,27 +35,4 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
 
         return null;
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
-     */
-    public function findExistingResourceShareForProvidedCustomer(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer
-    {
-        $resourceShareEntity = $this->getFactory()
-            ->createResourceShareQuery()
-            ->filterByResourceType($resourceShareTransfer->getResourceType())
-            ->filterByResourceData($resourceShareTransfer->getResourceData())
-            ->filterByCustomerReference($resourceShareTransfer->getCustomerReference())
-            ->findOne();
-
-        if ($resourceShareEntity) {
-            return (new ResourceShareTransfer())->fromArray(
-                $resourceShareEntity->toArray()
-            );
-        }
-
-        return null;
-    }
 }
