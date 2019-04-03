@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
 interface CheckoutResponseMapperPluginInterface
 {
     /**
+     * Specification:
+     * - Fills RestCheckoutResponseAttributesTransfer's properties using data from RestCheckoutResponseTransfer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\RestCheckoutResponseTransfer $restCheckoutResponseTransfer

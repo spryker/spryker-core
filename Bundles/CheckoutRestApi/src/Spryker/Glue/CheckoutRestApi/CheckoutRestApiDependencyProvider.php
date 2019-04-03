@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CheckoutRestApi;
 
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientBridge;
-use Spryker\Glue\CheckoutRestApi\Processor\Checkout\TestRestCheckoutResponseMapperPlugin;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -91,8 +90,6 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getCheckoutResponseMapperPlugins(): array
     {
-        return [
-            new TestRestCheckoutResponseMapperPlugin(),
-        ];
+        return [];
     }
 }
