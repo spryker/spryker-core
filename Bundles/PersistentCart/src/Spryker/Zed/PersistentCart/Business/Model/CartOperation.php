@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
+use Spryker\Zed\PersistentCart\Dependency\Service\PersistentCartToUtilQuantityServiceInterface;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
 class CartOperation implements CartOperationInterface

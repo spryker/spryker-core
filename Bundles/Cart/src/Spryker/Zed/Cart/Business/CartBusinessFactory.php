@@ -16,8 +16,8 @@ use Spryker\Zed\Cart\Business\Model\QuoteValidator;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\CartDependencyProvider;
-use Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
+use Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**

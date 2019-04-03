@@ -9,8 +9,8 @@ namespace Spryker\Zed\Cart;
 
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationBridge;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridge;
-use Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceBridge;
 use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeBridge;
+use Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
