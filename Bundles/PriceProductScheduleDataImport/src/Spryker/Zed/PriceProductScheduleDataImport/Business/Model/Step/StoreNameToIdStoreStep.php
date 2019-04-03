@@ -14,7 +14,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSetInterface;
 
-class StoreToIdStoreStep implements DataImportStepInterface
+class StoreNameToIdStoreStep implements DataImportStepInterface
 {
     protected const EXCEPTION_MESSAGE = 'Could not find store by name "%s"';
 

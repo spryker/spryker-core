@@ -15,8 +15,8 @@ use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\ConcreteSkuTo
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\CurrencyToIdCurrencyStep;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\PreparePriceDataStep;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\PriceProductScheduleListNameToIdStep;
-use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\PriceTypeToIdPriceType;
-use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\StoreToIdStoreStep;
+use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\PriceTypeToIdPriceTypeStep;
+use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\StoreNameToIdStoreStep;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportConfig getConfig()
@@ -36,9 +36,9 @@ class PriceProductScheduleDataImportBusinessFactory extends DataImportBusinessFa
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createPriceProductScheduleListNameToIdStep());
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createAbstractSkuToIdProductAbstractStep());
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createConcreteSkuToIdProductStep());
-        $dataSetStepBroker = $dataSetStepBroker->addStep($this->createStoreToIdStoreStep());
+        $dataSetStepBroker = $dataSetStepBroker->addStep($this->createStoreNameToIdStoreStep());
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createCurrencyToIdCurrencyStep());
-        $dataSetStepBroker = $dataSetStepBroker->addStep($this->createPriceTypeToIdPriceTypeWriterStep());
+        $dataSetStepBroker = $dataSetStepBroker->addStep($this->createPriceTypeToIdPriceTypeStep());
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createPreparePriceDataStep());
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createPriceProductScheduleWriterStep());
 
@@ -66,9 +66,9 @@ class PriceProductScheduleDataImportBusinessFactory extends DataImportBusinessFa
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createStoreToIdStoreStep(): DataImportStepInterface
+    public function createStoreNameToIdStoreStep(): DataImportStepInterface
     {
-        return new StoreToIdStoreStep();
+        return new StoreNameToIdStoreStep();
     }
 
     /**
@@ -90,9 +90,9 @@ class PriceProductScheduleDataImportBusinessFactory extends DataImportBusinessFa
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createPriceTypeToIdPriceTypeWriterStep(): DataImportStepInterface
+    public function createPriceTypeToIdPriceTypeStep(): DataImportStepInterface
     {
-        return new PriceTypeToIdPriceType();
+        return new PriceTypeToIdPriceTypeStep();
     }
 
     /**
