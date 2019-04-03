@@ -15,7 +15,7 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\OrderPaymentsRestApi\OrderPaymentsRestApiFactory getFactory()
  */
-class OrderPaymentsController extends AbstractController
+class OrderPaymentsResourceController extends AbstractController
 {
     /**
      * @Glue({
