@@ -25,7 +25,7 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
-     * @deprecated use isProductSellableForStore() instead
+     * @deprecated Use isProductSellableForStore() instead.
      *
      * @param string $sku
      * @param float $quantity
@@ -38,7 +38,7 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
-     * @deprecated use calculateStockForProductWithStore() instead
+     * @deprecated Use calculateStockForProductWithStore() instead.
      *
      * @param string $sku
      *
@@ -95,7 +95,7 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
-     * @deprecated use saveProductAvailabilityForStore() instead
+     * @deprecated Use saveProductAvailabilityForStore() instead.
      *
      * @param string $sku
      * @param float $quantity

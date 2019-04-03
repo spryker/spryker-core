@@ -6,15 +6,17 @@
     <transfer name="ProductQuantity">
         <property name="idProductQuantity" type="int" />
         <property name="fkProduct" type="int" />
-        <property name="quantityMin" type="int" />
-        <property name="quantityMax" type="int" />
-        <property name="quantityInterval" type="int" />
+        <property name="quantityMin" type="float" />
+        <property name="quantityMax" type="float" />
+        <property name="quantityInterval" type="float" />
         <property name="product" type="ProductConcrete" />
     </transfer>
 
     <transfer name="Item">
         <property name="sku" type="string" />
         <property name="quantity" type="float" />
+        <property name="normalizableFields" type="string[]" singular="normalizableField"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="CartChange">
@@ -32,6 +34,7 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
+        <property name="type" type="string"/>
         <property name="parameters" type="array"/>
     </transfer>
 

@@ -36,13 +36,7 @@ class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdVal
      */
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
-        if (!$httpRequest->headers->has(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID)) {
-            return null;
-        }
-
-        if (empty($httpRequest->headers->get(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID))
-            && in_array($restRequest->getResource()->getType(), $this->config->getGuestCartResources(), true)
-        ) {
+        if (!$this->isAnonymousHeaderSet($httpRequest) && $this->isAnonymousHeaderRequired($restRequest)) {
             return (new RestErrorMessageTransfer())
                 ->setStatus(Response::HTTP_BAD_REQUEST)
                 ->setCode(CartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
@@ -50,5 +44,36 @@ class AnonymousCustomerUniqueIdValidator implements AnonymousCustomerUniqueIdVal
         }
 
         return null;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
+     *
+     * @return bool
+     */
+    protected function isAnonymousHeaderSet(Request $httpRequest): bool
+    {
+        return $httpRequest->headers->has(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID)
+            && $httpRequest->headers->get(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function isAnonymousHeaderRequired(RestRequestInterface $restRequest): bool
+    {
+        if (in_array($restRequest->getResource()->getType(), $this->config->getGuestCartResources(), true)) {
+            return true;
+        }
+
+        foreach ($this->config->getGuestCartResources() as $resource) {
+            if ($restRequest->findParentResourceByType($resource)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

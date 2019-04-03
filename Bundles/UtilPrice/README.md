@@ -7,7 +7,7 @@ Provide service for operations with prices.
 ## Installation
 
 ```
-composer require spryker/util-number
+composer require spryker/util-price
 ```
 
 ## Documentation

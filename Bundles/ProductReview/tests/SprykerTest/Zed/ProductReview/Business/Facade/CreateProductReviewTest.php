@@ -123,7 +123,7 @@ class CreateProductReviewTest extends Unit
     }
 
     /**
-     * @return \Spryker\Client\ProductReview\ProductReviewClientInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Spryker\Client\ProductReview\ProductReviewClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getProductReviewClientMock()
     {

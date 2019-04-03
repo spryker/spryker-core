@@ -31,7 +31,8 @@ class AccessTokensResourceController extends AbstractController
      *          "responses": {
      *              "401": "Failed to authenticate user.",
      *              "403": "Unauthorized request."
-     *          }
+     *          },
+     *          "isIdNullable": true
      *     }
      * })
      *

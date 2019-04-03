@@ -15,6 +15,8 @@
         <property name="priceType"  type="PriceType" />
         <property name="moneyValue" type="MoneyValue" />
         <property name="priceDimension" type="PriceProductDimension" />
+        <property name="groupKey" type="string" />
+        <property name="isMergeable" type="bool" />
     </transfer>
 
     <transfer name="MoneyValue">
@@ -67,7 +69,7 @@
         <property name="priceDimension" type="PriceProductDimension" />
         <property name="sku" type="string" />
         <property name="quote" type="Quote" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
     </transfer>
 
     <transfer name="PriceProductCriteria">
@@ -77,7 +79,7 @@
         <property name="priceType" type="string" />
         <property name="priceDimension" type="PriceProductDimension" />
         <property name="quote" type="Quote" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
     </transfer>
 
     <transfer name="CurrentProductPrice">
@@ -85,7 +87,7 @@
         <property name="prices" type="array" singular="price" />
         <property name="currency" type="Currency" />
         <property name="priceMode" type="string" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="float" />
         <property name="sumPrice" type="int" />
     </transfer>
 

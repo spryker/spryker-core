@@ -94,7 +94,7 @@ class WebErrorHtmlRendererTest extends Unit
     /**
      * @param string $application
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface
      */
     protected function getErrorPageMock($application)
     {

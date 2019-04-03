@@ -130,7 +130,7 @@ class AvailabilityAbstractTable extends AbstractTable
         foreach ($queryResult as $productAbstractEntity) {
             $haveBundledProducts = $this->haveBundledProducts($productAbstractEntity);
 
-            $isNeverOutOfStock = $this->isNeverOutOfStock($productAbstractEntity, $haveBundledProducts);
+            $isNeverOutOfStock = $this->isNeverOutOfStock($productAbstractEntity);
 
             $result[] = [
                 SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
@@ -149,15 +149,11 @@ class AvailabilityAbstractTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     * @param bool $isBundleProduct
      *
      * @return bool
      */
-    protected function isNeverOutOfStock(SpyProductAbstract $productAbstractEntity, bool $isBundleProduct): bool
+    protected function isNeverOutOfStock(SpyProductAbstract $productAbstractEntity): bool
     {
-        if ($isBundleProduct && strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'false') !== false) {
-            return false;
-        }
         return strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'true') !== false;
     }
 
@@ -187,9 +183,10 @@ class AvailabilityAbstractTable extends AbstractTable
     protected function getAvailabilityLabel($quantity, $isNeverOutOfStock)
     {
         if ($quantity > 0 || $isNeverOutOfStock) {
-            return '<span class="label label-info">' . static::AVAILABLE . '</span>';
+            return $this->generateLabel(static::AVAILABLE, 'label-info');
         }
-        return '<span class="label">' . static::NOT_AVAILABLE . '</span>';
+
+        return $this->generateLabel(static::NOT_AVAILABLE, '');
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cart;
 
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationBridge;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridge;
+use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeBridge;
 use Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -20,9 +21,11 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CALCULATION = 'calculation facade';
     public const FACADE_MESSENGER = 'messenger facade';
+    public const FACADE_QUOTE = 'FACADE_QUOTE';
 
     public const CART_EXPANDER_PLUGINS = 'cart expander plugins';
     public const CART_PRE_CHECK_PLUGINS = 'pre check plugins';
+    public const CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS = 'CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS';
     public const CART_REMOVAL_PRE_CHECK_PLUGINS = 'CART_REMOVAL_PRE_CHECK_PLUGINS';
     public const CART_POST_SAVE_PLUGINS = 'cart post save plugins';
     public const CART_PRE_RELOAD_PLUGINS = 'cart pre reload plugins';
@@ -45,6 +48,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addCalculationFacade($container);
         $container = $this->addMessengerFacade($container);
+        $container = $this->addQuoteFacade($container);
         $container = $this->addExpanderPlugins($container);
         $container = $this->addPostSavePlugins($container);
         $container = $this->addPreCheckPlugins($container);
@@ -56,6 +60,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartRemoveItemStrategyPlugins($container);
         $container = $this->addPostReloadItemsPlugins($container);
         $container = $this->addUtilQuantityService($container);
+        $container = $this->addCartBeforePreCheckNormalizerPlugins($container);
 
         return $container;
     }
@@ -69,6 +74,19 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CALCULATION] = function (Container $container) {
             return new CartToCalculationBridge($container->getLocator()->calculation()->facade());
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteFacade(Container $container)
+    {
+        $container[static::FACADE_QUOTE] = function (Container $container) {
+            return new CartToQuoteFacadeBridge($container->getLocator()->quote()->facade());
         };
         return $container;
     }
@@ -109,6 +127,20 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CART_POST_SAVE_PLUGINS] = function (Container $container) {
             return $this->getPostSavePlugins($container);
         };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCartBeforePreCheckNormalizerPlugins(Container $container): Container
+    {
+        $container[static::CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS] = function (Container $container): array {
+            return $this->getCartBeforePreCheckNormalizerPlugins($container);
+        };
+
         return $container;
     }
 
@@ -264,6 +296,16 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[]
      */
     protected function getCartPreCheckPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface[]
+     */
+    protected function getCartBeforePreCheckNormalizerPlugins(Container $container): array
     {
         return [];
     }

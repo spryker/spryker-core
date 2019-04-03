@@ -11,10 +11,12 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `\Spryker\Yves\CmsContentWidget\Plugin\Twig\CmsContentWidgetTwigPlugin` instead.
+ *
  * @method \Spryker\Yves\CmsContentWidget\CmsContentWidgetFactory getFactory()
  */
 class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceProviderInterface
@@ -27,18 +29,18 @@ class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceP
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) {
+            $app->extend('twig', function (Environment $twig) {
                 return $this->registerCmsContentWidgets($twig);
             })
         );
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      *
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
-    protected function registerCmsContentWidgets(Twig_Environment $twig)
+    protected function registerCmsContentWidgets(Environment $twig)
     {
         foreach ($this->getFactory()->getCmsContentWidgetPlugins() as $functionName => $cmsContentWidgetPlugin) {
             $twig->addFunction(
@@ -53,11 +55,11 @@ class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceP
      * @param string $functionName
      * @param \Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface $cmsContentWidgetPlugin
      *
-     * @return \Twig_SimpleFunction
+     * @return \Twig\TwigFunction
      */
     protected function createTwigSimpleFunction($functionName, CmsContentWidgetPluginInterface $cmsContentWidgetPlugin)
     {
-        return new Twig_SimpleFunction(
+        return new TwigFunction(
             $functionName,
             $cmsContentWidgetPlugin->getContentWidgetFunction(),
             $this->getTwigSimpleFunctionOptions()

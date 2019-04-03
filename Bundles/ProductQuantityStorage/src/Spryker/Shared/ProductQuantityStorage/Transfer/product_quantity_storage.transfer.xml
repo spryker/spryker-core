@@ -5,9 +5,29 @@
 
     <transfer name="ProductQuantityStorage">
         <property name="idProduct" type="int" />
-        <property name="quantityMin" type="int" />
-        <property name="quantityMax" type="int" />
-        <property name="quantityInterval" type="int" />
+        <property name="quantityMin" type="float" />
+        <property name="quantityMax" type="float" />
+        <property name="quantityInterval" type="float" />
     </transfer>
 
+    <transfer name="Item">
+        <property name="id" type="int" />
+        <property name="quantity" type="float" />
+    </transfer>
+
+    <transfer name="ItemValidation">
+        <property name="item" type="Item" />
+        <property name="messages" type="Message[]" singular="Message" />
+        <property name="suggestedValues" type="Item" />
+    </transfer>
+
+    <transfer name="Message">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
+        <property name="parameters" type="array"/>
+    </transfer>
+
+    <transfer name="ProductQuantity">
+        <property name="idProduct" type="int" />
+    </transfer>
 </transfers>

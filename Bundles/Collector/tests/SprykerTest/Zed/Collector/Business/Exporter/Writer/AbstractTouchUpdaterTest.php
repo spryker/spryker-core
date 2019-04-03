@@ -142,7 +142,7 @@ class AbstractTouchUpdaterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\SprykerTest\Zed\Collector\Business\Fixture\TouchUpdaterStub
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Zed\Collector\Business\Fixture\TouchUpdaterStub
      */
     protected function createTouchUpdater()
     {
@@ -178,7 +178,7 @@ class AbstractTouchUpdaterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createConnectionMock()
     {

@@ -22,7 +22,7 @@ class CompanyUserEditForm extends CompanyUserForm
      *
      * @return $this
      */
-    protected function addCustomerSubForm(FormBuilderInterface $builder, array $options): CompanyUserForm
+    protected function addCustomerSubForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             CompanyUserTransfer::CUSTOMER,

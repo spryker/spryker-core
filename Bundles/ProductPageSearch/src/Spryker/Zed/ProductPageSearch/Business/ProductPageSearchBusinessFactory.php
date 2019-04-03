@@ -18,6 +18,8 @@ use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\Produ
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductAbstractPagePublisher;
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPublisher;
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPublisherInterface;
+use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisher;
+use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisherInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
 /**
@@ -54,6 +56,17 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getUtilEncoding(),
             $this->getSearchFacade(),
             $this->getProductConcretePageDataExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisherInterface
+     */
+    public function createProductConcretePageSearchUnpublisher(): ProductConcretePageSearchUnpublisherInterface
+    {
+        return new ProductConcretePageSearchUnpublisher(
+            $this->createProductConcretePageSearchReader(),
+            $this->createProductConcretePageSearchWriter()
         );
     }
 

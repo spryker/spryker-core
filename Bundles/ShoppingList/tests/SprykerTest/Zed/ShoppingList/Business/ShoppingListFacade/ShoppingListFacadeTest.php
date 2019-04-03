@@ -747,8 +747,8 @@ class ShoppingListFacadeTest extends Unit
     }
 
     /**
-     *
      * @group qwe
+     *
      * @dataProvider customerShoppingListItemQuantityCollectionDataProvider
      *
      * @param int|float $quantity1

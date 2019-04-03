@@ -155,7 +155,7 @@
     "spryker/oms-discount-connector": "*",
     "spryker/payment": "*",
     "spryker/payment-cart-connector": "*",
-    "spryker/pimple": "*",
+    "spryker/container": "*",
     "spryker/price": "*",
     "spryker/price-cart-connector": "*",
     "spryker/price-product": "*",

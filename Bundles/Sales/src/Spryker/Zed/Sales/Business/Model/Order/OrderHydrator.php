@@ -390,11 +390,11 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function deriveExpenseUnitPrices(ExpenseTransfer $expenseTransfer)
     {
-        $unitGrossPrice = $this->roundPrice($expenseTransfer->getSumGrossPrice() / $expenseTransfer->getQuantity());
-        $unitNetPrice = $this->roundPrice($expenseTransfer->getSumNetPrice() / $expenseTransfer->getQuantity());
-        $unitPrice = $this->roundPrice($expenseTransfer->getSumPrice() / $expenseTransfer->getQuantity());
-        $unitPriceToPayAggregation = $this->roundPrice($expenseTransfer->getSumPriceToPayAggregation() / $expenseTransfer->getQuantity());
-        $unitTaxAmount = $this->roundPrice($expenseTransfer->getSumTaxAmount() / $expenseTransfer->getQuantity());
+        $unitGrossPrice = (int)round($expenseTransfer->getSumGrossPrice() / $expenseTransfer->getQuantity());
+        $unitNetPrice = (int)round($expenseTransfer->getSumNetPrice() / $expenseTransfer->getQuantity());
+        $unitPrice = (int)round($expenseTransfer->getSumPrice() / $expenseTransfer->getQuantity());
+        $unitPriceToPayAggregation = (int)round($expenseTransfer->getSumPriceToPayAggregation() / $expenseTransfer->getQuantity());
+        $unitTaxAmount = (int)round($expenseTransfer->getSumTaxAmount() / $expenseTransfer->getQuantity());
 
         $expenseTransfer->setUnitGrossPrice($unitGrossPrice);
         $expenseTransfer->setUnitNetPrice($unitNetPrice);
