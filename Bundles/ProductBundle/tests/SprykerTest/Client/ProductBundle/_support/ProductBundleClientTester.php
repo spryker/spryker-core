@@ -8,10 +8,12 @@
 namespace SprykerTest\Client\ProductBundle;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\CartChangeBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 /**
  * Inherited Methods
@@ -41,10 +43,18 @@ class ProductBundleClientTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Ge§nerated\Shared\Transfer\CustomerTransfer
      */
     public function haveCustomer(): CustomerTransfer
     {
         return (new CustomerBuilder())->build();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function haveCartChangeTransfer(): CartChangeTransfer
+    {
+        return (new CartChangeBuilder())->build();
     }
 }
