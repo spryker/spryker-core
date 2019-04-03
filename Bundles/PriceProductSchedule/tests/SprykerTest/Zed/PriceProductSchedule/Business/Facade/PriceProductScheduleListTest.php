@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\PriceProductSchedule\Business\Facade;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
@@ -42,9 +44,9 @@ class PriceProductScheduleListTest extends Unit
     protected $spyPriceProductScheduleQuery;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
+     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
-    protected $priceProductFacade;
+    protected $storeFacade;
 
     /**
      * @return void
@@ -55,7 +57,7 @@ class PriceProductScheduleListTest extends Unit
 
         $this->priceProductScheduleFacade = $this->tester->getFacade();
         $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
-        $this->priceProductFacade = $this->tester->getLocator()->priceProduct()->facade();
+        $this->storeFacade = $this->tester->getLocator()->store()->facade();
     }
 
     /**
@@ -64,8 +66,13 @@ class PriceProductScheduleListTest extends Unit
     public function testPriceProductScheduleFromPriceProductScheduleListShouldNotApply(): void
     {
         // Assign
-        $priceProductScheduleList = $this->tester->havePriceProductScheduleList(false);
+        $priceProductScheduleList = $this->tester->havePriceProductScheduleList([
+            PriceProductScheduleListTransfer::IS_ACTIVE => false,
+        ]);
         $productConcreteTransfer = $this->tester->haveProduct();
+        $currencyId = $this->tester->haveCurrency();
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $priceType = $this->tester->havePriceType();
 
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
@@ -75,8 +82,14 @@ class PriceProductScheduleListTest extends Unit
                 PriceProductScheduleTransfer::PRICE_PRODUCT => [
                     PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
                     PriceProductTransfer::PRICE_TYPE => [
-                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                        PriceTypeTransfer::NAME => $priceType->getName(),
+                        PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
+                    ],
+                    PriceProductTransfer::MONEY_VALUE => [
+                        MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                        MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                        MoneyValueTransfer::NET_AMOUNT => 100,
+                        MoneyValueTransfer::GROSS_AMOUNT => 120,
                     ],
                 ],
             ]

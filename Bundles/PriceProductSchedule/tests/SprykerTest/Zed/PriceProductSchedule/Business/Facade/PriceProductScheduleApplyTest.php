@@ -54,14 +54,14 @@ class PriceProductScheduleApplyTest extends Unit
     protected $spyPriceProductScheduleQuery;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
-     */
-    protected $priceProductFacade;
-
-    /**
      * @var \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     protected $defaultProductTransfer;
+
+    /**
+     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
+     */
+    protected $storeFacade;
 
     /**
      * @return void
@@ -71,10 +71,10 @@ class PriceProductScheduleApplyTest extends Unit
         parent::setUp();
 
         $this->priceProductScheduleFacade = $this->tester->getFacade();
-        $this->priceProductFacade = $this->tester->getLocator()->priceProduct()->facade();
         $this->currencyFacade = $this->tester->getLocator()->currency()->facade();
         $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
         $this->defaultProductTransfer = $this->tester->haveProduct();
+        $this->storeFacade = $this->tester->getLocator()->store()->facade();
     }
 
     /**
@@ -88,52 +88,36 @@ class PriceProductScheduleApplyTest extends Unit
     {
         // Assign
         foreach ($priceProductScheduleTestData as $productScheduleTestData) {
-            $priceProductDefaultData = [
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::PRICE_TYPE => [
-                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
-                    ],
-                ],
-            ];
-
-            $priceProductData = array_merge(
-                $priceProductDefaultData,
-                $productScheduleTestData[static::KEY_PRICE_PRODUCT_SCHEDULE_DATA]
-            );
+            $priceProductScheduleData = $productScheduleTestData[static::KEY_PRICE_PRODUCT_SCHEDULE_DATA];
+            $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT] = $this->getPriceProductData();
 
             if ($productScheduleTestData[static::KEY_IS_OTHER_PRODUCT_CONCRETE]) {
                 $otherProduct = $this->tester->haveProduct();
-                $priceProductData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::ID_PRODUCT] = $otherProduct->getIdProductConcrete();
+                $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::ID_PRODUCT] = $otherProduct->getIdProductConcrete();
             }
 
             if ($productScheduleTestData[static::KEY_IS_OTHER_PRODUCT_ABSTRACT]) {
                 $otherProductAbstract = $this->tester->haveProductAbstract();
-                $priceProductData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::ID_PRODUCT_ABSTRACT] = $otherProductAbstract->getIdProductAbstract();
-            }
-
-            if ($productScheduleTestData[static::KEY_IS_OTHER_PRODUCT_CONCRETE] === false
-                && $productScheduleTestData[static::KEY_IS_OTHER_PRODUCT_ABSTRACT] === false) {
-                $priceProductData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::ID_PRODUCT] = $this->defaultProductTransfer->getIdProductConcrete();
+                $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::ID_PRODUCT_ABSTRACT] = $otherProductAbstract->getIdProductAbstract();
             }
 
             if ($productScheduleTestData[static::KEY_IS_OTHER_PRICE_TYPE]) {
-                $otherPriceType = $this->tester->havePriceType('ORIGINAL');
-                $priceProductData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::PRICE_TYPE] = [
+                $otherPriceType = $this->tester->havePriceType();
+                $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::PRICE_TYPE] = [
                     PriceTypeTransfer::NAME => $otherPriceType->getName(),
                     PriceTypeTransfer::ID_PRICE_TYPE => $otherPriceType->getIdPriceType(),
                 ];
             }
 
             if ($productScheduleTestData[static::KEY_IS_OTHER_CURRENCY]) {
-                $otherCurrency = $this->currencyFacade->fromIsoCode('CHF');
-                $priceProductData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE] = [
+                $otherCurrency = $this->tester->haveCurrency();
+                $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE] = [
                     MoneyValueTransfer::FK_CURRENCY => $otherCurrency->getIdCurrency(),
                     MoneyValueTransfer::CURRENCY => $otherCurrency,
                 ];
             }
 
-            $this->tester->havePriceProductSchedule($priceProductData);
+            $this->tester->havePriceProductSchedule($priceProductScheduleData);
         }
 
         // Act
@@ -162,6 +146,8 @@ class PriceProductScheduleApplyTest extends Unit
     {
         // Assign
         $otherStore = $this->tester->haveStore();
+        $currencyId = $this->tester->haveCurrency();
+        $priceType = $this->tester->havePriceType();
 
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
@@ -170,10 +156,13 @@ class PriceProductScheduleApplyTest extends Unit
                 PriceProductTransfer::ID_PRODUCT => $this->defaultProductTransfer->getIdProductConcrete(),
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_STORE => $otherStore->getIdStore(),
+                    MoneyValueTransfer::GROSS_AMOUNT => 100,
+                    MoneyValueTransfer::NET_AMOUNT => 200,
+                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
                 ],
                 PriceProductTransfer::PRICE_TYPE => [
-                    PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                    PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
+                    PriceTypeTransfer::NAME => $priceType->getName(),
+                    PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
                 ],
             ],
         ]);
@@ -183,7 +172,35 @@ class PriceProductScheduleApplyTest extends Unit
 
         // Assert
         $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $this->assertFalse($priceProductScheduleEntity->isCurrent(), 'Scheduled price for other store should not have been set as current.');
+        $this->assertFalse(
+            $priceProductScheduleEntity->isCurrent(),
+            'Scheduled price for other store should not have been set as current.'
+        );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPriceProductData(): array
+    {
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $currencyId = $this->tester->haveCurrency();
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $priceType = $this->tester->havePriceType();
+
+        return [
+            PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+            PriceProductTransfer::PRICE_TYPE => [
+                PriceTypeTransfer::NAME => $priceType->getName(),
+                PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
+            ],
+            PriceProductTransfer::MONEY_VALUE => [
+                MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                MoneyValueTransfer::NET_AMOUNT => 100,
+                MoneyValueTransfer::GROSS_AMOUNT => 120,
+            ],
+        ];
     }
 
     /**
@@ -192,195 +209,243 @@ class PriceProductScheduleApplyTest extends Unit
     public function differentPriceProductScheduleShouldApplyDataProvider(): array
     {
         return [
-            'single price product schedule' => [
+            'single price product schedule' => $this->getSinglePriceProductScheduleData(),
+            'price product schedule with different concrete products' => $this->getPriceProductScheduleWithDifferentConcreteProductsData(),
+            'price product schedule with different concrete products, price types and currencies' => $this->getPriceProductScheduleWithDifferentConcreteProductsPriceTypesAndCurrenciesData(),
+            'price product schedule with different abstract products' => $this->getPriceProductScheduleWithDifferentAbstractProductsData(),
+            'price product schedule with different product types' => $this->getPriceProductScheduleWithDifferentProductTypesData(),
+            'price product schedule with different currencies' => $this->getPriceProductScheduleWithDifferentCurrenciesData(),
+            ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSinglePriceProductScheduleData(): array
+    {
+        return [
+            [
                 [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => false,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
-                        static::KEY_IS_OTHER_CURRENCY => false,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-5 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 days')),
-                        ],
+                    static::KEY_IS_OTHER_PRICE_TYPE => false,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
+                    static::KEY_IS_OTHER_CURRENCY => false,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-5 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 days')),
                     ],
                 ],
             ],
-            'price product schedule with different concrete products' => [
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPriceProductScheduleWithDifferentConcreteProductsData(): array
+    {
+        return [
+            [
                 [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => false,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => true,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
-                        static::KEY_IS_OTHER_CURRENCY => false,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-10 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+5 days')),
-                        ],
-                    ],
-                ],
-                [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => false,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => true,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
-                        static::KEY_IS_OTHER_CURRENCY => false,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-3 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 days')),
-                        ],
-                    ],
-                ],
-                [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => false,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => true,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
-                        static::KEY_IS_OTHER_CURRENCY => false,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-8 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+2 days')),
-                        ],
+                    static::KEY_IS_OTHER_PRICE_TYPE => false,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => true,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
+                    static::KEY_IS_OTHER_CURRENCY => false,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-10 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+5 days')),
                     ],
                 ],
             ],
-            'price product schedule with different concrete products, price types and currencies' => [
+            [
                 [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => false,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => true,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
-                        static::KEY_IS_OTHER_CURRENCY => false,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-10 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+5 days')),
-                        ],
-                    ],
-                ],
-                [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => false,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => true,
-                        static::KEY_IS_OTHER_CURRENCY => true,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-3 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 days')),
-                        ],
-                    ],
-                ],
-                [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => false,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => true,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
-                        static::KEY_IS_OTHER_CURRENCY => true,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-8 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+2 days')),
-                        ],
-                    ],
-                ],
-                [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => true,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => true,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
-                        static::KEY_IS_OTHER_CURRENCY => true,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-12 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+9 days')),
-                        ],
+                    static::KEY_IS_OTHER_PRICE_TYPE => false,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => true,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
+                    static::KEY_IS_OTHER_CURRENCY => false,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-3 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 days')),
                     ],
                 ],
             ],
-            'price product schedule with different abstract products' => [
+            [
                 [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => false,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => true,
-                        static::KEY_IS_OTHER_CURRENCY => false,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-10 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+5 days')),
-                        ],
-                    ],
-                ],
-                [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => false,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => true,
-                        static::KEY_IS_OTHER_CURRENCY => false,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-3 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 days')),
-                        ],
-                    ],
-                ],
-                [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => false,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => true,
-                        static::KEY_IS_OTHER_CURRENCY => false,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-8 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+2 days')),
-                        ],
+                    static::KEY_IS_OTHER_PRICE_TYPE => false,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => true,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
+                    static::KEY_IS_OTHER_CURRENCY => false,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-8 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+2 days')),
                     ],
                 ],
             ],
-            'price product schedule with different product types' => [
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPriceProductScheduleWithDifferentConcreteProductsPriceTypesAndCurrenciesData(): array
+    {
+        return [
+            [
                 [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => true,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
-                        static::KEY_IS_OTHER_CURRENCY => false,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-10 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+5 days')),
-                        ],
-                    ],
-                ],
-                [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => true,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
-                        static::KEY_IS_OTHER_CURRENCY => false,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-3 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 days')),
-                        ],
+                    static::KEY_IS_OTHER_PRICE_TYPE => false,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => true,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
+                    static::KEY_IS_OTHER_CURRENCY => false,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-10 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+5 days')),
                     ],
                 ],
             ],
-            'price product schedule with different currencies' => [
+            [
                 [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => false,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
-                        static::KEY_IS_OTHER_CURRENCY => false,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-10 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+5 days')),
-                        ],
+                    static::KEY_IS_OTHER_PRICE_TYPE => false,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => true,
+                    static::KEY_IS_OTHER_CURRENCY => true,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-3 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 days')),
                     ],
                 ],
+            ],
+            [
                 [
-                    [
-                        static::KEY_IS_OTHER_PRICE_TYPE => false,
-                        static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
-                        static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
-                        static::KEY_IS_OTHER_CURRENCY => true,
-                        static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
-                            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-3 days')),
-                            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 days')),
-                        ],
+                    static::KEY_IS_OTHER_PRICE_TYPE => false,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => true,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
+                    static::KEY_IS_OTHER_CURRENCY => true,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-8 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+2 days')),
+                    ],
+                ],
+            ],
+            [
+                [
+                    static::KEY_IS_OTHER_PRICE_TYPE => true,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => true,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
+                    static::KEY_IS_OTHER_CURRENCY => true,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-12 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+9 days')),
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPriceProductScheduleWithDifferentAbstractProductsData(): array
+    {
+        return [
+            [
+                [
+                    static::KEY_IS_OTHER_PRICE_TYPE => false,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => true,
+                    static::KEY_IS_OTHER_CURRENCY => false,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-10 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+5 days')),
+                    ],
+                ],
+            ],
+            [
+                [
+                    static::KEY_IS_OTHER_PRICE_TYPE => false,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => true,
+                    static::KEY_IS_OTHER_CURRENCY => false,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-3 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 days')),
+                    ],
+                ],
+            ],
+            [
+                [
+                    static::KEY_IS_OTHER_PRICE_TYPE => false,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => true,
+                    static::KEY_IS_OTHER_CURRENCY => false,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-8 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+2 days')),
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPriceProductScheduleWithDifferentProductTypesData(): array
+    {
+        return [
+            [
+                [
+                    static::KEY_IS_OTHER_PRICE_TYPE => true,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
+                    static::KEY_IS_OTHER_CURRENCY => false,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-10 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+5 days')),
+                    ],
+                ],
+            ],
+            [
+                [
+                    static::KEY_IS_OTHER_PRICE_TYPE => true,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
+                    static::KEY_IS_OTHER_CURRENCY => false,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-3 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 days')),
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPriceProductScheduleWithDifferentCurrenciesData(): array
+    {
+        return [
+            [
+                [
+                    static::KEY_IS_OTHER_PRICE_TYPE => false,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
+                    static::KEY_IS_OTHER_CURRENCY => false,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-10 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+5 days')),
+                    ],
+                ],
+            ],
+            [
+                [
+                    static::KEY_IS_OTHER_PRICE_TYPE => false,
+                    static::KEY_IS_OTHER_PRODUCT_CONCRETE => false,
+                    static::KEY_IS_OTHER_PRODUCT_ABSTRACT => false,
+                    static::KEY_IS_OTHER_CURRENCY => true,
+                    static::KEY_PRICE_PRODUCT_SCHEDULE_DATA => [
+                        PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-3 days')),
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 days')),
                     ],
                 ],
             ],

@@ -817,16 +817,16 @@ class PriceProductFacadeTest extends Unit
             90,
             '',
             '',
-            self::USD_ISO_CODE
+            self::EUR_ISO_CODE
         );
         $priceProductFacade->removePriceProductStore($priceProductTransfer);
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setCurrencyIsoCode(self::USD_ISO_CODE)
+            ->setCurrencyIsoCode(self::EUR_ISO_CODE)
             ->setSku($priceProductTransfer->getSkuProduct());
 
         $priceProduct = $priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
-        $this->assertNull($priceProduct);
+        $this->assertNull($priceProduct, 'Price product should be removed from db');
     }
 }

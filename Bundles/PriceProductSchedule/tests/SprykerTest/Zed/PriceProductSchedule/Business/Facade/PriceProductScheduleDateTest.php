@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PriceProductSchedule\Business\Facade;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
@@ -42,9 +43,9 @@ class PriceProductScheduleDateTest extends Unit
     protected $spyPriceProductScheduleQuery;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
+     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
-    protected $priceProductFacade;
+    protected $storeFacade;
 
     /**
      * @return void
@@ -53,9 +54,9 @@ class PriceProductScheduleDateTest extends Unit
     {
         parent::setUp();
 
-        $this->priceProductFacade = $this->tester->getLocator()->priceProduct()->facade();
         $this->priceProductScheduleFacade = $this->tester->getFacade();
         $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
+        $this->storeFacade = $this->tester->getLocator()->store()->facade();
     }
 
     /**
@@ -69,15 +70,8 @@ class PriceProductScheduleDateTest extends Unit
     public function testPriceProductScheduleShouldApplyForActiveDateRanges(DateTime $activeFrom, DateTime $activeTo): void
     {
         // Assign
-        $productConcreteTransfer = $this->tester->haveProduct();
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule([
-            PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                PriceProductTransfer::PRICE_TYPE => [
-                    PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                    PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
-                ],
-            ],
+            PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
             PriceProductScheduleTransfer::ACTIVE_TO => $activeTo,
         ]);
@@ -101,18 +95,11 @@ class PriceProductScheduleDateTest extends Unit
     public function testPriceProductScheduleShouldNotApplyForNotActiveDateRanges(DateTime $activeFrom, DateTime $activeTo): void
     {
         // Assign
-        $productConcreteTransfer = $this->tester->haveProduct();
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
                 PriceProductScheduleTransfer::ACTIVE_TO => $activeTo,
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::PRICE_TYPE => [
-                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
-                    ],
-                ],
+                PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
         );
 
@@ -130,19 +117,12 @@ class PriceProductScheduleDateTest extends Unit
     public function testActivePriceProductScheduleShouldStayActive(): void
     {
         // Assign
-        $productConcreteTransfer = $this->tester->haveProduct();
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
                 PriceProductScheduleTransfer::IS_CURRENT => true,
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::PRICE_TYPE => [
-                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
-                    ],
-                ],
+                PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
         );
 
@@ -165,19 +145,12 @@ class PriceProductScheduleDateTest extends Unit
     public function testPriceProductScheduleShouldStayActiveForLessDuration(DateTime $activeFrom, DateTime $activeFrom2): void
     {
         // Assign
-        $productConcreteTransfer = $this->tester->haveProduct();
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+7 days')),
                 PriceProductScheduleTransfer::IS_CURRENT => true,
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::PRICE_TYPE => [
-                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
-                    ],
-                ],
+                PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
         );
 
@@ -185,13 +158,7 @@ class PriceProductScheduleDateTest extends Unit
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom2,
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+7 days')),
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::PRICE_TYPE => [
-                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
-                    ],
-                ],
+                PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
         );
 
@@ -217,19 +184,12 @@ class PriceProductScheduleDateTest extends Unit
     public function testPriceProductScheduleShouldApplyForLessDuration(DateTime $activeFrom, DateTime $activeFrom2): void
     {
         // Assign
-        $productConcreteTransfer = $this->tester->haveProduct();
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+4 days')),
                 PriceProductScheduleTransfer::IS_CURRENT => true,
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::PRICE_TYPE => [
-                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
-                    ],
-                ],
+                PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
         );
 
@@ -237,13 +197,7 @@ class PriceProductScheduleDateTest extends Unit
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom2,
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+4 days')),
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::PRICE_TYPE => [
-                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
-                    ],
-                ],
+                PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
         );
 
@@ -269,18 +223,11 @@ class PriceProductScheduleDateTest extends Unit
     public function testPriceProductScheduleShouldApplyForLowestDuration(DateTime $activeFrom, DateTime $activeFrom2): void
     {
         // Assign
-        $productConcreteTransfer = $this->tester->haveProduct();
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::PRICE_TYPE => [
-                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
-                    ],
-                ],
+                PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
         );
 
@@ -288,13 +235,7 @@ class PriceProductScheduleDateTest extends Unit
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom2,
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::PRICE_TYPE => [
-                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
-                    ],
-                ],
+                PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
         );
 
@@ -315,19 +256,12 @@ class PriceProductScheduleDateTest extends Unit
     public function testEndedPriceProductScheduleShouldBeEnabledAndTheNewOneShouldApply(): void
     {
         // Assign
-        $productConcreteTransfer = $this->tester->haveProduct();
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::ACTIVE_TO => new DateTime(),
                 PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
                 PriceProductScheduleTransfer::IS_CURRENT => true,
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::PRICE_TYPE => [
-                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
-                    ],
-                ],
+                PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
         );
 
@@ -335,13 +269,7 @@ class PriceProductScheduleDateTest extends Unit
             [
                 PriceProductScheduleTransfer::ACTIVE_TO => new DateTime(),
                 PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::PRICE_TYPE => [
-                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
-                    ],
-                ],
+                PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
         );
 
@@ -349,13 +277,7 @@ class PriceProductScheduleDateTest extends Unit
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::PRICE_TYPE => [
-                        PriceTypeTransfer::NAME => $this->priceProductFacade->getDefaultPriceTypeName(),
-                        PriceTypeTransfer::ID_PRICE_TYPE => $this->tester->getPriceTypeId($this->priceProductFacade->getDefaultPriceTypeName()),
-                    ],
-                ],
+                PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
         );
 
@@ -371,6 +293,31 @@ class PriceProductScheduleDateTest extends Unit
 
         $priceProductScheduleEntity3 = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer3->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity3->isCurrent(), 'Scheduled price with active date range should have been set as current.');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPriceProductData(): array
+    {
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $currencyId = $this->tester->haveCurrency();
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $priceType = $this->tester->havePriceType();
+
+        return [
+            PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+            PriceProductTransfer::PRICE_TYPE => [
+                PriceTypeTransfer::NAME => $priceType->getName(),
+                PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
+            ],
+            PriceProductTransfer::MONEY_VALUE => [
+                MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                MoneyValueTransfer::NET_AMOUNT => 100,
+                MoneyValueTransfer::GROSS_AMOUNT => 120,
+            ],
+        ];
     }
 
     /**

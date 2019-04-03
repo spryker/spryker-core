@@ -9,6 +9,7 @@ namespace SprykerTest\Shared\PriceProduct\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\PriceProductBuilder;
+use Generated\Shared\DataBuilder\PriceTypeBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
@@ -65,18 +66,27 @@ class PriceProductDataHelper extends Module
     }
 
     /**
-     * @param string $priceTypeName
+     * @param array $priceTypeData
      *
      * @return \Generated\Shared\Transfer\PriceTypeTransfer
      */
-    public function havePriceType(string $priceTypeName): PriceTypeTransfer
+    public function havePriceType(array $priceTypeData = []): PriceTypeTransfer
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
-        $priceTypeId = $priceProductFacade->createPriceType($priceTypeName);
+        $priceTypeTransfer = (new PriceTypeBuilder())
+            ->seed($priceTypeData)
+            ->build();
 
-        return (new PriceTypeTransfer())
-            ->setName($priceTypeName)
+        $existingPriceTypeTransfer = $priceProductFacade->findPriceTypeByName($priceTypeTransfer->getName());
+
+        if ($existingPriceTypeTransfer !== null) {
+            return $existingPriceTypeTransfer;
+        }
+
+        $priceTypeId = $priceProductFacade->createPriceType($priceTypeTransfer->getName());
+
+        return $priceTypeTransfer
             ->setIdPriceType($priceTypeId);
     }
 
@@ -178,7 +188,7 @@ class PriceProductDataHelper extends Module
      *
      * @return int|null
      */
-    public function getPriceTypeId(string $name): ?int
+    protected function getPriceTypeId(string $name): ?int
     {
         $spyPriceTypeEntity = $this->getPriceProductQueryContainer()->queryPriceType($name)->findOne();
 
