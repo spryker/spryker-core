@@ -30,7 +30,7 @@ class OrderPaymentsResourceRoutePlugin extends AbstractPlugin implements Resourc
         $resourceRouteCollection
             ->addPost(
                 OrderPaymentsRestApiConfig::ACTION_ORDER_PAYMENTS_POST,
-                OrderPaymentsRestApiConfig::RESOURCE_ORDER_PAYMENTS_IS_PROTECTED
+                OrderPaymentsRestApiConfig::RESOURCE_ORDER_PAYMENTS_POST_ACTION_IS_PROTECTED
             );
 
         return $resourceRouteCollection;

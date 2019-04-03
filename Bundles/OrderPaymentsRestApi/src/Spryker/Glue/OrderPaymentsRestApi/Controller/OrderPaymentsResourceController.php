@@ -37,6 +37,8 @@ class OrderPaymentsResourceController extends AbstractController
      */
     public function postAction(RestRequestInterface $restRequest, RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer): RestResponseInterface
     {
-        return $this->getFactory()->createOrderPaymentUpdater()->updateOrderPayment($restRequest, $restOrderPaymentsAttributesTransfer);
+        return $this->getFactory()
+            ->createOrderPaymentUpdater()
+            ->updateOrderPayment($restRequest, $restOrderPaymentsAttributesTransfer);
     }
 }

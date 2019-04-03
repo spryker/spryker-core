@@ -35,7 +35,8 @@ class OrderPaymentsRestApiZedStub implements OrderPaymentsRestApiZedStubInterfac
         UpdateOrderPaymentRequestTransfer $updateOrderPaymentRequestTransfer
     ): UpdateOrderPaymentResponseTransfer {
         /** @var \Generated\Shared\Transfer\UpdateOrderPaymentResponseTransfer $updateOrderPaymentResponseTransfer */
-        $updateOrderPaymentResponseTransfer = $this->zedRequestClient->call('/order-payments-rest-api/gateway/update-order-payment', $updateOrderPaymentRequestTransfer);
+        $updateOrderPaymentResponseTransfer = $this->zedRequestClient
+            ->call('/order-payments-rest-api/gateway/update-order-payment', $updateOrderPaymentRequestTransfer);
 
         return $updateOrderPaymentResponseTransfer;
     }
