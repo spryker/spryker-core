@@ -13,7 +13,7 @@ use Orm\Zed\Content\Persistence\SpyContentQuery;
 
 class ContentProductDataImportHelper extends Module
 {
-    private const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
+    protected const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
 
     /**
      * @return void

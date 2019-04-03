@@ -12,6 +12,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ContentProductDataImportConfig extends DataImportConfig
 {
+    public const IMPORT_FILE_NAME = 'content_product_abstract_list.csv';
     public const IMPORT_TYPE_CONTENT_PRODUCT = 'content-product-abstract-list';
 
     /**
@@ -21,7 +22,7 @@ class ContentProductDataImportConfig extends DataImportConfig
     {
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
         return $this->buildImporterConfiguration(
-            $moduleDataImportDirectory . 'content_product_abstract_list.csv',
+            $moduleDataImportDirectory . static::IMPORT_FILE_NAME,
             static::IMPORT_TYPE_CONTENT_PRODUCT
         );
     }

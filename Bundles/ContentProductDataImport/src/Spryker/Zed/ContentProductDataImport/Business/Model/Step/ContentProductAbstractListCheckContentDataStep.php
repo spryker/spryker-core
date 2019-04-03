@@ -58,7 +58,7 @@ class ContentProductAbstractListCheckContentDataStep implements DataImportStepIn
      *
      * @return array
      */
-    private function getErrorMessages(ContentValidationResponseTransfer $contentValidationResponseTransfer): array
+    protected function getErrorMessages(ContentValidationResponseTransfer $contentValidationResponseTransfer): array
     {
         $messages = [];
 
