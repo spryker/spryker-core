@@ -13,7 +13,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSetInterface;
 use Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportConfig;
 
-class ListNameToIdListWriterStep implements DataImportStepInterface
+class PriceProductScheduleListNameToIdStep implements DataImportStepInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportConfig

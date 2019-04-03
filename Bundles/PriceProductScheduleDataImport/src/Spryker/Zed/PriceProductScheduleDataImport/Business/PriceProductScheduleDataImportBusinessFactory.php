@@ -13,8 +13,8 @@ use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\PriceProductSchedu
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\AbstractSkuToIdProductAbstractStep;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\ConcreteSkuToIdProductStep;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\CurrencyToIdCurrencyStep;
-use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\ListNameToIdListWriterStep;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\PreparePriceDataStep;
+use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\PriceProductScheduleListNameToIdStep;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\PriceTypeToIdPriceType;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\StoreToIdStoreStep;
 
@@ -33,7 +33,7 @@ class PriceProductScheduleDataImportBusinessFactory extends DataImportBusinessFa
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker = $dataSetStepBroker->addStep($this->createListNameToIdListWriterStep());
+        $dataSetStepBroker = $dataSetStepBroker->addStep($this->createPriceProductScheduleListNameToIdStep());
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createAbstractSkuToIdProductAbstractStep());
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createConcreteSkuToIdProductStep());
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createStoreToIdStoreStep());
@@ -82,9 +82,9 @@ class PriceProductScheduleDataImportBusinessFactory extends DataImportBusinessFa
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createListNameToIdListWriterStep(): DataImportStepInterface
+    public function createPriceProductScheduleListNameToIdStep(): DataImportStepInterface
     {
-        return new ListNameToIdListWriterStep($this->getConfig());
+        return new PriceProductScheduleListNameToIdStep($this->getConfig());
     }
 
     /**
