@@ -10,7 +10,7 @@ namespace Spryker\Zed\Content\Dependency;
 interface ContentEvents
 {
     /**
-     * @deprecated Use instead CONTENT_PUBLISH.
+     * @deprecated use CONTENT_PUBLISH instead.
      *
      * Specification
      * - This events will be used for spy_content publishing.
@@ -45,7 +45,7 @@ interface ContentEvents
 
     /**
      * Specification
-     * - This events will be used for spy_content publishing.
+     * - This events will be used for content publishing.
      *
      * @api
      */

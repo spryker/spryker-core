@@ -28,7 +28,7 @@ class ContentConstraintsProvider implements ContentConstraintsProviderInterface
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getNameConstraints(): array
+    protected function getNameConstraints(): array
     {
         return [
             new NotBlank(),
@@ -40,7 +40,7 @@ class ContentConstraintsProvider implements ContentConstraintsProviderInterface
     /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getDescriptionConstraints(): array
+    protected function getDescriptionConstraints(): array
     {
         return [
             new NotBlank(),
