@@ -27,14 +27,4 @@
         <property name="customerReference" type="string" />
     </transfer>
 
-    <transfer name="UuidGeneratorConfiguration">
-        <property name="module" type="string"/>
-        <property name="table" type="string"/>
-    </transfer>
-
-    <transfer name="UuidGeneratorReport">
-        <property name="table" type="string"/>
-        <property name="count" type="int"/>
-    </transfer>
-
 </transfers>

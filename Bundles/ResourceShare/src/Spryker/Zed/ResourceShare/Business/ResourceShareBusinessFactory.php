@@ -23,6 +23,7 @@ use Spryker\Zed\ResourceShare\ResourceShareDependencyProvider;
 /**
  * @method \Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface getRepository()
  * @method \Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ResourceShare\ResourceShareConfig getConfig()
  */
 class ResourceShareBusinessFactory extends AbstractBusinessFactory
 {

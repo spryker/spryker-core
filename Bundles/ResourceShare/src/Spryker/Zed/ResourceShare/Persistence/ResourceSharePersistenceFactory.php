@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ResourceShare\ResourceShareConfig getConfig()
  */
 class ResourceSharePersistenceFactory extends AbstractPersistenceFactory
 {

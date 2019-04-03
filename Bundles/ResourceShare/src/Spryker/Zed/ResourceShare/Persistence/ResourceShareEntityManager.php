@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 /**
  * @method \Spryker\Zed\ResourceShare\Persistence\ResourceSharePersistenceFactory getFactory()
  */
-class ResourceShareEntityManager extends AbstractEntityManager
+class ResourceShareEntityManager extends AbstractEntityManager implements ResourceShareEntityManagerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer

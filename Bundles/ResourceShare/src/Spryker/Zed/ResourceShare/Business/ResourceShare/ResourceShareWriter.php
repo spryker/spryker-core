@@ -19,7 +19,7 @@ class ResourceShareWriter implements ResourceShareWriterInterface
     protected const ERROR_MESSAGE_RESOURCE_TYPE_IS_NOT_DEFINED = 'Resource type is not defined.';
     protected const ERROR_MESSAGE_RESOURCE_DATA_IS_NOT_DEFINED = 'Resource data is not defined.';
     protected const ERROR_MESSAGE_CUSTOMER_REFERENCE_IS_NOT_DEFINED = 'Customer reference is not defined.';
-    protected const ERROR_MESSAGE_RESOURCE_SHARE_ALREADY_EXISTS = 'Resource share already exists.';
+    protected const ERROR_MESSAGE_RESOURCE_IS_ALREADY_SHARED = 'Resource is already shared.';
 
     /**
      * @var \Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface
@@ -71,7 +71,7 @@ class ResourceShareWriter implements ResourceShareWriterInterface
         if (!$resourceShareTransfer) {
             return $resourceShareResponseTransfer->setIsSuccessful(false)
                 ->addErrorMessage(
-                    (new MessageTransfer())->setValue(static::ERROR_MESSAGE_RESOURCE_SHARE_ALREADY_EXISTS)
+                    (new MessageTransfer())->setValue(static::ERROR_MESSAGE_RESOURCE_IS_ALREADY_SHARED)
                 );
         }
 
@@ -117,6 +117,7 @@ class ResourceShareWriter implements ResourceShareWriterInterface
             );
         }
 
-        return $resourceShareResponseTransfer->setIsSuccessful(true);
+        return $resourceShareResponseTransfer->setIsSuccessful(true)
+            ->setResourceShare($resourceShareTransfer);
     }
 }
