@@ -49,7 +49,9 @@ class ResourceShareFacade extends AbstractFacade implements ResourceShareFacadeI
         string $uuid,
         ?CustomerTransfer $customerTransfer
     ): ResourceShareResponseTransfer {
-        // TODO: Implement activateResourceShare() method.
+        return $this->getFactory()
+            ->createResourceShareActivator()
+            ->activateResourceShare($uuid, $customerTransfer);
     }
 
     /**

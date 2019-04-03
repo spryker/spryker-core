@@ -8,11 +8,16 @@
 namespace Spryker\Zed\ResourceShare\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareActivator;
+use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareActivatorInterface;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareWriter;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareWriterInterface;
-use Spryker\Zed\ResourceShare\Dependency\Facade\ResourceShareToUuidFacadeInterface;
+use Spryker\Zed\ResourceShare\Business\Uuid\ResourceShareUuidGenerator;
+use Spryker\Zed\ResourceShare\Business\Uuid\ResourceShareUuidGeneratorInterface;
+use Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilEncodingServiceInterface;
+use Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilUuidGeneratorServiceInterface;
 use Spryker\Zed\ResourceShare\ResourceShareDependencyProvider;
 
 /**
@@ -39,15 +44,53 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
         return new ResourceShareWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getUuidFacade()
+            $this->createResourceShareUuidGenerator()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ResourceShare\Dependency\Facade\ResourceShareToUuidFacadeInterface
+     * @return \Spryker\Zed\ResourceShare\Business\Uuid\ResourceShareUuidGeneratorInterface
      */
-    public function getUuidFacade(): ResourceShareToUuidFacadeInterface
+    public function createResourceShareUuidGenerator(): ResourceShareUuidGeneratorInterface
     {
-        return $this->getProvidedDependency(ResourceShareDependencyProvider::FACADE_UUID);
+        return new ResourceShareUuidGenerator(
+            $this->getUtilEncodingService(),
+            $this->getUtilUuidService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareActivatorInterface
+     */
+    public function createResourceShareActivator(): ResourceShareActivatorInterface
+    {
+        return new ResourceShareActivator(
+            $this->createResourceShareReader(),
+            $this->getResourceShareActivatorStrategyPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ResourceShareToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ResourceShareDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilUuidGeneratorServiceInterface
+     */
+    public function getUtilUuidService(): ResourceShareToUtilUuidGeneratorServiceInterface
+    {
+        return $this->getProvidedDependency(ResourceShareDependencyProvider::SERVICE_UTIL_UUID_GENERATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[]
+     */
+    public function getResourceShareActivatorStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(ResourceShareDependencyProvider::PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY);
     }
 }
