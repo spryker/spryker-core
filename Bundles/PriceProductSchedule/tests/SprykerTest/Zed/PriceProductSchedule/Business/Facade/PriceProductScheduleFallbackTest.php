@@ -57,6 +57,11 @@ class PriceProductScheduleFallbackTest extends Unit
     protected $spyPriceProductScheduleQuery;
 
     /**
+     * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
+     */
+    protected $currencyFacade;
+
+    /**
      * @return void
      */
     public function setUp(): void
@@ -66,6 +71,7 @@ class PriceProductScheduleFallbackTest extends Unit
         $this->priceProductFacade = $this->tester->getLocator()->priceProduct()->facade();
         $this->storeFacade = $this->tester->getLocator()->store()->facade();
         $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
+        $this->currencyFacade = $this->tester->getLocator()->currency()->facade();
     }
 
     /**
@@ -75,37 +81,78 @@ class PriceProductScheduleFallbackTest extends Unit
     {
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
+        $priceTypeTransfer1 = $this->tester->havePriceType();
+        $storeTransfer = $this->storeFacade->getCurrentStore();
 
-        $priceTypeTransfer = (new PriceTypeTransfer())
-            ->setIdPriceType(static::PRICE_TYPE_ID)
-            ->setName(static::PRICE_TYPE_NAME_ORIGINAL);
-
-        $priceProductOverrideData = [
+        $this->tester->havePriceProduct([
             PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
             PriceProductTransfer::SKU_PRODUCT => $productConcreteTransfer->getSku(),
             PriceProductTransfer::ID_PRICE_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
-            PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer,
-        ];
+            PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer1,
+            PriceProductTransfer::MONEY_VALUE => [
+                MoneyValueTransfer::NET_AMOUNT => 100,
+                MoneyValueTransfer::GROSS_AMOUNT => 100,
+                MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+            ],
+        ]);
 
-        $this->tester->havePriceProduct($priceProductOverrideData);
+        $priceTypeTransfer2 = $this->tester->havePriceType();
 
-        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule($this->getPriceProductScheduleData($productConcreteTransfer));
+        $productPrice2 = $this->tester->havePriceProduct([
+            PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+            PriceProductTransfer::SKU_PRODUCT => $productConcreteTransfer->getSku(),
+            PriceProductTransfer::ID_PRICE_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
+            PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer2,
+            PriceProductTransfer::MONEY_VALUE => [
+                MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                MoneyValueTransfer::NET_AMOUNT => 200,
+                MoneyValueTransfer::GROSS_AMOUNT => 200,
+            ],
+        ]);
+
+        $currencyId = $this->tester->haveCurrency();
+        $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
+
+        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule([
+            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-1 hour')),
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                PriceProductTransfer::PRICE_TYPE => [
+                    PriceTypeTransfer::NAME => $priceTypeTransfer1->getName(),
+                    PriceTypeTransfer::ID_PRICE_TYPE => $priceTypeTransfer1->getIdPriceType(),
+                ],
+                PriceProductTransfer::MONEY_VALUE => [
+                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::CURRENCY => $currencyTransfer,
+                    MoneyValueTransfer::NET_AMOUNT => 100,
+                    MoneyValueTransfer::GROSS_AMOUNT => 100,
+                ],
+            ],
+        ]);
+
+        $priceProductScheduleFacade = $this->tester->getFacade();
+        $priceProductScheduleFacade->setFactory(
+            (new PriceProductScheduleBusinessFactory())
+                ->setConfig($this->getConfigMock($priceTypeTransfer1->getName(), $priceTypeTransfer2->getName()))
+        );
 
         // Act
-        $facade = $this->tester->getFacade();
-        $facade->setFactory((new PriceProductScheduleBusinessFactory())->setConfig($this->getConfigMock()));
-        $facade->applyScheduledPrices();
+        $priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setSku($productConcreteTransfer->getSku())
             ->setStoreName($this->storeFacade->getCurrentStore()->getName())
-            ->setCurrency($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getCurrency())
-            ->setIdProduct($productConcreteTransfer->getIdProductConcrete());
+            ->setCurrencyIsoCode($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getCurrency()->getCode());
 
         $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
-        $this->assertEquals(static::DEFAULT_PRICE_TYPE_ID, $priceProductTransfer->getFkPriceType(), 'Product price type should be reverted after scheduled price is over.');
+
+        $this->assertEquals($productPrice2->getMoneyValue()->getNetAmount(), $priceProductTransfer->getMoneyValue()->getNetAmount(), 'Product price type should be reverted after scheduled price is over.');
+        $this->assertEquals($productPrice2->getMoneyValue()->getGrossAmount(), $priceProductTransfer->getMoneyValue()->getGrossAmount(), 'Product price type should be reverted after scheduled price is over.');
     }
 
     /**
@@ -118,10 +165,11 @@ class PriceProductScheduleFallbackTest extends Unit
 
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule($this->getPriceProductScheduleData($productConcreteTransfer));
 
+        $priceProductScheduleFacade = $this->tester->getFacade();
+        $priceProductScheduleFacade->setFactory((new PriceProductScheduleBusinessFactory())->setConfig($this->getNotConfiguredConfigMock()));
+
         // Act
-        $facade = $this->tester->getFacade();
-        $facade->setFactory((new PriceProductScheduleBusinessFactory())->setConfig($this->getNotConfiguredConfigMock()));
-        $facade->applyScheduledPrices();
+        $priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
@@ -157,8 +205,6 @@ class PriceProductScheduleFallbackTest extends Unit
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
                     MoneyValueTransfer::FK_CURRENCY => $currencyId,
-                    MoneyValueTransfer::NET_AMOUNT => 100,
-                    MoneyValueTransfer::GROSS_AMOUNT => 120,
                 ],
             ],
         ];
@@ -173,16 +219,19 @@ class PriceProductScheduleFallbackTest extends Unit
     }
 
     /**
+     * @param string $priceTypeName
+     * @param string $fallbackPriceTypeName
+     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
      */
-    protected function getConfigMock()
+    protected function getConfigMock(string $priceTypeName, string $fallbackPriceTypeName)
     {
         $configMock = $this->getMockBuilder(PriceProductScheduleConfig::class)
-            ->setMethods(['findFallbackPriceType'])
+            ->setMethods(['getFallbackPriceTypeList'])
             ->getMock();
 
-        $configMock->method('findFallbackPriceType')
-            ->willReturn(PriceProductScheduleConfig::PRICE_TYPE_ORIGINAL);
+        $configMock->method('getFallbackPriceTypeList')
+            ->willReturn([$priceTypeName => $fallbackPriceTypeName]);
 
         return $configMock;
     }
@@ -193,11 +242,11 @@ class PriceProductScheduleFallbackTest extends Unit
     protected function getNotConfiguredConfigMock()
     {
         $configMock = $this->getMockBuilder(PriceProductScheduleConfig::class)
-            ->setMethods(['findFallbackPriceType'])
+            ->setMethods(['getFallbackPriceTypeList'])
             ->getMock();
 
-        $configMock->method('findFallbackPriceType')
-            ->willReturn(null);
+        $configMock->method('getFallbackPriceTypeList')
+            ->willReturn([]);
 
         return $configMock;
     }

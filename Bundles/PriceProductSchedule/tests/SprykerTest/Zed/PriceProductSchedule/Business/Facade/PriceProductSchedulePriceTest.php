@@ -133,8 +133,6 @@ class PriceProductSchedulePriceTest extends Unit
                     PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
-                    MoneyValueTransfer::GROSS_AMOUNT => 100,
-                    MoneyValueTransfer::NET_AMOUNT => 200,
                     MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
                     MoneyValueTransfer::FK_CURRENCY => $currencyId,
                 ],

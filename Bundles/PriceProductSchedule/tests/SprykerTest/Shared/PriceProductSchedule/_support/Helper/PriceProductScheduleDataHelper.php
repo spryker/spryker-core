@@ -40,30 +40,7 @@ class PriceProductScheduleDataHelper extends Module
      */
     public function havePriceProductSchedule(array $priceProductScheduleOverrideData = []): PriceProductScheduleTransfer
     {
-        $priceTypeTransfer = (new PriceTypeBuilder($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::PRICE_TYPE]))
-            ->build();
-        unset($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::PRICE_TYPE]);
-
-        $moneyValueTransfer = (new MoneyValueBuilder($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE]))
-            ->build();
-        unset($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE]);
-
-        $priceProductData = [
-            PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer,
-            PriceProductTransfer::MONEY_VALUE => $moneyValueTransfer,
-        ];
-
-        $priceProductOverrideData = $priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT];
-        $priceProductTransfer = (new PriceProductBuilder(array_merge($priceProductData, $priceProductOverrideData)))
-            ->build();
-        unset($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT]);
-
-        $priceProductScheduleData = [
-            PriceProductScheduleTransfer::PRICE_PRODUCT_SCHEDULE_LIST => $this->havePriceProductScheduleList(),
-            PriceProductScheduleTransfer::PRICE_PRODUCT => $priceProductTransfer,
-        ];
-
-        $priceProductScheduleTransfer = (new PriceProductScheduleBuilder(array_merge($priceProductScheduleData, $priceProductScheduleOverrideData)))
+        $priceProductScheduleTransfer = (new PriceProductScheduleBuilder($this->preparePriceProductScheduleData($priceProductScheduleOverrideData)))
             ->build();
 
         $spyPriceProductScheduleEntity = $this->mapPriceProductScheduleTransferToEntity($priceProductScheduleTransfer);
@@ -160,5 +137,36 @@ class PriceProductScheduleDataHelper extends Module
         $spyPriceProductScheduleEntity->setFkPriceProductScheduleList($priceProductScheduleTransfer->getPriceProductScheduleList()->getIdPriceProductScheduleList());
 
         return $spyPriceProductScheduleEntity;
+    }
+
+    /**
+     * @param array $priceProductScheduleOverrideData
+     *
+     * @return array
+     */
+    protected function preparePriceProductScheduleData(array $priceProductScheduleOverrideData): array
+    {
+        $priceTypeTransfer = (new PriceTypeBuilder($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::PRICE_TYPE]))
+            ->build();
+        unset($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::PRICE_TYPE]);
+
+        $moneyValueTransfer = (new MoneyValueBuilder($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE]))
+            ->build();
+        unset($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE]);
+
+        $priceProductData = $priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT];
+        $priceProductData[PriceProductTransfer::PRICE_TYPE] = $priceTypeTransfer;
+        $priceProductData[PriceProductTransfer::MONEY_VALUE] = $moneyValueTransfer;
+
+        $priceProductTransfer = (new PriceProductBuilder($priceProductData))
+            ->build();
+        unset($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT]);
+
+        $priceProductScheduleData = [
+            PriceProductScheduleTransfer::PRICE_PRODUCT_SCHEDULE_LIST => $this->havePriceProductScheduleList(),
+            PriceProductScheduleTransfer::PRICE_PRODUCT => $priceProductTransfer,
+        ];
+
+        return array_merge($priceProductScheduleData, $priceProductScheduleOverrideData);
     }
 }

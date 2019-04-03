@@ -137,17 +137,17 @@ class PriceProductScheduleDateTest extends Unit
     /**
      * @dataProvider priceProductScheduleShouldStayActiveForLessDurationDataProvider
      *
-     * @param \DateTime $activeFrom
-     * @param \DateTime $activeFrom2
+     * @param \DateTime $lowestActiveFrom
+     * @param \DateTime $higherActiveFrom
      *
      * @return void
      */
-    public function testPriceProductScheduleShouldStayActiveForLessDuration(DateTime $activeFrom, DateTime $activeFrom2): void
+    public function testPriceProductScheduleShouldStayActiveForLessDuration(DateTime $lowestActiveFrom, DateTime $higherActiveFrom): void
     {
         // Assign
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
+                PriceProductScheduleTransfer::ACTIVE_FROM => $lowestActiveFrom,
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+7 days')),
                 PriceProductScheduleTransfer::IS_CURRENT => true,
                 PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
@@ -156,7 +156,7 @@ class PriceProductScheduleDateTest extends Unit
 
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom2,
+                PriceProductScheduleTransfer::ACTIVE_FROM => $higherActiveFrom,
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+7 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
@@ -176,17 +176,17 @@ class PriceProductScheduleDateTest extends Unit
     /**
      * @dataProvider priceProductScheduleShouldApplyForLessDurationDataProvider
      *
-     * @param \DateTime $activeFrom
-     * @param \DateTime $activeFrom2
+     * @param \DateTime $lowestActiveFrom
+     * @param \DateTime $higherActiveFrom
      *
      * @return void
      */
-    public function testPriceProductScheduleShouldApplyForLessDuration(DateTime $activeFrom, DateTime $activeFrom2): void
+    public function testPriceProductScheduleShouldApplyForLessDuration(DateTime $lowestActiveFrom, DateTime $higherActiveFrom): void
     {
         // Assign
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
+                PriceProductScheduleTransfer::ACTIVE_FROM => $lowestActiveFrom,
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+4 days')),
                 PriceProductScheduleTransfer::IS_CURRENT => true,
                 PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
@@ -195,7 +195,7 @@ class PriceProductScheduleDateTest extends Unit
 
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom2,
+                PriceProductScheduleTransfer::ACTIVE_FROM => $higherActiveFrom,
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+4 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
@@ -206,34 +206,34 @@ class PriceProductScheduleDateTest extends Unit
 
         //Assert
         $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $this->assertFalse($priceProductScheduleEntity->isCurrent(), 'Scheduled price with less duration should have been set as current.');
+        $this->assertTrue($priceProductScheduleEntity->isCurrent(), 'Scheduled price with less duration should have been set as current.');
 
         $priceProductScheduleEntity2 = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
-        $this->assertTrue($priceProductScheduleEntity2->isCurrent(), 'Scheduled price with longest duration should not have been set as current.');
+        $this->assertFalse($priceProductScheduleEntity2->isCurrent(), 'Scheduled price with longest duration should not have been set as current.');
     }
 
     /**
      * @dataProvider priceProductScheduleShouldApplyForLowestDurationDataProvider
      *
-     * @param \DateTime $activeFrom
-     * @param \DateTime $activeFrom2
+     * @param \DateTime $lowestActiveFrom
+     * @param \DateTime $higherActiveFrom
      *
      * @return void
      */
-    public function testPriceProductScheduleShouldApplyForLowestDuration(DateTime $activeFrom, DateTime $activeFrom2): void
+    public function testPriceProductScheduleShouldApplyForLowestDuration(DateTime $lowestActiveFrom, DateTime $higherActiveFrom): void
     {
         // Assign
-        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
+        $priceProductScheduleTransferWithLowestDuration = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom,
+                PriceProductScheduleTransfer::ACTIVE_FROM => $lowestActiveFrom,
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
         );
 
-        $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
+        $priceProductScheduleTransferWithHigherDuration = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => $activeFrom2,
+                PriceProductScheduleTransfer::ACTIVE_FROM => $higherActiveFrom,
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
@@ -243,11 +243,11 @@ class PriceProductScheduleDateTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $this->assertTrue($priceProductScheduleEntity->isCurrent(), 'Scheduled price with less duration should have been set as current.');
+        $priceProductScheduleEntityWithLowestDuration = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransferWithLowestDuration->getIdPriceProductSchedule());
+        $this->assertTrue($priceProductScheduleEntityWithLowestDuration->isCurrent(), 'Scheduled price with less duration should have been set as current.');
 
-        $priceProductScheduleEntity2 = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
-        $this->assertFalse($priceProductScheduleEntity2->isCurrent(), 'Scheduled price with less duration should have been set as current.');
+        $priceProductScheduleEntityWithHigherDuration = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransferWithHigherDuration->getIdPriceProductSchedule());
+        $this->assertFalse($priceProductScheduleEntityWithHigherDuration->isCurrent(), 'Scheduled price with less duration should have been set as current.');
     }
 
     /**
@@ -258,8 +258,8 @@ class PriceProductScheduleDateTest extends Unit
         // Assign
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_TO => new DateTime(),
                 PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
+                PriceProductScheduleTransfer::ACTIVE_TO => new DateTime(),
                 PriceProductScheduleTransfer::IS_CURRENT => true,
                 PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
@@ -267,15 +267,15 @@ class PriceProductScheduleDateTest extends Unit
 
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_TO => new DateTime(),
                 PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
+                PriceProductScheduleTransfer::ACTIVE_TO => new DateTime(),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
         );
 
         $priceProductScheduleTransfer3 = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
+                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime()),
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => $this->getPriceProductData(),
             ]
@@ -314,8 +314,6 @@ class PriceProductScheduleDateTest extends Unit
             PriceProductTransfer::MONEY_VALUE => [
                 MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
                 MoneyValueTransfer::FK_CURRENCY => $currencyId,
-                MoneyValueTransfer::NET_AMOUNT => 100,
-                MoneyValueTransfer::GROSS_AMOUNT => 120,
             ],
         ];
     }

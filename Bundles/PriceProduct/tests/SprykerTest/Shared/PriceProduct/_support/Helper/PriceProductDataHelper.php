@@ -86,8 +86,9 @@ class PriceProductDataHelper extends Module
 
         $priceTypeId = $priceProductFacade->createPriceType($priceTypeTransfer->getName());
 
-        return $priceTypeTransfer
-            ->setIdPriceType($priceTypeId);
+        $priceTypeTransfer->setIdPriceType($priceTypeId);
+
+        return $priceTypeTransfer;
     }
 
     /**
@@ -136,7 +137,7 @@ class PriceProductDataHelper extends Module
         }
 
         $priceProductDefaultData = [
-            PriceProductTransfer::PRICE_TYPE_NAME => $defaultPriceTypeName,
+            PriceProductTransfer::PRICE_TYPE_NAME => $priceTypeTransfer->getName(),
             PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer,
             PriceProductTransfer::PRICE_DIMENSION => $priceDimensionTransfer,
             PriceProductTransfer::FK_PRICE_TYPE => $priceTypeTransfer->getIdPriceType(),

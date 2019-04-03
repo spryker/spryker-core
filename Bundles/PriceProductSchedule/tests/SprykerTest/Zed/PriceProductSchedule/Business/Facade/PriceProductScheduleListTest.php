@@ -63,7 +63,7 @@ class PriceProductScheduleListTest extends Unit
     /**
      * @return void
      */
-    public function testPriceProductScheduleFromPriceProductScheduleListShouldNotApply(): void
+    public function testPriceProductScheduleFromInactivePriceProductScheduleListShouldNotApply(): void
     {
         // Assign
         $priceProductScheduleList = $this->tester->havePriceProductScheduleList([
@@ -88,8 +88,6 @@ class PriceProductScheduleListTest extends Unit
                     PriceProductTransfer::MONEY_VALUE => [
                         MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
                         MoneyValueTransfer::FK_CURRENCY => $currencyId,
-                        MoneyValueTransfer::NET_AMOUNT => 100,
-                        MoneyValueTransfer::GROSS_AMOUNT => 120,
                     ],
                 ],
             ]

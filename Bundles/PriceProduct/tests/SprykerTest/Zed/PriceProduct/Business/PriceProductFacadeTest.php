@@ -806,10 +806,14 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
+     * @group test111
+     *
      * @return void
      */
     public function testRemovePriceProductStoreShouldDeletePriceFromDatabase()
     {
+        // Assign
+        /** @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceProductFacade */
         $priceProductFacade = $this->getPriceProductFacade();
 
         $priceProductTransfer = $this->createProductWithAmount(
@@ -819,8 +823,11 @@ class PriceProductFacadeTest extends Unit
             '',
             self::EUR_ISO_CODE
         );
+
+        // Act
         $priceProductFacade->removePriceProductStore($priceProductTransfer);
 
+        // Assert
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setCurrencyIsoCode(self::EUR_ISO_CODE)
             ->setSku($priceProductTransfer->getSkuProduct());
