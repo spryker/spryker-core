@@ -7,11 +7,11 @@
 
     <table name="spy_resource_share" idMethod="native" phpName="SpyResourceShare">
         <column name="id_resource_share" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="customer_reference" required="true" type="VARCHAR" size="255" />
+        <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
         <column name="uuid" required="true" type="VARCHAR" size="255"/>
-        <column name="resource_type" required="true" type="VARCHAR" size="255" />
-        <column name="resource_data" required="false" type="LONGVARCHAR" />
-        <column name="expiry_date" required="false" type="timestamp" />
+        <column name="resource_type" required="true" type="VARCHAR" size="255"/>
+        <column name="resource_data" required="false" type="LONGVARCHAR"/>
+        <column name="expiry_date" required="false" type="timestamp"/>
 
         <id-method-parameter value="id_resource_share_pk_seq"/>
 
