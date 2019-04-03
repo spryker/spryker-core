@@ -13,12 +13,11 @@ use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 interface QuoteRequestReferenceGeneratorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      * @param string $customerReference
      *
      * @return string
      */
-    public function generateQuoteRequestReference(QuoteRequestTransfer $quoteRequestTransfer, string $customerReference);
+    public function generateQuoteRequestReference(string $customerReference);
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer

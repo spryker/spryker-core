@@ -294,7 +294,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     {
         $quoteRequestTransfer->setStatus($this->quoteRequestConfig->getInitialStatus());
         $quoteRequestTransfer->setQuoteRequestReference(
-            $this->quoteRequestReferenceGenerator->generateQuoteRequestReference($quoteRequestTransfer, $customerReference)
+            $this->quoteRequestReferenceGenerator->generateQuoteRequestReference($customerReference)
         );
 
         return $this->quoteRequestEntityManager->createQuoteRequest($quoteRequestTransfer);

@@ -80,15 +80,22 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
     }
 
     /**
-     * @param int $idCompanyUser
+     * @module CompanyUser
+     * @module Customer
+     *
+     * @param string $customerReference
      *
      * @return int
      */
-    public function countCustomerQuoteRequests(int $idCompanyUser): int
+    public function countCustomerQuoteRequests(string $customerReference): int
     {
         return $this->getFactory()
             ->getQuoteRequestPropelQuery()
-            ->filterByFkCompanyUser($idCompanyUser)
+            ->useCompanyUserQuery()
+                ->useCustomerQuery()
+                    ->filterByCustomerReference($customerReference)
+                ->endUse()
+            ->endUse()
             ->count();
     }
 
