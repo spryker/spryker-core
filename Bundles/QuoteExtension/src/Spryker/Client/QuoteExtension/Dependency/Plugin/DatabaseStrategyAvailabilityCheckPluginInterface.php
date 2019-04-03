@@ -13,7 +13,7 @@ interface DatabaseStrategyAvailabilityCheckPluginInterface
 {
     /**
      * Specification:
-     * - Checks database strategy availability.
+     * - Checks if database strategy is allowed.
      *
      * @api
      *
