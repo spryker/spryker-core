@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Mapper\CompanyBusinessUnitAddressMapperInterface;
@@ -52,21 +53,16 @@ class CompanyBusinessUnitAddressResourceRelationshipExpander implements CompanyB
              * @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $payload
              */
             $payload = $resource->getPayload();
-            if ($payload === null || !($payload instanceof CompanyBusinessUnitTransfer)) {
-                continue;
-            }
-
             $addressCollectionTransfer = $payload->getAddressCollection();
-            if ($addressCollectionTransfer === null || !$addressCollectionTransfer->getCompanyUnitAddresses()->count()) {
+
+            if (!$this->isValidPayloadType($payload) || !$this->hasAddressCollection($addressCollectionTransfer)) {
                 continue;
             }
 
             foreach ($addressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddress) {
-                $companyBusinessUnitResource = $this->createCompanyBusinessUnitAddressResource(
+                $resource->addRelationship($this->createCompanyBusinessUnitAddressResource(
                     $companyUnitAddress
-                );
-
-                $resource->addRelationship($companyBusinessUnitResource);
+                ));
             }
         }
 
@@ -91,5 +87,25 @@ class CompanyBusinessUnitAddressResourceRelationshipExpander implements CompanyB
             $restCompanyBusinessUnitAttributesTransfer,
             $companyUnitAddressTransfer->getUuid()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $payload
+     *
+     * @return bool
+     */
+    protected function isValidPayloadType(?CompanyBusinessUnitTransfer $payload = null): bool
+    {
+        return $payload && $payload instanceof CompanyBusinessUnitTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer|null $addressCollectionTransfer
+     *
+     * @return bool
+     */
+    protected function hasAddressCollection(?CompanyUnitAddressCollectionTransfer $addressCollectionTransfer = null): bool
+    {
+        return $addressCollectionTransfer && $addressCollectionTransfer->getCompanyUnitAddresses()->count();
     }
 }

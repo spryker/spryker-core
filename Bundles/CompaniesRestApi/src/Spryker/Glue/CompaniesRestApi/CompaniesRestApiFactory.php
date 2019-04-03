@@ -36,7 +36,7 @@ class CompaniesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CompaniesRestApi\Processor\Company\Reader\CompanyReader
+     * @return \Spryker\Glue\CompaniesRestApi\Processor\Company\Reader\CompanyReaderInterface
      */
     public function createCompanyReader(): CompanyReaderInterface
     {

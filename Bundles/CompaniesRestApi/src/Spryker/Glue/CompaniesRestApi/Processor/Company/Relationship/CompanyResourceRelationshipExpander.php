@@ -14,6 +14,7 @@ use Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterfac
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class CompanyResourceRelationshipExpander implements CompanyResourceRelationshipExpanderInterface
 {
@@ -61,10 +62,8 @@ class CompanyResourceRelationshipExpander implements CompanyResourceRelationship
              */
             $payload = $resource->getPayload();
 
-            foreach ($this->config->getExtendableResourceTransfers() as $extendableResourceTransfer) {
-                if ($payload === null || !($payload instanceof $extendableResourceTransfer)) {
-                    continue;
-                }
+            if (!$payload || !$this->checkValidPayloadType($payload)) {
+                continue;
             }
 
             $companyTransfer = $payload->getCompany();
@@ -96,5 +95,21 @@ class CompanyResourceRelationshipExpander implements CompanyResourceRelationship
             $companyTransfer->getUuid(),
             $restCompanyAttributesTransfer
         );
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $payload
+     *
+     * @return bool
+     */
+    protected function checkValidPayloadType(AbstractTransfer $payload): bool
+    {
+        foreach ($this->config->getExtendableResourceTransfers() as $extendableResourceTransfer) {
+            if ($payload instanceof $extendableResourceTransfer) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
