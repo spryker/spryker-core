@@ -14,7 +14,7 @@ interface OrderPaymentsRestApiClientInterface
 {
     /**
      * Specification:
-     * -
+     * - Updates order payment information.
      *
      * @api
      *

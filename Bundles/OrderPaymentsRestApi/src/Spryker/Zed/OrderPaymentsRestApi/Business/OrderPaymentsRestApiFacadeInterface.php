@@ -14,7 +14,7 @@ interface OrderPaymentsRestApiFacadeInterface
 {
     /**
      * Specification:
-     * -
+     * - Updates order payment information.
      *
      * @api
      *
