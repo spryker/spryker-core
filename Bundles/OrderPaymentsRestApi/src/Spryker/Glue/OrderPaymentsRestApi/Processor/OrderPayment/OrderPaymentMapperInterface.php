@@ -10,34 +10,28 @@ namespace Spryker\Glue\OrderPaymentsRestApi\Processor\OrderPayment;
 use Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer;
 use Generated\Shared\Transfer\UpdateOrderPaymentRequestTransfer;
 use Generated\Shared\Transfer\UpdateOrderPaymentResponseTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 interface OrderPaymentMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
+     * @param \Generated\Shared\Transfer\UpdateOrderPaymentRequestTransfer $updateOrderPaymentRequestTransfer
      *
      * @return \Generated\Shared\Transfer\UpdateOrderPaymentRequestTransfer
      */
     public function mapRestOrderPaymentsAttributesTransferToUpdateOrderPaymentRequestTransfer(
-        RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
+        RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer,
+        UpdateOrderPaymentRequestTransfer $updateOrderPaymentRequestTransfer
     ): UpdateOrderPaymentRequestTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\UpdateOrderPaymentResponseTransfer $updateOrderPaymentResponseTransfer
+     * @param \Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer
      */
     public function mapUpdateOrderPaymentResponseTransferToRestOrderPaymentsAttributesTransfer(
-        UpdateOrderPaymentResponseTransfer $updateOrderPaymentResponseTransfer
-    ): RestOrderPaymentsAttributesTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    public function mapOrderPaymentResource(
+        UpdateOrderPaymentResponseTransfer $updateOrderPaymentResponseTransfer,
         RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
-    ): RestResourceInterface;
+    ): RestOrderPaymentsAttributesTransfer;
 }

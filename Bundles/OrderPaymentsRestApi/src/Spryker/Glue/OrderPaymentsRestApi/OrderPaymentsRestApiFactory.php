@@ -40,7 +40,7 @@ class OrderPaymentsRestApiFactory extends AbstractFactory
      */
     public function createOrderPaymentMapper(): OrderPaymentMapperInterface
     {
-        return new OrderPaymentMapper($this->getResourceBuilder());
+        return new OrderPaymentMapper();
     }
 
     /**

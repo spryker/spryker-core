@@ -7,17 +7,19 @@
 
 namespace Spryker\Glue\OrderPaymentsRestApi\Processor\RestResponseBuilder;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface OrderPaymentRestResponseBuilderInterface
 {
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $orderPaymentResource
+     * @param \Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createOrderPaymentRestResponse(RestResourceInterface $orderPaymentResource): RestResponseInterface;
+    public function createOrderPaymentRestResponse(
+        RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
+    ): RestResponseInterface;
 
     /**
      * @param string $errorCode

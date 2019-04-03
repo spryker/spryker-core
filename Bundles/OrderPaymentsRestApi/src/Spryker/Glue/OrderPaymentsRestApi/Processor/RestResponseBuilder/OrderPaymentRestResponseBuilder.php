@@ -8,9 +8,10 @@
 namespace Spryker\Glue\OrderPaymentsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\OrderPaymentsRestApi\OrderPaymentsRestApiConfig;
 
 class OrderPaymentRestResponseBuilder implements OrderPaymentRestResponseBuilderInterface
 {
@@ -28,12 +29,19 @@ class OrderPaymentRestResponseBuilder implements OrderPaymentRestResponseBuilder
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $orderPaymentRestResource
+     * @param \Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createOrderPaymentRestResponse(RestResourceInterface $orderPaymentRestResource): RestResponseInterface
-    {
+    public function createOrderPaymentRestResponse(
+        RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
+    ): RestResponseInterface {
+        $orderPaymentRestResource = $this->restResourceBuilder->createRestResource(
+            OrderPaymentsRestApiConfig::RESOURCE_ORDER_PAYMENTS,
+            $restOrderPaymentsAttributesTransfer->getPaymentIdentifier(),
+            $restOrderPaymentsAttributesTransfer
+        );
+
         return $this->restResourceBuilder->createRestResponse()->addResource($orderPaymentRestResource);
     }
 

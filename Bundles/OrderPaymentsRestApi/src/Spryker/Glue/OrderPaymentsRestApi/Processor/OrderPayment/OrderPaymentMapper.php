@@ -10,63 +10,32 @@ namespace Spryker\Glue\OrderPaymentsRestApi\Processor\OrderPayment;
 use Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer;
 use Generated\Shared\Transfer\UpdateOrderPaymentRequestTransfer;
 use Generated\Shared\Transfer\UpdateOrderPaymentResponseTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\OrderPaymentsRestApi\OrderPaymentsRestApiConfig;
 
 class OrderPaymentMapper implements OrderPaymentMapperInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
-    {
-        $this->restResourceBuilder = $restResourceBuilder;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
+     * @param \Generated\Shared\Transfer\UpdateOrderPaymentRequestTransfer $updateOrderPaymentRequestTransfer
      *
      * @return \Generated\Shared\Transfer\UpdateOrderPaymentRequestTransfer
      */
     public function mapRestOrderPaymentsAttributesTransferToUpdateOrderPaymentRequestTransfer(
-        RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
+        RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer,
+        UpdateOrderPaymentRequestTransfer $updateOrderPaymentRequestTransfer
     ): UpdateOrderPaymentRequestTransfer {
-        return (new UpdateOrderPaymentRequestTransfer())
-            ->fromArray($restOrderPaymentsAttributesTransfer->toArray(), true);
+        return $updateOrderPaymentRequestTransfer->fromArray($restOrderPaymentsAttributesTransfer->toArray(), true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\UpdateOrderPaymentResponseTransfer $updateOrderPaymentResponseTransfer
+     * @param \Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer
      */
     public function mapUpdateOrderPaymentResponseTransferToRestOrderPaymentsAttributesTransfer(
-        UpdateOrderPaymentResponseTransfer $updateOrderPaymentResponseTransfer
-    ): RestOrderPaymentsAttributesTransfer {
-        return (new RestOrderPaymentsAttributesTransfer())
-            ->fromArray($updateOrderPaymentResponseTransfer->toArray(), true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    public function mapOrderPaymentResource(
+        UpdateOrderPaymentResponseTransfer $updateOrderPaymentResponseTransfer,
         RestOrderPaymentsAttributesTransfer $restOrderPaymentsAttributesTransfer
-    ): RestResourceInterface {
-        $orderPaymentResource = $this->restResourceBuilder->createRestResource(
-            OrderPaymentsRestApiConfig::RESOURCE_ORDER_PAYMENTS,
-            $restOrderPaymentsAttributesTransfer->getPaymentIdentifier(),
-            $restOrderPaymentsAttributesTransfer
-        );
-
-        return $orderPaymentResource;
+    ): RestOrderPaymentsAttributesTransfer {
+        return $restOrderPaymentsAttributesTransfer->fromArray($updateOrderPaymentResponseTransfer->toArray(), true);
     }
 }
