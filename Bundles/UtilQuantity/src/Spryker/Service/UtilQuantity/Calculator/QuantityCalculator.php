@@ -56,4 +56,20 @@ class QuantityCalculator implements QuantityCalculatorInterface
     {
         return max($this->getQuantityPrecision($firstQuantity), $this->getQuantityPrecision($secondQuantity));
     }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityMultiple(float $firstQuantity, float $secondQuantity): bool
+    {
+        $maxPrecision = $this->getMaxPrecision($firstQuantity, $secondQuantity);
+
+        $intFirstQuantity = (int)($firstQuantity * pow(10, $maxPrecision));
+        $intSecondQuantity = (int)($secondQuantity * pow(10, $maxPrecision));
+
+        return $intFirstQuantity % $intSecondQuantity === 0;
+    }
 }

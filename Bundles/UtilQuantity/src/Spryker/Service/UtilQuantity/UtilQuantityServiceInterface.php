@@ -51,4 +51,17 @@ interface UtilQuantityServiceInterface
      * @return float
      */
     public function subtractQuantities(float $firstQuantity, float $secondQuantity): float;
+
+    /**
+     * Specification:
+     * - checks whether numbers divide without remainder.
+     *
+     * @api
+     *
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityMultiple(float $firstQuantity, float $secondQuantity): bool;
 }

@@ -54,4 +54,15 @@ class ProductQuantityToUtilQuantityServiceBridge implements ProductQuantityToUti
     {
         return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
     }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityMultiple(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityMultiple($firstQuantity, $secondQuantity);
+    }
 }

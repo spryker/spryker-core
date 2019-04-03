@@ -32,4 +32,12 @@ interface ProductQuantityToUtilQuantityServiceInterface
      * @return float
      */
     public function subtractQuantities(float $firstQuantity, float $secondQuantity): float;
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityMultiple(float $firstQuantity, float $secondQuantity): bool;
 }
