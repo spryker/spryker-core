@@ -33,38 +33,107 @@ class QuoteChangeRequestExpanderTest extends Unit
     /**
      * @dataProvider expandInternalsDataProvider
      *
+     * @group currentwork
+     *
      * @return void
      */
     public function testExpandInternals(
         $oneItemInGroupKey,
-        $twoItemsInGroupKey,
+        $threeItemsInGroupKey,
         $bundledItems,
-        $items
+        $items,
+        $bundledItemsAfterRemove,
+        $itemsAfterRemove
     ): void {
         $quoteTransfer = $this->tester->haveQuote();
         $quoteTransfer->setBundleItems($bundledItems);
         $quoteTransfer->setItems($items);
 
-        ////////////////////// Test case: Quote items has bundled product items after Expand //////////////////////
+        ////////////////////// Returns quantity sum for all items in a bundle //////////////////////
 
-        $bundledProductTotalQuantity = $this->getBundledProductTotalQuantity($quoteTransfer, $twoItemsInGroupKey);
+        $bundledProductTotalQuantity = $this->getBundledProductTotalQuantity($quoteTransfer, $threeItemsInGroupKey);
         $this->assertEquals(7, $bundledProductTotalQuantity);
 
         $bundledProductTotalQuantity = $this->getBundledProductTotalQuantity($quoteTransfer, $oneItemInGroupKey);
-        $this->assertEquals(1, $bundledProductTotalQuantity);
+        $this->assertEquals(4, $bundledProductTotalQuantity);
 
         $bundledProductTotalQuantity = $this->getBundledProductTotalQuantity($quoteTransfer, null);
         $this->assertEquals(0, $bundledProductTotalQuantity);
 
-        ////////////////////// Test case: Remove one product bundle and get appropriate bundled items //////////////////////
+        ////////////////////// No changes in cart, getBundledItems returns the same count /////////////////////
 
-        $returnedBundledItems = $this->getBundledItems($quoteTransfer, $oneItemInGroupKey, 1);
-        $this->assertCount(1, $returnedBundledItems);
+        $howManyShouldStayAfterExpand = 1;
+        $returnedBundledItems = $this->getBundledItems($quoteTransfer, $oneItemInGroupKey, $howManyShouldStayAfterExpand);
+        $this->assertCount($howManyShouldStayAfterExpand, $returnedBundledItems);
 
-        $returnedBundledItems = $this->getBundledItems($quoteTransfer, $twoItemsInGroupKey, 1);
+        $howManyShouldStayAfterExpand = 3;
+        $returnedBundledItems = $this->getBundledItems($quoteTransfer, $threeItemsInGroupKey, $howManyShouldStayAfterExpand);
+        $this->assertCount($howManyShouldStayAfterExpand, $returnedBundledItems);
+
+        ////////////////////// Remove some items from cart, getBundledItems returns the same count /////////////////////
+        $quoteTransfer = $this->tester->haveQuote();
+        $quoteTransfer->setBundleItems($bundledItemsAfterRemove);
+        $quoteTransfer->setItems($itemsAfterRemove);
+
+        $howManyShouldStayAfterExpand = 0;
+        $returnedBundledItems = $this->getBundledItems($quoteTransfer, $oneItemInGroupKey, $howManyShouldStayAfterExpand);
+        $this->assertCount($howManyShouldStayAfterExpand, $returnedBundledItems);
+
+        $howManyShouldStayAfterExpand = 2;
+        $returnedBundledItems = $this->getBundledItems($quoteTransfer, $threeItemsInGroupKey, $howManyShouldStayAfterExpand);
         $this->assertCount(2, $returnedBundledItems);
     }
 
+    /**
+     * @dataProvider expandRequestWithOneItemByAddTwoBundledProductsDataProvider
+     *
+     *
+     * @return void
+     */
+    public function testExpandRequestWithOneItemByAddBundleWithTwoItems(
+        $quoteBundleItems,
+        $quoteItems,
+        $oneProductPlusOneBundleChangeItems
+    ): void {
+        $quoteTransfer = $this->tester->haveQuote();
+        $quoteTransfer->setBundleItems($quoteBundleItems);
+        $quoteTransfer->setItems($quoteItems);
+
+        $cartChangeTransfer = $this->tester->haveCartChangeTransfer();
+        $cartChangeTransfer->setQuote($quoteTransfer);
+        $cartChangeTransfer->setItems($oneProductPlusOneBundleChangeItems);
+
+        $expendedChangeTransfer = $this->expand($cartChangeTransfer);
+
+        $this->assertCount(3, $expendedChangeTransfer->getItems());
+    }
+
+    /**
+     * @dataProvider expandRequestWithNoItemsByAddBundleWithTwoItemsDataProvider
+     *
+     * @return void
+     */
+    public function testExpandRequestWithNoItemsByAddBundleWithTwoItems(
+        $quoteBundleItems,
+        $quoteItems,
+        $oneBundleChangeItems
+    ): void {
+        $quoteTransfer = $this->tester->haveQuote();
+        $quoteTransfer->setBundleItems($quoteBundleItems);
+        $quoteTransfer->setItems($quoteItems);
+
+        $cartChangeTransfer = $this->tester->haveCartChangeTransfer();
+        $cartChangeTransfer->setQuote($quoteTransfer);
+        $cartChangeTransfer->setItems($oneBundleChangeItems);
+
+        $expendedChangeTransfer = $this->expand($cartChangeTransfer);
+
+        $this->assertCount(2, $expendedChangeTransfer->getItems());
+    }
+
+    /**
+     * @return array
+     */
     public function expandInternalsDataProvider(): array
     {
         return [
@@ -72,175 +141,64 @@ class QuoteChangeRequestExpanderTest extends Unit
         ];
     }
 
+    /**
+     * @return array
+     */
     protected function getDataForExpandInternalsDataProvider(): array
     {
-        $twoItemsInGroupKey = 'group-1';
-        $oneItemInGroupKey = 'group-2';
-        $relatedBundleItemIdentifier1 = 'related-bundle-1';
-        $relatedBundleItemIdentifier2 = 'related-bundle-2';
+        $threeItemsBundleGroupKey = 'group-1';
 
-        $bundleItemTransfer1 = new ItemTransfer();
-        $bundleItemTransfer1
+        $bundleItemTransfer1 = (new ItemTransfer())
             ->setSku('111_111')
-            ->setGroupKey($twoItemsInGroupKey)
-            ->setBundleItemIdentifier($relatedBundleItemIdentifier1)
+            ->setBundleItemIdentifier('bundle-1-item-1')
+            ->setGroupKey($threeItemsBundleGroupKey)
             ->setQuantity(2);
 
-        $bundleItemTransfer2 = new ItemTransfer();
-        $bundleItemTransfer2
+        $bundleItemTransfer2 = (new ItemTransfer())
             ->setSku('222_222')
-            ->setGroupKey($twoItemsInGroupKey)
-            ->setBundleItemIdentifier($relatedBundleItemIdentifier1)
-            ->setQuantity(5);
+            ->setBundleItemIdentifier('bundle-1-item-2')
+            ->setGroupKey($threeItemsBundleGroupKey)
+            ->setQuantity(3);
 
-        $bundleItemTransfer3 = new ItemTransfer();
-        $bundleItemTransfer3
-            ->setSku('210_123')
-            ->setGroupKey($oneItemInGroupKey)
-            ->setBundleItemIdentifier($relatedBundleItemIdentifier2)
-            ->setQuantity(1);
+        $bundleItemTransfer21 = (new ItemTransfer())
+            ->setSku('222_111')
+            ->setBundleItemIdentifier('bundle-1-item-3')
+            ->setGroupKey($threeItemsBundleGroupKey)
+            ->setQuantity(2);
+
+        $oneItemBundleGroupKey = 'group-2';
+        $bundleItemTransfer3 = (new ItemTransfer())
+            ->setSku('333_333')
+            ->setBundleItemIdentifier('bundle-2-item-1')
+            ->setGroupKey($oneItemBundleGroupKey)
+            ->setQuantity(4);
 
         $bundledItems = new ArrayObject([
             $bundleItemTransfer1,
             $bundleItemTransfer2,
-            $bundleItemTransfer3,
+            $bundleItemTransfer21,
+            $bundleItemTransfer3
         ]);
 
-        $itemTransfer1 = new ItemTransfer();
-        $itemTransfer1
+        $itemTransfer1 = (new ItemTransfer())
             ->setSku('111_111')
-            ->setGroupKey($twoItemsInGroupKey)
-            ->setRelatedBundleItemIdentifier($relatedBundleItemIdentifier1)
+            ->setRelatedBundleItemIdentifier('bundle-1-item-1')
             ->setQuantity(2);
 
-        $itemTransfer2 = new ItemTransfer();
-        $itemTransfer2
+        $itemTransfer2 = (new ItemTransfer())
             ->setSku('222_222')
-            ->setGroupKey($twoItemsInGroupKey)
-            ->setRelatedBundleItemIdentifier($relatedBundleItemIdentifier1)
-            ->setQuantity(5);
+            ->setRelatedBundleItemIdentifier('bundle-1-item-2')
+            ->setQuantity(3);
 
-        $itemTransfer3 = new ItemTransfer();
-        $itemTransfer3
-            ->setSku('210_123')
-            ->setGroupKey($oneItemInGroupKey)
-            ->setRelatedBundleItemIdentifier($relatedBundleItemIdentifier2)
-            ->setQuantity(1);
-
-        $items = new ArrayObject([
-            $itemTransfer1,
-            $itemTransfer2,
-            $itemTransfer3,
-        ]);
-
-        return [
-            $oneItemInGroupKey,
-            $twoItemsInGroupKey,
-            $bundledItems,
-            $items
-        ];
-    }
-
-    /**
-     * @dataProvider expandDataProvider
-     *
-     * @return void
-     */
-    public function testExpand(
-        $oneItemInGroupKey,
-        $twoItemsInGroupKey,
-        $bundledItems,
-        $items
-    ): void {
-        $quoteTransfer = $this->tester->haveQuote();
-        $quoteTransfer->setBundleItems($bundledItems);
-        $quoteTransfer->setItems($items);
-
-        $cartChangeTransfer = $this->tester->haveCartChangeTransfer();
-        $cartChangeTransfer->setQuote($quoteTransfer);
-        $cartChangeTransfer->setItems(new ArrayObject());
-
-        ////////////////////// Test case: Remove all items //////////////////////
-
-        $expendedChangeTransfer = $this->expand($cartChangeTransfer, []);
-        $this->assertCount(0, $expendedChangeTransfer->getItems());
-
-        ////////////////////// Test case: Get all all //////////////////////
-
-        $cartChangeTransfer->setItems($items);
-        $expendedChangeTransfer = $this->expand($cartChangeTransfer, []);
-        $this->assertCount(4, $expendedChangeTransfer->getItems());
-
-        ////////////////////// Test case: Remove one product bundle and get appropriate items items //////////////////////
-    }
-
-    public function expandDataProvider(): array
-    {
-        return [
-            'int-product-quantity' => $this->getDataForExpandDataProvider(),
-        ];
-    }
-
-    protected function getDataForExpandDataProvider(): array
-    {
-        $twoItemsInGroupKey = 'group-1';
-        $oneItemInGroupKey = 'group-2';
-        $relatedBundleItemIdentifier1 = 'related-bundle-1';
-        $relatedBundleItemIdentifier2 = 'related-bundle-2';
-
-        $bundleItemTransfer1 = new ItemTransfer();
-        $bundleItemTransfer1
-            ->setSku('111_111')
-            ->setGroupKey($twoItemsInGroupKey)
-            ->setBundleItemIdentifier($relatedBundleItemIdentifier1)
+        $itemTransfer21 = (new ItemTransfer())
+            ->setSku('222_111')
+            ->setRelatedBundleItemIdentifier('bundle-1-item-3')
             ->setQuantity(2);
 
-        $bundleItemTransfer2 = new ItemTransfer();
-        $bundleItemTransfer2
-            ->setSku('222_222')
-            ->setGroupKey($twoItemsInGroupKey)
-            ->setBundleItemIdentifier($relatedBundleItemIdentifier1)
-            ->setQuantity(5);
-
-        $bundleItemTransfer3 = new ItemTransfer();
-        $bundleItemTransfer3
-            ->setSku('210_123')
-            ->setGroupKey($oneItemInGroupKey)
-            ->setBundleItemIdentifier($relatedBundleItemIdentifier2)
-            ->setQuantity(1);
-
-        $bundleItemTransfer4 = new ItemTransfer();
-        $bundleItemTransfer4
-            ->setSku('666_666')
-            ->setQuantity(6);
-
-        $bundledItems = new ArrayObject([
-            $bundleItemTransfer1,
-            $bundleItemTransfer2,
-            $bundleItemTransfer3,
-            $bundleItemTransfer4,
-        ]);
-
-        $itemTransfer1 = new ItemTransfer();
-        $itemTransfer1
-            ->setSku('111_111')
-            ->setGroupKey($twoItemsInGroupKey)
-            ->setRelatedBundleItemIdentifier($relatedBundleItemIdentifier1)
-            ->setQuantity(2);
-
-        $itemTransfer2 = new ItemTransfer();
-        $itemTransfer2
-            ->setSku('222_222')
-            ->setGroupKey($twoItemsInGroupKey)
-            ->setRelatedBundleItemIdentifier($relatedBundleItemIdentifier1)
-            ->setQuantity(5);
-
-        $itemTransfer3 = new ItemTransfer();
-        $itemTransfer3
-            ->setSku('210_123')
-            ->setGroupKey($oneItemInGroupKey)
-            ->setRelatedBundleItemIdentifier($relatedBundleItemIdentifier2)
-            ->setQuantity(1);
+        $itemTransfer3 = (new ItemTransfer())
+            ->setSku('333_333')
+            ->setRelatedBundleItemIdentifier('bundle-2-item-1')
+            ->setQuantity(4);
 
         $itemTransfer4 = new ItemTransfer();
         $itemTransfer4
@@ -250,19 +208,169 @@ class QuoteChangeRequestExpanderTest extends Unit
         $items = new ArrayObject([
             $itemTransfer1,
             $itemTransfer2,
+            $itemTransfer21,
+            $itemTransfer3,
+            $itemTransfer4,
+        ]);
+
+        $bundledItemsAfterRemove = new ArrayObject([
+            $bundleItemTransfer1,
+            $bundleItemTransfer2,
+        ]);
+
+        $itemsAfterRemove = new ArrayObject([
+            $itemTransfer1,
+            $itemTransfer2,
             $itemTransfer3,
             $itemTransfer4,
         ]);
 
         return [
-            $oneItemInGroupKey,
-            $twoItemsInGroupKey,
+            $oneItemBundleGroupKey,
+            $threeItemsBundleGroupKey,
             $bundledItems,
-            $items
+            $items,
+            $bundledItemsAfterRemove,
+            $itemsAfterRemove
         ];
     }
 
-    //////////////////////////
+    /**
+     * @return array
+     */
+    public function expandRequestWithOneItemByAddTwoBundledProductsDataProvider(): array
+    {
+        return [
+            'int-product-quantity' => $this->getDataForExpandRequestWithOneItemByAddTwoBundledProductsDataProvider(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataForExpandRequestWithOneItemByAddTwoBundledProductsDataProvider(): array
+    {
+        $bundleGroupKey = 'group-1';
+
+        $bundleTransfer1 = (new ItemTransfer())
+            ->setGroupKey($bundleGroupKey)
+            ->setQuantity(2);
+
+        $bundleItemTransfer1 = (new ItemTransfer())
+            ->setSku('111_111')
+            ->setBundleItemIdentifier('bundle-1-item-1')
+            ->setGroupKey($bundleGroupKey)
+            ->setQuantity(2);
+
+        $bundleItemTransfer2 = (new ItemTransfer())
+            ->setSku('222_222')
+            ->setBundleItemIdentifier('bundle-1-item-2')
+            ->setGroupKey($bundleGroupKey)
+            ->setQuantity(5);
+
+        $bundledItems = new ArrayObject([
+            $bundleItemTransfer1,
+            $bundleItemTransfer2,
+        ]);
+
+        $itemTransfer1 = (new ItemTransfer())
+            ->setSku('111_111')
+            ->setRelatedBundleItemIdentifier('bundle-1-item-1')
+            ->setQuantity(2);
+
+        $itemTransfer2 = (new ItemTransfer())
+            ->setSku('222_222')
+            ->setRelatedBundleItemIdentifier('bundle-1-item-2')
+            ->setQuantity(5);
+
+        $itemTransfer3 = new ItemTransfer();
+        $itemTransfer3
+            ->setSku('666_666')
+            ->setQuantity(6);
+
+        $items = new ArrayObject([
+            $itemTransfer1,
+            $itemTransfer2,
+            $itemTransfer3,
+        ]);
+
+        $changeItems = new ArrayObject([
+            $bundleTransfer1,
+            $itemTransfer3,
+        ]);
+
+        return [
+            $bundledItems,
+            $items,
+            $changeItems
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function expandRequestWithNoItemsByAddBundleWithTwoItemsDataProvider(): array
+    {
+        return [
+            'int-product-quantity' => $this->getDataForExpandRequestWithNoItemsByAddBundleWithTwoItemsDataProvider(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataForExpandRequestWithNoItemsByAddBundleWithTwoItemsDataProvider(): array
+    {
+        $bundleGroupKey = 'group-1';
+
+        $bundleTransfer1 = (new ItemTransfer())
+            ->setGroupKey($bundleGroupKey)
+            ->setQuantity(2);
+
+        $bundleItemTransfer1 = (new ItemTransfer())
+            ->setSku('111_111')
+            ->setBundleItemIdentifier('bundle-1-item-1')
+            ->setGroupKey($bundleGroupKey)
+            ->setQuantity(2);
+
+        $bundleItemTransfer2 = (new ItemTransfer())
+            ->setSku('222_222')
+            ->setBundleItemIdentifier('bundle-1-item-2')
+            ->setGroupKey($bundleGroupKey)
+            ->setQuantity(5);
+
+        $bundledItems = new ArrayObject([
+            $bundleItemTransfer1,
+            $bundleItemTransfer2,
+        ]);
+
+        $itemTransfer1 = (new ItemTransfer())
+            ->setSku('111_111')
+            ->setRelatedBundleItemIdentifier('bundle-1-item-1')
+            ->setQuantity(2);
+
+        $itemTransfer2 = (new ItemTransfer())
+            ->setSku('222_222')
+            ->setRelatedBundleItemIdentifier('bundle-1-item-2')
+            ->setQuantity(5);
+
+        $items = new ArrayObject([
+            $itemTransfer1,
+            $itemTransfer2,
+        ]);
+
+        $changeItems = new ArrayObject([
+            $bundleTransfer1,
+        ]);
+
+        return [
+            $bundledItems,
+            $items,
+            $changeItems
+        ];
+    }
+
+    /////////////// Hardcoded methods from Spryker\Client\ProductBundle\QuoteChangeRequestExpander\QuoteChangeRequestExpander ////////
 
     protected function expand(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
     {
