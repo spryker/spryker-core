@@ -279,7 +279,9 @@ interface CompanyUserFacadeInterface
      * Specification:
      * - Retrieves company user collection according provided filter.
      * - Search works by first name, last name and email.
-     * - If company users by query are not exist, collection will be empty.
+     * - Applies "limit" when provided.
+     * - Populates "Customer" and "Company" properties in returned company users.
+     * - Applies "CompanyUserHydrationPluginInterface" plugins on returned company users.
      *
      * @api
      *
