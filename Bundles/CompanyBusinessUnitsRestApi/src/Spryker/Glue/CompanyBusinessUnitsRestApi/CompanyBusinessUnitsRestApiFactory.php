@@ -41,7 +41,8 @@ class CompanyBusinessUnitsRestApiFactory extends AbstractFactory
         return new CompanyBusinessUnitReader(
             $this->createCompanyBusinessUnitMapper(),
             $this->getCompanyBusinessUnitClient(),
-            $this->createCompanyBusinessUnitRestResponseBuilder()
+            $this->createCompanyBusinessUnitRestResponseBuilder(),
+            $this->getCompanyBusinessUnitMapperPlugins()
         );
     }
 
@@ -75,5 +76,13 @@ class CompanyBusinessUnitsRestApiFactory extends AbstractFactory
     public function getCompanyBusinessUnitClient(): CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface
     {
         return $this->getProvidedDependency(CompanyBusinessUnitsRestApiDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT);
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperInterface[]
+     */
+    public function getCompanyBusinessUnitMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyBusinessUnitsRestApiDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_MAPPER);
     }
 }
