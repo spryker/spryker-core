@@ -10,6 +10,9 @@ namespace Spryker\Zed\Translator\Business\Translator;
 use Spryker\Shared\Kernel\Communication\Application;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class TranslatorPreparator implements TranslatorPreparatorInterface
 {
     /**

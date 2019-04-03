@@ -14,6 +14,7 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 
 abstract class AbstractPlugin
 {
+    protected const SERVICE_LOCALE = 'locale';
     /**
      * @var \Spryker\Yves\Kernel\FactoryInterface
      */
@@ -114,7 +115,7 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Communication\Application
+     * @return \Spryker\Service\Container\Container
      */
     protected function getApplication()
     {
@@ -126,6 +127,6 @@ abstract class AbstractPlugin
      */
     protected function getLocale()
     {
-        return $this->getApplication()['locale'];
+        return $this->getApplication()->get(static::SERVICE_LOCALE);
     }
 }

@@ -36,6 +36,7 @@ use Spryker\Zed\Oms\OmsDependencyProvider;
 /**
  * @method \Spryker\Zed\Oms\OmsConfig getConfig()
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface getRepository()
  */
 class OmsBusinessFactory extends AbstractBusinessFactory
 {
@@ -201,7 +202,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new OrderItemMatrix(
             $this->getQueryContainer(),
             $this->getConfig(),
-            $this->getUtilSanitizeService()
+            $this->getUtilSanitizeService(),
+            $this->getRepository()
         );
     }
 

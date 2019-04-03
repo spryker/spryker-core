@@ -16,6 +16,7 @@ use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInter
 class QuoteRequestToQuoteConverter implements QuoteRequestToQuoteConverterInterface
 {
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
+    protected const GLOSSARY_KEY_WRONG_CONVERT_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.convert.error.wrong_valid_until';
 
     /**
      * @var \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface
@@ -56,6 +57,10 @@ class QuoteRequestToQuoteConverter implements QuoteRequestToQuoteConverterInterf
     {
         if (!$this->quoteRequestChecker->isQuoteRequestReady($quoteRequestTransfer)) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS);
+        }
+
+        if ($quoteRequestTransfer->getValidUntil() && strtotime($quoteRequestTransfer->getValidUntil()) < time()) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_WRONG_CONVERT_QUOTE_REQUEST_VALID_UNTIL);
         }
 
         $latestQuoteRequestVersionTransfer = $quoteRequestTransfer->getLatestVersion();

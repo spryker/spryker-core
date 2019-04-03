@@ -45,7 +45,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      */
     public function testFormatResultShouldReturnCorrectFormat(SearchConfigInterface $searchConfig, array $aggregationResult, array $expectedResult)
     {
-        /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit_Framework_MockObject_MockObject $searchFactoryMock */
+        /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
             ->setMethods(['getSearchConfig'])
             ->getMock();
@@ -62,7 +62,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         $facetResultFormatterPlugin = new FacetResultFormatterPlugin();
         $facetResultFormatterPlugin->setFactory($searchFactoryMock);
 
-        /** @var \Elastica\ResultSet|\PHPUnit_Framework_MockObject_MockObject $resultSetMock */
+        /** @var \Elastica\ResultSet|\PHPUnit\Framework\MockObject\MockObject $resultSetMock */
         $resultSetMock = $this->getMockBuilder(ResultSet::class)
             ->disableOriginalConstructor()
             ->setMethods(['getAggregations'])
