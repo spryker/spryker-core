@@ -12,6 +12,11 @@
         <property name="expiryDate" type="string" />
     </transfer>
 
+    <transfer name="ResourceShareRequest">
+        <property name="uuid" type="string" />
+        <property name="customer" type="Customer" />
+    </transfer>
+
     <transfer name="Message">
         <property name="value" type="string"/>
     </transfer>
