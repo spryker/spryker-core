@@ -85,7 +85,6 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
     {
         $productImageSetsQuery = $this->getFactory()
             ->getProductImageSetQuery()
-            ->innerJoinWithSpyProductImageSetToProductImage()
             ->useSpyProductImageSetToProductImageQuery()
                 ->innerJoinWithSpyProductImage()
             ->endUse()
