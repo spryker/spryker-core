@@ -2,7 +2,6 @@
 <transfers xmlns="spryker:transfer-01"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
-
     <transfer name="ContentBanner">
         <property name="title" type="string" />
         <property name="subtitle" type="string" />
@@ -11,7 +10,7 @@
         <property name="altText" type="string" />
     </transfer>
 
-    <transfer name="BannerTerm">
+    <transfer name="ContentBannerTerm">
         <property name="title" type="string" />
         <property name="subtitle" type="string" />
         <property name="imageUrl" type="string" />
@@ -19,11 +18,17 @@
         <property name="altText" type="string" />
     </transfer>
 
-    <transfer name="BannerType">
-        <property name="title" type="string" />
-        <property name="subtitle" type="string" />
-        <property name="imageUrl" type="string" />
-        <property name="clickUrl" type="string" />
-        <property name="altText" type="string" />
+    <transfer name="ContentValidationResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="parameterMessages" type="ContentParameterMessage[]" />
+    </transfer>
+
+    <transfer name="ContentParameterMessage">
+        <property name="parameter" type="string" />
+        <property name="messages" type="Message[]" singular="message" />
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 </transfers>
