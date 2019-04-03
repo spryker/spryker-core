@@ -10,8 +10,6 @@
 
     <transfer name="QuoteRequest">
         <property name="quoteRequestReference" dataBuilderRule="unique()->sentence" />
-        <property name="status" dataBuilderRule="randomElement(['waiting', 'in-progress', 'ready', 'closed', 'canceled'])" />
-        <property name="validUntil" dataBuilderRule="time('Y-m-d', '+20 years')" />
     </transfer>
 
 </transfers>

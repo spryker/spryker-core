@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\QuoteRequest\Business;
+namespace SprykerTest\Zed\QuoteRequest\Business\QuoteRequest;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CompanyUserBuilder;
@@ -37,6 +37,7 @@ use Spryker\Zed\QuoteRequest\QuoteRequestConfig;
  * @group Zed
  * @group QuoteRequest
  * @group Business
+ * @group QuoteRequest
  * @group QuoteRequestWriterTest
  * Add your own group annotations below this line
  */
@@ -120,56 +121,38 @@ class QuoteRequestWriterTest extends Unit
     /**
      * @return void
      */
-    public function testCancelQuoteRequestChangesQuoteRequestStatusToCanceledWithoutReference(): void
+    public function testCancelQuoteRequestFailsWithoutReference(): void
     {
         // Arrange
-
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
+        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer());
 
         // Act
-        $this->quoteRequestWriter->cancelQuoteRequest(new QuoteRequestCriteriaTransfer());
+        $quoteRequestResponseTransfer = $this->quoteRequestWriter->cancelQuoteRequest($quoteRequestCriteriaTransfer);
+
+        //Assert
+        $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
     }
 
     /**
      * @return void
      */
-    public function testCancelQuoteRequestChangesQuoteRequestStatusToCanceledWithoutCompanyUser(): void
+    public function testCancelQuoteRequestFailsWithoutCompanyUser(): void
     {
         // Arrange
         $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
             ->setQuoteRequestReference(static::FAKE_ID_QUOTE_REQUEST_VERSION);
 
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
-
         // Act
-        $this->quoteRequestWriter->cancelQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestWriter->cancelQuoteRequest($quoteRequestCriteriaTransfer);
+
+        //Assert
+        $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
     }
 
     /**
      * @return void
      */
-    public function testCancelQuoteRequestChangesQuoteRequestStatusToCanceledWithoutIdCompanyUser(): void
-    {
-        // Arrange
-        $this->companyUserTransfer->setIdCompanyUser(null);
-
-        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
-            ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
-            ->setQuoteRequestReference(static::FAKE_ID_QUOTE_REQUEST_VERSION);
-
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
-
-        // Act
-        $this->quoteRequestWriter->cancelQuoteRequest($quoteRequestCriteriaTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCancelQuoteRequestChangesQuoteRequestStatusToCanceledWithWrongReference(): void
+    public function testCancelQuoteRequestFailsWithWrongReference(): void
     {
         // Arrange
         $this->quoteRequestWriter->expects($this->any())
@@ -195,7 +178,7 @@ class QuoteRequestWriterTest extends Unit
     /**
      * @return void
      */
-    public function testCancelQuoteRequestChangesQuoteRequestStatusToCanceledWithWrongStatus(): void
+    public function testCancelQuoteRequestFailsWithWrongStatus(): void
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
@@ -261,21 +244,7 @@ class QuoteRequestWriterTest extends Unit
     /**
      * @return void
      */
-    public function testCreateQuoteRequestCreatesQuoteRequestWithoutCompanyUser(): void
-    {
-        // Arrange
-
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
-
-        // Act
-        $this->quoteRequestWriter->createQuoteRequest((new QuoteRequestBuilder())->build());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCreateQuoteRequestCreatesQuoteRequestWithoutCustomer(): void
+    public function testCreateQuoteRequestFailsWithoutCustomer(): void
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
@@ -301,7 +270,7 @@ class QuoteRequestWriterTest extends Unit
     /**
      * @return void
      */
-    public function testCreateQuoteRequestCreatesQuoteRequestWithoutQuote(): void
+    public function testCreateQuoteRequestFailsWithoutQuote(): void
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([
@@ -324,7 +293,7 @@ class QuoteRequestWriterTest extends Unit
     /**
      * @return void
      */
-    public function testCreateQuoteRequestCreatesQuoteRequestWithEmptyQuote(): void
+    public function testCreateQuoteRequestFailsWithEmptyQuote(): void
     {
         // Arrange
         $quoteRequestTransfer = (new QuoteRequestBuilder([

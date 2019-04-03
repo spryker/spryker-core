@@ -8,6 +8,7 @@
 namespace SprykerTest\Client\QuoteRequest;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteRequestBuilder;
@@ -112,7 +113,7 @@ class QuoteRequestToQuoteConverterTest extends Unit
 
         //Assert
         $quoteClientMock->method('setQuote')
-            ->willReturnCallback(function (QuoteTransfer $quoteTransfer){
+            ->willReturnCallback(function (QuoteTransfer $quoteTransfer) {
                 $this->assertTrue($quoteTransfer->getIsLocked());
             });
 
@@ -253,6 +254,7 @@ class QuoteRequestToQuoteConverterTest extends Unit
     {
         $quoteRequestTransfer = (new QuoteRequestBuilder([
             QuoteRequestTransfer::STATUS => $status,
+            QuoteRequestTransfer::VALID_UNTIL => (new DateTime("+1 hour"))->format('Y-m-d H:i:s'),
         ]))->build();
 
         $quoteTransfer = (new QuoteBuilder())

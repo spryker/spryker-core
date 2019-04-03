@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\QuoteRequest\Business;
+namespace SprykerTest\Zed\QuoteRequest\Business\QuoteRequest;
 
 use Codeception\Test\Unit;
 use DateInterval;
@@ -28,6 +28,7 @@ use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
  * @group Zed
  * @group QuoteRequest
  * @group Business
+ * @group QuoteRequest
  * @group QuoteRequestCheckerTest
  * Add your own group annotations below this line
  */
@@ -248,51 +249,6 @@ class QuoteRequestCheckerTest extends Unit
     /**
      * @return void
      */
-    public function testCheckValidUntilValidatesQuoteWhenQuoteRequestVersionNotLast(): void
-    {
-        // Arrange
-        $quoteRequestTransfer = (new QuoteRequestBuilder([
-            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_READY,
-        ]))->build();
-
-        $quoteRequestVersionTransfer = (new QuoteRequestVersionBuilder())->build();
-        $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
-
-        $quoteRequestVersionTransfer = (new QuoteRequestVersionBuilder([
-            QuoteRequestVersionTransfer::ID_QUOTE_REQUEST_VERSION => static::FAKE_ID_QUOTE_REQUEST_VERSION,
-            QuoteRequestVersionTransfer::QUOTE_REQUEST => $quoteRequestTransfer,
-        ]))->build();
-
-        $this->quoteRequestCheckerMock->expects($this->any())
-            ->method('findQuoteRequest')
-            ->willReturn($quoteRequestTransfer);
-
-        $this->quoteRequestCheckerMock->expects($this->any())
-            ->method('findQuoteRequestVersion')
-            ->willReturn($quoteRequestVersionTransfer);
-
-        $quoteTransfer = (new QuoteBuilder([
-            QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE => $quoteRequestVersionTransfer->getVersionReference(),
-        ]))->build();
-
-        $checkoutResponseTransfer = new CheckoutResponseTransfer();
-
-        // Act
-        $isValid = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer, $checkoutResponseTransfer);
-
-        // Assert
-        $this->assertFalse($isValid);
-        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
-        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
-        $this->assertEquals(
-            static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION,
-            $checkoutResponseTransfer->getErrors()[0]->getMessage()
-        );
-    }
-
-    /**
-     * @return void
-     */
     public function testCheckValidUntilValidatesQuoteWhenQuoteRequestWithEmptyValidUntil(): void
     {
         // Arrange
@@ -325,13 +281,9 @@ class QuoteRequestCheckerTest extends Unit
         $isValid = $this->quoteRequestCheckerMock->checkValidUntil($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($isValid);
-        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
-        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
-        $this->assertEquals(
-            static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VALID_UNTIL,
-            $checkoutResponseTransfer->getErrors()[0]->getMessage()
-        );
+        $this->assertTrue($isValid);
+        $this->assertNull($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(0, $checkoutResponseTransfer->getErrors());
     }
 
     /**
@@ -396,9 +348,11 @@ class QuoteRequestCheckerTest extends Unit
      */
     protected function createQuoteRequestRepositoryMock(): MockObject
     {
-        return $this->getMockBuilder(QuoteRequestRepositoryInterface::class)
-            ->setMethods(['getQuoteRequestCollectionByFilter', 'getQuoteRequestVersionCollectionByFilter'])
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $this->createPartialMock(QuoteRequestRepositoryInterface::class, [
+            'getQuoteRequestCollectionByFilter',
+            'getQuoteRequestVersionCollectionByFilter',
+            'countCustomerQuoteRequests',
+            'findQuoteRequestLatestVisibleVersion',
+        ]);
     }
 }

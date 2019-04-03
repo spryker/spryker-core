@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
+use Orm\Zed\QuoteRequest\Persistence\Map\SpyQuoteRequestVersionTableMap;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -39,12 +40,14 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
         $quoteRequestQuery = $this->getFactory()
             ->getQuoteRequestPropelQuery()
             ->joinWithCompanyUser()
+            ->leftJoinWithSpyQuoteRequestVersion()
             ->useCompanyUserQuery()
                 ->joinWithCustomer()
                 ->joinWithCompany()
                 ->joinWithCompanyBusinessUnit()
             ->endUse()
-            ->orderByIdQuoteRequest(Criteria::DESC);
+            ->orderByIdQuoteRequest(Criteria::DESC)
+            ->orderBy(SpyQuoteRequestVersionTableMap::COL_ID_QUOTE_REQUEST_VERSION);
 
         $quoteRequestQuery = $this->setQuoteRequestFilters($quoteRequestQuery, $quoteRequestFilterTransfer);
 
