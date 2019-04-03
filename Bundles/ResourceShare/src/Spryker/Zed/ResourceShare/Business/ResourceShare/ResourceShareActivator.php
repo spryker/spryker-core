@@ -70,6 +70,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         foreach ($this->resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
             if ($resourceShareActivatorStrategyPlugin->isLoginRequired()) {
                 return $resourceShareResponseTransfer->setIsSuccessful(false)
+                    ->setIsLoginRequired(true)
                     ->addErrorMessage(
                         (new MessageTransfer())->setValue(static::ERROR_MESSAGE_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER)
                     );
