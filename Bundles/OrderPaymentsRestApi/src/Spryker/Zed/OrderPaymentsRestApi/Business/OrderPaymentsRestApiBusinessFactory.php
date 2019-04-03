@@ -28,7 +28,7 @@ class OrderPaymentsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\OrderPaymentsRestApiExtension\Dependency\Plugin\OrderPaymentUpdaterPluginInterface[]
      */
-    protected function getOrderPaymentUpdaterPlugins(): array
+    public function getOrderPaymentUpdaterPlugins(): array
     {
         return $this->getProvidedDependency(OrderPaymentsRestApiDependencyProvider::ORDER_PAYMENT_UPDATER_PLUGINS);
     }
