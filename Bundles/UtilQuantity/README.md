@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/util-quantity.svg)](https://travis-ci.org/spryker/util-quantity)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/util-quantity/badge.svg)](https://coveralls.io/github/spryker/util-quantity)
 
-{{ADD DESCRIPTION HERE}}
+Provide service for operations with quantities.
 
 ## Installation
 
