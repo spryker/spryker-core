@@ -14,7 +14,7 @@ interface PriceProductScheduleDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - Imports PriceProductSchedule data.
+     * - Imports price product schedule data.
      *
      * @api
      *

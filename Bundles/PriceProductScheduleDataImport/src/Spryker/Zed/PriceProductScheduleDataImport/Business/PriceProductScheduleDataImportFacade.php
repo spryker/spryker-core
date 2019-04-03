@@ -29,7 +29,7 @@ class PriceProductScheduleDataImportFacade extends AbstractFacade implements Pri
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
         return $this->getFactory()
-            ->getPriceProductScheduleDataImport()
+            ->getPriceProductScheduleDataImporter()
             ->import($dataImporterConfigurationTransfer);
     }
 }
