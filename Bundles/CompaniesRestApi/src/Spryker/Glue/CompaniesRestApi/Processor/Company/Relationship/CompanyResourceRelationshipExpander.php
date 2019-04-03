@@ -62,7 +62,7 @@ class CompanyResourceRelationshipExpander implements CompanyResourceRelationship
              */
             $payload = $resource->getPayload();
 
-            if (!$payload || !$this->checkValidPayloadType($payload)) {
+            if (!$payload || !$this->isValidPayloadType($payload)) {
                 continue;
             }
 
@@ -102,7 +102,7 @@ class CompanyResourceRelationshipExpander implements CompanyResourceRelationship
      *
      * @return bool
      */
-    protected function checkValidPayloadType(AbstractTransfer $payload): bool
+    protected function isValidPayloadType(AbstractTransfer $payload): bool
     {
         foreach ($this->config->getExtendableResourceTransfers() as $extendableResourceTransfer) {
             if ($payload instanceof $extendableResourceTransfer) {
