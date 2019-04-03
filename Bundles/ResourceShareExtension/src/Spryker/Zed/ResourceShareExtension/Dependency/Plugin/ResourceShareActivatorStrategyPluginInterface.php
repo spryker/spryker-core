@@ -19,7 +19,17 @@ interface ResourceShareActivatorStrategyPluginInterface
      *
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
-     * @return \Generated\Shared\Transfer\ResourceShareTransfer
+     * @return void
      */
-    public function execute(ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer;
+    public function execute(ResourceShareTransfer $resourceShareTransfer): void;
+
+    /**
+     * Specification:
+     * - Determines if plugin expects customer to be logged in.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isLoginRequired(): bool;
 }
