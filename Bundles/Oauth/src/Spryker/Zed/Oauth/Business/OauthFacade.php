@@ -34,7 +34,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      */
     public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
-        return $this->getFactory()->createAccessGrantExecutor()->executeByRequest($oauthRequestTransfer);
+        return $this->getFactory()->createAccessTokenRequestExecutor()->executeByRequest($oauthRequestTransfer);
     }
 
     /**
