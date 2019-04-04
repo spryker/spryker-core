@@ -64,4 +64,22 @@ class UtilQuantityService extends AbstractService implements UtilQuantityService
             ->createQuantityComparator()
             ->isQuantityEqual($firstQuantity, $secondQuantity);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param float $dividendQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
+     *
+     * @return bool
+     */
+    public function isQuantityModuloEqual(float $dividendQuantity, float $divisorQuantity, float $remainder): bool
+    {
+        return $this->getFactory()
+            ->createQuantityComparator()
+            ->isQuantityModuloEqual($dividendQuantity, $divisorQuantity, $remainder);
+    }
 }

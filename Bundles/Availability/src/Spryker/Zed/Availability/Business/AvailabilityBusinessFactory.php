@@ -12,8 +12,8 @@ use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Availability\Business\Model\ProductReservationReader;
 use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreCondition;
 use Spryker\Zed\Availability\Business\Model\Sellable;
-use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
