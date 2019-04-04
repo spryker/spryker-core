@@ -15,10 +15,10 @@ use Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface;
 
 class ResourceShareWriter implements ResourceShareWriterInterface
 {
-    protected const ERROR_MESSAGE_RESOURCE_TYPE_IS_NOT_DEFINED = 'Resource type is not defined.';
-    protected const ERROR_MESSAGE_RESOURCE_DATA_IS_NOT_DEFINED = 'Resource data is not defined.';
-    protected const ERROR_MESSAGE_CUSTOMER_REFERENCE_IS_NOT_DEFINED = 'Customer reference is not defined.';
-    protected const ERROR_MESSAGE_RESOURCE_IS_ALREADY_SHARED = 'Resource is already shared.';
+    protected const ERROR_MESSAGE_RESOURCE_TYPE_IS_NOT_DEFINED = 'resource_share.generation.error.resource_type_is_not_defined';
+    protected const ERROR_MESSAGE_RESOURCE_DATA_IS_NOT_DEFINED = 'resource_share.generation.error.resource_data_is_not_defined';
+    protected const ERROR_MESSAGE_CUSTOMER_REFERENCE_IS_NOT_DEFINED = 'resource_share.generation.error.customer_reference_is_not_defined';
+    protected const ERROR_MESSAGE_RESOURCE_IS_ALREADY_SHARED = 'resource_share.generation.error.resource_is_already_shared';
 
     /**
      * @var \Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface

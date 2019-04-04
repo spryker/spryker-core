@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ResourceShareTransfer;
 
 class ResourceShareActivator implements ResourceShareActivatorInterface
 {
-    protected const ERROR_MESSAGE_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER = 'Strategy expects logged in customer.';
+    protected const ERROR_MESSAGE_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER = 'resource_share.activator.error.strategy_expects_logged_in_customer';
 
     /**
      * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface
