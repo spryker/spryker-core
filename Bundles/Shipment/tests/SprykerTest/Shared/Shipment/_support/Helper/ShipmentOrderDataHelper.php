@@ -1,20 +1,13 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-
 namespace SprykerTest\Shared\Shipment\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\DataBuilder\SaveOrderBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Spryker\Zed\Sales\Business\SalesBusinessFactory;
-use Spryker\Zed\Sales\Business\SalesFacadeInterface;
-use SprykerTest\Shared\Shipment\Helper\Config\TesterSalesConfig;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ShipmentOrderDataHelper extends Module
@@ -22,68 +15,44 @@ class ShipmentOrderDataHelper extends Module
     use LocatorHelperTrait;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
-     * @param string|null $stateMachineProcessName
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\SaveOrderTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function haveOrderUsingPreparedQuoteTransfer(QuoteTransfer $quoteTransfer = null, string $stateMachineProcessName = null): SaveOrderTransfer
+    public function haveOrderWithoutShipment(QuoteTransfer $quoteTransfer, string $testStateMachineProcessName = null): SaveOrderTransfer
     {
-        if ($quoteTransfer === null) {
-            $quoteTransfer = $this->createQuoteTransfer();
+        $testStateMachineProcessName = 'Test01';
+        $this->getOmsHelper()->configureTestStateMachine([$testStateMachineProcessName]);
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $productTransfer = $this->getProductDataHelper()->haveProduct($itemTransfer->toArray());
         }
+        $savedOrderTransfer = $this->getSalesDataHelper()->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName);
 
-        $saveOrderTransfer = (new SaveOrderBuilder())->makeEmpty()->build();
-
-        $salesFacade = $this->getSalesFacade();
-        if ($stateMachineProcessName) {
-            $salesFacade = $this->configureSalesFacadeForTests($salesFacade, $stateMachineProcessName);
-        }
-
-        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
-
-        return $saveOrderTransfer;
+        return $savedOrderTransfer;
     }
 
     /**
-     * @param \Spryker\Zed\Sales\Business\SalesFacadeInterface $salesFacade
-     * @param string $stateMachineProcessName
-     *
-     * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
+     * @return \Codeception\Module
      */
-    protected function configureSalesFacadeForTests(SalesFacadeInterface $salesFacade, $stateMachineProcessName): SalesFacadeInterface
+    protected function getOmsHelper(): Module
     {
-        $salesBusinessFactory = new SalesBusinessFactory();
-
-        $salesConfig = new TesterSalesConfig();
-        $salesConfig->setStateMachineProcessName($stateMachineProcessName);
-        $salesBusinessFactory->setConfig($salesConfig);
-
-        $salesFacade->setFactory($salesBusinessFactory);
-
-        return $salesFacade;
+        return $this->getModule('\SprykerTest\Zed\Oms\Helper\OmsHelper');
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
+     * @return \Codeception\Module
      */
-    protected function getSalesFacade(): SalesFacadeInterface
+    protected function getSalesDataHelper(): Module
     {
-        return $this->getLocator()->sales()->facade();
+        return $this->getModule('\SprykerTest\Shared\Sales\Helper\SalesDataHelper');
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Codeception\Module
      */
-    protected function createQuoteTransfer(): QuoteTransfer
+    protected function getProductDataHelper(): Module
     {
-        return (new QuoteBuilder())
-            ->withItem()
-            ->withCustomer()
-            ->withTotals()
-            ->withShippingAddress()
-            ->withBillingAddress()
-            ->withCurrency()
-            ->build();
+        return $this->getModule('\SprykerTest\Shared\Product\Helper\ProductDataHelper');
     }
 }

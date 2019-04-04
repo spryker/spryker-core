@@ -10,6 +10,8 @@ namespace SprykerTest\Shared\Sales\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\SaveOrderBuilder;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use SprykerTest\Shared\Sales\Helper\Config\TesterSalesConfig;
@@ -27,25 +29,20 @@ class SalesDataHelper extends Module
      */
     public function haveOrder(array $override = [], $stateMachineProcessName = null)
     {
-        $quoteTransfer = (new QuoteBuilder())
-            ->withItem($override)
-            ->withCustomer()
-            ->withTotals()
-            ->withShippingAddress()
-            ->withBillingAddress()
-            ->withCurrency()
-            ->build();
+        $quoteTransfer = $this->createQuoteTransfer($override);
 
-        $saveOrderTransfer = (new SaveOrderBuilder())->makeEmpty()->build();
+        return $this->createOrder($quoteTransfer, $stateMachineProcessName);
+    }
 
-        $salesFacade = $this->getSalesFacade();
-        if ($stateMachineProcessName) {
-            $salesFacade = $this->configureSalesFacadeForTests($salesFacade, $stateMachineProcessName);
-        }
-
-        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
-
-        return $saveOrderTransfer;
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string|null $stateMachineProcessName
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    public function haveOrderUsingPreparedQuoteTransfer(QuoteTransfer $quoteTransfer, string $stateMachineProcessName = null): SaveOrderTransfer
+    {
+        return $this->createOrder($quoteTransfer, $stateMachineProcessName);
     }
 
     /**
@@ -68,10 +65,47 @@ class SalesDataHelper extends Module
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string|null $stateMachineProcessName
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    protected function createOrder(QuoteTransfer $quoteTransfer, string $stateMachineProcessName = null): SaveOrderTransfer
+    {
+        $saveOrderTransfer = (new SaveOrderBuilder())->makeEmpty()->build();
+
+        $salesFacade = $this->getSalesFacade();
+        if ($stateMachineProcessName) {
+            $salesFacade = $this->configureSalesFacadeForTests($salesFacade, $stateMachineProcessName);
+        }
+
+        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+
+        return $saveOrderTransfer;
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
-    private function getSalesFacade()
+    protected function getSalesFacade()
     {
         return $this->getLocator()->sales()->facade();
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return \SprykerTest\Shared\Sales\Helper\QuoteTransfer
+     */
+    protected function createQuoteTransfer(array $override = []): QuoteTransfer
+    {
+        return (new QuoteBuilder())
+            ->withItem($override)
+            ->withCustomer()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->withCurrency()
+            ->build();
     }
 }
