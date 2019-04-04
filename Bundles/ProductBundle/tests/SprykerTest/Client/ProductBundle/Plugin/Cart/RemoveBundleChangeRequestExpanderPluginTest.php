@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\ProductBundle\QuoteChangeRequestExpander;
+namespace SprykerTest\Client\ProductBundle\Plugin\Cart;
 
 use ArrayObject;
 use Codeception\Test\Unit;
@@ -20,7 +20,7 @@ use Spryker\Client\ProductBundle\QuoteChangeRequestExpander\QuoteChangeRequestEx
  * @group SprykerTest
  * @group Client
  * @group ProductBundle
- * @group RemoveBundleChangeRequestExpanderPlugin
+ * @group Plugin
  * @group RemoveBundleChangeRequestExpanderPluginTest
  * Add your own group annotations below this line
  */
@@ -140,7 +140,7 @@ class RemoveBundleChangeRequestExpanderPluginTest extends Unit
             $itemTransfer3,
         ]);
 
-        $quoteTransfer = $this->tester->haveQuote([]);
+        $quoteTransfer = $this->tester->haveQuote();
         $quoteTransfer->setBundleItems($bundledItems);
         $quoteTransfer->setItems($items);
 
