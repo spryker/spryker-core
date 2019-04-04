@@ -9,11 +9,23 @@ namespace Spryker\Client\ResourceShare;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ResourceShare\Dependency\Client\ResourceShareToZedRequestClientInterface;
+use Spryker\Client\ResourceShare\ResourceShareActivator\ResourceShareActivator;
+use Spryker\Client\ResourceShare\ResourceShareActivator\ResourceShareActivatorInterface;
 use Spryker\Client\ResourceShare\Zed\ResourceShareStub;
 use Spryker\Client\ResourceShare\Zed\ResourceShareStubInterface;
 
 class ResourceShareFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\ResourceShare\ResourceShareActivator\ResourceShareActivatorInterface
+     */
+    public function createResourceShareActivator(): ResourceShareActivatorInterface
+    {
+        return new ResourceShareActivator(
+            $this->createZedResourceShareStub()
+        );
+    }
+
     /**
      * @return \Spryker\Client\ResourceShare\Zed\ResourceShareStubInterface
      */

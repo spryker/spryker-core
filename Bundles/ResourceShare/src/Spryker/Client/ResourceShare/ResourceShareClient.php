@@ -8,7 +8,6 @@
 namespace Spryker\Client\ResourceShare;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -48,12 +47,8 @@ class ResourceShareClient extends AbstractClient implements ResourceShareClientI
         string $uuid,
         ?CustomerTransfer $customerTransfer
     ): ResourceShareResponseTransfer {
-        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
-            ->setUuid($uuid)
-            ->setCustomer($customerTransfer);
-
         return $this->getFactory()
-            ->createZedResourceShareStub()
-            ->activateResourceShare($resourceShareRequestTransfer);
+            ->createResourceShareActivator()
+            ->activateResourceShare($uuid, $customerTransfer);
     }
 }
