@@ -56,13 +56,14 @@ class ProductQuantityToUtilQuantityServiceBridge implements ProductQuantityToUti
     }
 
     /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
+     * @param float $dividentQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
      *
      * @return bool
      */
-    public function isQuantityModuloEqual(float $firstQuantity, float $secondQuantity): bool
+    public function isQuantityModuloEqual(float $dividentQuantity, float $divisorQuantity, float $remainder): bool
     {
-        return $this->utilQuantityService->isQuantityModuloEqual($firstQuantity, $secondQuantity);
+        return $this->utilQuantityService->isQuantityModuloEqual($dividentQuantity, $divisorQuantity, $remainder);
     }
 }

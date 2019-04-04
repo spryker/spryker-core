@@ -34,10 +34,11 @@ interface ProductQuantityToUtilQuantityServiceInterface
     public function subtractQuantities(float $firstQuantity, float $secondQuantity): float;
 
     /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
+     * @param float $dividentQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
      *
      * @return bool
      */
-    public function isQuantityModuloEqual(float $firstQuantity, float $secondQuantity): bool;
+    public function isQuantityModuloEqual(float $dividentQuantity, float $divisorQuantity, float $remainder): bool;
 }

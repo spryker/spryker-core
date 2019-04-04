@@ -54,14 +54,15 @@ interface UtilQuantityServiceInterface
 
     /**
      * Specification:
-     * - checks whether numbers divide without remainder.
+     * - checks whether numbers divide with specified remainder.
      *
      * @api
      *
-     * @param float $firstQuantity
-     * @param float $secondQuantity
+     * @param float $dividendQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
      *
      * @return bool
      */
-    public function isQuantityModuloEqual(float $firstQuantity, float $secondQuantity): bool;
+    public function isQuantityModuloEqual(float $dividendQuantity, float $divisorQuantity, float $remainder): bool;
 }

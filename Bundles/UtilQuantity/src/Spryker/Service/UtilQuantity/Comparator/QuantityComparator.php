@@ -38,18 +38,22 @@ class QuantityComparator implements QuantityComparatorInterface
     }
 
     /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
+     * @param float $dividendQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
      *
      * @return bool
      */
-    public function isQuantityModuloEqual(float $firstQuantity, float $secondQuantity): bool
+    public function isQuantityModuloEqual(float $dividendQuantity, float $divisorQuantity, float $remainder): bool
     {
-        $maxPrecision = $this->precisionCalculator->getMaxPrecision($firstQuantity, $secondQuantity);
+        $maxPrecision = $this->precisionCalculator->getMaxPrecision($dividendQuantity, $divisorQuantity);
 
-        $intFirstQuantity = (int)($firstQuantity * pow(10, $maxPrecision));
-        $intSecondQuantity = (int)($secondQuantity * pow(10, $maxPrecision));
+        $intDividentQuantity = (int)($dividendQuantity * pow(10, $maxPrecision));
+        $intDivisorQuantity = (int)($divisorQuantity * pow(10, $maxPrecision));
 
-        return $intFirstQuantity % $intSecondQuantity === 0;
+        return $this->isQuantityEqual(
+            $intDividentQuantity % $intDivisorQuantity,
+            $remainder
+        );
     }
 }
