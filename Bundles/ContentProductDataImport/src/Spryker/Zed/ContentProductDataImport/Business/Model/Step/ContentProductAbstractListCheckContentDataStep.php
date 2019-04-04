@@ -62,9 +62,9 @@ class ContentProductAbstractListCheckContentDataStep implements DataImportStepIn
     {
         $messages = [];
 
-        foreach ($contentValidationResponseTransfer->getParameterMessages() as $parameterMessages) {
-            foreach ($parameterMessages->getMessages() as $parameterMessage) {
-                $messages[] = '[' . $parameterMessages->getParameter() . '] ' . $parameterMessage->getValue();
+        foreach ($contentValidationResponseTransfer->getParameterMessages() as $contentParameterMessageTransfer) {
+            foreach ($contentParameterMessageTransfer->getMessages() as $messageTransfer) {
+                $messages[] = '[' . $contentParameterMessageTransfer->getParameter() . '] ' . $messageTransfer->getValue();
             }
         }
 

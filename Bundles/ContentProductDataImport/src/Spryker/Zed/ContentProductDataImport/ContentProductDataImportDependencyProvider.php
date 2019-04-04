@@ -80,6 +80,7 @@ class ContentProductDataImportDependencyProvider extends DataImportDependencyPro
         $container[static::FACADE_CONTENT] = function (Container $container) {
             return new ContentProductDataImportToContentBridge($container->getLocator()->content()->facade());
         };
+
         return $container;
     }
 }

@@ -9,7 +9,7 @@
     "spryker/content-product": "^1.0.0",
     "spryker/data-import": "^1.4.0",
     "spryker/kernel": "^3.32.0",
-    "spryker/product": "^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0",
+    "spryker/product": "^6.0.0",
     "spryker/util-encoding": "^1.0.0 || ^2.0.0"
   },
   "require-dev": {
