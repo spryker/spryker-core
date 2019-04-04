@@ -139,15 +139,26 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         }
 
         $quantityMinusMin = $this->subtractQuantities($quantity, $min);
-        $divideQuantityMinusMinByModuleInterval = fmod($quantityMinusMin, $interval);
 
-        if (!$this->isQuantityEqual($quantity, 0) && !$this->isQuantityEqual($divideQuantityMinusMinByModuleInterval, 0)) {
+        if (!$this->isQuantityEqual($quantity, 0) && !$this->isQuantityModuloEqual($quantityMinusMin, $interval, 0)) {
             $this->addViolation(static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED, $sku, $interval, $quantity, $responseTransfer);
         }
 
         if ($max !== null && $quantity > $max) {
             $this->addViolation(static::ERROR_QUANTITY_MAX_NOT_FULFILLED, $sku, $max, $quantity, $responseTransfer);
         }
+    }
+
+    /**
+     * @param float $dividentQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
+     *
+     * @return bool
+     */
+    protected function isQuantityModuloEqual(float $dividentQuantity, float $divisorQuantity, float $remainder): bool
+    {
+        return $this->utilQuantityService->isQuantityModuloEqual($dividentQuantity, $divisorQuantity, $remainder);
     }
 
     /**

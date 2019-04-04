@@ -56,9 +56,8 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
         }
 
         $quantityMinusMin = $this->subtractQuantities($quantity, $min);
-        $divideQuantityMinusMinByModuleInterval = fmod($quantityMinusMin, $interval);
 
-        if ($interval && !$this->isQuantityEqual($divideQuantityMinusMinByModuleInterval, 0)) {
+        if ($interval && !$this->isQuantityModuloEqual($quantityMinusMin, $interval, 0)) {
             $max = $max ?? $this->sumQuantities($quantity, $interval);
 
             $quantity = $this->getNearestQuantityFromAllowed(
@@ -71,6 +70,18 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
     }
 
     /**
+     * @param float $dividentQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
+     *
+     * @return bool
+     */
+    protected function isQuantityModuloEqual(float $dividentQuantity, float $divisorQuantity, float $remainder): bool
+    {
+        return $this->utilQuantityService->isQuantityModuloEqual($dividentQuantity, $divisorQuantity, $remainder);
+    }
+
+    /**
      * @param float $firstQuantity
      * @param float $secondQuantity
      *
@@ -79,17 +90,6 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
     protected function subtractQuantities(float $firstQuantity, float $secondQuantity): float
     {
         return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
-    {
-        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
     }
 
     /**

@@ -143,9 +143,8 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
             return false;
         }
         $quantityMinusMin = $this->subtractQuantity($quantity, $min);
-        $quantityMinusMinModuloInterval = fmod($quantityMinusMin, $interval);
 
-        if (!$this->isQuantityEqual($quantityMinusMinModuloInterval, 0)) {
+        if (!$this->isQuantityModuloEqual($quantityMinusMin, $interval, 0)) {
             return false;
         }
 
@@ -154,6 +153,18 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
         }
 
         return true;
+    }
+
+    /**
+     * @param float $dividentQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
+     *
+     * @return bool
+     */
+    protected function isQuantityModuloEqual(float $dividentQuantity, float $divisorQuantity, float $remainder): bool
+    {
+        return $this->utilQuantityService->isQuantityModuloEqual($dividentQuantity, $divisorQuantity, $remainder);
     }
 
     /**
@@ -342,9 +353,8 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
         }
 
         $quantityMinusMin = $this->subtractQuantity($quantity, $min);
-        $quantityMinusMinModuloInterval = fmod($quantityMinusMin, $interval);
 
-        if (!$this->isQuantityEqual($quantityMinusMinModuloInterval, 0)) {
+        if (!$this->isQuantityModuloEqual($quantityMinusMin, $interval, 0)) {
             return $this->buildNotificationMessage(
                 static::MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED,
                 static::NOTIFICATION_MESSAGE_PARAM_STEP,
