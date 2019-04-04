@@ -34,7 +34,7 @@ class ContentTable extends AbstractTable
         array $contentPlugins
     ) {
         $this->contentQuery = $contentQuery;
-        $this->populateEnabledContentTypesCache($contentPlugins);
+        $this->enabledContentTypesCache = $this->populateEnabledContentTypesCache($contentPlugins);
     }
 
     /**
@@ -146,13 +146,16 @@ class ContentTable extends AbstractTable
     /**
      * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[] $contentPlugins
      *
-     * @return void
+     * @return array
      */
-    protected function populateEnabledContentTypesCache(array $contentPlugins): void
+    protected function populateEnabledContentTypesCache(array $contentPlugins): array
     {
+        $contentTypesCache = [];
         foreach ($contentPlugins as $contentPlugin) {
-            $this->enabledContentTypesCache[] = $contentPlugin->getTypeKey();
+            $contentTypesCache = $contentPlugin->getTypeKey();
         }
+
+        return array_unique($contentTypesCache);
     }
 
     /**
