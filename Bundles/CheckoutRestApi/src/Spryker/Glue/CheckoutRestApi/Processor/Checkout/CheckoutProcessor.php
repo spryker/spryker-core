@@ -10,6 +10,7 @@ namespace Spryker\Glue\CheckoutRestApi\Processor\Checkout;
 use ArrayObject;
 use Generated\Shared\Transfer\RestCheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -148,7 +149,8 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     {
         $restCheckoutResponseAttributesTransfer = $this->checkoutResponseMapper
             ->mapRestCheckoutResponseTransferToRestCheckoutResponseAttributesTransfer(
-                $restCheckoutResponseTransfer
+                $restCheckoutResponseTransfer,
+                new RestCheckoutResponseAttributesTransfer()
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(

@@ -18,7 +18,7 @@ class CheckoutResponseMapper implements CheckoutResponseMapperInterface
     protected $checkoutResponseMapperPlugins;
 
     /**
-     * @param array $checkoutResponseMapperPlugins
+     * @param \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface[] $checkoutResponseMapperPlugins
      */
     public function __construct(array $checkoutResponseMapperPlugins)
     {
@@ -27,14 +27,15 @@ class CheckoutResponseMapper implements CheckoutResponseMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutResponseTransfer $restCheckoutResponseTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer
      */
     public function mapRestCheckoutResponseTransferToRestCheckoutResponseAttributesTransfer(
-        RestCheckoutResponseTransfer $restCheckoutResponseTransfer
+        RestCheckoutResponseTransfer $restCheckoutResponseTransfer,
+        RestCheckoutResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
     ): RestCheckoutResponseAttributesTransfer {
-        $restCheckoutResponseAttributesTransfer = (new RestCheckoutResponseAttributesTransfer())
-            ->setOrderReference($restCheckoutResponseTransfer->getOrderReference());
+        $restCheckoutResponseAttributesTransfer->setOrderReference($restCheckoutResponseTransfer->getOrderReference());
 
         foreach ($this->checkoutResponseMapperPlugins as $checkoutResponseMapperPlugin) {
             $restCheckoutResponseAttributesTransfer = $checkoutResponseMapperPlugin
