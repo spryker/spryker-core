@@ -40,7 +40,7 @@ interface PriceProductTypeReaderInterface
     public function hasPriceType($priceTypeName);
 
     /**
-     * @param $priceTypeName|string
+     * @param string $priceTypeName
      *
      * @return \Generated\Shared\Transfer\PriceTypeTransfer|null
      */
