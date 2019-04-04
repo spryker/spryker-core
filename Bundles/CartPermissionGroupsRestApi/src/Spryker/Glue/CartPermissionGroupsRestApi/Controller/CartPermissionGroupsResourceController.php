@@ -55,6 +55,6 @@ class CartPermissionGroupsResourceController extends AbstractController
 
         return $this->getFactory()
             ->createCartPermissionGroupReader()
-            ->findCartPermissionGroupById($restRequest->getResource()->getId());
+            ->findCartPermissionGroupById((int)$restRequest->getResource()->getId());
     }
 }

@@ -31,9 +31,4 @@ interface CartPermissionGroupResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCartPermissionGroupNotFoundErrorResponse(): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createInvalidCartPermissionGroupIdErrorResponse(): RestResponseInterface;
 }

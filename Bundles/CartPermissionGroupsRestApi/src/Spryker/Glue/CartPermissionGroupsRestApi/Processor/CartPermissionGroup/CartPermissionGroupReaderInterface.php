@@ -17,9 +17,9 @@ interface CartPermissionGroupReaderInterface
     public function getCartPermissionGroupList(): RestResponseInterface;
 
     /**
-     * @param string $idCartPermissionGroup
+     * @param int $idCartPermissionGroup
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function findCartPermissionGroupById(string $idCartPermissionGroup): RestResponseInterface;
+    public function findCartPermissionGroupById(int $idCartPermissionGroup): RestResponseInterface;
 }

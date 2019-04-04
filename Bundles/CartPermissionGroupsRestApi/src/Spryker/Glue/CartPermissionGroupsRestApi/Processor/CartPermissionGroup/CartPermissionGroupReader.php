@@ -56,18 +56,14 @@ class CartPermissionGroupReader implements CartPermissionGroupReaderInterface
     }
 
     /**
-     * @param string $idCartPermissionGroup
+     * @param int $idCartPermissionGroup
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function findCartPermissionGroupById(string $idCartPermissionGroup): RestResponseInterface
+    public function findCartPermissionGroupById(int $idCartPermissionGroup): RestResponseInterface
     {
-        if (!is_numeric($idCartPermissionGroup)) {
-            return $this->cartPermissionGroupResponseBuilder->createInvalidCartPermissionGroupIdErrorResponse();
-        }
-
         $quotePermissionGroupResponseTransfer = $this->sharedCartClient->findQuotePermissionGroupById(
-            (new QuotePermissionGroupTransfer())->setIdQuotePermissionGroup((int)$idCartPermissionGroup)
+            (new QuotePermissionGroupTransfer())->setIdQuotePermissionGroup($idCartPermissionGroup)
         );
 
         if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
