@@ -165,7 +165,7 @@ class ContentTable extends AbstractTable
      */
     protected function isContentTypeEnabled(string $contentTypeKey): bool
     {
-        return in_array($contentTypeKey, $this->contentTypeKeyCache);
+        return in_array($contentTypeKey, $this->contentTypeKeyCache, true);
     }
 
     /**
