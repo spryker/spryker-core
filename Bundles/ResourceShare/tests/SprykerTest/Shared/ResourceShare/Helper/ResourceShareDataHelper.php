@@ -10,15 +10,12 @@ namespace SprykerTest\Shared\ResourceShare\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ResourceShareBuilder;
 use Generated\Shared\Transfer\ResourceShareTransfer;
-use Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery;
 use Spryker\Zed\ResourceShare\Business\ResourceShareFacadeInterface;
-use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ResourceShareDataHelper extends Module
 {
     use LocatorHelperTrait;
-    use DataCleanupHelperTrait;
 
     /**
      * @param array $seedData
@@ -32,24 +29,7 @@ class ResourceShareDataHelper extends Module
         $resourceShareResponseTransfer = $this->getResourceShareFacade()->generateResourceShare($resourceShareTransfer);
         $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($resourceShareTransfer): void {
-            $this->cleanupResourceShare($resourceShareTransfer);
-        });
-
         return $resourceShareTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     *
-     * @return void
-     */
-    protected function cleanupResourceShare(ResourceShareTransfer $resourceShareTransfer): void
-    {
-        SpyResourceShareQuery::create()
-            ->filterByIdResourceShare($resourceShareTransfer->getIdResourceShare())
-            ->findOne()
-            ->delete();
     }
 
     /**
