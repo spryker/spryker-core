@@ -7,7 +7,7 @@ This module provides the connection between product entities and merchant entiti
 ## Installation
 
 ```
-composer require spryker/merchant-product-connector
+composer require spryker/product-merchant-connector
 ```
 
 ## Documentation

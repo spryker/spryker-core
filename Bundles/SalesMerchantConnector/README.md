@@ -2,12 +2,12 @@
 [![Build Status](https://travis-ci.org/spryker/merchant-sales-connector.svg)](https://travis-ci.org/spryker/merchant-sales-connector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/merchant-sales-connector/badge.svg)](https://coveralls.io/github/spryker/merchant-sales-connector)
 
-{{ADD DESCRIPTION HERE}}
+Provides database structure and plugins to link sales to merchants.
 
 ## Installation
 
 ```
-composer require spryker/merchant-sales-connector
+composer require spryker/sales-merchant-connector
 ```
 
 ## Documentation
