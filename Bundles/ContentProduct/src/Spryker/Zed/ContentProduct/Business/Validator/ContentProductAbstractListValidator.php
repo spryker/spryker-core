@@ -15,7 +15,7 @@ use Spryker\Zed\ContentProduct\ContentProductConfig;
 
 class ContentProductAbstractListValidator implements ContentProductAbstractListValidatorInterface
 {
-    protected const ERROR_MESSAGE_MAX_NUMBER_OF_PRODUCTS = 'The number of products is too big, max {number}.';
+    protected const ERROR_MESSAGE_MAX_NUMBER_OF_PRODUCTS = 'There are too many products in the list, please reduce the list size to {number} or fewer.';
     protected const ERROR_MESSAGE_PARAMETER_COUNT = '{number}';
 
     /**
