@@ -23,13 +23,14 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
     public function findResourceShareByUuid(string $uuid): ?ResourceShareTransfer
     {
         $resourceShareEntity = $this->getFactory()
-            ->createResourceShareQuery()
+            ->createResourceSharePropelQuery()
             ->filterByUuid($uuid)
             ->findOne();
 
         if ($resourceShareEntity) {
             return (new ResourceShareTransfer())->fromArray(
-                $resourceShareEntity->toArray()
+                $resourceShareEntity->toArray(),
+                true
             );
         }
 

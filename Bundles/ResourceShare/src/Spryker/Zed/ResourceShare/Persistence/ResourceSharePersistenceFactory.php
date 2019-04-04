@@ -20,7 +20,7 @@ class ResourceSharePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery
      */
-    public function createResourceShareQuery(): SpyResourceShareQuery
+    public function createResourceSharePropelQuery(): SpyResourceShareQuery
     {
         return SpyResourceShareQuery::create();
     }

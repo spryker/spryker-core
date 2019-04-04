@@ -14,10 +14,6 @@ use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareWriter;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareWriterInterface;
-use Spryker\Zed\ResourceShare\Business\Uuid\ResourceShareUuidGenerator;
-use Spryker\Zed\ResourceShare\Business\Uuid\ResourceShareUuidGeneratorInterface;
-use Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilEncodingServiceInterface;
-use Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilUuidGeneratorServiceInterface;
 use Spryker\Zed\ResourceShare\ResourceShareDependencyProvider;
 
 /**
@@ -44,19 +40,7 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     {
         return new ResourceShareWriter(
             $this->getEntityManager(),
-            $this->getRepository(),
-            $this->createResourceShareUuidGenerator()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ResourceShare\Business\Uuid\ResourceShareUuidGeneratorInterface
-     */
-    public function createResourceShareUuidGenerator(): ResourceShareUuidGeneratorInterface
-    {
-        return new ResourceShareUuidGenerator(
-            $this->getUtilEncodingService(),
-            $this->getUtilUuidService()
+            $this->getRepository()
         );
     }
 
@@ -69,22 +53,6 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
             $this->createResourceShareReader(),
             $this->getResourceShareActivatorStrategyPlugins()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilEncodingServiceInterface
-     */
-    public function getUtilEncodingService(): ResourceShareToUtilEncodingServiceInterface
-    {
-        return $this->getProvidedDependency(ResourceShareDependencyProvider::SERVICE_UTIL_ENCODING);
-    }
-
-    /**
-     * @return \Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilUuidGeneratorServiceInterface
-     */
-    public function getUtilUuidService(): ResourceShareToUtilUuidGeneratorServiceInterface
-    {
-        return $this->getProvidedDependency(ResourceShareDependencyProvider::SERVICE_UTIL_UUID_GENERATOR);
     }
 
     /**
