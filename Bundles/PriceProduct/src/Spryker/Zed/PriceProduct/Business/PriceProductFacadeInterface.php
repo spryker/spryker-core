@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
@@ -90,6 +91,18 @@ interface PriceProductFacadeInterface
      * @return int
      */
     public function createPriceType($name);
+
+    /**
+     * Specification:
+     * - Finds a price type by given name.
+     *
+     * @api
+     *
+     * @param string $priceTypeName
+     *
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer|null
+     */
+    public function findPriceTypeByName(string $priceTypeName): ?PriceTypeTransfer;
 
     /**
      * Specification:

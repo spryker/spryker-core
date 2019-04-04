@@ -12,6 +12,7 @@ use DateTime;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 
 /**
  * Auto-generated group annotations
@@ -37,13 +38,25 @@ class PriceProductSchedulePriceTest extends Unit
     protected $priceProductScheduleFacade;
 
     /**
+     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected $spyPriceProductScheduleQuery;
+
+    /**
+     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->priceProductScheduleFacade = $this->tester->getFacade();
+        $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
+        $this->storeFacade = $this->tester->getLocator()->store()->facade();
     }
 
     /**
@@ -52,41 +65,23 @@ class PriceProductSchedulePriceTest extends Unit
     public function testPriceProductScheduleWithLowestGrossPriceShouldApply(): void
     {
         // Assign
-        $productConcreteTransfer = $this->tester->haveProduct();
+        $priceProductScheduleData = $this->getPriceProductScheduleData();
 
-        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
-            [
-                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime())->modify('-1 hour'),
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::MONEY_VALUE => [
-                        MoneyValueTransfer::GROSS_AMOUNT => 100,
-                    ],
-                ],
-            ]
-        );
+        $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT] = 100;
+        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule($priceProductScheduleData);
 
-        $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
-            [
-                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime())->modify('-1 hour'),
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::MONEY_VALUE => [
-                        MoneyValueTransfer::GROSS_AMOUNT => 200,
-                    ],
-                ],
-            ]
-        );
+        $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT] = 200;
+        $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule($priceProductScheduleData);
 
         // Act
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $this->assertTrue($priceProductScheduleEntity->isCurrent());
+        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $this->assertTrue($priceProductScheduleEntity->isCurrent(), 'Scheduled price with lowest gross price should have been set as current.');
 
-        $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
-        $this->assertFalse($priceProductScheduleEntity2->isCurrent());
+        $priceProductScheduleEntity2 = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
+        $this->assertFalse($priceProductScheduleEntity2->isCurrent(), 'Scheduled price with biggest gross price should not have been set as current.');
     }
 
     /**
@@ -95,42 +90,53 @@ class PriceProductSchedulePriceTest extends Unit
     public function testPriceProductScheduleWithLowestNetPriceShouldApply(): void
     {
         // Assign
-        $productConcreteTransfer = $this->tester->haveProduct();
+        $priceProductScheduleData = $this->getPriceProductScheduleData();
 
-        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
-            [
-                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime())->modify('-1 hour'),
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::MONEY_VALUE => [
-                        MoneyValueTransfer::GROSS_AMOUNT => 100,
-                        MoneyValueTransfer::NET_AMOUNT => 100,
-                    ],
-                ],
-            ]
-        );
+        $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT] = 100;
+        $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::NET_AMOUNT] = 100;
 
-        $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
-            [
-                PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime())->modify('-1 hour'),
-                PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                    PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                    PriceProductTransfer::MONEY_VALUE => [
-                        MoneyValueTransfer::GROSS_AMOUNT => 100,
-                        MoneyValueTransfer::NET_AMOUNT => 200,
-                    ],
-                ],
-            ]
-        );
+        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule($priceProductScheduleData);
+
+        $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT] = 100;
+        $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::NET_AMOUNT] = 200;
+
+        $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule($priceProductScheduleData);
 
         // Act
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $this->assertTrue($priceProductScheduleEntity->isCurrent());
+        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $this->assertTrue($priceProductScheduleEntity->isCurrent(), 'Scheduled price with lowest net price should have been set as current.');
 
-        $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
-        $this->assertFalse($priceProductScheduleEntity2->isCurrent());
+        $priceProductScheduleEntity2 = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
+        $this->assertFalse($priceProductScheduleEntity2->isCurrent(), 'Scheduled price with biggest net price should not have been set as current.');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPriceProductScheduleData(): array
+    {
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $currencyId = $this->tester->haveCurrency();
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $priceType = $this->tester->havePriceType();
+
+        return [
+            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-1 hour')),
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                PriceProductTransfer::PRICE_TYPE => [
+                    PriceTypeTransfer::NAME => $priceType->getName(),
+                    PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
+                ],
+                PriceProductTransfer::MONEY_VALUE => [
+                    MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                ],
+            ],
+        ];
     }
 }

@@ -20,6 +20,8 @@
         <column name="active_to" type="TIMESTAMP" required="true"/>
         <column name="is_current" required="true" default="false" type="BOOLEAN"/>
 
+        <behavior name="timestampable"/>
+
         <foreign-key name="spy_price_product_schedule-fk_product" foreignTable="spy_product" phpName="Product"
                      refPhpName="PriceProductSchedule">
             <reference local="fk_product" foreign="id_product"/>

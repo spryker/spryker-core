@@ -33,7 +33,7 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    protected function getFallbackPriceTypeList(): array
+    public function getFallbackPriceTypeList(): array
     {
         return [
             static::PRICE_TYPE_DEFAULT => static::PRICE_TYPE_ORIGINAL,

@@ -9,6 +9,7 @@ namespace SprykerTest\Shared\PriceProduct\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\PriceProductBuilder;
+use Generated\Shared\DataBuilder\PriceTypeBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
@@ -65,6 +66,32 @@ class PriceProductDataHelper extends Module
     }
 
     /**
+     * @param array $priceTypeData
+     *
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer
+     */
+    public function havePriceType(array $priceTypeData = []): PriceTypeTransfer
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceTypeTransfer = (new PriceTypeBuilder())
+            ->seed($priceTypeData)
+            ->build();
+
+        $existingPriceTypeTransfer = $priceProductFacade->findPriceTypeByName($priceTypeTransfer->getName());
+
+        if ($existingPriceTypeTransfer !== null) {
+            return $existingPriceTypeTransfer;
+        }
+
+        $priceTypeId = $priceProductFacade->createPriceType($priceTypeTransfer->getName());
+
+        $priceTypeTransfer->setIdPriceType($priceTypeId);
+
+        return $priceTypeTransfer;
+    }
+
+    /**
      * @param int $idPriceProduct
      *
      * @return void
@@ -93,6 +120,8 @@ class PriceProductDataHelper extends Module
         int $grossPrice,
         string $currencyIsoCode
     ): PriceProductTransfer {
+        $currencyTransfer = $this->getCurrencyFacade()->fromIsoCode($currencyIsoCode);
+
         $config = $this->getSharedPriceProductConfig();
 
         $priceDimensionTransfer = (new PriceProductDimensionTransfer())
@@ -109,8 +138,20 @@ class PriceProductDataHelper extends Module
             $priceTypeTransfer = $priceProductOverride[PriceProductTransfer::PRICE_TYPE];
         }
 
+        if (isset($priceProductOverride[PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::NET_AMOUNT])) {
+            $netPrice = $priceProductOverride[PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::NET_AMOUNT];
+        }
+
+        if (isset($priceProductOverride[PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT])) {
+            $grossPrice = $priceProductOverride[PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT];
+        }
+
+        if (isset($priceProductOverride[PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::CURRENCY])) {
+            $currencyTransfer = $priceProductOverride[PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::CURRENCY];
+        }
+
         $priceProductDefaultData = [
-            PriceProductTransfer::PRICE_TYPE_NAME => $defaultPriceTypeName,
+            PriceProductTransfer::PRICE_TYPE_NAME => $priceTypeTransfer->getName(),
             PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer,
             PriceProductTransfer::PRICE_DIMENSION => $priceDimensionTransfer,
             PriceProductTransfer::FK_PRICE_TYPE => $priceTypeTransfer->getIdPriceType(),
@@ -120,7 +161,6 @@ class PriceProductDataHelper extends Module
             ->seed($priceProductOverride)
             ->build();
 
-        $currencyTransfer = $this->getCurrencyFacade()->fromIsoCode($currencyIsoCode);
         $storeTransfer = $this->getStoreFacade()->getCurrentStore();
 
         $moneyValueTransfer = $this->createMoneyValueTransfer(

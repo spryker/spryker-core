@@ -833,4 +833,34 @@ class PriceProductFacadeTest extends Unit
         return (new PriceProductCriteriaTransfer())
             ->setPriceDimension($priceProductDimensionTransfer);
     }
+
+    /**
+     * @return void
+     */
+    public function testRemovePriceProductStoreShouldDeletePriceFromDatabase()
+    {
+        // Assign
+        /** @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceProductFacade */
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceProductTransfer = $this->createProductWithAmount(
+            100,
+            90,
+            '',
+            '',
+            self::EUR_ISO_CODE
+        );
+
+        // Act
+        $priceProductFacade->removePriceProductStore($priceProductTransfer);
+
+        // Assert
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setCurrencyIsoCode(self::EUR_ISO_CODE)
+            ->setSku($priceProductTransfer->getSkuProduct());
+
+        $priceProduct = $priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
+
+        $this->assertNull($priceProduct, 'Price product should be removed from db');
+    }
 }

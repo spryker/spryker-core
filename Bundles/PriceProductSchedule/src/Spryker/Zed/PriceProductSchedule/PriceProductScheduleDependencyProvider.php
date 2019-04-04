@@ -20,7 +20,7 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         return $container;
     }

@@ -8,17 +8,14 @@
 namespace SprykerTest\Shared\PriceProductSchedule\Helper;
 
 use Codeception\Module;
-use DateTime;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\DataBuilder\PriceProductBuilder;
 use Generated\Shared\DataBuilder\PriceProductScheduleBuilder;
 use Generated\Shared\DataBuilder\PriceProductScheduleListBuilder;
 use Generated\Shared\DataBuilder\PriceTypeBuilder;
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Generated\Shared\Transfer\PriceTypeTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery;
@@ -27,91 +24,27 @@ use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
-use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
+/**
+ * @method \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface getFacade()
+ */
 class PriceProductScheduleDataHelper extends Module
 {
-    use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
-    public const EUR_ISO_CODE = 'EUR';
-
-    public const NET_PRICE = 100;
-    public const GROSS_PRICE = 80;
-
-    public const ABSTRACT_ID_PRODUCT = 1;
-    public const CONCRETE_ID_PRODUCT = 1;
-
     /**
-     * @param array $priceProductScheduleOverride
+     * @param array $priceProductScheduleOverrideData
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
-    public function havePriceProductSchedule(array $priceProductScheduleOverride = []): PriceProductScheduleTransfer
+    public function havePriceProductSchedule(array $priceProductScheduleOverrideData = []): PriceProductScheduleTransfer
     {
-        $defaultPriceTypeName = $this->getPriceProductFacade()->getDefaultPriceTypeName();
-
-        $priceTypeData = [
-            PriceTypeTransfer::NAME => $defaultPriceTypeName,
-            PriceTypeTransfer::ID_PRICE_TYPE => $this->getPriceTypeId($defaultPriceTypeName),
-        ];
-
-        $priceTypeTransfer = (new PriceTypeBuilder($priceTypeData))
-            ->seed($priceProductScheduleOverride[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::PRICE_TYPE] ?? [])
-            ->build();
-        $currencyTransfer = $this->getCurrencyFacade()->fromIsoCode(static::EUR_ISO_CODE);
-
-        $moneyValueData = [
-            MoneyValueTransfer::FK_STORE => $this->getStoreFacade()->getCurrentStore()->getIdStore(),
-            MoneyValueTransfer::FK_CURRENCY => $currencyTransfer->getIdCurrency(),
-            MoneyValueTransfer::CURRENCY => $currencyTransfer,
-            MoneyValueTransfer::NET_AMOUNT => static::NET_PRICE,
-            MoneyValueTransfer::GROSS_AMOUNT => static::GROSS_PRICE,
-        ];
-
-        $moneyValueTransfer = (new MoneyValueBuilder($moneyValueData))
-            ->seed($priceProductScheduleOverride[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE] ?? [])
+        $priceProductScheduleTransfer = (new PriceProductScheduleBuilder($this->preparePriceProductScheduleData($priceProductScheduleOverrideData)))
             ->build();
 
-        $priceProductData = [
-            PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer,
-            PriceProductTransfer::MONEY_VALUE => $moneyValueTransfer,
-            PriceProductTransfer::ID_PRODUCT_ABSTRACT => static::ABSTRACT_ID_PRODUCT,
-            PriceProductTransfer::ID_PRODUCT => static::CONCRETE_ID_PRODUCT,
-        ];
-
-        $priceProductTransfer = (new PriceProductBuilder($priceProductData))
-            ->seed($priceProductScheduleOverride[PriceProductScheduleTransfer::PRICE_PRODUCT] ?? [])
-            ->build();
-
-        $priceProductScheduleData = [
-            PriceProductScheduleTransfer::PRICE_PRODUCT_SCHEDULE_LIST => $this->havePriceProductScheduleList(),
-            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime())->modify('-4 days'),
-            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('+3 days'),
-            PriceProductScheduleTransfer::PRICE_PRODUCT => $priceProductTransfer,
-        ];
-
-        $priceProductScheduleTransfer = (new PriceProductScheduleBuilder($priceProductScheduleData))
-            ->seed($priceProductScheduleOverride)
-            ->build();
-
-        $spyPriceProductScheduleEntity = new SpyPriceProductSchedule();
-        $spyPriceProductScheduleEntity->fromArray($priceProductScheduleTransfer->modifiedToArray());
-        $spyPriceProductScheduleEntity->setFkStore($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getFkStore());
-        $spyPriceProductScheduleEntity->setFkCurrency($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getCurrency()->getIdCurrency());
-        $spyPriceProductScheduleEntity->setFkPriceType($priceProductScheduleTransfer->getPriceProduct()->getPriceType()->getIdPriceType());
-        $spyPriceProductScheduleEntity->setGrossPrice($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getGrossAmount());
-        $spyPriceProductScheduleEntity->setNetPrice($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getNetAmount());
-        $spyPriceProductScheduleEntity->setFkProduct($priceProductScheduleTransfer->getPriceProduct()->getIdProduct());
-        $spyPriceProductScheduleEntity->setFkProductAbstract($priceProductScheduleTransfer->getPriceProduct()->getIdProductAbstract());
-        $spyPriceProductScheduleEntity->setFkPriceProductScheduleList($priceProductScheduleTransfer->getPriceProductScheduleList()->getIdPriceProductScheduleList());
-
+        $spyPriceProductScheduleEntity = $this->mapPriceProductScheduleTransferToEntity($priceProductScheduleTransfer);
         $spyPriceProductScheduleEntity->save();
-
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($spyPriceProductScheduleEntity) {
-            $this->cleanupPriceProductSchedule($spyPriceProductScheduleEntity->getIdPriceProductSchedule());
-        });
 
         $priceProductScheduleTransfer->setIdPriceProductSchedule($spyPriceProductScheduleEntity->getIdPriceProductSchedule());
 
@@ -119,15 +52,13 @@ class PriceProductScheduleDataHelper extends Module
     }
 
     /**
-     * @param bool|null $isActive
+     * @param array $priceProductScheduleData
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
      */
-    public function havePriceProductScheduleList($isActive = true): PriceProductScheduleListTransfer
+    public function havePriceProductScheduleList(array $priceProductScheduleData = []): PriceProductScheduleListTransfer
     {
-        $priceProductScheduleListTransfer = (new PriceProductScheduleListBuilder([
-            PriceProductScheduleListTransfer::IS_ACTIVE => $isActive,
-        ]))
+        $priceProductScheduleListTransfer = (new PriceProductScheduleListBuilder($priceProductScheduleData))
             ->build();
 
         $spyPriceProductScheduleListEntity = new SpyPriceProductScheduleList();
@@ -135,27 +66,8 @@ class PriceProductScheduleDataHelper extends Module
         $spyPriceProductScheduleListEntity->save();
 
         $priceProductScheduleListTransfer->setIdPriceProductScheduleList($spyPriceProductScheduleListEntity->getIdPriceProductScheduleList());
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($spyPriceProductScheduleListEntity) {
-            $this->cleanupPriceProductScheduleList($spyPriceProductScheduleListEntity->getIdPriceProductScheduleList());
-        });
 
         return $priceProductScheduleListTransfer;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return int|null
-     */
-    protected function getPriceTypeId(string $name): ?int
-    {
-        $spyPriceTypeEntity = $this->getPriceProductQueryContainer()->queryPriceType($name)->findOne();
-
-        if (!$spyPriceTypeEntity) {
-            return null;
-        }
-
-        return $spyPriceTypeEntity->getIdPriceType();
     }
 
     /**
@@ -175,35 +87,11 @@ class PriceProductScheduleDataHelper extends Module
     }
 
     /**
-     * @param int $idPriceProductScheduleList
-     *
-     * @return void
-     */
-    private function cleanupPriceProductScheduleList(int $idPriceProductScheduleList): void
-    {
-        $this->getPriceProductScheduleListQuery()
-            ->findByIdPriceProductScheduleList($idPriceProductScheduleList)
-            ->delete();
-    }
-
-    /**
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery
      */
     protected function getPriceProductScheduleListQuery(): SpyPriceProductScheduleListQuery
     {
         return new SpyPriceProductScheduleListQuery();
-    }
-
-    /**
-     * @param int $idPriceProductSchedule
-     *
-     * @return void
-     */
-    private function cleanupPriceProductSchedule(int $idPriceProductSchedule): void
-    {
-        $this->getPriceProductScheduleQuery()
-            ->findByIdPriceProductSchedule($idPriceProductSchedule)
-            ->delete();
     }
 
     /**
@@ -228,5 +116,57 @@ class PriceProductScheduleDataHelper extends Module
     protected function getCurrencyFacade(): CurrencyFacadeInterface
     {
         return $this->getLocator()->currency()->facade();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule
+     */
+    protected function mapPriceProductScheduleTransferToEntity(PriceProductScheduleTransfer $priceProductScheduleTransfer): SpyPriceProductSchedule
+    {
+        $spyPriceProductScheduleEntity = new SpyPriceProductSchedule();
+        $spyPriceProductScheduleEntity->fromArray($priceProductScheduleTransfer->modifiedToArray());
+        $spyPriceProductScheduleEntity->setFkStore($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getFkStore());
+        $spyPriceProductScheduleEntity->setFkCurrency($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getFkCurrency());
+        $spyPriceProductScheduleEntity->setFkPriceType($priceProductScheduleTransfer->getPriceProduct()->getPriceType()->getIdPriceType());
+        $spyPriceProductScheduleEntity->setGrossPrice($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getGrossAmount());
+        $spyPriceProductScheduleEntity->setNetPrice($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getNetAmount());
+        $spyPriceProductScheduleEntity->setFkProduct($priceProductScheduleTransfer->getPriceProduct()->getIdProduct());
+        $spyPriceProductScheduleEntity->setFkProductAbstract($priceProductScheduleTransfer->getPriceProduct()->getIdProductAbstract());
+        $spyPriceProductScheduleEntity->setFkPriceProductScheduleList($priceProductScheduleTransfer->getPriceProductScheduleList()->getIdPriceProductScheduleList());
+
+        return $spyPriceProductScheduleEntity;
+    }
+
+    /**
+     * @param array $priceProductScheduleOverrideData
+     *
+     * @return array
+     */
+    protected function preparePriceProductScheduleData(array $priceProductScheduleOverrideData): array
+    {
+        $priceTypeTransfer = (new PriceTypeBuilder($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::PRICE_TYPE]))
+            ->build();
+        unset($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::PRICE_TYPE]);
+
+        $moneyValueTransfer = (new MoneyValueBuilder($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE]))
+            ->build();
+        unset($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE]);
+
+        $priceProductData = $priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT];
+        $priceProductData[PriceProductTransfer::PRICE_TYPE] = $priceTypeTransfer;
+        $priceProductData[PriceProductTransfer::MONEY_VALUE] = $moneyValueTransfer;
+
+        $priceProductTransfer = (new PriceProductBuilder($priceProductData))
+            ->build();
+        unset($priceProductScheduleOverrideData[PriceProductScheduleTransfer::PRICE_PRODUCT]);
+
+        $priceProductScheduleData = [
+            PriceProductScheduleTransfer::PRICE_PRODUCT_SCHEDULE_LIST => $this->havePriceProductScheduleList(),
+            PriceProductScheduleTransfer::PRICE_PRODUCT => $priceProductTransfer,
+        ];
+
+        return array_merge($priceProductScheduleData, $priceProductScheduleOverrideData);
     }
 }
