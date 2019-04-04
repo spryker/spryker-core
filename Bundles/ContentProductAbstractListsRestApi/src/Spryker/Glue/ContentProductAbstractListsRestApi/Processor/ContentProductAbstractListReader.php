@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\ContentProductAbstractListsRestApi\Processor;
 
+use Exception;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException;
 use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Resource\ContentProductAbstractListsRestApiToProductsRestApiResourceInterface;
@@ -75,7 +75,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
                 (int)$parentResource->getId(),
                 $restRequest->getMetadata()->getLocale()
             );
-        } catch (InvalidProductAbstractListTypeException $exception) {
+        } catch (Exception $e) {
             return $this->addContentTypeInvalidError($restResponse);
         }
 

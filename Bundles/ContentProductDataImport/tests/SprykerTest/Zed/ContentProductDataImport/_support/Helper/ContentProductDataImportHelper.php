@@ -29,16 +29,15 @@ class ContentProductDataImportHelper extends Module
 
     /**
      * @param int $locale
-     * @param array $products
+     * @param string $products
      *
      * @return void
      */
-    public function assertContentLocalizedHasProducts(int $locale, array $products): void
+    public function assertContentLocalizedHasProducts(int $locale, string $products): void
     {
         $contentLocalized = $this->getContentLocalizedQuery()->findOneByFkLocale($locale);
-        $parameters = json_decode($contentLocalized->getParameters(), true);
 
-        $this->assertEquals($parameters[static::FIELD_ID_PRODUCT_ABSTRACTS], $products);
+        $this->assertContains($products, $contentLocalized->getParameters());
     }
 
     /**

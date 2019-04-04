@@ -110,8 +110,8 @@ class ContentProductDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasProducts(66, [152, 151]);
-        $this->tester->assertContentLocalizedHasProducts(46, [152, 151]);
+        $this->tester->assertContentLocalizedHasProducts(66, "[152,151]");
+        $this->tester->assertContentLocalizedHasProducts(46, "[152,151]");
     }
 
     /**
@@ -130,8 +130,8 @@ class ContentProductDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasProducts(66, [152, 151]);
-        $this->tester->assertContentLocalizedHasProducts(46, [152, 151]);
+        $this->tester->assertContentLocalizedHasProducts(66, "[152,151]");
+        $this->tester->assertContentLocalizedHasProducts(46, "[152,151]");
     }
 
     /**
@@ -150,7 +150,7 @@ class ContentProductDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasProducts(66, [152, 151]);
+        $this->tester->assertContentLocalizedHasProducts(66, "[152,151]");
         $this->tester->assertContentLocalizedDoesNotExist(46);
     }
 

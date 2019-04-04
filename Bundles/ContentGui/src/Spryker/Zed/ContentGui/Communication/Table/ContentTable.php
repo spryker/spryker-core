@@ -152,7 +152,7 @@ class ContentTable extends AbstractTable
     {
         $contentTypeKeyCache = [];
         foreach ($contentPlugins as $contentPlugin) {
-            $contentTypeKeyCache = $contentPlugin->getTypeKey();
+            $contentTypeKeyCache[] = $contentPlugin->getTypeKey();
         }
 
         return array_unique($contentTypeKeyCache);
