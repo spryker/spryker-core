@@ -19,6 +19,8 @@ use Spryker\Zed\PriceProduct\Business\Model\PriceGrouper;
 use Spryker\Zed\PriceProduct\Business\Model\PriceGrouperInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilder;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface;
+use Spryker\Zed\PriceProduct\Business\Model\PriceProductRemover;
+use Spryker\Zed\PriceProduct\Business\Model\PriceProductRemoverInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeMapper;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReader;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
@@ -319,6 +321,16 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductDefaultWriter(
             $this->getRepository(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceProductRemoverInterface
+     */
+    public function createPriceProductRemover(): PriceProductRemoverInterface
+    {
+        return new PriceProductRemover(
             $this->getEntityManager()
         );
     }

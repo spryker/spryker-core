@@ -503,4 +503,17 @@ interface PriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(array $productAbstractIds, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array;
+
+    /**
+     * Specification:
+     * - Removes price product
+     * - Removes price product default
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    public function removePriceProductStore(PriceProductTransfer $priceProductTransfer): void;
 }

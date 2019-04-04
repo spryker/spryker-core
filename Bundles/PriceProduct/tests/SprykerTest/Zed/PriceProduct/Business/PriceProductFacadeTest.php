@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
@@ -45,6 +46,7 @@ class PriceProductFacadeTest extends Unit
 {
     public const EUR_ISO_CODE = 'EUR';
     public const USD_ISO_CODE = 'USD';
+
     /**
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
      */
@@ -599,6 +601,25 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testPriceProductShouldBeRemoved()
+    {
+        // Assign
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceProductTransfer = $this->createProductWithAmount(100, 90);
+
+        // Act
+        $priceProductFacade->removePriceProductStore($priceProductTransfer);
+
+        // Assert
+        $priceProductEntity = $this->getPriceProductQuery()->findOneByIdPriceProduct($priceProductTransfer->getIdPriceProduct());
+
+        $this->assertNull($priceProductEntity);
+    }
+
+    /**
      * @param string $currencyCode
      * @param string $priceTypeName
      * @param int $grossAmount
@@ -694,6 +715,14 @@ class PriceProductFacadeTest extends Unit
     protected function createSharedPriceProductConfig()
     {
         return new PriceProductConfig();
+    }
+
+    /**
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
+     */
+    protected function getPriceProductQuery(): SpyPriceProductQuery
+    {
+        return new SpyPriceProductQuery();
     }
 
     /**
@@ -806,8 +835,6 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
-     * @group test111
-     *
      * @return void
      */
     public function testRemovePriceProductStoreShouldDeletePriceFromDatabase()

@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "spryker/currency": "^3.5.3",
+    "spryker/kernel": "^3.32.0",
     "spryker/price-product": "^2.11.0",
     "spryker/product": "^6.10.0",
     "spryker/store": "^1.9.1",
@@ -12,6 +13,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

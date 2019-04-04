@@ -530,4 +530,20 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
             ->createPriceProductAbstractReader()
             ->findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria($productAbstractIds, $priceProductCriteriaTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    public function removePriceProductStore(PriceProductTransfer $priceProductTransfer): void
+    {
+        $this->getFactory()
+            ->createPriceProductRemover()
+            ->removePriceProductStore($priceProductTransfer);
+    }
 }
