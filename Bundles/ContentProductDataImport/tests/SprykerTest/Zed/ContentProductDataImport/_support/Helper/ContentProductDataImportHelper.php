@@ -54,14 +54,21 @@ class ContentProductDataImportHelper extends Module
     }
 
     /**
+     * @param string|null $keyContent
+     *
      * @return void
      */
-    public function assertDatabaseTableContainsData(): void
+    public function assertDatabaseTableContainsData(?string $keyContent = null): void
     {
         $contentQuery = $this->getContentQuery();
-        $this->assertTrue(($contentQuery->count() > 0), 'Expected at least one entry in the database spy_content table but database table is empty.');
-
         $contentLocalizedQuery = $this->getContentLocalizedQuery();
+
+        if ($keyContent) {
+            $contentQuery = $contentQuery->findByKey($keyContent);
+            $contentLocalizedQuery = $contentLocalizedQuery->findByFkContent($contentQuery->getFirst()->getIdContent());
+        }
+
+        $this->assertTrue(($contentQuery->count() > 0), 'Expected at least one entry in the database spy_content table but database table is empty.');
         $this->assertTrue(($contentLocalizedQuery->count() > 0), 'Expected at least one entry in the database spy_content_localized table but database table is empty.');
     }
 
