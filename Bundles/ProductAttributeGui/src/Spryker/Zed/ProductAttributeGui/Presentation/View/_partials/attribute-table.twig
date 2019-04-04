@@ -2,6 +2,7 @@
     <form id="attribute_values_form" method="post" class="kv_autocomplete_form" action="{{ formActionUrl }}">
         <input type="hidden" name="attribute_values_form[hidden_product_abstract_id]" id="attribute_values_form_hidden_product_abstract_id" value="{{ idProductAbstract }}" />
         <input type="hidden" name="attribute_values_form[hidden_product_id]" id="attribute_values_form_hidden_product_id" value="{{ idProductConcrete }}" />
+        {{ form_widget(csrfForm) }}
         <thead>
         <tr>
             <th>Key</th>
@@ -85,7 +86,7 @@
                     {% endfor %}
                     <td style="vertical-align: middle; text-align: left;">
                         {% if isSuper == false %}
-                            <a data-key="{{ key }}" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a>
+                            <a data-key="{{ key }}" href="#" class="btn btn-xs btn-outline btn-danger remove-item">{{ 'Remove' | trans }}</a>
                         {% endif %}
                     </td>
                 </tr>

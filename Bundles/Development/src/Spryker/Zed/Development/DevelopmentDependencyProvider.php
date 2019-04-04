@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\Development;
 
+use Nette\DI\Config\Loader;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * @method \Spryker\Zed\Development\DevelopmentConfig getConfig()
@@ -21,6 +23,8 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_GRAPH = 'graph plugin';
     public const FINDER = 'finder';
+    public const FILESYSTEM = 'filesystem';
+    public const CONFIG_LOADER = 'config loader';
     public const TWIG_ENVIRONMENT = 'twig environment';
     public const TWIG_LOADER_FILESYSTEM = 'twig loader filesystem';
 
@@ -37,6 +41,14 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[static::FINDER] = function () {
             return $this->createFinder();
+        };
+
+        $container[static::FILESYSTEM] = function () {
+            return $this->createFilesystem();
+        };
+
+        $container[static::CONFIG_LOADER] = function () {
+            return $this->createConfigLoader();
         };
 
         $container[static::TWIG_ENVIRONMENT] = function () {
@@ -67,18 +79,34 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Twig_Environment
+     * @return \Symfony\Component\Filesystem\Filesystem
      */
-    protected function createTwigEnvironment()
+    protected function createFilesystem()
     {
-        return new Twig_Environment($this->createTwigLoaderFilesystem());
+        return new Filesystem();
     }
 
     /**
-     * @return \Twig_Loader_Filesystem
+     * @return \Nette\DI\Config\Loader
+     */
+    protected function createConfigLoader()
+    {
+        return new Loader();
+    }
+
+    /**
+     * @return \Twig\Environment
+     */
+    protected function createTwigEnvironment()
+    {
+        return new Environment($this->createTwigLoaderFilesystem());
+    }
+
+    /**
+     * @return \Twig\Loader\FilesystemLoader
      */
     protected function createTwigLoaderFilesystem()
     {
-        return new Twig_Loader_Filesystem();
+        return new FilesystemLoader();
     }
 }

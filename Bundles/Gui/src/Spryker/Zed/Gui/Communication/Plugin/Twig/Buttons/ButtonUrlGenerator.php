@@ -120,10 +120,20 @@ class ButtonUrlGenerator
     }
 
     /**
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function escapeUrl(string $url): string
+    {
+        return str_replace('"', '', $url);
+    }
+
+    /**
      * @return string
      */
     protected function generateAnchor()
     {
-        return '<a' . $this->getClass() . $this->getId() . $this->getExtraAttributes() . ' href="' . $this->url . '">';
+        return '<a' . $this->getClass() . $this->getId() . $this->getExtraAttributes() . ' href="' . $this->escapeUrl($this->url ?: '') . '">';
     }
 }

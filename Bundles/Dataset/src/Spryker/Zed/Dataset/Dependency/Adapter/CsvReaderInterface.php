@@ -14,9 +14,9 @@ interface CsvReaderInterface
     /**
      * @param int $offset
      *
-     * @return \Spryker\Zed\Dataset\Dependency\Adapter\CsvReaderInterface
+     * @return $this
      */
-    public function setHeaderOffset(int $offset): self;
+    public function setHeaderOffset(int $offset);
 
     /**
      * @return array

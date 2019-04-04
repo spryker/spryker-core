@@ -6,7 +6,7 @@
 ## Installation
 
 ```
-composer require spryker/product-label-page-search
+composer require spryker/product-label-search
 ```
 
 ## Documentation

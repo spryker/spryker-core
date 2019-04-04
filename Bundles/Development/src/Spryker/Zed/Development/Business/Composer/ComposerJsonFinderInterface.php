@@ -7,10 +7,15 @@
 
 namespace Spryker\Zed\Development\Business\Composer;
 
+use Generated\Shared\Transfer\ModuleTransfer;
+use Symfony\Component\Finder\SplFileInfo;
+
 interface ComposerJsonFinderInterface
 {
     /**
-     * @return \Symfony\Component\Finder\SplFileInfo[]
+     * @param \Generated\Shared\Transfer\ModuleTransfer $module
+     *
+     * @return \Symfony\Component\Finder\SplFileInfo|null
      */
-    public function findAll();
+    public function findByModule(ModuleTransfer $module): ?SplFileInfo;
 }

@@ -18,6 +18,10 @@ use Spryker\Zed\Quote\Business\Model\QuoteWriter;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutor;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface;
+use Spryker\Zed\Quote\Business\Quote\QuoteLocker;
+use Spryker\Zed\Quote\Business\Quote\QuoteLockerInterface;
+use Spryker\Zed\Quote\Business\QuoteValidator\QuoteLockStatusValidator;
+use Spryker\Zed\Quote\Business\QuoteValidator\QuoteLockStatusValidatorInterface;
 use Spryker\Zed\Quote\QuoteConfig;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
 
@@ -55,13 +59,30 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Quote\Business\QuoteValidator\QuoteLockStatusValidatorInterface
+     */
+    public function createQuoteLockStatusValidator(): QuoteLockStatusValidatorInterface
+    {
+        return new QuoteLockStatusValidator();
+    }
+
+    /**
      * @return \Spryker\Zed\Quote\Business\Model\QuoteReaderInterface
      */
     public function createQuoteReader(): QuoteReaderInterface
     {
         return new QuoteReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getQuoteExpanderPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Business\Quote\QuoteLockerInterface
+     */
+    public function createQuoteLocker(): QuoteLockerInterface
+    {
+        return new QuoteLocker();
     }
 
     /**
@@ -84,7 +105,9 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     {
         return new GuestQuoteDeleter(
             $this->getEntityManager(),
-            $this->getConfig()
+            $this->getRepository(),
+            $this->getConfig(),
+            $this->getQuoteDeleteBeforePlugins()
         );
     }
 
@@ -102,6 +125,14 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface[]
+     */
+    public function getQuoteExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_EXPANDER);
     }
 
     /**

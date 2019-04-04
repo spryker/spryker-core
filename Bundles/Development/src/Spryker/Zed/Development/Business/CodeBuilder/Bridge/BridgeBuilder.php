@@ -359,23 +359,19 @@ class BridgeBuilder
      */
     protected function resolveModulePath(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer): string
     {
-        switch ($bridgeBuilderDataTransfer->getVendor()) {
-            case 'Spryker':
-                return $this->config->getPathToCore() . $bridgeBuilderDataTransfer->getModule();
-
-            case 'SprykerShop':
-                return $this->config->getPathToShop() . $bridgeBuilderDataTransfer->getModule();
-
-            default:
-                $vendorDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getVendor());
-                $moduleDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getModule());
-
-                return implode(DIRECTORY_SEPARATOR, [
-                    APPLICATION_VENDOR_DIR,
-                    $vendorDirectory,
-                    $moduleDirectory,
-                ]);
+        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($bridgeBuilderDataTransfer->getVendor());
+        if ($pathToInternalNamespace) {
+            return $pathToInternalNamespace . $bridgeBuilderDataTransfer->getModule();
         }
+
+        $vendorDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getVendor());
+        $moduleDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getModule());
+
+        return implode(DIRECTORY_SEPARATOR, [
+            APPLICATION_VENDOR_DIR,
+            $vendorDirectory,
+            $moduleDirectory,
+        ]);
     }
 
     /**
@@ -385,23 +381,19 @@ class BridgeBuilder
      */
     protected function resolveTargetModulePath(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer): string
     {
-        switch ($bridgeBuilderDataTransfer->getToVendor()) {
-            case 'Spryker':
-                return $this->config->getPathToCore() . $bridgeBuilderDataTransfer->getToModule();
-
-            case 'SprykerShop':
-                return $this->config->getPathToShop() . $bridgeBuilderDataTransfer->getToModule();
-
-            default:
-                $vendorDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getToVendor());
-                $moduleDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getToModule());
-
-                return implode(DIRECTORY_SEPARATOR, [
-                    APPLICATION_VENDOR_DIR,
-                    $vendorDirectory,
-                    $moduleDirectory,
-                ]);
+        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($bridgeBuilderDataTransfer->getToVendor());
+        if ($pathToInternalNamespace) {
+            return $pathToInternalNamespace . $bridgeBuilderDataTransfer->getToModule();
         }
+
+        $vendorDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getToVendor());
+        $moduleDirectory = $this->normalizeNameForSplit($bridgeBuilderDataTransfer->getToModule());
+
+        return implode(DIRECTORY_SEPARATOR, [
+            APPLICATION_VENDOR_DIR,
+            $vendorDirectory,
+            $moduleDirectory,
+        ]);
     }
 
     /**
@@ -499,7 +491,7 @@ class BridgeBuilder
 
         $targetBridgeInterface = new ReflectionClass($path);
 
-        return $this->addMethodsToInterfaceTemplate(
+        return $this->addMethodsToTemplate(
             $targetBridgeInterface,
             $bridgeBuilderDataTransfer->getMethods(),
             $this->getInterfaceMethodTemplateContent(),
@@ -516,79 +508,6 @@ class BridgeBuilder
      * @return string
      */
     protected function addMethodsToTemplate(ReflectionClass $reflectionClass, array $methodNames, string $methodTemplate, string $templateContent): string
-    {
-        $methods = '';
-        $useStatements = [];
-
-        foreach (array_unique($methodNames) as $methodName) {
-            if (empty($methodName)) {
-                continue;
-            }
-            $method = $reflectionClass->getMethod($methodName);
-
-            $docComment = $this->cleanMethodDocBlock($method->getDocComment());
-            $methodReturnType = $this->getMethodReturnTypeFromDocComment($docComment);
-
-            $returnStatementReplacement = static::FUNCTION_RETURN;
-            $returnMethodTypeHint = $this->getMethodTypeHintForFunction($methodReturnType);
-
-            if ($methodReturnType === 'void') {
-                $returnStatementReplacement = '';
-            }
-
-            $useStatements = array_merge($useStatements, $this->getParameterTypes($method));
-
-            if (is_array($returnMethodTypeHint)) {
-                $useStatements = array_merge($useStatements, [$returnMethodTypeHint[static::FQCN] => true]);
-                $returnMethodTypeHint = $returnMethodTypeHint[static::TYPE_HINT];
-            }
-
-            $replacements = [
-                '{docBlock}' => $docComment,
-                '{methodName}' => $methodName,
-                '{returnStatement}' => $returnStatementReplacement,
-                '{returnMethodTypeHint}' => $returnMethodTypeHint,
-                '{parameters}' => $this->getParameters($method),
-                '{parametersWithoutTypes}' => $this->getParameterNames($method),
-            ];
-
-            $methods .=
-                str_replace(
-                    array_keys($replacements),
-                    array_values($replacements),
-                    $methodTemplate
-                )
-                . PHP_EOL . PHP_EOL . str_repeat(' ', 4);
-        }
-
-        $useStatements = array_keys($useStatements);
-        sort($useStatements);
-        $useStatements = array_reduce($useStatements, function ($prevUseStatement, $useStatement) {
-            return $prevUseStatement . PHP_EOL . 'use ' . $useStatement . ';';
-        }, '');
-
-        return str_replace(
-            [
-                '{methods}',
-                '{useStatements}',
-            ],
-            [
-                rtrim($methods, PHP_EOL . PHP_EOL . str_repeat(' ', 4)),
-                $useStatements,
-            ],
-            $templateContent
-        );
-    }
-
-    /**
-     * @param \ReflectionClass $reflectionClass
-     * @param array $methodNames
-     * @param string $methodTemplate
-     * @param string $templateContent
-     *
-     * @return string
-     */
-    protected function addMethodsToInterfaceTemplate(ReflectionClass $reflectionClass, array $methodNames, string $methodTemplate, string $templateContent): string
     {
         $methods = '';
         $useStatements = [];

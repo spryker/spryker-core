@@ -13,15 +13,14 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\GlossaryStorage\Business\GlossaryStorageBusinessFactory;
 use Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacade;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyStorageListener;
+use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyStoragePublishListener;
+use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyStorageUnpublishListener;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryTranslationStorageListener;
 use SprykerTest\Zed\GlossaryStorage\GlossaryStorageConfigMock;
 
@@ -40,22 +39,18 @@ use SprykerTest\Zed\GlossaryStorage\GlossaryStorageConfigMock;
  */
 class GlossaryStorageListenerTest extends Unit
 {
+    protected const ID_GLOSSARY = 1;
+
     /**
      * @var \SprykerTest\Zed\GlossaryStorage\GlossaryStorageCommunicationTester
      */
     protected $tester;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp()
     {
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
         parent::setUp();
 
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
@@ -71,22 +66,64 @@ class GlossaryStorageListenerTest extends Unit
     public function testGlossaryKeyStorageListenerStoreData(): void
     {
         // Prepare
-        $idGlossaryKey = 1;
-        $this->cleanUpGlossaryStorage($idGlossaryKey);
-        $beforeCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
+        $this->cleanUpGlossaryStorage(static::ID_GLOSSARY);
+        $beforeCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
 
         $glossaryKeyStorageListener = new GlossaryKeyStorageListener();
         $glossaryKeyStorageListener->setFacade($this->getGlossaryStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($idGlossaryKey),
+            (new EventEntityTransfer())->setId(static::ID_GLOSSARY),
         ];
 
         // Action
         $glossaryKeyStorageListener->handleBulk($eventTransfers, GlossaryEvents::GLOSSARY_KEY_PUBLISH);
 
         // Assert
-        $this->assertGlossaryStorage($idGlossaryKey, $beforeCount);
+        $this->assertGlossaryStorage(static::ID_GLOSSARY, $beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGlossaryKeyStoragePublishListener(): void
+    {
+        // Prepare
+        $this->cleanUpGlossaryStorage(static::ID_GLOSSARY);
+        $beforeCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
+
+        $glossaryKeyStoragePublishListener = new GlossaryKeyStoragePublishListener();
+        $glossaryKeyStoragePublishListener->setFacade($this->getGlossaryStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId(static::ID_GLOSSARY),
+        ];
+
+        // Action
+        $glossaryKeyStoragePublishListener->handleBulk($eventTransfers, GlossaryEvents::GLOSSARY_KEY_PUBLISH);
+
+        // Assert
+        $this->assertGlossaryStorage(static::ID_GLOSSARY, $beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGlossaryKeyStorageUnpublishListener(): void
+    {
+        // Prepare
+        $glossaryKeyStorageUnpublishListener = new GlossaryKeyStorageUnpublishListener();
+        $glossaryKeyStorageUnpublishListener->setFacade($this->getGlossaryStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId(static::ID_GLOSSARY),
+        ];
+
+        // Action
+        $glossaryKeyStorageUnpublishListener->handleBulk($eventTransfers, GlossaryEvents::GLOSSARY_KEY_UNPUBLISH);
+
+        // Assert
+        $this->assertSame(0, SpyGlossaryStorageQuery::create()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count());
     }
 
     /**
@@ -95,16 +132,15 @@ class GlossaryStorageListenerTest extends Unit
     public function testGlossaryTranslationStorageListenerStoreData(): void
     {
         // Prepare
-        $idGlossaryKey = 1;
-        $this->cleanUpGlossaryStorage($idGlossaryKey);
-        $beforeCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
+        $this->cleanUpGlossaryStorage(static::ID_GLOSSARY);
+        $beforeCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
 
         $glossaryTranslationStorageListener = new GlossaryTranslationStorageListener();
         $glossaryTranslationStorageListener->setFacade($this->getGlossaryStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY => $idGlossaryKey,
+                SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY => static::ID_GLOSSARY,
             ]),
         ];
 
@@ -112,7 +148,7 @@ class GlossaryStorageListenerTest extends Unit
         $glossaryTranslationStorageListener->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE);
 
         // Assert
-        $this->assertGlossaryStorage($idGlossaryKey, $beforeCount);
+        $this->assertGlossaryStorage(static::ID_GLOSSARY, $beforeCount);
     }
 
     /**
@@ -151,7 +187,8 @@ class GlossaryStorageListenerTest extends Unit
         $glossaryTranslationStorageListener->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE);
 
         // Assert
-        $this->assertGlossaryStorageCount($idGlossaryKey, $beforeCount - 1);
+        $glossaryStorageCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
+        $this->assertLessThan($beforeCount, $glossaryStorageCount);
     }
 
     /**
@@ -192,7 +229,8 @@ class GlossaryStorageListenerTest extends Unit
         $glossaryTranslationStorageListener->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE);
 
         // Assert
-        $this->assertGlossaryStorageCount($idGlossaryKey, $beforeCount - 1);
+        $glossaryStorageCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
+        $this->assertLessThan($beforeCount, $glossaryStorageCount);
     }
 
     /**
@@ -213,7 +251,8 @@ class GlossaryStorageListenerTest extends Unit
      */
     protected function assertGlossaryStorage(int $idGlossaryKey, int $beforeCount): void
     {
-        $this->assertGlossaryStorageCount($idGlossaryKey, $beforeCount + 2);
+        $glossaryStorageCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
+        $this->assertGreaterThan($beforeCount, $glossaryStorageCount);
         $spyGlossaryStorage = $this->createGlossaryStorageQuery()
             ->orderByFkGlossaryKey()
             ->filterByLocale('en_US')
@@ -221,19 +260,6 @@ class GlossaryStorageListenerTest extends Unit
         $this->assertNotNull($spyGlossaryStorage);
         $this->assertSame('cart.remove.items.success', $spyGlossaryStorage->getData()['GlossaryKey']['key']);
         $this->assertSame('Products were removed successfully', $spyGlossaryStorage->getData()['value']);
-    }
-
-    /**
-     * @param int $idGlossaryKey
-     * @param int $expectedCount
-     *
-     * @return void
-     */
-    protected function assertGlossaryStorageCount(int $idGlossaryKey, int $expectedCount): void
-    {
-        $glossaryStorageCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
-        $this->assertGreaterThan(0, $glossaryStorageCount);
-        $this->assertEquals($expectedCount, $glossaryStorageCount);
     }
 
     /**
@@ -251,7 +277,7 @@ class GlossaryStorageListenerTest extends Unit
     }
 
     /**
-     * @return \Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     protected function createGlossaryTranslationQuery(): SpyGlossaryTranslationQuery
     {

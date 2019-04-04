@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\JsonApi;
 
+use ArrayObject;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class RestResource implements RestResourceInterface
@@ -35,6 +36,11 @@ class RestResource implements RestResourceInterface
      * @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
      */
     protected $attributes;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
+     */
+    protected $payload;
 
     /**
      * @param string $type
@@ -153,7 +159,7 @@ class RestResource implements RestResourceInterface
         ];
 
         if ($this->attributes) {
-            $response[RestResourceInterface::RESOURCE_ATTRIBUTES] = $this->attributes->toArray(true, true);
+            $response[RestResourceInterface::RESOURCE_ATTRIBUTES] = $this->transformTransferToArray($this->attributes);
         }
 
         $response = $this->addLinksDataToResponse($response);
@@ -168,6 +174,25 @@ class RestResource implements RestResourceInterface
         }
 
         return $response;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $payload
+     *
+     * @return $this
+     */
+    public function setPayload(?AbstractTransfer $payload)
+    {
+        $this->payload = $payload;
+        return $this;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
+     */
+    public function getPayload(): ?AbstractTransfer
+    {
+        return $this->payload;
     }
 
     /**
@@ -206,5 +231,40 @@ class RestResource implements RestResourceInterface
             }
         }
         return $relationships;
+    }
+
+    /**
+     * Used for preventing have empty object instead of empty arrays in the response.
+     * Converts transfer object to array.
+     * Replaces empty ArrayObjects to empty arrays.
+     *
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
+     *
+     * @return array
+     */
+    private function transformTransferToArray(AbstractTransfer $transfer): array
+    {
+        $transferData = $transfer->toArray(true, true);
+
+        return $this->transformEmptyArrayObjectToArray($transferData);
+    }
+
+    /**
+     * @param array $transferData
+     *
+     * @return array
+     */
+    private function transformEmptyArrayObjectToArray(array $transferData): array
+    {
+        foreach ($transferData as $key => $item) {
+            if (is_array($item)) {
+                $transferData[$key] = $this->transformEmptyArrayObjectToArray($item);
+            }
+            if (($item instanceof ArrayObject) && count($item) === 0) {
+                $transferData[$key] = [];
+            }
+        }
+
+        return $transferData;
     }
 }

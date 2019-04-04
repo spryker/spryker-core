@@ -256,8 +256,9 @@ abstract class AbstractController
     protected function isUrlDomainWhitelisted(string $absoluteUrl): bool
     {
         $whitelistedDomains = Config::getInstance()->get(KernelConstants::DOMAIN_WHITELIST, []);
+        $isStrictDomainRedirect = Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
 
-        if (empty($whitelistedDomains)) {
+        if (empty($whitelistedDomains) && !$isStrictDomainRedirect) {
             return true;
         }
 
