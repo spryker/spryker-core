@@ -75,10 +75,10 @@ class UtilQuantityService extends AbstractService implements UtilQuantityService
      *
      * @return bool
      */
-    public function isQuantityMultiple(float $firstQuantity, float $secondQuantity): bool
+    public function isQuantityModuloEqual(float $firstQuantity, float $secondQuantity): bool
     {
         return $this->getFactory()
-            ->createQuantityCalculator()
-            ->isQuantityMultiple($firstQuantity, $secondQuantity);
+            ->createQuantityComparator()
+            ->isQuantityModuloEqual($firstQuantity, $secondQuantity);
     }
 }

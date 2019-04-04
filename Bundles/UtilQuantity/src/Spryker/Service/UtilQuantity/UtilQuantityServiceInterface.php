@@ -63,5 +63,5 @@ interface UtilQuantityServiceInterface
      *
      * @return bool
      */
-    public function isQuantityMultiple(float $firstQuantity, float $secondQuantity): bool;
+    public function isQuantityModuloEqual(float $firstQuantity, float $secondQuantity): bool;
 }

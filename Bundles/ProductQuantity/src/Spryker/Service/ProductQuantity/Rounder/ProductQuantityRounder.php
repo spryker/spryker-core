@@ -57,7 +57,7 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
 
         $quantityMinusMin = $this->subtractQuantities($quantity, $min);
 
-        if ($interval && !$this->isQuantityMultiple($quantityMinusMin, $interval)) {
+        if ($interval && !$this->isQuantityModuloEqual($quantityMinusMin, $interval)) {
             $max = $max ?? $this->sumQuantities($quantity, $interval);
 
             $quantity = $this->getNearestQuantityFromAllowed(
@@ -75,9 +75,9 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
      *
      * @return bool
      */
-    protected function isQuantityMultiple(float $firstQuantity, float $secondQuantity): bool
+    protected function isQuantityModuloEqual(float $firstQuantity, float $secondQuantity): bool
     {
-        return $this->utilQuantityService->isQuantityMultiple($firstQuantity, $secondQuantity);
+        return $this->utilQuantityService->isQuantityModuloEqual($firstQuantity, $secondQuantity);
     }
 
     /**

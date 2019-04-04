@@ -16,4 +16,12 @@ interface QuantityComparatorInterface
      * @return bool
      */
     public function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool;
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    public function isQuantityModuloEqual(float $firstQuantity, float $secondQuantity): bool;
 }

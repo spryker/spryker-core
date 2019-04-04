@@ -10,6 +10,19 @@ namespace Spryker\Service\UtilQuantity\Calculator;
 class QuantityCalculator implements QuantityCalculatorInterface
 {
     /**
+     * @var \Spryker\Service\UtilQuantity\Calculator\PrecisionCalculatorInterface
+     */
+    protected $precisionCalculator;
+
+    /**
+     * @param \Spryker\Service\UtilQuantity\Calculator\PrecisionCalculatorInterface $precisionCalculator
+     */
+    public function __construct(PrecisionCalculatorInterface $precisionCalculator)
+    {
+        $this->precisionCalculator = $precisionCalculator;
+    }
+
+    /**
      * @param float $firstQuantity
      * @param float $secondQuantity
      *
@@ -19,7 +32,7 @@ class QuantityCalculator implements QuantityCalculatorInterface
     {
         $resultQuantity = $firstQuantity + $secondQuantity;
 
-        return round($resultQuantity, $this->getMaxPrecision($firstQuantity, $secondQuantity));
+        return round($resultQuantity, $this->precisionCalculator->getMaxPrecision($firstQuantity, $secondQuantity));
     }
 
     /**
@@ -32,44 +45,6 @@ class QuantityCalculator implements QuantityCalculatorInterface
     {
         $resultQuantity = $firstQuantity - $secondQuantity;
 
-        return round($resultQuantity, $this->getMaxPrecision($firstQuantity, $secondQuantity));
-    }
-
-    /**
-     * @param float $quantity
-     *
-     * @return int
-     */
-    protected function getQuantityPrecision(float $quantity): int
-    {
-        $stringQuantity = (string)$quantity;
-        return strlen(substr($stringQuantity, strpos($stringQuantity, '.') + 1));
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return int
-     */
-    protected function getMaxPrecision(float $firstQuantity, float $secondQuantity): int
-    {
-        return max($this->getQuantityPrecision($firstQuantity), $this->getQuantityPrecision($secondQuantity));
-    }
-
-    /**
-     * @param float $firstQuantity
-     * @param float $secondQuantity
-     *
-     * @return bool
-     */
-    public function isQuantityMultiple(float $firstQuantity, float $secondQuantity): bool
-    {
-        $maxPrecision = $this->getMaxPrecision($firstQuantity, $secondQuantity);
-
-        $intFirstQuantity = (int)($firstQuantity * pow(10, $maxPrecision));
-        $intSecondQuantity = (int)($secondQuantity * pow(10, $maxPrecision));
-
-        return $intFirstQuantity % $intSecondQuantity === 0;
+        return round($resultQuantity, $this->precisionCalculator->getMaxPrecision($firstQuantity, $secondQuantity));
     }
 }
