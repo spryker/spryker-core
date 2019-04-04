@@ -5,7 +5,6 @@
 
     <transfer name="QuoteRequestVersion">
         <property name="versionReference" dataBuilderRule="unique()->sentence" />
-        <property name="version" dataBuilderRule="numberBetween(1,5)"  />
     </transfer>
 
     <transfer name="QuoteRequest">
