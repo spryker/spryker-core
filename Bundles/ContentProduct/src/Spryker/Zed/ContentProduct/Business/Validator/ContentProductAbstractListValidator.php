@@ -57,12 +57,13 @@ class ContentProductAbstractListValidator implements ContentProductAbstractListV
      *
      * @return \Generated\Shared\Transfer\ContentParameterMessageTransfer
      */
-    protected function validateNumberOfProductsConstraint(ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer): ContentParameterMessageTransfer
-    {
-        $existingProductsInProductAbstractList = count($contentProductAbstractListTermTransfer->getIdProductAbstracts());
+    protected function validateNumberOfProductsConstraint(
+        ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
+    ): ContentParameterMessageTransfer {
+        $numberOfProductsInProductAbstractList = count($contentProductAbstractListTermTransfer->getIdProductAbstracts());
         $maxProductsInProductAbstractList = $this->config->getMaxProductsInProductAbstractList();
 
-        if ($existingProductsInProductAbstractList > $maxProductsInProductAbstractList) {
+        if ($numberOfProductsInProductAbstractList > $maxProductsInProductAbstractList) {
             $message = (new MessageTransfer())
                 ->setValue(static::ERROR_MESSAGE_MAX_NUMBER_OF_PRODUCTS)
                 ->setParameters([static::ERROR_MESSAGE_PARAMETER_COUNT => $maxProductsInProductAbstractList]);

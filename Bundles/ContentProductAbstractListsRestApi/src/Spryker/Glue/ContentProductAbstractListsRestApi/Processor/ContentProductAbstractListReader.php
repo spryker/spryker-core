@@ -75,12 +75,12 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
                 (int)$parentResource->getId(),
                 $restRequest->getMetadata()->getLocale()
             );
+
+            if (!$contentProductAbstractListTypeTransfer) {
+                return $this->addContentItemtNotFoundError($restResponse);
+            }
         } catch (InvalidProductAbstractListTypeException $exception) {
             return $this->addContentTypeInvalidError($restResponse);
-        }
-
-        if (!$contentProductAbstractListTypeTransfer) {
-            return $this->addContentItemtNotFoundError($restResponse);
         }
 
         $idProductAbstracts = $contentProductAbstractListTypeTransfer->getIdProductAbstracts();
