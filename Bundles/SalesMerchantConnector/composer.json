@@ -1,5 +1,5 @@
 {
-  "name": "spryker/merchant-sales-connector",
+  "name": "spryker/sales-merchant-connector",
   "type": "library",
   "description": "SalesMerchantConnector module",
   "license": "proprietary",

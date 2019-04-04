@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/merchant-product-connector.svg)](https://travis-ci.org/spryker/merchant-product-connector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/merchant-product-connector/badge.svg)](https://coveralls.io/github/spryker/merchant-product-connector)
 
-{{ADD DESCRIPTION HERE}}
+This module provides the connection between product entities and merchant entities.
 
 ## Installation
 

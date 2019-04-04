@@ -1,5 +1,9 @@
-namespace: SalesMerchantConnector
+namespace: SprykerTest
 actor: Tester
+
+include:
+    - tests/SprykerTest/Zed/SalesMerchantConnector
+
 paths:
     tests: tests
     log: tests/_output

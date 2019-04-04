@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\SalesMerchantConnector\Communication\Plugin;
 
@@ -9,11 +13,16 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface;
 
+/**
+ * @method \Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorConfig getConfig()
+ * @method \Spryker\Zed\SalesMerchantConnector\Business\SalesMerchantConnectorFacadeInterface getFacade()
+ */
 class MerchantOrderItemExpanderPreSavePlugin extends AbstractPlugin implements OrderItemExpanderPreSavePluginInterface
 {
-
     /**
      * {@inheritdoc}
+     * - Adds merchant order reference to sales order item before saving
+     * - If there is no fkMerchant in ItemTransfer, returns $salesOrderItemEntity without changes
      *
      * @api
      *
@@ -25,8 +34,6 @@ class MerchantOrderItemExpanderPreSavePlugin extends AbstractPlugin implements O
      */
     public function expandOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
-        $salesOrderItemEntity->setFkMerchant($itemTransfer->getFkMerchant());
-
-        return $salesOrderItemEntity;
+        return $this->getFacade()->addMerchantOrderReferenceToSalesOrderItem($salesOrderItemEntity, $itemTransfer);
     }
 }

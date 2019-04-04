@@ -1,5 +1,5 @@
 {
-  "name": "spryker/merchant-product-connector",
+  "name": "spryker/product-merchant-connector",
   "type": "library",
   "description": "ProductMerchantConnector module",
   "license": "proprietary",
