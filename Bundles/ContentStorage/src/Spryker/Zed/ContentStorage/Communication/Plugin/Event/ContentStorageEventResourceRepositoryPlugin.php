@@ -60,7 +60,7 @@ class ContentStorageEventResourceRepositoryPlugin extends AbstractPlugin impleme
      */
     public function getEventName(): string
     {
-        return ContentEvents::ENTITY_SPY_CONTENT_PUBLISH;
+        return ContentEvents::CONTENT_PUBLISH;
     }
 
     /**
