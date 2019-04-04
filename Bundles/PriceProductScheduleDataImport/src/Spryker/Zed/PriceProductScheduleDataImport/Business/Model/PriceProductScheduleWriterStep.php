@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleDataImport\Business\Model;
 
+use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -35,11 +36,28 @@ class PriceProductScheduleWriterStep implements DataImportStepInterface
             ));
         }
 
-        $priceProductScheduleQuery = $this->createPriceProductScheduleQuery()
+        $priceProductScheduleEntity = $this->createPriceProductScheduleQuery($dataSet)->findOneOrCreate();
+
+        if ($priceProductScheduleEntity->isNew() === false) {
+            return;
+        }
+
+        $this->savePriceProductSchedule($priceProductScheduleEntity, $dataSet);
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected function createPriceProductScheduleQuery(DataSetInterface $dataSet): SpyPriceProductScheduleQuery
+    {
+        $priceProductScheduleQuery = SpyPriceProductScheduleQuery::create();
+
+        $priceProductScheduleQuery
             ->filterByFkPriceType($dataSet[PriceProductScheduleDataSetInterface::FK_PRICE_TYPE])
             ->filterByFkStore($dataSet[PriceProductScheduleDataSetInterface::FK_STORE])
             ->filterByFkCurrency($dataSet[PriceProductScheduleDataSetInterface::FK_CURRENCY])
-            ->filterByFkPriceProductScheduleList($dataSet[PriceProductScheduleDataSetInterface::FK_PRICE_PRODUCT_SCHEDULE_LIST])
             ->filterByNetPrice($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET])
             ->filterByGrossPrice($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS])
             ->filterByActiveFrom($dataSet[PriceProductScheduleDataSetInterface::KEY_INCLUDED_FROM])
@@ -53,12 +71,19 @@ class PriceProductScheduleWriterStep implements DataImportStepInterface
             $priceProductScheduleQuery->filterByFkProduct($dataSet[PriceProductScheduleDataSetInterface::FK_PRODUCT_CONCRETE]);
         }
 
-        $priceProductScheduleEntity = $priceProductScheduleQuery->findOneOrCreate();
+        return $priceProductScheduleQuery;
+    }
 
-        if ($priceProductScheduleEntity->isNew() === false) {
-            return;
-        }
-
+    /**
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return void
+     */
+    protected function savePriceProductSchedule(
+        SpyPriceProductSchedule $priceProductScheduleEntity,
+        DataSetInterface $dataSet
+    ): void {
         $priceProductScheduleEntity
             ->setFkStore($dataSet[PriceProductScheduleDataSetInterface::FK_STORE])
             ->setFkCurrency($dataSet[PriceProductScheduleDataSetInterface::FK_CURRENCY])
@@ -69,13 +94,5 @@ class PriceProductScheduleWriterStep implements DataImportStepInterface
             ->setActiveTo($dataSet[PriceProductScheduleDataSetInterface::KEY_INCLUDED_TO])
             ->setIsCurrent(false)
             ->save();
-    }
-
-    /**
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    protected function createPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
-    {
-        return SpyPriceProductScheduleQuery::create();
     }
 }
