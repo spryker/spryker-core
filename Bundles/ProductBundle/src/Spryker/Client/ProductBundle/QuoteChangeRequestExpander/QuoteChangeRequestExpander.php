@@ -60,7 +60,7 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $groupKey
-     * @param float $numberOfBundlesToRemove
+     * @param int $numberOfBundlesToRemove
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
@@ -70,7 +70,6 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
             $numberOfBundlesToRemove = $this->getBundledProductTotalQuantity($quoteTransfer, $groupKey);
         }
 
-        $numberOfBundlesToRemove = (int)round($numberOfBundlesToRemove);
         $bundledItems = [];
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($numberOfBundlesToRemove === 0) {

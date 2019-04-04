@@ -43,14 +43,6 @@ class ProductBundleClientTester extends Actor
     }
 
     /**
-     * @return \Ge§nerated\Shared\Transfer\CustomerTransfer
-     */
-    public function haveCustomer(): CustomerTransfer
-    {
-        return (new CustomerBuilder())->build();
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function haveCartChangeTransfer(): CartChangeTransfer
