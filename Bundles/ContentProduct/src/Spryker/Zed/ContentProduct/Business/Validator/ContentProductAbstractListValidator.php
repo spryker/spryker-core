@@ -42,7 +42,7 @@ class ContentProductAbstractListValidator implements ContentProductAbstractListV
         $contentValidationResponseTransfer = (new ContentValidationResponseTransfer())
             ->setIsSuccess(true);
 
-        $contentParameterMessageTransfer = $this->checkNumberOfProducts($contentProductAbstractListTermTransfer);
+        $contentParameterMessageTransfer = $this->validateNumberOfProductsConstraint($contentProductAbstractListTermTransfer);
 
         if ($contentParameterMessageTransfer->getMessages()->count()) {
             $contentValidationResponseTransfer->setIsSuccess(false)
@@ -57,13 +57,18 @@ class ContentProductAbstractListValidator implements ContentProductAbstractListV
      *
      * @return \Generated\Shared\Transfer\ContentParameterMessageTransfer
      */
-    protected function checkNumberOfProducts(ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer): ContentParameterMessageTransfer
+    protected function validateNumberOfProductsConstraint(ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer): ContentParameterMessageTransfer
     {
-        if (count($contentProductAbstractListTermTransfer->getIdProductAbstracts()) > $this->config->getMaxProductsInProductAbstractList()) {
-            $message = (new MessageTransfer())->setValue(static::ERROR_MESSAGE_MAX_NUMBER_OF_PRODUCTS)
-                ->setParameters([static::ERROR_MESSAGE_PARAMETER_COUNT => $this->config->getMaxProductsInProductAbstractList()]);
+        $existingProductsInProductAbstractList = count($contentProductAbstractListTermTransfer->getIdProductAbstracts());
+        $maxProductsInProductAbstractList = $this->config->getMaxProductsInProductAbstractList();
 
-            return (new ContentParameterMessageTransfer())->setParameter(ContentProductAbstractListTermTransfer::ID_PRODUCT_ABSTRACTS)
+        if ($existingProductsInProductAbstractList > $maxProductsInProductAbstractList) {
+            $message = (new MessageTransfer())
+                ->setValue(static::ERROR_MESSAGE_MAX_NUMBER_OF_PRODUCTS)
+                ->setParameters([static::ERROR_MESSAGE_PARAMETER_COUNT => $maxProductsInProductAbstractList]);
+
+            return (new ContentParameterMessageTransfer())
+                ->setParameter(ContentProductAbstractListTermTransfer::ID_PRODUCT_ABSTRACTS)
                 ->addMessage($message);
         }
 
