@@ -30,6 +30,7 @@
 
     <transfer name="Customer">
         <property name="customerReference" type="string" />
+        <property name="isGuest" type="bool" />
     </transfer>
 
 </transfers>

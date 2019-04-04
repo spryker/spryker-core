@@ -53,22 +53,29 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
             return $resourceShareReaderResponseTransfer;
         }
 
+        $resourceShareReaderResponseTransfer->requireResourceShare();
         $resourceShareTransfer = $resourceShareReaderResponseTransfer->getResourceShare();
 
-        return $this->executeResourceShareActivatorStrategyPlugins($resourceShareTransfer);
+        return $this->executeResourceShareActivatorStrategyPlugins(
+            $resourceShareTransfer,
+            $this->isCustomerLoggedIn($customerTransfer)
+        );
     }
 
     /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param bool $isCustomerLoggedIn
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    protected function executeResourceShareActivatorStrategyPlugins(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
-    {
+    protected function executeResourceShareActivatorStrategyPlugins(
+        ResourceShareTransfer $resourceShareTransfer,
+        bool $isCustomerLoggedIn
+    ): ResourceShareResponseTransfer {
         $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
 
         foreach ($this->resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
-            if ($resourceShareActivatorStrategyPlugin->isLoginRequired()) {
+            if (!$isCustomerLoggedIn && $resourceShareActivatorStrategyPlugin->isLoginRequired()) {
                 return $resourceShareResponseTransfer->setIsSuccessful(false)
                     ->setIsLoginRequired(true)
                     ->addErrorMessage(
@@ -81,5 +88,15 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
 
         return $resourceShareResponseTransfer->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isCustomerLoggedIn(?CustomerTransfer $customerTransfer): bool
+    {
+        return $customerTransfer && !$customerTransfer->getIsGuest();
     }
 }
