@@ -212,9 +212,8 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
         }
 
         $amountMinusMin = $this->subtractQuantities($amount, $min);
-        $amountMinusMinModuleInterval = fmod($amountMinusMin, $interval);
 
-        if (!$this->isQuantityEqual($amount, 0) && $interval != null && !$this->isQuantityEqual($amountMinusMinModuleInterval, 0)) {
+        if (!$this->isQuantityEqual($amount, 0) && $interval != null && !$this->isQuantityModuloEqual($amountMinusMin, $interval, 0)) {
             $this->addViolation(static::ERROR_AMOUNT_INTERVAL_NOT_FULFILLED, $sku, $interval, $amount, $responseTransfer);
         }
 
@@ -225,6 +224,18 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
         if (!$isVariable && $amount != $defaultAmount) {
             $this->addViolation(static::ERROR_AMOUNT_IS_NOT_VARIABLE, $sku, $defaultAmount, $amount, $responseTransfer);
         }
+    }
+
+    /**
+     * @param float $dividentQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
+     *
+     * @return bool
+     */
+    protected function isQuantityModuloEqual(float $dividentQuantity, float $divisorQuantity, float $remainder): bool
+    {
+        return $this->utilQuantityService->isQuantityModuloEqual($dividentQuantity, $divisorQuantity, $remainder);
     }
 
     /**

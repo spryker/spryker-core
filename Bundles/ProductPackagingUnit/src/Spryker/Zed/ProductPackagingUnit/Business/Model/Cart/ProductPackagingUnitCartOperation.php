@@ -95,7 +95,7 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
                 );
                 $newAmount = $this->subtractQuantities($currentItemTransfer->getAmount(), $itemTransfer->getAmount());
 
-                if ($newQuantity <= 0 || $newAmount < 1) {
+                if ($newQuantity <= 0 || $newAmount <= 0) {
                     $quoteTransfer->getItems()->offsetUnset($itemIndex);
                     break;
                 }

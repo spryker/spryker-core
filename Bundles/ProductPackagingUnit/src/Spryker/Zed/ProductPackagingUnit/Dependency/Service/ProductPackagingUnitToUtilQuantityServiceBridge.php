@@ -54,4 +54,16 @@ class ProductPackagingUnitToUtilQuantityServiceBridge implements ProductPackagin
     {
         return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
     }
+
+    /**
+     * @param float $dividentQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
+     *
+     * @return bool
+     */
+    public function isQuantityModuloEqual(float $dividentQuantity, float $divisorQuantity, float $remainder): bool
+    {
+        return $this->utilQuantityService->isQuantityModuloEqual($dividentQuantity, $divisorQuantity, $remainder);
+    }
 }
