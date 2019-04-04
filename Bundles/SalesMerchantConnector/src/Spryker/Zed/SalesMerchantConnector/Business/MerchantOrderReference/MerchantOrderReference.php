@@ -37,7 +37,7 @@ class MerchantOrderReference implements MerchantOrderReferenceInterface
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer {
         $merchantId = $itemTransfer->getFkMerchant();
-        if(!$merchantId) {
+        if (!$merchantId) {
             return $salesOrderItemEntity;
         }
 

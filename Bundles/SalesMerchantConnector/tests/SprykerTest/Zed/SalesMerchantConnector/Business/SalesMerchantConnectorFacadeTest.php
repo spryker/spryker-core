@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
  * @group SalesMerchantConnector
  * @group Business
  * @group Facade
- * @group SalesOrderThresholdFacadeTest
+ * @group SalesMerchantConnectorFacadeTest
  * Add your own group annotations below this line
  */
 class SalesMerchantConnectorFacadeTest extends SalesMerchantConnectorMocks
