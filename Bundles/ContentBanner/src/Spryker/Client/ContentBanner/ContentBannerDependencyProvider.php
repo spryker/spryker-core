@@ -11,9 +11,12 @@ use Spryker\Client\ContentBanner\Dependency\Client\ContentBannerToContentStorage
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
+/**
+ * @method \Spryker\Client\ContentBanner\ContentBannerConfig getConfig()
+ */
 class ContentBannerDependencyProvider extends AbstractDependencyProvider
 {
-    public const CLIENT_CONTENT_STORAGE = 'CLIENT_CONTENT_STORAGE ';
+    public const CLIENT_CONTENT_STORAGE = 'CLIENT_CONTENT_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

@@ -7,12 +7,9 @@
 
 namespace Spryker\Client\ContentBanner;
 
-use Generated\Shared\Transfer\BannerTermTransfer;
-use Generated\Shared\Transfer\BannerTypeTransfer;
 use Generated\Shared\Transfer\ContentBannerTransfer;
-use Spryker\Client\ContentBanner\Exception\MissingBannerTermException;
+use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Shared\ContentBanner\ContentBannerConfig;
 
 /**
  * @method \Spryker\Client\ContentBanner\ContentBannerFactory getFactory()
@@ -47,9 +44,9 @@ class ContentBannerClient extends AbstractClient implements ContentBannerClientI
      *
      * @throws \Spryker\Client\ContentBanner\Exception\MissingBannerTermException
      *
-     * @return \Generated\Shared\Transfer\BannerTypeTransfer|null
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
-    public function findBannerById(int $idContent, string $localeName): ?BannerTypeTransfer
+    public function findBannerById(int $idContent, string $localeName): ?ContentBannerTypeTransfer
     {
         $bannerContentTypeContext = $this->getFactory()
             ->getContentStorageClient()
@@ -59,17 +56,9 @@ class ContentBannerClient extends AbstractClient implements ContentBannerClientI
             return null;
         }
 
-        $term = $bannerContentTypeContext->getTerm();
-
-        if ($term === ContentBannerConfig::CONTENT_TERM_BANNER) {
-            $bannerTermTransfer = new BannerTermTransfer();
-            $bannerTermTransfer->fromArray($bannerContentTypeContext->getParameters(), true);
-
-            return $this->getFactory()
-                ->createBannerTermToBannerTypeExecutor()
-                ->execute($bannerTermTransfer);
-        }
-
-        throw new MissingBannerTermException(sprintf('There is no ContentBanner Term which can work with the term %s.', $term));
+        return $this->getFactory()
+            ->createContentBannerTermResolver()
+            ->resolve($bannerContentTypeContext->getTerm())
+            ->execute($bannerContentTypeContext);
     }
 }

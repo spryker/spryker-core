@@ -5,7 +5,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/content-storage": "^1.0.0",
     "spryker/content-banner": "^1.1.0",
     "spryker/glue-application": "^1.8.0",
     "spryker/glue-application-extension": "^1.0.0",

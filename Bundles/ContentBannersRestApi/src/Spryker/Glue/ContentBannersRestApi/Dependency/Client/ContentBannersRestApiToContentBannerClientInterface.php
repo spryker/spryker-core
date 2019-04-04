@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ContentBannersRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\BannerTypeTransfer;
+use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 
 interface ContentBannersRestApiToContentBannerClientInterface
 {
@@ -15,7 +15,7 @@ interface ContentBannersRestApiToContentBannerClientInterface
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\BannerTypeTransfer|null
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
-    public function findBannerById(int $idContent, string $localeName): ?BannerTypeTransfer;
+    public function findBannerById(int $idContent, string $localeName): ?ContentBannerTypeTransfer;
 }

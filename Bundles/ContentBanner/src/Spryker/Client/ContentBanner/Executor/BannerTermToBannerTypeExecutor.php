@@ -7,23 +7,45 @@
 
 namespace Spryker\Client\ContentBanner\Executor;
 
-use Generated\Shared\Transfer\BannerTermTransfer;
-use Generated\Shared\Transfer\BannerTypeTransfer;
+use Generated\Shared\Transfer\ContentBannerTermTransfer;
+use Generated\Shared\Transfer\ContentBannerTypeTransfer;
+use Generated\Shared\Transfer\ContentTypeContextTransfer;
+use Spryker\Shared\ContentBanner\ContentBannerConfig;
 
-class BannerTermToBannerTypeExecutor implements BannerTermToBannerTypeExecutorInterface
+class BannerTermToBannerTypeExecutor implements BannerTypeExecutorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\BannerTermTransfer $bannerTerm
-     *
-     * @return \Generated\Shared\Transfer\BannerTypeTransfer
+     * @return string
      */
-    public function execute(BannerTermTransfer $bannerTerm): BannerTypeTransfer
+    public static function getTerm(): string
     {
-        return (new BannerTypeTransfer())
-            ->setAltText($bannerTerm->getAltText())
-            ->setClickUrl($bannerTerm->getClickUrl())
-            ->setImageUrl($bannerTerm->getImageUrl())
-            ->setSubtitle($bannerTerm->getSubtitle())
-            ->setTitle($bannerTerm->getTitle());
+        return ContentBannerConfig::CONTENT_TERM_BANNER;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
+     *
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer
+     */
+    public function execute(ContentTypeContextTransfer $contentTypeContextTransfer): ContentBannerTypeTransfer
+    {
+        $bannerTermTransfer = $this->mapContentTypeParametersToTransfer($contentTypeContextTransfer);
+
+        return (new ContentBannerTypeTransfer())
+            ->setAltText($bannerTermTransfer->getAltText())
+            ->setClickUrl($bannerTermTransfer->getClickUrl())
+            ->setImageUrl($bannerTermTransfer->getImageUrl())
+            ->setSubtitle($bannerTermTransfer->getSubtitle())
+            ->setTitle($bannerTermTransfer->getTitle());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
+     *
+     * @return \Generated\Shared\Transfer\ContentBannerTermTransfer
+     */
+    protected function mapContentTypeParametersToTransfer(ContentTypeContextTransfer $contentTypeContextTransfer): ContentBannerTermTransfer
+    {
+        return (new ContentBannerTermTransfer())->fromArray($contentTypeContextTransfer->getParameters(), true);
     }
 }
