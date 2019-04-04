@@ -179,12 +179,8 @@ class ShipmentTaxRateCalculatorTest extends Test
      *
      * @return void
      */
-    protected function assertShipmentMethodTaxeRate(?ShipmentMethodTransfer $shipmentMethodTransfer, float $expectedValue): void
+    protected function assertShipmentMethodTaxeRateEqualsExpected(ShipmentMethodTransfer $shipmentMethodTransfer, float $expectedValue): void
     {
-        if ($shipmentMethodTransfer === null) {
-            return;
-        }
-
         $currentTaxRate = $shipmentMethodTransfer->getTaxRate();
         $this->assertEqualsWithDelta($expectedValue, $currentTaxRate, static::FLOAT_COMPARISION_DELTA,
             'tax rate should be ' . $expectedValue
@@ -202,10 +198,6 @@ class ShipmentTaxRateCalculatorTest extends Test
     protected function assertItemsForTaxes(QuoteTransfer $quoteTransfer, array $expectedValues): void
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!isset($expectedValues[$itemTransfer->getSku()])) {
-                continue;
-            }
-
             $this->assertShipmentMethodTaxeRate($itemTransfer->getShipment()->getMethod(), $expectedValues[$itemTransfer->getSku()]);
         }
     }
@@ -468,16 +460,6 @@ class ShipmentTaxRateCalculatorTest extends Test
     protected function createItemTransferBuilder(array $seed = []): ItemBuilder
     {
         return (new ItemBuilder($seed));
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\TaxProductConnector\TaxProductConnectorBusinessFactory
-     */
-    protected function createTaxProductConnectorBusinessFactory(): TaxProductConnectorBusinessFactory
-    {
-        return $this->getMockBuilder(TaxProductConnectorBusinessFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 
     /**
