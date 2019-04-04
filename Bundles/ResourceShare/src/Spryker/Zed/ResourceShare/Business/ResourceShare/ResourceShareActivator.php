@@ -48,34 +48,34 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         string $uuid,
         ?CustomerTransfer $customerTransfer
     ): ResourceShareResponseTransfer {
-        $resourceShareReaderResponseTransfer = $this->resourceShareReader->getResourceShareByUuid($uuid);
-        if (!$resourceShareReaderResponseTransfer->getIsSuccessful()) {
-            return $resourceShareReaderResponseTransfer;
+        $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShareByUuid($uuid);
+        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
+            return $resourceShareResponseTransfer;
         }
 
-        $resourceShareReaderResponseTransfer->requireResourceShare();
-        $resourceShareTransfer = $resourceShareReaderResponseTransfer->getResourceShare();
+        $resourceShareResponseTransfer->requireResourceShare();
+        $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
 
-        return $this->executeResourceShareActivatorStrategyPlugins(
-            $resourceShareTransfer,
-            $this->isCustomerLoggedIn($customerTransfer)
-        );
+        return $this->executeResourceShareActivatorStrategyPlugins($resourceShareTransfer, $customerTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     * @param bool $isCustomerLoggedIn
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     protected function executeResourceShareActivatorStrategyPlugins(
         ResourceShareTransfer $resourceShareTransfer,
-        bool $isCustomerLoggedIn
+        ?CustomerTransfer $customerTransfer
     ): ResourceShareResponseTransfer {
-        $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
+        $resourceShareResponseTransfer = (new ResourceShareResponseTransfer())
+            ->setIsLoginRequired(false);
 
         foreach ($this->resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
-            if (!$isCustomerLoggedIn && $resourceShareActivatorStrategyPlugin->isLoginRequired()) {
+            if (!$this->isCustomerLoggedIn($customerTransfer)
+                && $resourceShareActivatorStrategyPlugin->isLoginRequired()
+            ) {
                 return $resourceShareResponseTransfer->setIsSuccessful(false)
                     ->setIsLoginRequired(true)
                     ->addErrorMessage(

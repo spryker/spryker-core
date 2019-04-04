@@ -83,7 +83,7 @@ class ResourceShareFacadeTest extends Test
     public function testGenerateResourceShareShouldAllowResourceGenerationWithEmptyResourceData(): void
     {
         // Arrange
-        $resourceShareTransfer = $this->tester->haveResourceShare();
+        $resourceShareTransfer = (new ResourceShareBuilder())->build();
         $resourceShareTransfer->setResourceData(null);
 
         // Act
@@ -182,7 +182,7 @@ class ResourceShareFacadeTest extends Test
 
         // Assert
         $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
-        $this->assertEmpty($resourceShareResponseTransfer->getIsLoginRequired());
+        $this->assertFalse($resourceShareResponseTransfer->getIsLoginRequired());
     }
 
     /**
@@ -244,7 +244,7 @@ class ResourceShareFacadeTest extends Test
 
         // Assert
         $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
-        $this->assertEmpty($resourceShareResponseTransfer->getIsLoginRequired());
+        $this->assertFalse($resourceShareResponseTransfer->getIsLoginRequired());
     }
 
     /**
@@ -323,7 +323,7 @@ class ResourceShareFacadeTest extends Test
      */
     protected function createResourceShareActivatorStrategyPluginMock()
     {
-        return $this->getMockBuilder(ResourceShareActivatorStrategyPluginInterface::class)->getMock();
+        return $this->createMock(ResourceShareActivatorStrategyPluginInterface::class);
     }
 
     /**

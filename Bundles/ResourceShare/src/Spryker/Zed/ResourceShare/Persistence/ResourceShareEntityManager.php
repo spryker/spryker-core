@@ -27,10 +27,7 @@ class ResourceShareEntityManager extends AbstractEntityManager implements Resour
             return null;
         }
 
-        $resourceShareEntity = $this->getFactory()
-            ->createResourceSharePropelQuery()
-            ->findOneOrCreate();
-
+        $resourceShareEntity = new SpyResourceShare();
         $resourceShareEntity->fromArray($resourceShareTransfer->toArray());
         $resourceShareEntity->save();
 

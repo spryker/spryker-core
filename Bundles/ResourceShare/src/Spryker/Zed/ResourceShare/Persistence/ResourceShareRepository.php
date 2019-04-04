@@ -27,13 +27,10 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
             ->filterByUuid($uuid)
             ->findOne();
 
-        if ($resourceShareEntity) {
-            return (new ResourceShareTransfer())->fromArray(
-                $resourceShareEntity->toArray(),
-                true
-            );
+        if (!$resourceShareEntity) {
+            return null;
         }
 
-        return null;
+        return (new ResourceShareTransfer())->fromArray($resourceShareEntity->toArray(), true);
     }
 }
