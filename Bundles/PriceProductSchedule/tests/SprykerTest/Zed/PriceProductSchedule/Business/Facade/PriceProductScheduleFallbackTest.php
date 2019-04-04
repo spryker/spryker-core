@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PriceProductSchedule\Business\Facade;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
@@ -84,6 +85,9 @@ class PriceProductScheduleFallbackTest extends Unit
         $priceTypeTransfer1 = $this->tester->havePriceType();
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
+        $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test']);
+        $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
+
         $this->tester->havePriceProduct([
             PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
             PriceProductTransfer::SKU_PRODUCT => $productConcreteTransfer->getSku(),
@@ -93,7 +97,7 @@ class PriceProductScheduleFallbackTest extends Unit
             PriceProductTransfer::MONEY_VALUE => [
                 MoneyValueTransfer::NET_AMOUNT => 100,
                 MoneyValueTransfer::GROSS_AMOUNT => 100,
-                MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                MoneyValueTransfer::CURRENCY => $currencyTransfer,
             ],
         ]);
 
@@ -106,16 +110,13 @@ class PriceProductScheduleFallbackTest extends Unit
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
             PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer2,
             PriceProductTransfer::MONEY_VALUE => [
-                MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
                 MoneyValueTransfer::NET_AMOUNT => 200,
                 MoneyValueTransfer::GROSS_AMOUNT => 200,
+                MoneyValueTransfer::CURRENCY => $currencyTransfer,
             ],
         ]);
 
-        $currencyId = $this->tester->haveCurrency();
-        $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
-
-        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule([
+        $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
             PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-1 hour')),
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
@@ -146,8 +147,8 @@ class PriceProductScheduleFallbackTest extends Unit
         // Assert
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setSku($productConcreteTransfer->getSku())
-            ->setStoreName($this->storeFacade->getCurrentStore()->getName())
-            ->setCurrencyIsoCode($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getCurrency()->getCode());
+            ->setPriceTypeName($priceTypeTransfer1->getName())
+            ->setCurrencyIsoCode($currencyTransfer->getCode());
 
         $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 

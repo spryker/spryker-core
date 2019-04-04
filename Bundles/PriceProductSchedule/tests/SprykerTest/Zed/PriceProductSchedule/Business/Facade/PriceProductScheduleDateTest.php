@@ -38,11 +38,6 @@ class PriceProductScheduleDateTest extends Unit
     protected $priceProductScheduleFacade;
 
     /**
-     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    protected $spyPriceProductScheduleQuery;
-
-    /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
     protected $storeFacade;
@@ -55,7 +50,6 @@ class PriceProductScheduleDateTest extends Unit
         parent::setUp();
 
         $this->priceProductScheduleFacade = $this->tester->getFacade();
-        $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
         $this->storeFacade = $this->tester->getLocator()->store()->facade();
     }
 
@@ -80,7 +74,7 @@ class PriceProductScheduleDateTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity->isCurrent(), 'Scheduled price with active date range should have been set as current.');
     }
 
@@ -107,7 +101,7 @@ class PriceProductScheduleDateTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity->isCurrent(), 'Scheduled price with not active date range should not have been set as current.');
     }
 
@@ -130,7 +124,7 @@ class PriceProductScheduleDateTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity->isCurrent(), 'Current scheduled price with active date range should have been stay as current.');
     }
 
@@ -166,10 +160,10 @@ class PriceProductScheduleDateTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         //Assert
-        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity->isCurrent(), 'Scheduled price with less duration should have been stay as current.');
 
-        $priceProductScheduleEntity2 = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
+        $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity2->isCurrent(), 'Scheduled price with longest duration should not have been set as current.');
     }
 
@@ -205,10 +199,10 @@ class PriceProductScheduleDateTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         //Assert
-        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity->isCurrent(), 'Scheduled price with less duration should have been set as current.');
 
-        $priceProductScheduleEntity2 = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
+        $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity2->isCurrent(), 'Scheduled price with longest duration should not have been set as current.');
     }
 
@@ -243,10 +237,10 @@ class PriceProductScheduleDateTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntityWithLowestDuration = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransferWithLowestDuration->getIdPriceProductSchedule());
+        $priceProductScheduleEntityWithLowestDuration = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransferWithLowestDuration->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntityWithLowestDuration->isCurrent(), 'Scheduled price with less duration should have been set as current.');
 
-        $priceProductScheduleEntityWithHigherDuration = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransferWithHigherDuration->getIdPriceProductSchedule());
+        $priceProductScheduleEntityWithHigherDuration = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransferWithHigherDuration->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntityWithHigherDuration->isCurrent(), 'Scheduled price with less duration should have been set as current.');
     }
 
@@ -285,13 +279,13 @@ class PriceProductScheduleDateTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity->isCurrent(), 'Finished active scheduled price should have been set as not current.');
 
-        $priceProductScheduleEntity2 = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
+        $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
         $this->assertFalse($priceProductScheduleEntity2->isCurrent(), 'Finished not active scheduled price have been stay not current.');
 
-        $priceProductScheduleEntity3 = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer3->getIdPriceProductSchedule());
+        $priceProductScheduleEntity3 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer3->getIdPriceProductSchedule());
         $this->assertTrue($priceProductScheduleEntity3->isCurrent(), 'Scheduled price with active date range should have been set as current.');
     }
 

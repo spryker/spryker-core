@@ -120,6 +120,8 @@ class PriceProductDataHelper extends Module
         int $grossPrice,
         string $currencyIsoCode
     ): PriceProductTransfer {
+        $currencyTransfer = $this->getCurrencyFacade()->fromIsoCode($currencyIsoCode);
+
         $config = $this->getSharedPriceProductConfig();
 
         $priceDimensionTransfer = (new PriceProductDimensionTransfer())
@@ -136,6 +138,18 @@ class PriceProductDataHelper extends Module
             $priceTypeTransfer = $priceProductOverride[PriceProductTransfer::PRICE_TYPE];
         }
 
+        if (isset($priceProductOverride[PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::NET_AMOUNT])) {
+            $netPrice = $priceProductOverride[PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::NET_AMOUNT];
+        }
+
+        if (isset($priceProductOverride[PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT])) {
+            $grossPrice = $priceProductOverride[PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT];
+        }
+
+        if (isset($priceProductOverride[PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::CURRENCY])) {
+            $currencyTransfer = $priceProductOverride[PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::CURRENCY];
+        }
+
         $priceProductDefaultData = [
             PriceProductTransfer::PRICE_TYPE_NAME => $priceTypeTransfer->getName(),
             PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer,
@@ -147,7 +161,6 @@ class PriceProductDataHelper extends Module
             ->seed($priceProductOverride)
             ->build();
 
-        $currencyTransfer = $this->getCurrencyFacade()->fromIsoCode($currencyIsoCode);
         $storeTransfer = $this->getStoreFacade()->getCurrentStore();
 
         $moneyValueTransfer = $this->createMoneyValueTransfer(
