@@ -8,7 +8,11 @@
 namespace SprykerTest\Zed\Shipment;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -123,5 +127,54 @@ class ShipmentBusinessTester extends Actor
     public function getDefaultStoreName()
     {
         return $this->getLocator()->store()->facade()->getCurrentStore()->getName();
+    }
+
+    /**
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod|null $shipmentMethodEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function haveProductWithTaxSetInDb(?SpyShipmentMethod $shipmentMethodEntity): ProductAbstractTransfer
+    {
+        $productAbstractOverride = [];
+        if ($shipmentMethodEntity !== null) {
+            $productAbstractOverride[ProductAbstractTransfer::ID_TAX_SET] = $shipmentMethodEntity->getFkTaxSet();
+        }
+
+        return $this->haveProductAbstract($productAbstractOverride);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod[] $shipmentMethodEntityList
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod|null
+     */
+    public function findShipmentMethodEntityByAddressIso2CodeInShipmentMethodEntityList(
+        AddressTransfer $addressTransfer,
+        array $shipmentMethodEntityList = []
+    ): ?SpyShipmentMethod {
+        if (!isset($shipmentMethodEntityList[$addressTransfer->getIso2Code()])) {
+            return null;
+        }
+
+        return $shipmentMethodEntityList[$addressTransfer->getIso2Code()];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param null|\Orm\Zed\Shipment\Persistence\SpyShipmentMethod $spyShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    public function mapShipmentMethodEntityToTransfer(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        ?SpyShipmentMethod $shipmentMethodEntity
+    ): ShipmentMethodTransfer {
+        if ($shipmentMethodEntity === null) {
+            return $shipmentMethodTransfer;
+        }
+
+        return $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
     }
 }

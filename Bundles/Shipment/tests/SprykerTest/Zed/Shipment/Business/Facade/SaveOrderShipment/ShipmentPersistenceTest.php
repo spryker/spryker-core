@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Shipment\Business\Facade;
+namespace SprykerTest\Zed\Shipment\Business\Facade\SaveOrderShipment;
 
 use Exception;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;

@@ -30,6 +30,7 @@ suites:
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesHelper
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentOrderDataHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodWithTaxSetDataHelper
 
     Communication:
         path: Communication
