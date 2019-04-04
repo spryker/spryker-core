@@ -121,6 +121,19 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
+     *  - Checks if bundled products of cart items has price for current store.
+     *  - Sets error message if prices are not available.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function preCheckBundledProductPrices(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
      *  - Calculates QuoteTransfer::bundleItems prices.
      *
      * @api
