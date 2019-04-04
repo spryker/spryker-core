@@ -23,7 +23,7 @@ class ContentTable extends AbstractTable
     /**
      * @var string[]
      */
-    private $enabledContentTypesCache = [];
+    private $contentTypeKeyCache = [];
 
     /**
      * @param \Orm\Zed\Content\Persistence\SpyContentQuery $contentQuery
@@ -34,7 +34,7 @@ class ContentTable extends AbstractTable
         array $contentPlugins
     ) {
         $this->contentQuery = $contentQuery;
-        $this->enabledContentTypesCache = $this->populateEnabledContentTypesCache($contentPlugins);
+        $this->contentTypeKeyCache = $this->populateContentTypeKeyCache($contentPlugins);
     }
 
     /**
@@ -148,14 +148,14 @@ class ContentTable extends AbstractTable
      *
      * @return array
      */
-    protected function populateEnabledContentTypesCache(array $contentPlugins): array
+    protected function populateContentTypeKeyCache(array $contentPlugins): array
     {
-        $contentTypesCache = [];
+        $contentTypeKeyCache = [];
         foreach ($contentPlugins as $contentPlugin) {
-            $contentTypesCache = $contentPlugin->getTypeKey();
+            $contentTypeKeyCache = $contentPlugin->getTypeKey();
         }
 
-        return array_unique($contentTypesCache);
+        return array_unique($contentTypeKeyCache);
     }
 
     /**
@@ -165,7 +165,7 @@ class ContentTable extends AbstractTable
      */
     protected function isContentTypeEnabled(string $contentTypeKey): bool
     {
-        return in_array($contentTypeKey, $this->enabledContentTypesCache);
+        return in_array($contentTypeKey, $this->contentTypeKeyCache);
     }
 
     /**
