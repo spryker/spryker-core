@@ -47,7 +47,7 @@ class CartPermissionGroupReader implements CartPermissionGroupReaderInterface
         );
 
         if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
-            return $this->cartPermissionGroupResponseBuilder->createEmptyCartPermissionGroupsResponse();
+            return $this->cartPermissionGroupResponseBuilder->createCartPermissionGroupNotFoundErrorResponse();
         }
 
         return $this->cartPermissionGroupResponseBuilder->createCartPermissionGroupsCollectionResponse(
@@ -62,6 +62,10 @@ class CartPermissionGroupReader implements CartPermissionGroupReaderInterface
      */
     public function findCartPermissionGroupById(string $idCartPermissionGroup): RestResponseInterface
     {
+        if (!is_numeric($idCartPermissionGroup)) {
+            return $this->cartPermissionGroupResponseBuilder->createInvalidCartPermissionGroupIdErrorResponse();
+        }
+
         $quotePermissionGroupResponseTransfer = $this->sharedCartClient->findQuotePermissionGroupById(
             (new QuotePermissionGroupTransfer())->setIdQuotePermissionGroup((int)$idCartPermissionGroup)
         );

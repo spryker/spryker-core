@@ -340,6 +340,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
         $quotePermissionGroupEntity = $this->getFactory()
             ->createQuotePermissionGroupQuery()
             ->findOneByIdQuotePermissionGroup($idQuotePermissionGroup);
+
         if (!$quotePermissionGroupEntity) {
             return null;
         }

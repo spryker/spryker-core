@@ -14,11 +14,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface CartPermissionGroupResponseBuilderInterface
 {
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createEmptyCartPermissionGroupsResponse(): RestResponseInterface;
-
-    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $quotePermissionGroups
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -36,4 +31,9 @@ interface CartPermissionGroupResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCartPermissionGroupNotFoundErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createInvalidCartPermissionGroupIdErrorResponse(): RestResponseInterface;
 }

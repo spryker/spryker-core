@@ -18,6 +18,10 @@ class CartPermissionGroupsRestApiConfig extends AbstractBundleConfig
     public const ACTION_CART_PERMISSION_GROUPS_GET = 'get';
 
     public const RESPONSE_CODE_CART_PERMISSION_GROUP_NOT_FOUND = '2501';
+    public const RESPONSE_CODE_CART_PERMISSION_GROUP_INVALID_IDENTIFIER = '2501';
+    public const RESPONSE_CODE_CART_PERMISSION_GROUP_UNEXPECTED_ERROR = '2503';
 
     public const RESPONSE_DETAIL_CART_PERMISSION_GROUP_NOT_FOUND = 'Cart permission group not found.';
+    public const RESPONSE_DETAIL_CART_PERMISSION_GROUP_INVALID_IDENTIFIER = 'Invalid cart permission group id.';
+    public const RESPONSE_DETAIL_CART_PERMISSION_GROUP_UNEXPECTED_ERROR = 'Unexpected error.';
 }

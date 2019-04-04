@@ -43,14 +43,6 @@ class CartPermissionGroupResponseBuilder implements CartPermissionGroupResponseB
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createEmptyCartPermissionGroupsResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder->createRestResponse();
-    }
-
-    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $quotePermissionGroups
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -90,6 +82,29 @@ class CartPermissionGroupResponseBuilder implements CartPermissionGroupResponseB
 
         return $this->createEmptyCartPermissionGroupsResponse()
             ->addError($errorMessageTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createInvalidCartPermissionGroupIdErrorResponse(): RestResponseInterface
+    {
+        $errorMessageTransfer = $this->createErrorMessage(
+            CartPermissionGroupsRestApiConfig::RESPONSE_CODE_CART_PERMISSION_GROUP_INVALID_IDENTIFIER,
+            Response::HTTP_UNPROCESSABLE_ENTITY,
+            CartPermissionGroupsRestApiConfig::RESPONSE_DETAIL_CART_PERMISSION_GROUP_INVALID_IDENTIFIER
+        );
+
+        return $this->createEmptyCartPermissionGroupsResponse()
+            ->addError($errorMessageTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createEmptyCartPermissionGroupsResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse();
     }
 
     /**
