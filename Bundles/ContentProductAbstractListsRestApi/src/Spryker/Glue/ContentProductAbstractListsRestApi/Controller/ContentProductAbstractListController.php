@@ -41,6 +41,6 @@ class ContentProductAbstractListController extends AbstractController
     {
         return $this->getFactory()
             ->createContentProductAbstractListReader()
-            ->getContentItemById($restRequest);
+            ->getContentProductAbstractListById($restRequest);
     }
 }
