@@ -75,13 +75,13 @@ class ContentProductClientTest extends Unit
     /**
      * @return void
      */
-    public function testFindContentItemWithWrongTerm()
+    public function testFindContentItemWithWrongTermThrowsException()
     {
         // Arrange
-        $contentTypeContextTransfer = new ContentTypeContextTransfer();
-        $contentTypeContextTransfer->setIdContent(static::ID_CONTENT_ITEM);
-        $contentTypeContextTransfer->setTerm(static::WRONG_TERM);
-        $contentTypeContextTransfer->setParameters(['id_product_abstracts' => [static::ID_PRODUCT_ABSTRACT]]);
+        $contentTypeContextTransfer = (new ContentTypeContextTransfer())
+            ->setIdContent(static::ID_CONTENT_ITEM)
+            ->setTerm(static::WRONG_TERM)
+            ->setParameters(['id_product_abstracts' => [static::ID_PRODUCT_ABSTRACT]]);
 
         $this->setProductStorageClientReturn($contentTypeContextTransfer);
 
@@ -89,8 +89,7 @@ class ContentProductClientTest extends Unit
         $this->expectException(InvalidProductAbstractListTypeException::class);
 
         // Act
-        $systemUnderTest = $this->createContentProductClient()
-            ->findContentProductAbstractListType(static::ID_CONTENT_ITEM, static::LOCALE);
+        $this->createContentProductClient()->findContentProductAbstractListType(static::ID_CONTENT_ITEM, static::LOCALE);
     }
 
     /**
@@ -98,6 +97,7 @@ class ContentProductClientTest extends Unit
      */
     public function testFindNotExistingContentProduct()
     {
+        // Arrange
         $this->setProductStorageClientReturn(null);
 
         // Act
