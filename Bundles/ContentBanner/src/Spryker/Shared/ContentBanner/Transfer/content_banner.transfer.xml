@@ -9,14 +9,6 @@
     <transfer name="ContentBanner">
     </transfer>
 
-    <transfer name="ContentBannerTerm">
-        <property name="title" type="string" />
-        <property name="subtitle" type="string" />
-        <property name="imageUrl" type="string" />
-        <property name="clickUrl" type="string" />
-        <property name="altText" type="string" />
-    </transfer>
-
     <transfer name="ContentBannerType">
         <property name="title" type="string" />
         <property name="subtitle" type="string" />
