@@ -142,7 +142,7 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
         }
 
         if (!$quoteRequestFilterTransfer->getWithHidden()) {
-            return $this->addWithoutHiddenQuoteRequestFilter($quoteRequestQuery);
+            $quoteRequestQuery = $this->addWithoutHiddenQuoteRequestFilter($quoteRequestQuery);
         }
 
         if ($quoteRequestFilterTransfer->getQuoteRequestReference()) {
