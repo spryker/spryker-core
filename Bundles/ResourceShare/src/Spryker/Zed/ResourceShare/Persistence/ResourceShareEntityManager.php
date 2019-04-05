@@ -19,9 +19,9 @@ class ResourceShareEntityManager extends AbstractEntityManager implements Resour
     /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
-     * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer
      */
-    public function createResourceShare(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer
+    public function createResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer
     {
         $resourceShareEntity = new SpyResourceShare();
         $resourceShareEntity->fromArray($resourceShareTransfer->toArray());
