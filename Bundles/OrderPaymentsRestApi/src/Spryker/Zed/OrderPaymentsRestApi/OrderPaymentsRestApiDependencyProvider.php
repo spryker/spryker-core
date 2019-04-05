@@ -38,18 +38,16 @@ class OrderPaymentsRestApiDependencyProvider extends AbstractBundleDependencyPro
     protected function addOrderPaymentUpdaterPlugins(Container $container): Container
     {
         $container[static::PLUGINS_ORDER_PAYMENT_UPDATER] = function (Container $container) {
-            return $this->getOrderPaymentUpdaterPlugins($container);
+            return $this->getOrderPaymentUpdaterPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return \Spryker\Zed\OrderPaymentsRestApiExtension\Dependency\Plugin\OrderPaymentUpdaterPluginInterface[]
      */
-    protected function getOrderPaymentUpdaterPlugins(Container $container): array
+    protected function getOrderPaymentUpdaterPlugins(): array
     {
         return [];
     }

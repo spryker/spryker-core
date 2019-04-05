@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\UpdateOrderPaymentResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @api
- *
  * @method \Spryker\Zed\OrderPaymentsRestApi\Business\OrderPaymentsRestApiBusinessFactory getFactory()
  */
 class OrderPaymentsRestApiFacade extends AbstractFacade implements OrderPaymentsRestApiFacadeInterface
