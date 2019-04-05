@@ -82,7 +82,9 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteLocker(): QuoteLockerInterface
     {
-        return new QuoteLocker();
+        return new QuoteLocker(
+            $this->getQuoteUnlockPreCheckPlugins()
+        );
     }
 
     /**
@@ -181,5 +183,13 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     protected function getQuoteDeleteAfterPlugins(): array
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_DELETE_AFTER);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteUnlockPreCheckPluginInterface[]
+     */
+    protected function getQuoteUnlockPreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_UNLOCK_PRE_CHECK);
     }
 }
