@@ -153,7 +153,6 @@
     </transfer>
 
     <transfer name="ProductView">
-        <property name="available" type="bool" />
         <property name="currentProductPrice" type="CurrentProductPrice" />
     </transfer>
 
