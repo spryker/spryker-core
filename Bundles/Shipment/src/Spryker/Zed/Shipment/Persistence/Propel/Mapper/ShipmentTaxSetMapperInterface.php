@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 

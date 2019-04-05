@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,59 +7,23 @@
 
 namespace SprykerTest\Zed\Shipment\Business\Facade\SaveOrderShipment;
 
-use Exception;
-use Orm\Zed\Sales\Persistence\Map\SpySalesExpenseTableMap;
-use Orm\Zed\Sales\Persistence\Map\SpySalesShipmentTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
-use Propel\Runtime\Formatter\SimpleArrayFormatter;
-use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
-use BadMethodCallException;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\ExpenseBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\DataBuilder\SaveOrderBuilder;
-use Generated\Shared\DataBuilder\SequenceNumberSettingsBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
-use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Generated\Shared\Transfer\ShipmentTransfer;
+use Orm\Zed\Sales\Persistence\Map\SpySalesExpenseTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
-use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
-use Orm\Zed\Shipment\Persistence\SpyShipmentCarrier;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
-use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
-use Orm\Zed\Tax\Persistence\SpyTaxRate;
-use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Shared\Kernel\Store;
+use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Shared\Shipment\ShipmentConstants;
-use Spryker\Shared\Tax\TaxConstants;
-use Spryker\Zed\Product\ProductDependencyProvider;
-use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
-use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
-use Spryker\Zed\Shipment\ShipmentDependencyProvider;
-use Spryker\Zed\Tax\TaxDependencyProvider;
-use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorBusinessFactory;
-use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractAfterCreatePlugin;
-use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxBridge;
-use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
-use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -101,8 +66,8 @@ class ShipmentPersistenceWithExpensesTest extends Test
         $salesShipmentEntity = $salesShipmentQuery->findOne();
         $salesExpenseEntity = $salesExpenseQuery->findOne();
 
-        $this->assertNotNull($salesExpenseEntity, 'There is no shipment expense has been saved.');
-        $this->assertEquals($salesShipmentEntity->getFkSalesExpense(), $salesExpenseEntity->getIdSalesExpense(), 'There is no expense related to shipment has been saved.');
+        $this->assertNotNull($salesExpenseEntity, 'Shipment expense should have been saved.');
+        $this->assertEquals($salesShipmentEntity->getFkSalesExpense(), $salesExpenseEntity->getIdSalesExpense(), 'Shipment expense ID should have been connected to shipment entity.');
     }
 
     /**
@@ -118,26 +83,26 @@ class ShipmentPersistenceWithExpensesTest extends Test
         int $countOfNewShipmentExpenses
     ): void {
         // Arrange
-        $savedOrderTransfer = $this->tester->haveOrderWithoutShipment($quoteTransfer);
+        $saveOrderTransfer = $this->tester->haveOrderWithoutShipment($quoteTransfer);
 
-        $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder());
+        $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
         $idSalesShipmentExpenseQuery = SpySalesExpenseQuery::create()
-            ->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder())
+            ->filterByFkSalesOrder($saveOrderTransfer->getIdSalesOrder())
             ->filterByType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE)
             ->select(SpySalesExpenseTableMap::COL_ID_SALES_EXPENSE)
             ->setFormatter(SimpleArrayFormatter::class);
 
         // Act
-        $this->tester->getFacade()->saveOrderShipment($quoteTransfer, $savedOrderTransfer);
+        $this->tester->getFacade()->saveOrderShipment($quoteTransfer, $saveOrderTransfer);
 
         // Assert
         $salesShipmentEntityList = $salesShipmentQuery->find();
         $idSalesShipmentExpenseList = $idSalesShipmentExpenseQuery->find()->getData();
 
-        $this->assertEquals($countOfNewShipmentExpenses, count($idSalesShipmentExpenseList), 'Order shipment expenses count mismatch! There is no shipment expenses have been saved.');
-        foreach ($salesShipmentEntityList as $salesShipmentEntity) {
-            $this->assertContains($salesShipmentEntity->getFkSalesExpense(), $idSalesShipmentExpenseList, 'Order shipment expense is not related with order shipment.');
+        $this->assertEquals($countOfNewShipmentExpenses, count($idSalesShipmentExpenseList), 'Expected number of shipment expenses does not match the actual number.');
+        foreach ($salesShipmentEntityList as $i => $salesShipmentEntity) {
+            $this->assertContains($salesShipmentEntity->getFkSalesExpense(), $idSalesShipmentExpenseList, sprintf('Shipment expense ID should have been connected to shipment entity (iteration #%d).', $i));
         }
     }
 
@@ -157,7 +122,7 @@ class ShipmentPersistenceWithExpensesTest extends Test
     public function shipmentOrderSaverShouldUseMultipleShipmentsWithMultipleShipmentExpensesDataProvider(): array
     {
         return [
-            'France 1 item, expense set; expected: 1 order shipment and expense in DB' => $this->getDataWithMultipleShipmentsAnd1ItemToFranceWithExpense(),
+            'France 1 item, 1 expense set; expected: 1 order shipment and expense in DB' => $this->getDataWithMultipleShipmentsAnd1ItemToFranceWithExpense(),
             'France 2 items, Germany 1 item, 2 expenses set; expected: 2 order shipments and expenses in DB' => $this->getDataWithMultipleShipmentsAnd2ItemsToFranceAnd1ItemToGermanyWith2Expenses(),
         ];
     }
@@ -167,27 +132,21 @@ class ShipmentPersistenceWithExpensesTest extends Test
      */
     protected function getDataWithQuoteLevelShipmentToFranceWithExpense(): array
     {
-        $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
+        $addressBuilder = (new AddressBuilder([AddressTransfer::ISO2_CODE => 'FR']));
 
-        $shipmentMethodName = 'test method for split delivery';
         $shipmentBuilder = (new ShipmentBuilder())
-            ->withAnotherShippingAddress($addressBuilder)
-            ->withAnotherMethod((new ShipmentMethodBuilder([
-                'name' => $shipmentMethodName,
-            ])));
+            ->withShippingAddress($addressBuilder)
+            ->withMethod();
 
         $expenseBuilder = (new ExpenseBuilder([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
-            'unitGrossPrice' => 1111,
-            'name' => $shipmentMethodName,
-        ]))
-            ->withAnotherShipment($shipmentBuilder);
+            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+        ]))->withShipment($shipmentBuilder);
 
         $quoteTransfer = (new QuoteBuilder())
-            ->withAnotherShipment($shipmentBuilder)
-            ->withAnotherItem()
-            ->withAnotherExpense($expenseBuilder)
-            ->withAnotherShippingAddress($addressBuilder)
+            ->withShipment($shipmentBuilder)
+            ->withItem()
+            ->withExpense($expenseBuilder)
+            ->withShippingAddress($addressBuilder)
             ->withAnotherBillingAddress()
             ->withTotals()
             ->withCustomer()
@@ -202,19 +161,14 @@ class ShipmentPersistenceWithExpensesTest extends Test
      */
     protected function getDataWithMultipleShipmentsAnd1ItemToFranceWithExpense(): array
     {
-        $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
-        $shipmentMethodName = 'test method for SD';
+        $addressBuilder = (new AddressBuilder([AddressTransfer::ISO2_CODE => 'FR']));
         $shipmentTransfer = (new ShipmentBuilder())
-            ->withAnotherShippingAddress($addressBuilder)
-            ->withAnotherMethod((new ShipmentMethodBuilder([
-                'name' => $shipmentMethodName,
-            ])))
+            ->withShippingAddress($addressBuilder)
+            ->withMethod()
             ->build();
 
         $expenseTransfer = (new ExpenseBuilder([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
-            'unitGrossPrice' => 1111,
-            'name' => $shipmentMethodName,
+            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
         ]))->build();
         $expenseTransfer->setShipment($shipmentTransfer);
 
@@ -222,7 +176,7 @@ class ShipmentPersistenceWithExpensesTest extends Test
         $itemTransfer->setShipment($shipmentTransfer);
 
         $quoteTransfer = (new QuoteBuilder())
-            ->withAnotherBillingAddress()
+            ->withBillingAddress()
             ->withTotals()
             ->withCustomer()
             ->withCurrency()
@@ -239,21 +193,27 @@ class ShipmentPersistenceWithExpensesTest extends Test
      */
     protected function getDataWithMultipleShipmentsAnd2ItemsToFranceAnd1ItemToGermanyWith2Expenses(): array
     {
-        $addressBuilder1 = (new AddressBuilder(['iso2Code' => 'FR']));
-        $shipmentMethodName = 'test method 1 for SD';
+        $addressBuilder1 = (new AddressBuilder([AddressTransfer::ISO2_CODE => 'FR']));
         $shipmentTransfer1 = (new ShipmentBuilder())
-            ->withAnotherShippingAddress($addressBuilder1)
-            ->withAnotherMethod((new ShipmentMethodBuilder([
-                'name' => $shipmentMethodName,
-            ])))
+            ->withShippingAddress($addressBuilder1)
+            ->withMethod()
+            ->build();
+
+        $addressBuilder2 = (new AddressBuilder([AddressTransfer::ISO2_CODE => 'DE']));
+        $shipmentTransfer2 = (new ShipmentBuilder())
+            ->withShippingAddress($addressBuilder2)
+            ->withMethod()
             ->build();
 
         $expenseTransfer1 = (new ExpenseBuilder([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
-            'unitGrossPrice' => 1111,
-            'name' => $shipmentMethodName,
+            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
         ]))->build();
         $expenseTransfer1->setShipment($shipmentTransfer1);
+
+        $expenseTransfer2 = (new ExpenseBuilder([
+            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+        ]))->build();
+        $expenseTransfer2->setShipment($shipmentTransfer2);
 
         $itemTransfer1 = (new ItemBuilder())->build();
         $itemTransfer1->setShipment($shipmentTransfer1);
@@ -261,36 +221,20 @@ class ShipmentPersistenceWithExpensesTest extends Test
         $itemTransfer2 = (new ItemBuilder())->build();
         $itemTransfer2->setShipment($shipmentTransfer1);
 
-        $addressBuilder2 = (new AddressBuilder(['iso2Code' => 'DE']));
-        $shipmentMethodName = 'test method 2 for SD';
-        $shipmentTransfer2 = (new ShipmentBuilder())
-            ->withAnotherShippingAddress($addressBuilder2)
-            ->withAnotherMethod((new ShipmentMethodBuilder([
-                'name' => $shipmentMethodName,
-            ])))
-            ->build();
-
-        $expenseTransfer2 = (new ExpenseBuilder([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
-            'unitGrossPrice' => 1111,
-            'name' => $shipmentMethodName,
-        ]))->build();
-        $expenseTransfer2->setShipment($shipmentTransfer2);
-
         $itemTransfer3 = (new ItemBuilder())->build();
         $itemTransfer3->setShipment($shipmentTransfer2);
 
         $quoteTransfer = (new QuoteBuilder())
-            ->withAnotherBillingAddress()
+            ->withBillingAddress()
             ->withTotals()
             ->withCustomer()
             ->withCurrency()
             ->build();
 
         $quoteTransfer->addItem($itemTransfer1);
-        $quoteTransfer->addExpense($expenseTransfer1);
         $quoteTransfer->addItem($itemTransfer2);
         $quoteTransfer->addItem($itemTransfer3);
+        $quoteTransfer->addExpense($expenseTransfer1);
         $quoteTransfer->addExpense($expenseTransfer2);
 
         return [$quoteTransfer, 2];

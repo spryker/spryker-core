@@ -83,7 +83,7 @@ interface ShipmentMapperInterface
     public function mapShipmentEntityToShipmentTransferWithDetails(ShipmentTransfer $shipmentTransfer, SpySalesShipment $salesShipmentEntity): ShipmentTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer,
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $salesShipmentMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer

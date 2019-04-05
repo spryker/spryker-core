@@ -22,8 +22,8 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
-use Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrateInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrate as MultipleShipmentOrderHydrate;
+use Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrateInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentReader;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentReaderInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentSaver;
@@ -47,6 +47,7 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface getRepository()
  */
 class ShipmentBusinessFactory extends AbstractBusinessFactory
 {

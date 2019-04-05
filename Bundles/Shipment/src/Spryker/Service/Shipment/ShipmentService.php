@@ -10,7 +10,6 @@ namespace Spryker\Service\Shipment;
 use ArrayObject;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Kernel\AbstractService;
-use Spryker\Service\Shipment\Items\ItemsGrouperInterface;
 
 /**
  * @method \Spryker\Service\Shipment\ShipmentServiceFactory getFactory()

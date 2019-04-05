@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Business\Calculator;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -17,7 +16,6 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
-use Spryker\Zed\Shipment\Persistence\ShipmentRepository;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
 class ShipmentTaxRateCalculator implements CalculatorInterface
@@ -160,7 +158,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\TaxSetTransfer|null
      */

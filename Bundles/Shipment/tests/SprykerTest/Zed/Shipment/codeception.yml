@@ -29,8 +29,7 @@ suites:
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesHelper
-                - \SprykerTest\Shared\Shipment\Helper\ShipmentOrderDataHelper
-                - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodWithTaxSetDataHelper
+                - \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper
 
     Communication:
         path: Communication

@@ -23,6 +23,7 @@ use Symfony\Component\Validator\Constraints\Required;
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface getRepository()
  */
 class MethodForm extends AbstractType
 {

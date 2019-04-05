@@ -10,10 +10,16 @@ namespace SprykerTest\Zed\Shipment;
 use Codeception\Actor;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
+use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
@@ -130,51 +136,83 @@ class ShipmentBusinessTester extends Actor
     }
 
     /**
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod|null $shipmentMethodEntity
+     * @param float $currentTaxRate
+     * @param string $iso2Code
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    public function haveShipmentMethodWithTaxSet(float $currentTaxRate, string $iso2Code): ShipmentMethodTransfer
+    {
+        $idCountry = SpyCountryQuery::create()->filterByIso2Code($iso2Code)->findOne()->getIdCountry();
+        $taxSetTransfer = $this->haveTaxSetWithTaxRates([], [
+            [
+                TaxRateTransfer::FK_COUNTRY => $idCountry,
+                TaxRateTransfer::NAME => 'test tax rate 1',
+                TaxRateTransfer::RATE => $currentTaxRate,
+            ],
+            [
+                TaxRateTransfer::FK_COUNTRY => $idCountry,
+                TaxRateTransfer::NAME => 'test tax rate 2',
+                TaxRateTransfer::RATE => 5.00,
+            ],
+            [
+                TaxRateTransfer::FK_COUNTRY => $idCountry,
+                TaxRateTransfer::NAME => TaxConstants::TAX_EXEMPT_PLACEHOLDER,
+                TaxRateTransfer::RATE => 0.00,
+            ],
+        ]);
+
+        return $this->haveShipmentMethod([ShipmentMethodTransfer::FK_TAX_SET => $taxSetTransfer->getIdTaxSet()]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer|null $shipmentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function haveProductWithTaxSetInDb(?SpyShipmentMethod $shipmentMethodEntity): ProductAbstractTransfer
+    public function haveProductWithTaxSetInDb(?ShipmentMethodTransfer $shipmentMethodTransfer): ProductAbstractTransfer
     {
         $productAbstractOverride = [];
-        if ($shipmentMethodEntity !== null) {
-            $productAbstractOverride[ProductAbstractTransfer::ID_TAX_SET] = $shipmentMethodEntity->getFkTaxSet();
+        if ($shipmentMethodTransfer !== null) {
+            $productAbstractOverride[ProductAbstractTransfer::ID_TAX_SET] = $shipmentMethodTransfer->getFkTaxSet();
         }
 
         return $this->haveProductAbstract($productAbstractOverride);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod[] $shipmentMethodEntityList
+     * @param string $countryIso2Code
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransferList
      *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod|null
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findShipmentMethodEntityByAddressIso2CodeInShipmentMethodEntityList(
-        AddressTransfer $addressTransfer,
-        array $shipmentMethodEntityList = []
-    ): ?SpyShipmentMethod {
-        if (!isset($shipmentMethodEntityList[$addressTransfer->getIso2Code()])) {
+    public function findShipmentMethodByAddressIso2CodeInShipmentMethodTransferList(
+        string $countryIso2Code,
+        array $shipmentMethodTransferList = []
+    ): ?ShipmentMethodTransfer {
+        if (!isset($shipmentMethodTransferList[$countryIso2Code])) {
             return null;
         }
 
-        return $shipmentMethodEntityList[$addressTransfer->getIso2Code()];
+        return $shipmentMethodTransferList[$countryIso2Code];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param null|\Orm\Zed\Shipment\Persistence\SpyShipmentMethod $spyShipmentMethod
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string|null $testStateMachineProcessName
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function mapShipmentMethodEntityToTransfer(
-        ShipmentMethodTransfer $shipmentMethodTransfer,
-        ?SpyShipmentMethod $shipmentMethodEntity
-    ): ShipmentMethodTransfer {
-        if ($shipmentMethodEntity === null) {
-            return $shipmentMethodTransfer;
-        }
+    public function haveOrderWithoutShipment(QuoteTransfer $quoteTransfer, ?string $testStateMachineProcessName = null): SaveOrderTransfer
+    {
+        $testStateMachineProcessName = 'Test01';
+        $this->configureTestStateMachine([$testStateMachineProcessName]);
 
-        return $shipmentMethodTransfer->fromArray($shipmentMethodEntity->toArray(), true);
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $productTransfer = $this->haveProduct($itemTransfer->toArray());
+        }
+        $savedOrderTransfer = $this->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName);
+
+        return $savedOrderTransfer;
     }
 }

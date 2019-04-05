@@ -8,7 +8,14 @@
 namespace SprykerTest\Zed\TaxProductConnector;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Spryker\Shared\Tax\TaxConstants;
 
 /**
  * Inherited Methods
@@ -30,21 +37,65 @@ class TaxProductConnectorBusinessTester extends Actor
     use _generated\TaxProductConnectorBusinessTesterActions;
 
     /**
-     * @param float $taxRate
+     * @param float $currentTaxRate
+     * @param string $iso2Code
      *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxRate
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
-    public function haveTaxRate(float $taxRate): SpyTaxRate
+    public function haveTaxRateWithTaxSetInDb(float $currentTaxRate, string $iso2Code): TaxSetTransfer
     {
+        $idCountry = SpyCountryQuery::create()->filterByIso2Code($iso2Code)->findOne()->getIdCountry();
 
+        return  $this->haveTaxSetWithTaxRates([], [
+            [
+                TaxRateTransfer::FK_COUNTRY => $idCountry,
+                TaxRateTransfer::NAME => 'test tax rate 1',
+                TaxRateTransfer::RATE => $currentTaxRate,
+            ],
+            [
+                TaxRateTransfer::FK_COUNTRY => $idCountry,
+                TaxRateTransfer::NAME => 'test tax rate 2',
+                TaxRateTransfer::RATE => 5.00,
+            ],
+            [
+                TaxRateTransfer::FK_COUNTRY => $idCountry,
+                TaxRateTransfer::NAME => TaxConstants::TAX_EXEMPT_PLACEHOLDER,
+                TaxRateTransfer::RATE => 0.00,
+            ],
+        ]);
+    }
 
-        $taxRateEntity = new SpyTaxRate();
-        $taxRateEntity->setRate(13.04);
-        $taxRateEntity->setFkCountry(60);
-        $taxRateEntity->setName('Germany Standard test');
-        $taxRateEntity->save();
+    /**
+     * @param \Generated\Shared\Transfer\TaxSetTransfer|null $taxSetTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function haveProductWithTaxSetInDb(?TaxSetTransfer $taxSetTransfer): ProductAbstractTransfer
+    {
+        $productAbstractOverride = [];
+        if ($taxSetTransfer !== null) {
+            $productAbstractOverride[ProductAbstractTransfer::ID_TAX_SET] = $taxSetTransfer->getIdTaxSet();
+        }
 
-        return $taxRateEntity;
+        $productAbstractTransfer = $this->haveProductAbstract($productAbstractOverride);
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param string $countryIso2Code
+     * @param \Generated\Shared\Transfer\TaxSetTransfer[] $taxSetTransferList
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer|null
+     */
+    public function findTaxSetByAddressIso2CodeInTaxSetTransferList(
+        string $countryIso2Code,
+        array $taxSetTransferList = []
+    ): ?TaxSetTransfer {
+        if (!isset($taxSetTransferList[$countryIso2Code])) {
+            return null;
+        }
+
+        return $taxSetTransferList[$countryIso2Code];
     }
 }

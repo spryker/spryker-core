@@ -7,19 +7,10 @@
 
 namespace Spryker\Zed\Shipment\Business\Shipment;
 
-use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
-use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
-use Orm\Zed\Sales\Persistence\SpySalesShipment;
-use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
-use Spryker\Zed\Shipment\Business\OrderItem\OrderItemGrouperInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
@@ -41,7 +32,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     protected $salesFacade;
 
     /**
-     * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository,
+     * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
      */
@@ -114,8 +105,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array|\Generated\Shared\Transfer\ShipmentTransfer[]
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     * @return \Generated\Shared\Transfer\ShipmentTransfer[]
      */
     protected function getShipmentTransfersByOrder(OrderTransfer $orderTransfer): array
     {
@@ -123,7 +113,6 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         $shipmentMethodTransfers = $this->shipmentRepository->findShipmentMethodTransfersByShipment($shipmentTransfers);
         return $this->getMappedShipmentTransfersToShipmentMethodTransfers($shipmentTransfers, $shipmentMethodTransfers);
     }
-
 
     /**
      * @param iterable|\Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers

@@ -136,8 +136,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     /**
      * @api
      *
-     * @param int[] idProductAbstracts
-     * @param string $countryIso2Code
+     * @param int[] $idProductAbstracts
+     * @param string|array $countryIso2Code
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */

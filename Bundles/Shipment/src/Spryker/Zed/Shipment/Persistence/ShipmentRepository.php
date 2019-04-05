@@ -7,14 +7,10 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesShipment;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Spryker\Shared\Tax\TaxConstants;
@@ -71,7 +67,6 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer[]
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     public function findShipmentTransfersByOrder(OrderTransfer $orderTransfer): array
     {
@@ -89,10 +84,9 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @param array|\Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     public function findShipmentMethodTransfersByShipment(array $shipmentTransfers): array
     {

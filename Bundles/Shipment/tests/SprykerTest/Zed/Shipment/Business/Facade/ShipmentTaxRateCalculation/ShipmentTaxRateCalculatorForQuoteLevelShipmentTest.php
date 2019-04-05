@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,56 +7,25 @@
 
 namespace SprykerTest\Zed\Shipment\Business\Facade\ShipmentTaxRateCalculation;
 
-use Exception;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
-use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
-use BadMethodCallException;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\ExpenseBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\DataBuilder\SaveOrderBuilder;
-use Generated\Shared\DataBuilder\SequenceNumberSettingsBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
-use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\TaxRateTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
-use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
-use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
-use Orm\Zed\Shipment\Persistence\SpyShipmentCarrier;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
-use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
-use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Shipment\ShipmentConstants;
-use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
-use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
-use Spryker\Zed\Tax\TaxDependencyProvider;
-use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorBusinessFactory;
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractAfterCreatePlugin;
-use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxBridge;
-use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
-use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -73,9 +43,9 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
     protected const FLOAT_COMPARISION_DELTA = 0.001;
 
     /**
-     * @var \Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]
+     * @var \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    protected $shipmentMethodEntityList;
+    protected $shipmentMethodTransferList;
 
     /**
      * @return void
@@ -94,11 +64,9 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
             [new TaxSetProductAbstractAfterCreatePlugin()]
         );
 
-        SpyTaxRateQuery::create()->update(['Rate' => '1']);
-
-        $this->shipmentMethodEntityList = [];
-        $this->shipmentMethodEntityList['FR'] = $this->tester->createShipmentMethodWithTaxSet(20.00, 'FR');
-        $this->shipmentMethodEntityList['DE'] = $this->tester->createShipmentMethodWithTaxSet(15.00, 'DE');
+        $this->shipmentMethodTransferList = [];
+        $this->shipmentMethodTransferList['FR'] = $this->tester->haveShipmentMethodWithTaxSet(20.00, 'FR');
+        $this->shipmentMethodTransferList['DE'] = $this->tester->haveShipmentMethodWithTaxSet(15.00, 'DE');
     }
 
     /**
@@ -114,15 +82,17 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
         float $expectedValue
     ): void {
         // Arrange
-        $shipmentMethodTransfer = $quoteTransfer->getShipment()->getMethod();
-        $shipmentMethodEntity = $this->tester->findShipmentMethodEntityByAddressIso2CodeInShipmentMethodEntityList(
-            $quoteTransfer->getShipment()->getShippingAddress(),
-            $this->shipmentMethodEntityList
+        $quoteShipmentMethodTransfer = $quoteTransfer->getShipment()->getMethod();
+        $shipmentMethodTransfer = $this->tester->findShipmentMethodByAddressIso2CodeInShipmentMethodTransferList(
+            $quoteTransfer->getShipment()->getShippingAddress()->getIso2Code(),
+            $this->shipmentMethodTransferList
         );
-        $shipmentMethodTransfer = $this->tester->mapShipmentMethodEntityToTransfer($shipmentMethodTransfer, $shipmentMethodEntity);
+        if ($shipmentMethodTransfer !== null) {
+            $quoteShipmentMethodTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
+        }
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productAbstractTransfer = $this->tester->haveProductWithTaxSetInDb($shipmentMethodEntity);
+            $productAbstractTransfer = $this->tester->haveProductWithTaxSetInDb($quoteShipmentMethodTransfer);
             $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
         }
 
@@ -130,11 +100,16 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
         $this->tester->getFacade()->calculateShipmentTaxRate($quoteTransfer);
 
         // Assert
-        $actualTaxRate = $shipmentMethodTransfer->getTaxRate();
+        $actualTaxRate = $quoteShipmentMethodTransfer->getTaxRate();
 
-        $this->assertEqualsWithDelta($expectedValue, $actualTaxRate, static::FLOAT_COMPARISION_DELTA,
-            sprintf('Tax rate should be %.2f for shipment method ID %d, %.2f given.',
-                $expectedValue, $shipmentMethodTransfer->getIdShipmentMethod(), $actualTaxRate
+        $this->assertEqualsWithDelta(
+            $expectedValue,
+            $actualTaxRate,
+            static::FLOAT_COMPARISION_DELTA,
+            sprintf(
+                'Tax rate should be %.2f, %.2f given.',
+                $expectedValue,
+                $actualTaxRate
             )
         );
     }
@@ -155,31 +130,20 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
      */
     protected function getDataWithQuoteLevelShippingAddressAndShipmentToFrance(): array
     {
-        $skuProductAbstract = 'france_20';
-        $addressBuilder = (new AddressBuilder(['iso2Code' => 'FR']));
-        $itemBuilder = (new ItemBuilder([
-            'sku' => 'france_20',
-        ]));
+        $addressTransfer = (new AddressBuilder([AddressTransfer::ISO2_CODE => 'FR']))->build();
 
         $shipmentTransfer = (new ShipmentBuilder())
-            ->withAnotherShippingAddress($addressBuilder)
-            ->withAnotherMethod()
+            ->withMethod()
             ->build();
+        $shipmentTransfer->setShippingAddress($addressTransfer);
 
         $expenseTransfer = (new ExpenseBuilder([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
         ]))->build();
-
-        $quoteTransfer = (new QuoteBuilder())
-            ->withAnotherShippingAddress($addressBuilder)
-            ->withAnotherBillingAddress()
-            ->withAnotherItem($itemBuilder)
-            ->withTotals()
-            ->withCustomer()
-            ->withCurrency()
-            ->build();
-
         $expenseTransfer->setShipment($shipmentTransfer);
+
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer->setShippingAddress($addressTransfer);
         $quoteTransfer->setShipment($shipmentTransfer);
         $quoteTransfer->addExpense($expenseTransfer);
 
@@ -191,36 +155,20 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
      */
     protected function getDataWithQuoteLevelShippingAddressAndShipmentToMoon(): array
     {
-        $skuProductAbstract = 'mars_0';
-        $addressBuilder = (new AddressBuilder(['iso2Code' => 'MARS']));
-        $itemBuilder = (new ItemBuilder([
-            'sku' => $skuProductAbstract,
-        ]));
+        $addressTransfer = (new AddressBuilder([AddressTransfer::ISO2_CODE => 'MARS']))->build();
 
         $shipmentTransfer = (new ShipmentBuilder())
-            ->withAnotherShippingAddress($addressBuilder)
-            ->withAnotherMethod(
-                new ShipmentMethodBuilder([
-                    'idShipmentMethod' => -999999,
-                    'taxRate' => 0,
-                ])
-            )
+            ->withMethod()
             ->build();
+        $shipmentTransfer->setShippingAddress($addressTransfer);
 
         $expenseTransfer = (new ExpenseBuilder([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
         ]))->build();
-
-        $quoteTransfer = (new QuoteBuilder())
-            ->withAnotherShippingAddress($addressBuilder)
-            ->withAnotherBillingAddress()
-            ->withAnotherItem($itemBuilder)
-            ->withTotals()
-            ->withCustomer()
-            ->withCurrency()
-            ->build();
-
         $expenseTransfer->setShipment($shipmentTransfer);
+
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer->setShippingAddress($addressTransfer);
         $quoteTransfer->setShipment($shipmentTransfer);
         $quoteTransfer->addExpense($expenseTransfer);
 

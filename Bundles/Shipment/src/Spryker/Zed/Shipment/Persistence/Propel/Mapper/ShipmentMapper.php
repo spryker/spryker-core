@@ -139,7 +139,7 @@ class ShipmentMapper implements ShipmentMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer,
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $salesShipmentMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer

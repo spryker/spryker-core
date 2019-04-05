@@ -27,16 +27,18 @@ interface ShipmentRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array|\Generated\Shared\Transfer\ShipmentTransfer[]
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer[]
      */
     public function findShipmentTransfersByOrder(OrderTransfer $orderTransfer): array;
 
     /**
-     * @param array|\Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
      *
-     * @return array|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function findShipmentMethodTransfersByShipment(array $shipmentTransfers): array;
 }
