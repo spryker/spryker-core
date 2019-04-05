@@ -47,11 +47,11 @@ class ShoppingListSubtotalCalculatorTest extends Unit
     {
         // Arrange
         $shoppingListItemProductViews = [
-            (new ProductViewTransfer())->setAvailable(true)
+            (new ProductViewTransfer())
                 ->setCurrentProductPrice(
                     $this->createCurrentProductPriceTransferWithSumPrice(1)
                 ),
-            (new ProductViewTransfer())->setAvailable(true)
+            (new ProductViewTransfer())
                 ->setCurrentProductPrice(
                     $this->createCurrentProductPriceTransferWithSumPrice(2)
                 ),
@@ -69,37 +69,11 @@ class ShoppingListSubtotalCalculatorTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateShoppingListSubtotalShouldSkipUnavailableItems(): void
-    {
-        // Arrange
-        $shoppingListItemProductViews = [
-            (new ProductViewTransfer())->setAvailable(true)
-                ->setCurrentProductPrice(
-                    $this->createCurrentProductPriceTransferWithSumPrice(1)
-                ),
-            (new ProductViewTransfer())->setAvailable(false)
-                ->setCurrentProductPrice(
-                    $this->createCurrentProductPriceTransferWithSumPrice(2)
-                ),
-        ];
-
-        $expectedShoppingListSubtotal = 1;
-
-        // Act
-        $calculatedShoppingListSubtotal = $this->shoppingListSubtotalCalculator->calculateShoppingListSubtotal($shoppingListItemProductViews);
-
-        // Assert
-        $this->assertSame($calculatedShoppingListSubtotal, $expectedShoppingListSubtotal);
-    }
-
-    /**
-     * @return void
-     */
     public function testCalculateShoppingListSubtotalShouldThrowExceptionIfCurrentPriceProductIsNotDefined(): void
     {
         // Arrange
         $shoppingListItemProductViews = [
-            (new ProductViewTransfer())->setAvailable(false),
+            new ProductViewTransfer(),
         ];
 
         // Assert
