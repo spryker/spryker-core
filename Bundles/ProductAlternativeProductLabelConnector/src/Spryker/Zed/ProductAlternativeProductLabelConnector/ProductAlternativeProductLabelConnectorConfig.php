@@ -16,7 +16,7 @@ class ProductAlternativeProductLabelConnectorConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Label unique key.
+     * - Returns product alternatives label.
      *
      * @api
      *
@@ -29,7 +29,7 @@ class ProductAlternativeProductLabelConnectorConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Label type.
+     * - Returns frontend reference of product alternatives label.
      *
      * @api
      *

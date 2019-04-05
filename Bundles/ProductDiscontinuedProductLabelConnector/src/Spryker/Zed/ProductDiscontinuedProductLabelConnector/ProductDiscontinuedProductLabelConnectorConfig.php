@@ -16,7 +16,7 @@ class ProductDiscontinuedProductLabelConnectorConfig extends AbstractBundleConfi
 
     /**
      * Specification:
-     * - Label unique key.
+     * - Returns product discountinue label name.
      *
      * @api
      *
@@ -29,7 +29,7 @@ class ProductDiscontinuedProductLabelConnectorConfig extends AbstractBundleConfi
 
     /**
      * Specification:
-     * - Label type.
+     * - Returns frontend reference of product discountinue label.
      *
      * @api
      *
