@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ResourceShare\Persistence;
 
 use Generated\Shared\Transfer\ResourceShareTransfer;
-use Orm\Zed\ResourceShare\Persistence\SpyResourceShare;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -23,11 +22,13 @@ class ResourceShareEntityManager extends AbstractEntityManager implements Resour
      */
     public function createResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer
     {
-        $resourceShareEntity = new SpyResourceShare();
-        $resourceShareEntity->fromArray($resourceShareTransfer->toArray());
-        $resourceShareEntity->save();
+        $resourceShareEntity = $this->getFactory()
+            ->createResourceShareMapper()
+            ->mapResourceShareTransferToResourceShareEntity($resourceShareTransfer);
 
-        return (new ResourceShareTransfer())
-            ->fromArray($resourceShareEntity->toArray(), true);
+        $resourceShareTransfer->setIdResourceShare($resourceShareEntity->getIdResourceShare())
+            ->setUuid($resourceShareEntity->getUuid());
+
+        return $resourceShareTransfer;
     }
 }

@@ -75,10 +75,9 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         $resourceShareResponseTransfer = (new ResourceShareResponseTransfer())
             ->setIsLoginRequired(false);
 
+        $isCustomerLoggedIn = $this->isCustomerLoggedIn($resourceShareRequestTransfer);
         foreach ($this->resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
-            if ($resourceShareActivatorStrategyPlugin->isLoginRequired()
-                && !$this->isCustomerLoggedIn($resourceShareRequestTransfer)
-            ) {
+            if (!$isCustomerLoggedIn && $resourceShareActivatorStrategyPlugin->isLoginRequired()) {
                 return $resourceShareResponseTransfer->setIsSuccessful(false)
                     ->setIsLoginRequired(true)
                     ->addErrorMessage(

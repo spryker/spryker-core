@@ -49,12 +49,12 @@ class ResourceShareWriter implements ResourceShareWriterInterface
      */
     public function generateResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareResponseTransfer = $this->preValidateResourceShareTransfer($resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->validateResourceShareTransfer($resourceShareTransfer);
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return $resourceShareResponseTransfer;
         }
 
-        $existingResourceShareTransfer = $this->resourceShareRepository->findExistingResourceShareForProvidedCustomer($resourceShareTransfer);
+        $existingResourceShareTransfer = $this->resourceShareRepository->findResourceShare($resourceShareTransfer);
         if ($existingResourceShareTransfer) {
             return $resourceShareResponseTransfer->setIsSuccessful(false)
                 ->addErrorMessage(
@@ -73,7 +73,7 @@ class ResourceShareWriter implements ResourceShareWriterInterface
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    protected function preValidateResourceShareTransfer(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
+    protected function validateResourceShareTransfer(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
         $resourceShareResponseTransfer = (new ResourceShareResponseTransfer())
             ->setIsSuccessful(false);

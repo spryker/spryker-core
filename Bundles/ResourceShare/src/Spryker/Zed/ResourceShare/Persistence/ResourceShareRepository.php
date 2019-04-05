@@ -31,7 +31,9 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
             return null;
         }
 
-        return (new ResourceShareTransfer())->fromArray($resourceShareEntity->toArray(), true);
+        return $this->getFactory()
+            ->createResourceShareMapper()
+            ->mapResourceShareEntityToResourceShareTransfer($resourceShareEntity);
     }
 
     /**
@@ -39,7 +41,7 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
      *
      * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
      */
-    public function findExistingResourceShareForProvidedCustomer(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer
+    public function findResourceShare(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer
     {
         $resourceShareEntity = $this->getFactory()
             ->createResourceSharePropelQuery()
@@ -52,6 +54,8 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
             return null;
         }
 
-        return (new ResourceShareTransfer())->fromArray($resourceShareEntity->toArray(), true);
+        return $this->getFactory()
+            ->createResourceShareMapper()
+            ->mapResourceShareEntityToResourceShareTransfer($resourceShareEntity);
     }
 }

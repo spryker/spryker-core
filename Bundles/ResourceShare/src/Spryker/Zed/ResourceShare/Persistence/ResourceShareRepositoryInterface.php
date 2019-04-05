@@ -23,5 +23,5 @@ interface ResourceShareRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
      */
-    public function findExistingResourceShareForProvidedCustomer(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer;
+    public function findResourceShare(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer;
 }

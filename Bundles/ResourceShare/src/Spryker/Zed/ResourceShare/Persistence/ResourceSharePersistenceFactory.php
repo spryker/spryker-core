@@ -9,6 +9,7 @@ namespace Spryker\Zed\ResourceShare\Persistence;
 
 use Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ResourceShare\Persistence\Propel\Mapper\ResourceShareMapper;
 
 /**
  * @method \Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface getEntityManager()
@@ -23,5 +24,13 @@ class ResourceSharePersistenceFactory extends AbstractPersistenceFactory
     public function createResourceSharePropelQuery(): SpyResourceShareQuery
     {
         return SpyResourceShareQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ResourceShare\Persistence\Propel\Mapper\ResourceShareMapper
+     */
+    public function createResourceShareMapper(): ResourceShareMapper
+    {
+        return new ResourceShareMapper();
     }
 }
