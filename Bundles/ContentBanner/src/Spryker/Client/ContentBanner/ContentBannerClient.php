@@ -56,9 +56,6 @@ class ContentBannerClient extends AbstractClient implements ContentBannerClientI
             return null;
         }
 
-        return $this->getFactory()
-            ->createContentBannerTermResolver()
-            ->resolve($bannerContentTypeContext->getTerm())
-            ->execute($bannerContentTypeContext);
+        return $this->getFactory()->createContentBannerTypeMapper()->execute($bannerContentTypeContext);
     }
 }

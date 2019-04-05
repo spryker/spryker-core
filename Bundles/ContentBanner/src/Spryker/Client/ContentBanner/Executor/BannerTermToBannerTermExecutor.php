@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Spryker\Shared\ContentBanner\ContentBannerConfig;
 
-class BannerTermToBannerTypeExecutor implements BannerTypeExecutorInterface
+class BannerTermToBannerTermExecutor implements BannerTermExecutorInterface
 {
     /**
      * @return string

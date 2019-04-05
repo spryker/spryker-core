@@ -10,7 +10,7 @@ namespace Spryker\Client\ContentBanner\Executor;
 use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
 
-interface BannerTypeExecutorInterface
+interface BannerTermExecutorInterface
 {
     /**
      * @return string
