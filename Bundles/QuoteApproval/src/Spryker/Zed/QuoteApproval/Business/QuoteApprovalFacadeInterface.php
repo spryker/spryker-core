@@ -107,4 +107,16 @@ interface QuoteApprovalFacadeInterface
      * @return void
      */
     public function removeApprovalsByIdQuote(int $idQuote): void;
+
+    /**
+     * Specification:
+     * - Removes quote approval in quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function clearQuoteApprovalFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

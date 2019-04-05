@@ -267,4 +267,20 @@ interface PersistentCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Load quote by id.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Check changes and add notes to messenger (-> Messenger)
+     *  - Returns with unchanged QuoteTransfer and `isSuccessful=true` when cart is locked.
+     *  - Saves quote in database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

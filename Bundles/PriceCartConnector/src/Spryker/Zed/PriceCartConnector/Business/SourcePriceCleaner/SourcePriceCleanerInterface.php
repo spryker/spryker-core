@@ -5,23 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Cart\Dependency\Facade;
+namespace Spryker\Zed\PriceCartConnector\Business\SourcePriceCleaner;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CartToQuoteFacadeInterface
+interface SourcePriceCleanerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function clearSourcePricesFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 use DateTime;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
@@ -61,6 +62,20 @@ class QuoteRequestCleaner implements QuoteRequestCleanerInterface
 
         $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_CLOSED);
         $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function clearQuoteRequestFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $quoteTransfer
+            ->setQuoteRequestVersionReference(null)
+            ->setQuoteRequestReference(null);
+
+        return $quoteTransfer;
     }
 
     /**

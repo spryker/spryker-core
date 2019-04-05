@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceCartConnector\Business\Filter\ItemFilterInterface;
 use Spryker\Zed\PriceCartConnector\Business\Filter\ItemsWithoutPriceFilter;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
+use Spryker\Zed\PriceCartConnector\Business\SourcePriceCleaner\SourcePriceCleaner;
+use Spryker\Zed\PriceCartConnector\Business\SourcePriceCleaner\SourcePriceCleanerInterface;
 use Spryker\Zed\PriceCartConnector\Business\Validator\PriceProductValidator;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerInterface;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorDependencyProvider;
@@ -53,6 +55,14 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductFacade(),
             $this->getMessengerFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Business\SourcePriceCleaner\SourcePriceCleanerInterface
+     */
+    public function createSourcePriceCleaner(): SourcePriceCleanerInterface
+    {
+        return new SourcePriceCleaner();
     }
 
     /**

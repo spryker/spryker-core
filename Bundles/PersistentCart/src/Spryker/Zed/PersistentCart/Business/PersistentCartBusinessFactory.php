@@ -16,6 +16,8 @@ use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleterInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperation;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationInterface;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteLocker;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteLockerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteMerger;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteResolver;
@@ -143,6 +145,19 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteMerger(
             $this->getCartAddItemStrategyPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteLockerInterface
+     */
+    public function createQuoteLocker(): QuoteLockerInterface
+    {
+        return new QuoteLocker(
+            $this->getCartFacade(),
+            $this->createQuoteResolver(),
+            $this->getQuoteFacade(),
+            $this->createQuoteResponseExpander()
         );
     }
 

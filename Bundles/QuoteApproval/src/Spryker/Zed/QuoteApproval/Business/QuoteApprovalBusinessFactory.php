@@ -14,6 +14,8 @@ use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLocker;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculator;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCleaner;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCleanerInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreator;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreatorInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilder;
@@ -118,6 +120,14 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->getSharedCartFacade(),
             $this->getEntityManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCleanerInterface
+     */
+    public function createQuoteApprovalCleaner(): QuoteApprovalCleanerInterface
+    {
+        return new QuoteApprovalCleaner();
     }
 
     /**

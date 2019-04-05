@@ -5,23 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Cart\Dependency\Facade;
+namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CartToQuoteFacadeInterface
+interface QuoteApprovalCleanerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function clearQuoteApprovalFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

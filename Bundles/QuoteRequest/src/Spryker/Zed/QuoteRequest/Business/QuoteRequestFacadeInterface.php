@@ -246,4 +246,16 @@ interface QuoteRequestFacadeInterface
      * @return void
      */
     public function closeOutdatedQuoteRequests(): void;
+
+    /**
+     * Specification:
+     * - Removes request for quote in quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function clearQuoteRequestFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

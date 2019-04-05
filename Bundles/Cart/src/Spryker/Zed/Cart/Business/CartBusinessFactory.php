@@ -12,6 +12,8 @@ use Spryker\Zed\Cart\Business\Model\QuoteChangeObserver;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface;
 use Spryker\Zed\Cart\Business\Model\QuoteCleaner;
 use Spryker\Zed\Cart\Business\Model\QuoteCleanerInterface;
+use Spryker\Zed\Cart\Business\Model\QuoteLocker;
+use Spryker\Zed\Cart\Business\Model\QuoteLockerInterface;
 use Spryker\Zed\Cart\Business\Model\QuoteValidator;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
@@ -67,6 +69,18 @@ class CartBusinessFactory extends AbstractBusinessFactory
     public function createQuoteCleaner(): QuoteCleanerInterface
     {
         return new QuoteCleaner();
+    }
+
+    /**
+     * @return \Spryker\Zed\Cart\Business\Model\QuoteLockerInterface
+     */
+    public function createQuoteLocker(): QuoteLockerInterface
+    {
+        return new QuoteLocker(
+            $this->getQuoteFacade(),
+            $this->createCartOperation(),
+            $this->getQuoteBeforeUnlockPlugins()
+        );
     }
 
     /**
@@ -198,5 +212,13 @@ class CartBusinessFactory extends AbstractBusinessFactory
     public function getPostReloadItemsPlugins(): array
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_POST_RELOAD_ITEMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteBeforeUnlockPluginInterface[]
+     */
+    public function getQuoteBeforeUnlockPlugins(): array
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_QUOTE_BEFORE_UNLOCK);
     }
 }

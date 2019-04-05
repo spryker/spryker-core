@@ -5,23 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Cart\Dependency\Facade;
+namespace Spryker\Zed\CartExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CartToQuoteFacadeInterface
+interface QuoteBeforeUnlockPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * Specification:
+     * - Plugins which can be called before quote unlock.
      *
-     * @return bool
-     */
-    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
-
-    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }
