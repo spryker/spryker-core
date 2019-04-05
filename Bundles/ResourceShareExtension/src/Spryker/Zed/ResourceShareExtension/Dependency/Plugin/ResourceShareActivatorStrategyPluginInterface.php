@@ -25,7 +25,7 @@ interface ResourceShareActivatorStrategyPluginInterface
 
     /**
      * Specification:
-     * - Determines if plugin expects customer to be logged in.
+     * - Determines if strategy plugin requires the customer to be logged in.
      *
      * @api
      *
