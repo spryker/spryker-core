@@ -226,8 +226,8 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
             $priceGroups[$idProductAbstract][$storeName][] = $priceProductTransfer;
         }
 
-        foreach ($productAbstractIds as $idProductAbstract) {
-            $priceGroupsCollection[$idProductAbstract] = $this->getProductAbstractPriceStoreGroups($priceGroups[$idProductAbstract], $idProductAbstract);
+        foreach ($priceGroups as $idProductAbstract => $priceGroupByStore) {
+            $priceGroupsCollection[$idProductAbstract] = $this->getProductAbstractPriceStoreGroups($priceGroupByStore, $idProductAbstract);
         }
 
         return $priceGroupsCollection;
