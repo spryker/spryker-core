@@ -1,0 +1,14 @@
+parameters:
+  exclude_paths:
+    - '/Plugin/Router/'
+    - '/Controller/'
+    - '/ShopApplication/'
+    - '/Dependency/'
+    - '/Form/'
+    - '/Security/'
+    - '/Validator/'
+    - '/Widget/'
+
+services:
+  Spryker\Router\Migrate\Yves\Migrator\ControllerProviderToRouteProviderRector: ~
+  Spryker\Router\Migrate\Yves\Migrator\ControllerProviderToRouteProviderPluginFileRector: ~
