@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\TaxStorage\Business;
 
-/**
- * These methods should call respective methods in the publisher business model
- */
 interface TaxStorageFacadeInterface
 {
     /**

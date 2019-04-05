@@ -23,9 +23,9 @@ class TaxStorageToStorageClientBridge implements TaxStorageToStorageClientInterf
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $key
      *
-     * @api
+     * @return mixed
      */
     public function get($key)
     {
