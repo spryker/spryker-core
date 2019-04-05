@@ -7,13 +7,12 @@
 
 namespace SprykerTest\Client\ProductBundle\Plugin\Cart;
 
-use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CartChangeBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ProductBundle\Plugin\Cart\RemoveBundleChangeRequestExpanderPlugin;
-use Spryker\Client\ProductBundle\QuoteChangeRequestExpander\QuoteChangeRequestExpander;
 
 /**
  * Auto-generated group annotations
@@ -21,6 +20,7 @@ use Spryker\Client\ProductBundle\QuoteChangeRequestExpander\QuoteChangeRequestEx
  * @group Client
  * @group ProductBundle
  * @group Plugin
+ * @group Cart
  * @group RemoveBundleChangeRequestExpanderPluginTest
  * Add your own group annotations below this line
  */
@@ -35,45 +35,21 @@ class RemoveBundleChangeRequestExpanderPluginTest extends Unit
     /**
      * @dataProvider expandRequestWithOneItemByAddTwoBundledProductsDataProvider
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param int $expectedResult
      *
      * @return void
      */
-    public function testExpandRequestWithOneItemByAddBundleWithTwoItems($cartChangeTransfer): void
-    {
+    public function testExpandRequestWithOneItemByAddBundleWithTwoItemsShouldReturnItemAndAllBundleItems(
+        CartChangeTransfer $cartChangeTransfer,
+        int $expectedResult
+    ): void {
         //Act
         $removeBundleChangeRequestExpanderPlugin = $this->createRemoveBundleChangeRequestExpanderPlugin();
         $expendedChangeTransfer = $removeBundleChangeRequestExpanderPlugin->expand($cartChangeTransfer);
 
         //Assert
-        $this->assertCount(3, $expendedChangeTransfer->getItems());
-    }
-
-    /**
-     * @dataProvider expandRequestWithNoItemsByAddBundleWithTwoItemsDataProvider
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $cartChangeTransfer
-     *
-     * @return void
-     */
-    public function testExpandRequestWithNoItemsByAddBundleWithTwoItems($cartChangeTransfer): void
-    {
-        //Act
-        $removeBundleChangeRequestExpanderPlugin = $this->createRemoveBundleChangeRequestExpanderPlugin();
-        $expendedChangeTransfer = $removeBundleChangeRequestExpanderPlugin->expand($cartChangeTransfer);
-
-        //Assert
-        $this->assertCount(2, $expendedChangeTransfer->getItems());
-    }
-
-    /**
-     * @return array
-     */
-    public function expandInternalsDataProvider(): array
-    {
-        return [
-            'int-product-quantity' => $this->getDataForExpandInternalsDataProvider(),
-        ];
+        $this->assertCount($expectedResult, $expendedChangeTransfer->getItems());
     }
 
     /**
@@ -82,73 +58,80 @@ class RemoveBundleChangeRequestExpanderPluginTest extends Unit
     public function expandRequestWithOneItemByAddTwoBundledProductsDataProvider(): array
     {
         return [
-            'int-product-quantity' => $this->getDataForExpandRequestWithOneItemByAddTwoBundledProductsDataProvider(),
+            'int stock' => $this->getDataForExpandRequestWithOneItemByAddTwoBundledProductsDataProvider(2, 5, 3),
+            'float stock' => $this->getDataForExpandRequestWithOneItemByAddTwoBundledProductsDataProvider(0.02, 0.05, 3),
         ];
     }
 
     /**
+     * @param int|float $itemQty
+     * @param int|float $bundleItemQty
+     * @param int $expectedResult
+     *
      * @return array
      */
-    protected function getDataForExpandRequestWithOneItemByAddTwoBundledProductsDataProvider(): array
+    protected function getDataForExpandRequestWithOneItemByAddTwoBundledProductsDataProvider($itemQty, $bundleItemQty, int $expectedResult): array
     {
         $bundleGroupKey = 'group-1';
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem([
+                ItemTransfer::SKU => '666_666',
+                ItemTransfer::QUANTITY => $itemQty,
+            ])
+            ->withItem([
+                ItemTransfer::SKU => '111_111',
+                ItemTransfer::RELATED_BUNDLE_ITEM_IDENTIFIER => 'bundle-1-item-1',
+                ItemTransfer::QUANTITY => $bundleItemQty,
+            ])
+            ->withItem([
+                ItemTransfer::SKU => '222_222',
+                ItemTransfer::RELATED_BUNDLE_ITEM_IDENTIFIER => 'bundle-1-item-2',
+                ItemTransfer::QUANTITY => $bundleItemQty,
+            ])
+            ->withBundleItem([
+                ItemTransfer::SKU => '111_111',
+                ItemTransfer::BUNDLE_ITEM_IDENTIFIER => 'bundle-1-item-1',
+                ItemTransfer::GROUP_KEY => $bundleGroupKey,
+                ItemTransfer::QUANTITY => $bundleItemQty,
+            ])
+            ->withBundleItem([
+                ItemTransfer::SKU => '222_222',
+                ItemTransfer::BUNDLE_ITEM_IDENTIFIER => 'bundle-1-item-2',
+                ItemTransfer::GROUP_KEY => $bundleGroupKey,
+                ItemTransfer::QUANTITY => $bundleItemQty,
+            ])
+            ->build();
 
-        $bundleTransfer1 = (new ItemTransfer())
-            ->setGroupKey($bundleGroupKey)
-            ->setQuantity(2);
-
-        $bundleItemTransfer1 = (new ItemTransfer())
-            ->setSku('111_111')
-            ->setBundleItemIdentifier('bundle-1-item-1')
-            ->setGroupKey($bundleGroupKey)
-            ->setQuantity(2);
-
-        $bundleItemTransfer2 = (new ItemTransfer())
-            ->setSku('222_222')
-            ->setBundleItemIdentifier('bundle-1-item-2')
-            ->setGroupKey($bundleGroupKey)
-            ->setQuantity(5);
-
-        $bundledItems = new ArrayObject([
-            $bundleItemTransfer1,
-            $bundleItemTransfer2,
-        ]);
-
-        $itemTransfer1 = (new ItemTransfer())
-            ->setSku('111_111')
-            ->setRelatedBundleItemIdentifier('bundle-1-item-1')
-            ->setQuantity(2);
-
-        $itemTransfer2 = (new ItemTransfer())
-            ->setSku('222_222')
-            ->setRelatedBundleItemIdentifier('bundle-1-item-2')
-            ->setQuantity(5);
-
-        $itemTransfer3 = new ItemTransfer();
-        $itemTransfer3
-            ->setSku('666_666')
-            ->setQuantity(6);
-
-        $items = new ArrayObject([
-            $itemTransfer1,
-            $itemTransfer2,
-            $itemTransfer3,
-        ]);
-
-        $changeItems = new ArrayObject([
-            $bundleTransfer1,
-            $itemTransfer3,
-        ]);
-
-        $quoteTransfer = $this->tester->haveQuote();
-        $quoteTransfer->setBundleItems($bundledItems);
-        $quoteTransfer->setItems($items);
-
-        $cartChangeTransfer = $this->tester->haveCartChangeTransfer();
+        $cartChangeTransfer = (new CartChangeBuilder())
+            ->withItem([
+                ItemTransfer::GROUP_KEY => $bundleGroupKey,
+                ItemTransfer::QUANTITY => $bundleItemQty,
+            ])
+            ->build();
+        $cartChangeTransfer->addItem($quoteTransfer->getItems()[2]);
         $cartChangeTransfer->setQuote($quoteTransfer);
-        $cartChangeTransfer->setItems($changeItems);
 
-        return [$cartChangeTransfer];
+        return [$cartChangeTransfer, $expectedResult];
+    }
+
+    /**
+     * @dataProvider expandRequestWithNoItemsByAddBundleWithTwoItemsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param int $expectedResult
+     *
+     * @return void
+     */
+    public function testExpandRequestWithNoItemsByAddBundleWithTwoItems(
+        CartChangeTransfer $cartChangeTransfer,
+        int $expectedResult
+    ): void {
+        //Act
+        $removeBundleChangeRequestExpanderPlugin = $this->createRemoveBundleChangeRequestExpanderPlugin();
+        $expendedChangeTransfer = $removeBundleChangeRequestExpanderPlugin->expand($cartChangeTransfer);
+
+        //Assert
+        $this->assertCount($expectedResult, $expendedChangeTransfer->getItems());
     }
 
     /**
@@ -157,66 +140,55 @@ class RemoveBundleChangeRequestExpanderPluginTest extends Unit
     public function expandRequestWithNoItemsByAddBundleWithTwoItemsDataProvider(): array
     {
         return [
-            'int-product-quantity' => $this->getDataForExpandRequestWithNoItemsByAddBundleWithTwoItemsDataProvider(),
+            'int stock' => $this->getDataForExpandRequestWithNoItemsByAddBundleWithTwoItemsDataProvider(3, 2),
+            'float stock' => $this->getDataForExpandRequestWithNoItemsByAddBundleWithTwoItemsDataProvider(0.03, 2),
         ];
     }
 
     /**
+     * @param int|float $bundleItemQty
+     * @param int $expectedResult
+     *
      * @return array
      */
-    protected function getDataForExpandRequestWithNoItemsByAddBundleWithTwoItemsDataProvider(): array
+    protected function getDataForExpandRequestWithNoItemsByAddBundleWithTwoItemsDataProvider($bundleItemQty, int $expectedResult): array
     {
         $bundleGroupKey = 'group-1';
 
-        $bundleTransfer1 = (new ItemTransfer())
-            ->setGroupKey($bundleGroupKey)
-            ->setQuantity(2);
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem([
+                ItemTransfer::SKU => '111_111',
+                ItemTransfer::RELATED_BUNDLE_ITEM_IDENTIFIER => 'bundle-1-item-1',
+                ItemTransfer::QUANTITY => $bundleItemQty,
+            ])
+            ->withItem([
+                ItemTransfer::SKU => '222_222',
+                ItemTransfer::RELATED_BUNDLE_ITEM_IDENTIFIER => 'bundle-1-item-2',
+                ItemTransfer::QUANTITY => $bundleItemQty,
+            ])
+            ->withBundleItem([
+                ItemTransfer::SKU => '111_111',
+                ItemTransfer::BUNDLE_ITEM_IDENTIFIER => 'bundle-1-item-1',
+                ItemTransfer::GROUP_KEY => $bundleGroupKey,
+                ItemTransfer::QUANTITY => $bundleItemQty,
+            ])
+            ->withBundleItem([
+                ItemTransfer::SKU => '222_222',
+                ItemTransfer::BUNDLE_ITEM_IDENTIFIER => 'bundle-1-item-2',
+                ItemTransfer::GROUP_KEY => $bundleGroupKey,
+                ItemTransfer::QUANTITY => $bundleItemQty,
+            ])
+            ->build();
 
-        $bundleItemTransfer1 = (new ItemTransfer())
-            ->setSku('111_111')
-            ->setBundleItemIdentifier('bundle-1-item-1')
-            ->setGroupKey($bundleGroupKey)
-            ->setQuantity(2);
-
-        $bundleItemTransfer2 = (new ItemTransfer())
-            ->setSku('222_222')
-            ->setBundleItemIdentifier('bundle-1-item-2')
-            ->setGroupKey($bundleGroupKey)
-            ->setQuantity(5);
-
-        $bundledItems = new ArrayObject([
-            $bundleItemTransfer1,
-            $bundleItemTransfer2,
-        ]);
-
-        $itemTransfer1 = (new ItemTransfer())
-            ->setSku('111_111')
-            ->setRelatedBundleItemIdentifier('bundle-1-item-1')
-            ->setQuantity(2);
-
-        $itemTransfer2 = (new ItemTransfer())
-            ->setSku('222_222')
-            ->setRelatedBundleItemIdentifier('bundle-1-item-2')
-            ->setQuantity(5);
-
-        $items = new ArrayObject([
-            $itemTransfer1,
-            $itemTransfer2,
-        ]);
-
-        $changeItems = new ArrayObject([
-            $bundleTransfer1,
-        ]);
-
-        $quoteTransfer = $this->tester->haveQuote();
-        $quoteTransfer->setBundleItems($bundledItems);
-        $quoteTransfer->setItems($items);
-
-        $cartChangeTransfer = $this->tester->haveCartChangeTransfer();
+        $cartChangeTransfer = (new CartChangeBuilder())
+            ->withItem([
+                ItemTransfer::GROUP_KEY => $bundleGroupKey,
+                ItemTransfer::QUANTITY => $bundleItemQty,
+            ])
+            ->build();
         $cartChangeTransfer->setQuote($quoteTransfer);
-        $cartChangeTransfer->setItems($changeItems);
 
-        return [$cartChangeTransfer];
+        return [$cartChangeTransfer, $expectedResult];
     }
 
     /**
