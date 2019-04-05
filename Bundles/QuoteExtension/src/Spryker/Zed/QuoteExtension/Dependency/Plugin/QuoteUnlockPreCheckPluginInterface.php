@@ -21,5 +21,5 @@ interface QuoteUnlockPreCheckPluginInterface
      *
      * @return bool
      */
-    public function can(QuoteTransfer $quoteTransfer): bool;
+    public function check(QuoteTransfer $quoteTransfer): bool;
 }

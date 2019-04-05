@@ -56,7 +56,7 @@ class QuoteLocker implements QuoteLockerInterface
     protected function canUnlockQuote(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($this->quoteUnlockPreCheckPlugins as $quoteUnlockPreCheckPlugin) {
-            if (!$quoteUnlockPreCheckPlugin->can($quoteTransfer)) {
+            if (!$quoteUnlockPreCheckPlugin->check($quoteTransfer)) {
                 return false;
             }
         }

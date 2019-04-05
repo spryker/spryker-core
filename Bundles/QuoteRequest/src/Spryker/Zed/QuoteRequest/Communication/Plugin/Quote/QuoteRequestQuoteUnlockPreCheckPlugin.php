@@ -16,11 +16,11 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteUnlockPreCheckPluginInterf
  * @method \Spryker\Zed\QuoteRequest\Business\QuoteRequestFacadeInterface getFacade()
  * @method \Spryker\Zed\QuoteRequest\Communication\QuoteRequestCommunicationFactory getFactory()
  */
-class QuoteUnlockPreCheckPlugin extends AbstractPlugin implements QuoteUnlockPreCheckPluginInterface
+class QuoteRequestQuoteUnlockPreCheckPlugin extends AbstractPlugin implements QuoteUnlockPreCheckPluginInterface
 {
     /**
      * {@inheritdoc}
-     * Returns false if quote in 'request for quote' process.
+     * - Returns false if quote in 'request for quote' process.
      *
      * @api
      *
@@ -28,7 +28,7 @@ class QuoteUnlockPreCheckPlugin extends AbstractPlugin implements QuoteUnlockPre
      *
      * @return bool
      */
-    public function can(QuoteTransfer $quoteTransfer): bool
+    public function check(QuoteTransfer $quoteTransfer): bool
     {
         return !$quoteTransfer->getQuoteRequestVersionReference();
     }
