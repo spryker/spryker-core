@@ -17,5 +17,5 @@ interface ContentProductAbstractListTypeMapperInterface
      *
      * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer
      */
-    public function map(ContentTypeContextTransfer $contentTypeContextTransfer): ContentProductAbstractListTypeTransfer;
+    public function execute(ContentTypeContextTransfer $contentTypeContextTransfer): ContentProductAbstractListTypeTransfer;
 }
