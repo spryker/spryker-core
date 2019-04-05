@@ -32,7 +32,7 @@ class ProductTaxSetRelationshipByProductAbstractSkuPlugin extends AbstractPlugin
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createProductTaxSetsRelationshipExpander()
+            ->createProductTaxSetRelationshipExpander()
             ->addResourceRelationshipsByResourceId($resources, $restRequest);
     }
 

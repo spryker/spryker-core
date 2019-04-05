@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RestProductTaxRateTransfer;
 use Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer;
 use Generated\Shared\Transfer\TaxSetStorageTransfer;
 
-class ProductTaxSetsResourceMapper implements ProductTaxSetsResourceMapperInterface
+class ProductTaxSetResourceMapper implements ProductTaxSetResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\TaxSetStorageTransfer $taxSetStorageTransfer

@@ -8,19 +8,19 @@
 namespace Spryker\Glue\ProductTaxSetsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductTaxSetsRestApi\Processor\TaxSets\ProductTaxSetsReaderInterface;
+use Spryker\Glue\ProductTaxSetsRestApi\Processor\ProductTaxSet\ProductTaxSetReaderInterface;
 
-class ProductTaxSetsRelationshipExpander implements ProductTaxSetsRelationshipExpanderInterface
+class ProductTaxSetRelationshipExpander implements ProductTaxSetRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\ProductTaxSetsRestApi\Processor\TaxSets\ProductTaxSetsReaderInterface
+     * @var \Spryker\Glue\ProductTaxSetsRestApi\Processor\ProductTaxSet\ProductTaxSetReaderInterface
      */
     protected $productTaxSetsReader;
 
     /**
-     * @param \Spryker\Glue\ProductTaxSetsRestApi\Processor\TaxSets\ProductTaxSetsReaderInterface $productTaxSetsReader
+     * @param \Spryker\Glue\ProductTaxSetsRestApi\Processor\ProductTaxSet\ProductTaxSetReaderInterface $productTaxSetsReader
      */
-    public function __construct(ProductTaxSetsReaderInterface $productTaxSetsReader)
+    public function __construct(ProductTaxSetReaderInterface $productTaxSetsReader)
     {
         $this->productTaxSetsReader = $productTaxSetsReader;
     }
@@ -29,9 +29,9 @@ class ProductTaxSetsRelationshipExpander implements ProductTaxSetsRelationshipEx
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return void
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): void
+    public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
             $productTaxSetsResource = $this->productTaxSetsReader->findAbstractProductTaxSetsByAbstractProductSku(
@@ -42,5 +42,7 @@ class ProductTaxSetsRelationshipExpander implements ProductTaxSetsRelationshipEx
                 $resource->addRelationship($productTaxSetsResource);
             }
         }
+
+        return $resources;
     }
 }

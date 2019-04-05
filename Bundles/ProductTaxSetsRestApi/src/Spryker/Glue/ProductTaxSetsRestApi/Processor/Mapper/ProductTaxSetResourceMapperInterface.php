@@ -10,7 +10,7 @@ namespace Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer;
 use Generated\Shared\Transfer\TaxSetStorageTransfer;
 
-interface ProductTaxSetsResourceMapperInterface
+interface ProductTaxSetResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\TaxSetStorageTransfer $taxSetStorageTransfer

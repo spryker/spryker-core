@@ -10,42 +10,42 @@ namespace Spryker\Glue\ProductTaxSetsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxProductStorageClientInterface;
 use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxStorageClientInterface;
-use Spryker\Glue\ProductTaxSetsRestApi\Processor\Expander\ProductTaxSetsRelationshipExpander;
-use Spryker\Glue\ProductTaxSetsRestApi\Processor\Expander\ProductTaxSetsRelationshipExpanderInterface;
-use Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapper;
-use Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapperInterface;
-use Spryker\Glue\ProductTaxSetsRestApi\Processor\TaxSets\ProductTaxSetsReader;
-use Spryker\Glue\ProductTaxSetsRestApi\Processor\TaxSets\ProductTaxSetsReaderInterface;
+use Spryker\Glue\ProductTaxSetsRestApi\Processor\Expander\ProductTaxSetRelationshipExpander;
+use Spryker\Glue\ProductTaxSetsRestApi\Processor\Expander\ProductTaxSetRelationshipExpanderInterface;
+use Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetResourceMapper;
+use Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetResourceMapperInterface;
+use Spryker\Glue\ProductTaxSetsRestApi\Processor\ProductTaxSet\ProductTaxSetReader;
+use Spryker\Glue\ProductTaxSetsRestApi\Processor\ProductTaxSet\ProductTaxSetReaderInterface;
 
 class ProductTaxSetsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductTaxSetsRestApi\Processor\TaxSets\ProductTaxSetsReaderInterface
+     * @return \Spryker\Glue\ProductTaxSetsRestApi\Processor\ProductTaxSet\ProductTaxSetReaderInterface
      */
-    public function createTaxSetsReader(): ProductTaxSetsReaderInterface
+    public function createProductTaxSetReader(): ProductTaxSetReaderInterface
     {
-        return new ProductTaxSetsReader(
+        return new ProductTaxSetReader(
             $this->getTaxProductStorageClient(),
             $this->getTaxStorageClient(),
             $this->getResourceBuilder(),
-            $this->createTaxSetsResourceMapper()
+            $this->createProductTaxSetResourceMapper()
         );
     }
 
     /**
-     * @return \Spryker\Glue\ProductTaxSetsRestApi\Processor\Expander\ProductTaxSetsRelationshipExpanderInterface
+     * @return \Spryker\Glue\ProductTaxSetsRestApi\Processor\Expander\ProductTaxSetRelationshipExpanderInterface
      */
-    public function createProductTaxSetsRelationshipExpander(): ProductTaxSetsRelationshipExpanderInterface
+    public function createProductTaxSetRelationshipExpander(): ProductTaxSetRelationshipExpanderInterface
     {
-        return new ProductTaxSetsRelationshipExpander($this->createTaxSetsReader());
+        return new ProductTaxSetRelationshipExpander($this->createProductTaxSetReader());
     }
 
     /**
-     * @return \Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapperInterface
+     * @return \Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetResourceMapperInterface
      */
-    public function createTaxSetsResourceMapper(): ProductTaxSetsResourceMapperInterface
+    public function createProductTaxSetResourceMapper(): ProductTaxSetResourceMapperInterface
     {
-        return new ProductTaxSetsResourceMapper();
+        return new ProductTaxSetResourceMapper();
     }
 
     /**

@@ -9,13 +9,13 @@ namespace Spryker\Glue\ProductTaxSetsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface ProductTaxSetsRelationshipExpanderInterface
+interface ProductTaxSetRelationshipExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return void
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): void;
+    public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): array;
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductTaxSetsRestApi\Processor\TaxSets;
+namespace Spryker\Glue\ProductTaxSetsRestApi\Processor\ProductTaxSet;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer;
@@ -16,11 +16,11 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxProductStorageClientInterface;
 use Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxStorageClientInterface;
-use Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapperInterface;
+use Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetResourceMapperInterface;
 use Spryker\Glue\ProductTaxSetsRestApi\ProductTaxSetsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
+class ProductTaxSetReader implements ProductTaxSetReaderInterface
 {
     /**
      * @var \Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxProductStorageClientInterface
@@ -38,7 +38,7 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapperInterface
+     * @var \Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetResourceMapperInterface
      */
     protected $productTaxSetsResourceMapper;
 
@@ -46,13 +46,13 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
      * @param \Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxProductStorageClientInterface $taxProductStorageClient
      * @param \Spryker\Glue\ProductTaxSetsRestApi\Dependency\Client\ProductTaxSetsRestApiToTaxStorageClientInterface $taxStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetsResourceMapperInterface $productTaxSetsResourceMapper
+     * @param \Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper\ProductTaxSetResourceMapperInterface $productTaxSetsResourceMapper
      */
     public function __construct(
         ProductTaxSetsRestApiToTaxProductStorageClientInterface $taxProductStorageClient,
         ProductTaxSetsRestApiToTaxStorageClientInterface $taxStorageClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        ProductTaxSetsResourceMapperInterface $productTaxSetsResourceMapper
+        ProductTaxSetResourceMapperInterface $productTaxSetsResourceMapper
     ) {
         $this->taxProductStorageClient = $taxProductStorageClient;
         $this->taxStorageClient = $taxStorageClient;
@@ -93,12 +93,12 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
         RestRequestInterface $restRequest
     ): ?RestResourceInterface {
         $taxProductStorageTransfer = $this->taxProductStorageClient->findTaxProductStorage($abstractProductSku);
-        if ($taxProductStorageTransfer === null) {
+        if (!$taxProductStorageTransfer) {
             return null;
         }
 
         $taxStorageTransfer = $this->taxStorageClient->findTaxSetCollectionStorage($taxProductStorageTransfer->getIdTaxSet());
-        if ($taxStorageTransfer === null) {
+        if (!$taxStorageTransfer) {
             return null;
         }
 
