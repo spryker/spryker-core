@@ -10,8 +10,6 @@ namespace Spryker\Client\ContentProduct\Executor;
 use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
 use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
-use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException;
-use Spryker\Shared\ContentProduct\ContentProductConfig;
 
 class ProductAbstractListTermToProductAbstractListTypeExecutor implements ContentProductTermExecutorInterface
 {
@@ -35,19 +33,11 @@ class ProductAbstractListTermToProductAbstractListTypeExecutor implements Conten
     /**
      * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
      *
-     * @throws \Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException
-     *
      * @return \Generated\Shared\Transfer\ContentProductAbstractListTermTransfer
      */
     protected function mapContentTypeContextTransferToContentProductAbstractListTermTransfer(
         ContentTypeContextTransfer $contentTypeContextTransfer
     ): ContentProductAbstractListTermTransfer {
-        if ($contentTypeContextTransfer->getTerm() !== ContentProductConfig::CONTENT_TERM_PRODUCT_ABSTRACT_LIST) {
-            throw new InvalidProductAbstractListTypeException(
-                sprintf('There is no ContentProductAbstractList Term which can work with the term %s.', $contentTypeContextTransfer->getTerm())
-            );
-        }
-
         $contentProductAbstractListTermTransfer = new ContentProductAbstractListTermTransfer();
         $contentProductAbstractListTermTransfer->fromArray($contentTypeContextTransfer->getParameters());
 

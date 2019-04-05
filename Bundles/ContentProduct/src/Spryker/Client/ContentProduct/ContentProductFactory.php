@@ -8,6 +8,7 @@
 namespace Spryker\Client\ContentProduct;
 
 use Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface;
+use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException;
 use Spryker\Client\ContentProduct\Executor\ContentProductTermExecutorInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -19,10 +20,18 @@ class ContentProductFactory extends AbstractFactory
     /**
      * @param string $term
      *
+     * @throws \Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException
+     *
      * @return \Spryker\Client\ContentProduct\Executor\ContentProductTermExecutorInterface
      */
     public function createContentProductTermExecutorByTerm(string $term): ContentProductTermExecutorInterface
     {
+        if (!isset($this->getConfig()->getEnabledTermExecutors()[$term])) {
+            throw new InvalidProductAbstractListTypeException(
+                sprintf('There is no ContentProduct Term which can work with the term %s.', $term)
+            );
+        }
+
         $contentProductTermExecutor = $this->getConfig()->getEnabledTermExecutors()[$term];
 
         return new $contentProductTermExecutor();
