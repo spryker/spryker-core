@@ -4,8 +4,7 @@
 {% set priceModeNet = 'NET_MODE' %}
 {% set priceModeBoth = 'BOTH' %}
 
-{% set firstPrice = moneyValueFormViewCollection.vars.priceTable | first %}
-{% set firstPriceMode = firstPrice | first %}
+{% set priceModeCollection = moneyValueFormViewCollection.vars.priceTable | first | first %}
 
 <table id="price-table-collection" class="table table-bordered">
     <thead>
@@ -13,7 +12,7 @@
             <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-bottom: 1px solid #FFF; border-left:1px solid #FFF; border-right:1px solid #FFF;"></th>
             <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF;  border-bottom: 1px solid #FFF;border-left:1px solid #FFF;"></th>
 
-            {% for priceMode, priceTypes in firstPriceMode %}
+            {% for priceMode, priceTypes in priceModeCollection %}
                 {% set priceTypesLength = priceTypes|length %}
 
                 {% if priceTypesLength > 0 %}
@@ -33,7 +32,7 @@
             <td style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-left:1px solid #FFF; border-right:1px solid #FFF;"></td>
             <td style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-left:1px solid #FFF;;"></td>
 
-            {% for priceTypes in firstPriceMode %}
+            {% for priceTypes in priceModeCollection %}
                 {% for priceType in priceTypes | keys %}
                     <td>{{ priceType }}</td>
                 {% endfor %}
