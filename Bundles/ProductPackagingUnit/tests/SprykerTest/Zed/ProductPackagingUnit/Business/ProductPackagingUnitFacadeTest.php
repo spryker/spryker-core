@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductPackagingUnit\Business;
 
 use Codeception\Stub;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ProductPackagingUnitTypeBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -544,14 +545,14 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @dataProvider calculateAmountNormalizedSalesUnitValues
      *
      * @param int $amount
-     * @param int $quantity
+     * @param float $quantity
      * @param float $conversion
      * @param int $precision
      * @param int $expectedResult
      *
      * @return void
      */
-    public function testCalculateAmountNormalizedSalesUnitValueCalculatesCorrectValues(int $amount, int $quantity, float $conversion, int $precision, int $expectedResult): void
+    public function testCalculateAmountNormalizedSalesUnitValueCalculatesCorrectValues(int $amount, float $quantity, float $conversion, int $precision, int $expectedResult): void
     {
         // Assign
         $quoteTransfer = $this->tester->createQuoteTransferForValueCalculation($amount, $quantity, $conversion, $precision);
@@ -571,8 +572,11 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     {
         return [
             [7, 1, 1.25, 1000, 5600],
+            [7, 1.5, 1.25, 1000, 4000],
             [7, 1, 1.25, 100, 560],
+            [7, 1.5, 1.25, 100, 400],
             [7, 1, 1.25, 10, 56],
+            [7, 1.5, 1.25, 10, 40],
             [7, 1, 1.25, 1, 6],
             [10, 1, 5, 1, 2],
             [13, 1, 7, 1000, 1857],
@@ -586,24 +590,24 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @dataProvider itemAdditionAmounts
      *
      * @param bool $expectedIsSuccess
-     * @param int $defaultAmount
-     * @param int $quoteAmount
-     * @param int $quoteQuantity
-     * @param int|null $minRestriction
-     * @param int|null $maxRestriction
-     * @param int|null $intervalRestriction
+     * @param int|float $defaultAmount
+     * @param int|float $quoteAmount
+     * @param float $quoteQuantity
+     * @param int|float|null $minRestriction
+     * @param int|float|null $maxRestriction
+     * @param int|float|null $intervalRestriction
      * @param bool $isVariable
      *
      * @return void
      */
     public function testValidateItemAddAmountRestrictions(
         bool $expectedIsSuccess,
-        int $defaultAmount,
-        int $quoteAmount,
-        int $quoteQuantity,
-        ?int $minRestriction,
-        ?int $maxRestriction,
-        ?int $intervalRestriction,
+        $defaultAmount,
+        $quoteAmount,
+        $quoteQuantity,
+        $minRestriction,
+        $maxRestriction,
+        $intervalRestriction,
         bool $isVariable
     ): void {
         // Assign
@@ -670,14 +674,22 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function itemAdditionAmounts(): array
     {
         return [
-            [true, 1, 2, 1, 1, null, 1, true], // general rule
-            [true, 1, 7, 1, 7, null, 1, true], // min equals new amount
-            [true, 1, 5, 1, 5, 5,    1, true], // max equals new amount
-            [true, 1, 7, 1, 0, null, 7, true], // interval matches new amount
-            [false, 1, 5, 1, 7, 7,    7, true], // min, max, interval matches new amount
-            [false, 1, 5, 1, 8, null, 1, true], // min above new amount
-            [false, 1, 5, 1, 1, 3,    1, true], // max below new amount
-            [false, 1, 5, 1, 1, null, 3, true], // interval does not match new amount
+            'general rule int stock' => [true, 1, 2, 1, 1, null, 1, true],
+            'general rule float stock' => [true, 1, 2, 1.5, 1, null, 1, true],
+            'min equals new amount int stock' => [true, 1, 7, 1, 7, null, 1, true],
+            'min equals new amount float stock' => [true, 1.5, 7, 1.5, 1, null, 1.5, true],
+            'max equals new amount int stock' => [true, 1, 5, 1, 5, 5,    1, true],
+            'max equals new amount float stock' => [true, 1, 3, 1.5, 2, 3,    1, true],
+            'interval matches new amount int stock' => [true, 1, 7, 1, 0, null, 7, true],
+            'interval matches new amount float stock' => [true, 1, 7, 1.5, 0, null, 5, true],
+            'min, max, interval matches new amount int stock' => [false, 1, 5, 1, 7, 7,    7, true],
+            'min, max, interval matches new amount float stock' => [false, 1.5, 5, 1.5, 7, 7,    7, true],
+            'min above new amount int stock' => [false, 1, 5, 1, 8, null, 1, true],
+            'min above new amount float stock' => [false, 1.5, 5, 1.5, 8, null, 1, true],
+            'max below new amount int stock' => [false, 1, 5, 1, 1, 3,    1, true],
+            'max below new amount float stock' => [false, 1, 5, 1.5, 1, 2,    1, true],
+            'interval does not match new amount int stock' => [false, 1, 5, 1, 1, null, 3, true],
+            'interval does not match new amount float stock' => [false, 1, 5, 1.5, 1, null, 3, true],
         ];
     }
 
@@ -1031,50 +1043,160 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     }
 
     /**
+     * @dataProvider addItemToQuoteDataProvider
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $secondItemTransfer
+     * @param int|float $expectedResult
+     *
      * @return void
      */
-    public function testAddAndRemoveItemsToAndFromQuote(): void
+    public function testAddItemToQuoteShouldAddItemQuantity(
+        ItemTransfer $firstItemTransfer,
+        ItemTransfer $secondItemTransfer,
+        $expectedResult
+    ): void {
+        $quoteTransfer = new QuoteTransfer();
+
+        $quoteTransfer = $this->getFacade()->addItemToQuote($firstItemTransfer, $quoteTransfer);
+        $quoteTransfer = $this->getFacade()->addItemToQuote($secondItemTransfer, $quoteTransfer);
+
+        $this->assertEquals($expectedResult, $quoteTransfer->getItems()[0]->getQuantity());
+    }
+
+    /**
+     * @dataProvider addItemToQuoteDataProvider
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $secondItemTransfer
+     * @param int|float $expectedResult
+     *
+     * @return void
+     */
+    public function testAddItemToQuoteShouldAddItemAmount(
+        ItemTransfer $firstItemTransfer,
+        ItemTransfer $secondItemTransfer,
+        $expectedResult
+    ): void {
+        $quoteTransfer = new QuoteTransfer();
+
+        $quoteTransfer = $this->getFacade()->addItemToQuote($firstItemTransfer, $quoteTransfer);
+        $quoteTransfer = $this->getFacade()->addItemToQuote($secondItemTransfer, $quoteTransfer);
+
+        $this->assertEquals($expectedResult, $quoteTransfer->getItems()[0]->getAmount());
+    }
+
+    /**
+     * @return array
+     */
+    public function addItemToQuoteDataProvider(): array
     {
-        $itemSku = 'sku_1';
-        $quoteTransfer = $this->tester->createQuoteTransfer();
-        $itemTransfer = $this->tester->createProductPackagingUnitItemTransfer($itemSku);
+        return [
+            'int stock' => $this->getDataForAddItemToQuote(1, 2, 3),
+            'float stock' => $this->getDataForAddItemToQuote(1.1, 2.3, 3.4),
+        ];
+    }
 
-        // Action
-        $quoteTransfer = $this->getFacade()->addItemToQuote($itemTransfer, $quoteTransfer);
+    /**
+     * @param int|float $firstQuantity
+     * @param int|float $secondQuantity
+     * @param int|float $expectedResult
+     *
+     * @return array
+     */
+    protected function getDataForAddItemToQuote($firstQuantity, $secondQuantity, $expectedResult): array
+    {
+        $firstItemTransfer = (new ItemBuilder())->seed([
+            ItemTransfer::SKU => 'sku_1',
+            ItemTransfer::QUANTITY => $firstQuantity,
+            ItemTransfer::AMOUNT => $firstQuantity,
+        ])->build();
 
-        //Assert
-        $this->assertCount(1, $quoteTransfer->getItems());
+        $secondItemTransfer = (new ItemBuilder())->seed([
+            ItemTransfer::SKU => 'sku_1',
+            ItemTransfer::QUANTITY => $secondQuantity,
+            ItemTransfer::AMOUNT => $secondQuantity,
+        ])->build();
 
-        // Action
-        $quoteTransfer = $this->getFacade()->addItemToQuote($itemTransfer, $quoteTransfer);
+        return [$firstItemTransfer, $secondItemTransfer, $expectedResult];
+    }
 
-        //Assert
-        $this->assertCount(1, $quoteTransfer->getItems());
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $this->assertEquals(2, $itemTransfer->getQuantity());
-            $this->assertEquals(2, $itemTransfer->getAmount());
-        }
+    /**
+     * @dataProvider removeItemFromQuoteDataProvider
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $secondItemTransfer
+     * @param int|float $expectedResult
+     *
+     * @return void
+     */
+    public function testRemoveItemFromQuoteShouldSubtractItemQuantity(
+        ItemTransfer $firstItemTransfer,
+        ItemTransfer $secondItemTransfer,
+        $expectedResult
+    ): void {
+        $quoteTransfer = new QuoteTransfer();
 
-        // Action
-        $this->getFacade()->removeItemFromQuote(
-            $this->tester->createProductPackagingUnitItemTransfer($itemSku),
-            $quoteTransfer
-        );
+        $quoteTransfer = $this->getFacade()->addItemToQuote($firstItemTransfer, $quoteTransfer);
+        $quoteTransfer = $this->getFacade()->removeItemFromQuote($secondItemTransfer, $quoteTransfer);
 
-        //Assert
-        $this->assertCount(1, $quoteTransfer->getItems());
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $this->assertEquals(1, $itemTransfer->getQuantity());
-            $this->assertEquals(1, $itemTransfer->getAmount());
-        }
+        $this->assertEquals($expectedResult, $quoteTransfer->getItems()[0]->getQuantity());
+    }
 
-        // Action
-        $this->getFacade()->removeItemFromQuote(
-            $this->tester->createProductPackagingUnitItemTransfer($itemSku),
-            $quoteTransfer
-        );
+    /**
+     * @return array
+     */
+    public function removeItemFromQuoteDataProvider(): array
+    {
+        return [
+            'int stock' => $this->getDataForAddItemToQuote(3, 1, 2),
+            'float stock' => $this->getDataForAddItemToQuote(3.4, 2.3, 1.1),
+        ];
+    }
 
-        //Assert
-        $this->assertCount(0, $quoteTransfer->getItems());
+    /**
+     * @param int|float $firstQuantity
+     * @param int|float $secondQuantity
+     * @param int|float $expectedResult
+     *
+     * @return array
+     */
+    protected function getDataForRemoveItemFromQuote($firstQuantity, $secondQuantity, $expectedResult): array
+    {
+        $firstItemTransfer = (new ItemBuilder())->seed([
+            ItemTransfer::SKU => 'sku_1',
+            ItemTransfer::QUANTITY => $firstQuantity,
+            ItemTransfer::AMOUNT => $firstQuantity,
+        ])->build();
+
+        $secondItemTransfer = (new ItemBuilder())->seed([
+            ItemTransfer::SKU => 'sku_1',
+            ItemTransfer::QUANTITY => $secondQuantity,
+            ItemTransfer::AMOUNT => $secondQuantity,
+        ])->build();
+
+        return [$firstItemTransfer, $secondItemTransfer, $expectedResult];
+    }
+
+    /**
+     * @dataProvider removeItemFromQuoteDataProvider
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $secondItemTransfer
+     * @param int|float $expectedResult
+     *
+     * @return void
+     */
+    public function testRemoveItemFromQuoteShouldSubtractItemAmount(
+        ItemTransfer $firstItemTransfer,
+        ItemTransfer $secondItemTransfer,
+        $expectedResult
+    ): void {
+        $quoteTransfer = new QuoteTransfer();
+
+        $quoteTransfer = $this->getFacade()->addItemToQuote($firstItemTransfer, $quoteTransfer);
+        $quoteTransfer = $this->getFacade()->removeItemFromQuote($secondItemTransfer, $quoteTransfer);
+
+        $this->assertEquals($expectedResult, $quoteTransfer->getItems()[0]->getAmount());
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class LeadProductReservationCalculator implements LeadProductReservationCalculatorInterface
@@ -24,15 +25,23 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
     protected $productPackagingUnitRepository;
 
     /**
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface $omsFacade
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ProductPackagingUnitToOmsFacadeInterface $omsFacade,
-        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
+        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository,
+        ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->omsFacade = $omsFacade;
         $this->productPackagingUnitRepository = $productPackagingUnitRepository;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -51,6 +60,17 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
         $sumReservedLeadProductQuantity = $this->omsFacade
             ->sumReservedProductQuantitiesForSku($leadProductSku, $storeTransfer);
 
-        return $sumReservedLeadProductAmount + $sumReservedLeadProductQuantity;
+        return $this->sumQuantities($sumReservedLeadProductAmount, $sumReservedLeadProductQuantity);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 }
