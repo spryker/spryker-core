@@ -14,7 +14,7 @@ use Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface;
 
 class ResourceShareReader implements ResourceShareReaderInterface
 {
-    protected const ERROR_MESSAGE_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID = 'resource_share.reader.error.resource_is_not_found';
+    protected const GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID = 'resource_share.reader.error.resource_is_not_found';
 
     /**
      * @var \Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface
@@ -50,7 +50,7 @@ class ResourceShareReader implements ResourceShareReaderInterface
 
         return $resourceShareResponseTransfer->setIsSuccessful(false)
             ->addErrorMessage(
-                (new MessageTransfer())->setValue(static::ERROR_MESSAGE_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
+                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
             );
     }
 }

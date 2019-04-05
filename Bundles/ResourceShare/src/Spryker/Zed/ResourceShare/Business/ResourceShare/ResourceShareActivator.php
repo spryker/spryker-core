@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ResourceShareTransfer;
 
 class ResourceShareActivator implements ResourceShareActivatorInterface
 {
-    protected const ERROR_MESSAGE_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER = 'resource_share.activator.error.strategy_expects_logged_in_customer';
+    protected const GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER = 'resource_share.activator.error.strategy_expects_logged_in_customer';
 
     /**
      * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface
@@ -82,7 +82,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
                 return $resourceShareResponseTransfer->setIsSuccessful(false)
                     ->setIsLoginRequired(true)
                     ->addErrorMessage(
-                        (new MessageTransfer())->setValue(static::ERROR_MESSAGE_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER)
+                        (new MessageTransfer())->setValue(static::GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER)
                     );
             }
 

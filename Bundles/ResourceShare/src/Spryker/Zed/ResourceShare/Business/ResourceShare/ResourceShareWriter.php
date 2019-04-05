@@ -15,10 +15,10 @@ use Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface;
 
 class ResourceShareWriter implements ResourceShareWriterInterface
 {
-    protected const ERROR_MESSAGE_RESOURCE_TYPE_IS_NOT_DEFINED = 'resource_share.generation.error.resource_type_is_not_defined';
-    protected const ERROR_MESSAGE_RESOURCE_DATA_IS_NOT_DEFINED = 'resource_share.generation.error.resource_data_is_not_defined';
-    protected const ERROR_MESSAGE_CUSTOMER_REFERENCE_IS_NOT_DEFINED = 'resource_share.generation.error.customer_reference_is_not_defined';
-    protected const ERROR_MESSAGE_RESOURCE_IS_ALREADY_SHARED = 'resource_share.generation.error.resource_is_already_shared';
+    protected const GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED = 'resource_share.generation.error.resource_type_is_not_defined';
+    protected const GLOSSARY_KEY_RESOURCE_DATA_IS_NOT_DEFINED = 'resource_share.generation.error.resource_data_is_not_defined';
+    protected const GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED = 'resource_share.generation.error.customer_reference_is_not_defined';
+    protected const GLOSSARY_KEY_RESOURCE_IS_ALREADY_SHARED = 'resource_share.generation.error.resource_is_already_shared';
 
     /**
      * @var \Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface
@@ -58,7 +58,7 @@ class ResourceShareWriter implements ResourceShareWriterInterface
         if ($existingResourceShareTransfer) {
             return $resourceShareResponseTransfer->setIsSuccessful(false)
                 ->addErrorMessage(
-                    (new MessageTransfer())->setValue(static::ERROR_MESSAGE_RESOURCE_IS_ALREADY_SHARED)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_ALREADY_SHARED)
                 );
         }
 
@@ -80,13 +80,13 @@ class ResourceShareWriter implements ResourceShareWriterInterface
 
         if (!$resourceShareTransfer->getResourceType()) {
             return $resourceShareResponseTransfer->addErrorMessage(
-                (new MessageTransfer())->setValue(static::ERROR_MESSAGE_RESOURCE_TYPE_IS_NOT_DEFINED)
+                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED)
             );
         }
 
         if (!$resourceShareTransfer->getCustomerReference()) {
             return $resourceShareResponseTransfer->addErrorMessage(
-                (new MessageTransfer())->setValue(static::ERROR_MESSAGE_CUSTOMER_REFERENCE_IS_NOT_DEFINED)
+                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED)
             );
         }
 

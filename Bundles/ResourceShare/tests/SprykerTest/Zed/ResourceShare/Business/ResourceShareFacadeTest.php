@@ -27,12 +27,12 @@ use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorS
  */
 class ResourceShareFacadeTest extends Test
 {
-    protected const ERROR_MESSAGE_RESOURCE_TYPE_IS_NOT_DEFINED = 'resource_share.generation.error.resource_type_is_not_defined';
-    protected const ERROR_MESSAGE_RESOURCE_DATA_IS_NOT_DEFINED = 'resource_share.generation.error.resource_data_is_not_defined';
-    protected const ERROR_MESSAGE_CUSTOMER_REFERENCE_IS_NOT_DEFINED = 'resource_share.generation.error.customer_reference_is_not_defined';
-    protected const ERROR_MESSAGE_RESOURCE_IS_ALREADY_SHARED = 'resource_share.generation.error.resource_is_already_shared';
-    protected const ERROR_MESSAGE_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID = 'resource_share.reader.error.resource_is_not_found';
-    protected const ERROR_MESSAGE_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER = 'resource_share.activator.error.strategy_expects_logged_in_customer';
+    protected const GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED = 'resource_share.generation.error.resource_type_is_not_defined';
+    protected const GLOSSARY_KEY_RESOURCE_DATA_IS_NOT_DEFINED = 'resource_share.generation.error.resource_data_is_not_defined';
+    protected const GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED = 'resource_share.generation.error.customer_reference_is_not_defined';
+    protected const GLOSSARY_KEY_RESOURCE_IS_ALREADY_SHARED = 'resource_share.generation.error.resource_is_already_shared';
+    protected const GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID = 'resource_share.reader.error.resource_is_not_found';
+    protected const GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER = 'resource_share.activator.error.strategy_expects_logged_in_customer';
 
     protected const VALUE_RESOURCE_SHARE_UUID = 'VALUE_RESOURCE_SHARE_UUID';
     protected const VALUE_CUSTOMER_REFERENCE = 'VALUE_CUSTOMER_REFERENCE';
@@ -74,7 +74,7 @@ class ResourceShareFacadeTest extends Test
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::ERROR_MESSAGE_RESOURCE_TYPE_IS_NOT_DEFINED
+            static::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED
         ));
     }
 
@@ -111,7 +111,7 @@ class ResourceShareFacadeTest extends Test
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::ERROR_MESSAGE_CUSTOMER_REFERENCE_IS_NOT_DEFINED
+            static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED
         ));
     }
 
@@ -130,7 +130,7 @@ class ResourceShareFacadeTest extends Test
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::ERROR_MESSAGE_RESOURCE_IS_ALREADY_SHARED
+            static::GLOSSARY_KEY_RESOURCE_IS_ALREADY_SHARED
         ));
     }
 
@@ -154,7 +154,7 @@ class ResourceShareFacadeTest extends Test
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::ERROR_MESSAGE_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
+            static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
         ));
     }
 
@@ -218,7 +218,7 @@ class ResourceShareFacadeTest extends Test
         $this->assertTrue($resourceShareResponseTransfer->getIsLoginRequired());
         $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::ERROR_MESSAGE_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER
+            static::GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER
         ));
     }
 
@@ -268,7 +268,7 @@ class ResourceShareFacadeTest extends Test
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::ERROR_MESSAGE_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
+            static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
         ));
     }
 
