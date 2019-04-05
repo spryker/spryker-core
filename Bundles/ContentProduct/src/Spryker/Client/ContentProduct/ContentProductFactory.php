@@ -8,9 +8,12 @@
 namespace Spryker\Client\ContentProduct;
 
 use Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface;
-use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException;
 use Spryker\Client\ContentProduct\Executor\ContentProductTermExecutorInterface;
+use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermToProductAbstractListTypeExecutor;
+use Spryker\Client\ContentProduct\Mapper\ContentProductAbstractListTypeMapper;
+use Spryker\Client\ContentProduct\Mapper\ContentProductAbstractListTypeMapperInterface;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Shared\ContentProduct\ContentProductConfig;
 
 /**
  * @method \Spryker\Client\ContentProduct\ContentProductConfig getConfig()
@@ -18,23 +21,29 @@ use Spryker\Client\Kernel\AbstractFactory;
 class ContentProductFactory extends AbstractFactory
 {
     /**
-     * @param string $term
-     *
-     * @throws \Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException
-     *
+     * @return \Spryker\Client\ContentProduct\Mapper\ContentProductAbstractListTypeMapperInterface
+     */
+    public function createContentProductAbstractListTypeMapper(): ContentProductAbstractListTypeMapperInterface
+    {
+        return new ContentProductAbstractListTypeMapper($this->getContentProductTermExecutorMap());
+    }
+
+    /**
+     * @return \Spryker\Client\ContentProduct\Executor\ContentProductTermExecutorInterface[]
+     */
+    public function getContentProductTermExecutorMap(): array
+    {
+        return [
+            ContentProductConfig::CONTENT_TERM_PRODUCT_ABSTRACT_LIST => $this->createProductAbstractListTermToProductAbstractListTypeExecutor(),
+        ];
+    }
+
+    /**
      * @return \Spryker\Client\ContentProduct\Executor\ContentProductTermExecutorInterface
      */
-    public function createContentProductTermExecutorByTerm(string $term): ContentProductTermExecutorInterface
+    public function createProductAbstractListTermToProductAbstractListTypeExecutor(): ContentProductTermExecutorInterface
     {
-        if (!isset($this->getConfig()->getEnabledTermExecutors()[$term])) {
-            throw new InvalidProductAbstractListTypeException(
-                sprintf('There is no ContentProduct Term which can work with the term %s.', $term)
-            );
-        }
-
-        $contentProductTermExecutor = $this->getConfig()->getEnabledTermExecutors()[$term];
-
-        return new $contentProductTermExecutor();
+        return new ProductAbstractListTermToProductAbstractListTypeExecutor();
     }
 
     /**
