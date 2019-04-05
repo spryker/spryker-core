@@ -60,11 +60,11 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param int $filterQuantity
+     * @param float $filterQuantity
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    protected function getMinPrice(array $priceProductTransfers, int $filterQuantity): ?PriceProductTransfer
+    protected function getMinPrice(array $priceProductTransfers, float $filterQuantity): ?PriceProductTransfer
     {
         $minPriceProductTransfer = null;
 

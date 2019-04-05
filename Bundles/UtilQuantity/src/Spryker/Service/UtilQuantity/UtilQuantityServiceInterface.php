@@ -51,4 +51,18 @@ interface UtilQuantityServiceInterface
      * @return float
      */
     public function subtractQuantities(float $firstQuantity, float $secondQuantity): float;
+
+    /**
+     * Specification:
+     * - checks whether numbers divide with specified remainder.
+     *
+     * @api
+     *
+     * @param float $dividendQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
+     *
+     * @return bool
+     */
+    public function isQuantityModuloEqual(float $dividendQuantity, float $divisorQuantity, float $remainder): bool;
 }

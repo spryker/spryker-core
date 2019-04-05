@@ -13,7 +13,7 @@ interface ContentBannerClientInterface
 {
     /**
      * Specification:
-     * - Executes the ContentBanner term.
+     * - Executes the ContentBannerTerm.
      *
      * @api
      *
