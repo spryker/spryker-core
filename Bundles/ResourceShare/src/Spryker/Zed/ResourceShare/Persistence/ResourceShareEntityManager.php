@@ -26,6 +26,8 @@ class ResourceShareEntityManager extends AbstractEntityManager implements Resour
             ->createResourceShareMapper()
             ->mapResourceShareTransferToResourceShareEntity($resourceShareTransfer);
 
+        $resourceShareEntity->save();
+
         $resourceShareTransfer->setIdResourceShare($resourceShareEntity->getIdResourceShare())
             ->setUuid($resourceShareEntity->getUuid());
 

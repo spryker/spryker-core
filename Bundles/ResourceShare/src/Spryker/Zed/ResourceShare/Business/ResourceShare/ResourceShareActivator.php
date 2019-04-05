@@ -47,8 +47,10 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
         $resourceShareRequestTransfer->requireUuid();
+        $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShareByUuid(
+            (new ResourceShareTransfer())->setUuid($resourceShareRequestTransfer->getUuid())
+        );
 
-        $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShareByUuid($resourceShareRequestTransfer);
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return $resourceShareResponseTransfer;
         }

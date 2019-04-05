@@ -50,9 +50,9 @@ interface ResourceShareFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function getResourceShareByUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
+    public function getResourceShareByUuid(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer;
 }

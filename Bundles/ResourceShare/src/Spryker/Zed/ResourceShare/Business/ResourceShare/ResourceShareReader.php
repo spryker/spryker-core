@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface;
 
 class ResourceShareReader implements ResourceShareReaderInterface
@@ -30,17 +30,17 @@ class ResourceShareReader implements ResourceShareReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function getResourceShareByUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    public function getResourceShareByUuid(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareRequestTransfer->requireUuid();
+        $resourceShareTransfer->requireUuid();
         $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
 
         $resourceShareTransfer = $this->resourceShareRepository->findResourceShareByUuid(
-            $resourceShareRequestTransfer->getUuid()
+            $resourceShareTransfer->getUuid()
         );
 
         if ($resourceShareTransfer) {
