@@ -322,9 +322,9 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * - Calculates shopping list subtotal as a sum of each item price * item quantity.
+     * - Requires ProductViewTransfer::CurrentProductPrice.
      * - Considers only available shopping list items.
-     * - Returns calculated subtotal in cents.
+     * - Returns calculated subtotal.
      *
      * @api
      *
