@@ -9,8 +9,10 @@ namespace SprykerTest\Zed\PriceProductSchedule\Business\Model;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory;
 
@@ -37,7 +39,7 @@ class PriceProductScheduleCleanerTest extends Unit
     private $priceProductScheduleFactory;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\Model\PriceProductScheduleCleanerInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCleanerInterface
      */
     private $priceProductScheduleCleaner;
 
@@ -45,6 +47,11 @@ class PriceProductScheduleCleanerTest extends Unit
      * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
      */
     private $priceProductScheduleQuery;
+
+    /**
+     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
+     */
+    protected $storeFacade;
 
     /**
      * @return void
@@ -56,6 +63,7 @@ class PriceProductScheduleCleanerTest extends Unit
         $this->priceProductScheduleFactory = new PriceProductScheduleBusinessFactory();
         $this->priceProductScheduleCleaner = $this->priceProductScheduleFactory->createPriceProductScheduleCleaner();
         $this->priceProductScheduleQuery = new SpyPriceProductScheduleQuery();
+        $this->storeFacade = $this->tester->getLocator()->store()->facade();
     }
 
     /**
@@ -71,18 +79,10 @@ class PriceProductScheduleCleanerTest extends Unit
     {
         // Assign
         foreach ($data as $priceProductScheduleData) {
-            $productConcreteTransfer = $this->tester->haveProduct();
+            $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT] = $this->getPriceProductData();
+            $priceProductScheduleData[PriceProductScheduleTransfer::ACTIVE_FROM] = (new DateTime('-30 days'));
 
-            $this->tester->havePriceProductSchedule(
-                array_merge(
-                    $priceProductScheduleData,
-                    [
-                        PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                            PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-                        ],
-                    ]
-                )
-            );
+            $this->tester->havePriceProductSchedule($priceProductScheduleData);
         }
 
         // Act
@@ -95,36 +95,59 @@ class PriceProductScheduleCleanerTest extends Unit
     /**
      * @return array
      */
+    protected function getPriceProductData(): array
+    {
+        $currencyId = $this->tester->haveCurrency();
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $priceType = $this->tester->havePriceType();
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        return [
+            PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+            PriceProductTransfer::PRICE_TYPE => [
+                PriceTypeTransfer::NAME => $priceType->getName(),
+                PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
+            ],
+            PriceProductTransfer::MONEY_VALUE => [
+                MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                MoneyValueTransfer::FK_CURRENCY => $currencyId,
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public function priceProductScheduleCleanerShouldRemoveAllEntitiesBeforeDaysRetainedDataProvider(): array
     {
         return [
             'all entities should be removed' => [
                 [
-                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('-15 days')],
-                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('-7 days')],
-                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('-9 days')],
-                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('-13 days')],
+                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-15 days'))],
+                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-7 days'))],
+                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-9 days'))],
+                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-13 days'))],
                 ],
                 5,
                 0,
             ],
             'no entities should be removed' => [
                 [
-                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('-3 days')],
-                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('-5 days')],
-                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('-7 days')],
-                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('-9 days')],
+                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-3 days'))],
+                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-5 days'))],
+                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-7 days'))],
+                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-9 days'))],
                 ],
                 10,
                 4,
             ],
             'some entities should be removed' => [
                 [
-                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('-3 days')],
-                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('-2 days')],
+                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-3 days'))],
+                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-2 days'))],
                     [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())],
-                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('+1 days')],
-                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime())->modify('+2 days')],
+                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 days'))],
+                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+2 days'))],
                 ],
                 1,
                 3,

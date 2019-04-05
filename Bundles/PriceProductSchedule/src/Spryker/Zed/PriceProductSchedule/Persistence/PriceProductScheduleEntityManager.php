@@ -21,7 +21,7 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
      *
      * @return void
      */
-    public function deleteAppliedScheduledPrices(int $daysRetained): void
+    public function deleteOldScheduledPrices(int $daysRetained): void
     {
         $priceProductScheduleQuery = $this->getFactory()
             ->createPriceProductScheduleQuery();
@@ -30,6 +30,7 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
 
         $priceProductScheduleQuery
             ->filterByActiveTo(['max' => $filterTo], Criteria::LESS_THAN)
+            ->filterByIsCurrent(false)
             ->delete();
     }
 }

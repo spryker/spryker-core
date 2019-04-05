@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductSchedule\Business\Model;
+namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
 
@@ -31,6 +31,6 @@ class PriceProductScheduleCleaner implements PriceProductScheduleCleanerInterfac
      */
     public function cleanAppliedScheduledPrices(int $daysRetained): void
     {
-        $this->priceProductScheduleEntityManager->deleteAppliedScheduledPrices($daysRetained);
+        $this->priceProductScheduleEntityManager->deleteOldScheduledPrices($daysRetained);
     }
 }

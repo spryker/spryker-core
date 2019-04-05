@@ -601,25 +601,6 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testPriceProductShouldBeRemoved()
-    {
-        // Assign
-        $priceProductFacade = $this->getPriceProductFacade();
-
-        $priceProductTransfer = $this->createProductWithAmount(100, 90);
-
-        // Act
-        $priceProductFacade->removePriceProductStore($priceProductTransfer);
-
-        // Assert
-        $priceProductEntity = $this->getPriceProductQuery()->findOneByIdPriceProduct($priceProductTransfer->getIdPriceProduct());
-
-        $this->assertNull($priceProductEntity);
-    }
-
-    /**
      * @param string $currencyCode
      * @param string $priceTypeName
      * @param int $grossAmount
@@ -837,7 +818,7 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemovePriceProductStoreShouldDeletePriceFromDatabase()
+    public function testRemovePriceProductStoreShouldDeletePriceFromDatabase(): void
     {
         // Assign
         /** @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceProductFacade */

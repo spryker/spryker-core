@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProduct\Business\Model;
+namespace Spryker\Zed\PriceProductSchedule\Business\PriceProduct;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 
-interface PriceProductRemoverInterface
+interface ProductPriceUpdaterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return void
      */
-    public function removePriceProductStore(PriceProductTransfer $transferPriceProduct): void;
+    public function updateCurrentProductPrice(PriceProductTransfer $priceProductTransfer): void;
 }

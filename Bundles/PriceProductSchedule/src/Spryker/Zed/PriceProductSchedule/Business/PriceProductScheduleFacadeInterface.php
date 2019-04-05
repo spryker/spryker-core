@@ -21,7 +21,7 @@ interface PriceProductScheduleFacadeInterface
 
     /**
      * Specification:
-     * - Delete scheduled prices that has been applied earlier than the days provided as parameter
+     * - Delete scheduled prices that has been applied earlier than the days provided as parameter.
      *
      * @api
      *

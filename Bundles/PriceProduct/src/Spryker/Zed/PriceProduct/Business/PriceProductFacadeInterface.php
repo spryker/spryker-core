@@ -506,8 +506,10 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
-     * - Removes price product
-     * - Removes price product default
+     * - Removes price product.
+     * - Removes price product default.
+     * - Removes price product store.
+     * - Adds log message about removing price product.
      *
      * @api
      *

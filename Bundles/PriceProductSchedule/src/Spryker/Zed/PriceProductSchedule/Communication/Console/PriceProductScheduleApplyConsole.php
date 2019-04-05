@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PriceProductSchedule\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -16,11 +15,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface getRepository()
  */
-class PriceProductScheduleCleanConsole extends Console
+class PriceProductScheduleApplyConsole extends Console
 {
-    public const COMMAND_NAME = 'price-product-schedule:clear';
-    public const DESCRIPTION = 'Delete scheduled prices that has been applied earlier than the days provided as argument';
-    public const DAYS_RETAINED = 'days retained';
+    public const COMMAND_NAME = 'price-product-schedule:apply';
+    public const DESCRIPTION = 'Apply scheduled prices that meet the requirements';
 
     /**
      * @return void
@@ -29,12 +27,6 @@ class PriceProductScheduleCleanConsole extends Console
     {
         $this->setName(self::COMMAND_NAME)
             ->setDescription(self::DESCRIPTION);
-
-        $this->addArgument(
-            static::DAYS_RETAINED,
-            InputArgument::REQUIRED,
-            'Delete scheduled prices that has been applied earlier than count of days'
-        );
     }
 
     /**
@@ -45,7 +37,6 @@ class PriceProductScheduleCleanConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $daysRetained = $this->input->getArgument(static::DAYS_RETAINED);
-        $this->getFacade()->cleanAppliedScheduledPrices($daysRetained);
+        $this->getFacade()->applyScheduledPrices();
     }
 }

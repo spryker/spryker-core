@@ -17,5 +17,5 @@ interface PriceProductScheduleEntityManagerInterface
      *
      * @return void
      */
-    public function deleteAppliedScheduledPrices(int $daysRetained): void;
+    public function deleteOldScheduledPrices(int $daysRetained): void;
 }

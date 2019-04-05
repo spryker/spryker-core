@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProduct\Business\Model;
+namespace Spryker\Zed\PriceProduct\Business\PriceProduct;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Shared\Log\LoggerTrait;
@@ -36,7 +36,8 @@ class PriceProductRemover implements PriceProductRemoverInterface
     public function removePriceProductStore(PriceProductTransfer $priceProductTransfer): void
     {
         $priceProductTransfer
-            ->requireIdPriceProduct();
+            ->requireIdPriceProduct()
+            ->requirePriceDimension();
 
         $this->entityManager->deletePriceProductStoreByPriceProductTransfer($priceProductTransfer);
         $this->entityManager->deletePriceProductDefault($priceProductTransfer->getPriceDimension()->getIdPriceProductDefault());

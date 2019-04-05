@@ -38,7 +38,7 @@ class PriceProductRemoverTest extends Unit
     private $priceProductFactory;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\PriceProductRemoverInterface
+     * @var \Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemoverInterface
      */
     private $priceProductRemover;
 
@@ -86,7 +86,7 @@ class PriceProductRemoverTest extends Unit
     /**
      * @return void
      */
-    public function testRemovePriceProductStore()
+    public function testRemovePriceProductStore(): void
     {
         // Assign
         $priceProductTransfer = $this->createProductWithAmount(100, 90);
@@ -106,7 +106,8 @@ class PriceProductRemoverTest extends Unit
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function createProductWithAmount($grossAmount, $netAmount) {
+    protected function createProductWithAmount($grossAmount, $netAmount): PriceProductTransfer
+    {
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
             ->setType($this->priceProductConfig->getPriceDimensionDefault());
 
@@ -136,7 +137,7 @@ class PriceProductRemoverTest extends Unit
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function buildProduct(PriceProductTransfer $priceProductTransfer)
+    protected function buildProduct(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         $productConcreteTransfer = $this->tester->haveProduct();
 

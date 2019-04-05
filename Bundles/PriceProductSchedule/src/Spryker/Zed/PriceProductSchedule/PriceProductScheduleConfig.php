@@ -18,17 +18,7 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
 
     public const PRICE_TYPE_ORIGINAL = 'ORIGINAL';
 
-    /**
-     * @param string $priceType
-     *
-     * @return string|null
-     */
-    public function findFallbackPriceType(string $priceType): ?string
-    {
-        $fallBackPriceTypeList = $this->getFallbackPriceTypeList();
-
-        return $fallBackPriceTypeList[$priceType] ?? null;
-    }
+    protected const APPLY_BATCH_SIZE = 1000;
 
     /**
      * @return array
@@ -38,5 +28,13 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
         return [
             static::PRICE_TYPE_DEFAULT => static::PRICE_TYPE_ORIGINAL,
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getApplyBatchSize(): int
+    {
+        return static::APPLY_BATCH_SIZE;
     }
 }

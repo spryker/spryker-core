@@ -5,14 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductSchedule\Business\Model;
+namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
-interface PriceProductScheduleCleanerInterface
+interface PriceProductScheduleApplierInterface
 {
     /**
-     * @param int $daysRetained
-     *
      * @return void
      */
-    public function cleanAppliedScheduledPrices(int $daysRetained): void;
+    public function applyScheduledPrices(): void;
 }
