@@ -35,12 +35,8 @@ class ContentProductClient extends AbstractClient implements ContentProductClien
             return null;
         }
 
-        $contentProductAbstractListTermTransfer = $this->getFactory()
-            ->createContentProductAbstractListTermResolver()
-            ->resolve($contentTypeContextTransfer);
-
         return $this->getFactory()
-            ->createProductAbstractListTermToProductAbstractListTypeExecutor()
-            ->execute($contentProductAbstractListTermTransfer);
+            ->createContentProductTermExecutorByTerm($contentTypeContextTransfer->getTerm())
+            ->execute($contentTypeContextTransfer);
     }
 }

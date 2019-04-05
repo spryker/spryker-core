@@ -7,15 +7,15 @@
 
 namespace Spryker\Client\ContentProduct\Executor;
 
-use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
 use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
+use Generated\Shared\Transfer\ContentTypeContextTransfer;
 
-interface ProductAbstractListTermToProductAbstractListTypeExecutorInterface
+interface ContentProductTermExecutorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer
+     * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
      *
      * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer
      */
-    public function execute(ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer): ContentProductAbstractListTypeTransfer;
+    public function execute(ContentTypeContextTransfer $contentTypeContextTransfer): ContentProductAbstractListTypeTransfer;
 }
