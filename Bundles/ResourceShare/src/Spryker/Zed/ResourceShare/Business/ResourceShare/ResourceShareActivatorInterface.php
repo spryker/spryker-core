@@ -7,16 +7,15 @@
 
 namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 
 interface ResourceShareActivatorInterface
 {
     /**
-     * @param string $uuid
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function activateResourceShare(string $uuid, ?CustomerTransfer $customerTransfer): ResourceShareResponseTransfer;
+    public function activateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 }

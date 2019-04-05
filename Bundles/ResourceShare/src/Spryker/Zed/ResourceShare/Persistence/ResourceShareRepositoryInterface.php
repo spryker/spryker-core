@@ -17,4 +17,11 @@ interface ResourceShareRepositoryInterface
      * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
      */
     public function findResourceShareByUuid(string $uuid): ?ResourceShareTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
+     */
+    public function findExistingResourceShareForProvidedCustomer(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer;
 }

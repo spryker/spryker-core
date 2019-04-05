@@ -7,14 +7,15 @@
 
 namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 
 interface ResourceShareReaderInterface
 {
     /**
-     * @param string $uuid
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function getResourceShareByUuid(string $uuid): ResourceShareResponseTransfer;
+    public function getResourceShareByUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 }

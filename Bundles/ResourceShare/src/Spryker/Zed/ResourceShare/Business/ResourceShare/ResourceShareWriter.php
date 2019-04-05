@@ -49,22 +49,20 @@ class ResourceShareWriter implements ResourceShareWriterInterface
      */
     public function generateResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareResponseTransfer = $this->preValidateResourceShareTransfer(
-            $resourceShareTransfer,
-            new ResourceShareResponseTransfer()
-        );
-
+        $resourceShareResponseTransfer = $this->preValidateResourceShareTransfer($resourceShareTransfer);
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return $resourceShareResponseTransfer;
         }
 
-        $resourceShareTransfer = $this->resourceShareEntityManager->createResourceShare($resourceShareTransfer);
-        if (!$resourceShareTransfer) {
+        $existingResourceShareTransfer = $this->resourceShareRepository->findExistingResourceShareForProvidedCustomer($resourceShareTransfer);
+        if ($existingResourceShareTransfer) {
             return $resourceShareResponseTransfer->setIsSuccessful(false)
                 ->addErrorMessage(
                     (new MessageTransfer())->setValue(static::ERROR_MESSAGE_RESOURCE_IS_ALREADY_SHARED)
                 );
         }
+
+        $resourceShareTransfer = $this->resourceShareEntityManager->createResourceShare($resourceShareTransfer);
 
         return $resourceShareResponseTransfer->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
@@ -72,15 +70,13 @@ class ResourceShareWriter implements ResourceShareWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    protected function preValidateResourceShareTransfer(
-        ResourceShareTransfer $resourceShareTransfer,
-        ResourceShareResponseTransfer $resourceShareResponseTransfer
-    ): ResourceShareResponseTransfer {
-        $resourceShareResponseTransfer->setIsSuccessful(false);
+    protected function preValidateResourceShareTransfer(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
+    {
+        $resourceShareResponseTransfer = (new ResourceShareResponseTransfer())
+            ->setIsSuccessful(false);
 
         if (!$resourceShareTransfer->getResourceType()) {
             return $resourceShareResponseTransfer->addErrorMessage(

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ResourceShare\Business;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -40,18 +40,16 @@ class ResourceShareFacade extends AbstractFacade implements ResourceShareFacadeI
      *
      * @api
      *
-     * @param string $uuid
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     public function activateResourceShare(
-        string $uuid,
-        ?CustomerTransfer $customerTransfer
+        ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
         return $this->getFactory()
             ->createResourceShareActivator()
-            ->activateResourceShare($uuid, $customerTransfer);
+            ->activateResourceShare($resourceShareRequestTransfer);
     }
 
     /**
@@ -59,14 +57,14 @@ class ResourceShareFacade extends AbstractFacade implements ResourceShareFacadeI
      *
      * @api
      *
-     * @param string $uuid
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function getResourceShareByUuid(string $uuid): ResourceShareResponseTransfer
+    public function getResourceShareByUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         return $this->getFactory()
             ->createResourceShareReader()
-            ->getResourceShareByUuid($uuid);
+            ->getResourceShareByUuid($resourceShareRequestTransfer);
     }
 }

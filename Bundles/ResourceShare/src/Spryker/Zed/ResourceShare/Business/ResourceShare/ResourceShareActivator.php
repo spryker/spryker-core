@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 
@@ -39,16 +39,16 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     }
 
     /**
-     * @param string $uuid
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     public function activateResourceShare(
-        string $uuid,
-        ?CustomerTransfer $customerTransfer
+        ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
-        $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShareByUuid($uuid);
+        $resourceShareRequestTransfer->requireUuid();
+
+        $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShareByUuid($resourceShareRequestTransfer);
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return $resourceShareResponseTransfer;
         }
@@ -56,25 +56,28 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         $resourceShareResponseTransfer->requireResourceShare();
         $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
 
-        return $this->executeResourceShareActivatorStrategyPlugins($resourceShareTransfer, $customerTransfer);
+        return $this->executeResourceShareActivatorStrategyPlugins(
+            $resourceShareTransfer,
+            $resourceShareRequestTransfer
+        );
     }
 
     /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     protected function executeResourceShareActivatorStrategyPlugins(
         ResourceShareTransfer $resourceShareTransfer,
-        ?CustomerTransfer $customerTransfer
+        ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
         $resourceShareResponseTransfer = (new ResourceShareResponseTransfer())
             ->setIsLoginRequired(false);
 
         foreach ($this->resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
-            if (!$this->isCustomerLoggedIn($customerTransfer)
-                && $resourceShareActivatorStrategyPlugin->isLoginRequired()
+            if ($resourceShareActivatorStrategyPlugin->isLoginRequired()
+                && !$this->isCustomerLoggedIn($resourceShareRequestTransfer)
             ) {
                 return $resourceShareResponseTransfer->setIsSuccessful(false)
                     ->setIsLoginRequired(true)
@@ -91,12 +94,14 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return bool
      */
-    protected function isCustomerLoggedIn(?CustomerTransfer $customerTransfer): bool
+    protected function isCustomerLoggedIn(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
+        $customerTransfer = $resourceShareRequestTransfer->getCustomer();
+
         return $customerTransfer && !$customerTransfer->getIsGuest();
     }
 }

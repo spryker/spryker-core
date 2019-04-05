@@ -34,11 +34,6 @@ class GatewayController extends AbstractGatewayController
      */
     public function activateResourceShareAction(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareRequestTransfer->requireUuid();
-
-        return $this->getFacade()->activateResourceShare(
-            $resourceShareRequestTransfer->getUuid(),
-            $resourceShareRequestTransfer->getCustomer()
-        );
+        return $this->getFacade()->activateResourceShare($resourceShareRequestTransfer);
     }
 }

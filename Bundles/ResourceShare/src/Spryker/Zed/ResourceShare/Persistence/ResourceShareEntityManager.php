@@ -23,31 +23,11 @@ class ResourceShareEntityManager extends AbstractEntityManager implements Resour
      */
     public function createResourceShare(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer
     {
-        if ($this->findExistingResourceShareEntityForProvidedCustomer($resourceShareTransfer)) {
-            return null;
-        }
-
         $resourceShareEntity = new SpyResourceShare();
         $resourceShareEntity->fromArray($resourceShareTransfer->toArray());
         $resourceShareEntity->save();
 
         return (new ResourceShareTransfer())
             ->fromArray($resourceShareEntity->toArray(), true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     *
-     * @return \Orm\Zed\ResourceShare\Persistence\SpyResourceShare|null
-     */
-    protected function findExistingResourceShareEntityForProvidedCustomer(
-        ResourceShareTransfer $resourceShareTransfer
-    ): ?SpyResourceShare {
-        return $this->getFactory()
-            ->createResourceSharePropelQuery()
-            ->filterByResourceType($resourceShareTransfer->getResourceType())
-            ->filterByResourceData($resourceShareTransfer->getResourceData())
-            ->filterByCustomerReference($resourceShareTransfer->getCustomerReference())
-            ->findOne();
     }
 }
