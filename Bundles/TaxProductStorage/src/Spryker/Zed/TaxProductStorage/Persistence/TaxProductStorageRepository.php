@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class TaxProductStorageRepository extends AbstractRepository implements TaxProductStorageRepositoryInterface
 {
     /**
-     * @uses TaxSet
+     * @module Product
      *
      * @param int[] $productAbstractIds
      *

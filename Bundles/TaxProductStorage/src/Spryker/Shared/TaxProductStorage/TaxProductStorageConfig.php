@@ -13,7 +13,7 @@ class TaxProductStorageConfig extends AbstractSharedConfig
 {
     /**
      * Specification:
-     *  - Queue name as used for processing tax set messages.
+     *  - Queue name as used for processing product abstract product tax set messages.
      *
      * @api
      */
@@ -21,7 +21,7 @@ class TaxProductStorageConfig extends AbstractSharedConfig
 
     /**
      * Specification:
-     *  - Queue name as used for processing tax set error messages.
+     *  - Queue name as used for processing product abstract tax set error messages.
      *
      * @api
      */
