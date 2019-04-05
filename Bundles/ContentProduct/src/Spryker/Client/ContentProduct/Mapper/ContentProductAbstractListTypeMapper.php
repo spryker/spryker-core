@@ -39,7 +39,7 @@ class ContentProductAbstractListTypeMapper implements ContentProductAbstractList
 
         if (!isset($this->contentProductTermExecutors[$term])) {
             throw new InvalidProductAbstractListTypeException(
-                sprintf('There is no ContentProduct Term which can work with the term %s.', $term)
+                sprintf('There is no matching Term for ProductAbstractListType when provided with term %s.', $term)
             );
         }
 
