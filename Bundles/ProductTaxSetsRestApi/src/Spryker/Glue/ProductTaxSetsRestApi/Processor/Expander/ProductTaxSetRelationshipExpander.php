@@ -38,7 +38,7 @@ class ProductTaxSetRelationshipExpander implements ProductTaxSetRelationshipExpa
                 $resource->getId(),
                 $restRequest
             );
-            if ($productTaxSetsResource !== null) {
+            if ($productTaxSetsResource) {
                 $resource->addRelationship($productTaxSetsResource);
             }
         }
