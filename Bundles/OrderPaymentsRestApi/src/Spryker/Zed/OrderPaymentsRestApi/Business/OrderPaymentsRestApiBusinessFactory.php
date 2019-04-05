@@ -30,6 +30,6 @@ class OrderPaymentsRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function getOrderPaymentUpdaterPlugins(): array
     {
-        return $this->getProvidedDependency(OrderPaymentsRestApiDependencyProvider::ORDER_PAYMENT_UPDATER_PLUGINS);
+        return $this->getProvidedDependency(OrderPaymentsRestApiDependencyProvider::PLUGINS_ORDER_PAYMENT_UPDATER);
     }
 }

@@ -37,10 +37,7 @@ class OrderPaymentUpdater implements OrderPaymentUpdaterInterface
 
         foreach ($this->orderPaymentUpdaterPlugins as $orderPaymentUpdaterPlugin) {
             if ($orderPaymentUpdaterPlugin->isApplicable($updateOrderPaymentRequestTransfer)) {
-                $updateOrderPaymentRequestTransfer = $orderPaymentUpdaterPlugin->updateOrderPayment($updateOrderPaymentRequestTransfer);
-
-                return $updateOrderPaymentRequestTransfer
-                    ->setIsSuccessful(true);
+                return $orderPaymentUpdaterPlugin->updateOrderPayment($updateOrderPaymentRequestTransfer);
             }
         }
 

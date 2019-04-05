@@ -17,7 +17,7 @@ class OrderPaymentsResourceRoutePlugin extends AbstractPlugin implements Resourc
 {
     /**
      * {@inheritdoc}
-     * - Configures available actions for order-payments resource.
+     * - Configures available actions for `order-payments` resource.
      *
      * @api
      *
@@ -27,11 +27,7 @@ class OrderPaymentsResourceRoutePlugin extends AbstractPlugin implements Resourc
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection
-            ->addPost(
-                OrderPaymentsRestApiConfig::ACTION_ORDER_PAYMENTS_POST,
-                OrderPaymentsRestApiConfig::RESOURCE_ORDER_PAYMENTS_POST_ACTION_IS_PROTECTED
-            );
+        $resourceRouteCollection->addPost('post', true);
 
         return $resourceRouteCollection;
     }

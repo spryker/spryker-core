@@ -14,7 +14,7 @@ interface OrderPaymentUpdaterPluginInterface
 {
     /**
      * Specification:
-     * - Checks if order payment request is applicable for the update.
+     * - Checks whether this plugin is applicable for the payment updating.
      *
      * @api
      *

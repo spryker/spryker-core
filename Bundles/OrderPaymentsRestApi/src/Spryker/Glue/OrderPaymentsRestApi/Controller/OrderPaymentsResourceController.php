@@ -22,11 +22,7 @@ class OrderPaymentsResourceController extends AbstractController
      *     "post": {
      *          "summary": [
      *              "Updates order payment."
-     *          ],
-     *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
-     *          }],
+     *          ]
      *     }
      * })
      *

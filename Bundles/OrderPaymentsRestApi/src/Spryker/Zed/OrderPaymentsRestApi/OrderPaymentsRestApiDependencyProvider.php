@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Container;
  */
 class OrderPaymentsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const ORDER_PAYMENT_UPDATER_PLUGINS = 'ORDER_PAYMENT_UPDATER_PLUGINS';
+    public const PLUGINS_ORDER_PAYMENT_UPDATER = 'PLUGINS_ORDER_PAYMENT_UPDATER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,7 +37,7 @@ class OrderPaymentsRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addOrderPaymentUpdaterPlugins(Container $container): Container
     {
-        $container[static::ORDER_PAYMENT_UPDATER_PLUGINS] = function (Container $container) {
+        $container[static::PLUGINS_ORDER_PAYMENT_UPDATER] = function (Container $container) {
             return $this->getOrderPaymentUpdaterPlugins($container);
         };
 
