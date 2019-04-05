@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\PriceProductSchedule\Business\Model;
+namespace SprykerTest\Zed\PriceProductSchedule\Business\Facade;
 
 use Codeception\Test\Unit;
 use DateTime;
@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
-use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory;
 
 /**
  * Auto-generated group annotations
@@ -22,7 +20,7 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactor
  * @group Zed
  * @group PriceProductSchedule
  * @group Business
- * @group Model
+ * @group Facade
  * @group PriceProductScheduleCleanerTest
  * Add your own group annotations below this line
  */
@@ -34,24 +32,14 @@ class PriceProductScheduleCleanerTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory
-     */
-    private $priceProductScheduleFactory;
-
-    /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCleanerInterface
-     */
-    private $priceProductScheduleCleaner;
-
-    /**
-     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    private $priceProductScheduleQuery;
-
-    /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
     protected $storeFacade;
+
+    /**
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface
+     */
+    protected $priceProductScheduleFacade;
 
     /**
      * @return void
@@ -60,9 +48,7 @@ class PriceProductScheduleCleanerTest extends Unit
     {
         parent::setUp();
 
-        $this->priceProductScheduleFactory = new PriceProductScheduleBusinessFactory();
-        $this->priceProductScheduleCleaner = $this->priceProductScheduleFactory->createPriceProductScheduleCleaner();
-        $this->priceProductScheduleQuery = new SpyPriceProductScheduleQuery();
+        $this->priceProductScheduleFacade = $this->tester->getFacade();
         $this->storeFacade = $this->tester->getLocator()->store()->facade();
     }
 
@@ -75,8 +61,11 @@ class PriceProductScheduleCleanerTest extends Unit
      *
      * @return void
      */
-    public function testPriceProductScheduleCleanerShouldRemoveAllEntitiesBeforeDaysRetained(array $data, int $daysRetained, int $expectedCount): void
-    {
+    public function testPriceProductScheduleCleanerShouldRemoveAllEntitiesBeforeDaysRetained(
+        array $data,
+        int $daysRetained,
+        int $expectedCount
+    ): void {
         // Assign
         foreach ($data as $priceProductScheduleData) {
             $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT] = $this->getPriceProductData();
@@ -86,10 +75,10 @@ class PriceProductScheduleCleanerTest extends Unit
         }
 
         // Act
-        $this->priceProductScheduleCleaner->cleanAppliedScheduledPrices($daysRetained);
+        $this->priceProductScheduleFacade->cleanAppliedScheduledPrices($daysRetained);
 
         // Assert
-        $this->assertEquals($expectedCount, $this->priceProductScheduleQuery->find()->count());
+        $this->assertEquals($expectedCount, $this->tester->getPriceProductScheduleQuery()->find()->count());
     }
 
     /**
@@ -124,8 +113,8 @@ class PriceProductScheduleCleanerTest extends Unit
             'all entities should be removed' => [
                 [
                     [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-15 days'))],
-                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-7 days'))],
                     [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-9 days'))],
+                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-6 days'))],
                     [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-13 days'))],
                 ],
                 5,
@@ -150,6 +139,22 @@ class PriceProductScheduleCleanerTest extends Unit
                     [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+2 days'))],
                 ],
                 1,
+                3,
+            ],
+            'active entities should not be removed' => [
+                [
+                    [PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+5 days'))],
+                    [
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-3 days')),
+                        PriceProductScheduleTransfer::IS_CURRENT => true,
+
+                    ],
+                    [
+                        PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-11 days')),
+                        PriceProductScheduleTransfer::IS_CURRENT => true,
+                    ],
+                ],
+                10,
                 3,
             ],
         ];
