@@ -5,30 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Shared\Testify\Helper;
+namespace SprykerTest\Zed\Testify\Helper;
 
 use Codeception\Configuration;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
-use Spryker\Shared\Testify\Locator\TestifyConfiguratorInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Testify\Locator\Business\BusinessLocator as Locator;
+use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 
 class BusinessHelper extends Module
 {
-    protected const BUSINESS_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory';
-
-    /**
-     * @var array
-     */
-    protected $config = [
-        'projectNamespaces' => [],
-        'coreNamespaces' => [
-            'Spryker',
-        ],
-    ];
+    protected const BUSINESS_FACTORY_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory';
 
     /**
      * @var array
@@ -46,27 +35,6 @@ class BusinessHelper extends Module
     protected $mockedFactoryMethods = [];
 
     /**
-     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
-     */
-    public function getLocator()
-    {
-        return new Locator($this->config['projectNamespaces'], $this->config['coreNamespaces'], $this->createClosure());
-    }
-
-    /**
-     * @param string $key
-     * @param mixed $value
-     *
-     * @return $this
-     */
-    public function setDependency($key, $value)
-    {
-        $this->dependencies[$key] = $value;
-
-        return $this;
-    }
-
-    /**
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     public function getFacade()
@@ -82,11 +50,12 @@ class BusinessHelper extends Module
      */
     protected function createFacade(): AbstractFacade
     {
-        $currentNamespace = Configuration::config()['namespace'];
-        $namespaceParts = explode('\\', $currentNamespace);
+        $config = Configuration::config();
+        $namespaceParts = explode('\\', $config['namespace']);
+
         $moduleName = lcfirst($namespaceParts[2]);
 
-        return $this->getLocator()->$moduleName()->facade($this->createClosure());
+        return $this->getLocator()->$moduleName()->facade();
     }
 
     /**
@@ -117,15 +86,12 @@ class BusinessHelper extends Module
     public function getFactory()
     {
         if ($this->factoryStub !== null) {
-            return $this->factoryStub;
+            return $this->injectConfig($this->factoryStub);
         }
 
         $moduleFactory = $this->createModuleFactory();
-        if ($this->hasModule('\\' . ConfigHelper::class)) {
-            $moduleFactory->setConfig($this->getConfig());
-        }
 
-        return $moduleFactory;
+        return $this->injectConfig($moduleFactory);
     }
 
     /**
@@ -146,7 +112,21 @@ class BusinessHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf(static::BUSINESS_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
+        return sprintf(static::BUSINESS_FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|object $businessFactory
+     *
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     */
+    protected function injectConfig($businessFactory)
+    {
+        if ($this->hasModule('\\' . ConfigHelper::class)) {
+            $businessFactory->setConfig($this->getConfig());
+        }
+
+        return $businessFactory;
     }
 
     /**
@@ -163,32 +143,6 @@ class BusinessHelper extends Module
     protected function getConfigHelper(): ConfigHelper
     {
         return $this->getModule('\\' . ConfigHelper::class);
-    }
-
-    /**
-     * @return \Closure
-     */
-    private function createClosure()
-    {
-        $dependencies = $this->getDependencies();
-        $callback = function (TestifyConfiguratorInterface $configurator) use ($dependencies) {
-            foreach ($dependencies as $key => $value) {
-                $configurator->getContainer()->set($key, $value);
-            }
-        };
-
-        return $callback;
-    }
-
-    /**
-     * @return array
-     */
-    private function getDependencies()
-    {
-        $dependencies = $this->dependencies;
-        $this->dependencies = [];
-
-        return $dependencies;
     }
 
     /**
