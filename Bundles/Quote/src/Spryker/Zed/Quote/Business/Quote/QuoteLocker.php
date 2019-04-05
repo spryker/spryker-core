@@ -41,7 +41,7 @@ class QuoteLocker implements QuoteLockerInterface
      */
     public function unlock(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if (!$this->canUnlockQuote($quoteTransfer)) {
+        if (!$this->executeQuoteUnlockPreCheckPlugins($quoteTransfer)) {
             return $quoteTransfer;
         }
 
@@ -53,7 +53,7 @@ class QuoteLocker implements QuoteLockerInterface
      *
      * @return bool
      */
-    protected function canUnlockQuote(QuoteTransfer $quoteTransfer): bool
+    protected function executeQuoteUnlockPreCheckPlugins(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($this->quoteUnlockPreCheckPlugins as $quoteUnlockPreCheckPlugin) {
             if (!$quoteUnlockPreCheckPlugin->check($quoteTransfer)) {
