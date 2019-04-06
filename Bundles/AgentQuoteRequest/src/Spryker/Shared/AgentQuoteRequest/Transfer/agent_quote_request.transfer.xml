@@ -75,6 +75,7 @@
         <property name="quoteRequestReference" type="string" />
         <property name="excludedStatuses" type="array" />
         <property name="pagination" type="Pagination" />
+        <property name="withHidden" type="bool" />
     </transfer>
 
 </transfers>

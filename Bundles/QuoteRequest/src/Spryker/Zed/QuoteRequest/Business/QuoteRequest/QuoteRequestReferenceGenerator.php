@@ -37,18 +37,13 @@ class QuoteRequestReferenceGenerator implements QuoteRequestReferenceGeneratorIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      * @param string $customerReference
      *
      * @return string
      */
-    public function generateQuoteRequestReference(QuoteRequestTransfer $quoteRequestTransfer, string $customerReference)
+    public function generateQuoteRequestReference(string $customerReference)
     {
-        $quoteRequestTransfer->getCompanyUser()->requireIdCompanyUser();
-
-        $customerQuoteRequestCounter = $this->quoteRequestRepository->countCustomerQuoteRequests(
-            $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser()
-        );
+        $customerQuoteRequestCounter = $this->quoteRequestRepository->countCustomerQuoteRequests($customerReference);
 
         return sprintf(
             $this->quoteRequestConfig->getQuoteRequestReferenceFormat(),

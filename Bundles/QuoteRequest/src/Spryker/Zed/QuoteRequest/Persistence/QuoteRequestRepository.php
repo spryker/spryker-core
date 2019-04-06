@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
+use Orm\Zed\QuoteRequest\Persistence\Map\SpyQuoteRequestTableMap;
+use Orm\Zed\QuoteRequest\Persistence\Map\SpyQuoteRequestVersionTableMap;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -80,15 +82,22 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
     }
 
     /**
-     * @param int $idCompanyUser
+     * @module CompanyUser
+     * @module Customer
+     *
+     * @param string $customerReference
      *
      * @return int
      */
-    public function countCustomerQuoteRequests(int $idCompanyUser): int
+    public function countCustomerQuoteRequests(string $customerReference): int
     {
         return $this->getFactory()
             ->getQuoteRequestPropelQuery()
-            ->filterByFkCompanyUser($idCompanyUser)
+            ->useCompanyUserQuery()
+                ->useCustomerQuery()
+                    ->filterByCustomerReference($customerReference)
+                ->endUse()
+            ->endUse()
             ->count();
     }
 
@@ -139,6 +148,10 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
             $quoteRequestQuery->filterByFkCompanyUser($quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser());
         }
 
+        if (!$quoteRequestFilterTransfer->getWithHidden()) {
+            $quoteRequestQuery = $this->addWithoutHiddenQuoteRequestFilter($quoteRequestQuery);
+        }
+
         if ($quoteRequestFilterTransfer->getQuoteRequestReference()) {
             $quoteRequestQuery->filterByQuoteRequestReference($quoteRequestFilterTransfer->getQuoteRequestReference());
         }
@@ -146,6 +159,31 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
         if ($quoteRequestFilterTransfer->getPagination()) {
             $quoteRequestQuery = $this->preparePagination($quoteRequestQuery, $quoteRequestFilterTransfer->getPagination());
         }
+
+        return $quoteRequestQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery $quoteRequestQuery
+     *
+     * @return \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery
+     */
+    protected function addWithoutHiddenQuoteRequestFilter(SpyQuoteRequestQuery $quoteRequestQuery): SpyQuoteRequestQuery
+    {
+        $quoteRequestWithVisibleVersionsIds = $this->getFactory()
+            ->getQuoteRequestPropelQuery()
+            ->joinSpyQuoteRequestVersion()
+            ->groupByIdQuoteRequest()
+            ->having(sprintf(
+                'COUNT(%s) > 1 OR %s = false',
+                SpyQuoteRequestVersionTableMap::COL_FK_QUOTE_REQUEST,
+                SpyQuoteRequestTableMap::COL_IS_LATEST_VERSION_HIDDEN
+            ))
+            ->select(SpyQuoteRequestTableMap::COL_ID_QUOTE_REQUEST)
+            ->find()
+            ->toArray();
+
+        $quoteRequestQuery->filterByIdQuoteRequest_In($quoteRequestWithVisibleVersionsIds);
 
         return $quoteRequestQuery;
     }

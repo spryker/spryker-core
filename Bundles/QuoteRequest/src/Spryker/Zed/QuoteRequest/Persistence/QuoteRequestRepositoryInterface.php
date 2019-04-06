@@ -34,11 +34,11 @@ interface QuoteRequestRepositoryInterface
     ): QuoteRequestVersionCollectionTransfer;
 
     /**
-     * @param int $idCompanyUser
+     * @param string $customerReference
      *
      * @return int
      */
-    public function countCustomerQuoteRequests(int $idCompanyUser): int;
+    public function countCustomerQuoteRequests(string $customerReference): int;
 
     /**
      * @param int $idQuoteRequest

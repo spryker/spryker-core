@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\QuoteExtension\Dependency\Plugin;
+namespace Spryker\Zed\QuoteExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface DatabaseStrategyAvailabilityCheckPluginInterface
+interface QuoteUnlockPreCheckPluginInterface
 {
     /**
      * Specification:
-     * - Checks if database strategy is allowed.
+     * - Returns true if quote unlock allowed.
      *
      * @api
      *
@@ -21,5 +21,5 @@ interface DatabaseStrategyAvailabilityCheckPluginInterface
      *
      * @return bool
      */
-    public function isAllowed(QuoteTransfer $quoteTransfer): bool;
+    public function check(QuoteTransfer $quoteTransfer): bool;
 }

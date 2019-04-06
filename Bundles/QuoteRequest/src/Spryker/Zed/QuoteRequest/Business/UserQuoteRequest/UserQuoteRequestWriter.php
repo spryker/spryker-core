@@ -192,8 +192,7 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND);
         }
 
-        $quoteRequestReference = $this->quoteRequestReferenceGenerator
-            ->generateQuoteRequestReference($quoteRequestTransfer, $customerReference);
+        $quoteRequestReference = $this->quoteRequestReferenceGenerator->generateQuoteRequestReference($customerReference);
 
         $quoteRequestTransfer
             ->setQuoteRequestReference($quoteRequestReference)
@@ -374,6 +373,7 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
         $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setWithHidden(true)
             ->setQuoteRequestReference($quoteRequestCriteriaTransfer->getQuoteRequestReference());
 
         $quoteRequestTransfers = $this->quoteRequestRepository
