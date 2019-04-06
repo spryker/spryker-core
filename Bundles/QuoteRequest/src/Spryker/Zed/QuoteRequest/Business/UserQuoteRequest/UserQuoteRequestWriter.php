@@ -373,6 +373,7 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
         $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setWithHidden(true)
             ->setQuoteRequestReference($quoteRequestCriteriaTransfer->getQuoteRequestReference());
 
         $quoteRequestTransfers = $this->quoteRequestRepository
