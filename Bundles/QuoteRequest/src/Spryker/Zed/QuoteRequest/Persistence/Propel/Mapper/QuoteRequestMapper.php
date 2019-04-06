@@ -103,28 +103,14 @@ class QuoteRequestMapper
     /**
      * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequest $quoteRequestEntity
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
      */
-    protected function getLatestQuoteRequestVersion(SpyQuoteRequest $quoteRequestEntity): ?QuoteRequestVersionTransfer
+    protected function getLatestQuoteRequestVersion(SpyQuoteRequest $quoteRequestEntity): QuoteRequestVersionTransfer
     {
-        $latestQuoteRequestVersionEntity = null;
+        /** @var \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion $quoteRequestVersionEntity */
+        $quoteRequestVersionEntity = $quoteRequestEntity->getSpyQuoteRequestVersions()->getLast();
 
-        foreach ($quoteRequestEntity->getSpyQuoteRequestVersions() as $quoteRequestVersionEntity) {
-            if (!$latestQuoteRequestVersionEntity) {
-                $latestQuoteRequestVersionEntity = $quoteRequestVersionEntity;
-                continue;
-            }
-
-            if ($quoteRequestVersionEntity->getVersion() > $latestQuoteRequestVersionEntity->getVersion()) {
-                $latestQuoteRequestVersionEntity = $quoteRequestVersionEntity;
-            }
-        }
-
-        if (!$latestQuoteRequestVersionEntity) {
-            return null;
-        }
-
-        return $this->mapQuoteRequestVersionTransfer($latestQuoteRequestVersionEntity);
+        return $this->mapQuoteRequestVersionTransfer($quoteRequestVersionEntity);
     }
 
     /**
