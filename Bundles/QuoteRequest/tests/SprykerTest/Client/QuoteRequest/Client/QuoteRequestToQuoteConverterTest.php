@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\QuoteRequest;
+namespace SprykerTest\Client\QuoteRequest\Client;
 
 use Codeception\Test\Unit;
 use DateTime;
@@ -38,14 +38,14 @@ use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 class QuoteRequestToQuoteConverterTest extends Unit
 {
     /**
-     * @uses \Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverter::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS
+     * @uses \Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverter::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS
      */
-    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
+    protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
 
     /**
-     * @uses \Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverter::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND
+     * @uses \Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverter::GLOSSARY_KEY_WRONG_CONVERT_QUOTE_REQUEST_VALID_UNTIL
      */
-    protected const MESSAGE_ERROR_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
+    protected const GLOSSARY_KEY_WRONG_CONVERT_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.convert.error.wrong_valid_until';
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverter
@@ -65,10 +65,10 @@ class QuoteRequestToQuoteConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertQuoteRequestToLockedQuoteWithValidQuoteRequestSuccessful(): void
+    public function testConvertQuoteRequestToLockedQuoteWithoutValidUntilDate(): void
     {
         // Arrange
-        $quoteRequestTransfer = $this->createValidQuoteRequestTransferInStatus(SharedQuoteRequestConfig::STATUS_READY);
+        $quoteRequestTransfer = $this->createQuoteRequestTransfer();
 
         // Act
         $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
@@ -80,13 +80,16 @@ class QuoteRequestToQuoteConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertQuoteRequestToQuoteWithValidQuoteRequestSuccessful(): void
+    public function testConvertQuoteRequestToLockedQuoteWithValidUntilDate(): void
     {
         // Arrange
-        $quoteRequestTransfer = $this->createValidQuoteRequestTransferInStatus(SharedQuoteRequestConfig::STATUS_DRAFT);
+        $quoteRequestTransfer = $this->createQuoteRequestTransfer(
+            SharedQuoteRequestConfig::STATUS_READY,
+            (new DateTime("+1 hour"))->format('Y-m-d H:i:s')
+        );
 
         // Act
-        $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToQuote($quoteRequestTransfer);
+        $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
 
         // Assert
         $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
@@ -95,41 +98,10 @@ class QuoteRequestToQuoteConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertQuoteRequestToLockedQuoteLocksQuote(): void
+    public function testConvertQuoteRequestToLockedQuoteWithWrongStatus(): void
     {
         // Arrange
-        $quoteRequestTransfer = $this->createValidQuoteRequestTransferInStatus(SharedQuoteRequestConfig::STATUS_READY);
-
-        $quoteClientMock = $this->createQuoteRequestToQuoteClientInterfaceMock();
-
-        $quoteRequestToQuoteConverterMock = $this->getMockBuilder(QuoteRequestToQuoteConverter::class)
-            ->setConstructorArgs([
-                $this->createQuoteRequestToPersistentCartClientInterfaceMock(),
-                $quoteClientMock,
-                $this->createQuoteRequestCheckerMock(),
-            ])
-            ->setMethods(null)
-            ->getMock();
-
-        //Assert
-        $quoteClientMock->method('setQuote')
-            ->willReturnCallback(function (QuoteTransfer $quoteTransfer) {
-                $this->assertTrue($quoteTransfer->getIsLocked());
-            });
-
-        // Act
-        $quoteRequestToQuoteConverterMock->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testConvertQuoteRequestToLockedQuoteWithWrongStatusFails(): void
-    {
-        // Arrange
-        $quoteRequestTransfer = (new QuoteRequestBuilder([
-            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_WAITING,
-        ]))->build();
+        $quoteRequestTransfer = $this->createQuoteRequestTransfer(SharedQuoteRequestConfig::STATUS_WAITING);
 
         // Act
         $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
@@ -137,7 +109,7 @@ class QuoteRequestToQuoteConverterTest extends Unit
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertEquals(
-            static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS,
+            static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS,
             $quoteResponseTransfer->getErrors()[0]->getMessage()
         );
     }
@@ -145,12 +117,47 @@ class QuoteRequestToQuoteConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertQuoteRequestToQuoteWithWrongStatusFails(): void
+    public function testConvertQuoteRequestToLockedQuoteWithWrongValidUntilDate(): void
     {
         // Arrange
-        $quoteRequestTransfer = (new QuoteRequestBuilder([
-            QuoteRequestTransfer::STATUS => SharedQuoteRequestConfig::STATUS_READY,
-        ]))->build();
+        $quoteRequestTransfer = $this->createQuoteRequestTransfer(
+            SharedQuoteRequestConfig::STATUS_READY,
+            (new DateTime("-1 hour"))->format('Y-m-d H:i:s')
+        );
+
+        // Act
+        $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
+
+        // Assert
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_WRONG_CONVERT_QUOTE_REQUEST_VALID_UNTIL,
+            $quoteResponseTransfer->getErrors()[0]->getMessage()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testConvertQuoteRequestToQuoteWithDraftStatus(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->createQuoteRequestTransfer(SharedQuoteRequestConfig::STATUS_DRAFT);
+
+        // Act
+        $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToQuote($quoteRequestTransfer);
+
+        // Assert
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testConvertQuoteRequestToQuoteWithWrongStatus(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->createQuoteRequestTransfer(SharedQuoteRequestConfig::STATUS_WAITING);
 
         // Act
         $quoteResponseTransfer = $this->quoteRequestToQuoteConverterMock->convertQuoteRequestToQuote($quoteRequestTransfer);
@@ -158,7 +165,7 @@ class QuoteRequestToQuoteConverterTest extends Unit
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertEquals(
-            static::MESSAGE_ERROR_WRONG_QUOTE_REQUEST_STATUS,
+            static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS,
             $quoteResponseTransfer->getErrors()[0]->getMessage()
         );
     }
@@ -247,14 +254,17 @@ class QuoteRequestToQuoteConverterTest extends Unit
 
     /**
      * @param string $status
+     * @param string|null $validUntil
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    protected function createValidQuoteRequestTransferInStatus(string $status): QuoteRequestTransfer
-    {
+    protected function createQuoteRequestTransfer(
+        string $status = SharedQuoteRequestConfig::STATUS_READY,
+        ?string $validUntil = null
+    ): QuoteRequestTransfer {
         $quoteRequestTransfer = (new QuoteRequestBuilder([
             QuoteRequestTransfer::STATUS => $status,
-            QuoteRequestTransfer::VALID_UNTIL => (new DateTime("+1 hour"))->format('Y-m-d H:i:s'),
+            QuoteRequestTransfer::VALID_UNTIL => $validUntil,
         ]))->build();
 
         $quoteTransfer = (new QuoteBuilder())
