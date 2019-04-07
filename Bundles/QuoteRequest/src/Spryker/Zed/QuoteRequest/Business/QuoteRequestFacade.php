@@ -228,7 +228,8 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
      */
     public function getQuoteRequestVersionCollectionByFilter(QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer): QuoteRequestVersionCollectionTransfer
     {
-        return $this->getRepository()
+        return $this->getFactory()
+            ->createQuoteRequestReader()
             ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer);
     }
 

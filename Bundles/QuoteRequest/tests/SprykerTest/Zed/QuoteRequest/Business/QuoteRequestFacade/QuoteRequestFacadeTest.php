@@ -584,7 +584,7 @@ class QuoteRequestFacadeTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInReadyStatus(
-            (new DateTime())->format('Y-m-d H:i:s')
+            (new DateTime("+1 second"))->format('Y-m-d H:i:s')
         );
         $this->quoteTransfer->setQuoteRequestVersionReference(
             $quoteRequestTransfer->getLatestVersion()->getVersionReference()
@@ -596,7 +596,6 @@ class QuoteRequestFacadeTest extends Unit
         $isValid = $this->tester
             ->getFacade()
             ->checkQuoteRequest($this->quoteTransfer, $checkoutResponseTransfer);
-
 
         // Assert
         $this->assertFalse($isValid);
@@ -1189,7 +1188,7 @@ class QuoteRequestFacadeTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInReadyStatus(
-            (new DateTime())->format('Y-m-d H:i:s')
+            (new DateTime("+1 second"))->format('Y-m-d H:i:s')
         );
 
         // Act
@@ -1208,7 +1207,7 @@ class QuoteRequestFacadeTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInInProgressStatus(
-            (new DateTime())->format('Y-m-d H:i:s')
+            (new DateTime("+1 second"))->format('Y-m-d H:i:s')
         );
 
         // Act

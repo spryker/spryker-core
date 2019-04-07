@@ -9,6 +9,8 @@ namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 
 class QuoteRequestReader implements QuoteRequestReaderInterface
@@ -36,9 +38,20 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
         $quoteRequestCollectionTransfer = $this->quoteRequestRepository
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
 
-        $quoteRequestCollectionTransfer = $this->expandQuoteRequestWithLatestVisibleVersion($quoteRequestCollectionTransfer);
+        $quoteRequestCollectionTransfer = $this->expandQuoteRequestCollectionWithVersions($quoteRequestCollectionTransfer);
 
         return $quoteRequestCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer
+     */
+    public function getQuoteRequestVersionCollectionByFilter(QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer): QuoteRequestVersionCollectionTransfer
+    {
+        return $this->quoteRequestRepository
+            ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer);
     }
 
     /**
@@ -46,18 +59,28 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
-    protected function expandQuoteRequestWithLatestVisibleVersion(
+    protected function expandQuoteRequestCollectionWithVersions(
         QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
     ): QuoteRequestCollectionTransfer {
         foreach ($quoteRequestCollectionTransfer->getQuoteRequests() as $quoteRequestTransfer) {
-            $latestVisibleVersion = $quoteRequestTransfer->getLatestVersion();
+            $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterTransfer())
+                ->setQuoteRequest($quoteRequestTransfer);
+
+            $quoteRequestVersionTransfers = $this->quoteRequestRepository
+                ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer)
+                ->getQuoteRequestVersions();
+
+            $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfers->offsetGet(0));
 
             if ($quoteRequestTransfer->getIsLatestVersionHidden()) {
-                $latestVisibleVersion = $this->quoteRequestRepository
-                    ->findQuoteRequestLatestVisibleVersion($quoteRequestTransfer->getIdQuoteRequest());
+                if ($quoteRequestVersionTransfers->offsetExists(1)) {
+                    $quoteRequestTransfer->setLatestVisibleVersion($quoteRequestVersionTransfers->offsetGet(1));
+                }
+
+                continue;
             }
 
-            $quoteRequestTransfer->setLatestVisibleVersion($latestVisibleVersion);
+            $quoteRequestTransfer->setLatestVisibleVersion($quoteRequestTransfer->getLatestVersion());
         }
 
         return $quoteRequestCollectionTransfer;

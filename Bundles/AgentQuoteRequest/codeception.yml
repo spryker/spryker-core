@@ -2,7 +2,6 @@ namespace: SprykerTest
 
 include:
     - tests/SprykerTest/Client/AgentQuoteRequest
-    - tests/SprykerTest/Zed/AgentQuoteRequest
 
 paths:
     tests: tests

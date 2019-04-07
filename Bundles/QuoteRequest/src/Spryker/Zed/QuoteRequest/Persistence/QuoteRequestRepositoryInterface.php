@@ -9,9 +9,9 @@ namespace Spryker\Zed\QuoteRequest\Persistence;
 
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
-use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 
 interface QuoteRequestRepositoryInterface
 {
@@ -41,9 +41,9 @@ interface QuoteRequestRepositoryInterface
     public function countCustomerQuoteRequests(string $customerReference): int;
 
     /**
-     * @param int $idQuoteRequest
+     * @param string $versionReference
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    public function findQuoteRequestLatestVisibleVersion(int $idQuoteRequest): ?QuoteRequestVersionTransfer;
+    public function findQuoteRequestByVersionReference(string $versionReference): ?QuoteRequestTransfer;
 }

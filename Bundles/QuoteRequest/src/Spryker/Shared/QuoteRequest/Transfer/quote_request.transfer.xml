@@ -63,6 +63,7 @@
         <property name="excludedStatuses" type="array" />
         <property name="pagination" type="Pagination" />
         <property name="withHidden" type="bool" />
+        <property name="idQuoteRequest" type="int" />
     </transfer>
 
     <transfer name="QuoteRequestVersionFilter">

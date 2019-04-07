@@ -50,7 +50,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
         return new QuoteRequestWriter(
             $this->getConfig(),
             $this->getEntityManager(),
-            $this->getRepository(),
+            $this->createQuoteRequestReader(),
             $this->createQuoteRequestReferenceGenerator(),
             $this->getCompanyUserFacade(),
             $this->getCalculationFacade(),
@@ -66,7 +66,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
         return new UserQuoteRequestWriter(
             $this->getConfig(),
             $this->getEntityManager(),
-            $this->getRepository(),
+            $this->createQuoteRequestReader(),
             $this->createQuoteRequestReferenceGenerator(),
             $this->getCompanyUserFacade(),
             $this->getCartFacade()
@@ -79,7 +79,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     public function createQuoteRequestChecker(): QuoteRequestCheckerInterface
     {
         return new QuoteRequestChecker(
-            $this->getRepository()
+            $this->createQuoteRequestReader()
         );
     }
 

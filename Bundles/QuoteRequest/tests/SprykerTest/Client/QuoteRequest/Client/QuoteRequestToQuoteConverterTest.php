@@ -28,10 +28,10 @@ use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 
 /**
  * Auto-generated group annotations
- *
  * @group SprykerTest
  * @group Client
  * @group QuoteRequest
+ * @group Client
  * @group QuoteRequestToQuoteConverterTest
  * Add your own group annotations below this line
  */

@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
-use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 
 class QuoteRequestChecker implements QuoteRequestCheckerInterface
 {
@@ -26,16 +25,16 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.validation.error.wrong_valid_until';
 
     /**
-     * @var \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface
+     * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface
      */
-    protected $quoteRequestRepository;
+    protected $quoteRequestReader;
 
     /**
-     * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $quoteRequestRepository
+     * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface $quoteRequestReader
      */
-    public function __construct(QuoteRequestRepositoryInterface $quoteRequestRepository)
+    public function __construct(QuoteRequestReaderInterface $quoteRequestReader)
     {
-        $this->quoteRequestRepository = $quoteRequestRepository;
+        $this->quoteRequestReader = $quoteRequestReader;
     }
 
     /**
@@ -50,7 +49,7 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
             return true;
         }
 
-        $quoteRequestVersionTransfer = $this->findQuoteRequestVersion($quoteTransfer->getQuoteRequestVersionReference());
+        $quoteRequestVersionTransfer = $this->findQuoteRequestVersion($quoteTransfer);
 
         if (!$quoteRequestVersionTransfer) {
             $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND);
@@ -70,16 +69,18 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
     }
 
     /**
-     * @param string $quoteRequestVersionReference
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
      */
-    protected function findQuoteRequestVersion(string $quoteRequestVersionReference): ?QuoteRequestVersionTransfer
+    protected function findQuoteRequestVersion(QuoteTransfer $quoteTransfer): ?QuoteRequestVersionTransfer
     {
-        $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterTransfer())
-            ->setQuoteRequestVersionReference($quoteRequestVersionReference);
+        $quoteTransfer->requireQuoteRequestVersionReference();
 
-        $quoteRequestVersionTransfers = $this->quoteRequestRepository
+        $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterTransfer())
+            ->setQuoteRequestVersionReference($quoteTransfer->getQuoteRequestVersionReference());
+
+        $quoteRequestVersionTransfers = $this->quoteRequestReader
             ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer)
             ->getQuoteRequestVersions()
             ->getArrayCopy();
@@ -94,14 +95,10 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
      */
     protected function findQuoteRequest(QuoteRequestVersionTransfer $quoteRequestVersionTransfer): ?QuoteRequestTransfer
     {
-        $quoteRequestVersionTransfer->requireQuoteRequest()
-            ->getQuoteRequest()
-            ->requireQuoteRequestReference();
-
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestVersionTransfer->getQuoteRequest()->getQuoteRequestReference());
+            ->setIdQuoteRequest($quoteRequestVersionTransfer->getFkQuoteRequest());
 
-        $quoteRequestTransfers = $this->quoteRequestRepository
+        $quoteRequestTransfers = $this->quoteRequestReader
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
             ->getQuoteRequests()
             ->getArrayCopy();
