@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentProductGui\Communication\Plugin\ContentGui;
 
-use Generated\Shared\Transfer\ContentProductAbstractListTransfer;
+use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
 use Spryker\Shared\ContentProductGui\ContentProductGuiConfig;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface;
@@ -62,19 +62,19 @@ class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPlu
      *
      * @param array|null $params
      *
-     * @return \Generated\Shared\Transfer\ContentProductAbstractListTransfer
+     * @return \Generated\Shared\Transfer\ContentProductAbstractListTermTransfer
      */
     public function getTransferObject(?array $params = null): TransferInterface
     {
-        $contentProductAbstractListTransfer = new ContentProductAbstractListTransfer();
+        $contentProductAbstractListTermTransfer = new ContentProductAbstractListTermTransfer();
 
         if ($params !== null) {
-            $contentProductAbstractListTransfer->fromArray($params);
-            $contentProductAbstractListTransfer->setIdProductAbstracts(
-                array_values($contentProductAbstractListTransfer->getIdProductAbstracts())
+            $contentProductAbstractListTermTransfer->fromArray($params);
+            $contentProductAbstractListTermTransfer->setIdProductAbstracts(
+                array_values($contentProductAbstractListTermTransfer->getIdProductAbstracts())
             );
         }
 
-        return $contentProductAbstractListTransfer;
+        return $contentProductAbstractListTermTransfer;
     }
 }

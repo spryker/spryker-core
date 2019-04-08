@@ -34,7 +34,7 @@ class ProductAbstractListContentTermForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -94,7 +94,7 @@ class ProductAbstractListContentTermForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addIdProductAbstractsField($builder);
     }
@@ -118,6 +118,10 @@ class ProductAbstractListContentTermForm extends AbstractType
                     'placeholder' => static::PLACEHOLDER_ID_ABSTRACT_PRODUCTS,
                 ],
                 'constraints' => $this->getTextFieldConstraints(),
+            ],
+            'constraints' => [
+                $this->getFactory()->createProductConstraint(),
+
             ],
         ]);
 

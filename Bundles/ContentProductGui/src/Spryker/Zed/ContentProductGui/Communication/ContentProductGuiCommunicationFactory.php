@@ -8,22 +8,18 @@
 namespace Spryker\Zed\ContentProductGui\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\ContentProductGui\Communication\Form\Constraints\ProductConstraint;
 use Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelper;
 use Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
 use Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractSelectedTable;
 use Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractViewTable;
 use Spryker\Zed\ContentProductGui\ContentProductGuiDependencyProvider;
+use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToContentProductInterface;
 use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToLocaleInterface;
 use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToProductImageInterface;
 use Spryker\Zed\ContentProductGui\Dependency\QueryContainer\ContentProductGuiToProductInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
-/**
- * @method \Spryker\Zed\ContentProductGui\ContentStorageConfig getConfig()
- * @method \Spryker\Zed\ContentProductGui\Persistence\ContentStorageEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\ContentProductGui\Persistence\ContentStorageRepositoryInterface getRepository()
- * @method \Spryker\Zed\ContentProductGui\Business\ContentStorageFacadeInterface getFacade()
- */
 class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -66,6 +62,14 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ContentProductGui\Communication\Form\Constraints\ProductConstraint
+     */
+    public function createProductConstraint(): ProductConstraint
+    {
+        return new ProductConstraint($this->getContentProductFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface
      */
     public function createProductAbstractTableHelper(): ProductAbstractTableHelperInterface
@@ -95,5 +99,13 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade(): ContentProductGuiToLocaleInterface
     {
         return $this->getProvidedDependency(ContentProductGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToContentProductInterface
+     */
+    public function getContentProductFacade(): ContentProductGuiToContentProductInterface
+    {
+        return $this->getProvidedDependency(ContentProductGuiDependencyProvider::FACADE_CONTENT_PRODUCT);
     }
 }

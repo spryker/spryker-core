@@ -9,4 +9,9 @@
     <transfer name="LocalizedContent">
         <property name="fkLocale" type="int" />
     </transfer>
+
+    <transfer name="ContentValidationResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="parameterMessages" type="ContentParameterMessage[]" />
+    </transfer>
 </transfers>
