@@ -231,7 +231,6 @@ abstract class Redis
     }
 
     /**
-     *
      * @return void
      */
     public function connect()
