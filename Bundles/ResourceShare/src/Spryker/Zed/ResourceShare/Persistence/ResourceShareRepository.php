@@ -49,20 +49,59 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
         ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer,
         SpyResourceShareQuery $resourceShareQuery
     ): SpyResourceShareQuery {
-        if ($resourceShareCriteriaTransfer->getUuid()) {
-            $resourceShareQuery->filterByUuid($resourceShareCriteriaTransfer->getUuid());
+        $resourceShareQuery = $this->applyPersistenceCriteriaFilters($resourceShareCriteriaTransfer, $resourceShareQuery);
+        $resourceShareQuery = $this->applyResourceCriteriaFilters($resourceShareCriteriaTransfer, $resourceShareQuery);
+
+        if ($resourceShareCriteriaTransfer->getCustomerReference()) {
+            $resourceShareQuery->filterByCustomerReference($resourceShareCriteriaTransfer->getCustomerReference());
         }
 
+        return $resourceShareQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer
+     * @param \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery $resourceShareQuery
+     *
+     * @return \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery
+     */
+    protected function applyPersistenceCriteriaFilters(
+        ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer,
+        SpyResourceShareQuery $resourceShareQuery
+    ): SpyResourceShareQuery {
         if ($resourceShareCriteriaTransfer->getIdResourceShare()) {
             $resourceShareQuery->filterByIdResourceShare($resourceShareCriteriaTransfer->getIdResourceShare());
         }
 
+        if ($resourceShareCriteriaTransfer->getUuid()) {
+            $resourceShareQuery->filterByUuid($resourceShareCriteriaTransfer->getUuid());
+        }
+
+        return $resourceShareQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer
+     * @param \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery $resourceShareQuery
+     *
+     * @return \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery
+     */
+    protected function applyResourceCriteriaFilters(
+        ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer,
+        SpyResourceShareQuery $resourceShareQuery
+    ): SpyResourceShareQuery {
         if ($resourceShareCriteriaTransfer->getResourceType()) {
             $resourceShareQuery->filterByResourceType($resourceShareCriteriaTransfer->getResourceType());
         }
 
-        if ($resourceShareCriteriaTransfer->getResourceData()) {
+        if ($resourceShareCriteriaTransfer->getResourceData()
+            && $resourceShareCriteriaTransfer->isPropertyModified(ResourceShareCriteriaTransfer::RESOURCE_DATA)
+        ) {
             $resourceShareQuery->filterByResourceData($resourceShareCriteriaTransfer->getResourceData());
+        }
+
+        if ($resourceShareCriteriaTransfer->getExpiryDate()) {
+            $resourceShareQuery->filterByExpiryDate($resourceShareCriteriaTransfer->getExpiryDate());
         }
 
         return $resourceShareQuery;
