@@ -29,7 +29,7 @@ class ProductTaxSetsRestApiResource extends AbstractRestResource implements Prod
     public function findAbstractProductTaxSetsByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         return $this->getFactory()
-            ->createTaxSetsReader()
+            ->createProductTaxSetReader()
             ->findAbstractProductTaxSetsByAbstractProductSku($abstractProductSku, $restRequest);
     }
 }
