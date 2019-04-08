@@ -27,7 +27,11 @@ class ProductAbstractSelectedTable extends AbstractTable
     public const COL_NAME = 'Name';
     public const COL_STORIES = 'Stories';
     public const COL_STATUS = 'Status';
-    public const COL_DELETE = 'Delete';
+    public const COL_ACTIONS = 'Actions';
+
+    public const BUTTON_DELETE = 'Delete';
+    public const BUTTON_MOVE_UP = 'Move Up';
+    public const BUTTON_MOVE_DOWN = 'Move Down';
 
     /**
      * @var \Spryker\Zed\ContentProductGui\Dependency\QueryContainer\ContentProductGuiToProductInterface
@@ -101,14 +105,14 @@ class ProductAbstractSelectedTable extends AbstractTable
             static::COL_NAME => static::COL_NAME,
             static::COL_STORIES => static::COL_STORIES,
             static::COL_STATUS => static::COL_STATUS,
-            static::COL_DELETE => static::COL_DELETE,
+            static::COL_ACTIONS => static::COL_ACTIONS,
         ]);
 
         $config->setRawColumns([
             static::COL_IMAGE,
             static::COL_STORIES,
             static::COL_STATUS,
-            static::COL_DELETE,
+            static::COL_ACTIONS,
         ]);
 
         $config->setStateSave(false);
@@ -174,7 +178,37 @@ class ProductAbstractSelectedTable extends AbstractTable
             static::COL_NAME => $productAbstractEntity->getSpyProductAbstractLocalizedAttributess()->getFirst()->getName(),
             static::COL_STORIES => $this->productAbstractTableHelper->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),
             static::COL_STATUS => $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity),
-            static::COL_DELETE => $this->productAbstractTableHelper->getDeleteButton($productAbstractEntity),
+            static::COL_ACTIONS => $this->getActionButtons($productAbstractEntity),
         ];
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return string
+     */
+    protected function getActionButtons(SpyProductAbstract $productAbstractEntity)
+    {
+        $actionButtons = [];
+
+        $actionButtons[] = sprintf(
+            '<button type="button" data-id="%s" class="js-delete-product-abstract btn btn-sm btn-outline btn-danger"><i class="fa fa-trash"></i> %s</button>',
+            $productAbstractEntity->getIdProductAbstract(),
+            static::BUTTON_DELETE
+        );
+
+        $actionButtons[] = sprintf(
+            '<button type="button" data-id="%s" data-direction="up" class="js-reorder-product-abstract btn btn-sm btn-outline btn-create"><i class="fa fa-arrow-up"></i> %s</button>',
+            $productAbstractEntity->getIdProductAbstract(),
+            static::BUTTON_MOVE_UP
+        );
+
+        $actionButtons[] = sprintf(
+            '<button type="button" data-id="%s" data-direction="down" class="js-reorder-product-abstract btn btn-sm btn-outline btn-create"><i class="fa fa-arrow-down"></i> %s</button>',
+            $productAbstractEntity->getIdProductAbstract(),
+            static::BUTTON_MOVE_DOWN
+        );
+
+        return implode(' ', $actionButtons);
     }
 }

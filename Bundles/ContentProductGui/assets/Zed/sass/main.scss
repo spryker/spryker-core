@@ -21,3 +21,25 @@ td {
         max-height: 75px;
     }
 }
+
+.product-abstract-selected-table {
+    tbody {
+        tr {
+            &:first-child {
+                .js-reorder-product-abstract {
+                    &[data-direction="up"] {
+                        display: none;
+                    }
+                }
+            }
+
+            &:last-child {
+                .js-reorder-product-abstract {
+                    &[data-direction="down"] {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
