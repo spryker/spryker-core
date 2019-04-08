@@ -10,6 +10,8 @@ namespace Spryker\Zed\TaxStorage\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\TaxStorage\Business\TaxStoragePublisher\TaxStoragePublisher;
 use Spryker\Zed\TaxStorage\Business\TaxStoragePublisher\TaxStoragePublisherInterface;
+use Spryker\Zed\TaxStorage\Business\TaxStoragePublisher\TaxStorageUnpublisher;
+use Spryker\Zed\TaxStorage\Business\TaxStoragePublisher\TaxStorageUnpublisherInterface;
 
 /**
  * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepository getRepository()
@@ -27,6 +29,17 @@ class TaxStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxStorage\Business\TaxStoragePublisher\TaxStorageUnpublisherInterface
+     */
+    public function createTaxStorageUnpublisher(): TaxStorageUnpublisherInterface
+    {
+        return new TaxStorageUnpublisher(
+            $this->getRepository(),
+            $this->getEntityManager()
         );
     }
 }

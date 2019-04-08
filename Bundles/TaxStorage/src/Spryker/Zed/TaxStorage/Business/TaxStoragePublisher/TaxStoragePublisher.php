@@ -13,15 +13,12 @@ use Generated\Shared\Transfer\TaxSetStorageTransfer;
 use Orm\Zed\Tax\Persistence\Base\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface;
 use Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface;
 use Spryker\Zed\TaxStorage\TaxStorageConfig;
 
 class TaxStoragePublisher implements TaxStoragePublisherInterface
 {
-    use TransactionTrait;
-
     /**
      * @var \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface
      */
@@ -53,7 +50,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
     }
 
     /**
-     * @param array $taxSetIds
+     * @param int[] $taxSetIds
      *
      * @return void
      */
@@ -64,28 +61,11 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
         $spyTaxSetStorage = $this->taxStorageRepository
             ->findTaxSetStoragesByIds($taxSetIds);
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($spyTaxSets, $spyTaxSetStorage): void {
-            $this->storeDataSet($spyTaxSets, $spyTaxSetStorage);
-        });
+        $this->storeDataSet($spyTaxSets, $spyTaxSetStorage);
     }
 
     /**
-     * @param array $taxSetIds
-     *
-     * @return void
-     */
-    public function unpublishByTaxSetIds(array $taxSetIds): void
-    {
-        $spyTaxSetStorages = $this->taxStorageRepository
-            ->findTaxSetStoragesByIds($taxSetIds);
-
-        $this->getTransactionHandler()->handleTransaction(function () use ($spyTaxSetStorages): void {
-            $this->executeUnpublishTransaction($spyTaxSetStorages);
-        });
-    }
-
-    /**
-     * @param array $taxRateIds
+     * @param int[] $taxRateIds
      *
      * @return void
      */
@@ -109,18 +89,6 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
             $spyTaxSetStorage = $spyTaxSetStorages[$spyTaxSet->getIdTaxSet()] ?? (new SpyTaxSetStorage())
                     ->setFkTaxSet($spyTaxSet->getIdTaxSet());
             $this->createDataSet($spyTaxSet, $spyTaxSetStorage);
-        }
-    }
-
-    /**
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[] $spyTaxSetStorages
-     *
-     * @return void
-     */
-    protected function executeUnpublishTransaction(array $spyTaxSetStorages): void
-    {
-        foreach ($spyTaxSetStorages as $spyTaxSetStorage) {
-            $this->taxStorageEntityManager->deleteTaxSetStorage($spyTaxSetStorage);
         }
     }
 

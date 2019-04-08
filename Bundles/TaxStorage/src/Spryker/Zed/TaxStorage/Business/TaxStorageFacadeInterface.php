@@ -11,13 +11,13 @@ interface TaxStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Queries all TaxSets with related TaxRates by the given $taxSetIds
-     * - Stores data as json encoded to storage table
-     * - Sends a copy of data to queue based on module config
+     * - Queries all TaxSets with related TaxRates by the given $taxSetIds.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
      *
      * @api
      *
-     * @param array $taxSetIds
+     * @param int[] $taxSetIds
      *
      * @return void
      */
@@ -25,12 +25,12 @@ interface TaxStorageFacadeInterface
 
     /**
      * Specification:
-     * - Finds and deletes TaxSet storage entities with the given $taxSetIds
-     * - Sends delete message to queue based on module config
+     * - Finds and deletes TaxSet storage entities with the given $taxSetIds.
+     * - Sends delete message to queue based on module config.
      *
      * @api
      *
-     * @param array $taxSetIds
+     * @param int[] $taxSetIds
      *
      * @return void
      */
@@ -38,13 +38,13 @@ interface TaxStorageFacadeInterface
 
     /**
      * Specification:
-     * - Queries all TaxSets with related TaxRates by the given $taxRateIds
-     * - Stores data as json encoded to storage table
-     * - Sends a copy of data to queue based on module config
+     * - Queries all TaxSets with related TaxRates by the given $taxRateIds.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
      *
      * @api
      *
-     * @param array $taxRateIds
+     * @param int[] $taxRateIds
      *
      * @return void
      */

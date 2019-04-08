@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\TaxStorage;
 
+use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\TaxStorage\Dependency\Facade\TaxSetStorageToEventBehaviorFacadeBridge;
@@ -17,6 +18,7 @@ use Spryker\Zed\TaxStorage\Dependency\Facade\TaxSetStorageToEventBehaviorFacadeB
 class TaxStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const PROPEL_QUERY_TAX_SET = 'PROPEL_QUERY_TAX_SET';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -36,12 +38,39 @@ class TaxStorageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addTaxSetPropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addEventBehaviorFacade(Container $container): Container
     {
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new TaxSetStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTaxSetPropelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_TAX_SET] = function (Container $container) {
+            return SpyTaxSetQuery::create();
         };
 
         return $container;

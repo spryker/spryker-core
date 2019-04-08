@@ -7,22 +7,8 @@
 
 namespace Spryker\Zed\TaxStorage\Business\TaxStoragePublisher;
 
-interface TaxStoragePublisherInterface
+interface TaxStorageUnpublisherInterface
 {
-    /**
-     * @param int[] $taxSetIds
-     *
-     * @return void
-     */
-    public function publishByTaxSetIds(array $taxSetIds): void;
-
-    /**
-     * @param int[] $taxRateIds
-     *
-     * @return void
-     */
-    public function publishByTaxRateIds(array $taxRateIds): void;
-
     /**
      * @param int[] $taxSetIds
      *

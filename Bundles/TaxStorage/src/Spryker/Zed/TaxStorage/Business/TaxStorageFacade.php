@@ -21,7 +21,7 @@ class TaxStorageFacade extends AbstractFacade implements TaxStorageFacadeInterfa
      *
      * @api
      *
-     * @param array $taxSetIds
+     * @param int[] $taxSetIds
      *
      * @return void
      */
@@ -35,13 +35,13 @@ class TaxStorageFacade extends AbstractFacade implements TaxStorageFacadeInterfa
      *
      * @api
      *
-     * @param array $taxSetIds
+     * @param int[] $taxSetIds
      *
      * @return void
      */
     public function unpublishByTaxSetIds(array $taxSetIds): void
     {
-        $this->getFactory()->createTaxStoragePublisher()->unpublishByTaxSetIds($taxSetIds);
+        $this->getFactory()->createTaxStorageUnpublisher()->unpublishByTaxSetIds($taxSetIds);
     }
 
     /**
@@ -49,7 +49,7 @@ class TaxStorageFacade extends AbstractFacade implements TaxStorageFacadeInterfa
      *
      * @api
      *
-     * @param array $taxRateIds
+     * @param int[] $taxRateIds
      *
      * @return void
      */

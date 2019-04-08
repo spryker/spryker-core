@@ -10,6 +10,7 @@ namespace Spryker\Zed\TaxStorage\Persistence;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\TaxStorage\TaxStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManager getEntityManager()
@@ -23,7 +24,7 @@ class TaxStoragePersistenceFactory extends AbstractPersistenceFactory
      */
     public function createTaxSetQuery(): SpyTaxSetQuery
     {
-        return SpyTaxSetQuery::create();
+        return $this->getProvidedDependency(TaxStorageDependencyProvider::PROPEL_QUERY_TAX_SET);
     }
 
     /**

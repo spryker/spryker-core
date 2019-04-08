@@ -85,4 +85,17 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
 
         return $spyTaxSetStorage;
     }
+
+    /**
+     * @param int[] $taxSetIds
+     *
+     * @return void
+     */
+    public function deleteTaxSetStoragesByIds(array $taxSetIds): void
+    {
+        $this->getFactory()
+            ->createTaxSetStorageQuery()
+            ->filterByFkTaxSet_In($taxSetIds)
+            ->delete();
+    }
 }
