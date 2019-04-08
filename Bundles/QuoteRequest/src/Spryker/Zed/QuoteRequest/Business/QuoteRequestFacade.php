@@ -85,7 +85,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestWriter()
+            ->createQuoteRequestTerminator()
             ->cancelQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
@@ -94,15 +94,15 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
      *
      * @api
      *
-     * @param string $quoteRequestVersionReference
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function closeQuoteRequest(string $quoteRequestVersionReference): void
+    public function closeQuoteRequest(QuoteTransfer $quoteTransfer): void
     {
         $this->getFactory()
-            ->createQuoteRequestCleaner()
-            ->closeQuoteRequest($quoteRequestVersionReference);
+            ->createQuoteRequestTerminator()
+            ->closeQuoteRequest($quoteTransfer);
     }
 
     /**
@@ -117,7 +117,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     public function sendQuoteRequestToUser(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestWriter()
+            ->createQuoteRequestSender()
             ->sendQuoteRequestToUser($quoteRequestCriteriaTransfer);
     }
 
@@ -246,7 +246,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     public function checkQuoteRequest(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         return $this->getFactory()
-            ->createQuoteRequestChecker()
+            ->createQuoteRequestTimeValidator()
             ->checkValidUntil($quoteTransfer, $checkoutResponseTransfer);
     }
 
@@ -260,7 +260,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     public function closeOutdatedQuoteRequests(): void
     {
         $this->getFactory()
-            ->createQuoteRequestCleaner()
+            ->createQuoteRequestTerminator()
             ->closeOutdatedQuoteRequests();
     }
 }

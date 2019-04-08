@@ -9,7 +9,7 @@ namespace Spryker\Zed\QuoteRequest\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class QuoteRequestToCalculationBridge implements QuoteRequestToCalculationInterface
+class QuoteRequestToCalculationFacadeBridge implements QuoteRequestToCalculationFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Calculation\Business\CalculationFacadeInterface

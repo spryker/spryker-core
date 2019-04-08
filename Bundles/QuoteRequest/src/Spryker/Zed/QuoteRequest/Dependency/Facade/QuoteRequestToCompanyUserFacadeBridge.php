@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\QuoteRequest\Dependency\Facade;
 
-class QuoteRequestToCompanyUserBridge implements QuoteRequestToCompanyUserInterface
+class QuoteRequestToCompanyUserFacadeBridge implements QuoteRequestToCompanyUserFacadeInterface
 {
     /**
      * @var \Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface

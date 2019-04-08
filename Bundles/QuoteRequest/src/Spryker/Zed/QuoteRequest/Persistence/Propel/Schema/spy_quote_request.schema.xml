@@ -17,7 +17,7 @@
             <unique-column name="uuid"/>
         </unique>
         <behavior name="uuid">
-            <parameter name="key_columns" value="fk_company_user.id_quote_request"/>
+            <parameter name="key_columns" value="id_quote_request"/>
         </behavior>
 
         <unique name="spy_quote_request-reference">
@@ -41,7 +41,7 @@
         <column name="metadata" type="LONGVARCHAR" required="false"/>
         <column name="quote" type="LONGVARCHAR"/>
 
-        <foreign-key name="spy_quote_request_version-fk_quote_request" foreignTable="spy_quote_request" onDelete="CASCADE">
+        <foreign-key name="spy_quote_request_version-fk_quote_request" foreignTable="spy_quote_request">
             <reference foreign="id_quote_request" local="fk_quote_request"/>
         </foreign-key>
 

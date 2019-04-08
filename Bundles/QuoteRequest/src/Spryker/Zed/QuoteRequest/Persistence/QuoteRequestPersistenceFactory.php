@@ -60,7 +60,7 @@ class QuoteRequestPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceInterface
      */
-    protected function getUtilEncodingService(): QuoteRequestToUtilEncodingServiceInterface
+    public function getUtilEncodingService(): QuoteRequestToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::SERVICE_UTIL_ENCODING);
     }

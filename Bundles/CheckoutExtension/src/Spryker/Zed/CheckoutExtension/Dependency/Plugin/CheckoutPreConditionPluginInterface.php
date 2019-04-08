@@ -10,7 +10,7 @@ namespace Spryker\Zed\CheckoutExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CheckoutPreConditionInterface
+interface CheckoutPreConditionPluginInterface
 {
     /**
      * Specification:

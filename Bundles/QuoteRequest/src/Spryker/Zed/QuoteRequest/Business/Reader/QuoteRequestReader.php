@@ -5,12 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
+namespace Spryker\Zed\QuoteRequest\Business\Reader;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 
 class QuoteRequestReader implements QuoteRequestReaderInterface
@@ -21,11 +25,43 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
     protected $quoteRequestRepository;
 
     /**
-     * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $quoteRequestRepository
+     * @var \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserFacadeInterface
      */
-    public function __construct(QuoteRequestRepositoryInterface $quoteRequestRepository)
-    {
+    protected $companyUserFacade;
+
+    /**
+     * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $quoteRequestRepository
+     * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserFacadeInterface $companyUserFacade
+     */
+    public function __construct(
+        QuoteRequestRepositoryInterface $quoteRequestRepository,
+        QuoteRequestToCompanyUserFacadeInterface $companyUserFacade
+    ) {
         $this->quoteRequestRepository = $quoteRequestRepository;
+        $this->companyUserFacade = $companyUserFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequestTransfer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer
+    {
+        $quoteRequestCriteriaTransfer
+            ->requireQuoteRequestReference()
+            ->requireIdCompanyUser();
+
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setQuoteRequestReference($quoteRequestCriteriaTransfer->getQuoteRequestReference())
+            ->setCompanyUser((new CompanyUserTransfer())->setIdCompanyUser($quoteRequestCriteriaTransfer->getIdCompanyUser()));
+
+        $quoteRequestTransfers = $this
+            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
+            ->getQuoteRequests()
+            ->getArrayCopy();
+
+        return array_shift($quoteRequestTransfers);
     }
 
     /**
@@ -52,6 +88,19 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
     {
         return $this->quoteRequestRepository
             ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return string|null
+     */
+    public function findCustomerReference(CompanyUserTransfer $companyUserTransfer): ?string
+    {
+        $customerReferences = $this->companyUserFacade
+            ->getCustomerReferencesByCompanyUserIds([$companyUserTransfer->getIdCompanyUser()]);
+
+        return array_shift($customerReferences);
     }
 
     /**

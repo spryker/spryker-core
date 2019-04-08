@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\AgentQuoteRequest;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
@@ -135,6 +137,20 @@ class AgentQuoteRequestClient extends AbstractClient implements AgentQuoteReques
         return $this->getFactory()
             ->createQuoteRequestConverter()
             ->convertQuoteRequestToQuote($quoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaTransfer $companyUserCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getCompanyUserCollectionByQuery(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
+    {
+        return $this->getZedStub()->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer);
     }
 
     /**

@@ -70,9 +70,7 @@ class QuoteRequestVersionMapper
         SpyQuoteRequestVersion $quoteRequestVersionEntity,
         QuoteRequestVersionTransfer $quoteRequestVersionTransfer
     ): QuoteRequestVersionTransfer {
-        $quoteRequestVersionTransfer = $quoteRequestVersionTransfer
-            ->fromArray($quoteRequestVersionEntity->toArray(), true);
-
+        $quoteRequestVersionTransfer->fromArray($quoteRequestVersionEntity->toArray(), true);
         $quoteRequestVersionTransfer->setMetadata($this->decodeMetadata($quoteRequestVersionEntity));
 
         if ($quoteRequestVersionEntity->getQuote()) {

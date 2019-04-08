@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\QuoteRequest\Dependency\Facade;
 
-interface QuoteRequestToCompanyUserInterface
+interface QuoteRequestToCompanyUserFacadeInterface
 {
     /**
      * @param int[] $companyUserIds

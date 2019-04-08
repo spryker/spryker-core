@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
+namespace Spryker\Zed\QuoteRequest\Business\Validator;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -15,8 +15,9 @@ use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
+use Spryker\Zed\QuoteRequest\Business\Reader\QuoteRequestReaderInterface;
 
-class QuoteRequestChecker implements QuoteRequestCheckerInterface
+class QuoteRequestTimeValidator implements QuoteRequestTimeValidatorInterface
 {
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_NOT_FOUND = 'quote_request.checkout.validation.error.not_found';
@@ -25,12 +26,12 @@ class QuoteRequestChecker implements QuoteRequestCheckerInterface
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.validation.error.wrong_valid_until';
 
     /**
-     * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface
+     * @var \Spryker\Zed\QuoteRequest\Business\Reader\QuoteRequestReaderInterface
      */
     protected $quoteRequestReader;
 
     /**
-     * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface $quoteRequestReader
+     * @param \Spryker\Zed\QuoteRequest\Business\Reader\QuoteRequestReaderInterface $quoteRequestReader
      */
     public function __construct(QuoteRequestReaderInterface $quoteRequestReader)
     {

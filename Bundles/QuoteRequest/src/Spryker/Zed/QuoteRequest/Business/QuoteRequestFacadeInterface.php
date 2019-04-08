@@ -89,11 +89,11 @@ interface QuoteRequestFacadeInterface
      *
      * @api
      *
-     * @param string $quoteRequestVersionReference
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    public function closeQuoteRequest(string $quoteRequestVersionReference): void;
+    public function closeQuoteRequest(QuoteTransfer $quoteTransfer): void;
 
     /**
      * Specification:

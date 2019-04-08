@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyUser\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserQueryTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
@@ -418,13 +418,13 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      * @module Company
      * @module Customer
      *
-     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $companyUserQueryTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaTransfer $companyUserCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollectionByQuery(CompanyUserQueryTransfer $companyUserQueryTransfer): CompanyUserCollectionTransfer
+    public function getCompanyUserCollectionByQuery(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
     {
-        $queryPattern = $companyUserQueryTransfer->getQuery() . '%';
+        $queryPattern = $companyUserCriteriaTransfer->getPattern() . '%';
 
         $companyUsersQuery = $this->getFactory()
             ->createCompanyUserQuery()
@@ -439,8 +439,8 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
                 ->setIgnoreCase(true)
             ->endUse();
 
-        if ($companyUserQueryTransfer->getLimit()) {
-            $companyUsersQuery->limit($companyUserQueryTransfer->getLimit());
+        if ($companyUserCriteriaTransfer->getLimit()) {
+            $companyUsersQuery->limit($companyUserCriteriaTransfer->getLimit());
         }
 
         $companyUserEntityTransferCollection = $this->buildQueryFromCriteria($companyUsersQuery)->find();

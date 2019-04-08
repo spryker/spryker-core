@@ -62,8 +62,8 @@
         <property name="text" type="string"/>
     </transfer>
 
-    <transfer name="CompanyUserQuery">
-        <property name="query" type="string"/>
+    <transfer name="CompanyUserCriteria">
+        <property name="pattern" type="string"/>
         <property name="limit" type="int"/>
     </transfer>
 

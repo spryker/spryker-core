@@ -78,4 +78,9 @@
         <property name="withHidden" type="bool" />
     </transfer>
 
+    <transfer name="CompanyUserCriteria">
+        <property name="pattern" type="string"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
 </transfers>

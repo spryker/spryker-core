@@ -17,10 +17,10 @@ use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface;
-use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface;
-use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
+use Spryker\Zed\QuoteRequest\Business\Reader\QuoteRequestReaderInterface;
+use Spryker\Zed\QuoteRequest\Business\ReferenceGenerator\QuoteRequestReferenceGeneratorInterface;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartFacadeInterface;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
 use Spryker\Zed\QuoteRequest\QuoteRequestConfig;
 
@@ -45,40 +45,40 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
     protected $quoteRequestEntityManager;
 
     /**
-     * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface
+     * @var \Spryker\Zed\QuoteRequest\Business\Reader\QuoteRequestReaderInterface
      */
     protected $quoteRequestReader;
 
     /**
-     * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface
+     * @var \Spryker\Zed\QuoteRequest\Business\ReferenceGenerator\QuoteRequestReferenceGeneratorInterface
      */
     protected $quoteRequestReferenceGenerator;
 
     /**
-     * @var \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface
+     * @var \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserFacadeInterface
      */
     protected $companyUserFacade;
 
     /**
-     * @var \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface
+     * @var \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartFacadeInterface
      */
     protected $cartFacade;
 
     /**
      * @param \Spryker\Zed\QuoteRequest\QuoteRequestConfig $quoteRequestConfig
      * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface $quoteRequestEntityManager
-     * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface $quoteRequestReader
-     * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator
-     * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface $companyUserFacade
-     * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface $cartFacade
+     * @param \Spryker\Zed\QuoteRequest\Business\Reader\QuoteRequestReaderInterface $quoteRequestReader
+     * @param \Spryker\Zed\QuoteRequest\Business\ReferenceGenerator\QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator
+     * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserFacadeInterface $companyUserFacade
+     * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartFacadeInterface $cartFacade
      */
     public function __construct(
         QuoteRequestConfig $quoteRequestConfig,
         QuoteRequestEntityManagerInterface $quoteRequestEntityManager,
         QuoteRequestReaderInterface $quoteRequestReader,
         QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator,
-        QuoteRequestToCompanyUserInterface $companyUserFacade,
-        QuoteRequestToCartInterface $cartFacade
+        QuoteRequestToCompanyUserFacadeInterface $companyUserFacade,
+        QuoteRequestToCartFacadeInterface $cartFacade
     ) {
         $this->quoteRequestConfig = $quoteRequestConfig;
         $this->quoteRequestEntityManager = $quoteRequestEntityManager;

@@ -9,7 +9,7 @@ namespace Spryker\Zed\QuoteRequest\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteRequestToCartInterface
+interface QuoteRequestToCartFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
