@@ -9,19 +9,22 @@ namespace Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder;
 
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @deprecated Use \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\InstallerPathFinder instead.
+ */
 class InstallPathFinder implements PathFinderInterface
 {
     /**
-     * @var string[]
+     * @var string
      */
-    protected $pathPatterns;
+    protected $pathPattern;
 
     /**
-     * @param string[] $pathPatterns
+     * @param string $pathPattern
      */
-    public function __construct(array $pathPatterns)
+    public function __construct($pathPattern)
     {
-        $this->pathPatterns = $pathPatterns;
+        $this->pathPattern[] = $pathPattern;
     }
 
     /**
@@ -31,7 +34,7 @@ class InstallPathFinder implements PathFinderInterface
     {
         $finder = new Finder();
 
-        $finder->files()->in($this->pathPatterns)->name('package.json')->depth('< 2');
+        $finder->files()->in($this->pathPattern)->name('package.json')->depth('< 2');
 
         return $finder;
     }

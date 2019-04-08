@@ -99,7 +99,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getZedInstallerDirectoryPatterns()
+    public function getZedInstallerDirectoryPatterns(): array
     {
         return [
             $this->get(KernelConstants::SPRYKER_ROOT) . '/*/assets/Zed',

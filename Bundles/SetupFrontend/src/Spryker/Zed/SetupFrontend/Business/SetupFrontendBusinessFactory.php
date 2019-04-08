@@ -11,7 +11,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SetupFrontend\Business\Model\Builder\Builder;
 use Spryker\Zed\SetupFrontend\Business\Model\Cleaner\Cleaner;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\DependencyInstaller;
+use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\InstallerPathFinder;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\InstallPathFinder;
+use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\ProjectInstaller;
 use Spryker\Zed\SetupFrontend\Business\Model\PackageManager\NodeInstaller;
 
@@ -64,11 +66,21 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createInstallerPathFinderForYves() instead
+     *
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface
      */
     protected function createYvesInstallerPathFinder()
     {
         return new InstallPathFinder($this->getConfig()->getYvesInstallerDirectoryPattern());
+    }
+
+    /**
+     * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface
+     */
+    protected function createInstallerPathFinderForYves()
+    {
+        return new InstallerPathFinder($this->getConfig()->getYvesInstallerDirectoryPatterns());
     }
 
     /**
@@ -93,17 +105,27 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     public function createZedDependencyInstaller()
     {
         return new DependencyInstaller(
-            $this->createZedInstallerPathFinder(),
+            $this->createInstallerPathFinderForZed(),
             $this->getConfig()->getZedInstallCommand()
         );
     }
 
     /**
+     * @deprecated Use createInstallerPathFinderForZed() instead
+     *
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface
      */
     protected function createZedInstallerPathFinder()
     {
         return new InstallPathFinder($this->getConfig()->getZedInstallerDirectoryPattern());
+    }
+
+    /**
+     * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface
+     */
+    protected function createInstallerPathFinderForZed(): PathFinderInterface
+    {
+        return new InstallerPathFinder($this->getConfig()->getZedInstallerDirectoryPatterns());
     }
 
     /**
