@@ -49,7 +49,7 @@ class CheckoutResponseMapper implements CheckoutResponseMapperInterface
      */
     protected function executeCheckoutResponseMapperPlugins(
         RestCheckoutResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
-    ):RestCheckoutResponseAttributesTransfer {
+    ): RestCheckoutResponseAttributesTransfer {
         foreach ($this->checkoutResponseMapperPlugins as $checkoutResponseMapperPlugin) {
             $restCheckoutResponseAttributesTransfer = $checkoutResponseMapperPlugin
                 ->mapRestCheckoutResponseTransferToRestCheckoutResponseAttributesTransfer(
