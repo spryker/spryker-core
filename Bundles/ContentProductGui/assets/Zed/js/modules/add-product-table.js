@@ -32,33 +32,28 @@ var ProductListContentItem = function(
     };
 
     this.addProductButtonHandler = function(event) {
-        var button = $(event.currentTarget);
-        var productId = button.data('id');
-        var productTable = $(event.delegateTarget);
-        var indexOfActiveTable = this.productsTables.index(productTable);
+        var clickInfo = this.getClickInfo(event);
+        var indexOfActiveTable = this.productsTables.index(clickInfo.clickedTable);
 
-        if (this.isProductAdded(productTable, productId)) {
+        if (this.isProductAdded(clickInfo.clickedTable, clickInfo.productId)) {
             return;
         }
 
-        this.addProduct(productTable, productId, indexOfActiveTable);
+        this.addProduct(clickInfo.clickedTable, clickInfo.productId, indexOfActiveTable);
     };
 
     this.removeProductButtonHandler = function(event) {
-        var button = $(event.currentTarget);
-        var productId = button.data('id');
-        var assignedTable = $(event.delegateTarget);
-        var tableRow = button.parents('tr');
+        var clickInfo = this.getClickInfo(event);
+        var tableRow = clickInfo.button.parents('tr');
 
-        this.removeHiddenInput(assignedTable, productId);
-        this.removeProduct(assignedTable, tableRow, productId);
+        this.removeHiddenInput(clickInfo.clickedTable, clickInfo.productId);
+        this.removeProduct(clickInfo.clickedTable, tableRow, clickInfo.productId);
     }
 
     this.changeOrderButtonHandler = function(event) {
-        var button = $(event.target);
-        var assignedTable = $(event.delegateTarget);
+        var clickInfo = this.getClickInfo(event);
 
-        this.changeOrder(button, assignedTable);
+        this.changeOrder(clickInfo.button, clickInfo.clickedTable);
     }
 
     this.clearAllFieldsButtonsHandler = function(event) {
@@ -204,6 +199,14 @@ var ProductListContentItem = function(
 
     this.getTablesWrapper = function(productTable) {
         return productTable.parents(this.tablesWrapperSelector)
+    }
+
+    this.getClickInfo = function(event) {
+        return {
+            button: $(event.currentTarget),
+            productId: $(event.currentTarget).data('id'),
+            clickedTable: $(event.delegateTarget)
+        }
     }
 
     this.mapEvents()
