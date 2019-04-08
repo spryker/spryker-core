@@ -323,7 +323,6 @@ interface ShoppingListClientInterface
     /**
      * Specification:
      * - Requires ProductViewTransfer::CurrentProductPrice.
-     * - Considers only available shopping list items.
      * - Returns calculated subtotal.
      *
      * @api
