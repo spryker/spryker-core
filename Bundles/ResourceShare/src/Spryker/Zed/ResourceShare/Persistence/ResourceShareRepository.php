@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ResourceShare\Persistence;
 
+use Generated\Shared\Transfer\ResourceShareCriteriaTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
+use Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -16,17 +18,18 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ResourceShareRepository extends AbstractRepository implements ResourceShareRepositoryInterface
 {
     /**
-     * @param string $uuid
+     * @param \Generated\Shared\Transfer\ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
      */
-    public function findResourceShareByUuid(string $uuid): ?ResourceShareTransfer
+    public function findResourceShareByCriteria(ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer): ?ResourceShareTransfer
     {
-        $resourceShareEntity = $this->getFactory()
-            ->createResourceSharePropelQuery()
-            ->filterByUuid($uuid)
-            ->findOne();
+        $resourceShareQuery = $this->applyCriteriaFiltersToResourceShareQuery(
+            $resourceShareCriteriaTransfer,
+            $this->getFactory()->createResourceSharePropelQuery()
+        );
 
+        $resourceShareEntity = $resourceShareQuery->findOne();
         if (!$resourceShareEntity) {
             return null;
         }
@@ -37,25 +40,31 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer
+     * @param \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery $resourceShareQuery
      *
-     * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
+     * @return \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery
      */
-    public function findResourceShare(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer
-    {
-        $resourceShareEntity = $this->getFactory()
-            ->createResourceSharePropelQuery()
-            ->filterByResourceType($resourceShareTransfer->getResourceType())
-            ->filterByResourceData($resourceShareTransfer->getResourceData())
-            ->filterByCustomerReference($resourceShareTransfer->getCustomerReference())
-            ->findOne();
-
-        if (!$resourceShareEntity) {
-            return null;
+    protected function applyCriteriaFiltersToResourceShareQuery(
+        ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer,
+        SpyResourceShareQuery $resourceShareQuery
+    ): SpyResourceShareQuery {
+        if ($resourceShareCriteriaTransfer->getUuid()) {
+            $resourceShareQuery->filterByUuid($resourceShareCriteriaTransfer->getUuid());
         }
 
-        return $this->getFactory()
-            ->createResourceShareMapper()
-            ->mapResourceShareEntityToResourceShareTransfer($resourceShareEntity);
+        if ($resourceShareCriteriaTransfer->getIdResourceShare()) {
+            $resourceShareQuery->filterByIdResourceShare($resourceShareCriteriaTransfer->getIdResourceShare());
+        }
+
+        if ($resourceShareCriteriaTransfer->getResourceType()) {
+            $resourceShareQuery->filterByResourceType($resourceShareCriteriaTransfer->getResourceType());
+        }
+
+        if ($resourceShareCriteriaTransfer->getResourceData()) {
+            $resourceShareQuery->filterByResourceData($resourceShareCriteriaTransfer->getResourceData());
+        }
+
+        return $resourceShareQuery;
     }
 }

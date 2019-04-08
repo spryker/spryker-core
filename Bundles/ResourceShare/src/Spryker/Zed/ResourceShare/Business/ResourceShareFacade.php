@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ResourceShare\Business;
 
+use Generated\Shared\Transfer\ResourceShareCriteriaTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
@@ -57,14 +58,14 @@ class ResourceShareFacade extends AbstractFacade implements ResourceShareFacadeI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function getResourceShareByUuid(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
+    public function getResourceShare(ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer): ResourceShareResponseTransfer
     {
         return $this->getFactory()
             ->createResourceShareReader()
-            ->getResourceShareByUuid($resourceShareTransfer);
+            ->getResourceShare($resourceShareCriteriaTransfer);
     }
 }

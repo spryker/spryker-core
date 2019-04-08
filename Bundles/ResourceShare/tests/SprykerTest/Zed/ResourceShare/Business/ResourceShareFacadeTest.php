@@ -10,9 +10,9 @@ namespace SprykerTest\Zed\ResourceShare\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\ResourceShareBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ResourceShareCriteriaTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\ResourceShare\ResourceShareDependencyProvider;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
 
@@ -256,14 +256,14 @@ class ResourceShareFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetResourceShareByUuidShouldAddErrorMessageWhenResourceIsNotFoundByProvidedUuid(): void
+    public function testGetResourceShareShouldAddErrorMessageWhenResourceIsNotFoundByProvidedCriteria(): void
     {
         // Arrange
-        $resourceShareTransfer = (new ResourceShareTransfer())
+        $resourceShareCriteriaTransfer = (new ResourceShareCriteriaTransfer())
             ->setUuid(static::VALUE_RESOURCE_SHARE_UUID);
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->getResourceShareByUuid($resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->getFacade()->getResourceShare($resourceShareCriteriaTransfer);
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
@@ -276,16 +276,16 @@ class ResourceShareFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetResourceShareByUuidShouldReturnCorrectResourceShareFromDatabase(): void
+    public function testGetResourceShareShouldReturnCorrectResourceShareFromDatabase(): void
     {
         // Arrange
         $originalResourceShareTransfer = $this->tester->haveResourceShare();
 
-        $requestResourceShareTransfer = (new ResourceShareTransfer())
+        $requestResourceShareCriteriaTransfer = (new ResourceShareCriteriaTransfer())
             ->setUuid($originalResourceShareTransfer->getUuid());
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->getResourceShareByUuid($requestResourceShareTransfer);
+        $resourceShareResponseTransfer = $this->getFacade()->getResourceShare($requestResourceShareCriteriaTransfer);
 
         // Assert
         $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());

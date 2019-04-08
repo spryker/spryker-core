@@ -7,21 +7,15 @@
 
 namespace Spryker\Zed\ResourceShare\Persistence;
 
+use Generated\Shared\Transfer\ResourceShareCriteriaTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 
 interface ResourceShareRepositoryInterface
 {
     /**
-     * @param string $uuid
+     * @param \Generated\Shared\Transfer\ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
      */
-    public function findResourceShareByUuid(string $uuid): ?ResourceShareTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
-     */
-    public function findResourceShare(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer;
+    public function findResourceShareByCriteria(ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer): ?ResourceShareTransfer;
 }

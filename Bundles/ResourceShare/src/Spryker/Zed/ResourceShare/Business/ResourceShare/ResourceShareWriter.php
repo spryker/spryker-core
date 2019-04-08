@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ResourceShareCriteriaTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface;
@@ -54,7 +55,10 @@ class ResourceShareWriter implements ResourceShareWriterInterface
             return $resourceShareResponseTransfer;
         }
 
-        $existingResourceShareTransfer = $this->resourceShareRepository->findResourceShare($resourceShareTransfer);
+        $resourceShareCriteriaTransfer = (new ResourceShareCriteriaTransfer())
+            ->fromArray($resourceShareTransfer->toArray(), true);
+
+        $existingResourceShareTransfer = $this->resourceShareRepository->findResourceShareByCriteria($resourceShareCriteriaTransfer);
         if ($existingResourceShareTransfer) {
             return $resourceShareResponseTransfer->setIsSuccessful(false)
                 ->addErrorMessage(

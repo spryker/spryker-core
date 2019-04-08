@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ResourceShare\Business;
 
+use Generated\Shared\Transfer\ResourceShareCriteriaTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
@@ -45,14 +46,14 @@ interface ResourceShareFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves the share resource by the provided UUID.
+     * - Retrieves the share resource by the provided criteria.
      * - Returns "isSuccess=true" on success and error message otherwise.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function getResourceShareByUuid(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer;
+    public function getResourceShare(ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer): ResourceShareResponseTransfer;
 }

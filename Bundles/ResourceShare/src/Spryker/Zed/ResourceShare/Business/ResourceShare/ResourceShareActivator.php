@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ResourceShareCriteriaTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
@@ -47,8 +48,9 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
         $resourceShareRequestTransfer->requireUuid();
-        $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShareByUuid(
-            (new ResourceShareTransfer())->setUuid($resourceShareRequestTransfer->getUuid())
+
+        $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShare(
+            (new ResourceShareCriteriaTransfer())->setUuid($resourceShareRequestTransfer->getUuid())
         );
 
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {

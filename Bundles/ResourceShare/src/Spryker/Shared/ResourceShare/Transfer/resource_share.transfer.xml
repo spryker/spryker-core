@@ -33,4 +33,11 @@
         <property name="isGuest" type="bool" />
     </transfer>
 
+    <transfer name="ResourceShareCriteria">
+        <property name="idResourceShare" type="int" />
+        <property name="uuid" type="string" />
+        <property name="resourceType" type="string" />
+        <property name="resourceData" type="string" />
+    </transfer>
+
 </transfers>
