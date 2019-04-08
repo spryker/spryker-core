@@ -211,7 +211,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
             $this->addViolation(static::ERROR_AMOUNT_MIN_NOT_FULFILLED, $sku, $min, $amount, $responseTransfer);
         }
 
-        $amountMinusMin = $this->subtractQuantities($amount, $min);
+        $amountMinusMin = $this->subtractQuantities($amount, (float)$min);
 
         if (!$this->isQuantityEqual($amount, 0) && $interval != null && !$this->isQuantityModuloEqual($amountMinusMin, $interval, 0)) {
             $this->addViolation(static::ERROR_AMOUNT_INTERVAL_NOT_FULFILLED, $sku, $interval, $amount, $responseTransfer);
