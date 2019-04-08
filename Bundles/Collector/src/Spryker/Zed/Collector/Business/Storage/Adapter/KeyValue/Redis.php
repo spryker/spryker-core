@@ -25,7 +25,7 @@ abstract class Redis
     protected $config;
 
     /**
-     * @var \Predis\Client
+     * @var \Predis\Client|null
      */
     protected $resource;
 
@@ -240,10 +240,6 @@ abstract class Redis
     {
         if (!$this->resource) {
             $resource = new Client($this->config, $this->options);
-
-            if (!$resource) {
-                throw new ConnectionException($resource, 'Could not connect to redis server');
-            }
 
             $this->resource = $resource;
         }
