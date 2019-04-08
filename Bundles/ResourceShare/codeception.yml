@@ -1,7 +1,7 @@
 namespace: SprykerTest
 
 include:
-    - tests/SprykerTest/Shared/ResourceShare
+    - tests/SprykerTest/Client/ResourceShare
     - tests/SprykerTest/Zed/ResourceShare
 
 actor: Tester

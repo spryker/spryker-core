@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Shared\ResourceShare\Helper;
+namespace SprykerTest\Zed\ResourceShare\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ResourceShareBuilder;

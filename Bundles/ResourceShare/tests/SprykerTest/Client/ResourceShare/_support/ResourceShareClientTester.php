@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Shared\ResourceShare;
+namespace SprykerTest\Client\ResourceShare;
 
 use Codeception\Actor;
 
@@ -24,9 +24,9 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class ResourceShareSharedTester extends Actor
+class ResourceShareClientTester extends Actor
 {
-    use _generated\ResourceShareSharedTesterActions;
+    use _generated\ResourceShareClientTesterActions;
 
    /**
     * Define custom actions here

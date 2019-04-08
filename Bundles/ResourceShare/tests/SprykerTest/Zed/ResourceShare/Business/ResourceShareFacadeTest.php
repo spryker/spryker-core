@@ -289,7 +289,7 @@ class ResourceShareFacadeTest extends Test
 
         // Assert
         $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             $originalResourceShareTransfer->getIdResourceShare(),
             $resourceShareResponseTransfer->getResourceShare()->getIdResourceShare()
         );

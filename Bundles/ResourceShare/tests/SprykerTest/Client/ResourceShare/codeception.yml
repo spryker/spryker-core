@@ -1,4 +1,4 @@
-namespace: SprykerTest\Shared\ResourceShare
+namespace: SprykerTest\Client\ResourceShare
 
 paths:
     tests: .
@@ -12,15 +12,12 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Shared:
+    Client:
         path: .
-        class_name: ResourceShareSharedTester
+        class_name: ResourceShareClientTester
         modules:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper

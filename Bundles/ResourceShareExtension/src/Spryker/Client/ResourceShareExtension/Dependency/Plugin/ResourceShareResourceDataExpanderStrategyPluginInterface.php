@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ResourceShareExtension\Dependency\Plugin;
+namespace Spryker\Client\ResourceShareExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ResourceShareTransfer;
 
