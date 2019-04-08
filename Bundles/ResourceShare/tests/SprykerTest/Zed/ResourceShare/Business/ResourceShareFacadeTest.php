@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResourceShareCriteriaTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\ResourceShare\ResourceShareDependencyProvider;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
 
@@ -37,6 +38,7 @@ class ResourceShareFacadeTest extends Test
 
     protected const VALUE_RESOURCE_SHARE_UUID = 'VALUE_RESOURCE_SHARE_UUID';
     protected const VALUE_CUSTOMER_REFERENCE = 'VALUE_CUSTOMER_REFERENCE';
+    protected const VALUE_RESOURCE_DATA = 'VALUE_RESOURCE_DATA';
 
     /**
      * @var \SprykerTest\Zed\ResourceShare\ResourceShareBusinessTester
@@ -292,6 +294,36 @@ class ResourceShareFacadeTest extends Test
         $this->assertSame(
             $originalResourceShareTransfer->getIdResourceShare(),
             $resourceShareResponseTransfer->getResourceShare()->getIdResourceShare()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetResourceShareShouldNotIgnoreNullResourceDataWhenItIsSetExplicitly(): void
+    {
+        // Arrange
+        $firstResourceShareTransfer = $this->tester->haveResourceShare();
+
+        $this->tester->haveResourceShare([
+            ResourceShareTransfer::CUSTOMER_REFERENCE => $firstResourceShareTransfer->getCustomerReference(),
+            ResourceShareTransfer::RESOURCE_TYPE => $firstResourceShareTransfer->getResourceType(),
+            ResourceShareTransfer::RESOURCE_DATA => null,
+        ]);
+
+        $resourceShareCriteriaTransfer = (new ResourceShareCriteriaTransfer())
+            ->setCustomerReference($firstResourceShareTransfer->getCustomerReference())
+            ->setResourceType($firstResourceShareTransfer->getResourceType())
+            ->setResourceData(null);
+
+        // Act
+        $firstResourceShareResponseTransfer = $this->getFacade()->getResourceShare($resourceShareCriteriaTransfer);
+
+        // Assert
+        $this->assertTrue($firstResourceShareResponseTransfer->getIsSuccessful());
+        $this->assertSame(
+            $firstResourceShareTransfer->getIdResourceShare(),
+            $firstResourceShareResponseTransfer->getResourceShare()->getIdResourceShare()
         );
     }
 

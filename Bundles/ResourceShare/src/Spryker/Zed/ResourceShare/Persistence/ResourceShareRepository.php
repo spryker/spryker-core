@@ -24,9 +24,11 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
      */
     public function findResourceShareByCriteria(ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer): ?ResourceShareTransfer
     {
-        $resourceShareQuery = $this->applyCriteriaFiltersToResourceShareQuery(
+        $resourceShareQuery = $this->getFactory()->createResourceSharePropelQuery();
+
+        $resourceShareQuery = $this->filterResourceShareQuery(
             $resourceShareCriteriaTransfer,
-            $this->getFactory()->createResourceSharePropelQuery()
+            $resourceShareQuery
         );
 
         $resourceShareEntity = $resourceShareQuery->findOne();
@@ -45,27 +47,7 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
      *
      * @return \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery
      */
-    protected function applyCriteriaFiltersToResourceShareQuery(
-        ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer,
-        SpyResourceShareQuery $resourceShareQuery
-    ): SpyResourceShareQuery {
-        $resourceShareQuery = $this->applyPersistenceCriteriaFilters($resourceShareCriteriaTransfer, $resourceShareQuery);
-        $resourceShareQuery = $this->applyResourceCriteriaFilters($resourceShareCriteriaTransfer, $resourceShareQuery);
-
-        if ($resourceShareCriteriaTransfer->getCustomerReference()) {
-            $resourceShareQuery->filterByCustomerReference($resourceShareCriteriaTransfer->getCustomerReference());
-        }
-
-        return $resourceShareQuery;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer
-     * @param \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery $resourceShareQuery
-     *
-     * @return \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery
-     */
-    protected function applyPersistenceCriteriaFilters(
+    protected function filterResourceShareQuery(
         ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer,
         SpyResourceShareQuery $resourceShareQuery
     ): SpyResourceShareQuery {
@@ -77,19 +59,6 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
             $resourceShareQuery->filterByUuid($resourceShareCriteriaTransfer->getUuid());
         }
 
-        return $resourceShareQuery;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer
-     * @param \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery $resourceShareQuery
-     *
-     * @return \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery
-     */
-    protected function applyResourceCriteriaFilters(
-        ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer,
-        SpyResourceShareQuery $resourceShareQuery
-    ): SpyResourceShareQuery {
         if ($resourceShareCriteriaTransfer->getResourceType()) {
             $resourceShareQuery->filterByResourceType($resourceShareCriteriaTransfer->getResourceType());
         }
@@ -102,6 +71,10 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
 
         if ($resourceShareCriteriaTransfer->getExpiryDate()) {
             $resourceShareQuery->filterByExpiryDate($resourceShareCriteriaTransfer->getExpiryDate());
+        }
+
+        if ($resourceShareCriteriaTransfer->getCustomerReference()) {
+            $resourceShareQuery->filterByCustomerReference($resourceShareCriteriaTransfer->getCustomerReference());
         }
 
         return $resourceShareQuery;
