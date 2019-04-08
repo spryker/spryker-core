@@ -70,14 +70,14 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
     }
 
     /**
-     * @dataProvider taxRateCalculationShouldUseQuoteShippingAddressAndShipmentDataProvider
+     * @dataProvider taxRateCalculationShouldUseQuoteLevelShippingAddressAndShipmentDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param float $expectedValue
      *
      * @return void
      */
-    public function testTaxRateCalculationShouldUseQuoteShippingAddressAndShipment(
+    public function testTaxRateCalculationShouldUseQuoteLevelShippingAddressAndShipment(
         QuoteTransfer $quoteTransfer,
         float $expectedValue
     ): void {
@@ -88,7 +88,7 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
             $this->shipmentMethodTransferList
         );
         if ($shipmentMethodTransfer !== null) {
-            $quoteShipmentMethodTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
+            $quoteShipmentMethodTransfer->setIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod());
         }
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -100,16 +100,14 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
         $this->tester->getFacade()->calculateShipmentTaxRate($quoteTransfer);
 
         // Assert
-        $actualTaxRate = $quoteShipmentMethodTransfer->getTaxRate();
+        $actualTaxRate = $quoteTransfer->getShipment()->getMethod()->getTaxRate();
 
         $this->assertEqualsWithDelta(
             $expectedValue,
             $actualTaxRate,
             static::FLOAT_COMPARISION_DELTA,
             sprintf(
-                'Tax rate should be %.2f, %.2f given.',
-                $expectedValue,
-                $actualTaxRate
+                'The actual tax rate is invalid.'
             )
         );
     }
@@ -117,7 +115,7 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
     /**
      * @return array
      */
-    public function taxRateCalculationShouldUseQuoteShippingAddressAndShipmentDataProvider(): array
+    public function taxRateCalculationShouldUseQuoteLevelShippingAddressAndShipmentDataProvider(): array
     {
         return [
             'address: France; expected tax rate: 20%' => $this->getDataWithQuoteLevelShippingAddressAndShipmentToFrance(),

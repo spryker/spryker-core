@@ -65,20 +65,25 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
             [new TaxSetProductAbstractAfterCreatePlugin()]
         );
 
+        $this->tester->setDependency(
+            TaxDependencyProvider::STORE_CONFIG,
+            $this->createTaxStoreMock('MOON')
+        );
+
         $this->shipmentMethodTransferList = [];
         $this->shipmentMethodTransferList['FR'] = $this->tester->createShipmentMethodWithTaxSet(20.00, 'FR');
         $this->shipmentMethodTransferList['DE'] = $this->tester->createShipmentMethodWithTaxSet(15.00, 'DE');
     }
 
     /**
-     * @dataProvider taxRateCalculationShouldUseItemShippingAddressAndShipmentDataProvider
+     * @dataProvider taxRateCalculationShouldUseItemLevelShippingAddressAndShipmentDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param array $expectedValues
      *
      * @return void
      */
-    public function testTaxRateCalculationShouldUseItemShippingAddressAndShipment(
+    public function testTaxRateCalculationShouldUseItemLevelShippingAddressAndShipment(
         QuoteTransfer $quoteTransfer,
         array $expectedValues
     ): void {
@@ -90,17 +95,12 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
                 $this->shipmentMethodTransferList
             );
             if ($shipmentMethodTransfer !== null) {
-                $itemShipmentMethodTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
+                $itemShipmentMethodTransfer->setIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod());
             }
 
             $productAbstractTransfer = $this->tester->createProductWithTaxSetInDb($itemShipmentMethodTransfer);
             $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
         }
-
-        $this->tester->setDependency(
-            TaxDependencyProvider::STORE_CONFIG,
-            $this->createTaxStoreMock('MOON')
-        );
 
         $shipmentFacade = $this->tester->getFacade();
 
@@ -124,7 +124,7 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
     /**
      * @return array
      */
-    public function taxRateCalculationShouldUseItemShippingAddressAndShipmentDataProvider(): array
+    public function taxRateCalculationShouldUseItemLevelShippingAddressAndShipmentDataProvider(): array
     {
         return [
             'address: France, tax rate 20%; expected tax rate: 20%' => $this->getDataWithItemLevelShippingAddressesToFranceWithTaxRate20(),
