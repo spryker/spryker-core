@@ -303,27 +303,27 @@ class ResourceShareFacadeTest extends Test
     public function testGetResourceShareShouldNotIgnoreNullResourceDataWhenItIsSetExplicitly(): void
     {
         // Arrange
-        $firstResourceShareTransfer = $this->tester->haveResourceShare();
+        $resourceShareTransfer = $this->tester->haveResourceShare();
 
         $this->tester->haveResourceShare([
-            ResourceShareTransfer::CUSTOMER_REFERENCE => $firstResourceShareTransfer->getCustomerReference(),
-            ResourceShareTransfer::RESOURCE_TYPE => $firstResourceShareTransfer->getResourceType(),
+            ResourceShareTransfer::CUSTOMER_REFERENCE => $resourceShareTransfer->getCustomerReference(),
+            ResourceShareTransfer::RESOURCE_TYPE => $resourceShareTransfer->getResourceType(),
             ResourceShareTransfer::RESOURCE_DATA => null,
         ]);
 
         $resourceShareCriteriaTransfer = (new ResourceShareCriteriaTransfer())
-            ->setCustomerReference($firstResourceShareTransfer->getCustomerReference())
-            ->setResourceType($firstResourceShareTransfer->getResourceType())
+            ->setCustomerReference($resourceShareTransfer->getCustomerReference())
+            ->setResourceType($resourceShareTransfer->getResourceType())
             ->setResourceData(null);
 
         // Act
-        $firstResourceShareResponseTransfer = $this->getFacade()->getResourceShare($resourceShareCriteriaTransfer);
+        $resourceShareResponseTransfer = $this->getFacade()->getResourceShare($resourceShareCriteriaTransfer);
 
         // Assert
-        $this->assertTrue($firstResourceShareResponseTransfer->getIsSuccessful());
+        $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertSame(
-            $firstResourceShareTransfer->getIdResourceShare(),
-            $firstResourceShareResponseTransfer->getResourceShare()->getIdResourceShare()
+            $resourceShareTransfer->getIdResourceShare(),
+            $resourceShareResponseTransfer->getResourceShare()->getIdResourceShare()
         );
     }
 
