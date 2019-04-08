@@ -10,13 +10,8 @@ namespace Spryker\Client\ContentBanner\Executor;
 use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
 
-interface BannerTermExecutorInterface
+interface ContentBannerTermExecutorInterface
 {
-    /**
-     * @return string
-     */
-    public static function getTerm(): string;
-
     /**
      * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
      *

@@ -14,12 +14,12 @@ use Spryker\Client\ContentBanner\Exception\MissingBannerTermException;
 class ContentBannerTypeMapper implements ContentBannerTypeMapperInterface
 {
     /**
-     * @var \Spryker\Client\ContentBanner\Executor\BannerTermExecutorInterface[]
+     * @var \Spryker\Client\ContentBanner\Executor\ContentBannerTermExecutorInterface[]
      */
     protected $contentBannerTermExecutors;
 
     /**
-     * @param \Spryker\Client\ContentBanner\Executor\BannerTermExecutorInterface[] $contentBannerTermExecutors
+     * @param \Spryker\Client\ContentBanner\Executor\ContentBannerTermExecutorInterface[] $contentBannerTermExecutors
      */
     public function __construct(array $contentBannerTermExecutors)
     {

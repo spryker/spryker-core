@@ -9,8 +9,8 @@ namespace Spryker\Client\ContentBanner;
 
 use Spryker\Client\ContentBanner\Dependency\Client\ContentBannerToContentStorageClientInterface;
 use Spryker\Client\ContentBanner\Executor\BannerTermExecutor;
-use Spryker\Client\ContentBanner\Executor\BannerTermExecutorInterface;
-use Spryker\Client\ContentBanner\Executor\BannerTermToBannerTermExecutor;
+use Spryker\Client\ContentBanner\Executor\BannerTermToBannerTypeExecutor;
+use Spryker\Client\ContentBanner\Executor\ContentBannerTermExecutorInterface;
 use Spryker\Client\ContentBanner\Executor\ContentTermExecutorInterface;
 use Spryker\Client\ContentBanner\Mapper\ContentBannerTypeMapper;
 use Spryker\Client\ContentBanner\Mapper\ContentBannerTypeMapperInterface;
@@ -28,7 +28,7 @@ class ContentBannerFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ContentBanner\Executor\BannerTermExecutorInterface[]
+     * @return \Spryker\Client\ContentBanner\Executor\ContentBannerTermExecutorInterface[]
      */
     public function getContentBannerTermExecutorMap(): array
     {
@@ -38,11 +38,11 @@ class ContentBannerFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ContentBanner\Executor\BannerTermToBannerTermExecutor
+     * @return \Spryker\Client\ContentBanner\Executor\BannerTermToBannerTypeExecutor
      */
-    public function createBannerTermToBannerTypeExecutor(): BannerTermExecutorInterface
+    public function createBannerTermToBannerTypeExecutor(): ContentBannerTermExecutorInterface
     {
-        return new BannerTermToBannerTermExecutor();
+        return new BannerTermToBannerTypeExecutor();
     }
 
     /**

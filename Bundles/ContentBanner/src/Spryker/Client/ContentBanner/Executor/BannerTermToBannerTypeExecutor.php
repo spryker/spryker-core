@@ -10,18 +10,9 @@ namespace Spryker\Client\ContentBanner\Executor;
 use Generated\Shared\Transfer\ContentBannerTermTransfer;
 use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
-use Spryker\Shared\ContentBanner\ContentBannerConfig;
 
-class BannerTermToBannerTermExecutor implements BannerTermExecutorInterface
+class BannerTermToBannerTypeExecutor implements ContentBannerTermExecutorInterface
 {
-    /**
-     * @return string
-     */
-    public static function getTerm(): string
-    {
-        return ContentBannerConfig::CONTENT_TERM_BANNER;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
      *
