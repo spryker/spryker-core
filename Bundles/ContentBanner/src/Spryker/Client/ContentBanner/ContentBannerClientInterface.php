@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\ContentBanner;
 
-use Generated\Shared\Transfer\BannerTypeTransfer;
 use Generated\Shared\Transfer\ContentBannerTransfer;
+use Generated\Shared\Transfer\ContentBannerTypeTransfer;
 
 interface ContentBannerClientInterface
 {
@@ -38,7 +38,7 @@ interface ContentBannerClientInterface
      *
      * @throws \Spryker\Client\ContentBanner\Exception\MissingBannerTermException
      *
-     * @return \Generated\Shared\Transfer\BannerTypeTransfer|null
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
-    public function findBannerById(int $idContent, string $localeName): ?BannerTypeTransfer;
+    public function findBannerById(int $idContent, string $localeName): ?ContentBannerTypeTransfer;
 }
