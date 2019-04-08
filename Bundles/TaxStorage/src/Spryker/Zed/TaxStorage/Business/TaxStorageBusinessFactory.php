@@ -8,7 +8,6 @@
 namespace Spryker\Zed\TaxStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\TaxStorage\Business\Mapper\TaxStorageMapper;
 use Spryker\Zed\TaxStorage\Business\TaxStoragePublisher\TaxStoragePublisher;
 use Spryker\Zed\TaxStorage\Business\TaxStoragePublisher\TaxStoragePublisherInterface;
 
