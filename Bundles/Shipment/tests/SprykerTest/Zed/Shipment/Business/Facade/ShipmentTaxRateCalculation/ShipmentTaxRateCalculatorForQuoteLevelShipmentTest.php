@@ -100,14 +100,21 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
         $this->tester->getFacade()->calculateShipmentTaxRate($quoteTransfer);
 
         // Assert
-        $actualTaxRate = $quoteTransfer->getShipment()->getMethod()->getTaxRate();
+        $this->assertEqualsWithDelta(
+            $expectedValue,
+            $quoteTransfer->getShipment()->getMethod()->getTaxRate(),
+            static::FLOAT_COMPARISION_DELTA,
+            sprintf(
+                'The actual shipment methdo tax rate is invalid.'
+            )
+        );
 
         $this->assertEqualsWithDelta(
             $expectedValue,
-            $actualTaxRate,
+            $quoteTransfer->getExpenses()[0]->getTaxRate(),
             static::FLOAT_COMPARISION_DELTA,
             sprintf(
-                'The actual tax rate is invalid.'
+                'The actual shipment expense tax rate is invalid.'
             )
         );
     }
@@ -137,6 +144,7 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
 
         $expenseTransfer = (new ExpenseBuilder([
             ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            ExpenseTransfer::NAME => $shipmentTransfer->getMethod()->getName(),
         ]))->build();
         $expenseTransfer->setShipment($shipmentTransfer);
 
@@ -162,6 +170,7 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
 
         $expenseTransfer = (new ExpenseBuilder([
             ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            ExpenseTransfer::NAME => $shipmentTransfer->getMethod()->getName(),
         ]))->build();
         $expenseTransfer->setShipment($shipmentTransfer);
 

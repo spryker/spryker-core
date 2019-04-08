@@ -93,8 +93,8 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
             if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
-                || $expenseTransfer->getShipment() !== null
-                || $expenseShipmentKey === $itemShipmentKey
+                && $expenseTransfer->getShipment() !== null
+                && $expenseShipmentKey === $itemShipmentKey
             ) {
                 return $expenseTransfer;
             }

@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
+use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -51,6 +52,14 @@ class ShipmentBusinessTester extends Actor
     public function getShipmentFacade()
     {
         return $this->getLocator()->shipment()->facade();
+    }
+
+    /**
+     * @return \Spryker\Service\Shipment\ShipmentServiceInterface
+     */
+    public function getShipmentService(): ShipmentServiceInterface
+    {
+        return $this->getLocator()->shipment()->service();
     }
 
     /**

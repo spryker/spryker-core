@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Shipment\ShipmentConstants;
@@ -110,13 +111,20 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
         // Assert
         foreach ($quoteTransfer->getItems() as $i => $itemTransfer) {
             $expectedValue = $expectedValues[$itemTransfer->getSku()];
-            $actualTaxRate = $itemTransfer->getShipment()->getMethod()->getTaxRate();
+            $expenseTransfer = $this->findQuoteExpenseByShipment($quoteTransfer, $itemTransfer->getShipment());
 
             $this->assertEqualsWithDelta(
                 $expectedValue,
-                $actualTaxRate,
+                $itemTransfer->getShipment()->getMethod()->getTaxRate(),
                 static::FLOAT_COMPARISION_DELTA,
-                sprintf('Tax rate should be %.2f, %.2f given at the iteration #%d.', $expectedValue, $actualTaxRate, $i)
+                sprintf('The actual shipment methdo tax rate is invalid at the iteration #%d.', $i)
+            );
+
+            $this->assertEqualsWithDelta(
+                $expectedValue,
+                $expenseTransfer->getTaxRate(),
+                static::FLOAT_COMPARISION_DELTA,
+                sprintf('The actual shipment expense tax rate is invalid at the iteration #%d.', $i)
             );
         }
     }
@@ -237,5 +245,27 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
             ->willReturn($defaultCountryIso2Code);
 
         return $storeMock;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer|null
+     */
+    protected function findQuoteExpenseByShipment(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): ?ExpenseTransfer
+    {
+        $itemShipmentKey = $this->tester->getShipmentService()->getShipmentHashKey($shipmentTransfer);
+        foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
+            $expenseShipmentKey = $this->tester->getShipmentService()->getShipmentHashKey($expenseTransfer->getShipment());
+            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
+                && $expenseTransfer->getShipment() !== null
+                && $expenseShipmentKey === $itemShipmentKey
+            ) {
+                return $expenseTransfer;
+            }
+        }
+
+        return null;
     }
 }
