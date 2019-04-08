@@ -52,7 +52,7 @@ class TransferDefinitionFinder implements FinderInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\SplFileInfo[]
      */
     public function getXmlTransferDefinitionFiles()
     {

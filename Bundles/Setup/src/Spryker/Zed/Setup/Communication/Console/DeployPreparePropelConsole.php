@@ -50,10 +50,10 @@ class DeployPreparePropelConsole extends Console
         ];
 
         foreach ($dependingCommands as $commandName) {
-            $this->runDependingCommand($commandName);
+            $exitCode = $this->runDependingCommand($commandName);
 
             if ($this->hasError()) {
-                return $this->getLastExitCode();
+                return $exitCode;
             }
         }
 

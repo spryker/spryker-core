@@ -41,7 +41,5 @@ class GenerateServiceIdeAutoCompletionConsole extends Console
         $this->getFacade()->generateServiceIdeAutoCompletion();
 
         $this->info('Generated Service IDE auto-completion files');
-
-        return null;
     }
 }

@@ -41,7 +41,5 @@ class GenerateZedIdeAutoCompletionConsole extends Console
         $this->getFacade()->generateZedIdeAutoCompletion();
 
         $this->info('Generated Zed IDE auto-completion files');
-
-        return null;
     }
 }

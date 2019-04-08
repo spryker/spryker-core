@@ -38,10 +38,8 @@ class ProductTaxSetsRestApiConsole extends Console
      *
      * @return int|null
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getFacade()->updateTaxSetsWithoutUuid();
-
-        return null;
     }
 }

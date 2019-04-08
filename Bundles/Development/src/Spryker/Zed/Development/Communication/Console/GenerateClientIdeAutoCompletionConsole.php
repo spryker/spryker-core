@@ -41,7 +41,5 @@ class GenerateClientIdeAutoCompletionConsole extends Console
         $this->getFacade()->generateClientIdeAutoCompletion();
 
         $this->info('Generated Client IDE auto-completion files');
-
-        return null;
     }
 }

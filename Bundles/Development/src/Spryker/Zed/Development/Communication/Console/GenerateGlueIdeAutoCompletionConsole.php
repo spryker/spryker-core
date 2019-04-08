@@ -41,7 +41,5 @@ class GenerateGlueIdeAutoCompletionConsole extends Console
         $this->getFacade()->generateGlueIdeAutoCompletion();
 
         $this->info('Generated Glue IDE auto-completion files');
-
-        return null;
     }
 }

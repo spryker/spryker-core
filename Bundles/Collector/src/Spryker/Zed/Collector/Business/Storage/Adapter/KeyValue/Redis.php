@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue;
 
 use Predis\Client;
-use Predis\Connection\ConnectionException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Storage\StorageConstants;
 
@@ -232,7 +231,6 @@ abstract class Redis
     }
 
     /**
-     * @throws \Predis\Connection\ConnectionException
      *
      * @return void
      */

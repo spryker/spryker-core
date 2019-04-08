@@ -65,7 +65,5 @@ class CodeTestConsole extends Console
         }
 
         $this->getFacade()->runTest($module, $this->input->getOptions());
-
-        return null;
     }
 }

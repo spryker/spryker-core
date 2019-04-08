@@ -36,7 +36,7 @@ class ProductImagePageDataExpanderPlugin extends AbstractPlugin implements Produ
     }
 
     /**
-     * @param int $idImageSet
+     * @param int|null $idImageSet
      *
      * @return array
      */
