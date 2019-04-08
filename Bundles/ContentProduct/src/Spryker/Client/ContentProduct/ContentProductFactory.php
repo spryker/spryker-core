@@ -7,17 +7,50 @@
 
 namespace Spryker\Client\ContentProduct;
 
-use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermExecutor;
-use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermExecutorInterface;
+use Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface;
+use Spryker\Client\ContentProduct\Executor\ContentProductTermExecutorInterface;
+use Spryker\Client\ContentProduct\Executor\ProductAbstractListTermToProductAbstractListTypeExecutor;
+use Spryker\Client\ContentProduct\Mapper\ContentProductAbstractListTypeMapper;
+use Spryker\Client\ContentProduct\Mapper\ContentProductAbstractListTypeMapperInterface;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Shared\ContentProduct\ContentProductConfig;
 
+/**
+ * @method \Spryker\Client\ContentProduct\ContentProductConfig getConfig()
+ */
 class ContentProductFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ContentProduct\Executor\ProductAbstractListTermExecutorInterface
+     * @return \Spryker\Client\ContentProduct\Mapper\ContentProductAbstractListTypeMapperInterface
      */
-    public function createProductAbstractListTermExecutor(): ProductAbstractListTermExecutorInterface
+    public function createContentProductAbstractListTypeMapper(): ContentProductAbstractListTypeMapperInterface
     {
-        return new ProductAbstractListTermExecutor();
+        return new ContentProductAbstractListTypeMapper($this->getContentProductTermExecutorMap());
+    }
+
+    /**
+     * @return \Spryker\Client\ContentProduct\Executor\ContentProductTermExecutorInterface[]
+     */
+    public function getContentProductTermExecutorMap(): array
+    {
+        return [
+            ContentProductConfig::CONTENT_TERM_PRODUCT_ABSTRACT_LIST => $this->createProductAbstractListTermToProductAbstractListTypeExecutor(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Client\ContentProduct\Executor\ContentProductTermExecutorInterface
+     */
+    public function createProductAbstractListTermToProductAbstractListTypeExecutor(): ContentProductTermExecutorInterface
+    {
+        return new ProductAbstractListTermToProductAbstractListTypeExecutor();
+    }
+
+    /**
+     * @return \Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface
+     */
+    public function getContentStorageClient(): ContentProductToContentStorageClientInterface
+    {
+        return $this->getProvidedDependency(ContentProductDependencyProvider::CLIENT_CONTENT_STORAGE);
     }
 }
