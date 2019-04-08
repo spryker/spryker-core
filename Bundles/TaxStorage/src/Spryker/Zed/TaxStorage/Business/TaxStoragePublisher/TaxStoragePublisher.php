@@ -145,18 +145,13 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
 
     /**
      * @param \Orm\Zed\Tax\Persistence\Base\SpyTaxSet $spyTaxSet
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage|null $spyTaxSetStorage
+     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $spyTaxSetStorage
      *
      * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage
      */
-    protected function mapSpyTaxSetToTaxSetStorage(SpyTaxSet $spyTaxSet, ?SpyTaxSetStorage $spyTaxSetStorage = null): SpyTaxSetStorage
+    protected function mapSpyTaxSetToTaxSetStorage(SpyTaxSet $spyTaxSet, SpyTaxSetStorage $spyTaxSetStorage): SpyTaxSetStorage
     {
-        $taxSetStorageTransfer = new TaxSetStorageTransfer();
-        $taxSetStorageTransfer->fromArray($spyTaxSet->toArray(), true);
-        $taxSetStorageTransfer->setTaxRates(
-            $this->mapSpyTaxRatesToTaxRateTransfers($spyTaxSet->getSpyTaxRates())
-        );
-        $spyTaxSetStorage->setData($taxSetStorageTransfer->toArray());
+        $spyTaxSetStorage->setData($this->createTaxSetStorageTransfer($spyTaxSet)->toArray());
 
         return $spyTaxSetStorage;
     }
@@ -168,7 +163,13 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
      */
     protected function createTaxSetStorageTransfer(SpyTaxSet $spyTaxSet): TaxSetStorageTransfer
     {
-//@TODO
+        $taxSetStorageTransfer = new TaxSetStorageTransfer();
+        $taxSetStorageTransfer->fromArray($spyTaxSet->toArray(), true);
+        $taxSetStorageTransfer->setTaxRates(
+            $this->mapSpyTaxRatesToTaxRateTransfers($spyTaxSet->getSpyTaxRates())
+        );
+
+        return $taxSetStorageTransfer;
     }
 
     /**

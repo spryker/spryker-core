@@ -32,7 +32,7 @@ class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInte
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
+    public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $this
             ->addTaxSetCreateStorageListener($eventCollection)
@@ -49,70 +49,84 @@ class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInte
     /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
-     * @return void
+     * @return $this
      */
-    protected function addTaxSetCreateStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
+    protected function addTaxSetCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_CREATE, new TaxSetStoragePublishListener());
+        $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_CREATE, new TaxSetStoragePublishListener());
+
+        return $this;
     }
 
     /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
-     * @return void
+     * @return $this
      */
-    protected function addTaxSetUpdateStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
+    protected function addTaxSetUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_UPDATE, new TaxSetStoragePublishListener());
+        $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_UPDATE, new TaxSetStoragePublishListener());
+
+        return $this;
     }
 
     /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
-     * @return void
+     * @return $this
      */
-    protected function addTaxSetDeleteStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
+    protected function addTaxSetDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_DELETE, new TaxSetStorageUnpublishListener());
+        $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_DELETE, new TaxSetStorageUnpublishListener());
+
+        return $this;
     }
 
     /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
-     * @return void
+     * @return $this
      */
-    protected function addTaxRateUpdateStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
+    protected function addTaxRateUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_RATE_UPDATE, new TaxRateStoragePublishListener());
+        $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_RATE_UPDATE, new TaxRateStoragePublishListener());
+
+        return $this;
     }
 
     /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
-     * @return void
+     * @return $this
      */
-    protected function addTaxRateDeleteStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
+    protected function addTaxRateDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_RATE_DELETE, new TaxRateStoragePublishListener());
+        $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_RATE_DELETE, new TaxRateStoragePublishListener());
+
+        return $this;
     }
 
     /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
-     * @return void
+     * @return $this
      */
-    protected function addTaxSetTaxUpdateStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
+    protected function addTaxSetTaxUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_TAX_CREATE, new TaxSetTaxStoragePublishListener());
+        $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_TAX_CREATE, new TaxSetTaxStoragePublishListener());
+
+        return $this;
     }
 
     /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
-     * @return void
+     * @return $this
      */
-    protected function addTaxSetTaxDeleteStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
+    protected function addTaxSetTaxDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        return $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_TAX_DELETE, new TaxSetTaxStoragePublishListener());
+        $eventCollection->addListenerQueued(TaxEvents::ENTITY_SPY_TAX_SET_TAX_DELETE, new TaxSetTaxStoragePublishListener());
+
+        return $this;
     }
 }

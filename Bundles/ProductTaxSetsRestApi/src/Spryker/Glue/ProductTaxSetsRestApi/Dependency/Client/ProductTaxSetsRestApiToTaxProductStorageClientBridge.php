@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\TaxProductStorageTransfer;
 class ProductTaxSetsRestApiToTaxProductStorageClientBridge implements ProductTaxSetsRestApiToTaxProductStorageClientInterface
 {
     /**
-     * @var \Spryker\CLient\TaxProductStorage\TaxProductStorageCLientInterface
+     * @var \Spryker\Client\TaxProductStorage\TaxProductStorageCLientInterface
      */
     protected $taxProductStorageClient;
 
     /**
-     * @param \Spryker\CLient\TaxProductStorage\TaxProductStorageCLientInterface $taxProductStorageClient
+     * @param \Spryker\Client\TaxProductStorage\TaxProductStorageCLientInterface $taxProductStorageClient
      */
     public function __construct($taxProductStorageClient)
     {
