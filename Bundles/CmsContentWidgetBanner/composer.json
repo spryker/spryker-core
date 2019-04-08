@@ -1,15 +1,11 @@
 {
-  "name": "spryker/content-banners-rest-api",
+  "name": "spryker/cms-content-widget-banner",
   "type": "library",
-  "description": "ContentBannersRestApi module",
+  "description": "CmsContentWidgetBanner module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/content-banner": "^1.1.0",
-    "spryker/glue-application": "^1.8.0",
-    "spryker/glue-application-extension": "^1.0.0",
-    "spryker/kernel": "^3.22.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/cms-content-widget": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\ContentBanner\Exception\MissingBannerTermException;
 use Spryker\Glue\ContentBannersRestApi\ContentBannersRestApiConfig;
 use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface;
-use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentStorageClientInterface;
 use Spryker\Glue\ContentBannersRestApi\Mapper\ContentBannerMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -35,11 +34,6 @@ class ContentBannerReader implements ContentBannerReaderInterface
     protected $contentBannerMapper;
 
     /**
-     * @var \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentStorageClientInterface
-     */
-    protected $contentStorageClient;
-
-    /**
      * @var \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface
      */
     protected $contentBannerClient;
@@ -47,18 +41,15 @@ class ContentBannerReader implements ContentBannerReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ContentBannersRestApi\Mapper\ContentBannerMapperInterface $contentBannerMapper
-     * @param \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentStorageClientInterface $contentStorageClient
      * @param \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface $contentBannerClient
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         ContentBannerMapperInterface $contentBannerMapper,
-        ContentBannersRestApiToContentStorageClientInterface $contentStorageClient,
         ContentBannersRestApiToContentBannerClientInterface $contentBannerClient
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->contentBannerMapper = $contentBannerMapper;
-        $this->contentStorageClient = $contentStorageClient;
         $this->contentBannerClient = $contentBannerClient;
     }
 
@@ -77,7 +68,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
         }
 
         try {
-            $executedContentStorageTransfer = $this->contentBannerClient->findBannerById(
+            $contentBannerTypeTransfer = $this->contentBannerClient->findBannerById(
                 (int)$idContentBanner,
                 $restRequest->getMetadata()->getLocale()
             );
@@ -85,13 +76,13 @@ class ContentBannerReader implements ContentBannerReaderInterface
             return $this->addContentTypeInvalidError($response);
         }
 
-        if (!$executedContentStorageTransfer) {
+        if (!$contentBannerTypeTransfer) {
             return $this->addContentBannerNotFoundError($response);
         }
 
         $restContentBannerAttributes = $this->contentBannerMapper
             ->mapBannerTypeTransferToRestContentBannerAttributes(
-                $executedContentStorageTransfer,
+                $contentBannerTypeTransfer,
                 new RestContentBannerAttributesTransfer()
             );
 

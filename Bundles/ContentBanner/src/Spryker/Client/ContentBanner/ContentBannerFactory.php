@@ -8,28 +8,49 @@
 namespace Spryker\Client\ContentBanner;
 
 use Spryker\Client\ContentBanner\Dependency\Client\ContentBannerToContentStorageClientInterface;
+use Spryker\Client\ContentBanner\Executor\BannerTermExecutor;
 use Spryker\Client\ContentBanner\Executor\BannerTermToBannerTypeExecutor;
-use Spryker\Client\ContentBanner\Executor\BannerTermToBannerTypeExecutorInterface;
+use Spryker\Client\ContentBanner\Executor\ContentBannerTermExecutorInterface;
 use Spryker\Client\ContentBanner\Executor\ContentTermExecutorInterface;
-use Spryker\Client\ContentBanner\TermExecutor\BannerTermExecutor;
+use Spryker\Client\ContentBanner\Mapper\ContentBannerTypeMapper;
+use Spryker\Client\ContentBanner\Mapper\ContentBannerTypeMapperInterface;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Shared\ContentBanner\ContentBannerConfig;
 
 class ContentBannerFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\ContentBanner\Mapper\ContentBannerTypeMapperInterface
+     */
+    public function createContentBannerTypeMapper(): ContentBannerTypeMapperInterface
+    {
+        return new ContentBannerTypeMapper($this->getContentBannerTermExecutorMap());
+    }
+
+    /**
+     * @return \Spryker\Client\ContentBanner\Executor\ContentBannerTermExecutorInterface[]
+     */
+    public function getContentBannerTermExecutorMap(): array
+    {
+        return [
+            ContentBannerConfig::CONTENT_TERM_BANNER => $this->createBannerTermToBannerTypeExecutor(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Client\ContentBanner\Executor\BannerTermToBannerTypeExecutor
+     */
+    public function createBannerTermToBannerTypeExecutor(): ContentBannerTermExecutorInterface
+    {
+        return new BannerTermToBannerTypeExecutor();
+    }
+
     /**
      * @return \Spryker\Client\ContentBanner\Executor\ContentTermExecutorInterface
      */
     public function createBannerTermExecutor(): ContentTermExecutorInterface
     {
         return new BannerTermExecutor();
-    }
-
-    /**
-     * @return \Spryker\Client\ContentBanner\Executor\BannerTermToBannerTypeExecutor
-     */
-    public function createBannerTermToBannerTypeExecutor(): BannerTermToBannerTypeExecutorInterface
-    {
-        return new BannerTermToBannerTypeExecutor();
     }
 
     /**
