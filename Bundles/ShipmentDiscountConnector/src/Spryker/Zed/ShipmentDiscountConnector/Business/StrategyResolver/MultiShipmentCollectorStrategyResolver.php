@@ -44,6 +44,12 @@ class MultiShipmentCollectorStrategyResolver implements MultiShipmentCollectorSt
      */
     public function resolveByTypeAndItems(string $type, iterable $itemTransfers): ShipmentDiscountCollectorInterface
     {
+        if (count($itemTransfers) === 0) {
+            $this->assertRequiredStrategyWithoutMultiShipmentContainerItems($type);
+
+            return call_user_func($this->strategyContainer[$type][static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
+        }
+
         foreach ($itemTransfers as $itemTransfer) {
             if ($itemTransfer->getShipment() === null) {
                 $this->assertRequiredStrategyWithoutMultiShipmentContainerItems($type);

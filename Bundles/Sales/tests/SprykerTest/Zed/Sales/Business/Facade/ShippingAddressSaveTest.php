@@ -7,12 +7,9 @@
 
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
-use BadMethodCallException;
 use Codeception\TestCase\Test;
-use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\SequenceNumberSettingsBuilder;
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
@@ -20,7 +17,6 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Sales\SalesConstants;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
@@ -66,7 +62,6 @@ class ShippingAddressSaveTest extends Test
     {
         // Arrange
         $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
-        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
         $salesOrderAddressQuery = SpySalesOrderAddressQuery::create();
 
         // Act
@@ -155,7 +150,8 @@ class ShippingAddressSaveTest extends Test
     /**
      * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
-    protected function getSalesFacadeWithMockedConfig(): SalesFacadeInterface {
+    protected function getSalesFacadeWithMockedConfig(): SalesFacadeInterface
+    {
         $salesFacade = $this->tester->getFacade();
         $salesBusinessFactory = new SalesBusinessFactory();
 

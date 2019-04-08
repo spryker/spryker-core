@@ -8,20 +8,9 @@
 namespace SprykerTest\Zed\TaxProductConnector\Business\Facade\ProductItemTaxRateCalculation;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\DataBuilder\AddressBuilder;
-use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\DataBuilder\ShipmentBuilder;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Country\Persistence\SpyCountryQuery;
-use Orm\Zed\Tax\Persistence\SpyTaxRate;
-use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\Tax\TaxDependencyProvider;
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractAfterCreatePlugin;

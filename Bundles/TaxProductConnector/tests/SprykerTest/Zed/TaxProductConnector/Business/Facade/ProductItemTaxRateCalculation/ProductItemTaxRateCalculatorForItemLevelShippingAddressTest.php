@@ -14,17 +14,8 @@ use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Country\Persistence\SpyCountryQuery;
-use Orm\Zed\Tax\Persistence\SpyTaxRate;
-use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Product\ProductDependencyProvider;
-use Spryker\Zed\Tax\TaxDependencyProvider;
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractAfterCreatePlugin;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxBridge;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
@@ -151,8 +142,8 @@ class ProductItemTaxRateCalculatorForItemLevelShippingAddressTest extends Test
         $addressBuilder1 = (new AddressBuilder([AddressTransfer::ISO2_CODE => $iso2Code]));
 
         return (new ItemBuilder())->withShipment(
-                    (new ShipmentBuilder())->withShippingAddress($addressBuilder1)
-                )->build();
+            (new ShipmentBuilder())->withShippingAddress($addressBuilder1)
+        )->build();
     }
 
     /**

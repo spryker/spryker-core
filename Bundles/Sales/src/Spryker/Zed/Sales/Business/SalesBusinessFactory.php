@@ -25,7 +25,6 @@ use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader;
-use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface;
@@ -41,8 +40,6 @@ use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShipping
 use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
-use Spryker\Zed\Sales\Business\StrategyResolver\OrderSaverStrategyResolver;
-use Spryker\Zed\Sales\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 

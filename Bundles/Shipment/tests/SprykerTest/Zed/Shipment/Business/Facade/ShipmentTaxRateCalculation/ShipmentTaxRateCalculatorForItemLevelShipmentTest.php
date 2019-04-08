@@ -13,13 +13,11 @@ use Generated\Shared\DataBuilder\ExpenseBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
-use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Product\ProductDependencyProvider;
@@ -43,6 +41,11 @@ use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractAf
 class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
 {
     protected const FLOAT_COMPARISION_DELTA = 0.001;
+
+    /**
+     * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
+     */
+    protected $tester;
 
     /**
      * @var \Generated\Shared\Transfer\ShipmentMethodTransfer[]

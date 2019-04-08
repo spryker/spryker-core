@@ -9,7 +9,6 @@ namespace Spryker\Client\Sales\Zed;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class SalesStub implements SalesStubInterface

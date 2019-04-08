@@ -8,16 +8,13 @@
 namespace SprykerTest\Zed\Shipment;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Tax\TaxConstants;

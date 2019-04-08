@@ -88,17 +88,17 @@ class ShipmentDiscountCollector extends ShipmentDiscountWithoutMultiShipmentColl
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
     protected function isShipmentExpenseSatisfiedBy(
         ShipmentGroupTransfer $shipmentGroupTransfer,
-        ShipmentTransfer $expenseTransfer,
+        ExpenseTransfer $expenseTransfer,
         ClauseTransfer $clauseTransfer
-    ): ?ExpenseTransfer {
+    ): bool {
         foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
             if (!$this->shipmentDiscountDecisionRule
                     ->isItemShipmentExpenseSatisfiedBy($itemTransfer, $expenseTransfer, $clauseTransfer)

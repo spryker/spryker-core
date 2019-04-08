@@ -10,16 +10,11 @@ namespace SprykerTest\Zed\Shipment\Business\Facade\ShipmentTaxRateCalculation;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\ExpenseBuilder;
-use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
-use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\TaxRateTransfer;
-use Orm\Zed\Country\Persistence\SpyCountryQuery;
-use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
@@ -41,6 +36,11 @@ use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractAf
 class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
 {
     protected const FLOAT_COMPARISION_DELTA = 0.001;
+
+    /**
+     * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
+     */
+    protected $tester;
 
     /**
      * @var \Generated\Shared\Transfer\ShipmentMethodTransfer[]

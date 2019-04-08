@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business\Model\OrderItem;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 
 interface SalesOrderItemGrouperInterface
 {

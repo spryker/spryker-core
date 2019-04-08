@@ -40,7 +40,7 @@ class SalesDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function haveOrderUsingPreparedQuoteTransfer(QuoteTransfer $quoteTransfer, string $stateMachineProcessName = null): SaveOrderTransfer
+    public function haveOrderUsingPreparedQuoteTransfer(QuoteTransfer $quoteTransfer, ?string $stateMachineProcessName = null): SaveOrderTransfer
     {
         return $this->createOrder($quoteTransfer, $stateMachineProcessName);
     }
@@ -70,7 +70,7 @@ class SalesDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    protected function createOrder(QuoteTransfer $quoteTransfer, string $stateMachineProcessName = null): SaveOrderTransfer
+    protected function createOrder(QuoteTransfer $quoteTransfer, ?string $stateMachineProcessName = null): SaveOrderTransfer
     {
         $saveOrderTransfer = (new SaveOrderBuilder())->makeEmpty()->build();
 

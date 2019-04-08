@@ -8,13 +8,10 @@
 namespace SprykerTest\Zed\TaxProductConnector;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
-use Orm\Zed\Tax\Persistence\SpyTaxRate;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Spryker\Shared\Tax\TaxConstants;
 
 /**
@@ -46,7 +43,7 @@ class TaxProductConnectorBusinessTester extends Actor
     {
         $idCountry = SpyCountryQuery::create()->filterByIso2Code($iso2Code)->findOne()->getIdCountry();
 
-        return  $this->haveTaxSetWithTaxRates([], [
+        return $this->haveTaxSetWithTaxRates([], [
             [
                 TaxRateTransfer::FK_COUNTRY => $idCountry,
                 TaxRateTransfer::RATE => $currentTaxRate,

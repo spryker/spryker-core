@@ -9,8 +9,6 @@ namespace Spryker\Zed\Sales\Business\Order;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader as OrderReaderWithoutMultiShippingAddress;
-use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemGrouperInterface;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderReader extends OrderReaderWithoutMultiShippingAddress
 {
