@@ -18,8 +18,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CloseOutdatedQuoteRequestConsole extends Console
 {
-    public const COMMAND_NAME = 'quote-request:close-outdated';
-    public const COMMAND_DESCRIPTION = 'Updates status to "closed" for all requests for quote where valid_until less than current time.';
+    protected const COMMAND_NAME = 'quote-request:close-outdated';
+    protected const COMMAND_DESCRIPTION = 'Updates status to "closed" for all requests for quote where valid_until less than current time.';
 
     /**
      * @return void
