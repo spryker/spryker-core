@@ -10,9 +10,9 @@ namespace Spryker\Zed\QuoteRequest\Persistence;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
-use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Orm\Zed\QuoteRequest\Persistence\Map\SpyQuoteRequestTableMap;
 use Orm\Zed\QuoteRequest\Persistence\Map\SpyQuoteRequestVersionTableMap;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery;
@@ -66,7 +66,7 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
         $quoteRequestVersionQuery = $this->getFactory()
             ->getQuoteRequestVersionPropelQuery()
             ->joinWithSpyQuoteRequest()
-            ->orderByIdQuoteRequestVersion(Criteria::DESC);
+            ->orderByVersion(Criteria::DESC);
 
         if ($quoteRequestVersionFilterTransfer->getQuoteRequest() && $quoteRequestVersionFilterTransfer->getQuoteRequest()->getIdQuoteRequest()) {
             $quoteRequestVersionQuery->filterByFkQuoteRequest($quoteRequestVersionFilterTransfer->getQuoteRequest()->getIdQuoteRequest());
@@ -102,32 +102,32 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
     }
 
     /**
-     * @param int $idQuoteRequest
+     * @param string $versionReference
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    public function findQuoteRequestLatestVisibleVersion(int $idQuoteRequest): ?QuoteRequestVersionTransfer
+    public function findQuoteRequestByVersionReference(string $versionReference): ?QuoteRequestTransfer
     {
-        $quoteRequestVersionCollection = $this->getFactory()
-            ->getQuoteRequestVersionPropelQuery()
-            ->filterByFkQuoteRequest($idQuoteRequest)
-            ->useSpyQuoteRequestQuery()
-                ->filterByIsLatestVersionHidden(true)
+        $quoteRequestEntity = $this->getFactory()
+            ->getQuoteRequestPropelQuery()
+            ->joinWithCompanyUser()
+            ->useCompanyUserQuery()
+                ->joinWithCustomer()
+                ->joinWithCompany()
+                ->joinWithCompanyBusinessUnit()
             ->endUse()
-            ->orderByIdQuoteRequestVersion(Criteria::DESC)
-            ->limit(2)
-            ->find();
+            ->useSpyQuoteRequestVersionQuery()
+                ->filterByVersionReference($versionReference)
+            ->endUse()
+            ->findOne();
 
-        if (!$quoteRequestVersionCollection->offsetExists(1)) {
+        if (!$quoteRequestEntity) {
             return null;
         }
 
         return $this->getFactory()
-            ->createQuoteRequestVersionMapper()
-            ->mapQuoteRequestVersionEntityToQuoteRequestVersionTransfer(
-                $quoteRequestVersionCollection->offsetGet(1),
-                new QuoteRequestVersionTransfer()
-            );
+            ->createQuoteRequestMapper()
+            ->mapQuoteRequestEntityToQuoteRequestTransfer($quoteRequestEntity, new QuoteRequestTransfer());
     }
 
     /**
@@ -154,6 +154,10 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
 
         if ($quoteRequestFilterTransfer->getQuoteRequestReference()) {
             $quoteRequestQuery->filterByQuoteRequestReference($quoteRequestFilterTransfer->getQuoteRequestReference());
+        }
+
+        if ($quoteRequestFilterTransfer->getIdQuoteRequest()) {
+            $quoteRequestQuery->filterByIdQuoteRequest($quoteRequestFilterTransfer->getIdQuoteRequest());
         }
 
         if ($quoteRequestFilterTransfer->getPagination()) {

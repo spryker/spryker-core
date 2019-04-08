@@ -41,6 +41,7 @@ class QuoteRequestConfig extends AbstractBundleConfig
             QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE,
             QuoteTransfer::QUOTE_REQUEST_REFERENCE,
             QuoteTransfer::IS_LOCKED,
+            QuoteTransfer::ITEMS,
         ];
     }
 

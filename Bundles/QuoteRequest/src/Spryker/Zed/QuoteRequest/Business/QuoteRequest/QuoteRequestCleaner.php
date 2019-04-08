@@ -8,8 +8,6 @@
 namespace Spryker\Zed\QuoteRequest\Business\QuoteRequest;
 
 use DateTime;
-use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
@@ -53,7 +51,7 @@ class QuoteRequestCleaner implements QuoteRequestCleanerInterface
      */
     public function closeQuoteRequest(string $quoteRequestVersionReference): void
     {
-        $quoteRequestTransfer = $this->findQuoteRequestTransferByVersionReference($quoteRequestVersionReference);
+        $quoteRequestTransfer = $this->quoteRequestRepository->findQuoteRequestByVersionReference($quoteRequestVersionReference);
 
         if (!$quoteRequestTransfer) {
             return;
@@ -61,29 +59,5 @@ class QuoteRequestCleaner implements QuoteRequestCleanerInterface
 
         $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_CLOSED);
         $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
-    }
-
-    /**
-     * @param string $quoteRequestVersionReference
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
-     */
-    protected function findQuoteRequestTransferByVersionReference(string $quoteRequestVersionReference): ?QuoteRequestTransfer
-    {
-        $quoteRequestVersionFilterTransfer = (new QuoteRequestVersionFilterTransfer())
-            ->setQuoteRequestVersionReference($quoteRequestVersionReference);
-
-        $quoteRequestVersionTransfers = $this->quoteRequestRepository
-            ->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer)
-            ->getQuoteRequestVersions()
-            ->getArrayCopy();
-
-        $quoteRequestVersionTransfer = array_shift($quoteRequestVersionTransfers);
-
-        if (!$quoteRequestVersionTransfer) {
-            return null;
-        }
-
-        return $quoteRequestVersionTransfer->getQuoteRequest();
     }
 }
