@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -63,22 +61,22 @@ class QuoteRequestVersionMapper
     }
 
     /**
-     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion $quoteRequestVersion
+     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion $quoteRequestVersionEntity
      * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
      */
-    public function mapQuoteRequestVersionEntityToQuoteRequestVersionTransfer(
-        SpyQuoteRequestVersion $quoteRequestVersion,
+    protected function mapQuoteRequestVersionEntityToQuoteRequestVersionTransfer(
+        SpyQuoteRequestVersion $quoteRequestVersionEntity,
         QuoteRequestVersionTransfer $quoteRequestVersionTransfer
     ): QuoteRequestVersionTransfer {
         $quoteRequestVersionTransfer = $quoteRequestVersionTransfer
-            ->fromArray($quoteRequestVersion->toArray(), true)
-            ->setMetadata($this->decodeMetadata($quoteRequestVersion))
-            ->setQuoteRequest($this->getQuoteRequest($quoteRequestVersion));
+            ->fromArray($quoteRequestVersionEntity->toArray(), true);
 
-        if ($quoteRequestVersion->getQuote()) {
-            $quoteRequestVersionTransfer->setQuote($this->decodeQuote($quoteRequestVersion->getQuote()));
+        $quoteRequestVersionTransfer->setMetadata($this->decodeMetadata($quoteRequestVersionEntity));
+
+        if ($quoteRequestVersionEntity->getQuote()) {
+            $quoteRequestVersionTransfer->setQuote($this->decodeQuote($quoteRequestVersionEntity->getQuote()));
         }
 
         return $quoteRequestVersionTransfer;
@@ -105,23 +103,6 @@ class QuoteRequestVersionMapper
             ->setMetadata($this->encodeMetadata($quoteRequestVersionTransfer));
 
         return $quoteRequestVersionEntity;
-    }
-
-    /**
-     * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersion $quoteRequestVersion
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
-     */
-    protected function getQuoteRequest(SpyQuoteRequestVersion $quoteRequestVersion): QuoteRequestTransfer
-    {
-        $quoteRequestEntity = $quoteRequestVersion->getSpyQuoteRequest();
-        $quoteRequestTransfer = (new QuoteRequestTransfer())
-            ->fromArray($quoteRequestEntity->toArray(), true)
-            ->setCompanyUser(
-                (new CompanyUserTransfer())->setIdCompanyUser($quoteRequestEntity->getFkCompanyUser())
-            );
-
-        return $quoteRequestTransfer;
     }
 
     /**

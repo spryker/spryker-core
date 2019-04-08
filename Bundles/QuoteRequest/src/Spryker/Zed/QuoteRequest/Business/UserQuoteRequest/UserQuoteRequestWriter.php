@@ -17,11 +17,11 @@ use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface;
 use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
-use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 use Spryker\Zed\QuoteRequest\QuoteRequestConfig;
 
 class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
@@ -45,9 +45,9 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
     protected $quoteRequestEntityManager;
 
     /**
-     * @var \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface
+     * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface
      */
-    protected $quoteRequestRepository;
+    protected $quoteRequestReader;
 
     /**
      * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface
@@ -67,7 +67,7 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
     /**
      * @param \Spryker\Zed\QuoteRequest\QuoteRequestConfig $quoteRequestConfig
      * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface $quoteRequestEntityManager
-     * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $quoteRequestRepository
+     * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface $quoteRequestReader
      * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator
      * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface $companyUserFacade
      * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface $cartFacade
@@ -75,14 +75,14 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
     public function __construct(
         QuoteRequestConfig $quoteRequestConfig,
         QuoteRequestEntityManagerInterface $quoteRequestEntityManager,
-        QuoteRequestRepositoryInterface $quoteRequestRepository,
+        QuoteRequestReaderInterface $quoteRequestReader,
         QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator,
         QuoteRequestToCompanyUserInterface $companyUserFacade,
         QuoteRequestToCartInterface $cartFacade
     ) {
         $this->quoteRequestConfig = $quoteRequestConfig;
         $this->quoteRequestEntityManager = $quoteRequestEntityManager;
-        $this->quoteRequestRepository = $quoteRequestRepository;
+        $this->quoteRequestReader = $quoteRequestReader;
         $this->quoteRequestReferenceGenerator = $quoteRequestReferenceGenerator;
         $this->companyUserFacade = $companyUserFacade;
         $this->cartFacade = $cartFacade;
@@ -373,9 +373,10 @@ class UserQuoteRequestWriter implements UserQuoteRequestWriterInterface
         $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->setWithHidden(true)
             ->setQuoteRequestReference($quoteRequestCriteriaTransfer->getQuoteRequestReference());
 
-        $quoteRequestTransfers = $this->quoteRequestRepository
+        $quoteRequestTransfers = $this->quoteRequestReader
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
             ->getQuoteRequests()
             ->getArrayCopy();

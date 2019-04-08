@@ -54,7 +54,7 @@ class QuoteRequestCleaner implements QuoteRequestCleanerInterface
      */
     public function closeQuoteRequest(string $quoteRequestVersionReference): void
     {
-        $quoteRequestTransfer = $this->findQuoteRequestTransferByVersionReference($quoteRequestVersionReference);
+        $quoteRequestTransfer = $this->quoteRequestRepository->findQuoteRequestByVersionReference($quoteRequestVersionReference);
 
         if (!$quoteRequestTransfer) {
             return;

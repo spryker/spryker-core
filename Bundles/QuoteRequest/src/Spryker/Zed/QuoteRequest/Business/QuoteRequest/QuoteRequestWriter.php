@@ -21,7 +21,6 @@ use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterfac
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
-use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 use Spryker\Zed\QuoteRequest\QuoteRequestConfig;
 
 class QuoteRequestWriter implements QuoteRequestWriterInterface
@@ -44,9 +43,9 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     protected $quoteRequestEntityManager;
 
     /**
-     * @var \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface
+     * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface
      */
-    protected $quoteRequestRepository;
+    protected $quoteRequestReader;
 
     /**
      * @var \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface
@@ -71,7 +70,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     /**
      * @param \Spryker\Zed\QuoteRequest\QuoteRequestConfig $quoteRequestConfig
      * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface $quoteRequestEntityManager
-     * @param \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface $quoteRequestRepository
+     * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface $quoteRequestReader
      * @param \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator
      * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface $companyUserFacade
      * @param \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface $calculationFacade
@@ -80,7 +79,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     public function __construct(
         QuoteRequestConfig $quoteRequestConfig,
         QuoteRequestEntityManagerInterface $quoteRequestEntityManager,
-        QuoteRequestRepositoryInterface $quoteRequestRepository,
+        QuoteRequestReaderInterface $quoteRequestReader,
         QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator,
         QuoteRequestToCompanyUserInterface $companyUserFacade,
         QuoteRequestToCalculationInterface $calculationFacade,
@@ -88,7 +87,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     ) {
         $this->quoteRequestConfig = $quoteRequestConfig;
         $this->quoteRequestEntityManager = $quoteRequestEntityManager;
-        $this->quoteRequestRepository = $quoteRequestRepository;
+        $this->quoteRequestReader = $quoteRequestReader;
         $this->quoteRequestReferenceGenerator = $quoteRequestReferenceGenerator;
         $this->companyUserFacade = $companyUserFacade;
         $this->calculationFacade = $calculationFacade;
@@ -381,7 +380,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->setQuoteRequestReference($quoteRequestCriteriaTransfer->getQuoteRequestReference())
             ->setCompanyUser((new CompanyUserTransfer())->setIdCompanyUser($quoteRequestCriteriaTransfer->getIdCompanyUser()));
 
-        $quoteRequestTransfers = $this->quoteRequestRepository
+        $quoteRequestTransfers = $this->quoteRequestReader
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
             ->getQuoteRequests()
             ->getArrayCopy();
