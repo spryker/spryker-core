@@ -54,7 +54,7 @@ class ShipmentPersistenceWithExpensesTest extends Test
         QuoteTransfer $quoteTransfer
     ): void {
         // Arrange
-        $saveOrderTransfer = $this->tester->haveOrderWithoutShipment($quoteTransfer);
+        $saveOrderTransfer = $this->tester->createOrderWithoutShipment($quoteTransfer);
 
         $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
         $salesExpenseQuery = SpySalesExpenseQuery::create()->filterByFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
@@ -83,7 +83,7 @@ class ShipmentPersistenceWithExpensesTest extends Test
         int $countOfNewShipmentExpenses
     ): void {
         // Arrange
-        $saveOrderTransfer = $this->tester->haveOrderWithoutShipment($quoteTransfer);
+        $saveOrderTransfer = $this->tester->createOrderWithoutShipment($quoteTransfer);
 
         $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
 

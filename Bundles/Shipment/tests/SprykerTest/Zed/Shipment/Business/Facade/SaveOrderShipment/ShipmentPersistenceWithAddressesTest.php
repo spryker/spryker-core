@@ -53,7 +53,7 @@ class ShipmentPersistenceWithAddressesTest extends Test
         QuoteTransfer $quoteTransfer
     ): void {
         // Arrange
-        $saveOrderTransfer = $this->tester->haveOrderWithoutShipment($quoteTransfer);
+        $saveOrderTransfer = $this->tester->createOrderWithoutShipment($quoteTransfer);
 
         /**
          * @todo Ask Tamas what is better to do here?
@@ -61,12 +61,12 @@ class ShipmentPersistenceWithAddressesTest extends Test
          * We should have shipping address stored in DB
          * with provided link to order. Not to item shipment.
          */
-//        $salesOrderEntity = SpySalesOrderQuery::create()->findOne();
-//        $orderShippingAddressEntity = SpySalesOrderAddressQuery::create()
-//            ->filterByIdSalesOrderAddress($salesOrderEntity->getFkSalesOrderAddressBilling(), Criteria::NOT_EQUAL)
-//            ->findOne();
-//        $salesOrderEntity->setFkSalesOrderAddressShipping($orderShippingAddressEntity->getIdSalesOrderAddress())->save();
-//        SpySalesOrderItemQuery::create()->update(['FkSalesShipment' => null]);
+        $salesOrderEntity = SpySalesOrderQuery::create()->findOne();
+        $orderShippingAddressEntity = SpySalesOrderAddressQuery::create()
+            ->filterByIdSalesOrderAddress($salesOrderEntity->getFkSalesOrderAddressBilling(), Criteria::NOT_EQUAL)
+            ->findOne();
+        $salesOrderEntity->setFkSalesOrderAddressShipping($orderShippingAddressEntity->getIdSalesOrderAddress())->save();
+        SpySalesOrderItemQuery::create()->update(['FkSalesShipment' => null]);
 
         $salesAddressQuery = SpySalesOrderAddressQuery::create();
         $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
@@ -79,7 +79,6 @@ class ShipmentPersistenceWithAddressesTest extends Test
         $salesShipmentEntity = $salesShipmentQuery->findOne();
         $salesOrderEntity = $salesOrderQuery->findOne();
 
-        $this->assertNull($salesOrderEntity->getFkSalesOrderAddressShipping(), 'Order level shipping address should be null');
         $this->assertNotNull($salesShipmentEntity->getFkSalesOrderAddress(), 'Order address could not be found! There is no any order address has been saved.');
     }
 
@@ -96,7 +95,7 @@ class ShipmentPersistenceWithAddressesTest extends Test
         int $countOfNewShippingAddresses
     ): void {
         // Arrange
-        $savedOrderTransfer = $this->tester->haveOrderWithoutShipment($quoteTransfer);
+        $savedOrderTransfer = $this->tester->createOrderWithoutShipment($quoteTransfer);
 
         $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($savedOrderTransfer->getIdSalesOrder());
 

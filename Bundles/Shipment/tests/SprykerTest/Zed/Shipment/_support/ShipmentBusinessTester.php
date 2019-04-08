@@ -141,7 +141,7 @@ class ShipmentBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function haveShipmentMethodWithTaxSet(float $currentTaxRate, string $iso2Code): ShipmentMethodTransfer
+    public function createShipmentMethodWithTaxSet(float $currentTaxRate, string $iso2Code): ShipmentMethodTransfer
     {
         $idCountry = SpyCountryQuery::create()->filterByIso2Code($iso2Code)->findOne()->getIdCountry();
         $taxSetTransfer = $this->haveTaxSetWithTaxRates([], [
@@ -170,7 +170,7 @@ class ShipmentBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function haveProductWithTaxSetInDb(?ShipmentMethodTransfer $shipmentMethodTransfer): ProductAbstractTransfer
+    public function createProductWithTaxSetInDb(?ShipmentMethodTransfer $shipmentMethodTransfer): ProductAbstractTransfer
     {
         $productAbstractOverride = [];
         if ($shipmentMethodTransfer !== null) {
@@ -203,7 +203,7 @@ class ShipmentBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function haveOrderWithoutShipment(QuoteTransfer $quoteTransfer, ?string $testStateMachineProcessName = null): SaveOrderTransfer
+    public function createOrderWithoutShipment(QuoteTransfer $quoteTransfer, ?string $testStateMachineProcessName = null): SaveOrderTransfer
     {
         $testStateMachineProcessName = 'Test01';
         $this->configureTestStateMachine([$testStateMachineProcessName]);

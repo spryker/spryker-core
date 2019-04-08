@@ -25,5 +25,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
-                - \SprykerTest\Zed\TaxProductConnector\Helper\Facade\FacadeHelper
                 - \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper

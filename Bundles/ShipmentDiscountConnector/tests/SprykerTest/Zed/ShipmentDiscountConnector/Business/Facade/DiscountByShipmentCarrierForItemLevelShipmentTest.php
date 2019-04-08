@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Shipment\Business\Facade\ShipmentTaxRateCalculation;
+namespace SprykerTest\Zed\ShipmentDiscountConnector\Business\Facade\ShipmentTaxRateCalculation;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\AddressBuilder;
@@ -32,14 +32,14 @@ use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractAf
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group Shipment
+ * @group ShipmentDiscountConnector
  * @group Business
  * @group Facade
- * @group ShipmentTaxRateCalculation
- * @group ShipmentTaxRateCalculatorForItemLevelShipmentTest
+ * @group ShipmentDiscountCollection
+ * @group DiscountByShipmentCarrierForItemLevelShipmentTest
  * Add your own group annotations below this line
  */
-class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
+class DiscountByShipmentCarrierForItemLevelShipmentTest extends Test
 {
     protected const FLOAT_COMPARISION_DELTA = 0.001;
 
@@ -66,8 +66,8 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
         );
 
         $this->shipmentMethodTransferList = [];
-        $this->shipmentMethodTransferList['FR'] = $this->tester->createShipmentMethodWithTaxSet(20.00, 'FR');
-        $this->shipmentMethodTransferList['DE'] = $this->tester->createShipmentMethodWithTaxSet(15.00, 'DE');
+        $this->shipmentMethodTransferList['FR'] = $this->tester->haveShipmentMethodWithTaxSet(20.00, 'FR');
+        $this->shipmentMethodTransferList['DE'] = $this->tester->haveShipmentMethodWithTaxSet(15.00, 'DE');
     }
 
     /**
@@ -93,7 +93,7 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
                 $itemShipmentMethodTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
             }
 
-            $productAbstractTransfer = $this->tester->createProductWithTaxSetInDb($itemShipmentMethodTransfer);
+            $productAbstractTransfer = $this->tester->haveProductWithTaxSetInDb($itemShipmentMethodTransfer);
             $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
         }
 

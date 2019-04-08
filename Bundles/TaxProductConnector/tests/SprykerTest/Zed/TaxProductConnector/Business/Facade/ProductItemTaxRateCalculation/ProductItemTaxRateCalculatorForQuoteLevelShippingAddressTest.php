@@ -63,7 +63,7 @@ class ProductItemTaxRateCalculatorForQuoteLevelShippingAddressTest extends Test
 
         $this->tester->setDependency(
             TaxProductConnectorDependencyProvider::FACADE_TAX,
-            $this->createTaxProductConnectorToTaxFacadeBridgeMock('MOON', 66.00)
+            $this->createTaxProductConnectorToTaxFacadeBridgeMock('FOO', 66.00)
         );
 
         $this->tester->setDependency(
@@ -72,8 +72,8 @@ class ProductItemTaxRateCalculatorForQuoteLevelShippingAddressTest extends Test
         );
 
         $this->taxSetTransferList = [];
-        $this->taxSetTransferList['FR'] = $this->tester->haveTaxRateWithTaxSetInDb(20.00, 'FR');
-        $this->taxSetTransferList['DE'] = $this->tester->haveTaxRateWithTaxSetInDb(15.00, 'DE');
+        $this->taxSetTransferList['FR'] = $this->tester->createTaxRateWithTaxSetInDb(20.00, 'FR');
+        $this->taxSetTransferList['DE'] = $this->tester->createTaxRateWithTaxSetInDb(15.00, 'DE');
     }
 
     /**
@@ -95,7 +95,7 @@ class ProductItemTaxRateCalculatorForQuoteLevelShippingAddressTest extends Test
         );
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productAbstractTransfer = $this->tester->haveProductWithTaxSetInDb($taxSetTransfer);
+            $productAbstractTransfer = $this->tester->createProductWithTaxSetInDb($taxSetTransfer);
             $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
         }
 

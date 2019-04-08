@@ -21,6 +21,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Sales\SalesConstants;
+use Spryker\Zed\Sales\Business\SalesBusinessFactory;
+use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
 /**
@@ -64,15 +67,14 @@ class ShippingAddressSaveTest extends Test
         // Arrange
         $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
         $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
-        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()->filterByAddress1($shippingAddressTransfer->getAddress1());
-        $salesFacade = $this->tester->getSalesFacadeWithMockedConfig($this->createSalesConfigMock());
+        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create();
 
         // Act
-        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+        $this->getSalesFacadeWithMockedConfig()->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
 
         // Assert
-        $this->assertTrue($salesOrderAddressQuery->count() === 1, 'Shipping address should have been saved');
-        $this->assertNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should not have been assigned on sales order level.');
+        $this->assertEquals(2, $salesOrderAddressQuery->count(), 'Shipping address and billing address should have been saved');
+        $this->assertNotNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should have been assigned on sales order level.');
     }
 
     /**
@@ -88,13 +90,12 @@ class ShippingAddressSaveTest extends Test
         // Arrange
         $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
         $salesOrderAddressQuery = SpySalesOrderAddressQuery::create();
-        $salesFacade = $this->tester->getSalesFacadeWithMockedConfig($this->createSalesConfigMock());
 
         // Act
-        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+        $this->getSalesFacadeWithMockedConfig()->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
 
         // Assert
-        $this->assertEquals(1, $salesOrderAddressQuery->count(), 'Address count mismatch! Only billing address should have been saved.');
+        $this->assertEquals(1, $salesOrderAddressQuery->count(), 'Only billing address should have been saved.');
         $this->assertNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should not have been assigned on sales order level.');
     }
 
@@ -152,10 +153,34 @@ class ShippingAddressSaveTest extends Test
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Sales\SalesConfig
+     * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
-    protected function createSalesConfigMock(): SalesConfig
+    protected function getSalesFacadeWithMockedConfig(): SalesFacadeInterface {
+        $salesFacade = $this->tester->getFacade();
+        $salesBusinessFactory = new SalesBusinessFactory();
+
+        $mockedSalesConfig = $this->getMockBuilder(SalesConfig::class)->disableOriginalConstructor()->getMock();
+        $mockedSalesConfig->method('determineProcessForOrderItem')->willReturn('DummyPayment01');
+        $mockedSalesConfig->method('getOrderReferenceDefaults')->willReturn(
+            $this->createSequenceNumberSettingsTransfer()
+        );
+
+        $salesBusinessFactory->setConfig($mockedSalesConfig);
+        $salesFacade->setFactory($salesBusinessFactory);
+
+        return $salesFacade;
+    }
+
+    /**
+     * Defines the prefix for the sequence number which is the public id of an order.
+     *
+     * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
+     */
+    protected function createSequenceNumberSettingsTransfer(): SequenceNumberSettingsTransfer
     {
-        return $this->getMockBuilder(SalesConfig::class)->disableOriginalConstructor()->getMock();
+        return (new SequenceNumberSettingsBuilder([
+            'name' => SalesConstants::NAME_ORDER_REFERENCE,
+            'prefix' => 'DE--',
+        ]))->build();
     }
 }

@@ -65,8 +65,8 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
         );
 
         $this->shipmentMethodTransferList = [];
-        $this->shipmentMethodTransferList['FR'] = $this->tester->haveShipmentMethodWithTaxSet(20.00, 'FR');
-        $this->shipmentMethodTransferList['DE'] = $this->tester->haveShipmentMethodWithTaxSet(15.00, 'DE');
+        $this->shipmentMethodTransferList['FR'] = $this->tester->createShipmentMethodWithTaxSet(20.00, 'FR');
+        $this->shipmentMethodTransferList['DE'] = $this->tester->createShipmentMethodWithTaxSet(15.00, 'DE');
     }
 
     /**
@@ -92,7 +92,7 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
         }
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productAbstractTransfer = $this->tester->haveProductWithTaxSetInDb($quoteShipmentMethodTransfer);
+            $productAbstractTransfer = $this->tester->createProductWithTaxSetInDb($quoteShipmentMethodTransfer);
             $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
         }
 

@@ -73,8 +73,8 @@ class ProductItemTaxRateCalculatorForItemLevelShippingAddressTest extends Test
         );
 
         $this->taxSetTransferList = [];
-        $this->taxSetTransferList['FR'] = $this->tester->haveTaxRateWithTaxSetInDb(20.00, 'FR');
-        $this->taxSetTransferList['DE'] = $this->tester->haveTaxRateWithTaxSetInDb(15.00, 'DE');
+        $this->taxSetTransferList['FR'] = $this->tester->createTaxRateWithTaxSetInDb(20.00, 'FR');
+        $this->taxSetTransferList['DE'] = $this->tester->createTaxRateWithTaxSetInDb(15.00, 'DE');
     }
 
     /**
@@ -95,7 +95,7 @@ class ProductItemTaxRateCalculatorForItemLevelShippingAddressTest extends Test
                 $itemTransfer->getShipment()->getShippingAddress()->getIso2Code(),
                 $this->taxSetTransferList
             );
-            $productAbstractTransfer = $this->tester->haveProductWithTaxSetInDb($taxSetTransfer);
+            $productAbstractTransfer = $this->tester->createProductWithTaxSetInDb($taxSetTransfer);
             $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
         }
 

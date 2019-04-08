@@ -67,8 +67,8 @@ class ProductItemTaxRateCalculatorForDefaultTaxRatesTest extends Test
         );
 
         $this->taxSetTransferList = [];
-        $this->taxSetTransferList['FR'] = $this->tester->haveTaxRateWithTaxSetInDb(20.00, 'FR');
-        $this->taxSetTransferList['DE'] = $this->tester->haveTaxRateWithTaxSetInDb(15.00, 'DE');
+        $this->taxSetTransferList['FR'] = $this->tester->createTaxRateWithTaxSetInDb(20.00, 'FR');
+        $this->taxSetTransferList['DE'] = $this->tester->createTaxRateWithTaxSetInDb(15.00, 'DE');
     }
 
     /**
@@ -76,14 +76,14 @@ class ProductItemTaxRateCalculatorForDefaultTaxRatesTest extends Test
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $defaultCountryIso2Code
-     * @param array $expectedValues
+     * @param float $expectedTaxRate
      *
      * @return void
      */
-    public function testTaxRateCalculationShouldBeDefault(
+    public function testTaxRateCalculationWithoutAnyShippingAddressShouldUseDefaultCountrysTaxRateForAllItems(
         QuoteTransfer $quoteTransfer,
         string $defaultCountryIso2Code,
-        array $expectedValues
+        float $expectedTaxRate
     ): void {
         // Arrange
         $taxSetTransfer = $this->tester->findTaxSetByAddressIso2CodeInTaxSetTransferList(
@@ -92,7 +92,7 @@ class ProductItemTaxRateCalculatorForDefaultTaxRatesTest extends Test
         );
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productAbstractTransfer = $this->tester->haveProductWithTaxSetInDb($taxSetTransfer);
+            $productAbstractTransfer = $this->tester->createProductWithTaxSetInDb($taxSetTransfer);
             $itemTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
         }
 
@@ -103,7 +103,7 @@ class ProductItemTaxRateCalculatorForDefaultTaxRatesTest extends Test
 
         $this->tester->setDependency(
             TaxDependencyProvider::STORE_CONFIG,
-            $this->createTaxStoreMock($defaultCountryIso2Code)
+            $this->createStoreMockWithCustomCountry($defaultCountryIso2Code)
         );
 
         // Act
@@ -111,7 +111,6 @@ class ProductItemTaxRateCalculatorForDefaultTaxRatesTest extends Test
 
         // Assert
         foreach ($quoteTransfer->getItems() as $i => $itemTransfer) {
-            $expectedTaxRate = $expectedValues[$itemTransfer->getSku()];
             $actualTaxRate = $itemTransfer->getTaxRate();
 
             $this->assertEqualsWithDelta(
@@ -140,12 +139,9 @@ class ProductItemTaxRateCalculatorForDefaultTaxRatesTest extends Test
      */
     protected function getDataWithoutQuoteAndItemLevelShippingAddressesToFrance(): array
     {
-        $itemTransfer = (new ItemBuilder())->build();
+        $quoteTransfer = (new QuoteBuilder())->withItem()->build();
 
-        $quoteTransfer = (new QuoteBuilder())->build();
-        $quoteTransfer->addItem($itemTransfer);
-
-        return [$quoteTransfer, 'FR', [$itemTransfer->getSku() => 20.00]];
+        return [$quoteTransfer, 'FR', 20.00];
     }
 
     /**
@@ -153,12 +149,9 @@ class ProductItemTaxRateCalculatorForDefaultTaxRatesTest extends Test
      */
     protected function getDataWithoutQuoteAndItemLevelShippingAddressesToGermany(): array
     {
-        $itemTransfer = (new ItemBuilder())->build();
+        $quoteTransfer = (new QuoteBuilder())->withItem()->build();
 
-        $quoteTransfer = (new QuoteBuilder())->build();
-        $quoteTransfer->addItem($itemTransfer);
-
-        return [$quoteTransfer, 'DE', [$itemTransfer->getSku() => 15.00]];
+        return [$quoteTransfer, 'DE', 15.00];
     }
 
     /**
@@ -166,12 +159,9 @@ class ProductItemTaxRateCalculatorForDefaultTaxRatesTest extends Test
      */
     protected function getDataWithoutQuoteAndItemLevelShippingAddressesToMoon(): array
     {
-        $itemTransfer = (new ItemBuilder())->build();
+        $quoteTransfer = (new QuoteBuilder())->withItem()->build();
 
-        $quoteTransfer = (new QuoteBuilder())->build();
-        $quoteTransfer->addItem($itemTransfer);
-
-        return [$quoteTransfer, 'MOON', [$itemTransfer->getSku() => 66.00]];
+        return [$quoteTransfer, 'MOON', 66.00];
     }
 
     /**
@@ -204,7 +194,7 @@ class ProductItemTaxRateCalculatorForDefaultTaxRatesTest extends Test
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Store
      */
-    protected function createTaxStoreMock(string $defaultCountryIso2Code): Store
+    protected function createStoreMockWithCustomCountry(string $defaultCountryIso2Code): Store
     {
         $storeMock = $this->getMockBuilder(Store::class)
             ->disableOriginalConstructor()

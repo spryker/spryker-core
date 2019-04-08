@@ -42,19 +42,17 @@ class TaxProductConnectorBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
-    public function haveTaxRateWithTaxSetInDb(float $currentTaxRate, string $iso2Code): TaxSetTransfer
+    public function createTaxRateWithTaxSetInDb(float $currentTaxRate, string $iso2Code): TaxSetTransfer
     {
         $idCountry = SpyCountryQuery::create()->filterByIso2Code($iso2Code)->findOne()->getIdCountry();
 
         return  $this->haveTaxSetWithTaxRates([], [
             [
                 TaxRateTransfer::FK_COUNTRY => $idCountry,
-                TaxRateTransfer::NAME => 'test tax rate 1',
                 TaxRateTransfer::RATE => $currentTaxRate,
             ],
             [
                 TaxRateTransfer::FK_COUNTRY => $idCountry,
-                TaxRateTransfer::NAME => 'test tax rate 2',
                 TaxRateTransfer::RATE => 5.00,
             ],
             [
@@ -70,7 +68,7 @@ class TaxProductConnectorBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function haveProductWithTaxSetInDb(?TaxSetTransfer $taxSetTransfer): ProductAbstractTransfer
+    public function createProductWithTaxSetInDb(?TaxSetTransfer $taxSetTransfer): ProductAbstractTransfer
     {
         $productAbstractOverride = [];
         if ($taxSetTransfer !== null) {
