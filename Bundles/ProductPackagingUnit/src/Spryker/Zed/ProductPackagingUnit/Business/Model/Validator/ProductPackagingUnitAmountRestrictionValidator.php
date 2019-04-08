@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface;
 
 class ProductPackagingUnitAmountRestrictionValidator implements ProductPackagingUnitAmountRestrictionValidatorInterface
 {
@@ -31,11 +32,20 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     protected $productPackagingUnitReader;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface
      */
-    public function __construct(ProductPackagingUnitReaderInterface $productPackagingUnitReader)
-    {
+    protected $utilQuantityService;
+
+    /**
+     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
+     */
+    public function __construct(
+        ProductPackagingUnitReaderInterface $productPackagingUnitReader,
+        ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
+    ) {
         $this->productPackagingUnitReader = $productPackagingUnitReader;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -116,7 +126,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return int[]
+     * @return float[]
      */
     protected function getItemAddCartAmountMap(array $itemTransfers, CartChangeTransfer $cartChangeTransfer): array
     {
@@ -126,14 +136,28 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
         foreach ($itemTransfers as $itemTransfer) {
             $productGroupKey = $itemTransfer->getGroupKey();
             $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
-            $cartAmountMap[$productGroupKey] = (int)$amountPerQuantity;
+            $cartAmountMap[$productGroupKey] = $amountPerQuantity;
 
             if (isset($quoteAmountMapByGroupKey[$productGroupKey])) {
-                $cartAmountMap[$productGroupKey] += (int)$quoteAmountMapByGroupKey[$productGroupKey];
+                $cartAmountMap[$productGroupKey] = $this->sumQuantities(
+                    $cartAmountMap[$productGroupKey],
+                    $quoteAmountMapByGroupKey[$productGroupKey]
+                );
             }
         }
 
         return $cartAmountMap;
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 
     /**
@@ -146,7 +170,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
         $quoteAmountMap = [];
         foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
             $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
-            $quoteAmountMap[$itemTransfer->getGroupKey()] = (int)$amountPerQuantity;
+            $quoteAmountMap[$itemTransfer->getGroupKey()] = $amountPerQuantity;
         }
 
         return $quoteAmountMap;
@@ -169,13 +193,13 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
 
     /**
      * @param string $sku
-     * @param int $amount
+     * @param float $amount
      * @param \Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer $productPackagingUnitAmountTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
      * @return void
      */
-    protected function validateItem(string $sku, int $amount, ProductPackagingUnitAmountTransfer $productPackagingUnitAmountTransfer, CartPreCheckResponseTransfer $responseTransfer): void
+    protected function validateItem(string $sku, float $amount, ProductPackagingUnitAmountTransfer $productPackagingUnitAmountTransfer, CartPreCheckResponseTransfer $responseTransfer): void
     {
         $min = $productPackagingUnitAmountTransfer->getAmountMin();
         $max = $productPackagingUnitAmountTransfer->getAmountMax();
@@ -183,11 +207,13 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
         $defaultAmount = $productPackagingUnitAmountTransfer->getDefaultAmount();
         $isVariable = $productPackagingUnitAmountTransfer->getIsVariable();
 
-        if ($amount != 0 && $amount < $min) {
+        if (!$this->isQuantityEqual($amount, 0) && $amount < $min) {
             $this->addViolation(static::ERROR_AMOUNT_MIN_NOT_FULFILLED, $sku, $min, $amount, $responseTransfer);
         }
 
-        if ($amount != 0 && $interval != null && ($amount - $min) % $interval != 0) {
+        $amountMinusMin = $this->subtractQuantities($amount, (float)$min);
+
+        if (!$this->isQuantityEqual($amount, 0) && $interval != null && !$this->isQuantityModuloEqual($amountMinusMin, $interval, 0)) {
             $this->addViolation(static::ERROR_AMOUNT_INTERVAL_NOT_FULFILLED, $sku, $interval, $amount, $responseTransfer);
         }
 
@@ -198,6 +224,40 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
         if (!$isVariable && $amount != $defaultAmount) {
             $this->addViolation(static::ERROR_AMOUNT_IS_NOT_VARIABLE, $sku, $defaultAmount, $amount, $responseTransfer);
         }
+    }
+
+    /**
+     * @param float $dividentQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
+     *
+     * @return bool
+     */
+    protected function isQuantityModuloEqual(float $dividentQuantity, float $divisorQuantity, float $remainder): bool
+    {
+        return $this->utilQuantityService->isQuantityModuloEqual($dividentQuantity, $divisorQuantity, $remainder);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return bool
+     */
+    protected function isQuantityEqual(float $firstQuantity, float $secondQuantity): bool
+    {
+        return $this->utilQuantityService->isQuantityEqual($firstQuantity, $secondQuantity);
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function subtractQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
     }
 
     /**

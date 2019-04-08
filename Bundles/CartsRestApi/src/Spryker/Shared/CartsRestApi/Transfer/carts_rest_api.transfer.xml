@@ -16,7 +16,7 @@
         <property name="quantity" type="float" restRequestParameter="required" />
         <property name="groupKey" type="string" />
         <property name="abstractSku" type="string" />
-        <property name="amount" type="int" />
+        <property name="amount" type="float" />
         <property name="calculations" type="RestCartItemCalculations" />
     </transfer>
 

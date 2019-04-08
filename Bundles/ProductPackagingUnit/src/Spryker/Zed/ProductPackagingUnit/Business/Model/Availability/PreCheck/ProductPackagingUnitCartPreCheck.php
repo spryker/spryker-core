@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface;
 
 class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityPreCheck implements ProductPackagingUnitCartPreCheckInterface
 {
@@ -25,14 +26,21 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
     protected $productPackagingUnitReader;
 
     /**
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade,
-        ProductPackagingUnitReaderInterface $productPackagingUnitReader
+        ProductPackagingUnitReaderInterface $productPackagingUnitReader,
+        ProductPackagingUnitToUtilQuantityServiceInterface $utilQuantityService
     ) {
-        parent::__construct($availabilityFacade);
+        parent::__construct($availabilityFacade, $utilQuantityService);
         $this->productPackagingUnitReader = $productPackagingUnitReader;
     }
 
