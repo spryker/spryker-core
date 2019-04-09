@@ -14,6 +14,9 @@ class CompanyRolesRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_COMPANY_ROLES = 'company-roles';
     public const CONTROLLER_RESOURCE_COMPANY_ROLES = 'company-roles-resource';
 
+    /**
+     * @deprecated Will be removed with next major release.
+     */
     public const ACTION_COMPANY_ROLES_GET = 'get';
 
     public const RESPONSE_CODE_COMPANY_ROLE_NOT_FOUND = '2101';

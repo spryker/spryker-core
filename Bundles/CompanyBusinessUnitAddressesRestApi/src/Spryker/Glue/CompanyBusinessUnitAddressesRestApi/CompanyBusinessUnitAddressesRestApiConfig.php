@@ -13,6 +13,10 @@ class CompanyBusinessUnitAddressesRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES = 'company-business-unit-addresses';
     public const CONTROLLER_RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES = 'company-business-unit-addresses-resource';
+
+    /**
+     * @deprecated Will be removed with next major release.
+     */
     public const ACTION_COMPANY_BUSINESS_UNIT_ADDRESSES_GET = 'get';
 
     public const RESPONSE_CODE_COMPANY_BUSINESS_UNIT_ADDRESS_NOT_FOUND = '2001';

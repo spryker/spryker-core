@@ -134,6 +134,9 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     }
 
     /**
+     * @module CompanyBusinessUnit
+     * @module Country
+     *
      * @param string $companyBusinessUnitAddressUuid
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
@@ -144,7 +147,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         $companyUnitAddressEntity = $this->getFactory()
             ->createCompanyUnitAddressQuery()
             ->filterByUuid($companyBusinessUnitAddressUuid)
-            ->innerJoinWithCountry()
+            ->leftJoinWithCountry()
             ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinCompanyBusinessUnit()
             ->endUse()

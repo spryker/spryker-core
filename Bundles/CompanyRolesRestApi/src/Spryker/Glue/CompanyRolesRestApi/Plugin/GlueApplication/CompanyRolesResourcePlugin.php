@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CompanyRolesRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyRolesAttributesTransfer;
 use Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
@@ -30,8 +30,7 @@ class CompanyRolesResourcePlugin extends AbstractPlugin implements ResourceRoute
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection
-            ->addGet(CompanyRolesRestApiConfig::ACTION_COMPANY_ROLES_GET);
+        $resourceRouteCollection->addGet('get');
 
         return $resourceRouteCollection;
     }
@@ -69,6 +68,6 @@ class CompanyRolesResourcePlugin extends AbstractPlugin implements ResourceRoute
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestCompanyRoleAttributesTransfer::class;
+        return RestCompanyRolesAttributesTransfer::class;
     }
 }

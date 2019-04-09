@@ -8,18 +8,18 @@
 namespace Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper;
 
 use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\RestCompanyAttributesTransfer;
+use Generated\Shared\Transfer\RestCompaniesAttributesTransfer;
 
 interface CompanyMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     * @param \Generated\Shared\Transfer\RestCompanyAttributesTransfer $restCompanyAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCompaniesAttributesTransfer $restCompaniesAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\RestCompanyAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestCompaniesAttributesTransfer
      */
-    public function mapCompanyTransferToRestCompanyAttributesTransfer(
+    public function mapCompanyTransferToRestCompaniesAttributesTransfer(
         CompanyTransfer $companyTransfer,
-        RestCompanyAttributesTransfer $restCompanyAttributesTransfer
-    ): RestCompanyAttributesTransfer;
+        RestCompaniesAttributesTransfer $restCompaniesAttributesTransfer
+    ): RestCompaniesAttributesTransfer;
 }

@@ -9,7 +9,7 @@ namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyBusinessUnitsAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiConfig;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Mapper\CompanyBusinessUnitMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -80,16 +80,16 @@ class CompanyBusinessUnitResourceRelationshipExpander implements CompanyBusiness
     protected function createCompanyBusinessUnitResource(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): RestResourceInterface {
-        $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapper
-            ->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
+        $restCompanyBusinessUnitsAttributesTransfer = $this->companyBusinessUnitMapper
+            ->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitsAttributesTransfer(
                 $companyBusinessUnitTransfer,
-                new RestCompanyBusinessUnitAttributesTransfer()
+                new RestCompanyBusinessUnitsAttributesTransfer()
             );
 
         return $this->restResourceBuilder->createRestResource(
             CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
             $companyBusinessUnitTransfer->getUuid(),
-            $restCompanyBusinessUnitAttributesTransfer
+            $restCompanyBusinessUnitsAttributesTransfer
         );
     }
 }

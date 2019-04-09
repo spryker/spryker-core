@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CompaniesRestApi\Processor\Company\RestResponseBuilder;
 
-use Generated\Shared\Transfer\RestCompanyAttributesTransfer;
+use Generated\Shared\Transfer\RestCompaniesAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -15,24 +15,24 @@ interface CompanyRestResponseBuilderInterface
 {
     /**
      * @param string $companyUuid
-     * @param \Generated\Shared\Transfer\RestCompanyAttributesTransfer $restCompanyAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCompaniesAttributesTransfer $restCompaniesAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyRestResponse(
         string $companyUuid,
-        RestCompanyAttributesTransfer $restCompanyAttributesTransfer
+        RestCompaniesAttributesTransfer $restCompaniesAttributesTransfer
     ): RestResponseInterface;
 
     /**
      * @param string $companyUuid
-     * @param \Generated\Shared\Transfer\RestCompanyAttributesTransfer $restCompanyAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCompaniesAttributesTransfer $restCompaniesAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function buildCompanyRestResource(
+    public function createCompanyRestResource(
         string $companyUuid,
-        RestCompanyAttributesTransfer $restCompanyAttributesTransfer
+        RestCompaniesAttributesTransfer $restCompaniesAttributesTransfer
     ): RestResourceInterface;
 
     /**
@@ -44,4 +44,9 @@ interface CompanyRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyNotFoundError(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createResourceNotImplementedError(): RestResponseInterface;
 }

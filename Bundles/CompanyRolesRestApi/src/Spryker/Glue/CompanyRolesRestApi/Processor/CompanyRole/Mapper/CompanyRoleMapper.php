@@ -8,20 +8,20 @@
 namespace Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Mapper;
 
 use Generated\Shared\Transfer\CompanyRoleTransfer;
-use Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyRolesAttributesTransfer;
 
 class CompanyRoleMapper implements CompanyRoleMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
-     * @param \Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyRolesAttributesTransfer $restCompanyRolesAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestCompanyRolesAttributesTransfer
      */
-    public function mapCompanyRoleTransferToRestCompanyRoleAttributesTransfer(
+    public function mapCompanyRoleTransferToRestCompanyRolesAttributesTransfer(
         CompanyRoleTransfer $companyRoleTransfer,
-        RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
-    ): RestCompanyRoleAttributesTransfer {
-        return $restCompanyRoleAttributesTransfer->fromArray($companyRoleTransfer->toArray(), true);
+        RestCompanyRolesAttributesTransfer $restCompanyRolesAttributesTransfer
+    ): RestCompanyRolesAttributesTransfer {
+        return $restCompanyRolesAttributesTransfer->fromArray($companyRoleTransfer->toArray(), true);
     }
 }

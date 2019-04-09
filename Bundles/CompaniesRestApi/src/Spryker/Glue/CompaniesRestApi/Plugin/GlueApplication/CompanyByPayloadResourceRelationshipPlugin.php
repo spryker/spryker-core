@@ -32,8 +32,8 @@ class CompanyByPayloadResourceRelationshipPlugin extends AbstractPlugin implemen
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createCompanyByPayloadResourceRelationshipExpander()
-            ->addResourceRelationships($resources, $restRequest);
+            ->createCompanyResourceRelationshipExpander()
+            ->addResourceRelationshipsByPayload($resources, $restRequest);
     }
 
     /**

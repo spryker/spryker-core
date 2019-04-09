@@ -10,7 +10,7 @@ namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusi
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Mapper\CompanyBusinessUnitAddressMapperInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -26,7 +26,7 @@ class CompanyBusinessUnitAddressResourceRelationshipExpander implements CompanyB
     /**
      * @var \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Mapper\CompanyBusinessUnitAddressMapperInterface
      */
-    protected $companyBusinessUnitMapper;
+    protected $companyBusinessUnitAddressMapper;
 
     /**
      * @param \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilderInterface $companyBusinessUnitAddressRestResponseBuilder
@@ -37,7 +37,7 @@ class CompanyBusinessUnitAddressResourceRelationshipExpander implements CompanyB
         CompanyBusinessUnitAddressMapperInterface $companyBusinessUnitAddressMapper
     ) {
         $this->companyBusinessUnitAddressRestResponseBuilder = $companyBusinessUnitAddressRestResponseBuilder;
-        $this->companyBusinessUnitMapper = $companyBusinessUnitAddressMapper;
+        $this->companyBusinessUnitAddressMapper = $companyBusinessUnitAddressMapper;
     }
 
     /**
@@ -54,7 +54,7 @@ class CompanyBusinessUnitAddressResourceRelationshipExpander implements CompanyB
              */
             $payload = $resource->getPayload();
 
-            if (!$this->isValidPayloadType($payload)) {
+            if (!$payload || !($payload instanceof CompanyBusinessUnitTransfer)) {
                 continue;
             }
 
@@ -81,26 +81,16 @@ class CompanyBusinessUnitAddressResourceRelationshipExpander implements CompanyB
     protected function createCompanyBusinessUnitAddressResource(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): RestResourceInterface {
-        $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapper
-            ->mapCompanyUnitAddressTransferToRestCompanyBusinessUnitAddressAttributesTransfer(
+        $restCompanyBusinessUnitAddressesAttributesTransfer = $this->companyBusinessUnitAddressMapper
+            ->mapCompanyUnitAddressTransferToRestCompanyBusinessUnitAddressesAttributesTransfer(
                 $companyUnitAddressTransfer,
-                new RestCompanyBusinessUnitAddressAttributesTransfer()
+                new RestCompanyBusinessUnitAddressesAttributesTransfer()
             );
 
-        return $this->companyBusinessUnitAddressRestResponseBuilder->buildCompanyBusinessUnitAddressRestResource(
+        return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressRestResource(
             $companyUnitAddressTransfer->getUuid(),
-            $restCompanyBusinessUnitAttributesTransfer
+            $restCompanyBusinessUnitAddressesAttributesTransfer
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $payload
-     *
-     * @return bool
-     */
-    protected function isValidPayloadType(?CompanyBusinessUnitTransfer $payload = null): bool
-    {
-        return $payload && $payload instanceof CompanyBusinessUnitTransfer;
     }
 
     /**
@@ -110,6 +100,7 @@ class CompanyBusinessUnitAddressResourceRelationshipExpander implements CompanyB
      */
     protected function hasAddressCollection(?CompanyUnitAddressCollectionTransfer $addressCollectionTransfer = null): bool
     {
-        return $addressCollectionTransfer && $addressCollectionTransfer->getCompanyUnitAddresses()->count();
+        return $addressCollectionTransfer
+            && $addressCollectionTransfer->getCompanyUnitAddresses()->count() > 0;
     }
 }

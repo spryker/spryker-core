@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRole;
 
-class CompanyRoleCompanyMapper implements CompanyRoleCompanyMapperInterface
+class CompanyRoleCompanyMapper
 {
     /**
      * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole $spyCompanyRole
@@ -19,7 +19,7 @@ class CompanyRoleCompanyMapper implements CompanyRoleCompanyMapperInterface
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
-    public function hydrateCompanyRoleWithCompany(
+    public function mapCompanyFromCompanyRoleEntityToCompanyRoleTransfer(
         SpyCompanyRole $spyCompanyRole,
         CompanyRoleTransfer $companyRoleTransfer
     ): CompanyRoleTransfer {

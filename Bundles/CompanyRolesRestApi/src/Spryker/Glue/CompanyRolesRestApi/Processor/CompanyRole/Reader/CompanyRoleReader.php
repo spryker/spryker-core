@@ -8,7 +8,7 @@
 namespace Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Reader;
 
 use Generated\Shared\Transfer\CompanyRoleTransfer;
-use Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyRolesAttributesTransfer;
 use Spryker\Glue\CompanyRolesRestApi\Dependency\Client\CompanyRolesRestApiToCompanyRoleClientInterface;
 use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Mapper\CompanyRoleMapperInterface;
 use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\RestResponseBuilder\CompanyRoleRestResponseBuilderInterface;
@@ -69,16 +69,16 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
             return $this->companyRoleRestResponseBuilder->createCompanyRoleNotFoundError();
         }
 
-        $restCompanyRoleAttributesTransfer = $this->companyRoleMapperInterface
-            ->mapCompanyRoleTransferToRestCompanyRoleAttributesTransfer(
+        $restCompanyRolesAttributesTransfer = $this->companyRoleMapperInterface
+            ->mapCompanyRoleTransferToRestCompanyRolesAttributesTransfer(
                 $companyRoleResponseTransfer->getCompanyRoleTransfer(),
-                new RestCompanyRoleAttributesTransfer()
+                new RestCompanyRolesAttributesTransfer()
             );
 
         return $this->companyRoleRestResponseBuilder
             ->createCompanyRoleRestResponse(
                 $companyRoleUuid,
-                $restCompanyRoleAttributesTransfer,
+                $restCompanyRolesAttributesTransfer,
                 $companyRoleResponseTransfer->getCompanyRoleTransfer()
             );
     }

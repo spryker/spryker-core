@@ -8,20 +8,20 @@
 namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Mapper;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer;
 
 class CompanyBusinessUnitAddressMapper implements CompanyBusinessUnitAddressMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer
      */
-    public function mapCompanyUnitAddressTransferToRestCompanyBusinessUnitAddressAttributesTransfer(
+    public function mapCompanyUnitAddressTransferToRestCompanyBusinessUnitAddressesAttributesTransfer(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
-        RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
-    ): RestCompanyBusinessUnitAddressAttributesTransfer {
-        return $restCompanyBusinessUnitAddressAttributesTransfer->fromArray($companyUnitAddressTransfer->toArray(), true);
+        RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
+    ): RestCompanyBusinessUnitAddressesAttributesTransfer {
+        return $restCompanyBusinessUnitAddressesAttributesTransfer->fromArray($companyUnitAddressTransfer->toArray(), true);
     }
 }

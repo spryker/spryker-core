@@ -8,7 +8,7 @@
 namespace Spryker\Glue\CompaniesRestApi\Processor\Company\Reader;
 
 use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\RestCompanyAttributesTransfer;
+use Generated\Shared\Transfer\RestCompaniesAttributesTransfer;
 use Spryker\Glue\CompaniesRestApi\Dependency\Client\CompaniesRestApiToCompanyClientInterface;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\RestResponseBuilder\CompanyRestResponseBuilderInterface;
@@ -69,14 +69,14 @@ class CompanyReader implements CompanyReaderInterface
             return $this->companyRestResponseBuilder->createCompanyNotFoundError();
         }
 
-        $restCompanyAttributesTransfer = $this->companyMapperInterface
-            ->mapCompanyTransferToRestCompanyAttributesTransfer(
+        $restCompaniesAttributesTransfer = $this->companyMapperInterface
+            ->mapCompanyTransferToRestCompaniesAttributesTransfer(
                 $companyResponseTransfer->getCompanyTransfer(),
-                new RestCompanyAttributesTransfer()
+                new RestCompaniesAttributesTransfer()
             );
 
         return $this->companyRestResponseBuilder
-            ->createCompanyRestResponse($companyUuid, $restCompanyAttributesTransfer);
+            ->createCompanyRestResponse($companyUuid, $restCompaniesAttributesTransfer);
     }
 
     /**

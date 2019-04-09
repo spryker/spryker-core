@@ -8,7 +8,7 @@
 namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Reader;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Dependency\Client\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressClientInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Mapper\CompanyBusinessUnitAddressMapperInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilderInterface;
@@ -69,14 +69,14 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
             return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressNotFoundError();
         }
 
-        $restCompanyBusinessUnitAddressAttributesTransfer = $this->companyBusinessUnitAddressMapperInterface
-            ->mapCompanyUnitAddressTransferToRestCompanyBusinessUnitAddressAttributesTransfer(
+        $restCompanyBusinessUnitAddressesAttributesTransfer = $this->companyBusinessUnitAddressMapperInterface
+            ->mapCompanyUnitAddressTransferToRestCompanyBusinessUnitAddressesAttributesTransfer(
                 $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer(),
-                new RestCompanyBusinessUnitAddressAttributesTransfer()
+                new RestCompanyBusinessUnitAddressesAttributesTransfer()
             );
 
         return $this->companyBusinessUnitAddressRestResponseBuilder
-            ->createCompanyBusinessUnitAddressRestResponse($companyBusinessUnitAddressUuid, $restCompanyBusinessUnitAddressAttributesTransfer);
+            ->createCompanyBusinessUnitAddressRestResponse($companyBusinessUnitAddressUuid, $restCompanyBusinessUnitAddressesAttributesTransfer);
     }
 
     /**

@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder;
 
-use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -15,24 +15,24 @@ interface CompanyBusinessUnitAddressRestResponseBuilderInterface
 {
     /**
      * @param string $companyBusinessUnitAddressUuid
-     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyBusinessUnitAddressRestResponse(
         string $companyBusinessUnitAddressUuid,
-        RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
+        RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
     ): RestResponseInterface;
 
     /**
      * @param string $companyBusinessUnitAddressUuid
-     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function buildCompanyBusinessUnitAddressRestResource(
+    public function createCompanyBusinessUnitAddressRestResource(
         string $companyBusinessUnitAddressUuid,
-        RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
+        RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
     ): RestResourceInterface;
 
     /**
@@ -44,4 +44,9 @@ interface CompanyBusinessUnitAddressRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyBusinessUnitAddressNotFoundError(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createResourceNotImplementedError(): RestResponseInterface;
 }

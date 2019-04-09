@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder;
 
-use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -32,32 +32,32 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
 
     /**
      * @param string $companyBusinessUnitAddressUuid
-     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyBusinessUnitAddressRestResponse(
         string $companyBusinessUnitAddressUuid,
-        RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
+        RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
     ): RestResponseInterface {
         return $this->restResourceBuilder->createRestResponse()
-            ->addResource($this->buildCompanyBusinessUnitAddressRestResource($companyBusinessUnitAddressUuid, $restCompanyBusinessUnitAddressAttributesTransfer));
+            ->addResource($this->createCompanyBusinessUnitAddressRestResource($companyBusinessUnitAddressUuid, $restCompanyBusinessUnitAddressesAttributesTransfer));
     }
 
     /**
      * @param string $companyBusinessUnitAddressUuid
-     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function buildCompanyBusinessUnitAddressRestResource(
+    public function createCompanyBusinessUnitAddressRestResource(
         string $companyBusinessUnitAddressUuid,
-        RestCompanyBusinessUnitAddressAttributesTransfer $restCompanyBusinessUnitAddressAttributesTransfer
+        RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
     ): RestResourceInterface {
         $restResource = $this->restResourceBuilder->createRestResource(
             CompanyBusinessUnitAddressesRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES,
             $companyBusinessUnitAddressUuid,
-            $restCompanyBusinessUnitAddressAttributesTransfer
+            $restCompanyBusinessUnitAddressesAttributesTransfer
         );
 
         return $restResource;
@@ -87,5 +87,19 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
             ->setDetail(CompanyBusinessUnitAddressesRestApiConfig::RESPONSE_DETAIL_COMPANY_BUSINESS_UNIT_ADDRESS_NOT_FOUND);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createResourceNotImplementedError(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
+            ->setDetail(CompanyBusinessUnitAddressesRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
+
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($restErrorMessageTransfer);
     }
 }

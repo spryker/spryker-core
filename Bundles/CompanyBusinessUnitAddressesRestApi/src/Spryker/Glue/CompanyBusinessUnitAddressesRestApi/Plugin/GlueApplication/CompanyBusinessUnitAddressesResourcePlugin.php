@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
@@ -30,8 +30,7 @@ class CompanyBusinessUnitAddressesResourcePlugin extends AbstractPlugin implemen
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection
-            ->addGet(CompanyBusinessUnitAddressesRestApiConfig::ACTION_COMPANY_BUSINESS_UNIT_ADDRESSES_GET);
+        $resourceRouteCollection->addGet('get');
 
         return $resourceRouteCollection;
     }
@@ -69,6 +68,6 @@ class CompanyBusinessUnitAddressesResourcePlugin extends AbstractPlugin implemen
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestCompanyBusinessUnitAddressAttributesTransfer::class;
+        return RestCompanyBusinessUnitAddressesAttributesTransfer::class;
     }
 }

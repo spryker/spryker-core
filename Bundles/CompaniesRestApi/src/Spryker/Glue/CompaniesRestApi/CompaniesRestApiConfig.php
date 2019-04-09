@@ -14,6 +14,9 @@ class CompaniesRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_COMPANIES = 'companies';
     public const CONTROLLER_RESOURCE_COMPANIES = 'companies-resource';
 
+    /**
+     * @deprecated Will be removed with next major release.
+     */
     public const ACTION_COMPANIES_GET = 'get';
 
     public const RESPONSE_CODE_COMPANY_NOT_FOUND = '1801';

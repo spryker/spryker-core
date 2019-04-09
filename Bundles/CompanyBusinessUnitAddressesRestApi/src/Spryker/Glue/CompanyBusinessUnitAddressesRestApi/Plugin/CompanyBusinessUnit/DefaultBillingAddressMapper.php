@@ -8,31 +8,31 @@
 namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\CompanyBusinessUnit;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyBusinessUnitsAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperInterface;
 
 class DefaultBillingAddressMapper implements CompanyBusinessUnitMapperInterface
 {
     /**
-     * {@inheritDoc}
-     * - Maps and replaces defaultBillingAddress id to uuid in the RestCompanyBusinessUnitAttributesTransfer.
+     * {@inheritdoc}
+     * - Maps and replaces defaultBillingAddress id to uuid in the RestCompanyBusinessUnitsAttributesTransfer.
      * - Searches company unit address collection for defaultBillingAddress uuid.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $companyBusinessUnitAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitsAttributesTransfer $companyBusinessUnitsAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitsAttributesTransfer
      */
     public function map(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
-        RestCompanyBusinessUnitAttributesTransfer $companyBusinessUnitAttributesTransfer
-    ): RestCompanyBusinessUnitAttributesTransfer {
+        RestCompanyBusinessUnitsAttributesTransfer $companyBusinessUnitsAttributesTransfer
+    ): RestCompanyBusinessUnitsAttributesTransfer {
         if (!$companyBusinessUnitTransfer->getDefaultBillingAddress()
-            || !$companyBusinessUnitTransfer->getAddressCollection()->getCompanyUnitAddresses()->count()
+            || !$this->hasAddressCollection($companyBusinessUnitTransfer)
         ) {
-            return $companyBusinessUnitAttributesTransfer;
+            return $companyBusinessUnitsAttributesTransfer;
         }
 
         foreach ($companyBusinessUnitTransfer->getAddressCollection()->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
@@ -40,11 +40,22 @@ class DefaultBillingAddressMapper implements CompanyBusinessUnitMapperInterface
                 continue;
             }
 
-            $companyBusinessUnitAttributesTransfer->setDefaultBillingAddress($companyUnitAddressTransfer->getUuid());
+            $companyBusinessUnitsAttributesTransfer->setDefaultBillingAddress($companyUnitAddressTransfer->getUuid());
 
-            return $companyBusinessUnitAttributesTransfer;
+            return $companyBusinessUnitsAttributesTransfer;
         }
 
-        return $companyBusinessUnitAttributesTransfer;
+        return $companyBusinessUnitsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return bool
+     */
+    protected function hasAddressCollection(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool
+    {
+        return $companyBusinessUnitTransfer->getAddressCollection()
+            && $companyBusinessUnitTransfer->getAddressCollection()->getCompanyUnitAddresses()->count() > 0;
     }
 }

@@ -335,7 +335,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
 
         $companyRoleTransfer = $this->getFactory()
             ->createCompanyRoleCompanyMapper()
-            ->hydrateCompanyRoleWithCompany(
+            ->mapCompanyFromCompanyRoleEntityToCompanyRoleTransfer(
                 $spyCompanyRole,
                 $companyRoleTransfer
             );
@@ -416,6 +416,8 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     }
 
     /**
+     * @module Company
+     *
      * @param string $companyRoleUuid
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
