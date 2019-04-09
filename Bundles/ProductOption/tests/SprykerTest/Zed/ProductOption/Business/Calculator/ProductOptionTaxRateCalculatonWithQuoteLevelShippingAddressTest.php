@@ -109,8 +109,7 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
         }
 
         // Act
-        $this->tester->getFacade()
-            ->calculateProductOptionTaxRate($quoteTransfer);
+        $this->tester->getFacade()->calculateProductOptionTaxRate($quoteTransfer);
 
         // Assert
         foreach ($quoteTransfer->getItems() as $iterator => $itemTransfer) {
