@@ -80,7 +80,18 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
         }
 
         $connectionCredentials = $connectionCredentialsTransfer->toArray();
+        $connectionCredentials = $this->clearEmptyPassword($connectionCredentials);
 
+        return $connectionCredentials;
+    }
+
+    /**
+     * @param array $connectionCredentials
+     *
+     * @return array
+     */
+    protected function clearEmptyPassword(array $connectionCredentials)
+    {
         if (isset($connectionCredentials[RedisCredentialsTransfer::PASSWORD]) && !$connectionCredentials[RedisCredentialsTransfer::PASSWORD]) {
             unset($connectionCredentials[RedisCredentialsTransfer::PASSWORD]);
         }
