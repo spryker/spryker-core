@@ -13,7 +13,6 @@ use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Zed\ShipmentCheckoutConnector\Business\ShipmentCheckoutConnectorFacade;
 
 /**
  * Auto-generated group annotations
@@ -37,19 +36,22 @@ class ShipmentCheckoutPreCheckTest extends Test
      */
     public function testCheckShipmentWhenQuoteShipmentIsDefinedAndMethodIsActive(): void
     {
+        // Arrange
         $quoteTransfer = (new QuoteBuilder())
             ->withShipment(
                 (new ShipmentBuilder())
-                ->withMethod([ShipmentMethodTransfer::IS_ACTIVE => true])
+                    ->withMethod([ShipmentMethodTransfer::IS_ACTIVE => true])
             )
             ->withItem()
             ->build();
 
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
 
-        $result = (new ShipmentCheckoutConnectorFacade())->checkShipment($quoteTransfer, $checkoutResponseTransfer);
+        // Act
+        $result = $this->tester->getFacade()->checkShipment($quoteTransfer, $checkoutResponseTransfer);
 
-        $this->assertTrue($result);
+        // Assert
+        $this->assertTrue($result, 'The shipment check should return true, false given');
     }
 
     /**
@@ -67,9 +69,9 @@ class ShipmentCheckoutPreCheckTest extends Test
 
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
 
-        $result = (new ShipmentCheckoutConnectorFacade())->checkShipment($quoteTransfer, $checkoutResponseTransfer);
+        $result = $this->tester->getFacade()->checkShipment($quoteTransfer, $checkoutResponseTransfer);
 
-        $this->assertFalse($result);
+        $this->assertFalse($result, 'The shipment check should return false, true given');
     }
 
     /**
@@ -82,23 +84,23 @@ class ShipmentCheckoutPreCheckTest extends Test
                 (new ItemBuilder())
                 ->withShipment(
                     (new ShipmentBuilder())
-                    ->withMethod([ShipmentMethodTransfer::IS_ACTIVE => true])
+                        ->withMethod([ShipmentMethodTransfer::IS_ACTIVE => true])
                 )
             )
             ->withAnotherItem(
                 (new ItemBuilder())
                 ->withAnotherShipment(
                     (new ShipmentBuilder())
-                    ->withAnotherMethod([ShipmentMethodTransfer::IS_ACTIVE => true])
+                        ->withAnotherMethod([ShipmentMethodTransfer::IS_ACTIVE => true])
                 )
             )
             ->build();
 
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
 
-        $result = (new ShipmentCheckoutConnectorFacade())->checkShipment($quoteTransfer, $checkoutResponseTransfer);
+        $result = $this->tester->getFacade()->checkShipment($quoteTransfer, $checkoutResponseTransfer);
 
-        $this->assertTrue($result);
+        $this->assertTrue($result, 'The shipment check should return true, false given');
     }
 
     /**
@@ -108,22 +110,23 @@ class ShipmentCheckoutPreCheckTest extends Test
     {
         $shipmentBuilder = (new ShipmentBuilder())
             ->withAnotherMethod([ShipmentMethodTransfer::IS_ACTIVE => false]);
+
         $quoteTransfer = (new QuoteBuilder())
             ->withItem(
                 (new ItemBuilder())
-                ->withShipment($shipmentBuilder)
+                    ->withShipment($shipmentBuilder)
             )
             ->withAnotherItem(
                 (new ItemBuilder())
-                ->withShipment($shipmentBuilder)
+                    ->withShipment($shipmentBuilder)
             )
             ->build();
 
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
 
-        $result = (new ShipmentCheckoutConnectorFacade())->checkShipment($quoteTransfer, $checkoutResponseTransfer);
+        $result = $this->tester->getFacade()->checkShipment($quoteTransfer, $checkoutResponseTransfer);
 
-        $this->assertTrue($result);
+        $this->assertTrue($result, 'The shipment check should return true, false given');
     }
 
     /**
@@ -150,8 +153,8 @@ class ShipmentCheckoutPreCheckTest extends Test
 
         $checkoutResponseTransfer = (new CheckoutResponseBuilder())->build();
 
-        $result = (new ShipmentCheckoutConnectorFacade())->checkShipment($quoteTransfer, $checkoutResponseTransfer);
+        $result = $this->tester->getFacade()->checkShipment($quoteTransfer, $checkoutResponseTransfer);
 
-        $this->assertTrue($result);
+        $this->assertTrue($result, 'The shipment check should return true, false given');
     }
 }

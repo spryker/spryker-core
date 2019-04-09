@@ -98,8 +98,7 @@ class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
             ->setIdProductOptionValue($productOptionValueEntity->getIdProductOptionValue());
 
         // Act
-        $this->tester->getFacade()
-            ->calculateProductOptionTaxRate($quoteTransfer);
+        $this->tester->getFacade()->calculateProductOptionTaxRate($quoteTransfer);
 
         // Assert
         $this->assertEquals(

@@ -11,9 +11,12 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Pyz\Zed\ProductOption\ProductOptionDependencyProvider;
@@ -49,28 +52,28 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
     {
         parent::setUp();
 
-        $taxSetTransfer = $this->tester->haveTaxSetWithTaxRates(['name' => static::TAX_SET_NAME], [
+        $taxSetTransfer = $this->tester->haveTaxSetWithTaxRates([TaxSetTransfer::NAME => static::TAX_SET_NAME], [
             [
-                'fk_country' => $this->getCountryIdByIso2Code('DE'),
-                'rate' => 15.00,
+                TaxRateTransfer::FK_COUNTRY => $this->getCountryIdByIso2Code('DE'),
+                TaxRateTransfer::RATE => 15.00,
             ],
             [
-                'fk_country' => $this->getCountryIdByIso2Code('FR'),
-                'rate' => 20.00,
+                TaxRateTransfer::FK_COUNTRY => $this->getCountryIdByIso2Code('FR'),
+                TaxRateTransfer::RATE => 20.00,
             ],
         ]);
 
         $productOptionGroupTransfer = $this->tester->haveProductOptionGroupWithValues(
-            ['fk_tax_set' => $taxSetTransfer->getIdTaxSet()],
+            [ProductOptionGroupTransfer::FK_TAX_SET => $taxSetTransfer->getIdTaxSet()],
             [
                 [
-                    ['sku' => static::PRODUCT_OPTION_VALUE_SKU_1],
+                    [ProductOptionValueTransfer::SKU => static::PRODUCT_OPTION_VALUE_SKU_1],
                     [
                         ['netAmount' => 10000],
                     ],
                 ],
                 [
-                    ['sku' => static::PRODUCT_OPTION_VALUE_SKU_2],
+                    [ProductOptionValueTransfer::SKU => static::PRODUCT_OPTION_VALUE_SKU_2],
                     [
                         ['netAmount' => 20000],
                     ],
@@ -106,8 +109,7 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
         }
 
         // Act
-        $this->tester->getFacade()
-            ->calculateProductOptionTaxRate($quoteTransfer);
+        $this->tester->getFacade()->calculateProductOptionTaxRate($quoteTransfer);
 
         // Assert
         foreach ($quoteTransfer->getItems() as $iterator => $itemTransfer) {
