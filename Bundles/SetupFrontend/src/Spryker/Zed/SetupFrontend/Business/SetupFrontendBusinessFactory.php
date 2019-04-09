@@ -16,6 +16,7 @@ use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\InstallPathFin
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface;
 use Spryker\Zed\SetupFrontend\Business\Model\Installer\ProjectInstaller;
 use Spryker\Zed\SetupFrontend\Business\Model\PackageManager\NodeInstaller;
+use Symfony\Component\Finder\Finder;
 
 /**
  * @method \Spryker\Zed\SetupFrontend\SetupFrontendConfig getConfig()
@@ -80,7 +81,10 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     protected function createInstallerPathFinderForYves()
     {
-        return new InstallerPathFinder($this->getConfig()->getYvesInstallerDirectoryPatterns());
+        return new InstallerPathFinder(
+            $this->createFinder(),
+            $this->getConfig()->getYvesInstallerDirectoryPatterns()
+        );
     }
 
     /**
@@ -125,7 +129,10 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     protected function createInstallerPathFinderForZed(): PathFinderInterface
     {
-        return new InstallerPathFinder($this->getConfig()->getZedInstallerDirectoryPatterns());
+        return new InstallerPathFinder(
+            $this->createFinder(),
+            $this->getConfig()->getZedInstallerDirectoryPatterns()
+        );
     }
 
     /**
@@ -134,5 +141,13 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     public function createZedBuilder()
     {
         return new Builder($this->getConfig()->getZedBuildCommand());
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\Finder
+     */
+    public function createFinder()
+    {
+        return new Finder();
     }
 }

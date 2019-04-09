@@ -19,10 +19,17 @@ class InstallerPathFinder implements PathFinderInterface
     protected $pathPatterns = [];
 
     /**
+     * @var \Symfony\Component\Finder\Finder
+     */
+    protected $finder;
+
+    /**
+     * @param \Symfony\Component\Finder\Finder $finder
      * @param array $pathPatterns
      */
-    public function __construct(array $pathPatterns)
+    public function __construct(Finder $finder, array $pathPatterns)
     {
+        $this->finder = $finder;
         $this->pathPatterns = $pathPatterns;
     }
 
@@ -31,11 +38,11 @@ class InstallerPathFinder implements PathFinderInterface
      */
     public function find()
     {
-        $finder = new Finder();
-
-        $finder->files()->in($this->pathPatterns)->name(self::PACKAGE_JSON_FILE_PATTERN)->depth('< 2');
-
-        return $finder;
+        return $this->finder
+            ->files()
+            ->in($this->pathPatterns)
+            ->name(self::PACKAGE_JSON_FILE_PATTERN)
+            ->depth('< 2');
     }
 
     /**
