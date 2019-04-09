@@ -259,6 +259,26 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int|null
+     */
+    public function findIdPriceProductForProductAbstract(PriceProductTransfer $priceProductTransfer): ?int
+    {
+        $priceProductEntity = $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract())
+            ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
+            ->findOne();
+
+        if ($priceProductEntity !== null) {
+            return $priceProductEntity->getIdPriceProduct();
+        }
+
+        return null;
+    }
+
+    /**
      * @param int[] $productAbstractIds
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *

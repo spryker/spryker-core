@@ -76,32 +76,9 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
      */
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array
     {
-        // '
-        // SELECT C.*
-        // FROM (
-        //    SELECT productID, min(RESULT) R
-        //    FROM (
-        //       SELECT CONCAT(fk_price_type, \' \', fk_currency, \' \', fk_product, \'_\', fk_product_abstract) AS productID,
-        //              CONCAT(EXTRACT(epoch from now() - active_from), \' \', EXTRACT(epoch from active_to - now()),
-        //                     \' \', net_price, \' \', gross_price, \' \', id_price_product_schedule) as RESULT
-        //       FROM spy_price_product_schedule
-        //       WHERE fk_store = 1
-        //         AND now() >= spy_price_product_schedule.active_from
-        //         AND now() <= spy_price_product_schedule.active_to
-        //    ) A
-        //    GROUP BY productID
-        // LIMIT 1000
-        // ) B
-        // JOIN spy_price_product_schedule AS C ON (C.id_price_product_schedule = SUBSTRING(B.R from \'[0-9]+$\')::BIGINT) AND C.is_current = false;
-        // ';
-        //@todo finish work on converting sql to query
-        return $this->getFactory()
-            ->createPriceProductScheduleQuery()
-            ->find()
-            ->getData();
-
         $aQuery = $this->getFactory()
             ->createPriceProductScheduleQuery()
+            ->select([static::COL_PRODUCT_ID])
             ->addAsColumn(
                 static::COL_PRODUCT_ID,
                 sprintf(
@@ -113,9 +90,9 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
                 )
             )
             ->addAsColumn(
-                static::COL_PRODUCT_ID,
+                static::COL_RESULT,
                 sprintf(
-                    'CONCAT(EXTRACT(now() - %s), \' \', EXTRACT(%s - now()), \' \', %s, \' \', %s, \' \', %s)',
+                    'CONCAT(EXTRACT(epoch from now() - %s), \' \', EXTRACT(epoch from %s - now()), \' \', %s, \' \', %s, \' \', %s)',
                     SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM,
                     SpyPriceProductScheduleTableMap::COL_ACTIVE_TO,
                     SpyPriceProductScheduleTableMap::COL_NET_PRICE,
@@ -123,19 +100,29 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
                     SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE
                 )
             )
-            ->filterByActiveTo(['min' => new DateTime()], Criteria::GREATER_EQUAL)
+            ->filterByFkStore($storeTransfer->getIdStore())
             ->filterByActiveFrom(['max' => new DateTime()], Criteria::LESS_EQUAL)
-            ->groupBy(static::COL_PRODUCT_ID);
+            ->filterByActiveTo(['min' => new DateTime()], Criteria::GREATER_EQUAL);
 
         $bQuery = $this->getFactory()
             ->createPriceProductScheduleQuery()
-            ->addSelectQuery($aQuery);
+            ->addSelectQuery($aQuery, 'A', false)
+            ->addAsColumn(static::COL_PRODUCT_ID, 'A.' . static::COL_PRODUCT_ID)
+            ->addAsColumn('R', sprintf('min(%s)', 'A.' . static::COL_RESULT))
+            ->groupBy(static::COL_PRODUCT_ID)
+            ->limit($this->getFactory()->getConfig()->getApplyBatchSize());
 
-        return $this->getFactory()
+        $q = $this->getFactory()
             ->createPriceProductScheduleQuery()
-            ->addSelectQuery($bQuery)
-            ->limit($this->getFactory()->getConfig()->getApplyBatchSize())
+            ->addSelectQuery($bQuery, 'B', false)
+            ->usePriceProductScheduleListQuery()
+                ->filterByIsActive(true)
+            ->endUse()
+            ->filterByIsCurrent(false)
+            ->where(SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE . ' = SUBSTRING(B.R from \'[0-9]+$\')::BIGINT')
             ->find()
             ->getData();
+
+        return $q;
     }
 }

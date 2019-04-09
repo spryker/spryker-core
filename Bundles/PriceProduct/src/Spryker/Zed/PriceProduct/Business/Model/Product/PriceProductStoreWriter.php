@@ -160,21 +160,36 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     protected function savePriceProductEntity(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         $priceProductTransfer
-            ->requireFkPriceType()
-            ->requireIdProduct();
-
-        $idPriceProduct = $this->priceProductRepository
-            ->findIdPriceProductForProductConcrete($priceProductTransfer);
-
-        if ($idPriceProduct !== null) {
-            $priceProductTransfer->setIdPriceProduct($idPriceProduct);
-
-            return $priceProductTransfer;
-        }
+            ->requireFkPriceType();
 
         $priceProductEntity = (new SpyPriceProduct())
-            ->setFkPriceType($priceProductTransfer->getFkPriceType())
-            ->setFkProduct($priceProductTransfer->getIdProduct());
+            ->setFkPriceType($priceProductTransfer->getFkPriceType());
+
+        if ($priceProductTransfer->getIdProduct() !== null) {
+            $idPriceProduct = $this->priceProductRepository
+                ->findIdPriceProductForProductConcrete($priceProductTransfer);
+
+            if ($idPriceProduct !== null) {
+                $priceProductTransfer->setIdPriceProduct($idPriceProduct);
+
+                return $priceProductTransfer;
+            }
+
+            $priceProductTransfer->setIdProduct($priceProductTransfer->getIdProduct());
+        }
+
+        if ($priceProductTransfer->getIdProductAbstract() !== null) {
+            $idPriceProduct = $this->priceProductRepository
+                ->findIdPriceProductForProductAbstract($priceProductTransfer);
+
+            if ($idPriceProduct !== null) {
+                $priceProductTransfer->setIdPriceProduct($idPriceProduct);
+
+                return $priceProductTransfer;
+            }
+
+            $priceProductTransfer->setIdProductAbstract($priceProductTransfer->getIdProductAbstract());
+        }
 
         $priceProductEntity->save();
 

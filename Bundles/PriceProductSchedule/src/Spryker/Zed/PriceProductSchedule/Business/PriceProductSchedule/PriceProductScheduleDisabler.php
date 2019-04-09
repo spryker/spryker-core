@@ -101,12 +101,13 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
     {
         $fallbackPriceProduct = $this->priceProductFallbackFinder->findFallbackPriceProduct($priceProductScheduleTransfer->getPriceProduct());
 
+        $priceProductScheduleTransfer->setIsCurrent(false);
+
+        $this->priceProductScheduleWriter->savePriceProductSchedule($priceProductScheduleTransfer);
+
         if ($fallbackPriceProduct !== null) {
-            $this->productPriceUpdater->updateCurrentProductPrice($fallbackPriceProduct);
-
-            $priceProductScheduleTransfer->setIsCurrent(false);
-
-            $this->priceProductScheduleWriter->savePriceProductSchedule($priceProductScheduleTransfer);
+            $fallbackPriceProduct->setSkuProduct($priceProductScheduleTransfer->getPriceProduct()->getSkuProduct());
+            $this->productPriceUpdater->updateCurrentProductPrice($fallbackPriceProduct, $priceProductScheduleTransfer->getPriceProduct()->getPriceType());
 
             return;
         }

@@ -119,6 +119,7 @@ class PriceProductScheduleFallbackTest extends Unit
         $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
             PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-1 hour')),
+            PriceProductScheduleTransfer::IS_CURRENT => true,
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
                 PriceProductTransfer::PRICE_TYPE => [

@@ -62,9 +62,13 @@ class PriceProductSchedulePriceTest extends Unit
         $priceProductScheduleData = $this->getPriceProductScheduleData();
 
         $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT] = 100;
+        $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::NET_AMOUNT] = 200;
+
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule($priceProductScheduleData);
 
         $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT] = 200;
+        $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::NET_AMOUNT] = 200;
+
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule($priceProductScheduleData);
 
         // Act

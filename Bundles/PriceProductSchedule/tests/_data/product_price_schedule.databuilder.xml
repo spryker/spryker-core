@@ -10,7 +10,7 @@
     </transfer>
 
     <transfer name="PriceProductScheduleList">
-        <property name="isActive" type="bool" dataBuilderRule="=false"/>
+        <property name="isActive" type="bool" dataBuilderRule="=true"/>
         <property name="name" type="string" dataBuilderRule="unique()->sentence(5)"/>
         <property name="customer" type="User"/>
     </transfer>

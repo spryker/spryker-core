@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProduct;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
 
@@ -38,18 +39,25 @@ class ProductPriceUpdater implements ProductPriceUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $fallbackPriceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer $currentPriceType
      *
      * @return void
      */
-    public function updateCurrentProductPrice(PriceProductTransfer $fallbackPriceProductTransfer): void
+    public function updateCurrentProductPrice(PriceProductTransfer $fallbackPriceProductTransfer, PriceTypeTransfer $currentPriceType): void
     {
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setSku($fallbackPriceProductTransfer->getSkuProduct())
+            ->setPriceTypeName($currentPriceType->getName())
             ->setCurrencyIsoCode($fallbackPriceProductTransfer->getMoneyValue()->getCurrency()->getCode());
 
         $priceProductTransferForUpdate = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
+
+        if ($priceProductTransferForUpdate === null) {
+            return;
+        }
+
         $priceProductTransferForUpdate->getMoneyValue()->setGrossAmount($fallbackPriceProductTransfer->getMoneyValue()->getGrossAmount());
-        $priceProductTransferForUpdate->getMoneyValue()->setGrossAmount($fallbackPriceProductTransfer->getMoneyValue()->getNetAmount());
+        $priceProductTransferForUpdate->getMoneyValue()->setNetAmount($fallbackPriceProductTransfer->getMoneyValue()->getNetAmount());
 
         $this->priceProductFacade->persistPriceProductStore($priceProductTransferForUpdate);
     }
