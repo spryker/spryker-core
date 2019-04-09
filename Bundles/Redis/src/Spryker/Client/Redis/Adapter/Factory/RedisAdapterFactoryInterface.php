@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Redis\Connection\Factory;
+namespace Spryker\Client\Redis\Adapter\Factory;
 
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
-use Spryker\Client\Redis\Connection\Adapter\RedisAdapterInterface;
+use Spryker\Client\Redis\Adapter\RedisAdapterInterface;
 
 interface RedisAdapterFactoryInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $redisConfigurationTransfer
      *
-     * @return \Spryker\Client\Redis\Connection\Adapter\RedisAdapterInterface
+     * @return \Spryker\Client\Redis\Adapter\RedisAdapterInterface
      */
     public function create(RedisConfigurationTransfer $redisConfigurationTransfer): RedisAdapterInterface;
 }

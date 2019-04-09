@@ -9,7 +9,7 @@ namespace Spryker\Client\Redis;
 
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Redis\Connection\Adapter\RedisAdapterInterface;
+use Spryker\Client\Redis\Adapter\RedisAdapterInterface;
 
 /**
  * @method \Spryker\Client\Redis\RedisFactory getFactory()
@@ -219,7 +219,7 @@ class RedisClient extends AbstractClient implements RedisClientInterface
     /**
      * @param string $connectionKey
      *
-     * @return \Spryker\Client\Redis\Connection\Adapter\RedisAdapterInterface
+     * @return \Spryker\Client\Redis\Adapter\RedisAdapterInterface
      */
     protected function getConnection(string $connectionKey): RedisAdapterInterface
     {

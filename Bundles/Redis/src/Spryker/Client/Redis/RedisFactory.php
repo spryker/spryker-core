@@ -8,15 +8,15 @@
 namespace Spryker\Client\Redis;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Redis\Connection\Factory\PredisAdapterFactory;
-use Spryker\Client\Redis\Connection\Factory\RedisAdapterFactoryInterface;
-use Spryker\Client\Redis\Connection\RedisAdapterProvider;
-use Spryker\Client\Redis\Connection\RedisAdapterProviderInterface;
+use Spryker\Client\Redis\Adapter\Factory\PredisAdapterFactory;
+use Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface;
+use Spryker\Client\Redis\Adapter\RedisAdapterProvider;
+use Spryker\Client\Redis\Adapter\RedisAdapterProviderInterface;
 
 class RedisFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\Redis\Connection\RedisAdapterProviderInterface
+     * @return \Spryker\Client\Redis\Adapter\RedisAdapterProviderInterface
      */
     public function createRedisAdapterProvider(): RedisAdapterProviderInterface
     {
@@ -26,7 +26,7 @@ class RedisFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Redis\Connection\Factory\RedisAdapterFactoryInterface
+     * @return \Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface
      */
     public function createRedisAdapterFactory(): RedisAdapterFactoryInterface
     {

@@ -5,27 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Redis\Connection;
+namespace Spryker\Client\Redis\Adapter;
 
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
-use Spryker\Client\Redis\Connection\Adapter\RedisAdapterInterface;
-use Spryker\Client\Redis\Connection\Factory\RedisAdapterFactoryInterface;
+use Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface;
 use Spryker\Client\Redis\Exception\ConnectionNotInitializedException;
 
 class RedisAdapterProvider implements RedisAdapterProviderInterface
 {
     /**
-     * @var \Spryker\Client\Redis\Connection\Adapter\RedisAdapterInterface[]
+     * @var \Spryker\Client\Redis\Adapter\RedisAdapterInterface[]
      */
     protected static $clientPool = [];
 
     /**
-     * @var \Spryker\Client\Redis\Connection\Factory\RedisAdapterFactoryInterface $clientAdapterFactory
+     * @var \Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface $clientAdapterFactory
      */
     protected $clientAdapterFactory;
 
     /**
-     * @param \Spryker\Client\Redis\Connection\Factory\RedisAdapterFactoryInterface $clientFactory
+     * @param \Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface $clientFactory
      */
     public function __construct(RedisAdapterFactoryInterface $clientFactory)
     {
@@ -52,7 +51,7 @@ class RedisAdapterProvider implements RedisAdapterProviderInterface
      *
      * @throws \Spryker\Client\Redis\Exception\ConnectionNotInitializedException
      *
-     * @return \Spryker\Client\Redis\Connection\Adapter\RedisAdapterInterface
+     * @return \Spryker\Client\Redis\Adapter\RedisAdapterInterface
      */
     public function getAdapter(string $connectionKey): RedisAdapterInterface
     {
@@ -68,7 +67,7 @@ class RedisAdapterProvider implements RedisAdapterProviderInterface
     /**
      * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $configurationTransfer
      *
-     * @return \Spryker\Client\Redis\Connection\Adapter\RedisAdapterInterface
+     * @return \Spryker\Client\Redis\Adapter\RedisAdapterInterface
      */
     protected function createClient(RedisConfigurationTransfer $configurationTransfer): RedisAdapterInterface
     {

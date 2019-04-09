@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\Redis\Connection;
+namespace SprykerTest\Client\Redis\Adapter;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
 use ReflectionProperty;
-use Spryker\Client\Redis\Connection\Adapter\RedisAdapterInterface;
-use Spryker\Client\Redis\Connection\Factory\RedisAdapterFactoryInterface;
-use Spryker\Client\Redis\Connection\RedisAdapterProvider;
+use Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface;
+use Spryker\Client\Redis\Adapter\RedisAdapterInterface;
+use Spryker\Client\Redis\Adapter\RedisAdapterProvider;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Client
  * @group Redis
- * @group Connection
+ * @group Adapter
  * @group RedisAdapterProviderTest
  * Add your own group annotations below this line
  */
@@ -29,7 +29,7 @@ class RedisAdapterProviderTest extends Unit
     protected const CONNECTION_KEY_STORAGE = 'storage connection key';
 
     /**
-     * @var \Spryker\Client\Redis\Connection\RedisAdapterProviderInterface
+     * @var \Spryker\Client\Redis\Adapter\RedisAdapterProviderInterface
      */
     protected $connectionProvider;
 
@@ -116,7 +116,7 @@ class RedisAdapterProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Redis\Connection\Factory\RedisAdapterFactoryInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface
      */
     protected function createClientAdapterFactoryMock()
     {
