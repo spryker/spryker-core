@@ -52,7 +52,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     {
         $priceProductTransfer = $this->mapPriceProductTransfer($priceProductScheduleEntity);
 
-        $priceProductScheduleListTransfer = (new PriceProductSchedulelistTransfer())
+        $priceProductScheduleListTransfer = (new PriceProductScheduleListTransfer())
             ->fromArray($priceProductScheduleEntity->getPriceProductScheduleList()->toArray(), true);
 
         return (new PriceProductScheduleTransfer())
