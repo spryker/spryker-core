@@ -108,8 +108,8 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Test
     {
         return [
             'quote has one item with shipping address, billind is defined; expected 2 addresses saved' => $this->getQuoteWithOneItemAndBillingAddresAndItemLevelShippingAddress(),
-            'quote has two items wish shipping addresses, billind is defined; expected 3 addresses saved' => $this->getQuoteWithTwoItemBillingAddresAndItemLevelShippingAddress(),
-            'quote has three items wish two different shipping addresses, billind is the same as one shipping; expected 2 addresses saved' => $this->getQuoteWithThreeItemsAndTwoDifferentAddresses(),
+            'quote has two items with shipping addresses, billind is defined; expected 3 addresses saved' => $this->getQuoteWithTwoItemBillingAddresAndItemLevelShippingAddress(),
+            'quote has three items with two different shipping addresses, billind is the same as one shipping; expected 2 addresses saved' => $this->getQuoteWithThreeItemsAndTwoDifferentAddresses(),
         ];
     }
 
@@ -120,7 +120,7 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Test
     {
         return [
             'quote has one item with shipping address, billind is defined; expected no shipping or billing addresses saved' => $this->getQuoteWithOneItemAndBillingAddresAndItemLevelShippingAddress(),
-            'quote has three items wish two different shipping addresses; expected no shipping or billing addresses saved' => $this->getQuoteWithThreeItemsAndTwoDifferentAddresses(),
+            'quote has three items with two different shipping addresses; expected no shipping or billing addresses saved' => $this->getQuoteWithThreeItemsAndTwoDifferentAddresses(),
         ];
     }
 
