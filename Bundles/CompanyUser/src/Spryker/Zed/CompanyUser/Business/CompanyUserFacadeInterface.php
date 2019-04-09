@@ -278,7 +278,7 @@ interface CompanyUserFacadeInterface
     /**
      * Specification:
      * - Retrieves company user collection according provided criteria.
-     * - Searches by at least one of first name, last name, and email.
+     * - Searches "pattern" by at least one of first name, last name, and email.
      * - Applies "limit" when provided.
      * - Populates "Customer" and "Company" properties in returned company users.
      * - Applies "CompanyUserHydrationPluginInterface" plugins on returned company users.
