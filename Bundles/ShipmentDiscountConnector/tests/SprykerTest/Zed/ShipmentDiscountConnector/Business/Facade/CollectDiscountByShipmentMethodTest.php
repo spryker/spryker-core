@@ -19,6 +19,7 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\CarrierDiscountD
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\CarrierDiscountDecisionRule as CarrierDiscountDecisionRuleWithQuoteLevelShipment;
 use Spryker\Zed\ShipmentDiscountConnector\Business\ShipmentDiscountConnectorBusinessFactory;
 use Spryker\Zed\ShipmentDiscountConnector\Business\ShipmentDiscountConnectorFacadeInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceBridge;
 
 /**
  * Auto-generated group annotations
@@ -27,7 +28,6 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\ShipmentDiscountConnectorFaca
  * @group ShipmentDiscountConnector
  * @group Business
  * @group Facade
- * @group ShipmentDiscountCollector
  * @group CollectDiscountByShipmentMethodTest
  * Add your own group annotations below this line
  */
@@ -55,7 +55,7 @@ class CollectDiscountByShipmentMethodTest extends Test
         // Arrange
 
         // Act
-        $discountableItems = $this->getFacadeWithMockedDecisionRules()->collectDiscountByShipmentCarrier($quoteTransfer, $clauseTransfer);
+        $discountableItems = $this->getFacadeWithMockedDecisionRules()->collectDiscountByShipmentMethod($quoteTransfer, $clauseTransfer);
 
         // Assert
         $this->assertCount(
@@ -68,7 +68,7 @@ class CollectDiscountByShipmentMethodTest extends Test
             $this->assertContains(
                 $discountableItemTransfer->getUnitPrice(),
                 $expectedValues,
-                sprintf('The actual discountable item is not expected at the iteration #%d.', $i)
+                sprintf('The actual discountable item is not expected (iteration #%d).', $i)
             );
         }
     }
@@ -135,16 +135,21 @@ class CollectDiscountByShipmentMethodTest extends Test
     {
         $mockedMultiShipmentDecisionRule = $this->getMockBuilder(CarrierDiscountDecisionRule::class)->disableOriginalConstructor()->getMock();
         $mockedMultiShipmentDecisionRule->method('isExpenseSatisfiedBy')->willReturn(true);
+        $mockedMultiShipmentDecisionRule->method('isItemShipmentExpenseSatisfiedBy')->willReturn(true);
 
         $mockedQuoteLevelShipmentDecisionRule = $this->getMockBuilder(CarrierDiscountDecisionRuleWithQuoteLevelShipment::class)->disableOriginalConstructor()->getMock();
         $mockedQuoteLevelShipmentDecisionRule->method('isExpenseSatisfiedBy')->willReturn(true);
+        $mockedQuoteLevelShipmentDecisionRule->method('isItemShipmentExpenseSatisfiedBy')->willReturn(true);
 
         $mockedBusinessFactory = $this->createPartialMock(
             ShipmentDiscountConnectorBusinessFactory::class,
-            ['createCarrierDiscountDecisionRule', 'createCarrierDiscountDecisionRuleWithMultiShipment']
+            ['createMethodDiscountDecisionRule', 'createMethodDiscountDecisionRuleWithMultiShipment', 'getShipmentService']
         );
-        $mockedBusinessFactory->method('createCarrierDiscountDecisionRule')->willReturn($mockedQuoteLevelShipmentDecisionRule);
-        $mockedBusinessFactory->method('createCarrierDiscountDecisionRuleWithMultiShipment')->willReturn($mockedMultiShipmentDecisionRule);
+        $mockedBusinessFactory->method('createMethodDiscountDecisionRule')->willReturn($mockedQuoteLevelShipmentDecisionRule);
+        $mockedBusinessFactory->method('createMethodDiscountDecisionRuleWithMultiShipment')->willReturn($mockedMultiShipmentDecisionRule);
+        $mockedBusinessFactory->method('getShipmentService')->willReturn(
+            new ShipmentDiscountConnectorToShipmentServiceBridge($this->tester->getLocator()->shipment()->service())
+        );
 
         $facade = $this->tester->getFacade();
         $facade->setFactory($mockedBusinessFactory);

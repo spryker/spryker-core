@@ -23,6 +23,7 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmen
 use Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentCollectorStrategyResolverInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentDecisionRuleStrategyResolver;
 use Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentDecisionRuleStrategyResolverInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface;
 use Spryker\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorDependencyProvider;
 
 /**
@@ -198,7 +199,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToMoneyInterface
      */
-    protected function getMoneyFacade()
+    public function getMoneyFacade()
     {
         return $this->getProvidedDependency(ShipmentDiscountConnectorDependencyProvider::FACADE_MONEY);
     }
@@ -206,7 +207,7 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface
      */
-    protected function getShipmentService()
+    public function getShipmentService(): ShipmentDiscountConnectorToShipmentServiceInterface
     {
         return $this->getProvidedDependency(ShipmentDiscountConnectorDependencyProvider::SERVICE_SHIPMENT);
     }
