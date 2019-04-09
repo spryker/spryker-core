@@ -270,11 +270,11 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - Load quote by id.
-     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
-     *  - Check changes and add notes to messenger (-> Messenger)
-     *  - Returns with unchanged QuoteTransfer and `isSuccessful=true` when cart is locked.
-     *  - Saves quote in database.
+     * - Load quote by id.
+     * - Executes QuoteBeforeUnlockPluginInterface plugins before unlock.
+     * - Unlocks quote by setting `isLocked` transfer property to false.
+     * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     * - Saves quote in database.
      *
      * @api
      *

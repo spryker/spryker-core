@@ -8,7 +8,7 @@
 namespace Spryker\Zed\QuoteRequest\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CartExtension\Dependency\Plugin\QuoteBeforeUnlockPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\QuotePreUnlockPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -16,11 +16,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\QuoteRequest\Communication\QuoteRequestCommunicationFactory getFactory()
  * @method \Spryker\Zed\QuoteRequest\QuoteRequestConfig getConfig()
  */
-class QuoteRequestBeforeQuoteUnlockPlugin extends AbstractPlugin implements QuoteBeforeUnlockPluginInterface
+class SanitizeQuoteRequestPreQuoteUnlockPlugin extends AbstractPlugin implements QuotePreUnlockPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Removes request for quote in quote.
+     * - Sanitizes request for quote in quote.
      *
      * @api
      *
@@ -30,6 +30,6 @@ class QuoteRequestBeforeQuoteUnlockPlugin extends AbstractPlugin implements Quot
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFacade()->clearQuoteRequestFromQuote($quoteTransfer);
+        return $this->getFacade()->sanitizeQuoteRequest($quoteTransfer);
     }
 }

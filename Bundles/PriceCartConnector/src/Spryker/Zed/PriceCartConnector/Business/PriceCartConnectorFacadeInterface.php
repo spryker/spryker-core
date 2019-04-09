@@ -53,7 +53,7 @@ interface PriceCartConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Removes source prices from quote.
+     * - Sanitizes source prices in quote.
      *
      * @api
      *
@@ -61,5 +61,5 @@ interface PriceCartConnectorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function clearSourcePricesFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function sanitizeSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

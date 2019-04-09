@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\Cart\Business;
 
+use Spryker\Zed\Cart\Business\Locker\QuoteLocker;
+use Spryker\Zed\Cart\Business\Locker\QuoteLockerInterface;
 use Spryker\Zed\Cart\Business\Model\Operation;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserver;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface;
 use Spryker\Zed\Cart\Business\Model\QuoteCleaner;
 use Spryker\Zed\Cart\Business\Model\QuoteCleanerInterface;
-use Spryker\Zed\Cart\Business\Model\QuoteLocker;
-use Spryker\Zed\Cart\Business\Model\QuoteLockerInterface;
 use Spryker\Zed\Cart\Business\Model\QuoteValidator;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
@@ -72,14 +72,14 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Cart\Business\Model\QuoteLockerInterface
+     * @return \Spryker\Zed\Cart\Business\Locker\QuoteLockerInterface
      */
     public function createQuoteLocker(): QuoteLockerInterface
     {
         return new QuoteLocker(
             $this->getQuoteFacade(),
             $this->createCartOperation(),
-            $this->getQuoteBeforeUnlockPlugins()
+            $this->getQuotePreUnlockPlugins()
         );
     }
 
@@ -215,10 +215,10 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteBeforeUnlockPluginInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuotePreUnlockPluginInterface[]
      */
-    public function getQuoteBeforeUnlockPlugins(): array
+    public function getQuotePreUnlockPlugins(): array
     {
-        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_QUOTE_BEFORE_UNLOCK);
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_QUOTE_PRE_UNLOCK);
     }
 }

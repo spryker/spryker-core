@@ -68,10 +68,10 @@ class PriceCartConnectorFacade extends AbstractFacade implements PriceCartConnec
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function clearSourcePricesFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function sanitizeSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
-            ->createSourcePriceCleaner()
-            ->clearSourcePricesFromQuote($quoteTransfer);
+            ->createSourcePriceSanitizer()
+            ->sanitizeSourcePrices($quoteTransfer);
     }
 }

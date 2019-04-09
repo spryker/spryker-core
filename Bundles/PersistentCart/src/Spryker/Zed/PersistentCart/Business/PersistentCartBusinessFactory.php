@@ -8,6 +8,8 @@
 namespace Spryker\Zed\PersistentCart\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\PersistentCart\Business\Locker\QuoteLocker;
+use Spryker\Zed\PersistentCart\Business\Locker\QuoteLockerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpander;
 use Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpanderInterface;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperation;
@@ -16,8 +18,6 @@ use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleterInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperation;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationInterface;
-use Spryker\Zed\PersistentCart\Business\Model\QuoteLocker;
-use Spryker\Zed\PersistentCart\Business\Model\QuoteLockerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteMerger;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteResolver;
@@ -149,7 +149,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteLockerInterface
+     * @return \Spryker\Zed\PersistentCart\Business\Locker\QuoteLockerInterface
      */
     public function createQuoteLocker(): QuoteLockerInterface
     {

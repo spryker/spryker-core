@@ -33,7 +33,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CART_ADD_ITEM_STRATEGY = 'PLUGINS_CART_ADD_ITEM_STRATEGY';
     public const PLUGINS_CART_REMOVE_ITEM_STRATEGY = 'PLUGINS_CART_REMOVE_ITEM_STRATEGY';
     public const PLUGINS_POST_RELOAD_ITEMS = 'PLUGINS_POST_RELOAD_ITEMS';
-    public const PLUGINS_QUOTE_BEFORE_UNLOCK = 'PLUGINS_QUOTE_BEFORE_UNLOCK';
+    public const PLUGINS_QUOTE_PRE_UNLOCK = 'PLUGINS_QUOTE_PRE_UNLOCK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -58,7 +58,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartRemoveItemStrategyPlugins($container);
         $container = $this->addPostReloadItemsPlugins($container);
         $container = $this->addCartBeforePreCheckNormalizerPlugins($container);
-        $container = $this->addQuoteBeforeUnlockPlugins($container);
+        $container = $this->addQuotePreUnlockPlugins($container);
 
         return $container;
     }
@@ -257,10 +257,10 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQuoteBeforeUnlockPlugins(Container $container): Container
+    protected function addQuotePreUnlockPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_BEFORE_UNLOCK] = function () {
-            return $this->getQuoteBeforeUnlockPlugins();
+        $container[static::PLUGINS_QUOTE_PRE_UNLOCK] = function () {
+            return $this->getQuotePreUnlockPlugins();
         };
 
         return $container;
@@ -377,9 +377,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteBeforeUnlockPluginInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuotePreUnlockPluginInterface[]
      */
-    protected function getQuoteBeforeUnlockPlugins(): array
+    protected function getQuotePreUnlockPlugins(): array
     {
         return [];
     }

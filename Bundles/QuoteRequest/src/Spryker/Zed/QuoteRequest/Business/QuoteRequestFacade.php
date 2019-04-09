@@ -273,10 +273,10 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function clearQuoteRequestFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function sanitizeQuoteRequest(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
             ->createQuoteRequestVersionSanitizer()
-            ->clearQuoteRequestFromQuote($quoteTransfer);
+            ->sanitizeQuoteRequest($quoteTransfer);
     }
 }

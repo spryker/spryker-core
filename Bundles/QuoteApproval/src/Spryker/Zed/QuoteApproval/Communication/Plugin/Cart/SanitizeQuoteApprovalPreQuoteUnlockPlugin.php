@@ -8,18 +8,19 @@
 namespace Spryker\Zed\QuoteApproval\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CartExtension\Dependency\Plugin\QuoteBeforeUnlockPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\QuotePreUnlockPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface getFacade()
  * @method \Spryker\Zed\QuoteApproval\QuoteApprovalConfig getConfig()
  */
-class QuoteApprovalBeforeQuoteUnlockPlugin extends AbstractPlugin implements QuoteBeforeUnlockPluginInterface
+class SanitizeQuoteApprovalPreQuoteUnlockPlugin extends AbstractPlugin implements QuotePreUnlockPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Removes quote approval in quote.
+     * - Sanitizes quote approval in quote.
+     * - Removes all approvals for quote from Persistence.
      *
      * @api
      *
@@ -29,6 +30,6 @@ class QuoteApprovalBeforeQuoteUnlockPlugin extends AbstractPlugin implements Quo
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFacade()->clearQuoteApprovalFromQuote($quoteTransfer);
+        return $this->getFacade()->sanitizeQuoteApproval($quoteTransfer);
     }
 }

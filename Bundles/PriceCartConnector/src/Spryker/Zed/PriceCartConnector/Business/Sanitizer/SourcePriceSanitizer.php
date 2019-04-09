@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceCartConnector\Business\SourcePriceCleaner;
+namespace Spryker\Zed\PriceCartConnector\Business\Sanitizer;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class SourcePriceCleaner implements SourcePriceCleanerInterface
+class SourcePriceSanitizer implements SourcePriceSanitizerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function clearSourcePricesFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function sanitizeSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setSourceUnitGrossPrice(null);

@@ -45,7 +45,7 @@ class QuoteRequestVersionSanitizer implements QuoteRequestVersionSanitizerInterf
     {
         $quoteTransfer = $quoteRequestVersionTransfer->getQuote();
 
-        $quoteTransfer = $this->clearQuoteRequestFromQuote($quoteTransfer);
+        $quoteTransfer = $this->sanitizeQuoteRequest($quoteTransfer);
         $quoteTransfer = $this->clearSourcePrices($quoteTransfer);
 
         $quoteRequestVersionTransfer->setQuote($quoteTransfer);
@@ -89,7 +89,7 @@ class QuoteRequestVersionSanitizer implements QuoteRequestVersionSanitizerInterf
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function clearQuoteRequestFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function sanitizeQuoteRequest(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $quoteTransfer
             ->setQuoteRequestVersionReference(null)

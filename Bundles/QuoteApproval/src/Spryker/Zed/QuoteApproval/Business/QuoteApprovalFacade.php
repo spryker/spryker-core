@@ -133,10 +133,10 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function clearQuoteApprovalFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function sanitizeQuoteApproval(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
-            ->createQuoteApprovalCleaner()
-            ->clearQuoteApprovalFromQuote($quoteTransfer);
+            ->createQuoteApprovalSanitizer()
+            ->sanitizeQuoteApproval($quoteTransfer);
     }
 }

@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceCartConnector\Communication\Plugin;
+namespace Spryker\Zed\PriceCartConnector\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CartExtension\Dependency\Plugin\QuoteBeforeUnlockPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\QuotePreUnlockPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -16,11 +16,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\PriceCartConnector\Communication\PriceCartConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig getConfig()
  */
-class SourcePricesBeforeQuoteUnlockPlugin extends AbstractPlugin implements QuoteBeforeUnlockPluginInterface
+class SanitizeSourcePricesQuotePreUnlockPlugin extends AbstractPlugin implements QuotePreUnlockPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Removes source prices from quote.
+     * - Sanitizes source prices in quote items.
      *
      * @api
      *
@@ -30,6 +30,6 @@ class SourcePricesBeforeQuoteUnlockPlugin extends AbstractPlugin implements Quot
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFacade()->clearSourcePricesFromQuote($quoteTransfer);
+        return $this->getFacade()->sanitizeSourcePrices($quoteTransfer);
     }
 }

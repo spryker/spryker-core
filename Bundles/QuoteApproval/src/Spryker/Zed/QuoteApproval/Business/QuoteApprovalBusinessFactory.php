@@ -14,8 +14,6 @@ use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLocker;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculator;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface;
-use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCleaner;
-use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCleanerInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreator;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreatorInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilder;
@@ -28,6 +26,8 @@ use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalWriter;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalWriterInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApproverListProvider;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApproverListProviderInterface;
+use Spryker\Zed\QuoteApproval\Business\Sanitizer\QuoteApprovalSanitizer;
+use Spryker\Zed\QuoteApproval\Business\Sanitizer\QuoteApprovalSanitizerInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyRoleFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToCustomerFacadeInterface;
@@ -123,11 +123,13 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCleanerInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\Sanitizer\QuoteApprovalSanitizerInterface
      */
-    public function createQuoteApprovalCleaner(): QuoteApprovalCleanerInterface
+    public function createQuoteApprovalSanitizer(): QuoteApprovalSanitizerInterface
     {
-        return new QuoteApprovalCleaner();
+        return new QuoteApprovalSanitizer(
+            $this->getEntityManager()
+        );
     }
 
     /**

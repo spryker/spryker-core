@@ -110,7 +110,8 @@ interface QuoteApprovalFacadeInterface
 
     /**
      * Specification:
-     * - Removes quote approval in quote.
+     * - Sanitizes quote approval in quote.
+     * - Removes all approvals for quote from Persistence.
      *
      * @api
      *
@@ -118,5 +119,5 @@ interface QuoteApprovalFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function clearQuoteApprovalFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function sanitizeQuoteApproval(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

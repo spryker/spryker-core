@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
+namespace Spryker\Zed\PriceCartConnector\Business\Sanitizer;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteApprovalCleanerInterface
+interface SourcePriceSanitizerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function clearQuoteApprovalFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function sanitizeSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

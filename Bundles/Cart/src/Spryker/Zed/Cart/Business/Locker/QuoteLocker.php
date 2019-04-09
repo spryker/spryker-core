@@ -5,10 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Cart\Business\Model;
+namespace Spryker\Zed\Cart\Business\Locker;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Cart\Business\Model\OperationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -27,23 +28,23 @@ class QuoteLocker implements QuoteLockerInterface
     protected $operation;
 
     /**
-     * @var array|\Spryker\Zed\CartExtension\Dependency\Plugin\QuoteBeforeUnlockPluginInterface[]
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\QuotePreUnlockPluginInterface[]
      */
-    protected $quoteBeforeUnlockPlugins;
+    protected $quotePreUnlockPlugins;
 
     /**
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\Cart\Business\Model\OperationInterface $operation
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteBeforeUnlockPluginInterface[] $quoteBeforeUnlockPlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\QuotePreUnlockPluginInterface[] $quotePreUnlockPlugins
      */
     public function __construct(
         CartToQuoteFacadeInterface $quoteFacade,
         OperationInterface $operation,
-        array $quoteBeforeUnlockPlugins
+        array $quotePreUnlockPlugins
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->operation = $operation;
-        $this->quoteBeforeUnlockPlugins = $quoteBeforeUnlockPlugins;
+        $this->quotePreUnlockPlugins = $quotePreUnlockPlugins;
     }
 
     /**
@@ -65,9 +66,7 @@ class QuoteLocker implements QuoteLockerInterface
      */
     public function executeUnlockTransaction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        foreach ($this->quoteBeforeUnlockPlugins as $quoteBeforeUnlockPlugin) {
-            $quoteTransfer = $quoteBeforeUnlockPlugin->execute($quoteTransfer);
-        }
+        $quoteTransfer = $this->executeQuotePreUnlockPlugins($quoteTransfer);
 
         $quoteTransfer = $this->quoteFacade->unlockQuote($quoteTransfer);
         $quoteTransfer = $this->operation->reloadItems($quoteTransfer);
@@ -75,5 +74,19 @@ class QuoteLocker implements QuoteLockerInterface
         return (new QuoteResponseTransfer())
             ->setQuoteTransfer($quoteTransfer)
             ->setIsSuccessful(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeQuotePreUnlockPlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($this->quotePreUnlockPlugins as $quotePreUnlockPlugin) {
+            $quoteTransfer = $quotePreUnlockPlugin->execute($quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 }

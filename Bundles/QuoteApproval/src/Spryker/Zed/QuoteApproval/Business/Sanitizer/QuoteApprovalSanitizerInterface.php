@@ -5,17 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCart\Business\Model;
+namespace Spryker\Zed\QuoteApproval\Business\Sanitizer;
 
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteLockerInterface
+interface QuoteApprovalSanitizerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function unlock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function sanitizeQuoteApproval(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

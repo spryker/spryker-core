@@ -249,7 +249,7 @@ interface QuoteRequestFacadeInterface
 
     /**
      * Specification:
-     * - Removes request for quote in quote.
+     * - Sanitizes request for quote in quote.
      *
      * @api
      *
@@ -257,5 +257,5 @@ interface QuoteRequestFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function clearQuoteRequestFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function sanitizeQuoteRequest(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

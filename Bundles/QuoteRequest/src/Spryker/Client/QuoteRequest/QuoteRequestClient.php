@@ -150,7 +150,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     public function convertQuoteRequestToLockedQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestToQuoteConverter()
+            ->createQuoteRequestConverter()
             ->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
     }
 
@@ -166,7 +166,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestToQuoteConverter()
+            ->createQuoteRequestConverter()
             ->convertQuoteRequestToQuote($quoteRequestTransfer);
     }
 
@@ -182,7 +182,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $this->getFactory()
-            ->createQuoteRequestChecker()
+            ->createQuoteRequestStatus()
             ->isQuoteRequestCancelable($quoteRequestTransfer);
     }
 
@@ -198,7 +198,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $this->getFactory()
-            ->createQuoteRequestChecker()
+            ->createQuoteRequestStatus()
             ->isQuoteRequestEditable($quoteRequestTransfer);
     }
 
@@ -214,7 +214,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     public function isQuoteRequestReady(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $this->getFactory()
-            ->createQuoteRequestChecker()
+            ->createQuoteRequestStatus()
             ->isQuoteRequestReady($quoteRequestTransfer);
     }
 

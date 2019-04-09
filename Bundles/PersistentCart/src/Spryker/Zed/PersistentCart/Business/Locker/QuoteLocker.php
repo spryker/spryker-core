@@ -5,10 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCart\Business\Model;
+namespace Spryker\Zed\PersistentCart\Business\Locker;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 
