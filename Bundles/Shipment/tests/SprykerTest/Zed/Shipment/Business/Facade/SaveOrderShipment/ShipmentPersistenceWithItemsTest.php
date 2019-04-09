@@ -15,7 +15,6 @@ use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesShipmentTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
@@ -51,7 +50,6 @@ class ShipmentPersistenceWithItemsTest extends Test
         // Arrange
         $saveOrderTransfer = $this->tester->createOrderWithoutShipment($quoteTransfer);
 
-        $salesAddressQuery = SpySalesOrderAddressQuery::create();
         $salesOrderItemsQuery = SpySalesOrderItemQuery::create()->filterByFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
         $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
@@ -60,11 +58,11 @@ class ShipmentPersistenceWithItemsTest extends Test
 
         // Assert
         $salesShipmentEntity = $salesShipmentQuery->findOne();
-        $salesOrderItemsEntityList = $salesOrderItemsQuery->find();
+        $salesOrderItemsEntities = $salesOrderItemsQuery->find();
 
-        $this->assertEquals($quoteTransfer->getItems()->count(), $salesOrderItemsEntityList->count(), 'Order shipment has no any related addresses been saved.');
-        foreach ($salesOrderItemsEntityList as $salesOrderItemEntity) {
-            $this->assertEquals($salesOrderItemEntity->getFkSalesShipment(), $salesShipmentEntity->getIdSalesShipment(), 'Order shipment is not related with order item.');
+        $this->assertCount($quoteTransfer->getItems()->count(), $salesOrderItemsEntities, 'Order shipment has no any related addresses been saved.');
+        foreach ($salesOrderItemsEntities as $i => $salesOrderItemEntity) {
+            $this->assertEquals($salesOrderItemEntity->getFkSalesShipment(), $salesShipmentEntity->getIdSalesShipment(), sprintf('Order shipment is not related with order item (iteration #%d).', $i));
         }
     }
 
@@ -94,12 +92,12 @@ class ShipmentPersistenceWithItemsTest extends Test
         $this->tester->getFacade()->saveOrderShipment($quoteTransfer, $savedOrderTransfer);
 
         // Assert
-        $salesOrderItemEntityList = $salesOrderItemQuery->find();
-        $idSalesShipmentList = $idSalesShipmentQuery->find()->getData();
+        $salesOrderItemEntities = $salesOrderItemQuery->find();
+        $idSalesShipmentEntities = $idSalesShipmentQuery->find()->getData();
 
-        $this->assertEquals($countOfNewShipments, count($idSalesShipmentList), 'Order shipments count mismatch! There is no shipments have been saved.');
-        foreach ($salesOrderItemEntityList as $salesOrderItemEntity) {
-            $this->assertContains($salesOrderItemEntity->getFkSalesShipment(), $idSalesShipmentList, 'Order item is not related with order shipment.');
+        $this->assertCount($countOfNewShipments, $idSalesShipmentEntities, 'Saved order shipments count mismatch!');
+        foreach ($salesOrderItemEntities as $i => $salesOrderItemEntity) {
+            $this->assertContains($salesOrderItemEntity->getFkSalesShipment(), $idSalesShipmentEntities, sprintf('Order item is not related with order shipment (iteration #%d).', $i));
         }
     }
 

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;

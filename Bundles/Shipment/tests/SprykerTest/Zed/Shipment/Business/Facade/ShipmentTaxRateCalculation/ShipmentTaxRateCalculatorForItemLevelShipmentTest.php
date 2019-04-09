@@ -120,14 +120,14 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
                 $expectedValue,
                 $itemTransfer->getShipment()->getMethod()->getTaxRate(),
                 static::FLOAT_COMPARISION_DELTA,
-                sprintf('The actual shipment methdo tax rate is invalid at the iteration #%d.', $i)
+                sprintf('The actual shipment method tax rate is invalid (iteration #%d).', $i)
             );
 
             $this->assertEqualsWithDelta(
                 $expectedValue,
                 $expenseTransfer->getTaxRate(),
                 static::FLOAT_COMPARISION_DELTA,
-                sprintf('The actual shipment expense tax rate is invalid at the iteration #%d.', $i)
+                sprintf('The actual shipment expense tax rate is invalid (iteration #%d).', $i)
             );
         }
     }

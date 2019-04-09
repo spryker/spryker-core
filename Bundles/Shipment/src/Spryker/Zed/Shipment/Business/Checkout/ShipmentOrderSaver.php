@@ -92,32 +92,10 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     protected function saveOrderShipmentTransaction(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         $salesOrderEntity = $this->getSalesOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
-        $shipmentTransfer = $quoteTransfer->getShipment();
 
-        $shipmentTransfer = $this->saveSalesOrderAddress($shipmentTransfer);
         $salesOrderEntity = $this->addExpensesToOrder($quoteTransfer, $salesOrderEntity, $saveOrderTransfer);
         $shipmentTransfer = $this->createSalesShipment($quoteTransfer, $salesOrderEntity, $saveOrderTransfer);
         $this->updateFkShipmentForOrderItems($saveOrderTransfer->getOrderItems(), $shipmentTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
-     */
-    protected function saveSalesOrderAddress(ShipmentTransfer $shipmentTransfer): ShipmentTransfer
-    {
-        $shippingAddressTransfer = $shipmentTransfer->getShippingAddress();
-        $customerAddressTransfer = $this->customerFacade->findCustomerAddressByAddressData($shippingAddressTransfer);
-        if ($customerAddressTransfer !== null) {
-            $shippingAddressTransfer = $customerAddressTransfer;
-        }
-
-        $shippingAddressTransfer = $this->salesFacade->createOrderAddress($shippingAddressTransfer);
-
-        $shipmentTransfer->setShippingAddress($shippingAddressTransfer);
-
-        return $shipmentTransfer;
     }
 
     /**

@@ -73,14 +73,14 @@ class ShippingAddressSaveTest extends Test
     }
 
     /**
-     * @dataProvider saveOrderAddressShouldntPersistAddressEntityDataProvider
+     * @dataProvider saveOrderAddressShouldNotPersistAddressEntityDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
-    public function testSaveOrderAddressShouldntPersistAddressEntity(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    public function testSaveOrderAddressShouldNotPersistAddressEntity(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         // Arrange
         $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
@@ -107,7 +107,7 @@ class ShippingAddressSaveTest extends Test
     /**
      * @return array
      */
-    public function saveOrderAddressShouldntPersistAddressEntityDataProvider(): array
+    public function saveOrderAddressShouldNotPersistAddressEntityDataProvider(): array
     {
         return [
             'without quote level shipping address' => $this->getDataWithoutQuoteLevelShippingAddress(),

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShipmentCartConnector\Business\Cart;
 
-use ArchitectureSniffer\PropelQuery\Method\Transfer\MethodTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;

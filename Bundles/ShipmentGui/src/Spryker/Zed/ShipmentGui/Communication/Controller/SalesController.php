@@ -33,7 +33,6 @@ class SalesController extends AbstractController
             ->getShipmentService()
             ->groupItemsByShipment($orderTransfer->getItems());
 
-
         return $this->viewResponse([
             'events' => $events,
             'order' => $orderTransfer,

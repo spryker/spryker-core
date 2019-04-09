@@ -215,7 +215,7 @@ class ShipmentBusinessTester extends Actor
         $this->configureTestStateMachine([$testStateMachineProcessName]);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $productTransfer = $this->haveProduct($itemTransfer->toArray());
+            $this->haveProduct($itemTransfer->toArray());
         }
         $savedOrderTransfer = $this->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, $testStateMachineProcessName);
 

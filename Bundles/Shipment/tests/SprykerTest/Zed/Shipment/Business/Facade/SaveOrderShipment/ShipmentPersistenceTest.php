@@ -79,7 +79,7 @@ class ShipmentPersistenceTest extends Test
         $this->tester->getFacade()->saveOrderShipment($quoteTransfer, $saveOrderTransfer);
 
         // Assert
-        $this->assertEquals($countOfNewShipments, $salesShipmentQuery->count(), 'Order shipments count mismatch! There is no shipments have been saved.');
+        $this->assertEquals($countOfNewShipments, $salesShipmentQuery->count(), 'Saved order shipments count mismatch!');
     }
 
     /**

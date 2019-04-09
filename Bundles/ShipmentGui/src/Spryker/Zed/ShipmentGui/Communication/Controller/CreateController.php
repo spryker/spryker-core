@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
-use Spryker\Zed\ShipmentGui\ShipmentGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

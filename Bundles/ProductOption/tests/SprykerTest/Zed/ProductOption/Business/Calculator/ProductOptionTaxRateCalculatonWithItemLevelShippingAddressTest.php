@@ -236,7 +236,8 @@ class ProductOptionTaxRateCalculatonWithItemLevelShippingAddressTest extends Uni
      *
      * @return int
      */
-    protected function getCountryIdByIso2Code(string $iso2code): int {
+    protected function getCountryIdByIso2Code(string $iso2code): int
+    {
         return SpyCountryQuery::create()->filterByIso2Code($iso2Code)->findOne()->getIdCountry();
     }
 }

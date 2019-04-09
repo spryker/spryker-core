@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderAddressTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -39,46 +38,6 @@ class ShipmentPersistenceWithAddressesTest extends Test
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
      */
     protected $tester;
-
-    /**
-     * @dataProvider shipmentOrderSaverShouldUseQuoteLevelShipmentAndShippingAddressDataProvider
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function testShipmentOrderSaverShouldUseQuoteLevelShipmentAndShippingAddress(
-        QuoteTransfer $quoteTransfer
-    ): void {
-        // Arrange
-        $saveOrderTransfer = $this->tester->createOrderWithoutShipment($quoteTransfer);
-
-        /**
-         * @todo Ask Tamas what is better to do here?
-         *
-         * We should have shipping address stored in DB
-         * with provided link to order. Not to item shipment.
-         */
-        $salesOrderEntity = SpySalesOrderQuery::create()->findOne();
-        $orderShippingAddressEntity = SpySalesOrderAddressQuery::create()
-            ->filterByIdSalesOrderAddress($salesOrderEntity->getFkSalesOrderAddressBilling(), Criteria::NOT_EQUAL)
-            ->findOne();
-        $salesOrderEntity->setFkSalesOrderAddressShipping($orderShippingAddressEntity->getIdSalesOrderAddress())->save();
-        SpySalesOrderItemQuery::create()->update(['FkSalesShipment' => null]);
-
-        $salesAddressQuery = SpySalesOrderAddressQuery::create();
-        $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
-        $salesOrderQuery = SpySalesOrderQuery::create()->filterByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
-
-        // Act
-        $this->tester->getFacade()->saveOrderShipment($quoteTransfer, $saveOrderTransfer);
-
-        // Assert
-        $salesShipmentEntity = $salesShipmentQuery->findOne();
-        $salesOrderEntity = $salesOrderQuery->findOne();
-
-        $this->assertNotNull($salesShipmentEntity->getFkSalesOrderAddress(), 'Order address could not be found! There is no any order address has been saved.');
-    }
 
     /**
      * @dataProvider shipmentOrderSaverShouldUseMultipleShipmentsWithMultipleShipmentAddressesDataProvider
@@ -112,23 +71,13 @@ class ShipmentPersistenceWithAddressesTest extends Test
         $this->tester->getFacade()->saveOrderShipment($quoteTransfer, $savedOrderTransfer);
 
         // Assert
-        $salesShipmentEntityList = $salesShipmentQuery->find();
+        $salesShipmentEntities = $salesShipmentQuery->find();
         $idSalesAddressList = $idSalesAddressQuery->find()->getData();
 
-        $this->assertEquals($countOfNewShippingAddresses, count($idSalesAddressList), 'Order shipping addresses count mismatch! There is no order shipping addresses have been saved.');
-        foreach ($salesShipmentEntityList as $salesShipmentEntity) {
-            $this->assertContains($salesShipmentEntity->getFkSalesOrderAddress(), $idSalesAddressList, 'Order shipment address is not related with order shipment.');
+        $this->assertCount($countOfNewShippingAddresses, $idSalesAddressList, 'Saved order shipping addresses count mismatch!');
+        foreach ($salesShipmentEntities as $i => $salesShipmentEntity) {
+            $this->assertContains($salesShipmentEntity->getFkSalesOrderAddress(), $idSalesAddressList, sprintf('Order shipment address is not related with order shipment (iteration #%d).', $i));
         }
-    }
-
-    /**
-     * @return array
-     */
-    public function shipmentOrderSaverShouldUseQuoteLevelShipmentAndShippingAddressDataProvider(): array
-    {
-        return [
-            'any data, 1 address; expected: shipment with shipping address in DB' => $this->getDataWithQuoteLevelShipmentAndShippingAddressToFrance(),
-        ];
     }
 
     /**
@@ -140,30 +89,6 @@ class ShipmentPersistenceWithAddressesTest extends Test
             'France 1 item, 1 address; expected: 1 order shipment with shipping address in DB' => $this->getDataWithMultipleShipmentsAndShippingAddressesAnd1ItemToFrance(),
             'France 2 items, Germany 1 item, 2 addresses; expected: 2 order shipments with shipping addresses in DB' => $this->getDataWithMultipleShipmentsAndShippingAddressesAnd2ItemsToFranceAnd1ItemToGermany(),
         ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDataWithQuoteLevelShipmentAndShippingAddressToFrance(): array
-    {
-        $addressBuilder = (new AddressBuilder([AddressTransfer::ISO2_CODE => 'FR']));
-
-        $shipmentBuilder = (new ShipmentBuilder())
-            ->withShippingAddress($addressBuilder)
-            ->withMethod();
-
-        $quoteTransfer = (new QuoteBuilder())
-            ->withShipment($shipmentBuilder)
-            ->withItem()
-            ->withShippingAddress($addressBuilder)
-            ->withAnotherBillingAddress()
-            ->withTotals()
-            ->withCustomer()
-            ->withCurrency()
-            ->build();
-
-        return [$quoteTransfer];
     }
 
     /**

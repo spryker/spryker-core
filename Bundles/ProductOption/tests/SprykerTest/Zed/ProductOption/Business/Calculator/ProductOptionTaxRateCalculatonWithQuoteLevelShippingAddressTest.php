@@ -49,7 +49,6 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
     {
         parent::setUp();
 
-
         $taxSetTransfer = $this->tester->haveTaxSetWithTaxRates(['name' => static::TAX_SET_NAME], [
             [
                 'fk_country' => $this->getCountryIdByIso2Code('DE'),
@@ -269,7 +268,8 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
      *
      * @return int
      */
-    protected function getCountryIdByIso2Code(string $iso2code): int {
+    protected function getCountryIdByIso2Code(string $iso2code): int
+    {
         return SpyCountryQuery::create()->filterByIso2Code($iso2Code)->findOne()->getIdCountry();
     }
 }

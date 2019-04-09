@@ -23,5 +23,6 @@ interface ShipmentMethodFilterPluginInterface
      */
     public function filterShipmentMethods(
         ShipmentGroupTransfer $shipmentGroupTransfer,
-        QuoteTransfer $quoteTransfer): ArrayObject;
+        QuoteTransfer $quoteTransfer
+    ): ArrayObject;
 }

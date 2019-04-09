@@ -94,11 +94,11 @@ class ShipmentPersistenceWithExpensesTest extends Test
         $this->tester->getFacade()->saveOrderShipment($quoteTransfer, $saveOrderTransfer);
 
         // Assert
-        $salesShipmentEntityList = $salesShipmentQuery->find();
+        $salesShipmentEntities = $salesShipmentQuery->find();
         $idSalesShipmentExpenseList = $idSalesShipmentExpenseQuery->find()->getData();
 
-        $this->assertEquals($countOfNewShipmentExpenses, count($idSalesShipmentExpenseList), 'Expected number of shipment expenses does not match the actual number.');
-        foreach ($salesShipmentEntityList as $i => $salesShipmentEntity) {
+        $this->assertCount($countOfNewShipmentExpenses, $idSalesShipmentExpenseList, 'Expected number of shipment expenses does not match the actual number.');
+        foreach ($salesShipmentEntities as $i => $salesShipmentEntity) {
             $this->assertContains($salesShipmentEntity->getFkSalesExpense(), $idSalesShipmentExpenseList, sprintf('Shipment expense ID should have been connected to shipment entity (iteration #%d).', $i));
         }
     }

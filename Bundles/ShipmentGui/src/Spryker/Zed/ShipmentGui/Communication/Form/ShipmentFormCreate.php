@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Form;
 
 use DateTime;
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
