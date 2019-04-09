@@ -16,9 +16,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Client\QuoteRequestAgent\Converter\QuoteRequestAgentConverter;
 use Spryker\Client\QuoteRequestAgent\Dependency\Client\QuoteRequestAgentToQuoteClientBridge;
-use Spryker\Client\QuoteRequestAgent\QuoteRequest\QuoteRequestChecker;
-use Spryker\Client\QuoteRequestAgent\QuoteRequest\QuoteRequestConverter;
+use Spryker\Client\QuoteRequestAgent\Status\QuoteRequestAgentStatus;
 use Spryker\Shared\QuoteRequestAgent\QuoteRequestAgentConfig as SharedQuoteRequestAgentConfig;
 
 /**
@@ -26,20 +26,20 @@ use Spryker\Shared\QuoteRequestAgent\QuoteRequestAgentConfig as SharedQuoteReque
  * @group SprykerTest
  * @group Client
  * @group QuoteRequestAgent
- * @group QuoteRequestConverterTest
+ * @group QuoteRequestAgentConverterTest
  * Add your own group annotations below this line
  */
-class QuoteRequestConverterTest extends Unit
+class QuoteRequestAgentConverterTest extends Unit
 {
     /**
-     * @uses \Spryker\Client\QuoteRequestAgent\QuoteRequest\QuoteRequestConverter::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS
+     * @uses \Spryker\Client\QuoteRequestAgent\Converter\QuoteRequestAgentConverter::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS
      */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\QuoteRequestAgent\QuoteRequest\QuoteRequestConverter
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\QuoteRequestAgent\Converter\QuoteRequestAgentConverter
      */
-    protected $quoteRequestConverterMock;
+    protected $quoteRequestAgentConverterMock;
 
     /**
      * @return void
@@ -48,7 +48,7 @@ class QuoteRequestConverterTest extends Unit
     {
         parent::setUp();
 
-        $this->quoteRequestConverterMock = $this->createQuoteRequestConverterMock();
+        $this->quoteRequestAgentConverterMock = $this->createQuoteRequestAgentConverterMock();
     }
 
     /**
@@ -60,7 +60,7 @@ class QuoteRequestConverterTest extends Unit
         $quoteRequestTransfer = $this->createQuoteRequestTransfer(SharedQuoteRequestAgentConfig::STATUS_IN_PROGRESS);
 
         // Act
-        $quoteResponseTransfer = $this->quoteRequestConverterMock->convertQuoteRequestToQuote($quoteRequestTransfer);
+        $quoteResponseTransfer = $this->quoteRequestAgentConverterMock->convertQuoteRequestToQuote($quoteRequestTransfer);
 
         // Assert
         $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
@@ -75,7 +75,7 @@ class QuoteRequestConverterTest extends Unit
         $quoteRequestTransfer = $this->createQuoteRequestTransfer(SharedQuoteRequestAgentConfig::STATUS_WAITING);
 
         // Act
-        $quoteResponseTransfer = $this->quoteRequestConverterMock->convertQuoteRequestToQuote($quoteRequestTransfer);
+        $quoteResponseTransfer = $this->quoteRequestAgentConverterMock->convertQuoteRequestToQuote($quoteRequestTransfer);
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
@@ -88,12 +88,12 @@ class QuoteRequestConverterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteRequestConverterMock(): MockObject
+    protected function createQuoteRequestAgentConverterMock(): MockObject
     {
-        return $this->getMockBuilder(QuoteRequestConverter::class)
+        return $this->getMockBuilder(QuoteRequestAgentConverter::class)
             ->setConstructorArgs([
                 $this->createQuoteRequestAgentToQuoteClientBridgeMock(),
-                $this->createQuoteRequestCheckerMock(),
+                $this->createQuoteRequestAgentStatusMock(),
             ])
             ->setMethods(null)
             ->getMock();
@@ -110,20 +110,20 @@ class QuoteRequestConverterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteRequestCheckerMock(): MockObject
+    protected function createQuoteRequestAgentStatusMock(): MockObject
     {
-        $quoteRequestCheckerMock = $this->getMockBuilder(QuoteRequestChecker::class)
+        $quoteRequestAgentStatusMock = $this->getMockBuilder(QuoteRequestAgentStatus::class)
             ->disableOriginalConstructor()
             ->setMethods(['isQuoteRequestEditable'])
             ->getMock();
 
-        $quoteRequestCheckerMock
+        $quoteRequestAgentStatusMock
             ->method('isQuoteRequestEditable')
             ->willReturnCallback(function (QuoteRequestTransfer $quoteRequestTransfer) {
                 return $quoteRequestTransfer->getStatus() === SharedQuoteRequestAgentConfig::STATUS_IN_PROGRESS;
             });
 
-        return $quoteRequestCheckerMock;
+        return $quoteRequestAgentStatusMock;
     }
 
     /**
