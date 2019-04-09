@@ -113,7 +113,9 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      */
     public function findPriceTypeByName(string $priceTypeName): ?PriceTypeTransfer
     {
-        return null;
+        return $this->getFactory()
+            ->createPriceTypeReader()
+            ->findPriceTypeByName($priceTypeName);
     }
 
     /**
@@ -540,5 +542,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      */
     public function removePriceProductStore(PriceProductTransfer $priceProductTransfer): void
     {
+        $this->getFactory()
+            ->createPriceProductRemover()
+            ->removePriceProductStore($priceProductTransfer);
     }
 }

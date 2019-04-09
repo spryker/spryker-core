@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig getConfig()
+ * @method \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface getRepository()
  */
 class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory
 {

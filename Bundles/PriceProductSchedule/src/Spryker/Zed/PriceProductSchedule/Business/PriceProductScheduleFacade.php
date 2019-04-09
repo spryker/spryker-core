@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory getFactory()
+ * @method \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface getRepository()
  */
 class PriceProductScheduleFacade extends AbstractFacade implements PriceProductScheduleFacadeInterface
 {
@@ -21,6 +23,9 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      */
     public function applyScheduledPrices(): void
     {
+        $this->getFactory()
+            ->createPriceProductScheduleApplier()
+            ->applyScheduledPrices();
     }
 
     /**
@@ -30,5 +35,8 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      */
     public function cleanAppliedScheduledPrices(int $daysRetained): void
     {
+        $this->getFactory()
+            ->createPriceProductScheduleCleaner()
+            ->cleanAppliedScheduledPrices($daysRetained);
     }
 }

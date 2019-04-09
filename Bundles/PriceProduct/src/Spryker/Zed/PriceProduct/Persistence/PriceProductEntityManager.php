@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProduct\Persistence;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -64,5 +65,49 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
         SpyPriceProductDefaultEntityTransfer $spyPriceProductDefaultEntityTransfer
     ): SpyPriceProductDefaultEntityTransfer {
         return $this->save($spyPriceProductDefaultEntityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    public function deletePriceProductStoreByPriceProductTransfer(PriceProductTransfer $priceProductTransfer): void
+    {
+        $this->getFactory()
+            ->createPriceProductStoreQuery()
+            ->filterByFkCurrency($priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency())
+            ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
+            ->filterByFkStore($priceProductTransfer->getMoneyValue()->getFkStore())
+            ->filterByGrossPrice($priceProductTransfer->getMoneyValue()->getGrossAmount())
+            ->filterByNetPrice($priceProductTransfer->getMoneyValue()->getNetAmount())
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param int $idPriceProduct
+     *
+     * @return void
+     */
+    public function deletePriceProduct(int $idPriceProduct): void
+    {
+        $this->getFactory()
+            ->createPriceProductQuery()
+            ->findByIdPriceProduct($idPriceProduct)
+            ->delete();
+    }
+
+    /**
+     * @param int $idPriceProductDefault
+     *
+     * @return void
+     */
+    public function deletePriceProductDefault(int $idPriceProductDefault): void
+    {
+        $this->getFactory()
+            ->createPriceProductDefaultQuery()
+            ->findByIdPriceProductDefault($idPriceProductDefault)
+            ->delete();
     }
 }
