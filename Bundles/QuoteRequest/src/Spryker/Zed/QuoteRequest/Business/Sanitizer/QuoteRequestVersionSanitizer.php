@@ -43,11 +43,12 @@ class QuoteRequestVersionSanitizer implements QuoteRequestVersionSanitizerInterf
      */
     public function cleanUpQuoteRequestVersionQuote(QuoteRequestVersionTransfer $quoteRequestVersionTransfer): QuoteRequestVersionTransfer
     {
-        $quoteTransfer = $quoteRequestVersionTransfer->getQuote()
-            ->setQuoteRequestVersionReference(null)
-            ->setQuoteRequestReference(null);
+        $quoteTransfer = $quoteRequestVersionTransfer->getQuote();
 
-        $quoteRequestVersionTransfer->setQuote($this->clearSourcePrices($quoteTransfer));
+        $quoteTransfer = $this->clearQuoteRequestFromQuote($quoteTransfer);
+        $quoteTransfer = $this->clearSourcePrices($quoteTransfer);
+
+        $quoteRequestVersionTransfer->setQuote($quoteTransfer);
 
         return $quoteRequestVersionTransfer;
     }
@@ -81,6 +82,20 @@ class QuoteRequestVersionSanitizer implements QuoteRequestVersionSanitizerInterf
         $quoteRequestVersionTransfer->setQuote($recalculateQuoteTransfer);
 
         return $quoteRequestVersionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function clearQuoteRequestFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $quoteTransfer
+            ->setQuoteRequestVersionReference(null)
+            ->setQuoteRequestReference(null);
+
+        return $quoteTransfer;
     }
 
     /**
