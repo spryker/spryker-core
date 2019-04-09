@@ -8,15 +8,15 @@
 namespace Spryker\Client\QuoteRequest;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\QuoteRequest\Converter\QuoteRequestConverter;
+use Spryker\Client\QuoteRequest\Converter\QuoteRequestConverterInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
-use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestChecker;
-use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestCheckerInterface;
-use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestReader;
-use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestReaderInterface;
-use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverter;
-use Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverterInterface;
+use Spryker\Client\QuoteRequest\Reader\QuoteRequestReader;
+use Spryker\Client\QuoteRequest\Reader\QuoteRequestReaderInterface;
+use Spryker\Client\QuoteRequest\Status\QuoteRequestStatus;
+use Spryker\Client\QuoteRequest\Status\QuoteRequestStatusInterface;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStub;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface;
 
@@ -26,27 +26,27 @@ use Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface;
 class QuoteRequestFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestCheckerInterface
+     * @return \Spryker\Client\QuoteRequest\Converter\QuoteRequestConverterInterface
      */
-    public function createQuoteRequestChecker(): QuoteRequestCheckerInterface
+    public function createQuoteRequestConverter(): QuoteRequestConverterInterface
     {
-        return new QuoteRequestChecker($this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestToQuoteConverterInterface
-     */
-    public function createQuoteRequestToQuoteConverter(): QuoteRequestToQuoteConverterInterface
-    {
-        return new QuoteRequestToQuoteConverter(
+        return new QuoteRequestConverter(
             $this->getPersistentCartClient(),
             $this->getQuoteClient(),
-            $this->createQuoteRequestChecker()
+            $this->createQuoteRequestStatus()
         );
     }
 
     /**
-     * @return \Spryker\Client\QuoteRequest\QuoteRequest\QuoteRequestReaderInterface
+     * @return \Spryker\Client\QuoteRequest\Status\QuoteRequestStatusInterface
+     */
+    public function createQuoteRequestStatus(): QuoteRequestStatusInterface
+    {
+        return new QuoteRequestStatus($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteRequest\Reader\QuoteRequestReaderInterface
      */
     public function createQuoteRequestReader(): QuoteRequestReaderInterface
     {

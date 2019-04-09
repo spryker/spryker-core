@@ -9,7 +9,6 @@ namespace Spryker\Client\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserQueryTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -183,21 +182,5 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
         return $this->getFactory()
             ->createZedCompanyUserStub()
             ->getActiveCompanyUsersByCustomerReference($customerTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserQueryTransfer $companyUserQueryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
-     */
-    public function getCompanyUserCollectionByQuery(CompanyUserQueryTransfer $companyUserQueryTransfer): CompanyUserCollectionTransfer
-    {
-        return $this->getFactory()
-            ->createZedCompanyUserStub()
-            ->getCompanyUserCollectionByQuery($companyUserQueryTransfer);
     }
 }

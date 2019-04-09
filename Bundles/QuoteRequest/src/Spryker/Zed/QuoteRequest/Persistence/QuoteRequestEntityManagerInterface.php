@@ -28,18 +28,18 @@ interface QuoteRequestEntityManagerInterface
     public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
      */
-    public function createQuoteRequestVersion(QuoteRequestVersionTransfer $quoteRequestTransfer): QuoteRequestVersionTransfer;
+    public function createQuoteRequestVersion(QuoteRequestVersionTransfer $quoteRequestVersionTransfer): QuoteRequestVersionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestVersionTransfer $quoteRequestVersionTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
      */
-    public function updateQuoteRequestVersion(QuoteRequestVersionTransfer $quoteRequestTransfer): QuoteRequestVersionTransfer;
+    public function updateQuoteRequestVersion(QuoteRequestVersionTransfer $quoteRequestVersionTransfer): QuoteRequestVersionTransfer;
 
     /**
      * @param \DateTime $validUntil

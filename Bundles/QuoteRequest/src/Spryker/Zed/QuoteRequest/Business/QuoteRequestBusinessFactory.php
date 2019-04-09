@@ -8,21 +8,27 @@
 namespace Spryker\Zed\QuoteRequest\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestChecker;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestCheckerInterface;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestCleaner;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestCleanerInterface;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReader;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGenerator;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriter;
-use Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriterInterface;
+use Spryker\Zed\QuoteRequest\Business\Reader\QuoteRequestReader;
+use Spryker\Zed\QuoteRequest\Business\Reader\QuoteRequestReaderInterface;
+use Spryker\Zed\QuoteRequest\Business\ReferenceGenerator\QuoteRequestReferenceGenerator;
+use Spryker\Zed\QuoteRequest\Business\ReferenceGenerator\QuoteRequestReferenceGeneratorInterface;
+use Spryker\Zed\QuoteRequest\Business\Sanitizer\QuoteRequestVersionSanitizer;
+use Spryker\Zed\QuoteRequest\Business\Sanitizer\QuoteRequestVersionSanitizerInterface;
+use Spryker\Zed\QuoteRequest\Business\Sender\QuoteRequestSender;
+use Spryker\Zed\QuoteRequest\Business\Sender\QuoteRequestSenderInterface;
+use Spryker\Zed\QuoteRequest\Business\Status\QuoteRequestStatus;
+use Spryker\Zed\QuoteRequest\Business\Status\QuoteRequestStatusInterface;
 use Spryker\Zed\QuoteRequest\Business\UserQuoteRequest\UserQuoteRequestWriter;
 use Spryker\Zed\QuoteRequest\Business\UserQuoteRequest\UserQuoteRequestWriterInterface;
-use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface;
-use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface;
-use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface;
+use Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestTimeValidator;
+use Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestTimeValidatorInterface;
+use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestTerminator;
+use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestTerminatorInterface;
+use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriter;
+use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriterInterface;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationFacadeInterface;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartFacadeInterface;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserFacadeInterface;
 use Spryker\Zed\QuoteRequest\QuoteRequestDependencyProvider;
 
 /**
@@ -32,32 +38,6 @@ use Spryker\Zed\QuoteRequest\QuoteRequestDependencyProvider;
  */
 class QuoteRequestBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReaderInterface
-     */
-    public function createQuoteRequestReader(): QuoteRequestReaderInterface
-    {
-        return new QuoteRequestReader(
-            $this->getRepository()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestWriterInterface
-     */
-    public function createQuoteRequestWriter(): QuoteRequestWriterInterface
-    {
-        return new QuoteRequestWriter(
-            $this->getConfig(),
-            $this->getEntityManager(),
-            $this->createQuoteRequestReader(),
-            $this->createQuoteRequestReferenceGenerator(),
-            $this->getCompanyUserFacade(),
-            $this->getCalculationFacade(),
-            $this->getCartFacade()
-        );
-    }
-
     /**
      * @return \Spryker\Zed\QuoteRequest\Business\UserQuoteRequest\UserQuoteRequestWriterInterface
      */
@@ -74,28 +54,77 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestCheckerInterface
+     * @return \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriterInterface
      */
-    public function createQuoteRequestChecker(): QuoteRequestCheckerInterface
+    public function createQuoteRequestWriter(): QuoteRequestWriterInterface
     {
-        return new QuoteRequestChecker(
+        return new QuoteRequestWriter(
+            $this->getConfig(),
+            $this->getEntityManager(),
+            $this->createQuoteRequestReader(),
+            $this->createQuoteRequestReferenceGenerator(),
+            $this->createQuoteRequestVersionSanitizer(),
+            $this->createQuoteRequestStatus()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestTimeValidatorInterface
+     */
+    public function createQuoteRequestTimeValidator(): QuoteRequestTimeValidatorInterface
+    {
+        return new QuoteRequestTimeValidator(
             $this->createQuoteRequestReader()
         );
     }
 
     /**
-     * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestCleanerInterface
+     * @return \Spryker\Zed\QuoteRequest\Business\Sender\QuoteRequestSenderInterface
      */
-    public function createQuoteRequestCleaner(): QuoteRequestCleanerInterface
+    public function createQuoteRequestSender(): QuoteRequestSenderInterface
     {
-        return new QuoteRequestCleaner(
+        return new QuoteRequestSender(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->createQuoteRequestReader()
         );
     }
 
     /**
-     * @return \Spryker\Zed\QuoteRequest\Business\QuoteRequest\QuoteRequestReferenceGeneratorInterface
+     * @return \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestTerminatorInterface
+     */
+    public function createQuoteRequestTerminator(): QuoteRequestTerminatorInterface
+    {
+        return new QuoteRequestTerminator(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createQuoteRequestReader(),
+            $this->createQuoteRequestStatus()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\Reader\QuoteRequestReaderInterface
+     */
+    public function createQuoteRequestReader(): QuoteRequestReaderInterface
+    {
+        return new QuoteRequestReader(
+            $this->getRepository(),
+            $this->getCompanyUserFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\Status\QuoteRequestStatusInterface
+     */
+    public function createQuoteRequestStatus(): QuoteRequestStatusInterface
+    {
+        return new QuoteRequestStatus(
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\ReferenceGenerator\QuoteRequestReferenceGeneratorInterface
      */
     public function createQuoteRequestReferenceGenerator(): QuoteRequestReferenceGeneratorInterface
     {
@@ -106,25 +135,36 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserInterface
+     * @return \Spryker\Zed\QuoteRequest\Business\Sanitizer\QuoteRequestVersionSanitizerInterface
      */
-    public function getCompanyUserFacade(): QuoteRequestToCompanyUserInterface
+    public function createQuoteRequestVersionSanitizer(): QuoteRequestVersionSanitizerInterface
+    {
+        return new QuoteRequestVersionSanitizer(
+            $this->getCartFacade(),
+            $this->getCalculationFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserFacadeInterface
+     */
+    public function getCompanyUserFacade(): QuoteRequestToCompanyUserFacadeInterface
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::FACADE_COMPANY_USER);
     }
 
     /**
-     * @return \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationInterface
+     * @return \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationFacadeInterface
      */
-    public function getCalculationFacade(): QuoteRequestToCalculationInterface
+    public function getCalculationFacade(): QuoteRequestToCalculationFacadeInterface
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::FACADE_CALCULATION);
     }
 
     /**
-     * @return \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartInterface
+     * @return \Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartFacadeInterface
      */
-    public function getCartFacade(): QuoteRequestToCartInterface
+    public function getCartFacade(): QuoteRequestToCartFacadeInterface
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::FACADE_CART);
     }

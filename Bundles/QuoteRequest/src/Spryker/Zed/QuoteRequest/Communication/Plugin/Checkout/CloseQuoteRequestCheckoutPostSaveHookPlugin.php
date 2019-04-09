@@ -32,11 +32,6 @@ class CloseQuoteRequestCheckoutPostSaveHookPlugin extends AbstractPlugin impleme
      */
     public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        if (!$quoteTransfer->getQuoteRequestVersionReference()) {
-            return;
-        }
-
-        $this->getFacade()
-            ->closeQuoteRequest($quoteTransfer->getQuoteRequestVersionReference());
+        $this->getFacade()->closeQuoteRequest($quoteTransfer);
     }
 }

@@ -22,6 +22,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig;
@@ -426,11 +427,13 @@ class QuoteRequestFacadeTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInDraftStatus();
+        $quoteTransfer = (new QuoteTransfer())
+            ->setQuoteRequestVersionReference($quoteRequestTransfer->getLatestVersion()->getVersionReference());
 
         // Act
          $this->tester
             ->getFacade()
-            ->closeQuoteRequest($quoteRequestTransfer->getLatestVersion()->getVersionReference());
+            ->closeQuoteRequest($quoteTransfer);
 
         // Assert
         $quoteRequestCollection = $this->tester->getFacade()->getQuoteRequestCollectionByFilter(
@@ -450,11 +453,13 @@ class QuoteRequestFacadeTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInDraftStatus();
+        $quoteTransfer = (new QuoteTransfer())
+            ->setQuoteRequestVersionReference(static::FAKE_QUOTE_REQUEST_REFERENCE);
 
         // Act
          $this->tester
             ->getFacade()
-            ->closeQuoteRequest(static::FAKE_QUOTE_REQUEST_REFERENCE);
+            ->closeQuoteRequest($quoteTransfer);
 
         // Assert
         $quoteRequestCollection = $this->tester->getFacade()->getQuoteRequestCollectionByFilter(
@@ -1111,8 +1116,10 @@ class QuoteRequestFacadeTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInDraftStatus();
+        $quoteTransfer = (new QuoteTransfer())
+            ->setQuoteRequestVersionReference($quoteRequestTransfer->getLatestVersion()->getVersionReference());
 
-        $this->tester->getFacade()->closeQuoteRequest($quoteRequestTransfer->getLatestVersion()->getVersionReference());
+        $this->tester->getFacade()->closeQuoteRequest($quoteTransfer);
 
         // Act
         $quoteRequestResponseTransfer = $this->tester

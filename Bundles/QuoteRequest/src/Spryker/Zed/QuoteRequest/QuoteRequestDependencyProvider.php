@@ -9,9 +9,9 @@ namespace Spryker\Zed\QuoteRequest;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationBridge;
-use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartBridge;
-use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserBridge;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationFacadeBridge;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCartFacadeBridge;
+use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserFacadeBridge;
 use Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServiceBridge;
 
 /**
@@ -60,7 +60,7 @@ class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCompanyUserFacade(Container $container): Container
     {
         $container[static::FACADE_COMPANY_USER] = function (Container $container) {
-            return new QuoteRequestToCompanyUserBridge($container->getLocator()->companyUser()->facade());
+            return new QuoteRequestToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());
         };
 
         return $container;
@@ -74,7 +74,7 @@ class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCalculationFacade(Container $container): Container
     {
         $container[static::FACADE_CALCULATION] = function (Container $container) {
-            return new QuoteRequestToCalculationBridge($container->getLocator()->calculation()->facade());
+            return new QuoteRequestToCalculationFacadeBridge($container->getLocator()->calculation()->facade());
         };
 
         return $container;
@@ -88,7 +88,7 @@ class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCartFacade(Container $container): Container
     {
         $container[static::FACADE_CART] = function (Container $container) {
-            return new QuoteRequestToCartBridge($container->getLocator()->cart()->facade());
+            return new QuoteRequestToCartFacadeBridge($container->getLocator()->cart()->facade());
         };
 
         return $container;

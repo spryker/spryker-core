@@ -9,7 +9,7 @@ namespace Spryker\Zed\QuoteRequest\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\QuoteRequest\Communication\QuoteRequestCommunicationFactory getFactory()
  * @method \Spryker\Zed\QuoteRequest\QuoteRequestConfig getConfig()
  */
-class QuoteRequestPreCheckPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
+class QuoteRequestPreCheckPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
 {
     /**
      * {@inheritdoc}
