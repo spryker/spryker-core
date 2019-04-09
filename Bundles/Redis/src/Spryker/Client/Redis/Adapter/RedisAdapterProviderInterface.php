@@ -22,7 +22,7 @@ interface RedisAdapterProviderInterface
     /**
      * @param string $connectionKey
      *
-     * @throws \Spryker\Client\Redis\Exception\ConnectionNotInitializedException
+     * @throws \Spryker\Client\Redis\Exception\RedisAdapterNotInitializedException
      *
      * @return \Spryker\Client\Redis\Adapter\RedisAdapterInterface
      */

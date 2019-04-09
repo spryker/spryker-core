@@ -9,7 +9,7 @@ namespace Spryker\Client\Redis\Adapter;
 
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
 use Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface;
-use Spryker\Client\Redis\Exception\ConnectionNotInitializedException;
+use Spryker\Client\Redis\Exception\RedisAdapterNotInitializedException;
 
 class RedisAdapterProvider implements RedisAdapterProviderInterface
 {
@@ -49,15 +49,15 @@ class RedisAdapterProvider implements RedisAdapterProviderInterface
     /**
      * @param string $connectionKey
      *
-     * @throws \Spryker\Client\Redis\Exception\ConnectionNotInitializedException
+     * @throws \Spryker\Client\Redis\Exception\RedisAdapterNotInitializedException
      *
      * @return \Spryker\Client\Redis\Adapter\RedisAdapterInterface
      */
     public function getAdapter(string $connectionKey): RedisAdapterInterface
     {
         if (!isset(static::$clientPool[$connectionKey])) {
-            throw new ConnectionNotInitializedException(
-                sprintf('Redis connection for key %s is not initialized. Call `Spryker\Client\Redis\RedisClient::setupConnection()` first.', $connectionKey)
+            throw new RedisAdapterNotInitializedException(
+                sprintf('Redis client adapter for key %s is not initialized. Call `Spryker\Client\Redis\RedisClient::setupConnection()` first.', $connectionKey)
             );
         }
 

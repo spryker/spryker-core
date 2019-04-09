@@ -46,7 +46,7 @@ class RedisAdapterProviderTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Client\Redis\Exception\ConnectionNotInitializedException
+     * @expectedException \Spryker\Client\Redis\Exception\RedisAdapterNotInitializedException
      *
      * @return void
      */

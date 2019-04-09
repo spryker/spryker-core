@@ -9,6 +9,6 @@ namespace Spryker\Client\Redis\Exception;
 
 use Exception;
 
-class ConnectionNotInitializedException extends Exception
+class RedisAdapterNotInitializedException extends Exception
 {
 }
