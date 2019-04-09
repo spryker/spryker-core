@@ -168,10 +168,11 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
         SpyTaxRate $spyTaxRate,
         TaxRateStorageTransfer $taxRateStorageTransfer
     ): TaxRateStorageTransfer {
-         $taxRateStorageTransfer->fromArray($spyTaxRate->toArray(), true);
-         if($spyTaxRate->getCountry() !== null){
-             $taxRateStorageTransfer->setCountry($spyTaxRate->getCountry()->getName());
-         }
+        $taxRateStorageTransfer->fromArray($spyTaxRate->toArray(), true);
+        if ($spyTaxRate->getCountry() !== null) {
+            $taxRateStorageTransfer->setCountry($spyTaxRate->getCountry()->getName());
+        }
+
         return $taxRateStorageTransfer;
     }
 }
