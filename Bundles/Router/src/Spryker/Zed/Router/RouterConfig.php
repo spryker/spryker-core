@@ -56,6 +56,14 @@ class RouterConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return bool
+     */
+    public function isSslEnabled(): bool
+    {
+        return $this->get(RouterConstants::ROUTER_IS_SSL_ENABLED_ZED, true);
+    }
+
+    /**
      * @return array
      */
     public function getSslExcludedRouteNames(): array
