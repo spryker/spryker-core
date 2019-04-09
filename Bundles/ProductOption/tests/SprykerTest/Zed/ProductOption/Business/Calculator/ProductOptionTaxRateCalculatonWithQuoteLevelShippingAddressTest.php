@@ -11,6 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Pyz\Zed\ProductOption\ProductOptionDependencyProvider;
@@ -31,8 +33,8 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
 {
     protected const TAX_SET_NAME = 'test.tax.set';
 
-    protected const PRODUCT_OPTION_VALUE_1 = 'test.product.option.value.1';
-    protected const PRODUCT_OPTION_VALUE_2 = 'test.product.option.value.2';
+    protected const PRODUCT_OPTION_VALUE_SKU_1 = 'test.product.option.value.sku.1';
+    protected const PRODUCT_OPTION_VALUE_SKU_2 = 'test.product.option.value.sku.2';
 
     /**
      * @var \SprykerTest\Zed\ProductOption\ProductOptionBusinessTester
@@ -49,12 +51,10 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
         $taxSetTransfer = $this->tester->haveTaxSetWithTaxRates(['name' => static::TAX_SET_NAME], [
             [
                 'fk_country' => '60',
-                'name' => 'test tax rate 1',
                 'rate' => 15.00,
             ],
             [
                 'fk_country' => '79',
-                'name' => 'test tax rate 2',
                 'rate' => 20.00,
             ],
         ]);
@@ -63,10 +63,16 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
             ['fk_tax_set' => $taxSetTransfer->getIdTaxSet()],
             [
                 [
-                    ['sku' => static::PRODUCT_OPTION_VALUE_1],
+                    ['sku' => static::PRODUCT_OPTION_VALUE_SKU_1],
+                    [
+                        ['netAmount' => 10000],
+                    ],
                 ],
                 [
-                    ['sku' => static::PRODUCT_OPTION_VALUE_2],
+                    ['sku' => static::PRODUCT_OPTION_VALUE_SKU_2],
+                    [
+                        ['netAmount' => 20000],
+                    ],
                 ],
             ]
         );
@@ -76,24 +82,46 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
      * @dataProvider productOptionTaxRateCalculatorShouldUseQuoteShippingAddress
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param float $expectedResult
+     * @param float $expectedTaxRate
      *
      * @return void
      */
     public function testProductOptionTaxCalculatorShouldUseQuoteShippingAddress(
         QuoteTransfer $quoteTransfer,
-        float $expectedResult
+        float $expectedTaxRate
     ): void {
+        // Arrange
         $this->tester->setDependency(
             ProductOptionDependencyProvider::FACADE_TAX,
-            $this->createProductOptionToTaxFacadeBridgeMock('Moon', 66.00)
+            $this->createProductOptionToTaxFacadeBridgeMock('MOON', 66.00)
         );
-
-        $this->tester->getFacade()->calculateProductOptionTaxRate($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-                $this->assertEquals($expectedResult, $productOptionTransfer->getIdProductOptionValue(), "Expected result - {$expectedResult}, Actual result - {$productOptionTransfer->getTaxRate()}");
+                $productOptionTransfer->setIdProductOptionValue(
+                    $this->getProductOptionValueIdBySku($productOptionTransfer->getSku())
+                );
+            }
+        }
+
+        // Act
+        $this->tester->getFacade()
+            ->calculateProductOptionTaxRate($quoteTransfer);
+
+        // Assert
+        foreach ($quoteTransfer->getItems() as $iterator => $itemTransfer) {
+            foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+                $this->assertEquals(
+                    $expectedTaxRate,
+                    $productOptionTransfer->getTaxRate(),
+                    sprintf(
+                        'Actual tax rate for product option is not valid. Expected %.2f, %.2f given. Iteration #%d, option sku %s',
+                        $expectedTaxRate,
+                        $productOptionTransfer->getTaxRate(),
+                        $iterator,
+                        $productOptionTransfer->getSku()
+                    )
+                );
             }
         }
     }
@@ -132,7 +160,7 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
             'quote has one item with one option, shipping address: France, expected tax rate 20%' => $this->getQuoteWithOneItemWithOneOptionAndQuoteLevelShippingAddressToFrance(),
             'quote has one item with one option, shipping address: Moon, expected tax rate 66%' => $this->getQuoteWithOneItemWithOneOptionAndQuoteLevelShippingAddressToMoon(),
             'quote has one item with two options, shipping address: Germany, expected tax rate 15%' => $this->getQuoteWithOneItemWithTwoOptionsAndQuoteLevelShippingAddressToGermany(),
-            'quote has two items item with one option, shipping address: Germany, expected tax rate 15%' => $this->getQuoteWithTwoItemsWithOneOptionAndQuoteLevelShippingAddressToFrance(),
+            'quote has two items item with one option, shipping address: Germany, expected tax rate 15%' => $this->getQuoteWithTwoItemsWithOneOptionAndQuoteLevelShippingAddressToGermany(),
         ];
     }
 
@@ -141,20 +169,19 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
      */
     public function getQuoteWithOneItemWithOneOptionAndQuoteLevelShippingAddressToFrance(): array
     {
-        $productOptionValueEntity = SpyProductOptionValueQuery::create()->findBySku(static::PRODUCT_OPTION_VALUE_1);
         $quoteTransfer = (new QuoteBuilder())
             ->withShippingAddress(
-                (new AddressBuilder(['iso2Code' => 'DE']))
-            )
-            ->withItem(
-                (new ItemBuilder())
-                    ->withProductOption([
-                        'id_product_option_value' => $productOptionValueEntity[0]->getIdProductOptionValue(),
-                    ])
+                (new AddressBuilder(['iso2Code' => 'FR']))
             )
             ->build();
 
-        return [$quoteTransfer, 15.00];
+        $itemTransfer = (new ItemBuilder())
+            ->withProductOption([ProductOptionValueTransfer::SKU => static::PRODUCT_OPTION_VALUE_SKU_1])
+            ->build();
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        return [$quoteTransfer, 20.00];
     }
 
     /**
@@ -162,22 +189,17 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
      */
     public function getQuoteWithOneItemWithOneOptionAndQuoteLevelShippingAddressToMoon(): array
     {
-        $productOptionValueEntity = SpyProductOptionValueQuery::create()->findBySku(static::PRODUCT_OPTION_VALUE_1);
         $quoteTransfer = (new QuoteBuilder())
             ->withShippingAddress(
-                (new AddressBuilder(['iso2Code' => 'Moon']))
+                (new AddressBuilder(['iso2Code' => 'AZ']))
             )
-            ->withBillingAddress()
-            ->withItem(
-                (new ItemBuilder())
-                    ->withProductOption([
-                        'id_product_option_value' => $productOptionValueEntity[0]->getIdProductOptionValue(),
-                    ])
-            )
-            ->withCustomer()
-            ->withCurrency()
-            ->withTotals()
             ->build();
+
+        $itemTransfer = (new ItemBuilder())
+            ->withProductOption([ProductOptionValueTransfer::SKU => static::PRODUCT_OPTION_VALUE_SKU_1])
+            ->build();
+
+        $quoteTransfer->addItem($itemTransfer);
 
         return [$quoteTransfer, 66.00];
     }
@@ -187,26 +209,18 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
      */
     public function getQuoteWithOneItemWithTwoOptionsAndQuoteLevelShippingAddressToGermany(): array
     {
-        $productOptionValueEntity1 = SpyProductOptionValueQuery::create()->findBySku(static::PRODUCT_OPTION_VALUE_1);
-        $productOptionValueEntity2 = SpyProductOptionValueQuery::create()->findBySku(static::PRODUCT_OPTION_VALUE_2);
         $quoteTransfer = (new QuoteBuilder())
             ->withShippingAddress(
                 (new AddressBuilder(['iso2Code' => 'DE']))
             )
-            ->withBillingAddress()
-            ->withItem(
-                (new ItemBuilder())
-                    ->withProductOption([
-                        'id_product_option_value' => $productOptionValueEntity1[0]->getIdProductOptionValue(),
-                    ])
-                    ->withAnotherProductOption([
-                        'id_product_option_value' => $productOptionValueEntity2[0]->getIdProductOptionValue(),
-                    ])
-            )
-            ->withCustomer()
-            ->withCurrency()
-            ->withTotals()
             ->build();
+
+        $itemTransfer = (new ItemBuilder())
+            ->withProductOption([ProductOptionValueTransfer::SKU => static::PRODUCT_OPTION_VALUE_SKU_1])
+            ->withAnotherProductOption([ProductOptionTransfer::SKU => static::PRODUCT_OPTION_VALUE_SKU_2])
+            ->build();
+
+        $quoteTransfer->addItem($itemTransfer);
 
         return [$quoteTransfer, 15.00];
     }
@@ -214,31 +228,37 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
     /**
      * @return array
      */
-    public function getQuoteWithTwoItemsWithOneOptionAndQuoteLevelShippingAddressToFrance(): array
+    public function getQuoteWithTwoItemsWithOneOptionAndQuoteLevelShippingAddressToGermany(): array
     {
-        $productOptionValueEntity = SpyProductOptionValueQuery::create()->findBySku(static::PRODUCT_OPTION_VALUE_1);
         $quoteTransfer = (new QuoteBuilder())
             ->withShippingAddress(
-                (new AddressBuilder(['iso2Code' => 'FR']))
+                (new AddressBuilder(['iso2Code' => 'DE']))
             )
-            ->withBillingAddress()
-            ->withItem(
-                (new ItemBuilder())
-                    ->withProductOption([
-                        'id_product_option_value' => $productOptionValueEntity[0]->getIdProductOptionValue(),
-                    ])
-            )
-            ->withAnotherItem(
-                (new ItemBuilder())
-                ->withProductOption([
-                    'id_product_option_value' => $productOptionValueEntity[0]->getIdProductOptionValue(),
-                ])
-            )
-            ->withCustomer()
-            ->withCurrency()
-            ->withTotals()
             ->build();
 
+        $itemTransfer1 = (new ItemBuilder())
+            ->withProductOption([ProductOptionTransfer::SKU => static::PRODUCT_OPTION_VALUE_SKU_1])
+            ->build();
+        $itemTransfer2 = (new ItemBuilder())
+            ->withAnotherProductOption([ProductOptionTransfer::SKU => static::PRODUCT_OPTION_VALUE_SKU_2])
+            ->build();
+
+        $quoteTransfer
+            ->addItem($itemTransfer1)
+            ->addItem($itemTransfer2);
+
         return [$quoteTransfer, 15.00];
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return int
+     */
+    protected function getProductOptionValueIdBySku(string $sku): int
+    {
+        $productOptionValueEntity = SpyProductOptionValueQuery::create()->findOneBySku($sku);
+
+        return $productOptionValueEntity->getIdProductOptionValue();
     }
 }

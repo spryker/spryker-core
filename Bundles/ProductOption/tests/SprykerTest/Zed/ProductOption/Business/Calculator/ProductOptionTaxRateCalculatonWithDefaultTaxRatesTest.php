@@ -12,12 +12,13 @@ use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
-use Pyz\Zed\ProductOption\ProductOptionDependencyProvider;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface;
+use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -33,16 +34,7 @@ class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
 {
     protected const TAX_SET_NAME = 'test.tax.set';
 
-    protected const PRODUCT_OPTION_VALUE = 'test.product.option.value';
-
-    /**
-     * @var array
-     */
-    protected $defaultCountryListWithExpectedRate = [
-        'DE' => 15.00,
-        'FR' => 20.00,
-        'MOON' => 0.00,
-    ];
+    protected const PRODUCT_OPTION_VALUE_SKU = 'test.product.option.value.sku';
 
     /**
      * @var \SprykerTest\Zed\ProductOption\ProductOptionBusinessTester
@@ -59,12 +51,10 @@ class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
         $taxSetTransfer = $this->tester->haveTaxSetWithTaxRates([TaxSetTransfer::NAME => static::TAX_SET_NAME], [
             [
                 TaxRateTransfer::FK_COUNTRY => '60',
-                TaxRateTransfer::NAME => 'test tax rate 1',
                 TaxRateTransfer::RATE => 15.00,
             ],
             [
                 TaxRateTransfer::FK_COUNTRY => '79',
-                TaxRateTransfer::NAME => 'test tax rate 2',
                 TaxRateTransfer::RATE => 20.00,
             ],
         ]);
@@ -73,9 +63,9 @@ class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
             [ProductOptionGroupTransfer::FK_TAX_SET => $taxSetTransfer->getIdTaxSet()],
             [
                 [
-                    [ProductOptionValueTransfer::SKU => static::PRODUCT_OPTION_VALUE],
+                    [ProductOptionValueTransfer::SKU => static::PRODUCT_OPTION_VALUE_SKU],
                     [
-                        ['netAmount' => 1000],
+                        ['netAmount' => 10000],
                     ],
                 ],
             ]
@@ -83,41 +73,108 @@ class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
     }
 
     /**
+     * @dataProvider productOptionTaxRateCalculatorWithDefaultTaxRates
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $defaultCountryIso2Code
+     * @param float $expectedTaxRate
+     *
      * @return void
      */
-    public function testProductOptionTaxCalculatorShouldUseDefaultStoreCountry(): void
-    {
-        $productOptionValueEntity = SpyProductOptionValueQuery::create()->findBySku(static::PRODUCT_OPTION_VALUE);
-        $quoteTransfer = (new QuoteBuilder())
-            ->withItem(
-                (new ItemBuilder())
-                    ->withProductOption([
-                        'id_product_option_value' => $productOptionValueEntity[0]->getIdProductOptionValue(),
-                    ])
+    public function testProductOptionTaxCalculatorShouldUseDefaultStoreCountry(
+        QuoteTransfer $quoteTransfer,
+        string $defaultCountryIso2Code,
+        float $expectedTaxRate
+    ): void {
+        // Arrange
+        $this->tester->setDependency(
+            ProductOptionDependencyProvider::FACADE_TAX,
+            $this->createProductOptionToTaxFacadeBridgeMock($defaultCountryIso2Code, 0.00)
+        );
+
+        $productOptionValueEntity = SpyProductOptionValueQuery::create()->findOneBySku(static::PRODUCT_OPTION_VALUE_SKU);
+        $quoteTransfer->getItems()[0]
+            ->getProductOptions()[0]
+            ->setIdProductOptionValue($productOptionValueEntity->getIdProductOptionValue());
+
+        // Act
+        $this->tester->getFacade()
+            ->calculateProductOptionTaxRate($quoteTransfer);
+
+        // Assert
+        $this->assertEquals(
+            $expectedTaxRate,
+            $quoteTransfer->getItems()[0]->getProductOptions()[0]->getTaxRate(),
+            sprintf(
+                'Actual tax rate for product option is not valid. Expected %.2f, %.2f given.',
+                $expectedTaxRate,
+                $quoteTransfer->getItems()[0]->getProductOptions()[0]->getTaxRate()
             )
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function productOptionTaxRateCalculatorWithDefaultTaxRates(): array
+    {
+        return [
+            'quote has one item with one option; no shipping address; default store country France; expected rate 20%' => $this->getQuoteWithOneItemWithoutShippingAddressesAndDefaultCountryIsFrance(),
+            'quote has one item with one option; no shipping address; default store country Germany; expected rate 15%' => $this->getQuoteWithOneItemWithoutShippingAddressesAndDefaultCountryIsGermany(),
+            'quote has one item with one option; no shipping address; default store country Moon; expected rate 0%' => $this->getQuoteWithOneItemWithoutShippingAddressesAndDefaultCountryIsMoon(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getQuoteWithOneItemWithoutShippingAddressesAndDefaultCountryIsFrance(): array
+    {
+        $itemTransfer = (new ItemBuilder())
+            ->withProductOption([ProductOptionValueTransfer::SKU => static::PRODUCT_OPTION_VALUE_SKU])
             ->build();
 
-        foreach ($this->defaultCountryListWithExpectedRate as $defaultCountryIso2Code => $taxRate) {
-            $this->tester->setDependency(
-                ProductOptionDependencyProvider::FACADE_TAX,
-                $this->createProductOptionToTaxFacadeBridgeMock($defaultCountryIso2Code, 0.00)
-            );
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer->addItem($itemTransfer);
 
-            $this->tester->getFacade()->calculateProductOptionTaxRate($quoteTransfer);
+        return [$quoteTransfer, 'FR', 20.00];
+    }
 
-            foreach ($quoteTransfer->getItems() as $itemTransfer) {
-                foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-                    $this->assertEquals($taxRate, $productOptionTransfer->getTaxRate(), "Expected result - {$taxRate}, Actual result - {$productOptionTransfer->getTaxRate()}");
-                }
-            }
-        }
+    /**
+     * @return array
+     */
+    public function getQuoteWithOneItemWithoutShippingAddressesAndDefaultCountryIsGermany(): array
+    {
+        $itemTransfer = (new ItemBuilder())
+            ->withProductOption([ProductOptionValueTransfer::SKU => static::PRODUCT_OPTION_VALUE_SKU])
+            ->build();
+
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer->addItem($itemTransfer);
+
+        return [$quoteTransfer, 'DE', 15.00];
+    }
+
+    /**
+     * @return array
+     */
+    public function getQuoteWithOneItemWithoutShippingAddressesAndDefaultCountryIsMoon(): array
+    {
+        $itemTransfer = (new ItemBuilder())
+            ->withProductOption([ProductOptionValueTransfer::SKU => static::PRODUCT_OPTION_VALUE_SKU])
+            ->build();
+
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer->addItem($itemTransfer);
+
+        return [$quoteTransfer, 'AZ', 0.00];
     }
 
     /**
      * @param string $defaultCountryIso2Code
      * @param float $defaultTaxRate
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function createProductOptionToTaxFacadeBridgeMock(string $defaultCountryIso2Code, float $defaultTaxRate): ProductOptionToTaxFacadeInterface
     {
