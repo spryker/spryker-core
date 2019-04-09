@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface;
 
@@ -34,7 +35,9 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      */
     public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getZedStub()->createQuoteRequest($quoteRequestTransfer);
+        return $this->getFactory()
+            ->createQuoteRequestCreator()
+            ->createQuoteRequest($quoteRequestTransfer);
     }
 
     /**
@@ -150,7 +153,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     public function convertQuoteRequestToLockedQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestToQuoteConverter()
+            ->createQuoteRequestConverter()
             ->convertQuoteRequestToLockedQuote($quoteRequestTransfer);
     }
 
@@ -166,7 +169,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestToQuoteConverter()
+            ->createQuoteRequestConverter()
             ->convertQuoteRequestToQuote($quoteRequestTransfer);
     }
 
@@ -182,8 +185,24 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $this->getFactory()
-            ->createQuoteRequestChecker()
+            ->createQuoteRequestStatus()
             ->isQuoteRequestCancelable($quoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApplicableForQuoteRequest(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteRequestQuoteValidator()
+            ->isQuoteApplicableForQuoteRequest($quoteTransfer);
     }
 
     /**
@@ -198,7 +217,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $this->getFactory()
-            ->createQuoteRequestChecker()
+            ->createQuoteRequestStatus()
             ->isQuoteRequestEditable($quoteRequestTransfer);
     }
 
@@ -214,7 +233,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     public function isQuoteRequestReady(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
         return $this->getFactory()
-            ->createQuoteRequestChecker()
+            ->createQuoteRequestStatus()
             ->isQuoteRequestReady($quoteRequestTransfer);
     }
 
