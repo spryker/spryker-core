@@ -31,15 +31,19 @@ class GlossaryStoragePublishingRegistry extends AbstractPlugin implements Publis
      */
     public function getRegisteredPublishingCollection(PublishingCollectionInterface $publisherCollection)
     {
-        $publisherCollection->addPublishingPlugin(GlossaryEvents::GLOSSARY_KEY_PUBLISH, new GlossaryKeyPublisher());
-        $publisherCollection->addPublishingPlugin(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_CREATE, new GlossaryKeyPublisher());
-        $publisherCollection->addPublishingPlugin(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE, new GlossaryKeyPublisher());
+        // Rephrase the terms
+        // getRegisteredPublishingCollection??
+        // registerPlugin??
 
-        $publisherCollection->addPublishingPlugin(GlossaryEvents::GLOSSARY_KEY_UNPUBLISH, new GlossaryKeyUnpublisher());
-        $publisherCollection->addPublishingPlugin(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_DELETE, new GlossaryKeyUnpublisher());
+        $publisherCollection->registerPlugin(GlossaryEvents::GLOSSARY_KEY_PUBLISH, new GlossaryKeyPublisher());
+        $publisherCollection->registerPlugin(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_CREATE, new GlossaryKeyPublisher());
+        $publisherCollection->registerPlugin(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE, new GlossaryKeyPublisher());
 
-        $publisherCollection->addPublishingPlugin(GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE, new GlossaryTranslationPublisher());
-        $publisherCollection->addPublishingPlugin(GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_UPDATE, new GlossaryTranslationPublisher());
+        $publisherCollection->registerPlugin(GlossaryEvents::GLOSSARY_KEY_UNPUBLISH, new GlossaryKeyUnpublisher());
+        $publisherCollection->registerPlugin(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_DELETE, new GlossaryKeyUnpublisher());
+
+        $publisherCollection->registerPlugin(GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE, new GlossaryTranslationPublisher());
+        $publisherCollection->registerPlugin(GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_UPDATE, new GlossaryTranslationPublisher());
 
         return $publisherCollection;
     }

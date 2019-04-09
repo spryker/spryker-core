@@ -33,13 +33,13 @@ class AvailabilityStoragePublishingRegistry extends AbstractPlugin implements Pu
      */
     public function getRegisteredPublishingCollection(PublishingCollectionInterface $publishingCollection)
     {
-        $publishingCollection->addPublishingPlugin(AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH, new AvailabilityAbstractPublisher());
-        $publishingCollection->addPublishingPlugin(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_CREATE, new AvailabilityAbstractPublisher());
-        $publishingCollection->addPublishingPlugin(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_UPDATE, new AvailabilityAbstractPublisher());
-        $publishingCollection->addPublishingPlugin(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_UPDATE, new AvailabilityPublisher());
-        $publishingCollection->addPublishingPlugin(AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH, new AvailabilityAbstractUnpublisher());
-        $publishingCollection->addPublishingPlugin(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE, new AvailabilityAbstractUnpublisher());
-        $publishingCollection->addPublishingPlugin(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new AvailabilityProductPublisher());
+        $publishingCollection->registerPlugin(AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH, new AvailabilityAbstractPublisher());
+        $publishingCollection->registerPlugin(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_CREATE, new AvailabilityAbstractPublisher());
+        $publishingCollection->registerPlugin(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_UPDATE, new AvailabilityAbstractPublisher());
+        $publishingCollection->registerPlugin(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_UPDATE, new AvailabilityPublisher());
+        $publishingCollection->registerPlugin(AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH, new AvailabilityAbstractUnpublisher());
+        $publishingCollection->registerPlugin(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE, new AvailabilityAbstractUnpublisher());
+        $publishingCollection->registerPlugin(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new AvailabilityProductPublisher());
 
         return $publishingCollection;
     }

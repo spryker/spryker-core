@@ -24,7 +24,7 @@ class PublishingCollection implements PublishingCollectionInterface
      *
      * @return $this|PublishingCollectionInterface
      */
-    public function addPublishingPlugin(string $eventName, PublishingPluginInterface $eventHandler)
+    public function registerPlugin(string $eventName, PublishingPluginInterface $eventHandler)
     {
         $this->add($eventName, $eventHandler);
 

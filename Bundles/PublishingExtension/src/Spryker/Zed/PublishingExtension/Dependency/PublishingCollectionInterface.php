@@ -19,7 +19,7 @@ interface PublishingCollectionInterface extends ArrayAccess, IteratorAggregate
      *
      * @return $this
      */
-    public function addPublishingPlugin(string $eventName, PublishingPluginInterface $publishingPlugin);
+    public function registerPlugin(string $eventName, PublishingPluginInterface $publishingPlugin);
 
     /**
      * @deprecated
