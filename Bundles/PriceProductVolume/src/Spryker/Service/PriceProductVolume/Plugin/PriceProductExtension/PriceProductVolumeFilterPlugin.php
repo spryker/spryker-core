@@ -13,6 +13,9 @@ use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
+/**
+ * @method \Spryker\Service\PriceProductVolume\PriceProductVolumeConfig getConfig()
+ */
 class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
 {
     /**
@@ -26,7 +29,7 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
      */
     public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
-        if ($priceProductFilterTransfer->getQuantity() <= 1) {
+        if ($priceProductFilterTransfer->getQuantity() <= $this->getConfig()->getMinimumQuantity()) {
             $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'filterVolumePrices']);
 
             return $priceProductTransfers;
