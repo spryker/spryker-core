@@ -167,7 +167,7 @@ class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
         $quoteTransfer = (new QuoteBuilder())->build();
         $quoteTransfer->addItem($itemTransfer);
 
-        return [$quoteTransfer, 'AZ', 0.00];
+        return [$quoteTransfer, 'MOON', 0.00];
     }
 
     /**

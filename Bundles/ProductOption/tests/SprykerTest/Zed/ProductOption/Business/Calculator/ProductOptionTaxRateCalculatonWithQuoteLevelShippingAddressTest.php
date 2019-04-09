@@ -191,7 +191,7 @@ class ProductOptionTaxRateCalculatonWithQuoteLevelShippingAddressTest extends Un
     {
         $quoteTransfer = (new QuoteBuilder())
             ->withShippingAddress(
-                (new AddressBuilder(['iso2Code' => 'AZ']))
+                (new AddressBuilder(['iso2Code' => 'MOON']))
             )
             ->build();
 
