@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteRequestClientInterface
 {
@@ -189,20 +188,6 @@ interface QuoteRequestClientInterface
      * @return bool
      */
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool;
-
-    /**
-     * Specification:
-     *  - Returns false if current logged in customer is not company user.
-     *  - Returns false if customer can't write quote.
-     *  - Executes `QuoteRequestCreatePreCheckPluginInterface` returns false if at least one plugin returns false - true otherwise.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteApplicableForQuoteRequest(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * Specification:
