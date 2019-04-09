@@ -15,11 +15,7 @@ class CartPermissionGroupsRestApiConfig extends AbstractBundleConfig
 
     public const CONTROLLER_CART_PERMISSION_GROUPS = 'cart-permission-groups-resource';
 
-    public const ACTION_CART_PERMISSION_GROUPS_GET = 'get';
-
     public const RESPONSE_CODE_CART_PERMISSION_GROUP_NOT_FOUND = '2501';
-    public const RESPONSE_CODE_CART_PERMISSION_GROUP_UNEXPECTED_ERROR = '2502';
 
     public const RESPONSE_DETAIL_CART_PERMISSION_GROUP_NOT_FOUND = 'Cart permission group not found.';
-    public const RESPONSE_DETAIL_CART_PERMISSION_GROUP_UNEXPECTED_ERROR = 'Unexpected error.';
 }

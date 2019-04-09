@@ -17,7 +17,7 @@ class CartPermissionGroupsResourceRoutePlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritdoc}
-     *  - Configures available actions for cart-permission-groups resource.
+     *  - Configures available actions for `cart-permission-groups` resource.
      *
      * @api
      *
@@ -27,7 +27,7 @@ class CartPermissionGroupsResourceRoutePlugin extends AbstractPlugin implements 
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        return $resourceRouteCollection->addGet(CartPermissionGroupsRestApiConfig::ACTION_CART_PERMISSION_GROUPS_GET, true);
+        return $resourceRouteCollection->addGet('get', true);
     }
 
     /**

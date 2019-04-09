@@ -47,7 +47,7 @@ class CartPermissionGroupReader implements CartPermissionGroupReaderInterface
         );
 
         if (!$quotePermissionGroupResponseTransfer->getIsSuccessful()) {
-            return $this->cartPermissionGroupResponseBuilder->createCartPermissionGroupNotFoundErrorResponse();
+            return $this->cartPermissionGroupResponseBuilder->createEmptyCartPermissionGroupsResponse();
         }
 
         return $this->cartPermissionGroupResponseBuilder->createCartPermissionGroupsCollectionResponse(

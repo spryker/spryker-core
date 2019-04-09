@@ -22,10 +22,6 @@ class CartPermissionGroupsResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves cart permission group by id."
      *          ],
-     *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
-     *          }],
      *          "responses": {
      *              "404": "Cart permission group not found."
      *          }
@@ -33,11 +29,7 @@ class CartPermissionGroupsResourceController extends AbstractController
      *      "getCollection": {
      *          "summary": [
      *              "Retrieves collection of cart permission groups."
-     *          ],
-     *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
-     *          }],
+     *          ]
      *      }
      * })
      *
