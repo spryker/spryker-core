@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Persistence\Propel;
 
-use Orm\Zed\PriceProductSchedule\Persistence\Base\SpyPriceProductScheduleQuery as BaseSpyPriceProductScheduleQuery;
+use Orm\Zed\PriceProductSchedule\Persistence\Base\SpyPriceProductScheduleListQuery as BaseSpyPriceProductScheduleListQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_price_product_schedule_list' table.
@@ -18,6 +18,6 @@ use Orm\Zed\PriceProductSchedule\Persistence\Base\SpyPriceProductScheduleQuery a
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyPriceProductScheduleListQuery extends BaseSpyPriceProductScheduleQuery
+abstract class AbstractSpyPriceProductScheduleListQuery extends BaseSpyPriceProductScheduleListQuery
 {
 }
