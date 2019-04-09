@@ -8,6 +8,7 @@
 namespace Spryker\Zed\TaxStorage\Business\TaxStoragePublisher;
 
 use Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface;
+use Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface;
 
 class TaxStorageUnpublisher implements TaxStorageUnpublisherInterface
 {
@@ -17,11 +18,11 @@ class TaxStorageUnpublisher implements TaxStorageUnpublisherInterface
     protected $taxStorageRepository;
 
     /**
-     * @param \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\TaxStorage\Business\TaxStoragePublisher\TaxStorageRepositoryInterface $taxStorageRepository
      */
-    public function __construct(TaxStorageEntityManagerInterface $entityManager)
+    public function __construct(TaxStorageRepositoryInterface $taxStorageRepository)
     {
-        $this->taxStorageEntityManager = $entityManager;
+        $this->taxStorageRepository = $taxStorageRepository;
     }
 
     /**
@@ -31,7 +32,10 @@ class TaxStorageUnpublisher implements TaxStorageUnpublisherInterface
      */
     public function unpublishByTaxSetIds(array $taxSetIds): void
     {
-        $spyTaxSetStorages = $this->taxStorageEntityManager
-            ->deleteTaxSetStoragesByIds($taxSetIds);
+        $spyTaxSetStorages = $this->taxStorageRepository->findTaxSetStoragesByIds($taxSetIds);
+
+        foreach ($spyTaxSetStorages as $spyTaxSetStorage){
+            $spyTaxSetStorage->delete();
+        }
     }
 }
