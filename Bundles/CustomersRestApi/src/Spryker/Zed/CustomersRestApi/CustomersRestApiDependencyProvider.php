@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CustomersRestApi;
 
 use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
+use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -17,6 +18,7 @@ use Spryker\Zed\Kernel\Container;
 class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_CUSTOMER_ADDRESS = 'PROPEL_QUERY_CUSTOMER_ADDRESS';
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -25,7 +27,21 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
+        $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addCustomerAddressPropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addCustomerFacade($container);
 
         return $container;
     }
@@ -39,6 +55,20 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container[static::PROPEL_QUERY_CUSTOMER_ADDRESS] = function () {
             return SpyCustomerAddressQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerFacade(Container $container): Container
+    {
+        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+            return new CustomersRestApiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
         };
 
         return $container;

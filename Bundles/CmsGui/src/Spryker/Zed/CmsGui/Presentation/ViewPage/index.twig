@@ -7,7 +7,7 @@
     {% endif %}
 {% endfor %}
 
-{% set widget_title = 'View CMS Page: ' | trans ~ pageName %}
+{% set widget_title = 'View CMS Page:' | trans ~ ' ' ~ pageName %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -48,12 +48,20 @@
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' }  %}
         {% block widget_content %}
+
             <p>
-                <strong>{{ 'Is searchable:' | trans }}</strong> {{ cmsPage.isSearchable ? 'yes' : 'no' }}
+                <strong>Store relation:</strong>
+                {% for storeName in relatedStoreNames %}
+                    <span class="label label-info">{{ storeName }}</span>
+                {% endfor %}
             </p>
 
             <p>
-                <strong>{{ 'Is active:' | trans }}</strong> {{ cmsPage.isActive ? 'yes' : 'no' }}
+                <strong>{{ 'Is searchable:' | trans }}</strong> {{ (cmsPage.isSearchable ? 'yes' : 'no') | trans }}
+            </p>
+
+            <p>
+                <strong>{{ 'Is active:' | trans }}</strong> {{ (cmsPage.isActive ? 'yes' : 'no') | trans }}
             </p>
 
             <p>
@@ -61,7 +69,7 @@
             </p>
 
             <p>
-                <strong>{{ 'Valid from:' | trans }}</strong> {{ cmsPage.validFrom ? cmsPage.validFrom|date : 'n/a'|trans }}
+                <strong>{{ 'Valid from:' | trans }}</strong> {{ cmsPage.validFrom ? cmsPage.validFrom|date : 'n/a'| trans }}
             </p>
 
             <p>
@@ -74,7 +82,7 @@
         {% endblock %}
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Urls' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Urls' | trans } %}
         {% block widget_content %}
 
             <table class="table">
@@ -95,7 +103,7 @@
         {% endblock %}
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'SEO' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'SEO' | trans } %}
         {% block widget_content %}
 
             <table class="table">

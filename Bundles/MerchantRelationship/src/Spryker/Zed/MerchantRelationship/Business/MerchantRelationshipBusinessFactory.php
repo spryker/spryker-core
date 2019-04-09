@@ -16,6 +16,7 @@ use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReader;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReaderInterface;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipWriter;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipWriterInterface;
+use Spryker\Zed\MerchantRelationship\MerchantRelationshipDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface getRepository()
@@ -32,7 +33,8 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
         return new MerchantRelationshipWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createMerchantRelationshipKeyGenerator()
+            $this->createMerchantRelationshipKeyGenerator(),
+            $this->getMerchantRelationshipPreDeletePlugins()
         );
     }
 
@@ -61,5 +63,13 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
     public function createMerchantRelationshipExpander(): MerchantRelationshipExpanderInterface
     {
         return new MerchantRelationshipExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface[]
+     */
+    public function getMerchantRelationshipPreDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantRelationshipDependencyProvider::PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE);
     }
 }

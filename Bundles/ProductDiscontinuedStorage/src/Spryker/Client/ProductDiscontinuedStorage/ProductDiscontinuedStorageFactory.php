@@ -20,6 +20,8 @@ use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedSu
 use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedSuperAttributesProductViewExpanderInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReader;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface;
+use Spryker\Client\ProductDiscontinuedStorage\Validator\ProductDiscontinuedItemValidator;
+use Spryker\Client\ProductDiscontinuedStorage\Validator\ProductDiscontinuedItemValidatorInterface;
 
 class ProductDiscontinuedStorageFactory extends AbstractFactory
 {
@@ -62,6 +64,17 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
     {
         return new DiscontinuedAvailabilityProductViewExpander(
             $this->createProductDiscontinuedStorageReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductDiscontinuedStorage\Validator\ProductDiscontinuedItemValidatorInterface
+     */
+    public function createProductDiscontinuedItemValidator(): ProductDiscontinuedItemValidatorInterface
+    {
+        return new ProductDiscontinuedItemValidator(
+            $this->createProductDiscontinuedStorageReader(),
+            $this->getLocaleClient()
         );
     }
 

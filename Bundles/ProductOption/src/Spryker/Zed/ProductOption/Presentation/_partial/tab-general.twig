@@ -2,10 +2,9 @@
 
 {{ form_start(generalForm, { attr: { id:'product_option_general'}}) }}
  <div class="well">
-     {% filter trans|raw %}
-         <h3>Add General Information</h3>
-         <p>Create a product option by defining option values with translation key, sku and price. By adding more than 1 option value bellow, you will create an option group. With an option group your customer can choose one option from this group.</p>
-     {% endfilter %}
+     <h3>{{ 'Add General Information' | trans }}</h3>
+     <p>{{ 'Create a product option by defining option values with translation key, sku and price. By adding more than 1 option value bellow, you will create an option group. With an option group your customer can choose one option from this group.' | trans }}</p>
+
  </div>
 
 {% set readOnly = {} %}
@@ -63,13 +62,13 @@
 
                {% for productGroupNameTranslationForm in generalForm.groupNameTranslations %}
                     {% if productGroupNameTranslationForm.vars.data.localeCode == locale.localeName  %}
-                        {{ include ('@ProductOption/_template/_product-option-translation-template.twig', { 'productOptionTranslationForm': productGroupNameTranslationForm, 'label' : 'Group name:'}) }}
+                        {{ include ('@ProductOption/_template/_product-option-translation-template.twig', { 'productOptionTranslationForm': productGroupNameTranslationForm, 'label' : 'Group name' | trans ~ ':'}) }}
                     {% endif %}
                 {% endfor %}
 
                 {% for valueTranslationForm in generalForm.productOptionValueTranslations %}
                     {% if valueTranslationForm.vars.data.localeCode == locale.localeName  %}
-                        {{ include ('@ProductOption/_template/_product-option-translation-template.twig', { 'productOptionTranslationForm': valueTranslationForm, 'label' : 'Option name:' }) }}
+                        {{ include ('@ProductOption/_template/_product-option-translation-template.twig', { 'productOptionTranslationForm': valueTranslationForm, 'label' : 'Option name' | trans ~ ':' }) }}
                     {% endif %}
                 {% endfor %}
 

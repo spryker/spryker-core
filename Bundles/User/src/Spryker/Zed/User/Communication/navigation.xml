@@ -27,6 +27,15 @@
                         <action>update</action>
                         <visible>0</visible>
                     </user-edit>
+
+                    <user-confirm-delete>
+                        <label>Delete User</label>
+                        <title>Delete User</title>
+                        <bundle>user</bundle>
+                        <controller>edit</controller>
+                        <action>confirm-delete</action>
+                        <visible>0</visible>
+                    </user-confirm-delete>
                 </pages>
             </user>
         </pages>

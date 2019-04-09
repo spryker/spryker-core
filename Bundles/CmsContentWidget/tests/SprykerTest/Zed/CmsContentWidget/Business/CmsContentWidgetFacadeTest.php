@@ -200,7 +200,7 @@ class CmsContentWidgetFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface
      */
     protected function createMockedCmsContentWidgetFunction()
     {
@@ -233,7 +233,7 @@ class CmsContentWidgetFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\CmsContentWidget\CmsContentWidgetConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CmsContentWidget\CmsContentWidgetConfig
      */
     protected function createCmsConfigMock()
     {
@@ -241,7 +241,7 @@ class CmsContentWidgetFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
      */
     protected function createCmsContentWidgetConfigurationProviderMock()
     {
@@ -249,7 +249,7 @@ class CmsContentWidgetFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\CmsContentWidget\Dependency\Facade\CmsContentWidgetToGlossaryInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CmsContentWidget\Dependency\Facade\CmsContentWidgetToGlossaryInterface
      */
     protected function createGlossaryFacadeMock()
     {

@@ -11,8 +11,12 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Application\Business\Model\Twig\EnvironmentInfo;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Twig\Environment;
 
 /**
+ * @deprecated Will be removed without replacement in the next major.
+ * If you use `environmentInfo` function in your twig files, please add it on your own.
+ *
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
@@ -26,6 +30,13 @@ class EnvironmentInformationServiceProvider extends AbstractPlugin implements Se
      */
     public function register(Application $app)
     {
+        $app['twig'] = $app->share(
+            $app->extend('twig', function (Environment $twig) {
+                $twig->addFunction(new EnvironmentInfo());
+
+                return $twig;
+            })
+        );
     }
 
     /**
@@ -35,7 +46,5 @@ class EnvironmentInformationServiceProvider extends AbstractPlugin implements Se
      */
     public function boot(Application $app)
     {
-        $twig = $app['twig'];
-        $twig->addFunction(new EnvironmentInfo());
     }
 }

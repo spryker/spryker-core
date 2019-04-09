@@ -15,6 +15,8 @@
     <transfer name="Item">
         <property name="sku" type="string" />
         <property name="quantity" type="int" />
+        <property name="normalizableFields" type="string[]" singular="normalizableField"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="CartChange">
@@ -32,6 +34,7 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
+        <property name="type" type="string"/>
         <property name="parameters" type="array"/>
     </transfer>
 

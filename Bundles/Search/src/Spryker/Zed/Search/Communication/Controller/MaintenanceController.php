@@ -59,7 +59,7 @@ class MaintenanceController extends AbstractController
     {
         $elasticaResponse = $this->getFacade()->delete();
         $formattedResponse = var_export($elasticaResponse->getData(), true);
-        $this->addInfoMessage(sprintf(self::MESSAGE_RESPONSE, $formattedResponse));
+        $this->addInfoMessage(self::MESSAGE_RESPONSE, ['%s' => $formattedResponse]);
 
         return $this->redirectResponse(self::URL_SEARCH_MAINTENANCE);
     }

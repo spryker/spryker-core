@@ -9,9 +9,12 @@ namespace Spryker\Zed\Kernel\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Silex\Application;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
+use Spryker\Zed\Kernel\Communication\Exception\ForbiddenRedirectException;
 use Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerBridge;
 use Spryker\Zed\Kernel\Dependency\Facade\NullMessenger;
 use Spryker\Zed\Kernel\Exception\Controller\InvalidIdException;
@@ -181,6 +184,24 @@ abstract class AbstractController
     }
 
     /**
+     * @param string $url
+     * @param int $code
+     * @param array $headers
+     *
+     * @throws \Spryker\Zed\Kernel\Communication\Exception\ForbiddenRedirectException
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function redirectResponseExternal(string $url, int $code = 302, array $headers = []): RedirectResponse
+    {
+        if (strpos($url, '/') !== 0 && !$this->isUrlDomainWhitelisted($url)) {
+            throw new ForbiddenRedirectException(sprintf('URL %s is not a part of a whitelisted domain', $url));
+        }
+
+        return $this->redirectResponse($url, $code, $headers);
+    }
+
+    /**
      * @param array|null $data
      * @param int $status
      * @param array $headers
@@ -288,5 +309,43 @@ abstract class AbstractController
     protected function getApplication()
     {
         return $this->application;
+    }
+
+    /**
+     * @param string $absoluteUrl
+     *
+     * @return bool
+     */
+    protected function isUrlDomainWhitelisted(string $absoluteUrl): bool
+    {
+        $whitelistedDomains = Config::get(KernelConstants::DOMAIN_WHITELIST, []);
+        $isStrictDomainRedirect = Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
+
+        if (empty($whitelistedDomains) && !$isStrictDomainRedirect) {
+            return true;
+        }
+
+        foreach ($whitelistedDomains as $whitelistedDomain) {
+            if ($this->extractDomainFromUrl($absoluteUrl) === $whitelistedDomain) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function extractDomainFromUrl(string $url): string
+    {
+        $urlDomain = parse_url($url, PHP_URL_HOST);
+        if ($urlDomain === false) {
+            return '';
+        }
+
+        return $urlDomain;
     }
 }

@@ -5,7 +5,7 @@
           namespace="Orm\Zed\ProductMeasurementUnitStorage\Persistence"
           package="src.Orm.Zed.ProductMeasurementUnitStorage.Persistence">
 
-    <table name="spy_product_measurement_unit_storage">
+    <table name="spy_product_measurement_unit_storage" identifierQuoting="true">
         <column name="id_product_measurement_unit_storage" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_measurement_unit" type="integer" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
@@ -26,7 +26,7 @@
         <behavior name="timestampable"/>
     </table>
 
-    <table name="spy_product_concrete_measurement_unit_storage">
+    <table name="spy_product_concrete_measurement_unit_storage" identifierQuoting="true">
         <column name="id_product_concrete_measurement_unit_storage" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product" type="integer" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>

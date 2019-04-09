@@ -28,6 +28,8 @@ class SalesOrderThresholdGuiDependencyProvider extends AbstractBundleDependencyP
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_TAX = 'FACADE_TAX';
 
+    public const SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS = 'SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -43,6 +45,7 @@ class SalesOrderThresholdGuiDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addMoneyFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addTaxFacade($container);
+        $container = $this->addSalesOrderThresholdFormExpanderPlugins($container);
 
         return $container;
     }
@@ -129,5 +132,27 @@ class SalesOrderThresholdGuiDependencyProvider extends AbstractBundleDependencyP
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesOrderThresholdFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getSalesOrderThresholdFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]
+     */
+    protected function getSalesOrderThresholdFormExpanderPlugins(): array
+    {
+        return [];
     }
 }
