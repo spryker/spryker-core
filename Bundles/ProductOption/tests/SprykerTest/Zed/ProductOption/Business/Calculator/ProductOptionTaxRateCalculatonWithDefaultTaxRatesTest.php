@@ -50,11 +50,11 @@ class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
 
         $taxSetTransfer = $this->tester->haveTaxSetWithTaxRates([TaxSetTransfer::NAME => static::TAX_SET_NAME], [
             [
-                TaxRateTransfer::FK_COUNTRY => '60',
+                TaxRateTransfer::FK_COUNTRY => $this->getCountryIdByIso2Code('DE'),
                 TaxRateTransfer::RATE => 15.00,
             ],
             [
-                TaxRateTransfer::FK_COUNTRY => '79',
+                TaxRateTransfer::FK_COUNTRY => $this->getCountryIdByIso2Code('FR'),
                 TaxRateTransfer::RATE => 20.00,
             ],
         ]);
@@ -193,5 +193,14 @@ class ProductOptionTaxRateCalculatonWithDefaultTaxRatesTest extends Unit
             ->willReturn($defaultTaxRate);
 
         return $bridgeMock;
+    }
+
+    /**
+     * @param string $iso2code
+     *
+     * @return int
+     */
+    protected function getCountryIdByIso2Code(string $iso2code): int {
+        return SpyCountryQuery::create()->filterByIso2Code($iso2Code)->findOne()->getIdCountry();
     }
 }

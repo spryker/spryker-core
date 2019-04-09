@@ -51,11 +51,11 @@ class ProductOptionTaxRateCalculatonWithItemLevelShippingAddressTest extends Uni
 
         $taxSetTransfer = $this->tester->haveTaxSetWithTaxRates(['name' => static::TAX_SET_NAME], [
             [
-                'fk_country' => '60',
+                'fk_country' => $this->getCountryIdByIso2Code('DE'),
                 'rate' => 15.00,
             ],
             [
-                'fk_country' => '79',
+                'fk_country' => $this->getCountryIdByIso2Code('FR'),
                 'rate' => 20.00,
             ],
         ]);
@@ -229,5 +229,14 @@ class ProductOptionTaxRateCalculatonWithItemLevelShippingAddressTest extends Uni
         $productOptionValueEntity = SpyProductOptionValueQuery::create()->findOneBySku($sku);
 
         return $productOptionValueEntity->getIdProductOptionValue();
+    }
+
+    /**
+     * @param string $iso2code
+     *
+     * @return int
+     */
+    protected function getCountryIdByIso2Code(string $iso2code): int {
+        return SpyCountryQuery::create()->filterByIso2Code($iso2Code)->findOne()->getIdCountry();
     }
 }
