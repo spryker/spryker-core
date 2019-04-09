@@ -2,8 +2,9 @@
   "name": "spryker/price-product-schedule-data-import",
   "type": "library",
   "description": "PriceProductScheduleDataImport module",
-  "license": "proprietary",
+  "license": "MIT",
   "require": {
+    "php": ">=7.1",
     "spryker/currency": "^3.6.0",
     "spryker/data-import": "^1.4.3",
     "spryker/kernel": "^3.9.0",
@@ -19,7 +20,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\PriceProductScheduleDataImport\\Helper\\": "tests/SprykerTest/Zed/PriceProductScheduleDataImport/_support/Helper/"
     }
   },
   "autoload-dev": {
