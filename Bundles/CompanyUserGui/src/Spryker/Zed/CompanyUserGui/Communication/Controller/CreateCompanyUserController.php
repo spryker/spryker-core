@@ -21,10 +21,9 @@ class CreateCompanyUserController extends AbstractController
 
     protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Company user has been created.';
     protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Company user has not been created.';
+    protected const MESSAGE_ERROR_COMPANY_WITHOUT_CUSTOMER = 'Customer for company with id %s doesn\'t exist';
 
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
-
-    protected const URL_REDIRECT_CUSTOMER_NOT_EXISTS = '/customer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -73,9 +72,9 @@ class CreateCompanyUserController extends AbstractController
             ->handleRequest($request);
 
         if ($companyUserTransfer->getCustomer() === null) {
-            $this->addErrorMessage(sprintf('Customer with id %s doesn\'t exist', $idCompanyUser));
+            $this->addErrorMessage(sprintf(static::MESSAGE_ERROR_COMPANY_WITHOUT_CUSTOMER, $idCompanyUser));
 
-            return $this->redirectResponse(static::URL_REDIRECT_CUSTOMER_NOT_EXISTS);
+            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {

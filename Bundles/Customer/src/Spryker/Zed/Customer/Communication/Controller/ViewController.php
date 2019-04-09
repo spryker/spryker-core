@@ -40,7 +40,7 @@ class ViewController extends AbstractController
 
         $idCustomer = $this->castId($idCustomer);
 
-        $customerTransfer = $this->findCustomer($idCustomer);
+        $customerTransfer = $this->findCustomerById($idCustomer);
 
         if ($customerTransfer === null) {
             $this->addErrorMessage(sprintf('Customer with id %s doesn\'t exist', $idCustomer));
@@ -163,7 +163,7 @@ class ViewController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    protected function findCustomer(int $idCustomer): ?CustomerTransfer
+    protected function findCustomerById(int $idCustomer): ?CustomerTransfer
     {
         $customerTransfer = $this->createCustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);

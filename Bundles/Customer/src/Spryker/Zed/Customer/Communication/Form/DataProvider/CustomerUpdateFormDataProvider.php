@@ -29,7 +29,7 @@ class CustomerUpdateFormDataProvider extends CustomerFormDataProvider
             ->findOne();
 
         if ($customerEntity === null) {
-            return [];
+            parent::getData();
         }
 
         $data = $customerEntity->toArray();
