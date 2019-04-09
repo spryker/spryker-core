@@ -134,7 +134,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
         $taxSetStorageTransfer = new TaxSetStorageTransfer();
         $taxSetStorageTransfer->fromArray($spyTaxSet->toArray(), true);
         $taxSetStorageTransfer->setTaxRates(
-            $this->mapSpyTaxRatesToTaxRateTransfers($spyTaxSet->getSpyTaxRates())
+            $this->mapSpyTaxRatesToTaxRateTransfers($spyTaxSet->getSpyTaxRates()->getArrayCopy())
         );
 
         return $taxSetStorageTransfer;
@@ -168,8 +168,10 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
         SpyTaxRate $spyTaxRate,
         TaxRateStorageTransfer $taxRateStorageTransfer
     ): TaxRateStorageTransfer {
-        return $taxRateStorageTransfer
-            ->fromArray($spyTaxRate->toArray(), true)
-            ->setCountry($spyTaxRate->getCountry()->getName());
+         $taxRateStorageTransfer->fromArray($spyTaxRate->toArray(), true);
+         if($spyTaxRate->getCountry() !== null){
+             $taxRateStorageTransfer->setCountry($spyTaxRate->getCountry()->getName());
+         }
+        return $taxRateStorageTransfer;
     }
 }
