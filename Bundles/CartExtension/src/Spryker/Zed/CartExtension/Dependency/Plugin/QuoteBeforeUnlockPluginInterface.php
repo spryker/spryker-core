@@ -13,7 +13,7 @@ interface QuoteBeforeUnlockPluginInterface
 {
     /**
      * Specification:
-     * - Plugins which can be called before quote unlock.
+     * - Plugins which are called before quote unlock.
      *
      * @api
      *
