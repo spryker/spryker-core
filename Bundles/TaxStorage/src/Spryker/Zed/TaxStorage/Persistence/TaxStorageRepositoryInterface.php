@@ -34,11 +34,4 @@ interface TaxStorageRepositoryInterface
      * @return \Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
      */
     public function findAllTaxSetStorages(): array;
-
-    /**
-     * @param int[] $taxSetIds
-     *
-     * @return void
-     */
-    public function deleteTaxSetStoragesByIds(array $taxSetIds): void;
 }

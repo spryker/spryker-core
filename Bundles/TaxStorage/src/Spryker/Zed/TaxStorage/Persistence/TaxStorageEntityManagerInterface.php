@@ -24,4 +24,11 @@ interface TaxStorageEntityManagerInterface
      * @return void
      */
     public function deleteTaxSetStorage(SpyTaxSetStorage $spyTaxSetStorage): void;
+
+    /**
+     * @param int[] $taxSetIds
+     *
+     * @return void
+     */
+    public function deleteTaxSetStoragesByIds(array $taxSetIds): void;
 }

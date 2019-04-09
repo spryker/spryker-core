@@ -22,11 +22,4 @@ interface TaxStoragePublisherInterface
      * @return void
      */
     public function publishByTaxRateIds(array $taxRateIds): void;
-
-    /**
-     * @param int[] $taxSetIds
-     *
-     * @return void
-     */
-    public function unpublishByTaxSetIds(array $taxSetIds): void;
 }

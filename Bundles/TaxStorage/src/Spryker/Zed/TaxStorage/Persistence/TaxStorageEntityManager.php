@@ -34,4 +34,17 @@ class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorag
     {
         $spyTaxSetStorage->delete();
     }
+
+    /**
+     * @param int[] $taxSetIds
+     *
+     * @return void
+     */
+    public function deleteTaxSetStoragesByIds(array $taxSetIds): void
+    {
+        $this->getFactory()
+            ->createTaxSetStorageQuery()
+            ->filterByFkTaxSet_In($taxSetIds)
+            ->delete();
+    }
 }
