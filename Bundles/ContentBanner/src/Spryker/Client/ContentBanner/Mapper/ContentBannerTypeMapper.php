@@ -41,7 +41,7 @@ class ContentBannerTypeMapper implements ContentBannerTypeMapperInterface
      *
      * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
-    public function findBannerTypeById(int $idContent, string $localeName): ?ContentBannerTypeTransfer
+    public function executeBannerTypeById(int $idContent, string $localeName): ?ContentBannerTypeTransfer
     {
         $contentTypeContextTransfer = $this->contentStorageClient->findContentTypeContext($idContent, $localeName);
 
