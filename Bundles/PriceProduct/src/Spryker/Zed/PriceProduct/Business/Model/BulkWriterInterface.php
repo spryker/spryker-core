@@ -21,7 +21,7 @@ interface BulkWriterInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     public function createPriceForProduct(PriceProductTransfer $transferPriceProduct);
 
