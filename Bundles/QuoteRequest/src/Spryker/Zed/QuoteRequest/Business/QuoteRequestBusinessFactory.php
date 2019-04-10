@@ -16,14 +16,20 @@ use Spryker\Zed\QuoteRequest\Business\Sanitizer\QuoteRequestVersionSanitizer;
 use Spryker\Zed\QuoteRequest\Business\Sanitizer\QuoteRequestVersionSanitizerInterface;
 use Spryker\Zed\QuoteRequest\Business\Sender\QuoteRequestSender;
 use Spryker\Zed\QuoteRequest\Business\Sender\QuoteRequestSenderInterface;
+use Spryker\Zed\QuoteRequest\Business\Sender\QuoteRequestUserSender;
+use Spryker\Zed\QuoteRequest\Business\Sender\QuoteRequestUserSenderInterface;
 use Spryker\Zed\QuoteRequest\Business\Status\QuoteRequestStatus;
 use Spryker\Zed\QuoteRequest\Business\Status\QuoteRequestStatusInterface;
-use Spryker\Zed\QuoteRequest\Business\UserQuoteRequest\UserQuoteRequestWriter;
-use Spryker\Zed\QuoteRequest\Business\UserQuoteRequest\UserQuoteRequestWriterInterface;
+use Spryker\Zed\QuoteRequest\Business\Status\QuoteRequestUserStatus;
+use Spryker\Zed\QuoteRequest\Business\Status\QuoteRequestUserStatusInterface;
 use Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestTimeValidator;
 use Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestTimeValidatorInterface;
 use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestTerminator;
 use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestTerminatorInterface;
+use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestUserTerminator;
+use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestUserTerminatorInterface;
+use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestUserWriter;
+use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestUserWriterInterface;
 use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriter;
 use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriterInterface;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCalculationFacadeInterface;
@@ -39,21 +45,6 @@ use Spryker\Zed\QuoteRequest\QuoteRequestDependencyProvider;
 class QuoteRequestBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\QuoteRequest\Business\UserQuoteRequest\UserQuoteRequestWriterInterface
-     */
-    public function createUserQuoteRequestWriter(): UserQuoteRequestWriterInterface
-    {
-        return new UserQuoteRequestWriter(
-            $this->getConfig(),
-            $this->getEntityManager(),
-            $this->createQuoteRequestReader(),
-            $this->createQuoteRequestReferenceGenerator(),
-            $this->getCompanyUserFacade(),
-            $this->getCartFacade()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriterInterface
      */
     public function createQuoteRequestWriter(): QuoteRequestWriterInterface
@@ -65,6 +56,21 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteRequestReferenceGenerator(),
             $this->createQuoteRequestVersionSanitizer(),
             $this->createQuoteRequestStatus()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestUserWriterInterface
+     */
+    public function createQuoteRequestUserWriter(): QuoteRequestUserWriterInterface
+    {
+        return new QuoteRequestUserWriter(
+            $this->getConfig(),
+            $this->getEntityManager(),
+            $this->createQuoteRequestReader(),
+            $this->createQuoteRequestReferenceGenerator(),
+            $this->createQuoteRequestVersionSanitizer(),
+            $this->createQuoteRequestUserStatus()
         );
     }
 
@@ -90,6 +96,17 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\QuoteRequest\Business\Sender\QuoteRequestUserSenderInterface
+     */
+    public function createQuoteRequestUserSender(): QuoteRequestUserSenderInterface
+    {
+        return new QuoteRequestUserSender(
+            $this->getEntityManager(),
+            $this->createQuoteRequestReader()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestTerminatorInterface
      */
     public function createQuoteRequestTerminator(): QuoteRequestTerminatorInterface
@@ -99,6 +116,18 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createQuoteRequestReader(),
             $this->createQuoteRequestStatus()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestUserTerminatorInterface
+     */
+    public function createQuoteRequestUserTerminator(): QuoteRequestUserTerminatorInterface
+    {
+        return new QuoteRequestUserTerminator(
+            $this->getEntityManager(),
+            $this->createQuoteRequestReader(),
+            $this->createQuoteRequestUserStatus()
         );
     }
 
@@ -119,6 +148,16 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     public function createQuoteRequestStatus(): QuoteRequestStatusInterface
     {
         return new QuoteRequestStatus(
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\Status\QuoteRequestUserStatusInterface
+     */
+    public function createQuoteRequestUserStatus(): QuoteRequestUserStatusInterface
+    {
+        return new QuoteRequestUserStatus(
             $this->getConfig()
         );
     }

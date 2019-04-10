@@ -80,6 +80,14 @@ class QuoteRequestConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
+    public function getUserEditableStatuses(): array
+    {
+        return $this->getSharedConfig()->getUserEditableStatuses();
+    }
+
+    /**
+     * @return string[]
+     */
     public function getUserRevisableStatuses(): array
     {
         return $this->getSharedConfig()->getUserRevisableStatuses();
