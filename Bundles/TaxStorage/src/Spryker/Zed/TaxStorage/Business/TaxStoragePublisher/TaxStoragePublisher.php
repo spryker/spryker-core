@@ -36,16 +36,16 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
 
     /**
      * @param \Spryker\Zed\TaxStorage\Persistence\TaxStorageRepositoryInterface $taxStorageRepository
-     * @param \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\TaxStorage\Persistence\TaxStorageEntityManagerInterface $taxStorageEntityManager
      * @param \Spryker\Zed\TaxStorage\TaxStorageConfig $taxStorageConfig
      */
     public function __construct(
         TaxStorageRepositoryInterface $taxStorageRepository,
-        TaxStorageEntityManagerInterface $entityManager,
+        TaxStorageEntityManagerInterface $taxStorageEntityManager,
         TaxStorageConfig $taxStorageConfig
     ) {
         $this->taxStorageRepository = $taxStorageRepository;
-        $this->taxStorageEntityManager = $entityManager;
+        $this->taxStorageEntityManager = $taxStorageEntityManager;
         $this->taxStorageConfig = $taxStorageConfig;
     }
 
@@ -94,15 +94,12 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
 
     /**
      * @param \Orm\Zed\Tax\Persistence\SpyTaxSet $spyTaxSet
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage|null $spyTaxSetStorage
+     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $spyTaxSetStorage
      *
      * @return void
      */
-    protected function createDataSet(SpyTaxSet $spyTaxSet, ?SpyTaxSetStorage $spyTaxSetStorage = null): void
+    protected function createDataSet(SpyTaxSet $spyTaxSet, SpyTaxSetStorage $spyTaxSetStorage): void
     {
-        if ($spyTaxSetStorage === null) {
-            $spyTaxSetStorage = new SpyTaxSetStorage();
-        }
         $spyTaxSetStorage = $this->mapSpyTaxSetToTaxSetStorage($spyTaxSet, $spyTaxSetStorage);
         $spyTaxSetStorage->setIsSendingToQueue(
             $this->taxStorageConfig->isSendingToQueue()

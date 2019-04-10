@@ -22,7 +22,7 @@ class TaxStoragePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetTaxQuery
      */
-    public function createTaxSetQuery(): SpyTaxSetQuery
+    public function getTaxSetQuery(): SpyTaxSetQuery
     {
         return $this->getProvidedDependency(TaxStorageDependencyProvider::PROPEL_QUERY_TAX_SET);
     }
