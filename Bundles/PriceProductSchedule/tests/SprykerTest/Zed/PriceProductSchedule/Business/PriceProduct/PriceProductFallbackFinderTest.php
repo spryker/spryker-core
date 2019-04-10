@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\PriceProductSchedule\Business\PriceProduct;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory;
@@ -54,7 +55,7 @@ class PriceProductFallbackFinderTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
         $priceTypeTransfer1 = $this->tester->havePriceType();
 
-        $currencyId = $this->tester->haveCurrency();
+        $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'BBB']);
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
 
         $productPrice1 = $this->tester->havePriceProduct([

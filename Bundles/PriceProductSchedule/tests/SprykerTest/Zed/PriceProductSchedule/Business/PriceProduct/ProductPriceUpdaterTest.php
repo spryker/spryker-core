@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\PriceProductSchedule\Business\PriceProduct;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -65,7 +66,7 @@ class ProductPriceUpdaterTest extends Unit
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $priceTypeTransfer1 = $this->tester->havePriceType();
-        $currencyId = $this->tester->haveCurrency();
+        $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'AAA']);
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
 
         $this->tester->havePriceProduct([
