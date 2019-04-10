@@ -42,7 +42,7 @@ class PriceProductScheduleWriter implements PriceProductScheduleWriterInterface
     public function savePriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
     {
         $priceProductScheduleEntity = $this->priceProductScheduleRepository->findByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $priceProductScheduleEntity = $this->priceProductScheduleMapper->mapPriceProductScheduleTransferToEntity($priceProductScheduleTransfer, $priceProductScheduleEntity);
+        $priceProductScheduleEntity = $this->priceProductScheduleMapper->mapPriceProductScheduleTransferToPriceProductScheduleEntity($priceProductScheduleTransfer, $priceProductScheduleEntity);
 
         $priceProductScheduleEntity->save();
     }

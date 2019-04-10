@@ -73,7 +73,7 @@ class PriceProductTypeReader implements PriceProductTypeReaderInterface
      */
     public function findPriceTypeByName(string $priceTypeName): ?PriceTypeTransfer
     {
-        if (!$this->hasPriceType($priceTypeName)) {
+        if ($this->hasPriceType($priceTypeName) === false) {
             return null;
         }
 

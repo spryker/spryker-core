@@ -90,7 +90,7 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
      *
      * @return void
      */
-    public function deletePriceProduct(int $idPriceProduct): void
+    public function deletePriceProductById(int $idPriceProduct): void
     {
         $this->getFactory()
             ->createPriceProductQuery()
@@ -103,7 +103,7 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
      *
      * @return void
      */
-    public function deletePriceProductDefault(int $idPriceProductDefault): void
+    public function deletePriceProductDefaultById(int $idPriceProductDefault): void
     {
         $this->getFactory()
             ->createPriceProductDefaultQuery()

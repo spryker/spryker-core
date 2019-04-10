@@ -40,8 +40,8 @@ class PriceProductRemover implements PriceProductRemoverInterface
             ->requirePriceDimension();
 
         $this->entityManager->deletePriceProductStoreByPriceProductTransfer($priceProductTransfer);
-        $this->entityManager->deletePriceProductDefault($priceProductTransfer->getPriceDimension()->getIdPriceProductDefault());
-        $this->entityManager->deletePriceProduct($priceProductTransfer->getIdPriceProduct());
+        $this->entityManager->deletePriceProductDefaultById($priceProductTransfer->getPriceDimension()->getIdPriceProductDefault());
+        $this->entityManager->deletePriceProductById($priceProductTransfer->getIdPriceProduct());
 
         $this->getLogger()->warning(sprintf('Price for product with id "%s" was deleted', $priceProductTransfer->getIdPriceProduct()));
     }

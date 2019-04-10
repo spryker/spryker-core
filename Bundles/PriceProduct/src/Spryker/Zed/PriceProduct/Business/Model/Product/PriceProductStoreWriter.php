@@ -174,8 +174,6 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 
                 return $priceProductTransfer;
             }
-
-            $priceProductTransfer->setIdProduct($priceProductTransfer->getIdProduct());
         }
 
         if ($priceProductTransfer->getIdProductAbstract() !== null) {
@@ -187,8 +185,6 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 
                 return $priceProductTransfer;
             }
-
-            $priceProductTransfer->setIdProductAbstract($priceProductTransfer->getIdProductAbstract());
         }
 
         $priceProductEntity->save();
