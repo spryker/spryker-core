@@ -8,7 +8,7 @@
 namespace Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\RestResponseBuilder;
 
 use Generated\Shared\Transfer\CompanyRoleTransfer;
-use Generated\Shared\Transfer\RestCompanyRolesAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -33,19 +33,19 @@ class CompanyRoleRestResponseBuilder implements CompanyRoleRestResponseBuilderIn
 
     /**
      * @param string $companyRoleUuid
-     * @param \Generated\Shared\Transfer\RestCompanyRolesAttributesTransfer $restCompanyRolesAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer|null $companyRoleTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyRoleRestResponse(
         string $companyRoleUuid,
-        RestCompanyRolesAttributesTransfer $restCompanyRolesAttributesTransfer,
+        RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer,
         ?CompanyRoleTransfer $companyRoleTransfer = null
     ): RestResponseInterface {
         $companyRoleRestResource = $this->createCompanyRoleRestResource(
             $companyRoleUuid,
-            $restCompanyRolesAttributesTransfer,
+            $restCompanyRoleAttributesTransfer,
             $companyRoleTransfer
         );
 
@@ -55,20 +55,20 @@ class CompanyRoleRestResponseBuilder implements CompanyRoleRestResponseBuilderIn
 
     /**
      * @param string $companyRoleUuid
-     * @param \Generated\Shared\Transfer\RestCompanyRolesAttributesTransfer $restCompanyRolesAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer|null $companyRoleTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function createCompanyRoleRestResource(
         string $companyRoleUuid,
-        RestCompanyRolesAttributesTransfer $restCompanyRolesAttributesTransfer,
+        RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer,
         ?CompanyRoleTransfer $companyRoleTransfer = null
     ): RestResourceInterface {
         $restResource = $this->restResourceBuilder->createRestResource(
             CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES,
             $companyRoleUuid,
-            $restCompanyRolesAttributesTransfer
+            $restCompanyRoleAttributesTransfer
         );
 
         if (!$companyRoleTransfer) {

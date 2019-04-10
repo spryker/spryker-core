@@ -8,27 +8,27 @@
 namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\CompanyBusinessUnit;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\RestCompanyBusinessUnitsAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperInterface;
 
 class DefaultBillingAddressMapper implements CompanyBusinessUnitMapperInterface
 {
     /**
      * {@inheritdoc}
-     * - Maps and replaces defaultBillingAddress id to uuid in the RestCompanyBusinessUnitsAttributesTransfer.
+     * - Maps and replaces defaultBillingAddress id to uuid in the RestCompanyBusinessUnitAttributesTransfer.
      * - Searches company unit address collection for defaultBillingAddress uuid.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitsAttributesTransfer $companyBusinessUnitsAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $companyBusinessUnitsAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitsAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer
      */
     public function map(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
-        RestCompanyBusinessUnitsAttributesTransfer $companyBusinessUnitsAttributesTransfer
-    ): RestCompanyBusinessUnitsAttributesTransfer {
+        RestCompanyBusinessUnitAttributesTransfer $companyBusinessUnitsAttributesTransfer
+    ): RestCompanyBusinessUnitAttributesTransfer {
         if (!$companyBusinessUnitTransfer->getDefaultBillingAddress()
             || !$this->hasAddressCollection($companyBusinessUnitTransfer)
         ) {

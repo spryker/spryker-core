@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CompaniesRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestCompaniesAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyAttributesTransfer;
 use Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
@@ -68,6 +68,6 @@ class CompaniesResourcePlugin extends AbstractPlugin implements ResourceRoutePlu
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestCompaniesAttributesTransfer::class;
+        return RestCompanyAttributesTransfer::class;
     }
 }

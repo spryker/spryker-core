@@ -9,7 +9,7 @@ namespace Spryker\Glue\CompaniesRestApi\Processor\Company\Relationship;
 
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\RestCompaniesAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyAttributesTransfer;
 use Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -124,16 +124,16 @@ class CompanyResourceRelationshipExpander implements CompanyResourceRelationship
      */
     protected function createCompanyResource(CompanyTransfer $companyTransfer): RestResourceInterface
     {
-        $restCompaniesAttributesTransfer = $this->companyMapper
-            ->mapCompanyTransferToRestCompaniesAttributesTransfer(
+        $restCompanyAttributesTransfer = $this->companyMapper
+            ->mapCompanyTransferToRestCompanyAttributesTransfer(
                 $companyTransfer,
-                new RestCompaniesAttributesTransfer()
+                new RestCompanyAttributesTransfer()
             );
 
         return $this->restResourceBuilder->createRestResource(
             CompaniesRestApiConfig::RESOURCE_COMPANIES,
             $companyTransfer->getUuid(),
-            $restCompaniesAttributesTransfer
+            $restCompanyAttributesTransfer
         );
     }
 }

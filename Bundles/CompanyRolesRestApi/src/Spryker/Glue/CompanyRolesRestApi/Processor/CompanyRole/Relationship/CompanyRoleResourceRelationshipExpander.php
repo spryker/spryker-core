@@ -9,7 +9,7 @@ namespace Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Relationship;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\RestCompanyRolesAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer;
 use Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiConfig;
 use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Mapper\CompanyRoleMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -79,16 +79,16 @@ class CompanyRoleResourceRelationshipExpander implements CompanyRoleResourceRela
         CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
     ): void {
         foreach ($companyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {
-            $restCompanyRolesAttributesTransfer = $this->companyRoleMapper
-                ->mapCompanyRoleTransferToRestCompanyRolesAttributesTransfer(
+            $restCompanyRoleAttributesTransfer = $this->companyRoleMapper
+                ->mapCompanyRoleTransferToRestCompanyRoleAttributesTransfer(
                     $companyRoleTransfer,
-                    new RestCompanyRolesAttributesTransfer()
+                    new RestCompanyRoleAttributesTransfer()
                 );
 
             $companyRoleResource = $this->restResourceBuilder->createRestResource(
                 CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES,
                 $companyRoleTransfer->getUuid(),
-                $restCompanyRolesAttributesTransfer
+                $restCompanyRoleAttributesTransfer
             );
 
             $resource->addRelationship($companyRoleResource);
