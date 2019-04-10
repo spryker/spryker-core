@@ -8,14 +8,16 @@
 namespace Spryker\Client\ContentBanner\Mapper;
 
 use Generated\Shared\Transfer\ContentBannerTypeTransfer;
-use Generated\Shared\Transfer\ContentTypeContextTransfer;
 
 interface ContentBannerTypeMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
+     * @param int $idContent
+     * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer
+     * @throws \Spryker\Client\ContentBanner\Exception\MissingBannerTermException
+     *
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
-    public function execute(ContentTypeContextTransfer $contentTypeContextTransfer): ContentBannerTypeTransfer;
+    public function findBannerTypeById(int $idContent, string $localeName): ?ContentBannerTypeTransfer;
 }

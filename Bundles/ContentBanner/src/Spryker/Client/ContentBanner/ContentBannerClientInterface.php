@@ -40,5 +40,5 @@ interface ContentBannerClientInterface
      *
      * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
-    public function findBannerById(int $idContent, string $localeName): ?ContentBannerTypeTransfer;
+    public function findBannerTypeById(int $idContent, string $localeName): ?ContentBannerTypeTransfer;
 }

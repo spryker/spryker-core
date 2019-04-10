@@ -24,7 +24,10 @@ class ContentBannerFactory extends AbstractFactory
      */
     public function createContentBannerTypeMapper(): ContentBannerTypeMapperInterface
     {
-        return new ContentBannerTypeMapper($this->getContentBannerTermExecutorMap());
+        return new ContentBannerTypeMapper(
+            $this->getContentStorageClient(),
+            $this->getContentBannerTermExecutorMap()
+        );
     }
 
     /**

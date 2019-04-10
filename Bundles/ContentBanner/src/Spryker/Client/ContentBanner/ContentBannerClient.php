@@ -46,16 +46,8 @@ class ContentBannerClient extends AbstractClient implements ContentBannerClientI
      *
      * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
-    public function findBannerById(int $idContent, string $localeName): ?ContentBannerTypeTransfer
+    public function findBannerTypeById(int $idContent, string $localeName): ?ContentBannerTypeTransfer
     {
-        $bannerContentTypeContext = $this->getFactory()
-            ->getContentStorageClient()
-            ->findContentTypeContext($idContent, $localeName);
-
-        if (!$bannerContentTypeContext) {
-            return null;
-        }
-
-        return $this->getFactory()->createContentBannerTypeMapper()->execute($bannerContentTypeContext);
+        return $this->getFactory()->createContentBannerTypeMapper()->findBannerTypeById($idContent, $localeName);
     }
 }

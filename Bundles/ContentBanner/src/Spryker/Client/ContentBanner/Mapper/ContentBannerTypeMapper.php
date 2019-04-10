@@ -8,33 +8,47 @@
 namespace Spryker\Client\ContentBanner\Mapper;
 
 use Generated\Shared\Transfer\ContentBannerTypeTransfer;
-use Generated\Shared\Transfer\ContentTypeContextTransfer;
+use Spryker\Client\ContentBanner\Dependency\Client\ContentBannerToContentStorageClientInterface;
 use Spryker\Client\ContentBanner\Exception\MissingBannerTermException;
 
 class ContentBannerTypeMapper implements ContentBannerTypeMapperInterface
 {
+    /**
+     * @var \Spryker\Client\ContentBanner\Dependency\Client\ContentBannerToContentStorageClientInterface
+     */
+    protected $contentStorageClient;
+
     /**
      * @var \Spryker\Client\ContentBanner\Executor\ContentBannerTermExecutorInterface[]
      */
     protected $contentBannerTermExecutors;
 
     /**
+     * @param \Spryker\Client\ContentBanner\Dependency\Client\ContentBannerToContentStorageClientInterface $contentStorageClient
      * @param \Spryker\Client\ContentBanner\Executor\ContentBannerTermExecutorInterface[] $contentBannerTermExecutors
      */
-    public function __construct(array $contentBannerTermExecutors)
+    public function __construct(ContentBannerToContentStorageClientInterface $contentStorageClient, array $contentBannerTermExecutors)
     {
+        $this->contentStorageClient = $contentStorageClient;
         $this->contentBannerTermExecutors = $contentBannerTermExecutors;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
+     * @param int $idContent
+     * @param string $localeName
      *
      * @throws \Spryker\Client\ContentBanner\Exception\MissingBannerTermException
      *
-     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
-    public function execute(ContentTypeContextTransfer $contentTypeContextTransfer): ContentBannerTypeTransfer
+    public function findBannerTypeById(int $idContent, string $localeName): ?ContentBannerTypeTransfer
     {
+        $contentTypeContextTransfer = $this->contentStorageClient->findContentTypeContext($idContent, $localeName);
+
+        if (!$contentTypeContextTransfer) {
+            return null;
+        }
+
         $term = $contentTypeContextTransfer->getTerm();
 
         if (!isset($this->contentBannerTermExecutors[$term])) {
