@@ -11,10 +11,35 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\ShipmentPriceDiscountDecisionRule as ShipmentPriceDiscountDecisionRuleWithMultiShipment;
+use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToMoneyInterface;
+use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface;
 
 class ShipmentPriceDiscountDecisionRule extends ShipmentPriceDiscountDecisionRuleWithMultiShipment
 {
+    /**
+     * @var \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface
+     */
+    protected $shipmentService;
+
+    /**
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface $discountFacade
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToMoneyInterface $moneyFacade
+     * @param \Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface $shipmentService
+     */
+    public function __construct(
+        ShipmentDiscountConnectorToDiscountInterface $discountFacade,
+        ShipmentDiscountConnectorToMoneyInterface $moneyFacade,
+        ShipmentDiscountConnectorToShipmentServiceInterface $shipmentService
+    ) {
+        parent::__construct($discountFacade, $moneyFacade);
+
+        $this->shipmentService = $shipmentService;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -28,7 +53,7 @@ class ShipmentPriceDiscountDecisionRule extends ShipmentPriceDiscountDecisionRul
             return false;
         }
 
-        $expenseTransfer = $this->findShipmentExpense($quoteTransfer, $itemTransfer->getShipment());
+        $expenseTransfer = $this->findQuoteExpenseByShipment($quoteTransfer, $itemTransfer->getShipment());
 
         if ($expenseTransfer === null) {
             return false;
@@ -38,13 +63,13 @@ class ShipmentPriceDiscountDecisionRule extends ShipmentPriceDiscountDecisionRul
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
-    public function isItemShipmentExpenseSatisfiedBy(ItemTransfer $itemTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer): bool
+    public function isExpenseSatisfiedBy(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer)
     {
         return $this->isSatisfiedPrice($expenseTransfer, $clauseTransfer);
     }
@@ -68,15 +93,17 @@ class ShipmentPriceDiscountDecisionRule extends ShipmentPriceDiscountDecisionRul
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer|null
      */
-    protected function findShipmentExpense(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): ?ExpenseTransfer
+    protected function findQuoteExpenseByShipment(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): ?ExpenseTransfer
     {
+        $itemShipmentKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            $expenseShipmentTransfer = $expenseTransfer->getShipment();
-            if ($expenseShipmentTransfer !== $shipmentTransfer) {
-                continue;
+            $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
+            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
+                && $expenseTransfer->getShipment() !== null
+                && $expenseShipmentKey === $itemShipmentKey
+            ) {
+                return $expenseTransfer;
             }
-
-            return $expenseTransfer;
         }
 
         return null;

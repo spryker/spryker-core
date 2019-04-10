@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\MethodDiscountDecisionRule as MethodDiscountDecisionRuleWithMultiShipment;
 
 class MethodDiscountDecisionRule extends MethodDiscountDecisionRuleWithMultiShipment
@@ -24,40 +25,34 @@ class MethodDiscountDecisionRule extends MethodDiscountDecisionRuleWithMultiShip
      */
     public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
     {
-        return $this->isSatisfiedItemShipmentMethod($itemTransfer, $clauseTransfer);
+        return $this->isSatisfiedItemShipmentMethod($itemTransfer->getShipment(), $clauseTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
-    public function isItemShipmentExpenseSatisfiedBy(ItemTransfer $itemTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer): bool
+    public function isExpenseSatisfiedBy(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer)
     {
-        return $this->isSatisfiedItemShipmentMethod($itemTransfer, $clauseTransfer);
+        return $this->isSatisfiedItemShipmentMethod($expenseTransfer->getShipment(), $clauseTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
-    protected function isSatisfiedItemShipmentMethod(ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer): bool
+    protected function isSatisfiedItemShipmentMethod(ShipmentTransfer $shipmentTransfer, ClauseTransfer $clauseTransfer): bool
     {
-        $shipmentTransfer = $itemTransfer->getShipment();
-
-        if ($shipmentTransfer === null) {
-            return null;
+        if ($shipmentTransfer === null || $shipmentTransfer->getMethod() === null) {
+            return false;
         }
 
-        $idShipmentMethod = null;
-
-        if ($shipmentTransfer->getMethod()) {
-            $idShipmentMethod = $shipmentTransfer->getMethod()->getIdShipmentMethod();
-        }
+        $idShipmentMethod = $shipmentTransfer->getMethod()->getIdShipmentMethod();
 
         if ($idShipmentMethod && $this->discountFacade->queryStringCompare($clauseTransfer, $idShipmentMethod)) {
             return true;

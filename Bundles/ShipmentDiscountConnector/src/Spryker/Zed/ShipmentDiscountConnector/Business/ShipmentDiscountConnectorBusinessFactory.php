@@ -176,7 +176,8 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentPriceDiscountDecisionRuleWithMultiShipment(
             $this->getDiscountFacade(),
-            $this->getMoneyFacade()
+            $this->getMoneyFacade(),
+            $this->getShipmentService()
         );
     }
 

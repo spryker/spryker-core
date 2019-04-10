@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\CarrierDiscountDecisionRule as CarrierDiscountDecisionRuleWithoutMultiShipment;
 
 class CarrierDiscountDecisionRule extends CarrierDiscountDecisionRuleWithoutMultiShipment
@@ -24,30 +25,30 @@ class CarrierDiscountDecisionRule extends CarrierDiscountDecisionRuleWithoutMult
      */
     public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
     {
-        return $this->isSatisfiedItemShipmentCarrierBy($itemTransfer, $clauseTransfer);
+        return $this->isSatisfiedItemShipmentCarrier($itemTransfer->getShipment(), $clauseTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
-    public function isItemShipmentExpenseSatisfiedBy(ItemTransfer $itemTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer): bool
+    public function isExpenseSatisfiedBy(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer, ClauseTransfer $clauseTransfer)
     {
-        return $this->isSatisfiedItemShipmentCarrierBy($itemTransfer, $clauseTransfer);
+        return $this->isSatisfiedItemShipmentCarrier($expenseTransfer->getShipment(), $clauseTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
-    protected function isSatisfiedItemShipmentCarrierBy(ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer): bool
+    protected function isSatisfiedItemShipmentCarrier(ShipmentTransfer $shipmentTransfer, ClauseTransfer $clauseTransfer): bool
     {
-        $idShipmentCarrier = $this->getIdShipmentCarrierByItem($itemTransfer);
+        $idShipmentCarrier = $this->getIdShipmentCarrier($shipmentTransfer);
 
         if ($idShipmentCarrier && $this->discountFacade->queryStringCompare($clauseTransfer, $idShipmentCarrier)) {
             return true;
@@ -57,14 +58,12 @@ class CarrierDiscountDecisionRule extends CarrierDiscountDecisionRuleWithoutMult
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return int|null
      */
-    protected function getIdShipmentCarrierByItem(ItemTransfer $itemTransfer): ?int
+    protected function getIdShipmentCarrier(ShipmentTransfer $shipmentTransfer): ?int
     {
-        $shipmentTransfer = $itemTransfer->getShipment();
-
         if ($shipmentTransfer === null) {
             return null;
         }

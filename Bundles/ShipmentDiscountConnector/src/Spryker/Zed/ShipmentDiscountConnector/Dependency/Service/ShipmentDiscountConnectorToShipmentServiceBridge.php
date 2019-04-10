@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentDiscountConnector\Dependency\Service;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ShipmentTransfer;
 
 class ShipmentDiscountConnectorToShipmentServiceBridge implements ShipmentDiscountConnectorToShipmentServiceInterface
 {
@@ -32,5 +33,15 @@ class ShipmentDiscountConnectorToShipmentServiceBridge implements ShipmentDiscou
     public function groupItemsByShipment(iterable $itemTransfers): ArrayObject
     {
         return $this->shipmentService->groupItemsByShipment($itemTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return string
+     */
+    public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string
+    {
+        return $this->shipmentService->getShipmentHashKey($shipmentTransfer);
     }
 }
