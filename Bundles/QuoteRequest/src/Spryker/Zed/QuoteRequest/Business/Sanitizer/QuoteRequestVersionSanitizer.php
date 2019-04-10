@@ -77,7 +77,7 @@ class QuoteRequestVersionSanitizer implements QuoteRequestVersionSanitizerInterf
             ->getQuote()
             ->requireItems();
 
-        $recalculateQuoteTransfer = $this->calculationFacade->recalculate($quoteRequestVersionTransfer->getQuote());
+        $recalculateQuoteTransfer = $this->calculationFacade->recalculateQuote($quoteRequestVersionTransfer->getQuote());
         $quoteRequestVersionTransfer->setQuote($recalculateQuoteTransfer);
 
         return $quoteRequestVersionTransfer;

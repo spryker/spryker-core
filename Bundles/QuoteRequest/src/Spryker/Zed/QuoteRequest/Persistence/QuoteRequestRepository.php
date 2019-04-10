@@ -29,7 +29,6 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
      * @module Customer
      * @module CompanyUser
      * @module Company
-     * @module CompanyBusinessUnit
      *
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
@@ -44,7 +43,6 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
             ->useCompanyUserQuery()
                 ->joinWithCustomer()
                 ->joinWithCompany()
-                ->joinWithCompanyBusinessUnit()
             ->endUse()
             ->orderByIdQuoteRequest(Criteria::DESC);
 
@@ -102,6 +100,10 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
     }
 
     /**
+     * @module Customer
+     * @module CompanyUser
+     * @module Company
+     *
      * @param string $versionReference
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
@@ -114,7 +116,6 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
             ->useCompanyUserQuery()
                 ->joinWithCustomer()
                 ->joinWithCompany()
-                ->joinWithCompanyBusinessUnit()
             ->endUse()
             ->useSpyQuoteRequestVersionQuery()
                 ->filterByVersionReference($versionReference)

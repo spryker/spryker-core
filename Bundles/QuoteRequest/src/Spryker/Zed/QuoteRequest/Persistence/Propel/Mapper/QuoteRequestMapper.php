@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\QuoteRequest\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -85,13 +84,13 @@ class QuoteRequestMapper
         $companyTransfer = (new CompanyTransfer())
             ->fromArray($quoteRequestEntity->getCompanyUser()->getCompany()->toArray(), true);
 
-        $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
-            ->fromArray($quoteRequestEntity->getCompanyUser()->getCompanyBusinessUnit()->toArray(), true);
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->fromArray($quoteRequestEntity->getCompanyUser()->toArray(), true);
 
-        return (new CompanyUserTransfer())
-            ->fromArray($quoteRequestEntity->getCompanyUser()->toArray(), true)
+        $companyUserTransfer
             ->setCustomer($customerTransfer)
-            ->setCompany($companyTransfer)
-            ->setCompanyBusinessUnit($companyBusinessUnitTransfer);
+            ->setCompany($companyTransfer);
+
+        return $companyUserTransfer;
     }
 }
