@@ -1380,6 +1380,56 @@ class QuoteRequestFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testFindQuoteRequestRetrievesQuoteRequestByReference(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->haveQuoteRequestInDraftStatus();
+
+        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
+
+        // Act
+        $storedQuoteRequestTransfer = $this->tester->getFacade()->findQuoteRequest($quoteRequestCriteriaTransfer);
+
+        // Assert
+        $this->assertNotNull($storedQuoteRequestTransfer);
+        $this->assertEquals($quoteRequestTransfer->getIdQuoteRequest(), $storedQuoteRequestTransfer->getIdQuoteRequest());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindQuoteRequestRetrievesEmptyResultByFakeReference(): void
+    {
+        // Arrange
+        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setQuoteRequestReference(static::FAKE_QUOTE_REQUEST_REFERENCE);
+
+        // Act
+        $storedQuoteRequestTransfer = $this->tester->getFacade()->findQuoteRequest($quoteRequestCriteriaTransfer);
+
+        // Assert
+        $this->assertNull($storedQuoteRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindQuoteRequestThrowsExceptionWithEmptyQuoteRequestReference(): void
+    {
+        // Arrange
+        $quoteRequestCriteriaTransfer = new QuoteRequestCriteriaTransfer();
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->findQuoteRequest($quoteRequestCriteriaTransfer);
+    }
+
+    /**
      * @param string $quoteRequestReference
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
