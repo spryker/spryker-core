@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ZedRequest\Dependency\Facade;
 
+use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 
 class NullMessenger implements ZedRequestToMessengerInterface
@@ -39,9 +40,10 @@ class NullMessenger implements ZedRequestToMessengerInterface
     }
 
     /**
-     * @return void
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getStoredMessages()
     {
+        return new FlashMessagesTransfer();
     }
 }

@@ -65,7 +65,7 @@ class NodeWriter implements NodeWriterInterface
      *
      * @param int $idCategoryNode
      *
-     * @return void
+     * @return bool
      */
     public function delete($idCategoryNode)
     {
@@ -76,6 +76,8 @@ class NodeWriter implements NodeWriterInterface
         if ($nodeEntity) {
             $nodeEntity->delete();
         }
+
+        return $nodeEntity->isDeleted();
     }
 
     /**

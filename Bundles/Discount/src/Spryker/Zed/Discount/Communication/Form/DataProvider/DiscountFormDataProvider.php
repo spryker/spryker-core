@@ -35,7 +35,7 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
     /**
      * @param int|null $idDiscount
      *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
+     * @return mixed
      */
     public function getData($idDiscount = null)
     {
