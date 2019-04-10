@@ -9,6 +9,6 @@ namespace Spryker\Client\ContentProduct\Exception;
 
 use Exception;
 
-class InvalidProductAbstractListTypeException extends Exception
+class InvalidProductAbstractListTermException extends Exception
 {
 }

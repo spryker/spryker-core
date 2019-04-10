@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\ContentStorage;
+namespace SprykerTest\Client\ContentProduct;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
@@ -13,14 +13,14 @@ use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Spryker\Client\ContentProduct\ContentProductClient;
 use Spryker\Client\ContentProduct\ContentProductDependencyProvider;
 use Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface;
-use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException;
+use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTermException;
 use Spryker\Shared\ContentProduct\ContentProductConfig;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Client
- * @group ContentStorage
+ * @group ContentProduct
  * @group ContentProductClientTest
  * Add your own group annotations below this line
  */
@@ -66,7 +66,7 @@ class ContentProductClientTest extends Unit
 
         // Act
         $systemUnderTest = $this->createContentProductClient()
-            ->findContentProductAbstractListType(static::ID_CONTENT_ITEM, static::LOCALE);
+            ->findContentProductAbstractListTypeById(static::ID_CONTENT_ITEM, static::LOCALE);
 
         // Assert
         $this->assertEquals(ContentProductAbstractListTypeTransfer::class, get_class($systemUnderTest));
@@ -86,10 +86,10 @@ class ContentProductClientTest extends Unit
         $this->setProductStorageClientReturn($contentTypeContextTransfer);
 
         // Assert
-        $this->expectException(InvalidProductAbstractListTypeException::class);
+        $this->expectException(InvalidProductAbstractListTermException::class);
 
         // Act
-        $this->createContentProductClient()->findContentProductAbstractListType(static::ID_CONTENT_ITEM, static::LOCALE);
+        $this->createContentProductClient()->findContentProductAbstractListTypeById(static::ID_CONTENT_ITEM, static::LOCALE);
     }
 
     /**
@@ -102,7 +102,7 @@ class ContentProductClientTest extends Unit
 
         // Act
         $systemUnderTest = $this->createContentProductClient()
-            ->findContentProductAbstractListType(static::ID_CONTENT_ITEM, static::LOCALE);
+            ->findContentProductAbstractListTypeById(static::ID_CONTENT_ITEM, static::LOCALE);
 
         // Assert
         $this->assertNull($systemUnderTest);

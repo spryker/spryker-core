@@ -9,7 +9,7 @@ namespace Spryker\Client\ContentProduct\Mapper;
 
 use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
 use Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface;
-use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException;
+use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTermException;
 
 class ContentProductAbstractListTypeMapper implements ContentProductAbstractListTypeMapperInterface
 {
@@ -37,7 +37,7 @@ class ContentProductAbstractListTypeMapper implements ContentProductAbstractList
      * @param int $idContent
      * @param string $localeName
      *
-     * @throws \Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException
+     * @throws \Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTermException
      *
      * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer|null
      */
@@ -52,7 +52,7 @@ class ContentProductAbstractListTypeMapper implements ContentProductAbstractList
         $term = $contentTypeContextTransfer->getTerm();
 
         if (!isset($this->contentProductTermExecutors[$term])) {
-            throw new InvalidProductAbstractListTypeException(
+            throw new InvalidProductAbstractListTermException(
                 sprintf('There is no matching Term for ProductAbstractListType when provided with term %s.', $term)
             );
         }
