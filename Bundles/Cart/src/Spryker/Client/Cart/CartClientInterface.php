@@ -264,9 +264,11 @@ interface CartClientInterface
     /**
      * Specification:
      * - Makes zed request.
+     * - Loads customer quote from database when storage strategy is in place.
      * - Executes QuoteBeforeUnlockPluginInterface plugins before unlock.
      * - Unlocks quote by setting `isLocked` transfer property to false.
      * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     * - Save updated quote to database when storage strategy is in place.
      * - Stores quote in session internally after zed request.
      *
      * @api
