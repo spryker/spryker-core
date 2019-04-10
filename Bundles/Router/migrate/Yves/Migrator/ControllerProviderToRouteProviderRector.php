@@ -129,7 +129,7 @@ class ControllerProviderToRouteProviderRector extends AbstractRector
                 $this->refactorDefineControllerMethodToAddRouteMethod($statement);
             }
 
-            if (preg_match('/^add(.*?)Route$/', (string)$statement->name)) {
+            if (preg_match('/^add(.*?)Route/', (string)$statement->name)) {
                 $this->refactorAddXRouteMethod($statement);
             }
         }

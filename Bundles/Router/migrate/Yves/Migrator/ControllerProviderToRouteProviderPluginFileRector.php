@@ -100,9 +100,9 @@ class ControllerProviderToRouteProviderPluginFileRector extends AbstractFileSyst
         $currentDirectory = dirname($smartFileInfo->getRealPath());
 
         $directoryFragments = explode(DIRECTORY_SEPARATOR, $currentDirectory);
-        $positionOfCommunication = array_search('Plugin', $directoryFragments);
+        $positionOfPlugin = array_search('Plugin', $directoryFragments);
 
-        $newDirectory = implode(DIRECTORY_SEPARATOR, array_splice($directoryFragments, 0, $positionOfCommunication + 1));
+        $newDirectory = implode(DIRECTORY_SEPARATOR, array_splice($directoryFragments, 0, $positionOfPlugin + 1));
 
         $newClassName = str_replace('ControllerProvider', 'RouteProviderPlugin', (string)$classNode->name);
 

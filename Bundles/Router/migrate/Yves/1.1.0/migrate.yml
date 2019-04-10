@@ -11,4 +11,5 @@ parameters:
 
 services:
   Spryker\Router\Migrate\Yves\Migrator\ControllerProviderToRouteProviderRector: ~
+  Spryker\Router\Migrate\Yves\Migrator\ControllerProviderToRouteProviderNamespaceRector: ~
   Spryker\Router\Migrate\Yves\Migrator\ControllerProviderToRouteProviderPluginFileRector: ~

@@ -7,9 +7,9 @@
 
 namespace Spryker\Yves\Router\Plugin\RouteManipulator;
 
+use Spryker\Shared\Router\Route\Route;
 use Spryker\Shared\RouterExtension\Dependency\Plugin\RouteManipulatorPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Symfony\Component\Routing\Route;
 
 /**
  * @method \Spryker\Yves\Router\RouterConfig getConfig()
@@ -28,9 +28,9 @@ class SslRouteManipulatorPlugin extends AbstractPlugin implements RouteManipulat
 
     /**
      * @param string $routeName
-     * @param \Symfony\Component\Routing\Route $route
+     * @param \Spryker\Shared\Router\Route\Route $route
      *
-     * @return \Symfony\Component\Routing\Route
+     * @return \Spryker\Shared\Router\Route\Route
      */
     public function manipulate(string $routeName, Route $route): Route
     {

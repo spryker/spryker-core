@@ -115,15 +115,21 @@ abstract class YvesBootstrap
     /**
      * @return void
      */
-    abstract protected function registerServiceProviders();
+    protected function registerServiceProviders()
+    {
+    }
 
     /**
      * @return void
      */
-    abstract protected function registerRouters();
+    protected function registerRouters()
+    {
+    }
 
     /**
      * @return void
      */
-    abstract protected function registerControllerProviders();
+    protected function registerControllerProviders()
+    {
+    }
 }

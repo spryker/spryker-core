@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\RouterExtension\Dependency\Plugin;
 
-use Symfony\Component\Routing\Route;
+use Spryker\Shared\Router\Route\Route;
 
 interface RouteManipulatorPluginInterface
 {
@@ -18,9 +18,9 @@ interface RouteManipulatorPluginInterface
      * @api
      *
      * @param string $routeName
-     * @param \Symfony\Component\Routing\Route $route
+     * @param \Spryker\Shared\Router\Route\Route $route
      *
-     * @return \Symfony\Component\Routing\Route
+     * @return \Spryker\Shared\Router\Route\Route
      */
     public function manipulate(string $routeName, Route $route): Route;
 }

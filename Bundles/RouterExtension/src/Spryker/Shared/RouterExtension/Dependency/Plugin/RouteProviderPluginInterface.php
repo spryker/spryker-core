@@ -12,6 +12,10 @@ use Spryker\Shared\Router\Route\RouteCollection;
 interface RouteProviderPluginInterface
 {
     /**
+     * Specification:
+     * - Adds routes to the RouteCollection.
+     * - Returns a RouteCollection.
+     *
      * @api
      *
      * @param \Spryker\Shared\Router\Route\RouteCollection $routeCollection

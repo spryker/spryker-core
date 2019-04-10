@@ -13,34 +13,16 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
 use Symfony\Component\HttpFoundation\Request;
+use Zend\Filter\FilterChain;
+use Zend\Filter\StringToLower;
+use Zend\Filter\Word\CamelCaseToDash;
 
 abstract class AbstractRouteProviderPlugin extends AbstractPlugin implements RouteProviderPluginInterface
 {
     /**
-     * @var bool
+     * @var \Zend\Filter\FilterChain|null
      */
-    protected $sslEnabled;
-
-    /**
-     * Set the sslEnabledFlag to
-     * true to force ssl
-     * false to force http
-     * null to not force anything (both https or http allowed)
-     *
-     * @param bool|null $sslEnabled
-     */
-    public function __construct($sslEnabled = null)
-    {
-        $this->sslEnabled = $sslEnabled;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isSslEnabled()
-    {
-        return $this->sslEnabled;
-    }
+    protected $filterChain;
 
     /**
      * @param string $path
@@ -80,15 +62,24 @@ abstract class AbstractRouteProviderPlugin extends AbstractPlugin implements Rou
      *
      * @return \Spryker\Shared\Router\Route\Route
      */
-    protected function buildRoute(string $path, string $moduleName, string $controllerName, string $actionName = 'index', bool $parseJsonBody = false): Route
+    protected function buildRoute(string $path, string $moduleName, string $controllerName, string $actionName = 'indexAction', bool $parseJsonBody = false): Route
     {
         $route = new Route($path);
 
         $moduleNameControllerAction = new BundleControllerAction($moduleName, $controllerName, $actionName);
         $controllerResolver = new ControllerResolver();
         $controller = $controllerResolver->resolve($moduleNameControllerAction);
+        $filterChain = $this->getFilterChain();
 
-        $route->setDefault('_controller', [get_class($controller), $actionName . 'Action']);
+        $template = sprintf(
+            '%s/%s/%s',
+            $moduleName,
+            $filterChain->filter(str_replace('Controller', '', $controllerName)),
+            $filterChain->filter(str_replace('Action', '', $actionName))
+        );
+
+        $route->setDefault('_controller', [get_class($controller), $actionName]);
+        $route->setDefault('_template', $template);
 
         if ($parseJsonBody) {
             $this->addJsonParsing($route);
@@ -106,10 +97,26 @@ abstract class AbstractRouteProviderPlugin extends AbstractPlugin implements Rou
     {
         $route->before(function (Request $request) {
             $isJson = (strpos($request->headers->get('Content-Type'), 'application/json') === 0);
+
             if ($isJson) {
                 $data = json_decode($request->getContent(), true);
                 $request->request->replace(is_array($data) ? $data : []);
             }
         });
+    }
+
+    /**
+     * @return \Zend\Filter\FilterChain
+     */
+    protected function getFilterChain(): FilterChain
+    {
+        if ($this->filterChain === null) {
+            $this->filterChain = new FilterChain();
+            $this->filterChain
+                ->attach(new CamelCaseToDash())
+                ->attach(new StringToLower());
+        }
+
+        return $this->filterChain;
     }
 }
