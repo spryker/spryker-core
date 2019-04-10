@@ -8,7 +8,9 @@
     "spryker/kernel": "^3.32.0",
     "spryker/price-product": "^2.11.0",
     "spryker/product": "^6.10.0",
+    "spryker/propel-orm": "1.8.0",
     "spryker/store": "^1.9.1",
+    "spryker/symfony": "3.2.2",
     "spryker/user": "^3.7.0"
   },
   "require-dev": {
