@@ -8,33 +8,47 @@
 namespace Spryker\Client\ContentProduct\Mapper;
 
 use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
-use Generated\Shared\Transfer\ContentTypeContextTransfer;
+use Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface;
 use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException;
 
 class ContentProductAbstractListTypeMapper implements ContentProductAbstractListTypeMapperInterface
 {
+    /**
+     * @var \Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface
+     */
+    protected $contentStorageClient;
+
     /**
      * @var \Spryker\Client\ContentProduct\Executor\ContentProductTermExecutorInterface[]
      */
     protected $contentProductTermExecutors;
 
     /**
-     * @param \Spryker\Client\ContentProduct\Executor\ContentProductTermExecutorInterface[] $contentProductTermExecutors
+     * @param \Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface $contentStorageClient
+     * @param array $contentProductTermExecutors
      */
-    public function __construct(array $contentProductTermExecutors)
+    public function __construct(ContentProductToContentStorageClientInterface $contentStorageClient, array $contentProductTermExecutors)
     {
+        $this->contentStorageClient = $contentStorageClient;
         $this->contentProductTermExecutors = $contentProductTermExecutors;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
+     * @param int $idContent
+     * @param string $localeName
      *
      * @throws \Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTypeException
      *
-     * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer
+     * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer|null
      */
-    public function execute(ContentTypeContextTransfer $contentTypeContextTransfer): ContentProductAbstractListTypeTransfer
+    public function findContentProductAbstractListTypeById(int $idContent, string $localeName): ?ContentProductAbstractListTypeTransfer
     {
+        $contentTypeContextTransfer = $this->contentStorageClient->findContentTypeContext($idContent, $localeName);
+
+        if (!$contentTypeContextTransfer) {
+            return null;
+        }
+
         $term = $contentTypeContextTransfer->getTerm();
 
         if (!isset($this->contentProductTermExecutors[$term])) {

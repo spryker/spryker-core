@@ -25,18 +25,10 @@ class ContentProductClient extends AbstractClient implements ContentProductClien
      *
      * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer|null
      */
-    public function findContentProductAbstractListType(int $idContent, string $localeName): ?ContentProductAbstractListTypeTransfer
+    public function findContentProductAbstractListTypeById(int $idContent, string $localeName): ?ContentProductAbstractListTypeTransfer
     {
-        $contentTypeContextTransfer = $this->getFactory()
-            ->getContentStorageClient()
-            ->findContentTypeContext($idContent, $localeName);
-
-        if (!$contentTypeContextTransfer) {
-            return null;
-        }
-
         return $this->getFactory()
             ->createContentProductAbstractListTypeMapper()
-            ->execute($contentTypeContextTransfer);
+            ->findContentProductAbstractListTypeById($idContent, $localeName);
     }
 }

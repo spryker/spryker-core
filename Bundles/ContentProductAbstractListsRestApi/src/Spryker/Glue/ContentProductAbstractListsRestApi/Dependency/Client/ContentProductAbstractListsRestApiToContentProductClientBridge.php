@@ -30,8 +30,8 @@ class ContentProductAbstractListsRestApiToContentProductClientBridge implements 
      *
      * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer|null
      */
-    public function findContentProductAbstractListType(int $idContent, string $localeName): ?ContentProductAbstractListTypeTransfer
+    public function findContentProductAbstractListTypeById(int $idContent, string $localeName): ?ContentProductAbstractListTypeTransfer
     {
-        return $this->contentProductClient->findContentProductAbstractListType($idContent, $localeName);
+        return $this->contentProductClient->findContentProductAbstractListTypeById($idContent, $localeName);
     }
 }
