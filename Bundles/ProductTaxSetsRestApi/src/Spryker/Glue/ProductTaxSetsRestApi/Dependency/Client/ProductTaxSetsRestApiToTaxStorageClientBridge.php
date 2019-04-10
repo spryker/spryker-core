@@ -31,6 +31,6 @@ class ProductTaxSetsRestApiToTaxStorageClientBridge implements ProductTaxSetsRes
      */
     public function findTaxSetCollectionStorage(int $idTaxSet): ?TaxSetStorageTransfer
     {
-        return $this->taxStorageClient->findTaxSetCollectionStorage($idTaxSet);
+        return $this->taxStorageClient->findTaxSetStorage($idTaxSet);
     }
 }

@@ -37,7 +37,6 @@ class TaxProductStorageBusinessFactory extends AbstractBusinessFactory
     public function createTaxProductStorageUnpublisher(): TaxProductStorageUnpublisherInterface
     {
         return new TaxProductStorageUnpublisher(
-            $this->getRepository(),
             $this->getEntityManager()
         );
     }
