@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
@@ -45,6 +46,7 @@ class PriceProductFacadeTest extends Unit
 {
     public const EUR_ISO_CODE = 'EUR';
     public const USD_ISO_CODE = 'USD';
+
     /**
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
      */
@@ -697,6 +699,14 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
+     */
+    protected function getPriceProductQuery(): SpyPriceProductQuery
+    {
+        return new SpyPriceProductQuery();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
      * @param int $netPrice
@@ -803,5 +813,35 @@ class PriceProductFacadeTest extends Unit
 
         return (new PriceProductCriteriaTransfer())
             ->setPriceDimension($priceProductDimensionTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemovePriceProductStoreShouldDeletePriceFromDatabase(): void
+    {
+        // Assign
+        /** @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceProductFacade */
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceProductTransfer = $this->createProductWithAmount(
+            100,
+            90,
+            '',
+            '',
+            self::EUR_ISO_CODE
+        );
+
+        // Act
+        $priceProductFacade->removePriceProductStore($priceProductTransfer);
+
+        // Assert
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setCurrencyIsoCode(self::EUR_ISO_CODE)
+            ->setSku($priceProductTransfer->getSkuProduct());
+
+        $priceProduct = $priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
+
+        $this->assertNull($priceProduct, 'Price product should be removed from db');
     }
 }

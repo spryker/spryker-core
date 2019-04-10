@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed"
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
           xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
-          namespace="Orm\Zed\PriceProductSchedule\Persistence" package="src.Orm.Zed.PriceProductSchedule.Persistence">
+          namespace="Orm\Zed\PriceProductSchedule\Persistence"
+          package="src.Orm.Zed.PriceProductSchedule.Persistence">
 
-    <table name="spy_price_product_schedule">
+    <table name="spy_price_product_schedule" phpName="SpyPriceProductSchedule">
         <column name="id_price_product_schedule" type="BIGINT" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="fk_currency" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
@@ -17,6 +19,8 @@
         <column name="active_from" type="TIMESTAMP" required="true"/>
         <column name="active_to" type="TIMESTAMP" required="true"/>
         <column name="is_current" required="true" default="false" type="BOOLEAN"/>
+
+        <behavior name="timestampable"/>
 
         <foreign-key name="spy_price_product_schedule-fk_product" foreignTable="spy_product" phpName="Product"
                      refPhpName="PriceProductSchedule">
@@ -44,7 +48,8 @@
         </foreign-key>
 
         <foreign-key name="spy_price_product_schedule-fk_price_product_schedule_list"
-                     foreignTable="spy_price_product_schedule_list" phpName="PriceProductScheduleList"
+                     foreignTable="spy_price_product_schedule_list"
+                     phpName="PriceProductScheduleList"
                      refPhpName="PriceProductSchedule">
             <reference local="fk_price_product_schedule_list" foreign="id_price_product_schedule_list"/>
         </foreign-key>
@@ -53,8 +58,7 @@
     </table>
 
     <table name="spy_price_product_schedule_list">
-        <column name="id_price_product_schedule_list" type="BIGINT" required="true" primaryKey="true"
-                autoIncrement="true"/>
+        <column name="id_price_product_schedule_list" type="BIGINT" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <column name="is_active" type="BOOLEAN" required="false" defaultValue="false"/>
         <column name="fk_user" type="INTEGER"/>
