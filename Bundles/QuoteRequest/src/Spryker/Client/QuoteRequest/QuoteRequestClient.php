@@ -201,7 +201,7 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
     public function isQuoteApplicableForQuoteRequest(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
-            ->createQuoteRequestQuoteValidator()
+            ->createQuoteValidator()
             ->isQuoteApplicableForQuoteRequest($quoteTransfer);
     }
 

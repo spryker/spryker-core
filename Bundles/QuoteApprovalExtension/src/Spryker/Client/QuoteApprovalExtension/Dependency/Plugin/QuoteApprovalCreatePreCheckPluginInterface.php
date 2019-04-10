@@ -21,5 +21,5 @@ interface QuoteApprovalCreatePreCheckPluginInterface
      *
      * @return bool
      */
-    public function isQuoteApplicableForApproval(QuoteTransfer $quoteTransfer): bool;
+    public function check(QuoteTransfer $quoteTransfer): bool;
 }

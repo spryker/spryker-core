@@ -23,7 +23,7 @@ class QuoteRequestQuoteApprovalCreatePreCheckPlugin extends AbstractClient imple
      *
      * @return bool
      */
-    public function isQuoteApplicableForApproval(QuoteTransfer $quoteTransfer): bool
+    public function check(QuoteTransfer $quoteTransfer): bool
     {
         return !$quoteTransfer->getQuoteRequestReference();
     }

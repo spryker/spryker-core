@@ -21,5 +21,5 @@ interface QuoteRequestCreatePreCheckPluginInterface
      *
      * @return bool
      */
-    public function isQuoteApplicableForQuoteRequest(QuoteTransfer $quoteTransfer): bool;
+    public function check(QuoteTransfer $quoteTransfer): bool;
 }

@@ -141,7 +141,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
     protected function executeQuoteApprovalCreatePreCheckPlugins(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($this->quoteApprovalCreatePreCheckPlugins as $quoteApprovalCreatePreCheckPlugin) {
-            if (!$quoteApprovalCreatePreCheckPlugin->isQuoteApplicableForApproval($quoteTransfer)) {
+            if (!$quoteApprovalCreatePreCheckPlugin->check($quoteTransfer)) {
                 return false;
             }
         }

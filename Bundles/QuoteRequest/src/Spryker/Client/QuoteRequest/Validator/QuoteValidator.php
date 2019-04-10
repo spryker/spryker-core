@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\QuoteRequest\Quote;
+namespace Spryker\Client\QuoteRequest\Validator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCompanyUserClientInterface;
 
-class QuoteRequestQuoteValidator implements QuoteRequestQuoteValidatorInterface
+class QuoteValidator implements QuoteValidatorInterface
 {
     use PermissionAwareTrait;
 
@@ -76,7 +76,7 @@ class QuoteRequestQuoteValidator implements QuoteRequestQuoteValidatorInterface
     protected function executeQuoteRequestCreatePreCheckPlugins(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($this->quoteRequestCreatePreCheckPlugins as $quoteRequestCreatePreCheckPlugin) {
-            if (!$quoteRequestCreatePreCheckPlugin->isQuoteApplicableForQuoteRequest($quoteTransfer)) {
+            if (!$quoteRequestCreatePreCheckPlugin->check($quoteTransfer)) {
                 return false;
             }
         }

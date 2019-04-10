@@ -16,6 +16,8 @@ use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
 
 class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
 {
+    protected const GLOSSARY_KEY_QUOTE_IS_NOT_APPLICABLE_FOR_APPROVAL = 'quote_approval.create.quote_is_not_applicable_for_approval';
+
     /**
      * @var \Spryker\Client\QuoteApproval\Quote\QuoteStatusCheckerInterface
      */
@@ -56,7 +58,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
         if (!$this->quoteStatusChecker->isQuoteApplicableForApproval($this->quoteClient->getQuote())) {
             return (new QuoteApprovalResponseTransfer())
                 ->setIsSuccessful(false)
-                ->addMessage((new MessageTransfer())->setValue('quote_approval.create.quote_is_not_applicable_for_approval'));
+                ->addMessage((new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_APPLICABLE_FOR_APPROVAL));
         }
 
         return $this->quoteApprovalStub->createQuoteApproval($quoteApprovalRequestTransfer);

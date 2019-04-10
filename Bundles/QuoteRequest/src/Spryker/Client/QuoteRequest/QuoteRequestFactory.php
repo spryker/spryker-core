@@ -16,12 +16,12 @@ use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCompanyUserClien
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
-use Spryker\Client\QuoteRequest\Quote\QuoteRequestQuoteValidator;
-use Spryker\Client\QuoteRequest\Quote\QuoteRequestQuoteValidatorInterface;
 use Spryker\Client\QuoteRequest\Reader\QuoteRequestReader;
 use Spryker\Client\QuoteRequest\Reader\QuoteRequestReaderInterface;
 use Spryker\Client\QuoteRequest\Status\QuoteRequestStatus;
 use Spryker\Client\QuoteRequest\Status\QuoteRequestStatusInterface;
+use Spryker\Client\QuoteRequest\Validator\QuoteValidator;
+use Spryker\Client\QuoteRequest\Validator\QuoteValidatorInterface;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStub;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface;
 
@@ -43,11 +43,11 @@ class QuoteRequestFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuoteRequest\Quote\QuoteRequestQuoteValidatorInterface
+     * @return \Spryker\Client\QuoteRequest\Validator\QuoteValidatorInterface
      */
-    public function createQuoteRequestQuoteValidator(): QuoteRequestQuoteValidatorInterface
+    public function createQuoteValidator(): QuoteValidatorInterface
     {
-        return new QuoteRequestQuoteValidator(
+        return new QuoteValidator(
             $this->getCompanyUserClient(),
             $this->getQuoteRequestCreatePreCheckPlugins()
         );
@@ -60,7 +60,7 @@ class QuoteRequestFactory extends AbstractFactory
     {
         return new QuoteRequestCreator(
             $this->createQuoteRequestStub(),
-            $this->createQuoteRequestQuoteValidator()
+            $this->createQuoteValidator()
         );
     }
 

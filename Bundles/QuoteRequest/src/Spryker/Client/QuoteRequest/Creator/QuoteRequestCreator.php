@@ -10,7 +10,7 @@ namespace Spryker\Client\QuoteRequest\Creator;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
-use Spryker\Client\QuoteRequest\Quote\QuoteRequestQuoteValidatorInterface;
+use Spryker\Client\QuoteRequest\Validator\QuoteValidatorInterface;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface;
 
 class QuoteRequestCreator implements QuoteRequestCreatorInterface
@@ -23,20 +23,20 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
     protected $quoteRequestStub;
 
     /**
-     * @var \Spryker\Client\QuoteRequest\Quote\QuoteRequestQuoteValidatorInterface
+     * @var \Spryker\Client\QuoteRequest\Validator\QuoteValidatorInterface
      */
-    protected $quoteRequestQuoteValidator;
+    protected $quoteValidator;
 
     /**
      * @param \Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface $quoteRequestStub
-     * @param \Spryker\Client\QuoteRequest\Quote\QuoteRequestQuoteValidatorInterface $quoteRequestQuoteValidator
+     * @param \Spryker\Client\QuoteRequest\Validator\QuoteValidatorInterface $quoteValidator
      */
     public function __construct(
         QuoteRequestStubInterface $quoteRequestStub,
-        QuoteRequestQuoteValidatorInterface $quoteRequestQuoteValidator
+        QuoteValidatorInterface $quoteValidator
     ) {
         $this->quoteRequestStub = $quoteRequestStub;
-        $this->quoteRequestQuoteValidator = $quoteRequestQuoteValidator;
+        $this->quoteValidator = $quoteValidator;
     }
 
     /**
@@ -50,7 +50,7 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
             ->getLatestVersion()
             ->getQuote();
 
-        if (!$this->quoteRequestQuoteValidator->isQuoteApplicableForQuoteRequest($quoteTransfer)) {
+        if (!$this->quoteValidator->isQuoteApplicableForQuoteRequest($quoteTransfer)) {
             return (new QuoteRequestResponseTransfer())
                 ->setIsSuccessful(false)
                 ->addMessage(
