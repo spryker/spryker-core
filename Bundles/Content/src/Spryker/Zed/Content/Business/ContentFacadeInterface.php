@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Content\Business;
 
 use Generated\Shared\Transfer\ContentTransfer;
+use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 
 interface ContentFacadeInterface
 {
@@ -56,4 +57,17 @@ interface ContentFacadeInterface
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
     public function update(ContentTransfer $contentTransfer): ContentTransfer;
+
+    /**
+     * Specification:
+     * - Validates content transfer.
+     * - Returns ContentValidationResponseTransfer with status and messages in case of fail.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
+     */
+    public function validateContent(ContentTransfer $contentTransfer): ContentValidationResponseTransfer;
 }
