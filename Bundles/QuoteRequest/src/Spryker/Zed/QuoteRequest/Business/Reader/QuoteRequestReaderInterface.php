@@ -22,7 +22,7 @@ interface QuoteRequestReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    public function findQuoteRequestTransfer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer;
+    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer

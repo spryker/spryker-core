@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\QuoteRequestAgent\Dependency\Client;
 
-use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
-use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 
 class QuoteRequestAgentToQuoteRequestClientBridge implements QuoteRequestAgentToQuoteRequestClientInterface
 {
@@ -26,12 +26,12 @@ class QuoteRequestAgentToQuoteRequestClientBridge implements QuoteRequestAgentTo
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
+    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer
     {
-        return $this->quoteRequestClient->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
+        return $this->quoteRequestClient->findQuoteRequest($quoteRequestCriteriaTransfer);
     }
 }

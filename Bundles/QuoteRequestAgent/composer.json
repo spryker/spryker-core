@@ -13,10 +13,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/company": "*",
-    "spryker/company-business-unit": "*",
-    "spryker/customer": "*",
-    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

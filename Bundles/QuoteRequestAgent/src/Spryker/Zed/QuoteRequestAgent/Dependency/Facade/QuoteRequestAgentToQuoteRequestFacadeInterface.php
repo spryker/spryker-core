@@ -56,4 +56,11 @@ interface QuoteRequestAgentToQuoteRequestFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
      */
     public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer;
 }

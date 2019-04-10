@@ -167,7 +167,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
             ->setIdCompanyUser($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser());
 
-        $currentQuoteRequestTransfer = $this->quoteRequestReader->findQuoteRequestTransfer($quoteRequestCriteriaTransfer);
+        $currentQuoteRequestTransfer = $this->quoteRequestReader->findQuoteRequest($quoteRequestCriteriaTransfer);
 
         if (!$currentQuoteRequestTransfer) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
@@ -193,7 +193,9 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      */
     protected function executeReviseQuoteRequestTransaction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestTransfer = $this->quoteRequestReader->findQuoteRequestTransfer($quoteRequestCriteriaTransfer);
+        $quoteRequestCriteriaTransfer->requireIdCompanyUser();
+
+        $quoteRequestTransfer = $this->quoteRequestReader->findQuoteRequest($quoteRequestCriteriaTransfer);
 
         if (!$quoteRequestTransfer) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);

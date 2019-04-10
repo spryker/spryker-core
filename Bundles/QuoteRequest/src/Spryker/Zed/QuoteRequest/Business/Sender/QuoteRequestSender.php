@@ -50,7 +50,9 @@ class QuoteRequestSender implements QuoteRequestSenderInterface
      */
     public function sendQuoteRequestToUser(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestTransfer = $this->quoteRequestReader->findQuoteRequestTransfer($quoteRequestCriteriaTransfer);
+        $quoteRequestCriteriaTransfer->requireIdCompanyUser();
+
+        $quoteRequestTransfer = $this->quoteRequestReader->findQuoteRequest($quoteRequestCriteriaTransfer);
 
         if (!$quoteRequestTransfer) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);

@@ -134,22 +134,6 @@ interface QuoteRequestClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Retrieves "Request for Quote" entities filtered by company user.
-     * - Filters by quote request reference.
-     * - Selects latestVersion based on latest version id.
-     *
-     * @api
-     *
-     * @param string $quoteRequestReference
-     * @param int $idCompanyUser
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
-     */
-    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer;
-
-    /**
-     * Specification:
-     * - Makes Zed request.
      * - Expects "Request for Quote" status to be "ready".
      * - Locks quote.
      * - Replaces current customer quote by quote from latest quote request version.
@@ -212,4 +196,20 @@ interface QuoteRequestClientInterface
      * @return bool
      */
     public function isQuoteRequestReady(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Retrieves "Request for Quote" entity.
+     * - Expects the quote request reference to be provided.
+     * - Filters by quote request company user id when provided.
+     * - Selects latestVersion based on latest version id.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer;
 }

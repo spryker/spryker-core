@@ -126,23 +126,6 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @api
      *
-     * @param string $quoteRequestReference
-     * @param int $idCompanyUser
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
-     */
-    public function findCompanyUserQuoteRequestByReference(string $quoteRequestReference, int $idCompanyUser): ?QuoteRequestTransfer
-    {
-        return $this->getFactory()
-            ->createQuoteRequestReader()
-            ->findCompanyUserQuoteRequestByReference($quoteRequestReference, $idCompanyUser);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -216,6 +199,20 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
         return $this->getFactory()
             ->createQuoteRequestStatus()
             ->isQuoteRequestReady($quoteRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer
+    {
+        return $this->getZedStub()->findQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
     /**

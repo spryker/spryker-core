@@ -6,6 +6,7 @@
     <transfer name="QuoteRequestCriteria">
         <property name="quoteRequestReference" type="string" />
         <property name="idCompanyUser" type="int" />
+        <property name="withHidden" type="bool" />
     </transfer>
 
     <transfer name="QuoteRequestResponse">

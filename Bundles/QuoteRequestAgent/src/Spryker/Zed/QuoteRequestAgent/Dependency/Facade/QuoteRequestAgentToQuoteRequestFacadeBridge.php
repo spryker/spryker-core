@@ -87,4 +87,14 @@ class QuoteRequestAgentToQuoteRequestFacadeBridge implements QuoteRequestAgentTo
     {
         return $this->quoteRequestFacade->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer
+    {
+        return $this->quoteRequestFacade->findQuoteRequest($quoteRequestCriteriaTransfer);
+    }
 }

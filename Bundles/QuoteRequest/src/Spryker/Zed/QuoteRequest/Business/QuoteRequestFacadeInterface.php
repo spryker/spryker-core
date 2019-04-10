@@ -55,6 +55,7 @@ interface QuoteRequestFacadeInterface
     /**
      * Specification:
      * - Looks up one "Request for Quote" by provided quote request reference.
+     * - Expects the related company user to be provided.
      * - Expects "Request for Quote" status to be "ready".
      * - Creates latest version from previous version.
      * - Sets status to "draft".
@@ -258,4 +259,19 @@ interface QuoteRequestFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function sanitizeQuoteRequest(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves "Request for Quote" entity.
+     * - Expects the quote request reference to be provided.
+     * - Filters by quote request company user id when provided.
+     * - Selects latestVersion based on latest version id.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer;
 }

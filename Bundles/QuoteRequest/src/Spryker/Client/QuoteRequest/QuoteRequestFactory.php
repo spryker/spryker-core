@@ -13,8 +13,6 @@ use Spryker\Client\QuoteRequest\Converter\QuoteRequestConverterInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
-use Spryker\Client\QuoteRequest\Reader\QuoteRequestReader;
-use Spryker\Client\QuoteRequest\Reader\QuoteRequestReaderInterface;
 use Spryker\Client\QuoteRequest\Status\QuoteRequestStatus;
 use Spryker\Client\QuoteRequest\Status\QuoteRequestStatusInterface;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStub;
@@ -43,14 +41,6 @@ class QuoteRequestFactory extends AbstractFactory
     public function createQuoteRequestStatus(): QuoteRequestStatusInterface
     {
         return new QuoteRequestStatus($this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Client\QuoteRequest\Reader\QuoteRequestReaderInterface
-     */
-    public function createQuoteRequestReader(): QuoteRequestReaderInterface
-    {
-        return new QuoteRequestReader($this->createQuoteRequestStub());
     }
 
     /**

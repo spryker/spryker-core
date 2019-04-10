@@ -90,4 +90,14 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->getQuoteRequestVersionCollectionByFilter($quoteRequestVersionFilterTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequestAction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer
+    {
+        return $this->getFacade()->findQuoteRequest($quoteRequestCriteriaTransfer);
+    }
 }

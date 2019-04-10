@@ -279,4 +279,20 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
             ->createQuoteRequestVersionSanitizer()
             ->sanitizeQuoteRequest($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestReader()
+            ->findQuoteRequest($quoteRequestCriteriaTransfer);
+    }
 }

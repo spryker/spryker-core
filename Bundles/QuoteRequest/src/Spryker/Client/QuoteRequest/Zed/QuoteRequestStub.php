@@ -142,4 +142,20 @@ class QuoteRequestStub implements QuoteRequestStubInterface
 
         return $quoteRequestVersionCollectionTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestTransfer|null $quoteRequestTransfer */
+        $quoteRequestTransfer = $this->zedRequestClient->call(
+            '/quote-request/gateway/find-quote-request',
+            $quoteRequestCriteriaTransfer
+        );
+
+        return $quoteRequestTransfer;
+    }
 }

@@ -47,15 +47,18 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    public function findQuoteRequestTransfer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer
+    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer
     {
-        $quoteRequestCriteriaTransfer
-            ->requireQuoteRequestReference()
-            ->requireIdCompanyUser();
+        $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setQuoteRequestReference($quoteRequestCriteriaTransfer->getQuoteRequestReference())
-            ->setCompanyUser((new CompanyUserTransfer())->setIdCompanyUser($quoteRequestCriteriaTransfer->getIdCompanyUser()));
+            ->fromArray($quoteRequestCriteriaTransfer->toArray(), true);
+
+        if ($quoteRequestCriteriaTransfer->getIdCompanyUser()) {
+            $quoteRequestFilterTransfer->setCompanyUser(
+                (new CompanyUserTransfer())->setIdCompanyUser($quoteRequestCriteriaTransfer->getIdCompanyUser())
+            );
+        }
 
         $quoteRequestTransfers = $this
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\QuoteRequestAgent\Business\Reader;
 
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
+use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
@@ -39,7 +40,7 @@ class QuoteRequestAgentReader implements QuoteRequestAgentReaderInterface
     ): QuoteRequestOverviewCollectionTransfer {
         return (new QuoteRequestOverviewCollectionTransfer())
             ->setQuoteRequests($this->getQuoteRequestCollection($quoteRequestOverviewFilterTransfer)->getQuoteRequests())
-            ->setCurrentQuoteRequest($this->findQuoteRequestTransfer($quoteRequestOverviewFilterTransfer));
+            ->setCurrentQuoteRequest($this->findQuoteRequest($quoteRequestOverviewFilterTransfer));
     }
 
     /**
@@ -63,21 +64,16 @@ class QuoteRequestAgentReader implements QuoteRequestAgentReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
-    protected function findQuoteRequestTransfer(QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer): ?QuoteRequestTransfer
+    protected function findQuoteRequest(QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer): ?QuoteRequestTransfer
     {
         if (!$quoteRequestOverviewFilterTransfer->getQuoteRequestReference()) {
             return null;
         }
 
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->setWithHidden(true)
-            ->setQuoteRequestReference($quoteRequestOverviewFilterTransfer->getQuoteRequestReference());
+        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+            ->setQuoteRequestReference($quoteRequestOverviewFilterTransfer->getQuoteRequestReference())
+            ->setWithHidden(true);
 
-        $quoteRequestTransfers = $this->quoteRequestFacade
-            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer)
-            ->getQuoteRequests()
-            ->getArrayCopy();
-
-        return array_shift($quoteRequestTransfers);
+        return $this->quoteRequestFacade->findQuoteRequest($quoteRequestCriteriaTransfer);
     }
 }
