@@ -170,7 +170,8 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
 
         $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
-            ->setIdCompanyUser($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser());
+            ->setIdCompanyUser($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser())
+            ->setWithHidden(true);
 
         $currentQuoteRequestTransfer = $this->quoteRequestReader->findQuoteRequest($quoteRequestCriteriaTransfer);
 
