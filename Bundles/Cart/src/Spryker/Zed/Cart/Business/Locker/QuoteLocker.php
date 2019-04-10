@@ -11,12 +11,9 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\Model\OperationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class QuoteLocker implements QuoteLockerInterface
 {
-    use TransactionTrait;
-
     /**
      * @var \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface
      */
@@ -53,18 +50,6 @@ class QuoteLocker implements QuoteLockerInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function unlock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
-            return $this->executeUnlockTransaction($quoteTransfer);
-        });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function executeUnlockTransaction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer = $this->executeQuotePreUnlockPlugins($quoteTransfer);
 

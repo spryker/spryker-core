@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteRequest\Communication\Plugin\Quote;
+namespace Spryker\Zed\QuoteRequest\Communication\Plugin\QuoteApproval;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteUnlockPreCheckPluginInterface;
+use Spryker\Zed\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalUnlockPreCheckPluginInterface;
 
 /**
  * @method \Spryker\Zed\QuoteRequest\QuoteRequestConfig getConfig()
  * @method \Spryker\Zed\QuoteRequest\Business\QuoteRequestFacadeInterface getFacade()
  * @method \Spryker\Zed\QuoteRequest\Communication\QuoteRequestCommunicationFactory getFactory()
  */
-class QuoteRequestQuoteUnlockPreCheckPlugin extends AbstractPlugin implements QuoteUnlockPreCheckPluginInterface
+class QuoteRequestQuoteApprovalUnlockPreCheckPlugin extends AbstractPlugin implements QuoteApprovalUnlockPreCheckPluginInterface
 {
     /**
      * {@inheritdoc}

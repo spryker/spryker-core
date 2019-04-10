@@ -53,7 +53,7 @@ interface PriceCartConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Sanitizes source prices in quote.
+     * - Sanitizes source prices in quote items.
      *
      * @api
      *

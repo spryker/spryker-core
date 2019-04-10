@@ -12,19 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 class QuoteLocker implements QuoteLockerInterface
 {
     /**
-     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteUnlockPreCheckPluginInterface[]
-     */
-    protected $quoteUnlockPreCheckPlugins;
-
-    /**
-     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteUnlockPreCheckPluginInterface[] $quoteUnlockPreCheckPlugins
-     */
-    public function __construct(array $quoteUnlockPreCheckPlugins)
-    {
-        $this->quoteUnlockPreCheckPlugins = $quoteUnlockPreCheckPlugins;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -41,26 +28,6 @@ class QuoteLocker implements QuoteLockerInterface
      */
     public function unlock(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if (!$this->executeQuoteUnlockPreCheckPlugins($quoteTransfer)) {
-            return $quoteTransfer;
-        }
-
         return $quoteTransfer->setIsLocked(false);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function executeQuoteUnlockPreCheckPlugins(QuoteTransfer $quoteTransfer): bool
-    {
-        foreach ($this->quoteUnlockPreCheckPlugins as $quoteUnlockPreCheckPlugin) {
-            if (!$quoteUnlockPreCheckPlugin->check($quoteTransfer)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

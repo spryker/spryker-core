@@ -9,6 +9,7 @@ namespace Spryker\Zed\PersistentCart\Business\Locker;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface;
@@ -16,6 +17,8 @@ use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInte
 
 class QuoteLocker implements QuoteLockerInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface
      */
@@ -60,6 +63,18 @@ class QuoteLocker implements QuoteLockerInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function unlock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
+            return $this->executeUnlockTransaction($quoteTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function executeUnlockTransaction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->requireCustomer();
 

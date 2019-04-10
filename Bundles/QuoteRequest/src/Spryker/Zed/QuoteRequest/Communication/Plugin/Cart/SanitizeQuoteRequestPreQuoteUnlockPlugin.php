@@ -20,7 +20,7 @@ class SanitizeQuoteRequestPreQuoteUnlockPlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritdoc}
-     * - Sanitizes request for quote in quote.
+     * - Sanitizes data related to request for quote in quote.
      *
      * @api
      *

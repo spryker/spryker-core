@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteExtension\Dependency\Plugin;
+namespace Spryker\Zed\QuoteApprovalExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteUnlockPreCheckPluginInterface
+interface QuoteApprovalUnlockPreCheckPluginInterface
 {
     /**
      * Specification:

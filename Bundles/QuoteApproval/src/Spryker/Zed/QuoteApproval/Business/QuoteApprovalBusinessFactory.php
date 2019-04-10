@@ -62,7 +62,8 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     public function createQuoteLocker(): QuoteLockerInterface
     {
         return new QuoteLocker(
-            $this->getQuoteFacade()
+            $this->getQuoteFacade(),
+            $this->getQuoteApprovalUnlockPreCheckPlugins()
         );
     }
 
@@ -128,7 +129,8 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     public function createQuoteApprovalSanitizer(): QuoteApprovalSanitizerInterface
     {
         return new QuoteApprovalSanitizer(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 
@@ -200,5 +202,13 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     public function getCustomerFacade(): QuoteApprovalToCustomerFacadeInterface
     {
         return $this->getProvidedDependency(QuoteApprovalDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalUnlockPreCheckPluginInterface[]
+     */
+    protected function getQuoteApprovalUnlockPreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteApprovalDependencyProvider::PLUGINS_QUOTE_APPROVAL_UNLOCK_PRE_CHECK);
     }
 }

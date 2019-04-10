@@ -249,7 +249,7 @@ interface QuoteRequestFacadeInterface
 
     /**
      * Specification:
-     * - Sanitizes request for quote in quote.
+     * - Sanitizes data related to request for quote in quote.
      *
      * @api
      *

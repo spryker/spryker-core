@@ -184,6 +184,7 @@ interface QuoteStorageStrategyPluginInterface
 
     /**
      * Specification:
+     * - Makes zed request.
      * - Executes QuoteBeforeUnlockPluginInterface plugins before unlock.
      * - Unlocks quote by setting `isLocked` transfer property to false.
      * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.

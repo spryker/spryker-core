@@ -19,7 +19,7 @@ class SanitizeQuoteApprovalPreQuoteUnlockPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritdoc}
-     * - Sanitizes quote approval in quote.
+     * - Sanitizes data related to quote approval in quote.
      * - Removes all approvals for quote from Persistence.
      *
      * @api
