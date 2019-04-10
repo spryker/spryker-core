@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
-class PriceProductFallBackFinder implements PriceProductFallbackFinderInterface
+class PriceProductFallbackFinder implements PriceProductFallbackFinderInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
@@ -43,15 +43,15 @@ class PriceProductFallBackFinder implements PriceProductFallbackFinderInterface
      */
     public function findFallbackPriceProduct(PriceProductTransfer $priceProductTransfer): ?PriceProductTransfer
     {
-        $fallbackPriceProductName = $this->findFallbackPriceType($priceProductTransfer->getPriceTypeName());
+        $fallbackPriceTypeName = $this->findFallbackPriceType($priceProductTransfer->getPriceTypeName());
 
-        if ($fallbackPriceProductName === null) {
+        if ($fallbackPriceTypeName === null) {
             return null;
         }
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setSku($priceProductTransfer->getSkuProduct())
-            ->setPriceTypeName($fallbackPriceProductName)
+            ->setPriceTypeName($fallbackPriceTypeName)
             ->setCurrencyIsoCode($priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
 
         return $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);

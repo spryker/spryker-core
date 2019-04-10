@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\PriceProductSchedule\Business\Facade;
+namespace SprykerTest\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use Codeception\Test\Unit;
 use DateTime;
@@ -13,45 +13,40 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory;
 
 /**
  * Auto-generated group annotations
- *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductSchedule
  * @group Business
- * @group Facade
- * @group PriceProductScheduleApplyTest
+ * @group PriceProductSchedule
+ * @group PriceProductScheduleApplierTest
  * Add your own group annotations below this line
  */
-class PriceProductScheduleApplyTest extends Unit
+class PriceProductScheduleApplierTest extends Unit
 {
     public const KEY_IS_OTHER_CURRENCY = 'isOtherCurrency';
     public const KEY_IS_OTHER_PRICE_TYPE = 'isOtherPriceType';
     public const KEY_IS_PRODUCT_CONCRETE = 'isProductConcrete';
     public const KEY_IS_PRODUCT_ABSTRACT = 'isProductAbstract';
     public const KEY_PRICE_PRODUCT_SCHEDULE_DATA = 'priceProductScheduleData';
-
+    
     /**
      * @var \SprykerTest\Zed\PriceProductSchedule\PriceProductScheduleBusinessTester
      */
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory
      */
-    protected $priceProductScheduleFacade;
+    protected $priceProductScheduleFactory;
 
     /**
-     * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleApplierInterface
      */
-    protected $currencyFacade;
-
-    /**
-     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    protected $spyPriceProductScheduleQuery;
+    protected $priceProductScheduleApplier;
 
     /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
@@ -65,9 +60,8 @@ class PriceProductScheduleApplyTest extends Unit
     {
         parent::setUp();
 
-        $this->priceProductScheduleFacade = $this->tester->getFacade();
-        $this->currencyFacade = $this->tester->getLocator()->currency()->facade();
-        $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
+        $this->priceProductScheduleFactory = new PriceProductScheduleBusinessFactory();
+        $this->priceProductScheduleApplier = $this->priceProductScheduleFactory->createPriceProductScheduleApplier();
         $this->storeFacade = $this->tester->getLocator()->store()->facade();
     }
 
@@ -134,10 +128,10 @@ class PriceProductScheduleApplyTest extends Unit
         $this->tester->havePriceProductSchedule($priceProductScheduleData4);
 
         // Act
-        $this->priceProductScheduleFacade->applyScheduledPrices();
+        $this->priceProductScheduleApplier->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntities = $this->spyPriceProductScheduleQuery->find();
+        $priceProductScheduleEntities = $this->tester->getPriceProductScheduleQuery()->find();
 
         foreach ($priceProductScheduleEntities as $priceProductScheduleEntity) {
             $this->assertTrue(
@@ -173,10 +167,10 @@ class PriceProductScheduleApplyTest extends Unit
         }
 
         // Act
-        $this->priceProductScheduleFacade->applyScheduledPrices();
+        $this->priceProductScheduleApplier->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntities = $this->spyPriceProductScheduleQuery->find();
+        $priceProductScheduleEntities = $this->tester->getPriceProductScheduleQuery()->find();
 
         foreach ($priceProductScheduleEntities as $priceProductScheduleEntity) {
             $this->assertTrue(
@@ -212,10 +206,10 @@ class PriceProductScheduleApplyTest extends Unit
         }
 
         // Act
-        $this->priceProductScheduleFacade->applyScheduledPrices();
+        $this->priceProductScheduleApplier->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntities = $this->spyPriceProductScheduleQuery->find();
+        $priceProductScheduleEntities = $this->tester->getPriceProductScheduleQuery()->find();
 
         foreach ($priceProductScheduleEntities as $priceProductScheduleEntity) {
             $this->assertTrue(
@@ -254,10 +248,10 @@ class PriceProductScheduleApplyTest extends Unit
         }
 
         // Act
-        $this->priceProductScheduleFacade->applyScheduledPrices();
+        $this->priceProductScheduleApplier->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntities = $this->spyPriceProductScheduleQuery->find();
+        $priceProductScheduleEntities = $this->tester->getPriceProductScheduleQuery()->find();
 
         foreach ($priceProductScheduleEntities as $priceProductScheduleEntity) {
             $this->assertTrue(
@@ -300,10 +294,10 @@ class PriceProductScheduleApplyTest extends Unit
         ]);
 
         // Act
-        $this->priceProductScheduleFacade->applyScheduledPrices();
+        $this->priceProductScheduleApplier->applyScheduledPrices();
 
         // Assert
-        $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse(
             $priceProductScheduleEntity->isCurrent(),
             'Scheduled price for other store should not have been set as current.'

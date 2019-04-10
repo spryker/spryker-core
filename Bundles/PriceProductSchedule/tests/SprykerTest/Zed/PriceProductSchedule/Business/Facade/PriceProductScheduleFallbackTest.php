@@ -53,11 +53,6 @@ class PriceProductScheduleFallbackTest extends Unit
     protected $storeFacade;
 
     /**
-     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    protected $spyPriceProductScheduleQuery;
-
-    /**
      * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
      */
     protected $currencyFacade;
@@ -71,7 +66,6 @@ class PriceProductScheduleFallbackTest extends Unit
 
         $this->priceProductFacade = $this->tester->getLocator()->priceProduct()->facade();
         $this->storeFacade = $this->tester->getLocator()->store()->facade();
-        $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
         $this->currencyFacade = $this->tester->getLocator()->currency()->facade();
     }
 

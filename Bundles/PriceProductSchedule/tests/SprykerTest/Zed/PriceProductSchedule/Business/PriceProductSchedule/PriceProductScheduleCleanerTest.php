@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\PriceProductSchedule\Business\Model;
+namespace SprykerTest\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use Codeception\Test\Unit;
 use DateTime;
@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
-use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory;
 
 /**
@@ -22,7 +21,7 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactor
  * @group Zed
  * @group PriceProductSchedule
  * @group Business
- * @group Model
+ * @group PriceProductSchedule
  * @group PriceProductScheduleCleanerTest
  * Add your own group annotations below this line
  */
@@ -36,17 +35,12 @@ class PriceProductScheduleCleanerTest extends Unit
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory
      */
-    private $priceProductScheduleFactory;
+    protected $priceProductScheduleFactory;
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCleanerInterface
      */
-    private $priceProductScheduleCleaner;
-
-    /**
-     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    private $priceProductScheduleQuery;
+    protected $priceProductScheduleCleaner;
 
     /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
@@ -62,7 +56,6 @@ class PriceProductScheduleCleanerTest extends Unit
 
         $this->priceProductScheduleFactory = new PriceProductScheduleBusinessFactory();
         $this->priceProductScheduleCleaner = $this->priceProductScheduleFactory->createPriceProductScheduleCleaner();
-        $this->priceProductScheduleQuery = new SpyPriceProductScheduleQuery();
         $this->storeFacade = $this->tester->getLocator()->store()->facade();
     }
 
@@ -89,7 +82,7 @@ class PriceProductScheduleCleanerTest extends Unit
         $this->priceProductScheduleCleaner->cleanAppliedScheduledPrices($daysRetained);
 
         // Assert
-        $this->assertEquals($expectedCount, $this->priceProductScheduleQuery->find()->count());
+        $this->assertEquals($expectedCount, $this->tester->getPriceProductScheduleQuery()->find()->count());
     }
 
     /**

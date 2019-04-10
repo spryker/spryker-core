@@ -8,7 +8,7 @@
 namespace Spryker\Zed\PriceProductSchedule\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallBackFinder;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackFinder;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\ProductPriceUpdater;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\ProductPriceUpdaterInterface;
@@ -92,7 +92,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceProductFallbackFinder(): PriceProductFallbackFinderInterface
     {
-        return new PriceProductFallBackFinder(
+        return new PriceProductFallbackFinder(
             $this->getConfig(),
             $this->getPriceProductFacade()
         );

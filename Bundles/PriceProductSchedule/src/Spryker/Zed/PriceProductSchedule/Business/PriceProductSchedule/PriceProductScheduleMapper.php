@@ -80,7 +80,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         return $priceProductScheduleEntity
             ->setFkCurrency($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getFkCurrency())
             ->setFkStore($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getFkStore())
-            ->setFkPriceType($priceProductScheduleTransfer->getPriceProduct()->getFkPriceType())
+            ->setFkPriceType($priceProductScheduleTransfer->getPriceProduct()->getPriceType()->getIdPriceType())
             ->setFkProduct($priceProductScheduleTransfer->getPriceProduct()->getIdProduct())
             ->setFkProductAbstract($priceProductScheduleTransfer->getPriceProduct()->getIdProductAbstract())
             ->setFkPriceProductScheduleList($priceProductScheduleTransfer->getPriceProductScheduleList()->getIdPriceProductScheduleList())
@@ -122,6 +122,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             ->fromArray($priceProductScheduleEntity->toArray(), true)
             ->setPriceTypeName($priceTypeTransfer->getName())
             ->setPriceType($priceTypeTransfer)
+            ->setFkPriceType($priceTypeTransfer->getIdPriceType())
             ->setMoneyValue($moneyValueTransfer)
             ->setPriceDimension($this->getPriceProductDimensionTransfer($priceProductScheduleEntity));
 

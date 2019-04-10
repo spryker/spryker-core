@@ -61,7 +61,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->filterByIsCurrent(true)
             ->filterByFkStore($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getFkStore())
             ->filterByFkCurrency($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getFkCurrency())
-            ->filterByFkPriceType($priceProductScheduleTransfer->getPriceProduct()->getFkPriceType())
+            ->filterByFkPriceType($priceProductScheduleTransfer->getPriceProduct()->getPriceType()->getIdPriceType())
             ->filterByFkProduct($priceProductScheduleTransfer->getPriceProduct()->getIdProduct())
             ->filterByFkProductAbstract($priceProductScheduleTransfer->getPriceProduct()->getIdProductAbstract())
             ->filterByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule(), Criteria::NOT_EQUAL)
