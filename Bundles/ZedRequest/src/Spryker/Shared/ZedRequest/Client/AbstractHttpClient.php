@@ -299,7 +299,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
 
         $response = $client->send($request, $this->buildRequestOptions($requestTransfer, $requestOptions));
 
-        if (!$response || $response->getStatusCode() !== 200 || !$response->getBody()->getSize()) {
+        if ($response->getStatusCode() !== 200 || !$response->getBody()->getSize()) {
             throw new InvalidZedResponseException('Invalid or empty response', $response, $request->getUri());
         }
 

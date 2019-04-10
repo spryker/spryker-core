@@ -199,7 +199,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     /**
      * @param int[] $companyBusinessUnitIds
      *
-     * @return string[]
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
      */
     public function findExistingPriceProductConcreteMerchantRelationshipEntitiesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
     {
@@ -213,7 +213,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     /**
      * @param string[] $priceKeys
      *
-     * @return string[]
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
      */
     public function findExistingPriceProductConcreteMerchantRelationshipEntitiesByPriceKeys(array $priceKeys): array
     {
@@ -227,7 +227,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     /**
      * @param int[] $productIds
      *
-     * @return string[]
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
      */
     public function findExistingPriceProductConcreteMerchantRelationshipEntitiesByProductIds(array $productIds): array
     {
