@@ -22,7 +22,7 @@ class BannerTermToBannerTypeExecutor implements ContentBannerTermExecutorInterfa
     {
         $bannerTermTransfer = $this->mapContentTypeParametersToTransfer($contentTypeContextTransfer);
 
-        return (new ContentBannerTypeTransfer())->fromArray($bannerTermTransfer->toArray(), true);
+        return (new ContentBannerTypeTransfer())->fromArray($bannerTermTransfer->modifiedToArray(), true);
     }
 
     /**
