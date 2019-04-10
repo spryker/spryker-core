@@ -9,7 +9,6 @@ namespace Spryker\Zed\QuoteApproval\Business\Sanitizer;
 
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface;
 use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface;
 
@@ -44,32 +43,12 @@ class QuoteApprovalSanitizer implements QuoteApprovalSanitizerInterface
      */
     public function sanitizeQuoteApproval(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        if ($quoteTransfer->getIdQuote()) {
+            $this->quoteApprovalEntityManager->removeApprovalsByIdQuote($quoteTransfer->getIdQuote());
+        }
+
         $quoteTransfer->setQuoteApprovals(new ArrayObject());
 
-        if ($quoteTransfer->getIdQuote()) {
-            $this->declineQuoteApprovals($quoteTransfer);
-        }
-
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function declineQuoteApprovals(QuoteTransfer $quoteTransfer): void
-    {
-        $quoteTransfer->requireIdQuote();
-
-        $quoteApprovalTransfers = $this->quoteApprovalRepository
-            ->getQuoteApprovalsByIdQuote($quoteTransfer->getIdQuote());
-
-        foreach ($quoteApprovalTransfers as $quoteApprovalTransfer) {
-            $this->quoteApprovalEntityManager->updateQuoteApprovalWithStatus(
-                $quoteApprovalTransfer->getIdQuoteApproval(),
-                QuoteApprovalConfig::STATUS_DECLINED
-            );
-        }
     }
 }
