@@ -133,7 +133,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     public function createUserQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createUserQuoteRequestWriter()
+            ->createQuoteRequestUserWriter()
             ->createQuoteRequest($quoteRequestTransfer);
     }
 
@@ -149,7 +149,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     public function updateUserQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createUserQuoteRequestWriter()
+            ->createQuoteRequestUserWriter()
             ->updateQuoteRequest($quoteRequestTransfer);
     }
 
@@ -165,7 +165,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     public function reviseUserQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createUserQuoteRequestWriter()
+            ->createQuoteRequestUserWriter()
             ->reviseQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
@@ -181,7 +181,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     public function cancelUserQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createUserQuoteRequestWriter()
+            ->createQuoteRequestUserTerminator()
             ->cancelQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
@@ -197,7 +197,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createUserQuoteRequestWriter()
+            ->createQuoteRequestUserSender()
             ->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
     }
 
@@ -262,5 +262,21 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
         $this->getFactory()
             ->createQuoteRequestTerminator()
             ->closeOutdatedQuoteRequests();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function sanitizeQuoteRequest(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestVersionSanitizer()
+            ->sanitizeQuoteRequest($quoteTransfer);
     }
 }

@@ -338,6 +338,30 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
+     * Specification:
+     * - Makes zed request.
+     * - Loads customer quote from database.
+     * - Executes QuoteBeforeUnlockPluginInterface plugins before unlock.
+     * - Unlocks quote by setting `isLocked` transfer property to false.
+     * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     * - Save updated quote to database.
+     * - Stores quote in session internally after zed request.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function unlockQuote(): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = $this->getZedStub()
+            ->unlockQuote($this->getQuoteClient()->getQuote());
+
+        $this->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
     protected function createPersistentCartChangeTransfer()

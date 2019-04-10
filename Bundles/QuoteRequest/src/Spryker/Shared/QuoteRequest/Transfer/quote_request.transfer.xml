@@ -118,4 +118,12 @@
         <property name="lastPage" type="int" />
     </transfer>
 
+    <transfer name="CompanyUserCriteriaFilter">
+        <property name="companyUserIds" type="array"/>
+    </transfer>
+
+    <transfer name="CompanyUserCollection">
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
+    </transfer>
+
 </transfers>

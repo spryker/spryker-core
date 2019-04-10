@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteRequest\Business\Reader;
 
+use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
@@ -75,6 +76,7 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
             ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
 
         $quoteRequestCollectionTransfer = $this->expandQuoteRequestCollectionWithVersions($quoteRequestCollectionTransfer);
+        $quoteRequestCollectionTransfer = $this->expandQuoteRequestCollectionWithBusinessUnits($quoteRequestCollectionTransfer);
 
         return $quoteRequestCollectionTransfer;
     }
@@ -133,5 +135,58 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
         }
 
         return $quoteRequestCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
+     */
+    protected function expandQuoteRequestCollectionWithBusinessUnits(
+        QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
+    ): QuoteRequestCollectionTransfer {
+
+        if (!$quoteRequestCollectionTransfer->getQuoteRequests()->count()) {
+            return $quoteRequestCollectionTransfer;
+        }
+
+        $companyUserIds = [];
+
+        foreach ($quoteRequestCollectionTransfer->getQuoteRequests() as $quoteRequestTransfer) {
+            if (!in_array($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser(), $companyUserIds)) {
+                $companyUserIds[] = $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser();
+            }
+        }
+
+        $companyUserTransfers = $this->companyUserFacade
+            ->getCompanyUserCollection((new CompanyUserCriteriaFilterTransfer())->setCompanyUserIds($companyUserIds))
+            ->getCompanyUsers()
+            ->getArrayCopy();
+
+        $companyUserTransfers = $this->filterCompanyUsers($companyUserTransfers);
+
+        foreach ($quoteRequestCollectionTransfer->getQuoteRequests() as $quoteRequestTransfer) {
+            $companyUserTransfer = $companyUserTransfers[$quoteRequestTransfer->getCompanyUser()->getIdCompanyUser()] ?? null;
+            $quoteRequestTransfer->getCompanyUser()
+                ->setCompanyBusinessUnit($companyUserTransfer->getCompanyBusinessUnit());
+        }
+
+        return $quoteRequestCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer[] $companyUserTransfers
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    protected function filterCompanyUsers(array $companyUserTransfers): array
+    {
+        $filteredCompanyUserTransfers = [];
+
+        foreach ($companyUserTransfers as $companyUserTransfer) {
+            $filteredCompanyUserTransfers[$companyUserTransfer->getIdCompanyUser()] = $companyUserTransfer;
+        }
+
+        return $filteredCompanyUserTransfers;
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\QuoteRequest\Business\Sanitizer;
 
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteRequestVersionSanitizerInterface
 {
@@ -31,4 +32,11 @@ interface QuoteRequestVersionSanitizerInterface
      * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
      */
     public function recalculateQuoteRequestVersionQuote(QuoteRequestVersionTransfer $quoteRequestVersionTransfer): QuoteRequestVersionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function sanitizeQuoteRequest(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

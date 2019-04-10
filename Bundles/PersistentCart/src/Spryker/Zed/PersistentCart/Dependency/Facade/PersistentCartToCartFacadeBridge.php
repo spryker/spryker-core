@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PersistentCart\Dependency\Facade;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class PersistentCartToCartFacadeBridge implements PersistentCartToCartFacadeInterface
@@ -73,5 +74,15 @@ class PersistentCartToCartFacadeBridge implements PersistentCartToCartFacadeInte
     public function validateQuote($quoteTransfer)
     {
         return $this->cartFacade->validateQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->cartFacade->unlockQuote($quoteTransfer);
     }
 }

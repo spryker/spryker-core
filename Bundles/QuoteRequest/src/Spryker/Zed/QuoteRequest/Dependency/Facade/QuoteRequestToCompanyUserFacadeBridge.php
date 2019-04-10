@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\QuoteRequest\Dependency\Facade;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+
 class QuoteRequestToCompanyUserFacadeBridge implements QuoteRequestToCompanyUserFacadeInterface
 {
     /**
@@ -30,5 +33,15 @@ class QuoteRequestToCompanyUserFacadeBridge implements QuoteRequestToCompanyUser
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array
     {
         return $this->companyUserFacade->getCustomerReferencesByCompanyUserIds($companyUserIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getCompanyUserCollection(CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer): CompanyUserCollectionTransfer
+    {
+        return $this->companyUserFacade->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
     }
 }
