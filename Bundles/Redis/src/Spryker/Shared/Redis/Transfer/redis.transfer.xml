@@ -7,7 +7,7 @@
     <transfer name="RedisConfiguration">
         <property name="dataSourceNames" type="array" />
         <property name="connectionCredentials" type="RedisCredentials" />
-        <property name="connectionOptions" type="array" singular="connectionOption" associative="true" />
+        <property name="clientOptions" type="array" singular="clientOption" associative="true" />
     </transfer>
 
     <transfer name="RedisCredentials">

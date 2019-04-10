@@ -40,7 +40,7 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
     {
         return new Client(
             $this->getConnectionParameters($redisConfigurationTransfer),
-            $redisConfigurationTransfer->getConnectionOptions()
+            $redisConfigurationTransfer->getClientOptions()
         );
     }
 
@@ -90,7 +90,7 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
      *
      * @return array
      */
-    protected function clearEmptyPassword(array $connectionCredentials)
+    protected function clearEmptyPassword(array $connectionCredentials): array
     {
         if (isset($connectionCredentials[RedisCredentialsTransfer::PASSWORD]) && !$connectionCredentials[RedisCredentialsTransfer::PASSWORD]) {
             unset($connectionCredentials[RedisCredentialsTransfer::PASSWORD]);
