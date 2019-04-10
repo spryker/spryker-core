@@ -12,7 +12,6 @@ use Spryker\Client\QuoteRequest\Converter\QuoteRequestConverter;
 use Spryker\Client\QuoteRequest\Converter\QuoteRequestConverterInterface;
 use Spryker\Client\QuoteRequest\Creator\QuoteRequestCreator;
 use Spryker\Client\QuoteRequest\Creator\QuoteRequestCreatorInterface;
-use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCompanyUserClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
@@ -48,8 +47,7 @@ class QuoteRequestFactory extends AbstractFactory
     public function createQuoteValidator(): QuoteValidatorInterface
     {
         return new QuoteValidator(
-            $this->getCompanyUserClient(),
-            $this->getQuoteRequestCreatePreCheckPlugins()
+            $this->getQuoteRequestQuoteCheckPlugins()
         );
     }
 
@@ -113,17 +111,9 @@ class QuoteRequestFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCompanyUserClientInterface
+     * @return \Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestQuoteCheckPluginInterface[]
      */
-    public function getCompanyUserClient(): QuoteRequestToCompanyUserClientInterface
-    {
-        return $this->getProvidedDependency(QuoteRequestDependencyProvider::CLIENT_COMPANY_USER);
-    }
-
-    /**
-     * @return \Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestCreatePreCheckPluginInterface[]
-     */
-    public function getQuoteRequestCreatePreCheckPlugins(): array
+    public function getQuoteRequestQuoteCheckPlugins(): array
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::PLUGINS_QUOTE_REQUEST_CREATE_PRE_CHECK);
     }

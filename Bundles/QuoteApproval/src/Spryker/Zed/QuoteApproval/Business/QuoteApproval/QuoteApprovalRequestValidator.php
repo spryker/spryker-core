@@ -26,6 +26,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     use PermissionAwareTrait;
 
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    protected const GLOSSARY_KEY_CART_CANT_BE_SENT_FOR_APPROVAL = 'quote_approval.create.cart_cant_be_sent_for_approval';
     protected const GLOSSARY_KEY_APPROVER_CANT_APPROVE_QUOTE = 'quote_approval.create.approver_cant_approve_quote';
     protected const GLOSSARY_KEY_YOU_CANT_APPROVE_QUOTE = 'quote_approval.create.you_cant_approve_quote';
     protected const GLOSSARY_KEY_QUOTE_ALREADY_APPROVED = 'quote_approval.create.quote_already_approved';
@@ -88,6 +89,10 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
      */
     public function validateQuoteApprovalCreateRequest(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
+        if ($quoteApprovalRequestTransfer->getIdQuote() === null) {
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_CART_CANT_BE_SENT_FOR_APPROVAL);
+        }
+
         $this->assertQuoteApprovalCreateRequestValid($quoteApprovalRequestTransfer);
         $quoteTransfer = $this->getQuoteById($quoteApprovalRequestTransfer->getIdQuote());
 
@@ -186,8 +191,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     protected function assertQuoteApprovalCreateRequestValid(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): void
     {
         $quoteApprovalRequestTransfer->requireApproverCompanyUserId()
-            ->requireRequesterCompanyUserId()
-            ->requireIdQuote();
+            ->requireRequesterCompanyUserId();
     }
 
     /**

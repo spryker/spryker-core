@@ -96,21 +96,6 @@ interface QuoteApprovalClientInterface
 
     /**
      * Specification:
-     * - Returns false if customer is not company user.
-     * - Returns false if customer is not quote owner.
-     * - Returns false if customer doesn't have RequestQuoteApprovalPermissionPlugin permission.
-     * - Executes QuoteApprovalCreatePreCheckPluginInterface plugins, if at least one plugin returns false - returns false, returns true otherwise.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteApplicableForApproval(QuoteTransfer $quoteTransfer): bool;
-
-    /**
-     * Specification:
      * - Returns true if quote status is `waiting`.
      *
      * @api

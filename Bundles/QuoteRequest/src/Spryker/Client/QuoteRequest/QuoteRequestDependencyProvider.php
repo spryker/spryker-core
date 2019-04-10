@@ -9,7 +9,6 @@ namespace Spryker\Client\QuoteRequest;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCompanyUserClientBridge;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientBridge;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientBridge;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientBridge;
@@ -22,7 +21,6 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
-    public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
     public const PLUGINS_QUOTE_REQUEST_CREATE_PRE_CHECK = 'PLUGINS_QUOTE_REQUEST_CREATE_PRE_CHECK';
 
     /**
@@ -36,8 +34,7 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
         $container = $this->addZedRequestClient($container);
         $container = $this->addPersistentCartClient($container);
         $container = $this->addQuoteClient($container);
-        $container = $this->addCompanyUserClient($container);
-        $container = $this->addQuoteRequestCreatePreCheckPlugins($container);
+        $container = $this->addQuoteRequestQuoteCheckPlugins($container);
 
         return $container;
     }
@@ -89,33 +86,19 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCompanyUserClient(Container $container): Container
-    {
-        $container[static::CLIENT_COMPANY_USER] = function (Container $container) {
-            return new QuoteRequestToCompanyUserClientBridge($container->getLocator()->companyUser()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addQuoteRequestCreatePreCheckPlugins(Container $container): Container
+    protected function addQuoteRequestQuoteCheckPlugins(Container $container): Container
     {
         $container[static::PLUGINS_QUOTE_REQUEST_CREATE_PRE_CHECK] = function (Container $container) {
-            return $this->getQuoteRequestCreatePreCheckPlugins();
+            return $this->getQuoteRequestQuoteCheckPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestCreatePreCheckPluginInterface[]
+     * @return \Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestQuoteCheckPluginInterface[]
      */
-    protected function getQuoteRequestCreatePreCheckPlugins(): array
+    protected function getQuoteRequestQuoteCheckPlugins(): array
     {
         return [];
     }

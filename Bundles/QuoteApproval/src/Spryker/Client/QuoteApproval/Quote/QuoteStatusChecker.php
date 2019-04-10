@@ -9,7 +9,6 @@ namespace Spryker\Client\QuoteApproval\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\PermissionAwareTrait;
-use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToCompanyUserClientInterface;
 use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProviderInterface;
 use Spryker\Client\QuoteApproval\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Client\QuoteApproval\Plugin\Permission\PlaceOrderPermissionPlugin;
@@ -30,31 +29,15 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
     protected $permissionContextProvider;
 
     /**
-     * @var \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToCompanyUserClientInterface
-     */
-    protected $companyUserClient;
-
-    /**
-     * @var \Spryker\Client\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalCreatePreCheckPluginInterface[]
-     */
-    protected $quoteApprovalCreatePreCheckPlugins;
-
-    /**
      * @param \Spryker\Client\QuoteApproval\Quote\QuoteStatusCalculatorInterface $quoteStatusCalculator
      * @param \Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProviderInterface $permissionContextProvider
-     * @param \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToCompanyUserClientInterface $companyUserClient
-     * @param \Spryker\Client\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalCreatePreCheckPluginInterface[] $quoteApprovalCreatePreCheckPlugins
      */
     public function __construct(
         QuoteStatusCalculatorInterface $quoteStatusCalculator,
-        PermissionContextProviderInterface $permissionContextProvider,
-        QuoteApprovalToCompanyUserClientInterface $companyUserClient,
-        array $quoteApprovalCreatePreCheckPlugins
+        PermissionContextProviderInterface $permissionContextProvider
     ) {
         $this->quoteStatusCalculator = $quoteStatusCalculator;
         $this->permissionContextProvider = $permissionContextProvider;
-        $this->companyUserClient = $companyUserClient;
-        $this->quoteApprovalCreatePreCheckPlugins = $quoteApprovalCreatePreCheckPlugins;
     }
 
     /**
@@ -73,28 +56,6 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
         }
 
         return !$this->isQuoteApproved($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteApplicableForApproval(QuoteTransfer $quoteTransfer): bool
-    {
-        if (!$this->companyUserClient->findCompanyUser()) {
-            return false;
-        }
-
-        if ($quoteTransfer->getCustomerReference() !== $quoteTransfer->getCustomer()->getCustomerReference()) {
-            return false;
-        }
-
-        if (!$this->can('RequestQuoteApprovalPermissionPlugin')) {
-            return false;
-        }
-
-        return $this->executeQuoteApprovalCreatePreCheckPlugins($quoteTransfer);
     }
 
     /**
@@ -131,21 +92,5 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
             ->calculateQuoteStatus($quoteTransfer);
 
         return $quoteTransfer === QuoteApprovalConfig::STATUS_APPROVED;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function executeQuoteApprovalCreatePreCheckPlugins(QuoteTransfer $quoteTransfer): bool
-    {
-        foreach ($this->quoteApprovalCreatePreCheckPlugins as $quoteApprovalCreatePreCheckPlugin) {
-            if (!$quoteApprovalCreatePreCheckPlugin->check($quoteTransfer)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

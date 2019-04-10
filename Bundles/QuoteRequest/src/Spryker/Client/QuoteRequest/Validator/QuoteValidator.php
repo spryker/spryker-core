@@ -9,30 +9,22 @@ namespace Spryker\Client\QuoteRequest\Validator;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\PermissionAwareTrait;
-use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCompanyUserClientInterface;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
     use PermissionAwareTrait;
 
     /**
-     * @var \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCompanyUserClientInterface
+     * @var \Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestQuoteCheckPluginInterface[]
      */
-    protected $companyUserClient;
+    protected $quoteRequestQuoteCheckPlugins;
 
     /**
-     * @var \Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestCreatePreCheckPluginInterface[]
+     * @param array $quoteRequestQuoteCheckPlugins
      */
-    protected $quoteRequestCreatePreCheckPlugins;
-
-    /**
-     * @param \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCompanyUserClientInterface $companyUserClient
-     * @param array $quoteRequestCreatePreCheckPlugins
-     */
-    public function __construct(QuoteRequestToCompanyUserClientInterface $companyUserClient, array $quoteRequestCreatePreCheckPlugins)
+    public function __construct(array $quoteRequestQuoteCheckPlugins)
     {
-        $this->companyUserClient = $companyUserClient;
-        $this->quoteRequestCreatePreCheckPlugins = $quoteRequestCreatePreCheckPlugins;
+        $this->quoteRequestQuoteCheckPlugins = $quoteRequestQuoteCheckPlugins;
     }
 
     /**
@@ -42,7 +34,7 @@ class QuoteValidator implements QuoteValidatorInterface
      */
     public function isQuoteApplicableForQuoteRequest(QuoteTransfer $quoteTransfer): bool
     {
-        if (!$this->companyUserClient->findCompanyUser()) {
+        if (!$quoteTransfer->getCustomer() || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()) {
             return false;
         }
 
@@ -54,7 +46,7 @@ class QuoteValidator implements QuoteValidatorInterface
             return false;
         }
 
-        return $this->executeQuoteRequestCreatePreCheckPlugins($quoteTransfer);
+        return $this->executeQuoteRequestQuoteCheckPlugins($quoteTransfer);
     }
 
     /**
@@ -73,10 +65,10 @@ class QuoteValidator implements QuoteValidatorInterface
      *
      * @return bool
      */
-    protected function executeQuoteRequestCreatePreCheckPlugins(QuoteTransfer $quoteTransfer): bool
+    protected function executeQuoteRequestQuoteCheckPlugins(QuoteTransfer $quoteTransfer): bool
     {
-        foreach ($this->quoteRequestCreatePreCheckPlugins as $quoteRequestCreatePreCheckPlugin) {
-            if (!$quoteRequestCreatePreCheckPlugin->check($quoteTransfer)) {
+        foreach ($this->quoteRequestQuoteCheckPlugins as $quoteRequestQuoteCheckPlugin) {
+            if (!$quoteRequestQuoteCheckPlugin->check($quoteTransfer)) {
                 return false;
             }
         }

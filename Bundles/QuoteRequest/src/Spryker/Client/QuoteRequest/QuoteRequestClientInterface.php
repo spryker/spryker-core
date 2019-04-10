@@ -21,7 +21,11 @@ interface QuoteRequestClientInterface
 {
     /**
      * Specification:
+     * - Returns unsuccessful response with corresponding message if current logged in customer is not company user.
+     * - Returns unsuccessful response with corresponding message if current logged in customer is not quote owner and doesn't have "WriteSharedCartPermissionPlugin" permission.
+     * - Executes `QuoteRequestQuoteCheckPluginInterface` plugins, if at least one returns false - returns unsuccessful response.
      * - Makes Zed request.
+     * - Returns unsuccessful response with corresponding message if target quote has no items.
      * - Creates "Request for Quote" for the provided company user with "draft" status.
      * - Generates unique reference number.
      * - Generates version for the "Request for Quote" entity.
@@ -193,8 +197,8 @@ interface QuoteRequestClientInterface
     /**
      * Specification:
      *  - Returns false if current logged in customer is not company user.
-     *  - Returns false if customer can't write quote.
-     *  - Executes `QuoteRequestCreatePreCheckPluginInterface` returns false if at least one plugin returns false - true otherwise.
+     *  - Returns false if logged in customer is not quote owner and doesn't have "WriteSharedCartPermissionPlugin" permission.
+     *  - Executes `QuoteRequestQuoteCheckPluginInterface` returns false if at least one plugin returns false - true otherwise.
      *
      * @api
      *

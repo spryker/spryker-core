@@ -8,7 +8,7 @@
     "spryker/cart-extension": "^2.4.0",
     "spryker/checkout-extension": "^1.1.0",
     "spryker/company-role": "^1.3.0",
-    "spryker/company-user": "^2.9.0",
+    "spryker/company-user": "^2.0.0",
     "spryker/customer": "^7.11.0",
     "spryker/kernel": "^3.17.0",
     "spryker/permission-extension": "^1.0.0",

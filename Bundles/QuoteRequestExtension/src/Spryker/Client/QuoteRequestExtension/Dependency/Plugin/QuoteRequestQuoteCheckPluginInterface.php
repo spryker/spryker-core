@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\QuoteApprovalExtension\Dependency\Plugin;
+namespace Spryker\Client\QuoteRequestExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteApprovalCreatePreCheckPluginInterface
+interface QuoteRequestQuoteCheckPluginInterface
 {
     /**
      * Specification:
-     * - Returns true if quote applicable for approval - false otherwise.
+     * - Returns if quote is applicable for quote request creation.
      *
      * @api
      *

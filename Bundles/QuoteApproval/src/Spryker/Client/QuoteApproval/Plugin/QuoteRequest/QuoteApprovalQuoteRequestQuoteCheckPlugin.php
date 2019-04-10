@@ -9,12 +9,12 @@ namespace Spryker\Client\QuoteApproval\Plugin\QuoteRequest;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestCreatePreCheckPluginInterface;
+use Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestQuoteCheckPluginInterface;
 
 /**
  * @method \Spryker\Client\QuoteApproval\QuoteApprovalClientInterface getClient()
  */
-class QuoteApprovalQuoteRequestCreatePreCheckPlugin extends AbstractPlugin implements QuoteRequestCreatePreCheckPluginInterface
+class QuoteApprovalQuoteRequestQuoteCheckPlugin extends AbstractPlugin implements QuoteRequestQuoteCheckPluginInterface
 {
     /**
      * {@inheritdoc}
