@@ -246,4 +246,16 @@ interface QuoteRequestFacadeInterface
      * @return void
      */
     public function closeOutdatedQuoteRequests(): void;
+
+    /**
+     * Specification:
+     * - Sanitizes data related to request for quote in quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function sanitizeQuoteRequest(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

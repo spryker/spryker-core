@@ -237,4 +237,17 @@ class PersistentCartStub implements PersistentCartStubInterface
 
         return $quoteResponseTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart/gateway/unlock-quote', $quoteTransfer);
+
+        return $quoteResponseTransfer;
+    }
 }

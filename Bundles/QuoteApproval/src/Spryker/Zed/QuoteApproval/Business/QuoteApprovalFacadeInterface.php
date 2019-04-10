@@ -107,4 +107,17 @@ interface QuoteApprovalFacadeInterface
      * @return void
      */
     public function removeApprovalsByIdQuote(int $idQuote): void;
+
+    /**
+     * Specification:
+     * - Sanitizes data related to quote approval in quote.
+     * - Declines all approvals for quote from Persistence if quote id provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function sanitizeQuoteApproval(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }
