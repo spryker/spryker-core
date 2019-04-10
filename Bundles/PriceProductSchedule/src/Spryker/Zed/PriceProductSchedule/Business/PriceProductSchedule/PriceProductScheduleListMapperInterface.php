@@ -17,5 +17,7 @@ interface PriceProductScheduleListMapperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
      */
-    public function mapPriceProductScheduleListEntityToPriceProductScheduleListTransfer(SpyPriceProductScheduleList $priceProductScheduleListEntity): PriceProductScheduleListTransfer;
+    public function mapPriceProductScheduleListEntityToPriceProductScheduleListTransfer(
+        SpyPriceProductScheduleList $priceProductScheduleListEntity
+    ): PriceProductScheduleListTransfer;
 }

@@ -117,8 +117,11 @@ class PriceProductScheduleReaderTest extends Unit
      *
      * @return void
      */
-    public function testFindSimilarPriceProductSchedulesToDisable(array $activePriceProductScheduleData, array $data, int $expectedCount): void
-    {
+    public function testFindSimilarPriceProductSchedulesToDisable(
+        array $activePriceProductScheduleData,
+        array $data,
+        int $expectedCount
+    ): void {
         // Assign
         $priceProductData = $this->getPriceProductData();
         $activePriceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT] = $priceProductData;

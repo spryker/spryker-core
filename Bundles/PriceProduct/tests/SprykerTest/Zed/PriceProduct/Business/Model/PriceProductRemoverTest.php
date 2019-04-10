@@ -35,37 +35,37 @@ class PriceProductRemoverTest extends Unit
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductBusinessFactory
      */
-    private $priceProductFactory;
+    protected $priceProductFactory;
 
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemoverInterface
      */
-    private $priceProductRemover;
+    protected $priceProductRemover;
 
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
-    private $priceProductFacade;
+    protected $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Store\Business\StoreFacadeInterface
      */
-    private $storeFacade;
+    protected $storeFacade;
 
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Currency\Business\CurrencyFacadeInterface
      */
-    private $currencyFacade;
+    protected $currencyFacade;
 
     /**
      * @var \Spryker\Shared\PriceProduct\PriceProductConfig
      */
-    private $priceProductConfig;
+    protected $priceProductConfig;
 
     /**
      * @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    private $priceProductQuery;
+    protected $priceProductQuery;
 
     /**
      * @return void

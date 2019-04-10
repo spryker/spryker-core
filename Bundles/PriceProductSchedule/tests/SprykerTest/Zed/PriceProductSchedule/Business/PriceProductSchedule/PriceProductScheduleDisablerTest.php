@@ -17,6 +17,7 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactor
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductSchedule
@@ -98,8 +99,11 @@ class PriceProductScheduleDisablerTest extends Unit
      *
      * @return void
      */
-    public function testDisableOtherSimilarPriceProductSchedules(array $activePriceProductScheduleData, array $data, int $expectedActiveCountLeft): void
-    {
+    public function testDisableOtherSimilarPriceProductSchedules(
+        array $activePriceProductScheduleData,
+        array $data,
+        int $expectedActiveCountLeft
+    ): void {
         // Assign
         $priceProductData = $this->getPriceProductData();
         $activePriceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT] = $priceProductData;

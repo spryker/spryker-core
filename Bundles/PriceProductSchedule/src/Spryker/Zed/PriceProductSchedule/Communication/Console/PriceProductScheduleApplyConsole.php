@@ -25,8 +25,8 @@ class PriceProductScheduleApplyConsole extends Console
      */
     protected function configure(): void
     {
-        $this->setName(self::COMMAND_NAME)
-            ->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME)
+            ->setDescription(static::DESCRIPTION);
     }
 
     /**

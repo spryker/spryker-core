@@ -17,6 +17,7 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactor
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductSchedule
@@ -32,7 +33,7 @@ class PriceProductScheduleApplierTest extends Unit
     public const KEY_IS_PRODUCT_CONCRETE = 'isProductConcrete';
     public const KEY_IS_PRODUCT_ABSTRACT = 'isProductAbstract';
     public const KEY_PRICE_PRODUCT_SCHEDULE_DATA = 'priceProductScheduleData';
-    
+
     /**
      * @var \SprykerTest\Zed\PriceProductSchedule\PriceProductScheduleBusinessTester
      */
@@ -153,8 +154,9 @@ class PriceProductScheduleApplierTest extends Unit
      *
      * @return void
      */
-    public function testPriceProductScheduleForDifferentConcreteProductsShouldApply(array $priceProductScheduleTestData = []): void
-    {
+    public function testPriceProductScheduleForDifferentConcreteProductsShouldApply(
+        array $priceProductScheduleTestData = []
+    ): void {
         // Assign
         foreach ($priceProductScheduleTestData as $productScheduleTestData) {
             $priceProductScheduleData = $productScheduleTestData[static::KEY_PRICE_PRODUCT_SCHEDULE_DATA];
@@ -192,8 +194,9 @@ class PriceProductScheduleApplierTest extends Unit
      *
      * @return void
      */
-    public function testPriceProductScheduleForDifferentAbstractProductsShouldApply(array $priceProductScheduleTestData = []): void
-    {
+    public function testPriceProductScheduleForDifferentAbstractProductsShouldApply(
+        array $priceProductScheduleTestData = []
+    ): void {
         // Assign
         foreach ($priceProductScheduleTestData as $productScheduleTestData) {
             $priceProductScheduleData = $productScheduleTestData[static::KEY_PRICE_PRODUCT_SCHEDULE_DATA];
@@ -231,7 +234,8 @@ class PriceProductScheduleApplierTest extends Unit
      *
      * @return void
      */
-    public function testPriceProductScheduleForDifferentCurrenciesShouldApply(array $priceProductScheduleTestData = []): void
+    public function testPriceProductScheduleForDifferentCurrenciesShouldApply(array $priceProductScheduleTestData = []
+    ): void
     {
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();

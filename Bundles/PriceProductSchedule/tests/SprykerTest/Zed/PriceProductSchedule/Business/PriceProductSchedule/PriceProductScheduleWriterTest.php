@@ -17,6 +17,7 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactor
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductSchedule

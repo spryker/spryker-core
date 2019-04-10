@@ -54,8 +54,9 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
-    public function mapPriceProductScheduleEntityToPriceProductScheduleTransfer(SpyPriceProductSchedule $priceProductScheduleEntity): PriceProductScheduleTransfer
-    {
+    public function mapPriceProductScheduleEntityToPriceProductScheduleTransfer(
+        SpyPriceProductSchedule $priceProductScheduleEntity
+    ): PriceProductScheduleTransfer {
         $priceProductTransfer = $this->mapPriceProductScheduleEntityToPriceProductTransfer($priceProductScheduleEntity);
 
         $priceProductScheduleListTransfer = $this->priceProductScheduleListMapper
@@ -77,15 +78,18 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         PriceProductScheduleTransfer $priceProductScheduleTransfer,
         SpyPriceProductSchedule $priceProductScheduleEntity
     ): SpyPriceProductSchedule {
+        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
         return $priceProductScheduleEntity
-            ->setFkCurrency($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getFkCurrency())
-            ->setFkStore($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getFkStore())
-            ->setFkPriceType($priceProductScheduleTransfer->getPriceProduct()->getPriceType()->getIdPriceType())
-            ->setFkProduct($priceProductScheduleTransfer->getPriceProduct()->getIdProduct())
-            ->setFkProductAbstract($priceProductScheduleTransfer->getPriceProduct()->getIdProductAbstract())
+            ->setFkCurrency($moneyValueTransfer->getFkCurrency())
+            ->setFkStore($moneyValueTransfer->getFkStore())
+            ->setFkPriceType($priceProductTransfer->getPriceType()->getIdPriceType())
+            ->setFkProduct($priceProductTransfer->getIdProduct())
+            ->setFkProductAbstract($priceProductTransfer->getIdProductAbstract())
             ->setFkPriceProductScheduleList($priceProductScheduleTransfer->getPriceProductScheduleList()->getIdPriceProductScheduleList())
-            ->setNetPrice($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getNetAmount())
-            ->setGrossPrice($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getGrossAmount())
+            ->setNetPrice($moneyValueTransfer->getNetAmount())
+            ->setGrossPrice($moneyValueTransfer->getGrossAmount())
             ->setActiveFrom($priceProductScheduleTransfer->getActiveFrom())
             ->setActiveTo($priceProductScheduleTransfer->getActiveTo())
             ->setIsCurrent($priceProductScheduleTransfer->getIsCurrent());
@@ -112,8 +116,9 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function mapPriceProductScheduleEntityToPriceProductTransfer(SpyPriceProductSchedule $priceProductScheduleEntity): PriceProductTransfer
-    {
+    protected function mapPriceProductScheduleEntityToPriceProductTransfer(
+        SpyPriceProductSchedule $priceProductScheduleEntity
+    ): PriceProductTransfer {
         $moneyValueTransfer = $this->mapPriceProductScheduleEntityToMoneyValueTransfer($priceProductScheduleEntity);
 
         $priceTypeTransfer = $this->mapPriceTypeEntityToPriceTypeTransfer($priceProductScheduleEntity->getPriceType());
@@ -124,7 +129,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             ->setPriceType($priceTypeTransfer)
             ->setFkPriceType($priceTypeTransfer->getIdPriceType())
             ->setMoneyValue($moneyValueTransfer)
-            ->setPriceDimension($this->getPriceProductDimensionTransfer($priceProductScheduleEntity));
+            ->setPriceDimension($this->mapPriceProductScheduleEntityToPriceProductDimensionTransfer($priceProductScheduleEntity));
 
         if ($priceProductScheduleEntity->getFkProduct()) {
             $productConcreteTransfer = $this->productFacade->findProductConcreteById($priceProductScheduleEntity->getFkProduct());
@@ -150,8 +155,9 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
-    protected function mapPriceProductScheduleEntityToMoneyValueTransfer(SpyPriceProductSchedule $priceProductScheduleEntity): MoneyValueTransfer
-    {
+    protected function mapPriceProductScheduleEntityToMoneyValueTransfer(
+        SpyPriceProductSchedule $priceProductScheduleEntity
+    ): MoneyValueTransfer {
         $currencyTransfer = $this->currencyFacade
             ->getByIdCurrency($priceProductScheduleEntity->getFkCurrency());
 
@@ -170,10 +176,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     protected function mapPriceTypeEntityToPriceTypeTransfer(SpyPriceType $spyPriceType): PriceTypeTransfer
     {
         return (new PriceTypeTransfer())
-            ->fromArray($spyPriceType->toArray(), true)
-            ->setIdPriceType($spyPriceType->getIdPriceType())
-            ->setName($spyPriceType->getName())
-            ->setPriceModeConfiguration($spyPriceType->getPriceModeConfiguration());
+            ->fromArray($spyPriceType->toArray(), true);
     }
 
     /**
@@ -181,7 +184,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
      */
-    protected function getPriceProductDimensionTransfer(
+    protected function mapPriceProductScheduleEntityToPriceProductDimensionTransfer(
         SpyPriceProductSchedule $priceProductScheduleEntity
     ): PriceProductDimensionTransfer {
 

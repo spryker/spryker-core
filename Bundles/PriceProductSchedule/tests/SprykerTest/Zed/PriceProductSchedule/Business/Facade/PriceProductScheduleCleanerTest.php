@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductSchedule

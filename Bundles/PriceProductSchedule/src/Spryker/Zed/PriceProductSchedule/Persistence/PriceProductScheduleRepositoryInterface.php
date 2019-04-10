@@ -30,7 +30,8 @@ interface PriceProductScheduleRepositoryInterface
      *
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule[]
      */
-    public function findSimilarPriceProductSchedulesToDisable(PriceProductScheduleTransfer $priceProductScheduleTransfer): array;
+    public function findSimilarPriceProductSchedulesToDisable(PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): array;
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer

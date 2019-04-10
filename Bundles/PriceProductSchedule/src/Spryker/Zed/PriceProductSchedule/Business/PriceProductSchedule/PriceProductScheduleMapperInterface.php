@@ -17,7 +17,9 @@ interface PriceProductScheduleMapperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
-    public function mapPriceProductScheduleEntityToPriceProductScheduleTransfer(SpyPriceProductSchedule $priceProductScheduleEntity): PriceProductScheduleTransfer;
+    public function mapPriceProductScheduleEntityToPriceProductScheduleTransfer(
+        SpyPriceProductSchedule $priceProductScheduleEntity
+    ): PriceProductScheduleTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
@@ -25,12 +27,16 @@ interface PriceProductScheduleMapperInterface
      *
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule
      */
-    public function mapPriceProductScheduleTransferToPriceProductScheduleEntity(PriceProductScheduleTransfer $priceProductScheduleTransfer, SpyPriceProductSchedule $priceProductScheduleEntity): SpyPriceProductSchedule;
+    public function mapPriceProductScheduleTransferToPriceProductScheduleEntity(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer,
+        SpyPriceProductSchedule $priceProductScheduleEntity
+    ): SpyPriceProductSchedule;
 
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule[] $priceProductScheduleEntities
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
-    public function mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities): array;
+    public function mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities
+    ): array;
 }

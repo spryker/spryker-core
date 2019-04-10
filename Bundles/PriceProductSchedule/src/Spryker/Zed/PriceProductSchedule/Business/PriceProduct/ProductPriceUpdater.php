@@ -43,12 +43,15 @@ class ProductPriceUpdater implements ProductPriceUpdaterInterface
      *
      * @return void
      */
-    public function updateCurrentProductPrice(PriceProductTransfer $fallbackPriceProductTransfer, PriceTypeTransfer $currentPriceType): void
-    {
+    public function updateCurrentProductPrice(
+        PriceProductTransfer $fallbackPriceProductTransfer,
+        PriceTypeTransfer $currentPriceType
+    ): void {
+        $fallbackMoneyValueTransfer = $fallbackPriceProductTransfer->getMoneyValue();
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setSku($fallbackPriceProductTransfer->getSkuProduct())
             ->setPriceTypeName($currentPriceType->getName())
-            ->setCurrencyIsoCode($fallbackPriceProductTransfer->getMoneyValue()->getCurrency()->getCode());
+            ->setCurrencyIsoCode($fallbackMoneyValueTransfer->getCurrency()->getCode());
 
         $priceProductTransferForUpdate = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
@@ -56,8 +59,8 @@ class ProductPriceUpdater implements ProductPriceUpdaterInterface
             return;
         }
 
-        $priceProductTransferForUpdate->getMoneyValue()->setGrossAmount($fallbackPriceProductTransfer->getMoneyValue()->getGrossAmount());
-        $priceProductTransferForUpdate->getMoneyValue()->setNetAmount($fallbackPriceProductTransfer->getMoneyValue()->getNetAmount());
+        $priceProductTransferForUpdate->getMoneyValue()->setGrossAmount($fallbackMoneyValueTransfer->getGrossAmount());
+        $priceProductTransferForUpdate->getMoneyValue()->setNetAmount($fallbackMoneyValueTransfer->getNetAmount());
 
         $this->priceProductFacade->persistPriceProductStore($priceProductTransferForUpdate);
     }

@@ -21,5 +21,6 @@ interface PriceProductScheduleDisablerInterface
      *
      * @return void
      */
-    public function disableOtherSimilarPriceProductSchedules(PriceProductScheduleTransfer $priceProductScheduleTransfer): void;
+    public function disableOtherSimilarPriceProductSchedules(PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): void;
 }

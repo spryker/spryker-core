@@ -159,8 +159,9 @@ class PriceProductScheduleApplyTest extends Unit
      *
      * @return void
      */
-    public function testPriceProductScheduleForDifferentConcreteProductsShouldApply(array $priceProductScheduleTestData = []): void
-    {
+    public function testPriceProductScheduleForDifferentConcreteProductsShouldApply(
+        array $priceProductScheduleTestData = []
+    ): void {
         // Assign
         foreach ($priceProductScheduleTestData as $productScheduleTestData) {
             $priceProductScheduleData = $productScheduleTestData[static::KEY_PRICE_PRODUCT_SCHEDULE_DATA];
@@ -198,8 +199,9 @@ class PriceProductScheduleApplyTest extends Unit
      *
      * @return void
      */
-    public function testPriceProductScheduleForDifferentAbstractProductsShouldApply(array $priceProductScheduleTestData = []): void
-    {
+    public function testPriceProductScheduleForDifferentAbstractProductsShouldApply(
+        array $priceProductScheduleTestData = []
+    ): void {
         // Assign
         foreach ($priceProductScheduleTestData as $productScheduleTestData) {
             $priceProductScheduleData = $productScheduleTestData[static::KEY_PRICE_PRODUCT_SCHEDULE_DATA];
@@ -237,7 +239,8 @@ class PriceProductScheduleApplyTest extends Unit
      *
      * @return void
      */
-    public function testPriceProductScheduleForDifferentCurrenciesShouldApply(array $priceProductScheduleTestData = []): void
+    public function testPriceProductScheduleForDifferentCurrenciesShouldApply(array $priceProductScheduleTestData = []
+    ): void
     {
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();

@@ -17,6 +17,7 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactor
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductSchedule
@@ -68,8 +69,11 @@ class PriceProductScheduleCleanerTest extends Unit
      *
      * @return void
      */
-    public function testPriceProductScheduleCleanerShouldRemoveAllEntitiesBeforeDaysRetained(array $data, int $daysRetained, int $expectedCount): void
-    {
+    public function testPriceProductScheduleCleanerShouldRemoveAllEntitiesBeforeDaysRetained(
+        array $data,
+        int $daysRetained,
+        int $expectedCount
+    ): void {
         // Assign
         foreach ($data as $priceProductScheduleData) {
             $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT] = $this->getPriceProductData();

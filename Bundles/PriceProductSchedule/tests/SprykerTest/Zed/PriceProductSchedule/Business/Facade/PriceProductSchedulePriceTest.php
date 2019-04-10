@@ -76,10 +76,16 @@ class PriceProductSchedulePriceTest extends Unit
 
         // Assert
         $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $this->assertTrue($priceProductScheduleEntity->isCurrent(), 'Scheduled price with lowest gross price should have been set as current.');
+        $this->assertTrue(
+            $priceProductScheduleEntity->isCurrent(),
+            'Scheduled price with lowest gross price should have been set as current.'
+        );
 
         $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
-        $this->assertFalse($priceProductScheduleEntity2->isCurrent(), 'Scheduled price with biggest gross price should not have been set as current.');
+        $this->assertFalse(
+            $priceProductScheduleEntity2->isCurrent(),
+            'Scheduled price with biggest gross price should not have been set as current.'
+        );
     }
 
     /**
@@ -105,10 +111,16 @@ class PriceProductSchedulePriceTest extends Unit
 
         // Assert
         $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $this->assertTrue($priceProductScheduleEntity->isCurrent(), 'Scheduled price with lowest net price should have been set as current.');
+        $this->assertTrue(
+            $priceProductScheduleEntity->isCurrent(),
+            'Scheduled price with lowest net price should have been set as current.'
+        );
 
         $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
-        $this->assertFalse($priceProductScheduleEntity2->isCurrent(), 'Scheduled price with biggest net price should not have been set as current.');
+        $this->assertFalse(
+            $priceProductScheduleEntity2->isCurrent(),
+            'Scheduled price with biggest net price should not have been set as current.'
+        );
     }
 
     /**

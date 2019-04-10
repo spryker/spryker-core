@@ -50,7 +50,8 @@ class PriceProductScheduleReader implements PriceProductScheduleReaderInterface
     {
         $priceProductScheduleEntities = $this->priceProductScheduleRepository->findPriceProductSchedulesToDisable();
 
-        return $this->priceProductScheduleMapper->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
     }
 
     /**
@@ -58,11 +59,13 @@ class PriceProductScheduleReader implements PriceProductScheduleReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
-    public function findSimilarPriceProductSchedulesToDisable(PriceProductScheduleTransfer $priceProductScheduleTransfer): array
-    {
+    public function findSimilarPriceProductSchedulesToDisable(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): array {
         $priceProductScheduleEntities = $this->priceProductScheduleRepository->findSimilarPriceProductSchedulesToDisable($priceProductScheduleTransfer);
 
-        return $this->priceProductScheduleMapper->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
     }
 
     /**
@@ -73,6 +76,7 @@ class PriceProductScheduleReader implements PriceProductScheduleReaderInterface
         $storeTransfer = $this->storeFacade->getCurrentStore();
         $priceProductScheduleEntities = $this->priceProductScheduleRepository->findPriceProductSchedulesToEnableByStore($storeTransfer);
 
-        return $this->priceProductScheduleMapper->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
     }
 }

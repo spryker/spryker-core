@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class PriceProductScheduleEntityManager extends AbstractEntityManager implements PriceProductScheduleEntityManagerInterface
 {
+    protected const PATTERN_MINUS_DAYS = '-%s days';
+
     /**
      * @param int $daysRetained
      *
@@ -26,7 +28,7 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
         $priceProductScheduleQuery = $this->getFactory()
             ->createPriceProductScheduleQuery();
 
-        $filterTo = (new DateTime(sprintf('-%s days', $daysRetained)));
+        $filterTo = (new DateTime(sprintf(static::PATTERN_MINUS_DAYS, $daysRetained)));
 
         $priceProductScheduleQuery
             ->filterByActiveTo(['max' => $filterTo], Criteria::LESS_THAN)

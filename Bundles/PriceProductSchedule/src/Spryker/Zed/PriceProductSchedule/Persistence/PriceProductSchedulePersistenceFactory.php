@@ -17,9 +17,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory
 {
-       /**
-        * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-        */
+    /**
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
     public function createPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
     {
         return SpyPriceProductScheduleQuery::create();

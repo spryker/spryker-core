@@ -54,7 +54,8 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
      *
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule[]
      */
-    public function findSimilarPriceProductSchedulesToDisable(PriceProductScheduleTransfer $priceProductScheduleTransfer): array
+    public function findSimilarPriceProductSchedulesToDisable(PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): array
     {
         return $this->getFactory()
             ->createPriceProductScheduleQuery()
@@ -64,7 +65,10 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->filterByFkPriceType($priceProductScheduleTransfer->getPriceProduct()->getPriceType()->getIdPriceType())
             ->filterByFkProduct($priceProductScheduleTransfer->getPriceProduct()->getIdProduct())
             ->filterByFkProductAbstract($priceProductScheduleTransfer->getPriceProduct()->getIdProductAbstract())
-            ->filterByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule(), Criteria::NOT_EQUAL)
+            ->filterByIdPriceProductSchedule(
+                $priceProductScheduleTransfer->getIdPriceProductSchedule(),
+                Criteria::NOT_EQUAL
+            )
             ->find()
             ->getData();
     }
@@ -76,7 +80,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
      */
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array
     {
-        $aQuery = $this->getFactory()
+        $queryWithConcatenatedFields = $this->getFactory()
             ->createPriceProductScheduleQuery()
             ->select([static::COL_PRODUCT_ID])
             ->addAsColumn(
@@ -104,25 +108,23 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->filterByActiveFrom(['max' => new DateTime()], Criteria::LESS_EQUAL)
             ->filterByActiveTo(['min' => new DateTime()], Criteria::GREATER_EQUAL);
 
-        $bQuery = $this->getFactory()
+        $filteredByMinResultQuery = $this->getFactory()
             ->createPriceProductScheduleQuery()
-            ->addSelectQuery($aQuery, 'A', false)
+            ->addSelectQuery($queryWithConcatenatedFields, 'A', false)
             ->addAsColumn(static::COL_PRODUCT_ID, 'A.' . static::COL_PRODUCT_ID)
             ->addAsColumn('R', sprintf('min(%s)', 'A.' . static::COL_RESULT))
             ->groupBy(static::COL_PRODUCT_ID)
             ->limit($this->getFactory()->getConfig()->getApplyBatchSize());
 
-        $q = $this->getFactory()
+        return $this->getFactory()
             ->createPriceProductScheduleQuery()
-            ->addSelectQuery($bQuery, 'B', false)
+            ->addSelectQuery($filteredByMinResultQuery, 'B', false)
             ->usePriceProductScheduleListQuery()
-                ->filterByIsActive(true)
+            ->filterByIsActive(true)
             ->endUse()
             ->filterByIsCurrent(false)
             ->where(SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE . ' = SUBSTRING(B.R from \'[0-9]+$\')::BIGINT')
             ->find()
             ->getData();
-
-        return $q;
     }
 }

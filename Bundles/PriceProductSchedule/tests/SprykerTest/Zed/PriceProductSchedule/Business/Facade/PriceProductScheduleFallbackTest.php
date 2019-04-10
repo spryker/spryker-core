@@ -147,8 +147,16 @@ class PriceProductScheduleFallbackTest extends Unit
 
         $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
-        $this->assertEquals($productPrice2->getMoneyValue()->getNetAmount(), $priceProductTransfer->getMoneyValue()->getNetAmount(), 'Product price type should be reverted after scheduled price is over.');
-        $this->assertEquals($productPrice2->getMoneyValue()->getGrossAmount(), $priceProductTransfer->getMoneyValue()->getGrossAmount(), 'Product price type should be reverted after scheduled price is over.');
+        $this->assertEquals(
+            $productPrice2->getMoneyValue()->getNetAmount(),
+            $priceProductTransfer->getMoneyValue()->getNetAmount(),
+            'Product price type should be reverted after scheduled price is over.'
+        );
+        $this->assertEquals(
+            $productPrice2->getMoneyValue()->getGrossAmount(),
+            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
+            'Product price type should be reverted after scheduled price is over.'
+        );
     }
 
     /**
@@ -175,7 +183,10 @@ class PriceProductScheduleFallbackTest extends Unit
             ->setIdProduct($productConcreteTransfer->getIdProductConcrete());
 
         $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
-        $this->assertNull($priceProductTransfer, 'Product price type should be removed after scheduled price is over if no fallback price os configured.');
+        $this->assertNull(
+            $priceProductTransfer,
+            'Product price type should be removed after scheduled price is over if no fallback price os configured.'
+        );
     }
 
     /**

@@ -18,5 +18,8 @@ interface ProductPriceUpdaterInterface
      *
      * @return void
      */
-    public function updateCurrentProductPrice(PriceProductTransfer $priceProductTransfer, PriceTypeTransfer $currentPriceType): void;
+    public function updateCurrentProductPrice(
+        PriceProductTransfer $priceProductTransfer,
+        PriceTypeTransfer $currentPriceType
+    ): void;
 }

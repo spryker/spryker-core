@@ -16,6 +16,7 @@ use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductSchedule

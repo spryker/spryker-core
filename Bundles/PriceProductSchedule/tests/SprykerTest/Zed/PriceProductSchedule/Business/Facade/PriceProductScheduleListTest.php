@@ -98,6 +98,9 @@ class PriceProductScheduleListTest extends Unit
 
         // Assert
         $priceProductScheduleEntity = $this->spyPriceProductScheduleQuery->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $this->assertFalse($priceProductScheduleEntity->isCurrent(), 'Scheduled price with not active price product schedule list should not have been set as current.');
+        $this->assertFalse(
+            $priceProductScheduleEntity->isCurrent(),
+            'Scheduled price with not active price product schedule list should not have been set as current.'
+        );
     }
 }

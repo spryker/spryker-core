@@ -16,6 +16,7 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactor
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductSchedule
@@ -108,7 +109,15 @@ class ProductPriceUpdaterTest extends Unit
 
         $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
-        $this->assertEquals($productPrice2->getMoneyValue()->getNetAmount(), $priceProductTransfer->getMoneyValue()->getNetAmount(), 'The net price should be updated.');
-        $this->assertEquals($productPrice2->getMoneyValue()->getGrossAmount(), $priceProductTransfer->getMoneyValue()->getGrossAmount(), 'The gross price should be updated.');
+        $this->assertEquals(
+            $productPrice2->getMoneyValue()->getNetAmount(),
+            $priceProductTransfer->getMoneyValue()->getNetAmount(),
+            'The net price should be updated.'
+        );
+        $this->assertEquals(
+            $productPrice2->getMoneyValue()->getGrossAmount(),
+            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
+            'The gross price should be updated.'
+        );
     }
 }

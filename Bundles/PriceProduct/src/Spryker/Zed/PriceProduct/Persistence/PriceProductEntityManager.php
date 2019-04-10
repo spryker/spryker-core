@@ -74,13 +74,15 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
      */
     public function deletePriceProductStoreByPriceProductTransfer(PriceProductTransfer $priceProductTransfer): void
     {
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
         $this->getFactory()
             ->createPriceProductStoreQuery()
-            ->filterByFkCurrency($priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency())
+            ->filterByFkCurrency($moneyValueTransfer->getCurrency()->getIdCurrency())
             ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
-            ->filterByFkStore($priceProductTransfer->getMoneyValue()->getFkStore())
-            ->filterByGrossPrice($priceProductTransfer->getMoneyValue()->getGrossAmount())
-            ->filterByNetPrice($priceProductTransfer->getMoneyValue()->getNetAmount())
+            ->filterByFkStore($moneyValueTransfer->getFkStore())
+            ->filterByGrossPrice($moneyValueTransfer->getGrossAmount())
+            ->filterByNetPrice($moneyValueTransfer->getNetAmount())
             ->find()
             ->delete();
     }

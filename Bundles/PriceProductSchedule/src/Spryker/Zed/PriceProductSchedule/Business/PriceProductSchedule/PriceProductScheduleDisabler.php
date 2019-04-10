@@ -83,7 +83,8 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
      *
      * @return void
      */
-    public function disableOtherSimilarPriceProductSchedules(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
+    public function disableOtherSimilarPriceProductSchedules(PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): void
     {
         $productSchedulePricesForDisable = $this->priceProductScheduleReader->findSimilarPriceProductSchedulesToDisable($priceProductScheduleTransfer);
 
@@ -99,23 +100,28 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
      */
     protected function executeFallbackLogic(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
     {
-        $fallbackPriceProduct = $this->priceProductFallbackFinder->findFallbackPriceProduct($priceProductScheduleTransfer->getPriceProduct());
+        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
+
+        $fallbackPriceProduct = $this->priceProductFallbackFinder->findFallbackPriceProduct($priceProductTransfer);
 
         $priceProductScheduleTransfer->setIsCurrent(false);
 
         $this->priceProductScheduleWriter->savePriceProductSchedule($priceProductScheduleTransfer);
 
         if ($fallbackPriceProduct !== null) {
-            $fallbackPriceProduct->setSkuProduct($priceProductScheduleTransfer->getPriceProduct()->getSkuProduct());
-            $this->productPriceUpdater->updateCurrentProductPrice($fallbackPriceProduct, $priceProductScheduleTransfer->getPriceProduct()->getPriceType());
+            $fallbackPriceProduct->setSkuProduct($priceProductTransfer->getSkuProduct());
+            $this->productPriceUpdater->updateCurrentProductPrice(
+                $fallbackPriceProduct,
+                $priceProductTransfer->getPriceType()
+            );
 
             return;
         }
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setSku($priceProductScheduleTransfer->getPriceProduct()->getSkuProduct())
-            ->setPriceTypeName($priceProductScheduleTransfer->getPriceProduct()->getPriceTypeName())
-            ->setCurrencyIsoCode($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getCurrency()->getCode());
+            ->setSku($priceProductTransfer->getSkuProduct())
+            ->setPriceTypeName($priceProductTransfer->getPriceTypeName())
+            ->setCurrencyIsoCode($priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
 
         $currentPriceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
