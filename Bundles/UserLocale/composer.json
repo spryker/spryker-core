@@ -8,6 +8,7 @@
     "spryker/application-extension": "^1.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
+    "spryker/locale-extension": "^1.0.0",
     "spryker/user": "^3.7.0",
     "spryker/user-extension": "^1.1.0"
   },

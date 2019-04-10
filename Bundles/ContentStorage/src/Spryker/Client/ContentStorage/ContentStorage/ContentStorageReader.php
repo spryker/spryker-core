@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ContentStorage\ContentStorage;
 
+use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface;
@@ -67,6 +68,27 @@ class ContentStorageReader implements ContentStorageReaderInterface
             ->setIdContent($idContent)
             ->setType($contentExtractorPlugin->getTypeKey())
             ->setContent($contentExtractorPlugin->execute($content[ContentStorageConfig::CONTENT_KEY]));
+    }
+
+    /**
+     * @param int $idContent
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentTypeContextTransfer|null
+     */
+    public function findContentTypeContext(int $idContent, string $localeName): ?ContentTypeContextTransfer
+    {
+        $storageKey = $this->generateKey((string)$idContent, $localeName);
+        $content = $this->storageClient->get($storageKey);
+
+        if (!$content) {
+            return null;
+        }
+
+        return (new ContentTypeContextTransfer())
+            ->setIdContent($idContent)
+            ->setTerm($content[ContentStorageConfig::TERM_KEY])
+            ->setParameters($content[ContentStorageConfig::CONTENT_KEY]);
     }
 
     /**
