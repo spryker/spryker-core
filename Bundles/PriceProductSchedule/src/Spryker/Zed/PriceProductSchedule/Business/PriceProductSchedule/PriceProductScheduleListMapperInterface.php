@@ -14,7 +14,6 @@ interface PriceProductScheduleListMapperInterface
 {
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList $priceProductScheduleListEntity
-     *
      * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
