@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
@@ -51,16 +52,24 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
     public function mapPriceProductScheduleEntityToPriceProductScheduleTransfer(
-        SpyPriceProductSchedule $priceProductScheduleEntity
+        SpyPriceProductSchedule $priceProductScheduleEntity,
+        PriceProductScheduleTransfer $priceProductTransfer
     ): PriceProductScheduleTransfer {
-        $priceProductTransfer = $this->mapPriceProductScheduleEntityToPriceProductTransfer($priceProductScheduleEntity);
+        $priceProductTransfer = $this->mapPriceProductScheduleEntityToPriceProductTransfer(
+            $priceProductScheduleEntity,
+            new PriceProductTransfer()
+        );
 
         $priceProductScheduleListTransfer = $this->priceProductScheduleListMapper
-            ->mapPriceProductScheduleListEntityToPriceProductScheduleListTransfer($priceProductScheduleEntity->getPriceProductScheduleList());
+            ->mapPriceProductScheduleListEntityToPriceProductScheduleListTransfer(
+                $priceProductScheduleEntity->getPriceProductScheduleList(),
+                new PriceProductScheduleListTransfer()
+            );
 
         return (new PriceProductScheduleTransfer())
             ->fromArray($priceProductScheduleEntity->toArray(), true)
@@ -105,7 +114,10 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         $productPriceScheduleCollection = [];
 
         foreach ($priceProductScheduleEntities as $priceProductScheduleEntity) {
-            $productPriceScheduleCollection[] = $this->mapPriceProductScheduleEntityToPriceProductScheduleTransfer($priceProductScheduleEntity);
+            $productPriceScheduleCollection[] = $this->mapPriceProductScheduleEntityToPriceProductScheduleTransfer(
+                $priceProductScheduleEntity,
+                new PriceProductScheduleTransfer()
+            );
         }
 
         return $productPriceScheduleCollection;
@@ -113,23 +125,36 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     protected function mapPriceProductScheduleEntityToPriceProductTransfer(
-        SpyPriceProductSchedule $priceProductScheduleEntity
+        SpyPriceProductSchedule $priceProductScheduleEntity,
+        PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
-        $moneyValueTransfer = $this->mapPriceProductScheduleEntityToMoneyValueTransfer($priceProductScheduleEntity);
+        $moneyValueTransfer = $this->mapPriceProductScheduleEntityToMoneyValueTransfer(
+            $priceProductScheduleEntity,
+            new MoneyValueTransfer()
+        );
 
-        $priceTypeTransfer = $this->mapPriceTypeEntityToPriceTypeTransfer($priceProductScheduleEntity->getPriceType());
+        $priceTypeTransfer = $this->mapPriceTypeEntityToPriceTypeTransfer(
+            $priceProductScheduleEntity->getPriceType(),
+            new PriceTypeTransfer()
+        );
 
-        $priceProductTransfer = (new PriceProductTransfer())
+        $priceProductDimensionTransfer = $this->mapPriceProductScheduleEntityToPriceProductDimensionTransfer(
+            $priceProductScheduleEntity,
+            new PriceProductDimensionTransfer()
+        );
+
+        $priceProductTransfer
             ->fromArray($priceProductScheduleEntity->toArray(), true)
             ->setPriceTypeName($priceTypeTransfer->getName())
             ->setPriceType($priceTypeTransfer)
             ->setFkPriceType($priceTypeTransfer->getIdPriceType())
             ->setMoneyValue($moneyValueTransfer)
-            ->setPriceDimension($this->mapPriceProductScheduleEntityToPriceProductDimensionTransfer($priceProductScheduleEntity));
+            ->setPriceDimension($priceProductDimensionTransfer);
 
         if ($priceProductScheduleEntity->getFkProduct()) {
             $productConcreteTransfer = $this->productFacade->findProductConcreteById($priceProductScheduleEntity->getFkProduct());
@@ -152,16 +177,18 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
     protected function mapPriceProductScheduleEntityToMoneyValueTransfer(
-        SpyPriceProductSchedule $priceProductScheduleEntity
+        SpyPriceProductSchedule $priceProductScheduleEntity,
+        MoneyValueTransfer $moneyValueTransfer
     ): MoneyValueTransfer {
         $currencyTransfer = $this->currencyFacade
             ->getByIdCurrency($priceProductScheduleEntity->getFkCurrency());
 
-        return (new MoneyValueTransfer())
+        return $moneyValueTransfer
             ->fromArray($priceProductScheduleEntity->toArray(), true)
             ->setNetAmount($priceProductScheduleEntity->getNetPrice())
             ->setGrossAmount($priceProductScheduleEntity->getGrossPrice())
@@ -170,30 +197,29 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
     /**
      * @param \Orm\Zed\PriceProduct\Persistence\Base\SpyPriceType $spyPriceType
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
      *
      * @return \Generated\Shared\Transfer\PriceTypeTransfer
      */
-    protected function mapPriceTypeEntityToPriceTypeTransfer(SpyPriceType $spyPriceType): PriceTypeTransfer
-    {
-        return (new PriceTypeTransfer())
+    protected function mapPriceTypeEntityToPriceTypeTransfer(
+        SpyPriceType $spyPriceType,
+        PriceTypeTransfer $priceTypeTransfer
+    ): PriceTypeTransfer {
+        return $priceTypeTransfer
             ->fromArray($spyPriceType->toArray(), true);
     }
 
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
      */
     protected function mapPriceProductScheduleEntityToPriceProductDimensionTransfer(
-        SpyPriceProductSchedule $priceProductScheduleEntity
+        SpyPriceProductSchedule $priceProductScheduleEntity,
+        PriceProductDimensionTransfer $priceProductDimensionTransfer
     ): PriceProductDimensionTransfer {
-
-        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->fromArray(
-                $priceProductScheduleEntity->getVirtualColumns(),
-                true
-            );
-
-        return $priceProductDimensionTransfer;
+        return $priceProductDimensionTransfer
+            ->fromArray($priceProductScheduleEntity->getVirtualColumns(), true);
     }
 }
