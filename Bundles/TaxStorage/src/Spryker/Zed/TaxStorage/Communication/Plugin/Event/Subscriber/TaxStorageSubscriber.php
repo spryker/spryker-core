@@ -34,6 +34,7 @@ class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInte
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
+        $eventCollection = $this->addTaxSetPublishStorageListener($eventCollection);
         $eventCollection = $this->addTaxSetCreateStorageListener($eventCollection);
         $eventCollection = $this->addTaxSetUpdateStorageListener($eventCollection);
         $eventCollection = $this->addTaxSetDeleteStorageListener($eventCollection);
@@ -43,6 +44,16 @@ class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInte
         $eventCollection = $this->addTaxSetTaxDeleteStorageListener($eventCollection);
 
         return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
+     */
+    protected function addTaxSetPublishStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
+    {
+        return $eventCollection->addListenerQueued(TaxEvents::TAX_SET_PUBLISH, new TaxSetStoragePublishListener());
     }
 
     /**
