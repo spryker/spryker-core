@@ -25,7 +25,8 @@ class CustomerIdentifierExpander implements CustomerIdentifierExpanderInterface
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
 
         if ($companyUserTransfer) {
-            $customerIdentifierTransfer->setIdCompanyUser($companyUserTransfer->getUuid());
+            $customerIdentifierTransfer->setUuidCompanyUser($companyUserTransfer->getUuid());
+            $customerIdentifierTransfer->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
         }
 
         return $customerIdentifierTransfer;

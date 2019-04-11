@@ -42,7 +42,11 @@ class OauthCustomerConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createScopeProvider(): ScopeProviderInterface
     {
-        return new ScopeProvider($this->getConfig());
+        return new ScopeProvider(
+            $this->getConfig(),
+            $this->getUtilEncodingService(),
+            $this->getOauthCustomerScopeProviderPlugins()
+        );
     }
 
     /**
@@ -91,5 +95,13 @@ class OauthCustomerConnectorBusinessFactory extends AbstractBusinessFactory
     public function getOauthCustomerIdentifierExpanderPlugins(): array
     {
         return $this->getProvidedDependency(OauthCustomerConnectorDependencyProvider::PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerScopeProviderPluginInterface[]
+     */
+    public function getOauthCustomerScopeProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthCustomerConnectorDependencyProvider::PLUGINS_OAUTH_CUSTOMER_SCOPE_PROVIDER_PLUGINS);
     }
 }

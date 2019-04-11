@@ -15,4 +15,12 @@
         <property name="permissions" type="Permission[]" singular="permission" />
     </transfer>
 
+    <transfer name="CustomerIdentifier">
+        <property name="idCompanyUser" type="string"/>
+    </transfer>
+
+    <transfer name="OauthScope">
+        <property name="identifier" type="string" />
+    </transfer>
+
 </transfers>

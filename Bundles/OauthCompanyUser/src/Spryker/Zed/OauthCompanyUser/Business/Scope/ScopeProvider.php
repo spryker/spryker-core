@@ -19,11 +19,19 @@ class ScopeProvider implements ScopeProviderInterface
     protected $oauthCompanyUserConfig;
 
     /**
+     * @var \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserScopeProviderPluginInterface[]
+     */
+    protected $scopeExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig $oauthCompanyUserConfig
      */
-    public function __construct(OauthCompanyUserConfig $oauthCompanyUserConfig)
-    {
+    public function __construct(
+        OauthCompanyUserConfig $oauthCompanyUserConfig,
+        array $scopeExpanderPlugins
+    ){
         $this->oauthCompanyUserConfig = $oauthCompanyUserConfig;
+        $this->scopeExpanderPlugins = $scopeExpanderPlugins;
     }
 
     /**
