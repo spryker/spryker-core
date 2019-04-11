@@ -52,13 +52,13 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
-     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
     public function mapPriceProductScheduleEntityToPriceProductScheduleTransfer(
         SpyPriceProductSchedule $priceProductScheduleEntity,
-        PriceProductScheduleTransfer $priceProductTransfer
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): PriceProductScheduleTransfer {
         $priceProductTransfer = $this->mapPriceProductScheduleEntityToPriceProductTransfer(
             $priceProductScheduleEntity,
@@ -71,7 +71,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
                 new PriceProductScheduleListTransfer()
             );
 
-        return (new PriceProductScheduleTransfer())
+        return $priceProductScheduleTransfer
             ->fromArray($priceProductScheduleEntity->toArray(), true)
             ->setPriceProduct($priceProductTransfer)
             ->setPriceProductScheduleList($priceProductScheduleListTransfer);
