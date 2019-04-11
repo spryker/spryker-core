@@ -109,7 +109,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
-    public function mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities): array
+    public function mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers(array $priceProductScheduleEntities): array
     {
         $productPriceScheduleCollection = [];
 

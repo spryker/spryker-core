@@ -83,10 +83,11 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
      *
      * @return void
      */
-    public function disableOtherSimilarPriceProductSchedules(PriceProductScheduleTransfer $priceProductScheduleTransfer
-    ): void
-    {
-        $productSchedulePricesForDisable = $this->priceProductScheduleReader->findSimilarPriceProductSchedulesToDisable($priceProductScheduleTransfer);
+    public function disableOtherSimilarPriceProductSchedules(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): void {
+        $productSchedulePricesForDisable = $this->priceProductScheduleReader
+            ->findSimilarPriceProductSchedulesToDisable($priceProductScheduleTransfer);
 
         foreach ($productSchedulePricesForDisable as $priceProductScheduleTransfer) {
             $this->executeFallbackLogic($priceProductScheduleTransfer);
