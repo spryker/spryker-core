@@ -34,7 +34,7 @@ interface NodeWriterInterface
      *
      * @param int $idCategoryNode
      *
-     * @return int
+     * @return bool
      */
     public function delete($idCategoryNode);
 

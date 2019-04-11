@@ -19,7 +19,7 @@ interface PriceProductToTouchFacadeInterface
 
     /**
      * @param string $itemType
-     * @param string $itemId
+     * @param int $itemId
      *
      * @return bool
      */
