@@ -33,6 +33,7 @@ interface QuoteApprovalClientInterface
 
     /**
      * Specification:
+     * - Returns unsuccessful response with corresponding message if quote id is not provided.
      * - Makes zed request.
      * - Clears current cart sharing.
      * - Shares quote to approver with read only access.

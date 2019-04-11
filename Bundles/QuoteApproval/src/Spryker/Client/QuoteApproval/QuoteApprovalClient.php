@@ -48,7 +48,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     public function createQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteApprovalStub()
+            ->createQuoteApprovalCreator()
             ->createQuoteApproval($quoteApprovalRequestTransfer);
     }
 
