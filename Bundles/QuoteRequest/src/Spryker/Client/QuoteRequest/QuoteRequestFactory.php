@@ -10,11 +10,15 @@ namespace Spryker\Client\QuoteRequest;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\QuoteRequest\Converter\QuoteRequestConverter;
 use Spryker\Client\QuoteRequest\Converter\QuoteRequestConverterInterface;
+use Spryker\Client\QuoteRequest\Creator\QuoteRequestCreator;
+use Spryker\Client\QuoteRequest\Creator\QuoteRequestCreatorInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
 use Spryker\Client\QuoteRequest\Status\QuoteRequestStatus;
 use Spryker\Client\QuoteRequest\Status\QuoteRequestStatusInterface;
+use Spryker\Client\QuoteRequest\Validator\QuoteValidator;
+use Spryker\Client\QuoteRequest\Validator\QuoteValidatorInterface;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStub;
 use Spryker\Client\QuoteRequest\Zed\QuoteRequestStubInterface;
 
@@ -32,6 +36,27 @@ class QuoteRequestFactory extends AbstractFactory
             $this->getPersistentCartClient(),
             $this->getQuoteClient(),
             $this->createQuoteRequestStatus()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteRequest\Validator\QuoteValidatorInterface
+     */
+    public function createQuoteValidator(): QuoteValidatorInterface
+    {
+        return new QuoteValidator(
+            $this->getQuoteRequestQuoteCheckPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteRequest\Creator\QuoteRequestCreatorInterface
+     */
+    public function createQuoteRequestCreator(): QuoteRequestCreatorInterface
+    {
+        return new QuoteRequestCreator(
+            $this->createQuoteRequestStub(),
+            $this->createQuoteValidator()
         );
     }
 
@@ -73,5 +98,13 @@ class QuoteRequestFactory extends AbstractFactory
     public function getQuoteClient(): QuoteRequestToQuoteClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestQuoteCheckPluginInterface[]
+     */
+    public function getQuoteRequestQuoteCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteRequestDependencyProvider::PLUGINS_QUOTE_REQUEST_CREATE_PRE_CHECK);
     }
 }

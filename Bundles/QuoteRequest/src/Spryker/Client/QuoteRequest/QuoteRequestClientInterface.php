@@ -15,12 +15,17 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteRequestClientInterface
 {
     /**
      * Specification:
+     * - Returns unsuccessful response with corresponding message if current logged in customer is not company user.
+     * - Returns unsuccessful response with corresponding message if current logged in customer is not quote owner and doesn't have "WriteSharedCartPermissionPlugin" permission.
+     * - Executes `QuoteRequestQuoteCheckPluginInterface` plugins, if at least one returns false - returns unsuccessful response.
      * - Makes Zed request.
+     * - Returns unsuccessful response with corresponding message if target quote has no items.
      * - Creates "Request for Quote" for the provided company user with "draft" status.
      * - Generates unique reference number.
      * - Generates version for the "Request for Quote" entity.
@@ -172,6 +177,20 @@ interface QuoteRequestClientInterface
      * @return bool
      */
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * Specification:
+     *  - Returns false if current logged in customer is not company user.
+     *  - Returns false if logged in customer is not quote owner and doesn't have "WriteSharedCartPermissionPlugin" permission.
+     *  - Executes `QuoteRequestQuoteCheckPluginInterface` returns false if at least one plugin returns false - true otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApplicableForQuoteRequest(QuoteTransfer $quoteTransfer): bool;
 
     /**
      * Specification:

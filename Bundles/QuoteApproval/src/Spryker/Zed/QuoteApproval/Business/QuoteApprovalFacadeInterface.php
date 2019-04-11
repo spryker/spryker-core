@@ -16,6 +16,7 @@ interface QuoteApprovalFacadeInterface
 {
     /**
      * Specification:
+     * - Returns unsuccessful response with corresponding message if target quote has no items.
      * - Share cart to approver with read only access.
      * - Removes all existing cart sharing.
      * - Locks quote.

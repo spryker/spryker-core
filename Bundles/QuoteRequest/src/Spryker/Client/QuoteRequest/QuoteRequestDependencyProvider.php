@@ -21,6 +21,7 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const PLUGINS_QUOTE_REQUEST_CREATE_PRE_CHECK = 'PLUGINS_QUOTE_REQUEST_CREATE_PRE_CHECK';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -33,6 +34,7 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
         $container = $this->addZedRequestClient($container);
         $container = $this->addPersistentCartClient($container);
         $container = $this->addQuoteClient($container);
+        $container = $this->addQuoteRequestQuoteCheckPlugins($container);
 
         return $container;
     }
@@ -77,5 +79,27 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addQuoteRequestQuoteCheckPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_REQUEST_CREATE_PRE_CHECK] = function (Container $container) {
+            return $this->getQuoteRequestQuoteCheckPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestQuoteCheckPluginInterface[]
+     */
+    protected function getQuoteRequestQuoteCheckPlugins(): array
+    {
+        return [];
     }
 }
