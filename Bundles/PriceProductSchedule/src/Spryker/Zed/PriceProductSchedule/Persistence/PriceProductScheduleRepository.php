@@ -104,6 +104,9 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
                     SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE
                 )
             )
+            ->usePriceProductScheduleListQuery()
+                ->filterByIsActive(true)
+            ->endUse()
             ->filterByFkStore($storeTransfer->getIdStore())
             ->filterByActiveFrom(['max' => new DateTime()], Criteria::LESS_EQUAL)
             ->filterByActiveTo(['min' => new DateTime()], Criteria::GREATER_EQUAL);
@@ -119,9 +122,6 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
         return $this->getFactory()
             ->createPriceProductScheduleQuery()
             ->addSelectQuery($filteredByMinResultQuery, 'B', false)
-            ->usePriceProductScheduleListQuery()
-            ->filterByIsActive(true)
-            ->endUse()
             ->filterByIsCurrent(false)
             ->where(SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE . ' = SUBSTRING(B.R from \'[0-9]+$\')::BIGINT')
             ->find()
