@@ -17,8 +17,9 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'CMS Block' | trans } %}
         {% block widget_content %}
             {{ form_start(cmsBlockForm) }}
-                {{ form_widget(cmsBlockForm) }}
-                <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+            {{ form_widget(cmsBlockForm) }}
+
+            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
             {{ form_end(cmsBlockForm) }}
 
         {% endblock %}
