@@ -36,7 +36,6 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
      */
     public function createQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-
         if (!$quoteApprovalRequestTransfer->getIdQuote()) {
             return (new QuoteApprovalResponseTransfer())
                 ->setIsSuccessful(false)
