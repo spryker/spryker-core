@@ -38,7 +38,7 @@ class StorageRedisConfig extends AbstractBundleConfig
             ->setConnectionCredentials(
                 $this->getConnectionCredentials()
             )
-            ->setConnectionOptions(
+            ->setClientOptions(
                 $this->getConnectionOptions()
             );
     }

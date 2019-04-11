@@ -5,17 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Storage\Business\Model;
+namespace Spryker\Zed\Redis\Business\Export;
 
-/**
- * @deprecated Use `Spryker\Zed\Redis\Business\Export\RedisExporterInterface` instead.
- */
-interface StorageExporterInterface
+interface RedisExporterInterface
 {
     /**
      * @param string $destination
+     * @param int|null $redisPort
      *
      * @return bool
      */
-    public function export($destination);
+    public function export(string $destination, ?int $redisPort = null): bool;
 }

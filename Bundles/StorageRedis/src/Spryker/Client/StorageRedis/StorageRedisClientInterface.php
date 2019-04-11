@@ -23,7 +23,7 @@ interface StorageRedisClientInterface
      *
      * @return mixed
      */
-    public function set(string $key, $value, $ttl = null);
+    public function set(string $key, $value, ?int $ttl = null);
 
     /**
      * Specification:

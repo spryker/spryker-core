@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Storage\Communication\Console;
+namespace Spryker\Zed\StorageRedis\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,22 +13,19 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use `Spryker\Zed\StorageRedis\Communication\Console\StorageRedisImportRdbConsole` instead.
- *
- * @method \Spryker\Zed\Storage\Business\StorageFacadeInterface getFacade()
- * @method \Spryker\Zed\Storage\Communication\StorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\StorageRedis\Communication\StorageRedisCommunicationFactory getFactory()
  */
-class StorageImportRdbConsole extends Console
+class StorageRedisImportRdbConsole extends Console
 {
-    public const COMMAND_NAME = 'storage:redis:import';
-    public const DESCRIPTION = 'This command will import a rdb file.';
+    public const COMMAND_NAME = 'storage:redis:import-rdb';
+    public const DESCRIPTION = 'This command will import Redis rdb file.';
 
     public const ARGUMENT_SOURCE = 'source';
 
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::DESCRIPTION);
@@ -44,11 +41,12 @@ class StorageImportRdbConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $source = $input->getArgument(static::ARGUMENT_SOURCE);
+        $storageRedisImporter = $this->getFactory()->createStorageRedisImporter();
 
-        if ($this->getFacade()->import($source)) {
+        if ($storageRedisImporter->import($source)) {
             $this->info(sprintf('Imported rdb file "%s"', $source));
 
             return static::CODE_SUCCESS;

@@ -5,17 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Storage\Business\Model;
+namespace Spryker\Zed\StorageRedis\Communication\Import;
 
-/**
- * @deprecated Use `Spryker\Zed\Redis\Business\Import\RedisImporterInterface` instead.
- */
-interface StorageImporterInterface
+interface StorageRedisImporterInterface
 {
     /**
      * @param string $source
      *
      * @return bool
      */
-    public function import($source);
+    public function import(string $source): bool;
 }

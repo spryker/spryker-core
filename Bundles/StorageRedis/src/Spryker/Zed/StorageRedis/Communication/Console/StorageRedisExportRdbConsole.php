@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Storage\Communication\Console;
+namespace Spryker\Zed\StorageRedis\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,22 +13,19 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use `Spryker\Zed\StorageRedis\Communication\Console\StorageRedisExportRdbConsole` instead.
- *
- * @method \Spryker\Zed\Storage\Business\StorageFacadeInterface getFacade()
- * @method \Spryker\Zed\Storage\Communication\StorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\StorageRedis\Communication\StorageRedisCommunicationFactory getFactory()
  */
-class StorageExportRdbConsole extends Console
+class StorageRedisExportRdbConsole extends Console
 {
-    public const COMMAND_NAME = 'storage:redis:export';
-    public const DESCRIPTION = 'This command will export the rdb file.';
+    public const COMMAND_NAME = 'storage:redis:export-rdb';
+    public const DESCRIPTION = 'This command will export Redis rdb file.';
 
     public const ARGUMENT_DESTINATION = 'destination';
 
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::DESCRIPTION);
@@ -44,11 +41,12 @@ class StorageExportRdbConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $destination = $input->getArgument(static::ARGUMENT_DESTINATION);
+        $storageRedisExporter = $this->getFactory()->createStorageRedisExporter();
 
-        if ($this->getFacade()->export($destination)) {
+        if ($storageRedisExporter->export($destination)) {
             $this->info(sprintf('Exported rdb file to "%s"', $destination));
 
             return static::CODE_SUCCESS;
