@@ -37,7 +37,7 @@ class ProductAutocompleteController extends AbstractController
 
         return $this->jsonResponse([
             static::RESPONSE_KEY_RESULTS => $this->getFactory()->createProductCollectionFormatter()
-                ->prepareData($productAbstractSuggestions),
+                ->formatArray($productAbstractSuggestions),
         ]);
     }
 }

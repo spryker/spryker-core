@@ -10,9 +10,16 @@ namespace Spryker\Zed\CmsBlockProductConnector\Communication\Formatter;
 interface ProductCollectionFormatterInterface
 {
     /**
-     * @param array $suggestData
+     * @param array $productAbstractArray
      *
      * @return array
      */
-    public function prepareData(array $suggestData): array;
+    public function formatArray(array $productAbstractArray): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
+     *
+     * @return array
+     */
+    public function formatTransfers(array $productAbstractTransfers): array;
 }

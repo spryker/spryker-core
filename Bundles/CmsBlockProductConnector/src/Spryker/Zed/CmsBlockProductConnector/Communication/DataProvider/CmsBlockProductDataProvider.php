@@ -9,20 +9,13 @@ namespace Spryker\Zed\CmsBlockProductConnector\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType;
+use Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductCollectionFormatterInterface;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleInterface;
 use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRepositoryInterface;
 
 class CmsBlockProductDataProvider
 {
-    /**
-     * @var \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface
-     */
-    protected $cmsBlockProductQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer\CmsBlockProductConnectorToProductAbstractQueryContainerInterface
-     */
-    protected $productAbstractQueryContainer;
+    public const OPTION_PRODUCT_AUTOCOMPLETE_URL = '/cms-block-product-connector/product-autocomplete/';
 
     /**
      * @var \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleInterface
@@ -35,15 +28,23 @@ class CmsBlockProductDataProvider
     protected $cmsBlockProductConnectorRepository;
 
     /**
+     * @var \Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductCollectionFormatterInterface
+     */
+    protected $productCollectionFormatter;
+
+    /**
      * @param \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleInterface $localeFacade
      * @param \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRepositoryInterface $repository
+     * @param \Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductCollectionFormatterInterface $productCollectionFormatter
      */
     public function __construct(
         CmsBlockProductConnectorToLocaleInterface $localeFacade,
-        CmsBlockProductConnectorRepositoryInterface $repository
+        CmsBlockProductConnectorRepositoryInterface $repository,
+        ProductCollectionFormatterInterface $productCollectionFormatter
     ) {
         $this->localeFacade = $localeFacade;
         $this->cmsBlockProductConnectorRepository = $repository;
+        $this->productCollectionFormatter = $productCollectionFormatter;
     }
 
     /**
@@ -56,6 +57,7 @@ class CmsBlockProductDataProvider
         return [
             'data_class' => CmsBlockTransfer::class,
             CmsBlockProductAbstractType::OPTION_ASSIGNED_PRODUCT_ABSTRACTS => $this->getAssignedProductAbstracts($cmsBlockTransfer),
+            CmsBlockProductAbstractType::OPTION_PRODUCT_AUTOCOMPLETE_URL => static::OPTION_PRODUCT_AUTOCOMPLETE_URL,
         ];
     }
 
@@ -98,12 +100,6 @@ class CmsBlockProductDataProvider
             $cmsBlockTransfer->getIdCmsBlock()
         );
 
-        foreach ($productAbstractTransfers as $productAbstractTransfer) {
-            $label = $productAbstractTransfer->getName() . ' (SKU: ' . $productAbstractTransfer->getSku() . ')';
-
-            $productAbstractOptions[$label] = $productAbstractTransfer->getIdProductAbstract();
-        }
-
-        return $productAbstractOptions;
+        return $this->productCollectionFormatter->formatTransfers($productAbstractTransfers);
     }
 }

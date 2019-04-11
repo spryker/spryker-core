@@ -87,7 +87,27 @@ $(document).ready(function() {
     );
 
     $('.dropdown-toggle').dropdown();
-    $('.spryker-form-select2combobox').select2();
+
+    $('.spryker-form-select2combobox').each(function() {
+        if ($(this).data('autocomplete-url')) {
+            var autocompleteUrl = $(this).data('autocomplete-url');
+
+            $('.spryker-form-select2combobox').select2({
+                ajax: {
+                    url: autocompleteUrl,
+                    dataType: 'json',
+                    delay: 500,
+                    cache: true,
+                    processResults: function (response) {
+                        return response;
+                    }
+                },
+                minimumInputLength: 3
+            });
+        } else {
+            $(this).select2();
+        }
+    })
 
     /* Init tabs */
     $('.tabs-container').each(function(index, item){

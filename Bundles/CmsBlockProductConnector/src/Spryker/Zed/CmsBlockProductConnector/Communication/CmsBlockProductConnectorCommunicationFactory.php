@@ -38,7 +38,8 @@ class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunication
     {
         return new CmsBlockProductDataProvider(
             $this->getLocaleFacade(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createProductCollectionFormatter()
         );
     }
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockProductConnector\Communication\Form;
 
+use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,8 +28,7 @@ class CmsBlockProductAbstractType extends AbstractType
     public const PLACEHOLDER_ID_PRODUCT_ABSTRACTS = 'Type three letters of name or sku for suggestions.';
 
     public const OPTION_ASSIGNED_PRODUCT_ABSTRACTS = 'option-assigned-product-abstracts';
-
-    protected const TEMPLATE_PATH = '@CmsBlockProductConnector/Form/cms-block-product-abstract-type.twig';
+    public const OPTION_PRODUCT_AUTOCOMPLETE_URL = 'option-autocomplete-url';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -38,26 +38,26 @@ class CmsBlockProductAbstractType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addProductsAbstractField($builder, $options[static::OPTION_ASSIGNED_PRODUCT_ABSTRACTS]);
+        $this->addProductsAbstractField($builder, $options);
         $builder->addEventListener(FormEvents::PRE_SUBMIT, $this->getProductSearchPreSubmitCallback());
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
+     * @param array $options
      *
      * @return $this
      */
-    protected function addProductsAbstractField(FormBuilderInterface $builder, array $choices)
+    protected function addProductsAbstractField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_ID_PRODUCT_ABSTRACTS, ChoiceType::class, [
+        $builder->add(static::FIELD_ID_PRODUCT_ABSTRACTS, Select2ComboBoxType::class, [
             'label' => 'Products',
             'multiple' => true,
             'required' => false,
-            'choices' => $choices,
+            'choices' => $options[static::OPTION_ASSIGNED_PRODUCT_ABSTRACTS],
             'attr' => [
                 'placeholder' => static::PLACEHOLDER_ID_PRODUCT_ABSTRACTS,
-                'template_path' => $this->getTemplatePath(),
+                'data-autocomplete-url' => $options[static::OPTION_PRODUCT_AUTOCOMPLETE_URL],
             ],
         ]);
 
@@ -111,13 +111,5 @@ class CmsBlockProductAbstractType extends AbstractType
                 ]
             );
         };
-    }
-
-    /**
-     * @return string
-     */
-    protected function getTemplatePath(): string
-    {
-        return static::TEMPLATE_PATH;
     }
 }
