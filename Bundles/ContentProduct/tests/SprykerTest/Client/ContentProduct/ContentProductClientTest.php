@@ -66,7 +66,7 @@ class ContentProductClientTest extends Unit
 
         // Act
         $systemUnderTest = $this->createContentProductClient()
-            ->findContentProductAbstractListTypeById(static::ID_CONTENT_ITEM, static::LOCALE);
+            ->executeProductAbstractListTypeById(static::ID_CONTENT_ITEM, static::LOCALE);
 
         // Assert
         $this->assertEquals(ContentProductAbstractListTypeTransfer::class, get_class($systemUnderTest));
@@ -89,7 +89,7 @@ class ContentProductClientTest extends Unit
         $this->expectException(InvalidProductAbstractListTermException::class);
 
         // Act
-        $this->createContentProductClient()->findContentProductAbstractListTypeById(static::ID_CONTENT_ITEM, static::LOCALE);
+        $this->createContentProductClient()->executeProductAbstractListTypeById(static::ID_CONTENT_ITEM, static::LOCALE);
     }
 
     /**
@@ -102,7 +102,7 @@ class ContentProductClientTest extends Unit
 
         // Act
         $systemUnderTest = $this->createContentProductClient()
-            ->findContentProductAbstractListTypeById(static::ID_CONTENT_ITEM, static::LOCALE);
+            ->executeProductAbstractListTypeById(static::ID_CONTENT_ITEM, static::LOCALE);
 
         // Assert
         $this->assertNull($systemUnderTest);
