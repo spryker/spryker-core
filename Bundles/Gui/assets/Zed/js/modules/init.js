@@ -92,7 +92,7 @@ $(document).ready(function() {
         if ($(this).data('autocomplete-url')) {
             var autocompleteUrl = $(this).data('autocomplete-url');
 
-            $('.spryker-form-select2combobox').select2({
+            $(this).select2({
                 ajax: {
                     url: autocompleteUrl,
                     dataType: 'json',
