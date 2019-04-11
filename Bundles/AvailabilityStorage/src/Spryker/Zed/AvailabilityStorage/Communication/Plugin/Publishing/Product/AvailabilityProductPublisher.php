@@ -12,7 +12,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\PublishingExtension\Dependency\PublishingPluginInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublisherEventPluginInterface;
 
 /**
  * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
@@ -20,7 +20,7 @@ use Spryker\Zed\PublishingExtension\Dependency\PublishingPluginInterface;
  * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityStorage\AvailabilityStorageConfig getConfig()
  */
-class AvailabilityProductPublisher extends AbstractPlugin implements PublishingPluginInterface
+class AvailabilityProductPublisher extends AbstractPlugin implements PublisherEventPluginInterface
 {
     use DatabaseTransactionHandlerTrait;
 

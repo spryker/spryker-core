@@ -10,7 +10,7 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Publishing\Communication\PublishingCommunicationFactory;
-use Spryker\Zed\Publishing\Dependency\PublishingCollection;
+use Spryker\Zed\Publishing\Dependency\PublisherEventRegistry;
 
 /**
  *  @method PublishingCommunicationFactory getFactory()
@@ -27,7 +27,7 @@ class PublishingSubscriber extends AbstractPlugin implements EventSubscriberInte
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-        $publishingRegistryCollection = $this->getFactory()->getProcessorMessagePlugins();
+        $publishingRegistryCollection = $this->getFactory()->getPublisherRegistryCollection();
 
         $publishingListeners = $this->getRegisteredPublishingCollection($publishingRegistryCollection);
 
@@ -47,7 +47,7 @@ class PublishingSubscriber extends AbstractPlugin implements EventSubscriberInte
     {
         $publishingListeners = [];
         foreach ($publishingRegistryCollection as $publishingRegistry) {
-            $publishingListeners[] = $publishingRegistry->getRegisteredPublishingCollection(new PublishingCollection());
+            $publishingListeners[] = $publishingRegistry->getPublisherEventRegistry(new PublisherEventRegistry());
         }
 
         return $publishingListeners;

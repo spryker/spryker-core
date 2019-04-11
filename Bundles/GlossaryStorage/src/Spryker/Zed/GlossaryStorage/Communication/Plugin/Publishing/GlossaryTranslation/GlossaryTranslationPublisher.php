@@ -10,7 +10,7 @@ namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publishing\GlossaryTr
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\PublishingExtension\Dependency\PublishingPluginInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublisherEventPluginInterface;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
@@ -18,7 +18,7 @@ use Spryker\Zed\PublishingExtension\Dependency\PublishingPluginInterface;
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
  */
-class GlossaryTranslationPublisher extends AbstractPlugin implements PublishingPluginInterface
+class GlossaryTranslationPublisher extends AbstractPlugin implements PublisherEventPluginInterface
 {
     use DatabaseTransactionHandlerTrait;
 

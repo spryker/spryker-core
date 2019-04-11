@@ -10,7 +10,7 @@ namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Publishing\Availa
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\PublishingExtension\Dependency\PublishingPluginInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublisherEventPluginInterface;
 
 /**
  * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
@@ -18,7 +18,7 @@ use Spryker\Zed\PublishingExtension\Dependency\PublishingPluginInterface;
  * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityStorage\AvailabilityStorageConfig getConfig()
  */
-class AvailabilityPublisher extends AbstractPlugin implements PublishingPluginInterface
+class AvailabilityPublisher extends AbstractPlugin implements PublisherEventPluginInterface
 {
     use DatabaseTransactionHandlerTrait;
 

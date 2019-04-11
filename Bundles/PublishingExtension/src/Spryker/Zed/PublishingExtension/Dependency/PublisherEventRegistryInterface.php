@@ -10,16 +10,16 @@ namespace Spryker\Zed\PublishingExtension\Dependency;
 use ArrayAccess;
 use IteratorAggregate;
 
-interface PublishingCollectionInterface extends ArrayAccess, IteratorAggregate
+interface PublisherEventRegistryInterface extends ArrayAccess, IteratorAggregate
 {
 
     /**
      * @param string $eventName
-     * @param PublishingPluginInterface $publishingPlugin
+     * @param PublisherEventPluginInterface $publishingPlugin
      *
      * @return $this
      */
-    public function registerPlugin(string $eventName, PublishingPluginInterface $publishingPlugin);
+    public function register(string $eventName, PublisherEventPluginInterface $publishingPlugin);
 
     /**
      * @deprecated

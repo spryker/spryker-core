@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Publishing\Dependency;
 
 use ArrayIterator;
-use Spryker\Zed\PublishingExtension\Dependency\PublishingCollectionInterface;
-use Spryker\Zed\PublishingExtension\Dependency\PublishingPluginInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublisherEventRegistryInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublisherEventPluginInterface;
 
-class PublishingCollection implements PublishingCollectionInterface
+class PublisherEventRegistry implements PublisherEventRegistryInterface
 {
     /**
      * @var array
@@ -20,13 +20,13 @@ class PublishingCollection implements PublishingCollectionInterface
 
     /**
      * @param string $eventName
-     * @param PublishingPluginInterface $eventHandler
+     * @param PublisherEventPluginInterface $publishingPlugin
      *
-     * @return $this|PublishingCollectionInterface
+     * @return $this|PublisherEventRegistryInterface
      */
-    public function registerPlugin(string $eventName, PublishingPluginInterface $eventHandler)
+    public function register(string $eventName, PublisherEventPluginInterface $publishingPlugin)
     {
-        $this->add($eventName, $eventHandler);
+        $this->add($eventName, $publishingPlugin);
 
         return $this;
     }
@@ -43,20 +43,20 @@ class PublishingCollection implements PublishingCollectionInterface
 
     /**
      * @param $eventName
-     * @param PublishingPluginInterface $eventHandler
+     * @param PublisherEventPluginInterface $publishingPlugin
      * @param bool $isHandledInQueue
      * @param int $priority
      * @param null $queuePoolName
      *
      * @return void
      */
-    protected function add($eventName, PublishingPluginInterface $eventHandler)
+    protected function add($eventName, PublisherEventPluginInterface $publishingPlugin)
     {
         if (!$this->has($eventName)) {
             $this->eventListeners[$eventName] = [];
         }
 
-        $this->eventListeners[$eventName][] = $eventHandler;
+        $this->eventListeners[$eventName][] = $publishingPlugin;
     }
 
     /**

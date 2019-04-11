@@ -8,7 +8,7 @@ namespace Spryker\Zed\PublishingExtension\Dependency;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
-interface PublishingPluginInterface extends EventBulkHandlerInterface
+interface PublisherEventPluginInterface extends EventBulkHandlerInterface
 {
 
 }

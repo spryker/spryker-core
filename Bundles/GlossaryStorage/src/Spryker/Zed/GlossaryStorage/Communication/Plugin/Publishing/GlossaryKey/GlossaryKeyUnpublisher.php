@@ -9,7 +9,7 @@ namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publishing\GlossaryKe
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\PublishingExtension\Dependency\PublishingPluginInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublisherEventPluginInterface;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
@@ -17,7 +17,7 @@ use Spryker\Zed\PublishingExtension\Dependency\PublishingPluginInterface;
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
  */
-class GlossaryKeyUnpublisher extends AbstractPlugin implements PublishingPluginInterface
+class GlossaryKeyUnpublisher extends AbstractPlugin implements PublisherEventPluginInterface
 {
     use DatabaseTransactionHandlerTrait;
 

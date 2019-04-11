@@ -8,14 +8,14 @@
 namespace Spryker\Zed\Publishing\Dependency;
 
 use ArrayIterator;
-use Spryker\Zed\PublishingExtension\Dependency\PublishingRegistryCollectionInterface;
-use Spryker\Zed\PublishingExtension\Dependency\PublishingRegistryInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublisherRegistryCollectionInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublisherRegistryInterface;
 
-class PublishingRegistryCollection implements PublishingRegistryCollectionInterface
+class PublisherRegistryCollection implements PublisherRegistryCollectionInterface
 {
 
     /**
-     * @var PublishingRegistryInterface[]
+     * @var PublisherRegistryInterface[]
      */
     protected $registryCollection = [];
 
@@ -24,7 +24,7 @@ class PublishingRegistryCollection implements PublishingRegistryCollectionInterf
      *
      * @return void
      */
-    public function add(PublishingRegistryInterface $publishingRegistry)
+    public function add(PublisherRegistryInterface $publishingRegistry)
     {
         $this->registryCollection[] = $publishingRegistry;
     }
@@ -50,7 +50,7 @@ class PublishingRegistryCollection implements PublishingRegistryCollectionInterf
      *
      * @param mixed $offset
      *
-     * @return array|PublishingRegistryInterface
+     * @return array|PublisherRegistryInterface
      */
     public function offsetGet($offset)
     {
