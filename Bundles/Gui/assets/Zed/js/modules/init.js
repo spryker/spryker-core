@@ -88,24 +88,21 @@ $(document).ready(function() {
 
     $('.dropdown-toggle').dropdown();
 
-    $('.spryker-form-select2combobox').each(function() {
-        if ($(this).data('autocomplete-url')) {
+    $('.spryker-form-select2combobox').each(function(index, element) {
+        if ($(element).data('autocomplete-url')) {
             var autocompleteUrl = $(this).data('autocomplete-url');
 
-            $(this).select2({
+            $(element).select2({
                 ajax: {
                     url: autocompleteUrl,
                     dataType: 'json',
                     delay: 500,
                     cache: true,
-                    processResults: function (response) {
-                        return response;
-                    }
                 },
                 minimumInputLength: 3
             });
         } else {
-            $(this).select2();
+            $(element).select2();
         }
     })
 
