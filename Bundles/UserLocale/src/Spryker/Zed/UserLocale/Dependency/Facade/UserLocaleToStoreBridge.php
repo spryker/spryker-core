@@ -31,4 +31,12 @@ class UserLocaleToStoreBridge implements UserLocaleToStoreInterface
     {
         $this->store->setCurrentLocale($localeCode);
     }
+
+    /**
+     * @return string
+     */
+    public function getCurrentLocale()
+    {
+        return $this->store->getCurrentLocale();
+    }
 }

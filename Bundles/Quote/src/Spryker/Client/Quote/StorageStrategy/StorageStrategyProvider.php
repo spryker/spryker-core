@@ -40,7 +40,7 @@ class StorageStrategyProvider implements StorageStrategyProviderInterface
     {
         $storageStrategy = $this->findStorageStrategy($this->quoteConfig->getStorageStrategy());
 
-        if (!$storageStrategy || !$storageStrategy->isAllowed()) {
+        if (!$storageStrategy->isAllowed()) {
             $storageStrategy = $this->getDefaultStorageStrategy();
         }
 

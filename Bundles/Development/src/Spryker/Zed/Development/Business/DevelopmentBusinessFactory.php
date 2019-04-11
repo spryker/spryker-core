@@ -38,6 +38,7 @@ use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorCom
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainer;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\BehaviorDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\CodeceptionDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ComposerScriptDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderComposite;
@@ -132,6 +133,8 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\Quer
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ResourceMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ServiceMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriter;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriterInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
@@ -383,6 +386,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createExtensionDependencyFinder(),
             $this->createLocatorDependencyFinder(),
             $this->createPersistenceDependencyFinder(),
+            $this->createBehaviorDependencyFinder(),
             $this->createTwigDependencyFinder(),
             $this->createTravisDependencyFinder(),
             $this->createComposerScriptDependencyFinder(),
@@ -449,6 +453,16 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new PersistenceDependencyFinder(
             $this->createPropelSchemaParser()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
+     */
+    public function createBehaviorDependencyFinder(): DependencyFinderInterface
+    {
+        return new BehaviorDependencyFinder(
+            $this->createModuleFinder()
         );
     }
 
@@ -1727,8 +1741,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new IdeAutoCompletionWriter(
             $this->getIdeAutoCompletionGeneratorStack($options),
-            $this->createIdeAutoCompletionBundleFinder($bundleBuilder),
-            $options
+            $this->createIdeAutoCompletionBundleFinder($bundleBuilder)
         );
     }
 
@@ -1766,7 +1779,15 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createIdeAutoCompletionBundleGenerator(array $options)
     {
-        return new BundleGenerator($this->getTwigEnvironment(), $options);
+        return new BundleGenerator($this->getTwigEnvironment(), $this->createFileWriter(), $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriterInterface
+     */
+    protected function createFileWriter(): FileWriterInterface
+    {
+        return new FileWriter();
     }
 
     /**
@@ -1776,7 +1797,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createIdeAutoCompletionBundleMethodGenerator(array $options)
     {
-        return new BundleMethodGenerator($this->getTwigEnvironment(), $options);
+        return new BundleMethodGenerator($this->getTwigEnvironment(), $this->createFileWriter(), $options);
     }
 
     /**
