@@ -5,16 +5,6 @@
 
     <transfer name="AbstractProductsRestAttributes">
         <property name="sku" type="string"/>
-        <property name="name" type="string"/>
-        <property name="description" type="string"/>
-        <property name="attributes" type="array"/>
-        <property name="superAttributesDefinition" type="array"/>
-        <property name="superAttributes" type="array"/>
-        <property name="attributeMap" type="array"/>
-        <property name="metaTitle" type="string"/>
-        <property name="metaKeywords" type="string"/>
-        <property name="metaDescription" type="string"/>
-        <property name="attributeNames" type="array"/>
     </transfer>
 
     <transfer name="ContentProductAbstractListType">
