@@ -9,7 +9,7 @@ namespace Spryker\Client\QuoteExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface DatabaseStrategyAvailabilityCheckPluginInterface
+interface DatabaseStrategyPreCheckPluginInterface
 {
     /**
      * Specification:
@@ -21,5 +21,5 @@ interface DatabaseStrategyAvailabilityCheckPluginInterface
      *
      * @return bool
      */
-    public function isAllowed(QuoteTransfer $quoteTransfer): bool;
+    public function check(QuoteTransfer $quoteTransfer): bool;
 }

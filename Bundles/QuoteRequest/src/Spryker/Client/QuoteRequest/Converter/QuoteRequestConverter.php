@@ -72,7 +72,7 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
 
         $quoteTransfer = $this->quoteClient->lockQuote($quoteTransfer);
 
-        return $this->persistentCartClient->persistCustomerQuote($quoteTransfer);
+        return $this->persistentCartClient->persistQuote($quoteTransfer);
     }
 
     /**

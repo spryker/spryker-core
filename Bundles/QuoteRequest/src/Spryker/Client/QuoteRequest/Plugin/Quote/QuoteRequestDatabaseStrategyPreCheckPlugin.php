@@ -9,9 +9,9 @@ namespace Spryker\Client\QuoteRequest\Plugin\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyAvailabilityCheckPluginInterface;
+use Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface;
 
-class QuoteRequestDatabaseStrategyAvailabilityCheckPlugin extends AbstractPlugin implements DatabaseStrategyAvailabilityCheckPluginInterface
+class QuoteRequestDatabaseStrategyPreCheckPlugin extends AbstractPlugin implements DatabaseStrategyPreCheckPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -23,7 +23,7 @@ class QuoteRequestDatabaseStrategyAvailabilityCheckPlugin extends AbstractPlugin
      *
      * @return bool
      */
-    public function isAllowed(QuoteTransfer $quoteTransfer): bool
+    public function check(QuoteTransfer $quoteTransfer): bool
     {
         return !(bool)$quoteTransfer->getQuoteRequestReference();
     }

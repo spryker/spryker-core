@@ -126,5 +126,12 @@ interface PersistentCartStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
+    public function replaceQuoteByCustomerAndStore(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
     public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

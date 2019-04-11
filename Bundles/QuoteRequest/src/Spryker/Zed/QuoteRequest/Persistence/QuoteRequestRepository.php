@@ -149,16 +149,17 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
             $quoteRequestQuery->filterByFkCompanyUser($quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser());
         }
 
-        if (!$quoteRequestFilterTransfer->getWithHidden()) {
-            $quoteRequestQuery = $this->addWithoutHiddenQuoteRequestFilter($quoteRequestQuery);
-        }
-
         if ($quoteRequestFilterTransfer->getQuoteRequestReference()) {
             $quoteRequestQuery->filterByQuoteRequestReference($quoteRequestFilterTransfer->getQuoteRequestReference());
         }
 
         if ($quoteRequestFilterTransfer->getIdQuoteRequest()) {
             $quoteRequestQuery->filterByIdQuoteRequest($quoteRequestFilterTransfer->getIdQuoteRequest());
+        }
+
+        // TODO: add specification for future filters
+        if (!$quoteRequestFilterTransfer->getWithHidden()) {
+            $quoteRequestQuery = $this->addWithoutHiddenQuoteRequestFilter($quoteRequestQuery);
         }
 
         if ($quoteRequestFilterTransfer->getPagination()) {
@@ -175,12 +176,13 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
      */
     protected function addWithoutHiddenQuoteRequestFilter(SpyQuoteRequestQuery $quoteRequestQuery): SpyQuoteRequestQuery
     {
-        $quoteRequestWithVisibleVersionsIds = $this->getFactory()
-            ->getQuoteRequestPropelQuery()
+        $quoteRequestWithVisibleVersionQuery = clone $quoteRequestQuery;
+
+        $quoteRequestWithVisibleVersionsIds = $quoteRequestWithVisibleVersionQuery
             ->joinSpyQuoteRequestVersion()
             ->groupByIdQuoteRequest()
             ->having(sprintf(
-                'COUNT(%s) > 1 OR %s = false',
+                'COUNT(%s) = 1 AND %s = true',
                 SpyQuoteRequestVersionTableMap::COL_FK_QUOTE_REQUEST,
                 SpyQuoteRequestTableMap::COL_IS_LATEST_VERSION_HIDDEN
             ))
@@ -188,7 +190,7 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
             ->find()
             ->toArray();
 
-        $quoteRequestQuery->filterByIdQuoteRequest_In($quoteRequestWithVisibleVersionsIds);
+        $quoteRequestQuery->filterByIdQuoteRequest($quoteRequestWithVisibleVersionsIds, Criteria::NOT_IN);
 
         return $quoteRequestQuery;
     }

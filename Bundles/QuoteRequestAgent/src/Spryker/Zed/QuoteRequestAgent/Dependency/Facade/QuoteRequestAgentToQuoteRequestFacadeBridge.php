@@ -33,9 +33,9 @@ class QuoteRequestAgentToQuoteRequestFacadeBridge implements QuoteRequestAgentTo
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function createUserQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    public function createQuoteRequestForCompanyUser(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->createUserQuoteRequest($quoteRequestTransfer);
+        return $this->quoteRequestFacade->createQuoteRequestForCompanyUser($quoteRequestTransfer);
     }
 
     /**
@@ -43,9 +43,9 @@ class QuoteRequestAgentToQuoteRequestFacadeBridge implements QuoteRequestAgentTo
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function updateUserQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    public function updateQuoteRequestForCompanyUser(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->updateUserQuoteRequest($quoteRequestTransfer);
+        return $this->quoteRequestFacade->updateQuoteRequestForCompanyUser($quoteRequestTransfer);
     }
 
     /**
@@ -53,9 +53,9 @@ class QuoteRequestAgentToQuoteRequestFacadeBridge implements QuoteRequestAgentTo
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function cancelUserQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function cancelQuoteRequestForCompanyUser(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->cancelUserQuoteRequest($quoteRequestCriteriaTransfer);
+        return $this->quoteRequestFacade->cancelQuoteRequestForCompanyUser($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -63,9 +63,9 @@ class QuoteRequestAgentToQuoteRequestFacadeBridge implements QuoteRequestAgentTo
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function reviseUserQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function reviseQuoteRequestForCompanyUser(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->reviseUserQuoteRequest($quoteRequestCriteriaTransfer);
+        return $this->quoteRequestFacade->reviseQuoteRequestForCompanyUser($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -73,9 +73,9 @@ class QuoteRequestAgentToQuoteRequestFacadeBridge implements QuoteRequestAgentTo
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function sendQuoteRequestToCompanyUser(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+        return $this->quoteRequestFacade->sendQuoteRequestToCompanyUser($quoteRequestCriteriaTransfer);
     }
 
     /**

@@ -20,7 +20,8 @@ class PersistentCartQuotePersistPlugin extends AbstractPlugin implements QuotePe
 {
     /**
      * {@inheritdoc}
-     * - Plugin executed to make full replacement of the quote.
+     * - Retrieves a quote from Persistence using the provided customer and store information.
+     * - Replaces the retrieved quote with the provided quote and stores it in Persistence.
      *
      * @api
      *
@@ -30,6 +31,6 @@ class PersistentCartQuotePersistPlugin extends AbstractPlugin implements QuotePe
      */
     public function persist(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getClient()->persistQuote($quoteTransfer);
+        return $this->getClient()->replaceQuoteByCustomerAndStore($quoteTransfer);
     }
 }

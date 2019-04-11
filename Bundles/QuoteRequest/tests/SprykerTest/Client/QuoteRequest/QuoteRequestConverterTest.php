@@ -191,11 +191,11 @@ class QuoteRequestConverterTest extends Unit
     {
         $quoteRequestToPersistentCartClientInterfaceMock = $this->getMockBuilder(QuoteRequestToPersistentCartClientInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['persistCustomerQuote'])
+            ->setMethods(['persistQuote'])
             ->getMock();
 
         $quoteRequestToPersistentCartClientInterfaceMock->expects($this->any())
-            ->method('persistCustomerQuote')
+            ->method('persistQuote')
             ->willReturnCallback(function (QuoteTransfer $quoteTransfer) {
                 return (new QuoteResponseTransfer())->setQuoteTransfer($quoteTransfer)->setIsSuccessful(true);
             });

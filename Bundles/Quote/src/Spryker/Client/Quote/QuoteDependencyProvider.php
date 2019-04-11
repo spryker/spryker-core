@@ -26,7 +26,7 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const SERVICE_ZED = 'SERVICE_ZED';
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
-    public const PLUGINS_DATABASE_STRATEGY_AVAILABILITY_CHECK = 'PLUGINS_DATABASE_STRATEGY_AVAILABILITY_CHECK';
+    public const PLUGINS_DATABASE_STRATEGY_PRE_CHECK_PLUGINS = 'PLUGINS_DATABASE_STRATEGY_PRE_CHECK_PLUGINS';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -41,7 +41,7 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
         $container = $this->addCustomerClient($container);
         $container = $this->addZedSevice($container);
         $container = $this->addCurrencyClient($container);
-        $container = $this->addDatabaseStrategyAvailabilityCheckPlugins($container);
+        $container = $this->addDatabaseStrategyPreCheckPlugins($container);
 
         return $container;
     }
@@ -93,10 +93,10 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addDatabaseStrategyAvailabilityCheckPlugins(Container $container)
+    protected function addDatabaseStrategyPreCheckPlugins(Container $container)
     {
-        $container[static::PLUGINS_DATABASE_STRATEGY_AVAILABILITY_CHECK] = function () {
-            return $this->getDatabaseStrategyAvailabilityCheckPlugins();
+        $container[static::PLUGINS_DATABASE_STRATEGY_PRE_CHECK_PLUGINS] = function () {
+            return $this->getDatabaseStrategyPreCheckPlugins();
         };
 
         return $container;
@@ -155,9 +155,9 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyAvailabilityCheckPluginInterface[]
+     * @return \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface[]
      */
-    protected function getDatabaseStrategyAvailabilityCheckPlugins(): array
+    protected function getDatabaseStrategyPreCheckPlugins(): array
     {
         return [];
     }

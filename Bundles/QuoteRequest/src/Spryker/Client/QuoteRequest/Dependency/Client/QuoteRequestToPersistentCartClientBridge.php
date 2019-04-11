@@ -30,8 +30,8 @@ class QuoteRequestToPersistentCartClientBridge implements QuoteRequestToPersiste
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function persistCustomerQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->persistentCartClient->persistCustomerQuote($quoteTransfer);
+        return $this->persistentCartClient->persistQuote($quoteTransfer);
     }
 }

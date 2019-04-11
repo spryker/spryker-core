@@ -96,8 +96,10 @@ class QuoteRequestVersionMapper
 
         $quoteRequestVersionEntity->fromArray($data);
 
+        $quoteData = $this->filterDisallowedQuoteData($quoteRequestVersionTransfer->getQuote());
+
         $quoteRequestVersionEntity
-            ->setQuote($this->encodeQuoteData($quoteRequestVersionTransfer->getQuote()))
+            ->setQuote($this->encodeQuoteData($quoteData))
             ->setMetadata($this->encodeMetadata($quoteRequestVersionTransfer));
 
         return $quoteRequestVersionEntity;
@@ -145,14 +147,12 @@ class QuoteRequestVersionMapper
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array $quoteData
      *
      * @return string
      */
-    protected function encodeQuoteData(QuoteTransfer $quoteTransfer): string
+    protected function encodeQuoteData(array $quoteData): string
     {
-        $quoteData = $this->filterDisallowedQuoteData($quoteTransfer);
-
         return $this->encodingService->encodeJson($quoteData, JSON_OBJECT_AS_ARRAY);
     }
 

@@ -34,7 +34,7 @@ class QuoteRequestAgentWriter implements QuoteRequestAgentWriterInterface
      */
     public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->createUserQuoteRequest($quoteRequestTransfer);
+        return $this->quoteRequestFacade->createQuoteRequestForCompanyUser($quoteRequestTransfer);
     }
 
     /**
@@ -44,7 +44,7 @@ class QuoteRequestAgentWriter implements QuoteRequestAgentWriterInterface
      */
     public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->updateUserQuoteRequest($quoteRequestTransfer);
+        return $this->quoteRequestFacade->updateQuoteRequestForCompanyUser($quoteRequestTransfer);
     }
 
     /**
@@ -54,7 +54,7 @@ class QuoteRequestAgentWriter implements QuoteRequestAgentWriterInterface
      */
     public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->cancelUserQuoteRequest($quoteRequestCriteriaTransfer);
+        return $this->quoteRequestFacade->cancelQuoteRequestForCompanyUser($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -64,7 +64,7 @@ class QuoteRequestAgentWriter implements QuoteRequestAgentWriterInterface
      */
     public function reviseQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->reviseUserQuoteRequest($quoteRequestCriteriaTransfer);
+        return $this->quoteRequestFacade->reviseQuoteRequestForCompanyUser($quoteRequestCriteriaTransfer);
     }
 
     /**
@@ -74,6 +74,6 @@ class QuoteRequestAgentWriter implements QuoteRequestAgentWriterInterface
      */
     public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+        return $this->quoteRequestFacade->sendQuoteRequestToCompanyUser($quoteRequestCriteriaTransfer);
     }
 }

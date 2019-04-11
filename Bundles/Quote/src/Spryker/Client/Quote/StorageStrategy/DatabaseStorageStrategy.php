@@ -49,9 +49,9 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     protected $quoteLocker;
 
     /**
-     * @var \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyAvailabilityCheckPluginInterface[]
+     * @var \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface[]
      */
-    protected $databaseStrategyAvailabilityCheckPlugins;
+    protected $databaseStrategyPreCheckPlugins;
 
     /**
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface $customerClient
@@ -60,7 +60,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      * @param \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface $quoteLockStatusValidator
      * @param \Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface $quoteEditStatusValidator
      * @param \Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface $quoteLocker
-     * @param \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyAvailabilityCheckPluginInterface[] $databaseStrategyAvailabilityCheckPlugins
+     * @param \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface[] $databaseStrategyPreCheckPlugins
      */
     public function __construct(
         QuoteToCustomerClientInterface $customerClient,
@@ -69,7 +69,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
         QuoteLockStatusValidatorInterface $quoteLockStatusValidator,
         QuoteEditStatusValidatorInterface $quoteEditStatusValidator,
         QuoteLockerInterface $quoteLocker,
-        array $databaseStrategyAvailabilityCheckPlugins
+        array $databaseStrategyPreCheckPlugins
     ) {
         $this->customerClient = $customerClient;
         $this->quoteStub = $quoteStub;
@@ -77,7 +77,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
         $this->quoteLockStatusValidator = $quoteLockStatusValidator;
         $this->quoteEditStatusValidator = $quoteEditStatusValidator;
         $this->quoteLocker = $quoteLocker;
-        $this->databaseStrategyAvailabilityCheckPlugins = $databaseStrategyAvailabilityCheckPlugins;
+        $this->databaseStrategyPreCheckPlugins = $databaseStrategyPreCheckPlugins;
     }
 
     /**
@@ -93,7 +93,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      */
     public function isAllowed()
     {
-        if (!$this->checkDatabaseStrategyAvailability()) {
+        if (!$this->executeDatabaseStrategyPreCheckPlugins()) {
             return false;
         }
 
@@ -164,12 +164,12 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     /**
      * @return bool
      */
-    protected function checkDatabaseStrategyAvailability(): bool
+    protected function executeDatabaseStrategyPreCheckPlugins(): bool
     {
         $quoteTransfer = $this->getQuote();
 
-        foreach ($this->databaseStrategyAvailabilityCheckPlugins as $databaseStrategyAvailabilityCheckPlugin) {
-            if (!$databaseStrategyAvailabilityCheckPlugin->isAllowed($quoteTransfer)) {
+        foreach ($this->databaseStrategyPreCheckPlugins as $databaseStrategyPreCheckPlugin) {
+            if (!$databaseStrategyPreCheckPlugin->check($quoteTransfer)) {
                 return false;
             }
         }
