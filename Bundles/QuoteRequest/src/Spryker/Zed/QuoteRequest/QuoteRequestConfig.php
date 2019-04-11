@@ -41,6 +41,9 @@ class QuoteRequestConfig extends AbstractBundleConfig
             QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE,
             QuoteTransfer::QUOTE_REQUEST_REFERENCE,
             QuoteTransfer::ITEMS,
+            QuoteTransfer::EXPENSES,
+            QuoteTransfer::VOUCHER_DISCOUNTS,
+            QuoteTransfer::CART_RULE_DISCOUNTS,
         ];
     }
 

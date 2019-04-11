@@ -184,7 +184,6 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
         }
 
         $latestQuoteRequestVersionTransfer = $this->quoteRequestVersionSanitizer->reloadQuoteRequestVersionItems($quoteRequestTransfer->getLatestVersion());
-        $latestQuoteRequestVersionTransfer = $this->quoteRequestVersionSanitizer->cleanUpQuoteRequestVersionQuote($latestQuoteRequestVersionTransfer);
         $latestQuoteRequestVersionTransfer = $this->quoteRequestEntityManager->updateQuoteRequestVersion($latestQuoteRequestVersionTransfer);
 
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);

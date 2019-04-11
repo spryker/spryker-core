@@ -76,6 +76,8 @@ class QuoteRequestStub implements QuoteRequestStubInterface
             $quoteRequestCriteriaTransfer
         );
 
+        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+
         return $quoteRequestResponseTransfer;
     }
 
