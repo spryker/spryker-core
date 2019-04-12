@@ -10,16 +10,12 @@ namespace Spryker\Zed\PersistentCartShare\Business\Model;
 use Generated\Shared\Transfer\PersistentCartShareResourceDataTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 
-class ResourceDataMapper
+interface ResourceDataReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
      * @return \Generated\Shared\Transfer\PersistentCartShareResourceDataTransfer
      */
-    public function mapResourceDataToResourceDataTransfer(ResourceShareTransfer $resourceShareTransfer): PersistentCartShareResourceDataTransfer
-    {
-        return (new PersistentCartShareResourceDataTransfer())
-            ->fromArray((array)json_decode($resourceShareTransfer->getResourceData(), true));
-    }
+    public function getResourceDataFromResourceShareTransfer(ResourceShareTransfer $resourceShareTransfer): PersistentCartShareResourceDataTransfer;
 }

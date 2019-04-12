@@ -28,7 +28,7 @@ class PersistentCartShareFacade extends AbstractFacade implements PersistentCart
     public function getQuoteForPreview(QuotePreviewRequestTransfer $quotePreviewRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteForPreviewReader($this)
+            ->createQuoteForPreviewReader()
             ->getQuoteForPreview($quotePreviewRequestTransfer);
     }
 
@@ -39,10 +39,10 @@ class PersistentCartShareFacade extends AbstractFacade implements PersistentCart
      *
      * @return \Generated\Shared\Transfer\PersistentCartShareResourceDataTransfer
      */
-    public function mapResourceDataToResourceDataTransfer(ResourceShareTransfer $resourceShareTransfer): PersistentCartShareResourceDataTransfer
+    public function getResourceDataFromResourceShareTransfer(ResourceShareTransfer $resourceShareTransfer): PersistentCartShareResourceDataTransfer
     {
         return $this->getFactory()
-            ->createResourceDataMapper()
-            ->mapResourceDataToResourceDataTransfer($resourceShareTransfer);
+            ->createResourceDataReader()
+            ->getResourceDataFromResourceShareTransfer($resourceShareTransfer);
     }
 }

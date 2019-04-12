@@ -32,5 +32,5 @@ interface PersistentCartShareFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PersistentCartShareResourceDataTransfer
      */
-    public function mapResourceDataToResourceDataTransfer(ResourceShareTransfer $resourceShareTransfer): PersistentCartShareResourceDataTransfer;
+    public function getResourceDataFromResourceShareTransfer(ResourceShareTransfer $resourceShareTransfer): PersistentCartShareResourceDataTransfer;
 }

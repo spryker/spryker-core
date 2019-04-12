@@ -9,9 +9,10 @@ namespace Spryker\Zed\PersistentCartShare\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PersistentCartShare\Business\Model\QuoteForPreviewReader;
-use Spryker\Zed\PersistentCartShare\Business\Model\ResourceDataMapper;
+use Spryker\Zed\PersistentCartShare\Business\Model\ResourceDataReader;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToQuoteFacadeInterface;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeInterface;
+use Spryker\Zed\PersistentCartShare\Dependency\Service\PersistentCartShareToUtilEncodingServiceInterface;
 use Spryker\Zed\PersistentCartShare\PersistentCartShareDependencyProvider;
 
 /**
@@ -36,24 +37,32 @@ class PersistentCartShareBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Spryker\Zed\PersistentCartShare\Business\PersistentCartShareFacadeInterface $persistentCartFacade
-     *
      * @return \Spryker\Zed\PersistentCartShare\Business\Model\QuoteForPreviewReader
      */
-    public function createQuoteForPreviewReader(PersistentCartShareFacadeInterface $persistentCartFacade): QuoteForPreviewReader
+    public function createQuoteForPreviewReader(): QuoteForPreviewReader
     {
         return new QuoteForPreviewReader(
-            $persistentCartFacade,
+            $this->createResourceDataReader(),
             $this->getResourceShareFacade(),
             $this->getQuoteFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\PersistentCartShare\Business\Model\ResourceDataMapper
+     * @return \Spryker\Zed\PersistentCartShare\Business\Model\ResourceDataReader
      */
-    public function createResourceDataMapper(): ResourceDataMapper
+    public function createResourceDataReader(): ResourceDataReader
     {
-        return new ResourceDataMapper();
+        return new ResourceDataReader(
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCartShare\Dependency\Service\PersistentCartShareToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): PersistentCartShareToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(PersistentCartShareDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

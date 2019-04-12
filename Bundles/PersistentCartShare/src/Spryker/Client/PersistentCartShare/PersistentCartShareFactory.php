@@ -8,7 +8,6 @@
 namespace Spryker\Client\PersistentCartShare;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToQuoteClientInterface;
 use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToZedRequestClientInterface;
 use Spryker\Client\PersistentCartShare\Zed\PersistentCartShareStub;
 
@@ -17,14 +16,6 @@ use Spryker\Client\PersistentCartShare\Zed\PersistentCartShareStub;
  */
 class PersistentCartShareFactory extends AbstractFactory
 {
-    /**
-     * @return \Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToQuoteClientInterface
-     */
-    public function getQuoteClient(): PersistentCartShareToQuoteClientInterface
-    {
-        return $this->getProvidedDependency(PersistentCartShareDependencyProvider::CLIENT_QUOTE);
-    }
-
     /**
      * @return \Spryker\Client\PersistentCartShare\Zed\PersistentCartShareStub
      */

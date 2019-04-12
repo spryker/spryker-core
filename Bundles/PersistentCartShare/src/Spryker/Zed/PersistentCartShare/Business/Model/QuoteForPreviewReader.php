@@ -7,16 +7,17 @@
 
 namespace Spryker\Zed\PersistentCartShare\Business\Model;
 
+use ArrayObject;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuotePreviewRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareCriteriaTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Spryker\Zed\PersistentCartShare\Business\PersistentCartShareFacadeInterface;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToQuoteFacadeInterface;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeInterface;
 
-class QuoteForPreviewReader
+class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
 {
     /**
      * @var \Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeInterface
@@ -24,9 +25,9 @@ class QuoteForPreviewReader
     protected $resourceShareFacade;
 
     /**
-     * @var \Spryker\Zed\PersistentCartShare\Business\PersistentCartShareFacadeInterface
+     * @var \Spryker\Zed\PersistentCartShare\Business\Model\ResourceDataReaderInterface
      */
-    protected $persistentCartFacade;
+    protected $resourceDataMapper;
 
     /**
      * @var \Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToQuoteFacadeInterface
@@ -34,17 +35,17 @@ class QuoteForPreviewReader
     protected $quoteFacade;
 
     /**
-     * @param \Spryker\Zed\PersistentCartShare\Business\PersistentCartShareFacadeInterface $persistentCartFacade
+     * @param \Spryker\Zed\PersistentCartShare\Business\Model\ResourceDataReaderInterface $resourceDataMapper
      * @param \Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeInterface $resourceShareFacade
      * @param \Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToQuoteFacadeInterface $quoteFacade
      */
     public function __construct(
-        PersistentCartShareFacadeInterface $persistentCartFacade,
+        ResourceDataReaderInterface $resourceDataMapper,
         PersistentCartShareToResourceShareFacadeInterface $resourceShareFacade,
         PersistentCartShareToQuoteFacadeInterface $quoteFacade
     ) {
         $this->resourceShareFacade = $resourceShareFacade;
-        $this->persistentCartFacade = $persistentCartFacade;
+        $this->resourceDataMapper = $resourceDataMapper;
         $this->quoteFacade = $quoteFacade;
     }
 
@@ -56,14 +57,26 @@ class QuoteForPreviewReader
     public function getQuoteForPreview(QuotePreviewRequestTransfer $quotePreviewRequestTransfer): QuoteResponseTransfer
     {
         $resourceShareResponseTransfer = $this->getResourceShare($quotePreviewRequestTransfer);
-
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return (new QuoteResponseTransfer())
-                ->setIsSuccessful(false);
+                ->setIsSuccessful(false)
+                ->setErrors(
+                    $this->convertMessagesToQuoteErrors($resourceShareResponseTransfer->getErrorMessages())
+                );
         }
 
-        $idQuote = $this->getIdQuoteFromResourceShareResponce($resourceShareResponseTransfer);
-        $quoteResponseTransfer = $this->quoteFacade->findQuoteById($idQuote);
+        $resourceShareResponseTransfer = $this->activateResourceShare($quotePreviewRequestTransfer);
+        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
+            return (new QuoteResponseTransfer())
+                ->setIsSuccessful(false)
+                ->setErrors(
+                    $this->convertMessagesToQuoteErrors($resourceShareResponseTransfer->getErrorMessages())
+                );
+        }
+
+        $quoteResponseTransfer = $this->quoteFacade->findQuoteById(
+            $this->getIdQuoteFromResourceShareResponce($resourceShareResponseTransfer)
+        );
 
         return $quoteResponseTransfer;
     }
@@ -78,12 +91,7 @@ class QuoteForPreviewReader
         $resourceShareCriteriaTransfer = (new ResourceShareCriteriaTransfer())
             ->setUuid($quotePreviewRequestTransfer->getResourceShareUuid());
 
-        $this->resourceShareFacade->getResourceShare($resourceShareCriteriaTransfer);
-
-        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
-            ->setUuid($quotePreviewRequestTransfer->getResourceShareUuid());
-
-        return $this->resourceShareFacade->activateResourceShare($resourceShareRequestTransfer);
+        return $this->resourceShareFacade->getResourceShare($resourceShareCriteriaTransfer);
     }
 
     /**
@@ -93,9 +101,46 @@ class QuoteForPreviewReader
      */
     protected function getIdQuoteFromResourceShareResponce(ResourceShareResponseTransfer $resourceShareResponseTransfer): int
     {
-        $persistentCartShareResourceDataTransfer = $this->persistentCartFacade
-            ->mapResourceDataToResourceDataTransfer($resourceShareResponseTransfer->getResourceShare());
+        $persistentCartShareResourceDataTransfer = $this->resourceDataMapper
+            ->getResourceDataFromResourceShareTransfer(
+                $resourceShareResponseTransfer->getResourceShare()
+            );
 
-        return $persistentCartShareResourceDataTransfer->requireIdQuote()->getIdQuote();
+        return $persistentCartShareResourceDataTransfer
+            ->requireIdQuote()
+            ->getIdQuote();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuotePreviewRequestTransfer $quotePreviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    protected function activateResourceShare(QuotePreviewRequestTransfer $quotePreviewRequestTransfer): ResourceShareResponseTransfer
+    {
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
+            ->setUuid($quotePreviewRequestTransfer->getResourceShareUuid());
+
+        return $this->resourceShareFacade->activateResourceShare($resourceShareRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer[] $errorMessages
+     *
+     * @return \Generated\Shared\Transfer\QuoteErrorTransfer[]
+     */
+    protected function convertMessagesToQuoteErrors(ArrayObject $errorMessages): ArrayObject
+    {
+        $quoteErrorTransferCollection = new ArrayObject();
+        foreach ($errorMessages as $errorMessage) {
+            $quoteErrorTransferCollection->append(
+                (new QuoteErrorTransfer())
+                    ->setMessage(
+                        $errorMessage->getValue()
+                    )
+            );
+        }
+
+        return $quoteErrorTransferCollection;
     }
 }

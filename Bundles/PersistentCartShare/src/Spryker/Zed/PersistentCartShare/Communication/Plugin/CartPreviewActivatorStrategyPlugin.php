@@ -42,7 +42,7 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
             return false;
         }
 
-        $persistentCartShareResourceDataTransfer = $this->getFacade()->mapResourceDataToResourceDataTransfer($resourceShareTransfer);
+        $persistentCartShareResourceDataTransfer = $this->getFacade()->getResourceDataFromResourceShareTransfer($resourceShareTransfer);
 
         if (!$persistentCartShareResourceDataTransfer->getIdQuote()) {
             return false;
@@ -64,8 +64,6 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
      */
     public function execute(ResourceShareTransfer $resourceShareTransfer): void
     {
-        if (!$this->isApplicable($resourceShareTransfer)) {
-            //do nothing
-        }
+        //do nothing
     }
 }
