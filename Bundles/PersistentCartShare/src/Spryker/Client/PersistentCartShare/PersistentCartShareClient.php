@@ -7,11 +7,12 @@
 
 namespace Spryker\Client\PersistentCartShare;
 
+use Generated\Shared\Transfer\QuotePreviewRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method \Spryker\Client\PersistentCart\PersistentCartFactory getFactory()
+ * @method \Spryker\Client\PersistentCartShare\PersistentCartShareFactory getFactory()
  */
 class PersistentCartShareClient extends AbstractClient implements PersistentCartShareClientInterface
 {
@@ -26,10 +27,11 @@ class PersistentCartShareClient extends AbstractClient implements PersistentCart
      */
     public function getQuoteForPreview(string $resourceShareUuid): QuoteResponseTransfer
     {
-        $quoteTransfer = $this->getFactory()->getQuoteClient()->getQuote(); //temp
+        $quotePreviewRequestTransfer = new QuotePreviewRequestTransfer();
+        $quotePreviewRequestTransfer->setResourceShareUuid($resourceShareUuid);
 
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+        $quoteResponseTransfer = $this->getFactory()->createZedPersistentCartShareStub()
+            ->getQuoteForPreview($quotePreviewRequestTransfer);
 
         return $quoteResponseTransfer;
     }

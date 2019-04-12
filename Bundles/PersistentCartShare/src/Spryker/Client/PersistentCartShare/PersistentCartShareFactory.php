@@ -9,6 +9,8 @@ namespace Spryker\Client\PersistentCartShare;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToQuoteClientInterface;
+use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToZedRequestClientInterface;
+use Spryker\Client\PersistentCartShare\Zed\PersistentCartShareStub;
 
 /**
  * @method \Spryker\Client\PersistentCart\PersistentCartConfig getConfig()
@@ -21,5 +23,21 @@ class PersistentCartShareFactory extends AbstractFactory
     public function getQuoteClient(): PersistentCartShareToQuoteClientInterface
     {
         return $this->getProvidedDependency(PersistentCartShareDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCartShare\Zed\PersistentCartShareStub
+     */
+    public function createZedPersistentCartShareStub(): PersistentCartShareStub
+    {
+        return new PersistentCartShareStub($this->getZedRequestClient());
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): PersistentCartShareToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(PersistentCartShareDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }

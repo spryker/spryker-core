@@ -5,7 +5,10 @@
   "license": "proprietary",
   "require": {
     "spryker/kernel": "*",
-    "spryker/quote": "*"
+    "spryker/quote": "*",
+    "spryker/resource-share": "*",
+    "spryker/resource-share-extension": "*",
+    "spryker/zed-request": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
