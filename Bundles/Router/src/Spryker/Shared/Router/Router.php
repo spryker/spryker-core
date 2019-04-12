@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Router;
 
+use Spryker\Shared\RouterExtension\Dependency\Plugin\RouterEnhancerAwareInterface;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Routing\Router as SymfonyRouter;
 
@@ -31,40 +32,67 @@ class Router extends SymfonyRouter implements RouterInterface
     }
 
     /**
-     * @param string $name
-     * @param array $parameters
-     * @param int $referenceType
-     *
-     * @return string
+     * @return \Spryker\Shared\RouterExtension\Dependency\Plugin\RouterEnhancerAwareInterface|\Symfony\Component\Routing\Matcher\UrlMatcherInterface|null
      */
-    public function generate($name, $parameters = [], $referenceType = SymfonyRouter::ABSOLUTE_PATH)
+    public function getMatcher()
     {
-        $generatedUrl = parent::generate($name, $parameters, $referenceType);
-
-        foreach (array_reverse($this->routerEnhancerPlugins) as $routerEnhancerPlugin) {
-            $generatedUrl = $routerEnhancerPlugin->afterGenerate($generatedUrl, $this->getContext());
+        $this->matcher = parent::getMatcher();
+        if ($this->matcher instanceof RouterEnhancerAwareInterface) {
+            $this->matcher->setRouterEnhancerPlugins($this->routerEnhancerPlugins);
         }
 
-        return $generatedUrl;
+        return $this->matcher;
     }
 
     /**
-     * @param string $pathinfo
-     *
-     * @return array
+     * @return \Spryker\Shared\RouterExtension\Dependency\Plugin\RouterEnhancerAwareInterface|\Symfony\Component\Routing\Generator\UrlGeneratorInterface|null
      */
-    public function match($pathinfo)
+    public function getGenerator()
     {
-        foreach ($this->routerEnhancerPlugins as $routerEnhancerPlugin) {
-            $pathinfo = $routerEnhancerPlugin->beforeMatch($pathinfo, $this->getContext());
+        $this->generator = parent::getGenerator();
+
+        if ($this->generator instanceof RouterEnhancerAwareInterface) {
+            $this->generator->setRouterEnhancerPlugins($this->routerEnhancerPlugins);
         }
 
-        $parameters = parent::match($pathinfo);
-
-        foreach ($this->routerEnhancerPlugins as $routerEnhancerPlugin) {
-            $parameters = $routerEnhancerPlugin->afterMatch($parameters, $this->getContext());
-        }
-
-        return $parameters;
+        return $this->generator;
     }
+
+//    /**
+//     * @param string $name
+//     * @param array $parameters
+//     * @param int $referenceType
+//     *
+//     * @return string
+//     */
+//    public function generate($name, $parameters = [], $referenceType = SymfonyRouter::ABSOLUTE_PATH)
+//    {
+//        $generatedUrl = parent::generate($name, $parameters, $referenceType);
+//
+//        foreach (array_reverse($this->routerEnhancerPlugins) as $routerEnhancerPlugin) {
+//            $generatedUrl = $routerEnhancerPlugin->afterGenerate($generatedUrl, $this->getContext());
+//        }
+//
+//        return $generatedUrl;
+//    }
+//
+//    /**
+//     * @param string $pathinfo
+//     *
+//     * @return array
+//     */
+//    public function match($pathinfo)
+//    {
+//        foreach ($this->routerEnhancerPlugins as $routerEnhancerPlugin) {
+//            $pathinfo = $routerEnhancerPlugin->beforeMatch($pathinfo, $this->getContext());
+//        }
+//
+//        $parameters = parent::match($pathinfo);
+//
+//        foreach ($this->routerEnhancerPlugins as $routerEnhancerPlugin) {
+//            $parameters = $routerEnhancerPlugin->afterMatch($parameters, $this->getContext());
+//        }
+//
+//        return $parameters;
+//    }
 }

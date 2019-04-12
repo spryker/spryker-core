@@ -7,6 +7,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/router": "*",
     "spryker/symfony": "*",
     "spryker/testify": "*"
   },
@@ -16,6 +17,7 @@
     }
   },
   "suggest": {
+    "spryker/router": "You need to install this module when you want to use the RouterExtension interfaces.",
     "spryker/symfony": "You need to install this module when you want to use the Router plugin."
   },
   "minimum-stability": "dev",

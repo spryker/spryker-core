@@ -8,9 +8,10 @@
 namespace SprykerTest\Yves\Router\Plugin;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Router\RouterConstants;
+use Spryker\Yves\Router\Plugin\RouteManipulator\StoreDefaultRouteManipulatorPlugin;
 use Spryker\Yves\Router\Plugin\Router\YvesRouterPlugin;
 use Spryker\Yves\Router\Plugin\RouterEnhancer\StorePrefixRouterEnhancerPlugin;
-use Spryker\Yves\Router\UrlMatcher\RedirectableUrlMatcher;
 use SprykerTest\Yves\Router\Plugin\Fixtures\RouteProviderPlugin;
 use Symfony\Component\Routing\RequestContext;
 
@@ -37,18 +38,14 @@ class YvesRouterPluginWithStorePrefixRouterEnhancerTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->mockConfigMethod(
-            'getRouterConfiguration',
-            [
-                'cache_dir' => null,
-                'generator_cache_class' => 'YvesUrlGenerator',
-                'matcher_cache_class' => 'YvesUrlMatcher',
-                'matcher_base_class' => RedirectableUrlMatcher::class,
-            ]
-        );
+        $this->tester->mockEnvironmentConfig(RouterConstants::ROUTER_CACHE_ENABLED_YVES, false);
 
         $this->tester->mockFactoryMethod('getRouteProviderPlugins', [
             new RouteProviderPlugin(),
+        ]);
+
+        $this->tester->mockFactoryMethod('getRouteManipulatorPlugins', [
+            new StoreDefaultRouteManipulatorPlugin(),
         ]);
 
         $this->tester->mockFactoryMethod('getRouterEnhancerPlugins', [
@@ -57,52 +54,106 @@ class YvesRouterPluginWithStorePrefixRouterEnhancerTest extends Unit
     }
 
     /**
+     * @dataProvider matcherDataProvider
+     *
+     * @param string $url
+     * @param string $routeName
+     * @param string $store
+     *
      * @return void
      */
-    public function testMatchReturnsParameterWithStore(): void
+    public function testMatchReturnsParameterWithStore(string $url, string $routeName, string $store): void
     {
         $routerPlugin = new YvesRouterPlugin();
         $routerPlugin->setFactory($this->tester->getFactory());
 
         $router = $routerPlugin->getRouter();
 
-        $parameters = $router->match('/DE/foo');
+        $parameters = $router->match($url);
 
-        $this->assertSame('foo', $parameters['_route']);
-        $this->assertSame('DE', $parameters['store']);
+        $this->assertSame($routeName, $parameters['_route']);
+        $this->assertSame($store, $parameters['store']);
     }
 
     /**
+     * @dataProvider generatorDataProvider
+     *
+     * @param string $url
+     * @param string $routeName
+     * @param string $store
+     *
      * @return void
      */
-    public function testGenerateReturnsUrlWithStoreWhenStoreIsInContextParameter(): void
+    public function testGenerateReturnsUrlWithStoreWhenStoreIsInContext(string $url, string $routeName, string $store): void
     {
         $routerPlugin = new YvesRouterPlugin();
         $routerPlugin->setFactory($this->tester->getFactory());
 
         $requestContext = new RequestContext();
-        $requestContext->setParameter('store', 'DE');
+        $requestContext->setParameter('store', $store);
 
         $router = $routerPlugin->getRouter();
         $router->setContext($requestContext);
 
-        $url = $router->generate('foo');
+        $generatedUrl = $router->generate($routeName);
 
-        $this->assertSame('/DE/foo', $url);
+        $this->assertSame($url, $generatedUrl);
     }
 
     /**
+     * @dataProvider generatorWithoutLanguageAndStoreDataProvider
+     *
+     * @param string $url
+     * @param string $routeName
+     *
      * @return void
      */
-    public function testGenerateReturnsUrlWithoutStoreWhenStoreIsNotInContextParameter(): void
+    public function testGenerateReturnsUrlWithoutStoreWhenStoreIsNotInContext(string $url, string $routeName): void
     {
         $routerPlugin = new YvesRouterPlugin();
         $routerPlugin->setFactory($this->tester->getFactory());
 
         $router = $routerPlugin->getRouter();
 
-        $url = $router->generate('foo');
+        $generatedUrl = $router->generate($routeName);
 
-        $this->assertSame('/foo', $url);
+        $this->assertSame($url, $generatedUrl);
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function matcherDataProvider(): array
+    {
+        return [
+            ['/', 'home', 'US'],
+            ['/DE', 'home', 'DE'],
+            ['/foo', 'foo', 'US'],
+            ['/DE/foo', 'foo', 'DE'],
+        ];
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function generatorDataProvider(): array
+    {
+        return [
+            ['/US', 'home', 'US'],
+            ['/DE', 'home', 'DE'],
+            ['/DE/foo', 'foo', 'DE'],
+            ['/US/foo', 'foo', 'US'],
+        ];
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function generatorWithoutLanguageAndStoreDataProvider(): array
+    {
+        return [
+            ['/', 'home'],
+            ['/foo', 'foo'],
+        ];
     }
 }

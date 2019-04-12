@@ -26,6 +26,12 @@ class RouteProviderPlugin extends AbstractRouteProviderPlugin
         $route = $this->buildRoute('/', 'Router', 'Router');
         $routeCollection->add('home', $route);
 
+        $route = $this->buildRoute('/route/{parameter}', 'Router', 'Router');
+        $route->convert('parameter', function () {
+            return 'converted';
+        });
+        $routeCollection->add('converter', $route);
+
         return $routeCollection;
     }
 

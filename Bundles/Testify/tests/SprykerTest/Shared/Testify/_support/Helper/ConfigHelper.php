@@ -27,7 +27,7 @@ class ConfigHelper extends Module
     protected $configCache;
 
     /**
-     * @var \Spryker\Shared\Kernel\AbstractBundleConfig|object|null
+     * @var \Spryker\Shared\Kernel\AbstractBundleConfig|null
      */
     protected $configStub;
 
@@ -37,7 +37,7 @@ class ConfigHelper extends Module
     protected $mockedConfigMethods = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\AbstractBundleConfig|object|null
+     * @var \Spryker\Shared\Kernel\AbstractBundleConfig|null
      */
     protected $sharedConfigStub;
 
@@ -83,12 +83,26 @@ class ConfigHelper extends Module
     }
 
     /**
+     * @param string $key
+     * @param array|bool|float|int|string $value
+     *
+     * @return void
+     */
+    public function mockEnvironmentConfig($key, $value)
+    {
+        $configProperty = $this->getConfigReflectionProperty();
+        $config = $configProperty->getValue();
+        $config[$key] = $value;
+        $configProperty->setValue($config);
+    }
+
+    /**
      * @param string $methodName
      * @param mixed $return
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Shared\Kernel\AbstractBundleConfig|null
+     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
      */
     public function mockConfigMethod(string $methodName, $return)
     {
@@ -110,7 +124,7 @@ class ConfigHelper extends Module
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Shared\Kernel\AbstractBundleConfig|null
+     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
      */
     public function mockSharedConfigMethod(string $methodName, $return)
     {

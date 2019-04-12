@@ -17,7 +17,7 @@ class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
     /**
      * @var array
      */
-    protected $allowedLocales = [
+    protected $allowedLanguages = [
         'de',
         'en',
     ];
@@ -25,7 +25,7 @@ class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
     /**
      * @var string|null
      */
-    protected $currentLocale;
+    protected $currentLanguage;
 
     /**
      * @param string $pathinfo
@@ -40,8 +40,8 @@ class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
         }
 
         $pathinfoFragments = explode('/', trim($pathinfo, '/'));
-        if (in_array($pathinfoFragments[0], $this->allowedLocales)) {
-            $this->currentLocale = array_shift($pathinfoFragments);
+        if (in_array($pathinfoFragments[0], $this->allowedLanguages)) {
+            $this->currentLanguage = array_shift($pathinfoFragments);
 
             return '/' . implode('/', $pathinfoFragments);
         }
@@ -57,8 +57,8 @@ class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
      */
     public function afterMatch(array $parameters, RequestContext $requestContext): array
     {
-        if ($this->currentLocale !== null) {
-            $parameters['locale'] = $this->currentLocale;
+        if ($this->currentLanguage !== null) {
+            $parameters['language'] = $this->currentLanguage;
         }
 
         return $parameters;
@@ -72,14 +72,14 @@ class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
      */
     public function afterGenerate(string $url, RequestContext $requestContext): string
     {
-        if ($url === '/') {
-            return $url;
-        }
+        $language = $this->findLanguage($requestContext);
 
-        $locale = $this->findLocale($requestContext);
+        if ($language !== null) {
+            if ($url === '/') {
+                $url = '';
+            }
 
-        if ($locale !== null) {
-            return sprintf('/%s%s', $locale, $url);
+            return sprintf('/%s%s', $language, $url);
         }
 
         return $url;
@@ -90,10 +90,10 @@ class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
      *
      * @return string|null
      */
-    protected function findLocale(RequestContext $requestContext): ?string
+    protected function findLanguage(RequestContext $requestContext): ?string
     {
-        if ($requestContext->hasParameter('locale')) {
-            return $requestContext->getParameter('locale');
+        if ($requestContext->hasParameter('language')) {
+            return $requestContext->getParameter('language');
         }
 
         return null;

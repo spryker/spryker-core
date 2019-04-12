@@ -10,7 +10,9 @@ namespace SprykerTest\Yves\Router\Plugin;
 use Codeception\Test\Unit;
 use Spryker\Shared\Router\RouterConstants;
 use Spryker\Yves\Router\Plugin\Router\YvesRouterPlugin;
+use Spryker\Yves\Router\Plugin\RouterEnhancer\QueryStringRouterEnhancerPlugin;
 use SprykerTest\Yves\Router\Plugin\Fixtures\RouteProviderPlugin;
+use Symfony\Component\Routing\RequestContext;
 
 /**
  * Auto-generated group annotations
@@ -18,10 +20,10 @@ use SprykerTest\Yves\Router\Plugin\Fixtures\RouteProviderPlugin;
  * @group Yves
  * @group Router
  * @group Plugin
- * @group YvesRouterPluginTest
+ * @group YvesRouterPluginWithQueryStringRouterEnhancerTest
  * Add your own group annotations below this line
  */
-class YvesRouterPluginTest extends Unit
+class YvesRouterPluginWithQueryStringRouterEnhancerTest extends Unit
 {
     /**
      * @var \SprykerTest\Yves\Router\RouterYvesTester
@@ -40,56 +42,43 @@ class YvesRouterPluginTest extends Unit
         $this->tester->mockFactoryMethod('getRouteProviderPlugins', [
             new RouteProviderPlugin(),
         ]);
+
+        $this->tester->mockFactoryMethod('getRouterEnhancerPlugins', [
+            new QueryStringRouterEnhancerPlugin(),
+        ]);
     }
 
     /**
-     * @dataProvider dataProvider
-     *
-     * @param string $url
-     * @param string $routeName
-     *
      * @return void
      */
-    public function testMatchReturnsParameterForPathInfo(string $url, string $routeName): void
+    public function testGenerateReturnsUrlWithQueryParameter(): void
+    {
+        $routerPlugin = new YvesRouterPlugin();
+        $routerPlugin->setFactory($this->tester->getFactory());
+
+        $requestContext = new RequestContext();
+        $requestContext->setQueryString('?foo=bar&baz=bat');
+
+        $router = $routerPlugin->getRouter();
+        $router->setContext($requestContext);
+
+        $url = $router->generate('foo');
+
+        $this->assertSame('/foo?foo=bar&baz=bat', $url);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGenerateReturnsUrlWithoutQueryParameter(): void
     {
         $routerPlugin = new YvesRouterPlugin();
         $routerPlugin->setFactory($this->tester->getFactory());
 
         $router = $routerPlugin->getRouter();
 
-        $parameters = $router->match($url);
+        $url = $router->generate('foo');
 
-        $this->assertSame($routeName, $parameters['_route']);
-    }
-
-    /**
-     * @dataProvider dataProvider
-     *
-     * @param string $url
-     * @param string $routeName
-     *
-     * @return void
-     */
-    public function testGenerateReturnsUrlForRouteName(string $url, string $routeName): void
-    {
-        $routerPlugin = new YvesRouterPlugin();
-        $routerPlugin->setFactory($this->tester->getFactory());
-
-        $router = $routerPlugin->getRouter();
-
-        $url = $router->generate($routeName);
-
-        $this->assertSame($url, $url);
-    }
-
-    /**
-     * @return string[][]
-     */
-    public function dataProvider(): array
-    {
-        return [
-            ['/', 'home'],
-            ['/foo', 'foo'],
-        ];
+        $this->assertSame('/foo', $url);
     }
 }

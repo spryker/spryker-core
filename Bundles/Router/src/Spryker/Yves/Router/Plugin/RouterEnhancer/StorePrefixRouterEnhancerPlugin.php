@@ -72,13 +72,14 @@ class StorePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
      */
     public function afterGenerate(string $url, RequestContext $requestContext): string
     {
-        if ($url === '/') {
-            return $url;
-        }
-
         $store = $this->findStore($requestContext);
-
+        if ($url === '/') {
+        }
         if ($store !== null) {
+            if ($url === '/') {
+                $url = '';
+            }
+
             return sprintf('/%s%s', $store, $url);
         }
 

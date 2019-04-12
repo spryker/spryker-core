@@ -8,9 +8,10 @@
 namespace SprykerTest\Yves\Router\Plugin;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Router\RouterConstants;
+use Spryker\Yves\Router\Plugin\RouteManipulator\LanguageDefaultRouteManipulatorPlugin;
 use Spryker\Yves\Router\Plugin\Router\YvesRouterPlugin;
 use Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin;
-use Spryker\Yves\Router\UrlMatcher\RedirectableUrlMatcher;
 use SprykerTest\Yves\Router\Plugin\Fixtures\RouteProviderPlugin;
 use Symfony\Component\Routing\RequestContext;
 
@@ -37,18 +38,14 @@ class YvesRouterPluginWithLanguagePrefixRouterEnhancerTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->mockConfigMethod(
-            'getRouterConfiguration',
-            [
-                'cache_dir' => null,
-                'generator_cache_class' => 'YvesUrlGenerator',
-                'matcher_cache_class' => 'YvesUrlMatcher',
-                'matcher_base_class' => RedirectableUrlMatcher::class,
-            ]
-        );
+        $this->tester->mockEnvironmentConfig(RouterConstants::ROUTER_CACHE_ENABLED_YVES, false);
 
         $this->tester->mockFactoryMethod('getRouteProviderPlugins', [
             new RouteProviderPlugin(),
+        ]);
+
+        $this->tester->mockFactoryMethod('getRouteManipulatorPlugins', [
+            new LanguageDefaultRouteManipulatorPlugin(),
         ]);
 
         $this->tester->mockFactoryMethod('getRouterEnhancerPlugins', [
@@ -57,52 +54,106 @@ class YvesRouterPluginWithLanguagePrefixRouterEnhancerTest extends Unit
     }
 
     /**
+     * @dataProvider matcherDataProvider
+     *
+     * @param string $url
+     * @param string $routeName
+     * @param string $language
+     *
      * @return void
      */
-    public function testMatchReturnsParameterWithLanguage(): void
+    public function testMatchReturnsParameterWithLanguage(string $url, string $routeName, string $language): void
     {
         $routerPlugin = new YvesRouterPlugin();
         $routerPlugin->setFactory($this->tester->getFactory());
 
         $router = $routerPlugin->getRouter();
 
-        $parameters = $router->match('/de/foo');
+        $parameters = $router->match($url);
 
-        $this->assertSame('foo', $parameters['_route']);
-        $this->assertSame('de', $parameters['language']);
+        $this->assertSame($routeName, $parameters['_route']);
+        $this->assertSame($language, $parameters['language']);
     }
 
     /**
+     * @dataProvider generatorDataProvider
+     *
+     * @param string $url
+     * @param string $routeName
+     * @param string $language
+     *
      * @return void
      */
-    public function testGenerateReturnsUrlWithLanguageWhenLanguageIsInContextParameter(): void
+    public function testGenerateReturnsUrlWithLanguageWhenLanguageIsInContext(string $url, string $routeName, string $language): void
     {
         $routerPlugin = new YvesRouterPlugin();
         $routerPlugin->setFactory($this->tester->getFactory());
 
         $requestContext = new RequestContext();
-        $requestContext->setParameter('language', 'de');
+        $requestContext->setParameter('language', $language);
 
         $router = $routerPlugin->getRouter();
         $router->setContext($requestContext);
 
-        $url = $router->generate('foo');
+        $generatedUrl = $router->generate($routeName);
 
-        $this->assertSame('/de/foo', $url);
+        $this->assertSame($url, $generatedUrl);
     }
 
     /**
+     * @dataProvider generatorWithoutLanguageAndStoreDataProvider
+     *
+     * @param string $url
+     * @param string $routeName
+     *
      * @return void
      */
-    public function testGenerateReturnsUrlWithoutLanguageWhenLanguageIsNotInContextParameter(): void
+    public function testGenerateReturnsUrlWithoutLanguageWhenLanguageIsNotInContext(string $url, string $routeName): void
     {
         $routerPlugin = new YvesRouterPlugin();
         $routerPlugin->setFactory($this->tester->getFactory());
 
         $router = $routerPlugin->getRouter();
 
-        $url = $router->generate('foo');
+        $generatedUrl = $router->generate($routeName);
 
-        $this->assertSame('/foo', $url);
+        $this->assertSame($url, $generatedUrl);
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function matcherDataProvider(): array
+    {
+        return [
+            ['/', 'home', 'en'],
+            ['/de', 'home', 'de'],
+            ['/foo', 'foo', 'en'],
+            ['/de/foo', 'foo', 'de'],
+        ];
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function generatorDataProvider(): array
+    {
+        return [
+            ['/en', 'home', 'en'],
+            ['/de', 'home', 'de'],
+            ['/en/foo', 'foo', 'en'],
+            ['/de/foo', 'foo', 'de'],
+        ];
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function generatorWithoutLanguageAndStoreDataProvider(): array
+    {
+        return [
+            ['/', 'home'],
+            ['/foo', 'foo'],
+        ];
     }
 }

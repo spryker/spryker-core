@@ -8,10 +8,12 @@
 namespace SprykerTest\Yves\Router\Plugin;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Router\RouterConstants;
+use Spryker\Yves\Router\Plugin\RouteManipulator\LanguageDefaultRouteManipulatorPlugin;
+use Spryker\Yves\Router\Plugin\RouteManipulator\StoreDefaultRouteManipulatorPlugin;
 use Spryker\Yves\Router\Plugin\Router\YvesRouterPlugin;
 use Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin;
 use Spryker\Yves\Router\Plugin\RouterEnhancer\StorePrefixRouterEnhancerPlugin;
-use Spryker\Yves\Router\UrlMatcher\RedirectableUrlMatcher;
 use SprykerTest\Yves\Router\Plugin\Fixtures\RouteProviderPlugin;
 use Symfony\Component\Routing\RequestContext;
 
@@ -38,18 +40,15 @@ class YvesRouterPluginWithStoreAndLanguagePrefixRouterEnhancerTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->mockConfigMethod(
-            'getRouterConfiguration',
-            [
-                'cache_dir' => null,
-                'generator_cache_class' => 'YvesUrlGenerator',
-                'matcher_cache_class' => 'YvesUrlMatcher',
-                'matcher_base_class' => RedirectableUrlMatcher::class,
-            ]
-        );
+        $this->tester->mockEnvironmentConfig(RouterConstants::ROUTER_CACHE_ENABLED_YVES, false);
 
         $this->tester->mockFactoryMethod('getRouteProviderPlugins', [
             new RouteProviderPlugin(),
+        ]);
+
+        $this->tester->mockFactoryMethod('getRouteManipulatorPlugins', [
+            new LanguageDefaultRouteManipulatorPlugin(),
+            new StoreDefaultRouteManipulatorPlugin(),
         ]);
 
         $this->tester->mockFactoryMethod('getRouterEnhancerPlugins', [

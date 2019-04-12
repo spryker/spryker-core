@@ -9,6 +9,7 @@ namespace Spryker\Yves\Router;
 
 use Spryker\Shared\Router\RouterConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
+use Spryker\Yves\Router\Generator\UrlGenerator;
 use Spryker\Yves\Router\UrlMatcher\RedirectableUrlMatcher;
 
 class RouterConfig extends AbstractBundleConfig
@@ -20,9 +21,8 @@ class RouterConfig extends AbstractBundleConfig
     {
         return [
             'cache_dir' => $this->getCachePathIfCacheEnabled(),
-            'generator_cache_class' => 'YvesUrlGenerator',
-            'matcher_cache_class' => 'YvesUrlMatcher',
-            'matcher_base_class' => RedirectableUrlMatcher::class,
+            'generator_class' => UrlGenerator::class,
+            'matcher_class' => RedirectableUrlMatcher::class,
         ];
     }
 

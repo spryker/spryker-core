@@ -18,10 +18,10 @@ use SprykerTest\Yves\Router\Plugin\Fixtures\RouteProviderPlugin;
  * @group Yves
  * @group Router
  * @group Plugin
- * @group YvesRouterPluginTest
+ * @group YvesRouterPluginRouteConverterTest
  * Add your own group annotations below this line
  */
-class YvesRouterPluginTest extends Unit
+class YvesRouterPluginRouteConverterTest extends Unit
 {
     /**
      * @var \SprykerTest\Yves\Router\RouterYvesTester
@@ -43,53 +43,17 @@ class YvesRouterPluginTest extends Unit
     }
 
     /**
-     * @dataProvider dataProvider
-     *
-     * @param string $url
-     * @param string $routeName
-     *
      * @return void
      */
-    public function testMatchReturnsParameterForPathInfo(string $url, string $routeName): void
+    public function testGenerateWillConvertRouteParameter(): void
     {
         $routerPlugin = new YvesRouterPlugin();
         $routerPlugin->setFactory($this->tester->getFactory());
 
         $router = $routerPlugin->getRouter();
 
-        $parameters = $router->match($url);
+        $generatedUrl = $router->generate('converter', ['parameter' => 'foo']);
 
-        $this->assertSame($routeName, $parameters['_route']);
-    }
-
-    /**
-     * @dataProvider dataProvider
-     *
-     * @param string $url
-     * @param string $routeName
-     *
-     * @return void
-     */
-    public function testGenerateReturnsUrlForRouteName(string $url, string $routeName): void
-    {
-        $routerPlugin = new YvesRouterPlugin();
-        $routerPlugin->setFactory($this->tester->getFactory());
-
-        $router = $routerPlugin->getRouter();
-
-        $url = $router->generate($routeName);
-
-        $this->assertSame($url, $url);
-    }
-
-    /**
-     * @return string[][]
-     */
-    public function dataProvider(): array
-    {
-        return [
-            ['/', 'home'],
-            ['/foo', 'foo'],
-        ];
+        $this->assertSame('/route/converted', $generatedUrl);
     }
 }
