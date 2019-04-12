@@ -23,7 +23,7 @@ class QueueDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -38,6 +38,8 @@ class QueueDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new QueueToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         };
+
+        return $container;
     }
 
     /**

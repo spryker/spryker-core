@@ -48,7 +48,7 @@ abstract class AbstractCollectorConsole extends Console
     }
 
     /**
-     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface[] $results
+     * @param array $results
      *
      * @return string
      */

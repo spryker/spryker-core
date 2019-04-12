@@ -163,7 +163,7 @@ interface ProcessInterface
     public function getManualEvents();
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[][]
+     * @return string[][]
      */
     public function getManualEventsBySource();
 
