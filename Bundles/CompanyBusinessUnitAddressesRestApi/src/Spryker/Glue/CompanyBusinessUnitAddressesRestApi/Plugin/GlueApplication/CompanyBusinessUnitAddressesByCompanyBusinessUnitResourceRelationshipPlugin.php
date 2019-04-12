@@ -33,7 +33,7 @@ class CompanyBusinessUnitAddressesByCompanyBusinessUnitResourceRelationshipPlugi
     {
         $this->getFactory()
             ->createCompanyBusinessUnitAddressResourceRelationshipExpander()
-            ->addResourceRelationships($resources, $restRequest);
+            ->addResourceRelationshipsByCompanyBusinessUnit($resources, $restRequest);
     }
 
     /**

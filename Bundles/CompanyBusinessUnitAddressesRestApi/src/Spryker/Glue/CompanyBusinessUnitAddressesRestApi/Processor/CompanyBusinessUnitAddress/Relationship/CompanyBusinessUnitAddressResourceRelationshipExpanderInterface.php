@@ -17,5 +17,5 @@ interface CompanyBusinessUnitAddressResourceRelationshipExpanderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): array;
+    public function addResourceRelationshipsByCompanyBusinessUnit(array $resources, RestRequestInterface $restRequest): array;
 }
