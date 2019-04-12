@@ -26,12 +26,6 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
      */
     public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
-        if ($priceProductFilterTransfer->getQuantity() <= 1) {
-            $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'filterVolumePrices']);
-
-            return $priceProductTransfers;
-        }
-
         $minPriceProductTransfer = $this->getMinPrice(
             $priceProductTransfers,
             $priceProductFilterTransfer->getQuantity()
