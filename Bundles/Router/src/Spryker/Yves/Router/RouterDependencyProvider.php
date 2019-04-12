@@ -18,6 +18,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     public const ROUTER_PLUGINS = 'router-plugins';
     public const ROUTER_ROUTE_PROVIDER = 'router-controller-provider';
     public const ROUTER_ROUTE_MANIPULATOR = 'route manipulator';
+    public const ROUTER_ENHANCER_PLUGINS = 'router enhancer plugin';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -27,6 +28,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addRouterPlugins($container);
+        $container = $this->addRouterEnhancerPlugins($container);
         $container = $this->addRouteProvider($container);
         $container = $this->addRouteManipulator($container);
 
@@ -51,6 +53,28 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Shared\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
      */
     protected function getRouterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addRouterEnhancerPlugins(Container $container): Container
+    {
+        $container->set(static::ROUTER_ENHANCER_PLUGINS, function () {
+            return $this->getRouterEnhancerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     */
+    protected function getRouterEnhancerPlugins(): array
     {
         return [];
     }

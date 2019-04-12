@@ -46,6 +46,7 @@ class RouterFactory extends AbstractFactory
         return new Router(
             $this->createClosureLoader(),
             $this->createResource(),
+            $this->getRouterEnhancerPlugins(),
             $this->getConfig()->getRouterConfiguration()
         );
     }
@@ -93,5 +94,13 @@ class RouterFactory extends AbstractFactory
     protected function getRouteProviderPlugins(): array
     {
         return $this->getProvidedDependency(RouterDependencyProvider::ROUTER_ROUTE_PROVIDER);
+    }
+
+    /**
+     * @return \Spryker\Shared\RouterExtension\Dependency\Plugin\RouteProviderPluginInterface[]
+     */
+    protected function getRouterEnhancerPlugins(): array
+    {
+        return $this->getProvidedDependency(RouterDependencyProvider::ROUTER_ENHANCER_PLUGINS);
     }
 }

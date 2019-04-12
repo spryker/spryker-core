@@ -10,6 +10,8 @@ parameters:
     - '/Widget/'
 
 services:
-  Spryker\Router\Migrate\Yves\Migrator\ControllerProviderToRouteProviderRector: ~
+  Spryker\Router\Migrate\Yves\Migrator\AddControllerToAddRouteMethodNameRector: ~
   Spryker\Router\Migrate\Yves\Migrator\ControllerProviderToRouteProviderNamespaceRector: ~
+  Spryker\Router\Migrate\Yves\Migrator\ControllerProviderToRouteProviderRector: ~
+  Spryker\Router\Migrate\Yves\Migrator\ControllerProviderToRouteProviderClassNameRector: ~
   Spryker\Router\Migrate\Yves\Migrator\ControllerProviderToRouteProviderPluginFileRector: ~

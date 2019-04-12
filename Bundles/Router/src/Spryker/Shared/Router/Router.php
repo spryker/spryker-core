@@ -13,12 +13,58 @@ use Symfony\Component\Routing\Router as SymfonyRouter;
 class Router extends SymfonyRouter implements RouterInterface
 {
     /**
+     * @var \Spryker\Shared\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     */
+    protected $routerEnhancerPlugins;
+
+    /**
      * @param \Symfony\Component\Config\Loader\LoaderInterface $loader
-     * @param \Closure|mixed $resource
+     * @param mixed $resource
+     * @param \Spryker\Shared\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[] $routerEnhancerPlugins
      * @param array $options
      */
-    public function __construct(LoaderInterface $loader, $resource, array $options = [])
+    public function __construct(LoaderInterface $loader, $resource, array $routerEnhancerPlugins, array $options = [])
     {
         parent::__construct($loader, $resource, $options);
+
+        $this->routerEnhancerPlugins = $routerEnhancerPlugins;
+    }
+
+    /**
+     * @param string $name
+     * @param array $parameters
+     * @param int $referenceType
+     *
+     * @return string
+     */
+    public function generate($name, $parameters = [], $referenceType = SymfonyRouter::ABSOLUTE_PATH)
+    {
+        $generatedUrl = parent::generate($name, $parameters, $referenceType);
+
+        foreach (array_reverse($this->routerEnhancerPlugins) as $routerEnhancerPlugin) {
+            $generatedUrl = $routerEnhancerPlugin->afterGenerate($generatedUrl, $this->getContext());
+        }
+
+        return $generatedUrl;
+    }
+
+    /**
+     * @param string $pathinfo
+     *
+     * @return array
+     */
+    public function match($pathinfo)
+    {
+        foreach ($this->routerEnhancerPlugins as $routerEnhancerPlugin) {
+            $pathinfo = $routerEnhancerPlugin->beforeMatch($pathinfo, $this->getContext());
+        }
+
+        $parameters = parent::match($pathinfo);
+
+        foreach ($this->routerEnhancerPlugins as $routerEnhancerPlugin) {
+            $parameters = $routerEnhancerPlugin->afterMatch($parameters, $this->getContext());
+        }
+
+        return $parameters;
     }
 }

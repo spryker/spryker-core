@@ -1,4 +1,7 @@
 namespace: Router
+include:
+    - tests/SprykerTest/Yves/Router
+
 actor: Tester
 paths:
     tests: tests

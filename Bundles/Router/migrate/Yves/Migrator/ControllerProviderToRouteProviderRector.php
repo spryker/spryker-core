@@ -19,9 +19,7 @@ use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
-use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\String_;
-use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Expression;
@@ -33,7 +31,6 @@ use Rector\Rector\AbstractRector;
 use Rector\RectorDefinition\CodeSample;
 use Rector\RectorDefinition\RectorDefinition;
 use Spryker\Shared\Router\Route\RouteCollection;
-use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
 
 class ControllerProviderToRouteProviderRector extends AbstractRector
 {
@@ -88,51 +85,31 @@ class ControllerProviderToRouteProviderRector extends AbstractRector
      */
     public function getNodeTypes(): array
     {
-        return [Class_::class];
+        return [ClassMethod::class];
     }
 
     /**
-     * @param \PhpParser\Node\Stmt\Class_|\PhpParser\Node $node
+     * @param \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node $node
      *
      * @return \PhpParser\Node|null
      */
     public function refactor(Node $node): ?Node
     {
-        if (!Strings::endsWith((string)$node->name, 'ControllerProvider')) {
+        if (!Strings::endsWith((string)$node->getAttribute('fileInfo')->getFileName(), 'ControllerProvider.php')) {
             return null;
         }
 
-        $extends = new FullyQualified(AbstractRouteProviderPlugin::class);
-        $node->extends = $extends;
+        if ((string)$node->name === 'defineControllers') {
+            $this->refactorDefineControllerMethodToAddRouteMethod($node);
+        }
 
-        $newClassName = new Identifier(str_replace('ControllerProvider', 'RouteProviderPlugin', (string)$node->name));
-        $node->name = $newClassName;
-
-        foreach ($node->stmts as $statement) {
-            $this->refactorStatement($statement);
+        if (preg_match('/^add(.*?)Route/', (string)$node->name)) {
+            $this->refactorAddXRouteMethod($node);
         }
 
         $this->constantKeyValueMap = null;
 
         return $node;
-    }
-
-    /**
-     * @param \PhpParser\Node\Stmt $statement
-     *
-     * @return void
-     */
-    protected function refactorStatement(Stmt $statement): void
-    {
-        if ($statement instanceof ClassMethod) {
-            if ((string)$statement->name === 'defineControllers') {
-                $this->refactorDefineControllerMethodToAddRouteMethod($statement);
-            }
-
-            if (preg_match('/^add(.*?)Route/', (string)$statement->name)) {
-                $this->refactorAddXRouteMethod($statement);
-            }
-        }
     }
 
     /**

@@ -34,7 +34,7 @@ class FactoryHelper extends Module
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     * @return object|\Spryker\Yves\Kernel\AbstractFactory
      */
     public function mockFactoryMethod(string $methodName, $return)
     {
@@ -56,15 +56,15 @@ class FactoryHelper extends Module
     public function getFactory()
     {
         if ($this->factoryStub !== null) {
+            $this->factoryStub = $this->injectConfig($this->factoryStub);
+            $this->factoryStub = $this->injectContainer($this->factoryStub);
+
             return $this->factoryStub;
         }
 
         $moduleFactory = $this->createFactory();
-        if ($this->hasModule('\\' . ConfigHelper::class)) {
-            $moduleFactory->setConfig($this->getConfig());
-        }
 
-        return $moduleFactory;
+        return $this->injectConfig($moduleFactory);
     }
 
     /**
@@ -85,7 +85,21 @@ class FactoryHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf(static::FACTORY_CLASS_NAME_PATTERN, $namespaceParts[0], $namespaceParts[2]);
+        return sprintf(static::FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[2]);
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\AbstractFactory $factory
+     *
+     * @return \Spryker\Yves\Kernel\AbstractFactory
+     */
+    protected function injectConfig($factory)
+    {
+        if ($this->hasModule('\\' . ConfigHelper::class)) {
+            $factory->setConfig($this->getConfig());
+        }
+
+        return $factory;
     }
 
     /**
@@ -102,6 +116,36 @@ class FactoryHelper extends Module
     protected function getConfigHelper(): ConfigHelper
     {
         return $this->getModule('\\' . ConfigHelper::class);
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\AbstractFactory $factory
+     *
+     * @return \Spryker\Yves\Kernel\AbstractFactory
+     */
+    protected function injectContainer($factory)
+    {
+        if ($this->hasModule('\\' . DependencyProviderHelper::class)) {
+            $factory->setContainer($this->getContainer());
+        }
+
+        return $factory;
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function getContainer()
+    {
+        return $this->getDependencyProviderHelper()->getContainer();
+    }
+
+    /**
+     * @return \SprykerTest\Yves\Testify\Helper\DependencyProviderHelper
+     */
+    protected function getDependencyProviderHelper(): DependencyProviderHelper
+    {
+        return $this->getModule('\\' . DependencyProviderHelper::class);
     }
 
     /**

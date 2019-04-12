@@ -31,6 +31,18 @@ abstract class AbstractPlugin
     private $config;
 
     /**
+     * @param \Spryker\Yves\Kernel\AbstractFactory $factory
+     *
+     * @return $this
+     */
+    public function setFactory(AbstractFactory $factory)
+    {
+        $this->factory = $factory;
+
+        return $this;
+    }
+
+    /**
      * @return \Spryker\Yves\Kernel\FactoryInterface
      */
     protected function getFactory()
