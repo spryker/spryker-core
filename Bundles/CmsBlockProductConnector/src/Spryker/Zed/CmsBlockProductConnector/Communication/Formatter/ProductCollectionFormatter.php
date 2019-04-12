@@ -24,7 +24,7 @@ class ProductCollectionFormatter implements ProductCollectionFormatterInterface
         foreach ($productAbstractArray as $sku => $name) {
             $formatedArray[] = [
                 static::KEY_ID => $sku,
-                static::KEY_TEXT => $this->createLable($name, $sku),
+                static::KEY_TEXT => $this->createLabel($name, $sku),
             ];
         }
 
@@ -40,7 +40,7 @@ class ProductCollectionFormatter implements ProductCollectionFormatterInterface
     {
         $formatedArray = [];
         foreach ($productAbstractTransfers as $productAbstractTransfer) {
-            $label = $this->createLable($productAbstractTransfer->getName(), $productAbstractTransfer->getSku());
+            $label = $this->createLabel($productAbstractTransfer->getName(), $productAbstractTransfer->getSku());
             $formatedArray[$label] = $productAbstractTransfer->getSku();
         }
 
@@ -53,7 +53,7 @@ class ProductCollectionFormatter implements ProductCollectionFormatterInterface
      *
      * @return string
      */
-    protected function createLable(string $name, string $sku): string
+    protected function createLabel(string $name, string $sku): string
     {
         return sprintf(static::FORMAT_LABEL, $name, $sku);
     }
