@@ -20,14 +20,14 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      * @api
      *
      * @param string $key
-     * @param mixed $value
+     * @param string $value
      * @param int|null $ttl
      *
-     * @return void
+     * @return bool
      */
-    public function set(string $key, $value, $ttl = null): void
+    public function set(string $key, string $value, ?int $ttl = null): bool
     {
-        $this->getFactory()->createStorageRedisWrapper()->set($key, $value, $ttl);
+        return $this->getFactory()->createStorageRedisWrapper()->set($key, $value, $ttl);
     }
 
     /**
@@ -51,11 +51,11 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      *
      * @param string $key
      *
-     * @return void
+     * @return int
      */
-    public function delete(string $key)
+    public function delete(string $key): int
     {
-        $this->getFactory()->createStorageRedisWrapper()->delete($key);
+        return $this->getFactory()->createStorageRedisWrapper()->delete($key);
     }
 
     /**

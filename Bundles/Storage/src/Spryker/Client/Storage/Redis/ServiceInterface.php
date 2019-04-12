@@ -8,7 +8,7 @@
 namespace Spryker\Client\Storage\Redis;
 
 /**
- * @deprecated Use Spryker\Client\StorageExtension\Dependency\StoragePluginInterface instead.
+ * @deprecated Use `Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface` instead.
  */
 interface ServiceInterface
 {

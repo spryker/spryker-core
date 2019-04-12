@@ -52,13 +52,12 @@ interface StorageRedisToRedisClientInterface
     /**
      * @param string $connectionKey
      * @param string $script
-     * @param int $numkeys
-     * @param string|null $keyOrArg1
-     * @param string|null $keyOrArgN
+     * @param int $numKeys
+     * @param array $keysOrArgs
      *
      * @return bool
      */
-    public function eval(string $connectionKey, string $script, int $numkeys, ?string $keyOrArg1 = null, ?string $keyOrArgN = null): bool;
+    public function eval(string $connectionKey, string $script, int $numKeys, array ...$keysOrArgs): bool;
 
     /**
      * @param string $connectionKey

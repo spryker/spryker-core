@@ -14,7 +14,7 @@ use Spryker\Shared\StorageRedis\StorageRedisConstants;
 
 class StorageRedisConfig extends AbstractBundleConfig
 {
-    public const STORAGE_REDIS_CONNECTION_KEY = 'STORAGE_REDIS';
+    protected const STORAGE_REDIS_CONNECTION_KEY = 'STORAGE_REDIS';
 
     protected const REDIS_DEFAULT_DATABASE = 0;
 
@@ -41,6 +41,14 @@ class StorageRedisConfig extends AbstractBundleConfig
             ->setClientOptions(
                 $this->getConnectionOptions()
             );
+    }
+
+    /**
+     * @return string
+     */
+    public function getRedisConnectionKey(): string
+    {
+        return static::STORAGE_REDIS_CONNECTION_KEY;
     }
 
     /**

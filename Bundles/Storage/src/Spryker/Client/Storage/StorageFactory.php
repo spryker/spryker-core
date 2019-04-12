@@ -13,7 +13,7 @@ use Spryker\Client\Storage\Cache\StorageCacheStrategyFactory;
 use Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientInterface;
 use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientInterface;
 use Spryker\Client\Storage\Redis\Service;
-use Spryker\Client\StorageExtension\Dependency\StoragePluginInterface;
+use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Storage\StorageConstants;
 
@@ -25,12 +25,12 @@ class StorageFactory extends AbstractFactory
     public const DEFAULT_REDIS_DATABASE = 0;
 
     /**
-     * @var \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\StoragePluginInterface
+     * @var \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface
      */
     protected static $storageService;
 
     /**
-     * @deprecated Use `Spryker\Client\StorageExtension\Dependency\StoragePluginInterface` implementation instead.
+     * @deprecated Use `Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface` implementation instead.
      *
      * @return \Spryker\Client\Storage\Redis\ServiceInterface
      */
@@ -42,11 +42,14 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\StoragePluginInterface
+     * @return \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface
      */
     public function createCachedService()
     {
         if (static::$storageService === null) {
+            /**
+             * This check was added for BC only and will be removed with the next major release.
+             */
             static::$storageService = $this->getStoragePlugin() ?? $this->createService();
         }
 
@@ -109,7 +112,7 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\StorageExtension\Dependency\StoragePluginInterface|null
+     * @return \Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|null
      */
     protected function getStoragePlugin(): ?StoragePluginInterface
     {

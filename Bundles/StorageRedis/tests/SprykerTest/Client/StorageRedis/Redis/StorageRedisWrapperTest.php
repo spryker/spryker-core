@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\Storage\Redis;
+namespace SprykerTest\Client\StorageRedis\Redis;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
@@ -16,7 +16,7 @@ use Spryker\Client\StorageRedis\Redis\StorageRedisWrapper;
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Client
- * @group Storage
+ * @group StorageRedis
  * @group Redis
  * @group StorageRedisWrapperTest
  * Add your own group annotations below this line
@@ -55,9 +55,7 @@ class StorageRedisWrapperTest extends Unit
         parent::setUp();
 
         $this->setupDummyStorage();
-
-        $this->setupRedisClientMock();
-
+        $this->redisClientMock = $this->createMock(StorageRedisToRedisClientInterface::class);
         $this->storageRedisWrapper = new StorageRedisWrapper(
             $this->redisClientMock,
             static::CONNECTION_KEY,
@@ -236,7 +234,7 @@ class StorageRedisWrapperTest extends Unit
     }
 
     /**
-     * @expectedException \Exception
+     * @expectedException \Spryker\Client\StorageRedis\Exception\StorageRedisException
      * @expectedExceptionMessage could not set redisKey: "kv:plainTextKey" with value: ""plain text data""
      *
      * @return void
@@ -270,7 +268,7 @@ class StorageRedisWrapperTest extends Unit
     }
 
     /**
-     * @expectedException \Exception
+     * @expectedException \Spryker\Client\StorageRedis\Exception\StorageRedisException
      * @expectedExceptionMessage could not set redisKey: "kv:plainTextKey" with value: ""plain text data""
      *
      * @return void
@@ -283,7 +281,7 @@ class StorageRedisWrapperTest extends Unit
     }
 
     /**
-     * @expectedException \Exception
+     * @expectedException \Spryker\Client\StorageRedis\Exception\StorageRedisException
      * @expectedExceptionMessage could not set redisKey: "kv:plainTextKey" with value: ""plain text data""
      *
      * @return void
@@ -330,7 +328,7 @@ class StorageRedisWrapperTest extends Unit
     }
 
     /**
-     * @expectedException \Exception
+     * @expectedException \Spryker\Client\StorageRedis\Exception\StorageRedisException
      *
      * @return void
      */
@@ -392,14 +390,6 @@ class StorageRedisWrapperTest extends Unit
         $this->redisClientMock->method('keys')->willReturnCallback(function () {
             return array_keys($this->dummyStorage);
         });
-    }
-
-    /**
-     * @return void
-     */
-    protected function setupRedisClientMock(): void
-    {
-        $this->redisClientMock = $this->createMock(StorageRedisToRedisClientInterface::class);
     }
 
     /**

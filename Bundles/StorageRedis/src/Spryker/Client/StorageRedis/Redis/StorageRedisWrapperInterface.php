@@ -16,9 +16,9 @@ interface StorageRedisWrapperInterface
      *
      * @throws \Exception
      *
-     * @return mixed
+     * @return bool
      */
-    public function set(string $key, $value, ?int $ttl = null);
+    public function set(string $key, $value, ?int $ttl = null): bool;
 
     /**
      * @param array $items
@@ -30,9 +30,9 @@ interface StorageRedisWrapperInterface
     /**
      * @param string $key
      *
-     * @return mixed
+     * @return int
      */
-    public function delete(string $key);
+    public function delete(string $key): int;
 
     /**
      * @param array $keys
@@ -61,9 +61,11 @@ interface StorageRedisWrapperInterface
     public function getMulti(array $keys): array;
 
     /**
+     * @param string|null $section
+     *
      * @return array
      */
-    public function getStats(): array;
+    public function getStats(?string $section = null): array;
 
     /**
      * @return array

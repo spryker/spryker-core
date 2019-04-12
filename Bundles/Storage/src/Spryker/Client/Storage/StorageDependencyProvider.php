@@ -11,7 +11,7 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientBridge;
 use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientBridge;
-use Spryker\Client\StorageExtension\Dependency\StoragePluginInterface;
+use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 
 /**
  * @method \Spryker\Client\Storage\StorageConfig getConfig()
@@ -64,7 +64,7 @@ class StorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\StorageExtension\Dependency\StoragePluginInterface|null
+     * @return \Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|null
      */
     protected function getStoragePlugin(): ?StoragePluginInterface
     {

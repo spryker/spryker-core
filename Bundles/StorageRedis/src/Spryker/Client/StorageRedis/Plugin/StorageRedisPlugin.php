@@ -8,7 +8,7 @@
 namespace Spryker\Client\StorageRedis\Plugin;
 
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\StorageExtension\Dependency\StoragePluginInterface;
+use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 
 /**
  * @method \Spryker\Client\StorageRedis\StorageRedisFactory getFactory()

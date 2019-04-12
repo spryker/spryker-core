@@ -16,14 +16,14 @@ interface StorageRedisClientInterface
      * @api
      *
      * @param string $key
-     * @param mixed $value
+     * @param string $value
      * @param int|null $ttl
      *
      * @throws \Exception
      *
-     * @return mixed
+     * @return bool
      */
-    public function set(string $key, $value, ?int $ttl = null);
+    public function set(string $key, string $value, ?int $ttl = null): bool;
 
     /**
      * Specification:

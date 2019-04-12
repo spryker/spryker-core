@@ -142,6 +142,20 @@ class StorageRedisClientTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCanSetValueWithTtl(): void
+    {
+        $this->storageRedisClient->set(static::DUMMY_KEY, static::DUMMY_VALUE, 1);
+
+        $this->assertEquals(static::DUMMY_VALUE, $this->storageRedisClient->get(static::DUMMY_KEY));
+
+        sleep(1);
+
+        $this->assertEmpty($this->storageRedisClient->get(static::DUMMY_KEY));
+    }
+
+    /**
      * @param string[] $keys
      *
      * @return string[]

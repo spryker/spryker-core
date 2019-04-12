@@ -179,9 +179,9 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
      *
      * @throws \Spryker\Client\StorageRedis\Exception\StorageRedisException
      *
-     * @return mixed
+     * @return bool
      */
-    public function set(string $key, $value, ?int $ttl = null)
+    public function set(string $key, $value, ?int $ttl = null): bool
     {
         $key = $this->getKeyName($key);
 
@@ -240,9 +240,9 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
     /**
      * @param string $key
      *
-     * @return mixed
+     * @return int
      */
-    public function delete(string $key)
+    public function delete(string $key): int
     {
         $key = $this->getKeyName($key);
         $result = $this->redisClient->del($this->connectionKey, [$key]);
