@@ -28,7 +28,9 @@ class UserBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getSessionClient(),
             $this->getConfig(),
-            $this->getPostSavePlugins()
+            $this->getPostSavePlugins(),
+            $this->getUserPreSavePlugins(),
+            $this->getUserTransferExpanderPlugins()
         );
     }
 
@@ -38,6 +40,22 @@ class UserBusinessFactory extends AbstractBusinessFactory
     public function getPostSavePlugins(): array
     {
         return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface[]
+     */
+    public function getUserPreSavePlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_PRE_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface[]
+     */
+    public function getUserTransferExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_TRANSFER_EXPANDER);
     }
 
     /**

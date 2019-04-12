@@ -17,6 +17,7 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     protected const KEY_LINKS = 'links';
     protected const KEY_RELATIONSHIPS = 'relationships';
     protected const KEY_REST_REQUEST_PARAMETER = 'rest_request_parameter';
+    protected const KEY_IS_NULLABLE = 'is_nullable';
     protected const KEY_SELF = 'self';
     protected const KEY_TYPE = 'type';
 
@@ -109,14 +110,15 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     /**
      * @param string $schemaName
      * @param string $ref
+     * @param bool $isIdNullable
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
-    public function createResponseDataSchema(string $schemaName, string $ref): SchemaDataTransfer
+    public function createResponseDataSchema(string $schemaName, string $ref, bool $isIdNullable = false): SchemaDataTransfer
     {
         $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
         $schemaData->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_TYPE, static::VALUE_TYPE_STRING));
-        $schemaData->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_ID, static::VALUE_TYPE_STRING));
+        $schemaData->addProperty($this->schemaComponentBuilder->createTypePropertyTransfer(static::KEY_ID, static::VALUE_TYPE_STRING, $isIdNullable));
         $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_ATTRIBUTES, $ref));
         $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_LINKS, static::SCHEMA_NAME_LINKS));
 

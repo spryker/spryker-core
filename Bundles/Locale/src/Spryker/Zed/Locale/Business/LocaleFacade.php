@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Locale\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -198,5 +199,21 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
         $localeManager = $this->getFactory()->createLocaleManager();
 
         return $localeManager->getLocaleCollection();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function setCurrentLocale(LocaleTransfer $localeTransfer): LocaleTransfer
+    {
+        $this->getFactory()->getStore()->setCurrentLocale($localeTransfer->getLocaleName());
+
+        return $localeTransfer;
     }
 }

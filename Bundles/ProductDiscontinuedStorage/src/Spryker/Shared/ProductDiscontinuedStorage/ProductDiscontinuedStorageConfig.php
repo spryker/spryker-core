@@ -26,4 +26,12 @@ class ProductDiscontinuedStorageConfig extends AbstractBundleConfig
      * @api
      */
     public const PRODUCT_DISCONTINUED_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+
+    /**
+     * Specification:
+     * - Queue name as used for processing product discontinued messages.
+     *
+     * @api
+     */
+    public const PRODUCT_DISCONTINUED_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 }

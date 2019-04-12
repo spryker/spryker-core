@@ -441,6 +441,7 @@ class Writer implements WriterInterface
 
         $query = $this->queryContainer->queryWishlist()
             ->filterByName($wishlistTransfer->getName())
+            ->filterByFkCustomer($wishlistTransfer->getFkCustomer())
             ->filterByIdWishlist($wishlistTransfer->getIdWishlist(), Criteria::NOT_EQUAL);
 
         $this->assertWishlistIsUnique($query, $wishlistTransfer);
@@ -496,6 +497,7 @@ class Writer implements WriterInterface
 
         $query = $this->queryContainer->queryWishlist()
             ->filterByName($wishlistTransfer->getName())
+            ->filterByFkCustomer($wishlistTransfer->getFkCustomer())
             ->filterByIdWishlist($wishlistTransfer->getIdWishlist(), Criteria::NOT_EQUAL);
 
         return $query->count() === 0;

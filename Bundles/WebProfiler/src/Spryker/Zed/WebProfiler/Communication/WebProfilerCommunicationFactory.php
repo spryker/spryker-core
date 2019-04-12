@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\WebProfiler\Communication;
 
+use Spryker\Shared\Twig\Loader\FilesystemLoader;
+use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\WebProfiler\WebProfilerDependencyProvider;
 
@@ -21,5 +23,13 @@ class WebProfilerCommunicationFactory extends AbstractCommunicationFactory
     public function getWebProfiler()
     {
         return $this->getProvidedDependency(WebProfilerDependencyProvider::PLUGINS_WEB_PROFILER);
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Loader\FilesystemLoaderInterface
+     */
+    public function createTwigFilesystemLoader(): FilesystemLoaderInterface
+    {
+        return new FilesystemLoader($this->getConfig()->getWebProfilerTemplatePaths(), 'WebProfiler');
     }
 }

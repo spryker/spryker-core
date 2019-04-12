@@ -44,6 +44,8 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPag
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceTypeSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductAbstractListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductAbstractPublishListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductAbstractUnpublishListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductCategorySearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductConcreteLocalizedAttributesSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductConcreteSearchListener;
@@ -157,8 +159,9 @@ class ProductPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductPageProductAbstractListenerStoreData()
+    public function testProductPageProductAbstractListenerStoreData(): void
     {
+        // Prepare
         SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 
@@ -180,8 +183,65 @@ class ProductPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductPageCategoryNodeSearchListenerStoreData()
+    public function testProductPageProductAbstractPublishListener(): void
     {
+        // Prepare
+        SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
+        $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
+
+        // Act
+        $productPageProductAbstractPublishListener = new ProductPageProductAbstractPublishListener();
+        $productPageProductAbstractPublishListener->setFacade($this->getProductPageSearchFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
+        ];
+        $productPageProductAbstractPublishListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_PUBLISH);
+
+        // Assert
+        $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
+        $this->assertSame($beforeCount + static::NUMBER_OF_STORES * static::NUMBER_OF_LOCALES, $afterCount);
+        $this->assertProductPageAbstractSearch();
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductPageProductAbstractUnpublishListener(): void
+    {
+        // Prepare
+        $idProductAbstract = $this->productAbstractTransfer->getIdProductAbstract();
+        SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($idProductAbstract)->delete();
+
+        // Act
+        $productPageProductAbstractListener = new ProductPageProductAbstractPublishListener();
+        $productPageProductAbstractListener->setFacade($this->getProductPageSearchFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($idProductAbstract),
+        ];
+        $productPageProductAbstractListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_PUBLISH);
+        $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
+
+        $productPageProductAbstractListener = new ProductPageProductAbstractUnpublishListener();
+        $productPageProductAbstractListener->setFacade($this->getProductPageSearchFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($idProductAbstract),
+        ];
+        $productPageProductAbstractListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH);
+
+        // Assert
+        $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
+        $this->assertSame($beforeCount - static::NUMBER_OF_STORES * static::NUMBER_OF_LOCALES, $afterCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductPageCategoryNodeSearchListenerStoreData(): void
+    {
+        // Prepare
         $categoryIds = [$this->categoryTransfer->getIdCategory()];
 
         $productPageSearchQueryContainer = new ProductPageSearchQueryContainer();
@@ -208,8 +268,9 @@ class ProductPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductPageCategorySearchListenerStoreData()
+    public function testProductPageCategorySearchListenerStoreData(): void
     {
+        // Prepare
         $categoryIds = [$this->categoryTransfer->getIdCategory()];
 
         $productPageSearchQueryContainer = new ProductPageSearchQueryContainer();
@@ -236,8 +297,9 @@ class ProductPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductPageImageSetProductImageSearchListenerStoreData()
+    public function testProductPageImageSetProductImageSearchListenerStoreData(): void
     {
+        // Prepare
         $productImageSetToProductImageEntity = SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
             $this->productImageSetTransfer->getIdProductImageSet()
         );
@@ -261,14 +323,15 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
     }
 
     /**
      * @return void
      */
-    public function testProductPageImageSetSearchListenerStoreData()
+    public function testProductPageImageSetSearchListenerStoreData(): void
     {
+        // Prepare
         SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 
@@ -285,15 +348,16 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductPageAbstractSearch();
     }
 
     /**
      * @return void
      */
-    public function testProductPageLocalizedAttributesSearchListenerStoreData()
+    public function testProductPageLocalizedAttributesSearchListenerStoreData(): void
     {
+        // Prepare
         SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 
@@ -310,15 +374,16 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductPageAbstractSearch();
     }
 
     /**
      * @return void
      */
-    public function testProductPagePriceProductStoreSearchListenerStoreData()
+    public function testProductPagePriceProductStoreSearchListenerStoreData(): void
     {
+        // Prepare
         $priceProductIds = [
             $this->priceProductTransfer->getIdPriceProduct(),
         ];
@@ -341,14 +406,15 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
     }
 
     /**
      * @return void
      */
-    public function testProductPagePriceSearchListenerStoreData()
+    public function testProductPagePriceSearchListenerStoreData(): void
     {
+        // Prepare
         SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 
@@ -365,15 +431,16 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductPageAbstractSearch();
     }
 
     /**
      * @return void
      */
-    public function testProductPagePriceTypeSearchListenerStoreData()
+    public function testProductPagePriceTypeSearchListenerStoreData(): void
     {
+        // Prepare
         $priceTypeIds = [
             $this->priceProductTransfer->getFkPriceType(),
         ];
@@ -400,8 +467,9 @@ class ProductPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductPageProductCategorySearchListenerStoreData()
+    public function testProductPageProductCategorySearchListenerStoreData(): void
     {
+        // Prepare
         SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 
@@ -418,15 +486,16 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductPageAbstractSearch();
     }
 
     /**
      * @return void
      */
-    public function testProductPageProductConcreteLocalizedAttributesSearchListenerStoreData()
+    public function testProductPageProductConcreteLocalizedAttributesSearchListenerStoreData(): void
     {
+        // Prepare
         $productIds = [
             $this->productConcreteTransfer->getIdProductConcrete(),
         ];
@@ -449,14 +518,15 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
     }
 
     /**
      * @return void
      */
-    public function testProductPageProductConcreteSearchListenerStoreData()
+    public function testProductPageProductConcreteSearchListenerStoreData(): void
     {
+        // Prepare
         SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 
@@ -473,15 +543,16 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductPageAbstractSearch();
     }
 
     /**
      * @return void
      */
-    public function testProductPageProductImageSearchListenerStoreData()
+    public function testProductPageProductImageSearchListenerStoreData(): void
     {
+        // Prepare
         $productImageIds = [];
 
         foreach ($this->productImageSetTransfer->getProductImages() as $productImageTransfer) {
@@ -507,14 +578,15 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
     }
 
     /**
      * @return void
      */
-    public function testProductPageUrlSearchListenerStoreData()
+    public function testProductPageUrlSearchListenerStoreData(): void
     {
+        // Prepare
         SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
 
@@ -534,7 +606,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertGreaterThanOrEqual($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductPageAbstractSearch();
     }
 
@@ -557,7 +629,7 @@ class ProductPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    protected function assertProductPageAbstractSearch()
+    protected function assertProductPageAbstractSearch(): void
     {
         $productPageSearchEntity = SpyProductAbstractPageSearchQuery::create()
             ->orderByIdProductAbstractPageSearch()

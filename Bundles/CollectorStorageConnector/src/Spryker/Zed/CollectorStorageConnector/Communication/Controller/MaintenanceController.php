@@ -29,7 +29,7 @@ class MaintenanceController extends AbstractController
 
         $this->getFactory()->getCollectorFacade()->deleteStorageTimestamps($timestamps);
 
-        $this->addSuccessMessage(sprintf('Dropped "%d" timestamps.', count($timestamps)));
+        $this->addSuccessMessage('Dropped "%d" timestamps.', ['%d' => count($timestamps)]);
 
         return $this->redirectResponse(StorageMaintenanceController::URL_STORAGE_MAINTENANCE);
     }

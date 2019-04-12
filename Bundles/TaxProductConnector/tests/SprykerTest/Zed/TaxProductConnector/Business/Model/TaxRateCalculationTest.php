@@ -67,7 +67,7 @@ class TaxRateCalculationTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator
      */
     protected function createProductItemTaxRateCalculator()
     {
@@ -81,7 +81,7 @@ class TaxRateCalculationTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Tax\Business\Model\TaxDefault
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Tax\Business\Model\TaxDefault
      */
     protected function createTaxFacadeMock()
     {
@@ -102,7 +102,7 @@ class TaxRateCalculationTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface
      */
     protected function createQueryContainerMock()
     {

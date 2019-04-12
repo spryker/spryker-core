@@ -28,7 +28,7 @@ class CustomerDataProvider implements FormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getData($customerTransfer): CustomerTransfer
+    public function getData($customerTransfer)
     {
         return $customerTransfer;
     }
