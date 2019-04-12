@@ -40,7 +40,6 @@ class QuoteRequestConfig extends AbstractBundleConfig
         return [
             QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE,
             QuoteTransfer::QUOTE_REQUEST_REFERENCE,
-            QuoteTransfer::ITEMS,
         ];
     }
 
