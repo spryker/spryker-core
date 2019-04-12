@@ -12,7 +12,7 @@ use Symfony\Component\Routing\RequestContext;
 /**
  * @method \Spryker\Yves\Router\RouterConfig getConfig()
  */
-class LocalePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
+class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
 {
     /**
      * @var array

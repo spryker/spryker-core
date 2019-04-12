@@ -9,8 +9,7 @@ namespace SprykerTest\Yves\Router\Plugin;
 
 use Codeception\Test\Unit;
 use Spryker\Yves\Router\Plugin\Router\YvesRouterPlugin;
-use Spryker\Yves\Router\Plugin\RouterEnhancer\LocalePrefixRouterEnhancerPlugin;
-use Spryker\Yves\Router\Plugin\RouterEnhancer\StorePrefixRouterEnhancerPlugin;
+use Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin;
 use Spryker\Yves\Router\UrlMatcher\RedirectableUrlMatcher;
 use SprykerTest\Yves\Router\Plugin\Fixtures\RouteProviderPlugin;
 use Symfony\Component\Routing\RequestContext;
@@ -21,10 +20,10 @@ use Symfony\Component\Routing\RequestContext;
  * @group Yves
  * @group Router
  * @group Plugin
- * @group YvesRouterPluginWithStoreAndLocalePrefixRouterEnhancerTest
+ * @group YvesRouterPluginWithLanguagePrefixRouterEnhancerTest
  * Add your own group annotations below this line
  */
-class YvesRouterPluginWithStoreAndLocalePrefixRouterEnhancerTest extends Unit
+class YvesRouterPluginWithLanguagePrefixRouterEnhancerTest extends Unit
 {
     /**
      * @var \SprykerTest\Yves\Router\RouterYvesTester
@@ -53,52 +52,49 @@ class YvesRouterPluginWithStoreAndLocalePrefixRouterEnhancerTest extends Unit
         ]);
 
         $this->tester->mockFactoryMethod('getRouterEnhancerPlugins', [
-            new StorePrefixRouterEnhancerPlugin(),
-            new LocalePrefixRouterEnhancerPlugin(),
+            new LanguagePrefixRouterEnhancerPlugin(),
         ]);
     }
 
     /**
      * @return void
      */
-    public function testMatchReturnsParameterWithStoreAndLocale(): void
+    public function testMatchReturnsParameterWithLanguage(): void
     {
         $routerPlugin = new YvesRouterPlugin();
         $routerPlugin->setFactory($this->tester->getFactory());
 
         $router = $routerPlugin->getRouter();
 
-        $parameters = $router->match('/DE/de/foo');
+        $parameters = $router->match('/de/foo');
 
         $this->assertSame('foo', $parameters['_route']);
-        $this->assertSame('de', $parameters['locale']);
-        $this->assertSame('DE', $parameters['store']);
+        $this->assertSame('de', $parameters['language']);
     }
 
     /**
      * @return void
      */
-    public function testGenerateReturnsUrlWithStoreAndLocaleWhenStoreAndLocaleAreInContextParameter(): void
+    public function testGenerateReturnsUrlWithLanguageWhenLanguageIsInContextParameter(): void
     {
         $routerPlugin = new YvesRouterPlugin();
         $routerPlugin->setFactory($this->tester->getFactory());
 
         $requestContext = new RequestContext();
-        $requestContext->setParameter('locale', 'de');
-        $requestContext->setParameter('store', 'DE');
+        $requestContext->setParameter('language', 'de');
 
         $router = $routerPlugin->getRouter();
         $router->setContext($requestContext);
 
         $url = $router->generate('foo');
 
-        $this->assertSame('/DE/de/foo', $url);
+        $this->assertSame('/de/foo', $url);
     }
 
     /**
      * @return void
      */
-    public function testGenerateReturnsUrlWithoutStoreAndLocaleWhenStoreAndLocaleAreNotInContextParameter(): void
+    public function testGenerateReturnsUrlWithoutLanguageWhenLanguageIsNotInContextParameter(): void
     {
         $routerPlugin = new YvesRouterPlugin();
         $routerPlugin->setFactory($this->tester->getFactory());
