@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ShipmentCarrier">
+        <property name="idShipmentCarrier" dataBuilderRule="randomNumber(3)" />
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="idShipmentMethod" dataBuilderRule="randomNumber(3)" />
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="unitGrossPrice" dataBuilderRule="randomNumber(4)" />
+        <property name="type" dataBuilderRule="=SHIPMENT_EXPENSE_TYPE" />
+    </transfer>
+
+</transfers>

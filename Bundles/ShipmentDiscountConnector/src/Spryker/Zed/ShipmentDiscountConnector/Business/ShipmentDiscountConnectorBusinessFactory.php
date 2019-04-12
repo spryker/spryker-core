@@ -265,17 +265,17 @@ class ShipmentDiscountConnectorBusinessFactory extends AbstractBusinessFactory
         };
 
         $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_METHOD][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
-            return $this->createCarrierDiscountDecisionRule();
+            return $this->createMethodDiscountDecisionRule();
         };
         $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_METHOD][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
-            return $this->createCarrierDiscountDecisionRuleWithMultiShipment();
+            return $this->createMethodDiscountDecisionRuleWithMultiShipment();
         };
 
         $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_PRICE][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
-            return $this->createCarrierDiscountDecisionRule();
+            return $this->createShipmentPriceDiscountDecisionRule();
         };
         $strategyContainer[MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_PRICE][MultiShipmentCollectorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
-            return $this->createCarrierDiscountDecisionRuleWithMultiShipment();
+            return $this->createShipmentPriceDiscountDecisionRuleWithMultiShipment();
         };
 
         return new MultiShipmentDecisionRuleStrategyResolver($strategyContainer);
