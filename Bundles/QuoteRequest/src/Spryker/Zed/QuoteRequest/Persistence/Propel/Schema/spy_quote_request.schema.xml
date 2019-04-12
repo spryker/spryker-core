@@ -74,7 +74,7 @@
             <reference foreign="id_quote_request" local="fk_quote_request"/>
         </foreign-key>
 
-        <unique name="spy_quote_request_version-version">
+        <unique name="spy_quote_request_version-fk_quote_request-version">
             <unique-column name="fk_quote_request"/>
             <unique-column name="version"/>
         </unique>
