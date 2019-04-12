@@ -167,7 +167,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
     ): TaxRateStorageTransfer {
         $taxRateStorageTransfer->fromArray($spyTaxRate->toArray(), true);
         if ($spyTaxRate->getCountry() !== null) {
-            $taxRateStorageTransfer->setCountry($spyTaxRate->getCountry()->getName());
+            $taxRateStorageTransfer->setCountry($spyTaxRate->getCountry()->getIso2Code());
         }
 
         return $taxRateStorageTransfer;
