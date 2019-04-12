@@ -118,8 +118,8 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
             ->find();
 
         foreach ($productAbstractEntity->toArray() as $productAbstract) {
-            $productAbstractIds[$productAbstract[SpyProductAbstractTableMap::COL_SKU]] = $productAbstract[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT];
-            $this->cachedProductAbstractSkusToIds[$productAbstract[SpyProductAbstractTableMap::COL_SKU]] = $productAbstract[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT];
+            $productAbstractIds[$productAbstract[SpyProductAbstractTableMap::COL_SKU]] = (int)$productAbstract[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT];
+            $this->cachedProductAbstractSkusToIds[$productAbstract[SpyProductAbstractTableMap::COL_SKU]] = (int)$productAbstract[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT];
         }
 
         return $productAbstractIds;
