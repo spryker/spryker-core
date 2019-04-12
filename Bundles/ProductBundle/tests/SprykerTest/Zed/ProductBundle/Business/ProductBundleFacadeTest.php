@@ -24,9 +24,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
-use Spryker\Zed\ProductBundle\Business\ProductBundleFacade;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerBridge;
 
@@ -49,6 +47,11 @@ class ProductBundleFacadeTest extends Unit
     public const BUNDLED_PRODUCT_PRICE_1 = 50;
     public const BUNDLED_PRODUCT_PRICE_2 = 100;
     public const ID_STORE = 1;
+
+    /**
+     * @var \SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -158,6 +161,14 @@ class ProductBundleFacadeTest extends Unit
     public function testPreCheckCartAvailabilityWhenBundleAvailable(CartChangeTransfer $cartChangeTransfer): void
     {
         $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, true);
+
+        $this->tester->haveProductInStock([
+            StockProductTransfer::SKU => static::SKU_BUNDLED_1,
+        ]);
+
+        $this->tester->haveProductInStock([
+            StockProductTransfer::SKU => static::SKU_BUNDLED_2,
+        ]);
 
         $productBundleFacade = $this->createProductBundleFacade();
 
@@ -298,6 +309,14 @@ class ProductBundleFacadeTest extends Unit
     {
         $productConcreteTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, true);
 
+        $this->tester->haveProductInStock([
+            StockProductTransfer::SKU => static::SKU_BUNDLED_1,
+        ]);
+
+        $this->tester->haveProductInStock([
+            StockProductTransfer::SKU => static::SKU_BUNDLED_2,
+        ]);
+
         $productBundleFacade = $this->createProductBundleFacade();
 
         $quoteTransfer = $this->createBaseQuoteTransfer();
@@ -326,6 +345,10 @@ class ProductBundleFacadeTest extends Unit
     public function testUpdateAffectedBundleAvailabilityWhenOneOfBundledItemsUnavailable(): void
     {
         $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
+
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setSku(static::SKU_BUNDLED_2);
+        $this->tester->haveAvailabilityAbstract($productConcreteTransfer);
 
         $productBundleFacade = $this->createProductBundleFacade();
 
@@ -491,7 +514,7 @@ class ProductBundleFacadeTest extends Unit
      */
     protected function createProductBundleFacade()
     {
-        return new ProductBundleFacade();
+        return $this->tester->getFacade();
     }
 
     /**
@@ -515,7 +538,7 @@ class ProductBundleFacadeTest extends Unit
      */
     protected function getLocator()
     {
-        return Locator::getInstance();
+        return $this->tester->getLocator();
     }
 
     /**

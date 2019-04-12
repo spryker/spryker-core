@@ -84,7 +84,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductFacade(),
             $this->getProductFacade(),
             $this->getLocaleFacade(),
-            $this->getPriceFacade()
+            $this->getPriceFacade(),
+            $this->getUtilQuantityService()
         );
     }
 

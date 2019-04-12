@@ -32,4 +32,13 @@ interface ProductBundleToUtilQuantityServiceInterface
      * @return float
      */
     public function subtractQuantities(float $firstQuantity, float $secondQuantity): float;
+
+    /**
+     * @param float $dividentQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
+     *
+     * @return bool
+     */
+    public function isQuantityModuloEqual(float $dividentQuantity, float $divisorQuantity, float $remainder): bool;
 }
