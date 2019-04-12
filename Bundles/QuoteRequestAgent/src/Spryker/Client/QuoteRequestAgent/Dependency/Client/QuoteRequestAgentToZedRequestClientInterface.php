@@ -19,7 +19,7 @@ interface QuoteRequestAgentToZedRequestClientInterface
     /**
      * @param string $url
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
-     * @param array|int|null $requestOptions Deprecated: Do not use "int" anymore, please use an array for requestOptions.
+     * @param array|int|null $requestOptions
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
