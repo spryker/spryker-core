@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publishing\GlossaryKey;
+namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publishing\GlossaryTranslation;
 
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\PublishingExtension\Dependency\PublisherEventPluginInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublisherPluginInterface;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
@@ -17,13 +18,11 @@ use Spryker\Zed\PublishingExtension\Dependency\PublisherEventPluginInterface;
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
  */
-class GlossaryKeyPublisher extends AbstractPlugin implements PublisherEventPluginInterface
+class GlossaryWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -34,7 +33,7 @@ class GlossaryKeyPublisher extends AbstractPlugin implements PublisherEventPlugi
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY);
 
         $this->getFacade()->publish($glossaryKeyIds);
     }

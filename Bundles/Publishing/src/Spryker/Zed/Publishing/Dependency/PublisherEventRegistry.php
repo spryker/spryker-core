@@ -9,7 +9,7 @@ namespace Spryker\Zed\Publishing\Dependency;
 
 use ArrayIterator;
 use Spryker\Zed\PublishingExtension\Dependency\PublisherEventRegistryInterface;
-use Spryker\Zed\PublishingExtension\Dependency\PublisherEventPluginInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublisherPluginInterface;
 
 class PublisherEventRegistry implements PublisherEventRegistryInterface
 {
@@ -20,11 +20,11 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
 
     /**
      * @param string $eventName
-     * @param PublisherEventPluginInterface $publishingPlugin
+     * @param PublisherPluginInterface $publishingPlugin
      *
      * @return $this|PublisherEventRegistryInterface
      */
-    public function register(string $eventName, PublisherEventPluginInterface $publishingPlugin)
+    public function register(string $eventName, PublisherPluginInterface $publishingPlugin)
     {
         $this->add($eventName, $publishingPlugin);
 
@@ -43,14 +43,14 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
 
     /**
      * @param $eventName
-     * @param PublisherEventPluginInterface $publishingPlugin
+     * @param PublisherPluginInterface $publishingPlugin
      * @param bool $isHandledInQueue
      * @param int $priority
      * @param null $queuePoolName
      *
      * @return void
      */
-    protected function add($eventName, PublisherEventPluginInterface $publishingPlugin)
+    protected function add($eventName, PublisherPluginInterface $publishingPlugin)
     {
         if (!$this->has($eventName)) {
             $this->eventListeners[$eventName] = [];

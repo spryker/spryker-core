@@ -21,7 +21,7 @@ interface GlossaryStorageFacadeInterface
      *
      * @return void
      */
-    public function publish(array $glossaryKeyIds);
+    public function writeGlossary(array $glossaryKeyIds);
 
     /**
      * Specification:
@@ -34,5 +34,5 @@ interface GlossaryStorageFacadeInterface
      *
      * @return void
      */
-    public function unpublish(array $glossaryKeyIds);
+    public function deleteGlossary(array $glossaryKeyIds);
 }

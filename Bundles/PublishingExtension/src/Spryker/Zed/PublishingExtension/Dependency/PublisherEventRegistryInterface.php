@@ -15,11 +15,11 @@ interface PublisherEventRegistryInterface extends ArrayAccess, IteratorAggregate
 
     /**
      * @param string $eventName
-     * @param PublisherEventPluginInterface $publishingPlugin
+     * @param PublisherPluginInterface $publishingPlugin
      *
      * @return $this
      */
-    public function register(string $eventName, PublisherEventPluginInterface $publishingPlugin);
+    public function register(string $eventName, PublisherPluginInterface $publishingPlugin);
 
     /**
      * @deprecated

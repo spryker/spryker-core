@@ -37,7 +37,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @return void
      */
-    public function unpublish(array $glossaryKeyIds)
+    public function deleteGlossary(array $glossaryKeyIds)
     {
         $this->getFactory()->createGlossaryTranslationStorageWriter()->unpublish($glossaryKeyIds);
     }

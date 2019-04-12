@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publishing\GlossaryTranslation;
+namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publishing\GlossaryKey;
 
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\PublishingExtension\Dependency\PublisherEventPluginInterface;
+use Spryker\Zed\PublishingExtension\Dependency\PublisherPluginInterface;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
@@ -18,23 +17,22 @@ use Spryker\Zed\PublishingExtension\Dependency\PublisherEventPluginInterface;
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
  */
-class GlossaryTranslationPublisher extends AbstractPlugin implements PublisherEventPluginInterface
+class GlossaryDeletePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array $eventTransfers
      * @param string $eventName
      *
+     * @throws \Propel\Runtime\Exception\PropelException
      * @return void
      */
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY);
+        $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()->publish($glossaryKeyIds);
+        $this->getFacade()->deleteGlossary($glossaryKeyIds);
     }
 }
