@@ -14,12 +14,12 @@ interface PriceProductScheduleToProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteById(int $idProduct): ?\Generated\Shared\Transfer\ProductConcreteTransfer;
+    public function findProductConcreteById(int $idProduct);
 
     /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractById(int $idProductAbstract): ?\Generated\Shared\Transfer\ProductAbstractTransfer;
+    public function findProductAbstractById(int $idProductAbstract);
 }

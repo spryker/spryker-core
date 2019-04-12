@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 class PriceProductScheduleToStoreFacadeBridge implements PriceProductScheduleToStoreFacadeInterface
 {
     /**
@@ -27,7 +25,7 @@ class PriceProductScheduleToStoreFacadeBridge implements PriceProductScheduleToS
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer
+    public function getCurrentStore()
     {
         return $this->storeFacade->getCurrentStore();
     }
