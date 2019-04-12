@@ -112,7 +112,6 @@ class ContentProductDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $r = $this->createUtilEncodingServiceBridge()->encodeJson([152, 151]);
         $this->tester->assertContentLocalizedHasProducts(66, $this->createUtilEncodingServiceBridge()->encodeJson([152, 151]));
         $this->tester->assertContentLocalizedHasProducts(46, $this->createUtilEncodingServiceBridge()->encodeJson([152, 151]));
     }
