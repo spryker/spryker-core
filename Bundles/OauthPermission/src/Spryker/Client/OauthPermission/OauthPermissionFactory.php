@@ -9,9 +9,8 @@ namespace Spryker\Client\OauthPermission;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceInterface;
+use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceInterface;
 use Spryker\Glue\Kernel\Application;
-use Spryker\Shared\OauthPermission\OauthPermissionConverter;
-use Spryker\Shared\OauthPermission\OauthPermissionConverterInterface;
 
 class OauthPermissionFactory extends AbstractFactory
 {
@@ -32,10 +31,10 @@ class OauthPermissionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\OauthPermission\OauthPermissionConverterInterface
+     * @return \Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceInterface
      */
-    public function createOauthPermissionConverter(): OauthPermissionConverterInterface
+    public function getUtilEncodingService(): OauthPermissionToUtilEncodingServiceInterface
     {
-        return new OauthPermissionConverter();
+        return $this->getProvidedDependency(OauthPermissionDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

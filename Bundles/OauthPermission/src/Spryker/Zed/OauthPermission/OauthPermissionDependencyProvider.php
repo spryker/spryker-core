@@ -23,9 +23,9 @@ class OauthPermissionDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container = parent::provideBusinessLayerDependencies($container);
+        $container = parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addPermissionFacade($container);
 

@@ -25,21 +25,13 @@ class OauthPermissionFacade extends AbstractFacade implements OauthPermissionFac
      */
     public function provideScopesByCustomerIdentifier(CustomerIdentifierTransfer $customerIdentifierTransfer): array
     {
-        $idCompanyUser = $customerIdentifierTransfer->getIdCompanyUser();
         $scopes = [];
-
-        if (!$idCompanyUser) {
-            return $scopes;
-        }
-
-        $permissionCollectionTransfer = $this->getFactory()
-            ->getPermissionFacade()
-            ->getPermissionsByIdentifier($idCompanyUser);
-
-        $converter = $this->getFactory()->createOauthPermissionConverter();
+        $permissionCollectionTransfer = $customerIdentifierTransfer->getPermissions();
 
         foreach ($permissionCollectionTransfer->getPermissions() as $permission) {
-            $scopes[] = (new OauthScopeTransfer())->setIdentifier($converter->convertPermissionToScope($permission));
+            if(!$permission->getConfiguration()) {
+                $scopes[] = (new OauthScopeTransfer())->setIdentifier($permission->getKey());
+            }
         }
 
         return $scopes;

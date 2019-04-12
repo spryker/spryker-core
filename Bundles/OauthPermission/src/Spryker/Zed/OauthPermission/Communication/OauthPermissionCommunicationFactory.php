@@ -5,18 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OauthPermission\Business;
+namespace Spryker\Zed\OauthPermission\Communication;
 
-use Spryker\Shared\OauthPermission\OauthPermissionConverter;
-use Spryker\Shared\OauthPermission\OauthPermissionConverterInterface;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToPermissionFacadeInterface;
 use Spryker\Zed\OauthPermission\OauthPermissionDependencyProvider;
 
 /**
  * @method \Spryker\Zed\OauthPermission\OauthPermissionConfig getConfig()
+ * @method \Spryker\Zed\OauthPermission\Business\OauthPermissionFacadeInterface getFacade()
  */
-class OauthPermissionBusinessFactory extends AbstractBusinessFactory
+class OauthPermissionCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
      * @return \Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToPermissionFacadeInterface

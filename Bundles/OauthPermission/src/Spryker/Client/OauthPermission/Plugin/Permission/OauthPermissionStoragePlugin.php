@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\OauthPermission\Plugin\Permission;
 
+use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
-use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\OauthPermission\OauthPermissionConfig;
 use Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
@@ -36,15 +36,12 @@ class OauthPermissionStoragePlugin extends AbstractPlugin implements PermissionS
             ->getOauthService()
             ->extractAccessTokenData($accessToken);
 
-        $converter = $this->getFactory()->createOauthPermissionConverter();
+        $customerIdentifier = (new CustomerIdentifierTransfer())
+            ->fromArray($this->getFactory()
+                ->getUtilEncodingService()
+                ->decodeJson($oauthAccessTokenDataTransfer->getOauthUserId(), true));
 
-        $permissionCollectionTransfer = new PermissionCollectionTransfer();
-
-        foreach ($oauthAccessTokenDataTransfer->getOauthScopes() as $oauthScope) {
-            $permissionCollectionTransfer->addPermission($converter->convertScopeToPermission($oauthScope));
-        }
-
-        return $permissionCollectionTransfer;
+        return $customerIdentifier->getPermissions();
     }
 
     /**

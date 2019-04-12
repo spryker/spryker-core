@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ProductsRestApi\Processor\AbstractProducts;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -21,6 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AbstractProductsReader implements AbstractProductsReaderInterface
 {
+    use PermissionAwareTrait;
     protected const PRODUCT_CONCRETE_IDS_KEY = 'product_concrete_ids';
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
 
@@ -77,6 +79,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      */
     public function getProductAbstractStorageData(RestRequestInterface $restRequest): RestResponseInterface
     {
+        $test = $this->can('ReadSharedCartPermissionPlugin', 51);
         $response = $this->restResourceBuilder->createRestResponse();
 
         $resourceIdentifier = $restRequest->getResource()->getId();
