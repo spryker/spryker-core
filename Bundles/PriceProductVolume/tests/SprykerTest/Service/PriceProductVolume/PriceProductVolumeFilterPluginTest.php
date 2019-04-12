@@ -43,7 +43,7 @@ class PriceProductVolumeFilterPluginTest extends Unit
         $filteredResult = $plugin->filter($priceProductTransfers, $priceProductFilterTransfer);
         $filteredResult = array_values($filteredResult);
 
-        $this->assertEquals($expectedResult, $filteredResult[0]->getVolumeQuantity());
+        $this->assertEquals($expectedResult, $filteredResult[0]->getVolumeQuantity(), 'Volume quantity does not match to the expected one');
     }
 
     /**
@@ -52,40 +52,41 @@ class PriceProductVolumeFilterPluginTest extends Unit
     public function filterShouldReturnPriceWithNearestVolumeQtyDataProvider(): array
     {
         return [
-            'int stock' => $this->getDataForFilterShouldReturnPriceWithNearestVolumeQty(1, 2, 3, 4, 3),
-            'float stock' => $this->getDataForFilterShouldReturnPriceWithNearestVolumeQty(1.5, 2.5, 3.5, 3.1, 2.5),
-            '0 < filterQty < 1' => $this->getDataForFilterShouldReturnPriceWithNearestVolumeQty(1.5, 2.5, null, 0.5, null),
+            'int stock return 3rd volume' => $this->getDataForFilterShouldReturnPriceWithNearestVolumeQty(1, 2, 3, 4, 3),
+            'float stock return 2nd volume' => $this->getDataForFilterShouldReturnPriceWithNearestVolumeQty(1.5, 2.5, 3.5, 3.1, 2.5),
+            '0 < filterQty < 1 return price with no volume' => $this->getDataForFilterShouldReturnPriceWithNearestVolumeQty(1.5, 2.5, null, 0.5, null),
+            'selected quantity is 1, closest volume price less then 1' => $this->getDataForFilterShouldReturnPriceWithNearestVolumeQty(0.5, 2.5, null, 1, 0.5),
         ];
     }
 
     /**
-     * @param int|float $firstQty
-     * @param int|float $secondQty
-     * @param int|float $thirdQty
-     * @param int|float $filterQty
+     * @param int|float $firstVolumeQuantity
+     * @param int|float $secondVolumeQuantity
+     * @param int|float $thirdVolumeQuantity
+     * @param int|float $quantityToBuy
      * @param int|float $expectedResult
      *
      * @return array
      */
     protected function getDataForFilterShouldReturnPriceWithNearestVolumeQty(
-        $firstQty,
-        $secondQty,
-        $thirdQty,
-        $filterQty,
+        $firstVolumeQuantity,
+        $secondVolumeQuantity,
+        $thirdVolumeQuantity,
+        $quantityToBuy,
         $expectedResult
     ): array {
         $priceProductFilterTransfer = (new PriceProductFilterBuilder())->seed([
-                PriceProductFilterTransfer::QUANTITY => $filterQty,
+                PriceProductFilterTransfer::QUANTITY => $quantityToBuy,
             ])->build();
         $priceProductTransfers = [];
         $priceProductTransfers[] = (new PriceProductBuilder())->seed([
-            PriceProductTransfer::VOLUME_QUANTITY => $firstQty,
+            PriceProductTransfer::VOLUME_QUANTITY => $firstVolumeQuantity,
         ])->build();
         $priceProductTransfers[] = (new PriceProductBuilder())->seed([
-            PriceProductTransfer::VOLUME_QUANTITY => $secondQty,
+            PriceProductTransfer::VOLUME_QUANTITY => $secondVolumeQuantity,
         ])->build();
         $priceProductTransfers[] = (new PriceProductBuilder())->seed([
-            PriceProductTransfer::VOLUME_QUANTITY => $thirdQty,
+            PriceProductTransfer::VOLUME_QUANTITY => $thirdVolumeQuantity,
         ])->build();
 
         return [$priceProductFilterTransfer, $priceProductTransfers, $expectedResult];
