@@ -19,27 +19,19 @@ class PriceProductScheduleReader implements PriceProductScheduleReaderInterface
     protected $priceProductScheduleRepository;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface
-     */
-    protected $priceProductScheduleMapper;
-
-    /**
      * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface
      */
     protected $storeFacade;
 
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface $priceProductScheduleRepository
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface $priceProductScheduleMapper
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         PriceProductScheduleRepositoryInterface $priceProductScheduleRepository,
-        PriceProductScheduleMapperInterface $priceProductScheduleMapper,
         PriceProductScheduleToStoreFacadeInterface $storeFacade
     ) {
         $this->priceProductScheduleRepository = $priceProductScheduleRepository;
-        $this->priceProductScheduleMapper = $priceProductScheduleMapper;
         $this->storeFacade = $storeFacade;
     }
 
@@ -48,10 +40,7 @@ class PriceProductScheduleReader implements PriceProductScheduleReaderInterface
      */
     public function findPriceProductSchedulesToDisable(): array
     {
-        $priceProductScheduleEntities = $this->priceProductScheduleRepository->findPriceProductSchedulesToDisable();
-
-        return $this->priceProductScheduleMapper
-            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
+        return $this->priceProductScheduleRepository->findPriceProductSchedulesToDisable();
     }
 
     /**
@@ -62,10 +51,7 @@ class PriceProductScheduleReader implements PriceProductScheduleReaderInterface
     public function findSimilarPriceProductSchedulesToDisable(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): array {
-        $priceProductScheduleEntities = $this->priceProductScheduleRepository->findSimilarPriceProductSchedulesToDisable($priceProductScheduleTransfer);
-
-        return $this->priceProductScheduleMapper
-            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
+        return $this->priceProductScheduleRepository->findSimilarPriceProductSchedulesToDisable($priceProductScheduleTransfer);
     }
 
     /**
@@ -74,9 +60,6 @@ class PriceProductScheduleReader implements PriceProductScheduleReaderInterface
     public function findPriceProductSchedulesToEnableForCurrentStore(): array
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
-        $priceProductScheduleEntities = $this->priceProductScheduleRepository->findPriceProductSchedulesToEnableByStore($storeTransfer);
-
-        return $this->priceProductScheduleMapper
-            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
+        return $this->priceProductScheduleRepository->findPriceProductSchedulesToEnableByStore($storeTransfer);
     }
 }

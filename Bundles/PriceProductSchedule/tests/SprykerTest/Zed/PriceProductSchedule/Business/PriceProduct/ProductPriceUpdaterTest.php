@@ -33,7 +33,7 @@ class ProductPriceUpdaterTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProduct\ProductPriceUpdaterInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductUpdaterInterface
      */
     protected $productPriceUpdater;
 
@@ -99,7 +99,7 @@ class ProductPriceUpdaterTest extends Unit
         ]);
 
         // Act
-        $this->productPriceUpdater->updateCurrentProductPrice($productPrice2, $priceTypeTransfer1);
+        $this->productPriceUpdater->updateCurrentPriceProduct($productPrice2, $priceTypeTransfer1);
 
         // Assert
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())

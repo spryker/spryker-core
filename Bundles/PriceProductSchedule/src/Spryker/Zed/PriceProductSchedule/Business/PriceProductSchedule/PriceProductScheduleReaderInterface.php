@@ -16,7 +16,8 @@ interface PriceProductScheduleReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
-    public function findSimilarPriceProductSchedulesToDisable(PriceProductScheduleTransfer $priceProductScheduleTransfer
+    public function findSimilarPriceProductSchedulesToDisable(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): array;
 
     /**

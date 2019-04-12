@@ -11,7 +11,7 @@ use DateTime;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\Map\SpyPriceProductScheduleTableMap;
-use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
+use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -20,44 +20,70 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class PriceProductScheduleRepository extends AbstractRepository implements PriceProductScheduleRepositoryInterface
 {
-    public const COL_PRODUCT_ID = 'product_id';
-    public const COL_RESULT = 'result';
+    protected const COL_PRODUCT_ID = 'product_id';
+    protected const COL_RESULT = 'result';
+
+    protected const ALIAS_CONCATENATED = 'concatenated';
+    protected const ALIAS_FILTERED = 'filtered';
+
+    /**
+     * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleMapperInterface
+     */
+    protected $priceProductScheduleMapper;
+
+    public function __construct()
+    {
+        $this->priceProductScheduleMapper = $this->getFactory()->createPriceProductScheduleMapper();
+    }
 
     /**
      * @param int $idPriceProductSchedule
      *
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule|null
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
      */
-    public function findByIdPriceProductSchedule(int $idPriceProductSchedule): ?SpyPriceProductSchedule
+    public function findByIdPriceProductSchedule(int $idPriceProductSchedule): ?PriceProductScheduleTransfer
     {
-        return $this->getFactory()
+        $priceProductScheduleEntity = $this->getFactory()
             ->createPriceProductScheduleQuery()
             ->filterByIdPriceProductSchedule($idPriceProductSchedule)
             ->findOne();
+
+        if ($priceProductScheduleEntity === null) {
+            return null;
+        }
+
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntityToPriceProductScheduleTransfer(
+                $priceProductScheduleEntity,
+                new PriceProductScheduleTransfer()
+            );
     }
 
     /**
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule[]
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
     public function findPriceProductSchedulesToDisable(): array
     {
-        return $this->getFactory()
+        $priceProductScheduleEntities = $this->getFactory()
             ->createPriceProductScheduleQuery()
             ->filterByIsCurrent(true)
             ->filterByActiveTo(['max' => new DateTime()], Criteria::LESS_EQUAL)
             ->find()
             ->getData();
+
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule[]
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
-    public function findSimilarPriceProductSchedulesToDisable(PriceProductScheduleTransfer $priceProductScheduleTransfer
-    ): array
-    {
-        return $this->getFactory()
+    public function findSimilarPriceProductSchedulesToDisable(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): array {
+        $priceProductScheduleEntities = $this->getFactory()
             ->createPriceProductScheduleQuery()
             ->filterByIsCurrent(true)
             ->filterByFkStore($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getFkStore())
@@ -71,16 +97,43 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             )
             ->find()
             ->getData();
+
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
     }
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule[]
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array
     {
-        $queryWithConcatenatedFields = $this->getFactory()
+        $priceProductScheduleConcatenatedSubQuery = $this->createPriceProductScheduleConcatenatedSubQuery($storeTransfer);
+
+        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery($priceProductScheduleConcatenatedSubQuery);
+
+        $priceProductScheduleEntities = $this->getFactory()
+            ->createPriceProductScheduleQuery()
+            ->addSelectQuery($priceProductScheduleFilteredByMinResultSubQuery, static::ALIAS_FILTERED, false)
+            ->filterByIsCurrent(false)
+            ->where(SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE . ' = CAST(SUBSTRING(' . static::ALIAS_FILTERED . '.' . static::COL_RESULT . ' from \'[0-9]+$\') as BIGINT)')
+            ->find()
+            ->getData();
+
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected function createPriceProductScheduleConcatenatedSubQuery(
+        StoreTransfer $storeTransfer
+    ): SpyPriceProductScheduleQuery {
+        return $this->getFactory()
             ->createPriceProductScheduleQuery()
             ->select([static::COL_PRODUCT_ID])
             ->addAsColumn(
@@ -105,26 +158,27 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
                 )
             )
             ->usePriceProductScheduleListQuery()
-                ->filterByIsActive(true)
+            ->filterByIsActive(true)
             ->endUse()
             ->filterByFkStore($storeTransfer->getIdStore())
             ->filterByActiveFrom(['max' => new DateTime()], Criteria::LESS_EQUAL)
             ->filterByActiveTo(['min' => new DateTime()], Criteria::GREATER_EQUAL);
+    }
 
-        $filteredByMinResultQuery = $this->getFactory()
-            ->createPriceProductScheduleQuery()
-            ->addSelectQuery($queryWithConcatenatedFields, 'A', false)
-            ->addAsColumn(static::COL_PRODUCT_ID, 'A.' . static::COL_PRODUCT_ID)
-            ->addAsColumn('R', sprintf('min(%s)', 'A.' . static::COL_RESULT))
-            ->groupBy(static::COL_PRODUCT_ID)
-            ->limit($this->getFactory()->getConfig()->getApplyBatchSize());
-
+    /**
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleConcatenatedSubQuery
+     *
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected function createPriceProductScheduleFilteredByMinResultSubQuery(
+        SpyPriceProductScheduleQuery $priceProductScheduleConcatenatedSubQuery
+    ): SpyPriceProductScheduleQuery {
         return $this->getFactory()
             ->createPriceProductScheduleQuery()
-            ->addSelectQuery($filteredByMinResultQuery, 'B', false)
-            ->filterByIsCurrent(false)
-            ->where(SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE . ' = SUBSTRING(B.R from \'[0-9]+$\')::BIGINT')
-            ->find()
-            ->getData();
+            ->addSelectQuery($priceProductScheduleConcatenatedSubQuery, static::ALIAS_CONCATENATED, false)
+            ->addAsColumn(static::COL_PRODUCT_ID, static::ALIAS_CONCATENATED . '.' . static::COL_PRODUCT_ID)
+            ->addAsColumn(static::COL_RESULT, sprintf('min(%s)', static::ALIAS_CONCATENATED . '.' . static::COL_RESULT))
+            ->groupBy(static::COL_PRODUCT_ID)
+            ->limit($this->getFactory()->getConfig()->getApplyBatchSize());
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductSchedule\Persistence;
 
 use DateTime;
+use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -34,5 +35,30 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
             ->filterByActiveTo(['max' => $filterTo], Criteria::LESS_THAN)
             ->filterByIsCurrent(false)
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
+    public function savePriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer
+    {
+        $priceProductScheduleQuery = $this->getFactory()
+            ->createPriceProductScheduleQuery();
+
+        $priceProductScheduleEntity = $priceProductScheduleQuery
+            ->filterByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule())
+            ->findOneOrCreate();
+
+        $priceProductScheduleEntity = $this->getFactory()
+            ->createPriceProductScheduleMapper()
+            ->mapPriceProductScheduleTransferToPriceProductScheduleEntity($priceProductScheduleTransfer, $priceProductScheduleEntity);
+
+        $priceProductScheduleEntity->save();
+
+        $priceProductScheduleTransfer->setIdPriceProductSchedule($priceProductScheduleEntity->getIdPriceProductSchedule());
+
+        return $priceProductScheduleTransfer;
     }
 }

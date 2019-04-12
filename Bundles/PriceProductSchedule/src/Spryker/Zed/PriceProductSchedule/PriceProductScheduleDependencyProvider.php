@@ -44,6 +44,19 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = $this->addCurrencyFacade($container);
+        $container = $this->addProductFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addPriceProductFacade(Container $container): Container
     {
         $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {

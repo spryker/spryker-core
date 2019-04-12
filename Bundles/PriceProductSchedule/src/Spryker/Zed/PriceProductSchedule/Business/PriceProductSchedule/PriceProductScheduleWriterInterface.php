@@ -14,7 +14,7 @@ interface PriceProductScheduleWriterInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
-    public function savePriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): void;
+    public function savePriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer;
 }

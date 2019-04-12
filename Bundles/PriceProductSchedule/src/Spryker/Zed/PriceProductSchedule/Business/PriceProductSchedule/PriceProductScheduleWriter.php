@@ -8,45 +8,35 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
-use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
 
 class PriceProductScheduleWriter implements PriceProductScheduleWriterInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface;
+     * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface
      */
-    protected $priceProductScheduleRepository;
+    protected $priceProductScheduleEntityManager;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface
-     */
-    protected $priceProductScheduleMapper;
-
-    /**
-     * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface $priceProductScheduleRepository
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface $priceProductScheduleMapper
+     * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager
      */
     public function __construct(
-        PriceProductScheduleRepositoryInterface $priceProductScheduleRepository,
-        PriceProductScheduleMapperInterface $priceProductScheduleMapper
+        PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager
     ) {
-        $this->priceProductScheduleRepository = $priceProductScheduleRepository;
-        $this->priceProductScheduleMapper = $priceProductScheduleMapper;
+        $this->priceProductScheduleEntityManager = $priceProductScheduleEntityManager;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
-    public function savePriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
-    {
-        $priceProductScheduleEntity = $this->priceProductScheduleRepository->findByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $priceProductScheduleEntity = $this->priceProductScheduleMapper->mapPriceProductScheduleTransferToPriceProductScheduleEntity(
-            $priceProductScheduleTransfer,
-            $priceProductScheduleEntity
-        );
+    public function savePriceProductSchedule(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleTransfer {
+        $priceProductScheduleTransfer->requireIdPriceProductSchedule();
 
-        $priceProductScheduleEntity->save();
+        return $this->priceProductScheduleEntityManager
+            ->savePriceProductSchedule($priceProductScheduleTransfer);
     }
 }

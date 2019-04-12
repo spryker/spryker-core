@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
 
-class ProductPriceUpdater implements ProductPriceUpdaterInterface
+class PriceProductUpdater implements PriceProductUpdaterInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface
@@ -41,12 +41,12 @@ class ProductPriceUpdater implements ProductPriceUpdaterInterface
      * @param \Generated\Shared\Transfer\PriceProductTransfer $fallbackPriceProductTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer $currentPriceType
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function updateCurrentProductPrice(
+    public function updateCurrentPriceProduct(
         PriceProductTransfer $fallbackPriceProductTransfer,
         PriceTypeTransfer $currentPriceType
-    ): void {
+    ): ?PriceProductTransfer {
         $fallbackMoneyValueTransfer = $fallbackPriceProductTransfer->getMoneyValue();
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setSku($fallbackPriceProductTransfer->getSkuProduct())
@@ -56,12 +56,12 @@ class ProductPriceUpdater implements ProductPriceUpdaterInterface
         $priceProductTransferForUpdate = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
         if ($priceProductTransferForUpdate === null) {
-            return;
+            return null;
         }
 
         $priceProductTransferForUpdate->getMoneyValue()->setGrossAmount($fallbackMoneyValueTransfer->getGrossAmount());
         $priceProductTransferForUpdate->getMoneyValue()->setNetAmount($fallbackMoneyValueTransfer->getNetAmount());
 
-        $this->priceProductFacade->persistPriceProductStore($priceProductTransferForUpdate);
+        return $this->priceProductFacade->persistPriceProductStore($priceProductTransferForUpdate);
     }
 }

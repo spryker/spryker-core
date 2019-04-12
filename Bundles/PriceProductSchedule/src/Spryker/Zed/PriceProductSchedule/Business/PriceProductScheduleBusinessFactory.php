@@ -10,18 +10,14 @@ namespace Spryker\Zed\PriceProductSchedule\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackFinder;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackFinderInterface;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\ProductPriceUpdater;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\ProductPriceUpdaterInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductUpdater;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductUpdaterInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleApplier;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleApplierInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCleaner;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCleanerInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisabler;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleListMapper;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleListMapperInterface;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapper;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleReader;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleReaderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriter;
@@ -30,6 +26,10 @@ use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCur
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleListMapper;
+use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleListMapperInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleMapper;
+use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleMapperInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleDependencyProvider;
 
 /**
@@ -68,8 +68,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductScheduleWriter(): PriceProductScheduleWriterInterface
     {
         return new PriceProductScheduleWriter(
-            $this->getRepository(),
-            $this->createPriceProductScheduleMapper()
+            $this->getEntityManager()
         );
     }
 
@@ -99,11 +98,11 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProduct\ProductPriceUpdaterInterface
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductUpdaterInterface
      */
-    public function createProductPriceUpdater(): ProductPriceUpdaterInterface
+    public function createProductPriceUpdater(): PriceProductUpdaterInterface
     {
-        return new ProductPriceUpdater(
+        return new PriceProductUpdater(
             $this->getEntityManager(),
             $this->getPriceProductFacade()
         );
@@ -116,13 +115,12 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductScheduleReader(
             $this->getRepository(),
-            $this->createPriceProductScheduleMapper(),
             $this->getStoreFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface
+     * @return \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleMapperInterface
      */
     public function createPriceProductScheduleMapper(): PriceProductScheduleMapperInterface
     {
@@ -134,7 +132,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleListMapperInterface
+     * @return \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleListMapperInterface
      */
     public function createPriceProductScheduleListMapper(): PriceProductScheduleListMapperInterface
     {

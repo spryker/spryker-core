@@ -9,34 +9,34 @@ namespace Spryker\Zed\PriceProductSchedule\Persistence;
 
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
 
 interface PriceProductScheduleRepositoryInterface
 {
     /**
      * @param int $idPriceProductSchedule
      *
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule|null
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
      */
-    public function findByIdPriceProductSchedule(int $idPriceProductSchedule): ?SpyPriceProductSchedule;
+    public function findByIdPriceProductSchedule(int $idPriceProductSchedule): ?PriceProductScheduleTransfer;
 
     /**
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule[]
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
     public function findPriceProductSchedulesToDisable(): array;
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule[]
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
-    public function findSimilarPriceProductSchedulesToDisable(PriceProductScheduleTransfer $priceProductScheduleTransfer
+    public function findSimilarPriceProductSchedulesToDisable(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): array;
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule[]
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array;
 }

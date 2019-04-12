@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\PriceProduct\Business\Model;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
@@ -89,7 +88,23 @@ class PriceProductRemoverTest extends Unit
     public function testRemovePriceProductStore(): void
     {
         // Assign
-        $priceProductTransfer = $this->createProductWithAmount(100, 90);
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $priceTypeTransfer = $this->tester->havePriceType();
+        $currencyId = $this->tester->haveCurrency();
+        $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
+
+        $priceProductTransfer = $this->tester->havePriceProduct([
+            PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+            PriceProductTransfer::SKU_PRODUCT => $productConcreteTransfer->getSku(),
+            PriceProductTransfer::ID_PRICE_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
+            PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer,
+            PriceProductTransfer::MONEY_VALUE => [
+                MoneyValueTransfer::NET_AMOUNT => 100,
+                MoneyValueTransfer::GROSS_AMOUNT => 100,
+                MoneyValueTransfer::CURRENCY => $currencyTransfer,
+            ],
+        ]);
 
         // Act
         $this->priceProductRemover->removePriceProductStore($priceProductTransfer);
@@ -97,56 +112,6 @@ class PriceProductRemoverTest extends Unit
         // Assert
         $priceProductEntity = $this->priceProductQuery->findOneByIdPriceProduct($priceProductTransfer->getIdPriceProduct());
 
-        $this->assertNull($priceProductEntity);
-    }
-
-    /**
-     * @param int $grossAmount
-     * @param int $netAmount
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function createProductWithAmount($grossAmount, $netAmount): PriceProductTransfer
-    {
-        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType($this->priceProductConfig->getPriceDimensionDefault());
-
-        $basePriceProductTransfer = (new PriceProductTransfer())
-            ->setPriceDimension($priceProductDimensionTransfer);
-
-        $priceProductTransfer = $this->buildProduct($basePriceProductTransfer);
-
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-
-        $currencyTransfer = $this->currencyFacade->getDefaultCurrencyForCurrentStore();
-
-        $moneyValueTransfer = (new MoneyValueTransfer())
-            ->setNetAmount($netAmount)
-            ->setGrossAmount($grossAmount)
-            ->setFkStore($storeTransfer->getIdStore())
-            ->setFkCurrency($currencyTransfer->getIdCurrency())
-            ->setCurrency($currencyTransfer);
-
-        $priceProductTransfer->setMoneyValue($moneyValueTransfer);
-
-        return $this->priceProductFacade->createPriceForProduct($priceProductTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function buildProduct(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
-    {
-        $productConcreteTransfer = $this->tester->haveProduct();
-
-        $priceProductTransfer
-            ->setSkuProductAbstract($productConcreteTransfer->getAbstractSku())
-            ->setSkuProduct($productConcreteTransfer->getSku())
-            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
-            ->setIdProduct($productConcreteTransfer->getIdProductConcrete());
-
-        return $priceProductTransfer;
+        $this->assertNull($priceProductEntity, 'Price product should be removed');
     }
 }

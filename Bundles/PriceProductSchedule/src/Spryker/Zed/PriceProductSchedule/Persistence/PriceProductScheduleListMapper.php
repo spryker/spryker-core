@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
+namespace Spryker\Zed\PriceProductSchedule\Persistence;
 
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList;
 
-interface PriceProductScheduleListMapperInterface
+class PriceProductScheduleListMapper implements PriceProductScheduleListMapperInterface
 {
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList $priceProductScheduleListEntity
@@ -21,5 +21,8 @@ interface PriceProductScheduleListMapperInterface
     public function mapPriceProductScheduleListEntityToPriceProductScheduleListTransfer(
         SpyPriceProductScheduleList $priceProductScheduleListEntity,
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
-    ): PriceProductScheduleListTransfer;
+    ): PriceProductScheduleListTransfer {
+        return $priceProductScheduleListTransfer
+            ->fromArray($priceProductScheduleListEntity->toArray(), true);
+    }
 }

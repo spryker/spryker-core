@@ -78,7 +78,7 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
     {
         $this->priceProductFacade->persistPriceProductStore($priceProductScheduleTransfer->getPriceProduct());
 
-        $this->priceProductScheduleDisabler->disableOtherSimilarPriceProductSchedules($priceProductScheduleTransfer);
+        $this->priceProductScheduleDisabler->disableNotRelevantPriceProductSchedulesByPriceProductSchedule($priceProductScheduleTransfer);
 
         $priceProductScheduleTransfer->setIsCurrent(true);
 

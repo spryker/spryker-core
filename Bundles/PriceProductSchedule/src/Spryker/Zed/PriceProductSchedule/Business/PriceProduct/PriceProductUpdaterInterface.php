@@ -10,16 +10,16 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProduct;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 
-interface ProductPriceUpdaterInterface
+interface PriceProductUpdaterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer $currentPriceType
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function updateCurrentProductPrice(
+    public function updateCurrentPriceProduct(
         PriceProductTransfer $priceProductTransfer,
         PriceTypeTransfer $currentPriceType
-    ): void;
+    ): ?PriceProductTransfer;
 }

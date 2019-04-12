@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class PriceProductScheduleFacade extends AbstractFacade implements PriceProductScheduleFacadeInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @api
      */
@@ -29,7 +29,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @api
      */

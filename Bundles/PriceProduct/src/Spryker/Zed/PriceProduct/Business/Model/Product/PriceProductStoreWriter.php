@@ -162,8 +162,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         $priceProductTransfer
             ->requireFkPriceType();
 
-        $priceProductEntity = (new SpyPriceProduct())
-            ->setFkPriceType($priceProductTransfer->getFkPriceType());
+        $this->requireFieldsBaseOnProductType($priceProductTransfer);
 
         if ($priceProductTransfer->getIdProduct() !== null) {
             $idPriceProduct = $this->priceProductRepository
@@ -187,11 +186,30 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
             }
         }
 
+        $priceProductEntity = (new SpyPriceProduct())
+            ->setFkPriceType($priceProductTransfer->getFkPriceType());
+
         $priceProductEntity->save();
 
         $priceProductTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
 
         return $priceProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    protected function requireFieldsBaseOnProductType(PriceProductTransfer $priceProductTransfer): void
+    {
+        if ($priceProductTransfer->getIdProduct() === null) {
+            $priceProductTransfer->requireIdProductAbstract();
+        }
+
+        if ($priceProductTransfer->getIdProductAbstract() === null) {
+            $priceProductTransfer->requireIdProduct();
+        }
     }
 
     /**

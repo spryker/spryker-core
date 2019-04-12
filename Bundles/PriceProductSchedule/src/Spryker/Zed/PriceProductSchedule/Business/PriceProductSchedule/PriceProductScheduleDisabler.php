@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackFinderInterface;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\ProductPriceUpdaterInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductUpdaterInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 
 class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterface
@@ -34,7 +34,7 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
     protected $priceProductFallbackFinder;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProduct\ProductPriceUpdaterInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductUpdaterInterface
      */
     protected $productPriceUpdater;
 
@@ -47,14 +47,14 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface $priceProductScheduleWriter
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleReaderInterface $priceProductScheduleReader
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackFinderInterface $priceProductFallbackFinder
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProduct\ProductPriceUpdaterInterface $productPriceUpdater
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductUpdaterInterface $productPriceUpdater
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade
      */
     public function __construct(
         PriceProductScheduleWriterInterface $priceProductScheduleWriter,
         PriceProductScheduleReaderInterface $priceProductScheduleReader,
         PriceProductFallbackFinderInterface $priceProductFallbackFinder,
-        ProductPriceUpdaterInterface $productPriceUpdater,
+        PriceProductUpdaterInterface $productPriceUpdater,
         PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade
     ) {
         $this->priceProductScheduleWriter = $priceProductScheduleWriter;
@@ -73,7 +73,7 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
 
         foreach ($productSchedulePricesForDisable as $priceProductScheduleTransfer) {
             $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): void {
-                $this->executeFallbackLogic($priceProductScheduleTransfer);
+                $this->executeFallbackTransaction($priceProductScheduleTransfer);
             });
         }
     }
@@ -83,14 +83,16 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
      *
      * @return void
      */
-    public function disableOtherSimilarPriceProductSchedules(
+    public function disableNotRelevantPriceProductSchedulesByPriceProductSchedule(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): void {
         $productSchedulePricesForDisable = $this->priceProductScheduleReader
             ->findSimilarPriceProductSchedulesToDisable($priceProductScheduleTransfer);
 
         foreach ($productSchedulePricesForDisable as $priceProductScheduleTransfer) {
-            $this->executeFallbackLogic($priceProductScheduleTransfer);
+            $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): void {
+                $this->executeFallbackTransaction($priceProductScheduleTransfer);
+            });
         }
     }
 
@@ -99,7 +101,7 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
      *
      * @return void
      */
-    protected function executeFallbackLogic(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
+    protected function executeFallbackTransaction(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
     {
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
 
@@ -111,7 +113,7 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
 
         if ($fallbackPriceProduct !== null) {
             $fallbackPriceProduct->setSkuProduct($priceProductTransfer->getSkuProduct());
-            $this->productPriceUpdater->updateCurrentProductPrice(
+            $this->productPriceUpdater->updateCurrentPriceProduct(
                 $fallbackPriceProduct,
                 $priceProductTransfer->getPriceType()
             );

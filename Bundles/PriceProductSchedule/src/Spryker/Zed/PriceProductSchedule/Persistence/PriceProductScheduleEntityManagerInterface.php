@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Persistence;
 
+use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+
 /**
  * @method \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductSchedulePersistenceFactory getFactory()
  */
@@ -18,4 +20,13 @@ interface PriceProductScheduleEntityManagerInterface
      * @return void
      */
     public function deleteOldScheduledPrices(int $daysRetained): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
+    public function savePriceProductSchedule(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleTransfer;
 }

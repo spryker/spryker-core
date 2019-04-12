@@ -116,7 +116,7 @@ class PriceProductScheduleDisablerTest extends Unit
         }
 
         // Act
-        $this->priceProductScheduleDisabler->disableOtherSimilarPriceProductSchedules($activePriceProductSchedule);
+        $this->priceProductScheduleDisabler->disableNotRelevantPriceProductSchedulesByPriceProductSchedule($activePriceProductSchedule);
 
         // Assert
         $activePriceProductSchedulesCount = $this->tester
