@@ -16,6 +16,8 @@ use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReader;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReaderInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapper;
+use Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpander;
 use Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidator;
@@ -40,7 +42,8 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createCheckoutDataMapper(),
             $this->createCheckoutRequestAttributesExpander(),
-            $this->createCheckoutRequestValidator()
+            $this->createCheckoutRequestValidator(),
+            $this->createRestCheckoutErrorMapper()
         );
     }
 
@@ -62,7 +65,8 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->getGlossaryStorageClient(),
             $this->createCheckoutRequestAttributesExpander(),
-            $this->createCheckoutRequestValidator()
+            $this->createCheckoutRequestValidator(),
+            $this->createRestCheckoutErrorMapper()
         );
     }
 
@@ -102,6 +106,17 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function createSinglePaymentValidator(): SinglePaymentValidatorInterface
     {
         return new SinglePaymentValidator();
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapperInterface
+     */
+    public function createRestCheckoutErrorMapper(): RestCheckoutErrorMapperInterface
+    {
+        return new RestCheckoutErrorMapper(
+            $this->getConfig(),
+            $this->getGlossaryStorageClient()
+        );
     }
 
     /**

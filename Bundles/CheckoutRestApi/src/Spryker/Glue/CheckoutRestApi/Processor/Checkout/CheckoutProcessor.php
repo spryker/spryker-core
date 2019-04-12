@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CheckoutRestApi\Processor\Checkout;
 
 use ArrayObject;
-use Generated\Shared\Transfer\RestCheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
@@ -16,6 +15,7 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -30,6 +30,8 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected $restResourceBuilder;
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @var \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface
      */
     protected $glossaryStorageClient;
@@ -55,24 +57,32 @@ class CheckoutProcessor implements CheckoutProcessorInterface
     protected $checkoutRequestValidator;
 
     /**
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapperInterface
+     */
+    protected $restCheckoutErrorMapper;
+
+    /**
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface $checkoutRequestAttributesExpander
      * @param \Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface $checkoutRequestValidator
+     * @param \Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapperInterface $restCheckoutErrorMapper
      */
     public function __construct(
         CheckoutRestApiClientInterface $checkoutRestApiClient,
         RestResourceBuilderInterface $restResourceBuilder,
         CheckoutRestApiToGlossaryStorageClientInterface $glossaryStorageClient,
         CheckoutRequestAttributesExpanderInterface $checkoutRequestAttributesExpander,
-        CheckoutRequestValidatorInterface $checkoutRequestValidator
+        CheckoutRequestValidatorInterface $checkoutRequestValidator,
+        RestCheckoutErrorMapperInterface $restCheckoutErrorMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
         $this->checkoutRequestAttributesExpander = $checkoutRequestAttributesExpander;
         $this->checkoutRequestValidator = $checkoutRequestValidator;
+        $this->restCheckoutErrorMapper = $restCheckoutErrorMapper;
     }
 
     /**
@@ -110,30 +120,16 @@ class CheckoutProcessor implements CheckoutProcessorInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         foreach ($errors as $restCheckoutErrorTransfer) {
-            $restResponse->addError((new RestErrorMessageTransfer())
-                ->setCode($restCheckoutErrorTransfer->getCode())
-                ->setStatus($restCheckoutErrorTransfer->getStatus())
-                ->setDetail($this->translateCheckoutErrorMessage($restCheckoutErrorTransfer, $localeName)));
+            $restResponse->addError(
+                $this->restCheckoutErrorMapper->mapLocalizedRestCheckoutErrorTransferToRestErrorTransfer(
+                    $restCheckoutErrorTransfer,
+                    new RestErrorMessageTransfer(),
+                    $localeName
+                )
+            );
         }
 
         return $restResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutErrorTransfer $restCheckoutErrorTransfer
-     * @param string $localeName
-     *
-     * @return string
-     */
-    protected function translateCheckoutErrorMessage(RestCheckoutErrorTransfer $restCheckoutErrorTransfer, string $localeName): string
-    {
-        $checkoutErrorMessage = $restCheckoutErrorTransfer->getDetail();
-
-        return $this->glossaryStorageClient->translate(
-            $checkoutErrorMessage,
-            $localeName,
-            $restCheckoutErrorTransfer->getParameters()
-        ) ?: $checkoutErrorMessage;
     }
 
     /**
