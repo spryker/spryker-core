@@ -25,7 +25,6 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
-use Spryker\Shared\QuoteRequest\QuoteRequestConfig;
 
 /**
  * Auto-generated group annotations
@@ -165,7 +164,6 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertEquals($quoteRequestTransfer->getCompanyUser(), $storedQuoteRequestTransfer->getCompanyUser());
         $this->assertEquals(SharedQuoteRequestConfig::STATUS_DRAFT, $storedQuoteRequestTransfer->getStatus());
-        $this->assertEquals(QuoteRequestConfig::INITIAL_VERSION_NUMBER, $storedQuoteRequestTransfer->getLatestVersion()->getVersion());
         $this->assertEquals(
             $quoteRequestTransfer->getLatestVersion()->getQuote(),
             $storedQuoteRequestTransfer->getLatestVersion()->getQuote()

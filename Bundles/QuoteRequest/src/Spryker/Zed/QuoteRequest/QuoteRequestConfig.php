@@ -17,19 +17,19 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class QuoteRequestConfig extends AbstractBundleConfig
 {
     /**
+     * @return int
+     */
+    public function getInitialVersion(): int
+    {
+        return $this->getSharedConfig()->getInitialVersion();
+    }
+
+    /**
      * @return string
      */
     public function getInitialStatus(): string
     {
         return SharedQuoteRequestConfig::STATUS_DRAFT;
-    }
-
-    /**
-     * @return int
-     */
-    public function getInitialVersion(): int
-    {
-        return SharedQuoteRequestConfig::INITIAL_VERSION_NUMBER;
     }
 
     /**

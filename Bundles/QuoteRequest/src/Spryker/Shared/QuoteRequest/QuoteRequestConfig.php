@@ -18,7 +18,15 @@ class QuoteRequestConfig extends AbstractSharedConfig
     public const STATUS_CLOSED = 'closed';
     public const STATUS_CANCELED = 'canceled';
 
-    public const INITIAL_VERSION_NUMBER = 1;
+    protected const INITIAL_VERSION_NUMBER = 1;
+
+    /**
+     * @return int
+     */
+    public function getInitialVersion(): int
+    {
+        return static::INITIAL_VERSION_NUMBER;
+    }
 
     /**
      * @return string[]

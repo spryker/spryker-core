@@ -157,7 +157,7 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
             $quoteRequestQuery->filterByIdQuoteRequest($quoteRequestFilterTransfer->getIdQuoteRequest());
         }
 
-        // TODO: add specification for future filters
+        // Please add new filters above this one which do not contain an offset or a limit methods.
         if (!$quoteRequestFilterTransfer->getWithHidden()) {
             $quoteRequestQuery = $this->addWithoutHiddenQuoteRequestFilter($quoteRequestQuery);
         }
