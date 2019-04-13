@@ -17,7 +17,6 @@ use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
 
 class QuoteRequestUserSender implements QuoteRequestUserSenderInterface
 {
-    protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS = 'quote_request.validation.error.empty_quote_items';
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.update.validation.error.wrong_valid_until';
@@ -51,12 +50,13 @@ class QuoteRequestUserSender implements QuoteRequestUserSenderInterface
      */
     public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestTransfer = $this->quoteRequestReader->findQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestReader->findQuoteRequest($quoteRequestCriteriaTransfer);
 
-        if (!$quoteRequestTransfer) {
-            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
+        if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
+            return $quoteRequestResponseTransfer;
         }
 
+        $quoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
         $quoteRequestResponseTransfer = $this->validateQuoteRequestBeforeSend($quoteRequestTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {

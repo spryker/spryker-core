@@ -9,10 +9,11 @@ namespace Spryker\Zed\QuoteRequest\Business\Reader;
 
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
-use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionFilterTransfer;
 use Spryker\Zed\QuoteRequest\Dependency\Facade\QuoteRequestToCompanyUserFacadeInterface;
@@ -20,6 +21,8 @@ use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface;
 
 class QuoteRequestReader implements QuoteRequestReaderInterface
 {
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
+
     /**
      * @var \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestRepositoryInterface
      */
@@ -45,9 +48,9 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): ?QuoteRequestTransfer
+    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
 
@@ -65,7 +68,17 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
             ->getQuoteRequests()
             ->getArrayCopy();
 
-        return array_shift($quoteRequestTransfers);
+        $quoteRequestTransfer = array_shift($quoteRequestTransfers);
+
+        if (!$quoteRequestTransfer) {
+            return (new QuoteRequestResponseTransfer())
+                ->setIsSuccessful(false)
+                ->addMessage((new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS));
+        }
+
+        return (new QuoteRequestResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setQuoteRequest($quoteRequestTransfer);
     }
 
     /**
@@ -191,5 +204,20 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
         }
 
         return $filteredCompanyUserTransfers;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    protected function getErrorResponse(string $message): QuoteRequestResponseTransfer
+    {
+        $messageTransfer = (new MessageTransfer())
+            ->setValue($message);
+
+        return (new QuoteRequestResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage($messageTransfer);
     }
 }

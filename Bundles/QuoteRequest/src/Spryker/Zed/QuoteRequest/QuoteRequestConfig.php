@@ -33,6 +33,8 @@ class QuoteRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * // TODO: need discussion with Karoly
+     *
      * @return string[]
      */
     public function getQuoteFieldsAllowedForSaving(): array
@@ -40,6 +42,7 @@ class QuoteRequestConfig extends AbstractBundleConfig
         return [
             QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE,
             QuoteTransfer::QUOTE_REQUEST_REFERENCE,
+            QuoteTransfer::ITEMS,
         ];
     }
 

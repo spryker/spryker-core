@@ -1389,10 +1389,11 @@ class QuoteRequestFacadeTest extends Unit
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
 
         // Act
-        $storedQuoteRequestTransfer = $this->tester->getFacade()->findQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->tester->getFacade()->findQuoteRequest($quoteRequestCriteriaTransfer);
+        $storedQuoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
 
         // Assert
-        $this->assertNotNull($storedQuoteRequestTransfer);
+        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertEquals($quoteRequestTransfer->getIdQuoteRequest(), $storedQuoteRequestTransfer->getIdQuoteRequest());
     }
 
@@ -1406,10 +1407,10 @@ class QuoteRequestFacadeTest extends Unit
             ->setQuoteRequestReference(static::FAKE_QUOTE_REQUEST_REFERENCE);
 
         // Act
-        $storedQuoteRequestTransfer = $this->tester->getFacade()->findQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->tester->getFacade()->findQuoteRequest($quoteRequestCriteriaTransfer);
 
         // Assert
-        $this->assertNull($storedQuoteRequestTransfer);
+        $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
     }
 
     /**

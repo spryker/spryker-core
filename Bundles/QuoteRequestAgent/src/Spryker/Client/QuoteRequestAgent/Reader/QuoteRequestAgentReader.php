@@ -37,6 +37,8 @@ class QuoteRequestAgentReader implements QuoteRequestAgentReaderInterface
             ->setQuoteRequestReference($quoteRequestReference)
             ->setWithHidden(true);
 
-        return $this->quoteRequestClient->findQuoteRequest($quoteRequestCriteriaTransfer);
+        return $this->quoteRequestClient
+            ->findQuoteRequest($quoteRequestCriteriaTransfer)
+            ->getQuoteRequest();
     }
 }

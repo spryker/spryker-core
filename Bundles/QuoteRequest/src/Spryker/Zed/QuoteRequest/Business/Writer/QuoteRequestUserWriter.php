@@ -27,7 +27,6 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
     use TransactionTrait;
 
     protected const GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND = 'quote_request.validation.error.company_user_not_found';
-    protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS = 'quote_request.validation.error.empty_quote_items';
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.update.validation.error.wrong_valid_until';
@@ -173,13 +172,13 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
             ->setIdCompanyUser($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser())
             ->setWithHidden(true);
 
-        $currentQuoteRequestTransfer = $this->quoteRequestReader->findQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestReader->findQuoteRequest($quoteRequestCriteriaTransfer);
 
-        if (!$currentQuoteRequestTransfer) {
-            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
+        if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
+            return $quoteRequestResponseTransfer;
         }
 
-        if (!$this->quoteRequestUserStatus->isQuoteRequestEditable($currentQuoteRequestTransfer)) {
+        if (!$this->quoteRequestUserStatus->isQuoteRequestEditable($quoteRequestResponseTransfer->getQuoteRequest())) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
         }
 
@@ -202,11 +201,13 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
      */
     protected function executeReviseQuoteRequestTransaction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestTransfer = $this->quoteRequestReader->findQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestReader->findQuoteRequest($quoteRequestCriteriaTransfer);
 
-        if (!$quoteRequestTransfer) {
-            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS);
+        if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
+            return $quoteRequestResponseTransfer;
         }
+
+        $quoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
 
         if (!$this->quoteRequestUserStatus->isQuoteRequestRevisable($quoteRequestTransfer)) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
