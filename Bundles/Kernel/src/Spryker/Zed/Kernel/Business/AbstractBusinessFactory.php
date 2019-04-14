@@ -18,13 +18,15 @@ abstract class AbstractBusinessFactory extends AbstractFactory implements Busine
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
     ) {
         $dependencyProvider->provideBusinessLayerDependencies($container);
+
+        return $container;
     }
 
     /**

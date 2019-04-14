@@ -67,18 +67,19 @@ class PropelInstallConsole extends Console
      * @param string $command
      * @param array $arguments
      *
-     * @return void
+     * @return int
      */
     protected function runDependingCommand($command, array $arguments = [])
     {
         $command = $this->getApplication()->find($command);
         $arguments['command'] = $command;
         $input = new ArrayInput($arguments);
-        $command->run($input, $this->output);
+
+        return $command->run($input, $this->output);
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getDependingCommands()
     {

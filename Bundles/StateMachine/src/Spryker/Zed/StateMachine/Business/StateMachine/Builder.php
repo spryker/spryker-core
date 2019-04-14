@@ -156,12 +156,12 @@ class Builder implements BuilderInterface
      */
     protected function recursiveMerge($fromXmlElement, $intoXmlNode, $prefix = null)
     {
+        /** @var \SimpleXMLElement[] $xmlElements */
         $xmlElements = $fromXmlElement->children();
-        if ($xmlElements === null) {
+        if (!$xmlElements) {
             return;
         }
 
-        /** @var \SimpleXMLElement $xmlElement */
         foreach ($xmlElements as $xmlElement) {
             $xmlElement = $this->prefixSubProcessElementValue($xmlElement, $prefix);
             $xmlElement = $this->prefixSubProcessElementAttributes($xmlElement, $prefix);

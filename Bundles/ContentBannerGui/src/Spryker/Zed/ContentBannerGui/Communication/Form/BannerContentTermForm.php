@@ -47,7 +47,7 @@ class BannerContentTermForm extends AbstractType
                 if ($localizedContentTransfer->getFkLocale() === null) {
                     return [Constraint::DEFAULT_GROUP];
                 }
-                /** @var \Generated\Shared\Transfer\ContentBannerTransfer $contentBanner */
+                /** @var \Generated\Shared\Transfer\ContentBannerTermTransfer $contentBanner */
                 $contentBanner = $form->getNormData();
 
                 foreach ($contentBanner->toArray() as $field) {

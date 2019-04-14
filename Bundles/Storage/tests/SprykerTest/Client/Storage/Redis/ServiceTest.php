@@ -302,6 +302,7 @@ class ServiceTest extends Unit
             'kv:b' => 'B',
             'kv:d' => 'D',
         ];
+
         $storageClient = $this->getStorageClientMock();
         $this->tester->setProtectedProperty($storageClient, 'bufferedValues', $bufferedData);
 
@@ -330,11 +331,14 @@ class ServiceTest extends Unit
 
         $redisService = $this->getMockBuilder(Service::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getMulti'])
+            ->setMethods(['getMulti', '__destruct'])
             ->getMock();
         $redisService
             ->method('getMulti')
             ->willReturnCallback($getMultiFunctionStub);
+        $redisService
+            ->method('__destruct')
+            ->willReturn(true);
 
         $storageClient = $this->getMockBuilder(StorageClient::class)
             ->setMethods(['loadCacheKeysAndValues', 'getService'])
