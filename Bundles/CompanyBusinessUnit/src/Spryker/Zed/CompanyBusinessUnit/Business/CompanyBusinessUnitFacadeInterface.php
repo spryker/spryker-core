@@ -184,6 +184,7 @@ interface CompanyBusinessUnitFacadeInterface
     /**
      * Specification:
      * - Retrieves a company business unit by uuid.
+     * - Requires uuid to be set on CompanyBusinessUnitTransfer provided as a parameter.
      *
      * @api
      *

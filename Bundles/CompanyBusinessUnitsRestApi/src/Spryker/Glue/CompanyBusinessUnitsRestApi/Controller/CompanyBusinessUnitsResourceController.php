@@ -47,6 +47,12 @@ class CompanyBusinessUnitsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
+        if (!$restRequest->getResource()->getId()) {
+            $this->getFactory()
+                ->createCompanyBusinessUnitRestResponseBuilder()
+                ->createResourceNotImplementedError();
+        }
+
         return $this->getFactory()->createCompanyBusinessUnitReader()->getCompanyBusinessUnit($restRequest);
     }
 }

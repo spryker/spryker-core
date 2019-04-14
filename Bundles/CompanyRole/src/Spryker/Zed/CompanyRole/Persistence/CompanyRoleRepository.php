@@ -333,6 +333,13 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
                 $companyRoleTransfer
             );
 
+        $companyRoleTransfer = $this->getFactory()
+            ->createCompanyRoleCompanyMapper()
+            ->mapCompanyFromCompanyRoleEntityToCompanyRoleTransfer(
+                $spyCompanyRole,
+                $companyRoleTransfer
+            );
+
         return $companyRoleTransfer;
     }
 
@@ -409,22 +416,24 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     }
 
     /**
-     * @param string $uuid
+     * @module Company
+     *
+     * @param string $companyRoleUuid
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
      */
-    public function findCompanyRoleByUuid(string $uuid): ?CompanyRoleTransfer
+    public function findCompanyRoleByUuid(string $companyRoleUuid): ?CompanyRoleTransfer
     {
-        $query = $this->getFactory()
+        $companyRoleEntity = $this->getFactory()
             ->createCompanyRoleQuery()
-            ->filterByUuid($uuid);
+            ->joinCompany()
+            ->filterByUuid($companyRoleUuid)
+            ->findOne();
 
-        $spyCompanyRole = $this->buildQueryFromCriteria($query)->findOne();
-
-        if (!$spyCompanyRole) {
+        if (!$companyRoleEntity) {
             return null;
         }
 
-        return $this->prepareCompanyRoleTransfer($spyCompanyRole);
+        return $this->prepareCompanyRoleTransfer($companyRoleEntity);
     }
 }

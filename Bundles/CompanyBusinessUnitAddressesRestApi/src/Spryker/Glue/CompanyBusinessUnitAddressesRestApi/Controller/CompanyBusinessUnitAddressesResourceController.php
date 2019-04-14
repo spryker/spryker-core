@@ -30,6 +30,14 @@ class CompanyBusinessUnitAddressesResourceController extends AbstractController
      *              "400": "Company business unit address id is missing.",
      *              "404": "Company business unit address not found."
      *          }
+     *     },
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves company business unit addresses collection."
+     *          ],
+     *          "responses": {
+     *              "501": "Not implemented."
+     *          }
      *     }
      * })
      *
@@ -39,6 +47,14 @@ class CompanyBusinessUnitAddressesResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createCompanyBusinessUnitAddressReader()->getCompanyBusinessUnitAddress($restRequest);
+        if (!$restRequest->getResource()->getId()) {
+            return $this->getFactory()
+                ->createCompanyBusinessUnitAddressRestResponseBuilder()
+                ->createResourceNotImplementedError();
+        }
+
+        return $this->getFactory()
+            ->createCompanyBusinessUnitAddressReader()
+            ->getCompanyBusinessUnitAddress($restRequest);
     }
 }

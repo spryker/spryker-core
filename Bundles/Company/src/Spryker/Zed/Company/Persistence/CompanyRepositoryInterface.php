@@ -54,9 +54,9 @@ interface CompanyRepositoryInterface
     public function findCompanyById(int $idCompany): ?CompanyTransfer;
 
     /**
-     * @param string $uuid
+     * @param string $companyUuid
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer|null
      */
-    public function findCompanyByUuid(string $uuid): ?CompanyTransfer;
+    public function findCompanyByUuid(string $companyUuid): ?CompanyTransfer;
 }

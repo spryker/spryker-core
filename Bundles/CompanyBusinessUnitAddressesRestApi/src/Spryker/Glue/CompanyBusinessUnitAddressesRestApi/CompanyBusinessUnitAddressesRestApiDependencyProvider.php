@@ -26,7 +26,7 @@ class CompanyBusinessUnitAddressesRestApiDependencyProvider extends AbstractBund
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addCompanyBusinessUnitAddressClient($container);
+        $container = $this->addCompanyUnitAddressClient($container);
 
         return $container;
     }
@@ -36,7 +36,7 @@ class CompanyBusinessUnitAddressesRestApiDependencyProvider extends AbstractBund
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addCompanyBusinessUnitAddressClient(Container $container): Container
+    protected function addCompanyUnitAddressClient(Container $container): Container
     {
         $container[static::CLIENT_COMPANY_UNIT_ADDRESS] = function (Container $container) {
             return new CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressClientBridge(

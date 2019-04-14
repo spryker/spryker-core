@@ -33,10 +33,13 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
      */
     public function findCompanyRoleByUuid(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
-        $companyRoleResponseTransfer = new CompanyRoleResponseTransfer();
+        $companyRoleTransfer->requireUuid();
+
         $companyRoleTransfer = $this->companyRoleRepository->findCompanyRoleByUuid(
             $companyRoleTransfer->getUuid()
         );
+
+        $companyRoleResponseTransfer = new CompanyRoleResponseTransfer();
         if (!$companyRoleTransfer) {
             return $companyRoleResponseTransfer->setIsSuccessful(false);
         }

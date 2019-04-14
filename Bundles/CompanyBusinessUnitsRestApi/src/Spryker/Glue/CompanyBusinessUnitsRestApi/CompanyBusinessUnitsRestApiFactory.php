@@ -7,10 +7,15 @@
 
 namespace Spryker\Glue\CompanyBusinessUnitsRestApi;
 
+use Spryker\Glue\CompanyBusinessUnitsRestApi\Dependency\Client\CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Mapper\CompanyBusinessUnitMapper;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Mapper\CompanyBusinessUnitMapperInterface;
+use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Reader\CompanyBusinessUnitReader;
+use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Reader\CompanyBusinessUnitReaderInterface;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Relationship\CompanyBusinessUnitResourceRelationshipExpander;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Relationship\CompanyBusinessUnitResourceRelationshipExpanderInterface;
+use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\RestResponseBuilder\CompanyBusinessUnitRestResponseBuilder;
+use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\RestResponseBuilder\CompanyBusinessUnitRestResponseBuilderInterface;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\Customer\CustomerExpander;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\Customer\CustomerExpanderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -29,19 +34,20 @@ class CompanyBusinessUnitsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\CompanyBusinessUnitReader
+     * @return \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Reader\CompanyBusinessUnitReaderInterface
      */
     public function createCompanyBusinessUnitReader(): CompanyBusinessUnitReaderInterface
     {
         return new CompanyBusinessUnitReader(
             $this->createCompanyBusinessUnitMapper(),
             $this->getCompanyBusinessUnitClient(),
-            $this->createCompanyBusinessUnitRestResponseBuilder()
+            $this->createCompanyBusinessUnitRestResponseBuilder(),
+            $this->getCompanyBusinessUnitMapperPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\CompanyBusinessUnitMapperInterface
+     * @return \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Mapper\CompanyBusinessUnitMapperInterface
      */
     public function createCompanyBusinessUnitMapper(): CompanyBusinessUnitMapperInterface
     {
@@ -57,7 +63,7 @@ class CompanyBusinessUnitsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\CompanyBusinessUnitRestResponseBuilderInterface
+     * @return \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\RestResponseBuilder\CompanyBusinessUnitRestResponseBuilderInterface
      */
     public function createCompanyBusinessUnitRestResponseBuilder(): CompanyBusinessUnitRestResponseBuilderInterface
     {
@@ -70,5 +76,13 @@ class CompanyBusinessUnitsRestApiFactory extends AbstractFactory
     public function getCompanyBusinessUnitClient(): CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface
     {
         return $this->getProvidedDependency(CompanyBusinessUnitsRestApiDependencyProvider::CLIENT_COMPANY_BUSINESS_UNIT);
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperInterface[]
+     */
+    public function getCompanyBusinessUnitMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyBusinessUnitsRestApiDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_MAPPER);
     }
 }

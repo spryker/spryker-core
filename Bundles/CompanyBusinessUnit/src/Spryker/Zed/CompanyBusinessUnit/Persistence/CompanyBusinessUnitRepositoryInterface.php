@@ -68,9 +68,9 @@ interface CompanyBusinessUnitRepositoryInterface
     public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer;
 
     /**
-     * @param string $uuid
+     * @param string $companyBusinessUnitUuid
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
      */
-    public function findCompanyBusinessUnitByUuid(string $uuid): ?CompanyBusinessUnitTransfer;
+    public function findCompanyBusinessUnitByUuid(string $companyBusinessUnitUuid): ?CompanyBusinessUnitTransfer;
 }

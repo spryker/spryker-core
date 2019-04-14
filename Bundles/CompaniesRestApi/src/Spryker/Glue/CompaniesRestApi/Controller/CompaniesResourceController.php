@@ -7,12 +7,9 @@
 
 namespace Spryker\Glue\CompaniesRestApi\Controller;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Glue\CompaniesRestApi\CompaniesRestApiFactory getFactory()
@@ -50,6 +47,12 @@ class CompaniesResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
+        if (!$restRequest->getResource()->getId()) {
+            return $this->getFactory()
+                ->createCompanyRestResponseBuilder()
+                ->createResourceNotImplementedError();
+        }
+
         return $this->getFactory()->createCompanyReader()->getCompany($restRequest);
     }
 }

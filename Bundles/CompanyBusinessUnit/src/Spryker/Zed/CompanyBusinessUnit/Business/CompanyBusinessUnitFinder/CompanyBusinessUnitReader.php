@@ -56,12 +56,13 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
      */
     public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
     {
-        $companyBusinessUnitResponseTransfer = new CompanyBusinessUnitResponseTransfer();
+        $companyBusinessUnitTransfer->requireUuid();
 
         $companyBusinessUnitTransfer = $this->companyBusinessUnitRepository->findCompanyBusinessUnitByUuid(
             $companyBusinessUnitTransfer->getUuid()
         );
 
+        $companyBusinessUnitResponseTransfer = new CompanyBusinessUnitResponseTransfer();
         if (!$companyBusinessUnitTransfer) {
             return $companyBusinessUnitResponseTransfer->setIsSuccessful(false);
         }

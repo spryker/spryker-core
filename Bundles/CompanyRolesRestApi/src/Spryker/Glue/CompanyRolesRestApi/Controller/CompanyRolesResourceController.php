@@ -47,6 +47,12 @@ class CompanyRolesResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
+        if (!$restRequest->getResource()->getId()) {
+            $this->getFactory()
+                ->createCompanyRoleRestResponseBuilder()
+                ->createResourceNotImplementedError();
+        }
+
         return $this->getFactory()->createCompanyRoleReader()->getCompanyRole($restRequest);
     }
 }

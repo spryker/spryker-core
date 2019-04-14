@@ -171,22 +171,26 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     }
 
     /**
-     * @param string $uuid
+     * @param string $companyBusinessUnitUuid
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
      */
-    public function findCompanyBusinessUnitByUuid(string $uuid): ?CompanyBusinessUnitTransfer
+    public function findCompanyBusinessUnitByUuid(string $companyBusinessUnitUuid): ?CompanyBusinessUnitTransfer
     {
-        $query = $this->getSpyCompanyBusinessUnitQuery()
-            ->filterByUuid($uuid);
-        $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
-        if (!$entityTransfer) {
+        $companyBusinessUnitEntity = $this->getSpyCompanyBusinessUnitQuery()
+            ->filterByUuid($companyBusinessUnitUuid)
+            ->findOne();
+
+        if (!$companyBusinessUnitEntity) {
             return null;
         }
 
         return $this->getFactory()
             ->createCompanyBusinessUnitMapper()
-            ->mapEntityTransferToBusinessUnitTransfer($entityTransfer, new CompanyBusinessUnitTransfer());
+            ->mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer(
+                $companyBusinessUnitEntity,
+                new CompanyBusinessUnitTransfer()
+            );
     }
 
     /**

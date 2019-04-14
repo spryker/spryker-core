@@ -5,7 +5,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/company-business-unit": "^2.7.0",
+    "spryker/company-business-unit": "^2.10.0",
+    "spryker/company-business-units-rest-api-extension": "^1.0.0",
     "spryker/customers-rest-api-extension": "^1.1.0",
     "spryker/glue-application": "^1.15.0",
     "spryker/glue-application-extension": "^1.0.0",
@@ -18,8 +19,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
-    "spryker/uuid-behavior": "Used to generate UUIDs for the company business units entities."
+    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
   },
   "autoload": {
     "psr-4": {

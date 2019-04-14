@@ -30,8 +30,7 @@ class CompanyRolesResourcePlugin extends AbstractPlugin implements ResourceRoute
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection
-            ->addGet(CompanyRolesRestApiConfig::ACTION_COMPANY_ROLES_GET);
+        $resourceRouteCollection->addGet('get');
 
         return $resourceRouteCollection;
     }
