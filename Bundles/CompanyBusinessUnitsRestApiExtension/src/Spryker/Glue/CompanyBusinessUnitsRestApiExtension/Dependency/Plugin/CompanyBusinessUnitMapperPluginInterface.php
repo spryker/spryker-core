@@ -10,7 +10,7 @@ namespace Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 
-interface CompanyBusinessUnitMapperInterface
+interface CompanyBusinessUnitMapperPluginInterface
 {
     /**
      * Specification:

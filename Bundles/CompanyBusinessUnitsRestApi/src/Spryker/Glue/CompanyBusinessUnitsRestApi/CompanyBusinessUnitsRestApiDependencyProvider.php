@@ -65,7 +65,7 @@ class CompanyBusinessUnitsRestApiDependencyProvider extends AbstractBundleDepend
     }
 
     /**
-     * @return \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperInterface[]
+     * @return \Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface[]
      */
     protected function getCompanyBusinessUnitMapperPlugins(): array
     {
