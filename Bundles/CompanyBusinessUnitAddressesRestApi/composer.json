@@ -5,20 +5,20 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/company-unit-address": "^1.8.0",
     "spryker/company-business-units-rest-api-extension": "^1.0.0",
+    "spryker/company-unit-address": "^1.8.0",
     "spryker/glue-application": "^1.15.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.29.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/symfony": "^3.0.0",
+    "spryker/uuid-behavior": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
-    "spryker/uuid-behavior": "Used to generate UUIDs for the company unit address entities."
+    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
   },
   "autoload": {
     "psr-4": {

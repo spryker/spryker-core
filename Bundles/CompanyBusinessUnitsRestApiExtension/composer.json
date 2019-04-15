@@ -1,5 +1,6 @@
 {
   "name": "spryker/company-business-units-rest-api-extension",
+  "type": "library",
   "description": "CompanyBusinessUnitsRestApiExtension module",
   "license": "proprietary",
   "require": {
