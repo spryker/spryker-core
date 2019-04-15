@@ -178,4 +178,5 @@
         <property name="hasCustomer" type="bool" />
         <property name="customerTransfer" type="Customer" />
     </transfer>
+
 </transfers>

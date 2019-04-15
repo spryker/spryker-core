@@ -38,16 +38,19 @@ class CheckoutResponseMapper implements CheckoutResponseMapperInterface
         $restCheckoutResponseAttributesTransfer->setOrderReference($restCheckoutResponseTransfer->getOrderReference());
 
         return $this->executeCheckoutResponseMapperPlugins(
+            $restCheckoutResponseTransfer,
             $restCheckoutResponseAttributesTransfer
         );
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestCheckoutResponseTransfer $restCheckoutResponseTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutResponseAttributesTransfer
      */
     protected function executeCheckoutResponseMapperPlugins(
+        RestCheckoutResponseTransfer $restCheckoutResponseTransfer,
         RestCheckoutResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
     ): RestCheckoutResponseAttributesTransfer {
         foreach ($this->checkoutResponseMapperPlugins as $checkoutResponseMapperPlugin) {
