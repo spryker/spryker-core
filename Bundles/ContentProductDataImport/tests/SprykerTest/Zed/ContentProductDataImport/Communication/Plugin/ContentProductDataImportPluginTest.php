@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\ContentProductDataImport\Communication\Plugin\ContentProductAbstractListDataImportPlugin;
 use Spryker\Zed\ContentProductDataImport\ContentProductDataImportConfig;
-use Spryker\Zed\ContentProductDataImport\Dependency\Service\ContentProductDataImportToUtilEncodingServiceBridge;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
@@ -112,8 +111,8 @@ class ContentProductDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasProducts(66, $this->createUtilEncodingServiceBridge()->encodeJson([152, 151]));
-        $this->tester->assertContentLocalizedHasProducts(46, $this->createUtilEncodingServiceBridge()->encodeJson([152, 151]));
+        $this->tester->assertContentLocalizedHasProducts(66, $this->createUtilEncodingService()->encodeJson([152, 151]));
+        $this->tester->assertContentLocalizedHasProducts(46, $this->createUtilEncodingService()->encodeJson([152, 151]));
     }
 
     /**
@@ -132,8 +131,8 @@ class ContentProductDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasProducts(66, $this->createUtilEncodingServiceBridge()->encodeJson([152, 151]));
-        $this->tester->assertContentLocalizedHasProducts(46, $this->createUtilEncodingServiceBridge()->encodeJson([152, 151]));
+        $this->tester->assertContentLocalizedHasProducts(66, $this->createUtilEncodingService()->encodeJson([152, 151]));
+        $this->tester->assertContentLocalizedHasProducts(46, $this->createUtilEncodingService()->encodeJson([152, 151]));
     }
 
     /**
@@ -152,7 +151,7 @@ class ContentProductDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasProducts(66, $this->createUtilEncodingServiceBridge()->encodeJson([152, 151]));
+        $this->tester->assertContentLocalizedHasProducts(66, $this->createUtilEncodingService()->encodeJson([152, 151]));
         $this->tester->assertContentLocalizedDoesNotExist(46);
     }
 
@@ -172,10 +171,10 @@ class ContentProductDataImportPluginTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ContentProductDataImport\Dependency\Service\ContentProductDataImportToUtilEncodingServiceInterface
+     * @return \Spryker\Service\UtilEncoding\UtilEncodingService
      */
-    protected function createUtilEncodingServiceBridge()
+    protected function createUtilEncodingService()
     {
-        return new ContentProductDataImportToUtilEncodingServiceBridge(new UtilEncodingService());
+        return new UtilEncodingService();
     }
 }
