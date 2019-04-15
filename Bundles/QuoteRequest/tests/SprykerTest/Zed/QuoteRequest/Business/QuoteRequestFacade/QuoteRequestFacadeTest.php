@@ -1429,6 +1429,25 @@ class QuoteRequestFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testSanitizeQuoteRequestSanitizeQuoteRequestInQuote(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->haveQuoteRequestInDraftStatus();
+        $quoteTransfer = (new QuoteTransfer())
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
+            ->setQuoteRequestVersionReference($quoteRequestTransfer->getLatestVersion()->getVersionReference());
+
+        // Act
+        $updatedQuoteTransfer = $this->tester->getFacade()->sanitizeQuoteRequest($quoteTransfer);
+
+        // Assert
+        $this->assertNull($updatedQuoteTransfer->getQuoteRequestReference());
+        $this->assertNull($updatedQuoteTransfer->getQuoteRequestVersionReference());
+    }
+
+    /**
      * @param string $quoteRequestReference
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer

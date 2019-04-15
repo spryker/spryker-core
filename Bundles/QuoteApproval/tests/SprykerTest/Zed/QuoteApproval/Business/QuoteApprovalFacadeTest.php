@@ -251,6 +251,47 @@ class QuoteApprovalFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testSanitizeQuoteApprovalSanitizeAllApprovalsFromQuoteAndRemovesFromDatabase(): void
+    {
+        //Assign
+        $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
+        $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+
+        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
+
+        //Act
+        $quoteTransfer = $this->getFacade()->sanitizeQuoteApproval($quoteTransfer);
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+
+        //Assert
+        $this->assertEmpty($quoteTransfer->getQuoteApprovals());
+        $this->assertEmpty($quoteApprovalTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSanitizeQuoteApprovalSanitizeAllApprovalsFromQuoteWithoutRemoving(): void
+    {
+        //Assign
+        $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
+        $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+
+        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteTransfer->setIdQuote(null);
+
+        //Act
+        $quoteTransfer = $this->getFacade()->sanitizeQuoteApproval($quoteTransfer);
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+
+        //Assert
+        $this->assertEmpty($quoteTransfer->getQuoteApprovals());
+        $this->assertCount(1, $quoteApprovalTransfers);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalCreateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalRequestTransfer
