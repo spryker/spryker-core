@@ -36,7 +36,12 @@ class ResourceShareExpander implements ResourceShareExpanderInterface
         $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
 
         foreach ($this->resourceShareResourceDataExpanderStrategyPlugins as $resourceDataExpanderStrategyPlugin) {
+            if (!$resourceDataExpanderStrategyPlugin->isApplicable($resourceShareTransfer)) {
+                continue;
+            }
+
             $resourceShareTransfer = $resourceDataExpanderStrategyPlugin->expand($resourceShareTransfer);
+            break;
         }
 
         return $resourceShareResponseTransfer->setResourceShare($resourceShareTransfer);
