@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\PriceProduct
+namespace: SprykerTest\Zed\PriceProductScheduleDataImport
 
 paths:
     tests: .
@@ -12,9 +12,9 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
-        path: Business
-        class_name: PriceProductBusinessTester
+    Communication:
+        path: Communication
+        class_name: PriceProductScheduleDataImportCommunicationTester
         modules:
             enabled:
                 - Asserts
@@ -25,5 +25,3 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
-                - \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper
-                - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper

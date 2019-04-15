@@ -1,0 +1,35 @@
+{
+  "name": "spryker/price-product-schedule",
+  "type": "library",
+  "description": "PriceProductSchedule module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/currency": "^3.5.3",
+    "spryker/kernel": "^3.32.0",
+    "spryker/price-product": "^2.11.0",
+    "spryker/product": "^6.10.0",
+    "spryker/store": "^1.9.1",
+    "spryker/user": "^3.7.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

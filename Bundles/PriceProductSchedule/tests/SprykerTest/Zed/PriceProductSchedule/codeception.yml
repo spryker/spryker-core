@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\PriceProduct
+namespace: SprykerTest\Zed\PriceProductSchedule
 
 paths:
     tests: .
@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: PriceProductBusinessTester
+        class_name: PriceProductScheduleBusinessTester
         modules:
             enabled:
                 - Asserts
@@ -24,6 +24,8 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\PriceProductSchedule\Helper\PriceProductScheduleDataHelper
                 - \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
