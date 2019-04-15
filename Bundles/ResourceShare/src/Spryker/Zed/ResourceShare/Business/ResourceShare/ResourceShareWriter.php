@@ -8,17 +8,12 @@
 namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ResourceShareCriteriaTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface;
-use Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface;
 
 class ResourceShareWriter implements ResourceShareWriterInterface
 {
-    protected const GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED = 'resource_share.generation.error.resource_type_is_not_defined';
-    protected const GLOSSARY_KEY_RESOURCE_DATA_IS_NOT_DEFINED = 'resource_share.generation.error.resource_data_is_not_defined';
-    protected const GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED = 'resource_share.generation.error.customer_reference_is_not_defined';
     protected const GLOSSARY_KEY_RESOURCE_IS_ALREADY_SHARED = 'resource_share.generation.error.resource_is_already_shared';
 
     /**
@@ -27,39 +22,35 @@ class ResourceShareWriter implements ResourceShareWriterInterface
     protected $resourceShareEntityManager;
 
     /**
-     * @var \Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface
+     * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface
      */
-    protected $resourceShareRepository;
+    protected $resourceShareReader;
 
     /**
      * @param \Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface $resourceShareEntityManager
-     * @param \Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface $resourceShareRepository
+     * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface $resourceShareReader
      */
     public function __construct(
         ResourceShareEntityManagerInterface $resourceShareEntityManager,
-        ResourceShareRepositoryInterface $resourceShareRepository
+        ResourceShareReaderInterface $resourceShareReader
     ) {
         $this->resourceShareEntityManager = $resourceShareEntityManager;
-        $this->resourceShareRepository = $resourceShareRepository;
+        $this->resourceShareReader = $resourceShareReader;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function generateResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
+    public function generateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareResponseTransfer = $this->validateResourceShareTransfer($resourceShareTransfer);
-        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
-            return $resourceShareResponseTransfer;
-        }
+        $resourceShareRequestTransfer->requireResourceShare();
+        $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
 
-        $resourceShareCriteriaTransfer = (new ResourceShareCriteriaTransfer())
-            ->fromArray($resourceShareTransfer->toArray(), true);
+        $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShare($resourceShareTransfer);
 
-        $existingResourceShareTransfer = $this->resourceShareRepository->findResourceShareByCriteria($resourceShareCriteriaTransfer);
-        if ($existingResourceShareTransfer) {
+        if ($resourceShareResponseTransfer->getIsSuccessful()) {
             return $resourceShareResponseTransfer->setIsSuccessful(false)
                 ->addErrorMessage(
                     (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_ALREADY_SHARED)
@@ -67,32 +58,6 @@ class ResourceShareWriter implements ResourceShareWriterInterface
         }
 
         $resourceShareTransfer = $this->resourceShareEntityManager->createResourceShare($resourceShareTransfer);
-
-        return $resourceShareResponseTransfer->setIsSuccessful(true)
-            ->setResourceShare($resourceShareTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
-     */
-    protected function validateResourceShareTransfer(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
-    {
-        $resourceShareResponseTransfer = (new ResourceShareResponseTransfer())
-            ->setIsSuccessful(false);
-
-        if (!$resourceShareTransfer->getResourceType()) {
-            return $resourceShareResponseTransfer->addErrorMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED)
-            );
-        }
-
-        if (!$resourceShareTransfer->getCustomerReference()) {
-            return $resourceShareResponseTransfer->addErrorMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED)
-            );
-        }
 
         return $resourceShareResponseTransfer->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);

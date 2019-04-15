@@ -8,13 +8,15 @@
 namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ResourceShareCriteriaTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
 
 class ResourceShareActivator implements ResourceShareActivatorInterface
 {
+    use TransactionTrait;
+
     protected const GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER = 'resource_share.activator.error.strategy_expects_logged_in_customer';
 
     /**
@@ -47,40 +49,41 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     public function activateResourceShare(
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
-        $resourceShareRequestTransfer->requireUuid();
-
         $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShare(
-            (new ResourceShareCriteriaTransfer())->setUuid($resourceShareRequestTransfer->getUuid())
+            $resourceShareRequestTransfer->getResourceShare()
         );
 
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return $resourceShareResponseTransfer;
         }
 
-        $resourceShareResponseTransfer->requireResourceShare();
-        $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
+        $resourceShareRequestTransfer->setResourceShare(
+            $resourceShareResponseTransfer->getResourceShare()
+        );
 
         return $this->executeResourceShareActivatorStrategyPlugins(
-            $resourceShareTransfer,
             $resourceShareRequestTransfer
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     protected function executeResourceShareActivatorStrategyPlugins(
-        ResourceShareTransfer $resourceShareTransfer,
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
-        $resourceShareResponseTransfer = (new ResourceShareResponseTransfer())
-            ->setIsLoginRequired(false);
+        $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
 
+        $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $isCustomerLoggedIn = $this->isCustomerLoggedIn($resourceShareRequestTransfer);
+
         foreach ($this->resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
+            if (!$resourceShareActivatorStrategyPlugin->isApplicable($resourceShareTransfer)) {
+                continue;
+            }
+
             if (!$isCustomerLoggedIn && $resourceShareActivatorStrategyPlugin->isLoginRequired()) {
                 return $resourceShareResponseTransfer->setIsSuccessful(false)
                     ->setIsLoginRequired(true)
@@ -89,11 +92,35 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
                     );
             }
 
-            $resourceShareActivatorStrategyPlugin->execute($resourceShareTransfer);
+            $this->executeActivatorStrategyPlugin($resourceShareActivatorStrategyPlugin, $resourceShareRequestTransfer);
+            break;
         }
 
         return $resourceShareResponseTransfer->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
+    }
+
+    /**
+     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface $resourceShareActivatorStrategyPlugin
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return void
+     */
+    protected function executeActivatorStrategyPlugin(
+        ResourceShareActivatorStrategyPluginInterface $resourceShareActivatorStrategyPlugin,
+        ResourceShareRequestTransfer $resourceShareRequestTransfer
+    ): void {
+        $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
+
+        if ($resourceShareRequestTransfer->getUseDbTransaction()) {
+            $this->getTransactionHandler()->handleTransaction(function () use ($resourceShareActivatorStrategyPlugin, $resourceShareTransfer): void {
+                $resourceShareActivatorStrategyPlugin->execute($resourceShareTransfer);
+            });
+
+            return;
+        }
+
+        $resourceShareActivatorStrategyPlugin->execute($resourceShareTransfer);
     }
 
     /**
