@@ -17,6 +17,7 @@
         <property name="quantity" type="float" />
         <property name="price" type="int"/>
         <property name="prices" type="array"/>
+        <property name="currentProductPrice" type="CurrentProductPrice" />
     </transfer>
 
     <transfer name="MoneyValue">

@@ -12,7 +12,7 @@ interface PersistentCartToMessengerClientInterface
     /**
      * @param string $message
      *
-     * @return $this
+     * @return void
      */
     public function addSuccessMessage($message);
 

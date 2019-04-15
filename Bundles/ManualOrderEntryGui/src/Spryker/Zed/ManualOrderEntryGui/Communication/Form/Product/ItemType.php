@@ -208,6 +208,7 @@ class ItemType extends AbstractType
         $data = $event->getData();
 
         if ($data instanceof ItemTransfer) {
+            /** @var int $moneyFloat */
             $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data->getUnitGrossPrice());
             $data->setUnitGrossPrice($moneyFloat);
 

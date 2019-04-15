@@ -133,13 +133,15 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
             return new PersistenceOmsToSalesBridge($container->getLocator()->sales()->queryContainer());
         };
+
+        return $container;
     }
 
     /**
