@@ -9,9 +9,23 @@ namespace Spryker\Client\ProductBundle\QuoteItemFinder;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 
 class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterface
 {
+    /**
+     * @var \Spryker\Client\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
+     * @param \Spryker\Client\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
+     */
+    public function __construct(ProductBundleToUtilQuantityServiceInterface $utilQuantityService)
+    {
+        $this->utilQuantityService = $utilQuantityService;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
@@ -41,7 +55,8 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
             if ($this->checkItem($itemTransfer, $sku, $groupKey)) {
                 $itemTransfer = clone $itemTransfer;
-                $itemTransfer->setQuantity($this->getBundledProductTotalQuantity($quoteTransfer, $itemTransfer->getGroupKey()));
+                $totalQuantity = $this->getBundledProductTotalQuantity($quoteTransfer, $itemTransfer->getGroupKey());
+                $itemTransfer->setQuantity($totalQuantity);
 
                 return $itemTransfer;
             }
@@ -54,16 +69,20 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $groupKey
      *
-     * @return int
+     * @return float
      */
-    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): int
+    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): float
     {
-        $bundleItemQuantity = 0;
+        $bundleItemQuantity = 0.0;
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
                 continue;
             }
-            $bundleItemQuantity += $bundleItemTransfer->getQuantity();
+
+            $bundleItemQuantity = $this->sumQuantities(
+                $bundleItemQuantity,
+                $bundleItemTransfer->getQuantity()
+            );
         }
 
         return $bundleItemQuantity;
@@ -98,5 +117,16 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
     {
         return ($itemTransfer->getSku() === $sku && $groupKey === null) ||
             $itemTransfer->getGroupKey() === $groupKey;
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 }

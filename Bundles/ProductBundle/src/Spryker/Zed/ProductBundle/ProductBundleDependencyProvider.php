@@ -21,6 +21,7 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabil
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToProductQueryContainerBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerBridge;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceBridge;
 
 /**
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
@@ -40,6 +41,8 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_STOCK = 'stock query container';
     public const QUERY_CONTAINER_PRODUCT = 'product query container';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -61,6 +64,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQueryContainerSales($container);
         $container = $this->addQueryContainerStock($container);
         $container = $this->addQueryContainerProduct($container);
+        $container = $this->addUtilQuantityService($container);
 
         return $container;
     }
@@ -95,6 +99,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductBundleToProductBridge($container->getLocator()->product()->facade());
         };
+
         return $container;
     }
 
@@ -108,6 +113,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
             return new ProductBundleToPriceProductFacadeBridge($container->getLocator()->priceProduct()->facade());
         };
+
         return $container;
     }
 
@@ -121,6 +127,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductBundleToLocaleBridge($container->getLocator()->locale()->facade());
         };
+
         return $container;
     }
 
@@ -134,6 +141,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_AVAILABILITY] = function (Container $container) {
             return new ProductBundleToAvailabilityBridge($container->getLocator()->availability()->facade());
         };
+
         return $container;
     }
 
@@ -147,6 +155,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::QUERY_CONTAINER_AVAILABILITY] = function (Container $container) {
             return new ProductBundleToAvailabilityQueryContainerBridge($container->getLocator()->availability()->queryContainer());
         };
+
         return $container;
     }
 
@@ -160,6 +169,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
             return new ProductBundleToSalesQueryContainerBridge($container->getLocator()->sales()->queryContainer());
         };
+
         return $container;
     }
 
@@ -173,6 +183,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::QUERY_CONTAINER_STOCK] = function (Container $container) {
             return new ProductBundleToStockQueryContainerBridge($container->getLocator()->stock()->queryContainer());
         };
+
         return $container;
     }
 
@@ -186,6 +197,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return new ProductBundleToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
         };
+
         return $container;
     }
 
@@ -199,6 +211,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
             return new ProductBundleToProductImageBridge($container->getLocator()->productImage()->facade());
         };
+
         return $container;
     }
 
@@ -212,6 +225,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_PRICE] = function (Container $container) {
             return new ProductBundleToPriceBridge($container->getLocator()->price()->facade());
         };
+
         return $container;
     }
 
@@ -225,6 +239,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_STORE] = function (Container $container) {
             return new ProductBundleToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
+
         return $container;
     }
 
@@ -238,6 +253,21 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_MESSENGER] = function (Container $container) {
             return new ProductBundleToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilQuantityService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new ProductBundleToUtilQuantityServiceBridge($container->getLocator()->utilQuantity()->service());
+        };
+
         return $container;
     }
 }

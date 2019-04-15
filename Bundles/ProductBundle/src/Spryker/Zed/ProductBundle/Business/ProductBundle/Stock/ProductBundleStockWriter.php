@@ -16,6 +16,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Throwable;
 
@@ -45,21 +46,29 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface $stockQueryContainer
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandler
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToStockQueryContainerInterface $stockQueryContainer,
         ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandler,
-        ProductBundleToStoreFacadeInterface $storeFacade
+        ProductBundleToStoreFacadeInterface $storeFacade,
+        ProductBundleToUtilQuantityServiceInterface $utilQuantityService
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->stockQueryContainer = $stockQueryContainer;
         $this->productBundleAvailabilityHandler = $productBundleAvailabilityHandler;
         $this->storeFacade = $storeFacade;
+        $this->utilQuantityService = $utilQuantityService;
     }
 
     /**
@@ -306,7 +315,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     protected function removeBundleStock(ProductConcreteTransfer $productConcreteTransfer)
     {
         foreach ($this->findProductStocks($productConcreteTransfer->getIdProductConcrete()) as $stockProductEntity) {
-            $stockProductEntity->setQuantity(0);
+            $stockProductEntity->setQuantity(0.0);
             $stockProductEntity->setIsNeverOutOfStock(false);
             $stockProductEntity->save();
 
@@ -337,7 +346,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             if (isset($bundleTotalStockPerWarehouse[$productStockEntity->getFkStock()])) {
                 continue;
             }
-            $productStockEntity->setQuantity(0);
+            $productStockEntity->setQuantity(0.0);
             $productStockEntity->setIsNeverOutOfStock(false);
             $productStockEntity->save();
         }
