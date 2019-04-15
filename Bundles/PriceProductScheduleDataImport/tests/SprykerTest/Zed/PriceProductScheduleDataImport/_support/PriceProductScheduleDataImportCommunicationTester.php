@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\PriceProductScheduleDataImport;
 
 use Codeception\Actor;
+use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 
 /**
  * Inherited Methods
@@ -31,4 +32,22 @@ class PriceProductScheduleDataImportCommunicationTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return void
+     */
+    public function ensureDatabaseTableIsEmpty(): void
+    {
+        $priceProductScheduleQuery = $this->getPriceProductScheduleQuery();
+
+        $priceProductScheduleQuery->deleteAll();
+    }
+
+    /**
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    public function getPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
+    {
+        return SpyPriceProductScheduleQuery::create();
+    }
 }

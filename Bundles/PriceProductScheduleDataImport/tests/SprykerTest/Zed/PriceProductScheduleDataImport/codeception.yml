@@ -25,4 +25,3 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
-                - \SprykerTest\Zed\PriceProductScheduleDataImport\Helper\PriceProductScheduleDataImportHelper

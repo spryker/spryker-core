@@ -9,15 +9,12 @@ namespace Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step;
 
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
-use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSetInterface;
 
 class PriceTypeToIdPriceTypeStep implements DataImportStepInterface
 {
-    protected const EXCEPTION_MESSAGE = 'Could not find price type by name "%s"';
-
     /**
      * @var int[]
      */
@@ -26,23 +23,22 @@ class PriceTypeToIdPriceTypeStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
-     *
      * @return void
      */
     public function execute(DataSetInterface $dataSet): void
     {
         $priceProductType = $dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_TYPE];
         if (!isset($this->idPriceProductTypeCache[$priceProductType])) {
-            $idPriceType = $this->createSpyPriceTypeQuery()
-                ->select(SpyPriceTypeTableMap::COL_ID_PRICE_TYPE)
-                ->findOneByName($priceProductType);
+            $priceTypeEntity = $this->createSpyPriceTypeQuery()
+                ->filterByName($priceProductType)
+                ->findOneOrCreate();
 
-            if ($idPriceType === null) {
-                throw new EntityNotFoundException(sprintf(static::EXCEPTION_MESSAGE, $priceProductType));
+            if ($priceTypeEntity->isNew() || $priceTypeEntity->isModified()) {
+                $priceTypeEntity->setPriceModeConfiguration(SpyPriceTypeTableMap::COL_PRICE_MODE_CONFIGURATION_BOTH);
+                $priceTypeEntity->save();
             }
 
-            $this->idPriceProductTypeCache[$priceProductType] = $idPriceType;
+            $this->idPriceProductTypeCache[$priceProductType] = $priceTypeEntity->getIdPriceType();
         }
 
         $dataSet[PriceProductScheduleDataSetInterface::FK_PRICE_TYPE] = $this->idPriceProductTypeCache[$priceProductType];

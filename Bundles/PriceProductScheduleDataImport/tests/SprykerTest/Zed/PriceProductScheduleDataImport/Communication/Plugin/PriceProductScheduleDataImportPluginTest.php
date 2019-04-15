@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\PriceProductScheduleDataImport\Communication\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
-use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\PriceProductScheduleDataImport\Communication\Plugin\PriceProductScheduleDataImportPlugin;
@@ -40,18 +39,11 @@ class PriceProductScheduleDataImportPluginTest extends Unit
     protected $tester;
 
     /**
-     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    protected $priceProductScheduleQuery;
-
-    /**
      * @return void
      */
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->priceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
 
         $this->tester->ensureDatabaseTableIsEmpty();
     }
@@ -90,14 +82,14 @@ class PriceProductScheduleDataImportPluginTest extends Unit
         $dataImporterReportTransfer = $priceProductScheduleDataImportPlugin->import($dataImportConfigurationTransfer);
 
         //Assert
-        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
+        $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
         $this->assertSame(
             static::EXPECTED_IMPORT_COUNT,
-            $this->priceProductScheduleQuery->count(),
+            $dataImporterReportTransfer->getImportedDataSetCount(),
             sprintf(
                 'Imported number of price product schedules is %s expected %s.',
-                $this->priceProductScheduleQuery->count(),
+                $dataImporterReportTransfer->getImportedDataSetCount(),
                 static::EXPECTED_IMPORT_COUNT
             )
         );
