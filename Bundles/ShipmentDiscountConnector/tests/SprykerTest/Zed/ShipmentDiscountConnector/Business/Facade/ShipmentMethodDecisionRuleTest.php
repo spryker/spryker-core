@@ -41,33 +41,31 @@ class ShipmentMethodDecisionRuleTest extends Test
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     * @param string[] $expectedMatchedItemSkuList
+     * @param string[] $expectedValues
      *
      * @return void
      */
     public function testShipmentMethodDecisionRuleShouldMatchDifferentShipmentMethods(
         QuoteTransfer $quoteTransfer,
         ClauseTransfer $clauseTransfer,
-        array $expectedMatchedItemSkuList
+        array $expectedValues
     ): void {
         // Arrange
         $actualMatchedItemSkuList = [];
 
         // Act
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $isRuleMatched = $this->tester->getFacade()->isMethodSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
-            if (!$isRuleMatched) {
-                continue;
-            }
-
-            $actualMatchedItemSkuList[] = $itemTransfer->getSku();
+            $actualMatchedItemSkuList[$itemTransfer->getSku()] = $this->tester->getFacade()->isMethodSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
         }
 
         // Assert
-        $this->assertCount(count($expectedMatchedItemSkuList), $actualMatchedItemSkuList, 'Actual and expected rule matches counts are not the same.');
-
-        foreach ($actualMatchedItemSkuList as $i => $sku) {
-            $this->assertContains($sku, $expectedMatchedItemSkuList, sprintf('Actual and expected rule decisions do not match (iteration #%d).', $i));
+        $i = 0;
+        foreach ($actualMatchedItemSkuList as $sku => $isSatisfied) {
+            $this->assertEquals(
+                $expectedValues[$sku],
+                $isSatisfied,
+                sprintf('The actual item shipment\'s method does not satisfied the rule (iteration #%d).', $i++)
+            );
         }
     }
 
@@ -77,9 +75,9 @@ class ShipmentMethodDecisionRuleTest extends Test
     public function shipmentMethodDecisionRuleShouldMatchDifferentShipmentMethodsDataProvider(): array
     {
         return [
-            'Quote level shipment: 1 shipment, 1 method, Clause: shipment #1; expected: 1 shipment matches' => $this->getDataWith1QuoteLevelShipmentAndMethodForSingleShipmentIsMatched(),
-            'Item level shipment: 3 items, 2 shipments, Clause: shipment #1; expected: 1 shipment matches' => $this->getDataWith3ItemsAnd2ItemLevelShipmentsAndMethodsForSingleShipmentIsMatched(),
-            'Item level shipment: 3 items, 2 shipments, 2 methods, Clause: shipment #2; expected: 2 shipments match' => $this->getDataWith3ItemsAnd2ItemLevelShipmentsAndMethodsForMultipleShipmentIsMatched(),
+            'Quote level shipment: 1 shipment, 1 method, Clause: shipment #1; expected: 1 shipment is matched' => $this->getDataWith1QuoteLevelShipmentAndMethodForSingleShipmentIsMatched(),
+            'Item level shipment: 3 items, 2 shipments, Clause: shipment #1; expected: 1 shipment is matched' => $this->getDataWith3ItemsAnd2ItemLevelShipmentsAndMethodsForSingleShipmentIsMatched(),
+            'Item level shipment: 3 items, 2 shipments, 2 methods, Clause: shipment #2; expected: 2 shipments are matched' => $this->getDataWith3ItemsAnd2ItemLevelShipmentsAndMethodsForMultipleShipmentIsMatched(),
         ];
     }
 
@@ -95,7 +93,11 @@ class ShipmentMethodDecisionRuleTest extends Test
 
         $clauseTransfer = $this->createClauseTransferWithShipmentMethod($quoteTransfer->getShipment()->getMethod());
 
-        return [$quoteTransfer, $clauseTransfer, [$quoteTransfer->getItems()[0]->getSku()]];
+        return [
+            $quoteTransfer,
+            $clauseTransfer,
+            [$quoteTransfer->getItems()[0]->getSku() => true],
+        ];
     }
 
     /**
@@ -113,7 +115,14 @@ class ShipmentMethodDecisionRuleTest extends Test
 
         $clauseTransfer = $this->createClauseTransferWithShipmentMethod($shipmentTransfer1->getMethod());
 
-        return [$quoteTransfer, $clauseTransfer, [$itemTransfer1->getSku()]];
+        return [
+            $quoteTransfer,
+            $clauseTransfer, [
+                $itemTransfer1->getSku() => true,
+                $itemTransfer2->getSku() => false,
+                $itemTransfer3->getSku() => false,
+            ],
+        ];
     }
 
     /**
@@ -131,7 +140,15 @@ class ShipmentMethodDecisionRuleTest extends Test
 
         $clauseTransfer = $this->createClauseTransferWithShipmentMethod($shipmentTransfer2->getMethod());
 
-        return [$quoteTransfer, $clauseTransfer, [$itemTransfer2->getSku(), $itemTransfer3->getSku()]];
+        return [
+            $quoteTransfer,
+            $clauseTransfer,
+            [
+                $itemTransfer1->getSku() => false,
+                $itemTransfer2->getSku() => true,
+                $itemTransfer3->getSku() => true,
+            ],
+        ];
     }
 
     /**

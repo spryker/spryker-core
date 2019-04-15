@@ -41,33 +41,31 @@ class ShipmentCarrierDecisionRuleTest extends Test
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     * @param string[] $expectedMatchedItemSkuList
+     * @param string[] $expectedValues
      *
      * @return void
      */
     public function testShipmentCarrierDecisionRuleShouldMatchDifferentShipmentCarriers(
         QuoteTransfer $quoteTransfer,
         ClauseTransfer $clauseTransfer,
-        array $expectedMatchedItemSkuList
+        array $expectedValues
     ): void {
         // Arrange
         $actualMatchedItemSkuList = [];
 
         // Act
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $isRuleMatched = $this->tester->getFacade()->isCarrierSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
-            if (!$isRuleMatched) {
-                continue;
-            }
-
-            $actualMatchedItemSkuList[] = $itemTransfer->getSku();
+            $actualMatchedItemSkuList[$itemTransfer->getSku()] = $this->tester->getFacade()->isCarrierSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
         }
 
         // Assert
-        $this->assertCount(count($expectedMatchedItemSkuList), $actualMatchedItemSkuList, 'Actual and expected rule matches counts are not the same.');
-
-        foreach ($actualMatchedItemSkuList as $i => $sku) {
-            $this->assertContains($sku, $expectedMatchedItemSkuList, sprintf('Actual and expected rule decisions do not match (iteration #%d).', $i));
+        $i = 0;
+        foreach ($actualMatchedItemSkuList as $sku => $isSatisfied) {
+            $this->assertEquals(
+                $expectedValues[$sku],
+                $isSatisfied,
+                sprintf('The actual item shipment\'s carrier does not satisfied the rule (iteration #%d).', $i++)
+            );
         }
     }
 
@@ -77,9 +75,9 @@ class ShipmentCarrierDecisionRuleTest extends Test
     public function shipmentCarrierDecisionRuleShouldMatchDifferentShipmentCarriersDataProvider(): array
     {
         return [
-            'Quote level shipment: 1 shipment, 1 carrier, Clause: carrier #1; expected: 1 carrier matches' => $this->getDataWith1QuoteLevelShipmentAndCarrierForSingleCarrierIsMatched(),
-            'Item level shipment: 3 items, 3 shipments, 2 carriers, Clause: carrier #1; expected: 1 carrier matches' => $this->getDataWith3ItemsAnd2ItemLevelShipmentsAndCarriersForSingleCarrierIsMatched(),
-            'Item level shipment: 3 items, 3 shipments, 2 carriers, Clause: carrier #2; expected: 2 carriers match' => $this->getDataWith3ItemsAnd2ItemLevelShipmentsAndCarriersForMultipleCarrierIsMatched(),
+            'Quote level shipment: 1 shipment, 1 carrier, Clause: carrier #1; expected: 1 carrier is matched' => $this->getDataWith1QuoteLevelShipmentAndCarrierForSingleCarrierIsMatched(),
+            'Item level shipment: 3 items, 3 shipments, 2 carriers, Clause: carrier #1; expected: 1 carrier is matched' => $this->getDataWith3ItemsAnd2ItemLevelShipmentsAndCarriersForSingleCarrierIsMatched(),
+            'Item level shipment: 3 items, 3 shipments, 2 carriers, Clause: carrier #2; expected: 2 carriers are matched' => $this->getDataWith3ItemsAnd2ItemLevelShipmentsAndCarriersForMultipleCarrierIsMatched(),
         ];
     }
 
@@ -88,14 +86,19 @@ class ShipmentCarrierDecisionRuleTest extends Test
      */
     protected function getDataWith1QuoteLevelShipmentAndCarrierForSingleCarrierIsMatched(): array
     {
+        $shipmentBuilder = (new ShipmentBuilder())->withCarrier();
         $quoteTransfer = (new QuoteBuilder())
-            ->withShipment((new ShipmentBuilder())->withCarrier())
+            ->withShipment($shipmentBuilder)
             ->withItem()
             ->build();
 
         $clauseTransfer = $this->createClauseTransferWithShipmentCarrier($quoteTransfer->getShipment()->getCarrier());
 
-        return [$quoteTransfer, $clauseTransfer, [$quoteTransfer->getItems()[0]->getSku()]];
+        return [
+            $quoteTransfer,
+            $clauseTransfer,
+            [$quoteTransfer->getItems()[0]->getSku() => true],
+        ];
     }
 
     /**
@@ -113,7 +116,15 @@ class ShipmentCarrierDecisionRuleTest extends Test
 
         $clauseTransfer = $this->createClauseTransferWithShipmentCarrier($shipmentCarrierTransfer1);
 
-        return [$quoteTransfer, $clauseTransfer, [$itemTransfer1->getSku()]];
+        return [
+            $quoteTransfer,
+            $clauseTransfer,
+            [
+                $itemTransfer1->getSku() => true,
+                $itemTransfer2->getSku() => false,
+                $itemTransfer3->getSku() => false,
+            ],
+        ];
     }
 
     /**
@@ -131,7 +142,15 @@ class ShipmentCarrierDecisionRuleTest extends Test
 
         $clauseTransfer = $this->createClauseTransferWithShipmentCarrier($shipmentCarrierTransfer2);
 
-        return [$quoteTransfer, $clauseTransfer, [$itemTransfer2->getSku(), $itemTransfer3->getSku()]];
+        return [
+            $quoteTransfer,
+            $clauseTransfer,
+            [
+                $itemTransfer1->getSku() => false,
+                $itemTransfer2->getSku() => true,
+                $itemTransfer3->getSku() => true,
+            ],
+        ];
     }
 
     /**

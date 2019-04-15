@@ -43,33 +43,31 @@ class ShipmentPriceDecisionRuleTest extends Test
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     * @param string[] $expectedMatchedItemSkuList
+     * @param string[] $expectedValues
      *
      * @return void
      */
     public function testShipmentPriceDecisionRuleShouldMatchDifferentShipmentExpensePrices(
         QuoteTransfer $quoteTransfer,
         ClauseTransfer $clauseTransfer,
-        array $expectedMatchedItemSkuList
+        array $expectedValues
     ): void {
         // Arrange
         $actualMatchedItemSkuList = [];
 
         // Act
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $isRuleMatched = $this->tester->getFacade()->isPriceSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
-            if (!$isRuleMatched) {
-                continue;
-            }
-
-            $actualMatchedItemSkuList[] = $itemTransfer->getSku();
+            $actualMatchedItemSkuList[$itemTransfer->getSku()] = $this->tester->getFacade()->isPriceSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
         }
 
         // Assert
-        $this->assertCount(count($expectedMatchedItemSkuList), $actualMatchedItemSkuList, 'Actual and expected rule matches counts are not the same.');
-
-        foreach ($actualMatchedItemSkuList as $i => $sku) {
-            $this->assertContains($sku, $expectedMatchedItemSkuList, sprintf('Actual and expected rule decisions do not match (iteration #%d).', $i));
+        $i = 0;
+        foreach ($actualMatchedItemSkuList as $sku => $isSatisfied) {
+            $this->assertEquals(
+                $expectedValues[$sku],
+                $isSatisfied,
+                sprintf('The actual item shipment\'s expense price does not satisfied the rule (iteration #%d).', $i++)
+            );
         }
     }
 
@@ -79,9 +77,9 @@ class ShipmentPriceDecisionRuleTest extends Test
     public function shipmentPriceDecisionRuleShouldMatchDifferentShipmentExpensePricesDataProvider(): array
     {
         return [
-            'Quote level shipment: 1 shipment, 1 shipment expense with gross unit price 1000, Clause: >= 100; expected: 1 price matches' => $this->getDataWith1ShipmentExpenseWithQuoteLevelShipment(),
-            'Item level shipment: 3 items, 2 shipments, 2 shipment expense with gross unit prices [1000, 50, 50], Clause: >= 100; expected: 1 price matches' => $this->getDataWith1ShipmentExpenseWithItemLevelShipment(),
-            'Item level shipment: 3 items, 3 shipments, 3 shipment expense with gross unit prices [50, 1000, 1000], Clause: >= 100; expected: 2 prices match' => $this->getDataWith2ShipmentExpensesWithItemLevelShipment(),
+            'Quote level shipment: 1 shipment, 1 shipment expense with gross unit price 1000, Clause: >= 100; expected: 1 price is matched' => $this->getDataWith1ShipmentExpenseWithQuoteLevelShipment(),
+            'Item level shipment: 3 items, 2 shipments, 2 shipment expense with gross unit prices [1000, 50, 50], Clause: >= 100; expected: 1 price is matched' => $this->getDataWith1ShipmentExpenseWithItemLevelShipment(),
+            'Item level shipment: 3 items, 3 shipments, 3 shipment expense with gross unit prices [50, 1000, 1000], Clause: >= 100; expected: 2 prices are matched' => $this->getDataWith2ShipmentExpensesWithItemLevelShipment(),
         ];
     }
 
@@ -94,14 +92,18 @@ class ShipmentPriceDecisionRuleTest extends Test
             ->withShipment()
             ->withItem()
             ->withExpense((new ExpenseBuilder([
-                ExpenseTransfer::UNIT_GROSS_PRICE => 100000,
+                ExpenseTransfer::UNIT_GROSS_PRICE => 1000, // Cents
                 ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
             ])))
             ->build();
 
         $clauseTransfer = $this->createClauseTransferWithShipmentExpense();
 
-        return [$quoteTransfer, $clauseTransfer, [$quoteTransfer->getItems()[0]->getSku()]];
+        return [
+            $quoteTransfer,
+            $clauseTransfer,
+            [$quoteTransfer->getItems()[0]->getSku() => true],
+        ];
     }
 
     /**
@@ -113,13 +115,20 @@ class ShipmentPriceDecisionRuleTest extends Test
         $shipmentTransfer2 = (new ShipmentBuilder())->withMethod()->build();
 
         $quoteTransfer = (new QuoteBuilder())->build();
-        $itemTransfer1 = $this->addNewItemWithShipmentAndShipmentPriceIntoQuoteTransfer($quoteTransfer, $shipmentTransfer1, 100000);
-        $itemTransfer2 = $this->addNewItemWithShipmentAndShipmentPriceIntoQuoteTransfer($quoteTransfer, $shipmentTransfer2, 5000);
-        $itemTransfer3 = $this->addNewItemWithShipmentAndShipmentPriceIntoQuoteTransfer($quoteTransfer, $shipmentTransfer2, 5000);
+        $itemTransfer1 = $this->addNewItemWithShipmentAndShipmentPriceIntoQuoteTransfer($quoteTransfer, $shipmentTransfer1, 1000); // Cents
+        $itemTransfer2 = $this->addNewItemWithShipmentAndShipmentPriceIntoQuoteTransfer($quoteTransfer, $shipmentTransfer2, 50);
+        $itemTransfer3 = $this->addNewItemWithShipmentAndShipmentPriceIntoQuoteTransfer($quoteTransfer, $shipmentTransfer2, 50);
 
         $clauseTransfer = $this->createClauseTransferWithShipmentExpense();
 
-        return [$quoteTransfer, $clauseTransfer, [$itemTransfer1->getSku()]];
+        return [
+            $quoteTransfer,
+            $clauseTransfer, [
+                $itemTransfer1->getSku() => true,
+                $itemTransfer2->getSku() => false,
+                $itemTransfer3->getSku() => false,
+            ],
+        ];
     }
 
     /**
@@ -131,13 +140,21 @@ class ShipmentPriceDecisionRuleTest extends Test
         $shipmentTransfer2 = (new ShipmentBuilder())->withMethod()->build();
 
         $quoteTransfer = (new QuoteBuilder())->build();
-        $itemTransfer1 = $this->addNewItemWithShipmentAndShipmentPriceIntoQuoteTransfer($quoteTransfer, $shipmentTransfer1, 5000);
-        $itemTransfer2 = $this->addNewItemWithShipmentAndShipmentPriceIntoQuoteTransfer($quoteTransfer, $shipmentTransfer2, 100000);
-        $itemTransfer3 = $this->addNewItemWithShipmentAndShipmentPriceIntoQuoteTransfer($quoteTransfer, $shipmentTransfer2, 100000);
+        $itemTransfer1 = $this->addNewItemWithShipmentAndShipmentPriceIntoQuoteTransfer($quoteTransfer, $shipmentTransfer1, 50); // Cents
+        $itemTransfer2 = $this->addNewItemWithShipmentAndShipmentPriceIntoQuoteTransfer($quoteTransfer, $shipmentTransfer2, 1000);
+        $itemTransfer3 = $this->addNewItemWithShipmentAndShipmentPriceIntoQuoteTransfer($quoteTransfer, $shipmentTransfer2, 1000);
 
         $clauseTransfer = $this->createClauseTransferWithShipmentExpense();
 
-        return [$quoteTransfer, $clauseTransfer, [$itemTransfer2->getSku(), $itemTransfer3->getSku()]];
+        return [
+            $quoteTransfer,
+            $clauseTransfer,
+            [
+                $itemTransfer1->getSku() => false,
+                $itemTransfer2->getSku() => true,
+                $itemTransfer3->getSku() => true,
+            ],
+        ];
     }
 
     /**
@@ -174,7 +191,7 @@ class ShipmentPriceDecisionRuleTest extends Test
     {
         return (new ClauseBuilder([
             ClauseTransfer::FIELD => 'getUnitGrossPrice',
-            ClauseTransfer::VALUE => 100,
+            ClauseTransfer::VALUE => 1, // Euro
             ClauseTransfer::OPERATOR => '>=',
             ClauseTransfer::ACCEPTED_TYPES => [ComparatorOperators::TYPE_NUMBER],
         ]))->build();

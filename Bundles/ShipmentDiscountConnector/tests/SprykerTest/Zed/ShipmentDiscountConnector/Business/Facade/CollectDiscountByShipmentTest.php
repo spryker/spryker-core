@@ -18,8 +18,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\CarrierDiscountDecisionRule;
 use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\MethodDiscountDecisionRule;
+use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentPriceDiscountDecisionRule;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\CarrierDiscountDecisionRule as CarrierDiscountDecisionRuleWithQuoteLevelShipment;
 use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\MethodDiscountDecisionRule as MethodDiscountDecisionRuleWithQuoteLevelShipment;
+use Spryker\Zed\ShipmentDiscountConnector\Business\Model\DecisionRule\ShipmentPriceDiscountDecisionRule as ShipmentPriceDiscountDecisionRuleWithQuoteLevelShipment;
 use Spryker\Zed\ShipmentDiscountConnector\Business\ShipmentDiscountConnectorBusinessFactory;
 use Spryker\Zed\ShipmentDiscountConnector\Business\ShipmentDiscountConnectorFacadeInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceBridge;
@@ -45,92 +47,73 @@ class CollectDiscountByShipmentTest extends Test
      * @dataProvider collectDiscountByShipmentCarrierShouldUseQuoteShipmentExpensesDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param int[] $expectedValues
      *
      * @return void
      */
     public function testCollectDiscountByShipmentCarrierShouldUseQuoteShipmentExpenses(
         QuoteTransfer $quoteTransfer,
-        ClauseTransfer $clauseTransfer,
         array $expectedValues
     ): void {
-        // Arrange
-
         // Act
-        $discountableItems = $this->getFacadeWithMockedDecisionRules()->collectDiscountByShipmentCarrier($quoteTransfer, $clauseTransfer);
+        $discountableItems = $this->getFacadeWithMockedDecisionRules()->collectDiscountByShipmentCarrier($quoteTransfer, new ClauseTransfer());
 
         // Assert
-        $this->assertDiscountableItemsHasExpectedPriceValues($discountableItems, $expectedValues);
+        foreach ($discountableItems as $i => $discountableItemTransfer) {
+            $this->assertEquals(
+                $expectedValues[$i],
+                $discountableItemTransfer->getUnitPrice(),
+                sprintf('The actual discountable item expense\'s value is invalid (iteration #%d).', $i)
+            );
+        }
     }
 
     /**
      * @dataProvider collectDiscountByShipmentMethodShouldUseQuoteShipmentExpensesDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param int[] $expectedValues
      *
      * @return void
      */
     public function testCollectDiscountByShipmentMethodShouldUseQuoteShipmentExpenses(
         QuoteTransfer $quoteTransfer,
-        ClauseTransfer $clauseTransfer,
         array $expectedValues
     ): void {
-        // Arrange
-
         // Act
-        $discountableItems = $this->getFacadeWithMockedDecisionRules()->collectDiscountByShipmentMethod($quoteTransfer, $clauseTransfer);
+        $discountableItems = $this->getFacadeWithMockedDecisionRules()->collectDiscountByShipmentMethod($quoteTransfer, new ClauseTransfer());
 
         // Assert
-        $this->assertDiscountableItemsHasExpectedPriceValues($discountableItems, $expectedValues);
+        foreach ($discountableItems as $i => $discountableItemTransfer) {
+            $this->assertEquals(
+                $expectedValues[$i],
+                $discountableItemTransfer->getUnitPrice(),
+                sprintf('The actual discountable item expense\'s value is invalid (iteration #%d).', $i)
+            );
+        }
     }
 
     /**
      * @dataProvider collectDiscountByShipmentPriceShouldUseQuoteShipmentExpensesDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param int[] $expectedValues
      *
      * @return void
      */
     public function testCollectDiscountByShipmentPriceShouldUseQuoteShipmentExpenses(
         QuoteTransfer $quoteTransfer,
-        ClauseTransfer $clauseTransfer,
         array $expectedValues
     ): void {
-        // Arrange
-
         // Act
-        $discountableItems = $this->getFacadeWithMockedDecisionRules()->collectDiscountByShipmentPrice($quoteTransfer, $clauseTransfer);
+        $discountableItems = $this->getFacadeWithMockedDecisionRules()->collectDiscountByShipmentPrice($quoteTransfer, new ClauseTransfer());
 
         // Assert
-        $this->assertDiscountableItemsHasExpectedPriceValues($discountableItems, $expectedValues);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
-     * @param array $expectedValues
-     *
-     * @return void
-     */
-    protected function assertDiscountableItemsHasExpectedPriceValues(
-        array $discountableItems,
-        array $expectedValues
-    ): void {
-        $this->assertCount(
-            count($expectedValues),
-            $discountableItems,
-            'Actual and expected discountable items count does not match.'
-        );
-
         foreach ($discountableItems as $i => $discountableItemTransfer) {
-            $this->assertContains(
+            $this->assertEquals(
+                $expectedValues[$i],
                 $discountableItemTransfer->getUnitPrice(),
-                $expectedValues,
-                sprintf('The actual discountable item is not expected (iteration #%d).', $i)
+                sprintf('The actual discountable item expense\'s value is invalid (iteration #%d).', $i)
             );
         }
     }
@@ -185,7 +168,7 @@ class CollectDiscountByShipmentTest extends Test
             )
             ->build();
 
-        return [$quoteTransfer, new ClauseTransfer(), [100]];
+        return [$quoteTransfer, [100]];
     }
 
     /**
@@ -196,7 +179,7 @@ class CollectDiscountByShipmentTest extends Test
         $quoteTransfer = (new QuoteBuilder())->build();
         $quoteTransfer = $this->addNewItemAndExpenseIntoQuoteTransfer($quoteTransfer, 100);
 
-        return [$quoteTransfer, new ClauseTransfer(), [100]];
+        return [$quoteTransfer, [100]];
     }
 
     /**
@@ -208,7 +191,7 @@ class CollectDiscountByShipmentTest extends Test
         $quoteTransfer = $this->addNewItemAndExpenseIntoQuoteTransfer($quoteTransfer, 100);
         $quoteTransfer = $this->addNewItemAndExpenseIntoQuoteTransfer($quoteTransfer, 200);
 
-        return [$quoteTransfer, new ClauseTransfer(), [100, 200]];
+        return [$quoteTransfer, [100, 200]];
     }
 
     /**
@@ -254,23 +237,20 @@ class CollectDiscountByShipmentTest extends Test
         $mockedQuoteLevelShipmentMethodDiscountDecisionRule = $this->getMockBuilder(MethodDiscountDecisionRuleWithQuoteLevelShipment::class)->disableOriginalConstructor()->getMock();
         $mockedQuoteLevelShipmentMethodDiscountDecisionRule->method('isExpenseSatisfiedBy')->willReturn(true);
 
-        $mockedMultiShipmentPriceDiscountDecisionRule = $this->getMockBuilder(MethodDiscountDecisionRule::class)->disableOriginalConstructor()->getMock();
+        $mockedMultiShipmentPriceDiscountDecisionRule = $this->getMockBuilder(ShipmentPriceDiscountDecisionRule::class)->disableOriginalConstructor()->getMock();
         $mockedMultiShipmentPriceDiscountDecisionRule->method('isExpenseSatisfiedBy')->willReturn(true);
-        $mockedQuoteLevelShipmentPriceDiscountDecisionRule = $this->getMockBuilder(MethodDiscountDecisionRuleWithQuoteLevelShipment::class)->disableOriginalConstructor()->getMock();
+        $mockedQuoteLevelShipmentPriceDiscountDecisionRule = $this->getMockBuilder(ShipmentPriceDiscountDecisionRuleWithQuoteLevelShipment::class)->disableOriginalConstructor()->getMock();
         $mockedQuoteLevelShipmentPriceDiscountDecisionRule->method('isExpenseSatisfiedBy')->willReturn(true);
 
-        $mockedBusinessFactory = $this->createPartialMock(
-            ShipmentDiscountConnectorBusinessFactory::class,
-            [
-                'createCarrierDiscountDecisionRule',
-                'createCarrierDiscountDecisionRuleWithMultiShipment',
-                'createMethodDiscountDecisionRule',
-                'createMethodDiscountDecisionRuleWithMultiShipment',
-                'createShipmentPriceDiscountDecisionRule',
-                'createShipmentPriceDiscountDecisionRuleWithMultiShipment',
-                'getShipmentService',
-            ]
-        );
+        $mockedBusinessFactory = $this->getMockBuilder(ShipmentDiscountConnectorBusinessFactory::class)->setMethods([
+            'createCarrierDiscountDecisionRule',
+            'createCarrierDiscountDecisionRuleWithMultiShipment',
+            'createMethodDiscountDecisionRule',
+            'createMethodDiscountDecisionRuleWithMultiShipment',
+            'createShipmentPriceDiscountDecisionRule',
+            'createShipmentPriceDiscountDecisionRuleWithMultiShipment',
+            'getShipmentService',
+        ])->getMock();
         $mockedBusinessFactory->method('createCarrierDiscountDecisionRule')->willReturn($mockedQuoteLevelShipmentCarrierDiscountDecisionRule);
         $mockedBusinessFactory->method('createCarrierDiscountDecisionRuleWithMultiShipment')->willReturn($mockedMultiShipmentCarrierDiscountDecisionRule);
 
@@ -279,6 +259,9 @@ class CollectDiscountByShipmentTest extends Test
 
         $mockedBusinessFactory->method('createShipmentPriceDiscountDecisionRule')->willReturn($mockedQuoteLevelShipmentPriceDiscountDecisionRule);
         $mockedBusinessFactory->method('createShipmentPriceDiscountDecisionRuleWithMultiShipment')->willReturn($mockedMultiShipmentPriceDiscountDecisionRule);
+        /**
+         * @todo Investigate and try to remove this mocking.
+         */
         $mockedBusinessFactory->method('getShipmentService')->willReturn(
             new ShipmentDiscountConnectorToShipmentServiceBridge($this->tester->getLocator()->shipment()->service())
         );
