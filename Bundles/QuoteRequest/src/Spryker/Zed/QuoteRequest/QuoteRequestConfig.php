@@ -33,8 +33,6 @@ class QuoteRequestConfig extends AbstractBundleConfig
     }
 
     /**
-     * // TODO: need discussion with Karoly
-     *
      * @return string[]
      */
     public function getQuoteFieldsAllowedForSaving(): array
