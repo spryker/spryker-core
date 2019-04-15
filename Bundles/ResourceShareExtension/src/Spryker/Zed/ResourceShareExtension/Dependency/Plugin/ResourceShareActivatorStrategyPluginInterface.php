@@ -32,4 +32,16 @@ interface ResourceShareActivatorStrategyPluginInterface
      * @return bool
      */
     public function isLoginRequired(): bool;
+
+    /**
+     * Specification:
+     * - Checks if strategy plugin is applicable, based on resource data and resource type values.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return bool
+     */
+    public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool;
 }
