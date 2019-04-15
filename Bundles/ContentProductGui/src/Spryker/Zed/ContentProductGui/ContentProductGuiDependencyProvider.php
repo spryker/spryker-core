@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ContentProductGui;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToContentProductBridge;
 use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToLocaleBridge;
 use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToProductImageBridge;
-use Spryker\Zed\ContentProductGui\Dependency\QueryContainer\ContentProductGuiToProductBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -56,7 +56,7 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
     protected function provideProductQueryContainer(Container $container)
     {
         $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
-            return new ContentProductGuiToProductBridge($container->getLocator()->product()->queryContainer());
+            return SpyProductAbstractQuery::create();
         };
     }
 

@@ -8,7 +8,8 @@
 namespace Spryker\Zed\ContentProductGui\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\ContentProductGui\Communication\Form\Constraints\ProductConstraint;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Spryker\Zed\ContentProductGui\Communication\Form\Constraints\ContentProductAbstractListConstraint;
 use Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelper;
 use Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
 use Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractSelectedTable;
@@ -17,7 +18,6 @@ use Spryker\Zed\ContentProductGui\ContentProductGuiDependencyProvider;
 use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToContentProductInterface;
 use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToLocaleInterface;
 use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToProductImageInterface;
-use Spryker\Zed\ContentProductGui\Dependency\QueryContainer\ContentProductGuiToProductInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -62,11 +62,11 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentProductGui\Communication\Form\Constraints\ProductConstraint
+     * @return \Spryker\Zed\ContentProductGui\Communication\Form\Constraints\ContentProductAbstractListConstraint
      */
-    public function createProductConstraint(): ProductConstraint
+    public function createContentProductAbstractListConstraint(): ContentProductAbstractListConstraint
     {
-        return new ProductConstraint($this->getContentProductFacade());
+        return new ContentProductAbstractListConstraint($this->getContentProductFacade());
     }
 
     /**
@@ -86,9 +86,9 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentProductGui\Dependency\QueryContainer\ContentProductGuiToProductInterface
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function getProductQueryContainer(): ContentProductGuiToProductInterface
+    public function getProductQueryContainer(): SpyProductAbstractQuery
     {
         return $this->getProvidedDependency(ContentProductGuiDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }

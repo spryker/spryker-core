@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 class ContentGuiConfig extends AbstractSharedConfig
 {
     /**
-     * Content item banner
+     * Default locale name
      */
-    public const DEFAULT_NAME_LOCALE = 'Default';
+    public const DEFAULT_LOCALE_NAME = 'Default';
 }

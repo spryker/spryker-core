@@ -9,8 +9,8 @@ namespace Spryker\Zed\ContentProductGui\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
-use Spryker\Zed\ContentProductGui\Dependency\QueryContainer\ContentProductGuiToProductInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -28,14 +28,14 @@ class ProductAbstractViewTable extends AbstractTable
     public const COL_SKU = 'sku';
     public const COL_IMAGE = 'Image';
     public const COL_NAME = 'name';
-    public const COL_STORIES = 'Stories';
+    public const COL_STORES = 'Stores';
     public const COL_STATUS = 'Status';
     public const COL_SELECTED = 'Selected';
 
     public const COL_ALIAS_NAME = 'name';
 
     /**
-     * @var \Spryker\Zed\ContentProductGui\Dependency\QueryContainer\ContentProductGuiToProductInterface
+     * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected $productQueryContainer;
 
@@ -55,13 +55,13 @@ class ProductAbstractViewTable extends AbstractTable
     protected $identifierPostfix;
 
     /**
-     * @param \Spryker\Zed\ContentProductGui\Dependency\QueryContainer\ContentProductGuiToProductInterface $productQueryContainer
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productQueryContainer
      * @param \Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface $productAbstractTableHelper
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string|null $identifierPostfix
      */
     public function __construct(
-        ContentProductGuiToProductInterface $productQueryContainer,
+        SpyProductAbstractQuery $productQueryContainer,
         ProductAbstractTableHelperInterface $productAbstractTableHelper,
         LocaleTransfer $localeTransfer,
         ?string $identifierPostfix
@@ -90,7 +90,7 @@ class ProductAbstractViewTable extends AbstractTable
             static::COL_SKU => static::HEADER_SKU,
             static::COL_IMAGE => static::COL_IMAGE,
             static::COL_NAME => static::HEADER_NAME,
-            static::COL_STORIES => static::COL_STORIES,
+            static::COL_STORES => static::COL_STORES,
             static::COL_STATUS => static::COL_STATUS,
             static::COL_SELECTED => static::COL_SELECTED,
         ]);
@@ -103,7 +103,7 @@ class ProductAbstractViewTable extends AbstractTable
 
         $config->setRawColumns([
             static::COL_IMAGE,
-            static::COL_STORIES,
+            static::COL_STORES,
             static::COL_STATUS,
             static::COL_SELECTED,
         ]);
@@ -120,7 +120,7 @@ class ProductAbstractViewTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->productQueryContainer->queryProductAbstract()
+        $query = $this->productQueryContainer
             ->useSpyProductAbstractLocalizedAttributesQuery()
                 ->filterByFkLocale($this->localeTransfer->getIdLocale())
             ->endUse();
@@ -148,7 +148,7 @@ class ProductAbstractViewTable extends AbstractTable
             static::COL_SKU => $productAbstractEntity->getSku(),
             static::COL_IMAGE => $this->productAbstractTableHelper->getProductPreview($productAbstractEntity),
             static::COL_NAME => $productAbstractEntity->getSpyProductAbstractLocalizedAttributess()->getFirst()->getName(),
-            static::COL_STORIES => $this->productAbstractTableHelper->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),
+            static::COL_STORES => $this->productAbstractTableHelper->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),
             static::COL_STATUS => $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity),
             static::COL_SELECTED => $this->productAbstractTableHelper->getAddButtonField($productAbstractEntity),
         ];

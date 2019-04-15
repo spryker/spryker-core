@@ -10,12 +10,8 @@ namespace Spryker\Zed\ContentProductGui\Communication\Form\Constraints;
 use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToContentProductInterface;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
-class ProductConstraint extends SymfonyConstraint
+class ContentProductAbstractListConstraint extends SymfonyConstraint
 {
-    public const CONTENT_PRODUCT_FACADE = 'contentProductFacade';
-
-    protected const MESSAGE = 'Product quantity exceeded.';
-
     /**
      * @var \Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToContentProductInterface
      */
@@ -30,14 +26,6 @@ class ProductConstraint extends SymfonyConstraint
         $this->contentProductFacade = $contentProductFacade;
 
         parent::__construct($options);
-    }
-
-    /**
-     * @return string
-     */
-    public function getMessage(): string
-    {
-        return static::MESSAGE;
     }
 
     /**

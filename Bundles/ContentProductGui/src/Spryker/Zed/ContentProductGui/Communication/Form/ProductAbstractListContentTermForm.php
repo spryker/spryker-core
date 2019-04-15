@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -54,9 +56,6 @@ class ProductAbstractListContentTermForm extends AbstractType
 
                 return [];
             },
-            'attr' => [
-                'template_path' => static::TEMPLATE_PATH,
-            ],
         ]);
     }
 
@@ -78,6 +77,7 @@ class ProductAbstractListContentTermForm extends AbstractType
             $view->vars['value']->getIdProductAbstracts(),
             $view->parent->vars['name']
         );
+        $view->vars['attr']['template_path'] = static::TEMPLATE_PATH;
     }
 
     /**
@@ -120,10 +120,20 @@ class ProductAbstractListContentTermForm extends AbstractType
                 'constraints' => $this->getTextFieldConstraints(),
             ],
             'constraints' => [
-                $this->getFactory()->createProductConstraint(),
+                $this->getFactory()->createContentProductAbstractListConstraint(),
 
             ],
-        ]);
+        ])->get(static::FIELD_ID_ABSTRACT_PRODUCTS)->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) {
+                // Uses for sorting products
+                if ($event->getData()) {
+                    $ids = array_filter(array_values($event->getData()));
+                    $event->setData($ids);
+                    $event->getForm()->setData($ids);
+                }
+            }
+        );
 
         return $this;
     }

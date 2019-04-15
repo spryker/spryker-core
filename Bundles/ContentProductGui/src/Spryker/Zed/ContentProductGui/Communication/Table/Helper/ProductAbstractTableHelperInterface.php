@@ -16,33 +16,33 @@ interface ProductAbstractTableHelperInterface
      *
      * @return string
      */
-    public function getProductPreview(SpyProductAbstract $productAbstractEntity);
+    public function getProductPreview(SpyProductAbstract $productAbstractEntity): string;
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
      */
-    public function getAbstractProductStatusLabel(SpyProductAbstract $productAbstractEntity);
+    public function getAbstractProductStatusLabel(SpyProductAbstract $productAbstractEntity): string;
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
      */
-    public function getDeleteButton(SpyProductAbstract $productAbstractEntity);
+    public function getDeleteButton(SpyProductAbstract $productAbstractEntity): string;
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
      */
-    public function getAddButtonField(SpyProductAbstract $productAbstractEntity);
+    public function getAddButtonField(SpyProductAbstract $productAbstractEntity): string;
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractStore[] $spyProductAbstractStories
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractStore[] $productAbstractStoreEntities
      *
      * @return string
      */
-    public function getStoreNames(array $spyProductAbstractStories);
+    public function getStoreNames(array $productAbstractStoreEntities): string;
 }

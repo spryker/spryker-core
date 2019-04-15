@@ -13,11 +13,11 @@ use Spryker\Zed\ContentProductGui\Communication\Form\ProductAbstractListContentT
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class ProductConstraintValidator extends ConstraintValidator
+class ContentProductAbstractListConstraintValidator extends ConstraintValidator
 {
     /**
      * @param array $abstractProductIds The value that should be validated
-     * @param \Symfony\Component\Validator\Constraint|\SprykerShop\Yves\QuickOrderPage\Form\Constraint\ItemsFieldConstraint $constraint The constraint for the validation
+     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ContentProductGui\Communication\Form\Constraints\ContentProductAbstractListConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
      *
@@ -25,10 +25,10 @@ class ProductConstraintValidator extends ConstraintValidator
      */
     public function validate($abstractProductIds, Constraint $constraint)
     {
-        if (!$constraint instanceof ProductConstraint) {
+        if (!$constraint instanceof ContentProductAbstractListConstraint) {
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
-                ProductConstraint::class,
+                ContentProductAbstractListConstraint::class,
                 get_class($constraint)
             ));
         }
@@ -45,7 +45,7 @@ class ProductConstraintValidator extends ConstraintValidator
                 foreach ($parametrMessage->getMessages() as $message) {
                     $text = strtr($message->getValue(), $message->getParameters());
                     $this->context
-                        ->buildViolation($constraint->getMessage() . ' ' . $text)
+                        ->buildViolation($text)
                         ->atPath(ProductAbstractListContentTermForm::FIELD_ID_ABSTRACT_PRODUCTS)
                         ->addViolation();
                 }

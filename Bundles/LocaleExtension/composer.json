@@ -1,7 +1,7 @@
 {
   "name": "spryker/content-product-gui",
   "type": "library",
-  "description": "ContentProductGui module",
+  "description": "LocaleExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",

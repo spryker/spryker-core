@@ -368,9 +368,9 @@ class TableConfiguration
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isProcessing()
+    public function isProcessing(): ?bool
     {
         return $this->processing;
     }
@@ -380,15 +380,15 @@ class TableConfiguration
      *
      * @return void
      */
-    public function setProcessing($processing)
+    public function setProcessing(bool $processing)
     {
         $this->processing = $processing;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isServerSide()
+    public function isServerSide(): ?bool
     {
         return $this->serverSide;
     }
@@ -398,15 +398,15 @@ class TableConfiguration
      *
      * @return void
      */
-    public function setServerSide($serverSide)
+    public function setServerSide(bool $serverSide)
     {
         $this->serverSide = $serverSide;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isPaging()
+    public function isPaging(): ?bool
     {
         return $this->paging;
     }
@@ -416,15 +416,15 @@ class TableConfiguration
      *
      * @return void
      */
-    public function setPaging($paging)
+    public function setPaging(bool $paging)
     {
         $this->paging = $paging;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isOrdering()
+    public function isOrdering(): ?bool
     {
         return $this->ordering;
     }
@@ -434,7 +434,7 @@ class TableConfiguration
      *
      * @return void
      */
-    public function setOrdering($ordering)
+    public function setOrdering(bool $ordering)
     {
         $this->ordering = $ordering;
     }

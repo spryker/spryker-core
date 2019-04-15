@@ -80,7 +80,7 @@ class ContentTabs extends AbstractTabs
     protected function getAvailableLocales(): array
     {
         $defaultLocale = new LocaleTransfer();
-        $defaultLocale->setLocaleName(ContentGuiConfig::DEFAULT_NAME_LOCALE);
+        $defaultLocale->setLocaleName(ContentGuiConfig::DEFAULT_LOCALE_NAME);
 
         $locales = $this->localeFacade
             ->getLocaleCollection();

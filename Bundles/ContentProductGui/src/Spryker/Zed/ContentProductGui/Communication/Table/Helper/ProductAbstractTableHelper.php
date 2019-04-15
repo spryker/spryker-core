@@ -31,7 +31,7 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
      *
      * @return string
      */
-    public function getProductPreview(SpyProductAbstract $productAbstractEntity)
+    public function getProductPreview(SpyProductAbstract $productAbstractEntity): string
     {
         return sprintf(
             '<img src="%s">',
@@ -44,7 +44,7 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
      *
      * @return string
      */
-    public function getAbstractProductStatusLabel(SpyProductAbstract $productAbstractEntity)
+    public function getAbstractProductStatusLabel(SpyProductAbstract $productAbstractEntity): string
     {
         $isActive = false;
         foreach ($productAbstractEntity->getSpyProducts() as $spyProductEntity) {
@@ -61,7 +61,7 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
      *
      * @return string
      */
-    public function getDeleteButton(SpyProductAbstract $productAbstractEntity)
+    public function getDeleteButton(SpyProductAbstract $productAbstractEntity): string
     {
         return sprintf(
             '<button type="button" data-id="%1$s" class="js-delete-product-abstract btn btn-xs btn-outline btn-danger"><i class="fa fa-trash"></i></button>',
@@ -74,7 +74,7 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
      *
      * @return string
      */
-    public function getAddButtonField(SpyProductAbstract $productAbstractEntity)
+    public function getAddButtonField(SpyProductAbstract $productAbstractEntity): string
     {
         return sprintf(
             '<button type="button" data-id="%1$s" class="btn btn-sm btn-outline btn-create js-add-product-abstract"><i class="fa fa-plus"></i>Add to list</button>',
@@ -83,20 +83,20 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractStore[] $spyProductAbstractStories
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractStore[] $productAbstractStoreEntities
      *
      * @return string
      */
-    public function getStoreNames(array $spyProductAbstractStories)
+    public function getStoreNames(array $productAbstractStoreEntities): string
     {
         return implode(" ", array_map(
-            function (SpyProductAbstractStore $spyProductAbstractStore) {
+            function (SpyProductAbstractStore $productAbstractStoreEntity) {
                 return sprintf(
                     '<span class="label label-info">%s</span>',
-                    $spyProductAbstractStore->getSpyStore()->getName()
+                    $productAbstractStoreEntity->getSpyStore()->getName()
                 );
             },
-            $spyProductAbstractStories
+            $productAbstractStoreEntities
         ));
     }
 
@@ -105,7 +105,7 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
      *
      * @return string|null
      */
-    protected function getProductPreviewUrl(SpyProductAbstract $productAbstractEntity)
+    protected function getProductPreviewUrl(SpyProductAbstract $productAbstractEntity): ?string
     {
         $productImageSetTransferCollection = $this->productImageFacade
             ->getProductImagesSetCollectionByProductAbstractId($productAbstractEntity->getIdProductAbstract());
@@ -128,7 +128,7 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
      *
      * @return string
      */
-    protected function getStatusLabel($status)
+    protected function getStatusLabel($status): string
     {
         if (!$status) {
             return '<span class="label label-danger">Inactive</span>';
