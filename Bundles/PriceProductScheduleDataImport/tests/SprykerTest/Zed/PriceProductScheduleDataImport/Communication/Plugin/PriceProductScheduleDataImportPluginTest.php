@@ -11,6 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\PriceProductScheduleDataImport\Communication\Plugin\PriceProductScheduleDataImportPlugin;
 use Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportConfig;
 
@@ -26,17 +28,55 @@ use Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportCon
  */
 class PriceProductScheduleDataImportPluginTest extends Unit
 {
+    public const ABSTRACT_SKU = 'foo';
+
+    public const CONCRETE_SKU = 'foo-concrete';
+
+    public const EXPECTED_IMPORT_COUNT = 8;
+
     /**
      * @var \SprykerTest\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportCommunicationTester
      */
     protected $tester;
 
     /**
+     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected $priceProductScheduleQuery;
+
+    /**
      * @return void
      */
-    public function testImportImportsData(): void
+    protected function setUp(): void
     {
+        parent::setUp();
+
+        $this->priceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
+
         $this->tester->ensureDatabaseTableIsEmpty();
+    }
+
+    /**
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->tester->ensureDatabaseTableIsEmpty();
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportImportsPriceProductSchedules(): void
+    {
+        //Assign
+        $this->tester->haveProduct([
+            ProductConcreteTransfer::SKU => static::CONCRETE_SKU,
+        ], [
+            ProductAbstractTransfer::SKU => static::ABSTRACT_SKU,
+        ]);
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_price_schedule.csv');
@@ -45,11 +85,22 @@ class PriceProductScheduleDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
         $priceProductScheduleDataImportPlugin = new PriceProductScheduleDataImportPlugin();
+
+        //Act
         $dataImporterReportTransfer = $priceProductScheduleDataImportPlugin->import($dataImportConfigurationTransfer);
 
+        //Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
-        $this->tester->assertDatabaseTableContainsData();
+        $this->assertSame(
+            static::EXPECTED_IMPORT_COUNT,
+            $this->priceProductScheduleQuery->count(),
+            sprintf(
+                'Imported number of price product schedules is %s expected %s.',
+                $this->priceProductScheduleQuery->count(),
+                static::EXPECTED_IMPORT_COUNT
+            )
+        );
     }
 
     /**
@@ -57,11 +108,13 @@ class PriceProductScheduleDataImportPluginTest extends Unit
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
+        //Assign
         $priceProductScheduleDataImportPlugin = new PriceProductScheduleDataImportPlugin();
 
-        $this->assertSame(
-            PriceProductScheduleDataImportConfig::IMPORT_TYPE_PRODUCT_PRICE_SCHEDULE,
-            $priceProductScheduleDataImportPlugin->getImportType()
-        );
+        //Act
+        $importType = $priceProductScheduleDataImportPlugin->getImportType();
+
+        //Assert
+        $this->assertSame(PriceProductScheduleDataImportConfig::IMPORT_TYPE_PRODUCT_PRICE_SCHEDULE, $importType);
     }
 }

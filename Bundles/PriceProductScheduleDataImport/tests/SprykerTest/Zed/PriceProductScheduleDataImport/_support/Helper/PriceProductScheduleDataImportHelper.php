@@ -23,22 +23,9 @@ class PriceProductScheduleDataImportHelper extends Module
     }
 
     /**
-     * @return void
-     */
-    public function assertDatabaseTableContainsData(): void
-    {
-        $priceProductScheduleQuery = $this->getPriceProductScheduleQuery();
-
-        $this->assertTrue(
-            $priceProductScheduleQuery->exists(),
-            'Expected at least one entry in the database table but database table is empty.'
-        );
-    }
-
-    /**
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
      */
-    protected function getPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
+    public function getPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
     {
         return SpyPriceProductScheduleQuery::create();
     }
