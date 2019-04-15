@@ -14,6 +14,7 @@ use Generated\Shared\DataBuilder\CompanyUserBuilder;
 use Generated\Shared\DataBuilder\CompanyUserCriteriaFilterBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use TypeError;
@@ -545,5 +546,83 @@ class CompanyUserFacadeTest extends Test
 
         // Assert
         $this->assertNotNull($foundCompanyUserTransfer->getIdCompanyUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyUserCollectionByQueryRetrievesCompanyUsersByEmailPattern(): void
+    {
+        // Assign
+        $companyUserTransfer = $this->tester->haveCompanyUser(
+            [
+                'customer' => (new CustomerBuilder())->build(),
+                'fk_company' => $this->tester->haveCompany(['is_active' => true])->getIdCompany(),
+            ]
+        );
+
+        $companyUserCriteriaTransfer = (new CompanyUserCriteriaTransfer())
+            ->setPattern($companyUserTransfer->getCustomer()->getEmail());
+
+        // Act
+        $foundCompanyUserTransfer = $this->getFacade()
+            ->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer)
+            ->getCompanyUsers()
+            ->offsetGet(0);
+
+        // Assert
+        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyUserCollectionByQueryRetrievesCompanyUsersByFirstNamePattern(): void
+    {
+        // Assign
+        $companyUserTransfer = $this->tester->haveCompanyUser(
+            [
+                'customer' => (new CustomerBuilder())->build(),
+                'fk_company' => $this->tester->haveCompany(['is_active' => true])->getIdCompany(),
+            ]
+        );
+
+        $companyUserCriteriaTransfer = (new CompanyUserCriteriaTransfer())
+            ->setPattern($companyUserTransfer->getCustomer()->getFirstName());
+
+        // Act
+        $foundCompanyUserTransfer = $this->getFacade()
+            ->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer)
+            ->getCompanyUsers()
+            ->offsetGet(0);
+
+        // Assert
+        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyUserCollectionByQueryRetrievesCompanyUsersByLastNamePattern(): void
+    {
+        // Assign
+        $companyUserTransfer = $this->tester->haveCompanyUser(
+            [
+                'customer' => (new CustomerBuilder())->build(),
+                'fk_company' => $this->tester->haveCompany(['is_active' => true])->getIdCompany(),
+            ]
+        );
+
+        $companyUserCriteriaTransfer = (new CompanyUserCriteriaTransfer())
+            ->setPattern($companyUserTransfer->getCustomer()->getLastName());
+
+        // Act
+        $foundCompanyUserTransfer = $this->getFacade()
+            ->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer)
+            ->getCompanyUsers()
+            ->offsetGet(0);
+
+        // Assert
+        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
     }
 }
