@@ -27,9 +27,9 @@ class ContentGuiToUtilEncodingBridge implements ContentGuiToUtilEncodingInterfac
      * @param int|null $options
      * @param int|null $depth
      *
-     * @return string
+     * @return string|null
      */
-    public function encodeJson($value, $options = null, $depth = null): string
+    public function encodeJson($value, $options = null, $depth = null): ?string
     {
         return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
@@ -42,7 +42,7 @@ class ContentGuiToUtilEncodingBridge implements ContentGuiToUtilEncodingInterfac
      *
      * @return array
      */
-    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null): array
+    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null)
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
