@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerScopeProviderPluginInterface;
 
 /**
+ * TODO: Delete this plugin
  * @method \Spryker\Zed\OauthPermission\Business\OauthPermissionFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthPermission\OauthPermissionConfig getConfig()
  */

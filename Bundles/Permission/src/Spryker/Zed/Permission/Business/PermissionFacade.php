@@ -89,6 +89,7 @@ class PermissionFacade extends AbstractFacade implements PermissionFacadeInterfa
     }
 
     /**
+     * TODO: Write tests
      * {@inheritdoc}
      *
      * @api

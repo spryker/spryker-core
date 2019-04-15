@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AbstractProductsReader implements AbstractProductsReaderInterface
 {
+    //TODO: New glue trait
     use PermissionAwareTrait;
     protected const PRODUCT_CONCRETE_IDS_KEY = 'product_concrete_ids';
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';

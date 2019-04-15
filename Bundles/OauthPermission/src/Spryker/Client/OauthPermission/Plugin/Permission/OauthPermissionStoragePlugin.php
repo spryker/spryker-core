@@ -23,6 +23,7 @@ class OauthPermissionStoragePlugin extends AbstractPlugin implements PermissionS
      */
     public function getPermissionCollection(): PermissionCollectionTransfer
     {
+        //TODO: Cleanup
         $request = $this->getFactory()->getGlueApplication()->get('request');
         $authorizationToken = $request->headers->get(OauthPermissionConfig::HEADER_AUTHORIZATION);
 
@@ -41,6 +42,7 @@ class OauthPermissionStoragePlugin extends AbstractPlugin implements PermissionS
                 ->getUtilEncodingService()
                 ->decodeJson($oauthAccessTokenDataTransfer->getOauthUserId(), true));
 
+        //TODO: Check for PermissionCollectionTransfer
         return $customerIdentifier->getPermissions();
     }
 

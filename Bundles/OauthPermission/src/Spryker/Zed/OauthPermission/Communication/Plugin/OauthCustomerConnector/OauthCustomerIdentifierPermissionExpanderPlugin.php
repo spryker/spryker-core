@@ -21,6 +21,7 @@ class OauthCustomerIdentifierPermissionExpanderPlugin extends AbstractPlugin imp
 {
     /**
      * TODO: Specs
+     * TODO: Write tests + Move code from plugin
      *
      * @api
      *
