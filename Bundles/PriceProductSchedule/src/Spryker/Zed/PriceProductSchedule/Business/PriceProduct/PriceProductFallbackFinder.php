@@ -62,7 +62,7 @@ class PriceProductFallbackFinder implements PriceProductFallbackFinderInterface
      *
      * @return string|null
      */
-    public function findFallbackPriceType(string $priceTypeName): ?string
+    protected function findFallbackPriceType(string $priceTypeName): ?string
     {
         $fallBackPriceTypeList = $this->priceProductScheduleConfig->getFallbackPriceTypeList();
 

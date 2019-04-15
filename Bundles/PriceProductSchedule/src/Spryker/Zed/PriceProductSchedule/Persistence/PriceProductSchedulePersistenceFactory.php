@@ -11,6 +11,11 @@ use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleListMapper;
+use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleListMapperInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapper;
+use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapperInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleDependencyProvider;
 
 /**
@@ -29,7 +34,7 @@ class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleMapperInterface
+     * @return \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapperInterface
      */
     public function createPriceProductScheduleMapper(): PriceProductScheduleMapperInterface
     {
@@ -41,7 +46,7 @@ class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleListMapperInterface
+     * @return \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleListMapperInterface
      */
     public function createPriceProductScheduleListMapper(): PriceProductScheduleListMapperInterface
     {
@@ -62,5 +67,13 @@ class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory
     public function getProductFacade(): PriceProductScheduleToProductFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductScheduleDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeInterface
+     */
+    public function getPropelFacade(): PriceProductScheduleToPropelFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductScheduleDependencyProvider::FACADE_PROPEL);
     }
 }

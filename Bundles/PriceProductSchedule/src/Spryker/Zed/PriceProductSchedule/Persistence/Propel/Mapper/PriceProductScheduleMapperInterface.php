@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductSchedule\Persistence;
+namespace Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;

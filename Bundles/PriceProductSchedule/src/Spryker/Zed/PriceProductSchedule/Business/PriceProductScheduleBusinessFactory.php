@@ -26,10 +26,10 @@ use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCur
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
-use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleListMapper;
-use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleListMapperInterface;
-use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleMapper;
-use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleMapperInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleListMapper;
+use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleListMapperInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapper;
+use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapperInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleDependencyProvider;
 
 /**
@@ -120,7 +120,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleMapperInterface
+     * @return \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapperInterface
      */
     public function createPriceProductScheduleMapper(): PriceProductScheduleMapperInterface
     {
@@ -132,7 +132,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleListMapperInterface
+     * @return \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleListMapperInterface
      */
     public function createPriceProductScheduleListMapper(): PriceProductScheduleListMapperInterface
     {

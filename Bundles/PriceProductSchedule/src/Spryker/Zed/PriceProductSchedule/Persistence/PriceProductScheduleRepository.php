@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\Map\SpyPriceProductScheduleTableMap;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PriceProductSchedule\Persistence\Exception\NotSupportedDbEngineException;
+use Spryker\Zed\Propel\PropelConfig;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
@@ -26,37 +28,28 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     protected const ALIAS_CONCATENATED = 'concatenated';
     protected const ALIAS_FILTERED = 'filtered';
 
+    protected const MESSAGE_NOT_SUPPORTED_DB_ENGINE = 'DB engine "%s" is not supported. Please extend EXPRESSION_CONCATENATED_RESULT_MAP';
+
+    protected const EXPRESSION_CONCATENATED_RESULT_MAP = [
+        PropelConfig::DB_ENGINE_PGSQL => 'CONCAT(EXTRACT(epoch from now() - %s), \' \', EXTRACT(epoch from %s - now()), \' \', %s, \' \', %s, \' \', %s)',
+        PropelConfig::DB_ENGINE_MYSQL => 'CONCAT(UNIX_TIMESTAMP(now() - %s), \' \', UNIX_TIMESTAMP(%s - now()), \' \', %s, \' \', %s, \' \', %s)',
+    ];
+
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleMapperInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapperInterface
      */
     protected $priceProductScheduleMapper;
+
+    /**
+     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeInterface
+     */
+    protected $propelFacade;
 
     public function __construct()
     {
         $this->priceProductScheduleMapper = $this->getFactory()->createPriceProductScheduleMapper();
-    }
 
-    /**
-     * @param int $idPriceProductSchedule
-     *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
-     */
-    public function findByIdPriceProductSchedule(int $idPriceProductSchedule): ?PriceProductScheduleTransfer
-    {
-        $priceProductScheduleEntity = $this->getFactory()
-            ->createPriceProductScheduleQuery()
-            ->filterByIdPriceProductSchedule($idPriceProductSchedule)
-            ->findOne();
-
-        if ($priceProductScheduleEntity === null) {
-            return null;
-        }
-
-        return $this->priceProductScheduleMapper
-            ->mapPriceProductScheduleEntityToPriceProductScheduleTransfer(
-                $priceProductScheduleEntity,
-                new PriceProductScheduleTransfer()
-            );
+        $this->propelFacade = $this->getFactory()->getPropelFacade();
     }
 
     /**
@@ -133,6 +126,9 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     protected function createPriceProductScheduleConcatenatedSubQuery(
         StoreTransfer $storeTransfer
     ): SpyPriceProductScheduleQuery {
+        $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
+        $concatenatedResultExpression = $this->getConcatenatedResultExpressionByDbEngineName($currentDatabaseEngineName);
+
         return $this->getFactory()
             ->createPriceProductScheduleQuery()
             ->select([static::COL_PRODUCT_ID])
@@ -149,7 +145,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->addAsColumn(
                 static::COL_RESULT,
                 sprintf(
-                    'CONCAT(EXTRACT(epoch from now() - %s), \' \', EXTRACT(epoch from %s - now()), \' \', %s, \' \', %s, \' \', %s)',
+                    $concatenatedResultExpression,
                     SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM,
                     SpyPriceProductScheduleTableMap::COL_ACTIVE_TO,
                     SpyPriceProductScheduleTableMap::COL_NET_PRICE,
@@ -180,5 +176,23 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->addAsColumn(static::COL_RESULT, sprintf('min(%s)', static::ALIAS_CONCATENATED . '.' . static::COL_RESULT))
             ->groupBy(static::COL_PRODUCT_ID)
             ->limit($this->getFactory()->getConfig()->getApplyBatchSize());
+    }
+
+    /**
+     * @param string $databaseEngineName
+     *
+     * @throws \Spryker\Zed\PriceProductSchedule\Persistence\Exception\NotSupportedDbEngineException
+     *
+     * @return string
+     */
+    protected function getConcatenatedResultExpressionByDbEngineName(string $databaseEngineName): string
+    {
+        if (isset(static::EXPRESSION_CONCATENATED_RESULT_MAP[$databaseEngineName]) === false) {
+            throw new NotSupportedDbEngineException(
+                sprintf(static::MESSAGE_NOT_SUPPORTED_DB_ENGINE, $databaseEngineName)
+            );
+        }
+
+        return static::EXPRESSION_CONCATENATED_RESULT_MAP[$databaseEngineName];
     }
 }

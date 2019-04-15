@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductSchedule\Persistence;
+namespace Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
@@ -31,14 +31,14 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleListMapperInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleListMapperInterface
      */
     protected $priceProductScheduleListMapper;
 
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleListMapperInterface $priceProductScheduleListMapper
+     * @param \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleListMapperInterface $priceProductScheduleListMapper
      */
     public function __construct(
         PriceProductScheduleToCurrencyFacadeInterface $currencyFacade,

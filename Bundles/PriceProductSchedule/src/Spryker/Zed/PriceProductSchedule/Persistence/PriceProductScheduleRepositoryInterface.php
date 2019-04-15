@@ -13,13 +13,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface PriceProductScheduleRepositoryInterface
 {
     /**
-     * @param int $idPriceProductSchedule
-     *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
-     */
-    public function findByIdPriceProductSchedule(int $idPriceProductSchedule): ?PriceProductScheduleTransfer;
-
-    /**
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
     public function findPriceProductSchedulesToDisable(): array;
@@ -35,6 +28,8 @@ interface PriceProductScheduleRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @throws \Spryker\Zed\PriceProductSchedule\Persistence\Exception\NotSupportedDbEngineException
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */

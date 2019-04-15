@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeBridge;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeBridge;
+use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeBridge;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeBridge;
 
 /**
@@ -23,6 +24,7 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_PROPEL = 'FACADE_PROPEL';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -48,6 +50,7 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = $this->addCurrencyFacade($container);
         $container = $this->addProductFacade($container);
+        $container = $this->addPropelFacade($container);
 
         return $container;
     }
@@ -103,6 +106,20 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new PriceProductScheduleToProductFacadeBridge($container->getLocator()->product()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPropelFacade(Container $container): Container
+    {
+        $container[static::FACADE_PROPEL] = function (Container $container) {
+            return new PriceProductScheduleToPropelFacadeBridge($container->getLocator()->propel()->facade());
         };
 
         return $container;

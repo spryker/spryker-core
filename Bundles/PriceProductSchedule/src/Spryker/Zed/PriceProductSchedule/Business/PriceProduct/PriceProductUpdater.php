@@ -59,8 +59,9 @@ class PriceProductUpdater implements PriceProductUpdaterInterface
             return null;
         }
 
-        $priceProductTransferForUpdate->getMoneyValue()->setGrossAmount($fallbackMoneyValueTransfer->getGrossAmount());
-        $priceProductTransferForUpdate->getMoneyValue()->setNetAmount($fallbackMoneyValueTransfer->getNetAmount());
+        $priceProductTransferForUpdate->getMoneyValue()
+            ->setGrossAmount($fallbackMoneyValueTransfer->getGrossAmount())
+            ->setNetAmount($fallbackMoneyValueTransfer->getNetAmount());
 
         return $this->priceProductFacade->persistPriceProductStore($priceProductTransferForUpdate);
     }
