@@ -54,9 +54,10 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
 
         if (!$resourceShareRequestTransfer->getUuid()) {
-            return $resourceShareResponseTransfer->addErrorMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
-            );
+            return $resourceShareResponseTransfer->setIsSuccessful(false)
+                ->addErrorMessage(
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
+                );
         }
 
         $resourceShareTransfer = $this->resourceShareRepository->findResourceShareByUuid(
@@ -64,9 +65,10 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         );
 
         if (!$resourceShareTransfer) {
-            return $resourceShareResponseTransfer->addErrorMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
-            );
+            return $resourceShareResponseTransfer->setIsSuccessful(false)
+                ->addErrorMessage(
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
+                );
         }
 
         $resourceShareRequestTransfer->setResourceShare($resourceShareTransfer);

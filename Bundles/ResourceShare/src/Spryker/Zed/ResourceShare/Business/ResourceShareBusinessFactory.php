@@ -12,6 +12,8 @@ use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareActivator;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareActivatorInterface;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface;
+use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidator;
+use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareWriter;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareWriterInterface;
 use Spryker\Zed\ResourceShare\ResourceShareDependencyProvider;
@@ -29,7 +31,8 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     public function createResourceShareReader(): ResourceShareReaderInterface
     {
         return new ResourceShareReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createResourceShareValidator()
         );
     }
 
@@ -40,7 +43,8 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     {
         return new ResourceShareWriter(
             $this->getEntityManager(),
-            $this->createResourceShareReader()
+            $this->createResourceShareReader(),
+            $this->createResourceShareValidator()
         );
     }
 
@@ -53,6 +57,14 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getResourceShareActivatorStrategyPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface
+     */
+    public function createResourceShareValidator(): ResourceShareValidatorInterface
+    {
+        return new ResourceShareValidator();
     }
 
     /**
