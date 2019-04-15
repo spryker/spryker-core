@@ -126,20 +126,7 @@
 
     <transfer name="Address">
         <property name="idCustomerAddress" type="int" />
-        <property name="salutation" type="string" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
-        <property name="address1" type="string" />
-        <property name="address2" type="string" />
-        <property name="address3" type="string" />
-        <property name="company" type="string" />
-        <property name="city" type="string" />
-        <property name="zipCode" type="string" />
-        <property name="iso2Code" type="string" />
-        <property name="phone" type="string" />
-        <property name="comment" type="string" />
-        <property name="state" type="string" />
-        <property name="isDeleted" type="bool" />
+        <property name="uuid" type="string" />
         <property name="isDefaultBilling" type="bool" />
         <property name="isDefaultShipping" type="bool" />
     </transfer>
@@ -150,19 +137,7 @@
 
     <transfer name="ShipmentMethod">
         <property name="idShipmentMethod" type="int" />
-        <property name="fkSalesExpense" type="int" />
-        <property name="fkShipmentCarrier" type="int" />
-        <property name="fkTaxSet" type="int" />
-        <property name="availabilityPlugin" type="string" />
-        <property name="pricePlugin" type="string" />
-        <property name="deliveryTimePlugin" type="string" />
-        <property name="name" type="string" />
-        <property name="carrierName" type="string" />
-        <property name="taxRate" type="float" />
-        <property name="isActive" type="bool" />
-        <property name="deliveryTime" type="int" />
         <property name="storeCurrencyPrice" type="int" />
-        <property name="currencyIsoCode" type="string" />
     </transfer>
 
     <transfer name="PaymentProviderCollection">
@@ -182,4 +157,25 @@
         <property name="methodName" type="string" />
     </transfer>
 
+    <transfer name="Quote">
+        <property name="customer" type="Customer" />
+        <property name="items" type="Item[]" />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="isGuest" type="bool" />
+        <property name="customerReference" type="string"/>
+        <property name="defaultBillingAddress" type="string" />
+        <property name="defaultShippingAddress" type="string" />
+        <property name="addresses" type="Addresses" singular="address" />
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="hasCustomer" type="bool" />
+        <property name="customerTransfer" type="Customer" />
+    </transfer>
 </transfers>

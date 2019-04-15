@@ -94,7 +94,7 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function createCheckoutResponseMapper(): CheckoutResponseMapperInterface
     {
         return new CheckoutResponseMapper(
-            $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_RESPONSE_MAPPER)
+            $this->getCheckoutResponceMapperPlugins()
         );
     }
 
@@ -131,5 +131,13 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function getCheckoutRequestAttributesValidatorPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface[]
+     */
+    public function getCheckoutResponceMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_RESPONSE_MAPPER);
     }
 }
