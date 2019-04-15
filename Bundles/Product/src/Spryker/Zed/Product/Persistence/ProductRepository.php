@@ -87,7 +87,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->select([
                 static::KEY_FILTERED_PRODUCTS_RESULT,
                 static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME,
-            ]);
+            ])->addAscendingOrderByColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME);
 
         return $this->collectFilteredResults(
             $productAbstractQuery->find()->toArray()
