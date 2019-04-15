@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ResourceShare\Business;
 
-use Generated\Shared\Transfer\ResourceShareCriteriaTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
@@ -25,15 +24,15 @@ class ResourceShareFacade extends AbstractFacade implements ResourceShareFacadeI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function generateResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
+    public function generateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         return $this->getFactory()
             ->createResourceShareWriter()
-            ->generateResourceShare($resourceShareTransfer);
+            ->generateResourceShare($resourceShareRequestTransfer);
     }
 
     /**
@@ -58,14 +57,14 @@ class ResourceShareFacade extends AbstractFacade implements ResourceShareFacadeI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function getResourceShare(ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer): ResourceShareResponseTransfer
+    public function getResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
         return $this->getFactory()
             ->createResourceShareReader()
-            ->getResourceShare($resourceShareCriteriaTransfer);
+            ->getResourceShare($resourceShareTransfer);
     }
 }
