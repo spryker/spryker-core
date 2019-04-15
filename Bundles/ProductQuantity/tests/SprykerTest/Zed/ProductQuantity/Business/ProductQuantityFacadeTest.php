@@ -250,7 +250,7 @@ class ProductQuantityFacadeTest extends Unit
             'empty quote int quantity' => [true, 0, 1, 1, null, 1],
             'empty quote float quantity' => [true, 0, 1.5, 1, null, 0.5],
 
-            'general rule 0 qty' => [false, 0, 0, 1, null, 1],
+            'general rule 0 qty' => [true, 0, 0, 1, null, 1],
             'general rule negative int qty' => [false, 0, -4, 1, null, 1],
             'general rule negative float qty' => [false, 0, -4.5, 1, null, 1],
             'min above new int quantity' => [false, 5, 2, 8, null, 1],
@@ -305,7 +305,7 @@ class ProductQuantityFacadeTest extends Unit
             [true, 0.5, 1.5],
             [true, 2, 4],
             [true, 2.5, 4.5],
-            [false, 0, 0],
+            [true, 0, 0],
             [false, 0, -1],
             [false, 0, -1.5],
         ];
@@ -353,7 +353,7 @@ class ProductQuantityFacadeTest extends Unit
      */
     public function testNormalizeCartChangeTransferMinimumAdjustment(): void
     {
-        $expectedQuantity = 2;
+        $expectedQuantity = 2.0;
         $productTransfer = $this->tester->createProductWithSpecificProductQuantity($expectedQuantity, 100, 2);
         $expectedSku = $productTransfer->getSku();
 
@@ -372,7 +372,7 @@ class ProductQuantityFacadeTest extends Unit
      */
     public function testNormalizeCartChangeTransferMaximumAdjustment(): void
     {
-        $expectedQuantity = 100;
+        $expectedQuantity = 100.0;
         $productTransfer = $this->tester->createProductWithSpecificProductQuantity(2, $expectedQuantity, 2);
         $expectedSku = $productTransfer->getSku();
 
@@ -391,7 +391,7 @@ class ProductQuantityFacadeTest extends Unit
      */
     public function testNormalizeCartChangeTransferStepAdjustment(): void
     {
-        $expectedQuantity = 4;
+        $expectedQuantity = 4.0;
         $productTransfer = $this->tester->createProductWithSpecificProductQuantity(2, 100, 2);
         $expectedSku = $productTransfer->getSku();
 

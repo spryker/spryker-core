@@ -89,9 +89,8 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      */
     protected function validateQuantityIsPositive(string $sku, float $quantity, CartPreCheckResponseTransfer $responseTransfer): bool
     {
-        $restrictedQuantity = $this->config->getDefaultMinimumQuantity();
-        if ($quantity < $restrictedQuantity) {
-            $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, $restrictedQuantity, $quantity, $responseTransfer);
+        if ($quantity < 0) {
+            $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, 0, $quantity, $responseTransfer);
 
             return false;
         }
