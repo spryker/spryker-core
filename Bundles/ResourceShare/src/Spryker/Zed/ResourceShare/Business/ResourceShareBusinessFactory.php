@@ -50,7 +50,7 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     public function createResourceShareActivator(): ResourceShareActivatorInterface
     {
         return new ResourceShareActivator(
-            $this->createResourceShareReader(),
+            $this->getRepository(),
             $this->getResourceShareActivatorStrategyPlugins()
         );
     }

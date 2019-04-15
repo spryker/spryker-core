@@ -12,6 +12,13 @@ use Generated\Shared\Transfer\ResourceShareTransfer;
 interface ResourceShareRepositoryInterface
 {
     /**
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
+     */
+    public function findResourceShareByUuid(string $uuid): ?ResourceShareTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareTransfer|null

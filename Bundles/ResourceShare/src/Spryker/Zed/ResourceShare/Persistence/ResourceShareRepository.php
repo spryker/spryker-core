@@ -17,6 +17,27 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ResourceShareRepository extends AbstractRepository implements ResourceShareRepositoryInterface
 {
     /**
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
+     */
+    public function findResourceShareByUuid(string $uuid): ?ResourceShareTransfer
+    {
+        $resourceShareEntity = $this->getFactory()
+            ->createResourceSharePropelQuery()
+            ->filterByUuid($uuid)
+            ->findOne();
+
+        if (!$resourceShareEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createResourceShareMapper()
+            ->mapResourceShareEntityToResourceShareTransfer($resourceShareEntity);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareTransfer|null

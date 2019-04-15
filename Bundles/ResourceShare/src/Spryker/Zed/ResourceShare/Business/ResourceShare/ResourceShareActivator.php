@@ -11,18 +11,20 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
 
 class ResourceShareActivator implements ResourceShareActivatorInterface
 {
     use TransactionTrait;
 
+    protected const GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID = 'resource_share.activator.error.resource_is_not_found_by_provided_uuid';
     protected const GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER = 'resource_share.activator.error.strategy_expects_logged_in_customer';
 
     /**
-     * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface
+     * @var \Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface
      */
-    protected $resourceShareReader;
+    protected $resourceShareRepository;
 
     /**
      * @var \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[]
@@ -30,14 +32,14 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     protected $resourceShareActivatorStrategyPlugins;
 
     /**
-     * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface $resourceShareReader
-     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[] $resourceShareActivatorStrategyPlugins
+     * @param \Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface $resourceShareRepository
+     * @param array $resourceShareActivatorStrategyPlugins
      */
     public function __construct(
-        ResourceShareReaderInterface $resourceShareReader,
+        ResourceShareRepositoryInterface $resourceShareRepository,
         array $resourceShareActivatorStrategyPlugins
     ) {
-        $this->resourceShareReader = $resourceShareReader;
+        $this->resourceShareRepository = $resourceShareRepository;
         $this->resourceShareActivatorStrategyPlugins = $resourceShareActivatorStrategyPlugins;
     }
 
@@ -49,17 +51,25 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     public function activateResourceShare(
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
-        $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShare(
-            $resourceShareRequestTransfer->getResourceShare()
-        );
+        $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
 
-        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
-            return $resourceShareResponseTransfer;
+        if (!$resourceShareRequestTransfer->getUuid()) {
+            return $resourceShareResponseTransfer->addErrorMessage(
+                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
+            );
         }
 
-        $resourceShareRequestTransfer->setResourceShare(
-            $resourceShareResponseTransfer->getResourceShare()
+        $resourceShareTransfer = $this->resourceShareRepository->findResourceShareByUuid(
+            $resourceShareRequestTransfer->getUuid()
         );
+
+        if (!$resourceShareTransfer) {
+            return $resourceShareResponseTransfer->addErrorMessage(
+                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
+            );
+        }
+
+        $resourceShareRequestTransfer->setResourceShare($resourceShareTransfer);
 
         return $this->executeResourceShareActivatorStrategyPlugins(
             $resourceShareRequestTransfer
