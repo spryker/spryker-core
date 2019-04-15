@@ -16,25 +16,25 @@ use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProdu
 
 class DateValidatorStep implements DataImportStepInterface
 {
-    protected const DATE_EMPTY_EXCEPTION_MESSAGE = 'Both dates should not be empty"';
-    protected const START_DATE_MORE_THAN_END_DATE_EXCEPTION_MESSAGE = 'End dates should be greater than start date';
+    protected const DATE_EMPTY_EXCEPTION_MESSAGE = 'Both dates should not be empty';
+    protected const END_DATE_SHOULD_BE_GREATER_THAN_START_DATE_EXCEPTION_MESSAGE = 'End dates should be greater than start date';
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
-     * @throws \Pyz\Zed\DataImport\Business\Exception\InvalidDataException
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
      *
      * @return void
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        if (!$this->isDataSetHaveDates($dataSet)) {
+        if (!$this->hasDataSetDates($dataSet)) {
             throw new EntityNotFoundException(static::DATE_EMPTY_EXCEPTION_MESSAGE);
         }
 
         if (!$this->isEndDateGreaterThanStartDate($dataSet)) {
-            throw new InvalidDataException(static::START_DATE_MORE_THAN_END_DATE_EXCEPTION_MESSAGE);
+            throw new InvalidDataException(static::END_DATE_SHOULD_BE_GREATER_THAN_START_DATE_EXCEPTION_MESSAGE);
         }
     }
 
@@ -43,7 +43,7 @@ class DateValidatorStep implements DataImportStepInterface
      *
      * @return bool
      */
-    protected function isDataSetHaveDates(DataSetInterface $dataSet): bool
+    protected function hasDataSetDates(DataSetInterface $dataSet): bool
     {
         return !empty($dataSet[PriceProductScheduleDataSetInterface::KEY_INCLUDED_FROM]) &&
             !empty($dataSet[PriceProductScheduleDataSetInterface::KEY_INCLUDED_TO]);
