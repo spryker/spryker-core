@@ -5,13 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ContentStorage\Exception;
+namespace Spryker\Client\ContentBanner\Exception;
 
 use Exception;
 
-/**
- * @deprecated Will be removed without replacement.
- */
-class MissingContentTermTypePluginException extends Exception
+class MissingBannerTermException extends Exception
 {
 }

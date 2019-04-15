@@ -10,6 +10,9 @@ namespace Spryker\Client\ContentStorage\Resolver;
 use Spryker\Client\ContentStorage\Exception\MissingContentTermTypePluginException;
 use Spryker\Client\ContentStorageExtension\Dependency\Plugin\ContentTermExecutorPluginInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ContentResolver implements ContentResolverInterface
 {
     /**
