@@ -95,6 +95,13 @@ interface PriceProductRepositoryInterface
     public function findIdPriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): ?int;
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int|null
+     */
+    public function findIdPriceProductForProductAbstract(PriceProductTransfer $priceProductTransfer): ?int;
+
+    /**
      * @param int[] $productAbstractIds
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *

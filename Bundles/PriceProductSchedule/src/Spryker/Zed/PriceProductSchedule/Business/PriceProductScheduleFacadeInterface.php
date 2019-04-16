@@ -11,7 +11,7 @@ interface PriceProductScheduleFacadeInterface
 {
     /**
      * Specification:
-     * - Apply all scheduled prices.
+     * - Apply all scheduled prices which is meet the conditions for applying.
      *
      * @api
      *
@@ -21,7 +21,7 @@ interface PriceProductScheduleFacadeInterface
 
     /**
      * Specification:
-     * - Delete scheduled prices that has been applied earlier than the days provided as parameter.
+     * - Deletes scheduled prices that has been applied earlier than the days provided as parameter.
      *
      * @api
      *

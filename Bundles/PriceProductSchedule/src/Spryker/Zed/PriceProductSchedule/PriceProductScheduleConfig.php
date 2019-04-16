@@ -18,6 +18,8 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
 
     public const PRICE_TYPE_ORIGINAL = 'ORIGINAL';
 
+    protected const APPLY_BATCH_SIZE = 1000;
+
     /**
      * @return array
      */
@@ -26,5 +28,13 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
         return [
             static::PRICE_TYPE_DEFAULT => static::PRICE_TYPE_ORIGINAL,
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getApplyBatchSize(): int
+    {
+        return static::APPLY_BATCH_SIZE;
     }
 }

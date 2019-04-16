@@ -62,9 +62,13 @@ class PriceProductSchedulePriceTest extends Unit
         $priceProductScheduleData = $this->getPriceProductScheduleData();
 
         $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT] = 100;
+        $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::NET_AMOUNT] = 200;
+
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule($priceProductScheduleData);
 
         $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT] = 200;
+        $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::NET_AMOUNT] = 200;
+
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule($priceProductScheduleData);
 
         // Act
@@ -72,10 +76,16 @@ class PriceProductSchedulePriceTest extends Unit
 
         // Assert
         $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $this->assertTrue($priceProductScheduleEntity->isCurrent(), 'Scheduled price with lowest gross price should have been set as current.');
+        $this->assertTrue(
+            $priceProductScheduleEntity->isCurrent(),
+            'Scheduled price with lowest gross price should have been set as current.'
+        );
 
         $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
-        $this->assertFalse($priceProductScheduleEntity2->isCurrent(), 'Scheduled price with biggest gross price should not have been set as current.');
+        $this->assertFalse(
+            $priceProductScheduleEntity2->isCurrent(),
+            'Scheduled price with biggest gross price should not have been set as current.'
+        );
     }
 
     /**
@@ -101,10 +111,16 @@ class PriceProductSchedulePriceTest extends Unit
 
         // Assert
         $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
-        $this->assertTrue($priceProductScheduleEntity->isCurrent(), 'Scheduled price with lowest net price should have been set as current.');
+        $this->assertTrue(
+            $priceProductScheduleEntity->isCurrent(),
+            'Scheduled price with lowest net price should have been set as current.'
+        );
 
         $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
-        $this->assertFalse($priceProductScheduleEntity2->isCurrent(), 'Scheduled price with biggest net price should not have been set as current.');
+        $this->assertFalse(
+            $priceProductScheduleEntity2->isCurrent(),
+            'Scheduled price with biggest net price should not have been set as current.'
+        );
     }
 
     /**
