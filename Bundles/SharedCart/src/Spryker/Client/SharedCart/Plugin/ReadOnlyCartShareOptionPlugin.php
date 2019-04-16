@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PersistentCartShare\Plugin;
+namespace Spryker\Client\SharedCart\Plugin;
 
 use Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface;
 
-class FullAccessCartShareOptionPlugin implements CartShareOptionPluginInterface
+class ReadOnlyCartShareOptionPlugin implements CartShareOptionPluginInterface
 {
-    protected const KEY_FULL_ACCESS = 'FULL_ACCESS';
+    protected const KEY_READ_ONLY = 'READ_ONLY';
 
     /**
      * {@inheritdoc}
-     * - Returns full access share option key.
+     * - Returns read-only share option key.
      *
      * @api
      *
@@ -23,6 +23,6 @@ class FullAccessCartShareOptionPlugin implements CartShareOptionPluginInterface
      */
     public function getKey(): string
     {
-        return static::KEY_FULL_ACCESS;
+        return static::KEY_READ_ONLY;
     }
 }
