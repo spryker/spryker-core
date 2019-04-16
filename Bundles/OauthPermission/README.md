@@ -1,6 +1,6 @@
 # OauthPermission Module
-[![Build Status](https://travis-ci.org/spryker/glue-application-permission.svg)](https://travis-ci.org/spryker/glue-application-permission)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/glue-application-permission/badge.svg)](https://coveralls.io/github/spryker/glue-application-permission)
+[![Build Status](https://travis-ci.org/spryker/oauth-permission.svg)](https://travis-ci.org/spryker/oauth-permission)
+[![Coverage Status](https://coveralls.io/repos/github/spryker/oauth-permission/badge.svg)](https://coveralls.io/github/spryker/oauth-permission)
 
 OauthPermission module provides plugins for extending the OauthCustomerConnector module. 
 This extension provides functionality to provide customer permissions to customer identifier.
@@ -8,7 +8,7 @@ This extension provides functionality to provide customer permissions to custome
 ## Installation
 
 ```
-composer require spryker/glue-application-permission
+composer require spryker/oauth-permission
 ```
 
 ## Documentation
