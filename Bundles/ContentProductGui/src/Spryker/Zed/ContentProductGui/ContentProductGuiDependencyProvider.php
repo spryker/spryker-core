@@ -41,7 +41,7 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return void
      */
-    protected function provideProductImageFacade(Container $container)
+    protected function provideProductImageFacade(Container $container): void
     {
         $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
             return new ContentProductGuiToProductImageBridge($container->getLocator()->productImage()->facade());
@@ -53,7 +53,7 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return void
      */
-    protected function provideProductQueryContainer(Container $container)
+    protected function provideProductQueryContainer(Container $container): void
     {
         $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function (Container $container) {
             return SpyProductAbstractQuery::create();
@@ -65,7 +65,7 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return void
      */
-    protected function provideLocaleFacade(Container $container)
+    protected function provideLocaleFacade(Container $container): void
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ContentProductGuiToLocaleBridge($container->getLocator()->locale()->facade());
@@ -77,7 +77,7 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return void
      */
-    protected function provideContentProductFacade(Container $container)
+    protected function provideContentProductFacade(Container $container): void
     {
         $container[static::FACADE_CONTENT_PRODUCT] = function (Container $container) {
             return new ContentProductGuiToContentProductBridge($container->getLocator()->contentProduct()->facade());
