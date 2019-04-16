@@ -1,11 +1,11 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% if widget_title is not defined %}
-    {% set widget_title = 'Create CMS Content Item' | trans %}
+    {% set widget_title = 'Create Content Item' | trans %}
 {% endif %}
 
 {% block head_title widget_title %}
-{% block section_title 'Create CMS Content Item' | trans ~ ': ' ~ contentName | trans %}
+{% block section_title 'Create Content Item' | trans ~ ': ' ~ contentName | trans %}
 
 {% block action %}
     {{ backActionButton(backButton, 'Back to Content Items' | trans) }}
