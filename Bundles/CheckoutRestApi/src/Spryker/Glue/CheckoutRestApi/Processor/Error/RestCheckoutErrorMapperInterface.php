@@ -26,13 +26,13 @@ interface RestCheckoutErrorMapperInterface
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutErrorTransfer $restCheckoutErrorTransfer
      * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
-     * @param string|null $localeCode
+     * @param string $localeCode
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
     public function mapLocalizedRestCheckoutErrorTransferToRestErrorTransfer(
         RestCheckoutErrorTransfer $restCheckoutErrorTransfer,
         RestErrorMessageTransfer $restErrorMessageTransfer,
-        ?string $localeCode = null
+        string $localeCode
     ): RestErrorMessageTransfer;
 }
