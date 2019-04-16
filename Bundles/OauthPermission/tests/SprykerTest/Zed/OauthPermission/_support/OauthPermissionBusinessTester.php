@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Permission;
+namespace SprykerTest\Zed\OauthPermission;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
@@ -30,21 +30,13 @@ use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
  *
  * @SuppressWarnings(PHPMD)
  */
-class PermissionBusinessTester extends Actor
+class OauthPermissionBusinessTester extends Actor
 {
-    use _generated\PermissionBusinessTesterActions;
+    use _generated\OauthPermissionBusinessTesterActions;
 
-    /**
-     * Define custom actions here
-     */
-
-    /**
-     * @return void
-     */
-    public function registerPermissionStoragePlugin(): void
-    {
-        $this->havePermissionStorage(new PermissionStoragePlugin());
-    }
+   /**
+    * Define custom actions here
+    */
 
     /**
      * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface $permissionPlugin
@@ -53,7 +45,7 @@ class PermissionBusinessTester extends Actor
      */
     public function haveCompanyUserWithPermissions(PermissionPluginInterface $permissionPlugin): CompanyUserTransfer
     {
-        $this->registerPermissionStoragePlugin();
+        $this->havePermissionStorage(new PermissionStoragePlugin());
         $permissionTransfer = $this->havePermission($permissionPlugin);
         $permissionCollectionTransfer = (new PermissionCollectionTransfer())->addPermission($permissionTransfer);
 

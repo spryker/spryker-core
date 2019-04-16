@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\OauthCustomerConnector\Dependency\Service;
 
-
 class OauthCustomerConnectorToUtilEncodingServiceBridge implements OauthCustomerConnectorToUtilEncodingServiceInterface
 {
     /**
@@ -21,19 +20,6 @@ class OauthCustomerConnectorToUtilEncodingServiceBridge implements OauthCustomer
     public function __construct($utilEncodingService)
     {
         $this->utilEncodingService = $utilEncodingService;
-    }
-
-    /**
-     * @param string $jsonValue
-     * @param bool $assoc
-     * @param int|null $depth
-     * @param int|null $options
-     *
-     * @return mixed|null
-     */
-    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
-    {
-        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
 
     /**

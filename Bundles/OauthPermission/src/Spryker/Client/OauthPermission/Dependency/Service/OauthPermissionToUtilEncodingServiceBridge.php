@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\OauthPermission\Dependency\Service;
 
-
 class OauthPermissionToUtilEncodingServiceBridge implements OauthPermissionToUtilEncodingServiceInterface
 {
     /**
@@ -31,7 +30,7 @@ class OauthPermissionToUtilEncodingServiceBridge implements OauthPermissionToUti
      *
      * @return mixed|null
      */
-    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
+    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null)
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }

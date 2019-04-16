@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\OauthPermission\Business;
 
-use Spryker\Shared\OauthPermission\OauthPermissionConverter;
-use Spryker\Shared\OauthPermission\OauthPermissionConverterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\OauthPermission\Business\Expander\CustomerIdentifierExpander;
+use Spryker\Zed\OauthPermission\Business\Expander\CustomerIdentifierExpanderInterface;
 use Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToPermissionFacadeInterface;
 use Spryker\Zed\OauthPermission\OauthPermissionDependencyProvider;
 
@@ -18,6 +18,14 @@ use Spryker\Zed\OauthPermission\OauthPermissionDependencyProvider;
  */
 class OauthPermissionBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\OauthPermission\Business\Expander\CustomerIdentifierExpanderInterface
+     */
+    public function createCustomerIdentifierExpander(): CustomerIdentifierExpanderInterface
+    {
+        return new CustomerIdentifierExpander($this->getPermissionFacade());
+    }
+
     /**
      * @return \Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToPermissionFacadeInterface
      */

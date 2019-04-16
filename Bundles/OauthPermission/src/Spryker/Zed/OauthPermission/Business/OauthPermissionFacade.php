@@ -8,7 +8,7 @@
 namespace Spryker\Zed\OauthPermission\Business;
 
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
-use Generated\Shared\Transfer\OauthScopeTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -17,23 +17,19 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class OauthPermissionFacade extends AbstractFacade implements OauthPermissionFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerIdentifierTransfer $customerIdentifierTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     * @return \Generated\Shared\Transfer\CustomerIdentifierTransfer
      */
-    public function provideScopesByCustomerIdentifier(CustomerIdentifierTransfer $customerIdentifierTransfer): array
+    public function expandCustomerIdentifier(CustomerIdentifierTransfer $customerIdentifierTransfer, CustomerTransfer $customerTransfer): CustomerIdentifierTransfer
     {
-        $scopes = [];
-        $permissionCollectionTransfer = $customerIdentifierTransfer->getPermissions();
-
-        foreach ($permissionCollectionTransfer->getPermissions() as $permission) {
-            if(!$permission->getConfiguration()) {
-                $scopes[] = (new OauthScopeTransfer())->setIdentifier($permission->getKey());
-            }
-        }
-
-        return $scopes;
+        return $this->getFactory()
+            ->createCustomerIdentifierExpander()
+            ->expandCustomerIdentifier($customerIdentifierTransfer, $customerTransfer);
     }
 }

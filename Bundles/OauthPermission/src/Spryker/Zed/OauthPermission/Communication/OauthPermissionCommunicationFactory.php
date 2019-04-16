@@ -8,8 +8,6 @@
 namespace Spryker\Zed\OauthPermission\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToPermissionFacadeInterface;
-use Spryker\Zed\OauthPermission\OauthPermissionDependencyProvider;
 
 /**
  * @method \Spryker\Zed\OauthPermission\OauthPermissionConfig getConfig()
@@ -17,11 +15,4 @@ use Spryker\Zed\OauthPermission\OauthPermissionDependencyProvider;
  */
 class OauthPermissionCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToPermissionFacadeInterface
-     */
-    public function getPermissionFacade(): OauthPermissionToPermissionFacadeInterface
-    {
-        return $this->getProvidedDependency(OauthPermissionDependencyProvider::FACADE_PERMISSION);
-    }
 }

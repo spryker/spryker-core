@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OauthPermission\Business;
+namespace Spryker\Zed\OauthPermission\Business\Expander;
 
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface OauthPermissionFacadeInterface
+interface CustomerIdentifierExpanderInterface
 {
     /**
-     * Specification:
-     *  - Expands the CustomerIdentifierTransfer with permissions collection if idCompanyUser is set up in CustomerIdentifierTransfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CustomerIdentifierTransfer $customerIdentifierTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *

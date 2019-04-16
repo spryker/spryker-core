@@ -7,15 +7,19 @@
 
 namespace Spryker\Client\OauthPermission;
 
-use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceBridge;
 use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceBridge;
 use Spryker\Glue\Kernel\Plugin\Pimple;
 
+/**
+ * @method \Spryker\Client\OauthPermission\OauthPermissionConfig getConfig()
+ */
 class OauthPermissionDependencyProvider extends AbstractDependencyProvider
 {
     public const APPLICATION_GLUE = 'APPLICATION_GLUE';
+
     public const SERVICE_OAUTH = 'SERVICE_OAUTH';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -24,7 +28,7 @@ class OauthPermissionDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
 

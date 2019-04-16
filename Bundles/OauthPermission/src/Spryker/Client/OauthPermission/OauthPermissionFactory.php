@@ -10,10 +10,24 @@ namespace Spryker\Client\OauthPermission;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceInterface;
 use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceInterface;
+use Spryker\Client\OauthPermission\OauthPermission\OauthPermissionReader;
+use Spryker\Client\OauthPermission\OauthPermission\OauthPermissionReaderInterface;
 use Spryker\Glue\Kernel\Application;
 
 class OauthPermissionFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\OauthPermission\OauthPermission\OauthPermissionReaderInterface
+     */
+    public function createOauthPermissionReader(): OauthPermissionReaderInterface
+    {
+        return new OauthPermissionReader(
+            $this->getGlueApplication()->get('request'),
+            $this->getOauthService(),
+            $this->getUtilEncodingService()
+        );
+    }
+
     /**
      * @return \Spryker\Glue\Kernel\Application
      */

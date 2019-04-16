@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Permission\Business;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Spryker\Zed\Permission\Business\PermissionFacadeInterface;
+use SprykerTest\Zed\Permission\Stub\TestPermissionPlugin;
 
 /**
  * Auto-generated group annotations
@@ -33,6 +34,9 @@ class PermissionFacadeTest extends Unit
      */
     public function testFindMergedRegisteredNonInfrastructuralPermissionsDoesNotReturnInfrastructuralPermissions(): void
     {
+        //Assign
+        $this->tester->registerPermissionStoragePlugin();
+
         // Act
         $registeredNonInfrastructuralPermissions = $this->getPermissionFacade()
             ->findMergedRegisteredNonInfrastructuralPermissions()
@@ -40,6 +44,26 @@ class PermissionFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($this->hasInfrastructuralPermissions($registeredNonInfrastructuralPermissions));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetPermissionsByIdentifierShouldReturnPermissionsAssignedForCompanyUser(): void
+    {
+        //Assign
+        $companyUserTransfer = $this->tester->haveCompanyUserWithPermissions(new TestPermissionPlugin());
+
+        // Act
+        $permissionCollectionTransfer = $this->getPermissionFacade()
+            ->getPermissionsByIdentifier($companyUserTransfer->getIdCompanyUser());
+
+        //Assert
+        $this->assertCount(1, $permissionCollectionTransfer->getPermissions());
+        $this->assertEquals(
+            TestPermissionPlugin::KEY,
+            $permissionCollectionTransfer->getPermissions()->offsetGet(0)->getKey()
+        );
     }
 
     /**

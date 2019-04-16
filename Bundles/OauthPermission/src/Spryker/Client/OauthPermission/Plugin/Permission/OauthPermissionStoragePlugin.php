@@ -7,52 +7,25 @@
 
 namespace Spryker\Client\OauthPermission\Plugin\Permission;
 
-use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\OauthPermission\OauthPermissionConfig;
 use Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 /**
- * @method \Spryker\Client\OauthPermission\OauthPermissionFactory getFactory()
+ * @method \Spryker\Client\OauthPermission\OauthPermissionClient getClient()
  */
 class OauthPermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *  - Finds permissions in a authorization header.
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function getPermissionCollection(): PermissionCollectionTransfer
     {
-        //TODO: Cleanup
-        $request = $this->getFactory()->getGlueApplication()->get('request');
-        $authorizationToken = $request->headers->get(OauthPermissionConfig::HEADER_AUTHORIZATION);
-
-        if (!$authorizationToken) {
-            return new PermissionCollectionTransfer();
-        }
-
-        [$type, $accessToken] = $this->extractToken($authorizationToken);
-
-        $oauthAccessTokenDataTransfer = $this->getFactory()
-            ->getOauthService()
-            ->extractAccessTokenData($accessToken);
-
-        $customerIdentifier = (new CustomerIdentifierTransfer())
-            ->fromArray($this->getFactory()
-                ->getUtilEncodingService()
-                ->decodeJson($oauthAccessTokenDataTransfer->getOauthUserId(), true));
-
-        //TODO: Check for PermissionCollectionTransfer
-        return $customerIdentifier->getPermissions();
-    }
-
-    /**
-     * @param string $authorizationToken
-     *
-     * @return array
-     */
-    protected function extractToken(string $authorizationToken): array
-    {
-        return preg_split('/\s+/', $authorizationToken);
+        return $this->getClient()->getOauthCustomerPermissions();
     }
 }

@@ -20,8 +20,8 @@ use Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerI
 class OauthCustomerIdentifierPermissionExpanderPlugin extends AbstractPlugin implements OauthCustomerIdentifierExpanderPluginInterface
 {
     /**
-     * TODO: Specs
-     * TODO: Write tests + Move code from plugin
+     * Specification:
+     *  - Expands the CustomerIdentifierTransfer with permissions collection if idCompanyUser is set up in CustomerIdentifierTransfer.
      *
      * @api
      *
@@ -34,14 +34,7 @@ class OauthCustomerIdentifierPermissionExpanderPlugin extends AbstractPlugin imp
         CustomerIdentifierTransfer $customerIdentifierTransfer,
         CustomerTransfer $customerTransfer
     ): CustomerIdentifierTransfer {
-        if (!$customerIdentifierTransfer->getIdCompanyUser()) {
-            return $customerIdentifierTransfer;
-        }
-
-        $customerIdentifierTransfer->setPermissions(
-            $this->getFactory()->getPermissionFacade()->getPermissionsByIdentifier($customerIdentifierTransfer->getIdCompanyUser())
-        );
-
-        return $customerIdentifierTransfer;
+        return $this->getFacade()
+            ->expandCustomerIdentifier($customerIdentifierTransfer, $customerTransfer);
     }
 }

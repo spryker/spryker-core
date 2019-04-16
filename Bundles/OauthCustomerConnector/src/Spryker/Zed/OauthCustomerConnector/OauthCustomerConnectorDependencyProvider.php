@@ -24,7 +24,6 @@ class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyP
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     public const PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER = 'PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER';
-    public const PLUGINS_OAUTH_CUSTOMER_SCOPE_PROVIDER_PLUGINS = 'PLUGINS_OAUTH_CUSTOMER_SCOPE_PROVIDER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,7 +36,6 @@ class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addOauthFacade($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addOauthCustomerIdentifierExpanderPlugins($container);
-        $container = $this->addOauthCustomerScopeProviderPlugins($container);
 
         return $container;
     }
@@ -102,28 +100,6 @@ class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyP
      * @return \Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface[]
      */
     protected function getOauthCustomerIdentifierExpanderPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addOauthCustomerScopeProviderPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_OAUTH_CUSTOMER_SCOPE_PROVIDER_PLUGINS] = function () {
-            return $this->getOauthCustomerScopeProviderPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerScopeProviderPluginInterface[]
-     */
-    protected function getOauthCustomerScopeProviderPlugins(): array
     {
         return [];
     }
