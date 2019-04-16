@@ -15,9 +15,9 @@ interface ProductMeasurementSalesUnitValueInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return int
+     * @return float
      */
-    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): int;
+    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): float;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

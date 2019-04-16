@@ -71,9 +71,9 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return int
+     * @return float
      */
-    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): int;
+    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): float;
 
     /**
      * Specification:
