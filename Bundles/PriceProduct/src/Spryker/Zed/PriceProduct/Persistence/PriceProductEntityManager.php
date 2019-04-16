@@ -34,7 +34,7 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
                 new PriceProductCriteriaTransfer()
             );
 
-        if ($priceProductStoreQuery->getAsColumns() === 0) {
+        if (!$priceProductStoreQuery->getAsColumns()) {
             return;
         }
 

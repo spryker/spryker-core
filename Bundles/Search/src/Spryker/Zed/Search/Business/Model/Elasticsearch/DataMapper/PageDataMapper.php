@@ -183,18 +183,18 @@ class PageDataMapper implements PageDataMapperInterface
 
     /**
      * @param array $result
-     * @param \Generated\Shared\Transfer\SearchResultDataMapTransfer[] $searchResultData
+     * @param \Generated\Shared\Transfer\SearchResultDataMapTransfer[]|\ArrayObject $searchResultData
      *
      * @return array
      */
     protected function transformSearchResultData(array $result, $searchResultData)
     {
-        foreach ($searchResultData as $searchResultDataTransfer) {
-            $searchResultDataTransfer
+        foreach ($searchResultData as $searchResultDataMapTransfer) {
+            $searchResultDataMapTransfer
                 ->requireName()
                 ->requireValue();
 
-            $result[PageIndexMap::SEARCH_RESULT_DATA][$searchResultDataTransfer->getName()] = $searchResultDataTransfer->getValue();
+            $result[PageIndexMap::SEARCH_RESULT_DATA][$searchResultDataMapTransfer->getName()] = $searchResultDataMapTransfer->getValue();
         }
 
         return $result;
@@ -202,7 +202,7 @@ class PageDataMapper implements PageDataMapperInterface
 
     /**
      * @param array $result
-     * @param \Generated\Shared\Transfer\StringFacetMapTransfer[] $stringFacetMap
+     * @param \Generated\Shared\Transfer\StringFacetMapTransfer[]|\ArrayObject $stringFacetMap
      *
      * @return array
      */
@@ -224,7 +224,7 @@ class PageDataMapper implements PageDataMapperInterface
 
     /**
      * @param array $result
-     * @param \Generated\Shared\Transfer\IntegerFacetMapTransfer[] $integerFacet
+     * @param \Generated\Shared\Transfer\IntegerFacetMapTransfer[]|\ArrayObject $integerFacet
      *
      * @return array
      */
@@ -246,7 +246,7 @@ class PageDataMapper implements PageDataMapperInterface
 
     /**
      * @param array $result
-     * @param \Generated\Shared\Transfer\StringSortMapTransfer[] $stringSortMap
+     * @param \Generated\Shared\Transfer\StringSortMapTransfer[]|\ArrayObject $stringSortMap
      *
      * @return array
      */
@@ -265,7 +265,7 @@ class PageDataMapper implements PageDataMapperInterface
 
     /**
      * @param array $result
-     * @param \Generated\Shared\Transfer\IntegerSortMapTransfer[] $integerSortMap
+     * @param \Generated\Shared\Transfer\IntegerSortMapTransfer[]|\ArrayObject $integerSortMap
      *
      * @return array
      */

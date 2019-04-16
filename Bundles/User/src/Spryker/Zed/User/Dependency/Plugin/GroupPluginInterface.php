@@ -31,7 +31,7 @@ interface GroupPluginInterface
      * @param int $idUser
      * @param int $idGroup
      *
-     * @return int
+     * @return void
      */
     public function addUserToGroup($idUser, $idGroup);
 

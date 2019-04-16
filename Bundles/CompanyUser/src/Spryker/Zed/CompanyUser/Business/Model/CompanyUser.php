@@ -209,6 +209,26 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
+     * @param int[] $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function findActiveCompanyUsers(array $companyUserIds): array
+    {
+        return $this->companyUserRepository->findActiveCompanyUsersByIds($companyUserIds);
+    }
+
+    /**
+     * @param int[] $companyIds
+     *
+     * @return int[]
+     */
+    public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array
+    {
+        return $this->companyUserRepository->findActiveCompanyUserIdsByCompanyIds($companyIds);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
@@ -343,6 +363,22 @@ class CompanyUser implements CompanyUserInterface
         $this->addMessagesToCompanyResponse($companyUserResponseTransfer->getMessages(), $companyResponseTransfer);
 
         return $companyResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByUuid(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer
+    {
+        $companyUserTransfer->requireUuid();
+        $companyUserTransfer = $this->companyUserRepository->findActiveCompanyUserByUuid($companyUserTransfer->getUuid());
+        if ($companyUserTransfer !== null) {
+            return $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);
+        }
+
+        return null;
     }
 
     /**

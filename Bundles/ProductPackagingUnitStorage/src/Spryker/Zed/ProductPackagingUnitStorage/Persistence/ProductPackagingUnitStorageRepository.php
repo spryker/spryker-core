@@ -18,7 +18,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
     public function findProductAbstractPackagingStorageEntitiesByProductAbstractIds(array $productAbstractIds): array
     {
@@ -65,7 +65,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     }
 
     /**
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
     public function findAllProductAbstractPackagingStorageEntities(): array
     {
