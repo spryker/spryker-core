@@ -12,29 +12,29 @@
 {% endblock %}
 
 {% block content %}
-        {% block widget_content %}
-            <div class="row">
-                <div class="col-xs-12">
-                    {{ form_start(contentForm, {attr: {novalidate: 'novalidate'}}) }}
-                        <div class="row">
-                            <div class="col-xs-12 col-md-12">
-                                {{ form_row(contentForm.name) }}
-                            </div>
+    {% block widget_content %}
+        <div class="row">
+            <div class="col-xs-12">
+                {{ form_start(contentForm, {attr: {novalidate: 'novalidate'}}) }}
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12">
+                            {{ form_row(contentForm.name) }}
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-md-12">
-                                {{ form_row(contentForm.description) }}
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12">
+                            {{ form_row(contentForm.description) }}
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                            {{ tabs(contentTabs, {'contentForm' : contentForm} ) }}
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                        {{ tabs(contentTabs, {'contentForm' : contentForm} ) }}
                         </div>
-                    {{ form_end(contentForm) }}
-                </div>
+                    </div>
+                {{ form_end(contentForm) }}
             </div>
-            <script src="/assets/js/spryker-zed-content-clear.js"></script>
-        {% endblock %}
+        </div>
+        <script src="/assets/js/spryker-zed-content-clear.js"></script>
+    {% endblock %}
 {% endblock %}
 
