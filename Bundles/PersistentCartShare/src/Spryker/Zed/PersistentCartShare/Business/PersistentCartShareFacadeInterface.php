@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\PersistentCartShare\Business;
 
-use Generated\Shared\Transfer\PersistentCartShareResourceDataTransfer;
 use Generated\Shared\Transfer\QuotePreviewRequestTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 /**
  * @method \Spryker\Zed\PersistentCartShare\Business\PersistentCartShareBusinessFactory getFactory()
@@ -17,20 +16,16 @@ use Generated\Shared\Transfer\ResourceShareTransfer;
 interface PersistentCartShareFacadeInterface
 {
     /**
+     * Specification:
+     * - Retrieves a quote based on the provided UUID.
+     * - Validates if provided UUID refers to a "preview" type cart share.
+     * - Returns "isSuccess=true" and quote transfer on success and error message otherwise.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuotePreviewRequestTransfer $quotePreviewRequestTransfer
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteForPreview(QuotePreviewRequestTransfer $quotePreviewRequestTransfer);
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     *
-     * @return \Generated\Shared\Transfer\PersistentCartShareResourceDataTransfer
-     */
-    public function getResourceDataFromResourceShareTransfer(ResourceShareTransfer $resourceShareTransfer): PersistentCartShareResourceDataTransfer;
+    public function getQuoteForPreview(QuotePreviewRequestTransfer $quotePreviewRequestTransfer): QuoteResponseTransfer;
 }

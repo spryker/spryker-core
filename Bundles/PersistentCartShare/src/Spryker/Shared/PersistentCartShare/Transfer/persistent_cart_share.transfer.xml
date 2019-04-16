@@ -23,4 +23,10 @@
         <property name="shareOption" type="string"/>
     </transfer>
 
+    <transfer name="ResourceShare">
+        <property name="resourceType" type="string" />
+        <property name="resourceData" type="string" />
+        <property name="PersistentCartShareResourceData" type="PersistentCartShareResourceData" />
+    </transfer>
+
 </transfers>

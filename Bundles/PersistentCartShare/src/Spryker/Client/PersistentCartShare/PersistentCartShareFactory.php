@@ -9,6 +9,8 @@ namespace Spryker\Client\PersistentCartShare;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToZedRequestClientInterface;
+use Spryker\Client\PersistentCartShare\Dependency\Service\PersistentCartShareToUtilEncodingServiceInterface;
+use Spryker\Client\PersistentCartShare\Model\ResourceDataReader;
 use Spryker\Client\PersistentCartShare\Zed\PersistentCartShareStub;
 
 /**
@@ -30,5 +32,23 @@ class PersistentCartShareFactory extends AbstractFactory
     public function getZedRequestClient(): PersistentCartShareToZedRequestClientInterface
     {
         return $this->getProvidedDependency(PersistentCartShareDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCartShare\Model\ResourceDataReader
+     */
+    public function createResourceDataReader(): ResourceDataReader
+    {
+        return new ResourceDataReader(
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCartShare\Dependency\Service\PersistentCartShareToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): PersistentCartShareToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(PersistentCartShareDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

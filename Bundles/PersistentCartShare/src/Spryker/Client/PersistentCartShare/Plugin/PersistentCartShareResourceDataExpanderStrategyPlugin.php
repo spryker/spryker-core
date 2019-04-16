@@ -5,18 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCartShare\Communication\Plugin;
+namespace Spryker\Client\PersistentCartShare\Plugin;
 
 use Generated\Shared\Transfer\ResourceShareTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
+use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface;
 
 /**
- * @method \Spryker\Zed\PersistentCartShare\Business\PersistentCartShareFacade getFacade()
- * @method \Spryker\Zed\PersistentCartShare\Communication\PersistentCartShareCommunicationFactory getFactory()
- * @method \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig getConfig()
+ * @method \Spryker\Client\PersistentCartShare\PersistentCartShareFactory getFactory()
  */
-class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
+class PersistentCartShareResourceDataExpanderStrategyPlugin extends AbstractPlugin implements ResourceShareResourceDataExpanderStrategyPluginInterface
 {
     protected const SHARE_OPTION_PREVIEW = 'PREVIEW';
     protected const RESOURCE_TYPE_QUOTE = 'quote';
@@ -24,19 +22,7 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
     protected const PARAM_SHARE_OPTION = 'share_option';
 
     /**
-     * @api
-     *
      * @inheritDoc
-     */
-    public function isLoginRequired(): bool
-    {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
      */
     public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
     {
@@ -60,14 +46,20 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc{
      *
      * @api
      *
-     * @return void
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer
      */
-    public function execute(ResourceShareTransfer $resourceShareTransfer): void
+    public function expand(ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer
     {
-        //do nothing
+        return $resourceShareTransfer->setPersistentCartShareResourceData(
+            $this->getFactory()
+                ->createResourceDataReader()
+                ->getResourceDataFromResourceShareTransfer($resourceShareTransfer)
+        );
     }
 }

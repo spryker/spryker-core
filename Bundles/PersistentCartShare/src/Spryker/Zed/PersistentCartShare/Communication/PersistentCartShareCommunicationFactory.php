@@ -9,6 +9,7 @@ namespace Spryker\Zed\PersistentCartShare\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeInterface;
+use Spryker\Zed\PersistentCartShare\Dependency\Service\PersistentCartShareToUtilEncodingServiceInterface;
 use Spryker\Zed\PersistentCartShare\PersistentCartShareDependencyProvider;
 
 /**
@@ -23,5 +24,13 @@ class PersistentCartShareCommunicationFactory extends AbstractCommunicationFacto
     public function getResourceShareFacade(): PersistentCartShareToResourceShareFacadeInterface
     {
         return $this->getProvidedDependency(PersistentCartShareDependencyProvider::FACADE_RESOURCE_SHARE);
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCartShare\Dependency\Service\PersistentCartShareToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): PersistentCartShareToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(PersistentCartShareDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

@@ -11,14 +11,15 @@ use ArrayObject;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuotePreviewRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareCriteriaTransfer;
-use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToQuoteFacadeInterface;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeInterface;
 
 class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
 {
+    public const RESOURCE_TYPE_QUOTE = 'quote';
+
     /**
      * @var \Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeInterface
      */
@@ -57,15 +58,7 @@ class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
     public function getQuoteForPreview(QuotePreviewRequestTransfer $quotePreviewRequestTransfer): QuoteResponseTransfer
     {
         $resourceShareResponseTransfer = $this->getResourceShare($quotePreviewRequestTransfer);
-        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
-            return (new QuoteResponseTransfer())
-                ->setIsSuccessful(false)
-                ->setErrors(
-                    $this->convertMessagesToQuoteErrors($resourceShareResponseTransfer->getErrorMessages())
-                );
-        }
 
-        $resourceShareResponseTransfer = $this->activateResourceShare($quotePreviewRequestTransfer);
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return (new QuoteResponseTransfer())
                 ->setIsSuccessful(false)
@@ -88,10 +81,11 @@ class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
      */
     public function getResourceShare(QuotePreviewRequestTransfer $quotePreviewRequestTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareCriteriaTransfer = (new ResourceShareCriteriaTransfer())
-            ->setUuid($quotePreviewRequestTransfer->getResourceShareUuid());
-
-        return $this->resourceShareFacade->getResourceShare($resourceShareCriteriaTransfer);
+        return $this->resourceShareFacade->getResourceShare(
+            (new ResourceShareTransfer())
+                ->setUuid($quotePreviewRequestTransfer->getResourceShareUuid())
+                ->setResourceType(static::RESOURCE_TYPE_QUOTE)
+        );
     }
 
     /**
@@ -112,22 +106,9 @@ class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuotePreviewRequestTransfer $quotePreviewRequestTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $errorMessages
      *
-     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
-     */
-    protected function activateResourceShare(QuotePreviewRequestTransfer $quotePreviewRequestTransfer): ResourceShareResponseTransfer
-    {
-        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
-            ->setUuid($quotePreviewRequestTransfer->getResourceShareUuid());
-
-        return $this->resourceShareFacade->activateResourceShare($resourceShareRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $errorMessages
-     *
-     * @return \Generated\Shared\Transfer\QuoteErrorTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\QuoteErrorTransfer[]
      */
     protected function convertMessagesToQuoteErrors(ArrayObject $errorMessages): ArrayObject
     {

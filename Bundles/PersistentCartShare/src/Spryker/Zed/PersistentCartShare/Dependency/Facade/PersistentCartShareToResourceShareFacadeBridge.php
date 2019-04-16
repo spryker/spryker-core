@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\PersistentCartShare\Dependency\Facade;
 
-use Generated\Shared\Transfer\ResourceShareCriteriaTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 
 class PersistentCartShareToResourceShareFacadeBridge implements PersistentCartShareToResourceShareFacadeInterface
 {
@@ -31,13 +31,13 @@ class PersistentCartShareToResourceShareFacadeBridge implements PersistentCartSh
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function getResourceShare(ResourceShareCriteriaTransfer $resourceShareCriteriaTransfer): ResourceShareResponseTransfer
+    public function getResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
-        return $this->resourceShareFacade->getResourceShare($resourceShareCriteriaTransfer);
+        return $this->resourceShareFacade->getResourceShare($resourceShareTransfer);
     }
 
     /**
