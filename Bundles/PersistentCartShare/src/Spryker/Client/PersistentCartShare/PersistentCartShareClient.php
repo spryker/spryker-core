@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\PersistentCartShare;
 
+use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -26,5 +27,20 @@ class PersistentCartShareClient extends AbstractClient implements PersistentCart
         return $this->getFactory()
             ->createCartShareOptionReader()
             ->getCartShareOptions();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idQuote
+     * @param string $shareOption
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    public function generateCartResourceShare(int $idQuote, string $shareOption): ResourceShareResponseTransfer
+    {
+        // TODO: Implement generateCartResourceShare() method.
     }
 }
