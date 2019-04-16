@@ -10,7 +10,6 @@ namespace Spryker\Client\ResourceShare\Zed;
 use Everon\Component\Factory\Tests\Unit\Doubles\AbstractStub;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Client\ResourceShare\Dependency\Client\ResourceShareToZedRequestClientInterface;
 
 class ResourceShareStub extends AbstractStub implements ResourceShareStubInterface
@@ -29,14 +28,14 @@ class ResourceShareStub extends AbstractStub implements ResourceShareStubInterfa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function generateResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
+    public function generateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer */
-        $resourceShareResponseTransfer = $this->zedRequestClient->call('/resource-share/gateway/generate-resource-share', $resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->zedRequestClient->call('/resource-share/gateway/generate-resource-share', $resourceShareRequestTransfer);
 
         return $resourceShareResponseTransfer;
     }

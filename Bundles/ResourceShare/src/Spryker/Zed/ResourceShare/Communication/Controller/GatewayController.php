@@ -9,22 +9,21 @@ namespace Spryker\Zed\ResourceShare\Communication\Controller;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method \Spryker\Zed\ResourceShare\Business\ResourceShareFacade getFacade()
+ * @method \Spryker\Zed\ResourceShare\Business\ResourceShareFacadeInterface getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function generateResourceShareAction(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
+    public function generateResourceShareAction(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        return $this->getFacade()->generateResourceShare($resourceShareTransfer);
+        return $this->getFacade()->generateResourceShare($resourceShareRequestTransfer);
     }
 
     /**

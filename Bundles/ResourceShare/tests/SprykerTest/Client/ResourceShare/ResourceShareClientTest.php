@@ -26,7 +26,6 @@ use Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareResourc
  */
 class ResourceShareClientTest extends Unit
 {
-    protected const KEY_RESOURCE_DATA = 'resource_data';
     protected const VALUE_RESOURCE_DATA = 'VALUE_RESOURCE_DATA';
     protected const VALUE_RESOURCE_DATA_REPLACED = 'VALUE_RESOURCE_DATA_REPLACED';
     protected const VALUE_RESOURCE_DATA_EXPANDED = '_EXPANDED';
@@ -45,12 +44,13 @@ class ResourceShareClientTest extends Unit
         // Arrange
         $resourceShareTransfer = (new ResourceShareBuilder())->build();
         $resourceShareTransfer->setResourceData(static::VALUE_RESOURCE_DATA);
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer);
 
         $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichExpandsResourceDataMock();
         $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
 
         // Act
-        $resourceShareResponseTransfer = $this->getClient()->generateResourceShare($resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->getClient()->generateResourceShare($resourceShareRequestTransfer);
 
         // Assert
         $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
@@ -68,12 +68,13 @@ class ResourceShareClientTest extends Unit
         // Arrange
         $resourceShareTransfer = (new ResourceShareBuilder())->build();
         $resourceShareTransfer->setResourceData(static::VALUE_RESOURCE_DATA);
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer);
 
         $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichReplacesResourceDataMock();
         $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
 
         // Act
-        $resourceShareResponseTransfer = $this->getClient()->generateResourceShare($resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->getClient()->generateResourceShare($resourceShareRequestTransfer);
 
         // Assert
         $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
@@ -86,17 +87,18 @@ class ResourceShareClientTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateResourceShareWillNotExpandResourceDataIfGenerationFailed(): void
+    public function testGenerateResourceShareWillNotExpandResourceDataWhenGenerationFailed(): void
     {
         // Arrange
         $resourceShareTransfer = new ResourceShareTransfer();
         $resourceShareTransfer->setResourceData(static::VALUE_RESOURCE_DATA);
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer);
 
         $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichExpandsResourceDataMock();
         $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
 
         // Act
-        $resourceShareResponseTransfer = $this->getClient()->generateResourceShare($resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->getClient()->generateResourceShare($resourceShareRequestTransfer);
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
@@ -106,17 +108,18 @@ class ResourceShareClientTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateResourceShareWillNotReplaceResourceDataIfGenerationFailed(): void
+    public function testGenerateResourceShareWillNotReplaceResourceDataWhenGenerationFailed(): void
     {
         // Arrange
         $resourceShareTransfer = new ResourceShareTransfer();
         $resourceShareTransfer->setResourceData(static::VALUE_RESOURCE_DATA);
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer);
 
         $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichReplacesResourceDataMock();
         $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
 
         // Act
-        $resourceShareResponseTransfer = $this->getClient()->generateResourceShare($resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->getClient()->generateResourceShare($resourceShareRequestTransfer);
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
@@ -131,7 +134,8 @@ class ResourceShareClientTest extends Unit
         // Arrange
         $resourceShareTransfer = (new ResourceShareBuilder())->build();
         $resourceShareTransfer->setResourceData(static::VALUE_RESOURCE_DATA);
-        $resourceShareTransfer = $this->getClient()->generateResourceShare($resourceShareTransfer)->getResourceShare();
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer);
+        $resourceShareTransfer = $this->getClient()->generateResourceShare($resourceShareRequestTransfer)->getResourceShare();
 
         $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichExpandsResourceDataMock();
         $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
@@ -163,7 +167,8 @@ class ResourceShareClientTest extends Unit
         // Arrange
         $resourceShareTransfer = (new ResourceShareBuilder())->build();
         $resourceShareTransfer->setResourceData(static::VALUE_RESOURCE_DATA);
-        $resourceShareTransfer = $this->getClient()->generateResourceShare($resourceShareTransfer)->getResourceShare();
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer);
+        $resourceShareTransfer = $this->getClient()->generateResourceShare($resourceShareRequestTransfer)->getResourceShare();
 
         $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichReplacesResourceDataMock();
         $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
@@ -190,17 +195,16 @@ class ResourceShareClientTest extends Unit
     /**
      * @return void
      */
-    public function testActivateResourceShareWillNotExpandResourceDataIfGenerationFailed(): void
+    public function testActivateResourceShareWillNotExpandResourceDataWhenActivationFailed(): void
     {
         // Arrange
-        $resourceShareTransfer = new ResourceShareTransfer();
-        $resourceShareTransfer->setResourceData(static::VALUE_RESOURCE_DATA);
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())->setResourceShare(new ResourceShareTransfer());
 
         $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichExpandsResourceDataMock();
         $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
 
         // Act
-        $resourceShareResponseTransfer = $this->getClient()->generateResourceShare($resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->getClient()->activateResourceShare($resourceShareRequestTransfer);
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
@@ -210,17 +214,16 @@ class ResourceShareClientTest extends Unit
     /**
      * @return void
      */
-    public function testActivateResourceShareWillNotReplaceResourceDataIfGenerationFailed(): void
+    public function testActivateResourceShareWillNotReplaceResourceDataWhenActivationFailed(): void
     {
         // Arrange
-        $resourceShareTransfer = new ResourceShareTransfer();
-        $resourceShareTransfer->setResourceData(static::VALUE_RESOURCE_DATA);
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())->setResourceShare(new ResourceShareTransfer());
 
         $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichReplacesResourceDataMock();
         $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
 
         // Act
-        $resourceShareResponseTransfer = $this->getClient()->generateResourceShare($resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->getClient()->activateResourceShare($resourceShareRequestTransfer);
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
@@ -249,6 +252,7 @@ class ResourceShareClientTest extends Unit
     protected function createResourceShareResourceDataExpanderStrategyPluginWhichExpandsResourceDataMock()
     {
         $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginMock();
+        $resourceShareResourceDataExpanderStrategyPluginMock->method('isApplicable')->willReturn(true);
         $resourceShareResourceDataExpanderStrategyPluginMock->method('expand')
             ->willReturnCallback(function (ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer {
                 return $resourceShareTransfer->setResourceData(
@@ -265,6 +269,7 @@ class ResourceShareClientTest extends Unit
     protected function createResourceShareResourceDataExpanderStrategyPluginWhichReplacesResourceDataMock()
     {
         $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginMock();
+        $resourceShareResourceDataExpanderStrategyPluginMock->method('isApplicable')->willReturn(true);
         $resourceShareResourceDataExpanderStrategyPluginMock->method('expand')
             ->willReturnCallback(function (ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer {
                 return $resourceShareTransfer->setResourceData(

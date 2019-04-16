@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ResourceShare\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ResourceShareBuilder;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\ResourceShare\Business\ResourceShareFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -26,7 +27,9 @@ class ResourceShareDataHelper extends Module
     {
         $resourceShareTransfer = (new ResourceShareBuilder($seedData))->build();
 
-        $resourceShareResponseTransfer = $this->getResourceShareFacade()->generateResourceShare($resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->getResourceShareFacade()->generateResourceShare(
+            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
+        );
         $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
 
         return $resourceShareTransfer;

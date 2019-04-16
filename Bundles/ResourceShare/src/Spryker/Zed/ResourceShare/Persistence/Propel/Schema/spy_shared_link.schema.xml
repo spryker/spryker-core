@@ -26,7 +26,7 @@
         <behavior name="timestampable"/>
 
         <behavior name="uuid">
-            <parameter name="key_columns" value="resource_type.resource_data.customer_reference"/>
+            <parameter name="key_columns" value="id_resource_share.resource_type.customer_reference"/>
         </behavior>
     </table>
 
