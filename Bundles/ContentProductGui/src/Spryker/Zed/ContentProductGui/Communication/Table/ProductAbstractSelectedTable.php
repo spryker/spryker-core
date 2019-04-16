@@ -89,7 +89,7 @@ class ProductAbstractSelectedTable extends AbstractTable
     {
         $parameters = [];
 
-        if (($this->idProductAbstracts)) {
+        if ($this->idProductAbstracts) {
             $parameters = [ProductAbstractController::PARAM_IDS => $this->idProductAbstracts];
         }
 
