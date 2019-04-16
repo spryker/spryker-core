@@ -295,6 +295,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
     {
         return (new RestCheckoutResponseTransfer())
             ->setIsSuccess(true)
-            ->setOrderReference($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
+            ->setOrderReference($checkoutResponseTransfer->getSaveOrder()->getOrderReference())
+            ->setCheckoutResponse($checkoutResponseTransfer);
     }
 }
