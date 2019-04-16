@@ -13,6 +13,7 @@ use Spryker\Zed\Availability\Business\Model\ProductReservationReader;
 use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreCondition;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -29,7 +30,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new Sellable(
             $this->getOmsFacade(),
             $this->getStockFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -45,6 +47,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getProductFacade(),
             $this->getStoreFacade(),
+            $this->getUtilQuantityService(),
             $this->getEventFacade()
         );
     }
@@ -57,7 +60,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new ProductReservationReader(
             $this->getQueryContainer(),
             $this->getStockFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getUtilQuantityService()
         );
     }
 
@@ -98,7 +102,11 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductsAvailablePreCondition()
     {
-        return new ProductsAvailableCheckoutPreCondition($this->createSellableModel(), $this->getConfig());
+        return new ProductsAvailableCheckoutPreCondition(
+            $this->createSellableModel(),
+            $this->getConfig(),
+            $this->getUtilQuantityService()
+        );
     }
 
     /**
@@ -107,6 +115,14 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade()
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface
+     */
+    public function getUtilQuantityService(): AvailabilityToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 
     /**

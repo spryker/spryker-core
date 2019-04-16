@@ -296,7 +296,7 @@ interface OmsFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer);
 

@@ -18,6 +18,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleA
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceBridge;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 /**
@@ -33,6 +35,11 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 class ProductBundleAvailabilityHandlerTest extends Unit
 {
     public const ID_STORE = 1;
+
+    /**
+     * @var \SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -125,9 +132,23 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         }
 
         return $this->getMockBuilder(ProductBundleAvailabilityHandler::class)
-            ->setConstructorArgs([$availabilityQueryContainerMock, $availabilityFacadeMock, $productBundleQueryContainerMock, $storeFacadeMock])
+            ->setConstructorArgs([
+                $availabilityQueryContainerMock,
+                $availabilityFacadeMock,
+                $productBundleQueryContainerMock,
+                $storeFacadeMock,
+                $this->createUtilQuantityService(),
+            ])
             ->setMethods(['getBundleItemsByIdProduct', 'getBundlesUsingProductBySku', 'findBundleProductEntityBySku', 'findBundledItemAvailabilityEntityBySku'])
             ->getMock();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
+     */
+    protected function createUtilQuantityService(): ProductBundleToUtilQuantityServiceInterface
+    {
+        return new ProductBundleToUtilQuantityServiceBridge($this->tester->getLocator()->utilQuantity()->service());
     }
 
     /**

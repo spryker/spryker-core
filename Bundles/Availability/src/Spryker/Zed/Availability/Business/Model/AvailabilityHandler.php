@@ -19,6 +19,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
+use Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 
 class AvailabilityHandler implements AvailabilityHandlerInterface
@@ -54,6 +55,11 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
      * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface
      */
     protected $eventFacade;
@@ -65,6 +71,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface $productFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\Availability\Dependency\Service\AvailabilityToUtilQuantityServiceInterface $utilQuantityService
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface $eventFacade
      */
     public function __construct(
@@ -74,6 +81,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         AvailabilityQueryContainerInterface $queryContainer,
         AvailabilityToProductInterface $productFacade,
         AvailabilityToStoreFacadeInterface $storeFacade,
+        AvailabilityToUtilQuantityServiceInterface $utilQuantityService,
         AvailabilityToEventFacadeInterface $eventFacade
     ) {
         $this->sellable = $sellable;
@@ -82,6 +90,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $this->queryContainer = $queryContainer;
         $this->productFacade = $productFacade;
         $this->storeFacade = $storeFacade;
+        $this->utilQuantityService = $utilQuantityService;
         $this->eventFacade = $eventFacade;
     }
 
@@ -119,7 +128,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return int
      */
@@ -134,7 +143,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
@@ -212,11 +221,11 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             return true;
         }
 
-        if ($currentQuantity === 0 && $quantityWithReservedItems > $currentQuantity) {
+        if ($this->utilQuantityService->isQuantityEqual($currentQuantity, 0) && $quantityWithReservedItems > $currentQuantity) {
             return true;
         }
 
-        if ($currentQuantity !== 0 && $quantityWithReservedItems === 0) {
+        if (!$this->utilQuantityService->isQuantityEqual($currentQuantity, 0) && $this->utilQuantityService->isQuantityEqual($quantityWithReservedItems, 0)) {
             return true;
         }
 
@@ -285,13 +294,13 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $storeTransfer->getIdStore())
             ->findOne();
 
-        /** @var int|null $sumQuantity */
+        /** @var float|null $sumQuantity */
         $sumQuantity = $this->queryContainer
             ->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract, $storeTransfer->getIdStore())
             ->findOne();
 
         $availabilityAbstractEntity->setFkStore($storeTransfer->getIdStore());
-        $availabilityAbstractEntity->setQuantity((int)$sumQuantity);
+        $availabilityAbstractEntity->setQuantity($sumQuantity);
         $availabilityAbstractEntity->save();
     }
 

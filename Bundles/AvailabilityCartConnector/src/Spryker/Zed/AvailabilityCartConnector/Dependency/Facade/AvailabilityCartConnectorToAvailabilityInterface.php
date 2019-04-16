@@ -13,7 +13,7 @@ interface AvailabilityCartConnectorToAvailabilityInterface
 {
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return bool
      */
@@ -22,7 +22,7 @@ interface AvailabilityCartConnectorToAvailabilityInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProduct($sku);
 
@@ -30,13 +30,13 @@ interface AvailabilityCartConnectorToAvailabilityInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer);
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool

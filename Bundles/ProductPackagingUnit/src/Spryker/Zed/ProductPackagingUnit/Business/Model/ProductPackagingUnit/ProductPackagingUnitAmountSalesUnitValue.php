@@ -47,23 +47,23 @@ class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAm
             ->requireConversion()
             ->requirePrecision();
 
-        $amountPreQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
+        $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
 
         return $this->calculateNormalizedValue(
-            (int)$amountPreQuantity,
+            $amountPerQuantity,
             $itemTransfer->getAmountSalesUnit()->getConversion(),
             $itemTransfer->getAmountSalesUnit()->getPrecision()
         );
     }
 
     /**
-     * @param int $availabilityValue
+     * @param float $availabilityValue
      * @param float $unitToAvailabilityConversion
      * @param int $unitPrecision
      *
      * @return int
      */
-    protected function calculateNormalizedValue(int $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): int
+    protected function calculateNormalizedValue(float $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): int
     {
         return (int)round(
             $this->calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision)
@@ -71,13 +71,13 @@ class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAm
     }
 
     /**
-     * @param int $availabilityValue
+     * @param float $availabilityValue
      * @param float $unitToAvailabilityConversion
      * @param int $unitPrecision
      *
      * @return float
      */
-    protected function calculateFloatNormalizedValue(int $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): float
+    protected function calculateFloatNormalizedValue(float $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): float
     {
         return $availabilityValue / $unitToAvailabilityConversion * $unitPrecision;
     }

@@ -147,6 +147,7 @@
         <property name="sumAmount" type="int" />
         <property name="unitGrossAmount" type="int"/>
         <property name="sumGrossAmount" type="int"/>
+        <property name="quantity" type="float"/>
     </transfer>
 
 </transfers>

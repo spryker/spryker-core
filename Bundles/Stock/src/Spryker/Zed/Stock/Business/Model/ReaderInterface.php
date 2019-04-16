@@ -150,4 +150,11 @@ interface ReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @param string $sku
+     *
+     * @return float
+     */
+    public function getProductStockAmount(string $sku): float;
 }

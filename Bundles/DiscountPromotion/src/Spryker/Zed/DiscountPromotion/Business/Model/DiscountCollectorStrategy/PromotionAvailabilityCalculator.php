@@ -37,24 +37,25 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
 
     /**
      * @param int $idProductAbstract
-     * @param int $maxQuantity
+     * @param float $maxQuantity
      *
-     * @return int
+     * @return float
      */
     public function getMaximumQuantityBasedOnAvailability($idProductAbstract, $maxQuantity)
     {
         $productAbstractAvailabilityTransfer = $this->getProductAbstractAvailability($idProductAbstract);
 
         if ($productAbstractAvailabilityTransfer->getIsNeverOutOfStock()) {
-            return (int)$maxQuantity;
+            return $maxQuantity;
+        }
+        $availability = $productAbstractAvailabilityTransfer->getAvailability();
+
+        if ($availability <= 0) {
+            return 0.0;
         }
 
-        if ($productAbstractAvailabilityTransfer->getAvailability() <= 0) {
-            return 0;
-        }
-
-        if ($maxQuantity > $productAbstractAvailabilityTransfer->getAvailability()) {
-            return (int)$productAbstractAvailabilityTransfer->getAvailability();
+        if ($maxQuantity > $availability) {
+            return $productAbstractAvailabilityTransfer->getAvailability();
         }
 
         return $maxQuantity;

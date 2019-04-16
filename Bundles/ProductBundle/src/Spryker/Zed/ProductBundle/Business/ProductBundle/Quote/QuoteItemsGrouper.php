@@ -10,9 +10,23 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Quote;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface;
 
 class QuoteItemsGrouper implements QuoteItemsGrouperInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface
+     */
+    protected $utilQuantityService;
+
+    /**
+     * @param \Spryker\Zed\ProductBundle\Dependency\Service\ProductBundleToUtilQuantityServiceInterface $utilQuantityService
+     */
+    public function __construct(ProductBundleToUtilQuantityServiceInterface $utilQuantityService)
+    {
+        $this->utilQuantityService = $utilQuantityService;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -72,18 +86,33 @@ class QuoteItemsGrouper implements QuoteItemsGrouperInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $groupKey
      *
-     * @return int
+     * @return float
      */
-    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): int
+    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): float
     {
-        $bundleItemQuantity = 0;
+        $bundleItemQuantity = 0.0;
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
             if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
                 continue;
             }
-            $bundleItemQuantity += $bundleItemTransfer->getQuantity();
+
+            $bundleItemQuantity = $this->sumQuantities(
+                $bundleItemQuantity,
+                $bundleItemTransfer->getQuantity()
+            );
         }
 
         return $bundleItemQuantity;
+    }
+
+    /**
+     * @param float $firstQuantity
+     * @param float $secondQuantity
+     *
+     * @return float
+     */
+    protected function sumQuantities(float $firstQuantity, float $secondQuantity): float
+    {
+        return $this->utilQuantityService->sumQuantities($firstQuantity, $secondQuantity);
     }
 }

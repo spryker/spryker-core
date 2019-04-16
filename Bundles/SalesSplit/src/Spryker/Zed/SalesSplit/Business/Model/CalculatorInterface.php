@@ -13,7 +13,7 @@ interface CalculatorInterface
 {
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return int
      */

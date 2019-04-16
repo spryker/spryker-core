@@ -241,7 +241,6 @@
     "spryker/step-engine": "*",
     "spryker/store": "*",
     "spryker/stock": "*",
-    "spryker/stock-sales-connector": "*",
     "spryker/storage": "*",
     "spryker/symfony": "*",
     "spryker/synchronization": "*",

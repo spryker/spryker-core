@@ -15,6 +15,7 @@
     "spryker/price-extension": "^1.0.0",
     "spryker/quote": "^2.8.0",
     "spryker/store": "^1.9.0",
+    "spryker/util-quantity": "^1.0.0",
     "spryker/zed-request": "^3.6.0"
   },
   "require-dev": {

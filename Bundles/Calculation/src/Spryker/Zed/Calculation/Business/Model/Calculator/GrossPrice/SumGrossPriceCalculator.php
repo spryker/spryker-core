@@ -12,9 +12,23 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
+use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface;
 
 class SumGrossPriceCalculator implements CalculatorInterface
 {
+    /**
+     * @var \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface
+     */
+    protected $utilPriceService;
+
+    /**
+     * @param \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceInterface $utilPriceService
+     */
+    public function __construct(CalculationToUtilPriceServiceInterface $utilPriceService)
+    {
+        $this->utilPriceService = $utilPriceService;
+    }
+
     /**
      * For already ordered entities, sum prices are acting as source of truth.
      *
@@ -39,9 +53,20 @@ class SumGrossPriceCalculator implements CalculatorInterface
             if ($expenseTransfer->getIsOrdered() === true) {
                 continue;
             }
+            $sumGrossPrice = $this->roundPrice($expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity());
 
-            $expenseTransfer->setSumGrossPrice($expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity());
+            $expenseTransfer->setSumGrossPrice($sumGrossPrice);
         }
+    }
+
+    /**
+     * @param float $price
+     *
+     * @return int
+     */
+    protected function roundPrice(float $price): int
+    {
+        return $this->utilPriceService->roundPrice($price);
     }
 
     /**
@@ -57,7 +82,11 @@ class SumGrossPriceCalculator implements CalculatorInterface
             return;
         }
 
-        $itemTransfer->setSumGrossPrice((int)($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity()));
+        $sumGrossPrice = $this->roundPrice(
+            $itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity()
+        );
+
+        $itemTransfer->setSumGrossPrice($sumGrossPrice);
     }
 
     /**
@@ -96,7 +125,11 @@ class SumGrossPriceCalculator implements CalculatorInterface
                     continue;
                 }
 
-                $productOptionTransfer->setSumGrossPrice($productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity());
+                $sumGrossPrice = $this->roundPrice(
+                    $productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity()
+                );
+
+                $productOptionTransfer->setSumGrossPrice($sumGrossPrice);
             }
         }
     }

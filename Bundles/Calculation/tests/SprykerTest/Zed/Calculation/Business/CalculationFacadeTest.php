@@ -9,6 +9,10 @@ namespace SprykerTest\Zed\Calculation\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ExpenseBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\ProductOptionBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -35,6 +39,7 @@ use Spryker\Zed\Calculation\Communication\Plugin\Calculator\RefundableAmountCalc
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\RefundTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\SubtotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\TaxTotalCalculatorPlugin;
+use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilPriceServiceBridge;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -50,9 +55,18 @@ use Spryker\Zed\Kernel\Container;
 class CalculationFacadeTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\Calculation\CalculationBusinessTester
+     */
+    protected $tester;
+
+    /**
+     * @dataProvider calculatePriceShouldSetDefaultStorePriceValuesDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return void
      */
-    public function testCalculatePriceShouldSetDefaultStorePriceValues()
+    public function testCalculatePriceShouldSetDefaultStorePriceValuesForItem(QuoteTransfer $quoteTransfer): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -60,49 +74,133 @@ class CalculationFacadeTest extends Unit
             ]
         );
 
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setPriceMode(CalculationPriceMode::PRICE_MODE_GROSS);
+        $calculationFacade->recalculateQuote($quoteTransfer);
 
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(2);
-        $itemTransfer->setUnitGrossPrice(100);
+        $calculatedItemTransfer = $quoteTransfer->getItems()[0];
+        $this->assertNotEmpty(
+            $calculatedItemTransfer->getSumGrossPrice(),
+            'Item sum gross price is not set.'
+        );
+        $this->assertSame(
+            $calculatedItemTransfer->getUnitPrice(),
+            $calculatedItemTransfer->getUnitGrossPrice(),
+            'Item unit price must be the same as the item unit gross price'
+        );
+        $this->assertNotEmpty($calculatedItemTransfer->getSumPrice(), 'Item sum price is not set.');
+        $this->assertSame(
+            $calculatedItemTransfer->getSumPrice(),
+            $calculatedItemTransfer->getSumGrossPrice(),
+            'Item sum price must be the same as the item sum gross price'
+        );
+    }
 
-        $productOptionTransfer = new ProductOptionTransfer();
-        $productOptionTransfer->setQuantity(2);
-        $productOptionTransfer->setUnitGrossPrice(10);
+    /**
+     * @dataProvider calculatePriceShouldSetDefaultStorePriceValuesDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function testCalculatePriceShouldSetDefaultStorePriceValuesForItemOption(QuoteTransfer $quoteTransfer): void
+    {
+        $calculationFacade = $this->createCalculationFacade(
+            [
+                new PriceCalculatorPlugin(),
+            ]
+        );
+
+        $calculationFacade->recalculateQuote($quoteTransfer);
+
+        $calculatedItemTransfer = $quoteTransfer->getItems()[0];
+        $calculatedItemProductOptionTransfer = $calculatedItemTransfer->getProductOptions()[0];
+        $this->assertNotEmpty(
+            $calculatedItemProductOptionTransfer->getSumGrossPrice(),
+            "Product option sum gross price is not set."
+        );
+        $this->assertSame(
+            $calculatedItemProductOptionTransfer->getUnitPrice(),
+            $calculatedItemProductOptionTransfer->getUnitGrossPrice(),
+            'Product option unit price must be the same as the unit gross price'
+        );
+        $this->assertNotEmpty(
+            $calculatedItemProductOptionTransfer->getSumPrice(),
+            "Product option sum price is not set."
+        );
+        $this->assertSame(
+            $calculatedItemProductOptionTransfer->getSumPrice(),
+            $calculatedItemProductOptionTransfer->getSumGrossPrice(),
+            'Product option sum price must be equal sum gross price'
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function testCalculatePriceShouldSetDefaultStorePriceValuesForExpense(): void
+    {
+        $calculationFacade = $this->createCalculationFacade(
+            [
+                new PriceCalculatorPlugin(),
+            ]
+        );
+        $quoteTransfer = $this->getDataForCalculatePriceShouldSetDefaultStorePriceValues(2, 1);
+
+        $calculationFacade->recalculateQuote($quoteTransfer);
+
+        $calculatedExpenseTransfer = $quoteTransfer->getExpenses()[0];
+        $this->assertNotEmpty(
+            $calculatedExpenseTransfer->getSumGrossPrice(),
+            'Expense sum gross price is not set.'
+        );
+        $this->assertSame(
+            $calculatedExpenseTransfer->getUnitPrice(),
+            $calculatedExpenseTransfer->getUnitGrossPrice(),
+            'Expense unit price must be the same as the unit gross price'
+        );
+        $this->assertNotEmpty($calculatedExpenseTransfer->getSumPrice(), 'Expense sum price is not set.');
+        $this->assertSame(
+            $calculatedExpenseTransfer->getSumPrice(),
+            $calculatedExpenseTransfer->getSumGrossPrice(),
+            'Expense sum price must be the same as the sum gross price'
+        );
+    }
+
+    /**
+     * @param int|float $productQuantity
+     * @param int $expenseQuantity
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function getDataForCalculatePriceShouldSetDefaultStorePriceValues($productQuantity, int $expenseQuantity): QuoteTransfer
+    {
+        $quoteTransfer = (new QuoteBuilder())->seed([
+            QuoteTransfer::PRICE_MODE => CalculationPriceMode::PRICE_MODE_GROSS,
+        ])->build();
+
+        $itemTransfer = (new ItemBuilder())->seed([
+            ItemTransfer::QUANTITY => $productQuantity,
+            ItemTransfer::UNIT_GROSS_PRICE => 100,
+        ])->build();
+
+        $productOptionTransfer = (new ProductOptionBuilder())->seed([
+            ProductOptionTransfer::QUANTITY => $productQuantity,
+            ProductOptionTransfer::UNIT_GROSS_PRICE => 10,
+        ])->build();
 
         $itemTransfer->addProductOption($productOptionTransfer);
 
         $quoteTransfer->addItem($itemTransfer);
 
-        $expenseTransfer = new ExpenseTransfer();
-        $expenseTransfer->setUnitGrossPrice(100);
-        $expenseTransfer->setQuantity(1);
+        $expenseTransfer = (new ExpenseBuilder())->seed([
+            ExpenseTransfer::QUANTITY => $expenseQuantity,
+            ExpenseTransfer::UNIT_GROSS_PRICE => 100,
+        ])->build();
 
         $quoteTransfer->addExpense($expenseTransfer);
 
-        $calculationFacade->recalculateQuote($quoteTransfer);
-
-        //item
-        $calculatedItemTransfer = $quoteTransfer->getItems()[0];
-        $this->assertNotEmpty($calculatedItemTransfer->getSumGrossPrice());
-        $this->assertSame($calculatedItemTransfer->getUnitPrice(), $calculatedItemTransfer->getUnitGrossPrice());
-        $this->assertNotEmpty($calculatedItemTransfer->getSumPrice(), 'Item sum price is not set.');
-        $this->assertSame($calculatedItemTransfer->getSumPrice(), $calculatedItemTransfer->getSumGrossPrice());
-
-        //item.option
-        $calculatedItemProductOptionTransfer = $calculatedItemTransfer->getProductOptions()[0];
-        $this->assertNotEmpty($calculatedItemProductOptionTransfer->getSumGrossPrice());
-        $this->assertSame($calculatedItemProductOptionTransfer->getUnitPrice(), $calculatedItemProductOptionTransfer->getUnitPrice());
-        $this->assertNotEmpty($calculatedItemProductOptionTransfer->getSumPrice(), "Product option sum price is not set.");
-        $this->assertSame($calculatedItemProductOptionTransfer->getSumPrice(), $calculatedItemProductOptionTransfer->getSumGrossPrice());
-
-        //order.expense
-        $calculatedExpenseTransfer = $quoteTransfer->getExpenses()[0];
-        $this->assertNotEmpty($calculatedExpenseTransfer->getSumGrossPrice());
-        $this->assertSame($calculatedExpenseTransfer->getUnitPrice(), $calculatedExpenseTransfer->getUnitGrossPrice());
-        $this->assertNotEmpty($calculatedExpenseTransfer->getSumPrice(), 'Item sum price is not set.');
-        $this->assertSame($calculatedExpenseTransfer->getSumPrice(), $calculatedExpenseTransfer->getSumGrossPrice());
+        return $quoteTransfer;
     }
 
     /**
@@ -136,9 +234,15 @@ class CalculationFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider calculateSumDiscountAmountShouldSumAllItemDiscountsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $expectedItemSumDiscountAmountAggregation
+     * @param int $expectedExpenseSumDiscountAmountAggregation
+     *
      * @return void
      */
-    public function testCalculateSumDiscountAmountShouldSumAllItemDiscounts()
+    public function testCalculateSumDiscountAmountShouldSumAllItemDiscounts(QuoteTransfer $quoteTransfer, int $expectedItemSumDiscountAmountAggregation, int $expectedExpenseSumDiscountAmountAggregation): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -146,62 +250,63 @@ class CalculationFacadeTest extends Unit
             ]
         );
 
-        $quoteTransfer = new QuoteTransfer();
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setUnitPrice(200);
-        $itemTransfer->setSumPrice(200);
-
-        $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitAmount(20);
-        $calculatedDiscountTransfer->setSumAmount(20);
-        $calculatedDiscountTransfer->setQuantity(1);
-        $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
-
-        $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitAmount(20);
-        $calculatedDiscountTransfer->setSumAmount(20);
-        $calculatedDiscountTransfer->setQuantity(1);
-        $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
-
-        $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitAmount(20);
-        $calculatedDiscountTransfer->setSumAmount(20);
-        $calculatedDiscountTransfer->setQuantity(1);
-        $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
-
-        $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitAmount(20);
-        $calculatedDiscountTransfer->setSumAmount(20);
-        $calculatedDiscountTransfer->setQuantity(1);
-        $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
-
-        $quoteTransfer->addItem($itemTransfer);
-
-        $expenseTransfer = new ExpenseTransfer();
-        $expenseTransfer->setUnitPrice(200);
-        $expenseTransfer->setSumPrice(200);
-
-        $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitAmount(20);
-        $calculatedDiscountTransfer->setSumAmount(20);
-        $calculatedDiscountTransfer->setQuantity(1);
-        $expenseTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
-
-        $quoteTransfer->addExpense($expenseTransfer);
-
         $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedItemTransfer = $quoteTransfer->getItems()[0];
         $calculatedExpenseTransfer = $quoteTransfer->getExpenses()[0];
 
-        $this->assertSame(80, $calculatedItemTransfer->getSumDiscountAmountAggregation());
-        $this->assertSame(20, $calculatedExpenseTransfer->getSumDiscountAmountAggregation());
+        $this->assertSame($expectedItemSumDiscountAmountAggregation, $calculatedItemTransfer->getSumDiscountAmountAggregation());
+        $this->assertSame($expectedExpenseSumDiscountAmountAggregation, $calculatedExpenseTransfer->getSumDiscountAmountAggregation());
+    }
+
+    /**
+     * @return array
+     */
+    public function calculateSumDiscountAmountShouldSumAllItemDiscountsDataProvider(): array
+    {
+        return [
+            'int stock' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(2, 20, 160, 40),
+            'float stock' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(1.33, 20, 108, 27),
+            'float stock small price' => $this->getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts(1.13, 1, 4, 1),
+        ];
+    }
+
+    /**
+     * @param int|float $quantity
+     * @param int $unitAmount
+     * @param int $itemResult
+     * @param int $expenseResult
+     *
+     * @return array
+     */
+    protected function getDataForCalculateSumDiscountAmountShouldSumAllItemDiscounts($quantity, int $unitAmount, int $itemResult, int $expenseResult): array
+    {
+        $calculatedDiscountMap = [
+            CalculatedDiscountTransfer::ID_DISCOUNT => 1,
+            CalculatedDiscountTransfer::UNIT_AMOUNT => $unitAmount,
+            CalculatedDiscountTransfer::QUANTITY => $quantity,
+        ];
+        $baseTransferMap = [
+            ExpenseTransfer::UNIT_PRICE => 200,
+            ExpenseTransfer::SUM_PRICE => 200,
+        ];
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $itemTransfer = (new ItemBuilder())
+            ->seed($baseTransferMap)
+            ->withCalculatedDiscount($calculatedDiscountMap)
+            ->withCalculatedDiscount($calculatedDiscountMap)
+            ->withCalculatedDiscount($calculatedDiscountMap)
+            ->withCalculatedDiscount($calculatedDiscountMap)->build();
+        $quoteTransfer->addItem($itemTransfer);
+
+        $expenseTransfer = (new ExpenseBuilder())
+            ->seed($baseTransferMap)
+            ->withCalculatedDiscount($calculatedDiscountMap)
+            ->build();
+
+        $quoteTransfer->addExpense($expenseTransfer);
+
+        return [$quoteTransfer, $itemResult, $expenseResult];
     }
 
     /**
@@ -455,9 +560,14 @@ class CalculationFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider calculateRefundTotalShouldSumAllRefundableAmountsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $expectedResult
+     *
      * @return void
      */
-    public function testCalculateRefundTotalShouldSumAllRefundableAmounts()
+    public function testCalculateRefundTotalShouldSumAllRefundableAmounts(QuoteTransfer $quoteTransfer, int $expectedResult): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -465,33 +575,46 @@ class CalculationFacadeTest extends Unit
             ]
         );
 
-        $quoteTransfer = new QuoteTransfer();
-
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(1);
-        $itemTransfer->setRefundableAmount(10);
-
-        $productOptionTransfer = new ProductOptionTransfer();
-        $productOptionTransfer->setQuantity(1);
-        $productOptionTransfer->setRefundableAmount(10);
-
-        $itemTransfer->addProductOption($productOptionTransfer);
-
-        $quoteTransfer->addItem($itemTransfer);
-
-        $expenseTransfer = new ExpenseTransfer();
-        $expenseTransfer->setQuantity(1);
-        $expenseTransfer->setRefundableAmount(10);
-        $quoteTransfer->addExpense($expenseTransfer);
-
-        $totalsTransfer = new TotalsTransfer();
-        $quoteTransfer->setTotals($totalsTransfer);
-
         $calculationFacade->recalculateQuote($quoteTransfer);
 
         $calculatedRefundTotal = $quoteTransfer->getTotals()->getRefundTotal();
 
-        $this->assertSame(30, $calculatedRefundTotal);
+        $this->assertSame($expectedResult, $calculatedRefundTotal);
+    }
+
+    /**
+     * @return array
+     */
+    public function calculateRefundTotalShouldSumAllRefundableAmountsDataProvider(): array
+    {
+        return [
+            'int data' => $this->getDataForCalculateRefundTotalShouldSumAllRefundableAmounts(30),
+        ];
+    }
+
+    /**
+     * @param int $expectedResult
+     *
+     * @return array
+     */
+    protected function getDataForCalculateRefundTotalShouldSumAllRefundableAmounts(int $expectedResult): array
+    {
+        $quoteTransfer = (new QuoteBuilder())
+            ->withExpense([
+                ExpenseTransfer::REFUNDABLE_AMOUNT => 10,
+            ])
+            ->build();
+        $itemTransfer = (new ItemBuilder())->seed([
+            ItemTransfer::REFUNDABLE_AMOUNT => 10,
+        ])->withProductOption([
+            ProductOptionTransfer::REFUNDABLE_AMOUNT => 10,
+        ])->build();
+        $quoteTransfer->addItem($itemTransfer);
+
+        $totalsTransfer = new TotalsTransfer();
+        $quoteTransfer->setTotals($totalsTransfer);
+
+        return [$quoteTransfer, $expectedResult];
     }
 
     /**
@@ -603,7 +726,13 @@ class CalculationFacadeTest extends Unit
         $calculationBusinessFactory = new CalculationBusinessFactory();
 
         $container = new Container();
-        $container[CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK] = function (Container $container) use ($calculatorPlugins) {
+        $container[CalculationDependencyProvider::SERVICE_UTIL_PRICE] = function () {
+            return new CalculationToUtilPriceServiceBridge(
+                $this->tester->getLocator()->utilPrice()->service()
+            );
+        };
+
+        $container[CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK] = function () use ($calculatorPlugins) {
             return $calculatorPlugins;
         };
 

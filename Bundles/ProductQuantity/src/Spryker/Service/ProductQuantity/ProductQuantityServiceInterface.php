@@ -18,9 +18,9 @@ interface ProductQuantityServiceInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     * @param int $quantity
+     * @param float $quantity
      *
-     * @return int
+     * @return float
      */
-    public function getNearestQuantity(ProductQuantityTransfer $productQuantityTransfer, int $quantity): int;
+    public function getNearestQuantity(ProductQuantityTransfer $productQuantityTransfer, float $quantity): float;
 }

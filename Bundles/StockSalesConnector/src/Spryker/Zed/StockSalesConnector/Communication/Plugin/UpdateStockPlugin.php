@@ -20,6 +20,8 @@ class UpdateStockPlugin extends AbstractPlugin
     /**
      * @api
      *
+     * @deprecated not used
+     *
      * @param string $sku
      * @param string $stockType
      * @param int $incrementBy
@@ -34,6 +36,8 @@ class UpdateStockPlugin extends AbstractPlugin
     /**
      * @api
      *
+     * @deprecated not used
+     *
      * @param string $sku
      * @param string $stockType
      * @param int $decrementBy
@@ -47,6 +51,8 @@ class UpdateStockPlugin extends AbstractPlugin
 
     /**
      * @api
+     *
+     * @deprecated not used
      *
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *

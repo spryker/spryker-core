@@ -9,6 +9,7 @@ namespace Spryker\Zed\AvailabilityCartConnector\Business;
 
 use Spryker\Zed\AvailabilityCartConnector\AvailabilityCartConnectorDependencyProvider;
 use Spryker\Zed\AvailabilityCartConnector\Business\Cart\CheckCartAvailability;
+use Spryker\Zed\AvailabilityCartConnector\Dependency\Service\AvailabilityCartConnectorToUtilQuantityServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 class AvailabilityCartConnectorBusinessFactory extends AbstractBusinessFactory
@@ -18,7 +19,10 @@ class AvailabilityCartConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createCartCheckAvailability()
     {
-        return new CheckCartAvailability($this->getAvailabilityFacade());
+        return new CheckCartAvailability(
+            $this->getAvailabilityFacade(),
+            $this->getUtilQuantityService()
+        );
     }
 
     /**
@@ -27,5 +31,13 @@ class AvailabilityCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function getAvailabilityFacade()
     {
         return $this->getProvidedDependency(AvailabilityCartConnectorDependencyProvider::FACADE_AVAILABILITY);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityCartConnector\Dependency\Service\AvailabilityCartConnectorToUtilQuantityServiceInterface
+     */
+    public function getUtilQuantityService(): AvailabilityCartConnectorToUtilQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(AvailabilityCartConnectorDependencyProvider::SERVICE_UTIL_QUANTITY);
     }
 }

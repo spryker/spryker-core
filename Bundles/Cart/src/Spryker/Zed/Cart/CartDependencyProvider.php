@@ -10,6 +10,7 @@ namespace Spryker\Zed\Cart;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationBridge;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridge;
 use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeBridge;
+use Spryker\Zed\Cart\Dependency\Service\CartToUtilQuantityServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -34,6 +35,8 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CART_REMOVE_ITEM_STRATEGY = 'PLUGINS_CART_REMOVE_ITEM_STRATEGY';
     public const PLUGINS_POST_RELOAD_ITEMS = 'PLUGINS_POST_RELOAD_ITEMS';
 
+    public const SERVICE_UTIL_QUANTITY = 'SERVICE_UTIL_QUANTITY';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -56,6 +59,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartAddItemStrategyPlugins($container);
         $container = $this->addCartRemoveItemStrategyPlugins($container);
         $container = $this->addPostReloadItemsPlugins($container);
+        $container = $this->addUtilQuantityService($container);
         $container = $this->addCartBeforePreCheckNormalizerPlugins($container);
 
         return $container;
@@ -245,6 +249,22 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PLUGINS_POST_RELOAD_ITEMS] = function (Container $container): array {
             return $this->getPostReloadItemsPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilQuantityService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_QUANTITY] = function (Container $container) {
+            return new CartToUtilQuantityServiceBridge(
+                $container->getLocator()->utilQuantity()->service()
+            );
         };
 
         return $container;

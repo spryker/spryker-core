@@ -15,7 +15,7 @@ interface AvailabilityGuiToOmsFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return float
      */
     public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer);
 }
