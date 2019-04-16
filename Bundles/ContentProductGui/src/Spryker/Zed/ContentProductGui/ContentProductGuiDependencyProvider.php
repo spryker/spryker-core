@@ -19,14 +19,14 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_CONTENT_PRODUCT = 'FACADE_CONTENT_PRODUCT';
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
-    public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $this->provideProductImageFacade($container);
         $this->provideProductQueryContainer($container);
@@ -55,7 +55,7 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function provideProductQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function (Container $container) {
             return SpyProductAbstractQuery::create();
         };
     }

@@ -134,6 +134,8 @@ class ProductAbstractSelectedTable extends AbstractTable
     }
 
     /**
+     * @module Product
+     *
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array

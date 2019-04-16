@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentProductGui\Communication\Form\Constraints;
 
+use Generated\Shared\Transfer\ContentParameterMessageTransfer;
 use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\ContentProductGui\Communication\Form\ProductAbstractListContentTermForm;
@@ -42,14 +43,24 @@ class ContentProductAbstractListConstraintValidator extends ConstraintValidator
 
         if (!$contentValidationResponseTransfer->getIsSuccess()) {
             foreach ($contentValidationResponseTransfer->getParameterMessages() as $parametrMessage) {
-                foreach ($parametrMessage->getMessages() as $message) {
-                    $text = strtr($message->getValue(), $message->getParameters());
-                    $this->context
-                        ->buildViolation($text)
-                        ->atPath(ProductAbstractListContentTermForm::FIELD_ID_ABSTRACT_PRODUCTS)
-                        ->addViolation();
-                }
+                $this->addViolations($parametrMessage);
             }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ContentParameterMessageTransfer $parametrMessage
+     *
+     * @return void
+     */
+    protected function addViolations(ContentParameterMessageTransfer $parametrMessage)
+    {
+        foreach ($parametrMessage->getMessages() as $message) {
+            $text = strtr($message->getValue(), $message->getParameters());
+            $this->context
+                ->buildViolation($text)
+                ->atPath(ProductAbstractListContentTermForm::FIELD_ID_ABSTRACT_PRODUCTS)
+                ->addViolation();
         }
     }
 }

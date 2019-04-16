@@ -90,7 +90,7 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getProductQueryContainer(): SpyProductAbstractQuery
     {
-        return $this->getProvidedDependency(ContentProductGuiDependencyProvider::QUERY_CONTAINER_PRODUCT);
+        return $this->getProvidedDependency(ContentProductGuiDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
     }
 
     /**

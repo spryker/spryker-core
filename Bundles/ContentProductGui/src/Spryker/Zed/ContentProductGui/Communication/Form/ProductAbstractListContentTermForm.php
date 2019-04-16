@@ -17,9 +17,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\ContentProductGui\Communication\ContentProductGuiCommunicationFactory getFactory()
@@ -117,7 +114,6 @@ class ProductAbstractListContentTermForm extends AbstractType
                 'attr' => [
                     'placeholder' => static::PLACEHOLDER_ID_ABSTRACT_PRODUCTS,
                 ],
-                'constraints' => $this->getTextFieldConstraints(),
             ],
             'constraints' => [
                 $this->getFactory()->createContentProductAbstractListConstraint(),
@@ -136,17 +132,5 @@ class ProductAbstractListContentTermForm extends AbstractType
         );
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getTextFieldConstraints(): array
-    {
-        return [
-            new Required(),
-            new NotBlank(),
-            new Length(['max' => 100]),
-        ];
     }
 }
