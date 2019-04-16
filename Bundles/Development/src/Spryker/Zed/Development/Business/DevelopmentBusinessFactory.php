@@ -133,6 +133,8 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\Quer
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ResourceMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ServiceMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriter;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriterInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
@@ -1739,8 +1741,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new IdeAutoCompletionWriter(
             $this->getIdeAutoCompletionGeneratorStack($options),
-            $this->createIdeAutoCompletionBundleFinder($bundleBuilder),
-            $options
+            $this->createIdeAutoCompletionBundleFinder($bundleBuilder)
         );
     }
 
@@ -1778,7 +1779,15 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createIdeAutoCompletionBundleGenerator(array $options)
     {
-        return new BundleGenerator($this->getTwigEnvironment(), $options);
+        return new BundleGenerator($this->getTwigEnvironment(), $this->createFileWriter(), $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriterInterface
+     */
+    protected function createFileWriter(): FileWriterInterface
+    {
+        return new FileWriter();
     }
 
     /**
@@ -1788,7 +1797,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createIdeAutoCompletionBundleMethodGenerator(array $options)
     {
-        return new BundleMethodGenerator($this->getTwigEnvironment(), $options);
+        return new BundleMethodGenerator($this->getTwigEnvironment(), $this->createFileWriter(), $options);
     }
 
     /**

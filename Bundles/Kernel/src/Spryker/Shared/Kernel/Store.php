@@ -29,7 +29,7 @@ class Store
     /**
      * List of all storeNames
      *
-     * @var array
+     * @var string[]
      */
     protected $allStoreNames;
 
@@ -43,14 +43,14 @@ class Store
      *
      * E.g: "de" => "de_DE"
      *
-     * @var array
+     * @var string[]
      */
     protected $locales;
 
     /**
      * List of countries
      *
-     * @var array
+     * @var string[]
      */
     protected $countries;
 
@@ -220,7 +220,7 @@ class Store
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAllowedStores()
     {
@@ -228,7 +228,7 @@ class Store
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getInactiveStores()
     {
@@ -243,7 +243,7 @@ class Store
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getLocales()
     {
@@ -253,7 +253,7 @@ class Store
     /**
      * @param string $storeName
      *
-     * @return array
+     * @return string[]
      */
     public function getLocalesPerStore($storeName)
     {
@@ -309,7 +309,7 @@ class Store
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getCountries()
     {
