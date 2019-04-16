@@ -42,20 +42,20 @@ class ContentProductAbstractListConstraintValidator extends ConstraintValidator
             ->validateContentProductAbstractListTerm($contentProductAbstractListTermTransfer);
 
         if (!$contentValidationResponseTransfer->getIsSuccess()) {
-            foreach ($contentValidationResponseTransfer->getParameterMessages() as $parametrMessage) {
-                $this->addViolations($parametrMessage);
+            foreach ($contentValidationResponseTransfer->getParameterMessages() as $parameterMessage) {
+                $this->addViolations($parameterMessage);
             }
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentParameterMessageTransfer $parametrMessage
+     * @param \Generated\Shared\Transfer\ContentParameterMessageTransfer $parameterMessage
      *
      * @return void
      */
-    protected function addViolations(ContentParameterMessageTransfer $parametrMessage)
+    protected function addViolations(ContentParameterMessageTransfer $parameterMessage)
     {
-        foreach ($parametrMessage->getMessages() as $message) {
+        foreach ($parameterMessage->getMessages() as $message) {
             $text = strtr($message->getValue(), $message->getParameters());
             $this->context
                 ->buildViolation($text)
