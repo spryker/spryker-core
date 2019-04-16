@@ -4,8 +4,8 @@
   "description": "PersistentCartShare module",
   "license": "proprietary",
   "require": {
-    "spryker/kernel": "*",
-    "spryker/quote": "*",
+    "spryker/kernel": "^3.0.0",
+    "spryker/quote": "^2.0.0",
     "spryker/resource-share": "^1.0.0",
     "spryker/resource-share-extension": "^1.0.0",
     "spryker/util-encoding": "^2.0.0",
