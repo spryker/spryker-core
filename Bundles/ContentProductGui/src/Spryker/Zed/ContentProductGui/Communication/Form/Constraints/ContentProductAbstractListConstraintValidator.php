@@ -24,7 +24,7 @@ class ContentProductAbstractListConstraintValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($abstractProductIds, Constraint $constraint)
+    public function validate($abstractProductIds, Constraint $constraint): void
     {
         if (!$constraint instanceof ContentProductAbstractListConstraint) {
             throw new InvalidArgumentException(sprintf(
@@ -53,7 +53,7 @@ class ContentProductAbstractListConstraintValidator extends ConstraintValidator
      *
      * @return void
      */
-    protected function addViolations(ContentParameterMessageTransfer $parameterMessage)
+    protected function addViolations(ContentParameterMessageTransfer $parameterMessage): void
     {
         foreach ($parameterMessage->getMessages() as $message) {
             $text = strtr($message->getValue(), $message->getParameters());
