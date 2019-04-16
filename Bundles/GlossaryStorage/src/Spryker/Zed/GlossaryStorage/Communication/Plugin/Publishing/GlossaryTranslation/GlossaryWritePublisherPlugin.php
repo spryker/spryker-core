@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publishing\GlossaryTranslation;
+namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryTranslation;
 
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\PublishingExtension\Dependency\PublisherPluginInterface;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
@@ -35,6 +35,6 @@ class GlossaryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
         $this->preventTransaction();
         $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY);
 
-        $this->getFacade()->publish($glossaryKeyIds);
+        $this->getFacade()->writeGlossaryStorageCollection($glossaryKeyIds);
     }
 }

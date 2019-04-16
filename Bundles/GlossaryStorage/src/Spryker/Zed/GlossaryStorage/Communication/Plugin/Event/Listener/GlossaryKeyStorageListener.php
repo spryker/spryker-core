@@ -5,25 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey;
+namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener;
 
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
+ * @deprecated Use `\Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyStoragePublishListener` and `\Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyStorageUnpublishListener` instead.
+ *
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
  */
-class GlossaryWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
+class GlossaryKeyStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -36,6 +37,14 @@ class GlossaryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
         $this->preventTransaction();
         $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()->writeGlossaryStorageCollection($glossaryKeyIds);
+        if ($eventName === GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_DELETE ||
+            $eventName === GlossaryEvents::GLOSSARY_KEY_UNPUBLISH
+        ) {
+            $this->getFacade()->unpublish($glossaryKeyIds);
+
+            return;
+        }
+
+        $this->getFacade()->publish($glossaryKeyIds);
     }
 }

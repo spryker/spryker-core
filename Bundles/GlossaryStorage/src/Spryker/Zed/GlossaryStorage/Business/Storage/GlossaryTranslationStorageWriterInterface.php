@@ -14,12 +14,12 @@ interface GlossaryTranslationStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $glossaryKeyIds);
+    public function writeGlossaryStorageCollection(array $glossaryKeyIds);
 
     /**
      * @param array $glossaryKeyIds
      *
      * @return void
      */
-    public function unpublish(array $glossaryKeyIds);
+    public function deleteGlossaryDeleteCollection(array $glossaryKeyIds);
 }

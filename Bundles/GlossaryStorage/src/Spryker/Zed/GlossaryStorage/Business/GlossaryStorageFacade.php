@@ -25,7 +25,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      */
     public function publish(array $glossaryKeyIds)
     {
-        $this->getFactory()->createGlossaryTranslationStorageWriter()->publish($glossaryKeyIds);
+        $this->getFactory()->createGlossaryTranslationStorageWriter()->writeGlossaryStorageCollection($glossaryKeyIds);
     }
 
     /**
@@ -37,8 +37,36 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @return void
      */
-    public function deleteGlossary(array $glossaryKeyIds)
+    public function unpublish(array $glossaryKeyIds)
     {
-        $this->getFactory()->createGlossaryTranslationStorageWriter()->unpublish($glossaryKeyIds);
+        $this->getFactory()->createGlossaryTranslationStorageWriter()->deleteGlossaryDeleteCollection($glossaryKeyIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $glossaryKeyIds
+     *
+     * @return void
+     */
+    public function writeGlossaryStorageCollection(array $glossaryKeyIds)
+    {
+        $this->getFactory()->createGlossaryTranslationStorageWriter()->writeGlossaryStorageCollection($glossaryKeyIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $glossaryKeyIds
+     *
+     * @return void
+     */
+    public function deleteGlossaryStorageCollection(array $glossaryKeyIds)
+    {
+        $this->getFactory()->createGlossaryTranslationStorageWriter()->deleteGlossaryDeleteCollection($glossaryKeyIds);
     }
 }

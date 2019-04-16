@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publishing\GlossaryKey;
+namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\PublishingExtension\Dependency\PublisherPluginInterface;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
@@ -33,6 +33,6 @@ class GlossaryDeletePublisherPlugin extends AbstractPlugin implements PublisherP
         $this->preventTransaction();
         $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()->deleteGlossary($glossaryKeyIds);
+        $this->getFacade()->deleteGlossaryStorageCollection($glossaryKeyIds);
     }
 }
