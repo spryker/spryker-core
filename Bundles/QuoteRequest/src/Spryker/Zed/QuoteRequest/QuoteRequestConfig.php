@@ -38,8 +38,6 @@ class QuoteRequestConfig extends AbstractBundleConfig
     public function getQuoteFieldsAllowedForSaving(): array
     {
         return [
-            QuoteTransfer::QUOTE_REQUEST_VERSION_REFERENCE,
-            QuoteTransfer::QUOTE_REQUEST_REFERENCE,
             QuoteTransfer::ITEMS,
         ];
     }
