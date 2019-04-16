@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/content": "^1.1.0",
-    "spryker/content-product": "^1.0.0",
+    "spryker/content-product": "^0.1.0",
     "spryker/data-import": "^1.4.0",
     "spryker/kernel": "^3.32.0",
     "spryker/product": "^6.0.0",

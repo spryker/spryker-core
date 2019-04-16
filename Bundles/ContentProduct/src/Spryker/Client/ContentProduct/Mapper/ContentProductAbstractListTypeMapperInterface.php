@@ -8,14 +8,14 @@
 namespace Spryker\Client\ContentProduct\Mapper;
 
 use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
-use Generated\Shared\Transfer\ContentTypeContextTransfer;
 
 interface ContentProductAbstractListTypeMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ContentTypeContextTransfer $contentTypeContextTransfer
+     * @param int $idContent
+     * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer
+     * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer|null
      */
-    public function execute(ContentTypeContextTransfer $contentTypeContextTransfer): ContentProductAbstractListTypeTransfer;
+    public function executeProductAbstractListTypeById(int $idContent, string $localeName): ?ContentProductAbstractListTypeTransfer;
 }

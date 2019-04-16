@@ -25,7 +25,10 @@ class ContentProductFactory extends AbstractFactory
      */
     public function createContentProductAbstractListTypeMapper(): ContentProductAbstractListTypeMapperInterface
     {
-        return new ContentProductAbstractListTypeMapper($this->getContentProductTermExecutorMap());
+        return new ContentProductAbstractListTypeMapper(
+            $this->getContentStorageClient(),
+            $this->getContentProductTermExecutorMap()
+        );
     }
 
     /**

@@ -1,3 +1,2 @@
 parameters:
     ignoreErrors:
-        - '#Casting to array something that.+s already array#'
