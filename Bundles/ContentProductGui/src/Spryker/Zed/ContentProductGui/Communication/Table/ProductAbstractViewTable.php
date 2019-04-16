@@ -18,7 +18,7 @@ class ProductAbstractViewTable extends AbstractTable
 {
     public const TABLE_IDENTIFIER = 'product-abstract-view-table';
     public const TABLE_CLASS = 'product-abstract-view-table gui-table-data';
-    public const BASE_URL = '/content-product-gui/abstract-product/';
+    public const BASE_URL = '/content-product-gui/product-abstract/';
 
     public const HEADER_NAME = 'Name';
     public const HEADER_SKU = 'SKU';
@@ -77,7 +77,7 @@ class ProductAbstractViewTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $this->baseUrl = static::BASE_URL;
         $this->defaultUrl = static::TABLE_IDENTIFIER;
@@ -120,7 +120,7 @@ class ProductAbstractViewTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $query = $this->productQueryContainer
             ->useSpyProductAbstractLocalizedAttributesQuery()
@@ -141,7 +141,7 @@ class ProductAbstractViewTable extends AbstractTable
      *
      * @return array
      */
-    protected function formatRow(SpyProductAbstract $productAbstractEntity)
+    protected function formatRow(SpyProductAbstract $productAbstractEntity): array
     {
         $idProductAbstract = $productAbstractEntity->getIdProductAbstract();
 

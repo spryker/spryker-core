@@ -10,7 +10,8 @@ namespace Spryker\Zed\ContentProductGui\Communication\Table;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Spryker\Zed\ContentProductGui\Communication\Controller\AbstractProductController;
+use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\ContentProductGui\Communication\Controller\ProductAbstractController;
 use Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -19,7 +20,7 @@ class ProductAbstractSelectedTable extends AbstractTable
 {
     public const TABLE_IDENTIFIER = 'product-abstract-selected-table';
     public const TABLE_CLASS = 'product-abstract-selected-table gui-table-data';
-    public const BASE_URL = '/content-product-gui/abstract-product/';
+    public const BASE_URL = '/content-product-gui/product-abstract/';
 
     public const COL_ID_PRODUCT_ABSTRACT = 'ID';
     public const COL_SKU = 'SKU';
@@ -84,15 +85,16 @@ class ProductAbstractSelectedTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
-        $urlSuffix = '';
+        $parameters = [];
+
         if (($this->idProductAbstracts)) {
-            $urlSuffix = '?' . http_build_query([AbstractProductController::PARAM_IDS => $this->idProductAbstracts]);
+            $parameters = [ProductAbstractController::PARAM_IDS => $this->idProductAbstracts];
         }
 
         $this->baseUrl = static::BASE_URL;
-        $this->defaultUrl = static::TABLE_IDENTIFIER . $urlSuffix;
+        $this->defaultUrl = Url::generate(static::TABLE_IDENTIFIER, $parameters)->build();
         $this->tableClass = static::TABLE_CLASS;
         $this->setTableIdentifier(sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierPostfix));
 
@@ -123,7 +125,7 @@ class ProductAbstractSelectedTable extends AbstractTable
     /**
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function newTableConfiguration()
+    protected function newTableConfiguration(): TableConfiguration
     {
         $tableConfiguration = parent::newTableConfiguration();
         $tableConfiguration->setServerSide(false);
@@ -140,7 +142,7 @@ class ProductAbstractSelectedTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $results = [];
         if ($this->idProductAbstracts) {
@@ -169,7 +171,7 @@ class ProductAbstractSelectedTable extends AbstractTable
      *
      * @return array
      */
-    protected function formatRow(SpyProductAbstract $productAbstractEntity)
+    protected function formatRow(SpyProductAbstract $productAbstractEntity): array
     {
         $idProductAbstract = $productAbstractEntity->getIdProductAbstract();
 
@@ -189,7 +191,7 @@ class ProductAbstractSelectedTable extends AbstractTable
      *
      * @return string
      */
-    protected function getActionButtons(SpyProductAbstract $productAbstractEntity)
+    protected function getActionButtons(SpyProductAbstract $productAbstractEntity): string
     {
         $actionButtons = [];
 

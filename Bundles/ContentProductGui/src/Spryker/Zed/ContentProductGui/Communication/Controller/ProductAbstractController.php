@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ContentProductGui\Communication\ContentProductGuiCommunicationFactory getFactory()
  */
-class AbstractProductController extends AbstractController
+class ProductAbstractController extends AbstractController
 {
     public const PARAM_IDS = 'ids';
 
