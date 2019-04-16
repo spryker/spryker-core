@@ -27,7 +27,7 @@ class PriceProductScheduleToCurrencyFacadeBridge implements PriceProductSchedule
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getByIdCurrency(int $idCurrency)
+    public function getByIdCurrency($idCurrency)
     {
         return $this->currencyFacade->getByIdCurrency($idCurrency);
     }

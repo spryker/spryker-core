@@ -16,5 +16,5 @@ interface PriceProductScheduleToCurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getByIdCurrency(int $idCurrency);
+    public function getByIdCurrency($idCurrency);
 }
