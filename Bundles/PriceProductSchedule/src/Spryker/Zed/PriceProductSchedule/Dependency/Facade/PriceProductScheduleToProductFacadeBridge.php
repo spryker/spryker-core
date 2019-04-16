@@ -27,7 +27,7 @@ class PriceProductScheduleToProductFacadeBridge implements PriceProductScheduleT
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteById(int $idProduct): ?\Generated\Shared\Transfer\ProductConcreteTransfer
+    public function findProductConcreteById(int $idProduct)
     {
         return $this->productFacade->findProductConcreteById($idProduct);
     }
@@ -37,7 +37,7 @@ class PriceProductScheduleToProductFacadeBridge implements PriceProductScheduleT
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractById(int $idProductAbstract): ?\Generated\Shared\Transfer\ProductAbstractTransfer
+    public function findProductAbstractById(int $idProductAbstract)
     {
         return $this->productFacade->findProductAbstractById($idProductAbstract);
     }
