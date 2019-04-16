@@ -133,7 +133,8 @@ class PropelSchemaParser implements PropelSchemaParserInterface
         foreach ($this->getSchemaFileFinder() as $splFileInfo) {
             $module = $this->getModuleNameFromFile($splFileInfo);
             $uniqueColumnNames = $this->getUniqueColumnNames($splFileInfo);
-            $uniqueFieldToModuleNameMap = $this->addUniqueColumnNames($uniqueFieldToModuleNameMap, $uniqueColumnNames, $module);
+            $requiredColumnNames = $this->getRequiredColumnNames($splFileInfo);
+            $uniqueFieldToModuleNameMap = $this->addUniqueColumnNames($uniqueFieldToModuleNameMap, $requiredColumnNames, $uniqueColumnNames, $module);
         }
 
         return $uniqueFieldToModuleNameMap;
@@ -209,6 +210,35 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
      *
+     * @return string[]
+     */
+    protected function getRequiredColumnNames(SplFileInfo $splFileInfo): array
+    {
+        $simpleXmlElement = simplexml_load_file($splFileInfo->getPathname());
+
+        $requiredColumnNames = [];
+
+        foreach ($simpleXmlElement->xpath('//table') as $simpleXmlTableElement) {
+            $tableName = (string)$simpleXmlTableElement['name'];
+            $columnSimpleXmlElements = $simpleXmlTableElement->xpath('//table[@name="' . $tableName . '"]/column');
+            if ($columnSimpleXmlElements === false) {
+                continue;
+            }
+
+            foreach ($columnSimpleXmlElements as $columnSimpleXmlElement) {
+                if ((string)$columnSimpleXmlElement['required'] === 'true') {
+                    $requiredColumnName = (string)$columnSimpleXmlElement['name'];
+                    $requiredColumnNames[] = $tableName . '.' . $requiredColumnName;
+                }
+            }
+        }
+
+        return $requiredColumnNames;
+    }
+
+    /**
+     * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
+     *
      * @return string
      */
     protected function getModuleNameFromFile(SplFileInfo $splFileInfo): string
@@ -241,6 +271,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
 
     /**
      * @param array $uniqueFieldToModuleNameMap
+     * @param array $requiredColumnNames
      * @param array $uniqueColumnNames
      * @param string $module
      *
@@ -248,10 +279,12 @@ class PropelSchemaParser implements PropelSchemaParserInterface
      *
      * @return string[]
      */
-    protected function addUniqueColumnNames(array $uniqueFieldToModuleNameMap, array $uniqueColumnNames, string $module): array
+    protected function addUniqueColumnNames(array $uniqueFieldToModuleNameMap, array $requiredColumnNames, array $uniqueColumnNames, string $module): array
     {
         foreach ($uniqueColumnNames as $uniqueColumnName) {
-            if (isset($uniqueFieldToModuleNameMap[$uniqueColumnName]) && $uniqueFieldToModuleNameMap[$uniqueColumnName] !== $module) {
+            if (isset($uniqueFieldToModuleNameMap[$uniqueColumnName]) && $uniqueFieldToModuleNameMap[$uniqueColumnName] !== $module &&
+                in_array($module . '.' . $uniqueColumnName, $requiredColumnNames)
+            ) {
                 throw new PropelSchemaParserException(sprintf('Unique column "%s" was already found in the module "%s".', $uniqueColumnName, $uniqueFieldToModuleNameMap[$uniqueColumnName]));
             }
             $uniqueFieldToModuleNameMap[$uniqueColumnName] = $module;

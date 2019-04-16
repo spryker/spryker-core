@@ -98,6 +98,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
         ],
         self::ARRAY_FIELD => [
             'type' => 'array',
@@ -105,6 +107,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
         ],
         self::TRANSFER_FIELD => [
             'type' => 'Generated\Shared\Transfer\DeprecatedFooBarTransfer',
@@ -112,6 +116,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => true,
             'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
         ],
         self::TRANSFER_COLLECTION_FIELD => [
             'type' => 'Generated\Shared\Transfer\DeprecatedFooBarTransfer',
@@ -119,6 +125,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             'is_collection' => true,
             'is_transfer' => true,
             'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
         ],
         self::PROJECT_LEVEL_DEPRECATED_FIELD => [
             'type' => 'string',
@@ -126,6 +134,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
         ],
     ];
 

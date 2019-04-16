@@ -50,6 +50,7 @@ class ExportMarker implements MarkerInterface
      */
     public function getLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale)
     {
+        /** @var string|null $lastTimeStamp */
         $lastTimeStamp = $this->reader
             ->read($this->keyBuilder->generateKey($exportType, $locale->getLocaleName()), $exportType);
 

@@ -15,7 +15,7 @@ use Spryker\Shared\Search\SearchConstants;
 abstract class AbstractSearchClientProvider extends AbstractClientProvider
 {
     /**
-     * @return \Elastica\Client
+     * @return object
      */
     protected function createZedClient()
     {

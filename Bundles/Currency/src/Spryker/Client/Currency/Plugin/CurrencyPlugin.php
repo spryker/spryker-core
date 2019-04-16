@@ -10,9 +10,9 @@ namespace Spryker\Client\Currency\Plugin;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Client\Currency\CurrencyFactory getFactory()
+ * @deprecated Use \Spryker\Client\Currency\CurrencyClient instead.
  *
- * @deprecated use CurrencyClient instead
+ * @method \Spryker\Client\Currency\CurrencyFactory getFactory()
  */
 class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
 {

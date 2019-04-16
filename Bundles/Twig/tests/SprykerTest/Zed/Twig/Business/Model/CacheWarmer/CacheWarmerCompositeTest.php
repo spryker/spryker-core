@@ -59,7 +59,7 @@ class CacheWarmerCompositeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Twig\Business\Model\CacheWarmerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Twig\Business\Model\CacheWarmerInterface
      */
     private function getCacheWarmerMock()
     {
