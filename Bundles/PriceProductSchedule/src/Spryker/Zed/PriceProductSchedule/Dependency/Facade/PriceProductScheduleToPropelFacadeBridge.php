@@ -25,7 +25,7 @@ class PriceProductScheduleToPropelFacadeBridge implements PriceProductScheduleTo
     /**
      * @return string
      */
-    public function getCurrentDatabaseEngine(): string
+    public function getCurrentDatabaseEngine()
     {
         return $this->propelFacade->getCurrentDatabaseEngine();
     }

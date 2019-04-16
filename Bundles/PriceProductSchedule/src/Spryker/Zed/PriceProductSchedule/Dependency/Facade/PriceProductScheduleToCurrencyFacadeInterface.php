@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Dependency\Facade;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
-
 interface PriceProductScheduleToCurrencyFacadeInterface
 {
     /**
@@ -18,5 +16,5 @@ interface PriceProductScheduleToCurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getByIdCurrency(int $idCurrency): CurrencyTransfer;
+    public function getByIdCurrency(int $idCurrency);
 }

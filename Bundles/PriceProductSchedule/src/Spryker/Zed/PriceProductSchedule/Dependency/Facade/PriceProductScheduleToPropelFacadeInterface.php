@@ -12,5 +12,5 @@ interface PriceProductScheduleToPropelFacadeInterface
     /**
      * @return string
      */
-    public function getCurrentDatabaseEngine(): string;
+    public function getCurrentDatabaseEngine();
 }
