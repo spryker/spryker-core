@@ -28,10 +28,7 @@ class ProductAbstractController extends AbstractController
         $idProductAbstracts = $request->query->get(static::PARAM_IDS, []);
 
         return $this->jsonResponse(
-            $this->getFactory()->createProductAbstractSelectedTable(
-                $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
-                $idProductAbstracts
-            )->fetchData()
+            $this->getFactory()->createProductAbstractSelectedTable($idProductAbstracts)->fetchData()
         );
     }
 
@@ -43,9 +40,7 @@ class ProductAbstractController extends AbstractController
     public function productAbstractViewTableAction(Request $request): JsonResponse
     {
         return $this->jsonResponse(
-            $this->getFactory()
-                ->createProductAbstractViewTable($this->getFactory()->getLocaleFacade()->getCurrentLocale())
-                ->fetchData()
+            $this->getFactory()->createProductAbstractViewTable()->fetchData()
         );
     }
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ContentProductGui\Communication;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\ContentProductGui\Communication\Form\Constraints\ContentProductAbstractListConstraint;
 use Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelper;
@@ -23,39 +22,32 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string|null $identifierPostfix
      *
      * @return \Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractViewTable
      */
-    public function createProductAbstractViewTable(
-        LocaleTransfer $localeTransfer,
-        ?string $identifierPostfix = null
-    ): ProductAbstractViewTable {
+    public function createProductAbstractViewTable(?string $identifierPostfix = null): ProductAbstractViewTable
+    {
         return new ProductAbstractViewTable(
             $this->getProductQueryContainer(),
             $this->createProductAbstractTableHelper(),
-            $localeTransfer,
+            $this->getLocaleFacade()->getCurrentLocale(),
             $identifierPostfix
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param array $idProductAbstracts
      * @param string|null $identifierPostfix
      *
      * @return \Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractSelectedTable
      */
-    public function createProductAbstractSelectedTable(
-        LocaleTransfer $localeTransfer,
-        array $idProductAbstracts,
-        ?string $identifierPostfix = null
-    ): ProductAbstractSelectedTable {
+    public function createProductAbstractSelectedTable(array $idProductAbstracts, ?string $identifierPostfix = null): ProductAbstractSelectedTable
+    {
         return new ProductAbstractSelectedTable(
             $this->getProductQueryContainer(),
             $this->createProductAbstractTableHelper(),
-            $localeTransfer,
+            $this->getLocaleFacade()->getCurrentLocale(),
             $identifierPostfix,
             $idProductAbstracts
         );
