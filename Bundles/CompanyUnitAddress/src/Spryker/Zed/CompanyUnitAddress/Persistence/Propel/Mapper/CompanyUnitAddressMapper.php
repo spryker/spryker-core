@@ -92,9 +92,7 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
             $companyUnitAddressEntity->toArray(),
             true
         );
-        if ($companyUnitAddressEntity->getCountry() !== null) {
-            return $companyUnitAddressTransfer;
-        }
+
         $companyUnitAddressTransfer->setIso2Code($companyUnitAddressEntity->getCountry()->getIso2Code());
 
         return $companyUnitAddressTransfer;
