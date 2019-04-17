@@ -258,7 +258,7 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param string $queryString
      *
-     * @return array
+     * @return string[]
      */
     protected function getParamsFromQueryString($queryString)
     {
