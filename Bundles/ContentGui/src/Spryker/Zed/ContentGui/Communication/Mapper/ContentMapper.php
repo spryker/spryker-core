@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\ContentGui\Communication\Mapper;
 
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
 
 class ContentMapper implements ContentMapperInterface
 {
-    protected const URL_TEMPLATE_CONTENT_TYPE = '/content-gui/list-content-by-type?type=%s';
+    protected const URL_LIST_CONTENT_BY_TYPE = '/content-gui/list-content-by-type';
+    protected const URL_PARAM_TYPE = 'type';
     protected const KEY_TYPE = 'type';
     protected const KEY_NAME = 'name';
     protected const KEY_CONTENT_LIST_URL = 'contentListUrl';
@@ -34,7 +36,7 @@ class ContentMapper implements ContentMapperInterface
      *
      * @return array
      */
-    public function mapEnabledContentTypesForEditor(array $contentTypes): array
+    public function mapEditorContentTypes(array $contentTypes): array
     {
         $contentList = [];
 
@@ -56,6 +58,6 @@ class ContentMapper implements ContentMapperInterface
      */
     protected function generateContentTypeUrl(string $contentType): string
     {
-        return sprintf(static::URL_TEMPLATE_CONTENT_TYPE, $contentType);
+        return Url::generate(static::URL_LIST_CONTENT_BY_TYPE, [static::URL_PARAM_TYPE => $contentType])->build();
     }
 }

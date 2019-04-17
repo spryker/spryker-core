@@ -18,12 +18,12 @@ class ConfigurationController extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function contentListJsonAction(): JsonResponse
+    public function editorContentListJsonAction(): JsonResponse
     {
-        $enabledContentTypesForEditor = $this->getFactory()->getConfig()->getEnabledContentTypesForEditor();
+        $editorContentTypes = $this->getFactory()->getConfig()->getEditorContentTypes();
 
         return $this->jsonResponse(
-            $this->getFactory()->createContentMapper()->mapEnabledContentTypesForEditor($enabledContentTypesForEditor)
+            $this->getFactory()->createContentMapper()->mapEditorContentTypes($editorContentTypes)
         );
     }
 }

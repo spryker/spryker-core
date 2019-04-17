@@ -14,7 +14,7 @@ class ContentGuiConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getEnabledContentTypesForEditor(): array
+    public function getEditorContentTypes(): array
     {
         return [];
     }

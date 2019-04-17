@@ -14,5 +14,5 @@ interface ContentMapperInterface
      *
      * @return array
      */
-    public function mapEnabledContentTypesForEditor(array $contentTypes): array;
+    public function mapEditorContentTypes(array $contentTypes): array;
 }
