@@ -10,9 +10,9 @@ namespace Spryker\Zed\ContentGui\Communication\Mapper;
 interface ContentMapperInterface
 {
     /**
-     * @param array $contentTypes
+     * @param string[] $contentTypes
      *
-     * @return array
+     * @return string[][]
      */
     public function mapEditorContentTypes(array $contentTypes): array;
 }

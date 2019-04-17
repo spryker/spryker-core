@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ContentGuiConfig extends AbstractBundleConfig
 {
     /**
-     * @return array
+     * @return string[]
      */
     public function getEditorContentTypes(): array
     {

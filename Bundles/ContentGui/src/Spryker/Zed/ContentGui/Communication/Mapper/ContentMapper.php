@@ -32,9 +32,9 @@ class ContentMapper implements ContentMapperInterface
     }
 
     /**
-     * @param array $contentTypes
+     * @param string[] $contentTypes
      *
-     * @return array
+     * @return string[][]
      */
     public function mapEditorContentTypes(array $contentTypes): array
     {
