@@ -11,7 +11,10 @@ interface PriceProductScheduleFacadeInterface
 {
     /**
      * Specification:
-     * - Apply all scheduled prices which is meet the conditions for applying.
+     * - Apply scheduled prices for current store.
+     * - Persists price product store for applied scheduled price product.
+     * - Disable not relevant price product schedules for applied scheduled price product.
+     * - Reverts price products for scheduled that are finished from the fallback price type.
      *
      * @api
      *
@@ -21,7 +24,7 @@ interface PriceProductScheduleFacadeInterface
 
     /**
      * Specification:
-     * - Deletes scheduled prices that has been applied earlier than the days provided as parameter.
+     * - Deletes scheduled prices that has been ended earlier than the days provided as parameter.
      *
      * @api
      *

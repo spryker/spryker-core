@@ -10,6 +10,8 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface;
 
 class PriceProductScheduleApplier implements PriceProductScheduleApplierInterface
 {
@@ -26,9 +28,9 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
     protected $priceProductScheduleDisabler;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleReaderInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface
      */
-    protected $priceProductScheduleReader;
+    protected $priceProductScheduleRepository;
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface
@@ -36,21 +38,29 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
     protected $priceProductFacade;
 
     /**
+     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface $priceProductScheduleWriter
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface $priceProductScheduleDisabler
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleReaderInterface $priceProductScheduleReader
+     * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface $priceProductScheduleRepository
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         PriceProductScheduleWriterInterface $priceProductScheduleWriter,
         PriceProductScheduleDisablerInterface $priceProductScheduleDisabler,
-        PriceProductScheduleReaderInterface $priceProductScheduleReader,
-        PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade
+        PriceProductScheduleRepositoryInterface $priceProductScheduleRepository,
+        PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade,
+        PriceProductScheduleToStoreFacadeInterface $storeFacade
     ) {
         $this->priceProductScheduleWriter = $priceProductScheduleWriter;
         $this->priceProductScheduleDisabler = $priceProductScheduleDisabler;
-        $this->priceProductScheduleReader = $priceProductScheduleReader;
+        $this->priceProductScheduleRepository = $priceProductScheduleRepository;
         $this->priceProductFacade = $priceProductFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -58,7 +68,7 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
      */
     public function applyScheduledPrices(): void
     {
-        $productSchedulePricesForEnable = $this->priceProductScheduleReader->findPriceProductSchedulesToEnableForCurrentStore();
+        $productSchedulePricesForEnable = $this->findPriceProductSchedulesToEnableForCurrentStore();
 
         foreach ($productSchedulePricesForEnable as $priceProductScheduleTransfer) {
             $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): void {
@@ -67,6 +77,16 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
         }
 
         $this->priceProductScheduleDisabler->disableNotActiveScheduledPrices();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesToEnableForCurrentStore(): array
+    {
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+
+        return $this->priceProductScheduleRepository->findPriceProductSchedulesToEnableByStore($storeTransfer);
     }
 
     /**

@@ -18,8 +18,8 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductS
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleCleanerInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisabler;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleReader;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleReaderInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepository;
+use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriter;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface;
@@ -57,8 +57,9 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
         return new PriceProductScheduleApplier(
             $this->createPriceProductScheduleWriter(),
             $this->createPriceProductScheduleDisabler(),
-            $this->createPriceProductScheduleReader(),
-            $this->getPriceProductFacade()
+            $this->getRepository(),
+            $this->getPriceProductFacade(),
+            $this->getStoreFacade()
         );
     }
 
@@ -79,7 +80,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductScheduleDisabler(
             $this->createPriceProductScheduleWriter(),
-            $this->createPriceProductScheduleReader(),
+            $this->getRepository(),
             $this->createPriceProductFallbackFinder(),
             $this->createProductPriceUpdater(),
             $this->getPriceProductFacade()
@@ -105,17 +106,6 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
         return new PriceProductUpdater(
             $this->getEntityManager(),
             $this->getPriceProductFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleReaderInterface
-     */
-    public function createPriceProductScheduleReader(): PriceProductScheduleReaderInterface
-    {
-        return new PriceProductScheduleReader(
-            $this->getRepository(),
-            $this->getStoreFacade()
         );
     }
 

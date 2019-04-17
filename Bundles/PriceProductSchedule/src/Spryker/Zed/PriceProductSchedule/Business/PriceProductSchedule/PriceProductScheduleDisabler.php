@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductUpdaterInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface;
 
 class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterface
 {
@@ -24,9 +25,9 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
     protected $priceProductScheduleWriter;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleReaderInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface
      */
-    protected $priceProductScheduleReader;
+    protected $priceProductScheduleRepository;
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackFinderInterface
@@ -45,20 +46,20 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
 
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface $priceProductScheduleWriter
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleReaderInterface $priceProductScheduleReader
+     * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface $priceProductScheduleRepository
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackFinderInterface $priceProductFallbackFinder
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductUpdaterInterface $productPriceUpdater
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade
      */
     public function __construct(
         PriceProductScheduleWriterInterface $priceProductScheduleWriter,
-        PriceProductScheduleReaderInterface $priceProductScheduleReader,
+        PriceProductScheduleRepositoryInterface $priceProductScheduleRepository,
         PriceProductFallbackFinderInterface $priceProductFallbackFinder,
         PriceProductUpdaterInterface $productPriceUpdater,
         PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade
     ) {
         $this->priceProductScheduleWriter = $priceProductScheduleWriter;
-        $this->priceProductScheduleReader = $priceProductScheduleReader;
+        $this->priceProductScheduleRepository = $priceProductScheduleRepository;
         $this->priceProductFallbackFinder = $priceProductFallbackFinder;
         $this->productPriceUpdater = $productPriceUpdater;
         $this->priceProductFacade = $priceProductFacade;
@@ -69,7 +70,7 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
      */
     public function disableNotActiveScheduledPrices(): void
     {
-        $productSchedulePricesForDisable = $this->priceProductScheduleReader->findPriceProductSchedulesToDisable();
+        $productSchedulePricesForDisable = $this->priceProductScheduleRepository->findPriceProductSchedulesToDisable();
 
         foreach ($productSchedulePricesForDisable as $priceProductScheduleTransfer) {
             $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): void {
@@ -86,7 +87,7 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
     public function disableNotRelevantPriceProductSchedulesByPriceProductSchedule(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): void {
-        $productSchedulePricesForDisable = $this->priceProductScheduleReader
+        $productSchedulePricesForDisable = $this->priceProductScheduleRepository
             ->findSimilarPriceProductSchedulesToDisable($priceProductScheduleTransfer);
 
         foreach ($productSchedulePricesForDisable as $priceProductScheduleTransfer) {

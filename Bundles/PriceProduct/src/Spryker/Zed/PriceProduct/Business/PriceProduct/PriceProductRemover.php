@@ -9,11 +9,13 @@ namespace Spryker\Zed\PriceProduct\Business\PriceProduct;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Shared\Log\LoggerTrait;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface;
 
 class PriceProductRemover implements PriceProductRemoverInterface
 {
     use LoggerTrait;
+    use TransactionTrait;
 
     /**
      * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface
@@ -39,9 +41,11 @@ class PriceProductRemover implements PriceProductRemoverInterface
             ->requireIdPriceProduct()
             ->requirePriceDimension();
 
-        $this->entityManager->deletePriceProductStoreByPriceProductTransfer($priceProductTransfer);
-        $this->entityManager->deletePriceProductDefaultById($priceProductTransfer->getPriceDimension()->getIdPriceProductDefault());
-        $this->entityManager->deletePriceProductById($priceProductTransfer->getIdPriceProduct());
+        $this->getTransactionHandler()->handleTransaction(function () use ($priceProductTransfer): void {
+            $this->entityManager->deletePriceProductStoreByPriceProductTransfer($priceProductTransfer);
+            $this->entityManager->deletePriceProductDefaultById($priceProductTransfer->getPriceDimension()->getIdPriceProductDefault());
+            $this->entityManager->deletePriceProductById($priceProductTransfer->getIdPriceProduct());
+        });
 
         $this->getLogger()->warning(sprintf('Price for product with id "%s" was deleted', $priceProductTransfer->getIdPriceProduct()));
     }

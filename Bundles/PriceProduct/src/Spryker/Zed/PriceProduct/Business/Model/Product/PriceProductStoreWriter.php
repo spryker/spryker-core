@@ -187,7 +187,9 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         }
 
         $priceProductEntity = (new SpyPriceProduct())
-            ->setFkPriceType($priceProductTransfer->getFkPriceType());
+            ->setFkPriceType($priceProductTransfer->getFkPriceType())
+            ->setFkProduct($priceProductTransfer->getIdProduct())
+            ->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
 
         $priceProductEntity->save();
 

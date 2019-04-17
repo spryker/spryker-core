@@ -844,4 +844,16 @@ class PriceProductFacadeTest extends Unit
 
         $this->assertNull($priceProduct, 'Price product should be removed from db');
     }
+
+    /**
+     * @return void
+     */
+    public function testFindPriceTypeByName()
+    {
+        $priceTypeTransfer = $this->tester->havePriceType();
+
+        $findedPriceTypeTransfer = $this->getPriceProductFacade()->findPriceTypeByName($priceTypeTransfer->getName());
+
+        $this->assertEquals($priceTypeTransfer->getIdPriceType(), $findedPriceTypeTransfer->getIdPriceType());
+    }
 }
