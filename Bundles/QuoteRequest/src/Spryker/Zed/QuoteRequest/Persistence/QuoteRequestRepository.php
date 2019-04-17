@@ -157,9 +157,8 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
             $quoteRequestQuery->filterByIdQuoteRequest($quoteRequestFilterTransfer->getIdQuoteRequest());
         }
 
-        // Please add new filters above this one which do not contain an offset or a limit methods.
         if (!$quoteRequestFilterTransfer->getWithHidden()) {
-            $quoteRequestQuery = $this->addWithoutHiddenQuoteRequestFilter($quoteRequestQuery);
+            $quoteRequestQuery = $this->addExcludeHiddenQuoteRequestFilter($quoteRequestQuery);
         }
 
         if ($quoteRequestFilterTransfer->getPagination()) {
@@ -170,15 +169,17 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
     }
 
     /**
+     * Provided query can not contain group by, offset, or limit directives otherwise it will alter the results.
+     *
      * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery $quoteRequestQuery
      *
      * @return \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery
      */
-    protected function addWithoutHiddenQuoteRequestFilter(SpyQuoteRequestQuery $quoteRequestQuery): SpyQuoteRequestQuery
+    protected function addExcludeHiddenQuoteRequestFilter(SpyQuoteRequestQuery $quoteRequestQuery): SpyQuoteRequestQuery
     {
-        $quoteRequestWithVisibleVersionQuery = clone $quoteRequestQuery;
+        $hiddenQuoteRequestQuery = clone $quoteRequestQuery;
 
-        $quoteRequestWithVisibleVersionsIds = $quoteRequestWithVisibleVersionQuery
+        $hiddenQuoteRequestIds = $hiddenQuoteRequestQuery
             ->joinSpyQuoteRequestVersion()
             ->groupByIdQuoteRequest()
             ->having(sprintf(
@@ -190,7 +191,7 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
             ->find()
             ->toArray();
 
-        $quoteRequestQuery->filterByIdQuoteRequest($quoteRequestWithVisibleVersionsIds, Criteria::NOT_IN);
+        $quoteRequestQuery->filterByIdQuoteRequest($hiddenQuoteRequestIds, Criteria::NOT_IN);
 
         return $quoteRequestQuery;
     }
