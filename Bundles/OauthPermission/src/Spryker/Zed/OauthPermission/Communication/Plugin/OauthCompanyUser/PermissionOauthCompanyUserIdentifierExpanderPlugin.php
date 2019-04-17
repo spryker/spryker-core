@@ -17,7 +17,7 @@ use Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIden
  * @method \Spryker\Zed\OauthPermission\OauthPermissionConfig getConfig()
  * @method \Spryker\Zed\OauthPermission\Communication\OauthPermissionCommunicationFactory getFactory()
  */
-class PermissionOauthCompanyUserIdentifierExpanderPluginInterface extends AbstractPlugin implements OauthCompanyUserIdentifierExpanderPluginInterface
+class PermissionOauthCompanyUserIdentifierExpanderPlugin extends AbstractPlugin implements OauthCompanyUserIdentifierExpanderPluginInterface
 {
     /**
      * {@inheritdoc}

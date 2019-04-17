@@ -23,7 +23,6 @@
 
     <transfer name="CustomerIdentifier">
         <property name="idCompanyUser" type="string" />
-        <property name="uuidCompanyUser" type="string" />
     </transfer>
 
     <transfer name="RestCompanyUserAttributes">
