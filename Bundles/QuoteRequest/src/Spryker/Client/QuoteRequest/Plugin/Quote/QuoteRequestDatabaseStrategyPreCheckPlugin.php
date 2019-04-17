@@ -15,7 +15,7 @@ class QuoteRequestDatabaseStrategyPreCheckPlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritdoc}
-     * - Disallow database strategy when quoteRequestReference provided.
+     * - Disallow database strategy when "quoteRequestReference" is set in quote.
      *
      * @api
      *

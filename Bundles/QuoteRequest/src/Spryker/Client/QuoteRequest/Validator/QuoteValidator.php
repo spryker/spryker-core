@@ -50,6 +50,8 @@ class QuoteValidator implements QuoteValidatorInterface
     }
 
     /**
+     * @uses \Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
