@@ -22,6 +22,9 @@ use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @method \Spryker\Zed\ContentGui\ContentGuiConfig getConfig()
+ */
 class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
