@@ -12,6 +12,8 @@ use Orm\Zed\Content\Persistence\SpyContentQuery;
 use Spryker\Zed\ContentGui\Communication\Form\ContentForm;
 use Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProvider;
 use Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProviderInterface;
+use Spryker\Zed\ContentGui\Communication\Mapper\ContentMapper;
+use Spryker\Zed\ContentGui\Communication\Mapper\ContentMapperInterface;
 use Spryker\Zed\ContentGui\Communication\Resolver\ContentResolver;
 use Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface;
 use Spryker\Zed\ContentGui\Communication\Table\ContentTable;
@@ -19,6 +21,8 @@ use Spryker\Zed\ContentGui\Communication\Tabs\ContentTabs;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface;
+use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
+use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -67,6 +71,14 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ContentGui\Communication\Mapper\ContentMapperInterface
+     */
+    public function createContentMapper(): ContentMapperInterface
+    {
+        return new ContentMapper($this->getTranslatorFacade());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ContentTransfer|null $data
      * @param array $options
      *
@@ -112,8 +124,16 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingInterface
      */
-    public function getUtilEncoding()
+    public function getUtilEncoding(): ContentGuiToUtilEncodingInterface
     {
         return $this->getProvidedDependency(ContentGuiDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface
+     */
+    public function getTranslatorFacade(): ContentGuiToTranslatorFacadeInterface
+    {
+        return $this->getProvidedDependency(ContentGuiDependencyProvider::FACADE_TRANSLATOR);
     }
 }
