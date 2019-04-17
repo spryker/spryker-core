@@ -23,6 +23,8 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    public const PLUGINS_OAUTH_COMPANY_USER_EXPANDER = 'PLUGINS_OAUTH_COMPANY_USER_EXPANDER';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -35,6 +37,7 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addOauthFacade($container);
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addOauthCompanyUserExpanderPlugins($container);
 
         return $container;
     }
@@ -79,5 +82,27 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOauthCompanyUserExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_OAUTH_COMPANY_USER_EXPANDER] = function () {
+            return $this->getOauthCompanyUserExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface[]
+     */
+    protected function getOauthCompanyUserExpanderPlugins(): array
+    {
+        return [];
     }
 }

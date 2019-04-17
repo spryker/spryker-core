@@ -14,10 +14,10 @@ use Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerI
 
 /**
  * @method \Spryker\Zed\OauthPermission\Business\OauthPermissionFacadeInterface getFacade()
- * @method \Spryker\Zed\OauthPermission\Communication\OauthPermissionCommunicationFactory getFactory()
  * @method \Spryker\Zed\OauthPermission\OauthPermissionConfig getConfig()
+ * @method \Spryker\Zed\OauthPermission\Communication\OauthPermissionCommunicationFactory getFactory()
  */
-class OauthCustomerIdentifierPermissionExpanderPlugin extends AbstractPlugin implements OauthCustomerIdentifierExpanderPluginInterface
+class PermissionOauthCustomerIdentifierExpanderPlugin extends AbstractPlugin implements OauthCustomerIdentifierExpanderPluginInterface
 {
     /**
      * Specification:

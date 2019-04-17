@@ -8,8 +8,11 @@
 namespace Spryker\Zed\OauthPermission\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\OauthPermission\Business\Expander\CompanyUserIdentifierExpander;
+use Spryker\Zed\OauthPermission\Business\Expander\CompanyUserIdentifierExpanderInterface;
 use Spryker\Zed\OauthPermission\Business\Expander\CustomerIdentifierExpander;
 use Spryker\Zed\OauthPermission\Business\Expander\CustomerIdentifierExpanderInterface;
+use Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToCompanyUserFacadeInterface;
 use Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToPermissionFacadeInterface;
 use Spryker\Zed\OauthPermission\OauthPermissionDependencyProvider;
 
@@ -23,7 +26,18 @@ class OauthPermissionBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerIdentifierExpander(): CustomerIdentifierExpanderInterface
     {
-        return new CustomerIdentifierExpander($this->getPermissionFacade());
+        return new CustomerIdentifierExpander(
+            $this->getPermissionFacade(),
+            $this->getCompanyUserFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthPermission\Business\Expander\CompanyUserIdentifierExpanderInterface
+     */
+    public function createCompanyUserIdentifierExpander(): CompanyUserIdentifierExpanderInterface
+    {
+        return new CompanyUserIdentifierExpander($this->getPermissionFacade());
     }
 
     /**
@@ -32,5 +46,13 @@ class OauthPermissionBusinessFactory extends AbstractBusinessFactory
     public function getPermissionFacade(): OauthPermissionToPermissionFacadeInterface
     {
         return $this->getProvidedDependency(OauthPermissionDependencyProvider::FACADE_PERMISSION);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToCompanyUserFacadeInterface
+     */
+    public function getCompanyUserFacade(): OauthPermissionToCompanyUserFacadeInterface
+    {
+        return $this->getProvidedDependency(OauthPermissionDependencyProvider::FACADE_COMPANY_USER);
     }
 }
