@@ -53,7 +53,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
             if ($expenseTransfer->getIsOrdered() === true) {
                 continue;
             }
-            $sumGrossPrice = (int)round($expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity());
+            $sumGrossPrice = $this->roundPrice($expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity());
 
             $expenseTransfer->setSumGrossPrice($sumGrossPrice);
         }
