@@ -29,7 +29,7 @@ class ContentGuiToUtilEncodingBridge implements ContentGuiToUtilEncodingInterfac
      *
      * @return string
      */
-    public function encodeJson($value, $options = null, $depth = null): string
+    public function encodeJson($value, $options = null, $depth = null)
     {
         return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
