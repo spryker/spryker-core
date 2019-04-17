@@ -15,3 +15,4 @@ E-Mail,E-Mail
 "Overview of Company Users","Übersicht der Benutzer"
 "Overview of Company Users","Übersicht der Benutzer"
 "User ID",Nutzer-ID
+"Customer for company with id %s does not exist","Die Kunde für Unternehmen mit der ID %s ist nicht vorhanden"

@@ -23,6 +23,7 @@ class EditController extends AbstractController
 {
     public const MESSAGE_CUSTOMER_UPDATE_ERROR = 'Customer was not updated.';
     public const MESSAGE_CUSTOMER_UPDATE_SUCCESS = 'Customer was updated successfully.';
+    public const MESSAGE_ERROR_CUSTOMER_NOT_EXIST = 'Customer with id %s does not exist';
 
     protected const URL_REDIRECT_CUSTOMER_NOT_EXISTS = '/customer';
 
@@ -38,8 +39,8 @@ class EditController extends AbstractController
         $dataProvider = $this->getFactory()->createCustomerUpdateFormDataProvider();
         $formData = $dataProvider->getData($idCustomer);
 
-        if (!$formData) {
-            $this->addErrorMessage(sprintf('Customer with id %s doesn\'t exist', $idCustomer));
+        if ($formData === null) {
+            $this->addErrorMessage(static::MESSAGE_ERROR_CUSTOMER_NOT_EXIST, ['%s' => $idCustomer]);
 
             return $this->redirectResponse(static::URL_REDIRECT_CUSTOMER_NOT_EXISTS);
         }
