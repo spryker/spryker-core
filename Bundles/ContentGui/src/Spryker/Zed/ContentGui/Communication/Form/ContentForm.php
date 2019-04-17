@@ -73,7 +73,12 @@ class ContentForm extends AbstractType
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => static::LABEL_NAME,
-            'constraints' => $this->getFieldDefaultConstraints(),
+            'constraints' => array_merge(
+                $this->getFieldDefaultConstraints(),
+                [
+                    new Length(['max' => 255]),
+                ]
+            ),
         ]);
 
         return $this;
@@ -88,7 +93,12 @@ class ContentForm extends AbstractType
     {
         $builder->add(static::FIELD_DESCRIPTION, TextareaType::class, [
             'label' => static::LABEL_DESCRIPTION,
-            'constraints' => $this->getFieldDefaultConstraints(),
+            'constraints' => array_merge(
+                $this->getFieldDefaultConstraints(),
+                [
+                    new Length(['max' => 1024]),
+                ]
+            ),
         ]);
 
         return $this;
@@ -149,10 +159,9 @@ class ContentForm extends AbstractType
     protected function getFieldDefaultConstraints(): array
     {
         return [
-            new NotBlank(),
-            new Required(),
-            new Length(['max' => 255]),
-        ];
+                new NotBlank(),
+                new Required(),
+            ];
     }
 
     /**
