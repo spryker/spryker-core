@@ -14,8 +14,11 @@ use Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProvid
 use Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProviderInterface;
 use Spryker\Zed\ContentGui\Communication\Mapper\ContentMapper;
 use Spryker\Zed\ContentGui\Communication\Mapper\ContentMapperInterface;
+use Spryker\Zed\ContentGui\Communication\Resolver\ContentEditorPluginsResolver;
+use Spryker\Zed\ContentGui\Communication\Resolver\ContentEditorPluginsResolverInterface;
 use Spryker\Zed\ContentGui\Communication\Resolver\ContentResolver;
 use Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface;
+use Spryker\Zed\ContentGui\Communication\Table\ContentByTypeTable;
 use Spryker\Zed\ContentGui\Communication\Table\ContentTable;
 use Spryker\Zed\ContentGui\Communication\Tabs\ContentTabs;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
@@ -79,6 +82,30 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param string|null $contentType
+     *
+     * @return \Spryker\Zed\ContentGui\Communication\Table\ContentByTypeTable
+     */
+    public function createContentByTypeTable(?string $contentType = null): ContentByTypeTable
+    {
+        return new ContentByTypeTable(
+            $this->getPropelContentQuery(),
+            $contentType
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGui\Communication\Resolver\ContentEditorPluginsResolverInterface
+     */
+    public function createContentEditorPluginsResolver(): ContentEditorPluginsResolverInterface
+    {
+        return new ContentEditorPluginsResolver(
+            $this->getContentEditorPlugins(),
+            $this->getTranslatorFacade()
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ContentTransfer|null $data
      * @param array $options
      *
@@ -135,5 +162,13 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getTranslatorFacade(): ContentGuiToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(ContentGuiDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
+     */
+    public function getContentEditorPlugins(): array
+    {
+        return $this->getProvidedDependency(ContentGuiDependencyProvider::PLUGINS_CONTENT_EDITOR);
     }
 }
