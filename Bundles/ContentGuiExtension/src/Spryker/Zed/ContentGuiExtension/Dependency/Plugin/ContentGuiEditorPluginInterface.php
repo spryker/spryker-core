@@ -21,7 +21,7 @@ interface ContentGuiEditorPluginInterface
 
     /**
      * Specification:
-     * - Returns ContentWidgetTemplateTransfer with template options of content item.
+     * - Returns ContentWidgetTemplateTransfers with options of content type templates.
      *
      * @api
      *

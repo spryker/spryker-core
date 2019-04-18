@@ -44,16 +44,19 @@ class ContentByTypeTable extends AbstractTable
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config = $this->setHeader($config);
+
         $config->setSortable([
             ContentTableConstants::COL_ID_CONTENT,
             ContentTableConstants::COL_NAME,
         ]);
+
         $config->addRawColumn(ContentTableConstants::COL_ACTIONS);
         $config->setDefaultSortField(ContentTableConstants::COL_ID_CONTENT, TableConfiguration::SORT_DESC);
         $config->setSearchable([
             ContentTableConstants::COL_ID_CONTENT,
             ContentTableConstants::COL_NAME,
         ]);
+
         return $config;
     }
 
@@ -69,7 +72,9 @@ class ContentByTypeTable extends AbstractTable
             ContentTableConstants::COL_NAME => 'Name',
             ContentTableConstants::COL_ACTIONS => '',
         ];
+
         $config->setHeader($header);
+
         return $config;
     }
 
@@ -86,6 +91,7 @@ class ContentByTypeTable extends AbstractTable
 
         $contentItems = $this->runQuery($this->contentQuery, $config);
         $results = [];
+
         foreach ($contentItems as $key => $contentItem) {
             $checked = $key === 0;
 
@@ -95,6 +101,7 @@ class ContentByTypeTable extends AbstractTable
                 ContentTableConstants::COL_ACTIONS => $this->buildLinks($contentItem, $checked),
             ];
         }
+
         return $results;
     }
 
