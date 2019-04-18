@@ -12,7 +12,7 @@ class HeartbeatToStorageClientBridge implements HeartbeatToStorageClientInterfac
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
-    private $storageClient;
+    protected $storageClient;
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storageClient

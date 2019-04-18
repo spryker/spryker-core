@@ -194,7 +194,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
         $this->addWriteAccessStats($key);
         if (!$result) {
             throw new StorageRedisException(
-                'could not set redisKey: "' . $key . '" with value: "' . json_encode($value) . '"'
+                'Could not set redisKey: "' . $key . '" with value: "' . json_encode($value) . '"'
             );
         }
 

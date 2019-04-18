@@ -23,10 +23,6 @@ class RedisImporter implements RedisImporterInterface
         $process = new Process($command, APPLICATION_ROOT_DIR);
         $process->run();
 
-        if ($process->isSuccessful()) {
-            return true;
-        }
-
-        return false;
+        return $process->isSuccessful();
     }
 }
