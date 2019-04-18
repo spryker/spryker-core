@@ -33,12 +33,18 @@ $(document).ready( function () {
             }
 
             if (assignedCmsBlocks && assignedCmsBlocks[idCategoryTemplate]) {
-                $(item).val(assignedCmsBlocks[idCategoryTemplate]);
-            } else {
-                $(item).val([]);
+                $.each(assignedCmsBlocks[idCategoryTemplate], function( index, value ) {
+                    var option = $(item).find('option[value=' + value + ']');
+                    $(item).append(option);
+                });
             }
 
-            $(item).trigger('change');
+            $(item).trigger('change.select2');
+
+            $(item).on('select2:select', function(e){
+                $(this).append($(e.params.data.element));
+                $(this).trigger('change.select2');
+            });
         });
     };
 
