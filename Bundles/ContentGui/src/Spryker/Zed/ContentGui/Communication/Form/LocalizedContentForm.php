@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\ContentGui\Communication\ContentGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ContentGui\ContentGuiConfig getConfig()
  */
 class LocalizedContentForm extends AbstractType
 {
