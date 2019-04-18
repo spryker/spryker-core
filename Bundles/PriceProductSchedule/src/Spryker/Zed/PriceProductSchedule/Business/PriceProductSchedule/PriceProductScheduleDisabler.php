@@ -113,7 +113,14 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
         $this->priceProductScheduleWriter->savePriceProductSchedule($priceProductScheduleTransfer);
 
         if ($fallbackPriceProduct !== null) {
-            $fallbackPriceProduct->setSkuProduct($priceProductTransfer->getSkuProduct());
+            if ($priceProductTransfer->getSkuProduct() !== null) {
+                $fallbackPriceProduct->setSkuProduct($priceProductTransfer->getSkuProduct());
+            }
+
+            if ($priceProductTransfer->getSkuProductAbstract() !== null) {
+                $fallbackPriceProduct->setSkuProductAbstract($priceProductTransfer->getSkuProductAbstract());
+            }
+
             $this->productPriceUpdater->updateCurrentPriceProduct(
                 $fallbackPriceProduct,
                 $priceProductTransfer->getPriceType()
@@ -123,9 +130,16 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
         }
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setSku($priceProductTransfer->getSkuProduct())
             ->setPriceTypeName($priceProductTransfer->getPriceTypeName())
             ->setCurrencyIsoCode($priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
+
+        if ($priceProductTransfer->getSkuProduct() !== null) {
+            $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProduct());
+        }
+
+        if ($priceProductTransfer->getSkuProductAbstract() !== null) {
+            $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProductAbstract());
+        }
 
         $currentPriceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 

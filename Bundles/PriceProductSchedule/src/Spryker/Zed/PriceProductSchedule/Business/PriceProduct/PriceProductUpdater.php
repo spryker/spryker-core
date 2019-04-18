@@ -53,6 +53,14 @@ class PriceProductUpdater implements PriceProductUpdaterInterface
             ->setPriceTypeName($currentPriceType->getName())
             ->setCurrencyIsoCode($fallbackMoneyValueTransfer->getCurrency()->getCode());
 
+        if ($fallbackPriceProductTransfer->getSkuProduct() !== null) {
+            $priceProductFilterTransfer->setSku($fallbackPriceProductTransfer->getSkuProduct());
+        }
+
+        if ($fallbackPriceProductTransfer->getSkuProductAbstract() !== null) {
+            $priceProductFilterTransfer->setSku($fallbackPriceProductTransfer->getSkuProductAbstract());
+        }
+
         $priceProductTransferForUpdate = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
         if ($priceProductTransferForUpdate === null) {
