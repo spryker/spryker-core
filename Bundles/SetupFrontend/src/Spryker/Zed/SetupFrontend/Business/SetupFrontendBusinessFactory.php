@@ -61,7 +61,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     public function createYvesDependencyInstaller()
     {
         return new DependencyInstaller(
-            $this->createYvesInstallerPathFinder(),
+            $this->createInstallerPathFinderForYves(),
             $this->getConfig()->getYvesInstallCommand()
         );
     }
