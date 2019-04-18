@@ -165,7 +165,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
+     * @return \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface[]
      */
     public function getContentEditorPlugins(): array
     {

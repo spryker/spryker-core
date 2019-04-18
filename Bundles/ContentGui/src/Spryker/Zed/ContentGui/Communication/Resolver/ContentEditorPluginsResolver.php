@@ -45,6 +45,8 @@ class ContentEditorPluginsResolver implements ContentEditorPluginsResolverInterf
 
             return $this->resolveTemplates($contentEditorPlugin->getTemplates());
         }
+
+        return [];
     }
 
     /**
