@@ -32,4 +32,13 @@ interface ProductQuantityStorageToUtilQuantityServiceInterface
      * @return float
      */
     public function subtractQuantities(float $firstQuantity, float $secondQuantity): float;
+
+    /**
+     * @param float $dividendQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
+     *
+     * @return bool
+     */
+    public function isQuantityModuloEqual(float $dividendQuantity, float $divisorQuantity, float $remainder): bool;
 }

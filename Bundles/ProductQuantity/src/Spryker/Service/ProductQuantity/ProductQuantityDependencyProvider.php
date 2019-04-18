@@ -25,6 +25,8 @@ class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideServiceDependencies(Container $container): Container
     {
+        $container = $this->addUtilQuantityService($container);
+
         return $container;
     }
 
