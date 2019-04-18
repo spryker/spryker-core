@@ -41,8 +41,6 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use getYvesInstallerDirectoryPatterns() instead.
-     *
      * @return string
      */
     public function getYvesInstallerDirectoryPattern()
@@ -56,7 +54,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     public function getYvesInstallerDirectoryPatterns(): array
     {
         return [
-            $this->get(KernelConstants::SPRYKER_ROOT) . '/*/assets/Yves',
+            $this->getYvesInstallerDirectoryPattern(),
         ];
     }
 
