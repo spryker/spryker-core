@@ -77,7 +77,7 @@ interface PermissionFacadeInterface
 
     /**
      * Specification:
-     *  - Returns a permission collection fetched by storage plugins by identifier
+     *  - Returns a permission collection fetched by storage plugins by identifier.
      *
      * @api
      *

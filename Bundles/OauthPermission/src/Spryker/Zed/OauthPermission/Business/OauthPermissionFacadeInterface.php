@@ -23,7 +23,7 @@ interface OauthPermissionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerIdentifierTransfer
      */
-    public function expandCustomerIdentifier(
+    public function expandCustomerIdentifierWithPermissions(
         CustomerIdentifierTransfer $customerIdentifierTransfer,
         CustomerTransfer $customerTransfer
     ): CustomerIdentifierTransfer;

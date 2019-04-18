@@ -12,14 +12,14 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceInterface;
 use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceInterface;
 use Spryker\Client\OauthPermission\OauthPermissionConfig;
-use Symfony\Component\HttpFoundation\Request;
+use Spryker\Glue\Kernel\Application;
 
 class OauthPermissionReader implements OauthPermissionReaderInterface
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
+     * @var \Spryker\Glue\Kernel\Application
      */
-    protected $request;
+    protected $glueApplication;
 
     /**
      * @var \Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceInterface
@@ -32,16 +32,16 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
     protected $utilEncodeService;
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Glue\Kernel\Application $glueApplication
      * @param \Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceInterface $oauthService
      * @param \Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceInterface $utilEncodeService
      */
     public function __construct(
-        Request $request,
+        Application $glueApplication,
         OauthPermissionToOauthServiceInterface $oauthService,
         OauthPermissionToUtilEncodingServiceInterface $utilEncodeService
     ) {
-        $this->request = $request;
+        $this->glueApplication = $glueApplication;
         $this->oauthService = $oauthService;
         $this->utilEncodeService = $utilEncodeService;
     }
@@ -51,7 +51,9 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
      */
     public function getOauthCustomerPermissions(): PermissionCollectionTransfer
     {
-        $authorizationToken = $this->request->headers->get(OauthPermissionConfig::HEADER_AUTHORIZATION);
+        /** @var \Symfony\Component\HttpFoundation\Request $request */
+        $request = $this->glueApplication->get('request');
+        $authorizationToken = $request->headers->get(OauthPermissionConfig::HEADER_AUTHORIZATION);
 
         if (!$authorizationToken) {
             return new PermissionCollectionTransfer();

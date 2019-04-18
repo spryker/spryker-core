@@ -8,7 +8,6 @@
         <property name="permissions" type="PermissionCollection"/>
     </transfer>
 
-
     <transfer name="PermissionCollection">
         <property name="permissions" type="Permission[]" singular="permission"/>
     </transfer>

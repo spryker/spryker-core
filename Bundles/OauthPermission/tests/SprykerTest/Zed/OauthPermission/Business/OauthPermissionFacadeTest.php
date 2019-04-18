@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
-use Spryker\Zed\OauthPermission\Business\OauthPermissionFacade;
+use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 use Spryker\Zed\OauthPermission\Business\OauthPermissionFacadeInterface;
 
 /**
@@ -39,12 +39,13 @@ class OauthPermissionFacadeTest extends Unit
     public function testExpandCustomerIdentifierWillExpandCustomerDataWithCorrectPermissionsData(): void
     {
         //Assign
+        $this->tester->havePermissionStorage(new PermissionStoragePlugin());
         $companyUserTransfer = $this->tester->haveCompanyUserWithPermissions($this->createPermissionPluginMock());
         $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
             ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
 
         //Act
-        $customerIdentifierTransfer = $this->getOauthPermissionFacade()->expandCustomerIdentifier(
+        $customerIdentifierTransfer = $this->getOauthPermissionFacade()->expandCustomerIdentifierWithPermissions(
             $customerIdentifierTransfer,
             $companyUserTransfer->getCustomer()
         );
@@ -73,10 +74,10 @@ class OauthPermissionFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\OauthPermission\Business\OauthPermissionFacadeInterface
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\OauthPermission\Business\OauthPermissionFacadeInterface
      */
     protected function getOauthPermissionFacade(): OauthPermissionFacadeInterface
     {
-        return new OauthPermissionFacade();
+        return $this->tester->getFacade();
     }
 }

@@ -38,5 +38,5 @@ interface PermissionFinderInterface
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getPermissionsForIdentifier(string $identifier): PermissionCollectionTransfer;
+    public function getPermissionsByIdentifier(string $identifier): PermissionCollectionTransfer;
 }
