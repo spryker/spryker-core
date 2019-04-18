@@ -271,7 +271,6 @@ class QuoteRequestConverterTest extends Unit
             ->build();
 
         $quoteRequestVersionTransfer = (new QuoteRequestVersionBuilder([
-            QuoteRequestVersionTransfer::QUOTE_REQUEST => $quoteRequestTransfer,
             QuoteRequestVersionTransfer::QUOTE => $quoteTransfer,
         ]))->build();
 

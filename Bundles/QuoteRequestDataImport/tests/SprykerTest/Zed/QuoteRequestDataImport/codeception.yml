@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\QuoteRequest
+namespace: SprykerTest\Zed\QuoteRequestDataImport
 
 paths:
     tests: .
@@ -12,9 +12,9 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
-        path: .
-        class_name: QuoteRequestBusinessTester
+    Communication:
+        path: Communication
+        class_name: QuoteRequestDataImportCommunicationTester
         modules:
             enabled:
                 - Asserts
@@ -28,5 +28,6 @@ suites:
                 - \SprykerTest\Zed\Company\Helper\CompanyHelper
                 - \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper
                 - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
-                - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
                 - \SprykerTest\Shared\QuoteRequest\Helper\QuoteRequestHelper
+                - \SprykerTest\Zed\QuoteRequestDataImport\Helper\QuoteRequestDataImportHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper

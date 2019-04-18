@@ -27,14 +27,13 @@
     "spryker/company": "*",
     "spryker/company-business-unit": "*",
     "spryker/customer": "*",
-    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins.",
-    "spryker/quote-approval": "If you want to use quote approval functionality, min version 1.0.0",
-    "spryker/multi-cart": "If you want to use multicart functionality, min version 1.5.0"
+    "spryker/multi-cart": "If you want to use multicart functionality, min version 1.5.0",
+    "spryker/quote-approval": "If you want to use quote approval functionality, min version 1.0.0"
   },
   "autoload": {
     "psr-4": {
