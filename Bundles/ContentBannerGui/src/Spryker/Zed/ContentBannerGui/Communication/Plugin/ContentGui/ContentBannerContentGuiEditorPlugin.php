@@ -40,7 +40,7 @@ class ContentBannerContentGuiEditorPlugin implements ContentGuiEditorPluginInter
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
      */
     protected function mapTemplates(): array
     {

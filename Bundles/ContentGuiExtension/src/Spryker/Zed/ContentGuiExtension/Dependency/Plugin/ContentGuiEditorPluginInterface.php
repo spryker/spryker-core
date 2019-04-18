@@ -11,7 +11,7 @@ interface ContentGuiEditorPluginInterface
 {
     /**
      * Specification:
-     * - Returns type of content item.
+     * - Returns content type.
      *
      * @api
      *
