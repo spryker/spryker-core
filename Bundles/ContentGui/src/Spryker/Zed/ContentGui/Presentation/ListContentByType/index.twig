@@ -9,7 +9,7 @@
     <ul>
         {% for key, template in templates %}
             <li>
-                <input id="template-{{ template.identifier }}" type="radio" {{ key == 0 ? 'checked="checked"' : '' }} value="{{ template.identifier }}" data-macro="{{ template.macro }}" />
+                <input id="template-{{ template.identifier }}" name="template" type="radio" {{ key == 0 ? 'checked="checked"' : '' }} value="{{ template.identifier }}" data-macro="{{ template.macro }}" />
                 <label for="template-{{ template.identifier }}">{{ template.name }}</label>
             </li>
         {% endfor %}
