@@ -32,11 +32,11 @@ class ResourceShareValidator implements ResourceShareValidatorInterface
             );
         }
 
-        if (!$resourceShareTransfer->getCustomerReference()) {
-            return $resourceShareResponseTransfer->addErrorMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED)
-            );
-        }
+//        if (!$resourceShareTransfer->getCustomerReference()) {
+//            return $resourceShareResponseTransfer->addErrorMessage(
+//                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED)
+//            );
+//        }
 
         return $resourceShareResponseTransfer->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
