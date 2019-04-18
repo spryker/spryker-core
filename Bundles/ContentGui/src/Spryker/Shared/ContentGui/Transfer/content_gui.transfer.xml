@@ -24,5 +24,11 @@
         <property name="idLocale" type="int"/>
         <property name="localeName" type="string"/>
     </transfer>
+
+    <transfer name="ContentWidgetTemplate">
+        <property name="identifier" type="string"/>
+        <property name="name" type="string"/>
+        <property name="macro" type="string"/>
+    </transfer>
 </transfers>
 

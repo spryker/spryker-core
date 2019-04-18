@@ -24,4 +24,27 @@ class ContentBannerGuiConfig extends AbstractSharedConfig
      * Content item banner
      */
     public const CONTENT_TERM_BANNER = 'Banner';
+
+    /**
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::FUNCTION_NAME
+     */
+    public const FUNCTION_NAME = 'content_banner';
+
+    /**
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TEMPLATE_IDENTIFIER_DEFAULT
+     */
+    public const TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+
+    /**
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TEMPLATE_IDENTIFIER_TOP_TITLE
+     */
+    public const TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
+
+    /**
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TEMPLATE_NAMES
+     */
+    public const TEMPLATE_NAMES = [
+        self::TEMPLATE_IDENTIFIER_DEFAULT => 'content_banner.template.default',
+        self::TEMPLATE_IDENTIFIER_TOP_TITLE => 'content_banner.template.top-title',
+    ];
 }

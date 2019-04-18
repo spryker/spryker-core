@@ -21,6 +21,7 @@ use Spryker\Zed\Kernel\Container;
 class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_CONTENT_ITEM = 'PLUGINS_CONTENT_ITEM';
+    public const PLUGINS_CONTENT_EDITOR = 'PLUGINS_CONTENT_EDITOR';
     public const PROPEL_QUERY_CONTENT = 'PROPEL_QUERY_CONTENT';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
@@ -40,6 +41,7 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacadeService($container);
         $container = $this->addContentFacade($container);
         $container = $this->addContentPlugins($container);
+        $container = $this->addContentEditorPlugins($container);
         $container = $this->addUtilEncoding($container);
         $container = $this->addTranslatorFacade($container);
 
@@ -138,5 +140,27 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addContentEditorPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CONTENT_EDITOR] = function () {
+            return $this->getContentEditorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface[]
+     */
+    protected function getContentEditorPlugins(): array
+    {
+        return [];
     }
 }
