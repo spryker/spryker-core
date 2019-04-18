@@ -85,8 +85,6 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use getZedInstallerDirectoryPatterns() instead.
-     *
      * @return string
      */
     public function getZedInstallerDirectoryPattern()
@@ -100,7 +98,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     public function getZedInstallerDirectoryPatterns(): array
     {
         return [
-            $this->get(KernelConstants::SPRYKER_ROOT) . '/*/assets/Zed',
+            $this->getZedInstallerDirectoryPattern(),
         ];
     }
 
