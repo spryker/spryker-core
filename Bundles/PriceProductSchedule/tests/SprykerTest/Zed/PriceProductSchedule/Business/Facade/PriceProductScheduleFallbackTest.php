@@ -83,8 +83,6 @@ class PriceProductScheduleFallbackTest extends Unit
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
 
         $this->tester->havePriceProduct([
-            PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-            PriceProductTransfer::SKU_PRODUCT => $productConcreteTransfer->getSku(),
             PriceProductTransfer::ID_PRICE_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
             PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer1,
@@ -98,8 +96,6 @@ class PriceProductScheduleFallbackTest extends Unit
         $priceTypeTransfer2 = $this->tester->havePriceType();
 
         $productPrice2 = $this->tester->havePriceProduct([
-            PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-            PriceProductTransfer::SKU_PRODUCT => $productConcreteTransfer->getSku(),
             PriceProductTransfer::ID_PRICE_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
             PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer2,
