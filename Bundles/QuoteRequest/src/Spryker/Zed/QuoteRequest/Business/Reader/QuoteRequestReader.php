@@ -179,7 +179,7 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
             ->getCompanyUsers()
             ->getArrayCopy();
 
-        $companyUserTransfers = $this->filterCompanyUsers($companyUserTransfers);
+        $companyUserTransfers = $this->mapCompanyUsers($companyUserTransfers);
 
         foreach ($quoteRequestCollectionTransfer->getQuoteRequests() as $quoteRequestTransfer) {
             $companyUserTransfer = $companyUserTransfers[$quoteRequestTransfer->getCompanyUser()->getIdCompanyUser()] ?? null;
@@ -195,15 +195,15 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
-    protected function filterCompanyUsers(array $companyUserTransfers): array
+    protected function mapCompanyUsers(array $companyUserTransfers): array
     {
-        $filteredCompanyUserTransfers = [];
+        $companyUserTransferMap = [];
 
         foreach ($companyUserTransfers as $companyUserTransfer) {
-            $filteredCompanyUserTransfers[$companyUserTransfer->getIdCompanyUser()] = $companyUserTransfer;
+            $companyUserTransferMap[$companyUserTransfer->getIdCompanyUser()] = $companyUserTransfer;
         }
 
-        return $filteredCompanyUserTransfers;
+        return $companyUserTransferMap;
     }
 
     /**
