@@ -9,6 +9,8 @@ namespace Spryker\Zed\Propel\Business;
 
 use Generated\Shared\Transfer\SchemaValidationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelBusinessFactory getFactory()
@@ -237,5 +239,26 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     public function validateSchemaXmlFiles(): SchemaValidationTransfer
     {
         return $this->getFactory()->createSchemaXmlValidator()->validate();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $propelOriginalCommandClassName
+     * @param \Symfony\Component\Console\Input\InputDefinition $propelCommandDefinition
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
+     */
+    public function runOriginCommand(
+        string $propelOriginalCommandClassName,
+        InputDefinition $propelCommandDefinition,
+        OutputInterface $output
+    ): int {
+        return $this->getFactory()
+            ->createPropelOriginCommandRunner()
+            ->runOriginCommand($propelOriginalCommandClassName, $propelCommandDefinition, $output);
     }
 }

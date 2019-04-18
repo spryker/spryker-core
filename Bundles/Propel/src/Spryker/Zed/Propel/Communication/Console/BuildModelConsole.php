@@ -7,18 +7,13 @@
 
 namespace Spryker\Zed\Propel\Communication\Console;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
-use Spryker\Zed\Kernel\Communication\Console\Console;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
+use Spryker\Zed\PropelOrm\Business\Generator\Command\ModelBuildCommand;
 
 /**
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class BuildModelConsole extends Console
+class BuildModelConsole extends AbstractPropelOriginCommand
 {
     public const COMMAND_NAME = 'propel:model:build';
 
@@ -34,28 +29,10 @@ class BuildModelConsole extends Console
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return int
+     * @return string
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function getOriginCommandClassName(): string
     {
-        $this->info('Build propel models');
-
-        $config = Config::get(PropelConstants::PROPEL);
-        $command = 'APPLICATION_ENV=' . APPLICATION_ENV
-            . ' APPLICATION_STORE=' . APPLICATION_STORE
-            . ' APPLICATION_ROOT_DIR=' . APPLICATION_ROOT_DIR
-            . ' APPLICATION=' . APPLICATION
-            . ' vendor/bin/propel model:build --config-dir '
-            . $config['paths']['phpConfDir']
-            . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package';
-
-        $process = new Process($command, APPLICATION_ROOT_DIR);
-
-        return $process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
+        return ModelBuildCommand::class;
     }
 }

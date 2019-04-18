@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Propel\Business;
 
 use Generated\Shared\Transfer\SchemaValidationTransfer;
+use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Output\OutputInterface;
 
 interface PropelFacadeInterface
 {
@@ -184,4 +186,24 @@ interface PropelFacadeInterface
      * @return \Generated\Shared\Transfer\SchemaValidationTransfer
      */
     public function validateSchemaXmlFiles(): SchemaValidationTransfer;
+
+    /**
+     *
+     * Specification:
+     * - Runs propel command.
+     * - Builds InputInterface and provides to propel command.
+     *
+     * @api
+     *
+     * @param string $propelOriginalCommandClassName
+     * @param \Symfony\Component\Console\Input\InputDefinition $propelCommandDefinition
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
+     */
+    public function runOriginCommand(
+        string $propelOriginalCommandClassName,
+        InputDefinition $propelCommandDefinition,
+        OutputInterface $output
+    ): int;
 }
