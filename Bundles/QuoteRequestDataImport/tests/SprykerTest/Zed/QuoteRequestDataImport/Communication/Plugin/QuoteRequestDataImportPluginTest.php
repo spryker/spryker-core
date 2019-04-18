@@ -30,6 +30,7 @@ use Spryker\Zed\QuoteRequestDataImport\QuoteRequestDataImportConfig;
 class QuoteRequestDataImportPluginTest extends Unit
 {
     protected const TEST_COMPANY_USER_KEY = 'test-company-user-key';
+    protected const INCORRECT_COMPANY_USER_KEY = 'incorrect-company-user-key';
 
     /**
      * @var \SprykerTest\Zed\QuoteRequestDataImport\QuoteRequestDataImportCommunicationTester
@@ -76,7 +77,7 @@ class QuoteRequestDataImportPluginTest extends Unit
     {
         // Arrange
         $dataImporterReaderConfigurationTransfer = (new DataImporterReaderConfigurationTransfer())
-            ->setFileName(codecept_data_dir() . 'import/quote_request.csv');
+            ->setFileName(codecept_data_dir() . 'import/quote_request_company_user_not_found.csv');
 
         $dataImportConfigurationTransfer = (new DataImporterConfigurationTransfer())
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
@@ -84,7 +85,7 @@ class QuoteRequestDataImportPluginTest extends Unit
 
         // Assert
         $this->expectException(DataImportException::class);
-        $this->expectExceptionMessage(sprintf('Could not find company user by key "%s"', static::TEST_COMPANY_USER_KEY));
+        $this->expectExceptionMessage(sprintf('Could not find company user by key "%s"', static::INCORRECT_COMPANY_USER_KEY));
 
         // Act
         $quoteRequestDataImportPlugin = new QuoteRequestDataImportPlugin();

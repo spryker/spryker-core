@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersionQuery;
 
@@ -45,7 +44,6 @@ class QuoteRequestDataImportCommunicationTester extends Actor
     {
         $this->ensureDatabaseTableIsEmpty($this->getQuoteRequestQuery());
         $this->ensureDatabaseTableIsEmpty($this->getQuoteRequestVersionQuery());
-        $this->ensureDatabaseTableIsEmpty($this->getCompanyUserQuery());
     }
 
     /**
@@ -115,14 +113,6 @@ class QuoteRequestDataImportCommunicationTester extends Actor
     protected function getQuoteRequestQuery(): SpyQuoteRequestQuery
     {
         return SpyQuoteRequestQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
-     */
-    protected function getCompanyUserQuery(): SpyCompanyUserQuery
-    {
-        return SpyCompanyUserQuery::create();
     }
 
     /**

@@ -1,0 +1,2 @@
+quote_request_key,version,version_reference,metadata,quote
+incorrect-quote-request-key,1,test-version-reference-1,test-metadata,test-quote

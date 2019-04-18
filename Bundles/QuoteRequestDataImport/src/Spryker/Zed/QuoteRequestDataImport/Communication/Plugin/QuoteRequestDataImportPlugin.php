@@ -20,6 +20,8 @@ use Spryker\Zed\QuoteRequestDataImport\QuoteRequestDataImportConfig;
 class QuoteRequestDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -33,6 +35,8 @@ class QuoteRequestDataImportPlugin extends AbstractPlugin implements DataImportP
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string

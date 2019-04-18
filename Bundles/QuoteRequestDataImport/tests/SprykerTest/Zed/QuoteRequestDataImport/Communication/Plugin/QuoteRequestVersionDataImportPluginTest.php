@@ -34,26 +34,12 @@ use Spryker\Zed\QuoteRequestDataImport\QuoteRequestDataImportConfig;
 class QuoteRequestVersionDataImportPluginTest extends Unit
 {
     protected const TEST_QUOTE_REQUEST_KEY = 'test-quote-request-key';
+    protected const INCORRECT_QUOTE_REQUEST_KEY = 'incorrect-quote-request-key';
 
     /**
      * @var \SprykerTest\Zed\QuoteRequestDataImport\QuoteRequestDataImportCommunicationTester
      */
     protected $tester;
-
-    /**
-     * @var \Generated\Shared\Transfer\QuoteRequestTransfer
-     */
-    protected $quoteRequestTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\CompanyUserTransfer
-     */
-    protected $companyUserTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected $quoteTransfer;
 
     /**
      * @return void
@@ -107,7 +93,7 @@ class QuoteRequestVersionDataImportPluginTest extends Unit
     {
         // Arrange
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/quote_request_version.csv');
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/quote_request_version_quote_request_not_found.csv');
 
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
@@ -117,7 +103,7 @@ class QuoteRequestVersionDataImportPluginTest extends Unit
 
         // Assert
         $this->expectException(DataImportException::class);
-        $this->expectExceptionMessage(sprintf('Could not find quote request by key "%s"', static::TEST_QUOTE_REQUEST_KEY));
+        $this->expectExceptionMessage(sprintf('Could not find quote request by key "%s"', static::INCORRECT_QUOTE_REQUEST_KEY));
 
         // Act
         $quoteRequestVersionDataImportPlugin->import($dataImportConfigurationTransfer);
