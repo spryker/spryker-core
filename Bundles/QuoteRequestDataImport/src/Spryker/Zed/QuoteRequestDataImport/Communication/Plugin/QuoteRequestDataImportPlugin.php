@@ -21,6 +21,7 @@ class QuoteRequestDataImportPlugin extends AbstractPlugin implements DataImportP
 {
     /**
      * {@inheritdoc}
+     * - Imports Quote Requests data.
      *
      * @api
      *
