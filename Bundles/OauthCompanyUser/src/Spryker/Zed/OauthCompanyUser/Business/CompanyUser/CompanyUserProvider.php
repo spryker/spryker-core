@@ -28,21 +28,21 @@ class CompanyUserProvider implements CompanyUserProviderInterface
     /**
      * @var \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface[]
      */
-    protected $oauthCompanyUserExpanderPlugins;
+    protected $oauthCompanyUserIdentifierExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCompanyUserFacadeInterface $companyUserFacade
      * @param \Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface[] $oauthCompanyUserExpanderPlugins
+     * @param \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface[] $oauthCompanyUserIdentifierExpanderPlugins
      */
     public function __construct(
         OauthCompanyUserToCompanyUserFacadeInterface $companyUserFacade,
         OauthCompanyUserToUtilEncodingServiceInterface $utilEncodingService,
-        array $oauthCompanyUserExpanderPlugins
+        array $oauthCompanyUserIdentifierExpanderPlugins
     ) {
         $this->companyUserFacade = $companyUserFacade;
         $this->utilEncodingService = $utilEncodingService;
-        $this->oauthCompanyUserExpanderPlugins = $oauthCompanyUserExpanderPlugins;
+        $this->oauthCompanyUserIdentifierExpanderPlugins = $oauthCompanyUserIdentifierExpanderPlugins;
     }
 
     /**
@@ -114,7 +114,7 @@ class CompanyUserProvider implements CompanyUserProviderInterface
         CompanyUserIdentifierTransfer $companyUserIdentifierTransfer,
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserIdentifierTransfer {
-        foreach ($this->oauthCompanyUserExpanderPlugins as $companyUserIdentifierExpanderPlugin) {
+        foreach ($this->oauthCompanyUserIdentifierExpanderPlugins as $companyUserIdentifierExpanderPlugin) {
             $companyUserIdentifierTransfer = $companyUserIdentifierExpanderPlugin->expandCompanyUserIdentifier(
                 $companyUserIdentifierTransfer,
                 $companyUserTransfer

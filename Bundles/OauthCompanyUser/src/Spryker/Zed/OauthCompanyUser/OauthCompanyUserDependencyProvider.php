@@ -23,7 +23,7 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
-    public const PLUGINS_OAUTH_COMPANY_USER_EXPANDER = 'PLUGINS_OAUTH_COMPANY_USER_EXPANDER';
+    public const PLUGINS_OAUTH_COMPANY_USER_IDENTIFIER_EXPANDER = 'PLUGINS_OAUTH_COMPANY_USER_IDENTIFIER_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,7 +37,7 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addOauthFacade($container);
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addOauthCompanyUserExpanderPlugins($container);
+        $container = $this->addOauthCompanyUserIdentifierExpanderPlugins($container);
 
         return $container;
     }
@@ -89,10 +89,10 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addOauthCompanyUserExpanderPlugins(Container $container): Container
+    protected function addOauthCompanyUserIdentifierExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_OAUTH_COMPANY_USER_EXPANDER] = function () {
-            return $this->getOauthCompanyUserExpanderPlugins();
+        $container[static::PLUGINS_OAUTH_COMPANY_USER_IDENTIFIER_EXPANDER] = function () {
+            return $this->getOauthCompanyUserIdentifierExpanderPlugins();
         };
 
         return $container;
@@ -101,7 +101,7 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
     /**
      * @return \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface[]
      */
-    protected function getOauthCompanyUserExpanderPlugins(): array
+    protected function getOauthCompanyUserIdentifierExpanderPlugins(): array
     {
         return [];
     }
