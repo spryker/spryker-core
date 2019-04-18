@@ -291,7 +291,9 @@ class CustomerWriter implements CustomerWriterInterface
     {
         unset(
             $customerAttributes[RestCustomersAttributesTransfer::CREATED_AT],
-            $customerAttributes[RestCustomersAttributesTransfer::UPDATED_AT]
+            $customerAttributes[RestCustomersAttributesTransfer::UPDATED_AT],
+            $customerAttributes[RestCustomersAttributesTransfer::PASSWORD],
+            $customerAttributes[RestCustomersAttributesTransfer::CONFIRM_PASSWORD]
         );
 
         return $customerAttributes;
