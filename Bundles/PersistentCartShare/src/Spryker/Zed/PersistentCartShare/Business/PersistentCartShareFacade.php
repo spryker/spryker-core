@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PersistentCartShare\Business;
 
-use Generated\Shared\Transfer\QuotePreviewRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -21,14 +21,14 @@ class PersistentCartShareFacade extends AbstractFacade implements PersistentCart
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuotePreviewRequestTransfer $quotePreviewRequestTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteForPreview(QuotePreviewRequestTransfer $quotePreviewRequestTransfer): QuoteResponseTransfer
+    public function getQuoteForPreview(ResourceShareTransfer $resourceShareTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteForPreviewReader()
-            ->getQuoteForPreview($quotePreviewRequestTransfer);
+            ->getQuoteForPreview($resourceShareTransfer);
     }
 }

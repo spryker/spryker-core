@@ -7,23 +7,15 @@
 
 namespace Spryker\Zed\PersistentCartShare\Business\Model;
 
-use Generated\Shared\Transfer\QuotePreviewRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 
 interface QuoteForPreviewReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuotePreviewRequestTransfer $quotePreviewRequestTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteForPreview(QuotePreviewRequestTransfer $quotePreviewRequestTransfer): QuoteResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuotePreviewRequestTransfer $quotePreviewRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
-     */
-    public function getResourceShare(QuotePreviewRequestTransfer $quotePreviewRequestTransfer): ResourceShareResponseTransfer;
+    public function getQuoteForPreview(ResourceShareTransfer $resourceShareTransfer): QuoteResponseTransfer;
 }

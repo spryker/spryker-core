@@ -1,8 +1,8 @@
 namespace: SprykerTest
 
 include:
-    - tests/SprykerTest/Client/PeristentCartShare
-    - tests/SprykerTest/Zed/PeristentCartShare
+    - tests/SprykerTest/Client/PersistentCartShare
+    - tests/SprykerTest/Zed/PersistentCartShare
 
 actor: Tester
 
