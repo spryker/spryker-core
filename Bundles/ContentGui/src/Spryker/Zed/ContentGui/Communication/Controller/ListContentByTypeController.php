@@ -45,6 +45,7 @@ class ListContentByTypeController extends AbstractController
     {
         $contentType = $request->query->get(static::PARAM_CONTENT_TYPE);
         $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType);
+
         return $this->jsonResponse($contentByTypeTable->fetchData());
     }
 }
