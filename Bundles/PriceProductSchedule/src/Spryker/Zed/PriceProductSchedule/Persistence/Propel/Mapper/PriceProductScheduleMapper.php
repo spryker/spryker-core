@@ -17,6 +17,7 @@ use Orm\Zed\PriceProduct\Persistence\Base\SpyPriceType;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
 class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 {
@@ -36,18 +37,26 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     protected $priceProductScheduleListMapper;
 
     /**
+     * @var \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleListMapperInterface $priceProductScheduleListMapper
+     * @param \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig $config
      */
     public function __construct(
         PriceProductScheduleToCurrencyFacadeInterface $currencyFacade,
         PriceProductScheduleToProductFacadeInterface $productFacade,
-        PriceProductScheduleListMapperInterface $priceProductScheduleListMapper
+        PriceProductScheduleListMapperInterface $priceProductScheduleListMapper,
+        PriceProductScheduleConfig $config
     ) {
         $this->currencyFacade = $currencyFacade;
         $this->productFacade = $productFacade;
         $this->priceProductScheduleListMapper = $priceProductScheduleListMapper;
+        $this->config = $config;
     }
 
     /**
@@ -220,6 +229,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         PriceProductDimensionTransfer $priceProductDimensionTransfer
     ): PriceProductDimensionTransfer {
         return $priceProductDimensionTransfer
-            ->fromArray($priceProductScheduleEntity->getVirtualColumns(), true);
+            ->fromArray($priceProductScheduleEntity->getVirtualColumns(), true)
+            ->setType($this->config->getPriceDimensionDefault());
     }
 }

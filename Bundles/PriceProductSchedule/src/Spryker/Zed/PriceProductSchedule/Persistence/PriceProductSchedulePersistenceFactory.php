@@ -41,7 +41,8 @@ class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory
         return new PriceProductScheduleMapper(
             $this->getCurrencyFacade(),
             $this->getProductFacade(),
-            $this->createPriceProductScheduleListMapper()
+            $this->createPriceProductScheduleListMapper(),
+            $this->getConfig()
         );
     }
 
