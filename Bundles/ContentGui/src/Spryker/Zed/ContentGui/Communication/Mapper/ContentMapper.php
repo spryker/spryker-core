@@ -14,7 +14,6 @@ class ContentMapper implements ContentMapperInterface
 {
     protected const URL_LIST_CONTENT_BY_TYPE = '/content-gui/list-content-by-type';
     protected const URL_PARAM_TYPE = 'type';
-    protected const KEY_TYPE = 'type';
     protected const KEY_NAME = 'name';
     protected const KEY_CONTENT_LIST_URL = 'contentListUrl';
 
@@ -42,7 +41,6 @@ class ContentMapper implements ContentMapperInterface
 
         foreach ($contentTypes as $contentType) {
             $contentList[] = [
-                static::KEY_TYPE => $contentType,
                 static::KEY_NAME => $this->translatorFacade->trans($contentType),
                 static::KEY_CONTENT_LIST_URL => $this->generateContentTypeUrl($contentType),
             ];

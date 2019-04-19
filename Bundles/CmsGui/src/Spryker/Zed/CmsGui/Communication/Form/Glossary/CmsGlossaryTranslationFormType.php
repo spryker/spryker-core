@@ -85,6 +85,7 @@ class CmsGlossaryTranslationFormType extends AbstractType
             'label' => 'Content',
             'attr' => [
                 'class' => 'html-editor',
+                'data-editor-config' => 'contentItem'
             ],
             'required' => false,
             'constraints' => [

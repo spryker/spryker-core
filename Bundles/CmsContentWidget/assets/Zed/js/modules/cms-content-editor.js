@@ -76,6 +76,8 @@ CmsContentEditor.prototype.getEditorConfig = function(jsonData)
  */
 CmsContentEditor.prototype.createCmsContentWidgetButton = function (cmsContentWidgetDropDownItems)
 {
+    console.log(cmsContentWidgetDropDownItems);
+    debugger;
     return function (context) {
         var ui = $.summernote.ui;
 
