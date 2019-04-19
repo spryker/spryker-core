@@ -83,14 +83,16 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param string $contentType
+     * @param int|null $idContent
      *
      * @return \Spryker\Zed\ContentGui\Communication\Table\ContentByTypeTable
      */
-    public function createContentByTypeTable(string $contentType): ContentByTypeTable
+    public function createContentByTypeTable(string $contentType, ?int $idContent = null): ContentByTypeTable
     {
         return new ContentByTypeTable(
             $contentType,
-            $this->getPropelContentQuery()
+            $this->getPropelContentQuery(),
+            $idContent
         );
     }
 

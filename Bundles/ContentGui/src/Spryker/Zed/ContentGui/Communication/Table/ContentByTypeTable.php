@@ -14,6 +14,8 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ContentByTypeTable extends AbstractTable
 {
+    protected const FIELD_ACTION_CONTENT_ITEM = '<input type="radio" %s name="content-item" value="%s"/>';
+
     /**
      * @var string
      */
@@ -25,15 +27,23 @@ class ContentByTypeTable extends AbstractTable
     private $contentQuery;
 
     /**
+     * @var int
+     */
+    private $idContent;
+
+    /**
      * @param string $contentType
      * @param \Orm\Zed\Content\Persistence\SpyContentQuery $contentQuery
+     * @param int|null $idContent
      */
     public function __construct(
         string $contentType,
-        SpyContentQuery $contentQuery
+        SpyContentQuery $contentQuery,
+        ?int $idContent = null
     ) {
         $this->contentType = $contentType;
         $this->contentQuery = $contentQuery;
+        $this->idContent = $idContent;
     }
 
     /**
@@ -90,10 +100,12 @@ class ContentByTypeTable extends AbstractTable
         $results = [];
 
         foreach ($contentItems as $key => $contentItem) {
+            $checked = $this->isCheckedItem($key, $contentItem[SpyContentTableMap::COL_ID_CONTENT]);
+
             $results[] = [
                 ContentTableConstants::COL_ID_CONTENT => $contentItem[SpyContentTableMap::COL_ID_CONTENT],
                 ContentTableConstants::COL_NAME => $contentItem[SpyContentTableMap::COL_NAME],
-                ContentTableConstants::COL_ACTIONS => $this->buildLinks($contentItem, !$results),
+                ContentTableConstants::COL_ACTIONS => $this->buildLinks($contentItem, $checked),
             ];
         }
 
@@ -110,6 +122,25 @@ class ContentByTypeTable extends AbstractTable
     {
         $selectedAttr = $checked ? 'checked="checked"' : '';
 
-        return sprintf('<input type="radio" %s name="content-item" value="%s"/>', $selectedAttr, $contentItem[ContentTableConstants::COL_ID_CONTENT]);
+        return sprintf(
+            static::FIELD_ACTION_CONTENT_ITEM,
+            $selectedAttr,
+            $contentItem[ContentTableConstants::COL_ID_CONTENT]
+        );
+    }
+
+    /**
+     * @param int $key
+     * @param int $idContent
+     *
+     * @return bool
+     */
+    protected function isCheckedItem(int $key, int $idContent): bool
+    {
+        if ($this->idContent) {
+            return $this->idContent === $idContent;
+        }
+
+        return $key === 0;
     }
 }
