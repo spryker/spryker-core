@@ -47,6 +47,7 @@ class PriceProductUpdater implements PriceProductUpdaterInterface
         PriceProductTransfer $fallbackPriceProductTransfer,
         PriceTypeTransfer $currentPriceType
     ): ?PriceProductTransfer {
+        $fallbackPriceProductTransfer->requireMoneyValue();
         $fallbackMoneyValueTransfer = $fallbackPriceProductTransfer->getMoneyValue();
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setPriceTypeName($currentPriceType->getName())

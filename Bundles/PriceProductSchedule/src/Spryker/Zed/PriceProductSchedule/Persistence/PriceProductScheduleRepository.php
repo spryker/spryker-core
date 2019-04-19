@@ -75,14 +75,20 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     public function findSimilarPriceProductSchedulesToDisable(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): array {
+        $priceProductScheduleTransfer->requirePriceProduct();
+        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
+        $priceProductTransfer
+            ->requireMoneyValue()
+            ->requirePriceType();
+
         $priceProductScheduleEntities = $this->getFactory()
             ->createPriceProductScheduleQuery()
             ->filterByIsCurrent(true)
-            ->filterByFkStore($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getFkStore())
-            ->filterByFkCurrency($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getFkCurrency())
-            ->filterByFkPriceType($priceProductScheduleTransfer->getPriceProduct()->getPriceType()->getIdPriceType())
-            ->filterByFkProduct($priceProductScheduleTransfer->getPriceProduct()->getIdProduct())
-            ->filterByFkProductAbstract($priceProductScheduleTransfer->getPriceProduct()->getIdProductAbstract())
+            ->filterByFkStore($priceProductTransfer->getMoneyValue()->getFkStore())
+            ->filterByFkCurrency($priceProductTransfer->getMoneyValue()->getFkCurrency())
+            ->filterByFkPriceType($priceProductTransfer->getPriceType()->getIdPriceType())
+            ->filterByFkProduct($priceProductTransfer->getIdProduct())
+            ->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract())
             ->filterByIdPriceProductSchedule(
                 $priceProductScheduleTransfer->getIdPriceProductSchedule(),
                 Criteria::NOT_EQUAL

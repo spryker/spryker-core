@@ -43,6 +43,7 @@ class PriceProductFallbackFinder implements PriceProductFallbackFinderInterface
      */
     public function findFallbackPriceProduct(PriceProductTransfer $priceProductTransfer): ?PriceProductTransfer
     {
+        $priceProductTransfer->requireMoneyValue();
         $fallbackPriceTypeName = $this->findFallbackPriceType($priceProductTransfer->getPriceTypeName());
 
         if ($fallbackPriceTypeName === null) {
