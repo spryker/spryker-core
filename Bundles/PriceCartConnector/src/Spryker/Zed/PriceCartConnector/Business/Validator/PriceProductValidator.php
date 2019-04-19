@@ -87,18 +87,17 @@ class PriceProductValidator implements PriceProductValidatorInterface
     }
 
     /**
-     * @param CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
-     * @param ItemTransfer $itemTransfer
-     * @param PriceProductFilterTransfer $priceProductFilterTransfer
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return CartPreCheckResponseTransfer
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     protected function checkMinPriceRestriction(
         CartPreCheckResponseTransfer $cartPreCheckResponseTransfer,
         ItemTransfer $itemTransfer,
         PriceProductFilterTransfer $priceProductFilterTransfer
-    ): CartPreCheckResponseTransfer
-    {
+    ): CartPreCheckResponseTransfer {
         $price = $this->priceProductFacade->findPriceBySku($itemTransfer->getSku(), $priceProductFilterTransfer->getPriceTypeName());
         $sumPrice = $itemTransfer->getQuantity() * $price;
 
@@ -112,7 +111,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     }
 
     /**
-     * @return MessageTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer
      */
     protected function createMessageMinPriceRestriction(): MessageTransfer
     {
