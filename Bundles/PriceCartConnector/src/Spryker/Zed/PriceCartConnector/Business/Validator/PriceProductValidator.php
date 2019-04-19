@@ -15,10 +15,12 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
+use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 
 class PriceProductValidator implements PriceProductValidatorInterface
 {
     public const CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY = 'cart.pre.check.price.failed';
+    public const CART_PRE_CHECK_MIN_PRICE_RESTRICTION_FAILED_KEY = 'cart.pre.check.min_price.failed';
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface
      */
@@ -30,15 +32,23 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected $priceFacade;
 
     /**
+     * @var \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
+     * @param \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig $config
      */
     public function __construct(
         PriceCartToPriceProductInterface $priceProductFacade,
-        PriceCartToPriceInterface $priceFacade
+        PriceCartToPriceInterface $priceFacade,
+        PriceCartConnectorConfig $config
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->priceFacade = $priceFacade;
+        $this->config = $config;
     }
 
     /**
@@ -55,7 +65,17 @@ class PriceProductValidator implements PriceProductValidatorInterface
             $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $cartChangeTransfer->getQuote());
 
             if ($this->priceProductFacade->hasValidPriceFor($priceProductFilterTransfer)) {
-                continue;
+                $cartPreCheckResponseTransfer = $this->checkMinPriceRestriction(
+                    $cartPreCheckResponseTransfer,
+                    $itemTransfer,
+                    $priceProductFilterTransfer
+                );
+
+                if ($cartPreCheckResponseTransfer->getIsSuccess()) {
+                    continue;
+                }
+
+                return $cartPreCheckResponseTransfer;
             }
 
             return $cartPreCheckResponseTransfer
@@ -64,6 +84,40 @@ class PriceProductValidator implements PriceProductValidatorInterface
         }
 
         return $cartPreCheckResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    protected function checkMinPriceRestriction(
+        CartPreCheckResponseTransfer $cartPreCheckResponseTransfer,
+        ItemTransfer $itemTransfer,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): CartPreCheckResponseTransfer {
+        $price = $this->priceProductFacade->findPriceBySku($itemTransfer->getSku(), $priceProductFilterTransfer->getPriceTypeName());
+        $sumPrice = $itemTransfer->getQuantity() * $price;
+
+        if ($sumPrice < $this->config->getMinPriceRestriction()) {
+            return $cartPreCheckResponseTransfer
+                ->setIsSuccess(false)
+                ->addMessage($this->createMessageMinPriceRestriction());
+        }
+
+        return $cartPreCheckResponseTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createMessageMinPriceRestriction(): MessageTransfer
+    {
+        return (new MessageTransfer())
+            ->setValue(static::CART_PRE_CHECK_MIN_PRICE_RESTRICTION_FAILED_KEY)
+            ->setParameters(['%price%' => $this->config->getMinPriceRestriction()]);
     }
 
     /**
