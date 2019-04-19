@@ -32,6 +32,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
