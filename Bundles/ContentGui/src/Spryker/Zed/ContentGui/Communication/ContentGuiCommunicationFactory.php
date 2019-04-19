@@ -82,15 +82,15 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param string|null $contentType
+     * @param string $contentType
      *
      * @return \Spryker\Zed\ContentGui\Communication\Table\ContentByTypeTable
      */
-    public function createContentByTypeTable(?string $contentType = null): ContentByTypeTable
+    public function createContentByTypeTable(string $contentType): ContentByTypeTable
     {
         return new ContentByTypeTable(
-            $this->getPropelContentQuery(),
-            $contentType
+            $contentType,
+            $this->getPropelContentQuery()
         );
     }
 
@@ -99,10 +99,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createContentEditorPluginsResolver(): ContentEditorPluginsResolverInterface
     {
-        return new ContentEditorPluginsResolver(
-            $this->getContentEditorPlugins(),
-            $this->getTranslatorFacade()
-        );
+        return new ContentEditorPluginsResolver($this->getContentEditorPlugins());
     }
 
     /**

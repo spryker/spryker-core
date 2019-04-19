@@ -25,15 +25,15 @@ class ContentByTypeTable extends AbstractTable
     private $contentQuery;
 
     /**
+     * @param string $contentType
      * @param \Orm\Zed\Content\Persistence\SpyContentQuery $contentQuery
-     * @param string|null $contentType
      */
     public function __construct(
-        SpyContentQuery $contentQuery,
-        ?string $contentType = null
+        string $contentType,
+        SpyContentQuery $contentQuery
     ) {
-        $this->contentQuery = $contentQuery;
         $this->contentType = $contentType;
+        $this->contentQuery = $contentQuery;
     }
 
     /**
@@ -85,20 +85,15 @@ class ContentByTypeTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        if ($this->contentType) {
-            $this->contentQuery->filterByContentTypeKey($this->contentType);
-        }
-
+        $this->contentQuery->filterByContentTypeKey($this->contentType);
         $contentItems = $this->runQuery($this->contentQuery, $config);
         $results = [];
 
         foreach ($contentItems as $key => $contentItem) {
-            $checked = $key === 0;
-
             $results[] = [
                 ContentTableConstants::COL_ID_CONTENT => $contentItem[SpyContentTableMap::COL_ID_CONTENT],
                 ContentTableConstants::COL_NAME => $contentItem[SpyContentTableMap::COL_NAME],
-                ContentTableConstants::COL_ACTIONS => $this->buildLinks($contentItem, $checked),
+                ContentTableConstants::COL_ACTIONS => $this->buildLinks($contentItem, !$results),
             ];
         }
 
