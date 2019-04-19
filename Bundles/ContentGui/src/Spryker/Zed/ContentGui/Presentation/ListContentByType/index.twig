@@ -5,11 +5,7 @@
         {% endblock %}
     {% endembed %}
 
-    {% if twigFunctionTemplate is empty %}
-        <span>{{ 'Content editor plugin for this content type is not defined' | trans }}</span>
-    {% else %}
-        <input type="hidden" name="twigFunctionTemplate" value="{{ twigFunctionTemplate }}" />
-    {% endif %}
+    <input type="hidden" name="twigFunctionTemplate" value="{{ twigFunctionTemplate }}" />
 
     {% if templates is not empty %}
         {% set selectedTemplateIdentifier = selectedTemplateIdentifier is defined ? selectedTemplateIdentifier : templates[0].identifier %}
@@ -17,11 +13,13 @@
         <h5>{{ 'Choose template' | trans }}</h5>
         <ul>
             {% for key, template in templates %}
+                {% set templateName = template.name | trans %}
                 <li>
                     <input id="template-{{ template.identifier }}" name="template" type="radio"
                             {{ selectedTemplateIdentifier == template.identifier ? 'checked="checked"' : '' }}
+                            data-template="{{ templateName }}"
                            value="{{ template.identifier }}" />
-                    <label for="template-{{ template.identifier }}">{{ template.name | trans }}</label>
+                    <label for="template-{{ template.identifier }}">{{ templateName }}</label>
                 </li>
             {% endfor %}
         </ul>

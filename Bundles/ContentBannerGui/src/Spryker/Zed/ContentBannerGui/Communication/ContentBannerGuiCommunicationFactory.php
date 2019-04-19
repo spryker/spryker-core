@@ -7,17 +7,20 @@
 
 namespace Spryker\Zed\ContentBannerGui\Communication;
 
-use Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui\ContentBannerContentGuiEditorMapper;
-use Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui\ContentBannerContentGuiEditorMapperInterface;
+use Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui\ContentBannerContentGuiEditorConfigurationMapper;
+use Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui\ContentBannerContentGuiEditorConfigurationMapperInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig getConfig()
+ */
 class ContentBannerGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui\ContentBannerContentGuiEditorMapperInterface
+     * @return \Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui\ContentBannerContentGuiEditorConfigurationMapperInterface
      */
-    public function createContentBannerContentGuiEditorMapper(): ContentBannerContentGuiEditorMapperInterface
+    public function createContentBannerContentGuiEditorMapper(): ContentBannerContentGuiEditorConfigurationMapperInterface
     {
-        return new ContentBannerContentGuiEditorMapper();
+        return new ContentBannerContentGuiEditorConfigurationMapper($this->getConfig());
     }
 }

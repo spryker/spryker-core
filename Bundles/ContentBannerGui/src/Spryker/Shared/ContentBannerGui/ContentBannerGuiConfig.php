@@ -26,25 +26,28 @@ class ContentBannerGuiConfig extends AbstractSharedConfig
     public const CONTENT_TERM_BANNER = 'Banner';
 
     /**
-     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::FUNCTION_NAME
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TWIG_FUNCTION_NAME
      */
-    public const FUNCTION_NAME = 'content_banner';
+    public const TWIG_FUNCTION_NAME = 'content_banner';
 
     /**
-     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TEMPLATE_IDENTIFIER_DEFAULT
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT
      */
-    public const TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+    public const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 
     /**
-     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TEMPLATE_IDENTIFIER_TOP_TITLE
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
      */
-    public const TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
+    protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 
     /**
-     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TEMPLATE_NAMES
+     * @return array
      */
-    public const TEMPLATE_NAMES = [
-        self::TEMPLATE_IDENTIFIER_DEFAULT => 'content_banner.template.default',
-        self::TEMPLATE_IDENTIFIER_TOP_TITLE => 'content_banner.template.top-title',
-    ];
+    public function getContentWidgetTemplates(): array
+    {
+        return [
+            self::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => 'content_banner.template.default',
+            self::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => 'content_banner.template.top-title',
+        ];
+    }
 }

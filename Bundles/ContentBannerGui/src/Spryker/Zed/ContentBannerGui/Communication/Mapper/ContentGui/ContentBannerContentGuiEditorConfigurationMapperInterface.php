@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui;
 
-interface ContentBannerContentGuiEditorMapperInterface
+interface ContentBannerContentGuiEditorConfigurationMapperInterface
 {
     /**
      * @return array

@@ -8,13 +8,27 @@
 namespace Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui;
 
 use Generated\Shared\Transfer\ContentWidgetTemplateTransfer;
-use Spryker\Shared\ContentBannerGui\ContentBannerGuiConfig;
+use Spryker\Shared\ContentBannerGui\ContentBannerGuiConfig as SharedContentBannerGuiConfig;
+use Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig;
 
-class ContentBannerContentGuiEditorMapper implements ContentBannerContentGuiEditorMapperInterface
+class ContentBannerContentGuiEditorConfigurationMapper implements ContentBannerContentGuiEditorConfigurationMapperInterface
 {
     protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_ID = '%ID%';
     protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_TEMPLATE = '%TEMPLATE%';
     protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT = "{{ %s(%s, '%s') }}";
+
+    /**
+     * @var \Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig $config
+     */
+    public function __construct(ContentBannerGuiConfig $config)
+    {
+        $this->config = $config;
+    }
 
     /**
      * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
@@ -23,7 +37,7 @@ class ContentBannerContentGuiEditorMapper implements ContentBannerContentGuiEdit
     {
         $templates = [];
 
-        foreach (ContentBannerGuiConfig::TEMPLATE_NAMES as $templateIdentifier => $templateName) {
+        foreach ($this->config->getContentWidgetTemplates() as $templateIdentifier => $templateName) {
             $templates[] = (new ContentWidgetTemplateTransfer())
                 ->setIdentifier($templateIdentifier)
                 ->setName($templateName);
@@ -39,7 +53,7 @@ class ContentBannerContentGuiEditorMapper implements ContentBannerContentGuiEdit
     {
         return sprintf(
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT,
-            ContentBannerGuiConfig::FUNCTION_NAME,
+            SharedContentBannerGuiConfig::TWIG_FUNCTION_NAME,
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE_ID,
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE_TEMPLATE
         );

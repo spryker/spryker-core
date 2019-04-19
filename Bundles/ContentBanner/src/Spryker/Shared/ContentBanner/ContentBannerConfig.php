@@ -24,23 +24,26 @@ class ContentBannerConfig extends AbstractSharedConfig
     /**
      * Content item banner function name
      */
-    public const FUNCTION_NAME = 'content_banner';
+    public const TWIG_FUNCTION_NAME = 'content_banner';
 
     /**
      * Content item banner default template identifier
      */
-    public const TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+    public const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 
     /**
      * Content item banner top-title template identifier
      */
-    public const TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
+    public const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 
     /**
-     * Content item banner templates
+     * @return array
      */
-    public const TEMPLATE_NAMES = [
-        self::TEMPLATE_IDENTIFIER_DEFAULT => 'content_banner.template.default',
-        self::TEMPLATE_IDENTIFIER_TOP_TITLE => 'content_banner.template.top-title',
-    ];
+    public function getContentWidgetTemplates(): array
+    {
+        return [
+            self::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => 'content_banner.template.default',
+            self::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => 'content_banner.template.top-title',
+        ];
+    }
 }

@@ -69,6 +69,6 @@ class ContentEditorPluginsResolver implements ContentEditorPluginsResolverInterf
             $contentTypes[] = $contentEditorPlugin->getType();
         }
 
-        return $contentTypes;
+        return array_unique($contentTypes);
     }
 }
