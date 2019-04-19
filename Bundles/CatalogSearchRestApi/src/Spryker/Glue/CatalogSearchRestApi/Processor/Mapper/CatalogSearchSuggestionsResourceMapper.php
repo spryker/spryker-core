@@ -6,8 +6,8 @@
 
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\RestCatalogSearchSuggestionAbstractProductsTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
-use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface;
 
 class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestionsResourceMapperInterface
 {
@@ -18,25 +18,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
     protected const SEARCH_RESPONSE_CATEGORY_KEY = 'category';
     protected const SEARCH_RESPONSE_CMS_PAGE_KEY = 'cms_page';
 
-    protected const SEARCH_RESPONSE_ABSTRACT_SKU_KEY = 'abstract_sku';
-    protected const SEARCH_RESPONSE_PRICE_KEY = 'price';
-    protected const SEARCH_RESPONSE_ABSTRACT_NAME_KEY = 'abstract_name';
-    protected const SEARCH_RESPONSE_IMAGE_URL_SMALL_KEY = 'external_url_small';
-    protected const SEARCH_RESPONSE_IMAGE_URL_LARGE_KEY = 'external_url_large';
     protected const SEARCH_RESPONSE_NAME_KEY = 'name';
-
-    /**
-     * @var \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface
-     */
-    protected $currencyClient;
-
-    /**
-     * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientInterface $currencyClient
-     */
-    public function __construct(CatalogSearchRestApiToCurrencyClientInterface $currencyClient)
-    {
-        $this->currencyClient = $currencyClient;
-    }
 
     /**
      * @return array
@@ -62,7 +44,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
     {
         $restSuggestionsAttributesTransfer = new RestCatalogSearchSuggestionsAttributesTransfer();
         $restSuggestionsAttributesTransfer->fromArray($restSearchResponse, true);
-        $restSuggestionsAttributesTransfer->setCurrency($this->currencyClient->getCurrent()->getCode());
 
         $restSuggestionsAttributesTransfer = $this->mapCustomFields($restSuggestionsAttributesTransfer, $restSearchResponse);
 
@@ -96,19 +77,10 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         RestCatalogSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer,
         array $restSearchResponse
     ): RestCatalogSearchSuggestionsAttributesTransfer {
-        $suggestionName = static::SEARCH_RESPONSE_PRODUCT_ABSTRACT_KEY;
-        $suggestionKeysRequired = [
-            static::SEARCH_RESPONSE_ABSTRACT_SKU_KEY,
-            static::SEARCH_RESPONSE_PRICE_KEY,
-            static::SEARCH_RESPONSE_ABSTRACT_NAME_KEY,
-            static::SEARCH_RESPONSE_PRODUCT_ABSTRACT_IMAGES_KEY,
-        ];
-
-        $productsSuggestions = $this->mapSuggestions($restSearchResponse, $suggestionName, $suggestionKeysRequired);
-        $productsSuggestions = $this->mapProductImages($productsSuggestions);
-        $restSearchSuggestionsAttributesTransfer->setProducts($productsSuggestions);
-
-        return $restSearchSuggestionsAttributesTransfer;
+        return $this->mapSearchSuggestionProductsToRestCatalogSearchSuggestionsAttributesTransfer(
+            $restSearchResponse,
+            $restSearchSuggestionsAttributesTransfer
+        );
     }
 
     /**
@@ -148,34 +120,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
     }
 
     /**
-     * @param array $productSuggestions
-     *
-     * @return array
-     */
-    protected function mapProductImages(array $productSuggestions): array
-    {
-        $imagesKeysRequired = [
-            static::SEARCH_RESPONSE_IMAGE_URL_SMALL_KEY,
-            static::SEARCH_RESPONSE_IMAGE_URL_LARGE_KEY,
-        ];
-
-        foreach ($productSuggestions as &$productSuggestion) {
-            $productImages = [];
-            if (is_array($productSuggestion[static::SEARCH_RESPONSE_PRODUCT_ABSTRACT_IMAGES_KEY])) {
-                $productImages = $this->mapArrayValuesByKeys(
-                    $productSuggestion[static::SEARCH_RESPONSE_PRODUCT_ABSTRACT_IMAGES_KEY],
-                    $imagesKeysRequired
-                );
-            }
-
-            $productSuggestion[static::SEARCH_RESPONSE_PRODUCT_ABSTRACT_IMAGES_KEY] = $productImages;
-        }
-        unset($productSuggestion);
-
-        return $productSuggestions;
-    }
-
-    /**
      * @param array $restSearchResponse
      * @param string $suggestionName
      * @param array $suggestionKeysRequired
@@ -196,6 +140,36 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         );
 
         return $result;
+    }
+
+    /**
+     * @param array $restSearchResponse
+     * @param \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer
+     */
+    protected function mapSearchSuggestionProductsToRestCatalogSearchSuggestionsAttributesTransfer(
+        array $restSearchResponse,
+        RestCatalogSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer
+    ): RestCatalogSearchSuggestionsAttributesTransfer {
+        if (!$this->checkSuggestionByTypeValues($restSearchResponse, static::SEARCH_RESPONSE_PRODUCT_ABSTRACT_KEY)) {
+            return $restSearchSuggestionsAttributesTransfer;
+        }
+
+        $restSearchResponseSuggest = $restSearchResponse[static::SEARCH_RESPONSE_SUGGESTION_BY_TYPE_KEY];
+        $restSearchResponseSuggestProducts = $restSearchResponseSuggest[static::SEARCH_RESPONSE_PRODUCT_ABSTRACT_KEY];
+
+        foreach ($restSearchResponseSuggestProducts as $restSearchResponseSuggestProduct) {
+            $restCatalogSearchSuggestionAbstractProducts = new RestCatalogSearchSuggestionAbstractProductsTransfer();
+            $restCatalogSearchSuggestionAbstractProducts->fromArray(
+                $restSearchResponseSuggestProduct,
+                true
+            );
+
+            $restSearchSuggestionsAttributesTransfer->addAbstractProduct($restCatalogSearchSuggestionAbstractProducts);
+        }
+
+        return $restSearchSuggestionsAttributesTransfer;
     }
 
     /**

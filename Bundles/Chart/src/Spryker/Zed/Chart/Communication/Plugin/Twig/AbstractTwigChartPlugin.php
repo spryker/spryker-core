@@ -11,8 +11,8 @@ use Spryker\Shared\Chart\Dependency\Plugin\ChartLayoutablePluginInterface;
 use Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface;
 use Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
  * @method \Spryker\Zed\Chart\Communication\ChartCommunicationFactory getFactory()
@@ -35,12 +35,12 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     /**
      * @api
      *
-     * @return \Twig_SimpleFunction[]
+     * @return \Twig\TwigFunction[]
      */
     public function getChartFunctions(): array
     {
         return [
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 static::TWIG_FUNCTION_NAME,
                 [$this, 'renderChart'],
                 $this->getDefaultTwigOptions()
@@ -51,13 +51,13 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     /**
      * @api
      *
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param string $chartPluginName
      * @param string|null $dataIdentifier
      *
      * @return string
      */
-    public function renderChart(Twig_Environment $twig, $chartPluginName, $dataIdentifier = null): string
+    public function renderChart(Environment $twig, $chartPluginName, $dataIdentifier = null): string
     {
         $context = $this->getChartContext($chartPluginName, $dataIdentifier);
         $rendered = $twig->render($this->getTemplateName(), $context);

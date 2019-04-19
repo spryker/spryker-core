@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\Twig;
 
-use Twig_SimpleFunction;
+use Twig\TwigFunction as BaseTwigFunction;
 
-abstract class TwigFunction extends Twig_SimpleFunction
+abstract class TwigFunction extends BaseTwigFunction
 {
     public function __construct()
     {

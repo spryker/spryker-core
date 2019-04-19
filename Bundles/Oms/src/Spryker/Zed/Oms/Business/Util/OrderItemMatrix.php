@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use DateTime;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeInterface;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
 class OrderItemMatrix
 {
@@ -32,16 +32,6 @@ class OrderItemMatrix
     protected $processes;
 
     /**
-     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
-     */
-    protected $orderItems;
-
-    /**
-     * @var array
-     */
-    protected $orderItemStates = [];
-
-    /**
      * @var array
      */
     protected $orderItemStateBlacklist = [];
@@ -52,24 +42,28 @@ class OrderItemMatrix
     protected $utilSanitizeService;
 
     /**
+     * @var \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface
+     */
+    protected $omsRepository;
+
+    /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\OmsConfig $config
      * @param \Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeInterface $utilSanitizeService
+     * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
      */
     public function __construct(
         OmsQueryContainerInterface $queryContainer,
         OmsConfig $config,
-        OmsToUtilSanitizeInterface $utilSanitizeService
+        OmsToUtilSanitizeInterface $utilSanitizeService,
+        OmsRepositoryInterface $omsRepository
     ) {
         $this->queryContainer = $queryContainer;
         $this->config = $config;
 
         $this->processes = $this->getProcesses();
-
-        $orderItems = $this->queryContainer->queryMatrixOrderItems(array_keys($this->processes), $this->getStateBlacklist())
-            ->find();
-        $this->orderItems = $this->preProcessItems($orderItems);
         $this->utilSanitizeService = $utilSanitizeService;
+        $this->omsRepository = $omsRepository;
     }
 
     /**
@@ -78,22 +72,18 @@ class OrderItemMatrix
     public function getMatrix()
     {
         $results = [$this->getHeaderColumns()];
+        $orderItemsMatrix = $this->getOrderItemsMatrix();
+        $statesUsed = $this->getOrderItemStateNames(array_keys($orderItemsMatrix));
 
-        $statesUsed = $this->getOrderItemStateNames($this->orderItemStates);
-
-        foreach ($this->orderItems as $idState => $orderItemsPerProcess) {
-            if (!isset($statesUsed[$idState])) {
-                continue;
-            }
-
+        foreach ($orderItemsMatrix as $idState => $grid) {
             $result = [
                 self::COL_STATE => $statesUsed[$idState],
             ];
 
             foreach ($this->processes as $idProcess => $process) {
                 $element = '';
-                if (!empty($orderItemsPerProcess[$idProcess])) {
-                    $element = $this->formatElement($orderItemsPerProcess[$idProcess], $idProcess, $idState);
+                if (!empty($grid[$idProcess])) {
+                    $element = $this->formatElement($grid[$idProcess], $idProcess, $idState);
                 }
 
                 $result[$process] = $element;
@@ -121,36 +111,19 @@ class OrderItemMatrix
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array $gridInput
      * @param int $idProcess
      * @param int $idState
      *
      * @return string
      */
-    protected function formatElement($orderItems, $idProcess, $idState)
+    protected function formatElement(array $gridInput, int $idProcess, int $idState): string
     {
-        $grid = [
+        $grid = array_replace([
             'day' => 0,
             'week' => 0,
             'other' => 0,
-        ];
-        foreach ($orderItems as $orderItem) {
-            $lastStateChange = $orderItem->getLastStateChange();
-
-            $lastDay = new DateTime('-1 day');
-            if ($lastStateChange > $lastDay) {
-                ++$grid['day'];
-                continue;
-            }
-
-            $lastDay = new DateTime('-7 day');
-            if ($lastStateChange >= $lastDay) {
-                ++$grid['week'];
-                continue;
-            }
-
-            ++$grid['other'];
-        }
+        ], $gridInput);
 
         foreach ($grid as $key => $value) {
             if (!$value) {
@@ -166,7 +139,7 @@ class OrderItemMatrix
     }
 
     /**
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess[]
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getActiveProcesses()
     {
@@ -208,23 +181,11 @@ class OrderItemMatrix
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $orderItems
-     *
      * @return array
      */
-    protected function preProcessItems($orderItems)
+    protected function getOrderItemsMatrix(): array
     {
-        $items = [];
-        foreach ($orderItems as $orderItem) {
-            $idState = $orderItem->getFkOmsOrderItemState();
-            if (!in_array($idState, $this->orderItemStates)) {
-                $this->orderItemStates[] = $idState;
-            }
-            $idProcess = $orderItem->getFkOmsOrderProcess();
-            $items[$idState][$idProcess][] = $orderItem;
-        }
-
-        return $items;
+        return $this->omsRepository->getMatrixOrderItems(array_keys($this->processes), $this->getStateBlacklist());
     }
 
     /**

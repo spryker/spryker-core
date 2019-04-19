@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\FacetConfigTransfer;
@@ -19,7 +20,6 @@ use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\SortSearchResultTransfer;
 use Spryker\Client\Currency\CurrencyClient;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientBridge;
-use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper;
 
 /**
@@ -38,6 +38,10 @@ class CatalogSearchResourceMapperTest extends Unit
     protected const GROSS_AMOUNT = 'grossAmount';
     protected const GROSS_MODE = 'GROSS_MODE';
     protected const NET_MODE = 'NET_MODE';
+
+    /** @deprecated Will be removed in next major release. */
+    protected const KEY_PRODUCTS = 'products';
+    protected const KEY_ABSTRACT_PRODUCTS = 'abstractProducts';
 
     /**
      * @var \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper
@@ -84,25 +88,24 @@ class CatalogSearchResourceMapperTest extends Unit
             ->catalogSearchResourceMapper
             ->mapPrices($this->restSearchAttributesTransfer, $this->getPriceModeInformation());
 
-        $this->assertEquals(static::REQUESTED_CURRENCY, $this->restSearchAttributesTransfer->getCurrency());
-
-        $this->assertEquals(1, $this->restSearchAttributesTransfer->getProducts()->count());
+        $products = $this->getProductsFromRestCatalogSearchAttributesTransfer();
+        $this->assertEquals(1, $products->count());
         $this->assertEquals("cameras", $this->restSearchAttributesTransfer->getSpellingSuggestion());
 
-        $this->assertEquals("Toshiba CAMILEO S20", $this->restSearchAttributesTransfer->getProducts()[0]->getAbstractName());
-        $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrice());
-        $this->assertEquals("209", $this->restSearchAttributesTransfer->getProducts()[0]->getAbstractSku());
-        $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrices()[0][static::GROSS_AMOUNT]);
-        $this->assertArrayNotHasKey("id_product_abstract", $this->restSearchAttributesTransfer->getProducts()[0]);
-        $this->assertArrayNotHasKey("id_product_labels", $this->restSearchAttributesTransfer->getProducts()[0]);
+        $this->assertEquals("Toshiba CAMILEO S20", $products[0]->getAbstractName());
+        $this->assertEquals(19568, $products[0]->getPrice());
+        $this->assertEquals("209", $products[0]->getAbstractSku());
+        $this->assertEquals(19568, $products[0]->getPrices()[0][static::GROSS_AMOUNT]);
+        $this->assertArrayNotHasKey("id_product_abstract", $products[0]);
+        $this->assertArrayNotHasKey("id_product_labels", $products[0]);
 
-        $this->assertArrayNotHasKey("fk_product_image_set", $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]);
-        $this->assertArrayNotHasKey("id_product_image", $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]);
-        $this->assertArrayNotHasKey("id_product_image_set_to_product_image", $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]);
-        $this->assertArrayNotHasKey("fk_product_image", $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]);
+        $this->assertArrayNotHasKey("fk_product_image_set", $products[0]->getImages()[0]);
+        $this->assertArrayNotHasKey("id_product_image", $products[0]->getImages()[0]);
+        $this->assertArrayNotHasKey("id_product_image_set_to_product_image", $products[0]->getImages()[0]);
+        $this->assertArrayNotHasKey("fk_product_image", $products[0]->getImages()[0]);
 
-        $this->assertEquals("//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg", $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]['externalUrlSmall']);
-        $this->assertEquals("//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg", $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]['externalUrlLarge']);
+        $this->assertEquals("//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg", $products[0]->getImages()[0]['externalUrlSmall']);
+        $this->assertEquals("//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg", $products[0]->getImages()[0]['externalUrlLarge']);
 
         $this->assertEquals("name_asc", $this->restSearchAttributesTransfer->getSort()->getCurrentSortOrder());
         $this->assertEquals("1", $this->restSearchAttributesTransfer->getSort()->getCurrentSortParam());
@@ -118,8 +121,22 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->assertSame('label', $this->restSearchAttributesTransfer->getValueFacets()[0]['name']);
         $this->assertCount(1, $this->restSearchAttributesTransfer->getRangeFacets());
         $this->assertSame('rating', $this->restSearchAttributesTransfer->getRangeFacets()[0]['name']);
-        $this->assertArrayNotHasKey('config', $this->restSearchAttributesTransfer->getValueFacets()[0]);
-        $this->assertArrayNotHasKey('config', $this->restSearchAttributesTransfer->getRangeFacets()[0]);
+        $this->assertArrayHasKey('config', $this->restSearchAttributesTransfer->getValueFacets()[0]);
+        $this->assertArrayHasKey('config', $this->restSearchAttributesTransfer->getRangeFacets()[0]);
+
+        foreach ($this->restSearchAttributesTransfer->getValueFacets() as $valueFacet) {
+            $this->assertArrayHasKey('parameterName', $valueFacet->getConfig());
+            $this->assertArrayHasKey('isMultiValued', $valueFacet->getConfig());
+            $this->assertIsString($valueFacet->getConfig()->getParameterName());
+            $this->assertIsBool($valueFacet->getConfig()->getIsMultiValued());
+        }
+
+        foreach ($this->restSearchAttributesTransfer->getRangeFacets() as $rangeFacet) {
+            $this->assertArrayHasKey('parameterName', $rangeFacet->getConfig());
+            $this->assertArrayHasKey('isMultiValued', $rangeFacet->getConfig());
+            $this->assertIsString($rangeFacet->getConfig()->getParameterName());
+            $this->assertIsBool($rangeFacet->getConfig()->getIsMultiValued());
+        }
     }
 
     /**
@@ -133,8 +150,17 @@ class CatalogSearchResourceMapperTest extends Unit
                 $this->mockEmptyRestSearchResponseTransfer()
             );
 
-        $this->assertEquals(static::REQUESTED_CURRENCY, $this->restSearchAttributesTransfer->getCurrency());
-        $this->assertEmpty($this->restSearchAttributesTransfer->getProducts());
+        $this->assertEmpty($this->getProductsFromRestCatalogSearchAttributesTransfer());
+    }
+
+    /**
+     * @return \ArrayObject
+     */
+    protected function getProductsFromRestCatalogSearchAttributesTransfer(): ArrayObject
+    {
+        return isset($this->restSearchAttributesTransfer[static::KEY_ABSTRACT_PRODUCTS])
+            ? $this->restSearchAttributesTransfer[static::KEY_ABSTRACT_PRODUCTS]
+            : $this->restSearchAttributesTransfer[static::KEY_PRODUCTS];
     }
 
     /**
@@ -312,19 +338,6 @@ class CatalogSearchResourceMapperTest extends Unit
         $facetSearchResultTransfer->setConfig($facetConfig);
 
         return $facetSearchResultTransfer;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject | \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface
-     */
-    protected function getPriceClientMock()
-    {
-        $mock = $this
-            ->createMock(CatalogSearchRestApiToPriceClientInterface::class);
-        $mock->method('getCurrentPriceMode')
-            ->willReturn(static::GROSS_MODE);
-
-        return $mock;
     }
 
     /**

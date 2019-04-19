@@ -10,14 +10,19 @@ namespace Spryker\Zed\Payment\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payment\Business\Calculation\PaymentCalculator;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
+use Spryker\Zed\Payment\Business\Installer\SalesPaymentMethodTypeInstaller;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodReader;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentHydrator;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentReader;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentSaver;
+use Spryker\Zed\Payment\Business\Provider\PaymentProviderReader;
+use Spryker\Zed\Payment\Business\Provider\PaymentProviderReaderInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Payment\Persistence\PaymentEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface getRepository()()
  * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
  */
 class PaymentBusinessFactory extends AbstractBusinessFactory
@@ -87,18 +92,40 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface[]
-     */
-    protected function getPaymentMethodFilterPlugins()
-    {
-        return $this->getProvidedDependency(PaymentDependencyProvider::PAYMENT_METHOD_FILTER_PLUGINS);
-    }
-
-    /**
      * @return \Spryker\Zed\Payment\Business\Calculation\PaymentCalculatorInterface
      */
     public function createPaymentCalculator()
     {
         return new PaymentCalculator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Installer\SalesPaymentMethodTypeInstallerInterface
+     */
+    public function createSalesPaymentMethodTypeInstaller()
+    {
+        return new SalesPaymentMethodTypeInstaller(
+            $this->getEntityManager(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Provider\PaymentProviderReaderInterface
+     */
+    public function createPaymentProviderReader(): PaymentProviderReaderInterface
+    {
+        return new PaymentProviderReader(
+            $this->getRepository(),
+            $this->createPaymentMethodReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface[]
+     */
+    protected function getPaymentMethodFilterPlugins()
+    {
+        return $this->getProvidedDependency(PaymentDependencyProvider::PAYMENT_METHOD_FILTER_PLUGINS);
     }
 }

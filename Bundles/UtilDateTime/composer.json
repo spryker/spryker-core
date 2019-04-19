@@ -15,6 +15,9 @@
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/container": "If you want to use Twig Plugins"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

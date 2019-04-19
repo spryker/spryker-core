@@ -31,21 +31,9 @@ class CatalogSearchSuggestionsResourceController extends AbstractController
      *                  "in": "query",
      *                  "description": "Search query string.",
      *                  "required": true
-     *              },
-     *              {
-     *                  "name": "currency",
-     *                  "in": "query",
-     *                  "description": "Currency code to process request with."
-     *              },
-     *              {
-     *                  "name": "priceMode",
-     *                  "in": "query",
-     *                  "description": "Price mode to process request with."
      *              }
      *          ],
-     *          "responses": {
-     *              "400": "Invalid currency or price mode."
-     *          }
+     *          "isIdNullable": true
      *     }
      * })
      *

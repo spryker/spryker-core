@@ -3,7 +3,7 @@
     <tr>
         {% for id, value in config.header %}
         <th id="{{ id }}">
-            {{ value }}
+            {{ value | trans }}
         </th>
         {% endfor %}
     </tr>

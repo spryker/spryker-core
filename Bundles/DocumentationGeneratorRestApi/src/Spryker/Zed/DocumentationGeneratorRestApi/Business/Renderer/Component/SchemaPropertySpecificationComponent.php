@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\Component;
 
 use Generated\Shared\Transfer\SchemaPropertyComponentTransfer;
+use stdClass;
 
 /**
  * Specification:
@@ -18,6 +19,9 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
 {
     protected const KEY_REF = '$ref';
     protected const KEY_ITEMS = 'items';
+    protected const KEY_TYPE = 'type';
+    protected const KEY_NULLABLE = 'nullable';
+    protected const VALUE_TYPE_ARRAY = 'array';
 
     /**
      * @var \Generated\Shared\Transfer\SchemaPropertyComponentTransfer|null $schemaPropertyComponentTransfer
@@ -44,17 +48,50 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
             return [];
         }
 
-        if ($this->schemaPropertyComponentTransfer->getType()) {
-            $property[SchemaPropertyComponentTransfer::TYPE] = $this->schemaPropertyComponentTransfer->getType();
-        }
-        if ($this->schemaPropertyComponentTransfer->getSchemaReference()) {
-            $property[static::KEY_REF] = $this->schemaPropertyComponentTransfer->getSchemaReference();
-        }
-        if ($this->schemaPropertyComponentTransfer->getItemsSchemaReference()) {
-            $property[static::KEY_ITEMS][static::KEY_REF] = $this->schemaPropertyComponentTransfer->getItemsSchemaReference();
-        }
+        $property = $this->addBasicPropertyData($property);
+        $property = $this->addItemPropertyData($property);
 
         return [$this->schemaPropertyComponentTransfer->getName() => $property];
+    }
+
+    /**
+     * @param array $schemaProperty
+     *
+     * @return array
+     */
+    protected function addBasicPropertyData(array $schemaProperty): array
+    {
+        if ($this->schemaPropertyComponentTransfer->getType()) {
+            $schemaProperty[SchemaPropertyComponentTransfer::TYPE] = $this->schemaPropertyComponentTransfer->getType();
+        }
+        if ($this->schemaPropertyComponentTransfer->getSchemaReference()) {
+            $schemaProperty[static::KEY_REF] = $this->schemaPropertyComponentTransfer->getSchemaReference();
+        }
+
+        return $schemaProperty;
+    }
+
+    /**
+     * @param array $schemaProperty
+     *
+     * @return array
+     */
+    protected function addItemPropertyData(array $schemaProperty): array
+    {
+        if ($this->schemaPropertyComponentTransfer->getItemsSchemaReference()) {
+            $schemaProperty[static::KEY_ITEMS][static::KEY_REF] = $this->schemaPropertyComponentTransfer->getItemsSchemaReference();
+        }
+        if ($this->schemaPropertyComponentTransfer->getItemsType()) {
+            $schemaProperty[static::KEY_ITEMS][static::KEY_TYPE] = $this->schemaPropertyComponentTransfer->getItemsType();
+        }
+        if ($this->schemaPropertyComponentTransfer->getType() === static::VALUE_TYPE_ARRAY && !$this->schemaPropertyComponentTransfer->getItemsType()) {
+            $schemaProperty[static::KEY_ITEMS] = new stdClass();
+        }
+        if ($this->schemaPropertyComponentTransfer->getIsNullable()) {
+            $schemaProperty[static::KEY_NULLABLE] = true;
+        }
+
+        return $schemaProperty;
     }
 
     /**

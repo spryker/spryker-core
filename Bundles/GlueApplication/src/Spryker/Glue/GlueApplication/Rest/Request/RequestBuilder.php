@@ -88,7 +88,7 @@ class RequestBuilder implements RequestBuilderInterface
      *
      * @return $this
      */
-    public function addFilter(string $resource, string $field, string $value): RequestBuilderInterface
+    public function addFilter(string $resource, string $field, string $value)
     {
         $this->filters[$resource][] = new Filter($resource, $field, $value);
 
@@ -99,9 +99,9 @@ class RequestBuilder implements RequestBuilderInterface
      * @param string $field
      * @param string $direction
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addSort(string $field, string $direction): RequestBuilderInterface
+    public function addSort(string $field, string $direction)
     {
         $this->sort[] = new Sort($field, $direction);
 
@@ -112,9 +112,9 @@ class RequestBuilder implements RequestBuilderInterface
      * @param int $offset
      * @param int $limit
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addPage(int $offset, int $limit): RequestBuilderInterface
+    public function addPage(int $offset, int $limit)
     {
         $this->page = new Page($offset, $limit);
 
@@ -124,9 +124,9 @@ class RequestBuilder implements RequestBuilderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addMetadata(MetadataInterface $metadata): RequestBuilderInterface
+    public function addMetadata(MetadataInterface $metadata)
     {
         $this->metadata = $metadata;
 
@@ -136,9 +136,9 @@ class RequestBuilder implements RequestBuilderInterface
     /**
      * @param array $routeContext
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addRouteContext(array $routeContext): RequestBuilderInterface
+    public function addRouteContext(array $routeContext)
     {
         $this->routeContext = $routeContext;
 
@@ -148,9 +148,9 @@ class RequestBuilder implements RequestBuilderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addParentResource(RestResourceInterface $restResource): RequestBuilderInterface
+    public function addParentResource(RestResourceInterface $restResource)
     {
         $this->parentResources[$restResource->getType()] = $restResource;
 
@@ -161,9 +161,9 @@ class RequestBuilder implements RequestBuilderInterface
      * @param string $key
      * @param string $include
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addInclude(string $key, string $include): RequestBuilderInterface
+    public function addInclude(string $key, string $include)
     {
         $this->include[$key] = $include;
 
@@ -174,9 +174,9 @@ class RequestBuilder implements RequestBuilderInterface
      * @param string $resourceName
      * @param array $fields
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addFields(string $resourceName, array $fields): RequestBuilderInterface
+    public function addFields(string $resourceName, array $fields)
     {
         $this->fields[$resourceName] = new SparseField($resourceName, $fields);
 
@@ -186,9 +186,9 @@ class RequestBuilder implements RequestBuilderInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function addHttpRequest(Request $httpRequest): RequestBuilderInterface
+    public function addHttpRequest(Request $httpRequest)
     {
         $this->httpRequest = $httpRequest;
 
@@ -198,9 +198,9 @@ class RequestBuilder implements RequestBuilderInterface
     /**
      * @param bool $excludeRelationship
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
+     * @return $this
      */
-    public function setExcludeRelationship(bool $excludeRelationship): RequestBuilderInterface
+    public function setExcludeRelationship(bool $excludeRelationship)
     {
         $this->excludeRelationship = $excludeRelationship;
 

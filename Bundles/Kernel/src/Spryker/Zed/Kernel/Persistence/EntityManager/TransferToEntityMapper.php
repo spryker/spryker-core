@@ -37,7 +37,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
             }
 
             $parentEntitySetterMethodName = $this->findParentEntitySetterMethodName($propertyName, $entity);
-            if (is_array($value) || $value instanceof ArrayObject) {
+            if ($value instanceof ArrayObject) {
                 foreach ($value as $childTransfer) {
                     $childEntity = $this->mapEntityCollection($childTransfer);
                     $entity->$parentEntitySetterMethodName($childEntity);

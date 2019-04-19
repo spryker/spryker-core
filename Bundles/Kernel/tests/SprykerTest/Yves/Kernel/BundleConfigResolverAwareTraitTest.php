@@ -35,7 +35,7 @@ class BundleConfigResolverAwareTraitTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\Kernel\BundleConfigResolverAwareTrait
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Kernel\BundleConfigResolverAwareTrait
      */
     private function getBundleConfigResolverAwareTraitMock()
     {
@@ -43,7 +43,7 @@ class BundleConfigResolverAwareTraitTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\Kernel\AbstractBundleConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Kernel\AbstractBundleConfig
      */
     private function getAbstractBundleConfigMock()
     {
