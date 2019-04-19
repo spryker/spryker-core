@@ -28,4 +28,14 @@ interface ContentGuiEditorPluginInterface
      * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
      */
     public function getTemplates(): array;
+
+    /**
+     * Specification:
+     * - Returns twig function template of content item type.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getTwigFunctionTemplate(): string;
 }

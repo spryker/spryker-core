@@ -7,14 +7,15 @@
 
 namespace Spryker\Zed\ContentBannerGui\Communication\Plugin\ContentGui;
 
-use Generated\Shared\Transfer\ContentWidgetTemplateTransfer;
 use Spryker\Shared\ContentBannerGui\ContentBannerGuiConfig;
 use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-class ContentBannerContentGuiEditorPlugin implements ContentGuiEditorPluginInterface
+/**
+ * @method \Spryker\Zed\ContentBannerGui\Communication\ContentBannerGuiCommunicationFactory getFactory()
+ */
+class ContentBannerContentGuiEditorPlugin extends AbstractPlugin implements ContentGuiEditorPluginInterface
 {
-    protected const PARAMETER_MACRO_ID = '%ID%';
-
     /**
      * {@inheritDoc}
      *
@@ -36,36 +37,18 @@ class ContentBannerContentGuiEditorPlugin implements ContentGuiEditorPluginInter
      */
     public function getTemplates(): array
     {
-        return $this->mapTemplates();
+        return $this->getFactory()->createContentBannerContentGuiEditorMapper()->getTemplates();
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
-     */
-    protected function mapTemplates(): array
-    {
-        $templates = [];
-
-        foreach (ContentBannerGuiConfig::TEMPLATE_NAMES as $templateIdentifier => $templateName) {
-            $templates[] = (new ContentWidgetTemplateTransfer())
-                ->setIdentifier($templateIdentifier)
-                ->setName($templateName)
-                ->setMacro($this->createMacro($templateIdentifier));
-        }
-
-        return $templates;
-    }
-
-    /**
-     * @param string $templateIdentifier
+     * {@inheritDoc}
+     *
+     * @api
      *
      * @return string
      */
-    protected function createMacro(string $templateIdentifier): string
+    public function getTwigFunctionTemplate(): string
     {
-        $functionName = ContentBannerGuiConfig::FUNCTION_NAME;
-        $idParameter = static::PARAMETER_MACRO_ID;
-
-        return sprintf("{{ %s(%s, '%s') }}", $functionName, $idParameter, $templateIdentifier);
+        return $this->getFactory()->createContentBannerContentGuiEditorMapper()->getTwigFunctionTemplate();
     }
 }
