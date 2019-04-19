@@ -10,7 +10,9 @@ namespace Spryker\Zed\PriceProduct\Business\PriceProduct;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter\PriceProductStoreWriterPluginExecutorInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface;
+use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
 
 class PriceProductRemover implements PriceProductRemoverInterface
 {
@@ -20,14 +22,31 @@ class PriceProductRemover implements PriceProductRemoverInterface
     /**
      * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface
      */
-    protected $entityManager;
+    protected $priceProductEntityManager;
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface $entityManager
+     * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface
      */
-    public function __construct(PriceProductEntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
+    protected $priceProductRepository;
+
+    /**
+     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter\PriceProductStoreWriterPluginExecutorInterface
+     */
+    protected $priceProductStoreWriterPluginExecutor;
+
+    /**
+     * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface $priceProductEntityManager
+     * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface $priceProductRepository
+     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter\PriceProductStoreWriterPluginExecutorInterface $priceProductStoreWriterPluginExecutor
+     */
+    public function __construct(
+        PriceProductEntityManagerInterface $priceProductEntityManager,
+        PriceProductRepositoryInterface $priceProductRepository,
+        PriceProductStoreWriterPluginExecutorInterface $priceProductStoreWriterPluginExecutor
+    ) {
+        $this->priceProductEntityManager = $priceProductEntityManager;
+        $this->priceProductRepository = $priceProductRepository;
+        $this->priceProductStoreWriterPluginExecutor = $priceProductStoreWriterPluginExecutor;
     }
 
     /**
@@ -42,9 +61,14 @@ class PriceProductRemover implements PriceProductRemoverInterface
             ->requirePriceDimension();
 
         $this->getTransactionHandler()->handleTransaction(function () use ($priceProductTransfer): void {
-            $this->entityManager->deletePriceProductStoreByPriceProductTransfer($priceProductTransfer);
-            $this->entityManager->deletePriceProductDefaultById($priceProductTransfer->getPriceDimension()->getIdPriceProductDefault());
-            $this->entityManager->deletePriceProductById($priceProductTransfer->getIdPriceProduct());
+            $idPriceProductStore = $this->priceProductRepository->findIdPriceProductStoreByPriceProduct($priceProductTransfer);
+
+            if ($idPriceProductStore !== null) {
+                $this->priceProductStoreWriterPluginExecutor->executePriceProductStorePreDeletePlugins($idPriceProductStore);
+                $this->priceProductEntityManager->deletePriceProductStore($idPriceProductStore);
+            }
+
+            $this->priceProductEntityManager->deletePriceProductById($priceProductTransfer->getIdPriceProduct());
         });
 
         $this->getLogger()->warning(sprintf('Price for product with id "%s" was deleted', $priceProductTransfer->getIdPriceProduct()));

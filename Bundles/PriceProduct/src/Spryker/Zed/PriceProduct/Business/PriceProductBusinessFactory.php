@@ -331,7 +331,9 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductRemover(): PriceProductRemoverInterface
     {
         return new PriceProductRemover(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createPriceProductStoreWriterPluginExecutor()
         );
     }
 

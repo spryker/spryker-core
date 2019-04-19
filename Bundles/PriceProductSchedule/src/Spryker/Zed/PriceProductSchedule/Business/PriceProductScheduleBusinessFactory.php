@@ -112,26 +112,10 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface
-     */
-    public function getCurrencyFacade(): PriceProductScheduleToCurrencyFacadeInterface
-    {
-        return $this->getProvidedDependency(PriceProductScheduleDependencyProvider::FACADE_CURRENCY);
-    }
-
-    /**
      * @return \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface
      */
     public function getStoreFacade(): PriceProductScheduleToStoreFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductScheduleDependencyProvider::FACADE_STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface
-     */
-    public function getProductFacade(): PriceProductScheduleToProductFacadeInterface
-    {
-        return $this->getProvidedDependency(PriceProductScheduleDependencyProvider::FACADE_PRODUCT);
     }
 }

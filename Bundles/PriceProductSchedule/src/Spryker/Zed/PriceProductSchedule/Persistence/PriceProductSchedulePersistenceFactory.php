@@ -39,8 +39,6 @@ class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory
     public function createPriceProductScheduleMapper(): PriceProductScheduleMapperInterface
     {
         return new PriceProductScheduleMapper(
-            $this->getCurrencyFacade(),
-            $this->getProductFacade(),
             $this->createPriceProductScheduleListMapper(),
             $this->getConfig()
         );
@@ -52,22 +50,6 @@ class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory
     public function createPriceProductScheduleListMapper(): PriceProductScheduleListMapperInterface
     {
         return new PriceProductScheduleListMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface
-     */
-    public function getCurrencyFacade(): PriceProductScheduleToCurrencyFacadeInterface
-    {
-        return $this->getProvidedDependency(PriceProductScheduleDependencyProvider::FACADE_CURRENCY);
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface
-     */
-    public function getProductFacade(): PriceProductScheduleToProductFacadeInterface
-    {
-        return $this->getProvidedDependency(PriceProductScheduleDependencyProvider::FACADE_PRODUCT);
     }
 
     /**

@@ -74,7 +74,7 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
 
         foreach ($productSchedulePricesForDisable as $priceProductScheduleTransfer) {
             $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): void {
-                $this->executeFallbackTransaction($priceProductScheduleTransfer);
+                $this->executeExitLogicTransaction($priceProductScheduleTransfer);
             });
         }
     }
@@ -92,7 +92,7 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
 
         foreach ($productSchedulePricesForDisable as $priceProductScheduleTransfer) {
             $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): void {
-                $this->executeFallbackTransaction($priceProductScheduleTransfer);
+                $this->executeExitLogicTransaction($priceProductScheduleTransfer);
             });
         }
     }
@@ -102,7 +102,7 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
      *
      * @return void
      */
-    protected function executeFallbackTransaction(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
+    protected function executeExitLogicTransaction(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
     {
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
 

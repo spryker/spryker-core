@@ -53,12 +53,12 @@ class PriceProductFallbackFinder implements PriceProductFallbackFinderInterface
             ->setPriceTypeName($fallbackPriceTypeName)
             ->setCurrencyIsoCode($priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
 
-        if ($priceProductTransfer->getSkuProduct() !== null) {
-            $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProduct());
-        }
-
         if ($priceProductTransfer->getSkuProductAbstract() !== null) {
             $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProductAbstract());
+        }
+
+        if ($priceProductTransfer->getSkuProduct() !== null) {
+            $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProduct());
         }
 
         return $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);

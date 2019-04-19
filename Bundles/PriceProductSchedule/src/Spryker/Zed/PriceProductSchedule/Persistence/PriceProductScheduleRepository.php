@@ -48,7 +48,6 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     public function __construct()
     {
         $this->priceProductScheduleMapper = $this->getFactory()->createPriceProductScheduleMapper();
-
         $this->propelFacade = $this->getFactory()->getPropelFacade();
     }
 
@@ -110,6 +109,9 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->createPriceProductScheduleQuery()
             ->addSelectQuery($priceProductScheduleFilteredByMinResultSubQuery, static::ALIAS_FILTERED, false)
             ->filterByIsCurrent(false)
+            ->joinWithCurrency()
+            ->leftJoinWithProduct()
+            ->leftJoinWithProductAbstract()
             ->where(SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE . ' = CAST(SUBSTRING(' . static::ALIAS_FILTERED . '.' . static::COL_RESULT . ' from \'[0-9]+$\') as BIGINT)')
             ->find()
             ->getData();

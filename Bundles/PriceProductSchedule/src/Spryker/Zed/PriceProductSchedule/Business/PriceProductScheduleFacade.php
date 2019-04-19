@@ -20,6 +20,8 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      * {@inheritdoc}
      *
      * @api
+     *
+     * @return void
      */
     public function applyScheduledPrices(): void
     {
@@ -32,6 +34,8 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      * {@inheritdoc}
      *
      * @api
+     *
+     * @return void
      */
     public function cleanAppliedScheduledPrices(int $daysRetained): void
     {

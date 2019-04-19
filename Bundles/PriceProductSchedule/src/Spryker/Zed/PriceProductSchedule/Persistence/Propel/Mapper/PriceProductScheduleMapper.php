@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Orm\Zed\Currency\Persistence\SpyCurrency;
 use Orm\Zed\PriceProduct\Persistence\Base\SpyPriceType;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface;
@@ -21,16 +23,6 @@ use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
 class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 {
-    /**
-     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface
-     */
-    protected $currencyFacade;
-
-    /**
-     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface
-     */
-    protected $productFacade;
-
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleListMapperInterface
      */
@@ -42,19 +34,13 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     protected $config;
 
     /**
-     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface $currencyFacade
-     * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleListMapperInterface $priceProductScheduleListMapper
      * @param \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig $config
      */
     public function __construct(
-        PriceProductScheduleToCurrencyFacadeInterface $currencyFacade,
-        PriceProductScheduleToProductFacadeInterface $productFacade,
         PriceProductScheduleListMapperInterface $priceProductScheduleListMapper,
         PriceProductScheduleConfig $config
     ) {
-        $this->currencyFacade = $currencyFacade;
-        $this->productFacade = $productFacade;
         $this->priceProductScheduleListMapper = $priceProductScheduleListMapper;
         $this->config = $config;
     }
@@ -166,19 +152,17 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             ->setPriceDimension($priceProductDimensionTransfer);
 
         if ($priceProductScheduleEntity->getFkProduct()) {
-            $productConcreteTransfer = $this->productFacade->findProductConcreteById($priceProductScheduleEntity->getFkProduct());
+            $productConcreteEntity = $priceProductScheduleEntity->getProduct();
 
-            $priceProductTransfer->setIdProduct($productConcreteTransfer->getIdProductConcrete());
-            $priceProductTransfer->setSkuProduct($productConcreteTransfer->getSku());
-            $priceProductTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract());
-            $priceProductTransfer->setSkuProductAbstract($productConcreteTransfer->getAbstractSku());
+            $priceProductTransfer->setIdProduct($productConcreteEntity->getIdProduct());
+            $priceProductTransfer->setSkuProduct($productConcreteEntity->getSku());
         }
 
         if ($priceProductScheduleEntity->getFkProductAbstract()) {
-            $productAbstractTransfer = $this->productFacade->findProductAbstractById($priceProductScheduleEntity->getFkProductAbstract());
+            $productAbstractEntity = $priceProductScheduleEntity->getProductAbstract();
 
-            $priceProductTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
-            $priceProductTransfer->setSkuProductAbstract($productAbstractTransfer->getSku());
+            $priceProductTransfer->setIdProductAbstract($productAbstractEntity->getIdProductAbstract());
+            $priceProductTransfer->setSkuProductAbstract($productAbstractEntity->getSku());
         }
 
         return $priceProductTransfer;
@@ -194,14 +178,30 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         SpyPriceProductSchedule $priceProductScheduleEntity,
         MoneyValueTransfer $moneyValueTransfer
     ): MoneyValueTransfer {
-        $currencyTransfer = $this->currencyFacade
-            ->getByIdCurrency($priceProductScheduleEntity->getFkCurrency());
+        $currencyTransfer = $this->mapCurrencyEntityToCurrencyTransfer(
+            $priceProductScheduleEntity->getCurrency(),
+            new CurrencyTransfer()
+        );
 
         return $moneyValueTransfer
             ->fromArray($priceProductScheduleEntity->toArray(), true)
             ->setNetAmount($priceProductScheduleEntity->getNetPrice())
             ->setGrossAmount($priceProductScheduleEntity->getGrossPrice())
             ->setCurrency($currencyTransfer);
+    }
+
+    /**
+     * @param \Orm\Zed\Currency\Persistence\SpyCurrency $currencyEntity
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function mapCurrencyEntityToCurrencyTransfer(
+        SpyCurrency $currencyEntity,
+        CurrencyTransfer $currencyTransfer
+    ): CurrencyTransfer {
+        return $currencyTransfer
+            ->fromArray($currencyEntity->toArray(), true);
     }
 
     /**
