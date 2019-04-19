@@ -111,8 +111,8 @@ interface QuoteApprovalFacadeInterface
 
     /**
      * Specification:
-     * - Sanitizes data related to quote approval in quote.
      * - Removes all approvals for quote from Persistence.
+     * - Adjusts data related to quote approval in quote accordingly.
      *
      * @api
      *
