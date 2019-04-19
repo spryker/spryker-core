@@ -22,4 +22,9 @@ interface ContentEditorPluginsResolverInterface
      * @return string
      */
     public function getTwigFunctionTemplateByType(string $contentType): string;
+
+    /**
+     * @return string[]
+     */
+    public function getContentTypes(): array;
 }

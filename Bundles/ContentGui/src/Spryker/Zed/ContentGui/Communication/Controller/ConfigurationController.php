@@ -20,7 +20,7 @@ class ConfigurationController extends AbstractController
      */
     public function editorContentListJsonAction(): JsonResponse
     {
-        $editorContentTypes = $this->getFactory()->getConfig()->getEditorContentTypes();
+        $editorContentTypes = $this->getFactory()->createContentEditorPluginsResolver()->getContentTypes();
 
         return $this->jsonResponse(
             $this->getFactory()->createContentMapper()->mapEditorContentTypes($editorContentTypes)

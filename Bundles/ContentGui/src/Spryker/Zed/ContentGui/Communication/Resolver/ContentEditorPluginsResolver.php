@@ -57,4 +57,18 @@ class ContentEditorPluginsResolver implements ContentEditorPluginsResolverInterf
 
         return '';
     }
+
+    /**
+     * @return string[]
+     */
+    public function getContentTypes(): array
+    {
+        $contentTypes = [];
+
+        foreach ($this->contentEditorPlugins as $contentEditorPlugin) {
+            $contentTypes[] = $contentEditorPlugin->getType();
+        }
+
+        return $contentTypes;
+    }
 }

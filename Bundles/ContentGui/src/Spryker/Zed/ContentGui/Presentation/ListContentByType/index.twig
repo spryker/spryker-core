@@ -5,7 +5,11 @@
         {% endblock %}
     {% endembed %}
 
-    <input type="hidden" name="twigFunctionTemplate" value="{{ twigFunctionTemplate }}" />
+    {% if twigFunctionTemplate is empty %}
+        <span>{{ 'Content editor plugin for this content type is not defined' | trans }}</span>
+    {% else %}
+        <input type="hidden" name="twigFunctionTemplate" value="{{ twigFunctionTemplate }}" />
+    {% endif %}
 
     {% if templates is not empty %}
         {% set selectedTemplateIdentifier = selectedTemplateIdentifier is defined ? selectedTemplateIdentifier : templates[0].identifier %}

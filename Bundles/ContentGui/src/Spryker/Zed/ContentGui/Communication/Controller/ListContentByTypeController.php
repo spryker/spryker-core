@@ -29,6 +29,7 @@ class ListContentByTypeController extends AbstractController
         $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType);
         $contentTypeTemplates = $this->getFactory()->createContentEditorPluginsResolver()->getTemplatesByType($contentType);
         $twigFunctionTemplate = $this->getFactory()->createContentEditorPluginsResolver()->getTwigFunctionTemplateByType($contentType);
+
         $data = [
             'table' => $contentByTypeTable->render(),
             'templates' => $contentTypeTemplates,
