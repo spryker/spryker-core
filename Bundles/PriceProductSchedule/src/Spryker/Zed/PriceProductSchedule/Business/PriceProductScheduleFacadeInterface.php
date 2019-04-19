@@ -11,10 +11,10 @@ interface PriceProductScheduleFacadeInterface
 {
     /**
      * Specification:
-     * - Apply scheduled prices for current store.
+     * - Applies scheduled prices for current store.
      * - Persists price product store for applied scheduled price product.
-     * - Disable not relevant price product schedules for applied scheduled price product.
-     * - Reverts price products for scheduled that are finished from the fallback price type.
+     * - Disables not relevant price product schedules for applied scheduled price products.
+     * - Reverts price products from the fallback price types for scheduled product prices that are finished.
      *
      * @api
      *
