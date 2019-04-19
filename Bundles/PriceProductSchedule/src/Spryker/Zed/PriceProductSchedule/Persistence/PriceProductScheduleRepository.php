@@ -107,9 +107,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
      */
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array
     {
-        $priceProductScheduleConcatenatedSubQuery = $this->createPriceProductScheduleConcatenatedSubQuery($storeTransfer);
-
-        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery($priceProductScheduleConcatenatedSubQuery);
+        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery($storeTransfer);
 
         $priceProductScheduleEntities = $this->getFactory()
             ->createPriceProductScheduleQuery()
@@ -170,13 +168,15 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     }
 
     /**
-     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleConcatenatedSubQuery
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
      */
     protected function createPriceProductScheduleFilteredByMinResultSubQuery(
-        SpyPriceProductScheduleQuery $priceProductScheduleConcatenatedSubQuery
+        StoreTransfer $storeTransfer
     ): SpyPriceProductScheduleQuery {
+        $priceProductScheduleConcatenatedSubQuery = $this->createPriceProductScheduleConcatenatedSubQuery($storeTransfer);
+
         return $this->getFactory()
             ->createPriceProductScheduleQuery()
             ->addSelectQuery($priceProductScheduleConcatenatedSubQuery, static::ALIAS_CONCATENATED, false)
