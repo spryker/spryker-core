@@ -13,6 +13,7 @@ use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\PriceProductSchedu
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\AbstractSkuToIdProductAbstractStep;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\ConcreteSkuToIdProductStep;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\CurrencyToIdCurrencyStep;
+use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\DateValidatorStep;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\PreparePriceDataStep;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\PriceProductScheduleListNameToIdStep;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step\PriceTypeToIdPriceTypeStep;
@@ -28,11 +29,14 @@ class PriceProductScheduleDataImportBusinessFactory extends DataImportBusinessFa
      */
     public function getPriceProductScheduleDataImporter()
     {
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getPriceProductScheduleDataImporterConfiguration()
         );
 
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBroker = $dataSetStepBroker->addStep($this->createDateValidatorStep());
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createPriceProductScheduleListNameToIdStep());
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createAbstractSkuToIdProductAbstractStep());
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createConcreteSkuToIdProductStep());
@@ -109,5 +113,13 @@ class PriceProductScheduleDataImportBusinessFactory extends DataImportBusinessFa
     public function createPriceProductScheduleWriterStep(): DataImportStepInterface
     {
         return new PriceProductScheduleWriterStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createDateValidatorStep(): DataImportStepInterface
+    {
+        return new DateValidatorStep();
     }
 }
