@@ -58,6 +58,10 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     {
         $priceProductScheduleEntities = $this->getFactory()
             ->createPriceProductScheduleQuery()
+            ->joinWithCurrency()
+            ->joinWithPriceType()
+            ->leftJoinWithProduct()
+            ->leftJoinWithProductAbstract()
             ->filterByIsCurrent(true)
             ->filterByActiveTo(['max' => new DateTime()], Criteria::LESS_EQUAL)
             ->find()
@@ -83,6 +87,10 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
 
         $priceProductScheduleEntities = $this->getFactory()
             ->createPriceProductScheduleQuery()
+            ->joinWithCurrency()
+            ->joinWithPriceType()
+            ->leftJoinWithProduct()
+            ->leftJoinWithProductAbstract()
             ->filterByIsCurrent(true)
             ->filterByFkStore($priceProductTransfer->getMoneyValue()->getFkStore())
             ->filterByFkCurrency($priceProductTransfer->getMoneyValue()->getFkCurrency())
@@ -101,6 +109,9 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     }
 
     /**
+     * @module Product
+     * @module Currency
+     *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
@@ -112,10 +123,11 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
         $priceProductScheduleEntities = $this->getFactory()
             ->createPriceProductScheduleQuery()
             ->addSelectQuery($priceProductScheduleFilteredByMinResultSubQuery, static::ALIAS_FILTERED, false)
-            ->filterByIsCurrent(false)
             ->joinWithCurrency()
+            ->joinWithPriceType()
             ->leftJoinWithProduct()
             ->leftJoinWithProductAbstract()
+            ->filterByIsCurrent(false)
             ->where(SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE . ' = CAST(SUBSTRING(' . static::ALIAS_FILTERED . '.' . static::COL_RESULT . ' from \'[0-9]+$\') as BIGINT)')
             ->find()
             ->getData();
