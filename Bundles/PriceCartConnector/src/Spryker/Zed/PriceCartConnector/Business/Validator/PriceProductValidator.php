@@ -116,7 +116,8 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected function createMessageMinPriceRestriction(): MessageTransfer
     {
         return (new MessageTransfer())
-            ->setValue(static::CART_PRE_CHECK_MIN_PRICE_RESTRICTION_FAILED_KEY);
+            ->setValue(static::CART_PRE_CHECK_MIN_PRICE_RESTRICTION_FAILED_KEY)
+            ->setParameters(['%price%' => $this->config->getMinPriceRestriction()]);
     }
 
     /**
