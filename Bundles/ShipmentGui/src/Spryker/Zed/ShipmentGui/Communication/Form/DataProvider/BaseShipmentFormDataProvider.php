@@ -13,36 +13,39 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerInterface;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesInterface;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface;
 
 class BaseShipmentFormDataProvider
 {
     /**
-     * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesInterface
+     * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface
      */
     protected $salesFacade;
 
     /**
-     * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerInterface
+     * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface
      */
     protected $customerFacade;
 
     /**
-     * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface
+     * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface
      */
     protected $shipmentFacade;
 
     /**
-     * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesInterface $salesFacade
-     * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerInterface $customerFacade
-     * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface $shipmentFacade
+     * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface $salesFacade
+     * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface $customerFacade
+     * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface $shipmentFacade
      */
     public function __construct(
-        ShipmentGuiToSalesInterface $salesFacade,
-        ShipmentGuiToCustomerInterface $customerFacade,
-        ShipmentGuiToShipmentInterface $shipmentFacade
+        ShipmentGuiToSalesFacadeInterface $salesFacade,
+        ShipmentGuiToCustomerFacadeInterface $customerFacade,
+        ShipmentGuiToShipmentFacadeInterface $shipmentFacade
     ) {
         $this->salesFacade = $salesFacade;
         $this->customerFacade = $customerFacade;

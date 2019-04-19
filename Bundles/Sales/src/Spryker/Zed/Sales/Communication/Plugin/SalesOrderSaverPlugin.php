@@ -32,6 +32,6 @@ class SalesOrderSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderI
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFacade()->saveOrder($quoteTransfer, $checkoutResponse);
+        $this->getFacade()->saveSalesOrder($quoteTransfer, $checkoutResponse->getSaveOrder());
     }
 }

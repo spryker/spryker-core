@@ -97,8 +97,6 @@ class CheckoutFacadeTest extends Unit
     }
 
     /**
-     * @skip
-     *
      * @return void
      */
     public function testCheckoutSuccessfully()
@@ -174,8 +172,6 @@ class CheckoutFacadeTest extends Unit
     }
 
     /**
-     * @skip
-     *
      * @return void
      */
     public function testCheckoutCreatesOrderItems()

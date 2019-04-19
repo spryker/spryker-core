@@ -45,7 +45,8 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves the list of shipment methods from database as transfer object collection.
+     * - Retrieves the list of available shipment methods from database as transfer object collection
+     * grouped by shipment hash.
      *
      * @api
      *
@@ -189,11 +190,10 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Updates tax rates in Quote transfer object if shipment method is set in Quote transfer object.
-     * - Selects shipment method tax rate using shipping address's country code.
-     * - Uses default tax rate if shipping address is not defined in Quote transfer object.
-     * - Sets tax rate in provided Quote transfer object's shipment method.
-     * - Sets tax rate in provided Quote transfer object's selected shipment expense.
+     * - Selects shipment method tax rates using shipping address's country code of all shipments (quote or item level).
+     * - Uses default tax rate if shipping address is not defined on quote level (BC) or item level.
+     * - Sets tax rate in provided Quote transfer object's quote level (BC) or item level shipment methods.
+     * - Sets tax rate in provided Quote transfer object's quote level (BC) or item level shipment expenses.
      *
      * @api
      *
@@ -221,8 +221,9 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Adds shipment sales expense to sales order.
-     * - Creates sales shipment for sales order.
+     * - Adds shipment sales expenses to sales order according to quote level (BC) or item level shipments.
+     * - Creates sales shipments for sales order.
+     * - Creates sales shipping addresses for each item level shipment.
      *
      * @api
      *
@@ -299,7 +300,11 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Save shipment for specified order.
+     * - Creates new or update existing shipment for specified order in Zed.
+     * - Uses shipment saving logic from the saveOrderShipment() method.
+     * - Adds shipment sales expenses to sales order according to quote level (BC) or item level shipments.
+     * - Creates or updates sales shipment.
+     * - Creates or updates sales shipping addresses.
      *
      * @api
      *

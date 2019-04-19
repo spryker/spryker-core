@@ -139,7 +139,7 @@ class SalesFacadeSaveOrderTest extends Unit
 
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
 
-        $this->salesFacade->saveOrder($quoteTransfer, $this->getValidBaseResponseTransfer());
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $this->getValidBaseResponseTransfer()->getSaveOrder());
 
         $addressEntity = $salesOrderAddressQuery->findOne();
 
@@ -249,7 +249,7 @@ class SalesFacadeSaveOrderTest extends Unit
 
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
 
-        $this->salesFacade->saveOrder($quoteTransfer, $this->getValidBaseResponseTransfer());
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $this->getValidBaseResponseTransfer()->getSaveOrder());
 
         $addressEntity = $salesOrderAddressQuery->findOne();
 
@@ -265,7 +265,7 @@ class SalesFacadeSaveOrderTest extends Unit
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
-        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $checkoutResponseTransfer->getSaveOrder());
 
         $this->assertNotNull($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder());
     }
@@ -277,7 +277,7 @@ class SalesFacadeSaveOrderTest extends Unit
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
-        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $checkoutResponseTransfer->getSaveOrder());
 
         $orderQuery = SpySalesOrderQuery::create()
             ->filterByPrimaryKey($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder());
@@ -321,7 +321,7 @@ class SalesFacadeSaveOrderTest extends Unit
         $quoteTransfer->getCustomer()->setCreatedAt($customerCreatedAt);
 
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
-        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $checkoutResponseTransfer->getSaveOrder());
 
         $orderQuery = SpySalesOrderQuery::create()
             ->filterByPrimaryKey($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder());
@@ -375,7 +375,7 @@ class SalesFacadeSaveOrderTest extends Unit
             ->filterByName('item-test-2');
 
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
-        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $checkoutResponseTransfer->getSaveOrder());
 
         $savedItems = $checkoutResponseTransfer->getSaveOrder()->getOrderItems();
 
@@ -409,7 +409,7 @@ class SalesFacadeSaveOrderTest extends Unit
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
-        $this->salesFacade->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $checkoutResponseTransfer->getSaveOrder());
         $this->assertNotNull($checkoutResponseTransfer->getSaveOrder()->getOrderReference());
     }
 

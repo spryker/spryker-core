@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupCollectionTransfer;
 
 interface ManualOrderEntryGuiToShipmentFacadeInterface
 {

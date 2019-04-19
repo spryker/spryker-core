@@ -11,4 +11,10 @@
         <property name="address1" dataBuilderRule="address" />
     </transfer>
 
+    <transfer name="Item">
+        <property name="sku" dataBuilderRule="isbn10" />
+        <property name="name" dataBuilderRule="word" />
+        <property name="groupKey" dataBuilderRule="sentence(2)" />
+    </transfer>
+
 </transfers>

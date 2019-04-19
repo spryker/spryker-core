@@ -14,8 +14,8 @@ interface ShipmentCheckoutConnectorFacadeInterface
 {
     /**
      * Specification:
-     *  - Checks if shipment is still active in current quote.
-     *  - Writes error message to CheckoutResponseTransfer when shipment is not active.
+     *  - Checks if all shipments is still active for current quote at quote level (BC) or item level.
+     *  - Writes error messages to CheckoutResponseTransfer when shipments is not active.
      *
      * @api
      *

@@ -9,9 +9,9 @@ namespace Spryker\Zed\ShipmentGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerBridge;
-use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesBridge;
-use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentBridge;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeBridge;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeBridge;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeBridge;
 use Spryker\Zed\ShipmentGui\Dependency\Service\ShipmentGuiToShipmentServiceBridge;
 
 /**
@@ -62,7 +62,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addSalesFacade(Container $container): Container
     {
         $container[static::FACADE_SALES] = function (Container $container) {
-            return new ShipmentGuiToSalesBridge($container->getLocator()->sales()->facade());
+            return new ShipmentGuiToSalesFacadeBridge($container->getLocator()->sales()->facade());
         };
 
         return $container;
@@ -76,7 +76,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addShipmentFacade(Container $container): Container
     {
         $container[static::FACADE_SHIPMENT] = function (Container $container) {
-            return new ShipmentGuiToShipmentBridge($container->getLocator()->shipment()->facade());
+            return new ShipmentGuiToShipmentFacadeBridge($container->getLocator()->shipment()->facade());
         };
 
         return $container;
@@ -90,7 +90,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCustomerFacade(Container $container): Container
     {
         $container[static::FACADE_CUSTOMER] = function (Container $container) {
-            return new ShipmentGuiToCustomerBridge($container->getLocator()->customer()->facade());
+            return new ShipmentGuiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
         };
 
         return $container;

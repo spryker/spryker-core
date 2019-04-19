@@ -52,35 +52,49 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
             return $quoteTransfer;
         }
 
-        /**
-         * @todo Check what we should do with this code due to implement multiple shipment functionality.
-         */
         $shipmentTransfer = new ShipmentTransfer();
         $shipmentTransfer->setMethod($shipmentMethodTransfer)
             ->setShipmentSelection((string)$idShipmentMethod);
 
-        $quoteTransfer->setShipment($shipmentTransfer);
+        $quoteTransfer = $this->setShipmentTransferIntoQuote($quoteTransfer, $shipmentTransfer);
 
-        $expenseTransfer = $this->createShippingExpenseTransfer($shipmentMethodTransfer);
+        $expenseTransfer = $this->createShippingExpenseTransfer($shipmentTransfer);
         $quoteTransfer->addExpense($expenseTransfer);
 
         return $quoteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    protected function createShippingExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer): ExpenseTransfer
+    protected function createShippingExpenseTransfer(ShipmentTransfer $shipmentTransfer): ExpenseTransfer
     {
         $shipmentExpenseTransfer = new ExpenseTransfer();
-        $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
+        $shipmentExpenseTransfer->fromArray($shipmentTransfer->getMethod()->toArray(), true);
         $shipmentExpenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
         $shipmentExpenseTransfer->setUnitNetPrice(0);
-        $shipmentExpenseTransfer->setUnitGrossPrice($shipmentMethodTransfer->getStoreCurrencyPrice());
+        $shipmentExpenseTransfer->setUnitGrossPrice($shipmentTransfer->getMethod()->getStoreCurrencyPrice());
         $shipmentExpenseTransfer->setQuantity(1);
+        $shipmentExpenseTransfer->setShipment($shipmentTransfer);
 
         return $shipmentExpenseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setShipmentTransferIntoQuote(QuoteTransfer $quoteTransfer, ShipmentTransfer $shipmentTransfer): QuoteTransfer
+    {
+        $quoteTransfer->setShipment($shipmentTransfer);
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment($shipmentTransfer);
+        }
+
+        return $quoteTransfer;
     }
 }

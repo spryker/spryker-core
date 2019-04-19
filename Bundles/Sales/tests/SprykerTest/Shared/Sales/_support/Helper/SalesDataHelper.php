@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\Sales\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\SaveOrderBuilder;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
@@ -22,27 +23,50 @@ class SalesDataHelper extends Module
     use LocatorHelperTrait;
 
     /**
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[]
+     */
+    protected $saveOrderStack;
+
+    /**
      * @param array $override
      * @param string|null $stateMachineProcessName
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function haveOrder(array $override = [], $stateMachineProcessName = null)
-    {
+    public function haveOrder(
+        array $override = [],
+        $stateMachineProcessName = null,
+        array $saveOrderStack = []
+
+    ) {
+        $this->saveOrderStack = $saveOrderStack;
         $quoteTransfer = $this->createQuoteTransfer($override);
 
-        return $this->createOrder($quoteTransfer, $stateMachineProcessName);
+        $saveOrderTransfer = $this->createOrder($quoteTransfer, $stateMachineProcessName);
+        $this->executeSaveOrderPlugins($quoteTransfer, $saveOrderTransfer);
+
+        return $saveOrderTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string|null $stateMachineProcessName
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function haveOrderUsingPreparedQuoteTransfer(QuoteTransfer $quoteTransfer, ?string $stateMachineProcessName = null): SaveOrderTransfer
-    {
-        return $this->createOrder($quoteTransfer, $stateMachineProcessName);
+    public function haveOrderUsingPreparedQuoteTransfer(
+        QuoteTransfer $quoteTransfer,
+        ?string $stateMachineProcessName = null,
+        array $saveOrderStack = []
+    ): SaveOrderTransfer {
+        $this->saveOrderStack = $saveOrderStack;
+
+        $saveOrderTransfer = $this->createOrder($quoteTransfer, $stateMachineProcessName);
+        $this->executeSaveOrderPlugins($quoteTransfer, $saveOrderTransfer);
+
+        return $saveOrderTransfer;
     }
 
     /**
@@ -95,7 +119,7 @@ class SalesDataHelper extends Module
     /**
      * @param array $override
      *
-     * @return \SprykerTest\Shared\Sales\Helper\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer(array $override = []): QuoteTransfer
     {
@@ -107,5 +131,19 @@ class SalesDataHelper extends Module
             ->withBillingAddress()
             ->withCurrency()
             ->build();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    protected function executeSaveOrderPlugins(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    {
+        $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setSaveOrder($saveOrderTransfer);
+        foreach ($this->saveOrderStack as $orderSaver) {
+            $orderSaver->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+        }
     }
 }

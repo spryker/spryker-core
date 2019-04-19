@@ -35,7 +35,7 @@
         <property name="type" dataBuilderRule="=SHIPMENT_EXPENSE_TYPE" />
         <property name="taxRate" dataBuilderRule="randomFloat(2, 0, 99)" />
         <property name="name" dataBuilderRule="word(5)" />
-        <property name="unitGrossPrice" dataBuilderRule="randomNumber(3)" />
+        <property name="unitGrossPrice" dataBuilderRule="randomFloat(2)" />
     </transfer>
 
 </transfers>

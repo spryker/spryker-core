@@ -86,8 +86,9 @@ class ShipmentMethodDecisionRuleTest extends Test
      */
     protected function getDataWith1QuoteLevelShipmentAndMethodForSingleShipmentIsMatched(): array
     {
+        $shipmentBuilder = (new ShipmentBuilder())->withMethod(['idShipmentMethod' => 1]);
         $quoteTransfer = (new QuoteBuilder())
-            ->withShipment((new ShipmentBuilder())->withMethod())
+            ->withShipment($shipmentBuilder)
             ->withItem()
             ->build();
 
@@ -105,8 +106,8 @@ class ShipmentMethodDecisionRuleTest extends Test
      */
     protected function getDataWith3ItemsAnd2ItemLevelShipmentsAndMethodsForSingleShipmentIsMatched(): array
     {
-        $shipmentTransfer1 = (new ShipmentBuilder())->withMethod()->build();
-        $shipmentTransfer2 = (new ShipmentBuilder())->withMethod()->build();
+        $shipmentTransfer1 = (new ShipmentBuilder())->withMethod(['idShipmentMethod' => 1])->build();
+        $shipmentTransfer2 = (new ShipmentBuilder())->withMethod(['idShipmentMethod' => 2])->build();
 
         $quoteTransfer = (new QuoteBuilder())->build();
         $itemTransfer1 = $this->addNewItemWithShipmentIntoQuoteTransfer($quoteTransfer, $shipmentTransfer1);
@@ -130,8 +131,8 @@ class ShipmentMethodDecisionRuleTest extends Test
      */
     protected function getDataWith3ItemsAnd2ItemLevelShipmentsAndMethodsForMultipleShipmentIsMatched(): array
     {
-        $shipmentTransfer1 = (new ShipmentBuilder())->withMethod()->build();
-        $shipmentTransfer2 = (new ShipmentBuilder())->withMethod()->build();
+        $shipmentTransfer1 = (new ShipmentBuilder())->withMethod(['idShipmentMethod' => 1])->build();
+        $shipmentTransfer2 = (new ShipmentBuilder())->withMethod(['idShipmentMethod' => 2])->build();
 
         $quoteTransfer = (new QuoteBuilder())->build();
         $itemTransfer1 = $this->addNewItemWithShipmentIntoQuoteTransfer($quoteTransfer, $shipmentTransfer1);

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\OrderItem;
+namespace Spryker\Zed\Sales\Business\OrderItem;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;

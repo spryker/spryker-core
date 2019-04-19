@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment\Business\Shipment;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
@@ -54,7 +55,6 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     public function hydrateOrderWithShipment(OrderTransfer $orderTransfer)
     {
         $orderTransfer->requireIdSalesOrder();
-        $idSalesOrder = $orderTransfer->getIdSalesOrder();
 
         if ($this->isShipmentHydrated($orderTransfer)) {
             return $orderTransfer;
@@ -65,18 +65,13 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
             return $orderTransfer;
         }
 
-        if ($this->isMultiShipmentOrder($shipmentTransfers, $orderTransfer) === false) {
+        if ($this->isMultiShipmentOrder($shipmentTransfers, $orderTransfer) === true) {
             $orderTransfer = $this->hydrateMultiShipmentMethodToOrderTransfer($shipmentTransfers, $orderTransfer);
         } else {
             $orderTransfer = $this->hydrateShipmentMethodToOrderTransfer($shipmentTransfers, $orderTransfer);
         }
 
         $orderTransfer = $this->setShipmentToOrderExpenses($orderTransfer);
-
-        /**
-         * @todo Move to SalesOrderHydrator.
-         */
-        $orderTransfer = $this->setUniqueOrderItems($orderTransfer);
 
         $orderTransfer = $this->setOrderShipmentGroups($orderTransfer);
 
@@ -200,7 +195,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
                 && $itemShipmentTransfer->getCarrier()->getName() === $shipmentTransfer->getCarrier()->getName()
                 && $itemShipmentTransfer->getRequestedDeliveryDate() === $shipmentTransfer->getRequestedDeliveryDate()
             ) {
-                $shipmentMethodTransfer = $this->mapShipmentTransferToShipmentMethodTransfer($shipmentMethodTransfer, $shipmentTransfer);
+                $this->mapShipmentTransferToShipmentMethodTransfer($shipmentMethodTransfer, $shipmentTransfer);
                 continue;
             }
         }
@@ -236,18 +231,6 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         $shipmentGroups = $this->shipmentService->groupItemsByShipment($orderTransfer->getItems());
 
         return $orderTransfer->setShipmentGroups($shipmentGroups);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function setUniqueOrderItems(OrderTransfer $orderTransfer): OrderTransfer
-    {
-        $uniqueOrderItems = $this->salesFacade->getUniqueOrderItems($orderTransfer->getItems());
-
-        return $orderTransfer->setItems($uniqueOrderItems->getItems());
     }
 
     /**

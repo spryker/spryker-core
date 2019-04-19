@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business\Order;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -19,9 +20,34 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator as OrderHydratorWithoutMultiShipping;
+use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
+use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderHydrator extends OrderHydratorWithoutMultiShipping
 {
+    /**
+     * @var \Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface
+     */
+    protected $orderItemGrouper;
+
+    /**
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface $orderItemGrouper
+     * @param \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[] $hydrateOrderPlugins
+     */
+    public function __construct(
+        SalesQueryContainerInterface $queryContainer,
+        SalesToOmsInterface $omsFacade,
+        SalesOrderItemGrouperInterface $orderItemGrouper,
+        array $hydrateOrderPlugins = []
+    ) {
+        parent::__construct($queryContainer, $omsFacade, $hydrateOrderPlugins);
+
+        $this->orderItemGrouper = $orderItemGrouper;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -76,25 +102,6 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    public function hydrateOrderItemTransfer(SpySalesOrderItem $orderItemEntity): ItemTransfer
-    {
-        $itemTransfer = parent::hydrateOrderItemTransfer($orderItemEntity);
-
-        /**
-         * @todo Move to ShipmentOrderHydrator.
-         */
-        if ($orderItemEntity->getSpySalesShipment() !== null) {
-            $this->hydrateItemShipment($orderItemEntity, $itemTransfer);
-        }
-
-        return $itemTransfer;
-    }
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -104,10 +111,7 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     {
         parent::hydrateOrderItemsToOrderTransfer($orderEntity, $orderTransfer);
 
-        /**
-         * @todo Uncomment this.
-         */
-//        $orderTransfer = $this->setUniqueOrderItems($orderTransfer);
+        $this->setUniqueOrderItems($orderTransfer);
     }
 
     /**
@@ -117,9 +121,14 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
      */
     protected function setUniqueOrderItems(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $uniqueOrderItems = $this->salesFacade->getUniqueOrderItems($orderTransfer->getItems());
+        $uniqueOrderItemCollectionTransfer = $this->orderItemGrouper->getUniqueOrderItems($orderTransfer->getItems());
 
-        return $orderTransfer->setItems($uniqueOrderItems->getItems());
+        $orderItemsWithNumericIndexes = new ArrayObject();
+        foreach ($uniqueOrderItemCollectionTransfer->getItems() as $itemTransfer) {
+            $orderItemsWithNumericIndexes[] = $itemTransfer;
+        }
+
+        return $orderTransfer->setItems($orderItemsWithNumericIndexes);
     }
 
     /**
@@ -169,27 +178,6 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
         $addressTransfer->setCountry($countryTransfer);
 
         return $addressTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function hydrateItemShipment(SpySalesOrderItem $orderItemEntity, ItemTransfer $itemTransfer): void
-    {
-        $spySalesShipment = $orderItemEntity->getSpySalesShipment();
-
-        $shipmentTransfer = new ShipmentTransfer();
-        $shipmentTransfer->setShippingAddress(
-            $this->createAddressTransfer($spySalesShipment->getSpySalesOrderAddress())
-        );
-        $shipmentTransfer->setCarrier($this->createShipmentCarrier($spySalesShipment->getCarrierName()));
-        $shipmentTransfer->setMethod($this->createShipmentMethod($spySalesShipment->getName()));
-        $shipmentTransfer->setRequestedDeliveryDate($spySalesShipment->getRequestedDeliveryDate());
-
-        $itemTransfer->setShipment($shipmentTransfer);
     }
 
     /**

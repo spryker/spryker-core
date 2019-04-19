@@ -53,8 +53,7 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
     }
 
     /**
-     * Specification:
-     *  - Set tax rate for each item
+     * {@inheritdoc}
      *
      * @api
      *

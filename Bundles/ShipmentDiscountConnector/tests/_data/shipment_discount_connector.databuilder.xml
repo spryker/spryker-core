@@ -7,12 +7,8 @@
         <property name="idShipmentCarrier" dataBuilderRule="randomNumber(3)" />
     </transfer>
 
-    <transfer name="ShipmentMethod">
-        <property name="idShipmentMethod" dataBuilderRule="randomNumber(3)" />
-    </transfer>
-
     <transfer name="Expense">
-        <property name="unitGrossPrice" dataBuilderRule="randomNumber(4)" />
+        <property name="unitGrossPrice" dataBuilderRule="randomFloat(2)" />
         <property name="type" dataBuilderRule="=SHIPMENT_EXPENSE_TYPE" />
     </transfer>
 

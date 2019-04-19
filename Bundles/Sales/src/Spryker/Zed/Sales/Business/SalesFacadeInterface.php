@@ -69,24 +69,6 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use saveSalesOrder() instead
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return void
-     */
-    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
-
-    /**
-     * Specification:
-     * - Saves order and items to database
-     * - Sets "is test" flag
-     * - Updates checkout response with saved order data
-     * - Sets initial state for state machine
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
@@ -124,7 +106,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Creates new order address with values from the addresses transfer
+     * - Creates new order address with values from the addresses transfer.
      * - Returns addresses transfer with id of newly created order address.
      *
      * @api
@@ -180,11 +162,14 @@ interface SalesFacadeInterface
     /**
      * Specification:
      *  - Returns the order for the given customer id and sales order id.
-     *  - Aggregates order totals calls -> SalesAggregator
+     *  - Aggregates order totals calls -> SalesAggregator.
+     *  - Hydrates order using quote level (BC) or item level shipping addresses.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -192,11 +177,15 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Returns the order for the given sales order id.
+     *  - Returns persisted order information for the given sales order id.
+     *  - Hydrates order by calling HydrateOrderPlugin's registered in project dependency provider.
+     *  - Hydrates order using quote level (BC) or item level shipping addresses.
      *
      * @api
      *
      * @param int $idSalesOrder
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -204,7 +193,9 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Returns the order for the given sales order id.
+     *  - Returns persisted order information for the given sales order id.
+     *  - Hydrates order by calling HydrateOrderPlugin's registered in project dependency provider.
+     *  - Hydrates order using quote level (BC) or item level shipping addresses.
      *
      * @api
      *
@@ -271,7 +262,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Creates a collection of unique order items.
+     * - Returns a collection of order items grouped by unique group key.
      *
      * @api
      *
@@ -294,6 +285,8 @@ interface SalesFacadeInterface
     public function findOrderAddressByIdOrderAddress(int $idSalesOrderAddress): ?AddressTransfer;
 
     /**
+     * @todo: Should be refactored to return transfer objects collection.
+     *
      * Specification:
      * - Returns sales order items by salesShipmentId or null.
      *

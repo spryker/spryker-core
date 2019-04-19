@@ -27,13 +27,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 {
     /**
-     * Specification:
-     *  - Returns persisted order information stored into OrderTransfer
-     *  - Hydrates order by calling HydrateOrderPlugin's registered in project dependency provider.
+     * {@inheritdoc}
      *
      * @api
      *
      * @param int $idSalesOrder
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -45,9 +45,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Returns persisted order information stored into OrderTransfer
-     *  - Hydrates order by calling HydrateOrderPlugin's registered in project dependency provider.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -148,13 +146,13 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Returns the order for the given customer id and sales order id.
-     *  - Aggregates order totals calls -> SalesAggregator
+     * {@inheritdoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -164,25 +162,6 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
             ->createOrderHydratorStrategyResolver()
             ->resolve($orderTransfer->getItems())
             ->getCustomerOrder($orderTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @deprecated Use saveSalesOrder() instead
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return void
-     */
-    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
-    {
-        $this->getFactory()
-            ->createOrderSaver()
-            ->saveOrder($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
@@ -276,9 +255,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Replaces all values of the order address by the values from the addresses transfer
-     * - Returns true if order was successfully updated
+     * {@inheritdoc}
      *
      * @api
      *
@@ -376,6 +353,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * @todo: Should be refactored to return transfer objects collection.
+     *
      * {@inheritdoc}
      *
      * @api

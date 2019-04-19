@@ -15,6 +15,7 @@
 
     <transfer name="Order">
         <property name="locale" type="Locale"/>
+        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
     </transfer>
 
     <transfer name="OmsAvailabilityReservationRequest">

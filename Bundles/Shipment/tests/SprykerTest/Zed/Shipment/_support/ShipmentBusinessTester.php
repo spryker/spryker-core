@@ -209,9 +209,8 @@ class ShipmentBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function createOrderWithoutShipment(QuoteTransfer $quoteTransfer, ?string $testStateMachineProcessName = null): SaveOrderTransfer
+    public function createOrderWithoutShipment(QuoteTransfer $quoteTransfer, ?string $testStateMachineProcessName = 'Test01'): SaveOrderTransfer
     {
-        $testStateMachineProcessName = 'Test01';
         $this->configureTestStateMachine([$testStateMachineProcessName]);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {

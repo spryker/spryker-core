@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 
-class ShipmentGuiToShipmentFacadeFacadeBridge implements ShipmentGuiToShipmentInterface
+class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface

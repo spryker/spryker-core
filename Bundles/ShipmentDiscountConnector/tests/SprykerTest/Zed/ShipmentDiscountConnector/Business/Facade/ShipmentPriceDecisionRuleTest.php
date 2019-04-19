@@ -111,8 +111,8 @@ class ShipmentPriceDecisionRuleTest extends Test
      */
     protected function getDataWith1ShipmentExpenseWithItemLevelShipment(): array
     {
-        $shipmentTransfer1 = (new ShipmentBuilder())->withMethod()->build();
-        $shipmentTransfer2 = (new ShipmentBuilder())->withMethod()->build();
+        $shipmentTransfer1 = (new ShipmentBuilder())->withMethod(['idShipmentMethod' => 1])->build();
+        $shipmentTransfer2 = (new ShipmentBuilder())->withMethod(['idShipmentMethod' => 2])->build();
 
         $quoteTransfer = (new QuoteBuilder())->build();
         $itemTransfer1 = $this->addNewItemWithShipmentAndShipmentPriceIntoQuoteTransfer($quoteTransfer, $shipmentTransfer1, 1000); // Cents
@@ -136,8 +136,8 @@ class ShipmentPriceDecisionRuleTest extends Test
      */
     protected function getDataWith2ShipmentExpensesWithItemLevelShipment(): array
     {
-        $shipmentTransfer1 = (new ShipmentBuilder())->withMethod()->build();
-        $shipmentTransfer2 = (new ShipmentBuilder())->withMethod()->build();
+        $shipmentTransfer1 = (new ShipmentBuilder())->withMethod(['idShipmentMethod' => 1])->build();
+        $shipmentTransfer2 = (new ShipmentBuilder())->withMethod(['idShipmentMethod' => 2])->build();
 
         $quoteTransfer = (new QuoteBuilder())->build();
         $itemTransfer1 = $this->addNewItemWithShipmentAndShipmentPriceIntoQuoteTransfer($quoteTransfer, $shipmentTransfer1, 50); // Cents

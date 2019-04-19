@@ -330,7 +330,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves customer address by address details.
+     * - Retrieves customer address using all address details except address id.
      *
      * @api
      *

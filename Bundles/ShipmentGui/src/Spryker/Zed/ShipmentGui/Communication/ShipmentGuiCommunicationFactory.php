@@ -12,8 +12,12 @@ use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormCreateDa
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormEditDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormEdit;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerInterface;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeBridge;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesInterface;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface;
 use Spryker\Zed\ShipmentGui\ShipmentGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
@@ -78,25 +82,25 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesInterface
+     * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface
      */
-    public function getSalesFacade(): ShipmentGuiToSalesInterface
+    public function getSalesFacade(): ShipmentGuiToSalesFacadeInterface
     {
         return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_SALES);
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface
+     * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface
      */
-    public function getShipmentFacade(): ShipmentGuiToShipmentInterface
+    public function getShipmentFacade(): ShipmentGuiToShipmentFacadeInterface
     {
         return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_SHIPMENT);
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerInterface
+     * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface
      */
-    public function getCustomerFacade(): ShipmentGuiToCustomerInterface
+    public function getCustomerFacade(): ShipmentGuiToCustomerFacadeInterface
     {
         return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_CUSTOMER);
     }

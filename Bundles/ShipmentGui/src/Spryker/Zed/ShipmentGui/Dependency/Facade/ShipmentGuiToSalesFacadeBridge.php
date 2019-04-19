@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 
-class ShipmentGuiToSalesFacadeFacadeBridge implements ShipmentGuiToSalesInterface
+class ShipmentGuiToSalesFacadeBridge implements ShipmentGuiToSalesFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Sales\Business\SalesFacadeInterface

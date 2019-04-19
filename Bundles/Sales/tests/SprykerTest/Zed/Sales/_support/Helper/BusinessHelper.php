@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Sales\Helper;
 
 use Codeception\Module;
 use DateTime;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
@@ -80,15 +81,18 @@ class BusinessHelper extends Module
         $grossPrice,
         $taxRate
     ) {
+        $itemTransfer = (new ItemBuilder())->build();
+
         $salesOrderItem = new SpySalesOrderItem();
         $salesOrderItem->setGrossPrice($grossPrice);
         $salesOrderItem->setQuantity($quantity);
-        $salesOrderItem->setSku('123');
-        $salesOrderItem->setName('test1');
+        $salesOrderItem->setSku($itemTransfer->getSku());
+        $salesOrderItem->setName($itemTransfer->getName());
         $salesOrderItem->setTaxRate($taxRate);
         $salesOrderItem->setFkOmsOrderItemState($omsStateEntity->getIdOmsOrderItemState());
         $salesOrderItem->setProcess($omsOrderProcessEntity);
         $salesOrderItem->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
+        $salesOrderItem->setGroupKey($itemTransfer->getGroupKey());
         $salesOrderItem->save();
 
         return $salesOrderItem;

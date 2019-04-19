@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Communication\Plugin\Mail;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
@@ -67,11 +68,11 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
      */
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
     {
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
         $orderTransfer = $mailBuilder->getMailTransfer()->getOrder();
         if (!$this->isMultipleShipment($orderTransfer)) {
+            /**
+             * @deprecated Exists for Backward Compatibility reasons only.
+             */
             $mailBuilder->setHtmlTemplate('oms/mail/order_confirmation.html.twig');
 
             return $this;
@@ -89,11 +90,11 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
      */
     protected function setTextTemplate(MailBuilderInterface $mailBuilder)
     {
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
         $orderTransfer = $mailBuilder->getMailTransfer()->getOrder();
         if (!$this->isMultipleShipment($orderTransfer)) {
+            /**
+             * @deprecated Exists for Backward Compatibility reasons only.
+             */
             $mailBuilder->setTextTemplate('oms/mail/order_confirmation.text.twig');
 
             return $this;
