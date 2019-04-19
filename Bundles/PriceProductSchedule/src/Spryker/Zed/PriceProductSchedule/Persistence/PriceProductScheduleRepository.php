@@ -52,6 +52,10 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     }
 
     /**
+     * @module Product
+     * @module PriceProduct
+     * @module Currency
+     *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
     public function findPriceProductSchedulesToDisable(): array
@@ -72,6 +76,10 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     }
 
     /**
+     * @module Product
+     * @module PriceProduct
+     * @module Currency
+     *
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
@@ -110,6 +118,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
 
     /**
      * @module Product
+     * @module PriceProduct
      * @module Currency
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer

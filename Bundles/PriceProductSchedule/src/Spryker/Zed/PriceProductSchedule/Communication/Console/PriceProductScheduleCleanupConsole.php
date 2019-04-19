@@ -16,9 +16,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface getRepository()
  */
-class PriceProductScheduleCleanConsole extends Console
+class PriceProductScheduleCleanupConsole extends Console
 {
-    public const COMMAND_NAME = 'price-product-schedule:clean';
+    public const COMMAND_NAME = 'price-product-schedule:cleanup';
     public const DESCRIPTION = 'Deletes scheduled prices that has been applied earlier than the days provided as argument';
     public const DAYS_RETAINED = 'days retained';
 
