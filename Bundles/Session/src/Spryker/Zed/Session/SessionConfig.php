@@ -121,6 +121,8 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\SessionRedis\SessionRedisConfig::getConnectionOptions()` instead.
+     *
      * @return array
      */
     public function getSessionHandlerRedisConnectionOptionsZed(): array

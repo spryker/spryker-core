@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\SessionRedis\Handler\KeyGenerator;
+namespace Spryker\Zed\SessionRedis\Communication\Handler\Lock;
 
-interface SessionKeyGeneratorInterface
+interface SessionLockReaderInterface
 {
     /**
      * @param string $sessionId
      *
      * @return string
      */
-    public function generateSessionKey(string $sessionId): string;
+    public function getTokenForSession($sessionId);
 }

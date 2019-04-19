@@ -36,7 +36,9 @@ class SessionBusinessFactory extends AbstractBusinessFactory
      */
     protected function createYvesSessionLockReleaserPool()
     {
-        $sessionLockReleaserPool = new SessionLockReleaserPool();
+        $sessionLockReleaserPool = new SessionLockReleaserPool(
+            $this->getSessionLockReleaserPlugins()
+        );
         $sessionLockReleaserPool->addLockReleaser(
             $this->createRedisSessionLockReleaser(
                 $this->getConfig()->getSessionHandlerRedisConnectionParametersYves(),
@@ -62,7 +64,9 @@ class SessionBusinessFactory extends AbstractBusinessFactory
      */
     protected function createZedSessionLockReleaserPool()
     {
-        $sessionLockReleaserPool = new SessionLockReleaserPool();
+        $sessionLockReleaserPool = new SessionLockReleaserPool(
+            $this->getSessionLockReleaserPlugins()
+        );
         $sessionLockReleaserPool->addLockReleaser(
             $this->createRedisSessionLockReleaser(
                 $this->getConfig()->getSessionHandlerRedisConnectionParametersZed(),
@@ -75,6 +79,8 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use session handler plugins instead.
+     *
      * @param array|string $connectionParameters
      * @param array $connectionOptions
      *
@@ -129,6 +135,14 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     public function getMonitoringService(): SessionToMonitoringServiceInterface
     {
         return $this->getProvidedDependency(SessionDependencyProvider::MONITORING_SERVICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface[]
+     */
+    public function getSessionLockReleaserPlugins(): array
+    {
+        return $this->getProvidedDependency(SessionDependencyProvider::PLUGINS_SESSION_LOCK_RELEASER);
     }
 
     /**

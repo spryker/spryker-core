@@ -5,28 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Session\Business\Lock;
+namespace Spryker\Zed\SessionRedis\Communication\Handler\Lock;
 
-use Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface;
+use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
 
-/**
- * @deprecated Use session lock releaser plugins instead.
- */
 class SessionLockReleaser implements SessionLockReleaserInterface
 {
     /**
-     * @var \Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface
+     * @var \Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface
      */
     protected $locker;
 
     /**
-     * @var \Spryker\Zed\Session\Business\Lock\SessionLockReaderInterface
+     * @var \Spryker\Zed\SessionRedis\Communication\Handler\Lock\SessionLockReaderInterface
      */
     protected $lockReader;
 
     /**
-     * @param \Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface $locker
-     * @param \Spryker\Zed\Session\Business\Lock\SessionLockReaderInterface $lockReader
+     * @param \Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface $locker
+     * @param \Spryker\Zed\SessionRedis\Communication\Handler\Lock\SessionLockReaderInterface $lockReader
      */
     public function __construct(SessionLockerInterface $locker, SessionLockReaderInterface $lockReader)
     {

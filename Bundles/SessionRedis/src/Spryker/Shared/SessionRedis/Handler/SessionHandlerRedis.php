@@ -25,7 +25,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
     /**
      * @var string
      */
-    protected $keyPrefix = 'session:';
+    protected $keyPrefix = 'session';
 
     /**
      * @var string
@@ -84,7 +84,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      */
     public function read($sessionId): ?string
     {
-        $key = $this->keyPrefix . $sessionId;
+        $key = $this->buildSessionKey($sessionId);
         $startTime = microtime(true);
         $result = $this->redisClient->get($key);
         $this->monitoringService->addCustomParameter(static::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
@@ -100,7 +100,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      */
     public function write($sessionId, $sessionData): bool
     {
-        $key = $this->keyPrefix . $sessionId;
+        $key = $this->buildSessionKey($sessionId);
 
         if (strlen($sessionData) < 1) {
             return true;
@@ -120,7 +120,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      */
     public function destroy($sessionId): bool
     {
-        $key = $this->keyPrefix . $sessionId;
+        $key = $this->buildSessionKey($sessionId);
 
         $startTime = microtime(true);
         $this->redisClient->del($key);
@@ -137,5 +137,15 @@ class SessionHandlerRedis implements SessionHandlerInterface
     public function gc($maxLifetime): bool
     {
         return true;
+    }
+
+    /**
+     * @param string $sessionId
+     *
+     * @return string
+     */
+    protected function buildSessionKey(string $sessionId): string
+    {
+        return sprintf('%s:%s', $this->keyPrefix, $sessionId);
     }
 }

@@ -10,17 +10,15 @@ namespace Spryker\Zed\SessionRedis\Communication;
 use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientInterface;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
-use Spryker\Shared\SessionRedis\Handler\KeyGenerator\LockKeyGeneratorInterface;
-use Spryker\Shared\SessionRedis\Handler\KeyGenerator\Redis\RedisLockKeyGenerator;
-use Spryker\Shared\SessionRedis\Handler\KeyGenerator\Redis\RedisSessionKeyGenerator;
-use Spryker\Shared\SessionRedis\Handler\KeyGenerator\SessionKeyGeneratorInterface;
-use Spryker\Shared\SessionRedis\Handler\Lock\Redis\RedisSpinLockLocker;
-use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
-use Spryker\Shared\SessionRedis\Handler\SessionHandlerRedis;
-use Spryker\Shared\SessionRedis\Handler\SessionHandlerRedisLocking;
+use Spryker\Shared\SessionRedis\Handler\AbstractSessionHandlerFactory;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapper;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\SessionRedis\Communication\Handler\Lock\SessionLockReader;
+use Spryker\Zed\SessionRedis\Communication\Handler\Lock\SessionLockReaderInterface;
+use Spryker\Zed\SessionRedis\Communication\Handler\Lock\SessionLockReleaser;
+use Spryker\Zed\SessionRedis\Communication\Handler\Lock\SessionLockReleaserInterface;
+use Spryker\Zed\SessionRedis\Communication\Handler\SessionHandlerFactory;
 use Spryker\Zed\SessionRedis\SessionRedisConfig;
 use Spryker\Zed\SessionRedis\SessionRedisDependencyProvider;
 
@@ -30,16 +28,12 @@ use Spryker\Zed\SessionRedis\SessionRedisDependencyProvider;
 class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @param array $connectionCredentials
-     *
      * @return \SessionHandlerInterface
      */
     public function createSessionRedisHandler(): SessionHandlerInterface
     {
-        return new SessionHandlerRedis(
-            $this->createSessionRedisWrapper(),
-            $this->getConfig()->getSessionLifetime(),
-            $this->getMonitoringService()
+        return $this->createSessionHandlerFactory()->createSessionRedisHandler(
+            $this->createSessionRedisWrapper()
         );
     }
 
@@ -48,44 +42,35 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createSessionHandlerRedisLocking(): SessionHandlerInterface
     {
-        return new SessionHandlerRedisLocking(
-            $this->createSessionRedisWrapper(),
-            $this->createRedisSpinLockLocker(),
-            $this->createRedisSessionKeyGenerator(),
-            $this->getConfig()->getSessionLifetime()
+        return $this->createSessionHandlerFactory()->createSessionHandlerRedisLocking(
+            $this->createSessionRedisWrapper()
         );
     }
 
     /**
-     * @return \Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface
+     * @return \Spryker\Zed\SessionRedis\Communication\Handler\Lock\SessionLockReleaserInterface
      */
-    public function createRedisSpinLockLocker(): SessionLockerInterface
+    public function createSessionLockReleaser(): SessionLockReleaserInterface
     {
-        return new RedisSpinLockLocker(
-            $this->createSessionRedisWrapper(),
-            $this->createRedisLockKeyGenerator(),
-            $this->getConfig()->getLockingTimeout(),
-            $this->getConfig()->getLockingRetryDelay(),
-            $this->getConfig()->getLockingLockTtl()
+        $redisClient = $this->createSessionRedisWrapper();
+
+        return new SessionLockReleaser(
+            $this->createSessionHandlerFactory()->createSpinLockLocker($redisClient),
+            $this->createRedisSessionLockReader($redisClient)
         );
     }
 
     /**
-     * @return \Spryker\Shared\SessionRedis\Handler\KeyGenerator\LockKeyGeneratorInterface
+     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
+     *
+     * @return \Spryker\Zed\SessionRedis\Communication\Handler\Lock\SessionLockReaderInterface
      */
-    public function createRedisLockKeyGenerator(): LockKeyGeneratorInterface
+    public function createRedisSessionLockReader(SessionRedisWrapperInterface $redisClient): SessionLockReaderInterface
     {
-        return new RedisLockKeyGenerator(
-            $this->createRedisSessionKeyGenerator()
+        return new SessionLockReader(
+            $redisClient,
+            $this->createSessionHandlerFactory()->createSessionKeyBuilder()
         );
-    }
-
-    /**
-     * @return \Spryker\Shared\SessionRedis\Handler\KeyGenerator\SessionKeyGeneratorInterface
-     */
-    protected function createRedisSessionKeyGenerator(): SessionKeyGeneratorInterface
-    {
-        return new RedisSessionKeyGenerator();
     }
 
     /**
@@ -101,9 +86,20 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Shared\SessionRedis\Handler\AbstractSessionHandlerFactory
+     */
+    public function createSessionHandlerFactory(): AbstractSessionHandlerFactory
+    {
+        return new SessionHandlerFactory(
+            $this->getMonitoringService(),
+            $this->getConfig()->getSessionLifeTime()
+        );
+    }
+
+    /**
      * @return \Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface
      */
-    protected function getMonitoringService(): SessionRedisToMonitoringServiceInterface
+    public function getMonitoringService(): SessionRedisToMonitoringServiceInterface
     {
         return $this->getProvidedDependency(SessionRedisDependencyProvider::SERVICE_MONITORING);
     }
@@ -111,7 +107,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientInterface
      */
-    protected function getRedisClient(): SessionRedisToRedisClientInterface
+    public function getRedisClient(): SessionRedisToRedisClientInterface
     {
         return $this->getProvidedDependency(SessionRedisDependencyProvider::CLIENT_SESSION_REDIS);
     }

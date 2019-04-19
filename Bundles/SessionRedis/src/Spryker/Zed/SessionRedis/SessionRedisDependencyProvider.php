@@ -39,6 +39,19 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = $this->addMonitoringService($container);
+        $container = $this->addRedisClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addMonitoringService(Container $container): Container
     {
         $container[static::SERVICE_MONITORING] = function (Container $container) {

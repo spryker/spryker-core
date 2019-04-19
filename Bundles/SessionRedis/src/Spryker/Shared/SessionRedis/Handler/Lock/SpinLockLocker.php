@@ -5,16 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\SessionRedis\Handler\Lock\Redis;
+namespace Spryker\Shared\SessionRedis\Handler\Lock;
 
-use Spryker\Shared\SessionRedis\Handler\KeyGenerator\LockKeyGeneratorInterface;
-use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
+use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
-class RedisSpinLockLocker implements SessionLockerInterface
+class SpinLockLocker implements SessionLockerInterface
 {
-    public const KEY_SUFFIX = ':lock';
-
     public const DEFAULT_TIMEOUT_MILLISECONDS = 10000;
     public const DEFAULT_RETRY_DELAY_MICROSECONDS = 10000;
     public const DEFAULT_LOCK_TTL_MILLISECONDS = 20000;
@@ -29,9 +26,9 @@ class RedisSpinLockLocker implements SessionLockerInterface
     protected $redisClient;
 
     /**
-     * @var \Spryker\Shared\SessionRedis\Handler\KeyGenerator\LockKeyGeneratorInterface
+     * @var \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface
      */
-    protected $lockKeyGenerator;
+    protected $keyBuilder;
 
     /**
      * @var int
@@ -65,20 +62,20 @@ class RedisSpinLockLocker implements SessionLockerInterface
 
     /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     * @param \Spryker\Shared\SessionRedis\Handler\KeyGenerator\LockKeyGeneratorInterface $lockKeyGenerator
+     * @param \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface
      * @param int|null $timeoutMilliseconds
      * @param int|null $retryDelayMicroseconds
      * @param int|null $lockTtlMilliseconds
      */
     public function __construct(
         SessionRedisWrapperInterface $redisClient,
-        LockKeyGeneratorInterface $lockKeyGenerator,
+        SessionKeyBuilderInterface $keyBuilder,
         ?int $timeoutMilliseconds = null,
         ?int $retryDelayMicroseconds = null,
         ?int $lockTtlMilliseconds = null
     ) {
         $this->redisClient = $redisClient;
-        $this->lockKeyGenerator = $lockKeyGenerator;
+        $this->keyBuilder = $keyBuilder;
         $this->timeoutMilliseconds = $this->getTimeoutMilliseconds($timeoutMilliseconds);
         $this->retryDelayMicroseconds = $retryDelayMicroseconds ?: static::DEFAULT_RETRY_DELAY_MICROSECONDS;
         $this->lockTtlMilliseconds = $this->getLockTtlMilliseconds($lockTtlMilliseconds);
@@ -185,7 +182,7 @@ class RedisSpinLockLocker implements SessionLockerInterface
      */
     protected function acquire(): bool
     {
-        $lockKey = $this->lockKeyGenerator->generateLockKey($this->sessionId);
+        $lockKey = $this->generateLockKey($this->sessionId);
 
         $result = $this
             ->redisClient
@@ -218,7 +215,7 @@ class RedisSpinLockLocker implements SessionLockerInterface
      */
     public function unlock($sessionId, $token): bool
     {
-        $lockKey = $this->lockKeyGenerator->generateLockKey($sessionId);
+        $lockKey = $this->generateLockKey($sessionId);
 
         $result = $this
             ->redisClient
@@ -243,5 +240,15 @@ if redis.call("GET", KEYS[1]) == ARGV[1] then
 end
 return 0
 LUA;
+    }
+
+    /**
+     * @param string $sessionId
+     *
+     * @return string
+     */
+    protected function generateLockKey(string $sessionId): string
+    {
+        return $this->keyBuilder->buildLockKey($sessionId);
     }
 }

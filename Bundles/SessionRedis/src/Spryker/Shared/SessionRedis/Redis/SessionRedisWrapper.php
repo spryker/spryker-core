@@ -20,7 +20,7 @@ class SessionRedisWrapper implements SessionRedisWrapperInterface
     /**
      * @var string
      */
-    private $connectionKey;
+    protected $connectionKey;
 
     /**
      * @param \Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientInterface $redisClient

@@ -9,7 +9,7 @@ namespace Spryker\Shared\SessionRedis\Handler;
 
 use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException;
-use Spryker\Shared\SessionRedis\Handler\KeyGenerator\SessionKeyGeneratorInterface;
+use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
@@ -33,27 +33,26 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     protected $locker;
 
     /**
-     * @var \Spryker\Shared\SessionRedis\Handler\KeyGenerator\SessionKeyGeneratorInterface
+     * @var \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface
      */
-    protected $keyGenerator;
+    protected $keyBuilder;
 
     /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
      * @param \Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface $locker
-     * @param \Spryker\Shared\SessionRedis\Handler\KeyGenerator\SessionKeyGeneratorInterface $keyGenerator
+     * @param \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface $keyBuilder
      * @param int $ttlSeconds
      */
     public function __construct(
         SessionRedisWrapperInterface $redisClient,
         SessionLockerInterface $locker,
-        SessionKeyGeneratorInterface $keyGenerator,
+        SessionKeyBuilderInterface $keyBuilder,
         $ttlSeconds
     ) {
         $this->redisClient = $redisClient;
         $this->locker = $locker;
-        $this->keyGenerator = $keyGenerator;
         $this->ttlSeconds = $ttlSeconds;
-
+        $this->keyBuilder = $keyBuilder;
         $this->redisClient->connect();
     }
 
@@ -93,7 +92,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      */
     public function read($sessionId): string
     {
-        if (!$this->locker->lock($this->keyGenerator->generateSessionKey($sessionId))) {
+        if (!$this->locker->lock($this->keyBuilder->buildSessionKey($sessionId))) {
             throw new LockCouldNotBeAcquiredException(
                 sprintf(
                     '%s could not acquire access to the session %s',
@@ -105,7 +104,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
 
         $sessionData = $this
             ->redisClient
-            ->get($this->keyGenerator->generateSessionKey($sessionId));
+            ->get($this->keyBuilder->buildSessionKey($sessionId));
 
         return $this->normalizeSessionData($sessionData);
     }
@@ -148,7 +147,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     {
         $result = $this
             ->redisClient
-            ->setex($this->keyGenerator->generateSessionKey($sessionId), $this->ttlSeconds, $data);
+            ->setex($this->keyBuilder->buildSessionKey($sessionId), $this->ttlSeconds, $data);
 
         return ($result ? true : false);
     }
@@ -160,7 +159,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      */
     public function destroy($sessionId)
     {
-        $this->redisClient->del([$this->keyGenerator->generateSessionKey($sessionId)]);
+        $this->redisClient->del([$this->keyBuilder->buildSessionKey($sessionId)]);
         $this->locker->unlockCurrent();
 
         return true;

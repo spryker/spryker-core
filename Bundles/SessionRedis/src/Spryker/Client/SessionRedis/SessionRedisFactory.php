@@ -9,16 +9,10 @@ namespace Spryker\Client\SessionRedis;
 
 use SessionHandlerInterface;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\SessionRedis\Handler\SessionHandlerFactory;
 use Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientInterface;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
-use Spryker\Shared\SessionRedis\Handler\KeyGenerator\LockKeyGeneratorInterface;
-use Spryker\Shared\SessionRedis\Handler\KeyGenerator\Redis\RedisLockKeyGenerator;
-use Spryker\Shared\SessionRedis\Handler\KeyGenerator\Redis\RedisSessionKeyGenerator;
-use Spryker\Shared\SessionRedis\Handler\KeyGenerator\SessionKeyGeneratorInterface;
-use Spryker\Shared\SessionRedis\Handler\Lock\Redis\RedisSpinLockLocker;
-use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
-use Spryker\Shared\SessionRedis\Handler\SessionHandlerRedis;
-use Spryker\Shared\SessionRedis\Handler\SessionHandlerRedisLocking;
+use Spryker\Shared\SessionRedis\Handler\AbstractSessionHandlerFactory;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapper;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
@@ -32,10 +26,8 @@ class SessionRedisFactory extends AbstractFactory
      */
     public function createSessionRedisHandler(): SessionHandlerInterface
     {
-        return new SessionHandlerRedis(
-            $this->createSessionRedisWrapper(),
-            $this->getConfig()->getSessionLifetime(),
-            $this->getMonitoringService()
+        return $this->createSessionHandlerFactory()->createSessionRedisHandler(
+            $this->createSessionRedisWrapper()
         );
     }
 
@@ -44,35 +36,8 @@ class SessionRedisFactory extends AbstractFactory
      */
     public function createSessionHandlerRedisLocking(): SessionHandlerInterface
     {
-        return new SessionHandlerRedisLocking(
-            $this->createSessionRedisWrapper(),
-            $this->createRedisSpinLockLocker(),
-            $this->createRedisSessionKeyGenerator(),
-            $this->getConfig()->getSessionLifetime()
-        );
-    }
-
-    /**
-     * @return \Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface
-     */
-    public function createRedisSpinLockLocker(): SessionLockerInterface
-    {
-        return new RedisSpinLockLocker(
-            $this->createSessionRedisWrapper(),
-            $this->createRedisLockKeyGenerator(),
-            $this->getConfig()->getLockingTimeout(),
-            $this->getConfig()->getLockingRetryDelay(),
-            $this->getConfig()->getLockingLockTtl()
-        );
-    }
-
-    /**
-     * @return \Spryker\Shared\SessionRedis\Handler\KeyGenerator\LockKeyGeneratorInterface
-     */
-    public function createRedisLockKeyGenerator(): LockKeyGeneratorInterface
-    {
-        return new RedisLockKeyGenerator(
-            $this->createRedisSessionKeyGenerator()
+        return $this->createSessionHandlerFactory()->createSessionHandlerRedisLocking(
+            $this->createSessionRedisWrapper()
         );
     }
 
@@ -89,11 +54,14 @@ class SessionRedisFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\SessionRedis\Handler\KeyGenerator\SessionKeyGeneratorInterface
+     * @return \Spryker\Shared\SessionRedis\Handler\AbstractSessionHandlerFactory
      */
-    public function createRedisSessionKeyGenerator(): SessionKeyGeneratorInterface
+    public function createSessionHandlerFactory(): AbstractSessionHandlerFactory
     {
-        return new RedisSessionKeyGenerator();
+        return new SessionHandlerFactory(
+            $this->getMonitoringService(),
+            $this->getConfig()->getSessionLifetime()
+        );
     }
 
     /**
