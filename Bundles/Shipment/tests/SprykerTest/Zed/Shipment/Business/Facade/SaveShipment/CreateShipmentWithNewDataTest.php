@@ -76,7 +76,6 @@ class CreateShipmentWithNewDataTest extends Test
         $shipmentGroupTransfer->addItem($itemTransfer);
 
         $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
-        $orderTransfer->setItems($saveOrderTransfer->getOrderItems());
 
         // Act
         $shipmentGroupResponseTransfer = $this->tester->getFacade()->saveShipment($shipmentGroupTransfer, $orderTransfer);
@@ -207,7 +206,6 @@ class CreateShipmentWithNewDataTest extends Test
         $shipmentGroupTransfer = (new ShipmentGroupTransfer())->setShipment($shipmentTransfer);
 
         $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
-        $orderTransfer->setItems($saveOrderTransfer->getOrderItems());
 
         // Act
         $shipmentGroupResponseTransfer = $this->tester->getFacade()->saveShipment($shipmentGroupTransfer, $orderTransfer);
@@ -221,8 +219,6 @@ class CreateShipmentWithNewDataTest extends Test
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a new shipment should have been successful.');
         $this->assertNotNull($shipmentEntity->getFkSalesOrderAddress(), 'New sales shipment should have a sales order address.');
         $this->assertNotEquals($oldIdSalesOrderAddress, $shipmentEntity->getFkSalesOrderAddress(), 'New sales shipment should have been a new sales order address assigned.');
-
-        // todo move to expense test
     }
 
     /**
@@ -245,7 +241,6 @@ class CreateShipmentWithNewDataTest extends Test
         $shipmentGroupTransfer->addItem($itemTransfer);
 
         $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
-        $orderTransfer->setItems($saveOrderTransfer->getOrderItems());
 
         // Act
         $shipmentGroupResponseTransfer = $this->tester->getFacade()->saveShipment($shipmentGroupTransfer, $orderTransfer);
@@ -270,7 +265,10 @@ class CreateShipmentWithNewDataTest extends Test
         $quoteTransfer = $this->createQuoteTransfer();
         $saveOrderTransfer = $this->tester->haveOrderUsingPreparedQuoteTransfer($quoteTransfer, static::TEST_STATE_MACHINE_PROCESS_NAME);
 
-        $idShipment = $saveOrderTransfer->getOrderItems()[0]->getShipment()->getIdSalesShipment();
+        $oldShipmentTransfer = $shipmentTransfer = $this->tester->haveShipment(
+            $saveOrderTransfer->getIdSalesOrder(),
+            $saveOrderTransfer->getOrderItems()[0]->getShipment()->toArray()
+        );
 
         $shipmentTransfer = (new ShipmentBuilder())
             ->withShippingAddress()
@@ -285,7 +283,6 @@ class CreateShipmentWithNewDataTest extends Test
         }
 
         $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
-        $orderTransfer->setItems($saveOrderTransfer->getOrderItems());
 
         // Act
         $shipmentGroupResponseTransfer = $this->tester->getFacade()->saveShipment($shipmentGroupTransfer, $orderTransfer);
@@ -293,10 +290,10 @@ class CreateShipmentWithNewDataTest extends Test
         // Assert
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'New shipment should have been created successful.');
 
-        $shipmentEntity = SpySalesShipmentQuery::create()->findOneByIdSalesShipment($idShipment);
+        $shipmentEntity = SpySalesShipmentQuery::create()->findOneByIdSalesShipment($oldShipmentTransfer->getIdSalesShipment());
         $this->assertNotNull($shipmentEntity, 'New shipment creation should keep old shipment');
 
-        $itemEntities = SpySalesOrderItemQuery::create()->findByFkSalesShipment($idShipment);
+        $itemEntities = SpySalesOrderItemQuery::create()->findByFkSalesShipment($oldShipmentTransfer->getIdSalesShipment());
         $this->assertCount(0, $itemEntities, 'Old shipment should not have any assigned items.');
     }
 }
