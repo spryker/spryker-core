@@ -15,4 +15,11 @@ interface ContentEditorPluginsResolverInterface
      * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
      */
     public function getTemplatesByType(string $contentType): array;
+
+    /**
+     * @param string $contentType
+     *
+     * @return string
+     */
+    public function getTwigFunctionTemplateByType(string $contentType): string;
 }

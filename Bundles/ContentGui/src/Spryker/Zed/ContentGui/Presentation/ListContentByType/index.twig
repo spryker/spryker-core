@@ -5,13 +5,21 @@
         {% endblock %}
     {% endembed %}
 
-    <h5>{{ 'Choose template' | trans }}</h5>
-    <ul>
-        {% for key, template in templates %}
-            <li>
-                <input id="template-{{ template.identifier }}" name="template" type="radio" {{ key == 0 ? 'checked="checked"' : '' }} value="{{ template.identifier }}" data-macro="{{ template.macro }}" />
-                <label for="template-{{ template.identifier }}">{{ template.name }}</label>
-            </li>
-        {% endfor %}
-    </ul>
+    <input type="hidden" name="twigFunctionTemplate" value="{{ twigFunctionTemplate }}" />
+
+    {% if templates is not empty %}
+        {% set selectedTemplateIdentifier = selectedTemplateIdentifier is defined ? selectedTemplateIdentifier : templates[0].identifier %}
+
+        <h5>{{ 'Choose template' | trans }}</h5>
+        <ul>
+            {% for key, template in templates %}
+                <li>
+                    <input id="template-{{ template.identifier }}" name="template" type="radio"
+                            {{ selectedTemplateIdentifier == template.identifier ? 'checked="checked"' : '' }}
+                           value="{{ template.identifier }}" />
+                    <label for="template-{{ template.identifier }}">{{ template.name | trans }}</label>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}

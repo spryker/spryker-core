@@ -28,12 +28,14 @@ class ListContentByTypeController extends AbstractController
         $contentType = $request->query->get(static::PARAM_CONTENT_TYPE);
         $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType);
         $contentTypeTemplates = $this->getFactory()->createContentEditorPluginsResolver()->getTemplatesByType($contentType);
-        $response = [
+        $twigFunctionTemplate = $this->getFactory()->createContentEditorPluginsResolver()->getTwigFunctionTemplateByType($contentType);
+        $data = [
             'table' => $contentByTypeTable->render(),
             'templates' => $contentTypeTemplates,
+            'twigFunctionTemplate' => $twigFunctionTemplate,
         ];
 
-        return $this->viewResponse($response);
+        return $this->viewResponse($data);
     }
 
     /**

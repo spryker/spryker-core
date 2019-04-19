@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ContentGui\Communication\Resolver;
 
-use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
-
 class ContentEditorPluginsResolver implements ContentEditorPluginsResolverInterface
 {
     /**
@@ -17,18 +15,11 @@ class ContentEditorPluginsResolver implements ContentEditorPluginsResolverInterf
     protected $contentEditorPlugins;
 
     /**
-     * @var \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface
-     */
-    protected $translatorFacade;
-
-    /**
      * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface[] $contentEditorPlugins
-     * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface $translatorFacade
      */
-    public function __construct(array $contentEditorPlugins, ContentGuiToTranslatorFacadeInterface $translatorFacade)
+    public function __construct(array $contentEditorPlugins)
     {
         $this->contentEditorPlugins = $contentEditorPlugins;
-        $this->translatorFacade = $translatorFacade;
     }
 
     /**
@@ -43,24 +34,27 @@ class ContentEditorPluginsResolver implements ContentEditorPluginsResolverInterf
                 continue;
             }
 
-            return $this->resolveTemplates($contentEditorPlugin->getTemplates());
+            return $contentEditorPlugin->getTemplates();
         }
 
         return [];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $templates
+     * @param string $contentType
      *
-     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
+     * @return string
      */
-    protected function resolveTemplates(array $templates): array
+    public function getTwigFunctionTemplateByType(string $contentType): string
     {
-        foreach ($templates as $key => $template) {
-            $template->setName($this->translatorFacade->trans($template->getName()));
-            $templates[$key] = $template;
+        foreach ($this->contentEditorPlugins as $contentEditorPlugin) {
+            if ($contentEditorPlugin->getType() !== $contentType) {
+                continue;
+            }
+
+            return $contentEditorPlugin->getTwigFunctionTemplate();
         }
 
-        return $templates;
+        return '';
     }
 }
