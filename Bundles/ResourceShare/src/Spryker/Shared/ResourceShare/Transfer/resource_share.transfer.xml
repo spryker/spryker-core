@@ -16,7 +16,6 @@
         <property name="uuid" type="string" />
         <property name="customer" type="Customer" />
         <property name="resourceShare" type="ResourceShare" />
-        <property name="useDbTransaction" type="bool" />
     </transfer>
 
     <transfer name="ResourceShareResponseTransfer">

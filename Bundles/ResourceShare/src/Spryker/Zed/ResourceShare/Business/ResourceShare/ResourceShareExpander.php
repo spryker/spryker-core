@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ResourceShare\ResourceShare;
+namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 
 class ResourceShareExpander implements ResourceShareExpanderInterface
 {
     /**
-     * @var \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[]
+     * @var \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[]
      */
     protected $resourceShareResourceDataExpanderStrategyPlugins;
 
     /**
-     * @param \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[] $resourceShareResourceDataExpanderStrategyPlugins
+     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[] $resourceShareResourceDataExpanderStrategyPlugins
      */
     public function __construct(
         array $resourceShareResourceDataExpanderStrategyPlugins
@@ -30,8 +30,9 @@ class ResourceShareExpander implements ResourceShareExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function executeResourceDataExpanderStrategyPlugins(ResourceShareResponseTransfer $resourceShareResponseTransfer): ResourceShareResponseTransfer
-    {
+    public function executeResourceDataExpanderStrategyPlugins(
+        ResourceShareResponseTransfer $resourceShareResponseTransfer
+    ): ResourceShareResponseTransfer {
         $resourceShareResponseTransfer->requireResourceShare();
         $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
 

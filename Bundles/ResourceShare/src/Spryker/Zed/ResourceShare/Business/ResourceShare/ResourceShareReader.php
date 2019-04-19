@@ -22,19 +22,27 @@ class ResourceShareReader implements ResourceShareReaderInterface
     protected $resourceShareRepository;
 
     /**
+     * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface
+     */
+    protected $resourceShareExpander;
+
+    /**
      * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface
      */
     protected $resourceShareValidator;
 
     /**
      * @param \Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface $resourceShareRepository
+     * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface $resourceShareExpander
      * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface $resourceShareValidator
      */
     public function __construct(
         ResourceShareRepositoryInterface $resourceShareRepository,
+        ResourceShareExpanderInterface $resourceShareExpander,
         ResourceShareValidatorInterface $resourceShareValidator
     ) {
         $this->resourceShareRepository = $resourceShareRepository;
+        $this->resourceShareExpander = $resourceShareExpander;
         $this->resourceShareValidator = $resourceShareValidator;
     }
 
@@ -45,36 +53,24 @@ class ResourceShareReader implements ResourceShareReaderInterface
      */
     public function getResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
+        $existingResourceShareTransfer = $this->resourceShareRepository->findResourceShare($resourceShareTransfer);
+        if (!$existingResourceShareTransfer) {
+            return (new ResourceShareResponseTransfer())->setIsSuccessful(false)
+                ->addErrorMessage(
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND)
+                );
+        }
+
         $resourceShareResponseTransfer = $this->resourceShareValidator->validateResourceShareTransfer($resourceShareTransfer);
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return $resourceShareResponseTransfer;
         }
 
-        $existingResourceShareTransfer = $this->resourceShareRepository->findResourceShare(
-            $this->filterResourceShareTransfer($resourceShareTransfer)
+        $resourceShareResponseTransfer = $this->resourceShareExpander->executeResourceDataExpanderStrategyPlugins(
+            $resourceShareResponseTransfer
         );
 
-        if ($existingResourceShareTransfer) {
-            return $resourceShareResponseTransfer->setIsSuccessful(true)
-                ->setResourceShare($existingResourceShareTransfer);
-        }
-
-        return $resourceShareResponseTransfer->setIsSuccessful(false)
-            ->addErrorMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND)
-            );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareTransfer
-     */
-    protected function filterResourceShareTransfer(ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer
-    {
-        return (new ResourceShareTransfer())
-            ->setResourceType($resourceShareTransfer->getResourceType())
-            ->setResourceData($resourceShareTransfer->getResourceData())
-            ->setCustomerReference($resourceShareTransfer->getCustomerReference());
+        return $resourceShareResponseTransfer->setIsSuccessful(true)
+            ->setResourceShare($existingResourceShareTransfer);
     }
 }

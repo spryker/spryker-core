@@ -20,6 +20,7 @@ interface ResourceShareFacadeInterface
      * - Sets UUID in returned transfer if generation was successful.
      * - Sets `isSuccessful=true` if generation was successful, adds error messages otherwise.
      * - Does not create new UUID if the provided "resourceType" and "resourceData" pair exists for current customer.
+     * - Applies corresponding ResourceShareResourceDataExpanderStrategyPluginInterface strategy plugin to expand resource data.
      *
      * @api
      *
@@ -35,6 +36,7 @@ interface ResourceShareFacadeInterface
      * - Applies corresponding strategy using `ResourceShareActivatorStrategyPluginInterface` stack.
      * - Returns with "isLoginRequired=true" when strategy expects logged in customer.
      * - Returns with "isSuccess=true" on success or with error messages otherwise.
+     * - Applies corresponding ResourceShareResourceDataExpanderStrategyPluginInterface strategy plugin to expand resource data.
      *
      * @api
      *
@@ -49,6 +51,7 @@ interface ResourceShareFacadeInterface
      * - Retrieves the share resource by the defined ResourceShareTransfer properties.
      * - Considers "resourceType", "resourceData" and "customerReference" values from ResourceShareTransfer.
      * - Returns "isSuccess=true" on success and error message otherwise.
+     * - Applies corresponding ResourceShareResourceDataExpanderStrategyPluginInterface strategy plugin to expand resource data.
      *
      * @api
      *

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\ResourceShare\ResourceShareDependencyProvider;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
+use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -31,22 +32,22 @@ class ResourceShareFacadeTest extends Test
     /**
      * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareWriter::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED
      */
-    protected const GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED = 'resource_share.validation.error.resource_type_is_not_defined';
+    protected const GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED = 'resource_share.generation.error.resource_type_is_not_defined';
 
     /**
      * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareWriter::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED
      */
-    protected const GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED = 'resource_share.validation.error.customer_reference_is_not_defined';
-
-    /**
-     * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND
-     */
-    protected const GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND = 'resource_share.reader.error.resource_is_not_found';
+    protected const GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED = 'resource_share.generation.error.customer_reference_is_not_defined';
 
     /**
      * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareWriter::GLOSSARY_KEY_RESOURCE_IS_ALREADY_SHARED
      */
     protected const GLOSSARY_KEY_RESOURCE_IS_ALREADY_SHARED = 'resource_share.generation.error.resource_is_already_shared';
+
+    /**
+     * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND
+     */
+    protected const GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND = 'resource_share.reader.error.resource_is_not_found';
 
     /**
      * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareActivator::GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER
@@ -61,7 +62,10 @@ class ResourceShareFacadeTest extends Test
     protected const VALUE_RESOURCE_SHARE_UUID = 'VALUE_RESOURCE_SHARE_UUID';
     protected const VALUE_CUSTOMER_REFERENCE = 'VALUE_CUSTOMER_REFERENCE';
     protected const VALUE_RESOURCE_TYPE = 'VALUE_RESOURCE_TYPE';
+
     protected const VALUE_RESOURCE_DATA = 'VALUE_RESOURCE_DATA';
+    protected const VALUE_RESOURCE_DATA_REPLACED = 'VALUE_RESOURCE_DATA_REPLACED';
+    protected const VALUE_RESOURCE_DATA_EXPANDED = '_EXPANDED';
 
     /**
      * @var \SprykerTest\Zed\ResourceShare\ResourceShareBusinessTester
@@ -92,7 +96,7 @@ class ResourceShareFacadeTest extends Test
     public function testGenerateResourceShareShouldAddErrorMessageWhenResourceTypeIsNotDefined(): void
     {
         // Arrange
-        $resourceShareTransfer = $this->tester->haveResourceShare();
+        $resourceShareTransfer = (new ResourceShareBuilder())->build();
         $resourceShareTransfer->setResourceType(null);
 
         // Act
@@ -156,6 +160,10 @@ class ResourceShareFacadeTest extends Test
     {
         // Arrange
         $resourceShareTransfer = $this->tester->haveResourceShare();
+        $resourceShareTransfer = (new ResourceShareTransfer())
+            ->setResourceType($resourceShareTransfer->getResourceType())
+            ->setResourceData($resourceShareTransfer->getResourceData())
+            ->setCustomerReference($resourceShareTransfer->getCustomerReference());
 
         // Act
         $resourceShareResponseTransfer = $this->getFacade()->generateResourceShare(
@@ -168,6 +176,96 @@ class ResourceShareFacadeTest extends Test
             $resourceShareResponseTransfer,
             static::GLOSSARY_KEY_RESOURCE_IS_ALREADY_SHARED
         ));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGenerateResourceShareCanExpandResourceDataUsingPlugins(): void
+    {
+        // Arrange
+        $resourceShareTransfer = (new ResourceShareBuilder())->build();
+        $resourceShareTransfer->setResourceData(static::VALUE_RESOURCE_DATA);
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer);
+
+        $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichExpandsResourceDataMock();
+        $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
+
+        // Act
+        $resourceShareResponseTransfer = $this->getFacade()->generateResourceShare($resourceShareRequestTransfer);
+
+        // Assert
+        $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
+        $this->assertSame(
+            $resourceShareResponseTransfer->getResourceShare()->getResourceData(),
+            static::VALUE_RESOURCE_DATA . static::VALUE_RESOURCE_DATA_EXPANDED
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGenerateResourceShareCanReplaceResourceDataUsingPlugins(): void
+    {
+        // Arrange
+        $resourceShareTransfer = (new ResourceShareBuilder())->build();
+        $resourceShareTransfer->setResourceData(static::VALUE_RESOURCE_DATA);
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer);
+
+        $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichReplacesResourceDataMock();
+        $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
+
+        // Act
+        $resourceShareResponseTransfer = $this->getFacade()->generateResourceShare($resourceShareRequestTransfer);
+
+        // Assert
+        $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
+        $this->assertSame(
+            $resourceShareResponseTransfer->getResourceShare()->getResourceData(),
+            static::VALUE_RESOURCE_DATA_REPLACED
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGenerateResourceShareWillNotExpandResourceDataWhenGenerationFailed(): void
+    {
+        // Arrange
+        $resourceShareTransfer = new ResourceShareTransfer();
+        $resourceShareTransfer->setResourceData(static::VALUE_RESOURCE_DATA);
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer);
+
+        $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichExpandsResourceDataMock();
+        $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
+
+        // Act
+        $resourceShareResponseTransfer = $this->getFacade()->generateResourceShare($resourceShareRequestTransfer);
+
+        // Assert
+        $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
+        $this->assertNull($resourceShareResponseTransfer->getResourceShare());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGenerateResourceShareWillNotReplaceResourceDataWhenGenerationFailed(): void
+    {
+        // Arrange
+        $resourceShareTransfer = new ResourceShareTransfer();
+        $resourceShareTransfer->setResourceData(static::VALUE_RESOURCE_DATA);
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer);
+
+        $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichReplacesResourceDataMock();
+        $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
+
+        // Act
+        $resourceShareResponseTransfer = $this->getFacade()->generateResourceShare($resourceShareRequestTransfer);
+
+        // Assert
+        $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
+        $this->assertNull($resourceShareResponseTransfer->getResourceShare());
     }
 
     /**
@@ -294,6 +392,108 @@ class ResourceShareFacadeTest extends Test
     /**
      * @return void
      */
+    public function testActivateResourceShareCanExpandResourceDataUsingPlugins(): void
+    {
+        // Arrange
+        $resourceShareTransfer = $this->tester->haveResourceShare([
+            ResourceShareTransfer::RESOURCE_DATA => static::VALUE_RESOURCE_DATA,
+        ]);
+
+        $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichExpandsResourceDataMock();
+        $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
+
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference($resourceShareTransfer->getCustomerReference())
+            ->setIsGuest(false);
+
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
+            ->setUuid($resourceShareTransfer->getUuid())
+            ->setCustomer($customerTransfer);
+
+        // Act
+        $resourceShareResponseTransfer = $this->getFacade()->activateResourceShare($resourceShareRequestTransfer);
+
+        // Assert
+        $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
+        $this->assertSame(
+            $resourceShareResponseTransfer->getResourceShare()->getResourceData(),
+            static::VALUE_RESOURCE_DATA . static::VALUE_RESOURCE_DATA_EXPANDED
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testActivateResourceShareCanReplaceResourceDataUsingPlugins(): void
+    {
+        // Arrange
+        $resourceShareTransfer = $this->tester->haveResourceShare([
+            ResourceShareTransfer::RESOURCE_DATA => static::VALUE_RESOURCE_DATA,
+        ]);
+
+        $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichReplacesResourceDataMock();
+        $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
+
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference($resourceShareTransfer->getCustomerReference())
+            ->setIsGuest(false);
+
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
+            ->setUuid($resourceShareTransfer->getUuid())
+            ->setCustomer($customerTransfer);
+
+        // Act
+        $resourceShareResponseTransfer = $this->getFacade()->activateResourceShare($resourceShareRequestTransfer);
+
+        // Assert
+        $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
+        $this->assertSame(
+            $resourceShareResponseTransfer->getResourceShare()->getResourceData(),
+            static::VALUE_RESOURCE_DATA_REPLACED
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testActivateResourceShareWillNotExpandResourceDataWhenActivationFailed(): void
+    {
+        // Arrange
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())->setResourceShare(new ResourceShareTransfer());
+
+        $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichExpandsResourceDataMock();
+        $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
+
+        // Act
+        $resourceShareResponseTransfer = $this->getFacade()->activateResourceShare($resourceShareRequestTransfer);
+
+        // Assert
+        $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
+        $this->assertNull($resourceShareResponseTransfer->getResourceShare());
+    }
+
+    /**
+     * @return void
+     */
+    public function testActivateResourceShareWillNotReplaceResourceDataWhenActivationFailed(): void
+    {
+        // Arrange
+        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())->setResourceShare(new ResourceShareTransfer());
+
+        $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginWhichReplacesResourceDataMock();
+        $this->registerResourceShareResourceDataExpanderStrategyPlugin($resourceShareResourceDataExpanderStrategyPluginMock);
+
+        // Act
+        $resourceShareResponseTransfer = $this->getFacade()->activateResourceShare($resourceShareRequestTransfer);
+
+        // Assert
+        $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
+        $this->assertNull($resourceShareResponseTransfer->getResourceShare());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetResourceShareShouldAddErrorMessageWhenResourceIsNotFound(): void
     {
         // Arrange
@@ -402,6 +602,64 @@ class ResourceShareFacadeTest extends Test
     protected function createResourceShareActivatorStrategyPluginMock()
     {
         return $this->createMock(ResourceShareActivatorStrategyPluginInterface::class);
+    }
+
+    /**
+     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface $resourceShareResourceDataExpanderStrategyPlugin
+     *
+     * @return void
+     */
+    protected function registerResourceShareResourceDataExpanderStrategyPlugin(
+        ResourceShareResourceDataExpanderStrategyPluginInterface $resourceShareResourceDataExpanderStrategyPlugin
+    ): void {
+        $this->tester->setDependency(
+            ResourceShareDependencyProvider::PLUGINS_RESOURCE_SHARE_RESOURCE_DATA_EXPANDER_STRATEGY,
+            [
+                $resourceShareResourceDataExpanderStrategyPlugin,
+            ]
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createResourceShareResourceDataExpanderStrategyPluginWhichExpandsResourceDataMock()
+    {
+        $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginMock();
+        $resourceShareResourceDataExpanderStrategyPluginMock->method('isApplicable')->willReturn(true);
+        $resourceShareResourceDataExpanderStrategyPluginMock->method('expand')
+            ->willReturnCallback(function (ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer {
+                return $resourceShareTransfer->setResourceData(
+                    $resourceShareTransfer->getResourceData() . static::VALUE_RESOURCE_DATA_EXPANDED
+                );
+            });
+
+        return $resourceShareResourceDataExpanderStrategyPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createResourceShareResourceDataExpanderStrategyPluginWhichReplacesResourceDataMock()
+    {
+        $resourceShareResourceDataExpanderStrategyPluginMock = $this->createResourceShareResourceDataExpanderStrategyPluginMock();
+        $resourceShareResourceDataExpanderStrategyPluginMock->method('isApplicable')->willReturn(true);
+        $resourceShareResourceDataExpanderStrategyPluginMock->method('expand')
+            ->willReturnCallback(function (ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer {
+                return $resourceShareTransfer->setResourceData(
+                    static::VALUE_RESOURCE_DATA_REPLACED
+                );
+            });
+
+        return $resourceShareResourceDataExpanderStrategyPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createResourceShareResourceDataExpanderStrategyPluginMock()
+    {
+        return $this->createMock(ResourceShareResourceDataExpanderStrategyPluginInterface::class);
     }
 
     /**

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ResourceShare\ResourceShare;
+namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 
@@ -16,5 +16,7 @@ interface ResourceShareExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function executeResourceDataExpanderStrategyPlugins(ResourceShareResponseTransfer $resourceShareResponseTransfer): ResourceShareResponseTransfer;
+    public function executeResourceDataExpanderStrategyPlugins(
+        ResourceShareResponseTransfer $resourceShareResponseTransfer
+    ): ResourceShareResponseTransfer;
 }

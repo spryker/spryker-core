@@ -28,7 +28,7 @@ class ResourceShareClient extends AbstractClient implements ResourceShareClientI
     public function generateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         return $this->getFactory()
-            ->createResourceShareGenerator()
+            ->createZedResourceShareStub()
             ->generateResourceShare($resourceShareRequestTransfer);
     }
 
@@ -44,7 +44,7 @@ class ResourceShareClient extends AbstractClient implements ResourceShareClientI
     public function activateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         return $this->getFactory()
-            ->createResourceShareActivator()
+            ->createZedResourceShareStub()
             ->activateResourceShare($resourceShareRequestTransfer);
     }
 }
