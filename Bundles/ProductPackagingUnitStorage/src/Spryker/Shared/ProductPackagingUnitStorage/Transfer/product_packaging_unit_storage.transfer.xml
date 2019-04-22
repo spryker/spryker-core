@@ -6,11 +6,11 @@
     <transfer name="ProductConcretePackagingStorage">
         <property name="idProduct" type="int"/>
         <property name="name" type="string"/>
-        <property name="defaultAmount" type="int"/>
+        <property name="defaultAmount" type="float"/>
         <property name="isVariable" type="bool"/>
-        <property name="amountMin" type="int"/>
-        <property name="amountMax" type="int"/>
-        <property name="amountInterval" type="int"/>
+        <property name="amountMin" type="float"/>
+        <property name="amountMax" type="float"/>
+        <property name="amountInterval" type="float"/>
         <property name="hasLeadProduct" type="bool"/>
     </transfer>
 

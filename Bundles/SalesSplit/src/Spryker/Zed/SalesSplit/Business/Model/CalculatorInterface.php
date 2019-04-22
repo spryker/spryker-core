@@ -15,7 +15,7 @@ interface CalculatorInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
      * @param float $quantity
      *
-     * @return int
+     * @return float
      */
     public function calculateQuantityAmountLeft(SpySalesOrderItem $salesOrderItem, $quantity);
 }

@@ -136,11 +136,11 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     /**
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1): QuoteTransfer
+    public function changeItemQuantity($sku, $groupKey = null, $quantity = 1.0): QuoteTransfer
     {
         if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
@@ -154,11 +154,11 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     /**
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1): QuoteTransfer
+    public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1.0): QuoteTransfer
     {
         if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
@@ -172,11 +172,11 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     /**
      * @param string $sku
      * @param string|null $groupKey
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1): QuoteTransfer
+    public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1.0): QuoteTransfer
     {
         if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
