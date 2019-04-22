@@ -17,8 +17,6 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 use Orm\Zed\Currency\Persistence\SpyCurrency;
 use Orm\Zed\PriceProduct\Persistence\Base\SpyPriceType;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
 class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
@@ -83,15 +81,24 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         SpyPriceProductSchedule $priceProductScheduleEntity
     ): SpyPriceProductSchedule {
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
+
+        if ($priceProductTransfer === null) {
+            return $priceProductScheduleEntity;
+        }
+
         $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        if ($moneyValueTransfer === null) {
+            return $priceProductScheduleEntity;
+        }
 
         return $priceProductScheduleEntity
             ->setFkCurrency($moneyValueTransfer->getFkCurrency())
             ->setFkStore($moneyValueTransfer->getFkStore())
             ->setFkPriceType($priceProductTransfer->getPriceType()->getIdPriceType())
-            ->setFkProduct($priceProductTransfer->getIdProduct())
-            ->setFkProductAbstract($priceProductTransfer->getIdProductAbstract())
-            ->setFkPriceProductScheduleList($priceProductScheduleTransfer->getPriceProductScheduleList()->getIdPriceProductScheduleList())
+            ->setFkProduct((string)$priceProductTransfer->getIdProduct())
+            ->setFkProductAbstract((string)$priceProductTransfer->getIdProductAbstract())
+            ->setFkPriceProductScheduleList((string)$priceProductScheduleTransfer->getPriceProductScheduleList()->getIdPriceProductScheduleList())
             ->setNetPrice($moneyValueTransfer->getNetAmount())
             ->setGrossPrice($moneyValueTransfer->getGrossAmount())
             ->setActiveFrom($priceProductScheduleTransfer->getActiveFrom())
