@@ -1,7 +1,9 @@
 namespace: SprykerTest
 
 include:
-    - tests/SprykerTest/Client/SessionRedis
+    - tests/SprykerTest/Shared/SessionRedis
+    - tests/SprykerTest/Yves/SessionRedis
+    - tests/SprykerTest/Zed/SessionRedis
 
 paths:
     tests: tests
