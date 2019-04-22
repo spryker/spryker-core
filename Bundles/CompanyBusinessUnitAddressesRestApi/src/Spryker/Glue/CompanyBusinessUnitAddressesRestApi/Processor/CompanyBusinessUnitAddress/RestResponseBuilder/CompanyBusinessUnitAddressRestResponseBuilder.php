@@ -31,6 +31,14 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createEmptyCompanyBusinessUnitAddressRestResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse();
+    }
+
+    /**
      * @param string $companyBusinessUnitAddressUuid
      * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
      *

@@ -26,4 +26,5 @@ class CompanyBusinessUnitAddressesRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_COMPANY_BUSINESS_UNIT_ADDRESS_ID_IS_MISSING = 'Company business unit address id is missing.';
 
     public const RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED = 'Resource is not implemented.';
+    public const CURRENT_USER_RESOURCE_IDENTIFIER = 'mine';
 }
