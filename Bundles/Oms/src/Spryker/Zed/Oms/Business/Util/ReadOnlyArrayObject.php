@@ -29,7 +29,7 @@ class ReadOnlyArrayObject extends ArrayObject
      *
      * @throws \LogicException
      *
-     * @return void
+     * @return array
      */
     public function exchangeArray($input)
     {

@@ -8,6 +8,8 @@
 namespace Spryker\Client\ShoppingList;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ShoppingList\Calculation\ShoppingListSubtotalCalculator;
+use Spryker\Client\ShoppingList\Calculation\ShoppingListSubtotalCalculatorInterface;
 use Spryker\Client\ShoppingList\Cart\CartHandler;
 use Spryker\Client\ShoppingList\Cart\CartHandlerInterface;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface;
@@ -76,6 +78,14 @@ class ShoppingListFactory extends AbstractFactory
         return new ShoppingListAddItemExpander(
             $this->getAddItemShoppingListItemMapperPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingList\Calculation\ShoppingListSubtotalCalculatorInterface
+     */
+    public function createShoppingListSubtotalCalculator(): ShoppingListSubtotalCalculatorInterface
+    {
+        return new ShoppingListSubtotalCalculator();
     }
 
     /**
