@@ -74,7 +74,7 @@ class CalculatorTest extends Unit
     {
         return [
             'int stock' => ['test2', 30.0],
-            'float stock' => ['test3', 30.2],
+            'float stock' => ['test3', 30.3],
         ];
     }
 
@@ -136,7 +136,7 @@ class CalculatorTest extends Unit
             ->filterByFkProduct($this->floatProductEntity->getIdProduct())
             ->findOneOrCreate();
         $floatStockProduct1->setFkStock($stockType1->getIdStock())
-            ->setQuantity(10.1)
+            ->setQuantity(10.2)
             ->setFkProduct($this->floatProductEntity->getIdProduct())
             ->save();
 
@@ -214,7 +214,7 @@ class CalculatorTest extends Unit
             ->findOneOrCreate();
 
         $floatStockProduct2->setFkStock($stockType2->getIdStock())
-            ->setQuantity(20.1)
+            ->setQuantity(20.2)
             ->setFkProduct($this->floatProductEntity->getIdProduct())
             ->save();
     }

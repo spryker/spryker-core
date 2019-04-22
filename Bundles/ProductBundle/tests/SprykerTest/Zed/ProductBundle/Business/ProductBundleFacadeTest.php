@@ -164,10 +164,12 @@ class ProductBundleFacadeTest extends Unit
 
         $this->tester->haveProductInStock([
             StockProductTransfer::SKU => static::SKU_BUNDLED_1,
+            StockProductTransfer::QUANTITY => 10,
         ]);
 
         $this->tester->haveProductInStock([
             StockProductTransfer::SKU => static::SKU_BUNDLED_2,
+            StockProductTransfer::QUANTITY => 10,
         ]);
 
         $productBundleFacade = $this->createProductBundleFacade();
