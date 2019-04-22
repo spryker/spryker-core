@@ -60,7 +60,8 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
         return new ResourceShareWriter(
             $this->getEntityManager(),
             $this->createResourceShareReader(),
-            $this->createResourceShareExpander()
+            $this->createResourceShareExpander(),
+            $this->createResourceShareValidator()
         );
     }
 

@@ -61,7 +61,7 @@ class ResourceShareReader implements ResourceShareReaderInterface
                 );
         }
 
-        $resourceShareResponseTransfer = $this->resourceShareValidator->validateResourceShareTransfer($resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->resourceShareValidator->validateResourceShareTransfer($existingResourceShareTransfer);
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return $resourceShareResponseTransfer;
         }

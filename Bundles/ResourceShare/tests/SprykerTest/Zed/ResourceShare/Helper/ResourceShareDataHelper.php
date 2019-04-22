@@ -18,6 +18,8 @@ class ResourceShareDataHelper extends Module
 {
     use LocatorHelperTrait;
 
+    protected const ERROR_MESSAGE_UNABLE_TO_CREATE_RESOURCE_SHARE_WITH_PROVIDED_DATA = 'Unable to create resource share with provided data.';
+
     /**
      * @param array $seedData
      *
@@ -30,9 +32,13 @@ class ResourceShareDataHelper extends Module
         $resourceShareResponseTransfer = $this->getResourceShareFacade()->generateResourceShare(
             (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
         );
-        $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
 
-        return $resourceShareTransfer;
+        $this->assertTrue(
+            $resourceShareResponseTransfer->getIsSuccessful(),
+            static::ERROR_MESSAGE_UNABLE_TO_CREATE_RESOURCE_SHARE_WITH_PROVIDED_DATA
+        );
+
+        return $resourceShareResponseTransfer->getResourceShare();
     }
 
     /**

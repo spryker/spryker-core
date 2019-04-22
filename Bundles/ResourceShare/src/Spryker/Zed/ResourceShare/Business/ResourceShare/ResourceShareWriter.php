@@ -17,7 +17,6 @@ class ResourceShareWriter implements ResourceShareWriterInterface
 {
     protected const GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED = 'resource_share.generation.error.resource_type_is_not_defined';
     protected const GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED = 'resource_share.generation.error.customer_reference_is_not_defined';
-    protected const GLOSSARY_KEY_RESOURCE_IS_ALREADY_SHARED = 'resource_share.generation.error.resource_is_already_shared';
 
     /**
      * @var \Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface
@@ -35,18 +34,26 @@ class ResourceShareWriter implements ResourceShareWriterInterface
     protected $resourceShareExpander;
 
     /**
+     * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface
+     */
+    protected $resourceShareValidator;
+
+    /**
      * @param \Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface $resourceShareEntityManager
      * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface $resourceShareReader
      * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface $resourceShareExpander
+     * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface $resourceShareValidator
      */
     public function __construct(
         ResourceShareEntityManagerInterface $resourceShareEntityManager,
         ResourceShareReaderInterface $resourceShareReader,
-        ResourceShareExpanderInterface $resourceShareExpander
+        ResourceShareExpanderInterface $resourceShareExpander,
+        ResourceShareValidatorInterface $resourceShareValidator
     ) {
         $this->resourceShareEntityManager = $resourceShareEntityManager;
         $this->resourceShareReader = $resourceShareReader;
         $this->resourceShareExpander = $resourceShareExpander;
+        $this->resourceShareValidator = $resourceShareValidator;
     }
 
     /**
@@ -61,10 +68,12 @@ class ResourceShareWriter implements ResourceShareWriterInterface
 
         $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShare($resourceShareTransfer);
         if ($resourceShareResponseTransfer->getIsSuccessful()) {
-            return $resourceShareResponseTransfer->setIsSuccessful(false)
-                ->addErrorMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_ALREADY_SHARED)
-                );
+            return $resourceShareResponseTransfer;
+        }
+
+        $resourceShareResponseTransfer = $this->resourceShareValidator->validateResourceShareTransfer($resourceShareTransfer);
+        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
+            return $resourceShareResponseTransfer;
         }
 
         return $this->createResourceShare($resourceShareTransfer);

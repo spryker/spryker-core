@@ -84,6 +84,11 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
                 );
         }
 
+        $resourceShareResponseTransfer = $this->resourceShareValidator->validateResourceShareTransfer($resourceShareTransfer);
+        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
+            return $resourceShareResponseTransfer;
+        }
+
         $resourceShareRequestTransfer->setResourceShare(
             $this->executeResourceDataExpanderStrategyPlugins($resourceShareTransfer)
         );
