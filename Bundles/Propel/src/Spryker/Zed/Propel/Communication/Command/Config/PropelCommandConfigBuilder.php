@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Command\Config;
+namespace Spryker\Zed\Propel\Communication\Command\Config;
 
 use Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface;
 
-class PropelOriginCommandConfigBuilder implements PropelOriginCommandConfigBuilderInterface
+class PropelCommandConfigBuilder implements PropelCommandConfigBuilderInterface
 {
     protected const KEY_CONFIG_PROPEL_GENERATOR = 'generator';
     protected const KEY_CONFIG_PROPEL_NAMESPACE_AUTO_PACKAGE = 'namespaceAutoPackage';

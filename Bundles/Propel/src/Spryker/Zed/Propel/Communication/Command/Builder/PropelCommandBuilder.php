@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Command\Builder;
+namespace Spryker\Zed\Propel\Communication\Command\Builder;
 
-use Spryker\Zed\Propel\Business\Command\Config\PropelOriginCommandConfigBuilderInterface;
+use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigBuilderInterface;
 use Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface;
 use Symfony\Component\Console\Command\Command;
 
-class PropelOriginCommandBuilder implements PropelOriginCommandBuilderInterface
+class PropelCommandBuilder implements PropelCommandBuilderInterface
 {
     /**
-     * @var \Spryker\Zed\Propel\Business\Command\Config\PropelOriginCommandConfigBuilderInterface
+     * @var \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigBuilderInterface
      */
     protected $commandConfigurator;
 
     /**
-     * @param \Spryker\Zed\Propel\Business\Command\Config\PropelOriginCommandConfigBuilderInterface $commandConfigurator
+     * @param \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigBuilderInterface $commandConfigurator
      */
-    public function __construct(PropelOriginCommandConfigBuilderInterface $commandConfigurator)
+    public function __construct(PropelCommandConfigBuilderInterface $commandConfigurator)
     {
         $this->commandConfigurator = $commandConfigurator;
     }

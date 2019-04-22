@@ -8,13 +8,6 @@
 namespace Spryker\Zed\Propel\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Propel\Business\Command\Builder\PropelOriginCommandBuilder;
-use Spryker\Zed\Propel\Business\Command\Config\PropelOriginCommandConfigBuilder;
-use Spryker\Zed\Propel\Business\Command\Config\PropelOriginCommandConfigBuilderInterface;
-use Spryker\Zed\Propel\Business\Command\Input\PropelCommandInputBuilder;
-use Spryker\Zed\Propel\Business\Command\Input\PropelCommandInputBuilderInterface;
-use Spryker\Zed\Propel\Business\Command\Runner\PropelOriginCommandRunner;
-use Spryker\Zed\Propel\Business\Command\Runner\PropelOriginCommandRunnerInterface;
 use Spryker\Zed\Propel\Business\Model\DirectoryRemover;
 use Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjuster;
 use Spryker\Zed\Propel\Business\Model\PropelConfigConverterJson;
@@ -399,44 +392,5 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     protected function getUtilTextService()
     {
         return $this->getProvidedDependency(PropelDependencyProvider::UTIL_TEXT_SERVICE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Propel\Business\Command\Runner\PropelOriginCommandRunnerInterface
-     */
-    public function createPropelOriginCommandRunner(): PropelOriginCommandRunnerInterface
-    {
-        return new PropelOriginCommandRunner(
-            $this->createPropelOriginCommandCreator(),
-            $this->createPropelCommandInputBuilder()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Propel\Business\Command\Builder\PropelOriginCommandBuilder
-     */
-    protected function createPropelOriginCommandCreator(): PropelOriginCommandBuilder
-    {
-        return new PropelOriginCommandBuilder(
-            $this->createPropelOriginCommandConfigurator()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Propel\Business\Command\Config\PropelOriginCommandConfigBuilderInterface
-     */
-    protected function createPropelOriginCommandConfigurator(): PropelOriginCommandConfigBuilderInterface
-    {
-        return new PropelOriginCommandConfigBuilder(
-            $this->getConfig()->getPropelConfig()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Propel\Business\Command\Input\PropelCommandInputBuilderInterface
-     */
-    protected function createPropelCommandInputBuilder(): PropelCommandInputBuilderInterface
-    {
-        return new PropelCommandInputBuilder();
     }
 }

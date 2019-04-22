@@ -10,6 +10,14 @@ namespace Spryker\Zed\Propel\Communication;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Propel\Communication\Command\Builder\PropelCommandBuilder;
+use Spryker\Zed\Propel\Communication\Command\Builder\PropelCommandBuilderInterface;
+use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigBuilder;
+use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigBuilderInterface;
+use Spryker\Zed\Propel\Communication\Command\Input\PropelCommandInputBuilder;
+use Spryker\Zed\Propel\Communication\Command\Input\PropelCommandInputBuilderInterface;
+use Spryker\Zed\Propel\Communication\Command\Runner\PropelCommandRunner;
+use Spryker\Zed\Propel\Communication\Command\Runner\PropelCommandRunnerInterface;
 use Spryker\Zed\Propel\PropelDependencyProvider;
 
 /**
@@ -49,5 +57,43 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
     public function getLogFacade()
     {
         return $this->getProvidedDependency(PropelDependencyProvider::FACADE_LOG);
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Communication\Command\Runner\PropelCommandRunnerInterface
+     */
+    public function createPropelCommandRunner(): PropelCommandRunnerInterface
+    {
+        return new PropelCommandRunner(
+            $this->createPropelCommandInputBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Communication\Command\Builder\PropelCommandBuilderInterface
+     */
+    public function createPropelCommandCreator(): PropelCommandBuilderInterface
+    {
+        return new PropelCommandBuilder(
+            $this->createPropelCommandConfigurator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigBuilderInterface
+     */
+    protected function createPropelCommandConfigurator(): PropelCommandConfigBuilderInterface
+    {
+        return new PropelCommandConfigBuilder(
+            $this->getConfig()->getPropelConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Communication\Command\Input\PropelCommandInputBuilderInterface
+     */
+    protected function createPropelCommandInputBuilder(): PropelCommandInputBuilderInterface
+    {
+        return new PropelCommandInputBuilder();
     }
 }

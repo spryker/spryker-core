@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Command\Builder;
+namespace Spryker\Zed\Propel\Communication\Command\Builder;
 
 use Symfony\Component\Console\Command\Command;
 
-interface PropelOriginCommandBuilderInterface
+interface PropelCommandBuilderInterface
 {
     /**
      * @param string $originPropelCommandClassName

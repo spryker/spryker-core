@@ -27,8 +27,14 @@ abstract class AbstractPropelOriginCommand extends Console
     {
         $this->info($this->getDescription());
 
-        return $this->getFacade()->runOriginCommand(
-            $this->getOriginCommandClassName(),
+        $propelOriginalCommand = $this->getFactory()
+            ->createPropelCommandCreator()
+            ->createOriginCommand(
+                $this->getOriginCommandClassName()
+            );
+
+        return $this->getFactory()->createPropelCommandRunner()->runOriginCommand(
+            $propelOriginalCommand,
             $this->getDefinition(),
             $output
         );
