@@ -21,4 +21,12 @@ class ContentBannerGuiConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getContentWidgetTemplates();
     }
+
+    /**
+     * @return string
+     */
+    public function getTwigFunctionName(): string
+    {
+        return $this->getSharedConfig()->getTwigFunctionName();
+    }
 }

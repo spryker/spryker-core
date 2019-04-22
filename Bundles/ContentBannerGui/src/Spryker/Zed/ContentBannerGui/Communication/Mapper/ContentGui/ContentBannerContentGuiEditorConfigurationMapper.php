@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ContentBannerGui\Communication\Mapper\ContentGui;
 
 use Generated\Shared\Transfer\ContentWidgetTemplateTransfer;
-use Spryker\Shared\ContentBannerGui\ContentBannerGuiConfig as SharedContentBannerGuiConfig;
 use Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig;
 
 class ContentBannerContentGuiEditorConfigurationMapper implements ContentBannerContentGuiEditorConfigurationMapperInterface
@@ -53,7 +52,7 @@ class ContentBannerContentGuiEditorConfigurationMapper implements ContentBannerC
     {
         return sprintf(
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT,
-            SharedContentBannerGuiConfig::TWIG_FUNCTION_NAME,
+            $this->config->getTwigFunctionName(),
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE_ID,
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE_TEMPLATE
         );
