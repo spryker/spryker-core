@@ -26,6 +26,7 @@ use Spryker\Zed\Propel\Business\Model\Schema\Validator\PropelSchemaValidator;
 use Spryker\Zed\Propel\Business\Model\Schema\XmlValidator\PropelSchemaXmlNameValidator;
 use Spryker\Zed\Propel\Communication\Console\BuildModelConsole;
 use Spryker\Zed\Propel\Communication\Console\BuildSqlConsole;
+use Spryker\Zed\Propel\Communication\Console\ConvertConfigConsole;
 use Spryker\Zed\Propel\Communication\Console\CreateDatabaseConsole;
 use Spryker\Zed\Propel\Communication\Console\DiffConsole;
 use Spryker\Zed\Propel\Communication\Console\InsertSqlConsole;
@@ -233,6 +234,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
             $this->createBuildModelConsole(),
             $this->createBuildSqlConsole(),
             $this->createCreateDatabaseConsole(),
+            $this->createConvertConfigConsole(),
             $this->createDiffConsole(),
             $this->createInsertSqlConsole(),
             $this->createMigrateConsole(),
@@ -279,6 +281,16 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     protected function createBuildSqlConsole()
     {
         return new BuildSqlConsole();
+    }
+
+    /**
+     * @deprecated Please add the Command directly to your ConsoleDependencyProvider.
+     *
+     * @return \Spryker\Zed\Propel\Communication\Console\ConvertConfigConsole
+     */
+    protected function createConvertConfigConsole()
+    {
+        return new ConvertConfigConsole();
     }
 
     /**
