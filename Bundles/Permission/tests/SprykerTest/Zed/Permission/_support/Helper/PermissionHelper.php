@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 use Spryker\Zed\Permission\Business\PermissionFacadeInterface;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
@@ -64,7 +65,10 @@ class PermissionHelper extends Module
         $permissionTransfer = $this->havePermission($permissionPlugin);
 
         if (!isset($seedData[CompanyUserTransfer::FK_COMPANY])) {
-            $seedData[CompanyUserTransfer::FK_COMPANY] = $this->haveCompany()->getIdCompany();
+            $seedData[CompanyUserTransfer::FK_COMPANY] = $this->haveCompany([
+                CompanyTransfer::IS_ACTIVE => true,
+                CompanyTransfer::STATUS => SpyCompanyTableMap::COL_STATUS_APPROVED,
+            ])->getIdCompany();
         }
 
         if (!isset($seedData[CompanyUserTransfer::COMPANY_ROLE_COLLECTION])) {
