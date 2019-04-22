@@ -40,12 +40,12 @@ const ContentItemEditor = function(dropdownContentUrl) {
 
     this.generateDropdownList = function () {
         const dropdownList = this.dropDownItems.reduce(function(currentList, dropItem) {
-            const dropItemMarkup = '<li role="listitem">' +
+            const dropItemTemplate = '<li role="listitem">' +
                 '<a href="#" data-url="' + dropItem.contentListUrl + '">' +
                 dropItem.name +
                 '</a>' + '</li>';
 
-            return currentList + dropItemMarkup;
+            return currentList + dropItemTemplate;
         }, '');
 
         return dropdownList;

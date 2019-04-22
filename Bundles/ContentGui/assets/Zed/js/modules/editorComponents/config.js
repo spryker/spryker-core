@@ -19,7 +19,11 @@ const updateToolbarOptions = function (defaultConfig, newConfig) {
         });
 
         if (existingOptionIndex) {
-            defaultConfig.toolbar[existingOptionIndex][1].push(newToolbarOption[1].slice(0));
+            const newToolbarOptionsArray = newToolbarOption[1].slice(0);
+            const toolbarOptionGroup = defaultConfig.toolbar[existingOptionIndex];
+            const toolbarOptionsArray = toolbarOptionGroup[1];
+
+            toolbarOptionsArray.push(newToolbarOptionsArray);
             return;
         }
 
