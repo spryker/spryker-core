@@ -137,7 +137,7 @@ class StockFacadeTest extends Unit
     {
         $productStock = $this->stockFacade->calculateStockForProduct($sku);
 
-        $this->assertEquals($expected, $productStock);
+        $this->assertEquals($expected, round($productStock, 1));
     }
 
     /**
@@ -325,7 +325,7 @@ class StockFacadeTest extends Unit
 
         $stockSize = $this->stockFacade->calculateStockForProduct(static::CONCRETE_SKU);
 
-        $this->assertEquals($expected, $stockSize);
+        $this->assertEquals($expected, round($stockSize, 1));
     }
 
     /**
@@ -357,7 +357,7 @@ class StockFacadeTest extends Unit
 
         $stockSize = $this->stockFacade->calculateStockForProduct(static::CONCRETE_SKU);
 
-        $this->assertEquals($expected, $stockSize);
+        $this->assertEquals($expected, round($stockSize, 1));
     }
 
     /**
