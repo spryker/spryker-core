@@ -163,7 +163,7 @@ class Condition implements ConditionInterface
      * @param string $stateMachineName
      * @param string $processName
      *
-     * @return array $itemsWithOnEnterEvent
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][] $itemsWithOnEnterEvent
      */
     public function getOnEnterEventsForStatesWithoutTransition($stateMachineName, $processName)
     {
@@ -319,7 +319,7 @@ class Condition implements ConditionInterface
         if (!isset($stateMachineHandler->getConditionPlugins()[$conditionString])) {
             throw new ConditionNotFoundException(
                 sprintf(
-                    'Condition plugin "%s" not registered in "%s" class. Please add it to getConditionPlugins method.',
+                    'Condition plugin "%s" not registered in "%s" class. Please add it to getConditionPlugins() method.',
                     $conditionString,
                     get_class($this->stateMachineHandlerResolver)
                 )

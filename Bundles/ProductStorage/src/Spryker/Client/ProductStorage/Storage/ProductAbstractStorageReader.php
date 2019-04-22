@@ -133,7 +133,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
             return $collectorData;
         }
 
-        $key = $this->getStorageKey($idProductAbstract, $localeName);
+        $key = $this->getStorageKey((string)$idProductAbstract, $localeName);
 
         $productStorageData = $this->storageClient->get($key);
 
