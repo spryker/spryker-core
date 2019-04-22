@@ -15,8 +15,6 @@
 
     <transfer name="UpdateOrderPaymentResponse">
         <property name="isSuccessful" type="bool" />
-        <property name="paymentIdentifier" type="string" />
-        <property name="dataPayload" type="array" />
     </transfer>
 
 </transfers>

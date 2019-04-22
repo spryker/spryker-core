@@ -35,7 +35,7 @@ class CheckoutResponseMapper implements CheckoutResponseMapperInterface
         RestCheckoutResponseTransfer $restCheckoutResponseTransfer,
         RestCheckoutResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
     ): RestCheckoutResponseAttributesTransfer {
-        $restCheckoutResponseAttributesTransfer->setOrderReference($restCheckoutResponseTransfer->getOrderReference());
+        $restCheckoutResponseAttributesTransfer->fromArray($restCheckoutResponseTransfer->toArray(), true);
 
         return $this->executeCheckoutResponseMapperPlugins(
             $restCheckoutResponseTransfer,
@@ -53,8 +53,6 @@ class CheckoutResponseMapper implements CheckoutResponseMapperInterface
         RestCheckoutResponseTransfer $restCheckoutResponseTransfer,
         RestCheckoutResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
     ): RestCheckoutResponseAttributesTransfer {
-        $restCheckoutResponseAttributesTransfer->fromArray($restCheckoutResponseTransfer->toArray(), true);
-
         foreach ($this->checkoutResponseMapperPlugins as $checkoutResponseMapperPlugin) {
             $restCheckoutResponseAttributesTransfer = $checkoutResponseMapperPlugin
                 ->mapRestCheckoutResponseTransferToRestCheckoutResponseAttributesTransfer(
