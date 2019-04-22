@@ -73,6 +73,26 @@ class ResourceShareFacadeTest extends Test
     /**
      * @return void
      */
+    public function testGenerateResourceShareShouldReturnExistingResourceShareWhenItExists(): void
+    {
+        // Arrange
+        $originalResourceShareTransfer = $this->tester->haveResourceShare();
+
+        // Act
+        $resourceShareResponseTransfer = $this->getFacade()->generateResourceShare(
+            (new ResourceShareRequestTransfer())->setResourceShare($originalResourceShareTransfer)
+        );
+
+        $retrievedResourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
+
+        // Assert
+        $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
+        $this->assertSame($originalResourceShareTransfer->getIdResourceShare(), $retrievedResourceShareTransfer->getIdResourceShare());
+    }
+
+    /**
+     * @return void
+     */
     public function testGenerateResourceShareShouldGenerateResourceWhenResourceTypeAndResourceDataAreUnique(): void
     {
         // Arrange
