@@ -15,6 +15,13 @@ use Generated\Shared\Transfer\CompanyRoleTransfer;
 interface CompanyRoleGuiToCompanyRoleFacadeInterface
 {
     /**
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findDefaultCompanyRoleByIdCompany(int $idCompany): ?CompanyRoleTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
@@ -50,4 +57,11 @@ interface CompanyRoleGuiToCompanyRoleFacadeInterface
     public function getCompanyRoleCollection(
         CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyRoleCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): ?CompanyRoleTransfer;
 }

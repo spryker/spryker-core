@@ -56,7 +56,7 @@ class StoreFacadeTest extends Unit
 
         $stores = $storeFacade->getAllStores();
 
-        $this->assertInternalType('array', $stores);
+        $this->assertIsArray($stores);
     }
 
     /**

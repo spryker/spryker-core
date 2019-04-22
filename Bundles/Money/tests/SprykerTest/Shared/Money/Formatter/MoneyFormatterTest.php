@@ -50,7 +50,7 @@ class MoneyFormatterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Money\Formatter\MoneyFormatterCollectionInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Money\Formatter\MoneyFormatterCollectionInterface
      */
     protected function getMoneyFormatterCollectionMock()
     {
@@ -61,7 +61,7 @@ class MoneyFormatterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Money\Formatter\MoneyFormatterInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Money\Formatter\MoneyFormatterInterface
      */
     protected function getMoneyFormatterMock()
     {

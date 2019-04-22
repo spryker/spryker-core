@@ -66,6 +66,21 @@ class RestApiError implements RestApiErrorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
+    public function addCustomerEmailLengthExceededError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_EMAIL_LENGTH_EXCEEDED)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED);
+
+        return $restResponse->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
     public function addCustomerNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
@@ -271,12 +286,22 @@ class RestApiError implements RestApiErrorInterface
         foreach ($customerResponseTransfer->getErrors() as $customerErrorTransfer) {
             if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
                 $restResponse = $this->addCustomerAlreadyExistsError($restResponse);
+                continue;
             }
+
             if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_INVALID) {
                 $restResponse = $this->addCustomerEmailInvalidError($restResponse);
+                continue;
             }
+
+            if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED) {
+                $restResponse = $this->addCustomerEmailLengthExceededError($restResponse);
+                continue;
+            }
+
             if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
                 $restResponse = $this->addPasswordNotValidError($restResponse);
+                continue;
             }
         }
 

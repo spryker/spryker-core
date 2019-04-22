@@ -49,7 +49,7 @@ class SearchClientTest extends Unit
      */
     public function testGetSearchConfigShouldReturnTheSameInstance()
     {
-        /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit_Framework_MockObject_MockObject $searchFactoryMock */
+        /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
             ->setMethods(['createSearchConfig'])
             ->getMock();
@@ -81,7 +81,7 @@ class SearchClientTest extends Unit
             ->method('getStatus')
             ->willReturn($this->getMockBuilder(Status::class)->disableOriginalConstructor()->getMock());
 
-        /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit_Framework_MockObject_MockObject $searchFactoryMock */
+        /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
             ->setMethods(['getElasticsearchClient'])
             ->getMock();
@@ -101,7 +101,7 @@ class SearchClientTest extends Unit
     {
         $this->prepareSearchClientForSearchTest();
 
-        /** @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\PHPUnit_Framework_MockObject_MockObject $queryMock */
+        /** @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject $queryMock */
         $queryMock = $this->getMockBuilder(QueryInterface::class)->getMock();
 
         $result = $this->searchClient->search($queryMock);
@@ -115,7 +115,7 @@ class SearchClientTest extends Unit
     {
         $this->prepareSearchClientForSearchTest();
 
-        /** @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface|\PHPUnit_Framework_MockObject_MockObject $resultFormatterMock */
+        /** @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface|\PHPUnit\Framework\MockObject\MockObject $resultFormatterMock */
         $resultFormatterMock = $this
             ->getMockBuilder(ResultFormatterPluginInterface::class)
             ->setMethods(['getName', 'formatResult'])
@@ -124,7 +124,7 @@ class SearchClientTest extends Unit
             ->method('getName')
             ->willReturn('fooResultFormatter');
 
-        /** @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\PHPUnit_Framework_MockObject_MockObject $queryMock */
+        /** @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject $queryMock */
         $queryMock = $this->getMockBuilder(QueryInterface::class)->getMock();
         $resultFormatters = [
             $resultFormatterMock,
@@ -144,7 +144,7 @@ class SearchClientTest extends Unit
      */
     public function testExpandQuery()
     {
-        /** @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\PHPUnit_Framework_MockObject_MockObject $queryMock */
+        /** @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject $queryMock */
         $queryMock = $this->getMockBuilder(QueryInterface::class)->getMock();
 
         $queryExpanderMock = $this->getMockBuilder(QueryExpanderPluginInterface::class)
@@ -171,7 +171,7 @@ class SearchClientTest extends Unit
     {
         $expectedQuery = new SearchKeysQuery('foo', 25, 100);
 
-        /** @var \Spryker\Client\Search\SearchClient|\PHPUnit_Framework_MockObject_MockObject $clientMock */
+        /** @var \Spryker\Client\Search\SearchClient|\PHPUnit\Framework\MockObject\MockObject $clientMock */
         $clientMock = $this->getMockBuilder(SearchClient::class)
             ->setMethods(['search'])
             ->disableOriginalConstructor()
@@ -193,7 +193,7 @@ class SearchClientTest extends Unit
     {
         $expectedQuery = new SearchStringQuery('foo:bar', 25, 100);
 
-        /** @var \Spryker\Client\Search\SearchClient|\PHPUnit_Framework_MockObject_MockObject $clientMock */
+        /** @var \Spryker\Client\Search\SearchClient|\PHPUnit\Framework\MockObject\MockObject $clientMock */
         $clientMock = $this->getMockBuilder(SearchClient::class)
             ->setMethods(['search'])
             ->disableOriginalConstructor()
@@ -221,7 +221,7 @@ class SearchClientTest extends Unit
             $this->getMockBuilder(ResultSet::class)->disableOriginalConstructor()->getMock()
         );
 
-        /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit_Framework_MockObject_MockObject $searchFactoryMock */
+        /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
             ->setMethods(['createElasticsearchSearchHandler'])
             ->getMock();

@@ -8,10 +8,12 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\AnnotationTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRouteWithNullableIdPlugin;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternativeAttributesTransfer;
 
 /**
@@ -145,7 +147,10 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
      */
     public function testAddResponseResourceSchemaForPluginWithAlternativeTransferNameShouldGenerateValidResponseResourceSchemas(): void
     {
-        $this->schemaGenerator->addResponseResourceSchemaForPlugin(new TestResourceRoutePlugin(), RestTestAlternativeAttributesTransfer::class);
+        $this->schemaGenerator->addResponseResourceSchemaForPlugin(
+            new TestResourceRoutePlugin(),
+            (new AnnotationTransfer())->setResponseAttributesClassName(RestTestAlternativeAttributesTransfer::class)
+        );
 
         $schemas = $this->schemaGenerator->getSchemas();
 
@@ -190,6 +195,35 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
 
         $this->expectException(InvalidTransferClassException::class);
         $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddResponseCollectionSchemaForPluginWithNullablePropertiesInTransferShouldGenerateValidResponseResourceSchemas(): void
+    {
+        $this->schemaGenerator->addResponseResourceSchemaForPlugin(
+            new TestResourceRouteWithNullableIdPlugin()
+        );
+
+        $schemas = $this->schemaGenerator->getSchemas();
+
+        $this->assertArraySubset($this->tester->getSchemaGeneratorTestResponseAttributesSchemaForTransferWithNullableParameters(), $schemas);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddResponseCollectionSchemaForPluginWithNullableIdInAnnotationTransferShouldGenerateValidResponseResourceSchemas(): void
+    {
+        $this->schemaGenerator->addResponseResourceSchemaForPlugin(
+            new TestResourceRouteWithNullableIdPlugin(),
+            (new AnnotationTransfer())->setIsIdNullable(true)
+        );
+
+        $schemas = $this->schemaGenerator->getSchemas();
+
+        $this->assertArraySubset($this->tester->getSchemaGeneratorTestResponseDataSchemaWithNullableId(), $schemas);
     }
 
     /**

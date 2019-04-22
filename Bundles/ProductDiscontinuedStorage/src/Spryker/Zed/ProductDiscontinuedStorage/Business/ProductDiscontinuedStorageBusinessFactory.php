@@ -32,7 +32,8 @@ class ProductDiscontinuedStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getProductDiscontinuedFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getConfig()
         );
     }
 

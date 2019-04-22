@@ -19,7 +19,7 @@ use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInter
 class BaseRuleTester extends Unit
 {
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
     protected function createComparatorMock()
     {
@@ -27,7 +27,7 @@ class BaseRuleTester extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface
      */
     protected function createCurrencyConverterMock()
     {

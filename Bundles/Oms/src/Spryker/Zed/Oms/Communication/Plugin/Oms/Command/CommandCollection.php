@@ -21,7 +21,7 @@ class CommandCollection implements CommandCollectionInterface, HasAwareCollectio
     protected $commands = [];
 
     /**
-     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface $command
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface $command
      * @param string $name
      *
      * @throws \InvalidArgumentException

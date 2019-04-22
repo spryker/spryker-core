@@ -15,20 +15,9 @@ interface ResourceRouteCollectionInterface
      * @param bool $isProtected
      * @param array $context
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
+     * @return $this
      */
-    public function addGet(string $actionName, bool $isProtected = true, array $context = []): self;
-
-    /**
-     * @api
-     *
-     * @param string $actionName
-     * @param bool $isProtected
-     * @param array $context
-     *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
-     */
-    public function addPost(string $actionName, bool $isProtected = true, array $context = []): self;
+    public function addGet(string $actionName, bool $isProtected = true, array $context = []);
 
     /**
      * @api
@@ -39,7 +28,7 @@ interface ResourceRouteCollectionInterface
      *
      * @return $this
      */
-    public function addDelete(string $actionName, bool $isProtected = true, array $context = []): self;
+    public function addPost(string $actionName, bool $isProtected = true, array $context = []);
 
     /**
      * @api
@@ -50,7 +39,18 @@ interface ResourceRouteCollectionInterface
      *
      * @return $this
      */
-    public function addPatch(string $actionName, bool $isProtected = true, array $context = []): self;
+    public function addDelete(string $actionName, bool $isProtected = true, array $context = []);
+
+    /**
+     * @api
+     *
+     * @param string $actionName
+     * @param bool $isProtected
+     * @param array $context
+     *
+     * @return $this
+     */
+    public function addPatch(string $actionName, bool $isProtected = true, array $context = []);
 
     /**
      * @api

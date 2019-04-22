@@ -15,6 +15,10 @@ use Propel\Runtime\Map\RelationMap;
 class MultiCartDataImportHelper extends Module
 {
     /**
+     * @see \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty()
+     *
+     * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead
+     *
      * @return void
      */
     public function ensureDatabaseTableIsEmpty(): void
@@ -23,6 +27,10 @@ class MultiCartDataImportHelper extends Module
     }
 
     /**
+     * @see \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty()
+     *
+     * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param array $processedEntities
      *

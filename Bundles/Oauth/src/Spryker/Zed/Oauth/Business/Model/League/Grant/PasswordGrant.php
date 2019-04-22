@@ -60,41 +60,32 @@ class PasswordGrant implements GrantInterface
     {
         $oauthResponseTransfer = (new OauthResponseTransfer())
             ->setIsValid(false);
-
         try {
             $accessTokenRequest = new ServerRequest('POST', '', []);
             $accessTokenRequest = $accessTokenRequest->withParsedBody($oauthRequestTransfer->toArray());
-
             $passwordGrant = new LeaguePasswordGrant(
                 $this->repositoryBuilder->createUserRepository(),
                 $this->repositoryBuilder->createRefreshTokenRepository()
             );
-
             $passwordGrant->setRefreshTokenTTL(
                 new DateInterval($this->oauthConfig->getRefreshTokenTTL())
             );
-
             $this->authorizationServer->enableGrantType(
                 $passwordGrant,
                 new DateInterval($this->oauthConfig->getAccessTokenTTL())
             );
-
             $response = $this->authorizationServer->respondToAccessTokenRequest($accessTokenRequest, new Response());
-
             $data = (string)$response->getBody();
-
             return $oauthResponseTransfer
-                ->fromArray(json_decode($data, true))
+                ->fromArray(json_decode($data, true), true)
                 ->setIsValid(true);
         } catch (OAuthServerException $exception) {
             $oauthErrorTransfer = new OauthErrorTransfer();
             $oauthErrorTransfer
                 ->setErrorType($exception->getErrorType())
                 ->setMessage($exception->getMessage());
-
             $oauthResponseTransfer->setError($oauthErrorTransfer);
         }
-
         return $oauthResponseTransfer;
     }
 }

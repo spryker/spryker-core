@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface getRepository()
  */
 class IndexController extends AbstractController
 {
@@ -76,7 +77,7 @@ class IndexController extends AbstractController
             ->getData($idDiscount);
 
         if ($discountConfiguratorTransfer === null) {
-            $this->addErrorMessage(sprintf('Discount with id %s doesn\'t exist', $idDiscount));
+            $this->addErrorMessage("Discount with id %s doesn't exist", ['%s' => $idDiscount]);
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
@@ -147,7 +148,7 @@ class IndexController extends AbstractController
             ->getData($idDiscount);
 
         if ($discountConfiguratorTransfer === null) {
-            $this->addErrorMessage(sprintf('Discount with id %s doesn\'t exist', $idDiscount));
+            $this->addErrorMessage("Discount with id %s doesn't exist", ['%s' => $idDiscount]);
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }

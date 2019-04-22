@@ -14,12 +14,13 @@ class VoucherFormDataProvider extends BaseDiscountFormDataProvider
     /**
      * @param int|null $idDiscount
      *
-     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer
+     * @return mixed
      */
     public function getData($idDiscount = null)
     {
         $discountVoucherTransfer = new DiscountVoucherTransfer();
         $discountVoucherTransfer->setIdDiscount($idDiscount);
+        $discountVoucherTransfer->setNumberOfUses(0);
 
         if ($discountVoucherTransfer->getMaxNumberOfUses() === null) {
             $discountVoucherTransfer->setMaxNumberOfUses(0);

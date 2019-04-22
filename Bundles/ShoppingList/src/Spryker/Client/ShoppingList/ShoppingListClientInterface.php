@@ -103,6 +103,21 @@ interface ShoppingListClientInterface
     /**
      * Specification:
      *  - Makes Zed request.
+     *  - Add items to shopping list.
+     *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function addItems(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Makes Zed request.
      *  - Remove item by id.
      *  - Updates customer permissions.
      *  - Get messages from zed request and put them to session.
@@ -292,4 +307,29 @@ interface ShoppingListClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Gets customer from session.
+     *  - Makes Zed request. Gets customer by email.
+     *  - Updates customer in session.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function updateCustomerPermission(): void;
+
+    /**
+     * Specification:
+     * - Requires ProductViewTransfer::CurrentProductPrice.
+     * - Returns calculated subtotal.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViews
+     *
+     * @return int
+     */
+    public function calculateShoppingListSubtotal(array $shoppingListItemProductViews): int;
 }

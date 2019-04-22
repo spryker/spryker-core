@@ -24,7 +24,7 @@ class StockToTouchBridge implements StockToTouchInterface
 
     /**
      * @param string $itemType
-     * @param bool $itemId
+     * @param int $itemId
      *
      * @return bool
      */

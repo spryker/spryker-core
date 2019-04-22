@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductReplacementStorageTransfer;
 use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageEntityManagerInterface;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface;
+use Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig;
 
 class ProductReplacementPublisher implements ProductReplacementPublisherInterface
 {
@@ -27,15 +28,23 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
     protected $productAlternativeStorageEntityManager;
 
     /**
+     * @var \Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig
+     */
+    protected $productAlternativeStorageConfig;
+
+    /**
      * @param \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface $productAlternativeStorageRepository
      * @param \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageEntityManagerInterface $productAlternativeStorageEntityManager
+     * @param \Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig $productAlternativeStorageConfig
      */
     public function __construct(
         ProductAlternativeStorageRepositoryInterface $productAlternativeStorageRepository,
-        ProductAlternativeStorageEntityManagerInterface $productAlternativeStorageEntityManager
+        ProductAlternativeStorageEntityManagerInterface $productAlternativeStorageEntityManager,
+        ProductAlternativeStorageConfig $productAlternativeStorageConfig
     ) {
         $this->productAlternativeStorageRepository = $productAlternativeStorageRepository;
         $this->productAlternativeStorageEntityManager = $productAlternativeStorageEntityManager;
+        $this->productAlternativeStorageConfig = $productAlternativeStorageConfig;
     }
 
     /**
@@ -45,8 +54,8 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
      */
     public function publishAbstractReplacements(array $productIds): void
     {
-        $indexedSkus = $this->productAlternativeStorageRepository->getIndexedProductAbstractIdToSkusByProductIds($productIds);
-        $this->storeAbstractProductData($indexedSkus);
+        $this->storeAbstractReplacements($productIds);
+        $this->storeConcreteReplacementsByAbstract($productIds);
     }
 
     /**
@@ -58,6 +67,28 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
     {
         $indexedSkus = $this->productAlternativeStorageRepository->getIndexedProductConcreteIdToSkusByProductIds($productIds);
         $this->storeConcreteProductData($indexedSkus);
+    }
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return void
+     */
+    protected function storeAbstractReplacements(array $productIds): void
+    {
+        $productAbstractIndexedSkus = $this->productAlternativeStorageRepository->getIndexedProductAbstractIdToSkusByProductIds($productIds);
+        $this->storeAbstractProductData($productAbstractIndexedSkus);
+    }
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return void
+     */
+    protected function storeConcreteReplacementsByAbstract(array $productIds): void
+    {
+        $productConcreteIndexedSkusPerAbstract = $this->productAlternativeStorageRepository->getIndexedProductConcreteIdToSkusByProductAbstractIds($productIds);
+        $this->storeConcreteProductData($productConcreteIndexedSkusPerAbstract);
     }
 
     /**
@@ -84,7 +115,10 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
         array $indexedSkus
     ): void {
         foreach ($indexedSkus as $idProduct => $productConcreteData) {
-            $replacementIds = $this->productAlternativeStorageRepository->getReplacementsByConcreteProductId($idProduct);
+            $replacementIds = array_merge(
+                $this->productAlternativeStorageRepository->getReplacementsByConcreteProductId($idProduct),
+                $this->productAlternativeStorageRepository->getReplacementsByAbstractProductId($productConcreteData[ProductConcreteTransfer::FK_PRODUCT_ABSTRACT])
+            );
             $sku = $productConcreteData[ProductConcreteTransfer::SKU];
             $productReplacementStorageEntity = $this->productAlternativeStorageRepository->findProductReplacementStorageEntitiesBySku($sku);
             $this->storeDataSet($sku, $replacementIds, $productReplacementStorageEntity);
@@ -121,6 +155,7 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
                 $productReplacementStorage->toArray()
             );
 
+        $productReplacementStorageEntity->setIsSendingToQueue($this->productAlternativeStorageConfig->isSendingToQueue());
         $this->productAlternativeStorageEntityManager->saveProductReplacementForStorage($productReplacementStorageEntity);
     }
 }
