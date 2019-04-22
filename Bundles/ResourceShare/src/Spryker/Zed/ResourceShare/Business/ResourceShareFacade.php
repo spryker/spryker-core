@@ -60,10 +60,10 @@ class ResourceShareFacade extends AbstractFacade implements ResourceShareFacadeI
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function getResourceShareByProvidedUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    public function getResourceShareByUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         return $this->getFactory()
             ->createResourceShareReader()
-            ->getResourceShareByProvidedUuid($resourceShareRequestTransfer);
+            ->getResourceShareByUuid($resourceShareRequestTransfer);
     }
 }

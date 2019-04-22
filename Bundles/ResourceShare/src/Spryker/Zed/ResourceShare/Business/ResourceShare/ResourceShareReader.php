@@ -51,7 +51,7 @@ class ResourceShareReader implements ResourceShareReaderInterface
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function getResourceShareByProvidedUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    public function getResourceShareByUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
 

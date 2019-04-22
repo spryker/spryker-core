@@ -310,7 +310,7 @@ class ResourceShareFacadeTest extends Test
     /**
      * @return void
      */
-    public function testActivateResourceShareShouldAddErrorMessageWhenResourceIsNotFoundByProvidedUuid(): void
+    public function testActivateResourceShareShouldAddErrorMessageWhenResourceIsNotFoundByUuid(): void
     {
         // Arrange
         $customerTransfer = (new CustomerTransfer())
@@ -522,14 +522,14 @@ class ResourceShareFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetResourceShareByProvidedUuidShouldAddErrorMessageWhenResourceIsNotFound(): void
+    public function testGetResourceShareByUuidShouldAddErrorMessageWhenResourceIsNotFound(): void
     {
         // Arrange
         $resourceShareTransfer = (new ResourceShareBuilder())->build();
         $resourceShareTransfer->setUuid(static::VALUE_RESOURCE_SHARE_UUID);
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->getResourceShareByProvidedUuid(
+        $resourceShareResponseTransfer = $this->getFacade()->getResourceShareByUuid(
             (new ResourceShareRequestTransfer())->setUuid($resourceShareTransfer->getUuid())
         );
 
@@ -544,13 +544,13 @@ class ResourceShareFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetResourceShareByProvidedUuidShouldReturnCorrectResourceShareFromDatabase(): void
+    public function testGetResourceShareByUuidShouldReturnCorrectResourceShareFromDatabase(): void
     {
         // Arrange
         $resourceShareTransfer = $this->tester->haveResourceShare();
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->getResourceShareByProvidedUuid(
+        $resourceShareResponseTransfer = $this->getFacade()->getResourceShareByUuid(
             (new ResourceShareRequestTransfer())->setUuid($resourceShareTransfer->getUuid())
         );
 
@@ -565,13 +565,13 @@ class ResourceShareFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetResourceShareByProvidedUuidWillNotRetrieveExpiredResourceShare(): void
+    public function testGetResourceShareByUuidWillNotRetrieveExpiredResourceShare(): void
     {
         // Arrange
         $resourceShareTransfer = $this->createExpiredResourceShare();
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->getResourceShareByProvidedUuid(
+        $resourceShareResponseTransfer = $this->getFacade()->getResourceShareByUuid(
             (new ResourceShareRequestTransfer())->setUuid($resourceShareTransfer->getUuid())
         );
 
