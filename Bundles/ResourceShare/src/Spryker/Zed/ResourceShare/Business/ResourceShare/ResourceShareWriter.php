@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface;
+use Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface;
 
 class ResourceShareWriter implements ResourceShareWriterInterface
 {
@@ -24,9 +25,9 @@ class ResourceShareWriter implements ResourceShareWriterInterface
     protected $resourceShareEntityManager;
 
     /**
-     * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface
+     * @var \Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface
      */
-    protected $resourceShareReader;
+    protected $resourceShareRepository;
 
     /**
      * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface
@@ -40,18 +41,18 @@ class ResourceShareWriter implements ResourceShareWriterInterface
 
     /**
      * @param \Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface $resourceShareEntityManager
-     * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface $resourceShareReader
+     * @param \Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface $resourceShareRepository
      * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface $resourceShareExpander
      * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface $resourceShareValidator
      */
     public function __construct(
         ResourceShareEntityManagerInterface $resourceShareEntityManager,
-        ResourceShareReaderInterface $resourceShareReader,
+        ResourceShareRepositoryInterface $resourceShareRepository,
         ResourceShareExpanderInterface $resourceShareExpander,
         ResourceShareValidatorInterface $resourceShareValidator
     ) {
         $this->resourceShareEntityManager = $resourceShareEntityManager;
-        $this->resourceShareReader = $resourceShareReader;
+        $this->resourceShareRepository = $resourceShareRepository;
         $this->resourceShareExpander = $resourceShareExpander;
         $this->resourceShareValidator = $resourceShareValidator;
     }
@@ -64,11 +65,14 @@ class ResourceShareWriter implements ResourceShareWriterInterface
     public function generateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         $resourceShareRequestTransfer->requireResourceShare();
+
+        $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
 
-        $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShareByProvidedUuid($resourceShareRequestTransfer);
-        if ($resourceShareResponseTransfer->getIsSuccessful()) {
-            return $resourceShareResponseTransfer;
+        $existingResourceShareTransfer = $this->findResourceShare($resourceShareTransfer);
+        if ($existingResourceShareTransfer) {
+            return $resourceShareResponseTransfer->setIsSuccessful(true)
+                ->setResourceShare($existingResourceShareTransfer);
         }
 
         $resourceShareResponseTransfer = $this->resourceShareValidator->validateResourceShareTransfer($resourceShareTransfer);
@@ -77,6 +81,47 @@ class ResourceShareWriter implements ResourceShareWriterInterface
         }
 
         return $this->createResourceShare($resourceShareTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
+     */
+    protected function findResourceShare(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer
+    {
+        $existingResourceShareTransfer = null;
+        if ($resourceShareTransfer->getUuid()) {
+            $existingResourceShareTransfer = $this->resourceShareRepository->findResourceShareByUuid($resourceShareTransfer->getUuid());
+            if ($existingResourceShareTransfer) {
+                return $existingResourceShareTransfer;
+            }
+        }
+
+        if ($resourceShareTransfer->getResourceType()
+            && $this->isResourceDataPropertyModified($resourceShareTransfer)
+            && $resourceShareTransfer->getCustomerReference()
+        ) {
+            return $this->resourceShareRepository->findResourceShareByResource($resourceShareTransfer);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return bool
+     */
+    protected function isResourceDataPropertyModified(ResourceShareTransfer $resourceShareTransfer): bool
+    {
+        if ($resourceShareTransfer->isPropertyModified(ResourceShareTransfer::RESOURCE_DATA)
+            && $resourceShareTransfer->getResourceData() === null
+        ) {
+            return true;
+        }
+
+        return $resourceShareTransfer->getResourceData() !== null;
     }
 
     /**
