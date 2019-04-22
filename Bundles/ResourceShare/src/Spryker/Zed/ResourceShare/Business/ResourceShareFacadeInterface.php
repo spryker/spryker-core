@@ -9,7 +9,6 @@ namespace Spryker\Zed\ResourceShare\Business;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 
 interface ResourceShareFacadeInterface
 {
@@ -33,10 +32,10 @@ interface ResourceShareFacadeInterface
     /**
      * Specification:
      * - Returns with "isSuccess=false" and error message if resource is not found by provided uuid.
-     * - Applies corresponding strategy using `ResourceShareActivatorStrategyPluginInterface` stack.
+     * - Applies corresponding activator strategy using `ResourceShareActivatorStrategyPluginInterface` stack.
+     * - Applies corresponding data expander strategy using `ResourceShareResourceDataExpanderStrategyPluginInterface` stack.
      * - Returns with "isLoginRequired=true" when strategy expects logged in customer.
      * - Returns with "isSuccess=true" on success or with error messages otherwise.
-     * - Applies corresponding ResourceShareResourceDataExpanderStrategyPluginInterface strategy plugin to expand resource data.
      *
      * @api
      *
@@ -48,16 +47,15 @@ interface ResourceShareFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves the share resource by the defined ResourceShareTransfer properties.
-     * - Considers "resourceType", "resourceData" and "customerReference" values from ResourceShareTransfer.
+     * - Retrieves the share resource by the provided UUID.
      * - Returns "isSuccess=true" on success and error message otherwise.
      * - Applies corresponding ResourceShareResourceDataExpanderStrategyPluginInterface strategy plugin to expand resource data.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function getResourceShare(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer;
+    public function getResourceShareByProvidedUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 }

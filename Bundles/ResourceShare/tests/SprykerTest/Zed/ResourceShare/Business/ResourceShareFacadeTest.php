@@ -43,19 +43,14 @@ class ResourceShareFacadeTest extends Test
     protected const GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED = 'resource_share.generation.error.customer_reference_is_not_defined';
 
     /**
-     * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND
-     */
-    protected const GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND = 'resource_share.reader.error.resource_is_not_found';
-
-    /**
      * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareActivator::GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER
      */
     protected const GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER = 'resource_share.activator.error.strategy_expects_logged_in_customer';
 
     /**
-     * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareActivator::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
+     * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
      */
-    protected const GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID = 'resource_share.activator.error.resource_is_not_found_by_provided_uuid';
+    protected const GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID = 'resource_share.reader.error.resource_is_not_found_by_provided_uuid';
 
     /**
      * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidator::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED
@@ -539,35 +534,37 @@ class ResourceShareFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetResourceShareShouldAddErrorMessageWhenResourceIsNotFound(): void
+    public function testGetResourceShareByProvidedUuidShouldAddErrorMessageWhenResourceIsNotFound(): void
     {
         // Arrange
-        $resourceShareTransfer = (new ResourceShareTransfer())
-            ->setResourceType(static::VALUE_RESOURCE_TYPE)
-            ->setResourceData(static::VALUE_RESOURCE_DATA)
-            ->setCustomerReference(static::VALUE_CUSTOMER_REFERENCE);
+        $resourceShareTransfer = (new ResourceShareBuilder())->build();
+        $resourceShareTransfer->setUuid(static::VALUE_RESOURCE_SHARE_UUID);
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->getResourceShare($resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->getFacade()->getResourceShareByProvidedUuid(
+            (new ResourceShareRequestTransfer())->setUuid($resourceShareTransfer->getUuid())
+        );
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND
+            static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
         ));
     }
 
     /**
      * @return void
      */
-    public function testGetResourceShareShouldReturnCorrectResourceShareFromDatabase(): void
+    public function testGetResourceShareByProvidedUuidShouldReturnCorrectResourceShareFromDatabase(): void
     {
         // Arrange
         $resourceShareTransfer = $this->tester->haveResourceShare();
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->getResourceShare($resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->getFacade()->getResourceShareByProvidedUuid(
+            (new ResourceShareRequestTransfer())->setUuid($resourceShareTransfer->getUuid())
+        );
 
         // Assert
         $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
@@ -580,44 +577,14 @@ class ResourceShareFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetResourceShareShouldNotIgnoreNullResourceDataWhenItIsSetExplicitly(): void
-    {
-        // Arrange
-        $resourceShareTransfer = $this->tester->haveResourceShare();
-
-        $this->tester->haveResourceShare([
-            ResourceShareTransfer::CUSTOMER_REFERENCE => $resourceShareTransfer->getCustomerReference(),
-            ResourceShareTransfer::RESOURCE_TYPE => $resourceShareTransfer->getResourceType(),
-            ResourceShareTransfer::RESOURCE_DATA => null,
-        ]);
-
-        $searchableResourceShareTransfer = (new ResourceShareTransfer())
-            ->setCustomerReference($resourceShareTransfer->getCustomerReference())
-            ->setResourceType($resourceShareTransfer->getResourceType())
-            ->setResourceData(null);
-
-        // Act
-        $resourceShareResponseTransfer = $this->getFacade()->getResourceShare($searchableResourceShareTransfer);
-
-        // Assert
-        $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
-        $this->assertSame(
-            $resourceShareTransfer->getIdResourceShare(),
-            $resourceShareResponseTransfer->getResourceShare()->getIdResourceShare()
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetResourceShareWillNotRetrieveExpiredResourceShare(): void
+    public function testGetResourceShareByProvidedUuidWillNotRetrieveExpiredResourceShare(): void
     {
         // Arrange
         $resourceShareTransfer = $this->createExpiredResourceShare();
 
         // Act
-        $resourceShareResponseTransfer = $this->getFacade()->getResourceShare(
-            (new ResourceShareTransfer())->setUuid($resourceShareTransfer->getUuid())
+        $resourceShareResponseTransfer = $this->getFacade()->getResourceShareByProvidedUuid(
+            (new ResourceShareRequestTransfer())->setUuid($resourceShareTransfer->getUuid())
         );
 
         // Assert

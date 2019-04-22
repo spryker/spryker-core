@@ -66,7 +66,7 @@ class ResourceShareWriter implements ResourceShareWriterInterface
         $resourceShareRequestTransfer->requireResourceShare();
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
 
-        $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShare($resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->resourceShareReader->getResourceShareByProvidedUuid($resourceShareRequestTransfer);
         if ($resourceShareResponseTransfer->getIsSuccessful()) {
             return $resourceShareResponseTransfer;
         }
