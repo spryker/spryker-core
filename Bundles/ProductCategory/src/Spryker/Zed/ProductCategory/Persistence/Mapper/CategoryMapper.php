@@ -55,8 +55,8 @@ class CategoryMapper implements CategoryMapperInterface
      */
     public function mapCategoryCollection(ObjectCollection $productCategoryEntities, CategoryCollectionTransfer $categoryCollectionTransfer): CategoryCollectionTransfer
     {
-        /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategory $productCategoryEntity */
         foreach ($productCategoryEntities as $productCategoryEntity) {
+            /** @var \Orm\Zed\Category\Persistence\SpyCategory|null $categoryEntity */
             $categoryEntity = $productCategoryEntity->getSpyCategory();
             if ($categoryEntity === null) {
                 continue;

@@ -665,7 +665,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @throws \LogicException
      *
-     * @return array
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[][]
      */
     protected function filterItemsWithOnEnterEvent(array $orderItems, array $processes, array $sourceStateBuffer)
     {
@@ -737,7 +737,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param array $orderItemsWithOnEnterEvent
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[][] $orderItemsWithOnEnterEvent
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return void
