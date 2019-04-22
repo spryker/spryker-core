@@ -30,6 +30,6 @@ class QuoteRequestQuoteApprovalUnlockPreCheckPlugin extends AbstractPlugin imple
      */
     public function check(QuoteTransfer $quoteTransfer): bool
     {
-        return !$quoteTransfer->getQuoteRequestVersionReference();
+        return !$quoteTransfer->getQuoteRequestVersionReference() && !$quoteTransfer->getQuoteRequestReference();
     }
 }

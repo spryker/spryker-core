@@ -8,13 +8,10 @@
 namespace Spryker\Zed\QuoteRequestAgent\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\QuoteRequestAgent\Business\Reader\CompanyUserReader;
-use Spryker\Zed\QuoteRequestAgent\Business\Reader\CompanyUserReaderInterface;
-use Spryker\Zed\QuoteRequestAgent\Business\Reader\QuoteRequestAgentReader;
-use Spryker\Zed\QuoteRequestAgent\Business\Reader\QuoteRequestAgentReaderInterface;
-use Spryker\Zed\QuoteRequestAgent\Business\Writer\QuoteRequestAgentWriter;
-use Spryker\Zed\QuoteRequestAgent\Business\Writer\QuoteRequestAgentWriterInterface;
-use Spryker\Zed\QuoteRequestAgent\Dependency\Facade\QuoteRequestAgentToCompanyUserFacadeInterface;
+use Spryker\Zed\QuoteRequestAgent\Business\Reader\QuoteRequestReader;
+use Spryker\Zed\QuoteRequestAgent\Business\Reader\QuoteRequestReaderInterface;
+use Spryker\Zed\QuoteRequestAgent\Business\Writer\QuoteRequestWriter;
+use Spryker\Zed\QuoteRequestAgent\Business\Writer\QuoteRequestWriterInterface;
 use Spryker\Zed\QuoteRequestAgent\Dependency\Facade\QuoteRequestAgentToQuoteRequestFacadeInterface;
 use Spryker\Zed\QuoteRequestAgent\QuoteRequestAgentDependencyProvider;
 
@@ -24,31 +21,21 @@ use Spryker\Zed\QuoteRequestAgent\QuoteRequestAgentDependencyProvider;
 class QuoteRequestAgentBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\QuoteRequestAgent\Business\Reader\CompanyUserReaderInterface
+     * @return \Spryker\Zed\QuoteRequestAgent\Business\Reader\QuoteRequestReaderInterface
      */
-    public function createCompanyUserReader(): CompanyUserReaderInterface
+    public function createQuoteRequestReader(): QuoteRequestReaderInterface
     {
-        return new CompanyUserReader(
-            $this->getCompanyUserFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\QuoteRequestAgent\Business\Reader\QuoteRequestAgentReaderInterface
-     */
-    public function createQuoteRequestAgentReader(): QuoteRequestAgentReaderInterface
-    {
-        return new QuoteRequestAgentReader(
+        return new QuoteRequestReader(
             $this->getQuoteRequestFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\QuoteRequestAgent\Business\Writer\QuoteRequestAgentWriterInterface
+     * @return \Spryker\Zed\QuoteRequestAgent\Business\Writer\QuoteRequestWriterInterface
      */
-    public function createQuoteRequestAgentWriter(): QuoteRequestAgentWriterInterface
+    public function createQuoteRequestWriter(): QuoteRequestWriterInterface
     {
-        return new QuoteRequestAgentWriter(
+        return new QuoteRequestWriter(
             $this->getQuoteRequestFacade()
         );
     }
@@ -59,13 +46,5 @@ class QuoteRequestAgentBusinessFactory extends AbstractBusinessFactory
     public function getQuoteRequestFacade(): QuoteRequestAgentToQuoteRequestFacadeInterface
     {
         return $this->getProvidedDependency(QuoteRequestAgentDependencyProvider::FACADE_QUOTE_REQUEST);
-    }
-
-    /**
-     * @return \Spryker\Zed\QuoteRequestAgent\Dependency\Facade\QuoteRequestAgentToCompanyUserFacadeInterface
-     */
-    public function getCompanyUserFacade(): QuoteRequestAgentToCompanyUserFacadeInterface
-    {
-        return $this->getProvidedDependency(QuoteRequestAgentDependencyProvider::FACADE_COMPANY_USER);
     }
 }

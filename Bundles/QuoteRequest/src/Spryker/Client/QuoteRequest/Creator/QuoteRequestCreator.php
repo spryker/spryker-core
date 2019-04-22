@@ -46,7 +46,9 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
      */
     public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        $quoteTransfer = $quoteRequestTransfer->requireLatestVersion()
+        $quoteRequestTransfer->requireLatestVersion();
+
+        $quoteTransfer = $quoteRequestTransfer
             ->getLatestVersion()
             ->getQuote();
 

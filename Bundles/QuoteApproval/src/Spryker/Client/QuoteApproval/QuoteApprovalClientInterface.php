@@ -35,10 +35,11 @@ interface QuoteApprovalClientInterface
      * Specification:
      * - Returns unsuccessful response with corresponding message if quote id is not provided.
      * - Makes zed request.
-     * - Clears current cart sharing.
-     * - Shares quote to approver with read only access.
+     * - Returns unsuccessful response with corresponding message if target quote has no items.
+     * - Share cart to approver with read only access.
+     * - Removes all existing cart sharing.
      * - Locks quote.
-     * - Creates QuoteApproval with `Waiting` status.
+     * - Creates new QuoteApproval request in status `waiting`.
      *
      * @api
      *

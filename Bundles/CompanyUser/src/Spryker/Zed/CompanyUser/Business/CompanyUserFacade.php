@@ -332,10 +332,10 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollectionByQuery(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
+    public function getCompanyUserCollectionByCriteria(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
     {
         return $this->getFactory()
             ->createCompanyUser()
-            ->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer);
+            ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer);
     }
 }

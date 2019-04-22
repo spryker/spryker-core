@@ -5,7 +5,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/company-user": "^2.9.0",
     "spryker/kernel": "^3.17.0",
     "spryker/quote": "^2.9.0",
     "spryker/quote-request": "^1.0.0",

@@ -47,4 +47,13 @@ interface QuoteRequestEntityManagerInterface
      * @return void
      */
     public function closeOutdatedQuoteRequests(DateTime $validUntil): void;
+
+    /**
+     * @param string $quoteRequestReference
+     * @param string $fromStatus
+     * @param string $toStatus
+     *
+     * @return bool
+     */
+    public function updateQuoteRequestStatus(string $quoteRequestReference, string $fromStatus, string $toStatus): bool;
 }

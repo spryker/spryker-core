@@ -25,10 +25,10 @@ class CompanyUserAgentFacade extends AbstractFacade implements CompanyUserAgentF
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollectionByQuery(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
+    public function getCompanyUserCollectionByCriteria(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
     {
         return $this->getFactory()
             ->createCompanyUserReader()
-            ->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer);
+            ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer);
     }
 }

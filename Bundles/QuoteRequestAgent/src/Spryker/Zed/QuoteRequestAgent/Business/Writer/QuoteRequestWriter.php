@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Zed\QuoteRequestAgent\Dependency\Facade\QuoteRequestAgentToQuoteRequestFacadeInterface;
 
-class QuoteRequestAgentWriter implements QuoteRequestAgentWriterInterface
+class QuoteRequestWriter implements QuoteRequestWriterInterface
 {
     /**
      * @var \Spryker\Zed\QuoteRequestAgent\Dependency\Facade\QuoteRequestAgentToQuoteRequestFacadeInterface

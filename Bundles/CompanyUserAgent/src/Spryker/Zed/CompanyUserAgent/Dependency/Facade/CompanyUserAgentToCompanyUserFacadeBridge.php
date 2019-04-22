@@ -30,8 +30,8 @@ class CompanyUserAgentToCompanyUserFacadeBridge implements CompanyUserAgentToCom
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollectionByQuery(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
+    public function getCompanyUserCollectionByCriteria(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
     {
-        return $this->companyUserFacade->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer);
+        return $this->companyUserFacade->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer);
     }
 }

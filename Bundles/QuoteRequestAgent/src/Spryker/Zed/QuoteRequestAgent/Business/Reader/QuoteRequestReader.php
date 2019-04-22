@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Zed\QuoteRequestAgent\Dependency\Facade\QuoteRequestAgentToQuoteRequestFacadeInterface;
 
-class QuoteRequestAgentReader implements QuoteRequestAgentReaderInterface
+class QuoteRequestReader implements QuoteRequestReaderInterface
 {
     /**
      * @var \Spryker\Zed\QuoteRequestAgent\Dependency\Facade\QuoteRequestAgentToQuoteRequestFacadeInterface

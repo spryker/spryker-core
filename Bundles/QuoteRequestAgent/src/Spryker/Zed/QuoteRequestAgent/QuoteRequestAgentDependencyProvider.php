@@ -9,7 +9,6 @@ namespace Spryker\Zed\QuoteRequestAgent;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\QuoteRequestAgent\Dependency\Facade\QuoteRequestAgentToCompanyUserFacadeBridge;
 use Spryker\Zed\QuoteRequestAgent\Dependency\Facade\QuoteRequestAgentToQuoteRequestFacadeBridge;
 
 /**
@@ -18,7 +17,6 @@ use Spryker\Zed\QuoteRequestAgent\Dependency\Facade\QuoteRequestAgentToQuoteRequ
 class QuoteRequestAgentDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_QUOTE_REQUEST = 'FACADE_QUOTE_REQUEST';
-    public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,7 +27,6 @@ class QuoteRequestAgentDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addQuoteRequestFacade($container);
-        $container = $this->addCompanyUserFacade($container);
 
         return $container;
     }
@@ -43,20 +40,6 @@ class QuoteRequestAgentDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container[static::FACADE_QUOTE_REQUEST] = function (Container $container) {
             return new QuoteRequestAgentToQuoteRequestFacadeBridge($container->getLocator()->quoteRequest()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCompanyUserFacade(Container $container): Container
-    {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
-            return new QuoteRequestAgentToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());
         };
 
         return $container;

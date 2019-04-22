@@ -25,10 +25,10 @@ class CompanyUserAgentClient extends AbstractClient implements CompanyUserAgentC
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollectionByQuery(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
+    public function getCompanyUserCollectionByCriteria(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
     {
         return $this->getFactory()
             ->createCompanyUserAgentStub()
-            ->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer);
+            ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer);
     }
 }

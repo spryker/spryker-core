@@ -30,6 +30,7 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS = 'quote_request.validation.error.empty_quote_items';
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.update.validation.error.wrong_valid_until';
+    protected const GLOSSARY_KEY_CONCURRENT_CUSTOMERS = 'quote_request.update.validation.concurrent';
 
     /**
      * @var \Spryker\Zed\QuoteRequest\QuoteRequestConfig
@@ -213,6 +214,10 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
         }
 
+        if (!$this->isQuoteRequestNonConcurrent($quoteRequestTransfer)) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_CONCURRENT_CUSTOMERS);
+        }
+
         $latestQuoteRequestVersionTransfer = $this->addQuoteRequestVersion($quoteRequestTransfer);
 
         $quoteRequestTransfer
@@ -295,6 +300,20 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
 
         return (new QuoteRequestResponseTransfer())
             ->setIsSuccessful(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteRequestNonConcurrent(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->quoteRequestEntityManager->updateQuoteRequestStatus(
+            $quoteRequestTransfer->getQuoteRequestReference(),
+            $quoteRequestTransfer->getStatus(),
+            SharedQuoteRequestConfig::STATUS_IN_PROGRESS
+        );
     }
 
     /**

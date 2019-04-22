@@ -34,7 +34,7 @@
             <unique-column name="uuid"/>
         </unique>
         <behavior name="uuid">
-            <parameter name="key_columns" value="id_quote_request"/>
+            <parameter name="key_columns" value="quote_request_reference"/>
         </behavior>
 
         <unique name="spy_quote_request-reference">

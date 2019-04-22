@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\QuoteRequestAgent;
 
-use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
@@ -147,23 +145,6 @@ interface QuoteRequestAgentClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function convertQuoteRequestToQuote(QuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer;
-
-    /**
-     * Specification:
-     * - Makes Zed request.
-     * - Retrieves company user collection according provided criteria.
-     * - Searches by at least one of first name, last name, and email.
-     * - Applies "limit" when provided.
-     * - Populates "Customer" and "Company" properties in returned company users.
-     * - Applies "CompanyUserHydrationPluginInterface" plugins on returned company users.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaTransfer $companyUserCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
-     */
-    public function getCompanyUserCollectionByQuery(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer;
 
     /**
      * Specification:

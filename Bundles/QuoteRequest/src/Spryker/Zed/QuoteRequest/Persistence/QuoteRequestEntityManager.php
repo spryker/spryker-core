@@ -112,4 +112,20 @@ class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRe
             ->filterByValidUntil($validUntil, Criteria::LESS_EQUAL)
             ->update([static::COLUMN_STATUS => SharedQuoteRequestConfig::STATUS_CLOSED]);
     }
+
+    /**
+     * @param string $quoteRequestReference
+     * @param string $fromStatus
+     * @param string $toStatus
+     *
+     * @return bool
+     */
+    public function updateQuoteRequestStatus(string $quoteRequestReference, string $fromStatus, string $toStatus): bool
+    {
+        return (bool)$this->getFactory()
+            ->getQuoteRequestPropelQuery()
+            ->filterByQuoteRequestReference($quoteRequestReference)
+            ->filterByStatus($fromStatus)
+            ->update([static::COLUMN_STATUS => $toStatus]);
+    }
 }

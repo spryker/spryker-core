@@ -21,8 +21,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollectionByQueryAction(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
+    public function getCompanyUserCollectionByCriteriaAction(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
     {
-        return $this->getFacade()->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer);
+        return $this->getFacade()->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer);
     }
 }

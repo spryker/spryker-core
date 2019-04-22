@@ -10,14 +10,19 @@ namespace Spryker\Zed\QuoteRequest\Business\Writer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteRequest\Business\Reader\QuoteRequestReaderInterface;
 use Spryker\Zed\QuoteRequest\Business\Status\QuoteRequestUserStatusInterface;
 use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
 
 class QuoteRequestUserTerminator implements QuoteRequestUserTerminatorInterface
 {
+    use TransactionTrait;
+
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+    protected const GLOSSARY_KEY_CONCURRENT_CUSTOMERS = 'quote_request.update.validation.concurrent';
 
     /**
      * @var \Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface
@@ -56,6 +61,18 @@ class QuoteRequestUserTerminator implements QuoteRequestUserTerminatorInterface
      */
     public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteRequestCriteriaTransfer) {
+            return $this->executeCancelQuoteRequestTransaction($quoteRequestCriteriaTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function executeCancelQuoteRequestTransaction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    {
         $quoteRequestResponseTransfer = $this->quoteRequestReader->findQuoteRequest($quoteRequestCriteriaTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
@@ -68,12 +85,30 @@ class QuoteRequestUserTerminator implements QuoteRequestUserTerminatorInterface
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
         }
 
+        if (!$this->isQuoteRequestNonConcurrent($quoteRequestTransfer)) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_CONCURRENT_CUSTOMERS);
+        }
+
         $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_CANCELED);
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
         return (new QuoteRequestResponseTransfer())
             ->setIsSuccessful(true)
             ->setQuoteRequest($quoteRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteRequestNonConcurrent(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->quoteRequestEntityManager->updateQuoteRequestStatus(
+            $quoteRequestTransfer->getQuoteRequestReference(),
+            $quoteRequestTransfer->getStatus(),
+            SharedQuoteRequestConfig::STATUS_CANCELED
+        );
     }
 
     /**

@@ -551,7 +551,7 @@ class CompanyUserFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetCompanyUserCollectionByQueryRetrievesCompanyUsersByEmailPattern(): void
+    public function testGetCompanyUserCollectionByCriteriaRetrievesCompanyUsersByEmailPattern(): void
     {
         // Assign
         $companyUserTransfer = $this->tester->haveCompanyUser(
@@ -566,7 +566,7 @@ class CompanyUserFacadeTest extends Test
 
         // Act
         $foundCompanyUserTransfer = $this->getFacade()
-            ->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer)
+            ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer)
             ->getCompanyUsers()
             ->offsetGet(0);
 
@@ -577,7 +577,7 @@ class CompanyUserFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetCompanyUserCollectionByQueryRetrievesCompanyUsersByFirstNamePattern(): void
+    public function testGetCompanyUserCollectionByCriteriaRetrievesCompanyUsersByFirstNamePattern(): void
     {
         // Assign
         $companyUserTransfer = $this->tester->haveCompanyUser(
@@ -592,7 +592,7 @@ class CompanyUserFacadeTest extends Test
 
         // Act
         $foundCompanyUserTransfer = $this->getFacade()
-            ->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer)
+            ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer)
             ->getCompanyUsers()
             ->offsetGet(0);
 
@@ -603,7 +603,7 @@ class CompanyUserFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetCompanyUserCollectionByQueryRetrievesCompanyUsersByLastNamePattern(): void
+    public function testGetCompanyUserCollectionByCriteriaRetrievesCompanyUsersByLastNamePattern(): void
     {
         // Assign
         $companyUserTransfer = $this->tester->haveCompanyUser(
@@ -618,7 +618,7 @@ class CompanyUserFacadeTest extends Test
 
         // Act
         $foundCompanyUserTransfer = $this->getFacade()
-            ->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer)
+            ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer)
             ->getCompanyUsers()
             ->offsetGet(0);
 

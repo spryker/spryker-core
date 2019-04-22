@@ -91,7 +91,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         $this->assertQuoteApprovalCreateRequestValid($quoteApprovalRequestTransfer);
         $quoteTransfer = $this->getQuoteById($quoteApprovalRequestTransfer->getIdQuote());
 
-        if (!$quoteTransfer->getTotals()) {
+        if (!$quoteTransfer->getItems()->count()) {
             return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_CANT_SEND_FOR_APPROVE_EMPTY_QUOTE);
         }
 

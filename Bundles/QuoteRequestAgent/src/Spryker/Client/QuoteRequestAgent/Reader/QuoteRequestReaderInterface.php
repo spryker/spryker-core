@@ -9,7 +9,7 @@ namespace Spryker\Client\QuoteRequestAgent\Reader;
 
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 
-interface QuoteRequestAgentReaderInterface
+interface QuoteRequestReaderInterface
 {
     /**
      * @param string $quoteRequestReference

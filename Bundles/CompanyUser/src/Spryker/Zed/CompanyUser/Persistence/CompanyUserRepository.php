@@ -422,7 +422,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollectionByQuery(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
+    public function getCompanyUserCollectionByCriteria(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
     {
         $queryPattern = $companyUserCriteriaTransfer->getPattern() . '%';
 

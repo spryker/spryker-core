@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyUser\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -100,15 +99,5 @@ class GatewayController extends AbstractGatewayController
     public function disableCompanyUserAction(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         return $this->getFacade()->disableCompanyUser($companyUserTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaTransfer $companyUserCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
-     */
-    public function getCompanyUserCollectionByQueryAction(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
-    {
-        return $this->getFacade()->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer);
     }
 }

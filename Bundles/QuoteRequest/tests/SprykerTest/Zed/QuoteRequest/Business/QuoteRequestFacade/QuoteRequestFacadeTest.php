@@ -473,7 +473,7 @@ class QuoteRequestFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckQuoteRequestChecksQuoteRequestInQuoteWhenValidUntilNotSet(): void
+    public function testIsQuoteRequestVersionReadyForCheckoutChecksQuoteRequestInQuoteWhenValidUntilNotSet(): void
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInReadyStatus();
@@ -485,7 +485,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $isValid = $this->tester
             ->getFacade()
-            ->checkQuoteRequest($this->quoteTransfer, new CheckoutResponseTransfer());
+            ->isQuoteRequestVersionReadyForCheckout($this->quoteTransfer, new CheckoutResponseTransfer());
 
         // Assert
         $this->assertTrue($isValid);
@@ -494,7 +494,7 @@ class QuoteRequestFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckQuoteRequestChecksQuoteRequestInQuoteWhenValidUntilSet(): void
+    public function testIsQuoteRequestVersionReadyForCheckoutChecksQuoteRequestInQuoteWhenValidUntilSet(): void
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInReadyStatus(
@@ -508,7 +508,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $isValid = $this->tester
             ->getFacade()
-            ->checkQuoteRequest($this->quoteTransfer, new CheckoutResponseTransfer());
+            ->isQuoteRequestVersionReadyForCheckout($this->quoteTransfer, new CheckoutResponseTransfer());
 
         // Assert
         $this->assertTrue($isValid);
@@ -517,7 +517,7 @@ class QuoteRequestFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckQuoteRequestSkipCheckWhenQuoteRequestVersionReferenceNotProvided(): void
+    public function testIsQuoteRequestVersionReadyForCheckoutSkipCheckWhenQuoteRequestVersionReferenceNotProvided(): void
     {
         // Arrange
         $this->quoteTransfer->setQuoteRequestVersionReference(null);
@@ -525,7 +525,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $isValid = $this->tester
             ->getFacade()
-            ->checkQuoteRequest($this->quoteTransfer, new CheckoutResponseTransfer());
+            ->isQuoteRequestVersionReadyForCheckout($this->quoteTransfer, new CheckoutResponseTransfer());
 
         // Assert
         $this->assertTrue($isValid);
@@ -534,7 +534,7 @@ class QuoteRequestFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckQuoteRequestThrowsErrorMessageQuoteRequestVersionNotFound(): void
+    public function testIsQuoteRequestVersionReadyForCheckoutThrowsErrorMessageQuoteRequestVersionNotFound(): void
     {
         // Arrange
         $this->quoteTransfer->setQuoteRequestVersionReference(static::FAKE_QUOTE_REQUEST_VERSION_REFERENCE);
@@ -543,7 +543,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $isValid = $this->tester
             ->getFacade()
-            ->checkQuoteRequest($this->quoteTransfer, $checkoutResponseTransfer);
+            ->isQuoteRequestVersionReadyForCheckout($this->quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertFalse($isValid);
@@ -557,7 +557,7 @@ class QuoteRequestFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckQuoteRequestThrowsErrorMessageQuoteRequestNotReady(): void
+    public function testIsQuoteRequestVersionReadyForCheckoutThrowsErrorMessageQuoteRequestNotReady(): void
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInDraftStatus();
@@ -569,7 +569,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $isValid = $this->tester
             ->getFacade()
-            ->checkQuoteRequest($this->quoteTransfer, $checkoutResponseTransfer);
+            ->isQuoteRequestVersionReadyForCheckout($this->quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertFalse($isValid);
@@ -583,7 +583,7 @@ class QuoteRequestFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckQuoteRequestThrowsErrorMessageQuoteRequestWrongValidUntil(): void
+    public function testIsQuoteRequestVersionReadyForCheckoutThrowsErrorMessageQuoteRequestWrongValidUntil(): void
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInReadyStatus(
@@ -598,7 +598,7 @@ class QuoteRequestFacadeTest extends Unit
         sleep(2);
         $isValid = $this->tester
             ->getFacade()
-            ->checkQuoteRequest($this->quoteTransfer, $checkoutResponseTransfer);
+            ->isQuoteRequestVersionReadyForCheckout($this->quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertFalse($isValid);

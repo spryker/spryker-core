@@ -27,6 +27,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
 
     protected const GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND = 'quote_request.validation.error.company_user_not_found';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+    protected const GLOSSARY_KEY_CONCURRENT_CUSTOMERS = 'quote_request.update.validation.concurrent';
 
     /**
      * @var \Spryker\Zed\QuoteRequest\QuoteRequestConfig
@@ -125,9 +126,10 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      */
     protected function executeCreateQuoteRequestTransaction(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestTransfer->requireCompanyUser()
+        $quoteRequestTransfer
+            ->requireCompanyUser()
             ->getCompanyUser()
-            ->requireIdCompanyUser();
+                ->requireIdCompanyUser();
 
         $customerReference = $this->quoteRequestReader->findCustomerReference($quoteRequestTransfer->getCompanyUser());
 
@@ -157,10 +159,11 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      */
     protected function executeUpdateQuoteRequestTransaction(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestTransfer->requireQuoteRequestReference()
+        $quoteRequestTransfer
+            ->requireQuoteRequestReference()
             ->requireCompanyUser()
             ->getCompanyUser()
-            ->requireIdCompanyUser();
+                ->requireIdCompanyUser();
 
         $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
@@ -205,6 +208,10 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS);
         }
 
+        if (!$this->isQuoteRequestNonConcurrent($quoteRequestTransfer)) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_CONCURRENT_CUSTOMERS);
+        }
+
         $latestQuoteRequestVersionTransfer = $this->addQuoteRequestVersion($quoteRequestTransfer);
 
         $quoteRequestTransfer
@@ -213,6 +220,8 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->setLatestVisibleVersion($latestQuoteRequestVersionTransfer);
 
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
+
+        sleep(20);
 
         return (new QuoteRequestResponseTransfer())
             ->setQuoteRequest($quoteRequestTransfer)
@@ -263,7 +272,8 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      */
     protected function addQuoteRequestVersion(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestVersionTransfer
     {
-        $quoteRequestTransfer->requireIdQuoteRequest()
+        $quoteRequestTransfer
+            ->requireIdQuoteRequest()
             ->requireLatestVersion();
 
         $latestQuoteRequestVersionTransfer = $quoteRequestTransfer->getLatestVersion();
@@ -282,6 +292,20 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         $quoteRequestVersionTransfer = $this->quoteRequestVersionSanitizer->reloadQuoteRequestVersionItems($quoteRequestVersionTransfer);
 
         return $this->quoteRequestEntityManager->createQuoteRequestVersion($quoteRequestVersionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteRequestNonConcurrent(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->quoteRequestEntityManager->updateQuoteRequestStatus(
+            $quoteRequestTransfer->getQuoteRequestReference(),
+            $quoteRequestTransfer->getStatus(),
+            SharedQuoteRequestConfig::STATUS_DRAFT
+        );
     }
 
     /**

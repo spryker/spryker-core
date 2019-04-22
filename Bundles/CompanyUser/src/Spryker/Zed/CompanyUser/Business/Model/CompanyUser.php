@@ -484,10 +484,10 @@ class CompanyUser implements CompanyUserInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollectionByQuery(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
+    public function getCompanyUserCollectionByCriteria(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
     {
         $companyUserCollectionTransfer = $this->companyUserRepository
-            ->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer);
+            ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer);
 
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as &$companyUserTransfer) {
             $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);

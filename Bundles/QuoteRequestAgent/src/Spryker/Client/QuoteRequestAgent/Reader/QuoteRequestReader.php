@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Client\QuoteRequestAgent\Dependency\Client\QuoteRequestAgentToQuoteRequestClientInterface;
 
-class QuoteRequestAgentReader implements QuoteRequestAgentReaderInterface
+class QuoteRequestReader implements QuoteRequestReaderInterface
 {
     /**
      * @var \Spryker\Client\QuoteRequestAgent\Dependency\Client\QuoteRequestAgentToQuoteRequestClientInterface

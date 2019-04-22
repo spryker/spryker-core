@@ -10,7 +10,7 @@ namespace Spryker\Zed\QuoteRequestAgent\Business\Reader;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 
-interface QuoteRequestAgentReaderInterface
+interface QuoteRequestReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer

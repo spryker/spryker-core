@@ -13,8 +13,8 @@ use Spryker\Client\QuoteRequestAgent\Converter\QuoteRequestAgentConverterInterfa
 use Spryker\Client\QuoteRequestAgent\Dependency\Client\QuoteRequestAgentToQuoteClientInterface;
 use Spryker\Client\QuoteRequestAgent\Dependency\Client\QuoteRequestAgentToQuoteRequestClientInterface;
 use Spryker\Client\QuoteRequestAgent\Dependency\Client\QuoteRequestAgentToZedRequestClientInterface;
-use Spryker\Client\QuoteRequestAgent\Reader\QuoteRequestAgentReader;
-use Spryker\Client\QuoteRequestAgent\Reader\QuoteRequestAgentReaderInterface;
+use Spryker\Client\QuoteRequestAgent\Reader\QuoteRequestReader;
+use Spryker\Client\QuoteRequestAgent\Reader\QuoteRequestReaderInterface;
 use Spryker\Client\QuoteRequestAgent\Status\QuoteRequestAgentStatus;
 use Spryker\Client\QuoteRequestAgent\Status\QuoteRequestAgentStatusInterface;
 use Spryker\Client\QuoteRequestAgent\Zed\QuoteRequestAgentStub;
@@ -45,11 +45,11 @@ class QuoteRequestAgentFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuoteRequestAgent\Reader\QuoteRequestAgentReaderInterface
+     * @return \Spryker\Client\QuoteRequestAgent\Reader\QuoteRequestReaderInterface
      */
-    public function createQuoteRequestAgentReader(): QuoteRequestAgentReaderInterface
+    public function createQuoteRequestReader(): QuoteRequestReaderInterface
     {
-        return new QuoteRequestAgentReader(
+        return new QuoteRequestReader(
             $this->getQuoteRequestClient()
         );
     }

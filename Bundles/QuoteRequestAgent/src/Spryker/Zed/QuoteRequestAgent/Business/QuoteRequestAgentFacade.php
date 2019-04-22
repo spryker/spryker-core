@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\QuoteRequestAgent\Business;
 
-use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
@@ -33,7 +31,7 @@ class QuoteRequestAgentFacade extends AbstractFacade implements QuoteRequestAgen
     public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestAgentWriter()
+            ->createQuoteRequestWriter()
             ->createQuoteRequest($quoteRequestTransfer);
     }
 
@@ -49,7 +47,7 @@ class QuoteRequestAgentFacade extends AbstractFacade implements QuoteRequestAgen
     public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestAgentWriter()
+            ->createQuoteRequestWriter()
             ->updateQuoteRequest($quoteRequestTransfer);
     }
 
@@ -65,7 +63,7 @@ class QuoteRequestAgentFacade extends AbstractFacade implements QuoteRequestAgen
     public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestAgentWriter()
+            ->createQuoteRequestWriter()
             ->cancelQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
@@ -81,7 +79,7 @@ class QuoteRequestAgentFacade extends AbstractFacade implements QuoteRequestAgen
     public function reviseQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestAgentWriter()
+            ->createQuoteRequestWriter()
             ->reviseQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
@@ -97,7 +95,7 @@ class QuoteRequestAgentFacade extends AbstractFacade implements QuoteRequestAgen
     public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteRequestAgentWriter()
+            ->createQuoteRequestWriter()
             ->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
     }
 
@@ -114,23 +112,7 @@ class QuoteRequestAgentFacade extends AbstractFacade implements QuoteRequestAgen
         QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
     ): QuoteRequestOverviewCollectionTransfer {
         return $this->getFactory()
-            ->createQuoteRequestAgentReader()
+            ->createQuoteRequestReader()
             ->getQuoteRequestOverviewCollection($quoteRequestOverviewFilterTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaTransfer $companyUserCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
-     */
-    public function getCompanyUserCollectionByQuery(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
-    {
-        return $this->getFactory()
-            ->createCompanyUserReader()
-            ->getCompanyUserCollectionByQuery($companyUserCriteriaTransfer);
     }
 }
