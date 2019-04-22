@@ -67,10 +67,20 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
             return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitIdMissingError();
         }
 
-        if (!$this->isCurrentUserResourceIdentifier($restRequest->getResource()->getId())) {
-            return $this->companyBusinessUnitRestResponseBuilder->createResourceNotImplementedError();
+        if ($this->isCurrentUserResourceIdentifier($restRequest->getResource()->getId())) {
+            return $this->getUserOwnCompanyBusinessUnit($restRequest);
         }
 
+        return $this->getUserOwnCompanyBusinessUnitByUuid($restRequest);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getUserOwnCompanyBusinessUnit(RestRequestInterface $restRequest): RestResponseInterface
+    {
         $companyBusinessUnitTransfer = $this->companyBusinessUnitClient->getCompanyBusinessUnitById(
             (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($restRequest->getRestUser()->getIdCompanyBusinessUnit())
         );
@@ -80,6 +90,25 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         }
 
         return $this->createResponse($companyBusinessUnitTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getUserOwnCompanyBusinessUnitByUuid(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitClient->findCompanyBusinessUnitByUuid(
+            (new CompanyBusinessUnitTransfer())->setUuid($restRequest->getResource()->getId())
+        );
+
+        if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()
+            || !$this->isCurrentCompanyUserAuthorizedToAccessCompanyBusinessUnitResource($restRequest, $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer())) {
+            return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitNotFoundError();
+        }
+
+        return $this->createResponse($companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer());
     }
 
     /**
@@ -152,5 +181,20 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         }
 
         return $restCompanyBusinessUnitAttributesTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return bool
+     */
+    protected function isCurrentCompanyUserAuthorizedToAccessCompanyBusinessUnitResource(
+        RestRequestInterface $restRequest,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): bool {
+        return $restRequest->getRestUser()
+            && $restRequest->getRestUser()->getIdCompany()
+            && $restRequest->getRestUser()->getIdCompany() === $companyBusinessUnitTransfer->getFkCompany();
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
 class CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientBridge implements CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface
@@ -33,5 +34,15 @@ class CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientBridge implements Co
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitTransfer {
         return $this->companyBusinessUnitClient->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function findCompanyBusinessUnitByUuid(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
+    {
+        return $this->companyBusinessUnitClient->findCompanyBusinessUnitByUuid($companyBusinessUnitTransfer);
     }
 }

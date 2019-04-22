@@ -48,8 +48,7 @@ class CompanyBusinessUnitsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$restRequest->getResource()->getId()
-            || $restRequest->getResource()->getId() !== CompanyBusinessUnitsRestApiConfig::CURRENT_USER_RESOURCE_IDENTIFIER) {
+        if (!$restRequest->getResource()->getId()) {
             return $this->getFactory()
                 ->createCompanyBusinessUnitRestResponseBuilder()
                 ->createResourceNotImplementedError();
