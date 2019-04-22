@@ -7,6 +7,11 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business;
 
+use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
+
 interface PriceProductScheduleFacadeInterface
 {
     /**
@@ -33,4 +38,40 @@ interface PriceProductScheduleFacadeInterface
      * @return void
      */
     public function cleanAppliedScheduledPrices(int $daysRetained): void;
+
+    /**
+     * Specification:
+     * - Creates and saves price product schedule list.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function createPriceProductScheduleList(PriceProductScheduleListTransfer $priceProductScheduleListTransfer): PriceProductScheduleListResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates and saves price product schedule list.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function updatePriceProductScheduleList(PriceProductScheduleListTransfer $priceProductScheduleListTransfer): PriceProductScheduleListResponseTransfer;
+
+    /**
+     * Specification:
+     * - Imports price product schedules.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer
+     */
+    public function importPriceProductSchedules(PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest): PriceProductScheduleListImportResponseTransfer;
 }

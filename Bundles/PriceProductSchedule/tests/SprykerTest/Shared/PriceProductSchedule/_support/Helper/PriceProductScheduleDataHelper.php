@@ -11,8 +11,10 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\DataBuilder\PriceProductBuilder;
 use Generated\Shared\DataBuilder\PriceProductScheduleBuilder;
+use Generated\Shared\DataBuilder\PriceProductScheduleImportBuilder;
 use Generated\Shared\DataBuilder\PriceProductScheduleListBuilder;
 use Generated\Shared\DataBuilder\PriceTypeBuilder;
+use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -71,6 +73,17 @@ class PriceProductScheduleDataHelper extends Module
     }
 
     /**
+     * @param array $priceProductScheduleImportData
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleImportTransfer
+     */
+    public function havePriceProductScheduleImport(array $priceProductScheduleImportData = []): PriceProductScheduleImportTransfer
+    {
+        return (new PriceProductScheduleImportBuilder($priceProductScheduleImportData))
+            ->build();
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
     protected function getPriceProductFacade(): PriceProductFacadeInterface
@@ -89,7 +102,7 @@ class PriceProductScheduleDataHelper extends Module
     /**
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery
      */
-    protected function getPriceProductScheduleListQuery(): SpyPriceProductScheduleListQuery
+    public function getPriceProductScheduleListQuery(): SpyPriceProductScheduleListQuery
     {
         return new SpyPriceProductScheduleListQuery();
     }

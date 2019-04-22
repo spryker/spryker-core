@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business;
 
+use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -42,5 +46,50 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
         $this->getFactory()
             ->createPriceProductScheduleCleaner()
             ->cleanAppliedScheduledPrices($daysRetained);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function createPriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListResponseTransfer {
+        return new PriceProductScheduleListResponseTransfer();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function updatePriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListResponseTransfer {
+        return new PriceProductScheduleListResponseTransfer();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer
+     */
+    public function importPriceProductSchedules(
+        PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
+    ): PriceProductScheduleListImportResponseTransfer {
+       return new PriceProductScheduleListImportResponseTransfer();
     }
 }
