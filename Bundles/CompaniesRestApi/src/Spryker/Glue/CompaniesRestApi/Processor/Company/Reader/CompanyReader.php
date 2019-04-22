@@ -55,12 +55,12 @@ class CompanyReader implements CompanyReaderInterface
      */
     public function getCurrentUserCompany(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$this->isCurrentUserResourceIdentifier($restRequest->getResource()->getId())) {
-            return $this->companyRestResponseBuilder->createResourceNotImplementedError();
-        }
-
         if (!$restRequest->getRestUser()->getIdCompany()) {
             return $this->companyRestResponseBuilder->createCompanyIdMissingError();
+        }
+
+        if (!$this->isCurrentUserResourceIdentifier($restRequest->getResource()->getId())) {
+            return $this->companyRestResponseBuilder->createResourceNotImplementedError();
         }
 
         $companyTransfer = $this->companyClient->getCompanyById(
