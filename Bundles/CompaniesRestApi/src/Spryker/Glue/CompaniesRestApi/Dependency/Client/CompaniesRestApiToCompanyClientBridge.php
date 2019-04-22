@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CompaniesRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 
 class CompaniesRestApiToCompanyClientBridge implements CompaniesRestApiToCompanyClientInterface
@@ -32,5 +33,15 @@ class CompaniesRestApiToCompanyClientBridge implements CompaniesRestApiToCompany
     public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer
     {
         return $this->companyClient->getCompanyById($companyTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    public function findCompanyByUuid(CompanyTransfer $companyTransfer): CompanyResponseTransfer
+    {
+        return $this->companyClient->findCompanyByUuid($companyTransfer);
     }
 }
