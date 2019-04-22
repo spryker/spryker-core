@@ -1,3 +1,4 @@
+const defaultEditorConfig = require('ZedGuiEditorConfiguration');
 const getEditorConfig = require('./editorComponents/config');
 const editorButtons = require('./editorComponents/buttons');
 const contentItemDialog = require('./content-item-editor-dialog');
@@ -16,14 +17,17 @@ const ContentItemEditor = function(dropdownContentUrl) {
     };
 
     this.getContentItemEditorConfig = function () {
-        return getEditorConfig({
+        const defaultConfig = defaultEditorConfig.getConfig();
+        const newConfig = {
             toolbar: [
                 ['insert', ['dropdownContentItem']]
             ],
             buttons: {
                 dropdownContentItem: this.createDropdownButton()
             }
-        });
+        };
+
+        return getEditorConfig(defaultConfig, newConfig);
     };
 
     this.createDropdownButton = function (dropdownContentUrl) {

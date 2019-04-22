@@ -1,9 +1,4 @@
-const defaultEditorConfig = require('ZedGuiEditorConfiguration');
-
-const getEditorConfig = function (config) {
-    const defaultConfig = defaultEditorConfig.getConfig();
-    const newConfig = config;
-
+const getEditorConfig = function (defaultConfig, newConfig) {
     for (const optionItem in newConfig) {
         switch (optionItem) {
             case 'toolbar':
