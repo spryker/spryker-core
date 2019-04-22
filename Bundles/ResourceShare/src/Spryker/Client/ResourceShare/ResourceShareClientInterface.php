@@ -14,12 +14,11 @@ interface ResourceShareClientInterface
 {
     /**
      * Specification:
-     * - Makes a Zed-Request call to generate share resource for the provided customer.
+     * - Makes a Zed-Request call to generate resource share for provided customer.
      * - Uses resource data from provided ResourceShareRequestTransfer::ResourceShareTransfer.
      * - Sets UUID in returned transfer if generation was successful.
      * - Sets `isSuccessful=true` if generation was successful, adds error messages otherwise.
      * - Does not create new UUID if the provided "resourceType" and "resourceData" pair exists.
-     * - Applies corresponding ResourceShareResourceDataExpanderStrategyPluginInterface strategy plugin to expand resource data.
      *
      * @api
      *
@@ -31,12 +30,10 @@ interface ResourceShareClientInterface
 
     /**
      * Specification:
-     * - Makes Zed-Request.
+     * - Makes Zed-Request to activate resource share for provided customer.
      * - Returns with "isSuccess=false" and error message if resource is not found by provided uuid.
-     * - Applies corresponding strategy if "isSuccess=false" using `ResourceShareActivatorStrategyPluginInterface` stack.
      * - Returns with "isLoginRequired=true" when strategy expects logged in customer.
      * - Returns with "isSuccess=true" on success or with error messages otherwise.
-     * - Applies corresponding ResourceShareResourceDataExpanderStrategyPluginInterface strategy plugin to expand resource data.
      *
      * @api
      *

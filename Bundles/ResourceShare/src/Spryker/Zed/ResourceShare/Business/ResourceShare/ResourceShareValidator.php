@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
+use DateTime;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 
 class ResourceShareValidator implements ResourceShareValidatorInterface
 {
-    protected const GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED = 'resource_share.validation.error.resource_type_is_not_defined';
-    protected const GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED = 'resource_share.validation.error.customer_reference_is_not_defined';
+    protected const GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED = 'resource_share.validation.error.resource_share_is_expired';
 
     /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
@@ -23,22 +23,30 @@ class ResourceShareValidator implements ResourceShareValidatorInterface
      */
     public function validateResourceShareTransfer(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareResponseTransfer = (new ResourceShareResponseTransfer())
-            ->setIsSuccessful(false);
+        $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
 
-        if (!$resourceShareTransfer->getResourceType()) {
-            return $resourceShareResponseTransfer->addErrorMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED)
-            );
+        if ($this->isResourceShareExpired($resourceShareTransfer)) {
+            return $resourceShareResponseTransfer->setIsSuccessful(false)
+                ->addErrorMessage(
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED)
+                );
         }
-
-//        if (!$resourceShareTransfer->getCustomerReference()) {
-//            return $resourceShareResponseTransfer->addErrorMessage(
-//                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED)
-//            );
-//        }
 
         return $resourceShareResponseTransfer->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return bool
+     */
+    protected function isResourceShareExpired(ResourceShareTransfer $resourceShareTransfer): bool
+    {
+        if (!$resourceShareTransfer->getExpiryDate()) {
+            return false;
+        }
+
+        return new DateTime() >= new DateTime($resourceShareTransfer->getExpiryDate());
     }
 }

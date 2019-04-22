@@ -10,6 +10,8 @@ namespace Spryker\Zed\ResourceShare\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareActivator;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareActivatorInterface;
+use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpander;
+use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidator;
@@ -32,18 +34,7 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     {
         return new ResourceShareReader(
             $this->getRepository(),
-            $this->createResourceShareValidator()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareWriterInterface
-     */
-    public function createResourceShareWriter(): ResourceShareWriterInterface
-    {
-        return new ResourceShareWriter(
-            $this->getEntityManager(),
-            $this->createResourceShareReader(),
+            $this->createResourceShareExpander(),
             $this->createResourceShareValidator()
         );
     }
@@ -54,8 +45,33 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     public function createResourceShareActivator(): ResourceShareActivatorInterface
     {
         return new ResourceShareActivator(
-            $this->getRepository(),
+            $this->createResourceShareReader(),
+            $this->createResourceShareExpander(),
+            $this->createResourceShareValidator(),
             $this->getResourceShareActivatorStrategyPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareWriterInterface
+     */
+    public function createResourceShareWriter(): ResourceShareWriterInterface
+    {
+        return new ResourceShareWriter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createResourceShareExpander(),
+            $this->createResourceShareValidator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface
+     */
+    public function createResourceShareExpander(): ResourceShareExpanderInterface
+    {
+        return new ResourceShareExpander(
+            $this->getResourceShareResourceDataExpanderStrategyPlugins()
         );
     }
 
@@ -73,5 +89,13 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     public function getResourceShareActivatorStrategyPlugins(): array
     {
         return $this->getProvidedDependency(ResourceShareDependencyProvider::PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[]
+     */
+    public function getResourceShareResourceDataExpanderStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(ResourceShareDependencyProvider::PLUGINS_RESOURCE_SHARE_RESOURCE_DATA_EXPANDER_STRATEGY);
     }
 }

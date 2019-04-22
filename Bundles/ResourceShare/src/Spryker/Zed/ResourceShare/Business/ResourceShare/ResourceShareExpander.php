@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ResourceShare\ResourceShare;
+namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
-use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 
 class ResourceShareExpander implements ResourceShareExpanderInterface
 {
     /**
-     * @var \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[]
+     * @var \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[]
      */
     protected $resourceShareResourceDataExpanderStrategyPlugins;
 
     /**
-     * @param \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[] $resourceShareResourceDataExpanderStrategyPlugins
+     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[] $resourceShareResourceDataExpanderStrategyPlugins
      */
     public function __construct(
         array $resourceShareResourceDataExpanderStrategyPlugins
@@ -26,15 +26,13 @@ class ResourceShareExpander implements ResourceShareExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
-     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer
      */
-    public function executeResourceDataExpanderStrategyPlugins(ResourceShareResponseTransfer $resourceShareResponseTransfer): ResourceShareResponseTransfer
-    {
-        $resourceShareResponseTransfer->requireResourceShare();
-        $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
-
+    public function executeResourceDataExpanderStrategyPlugins(
+        ResourceShareTransfer $resourceShareTransfer
+    ): ResourceShareTransfer {
         foreach ($this->resourceShareResourceDataExpanderStrategyPlugins as $resourceDataExpanderStrategyPlugin) {
             if (!$resourceDataExpanderStrategyPlugin->isApplicable($resourceShareTransfer)) {
                 continue;
@@ -44,6 +42,6 @@ class ResourceShareExpander implements ResourceShareExpanderInterface
             break;
         }
 
-        return $resourceShareResponseTransfer->setResourceShare($resourceShareTransfer);
+        return $resourceShareTransfer;
     }
 }

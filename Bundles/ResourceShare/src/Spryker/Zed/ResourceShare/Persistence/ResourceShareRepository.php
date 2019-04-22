@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ResourceShare\Persistence;
 
 use Generated\Shared\Transfer\ResourceShareTransfer;
-use Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -42,16 +41,15 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
      *
      * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
      */
-    public function findResourceShare(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer
+    public function findResourceShareByResource(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer
     {
-        $resourceShareQuery = $this->getFactory()->createResourceSharePropelQuery();
+        $resourceShareEntity = $this->getFactory()
+            ->createResourceSharePropelQuery()
+            ->filterByResourceType($resourceShareTransfer->getResourceType())
+            ->filterByResourceData($resourceShareTransfer->getResourceData())
+            ->filterByCustomerReference($resourceShareTransfer->getCustomerReference())
+            ->findOne();
 
-        $resourceShareQuery = $this->setResourceShareQueryFilters(
-            $resourceShareTransfer,
-            $resourceShareQuery
-        );
-
-        $resourceShareEntity = $resourceShareQuery->findOne();
         if (!$resourceShareEntity) {
             return null;
         }
@@ -59,73 +57,5 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
         return $this->getFactory()
             ->createResourceShareMapper()
             ->mapResourceShareEntityToResourceShareTransfer($resourceShareEntity);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     * @param \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery $resourceShareQuery
-     *
-     * @return \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery
-     */
-    protected function setResourceShareQueryFilters(
-        ResourceShareTransfer $resourceShareTransfer,
-        SpyResourceShareQuery $resourceShareQuery
-    ): SpyResourceShareQuery {
-        $resourceShareQuery = $this->setResourceShareQueryIdentityFilters($resourceShareTransfer, $resourceShareQuery);
-        $resourceShareQuery = $this->setResourceShareQueryResourceFilters($resourceShareTransfer, $resourceShareQuery);
-
-        return $resourceShareQuery;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     * @param \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery $resourceShareQuery
-     *
-     * @return \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery
-     */
-    protected function setResourceShareQueryResourceFilters(
-        ResourceShareTransfer $resourceShareTransfer,
-        SpyResourceShareQuery $resourceShareQuery
-    ): SpyResourceShareQuery {
-        if ($resourceShareTransfer->getResourceType()) {
-            $resourceShareQuery->filterByResourceType($resourceShareTransfer->getResourceType());
-        }
-
-        if ($resourceShareTransfer->getResourceData()
-            && $resourceShareTransfer->isPropertyModified(ResourceShareTransfer::RESOURCE_DATA)
-        ) {
-            $resourceShareQuery->filterByResourceData($resourceShareTransfer->getResourceData());
-        }
-
-        if ($resourceShareTransfer->getExpiryDate()) {
-            $resourceShareQuery->filterByExpiryDate($resourceShareTransfer->getExpiryDate());
-        }
-
-        return $resourceShareQuery;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     * @param \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery $resourceShareQuery
-     *
-     * @return \Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery
-     */
-    protected function setResourceShareQueryIdentityFilters(
-        ResourceShareTransfer $resourceShareTransfer,
-        SpyResourceShareQuery $resourceShareQuery
-    ): SpyResourceShareQuery {
-        if ($resourceShareTransfer->getIdResourceShare()) {
-            $resourceShareQuery->filterByIdResourceShare($resourceShareTransfer->getIdResourceShare());
-        }
-
-        if ($resourceShareTransfer->getUuid()) {
-            $resourceShareQuery->filterByUuid($resourceShareTransfer->getUuid());
-        }
-
-        if ($resourceShareTransfer->getCustomerReference()) {
-            $resourceShareQuery->filterByCustomerReference($resourceShareTransfer->getCustomerReference());
-        }
-
-        return $resourceShareQuery;
     }
 }

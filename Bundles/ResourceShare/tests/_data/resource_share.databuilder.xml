@@ -7,7 +7,7 @@
         <property name="customerReference" dataBuilderRule="unique()->sentence(4)" />
         <property name="resourceType" dataBuilderRule="unique()->sentence(2)" />
         <property name="resourceData" dataBuilderRule="unique()->sentence(2)" />
-        <property name="expiryDate" dataBuilderRule="date('Y-m-d', '-1 year')" />
+        <property name="expiryDate" dataBuilderRule="dateTimeBetween('now', '+1 year')->format('Y-m-d')" />
     </transfer>
 
 </transfers>
