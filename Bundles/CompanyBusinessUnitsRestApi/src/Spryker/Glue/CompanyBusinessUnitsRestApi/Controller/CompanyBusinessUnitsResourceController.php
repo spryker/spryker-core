@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Controller;
 
-use Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
