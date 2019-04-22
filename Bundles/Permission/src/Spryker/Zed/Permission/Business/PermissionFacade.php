@@ -99,6 +99,6 @@ class PermissionFacade extends AbstractFacade implements PermissionFacadeInterfa
      */
     public function getPermissionsByIdentifier(string $identifier): PermissionCollectionTransfer
     {
-        return $this->getFactory()->createPermissionFinder()->getPermissionsForIdentifier($identifier);
+        return $this->getFactory()->createPermissionFinder()->getPermissionsByIdentifier($identifier);
     }
 }

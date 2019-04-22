@@ -18,7 +18,7 @@ class OauthPermissionStoragePlugin extends AbstractPlugin implements PermissionS
 {
     /**
      * {@inheritdoc}
-     *  - Finds permissions in a authorization header.
+     *  - Reads permission collection from the authorization header.
      *
      * @api
      *

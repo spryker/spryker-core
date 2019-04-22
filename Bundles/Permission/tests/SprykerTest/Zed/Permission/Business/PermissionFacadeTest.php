@@ -9,8 +9,9 @@ namespace SprykerTest\Zed\Permission\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 use Spryker\Zed\Permission\Business\PermissionFacadeInterface;
-use SprykerTest\Zed\Permission\Stub\TestPermissionPlugin;
 
 /**
  * Auto-generated group annotations
@@ -24,6 +25,8 @@ use SprykerTest\Zed\Permission\Stub\TestPermissionPlugin;
  */
 class PermissionFacadeTest extends Unit
 {
+    protected const PERMISSION_PLUGIN_KEY = 'TestPermissionPlugin';
+
     /**
      * @var \SprykerTest\Zed\Permission\PermissionBusinessTester
      */
@@ -52,7 +55,8 @@ class PermissionFacadeTest extends Unit
     public function testGetPermissionsByIdentifierShouldReturnPermissionsAssignedForCompanyUser(): void
     {
         //Assign
-        $companyUserTransfer = $this->tester->haveCompanyUserWithPermissions(new TestPermissionPlugin());
+        $this->tester->registerPermissionStoragePlugin();
+        $companyUserTransfer = $this->tester->haveCompanyUserWithPermissions($this->createPermissionPluginMock());
 
         // Act
         $permissionCollectionTransfer = $this->getPermissionFacade()
@@ -61,7 +65,7 @@ class PermissionFacadeTest extends Unit
         //Assert
         $this->assertCount(1, $permissionCollectionTransfer->getPermissions());
         $this->assertEquals(
-            TestPermissionPlugin::KEY,
+            static::PERMISSION_PLUGIN_KEY,
             $permissionCollectionTransfer->getPermissions()->offsetGet(0)->getKey()
         );
     }
@@ -88,5 +92,19 @@ class PermissionFacadeTest extends Unit
     protected function getPermissionFacade(): PermissionFacadeInterface
     {
         return $this->tester->getFacade();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface
+     */
+    protected function createPermissionPluginMock(): MockObject
+    {
+        $mock = $this->getMockBuilder(PermissionPluginInterface::class)
+            ->setMethods(['getKey'])
+            ->getMock();
+        $mock->method('getKey')
+            ->willReturn(static::PERMISSION_PLUGIN_KEY);
+
+        return $mock;
     }
 }

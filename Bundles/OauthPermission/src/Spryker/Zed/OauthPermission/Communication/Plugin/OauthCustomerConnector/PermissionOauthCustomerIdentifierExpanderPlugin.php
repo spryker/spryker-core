@@ -35,6 +35,6 @@ class PermissionOauthCustomerIdentifierExpanderPlugin extends AbstractPlugin imp
         CustomerTransfer $customerTransfer
     ): CustomerIdentifierTransfer {
         return $this->getFacade()
-            ->expandCustomerIdentifier($customerIdentifierTransfer, $customerTransfer);
+            ->expandCustomerIdentifierWithPermissions($customerIdentifierTransfer, $customerTransfer);
     }
 }

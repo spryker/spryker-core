@@ -8,11 +8,6 @@
 namespace SprykerTest\Zed\Permission;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
-use Generated\Shared\Transfer\CompanyRoleTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\PermissionCollectionTransfer;
-use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 
 /**
@@ -44,35 +39,5 @@ class PermissionBusinessTester extends Actor
     public function registerPermissionStoragePlugin(): void
     {
         $this->havePermissionStorage(new PermissionStoragePlugin());
-    }
-
-    /**
-     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface $permissionPlugin
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
-    public function haveCompanyUserWithPermissions(PermissionPluginInterface $permissionPlugin): CompanyUserTransfer
-    {
-        $this->registerPermissionStoragePlugin();
-        $permissionTransfer = $this->havePermission($permissionPlugin);
-        $permissionCollectionTransfer = (new PermissionCollectionTransfer())->addPermission($permissionTransfer);
-
-        $companyTransfer = $this->haveCompany();
-        $companyRoleTransfer = $this->haveCompanyRole([
-            CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            CompanyRoleTransfer::PERMISSION_COLLECTION => $permissionCollectionTransfer,
-        ]);
-
-        $companyRoleCollection = (new CompanyRoleCollectionTransfer())->addRole($companyRoleTransfer);
-
-        $companyUserTransfer = $this->haveCompanyUser([
-            CompanyUserTransfer::CUSTOMER => $this->haveCustomer(),
-            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            CompanyUserTransfer::COMPANY_ROLE_COLLECTION => $companyRoleCollection,
-        ]);
-
-        $this->assignCompanyRolesToCompanyUser($companyUserTransfer);
-
-        return $companyUserTransfer;
     }
 }
