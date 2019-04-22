@@ -9,12 +9,14 @@ namespace Spryker\Client\ProductPackagingUnitStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToProductMeasurementUnitStorageClientBridge;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageClientBridge;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Service\ProductPackagingUnitStorageToSynchronizationServiceBridge;
 
 class ProductPackagingUnitStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE = 'CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
@@ -28,6 +30,7 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractDependencyPr
 
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
+        $container = $this->addProductMeasurementUnitStorageClient($container);
 
         return $container;
     }
@@ -41,6 +44,22 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractDependencyPr
     {
         $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new ProductPackagingUnitStorageToStorageClientBridge($container->getLocator()->storage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductMeasurementUnitStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE] = function (Container $container) {
+            return new ProductPackagingUnitStorageToProductMeasurementUnitStorageClientBridge(
+                $container->getLocator()->productMeasurementUnitStorage()->client()
+            );
         };
 
         return $container;

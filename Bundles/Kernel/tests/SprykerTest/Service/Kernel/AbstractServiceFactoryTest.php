@@ -55,7 +55,7 @@ class AbstractServiceFactoryTest extends Unit
     public function testGetProvidedDependency()
     {
         $container = new Container();
-        $container[self::CONTAINER_KEY] = self::CONTAINER_VALUE;
+        $container->set(self::CONTAINER_KEY, self::CONTAINER_VALUE);
         $factory = new ServiceFactory();
 
         $factory->setContainer($container);
@@ -68,7 +68,7 @@ class AbstractServiceFactoryTest extends Unit
     public function testGetProvidedDependencyShouldResolveContainer()
     {
         $container = new Container();
-        $container[self::CONTAINER_KEY] = self::CONTAINER_VALUE;
+        $container->set(self::CONTAINER_KEY, self::CONTAINER_VALUE);
 
         $factoryMock = $this->getFactoryMock(['createContainerWithProvidedDependencies']);
         $factoryMock->expects($this->once())->method('createContainerWithProvidedDependencies')->willReturn($container);
@@ -79,7 +79,7 @@ class AbstractServiceFactoryTest extends Unit
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\AbstractFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\AbstractFactory
      */
     protected function getFactoryMock(array $methods)
     {

@@ -256,8 +256,9 @@ abstract class AbstractController
     protected function isUrlDomainWhitelisted(string $absoluteUrl): bool
     {
         $whitelistedDomains = Config::getInstance()->get(KernelConstants::DOMAIN_WHITELIST, []);
+        $isStrictDomainRedirect = Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
 
-        if (empty($whitelistedDomains)) {
+        if (empty($whitelistedDomains) && !$isStrictDomainRedirect) {
             return true;
         }
 
@@ -277,6 +278,7 @@ abstract class AbstractController
      */
     protected function extractDomainFromUrl(string $url): string
     {
+        /** @var string|false $urlDomain */
         $urlDomain = parse_url($url, PHP_URL_HOST);
         if ($urlDomain === false) {
             return '';

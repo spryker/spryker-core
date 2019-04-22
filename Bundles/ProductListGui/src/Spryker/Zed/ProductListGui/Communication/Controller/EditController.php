@@ -32,16 +32,9 @@ class EditController extends ProductListAbstractController
         );
 
         if ($productListTransfer) {
-            $this->addSuccessMessage(sprintf(
-                static::MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS,
-                $productListTransfer->getTitle()
-            ));
-
-            $defaultRedirectUrl = $this->getFactory()
-                ->getConfig()
-                ->getDefaultRedirectUrl();
-
-            return $this->redirectResponse($defaultRedirectUrl);
+            $this->addSuccessMessage(static::MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS, [
+                '%s' => $productListTransfer->getTitle(),
+            ]);
         }
 
         return $this->viewResponse($this->executeEditAction($request, $productListAggregateForm));

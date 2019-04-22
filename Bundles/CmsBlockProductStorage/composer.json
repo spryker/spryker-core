@@ -9,17 +9,16 @@
     "spryker/cms-block-product-connector": "^1.1.0",
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.21.0",
+    "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0",
     "spryker/util-sanitize": "^2.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/event": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
-    "spryker/propel-query-builder": "*",
     "spryker/testify": "*"
   },
   "suggest": {

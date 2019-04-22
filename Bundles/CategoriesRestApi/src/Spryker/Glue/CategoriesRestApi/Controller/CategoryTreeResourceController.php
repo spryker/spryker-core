@@ -17,6 +17,19 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class CategoryTreeResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves category tree for specified locale."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "isIdNullable": true
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

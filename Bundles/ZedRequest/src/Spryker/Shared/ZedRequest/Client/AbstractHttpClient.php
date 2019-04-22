@@ -175,9 +175,10 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     protected function getConfigServerPort()
     {
         if (Config::get(static::ZED_API_SSL_ENABLED)) {
-            return Config::get(ApplicationConstants::PORT_SSL_ZED) ?: static::DEFAULT_SSL_PORT;
+            return Config::get(ApplicationConstants::PORT_SSL_ZED, static::DEFAULT_SSL_PORT);
         }
-        return Config::get(ApplicationConstants::PORT_ZED) ?: static::DEFAULT_PORT;
+
+        return Config::get(ApplicationConstants::PORT_ZED, static::DEFAULT_PORT);
     }
 
     /**
@@ -298,7 +299,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
 
         $response = $client->send($request, $this->buildRequestOptions($requestTransfer, $requestOptions));
 
-        if (!$response || $response->getStatusCode() !== 200 || !$response->getBody()->getSize()) {
+        if ($response->getStatusCode() !== 200 || !$response->getBody()->getSize()) {
             throw new InvalidZedResponseException('Invalid or empty response', $response, $request->getUri());
         }
 

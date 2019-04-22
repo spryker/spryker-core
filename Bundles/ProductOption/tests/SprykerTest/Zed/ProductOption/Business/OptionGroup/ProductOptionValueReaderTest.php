@@ -84,7 +84,7 @@ class ProductOptionValueReaderTest extends MockProvider
     /**
      * @uses ProductOptionValueReader::findOptionValueById()
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader
      */
     protected function createProductOptionValueReader()
     {
@@ -103,7 +103,7 @@ class ProductOptionValueReaderTest extends MockProvider
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceReaderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceReaderInterface
      */
     protected function createProductOptionValuePriceReaderMock()
     {
@@ -116,7 +116,7 @@ class ProductOptionValueReaderTest extends MockProvider
      * @uses SpyProductOptionValue::save()
      * @uses SpyProductOptionValue::getSpyProductOptionGroup()
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
      */
     protected function createProductOptionValueEntityMock()
     {

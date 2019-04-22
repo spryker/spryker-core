@@ -12,9 +12,6 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorageQuery;
-use PHPUnit\Framework\SkippedTestError;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductRelation\Business\ProductRelationFacade;
 use Spryker\Zed\ProductRelation\Dependency\ProductRelationEvents;
 use Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageBusinessFactory;
@@ -54,18 +51,11 @@ class ProductRelationStorageListenerTest extends Unit
     protected $productAbstractTransferRelated;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
-
-        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbEngine !== 'pgsql') {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
-        }
 
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();
         $this->productAbstractTransferRelated = $this->tester->haveProductAbstract();

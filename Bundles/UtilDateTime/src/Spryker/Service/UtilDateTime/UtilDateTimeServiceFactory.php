@@ -18,14 +18,14 @@ class UtilDateTimeServiceFactory extends AbstractServiceFactory
     public function createDateFormatter()
     {
         return new DateTimeFormatter(
-            $this->getConfig()
+            $this->getModuleConfig()
         );
     }
 
     /**
      * @return \Spryker\Shared\Config\Config
      */
-    protected function getConfig()
+    protected function getModuleConfig()
     {
         return $this->getProvidedDependency(UtilDateTimeDependencyProvider::CONFIG);
     }

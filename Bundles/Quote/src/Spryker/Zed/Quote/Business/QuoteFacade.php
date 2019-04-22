@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Quote\Business\QuoteBusinessFactory getFactory()
  * @method \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface getRepository()
- * @method \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface getEntityManager()()
+ * @method \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface getEntityManager()
  */
 class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
 {
@@ -133,7 +133,9 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
      */
     public function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        return $this->getRepository()->filterQuoteCollection($quoteCriteriaFilterTransfer);
+        return $this->getFactory()
+            ->createQuoteReader()
+            ->getFilteredQuoteCollection($quoteCriteriaFilterTransfer);
     }
 
     /**
@@ -160,5 +162,65 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     public function deleteExpiredGuestQuote(): void
     {
         $this->getFactory()->createGuestQuoteDeleter()->deleteExpiredGuestQuote();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteReader()->findQuoteByUuid($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()->createQuoteLocker()->lock($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()->createQuoteLocker()->unlock($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteLockStatusValidator()
+            ->isQuoteLocked($quoteTransfer);
     }
 }

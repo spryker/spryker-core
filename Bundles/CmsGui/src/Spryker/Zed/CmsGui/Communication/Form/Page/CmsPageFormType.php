@@ -38,6 +38,7 @@ class CmsPageFormType extends AbstractType
     public const OPTION_TEMPLATE_CHOICES = 'template_choices';
     public const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_attributes';
     public const OPTION_DATA_CLASS_META_ATTRIBUTES = 'data_class_meta_attributes';
+    public const FIELD_STORE_RELATION = 'storeRelation';
 
     use ArrayObjectTransformerTrait;
 
@@ -63,6 +64,7 @@ class CmsPageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addSearchableField($builder)
+            ->addStoreRelationForm($builder)
             ->addFkPage($builder)
             ->addFkTemplateField($builder, $options[static::OPTION_TEMPLATE_CHOICES])
             ->addPageAttributesFormCollection($builder, $options)
@@ -207,6 +209,25 @@ class CmsPageFormType extends AbstractType
 
         $builder->get(static::FIELD_VALID_TO)
             ->addModelTransformer($this->createDateTimeModelTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStoreRelationForm(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_STORE_RELATION,
+            $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
+            [
+                'label' => false,
+                'required' => false,
+            ]
+        );
 
         return $this;
     }

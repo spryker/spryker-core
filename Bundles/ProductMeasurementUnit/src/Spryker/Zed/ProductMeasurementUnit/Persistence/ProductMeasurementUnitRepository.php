@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductMeasurementUnit\Persistence\Map\SpyProductMeasurementSalesUnitTableMap;
 use Propel\Runtime\Exception\EntityNotFoundException;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -250,5 +252,31 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         }
 
         return $productMeasurementSalesUnitTransfers;
+    }
+
+    /**
+     * @module Product
+     *
+     * @param string[] $productConcreteSkus
+     * @param int $idStore
+     *
+     * @return int[]
+     */
+    public function findIndexedStoreAwareDefaultProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array
+    {
+        $productMeasurementSalesUnitQuery = $this->getFactory()
+            ->createProductMeasurementSalesUnitQuery();
+        $productMeasurementSalesUnitQuery
+            ->filterByIsDefault(true)
+            ->useProductQuery()
+                ->filterBySku_In($productConcreteSkus)
+            ->endUse()
+            ->useSpyProductMeasurementSalesUnitStoreQuery()
+                ->filterByFkStore($idStore)
+            ->endUse()
+            ->select([SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT, SpyProductTableMap::COL_SKU]);
+
+        return $productMeasurementSalesUnitQuery->find()
+            ->toKeyValue(SpyProductTableMap::COL_SKU, SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT);
     }
 }

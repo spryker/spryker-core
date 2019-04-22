@@ -108,7 +108,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
         $executionContextMock = $this->createExecutionContextMock();
 
         $executionContextMock
-            ->expects($this->once())
+            ->expects($this->never())
             ->method('buildViolation');
 
         $cmsPageAttributeTransfer->setIdCmsPage(123);
@@ -117,7 +117,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Validator\Context\ExecutionContextInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Validator\Context\ExecutionContextInterface
      */
     protected function createExecutionContextMock()
     {
@@ -131,7 +131,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface
      */
     protected function createConstraintViolationBuilderMock()
     {

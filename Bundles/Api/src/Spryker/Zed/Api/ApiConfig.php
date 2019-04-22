@@ -54,6 +54,16 @@ class ApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * All REST API resources will not be available, routes will be disabled.
+     *
+     * @return bool
+     */
+    public function isApiEnabled(): bool
+    {
+        return false;
+    }
+
+    /**
      * This returns the base URI to the API
      *
      * Modify if you want to include host and schema/protocol.

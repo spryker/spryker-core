@@ -204,13 +204,9 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     protected function executePreCheckPluginPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer, CheckoutPreCheckPluginInterface $plugin)
     {
         $errorCount = $checkoutResponseTransfer->getErrors()->count();
-        $result = $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
+        $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
 
-        if ($result === null) {
-            return $errorCount === $checkoutResponseTransfer->getErrors()->count();
-        }
-
-        return $result;
+        return $errorCount === $checkoutResponseTransfer->getErrors()->count();
     }
 
     /**
@@ -218,11 +214,11 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface $plugin
      *
-     * @return bool
+     * @return void
      */
     protected function executePreCheckPluginPaymentPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer, CheckoutPreCheckPluginInterface $plugin)
     {
-        return $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
+        $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**

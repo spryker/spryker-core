@@ -62,7 +62,7 @@ class AbstractClassResolverTest extends Unit
     /**
      * @param bool $classExists
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Glue\Kernel\ClassResolver\AbstractClassResolver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\Kernel\ClassResolver\AbstractClassResolver
      */
     private function getAbstractClassResolverMock($classExists)
     {

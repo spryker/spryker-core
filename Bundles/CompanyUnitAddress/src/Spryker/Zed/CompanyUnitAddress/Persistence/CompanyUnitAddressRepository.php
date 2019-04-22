@@ -102,6 +102,38 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     }
 
     /**
+     * @module Country
+     * @module CompanyBusinessUnit
+     *
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer
+    {
+        $companyUnitAddressQuery = $this->getFactory()
+            ->createCompanyUnitAddressQuery()
+            ->filterByIdCompanyUnitAddress($idCompanyUnitAddress)
+            ->leftJoinWithCountry()
+            ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithCompanyBusinessUnit()
+            ->endUse();
+
+        /**
+         * @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress|null
+         */
+        $companyUnitAddressEntity = $companyUnitAddressQuery->findOne();
+
+        if (!$companyUnitAddressEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyUniAddressMapper()
+            ->mapCompanyUnitAddressEntityToCompanyUnitAddressTransfer($companyUnitAddressEntity, new CompanyUnitAddressTransfer());
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *

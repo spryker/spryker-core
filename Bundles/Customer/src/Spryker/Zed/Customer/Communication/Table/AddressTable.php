@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Communication\Table;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
@@ -22,6 +23,8 @@ class AddressTable extends AbstractTable
     public const DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
 
     public const COL_COMPANY = 'Company';
+
+    protected const URL_EDIT_CUSTOMER_ADDRESS = '/customer/address/edit';
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
@@ -130,10 +133,10 @@ class AddressTable extends AbstractTable
 
                 $tags = [];
                 if ((is_bool($id) === false) && ($id === $defaultBillingAddress)) {
-                    $tags[] = '<span class="label label-danger" title="Default billing address">BILLING</span>';
+                    $tags[] = $this->generateLabel('BILLING', 'label-danger');
                 }
                 if ((is_bool($id) === false) && ($id === $defaultShippingAddress)) {
-                    $tags[] = '<span class="label label-danger" title="Default shipping address">SHIPPING</span>';
+                    $tags[] = $this->generateLabel('SHIPPING', 'label-danger');
                 }
 
                 $address = $this->utilSanitize->escapeHtml($lines[$key][SpyCustomerAddressTableMap::COL_ADDRESS1]);
@@ -160,7 +163,13 @@ class AddressTable extends AbstractTable
             : null;
 
         if ($idCustomerAddress !== null) {
-            $buttons[] = $this->generateEditButton(sprintf('/customer/address/edit?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'Edit');
+            $buttons[] = $this->generateEditButton(
+                Url::generate(static::URL_EDIT_CUSTOMER_ADDRESS, [
+                    CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS => $idCustomerAddress,
+                    CustomerConstants::PARAM_ID_CUSTOMER => $this->idCustomer,
+                ]),
+                'Edit'
+            );
         }
 
         return implode(' ', $buttons);

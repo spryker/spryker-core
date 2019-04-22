@@ -15,6 +15,9 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

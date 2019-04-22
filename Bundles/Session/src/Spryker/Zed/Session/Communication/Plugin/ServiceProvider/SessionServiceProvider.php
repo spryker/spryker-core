@@ -10,6 +10,9 @@ namespace Spryker\Zed\Session\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
@@ -64,6 +67,41 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
         $session = $this->getSession($application);
         $this->getSessionClient()->setContainer($session);
+        $application['dispatcher']->addListener(KernelEvents::RESPONSE, [$this, 'extendCookieLifetime'], -128);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     *
+     * @return void
+     */
+    public function extendCookieLifetime(FilterResponseEvent $event): void
+    {
+        if ($event->isMasterRequest() === false) {
+            return;
+        }
+
+        $request = $event->getRequest();
+
+        $session = $request->hasPreviousSession() ? $request->getSession() : null;
+
+        if ($session === null || $session->isStarted() === false) {
+            return;
+        }
+
+        $session->save();
+
+        $params = session_get_cookie_params();
+
+        $event->getResponse()->headers->setCookie(new Cookie(
+            $session->getName(),
+            $session->getId(),
+            $params['lifetime'] === 0 ? 0 : time() + $params['lifetime'],
+            $params['path'],
+            $params['domain'],
+            $params['secure'],
+            $params['httponly']
+        ));
     }
 
     /**

@@ -31,7 +31,7 @@ class VersionGenerator implements VersionGeneratorInterface
      *
      * @return int
      */
-    public function generateNewCmsVersion($idCmsPage)
+    public function generateNewCmsVersion(int $idCmsPage): int
     {
         $cmsVersionEntity = $this->queryContainer->queryCmsVersionByIdPage($idCmsPage)->findOne();
 
@@ -47,7 +47,7 @@ class VersionGenerator implements VersionGeneratorInterface
      *
      * @return string
      */
-    public function generateNewCmsVersionName($versionNumber)
+    public function generateNewCmsVersionName(int $versionNumber): string
     {
         return sprintf('v. %d', $versionNumber);
     }
@@ -57,7 +57,7 @@ class VersionGenerator implements VersionGeneratorInterface
      *
      * @return string
      */
-    public function generateReferenceCmsVersionName($versionNumber)
+    public function generateReferenceCmsVersionName(int $versionNumber): string
     {
         return sprintf('copy of v. %d', $versionNumber);
     }

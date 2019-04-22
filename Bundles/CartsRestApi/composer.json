@@ -10,23 +10,31 @@
     "spryker/customers-rest-api-extension": "^1.0.0",
     "spryker/glue-application": "^1.8.0",
     "spryker/glue-application-extension": "^1.0.0",
-    "spryker/kernel": "^3.22.0",
+    "spryker/kernel": "^3.29.0",
     "spryker/persistent-cart": "^1.2.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/quote": "^2.1.0",
+    "spryker/quote": "^2.5.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/zed-request": "^3.4.0"
+    "spryker/uuid-behavior": "^1.0.0",
+    "spryker/zed-request": "^3.6.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/uuid-behavior": "Used to generate UUIDs for the cart entities."
+    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
+    "spryker/rest-request-validator": "If you want to use rest request validation.",
+    "spryker/uuid": "If you want to generate UUIDs for existing entities."
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

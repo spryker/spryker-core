@@ -1,0 +1,20 @@
+namespace: SprykerTest\Service\Container
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Business:
+        path: .
+        class_name: ContainerTester
+        modules:
+            enabled:
+                - Asserts

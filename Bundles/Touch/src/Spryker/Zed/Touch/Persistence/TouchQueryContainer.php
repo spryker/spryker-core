@@ -10,6 +10,7 @@ namespace Spryker\Zed\Touch\Persistence;
 use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
@@ -216,6 +217,27 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         }
 
         $query->filterByFkTouch($touchIds, Criteria::EQUAL);
+
+        return $query;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $itemType
+     * @param string $itemEvent
+     * @param array $itemIds
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    public function queryTouchEntriesByItemTypeAndItemEventAndItemIds(string $itemType, string $itemEvent, array $itemIds): SpyTouchQuery
+    {
+        $query = $this->getFactory()->createTouchQuery()
+            ->filterByItemType($itemType)
+            ->filterByItemEvent($itemEvent)
+            ->filterByItemId($itemIds, Criteria::IN);
 
         return $query;
     }
