@@ -13,7 +13,7 @@ use Spryker\Shared\Session\Exception\SessionHandlerNotFoundInSessionHandlerPoolE
 class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
 {
     /**
-     * @var array
+     * @var \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerPluginInterface[]|\SessionHandlerInterface[]
      */
     protected $sessionHandler = [];
 
@@ -26,8 +26,6 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
     }
 
     /**
-     * @deprecated Stack of handlers should be passed to the constructor
-     *
      * @param \SessionHandlerInterface $sessionHandler
      * @param string $sessionHandlerName
      *
@@ -74,7 +72,7 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
     protected function setupSessionHandlersFromPlugins(array $sessionHandlerPlugins): void
     {
         foreach ($sessionHandlerPlugins as $sessionHandlerPlugin) {
-            $this->sessionHandler[$sessionHandlerPlugin->getSessionHandlerName()] = $sessionHandlerPlugin->getSessionHandler();
+            $this->addHandler($sessionHandlerPlugin, $sessionHandlerPlugin->getSessionHandlerName());
         }
     }
 }

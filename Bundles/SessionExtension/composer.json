@@ -7,8 +7,6 @@
     "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

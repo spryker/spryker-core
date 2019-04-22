@@ -13,33 +13,33 @@ interface SessionRedisToRedisClientInterface
 {
     /**
      * @param string $connectionKey
-     * @param mixed $key
+     * @param string $key
      *
-     * @return string
+     * @return string|null
      */
-    public function get(string $connectionKey, $key);
+    public function get(string $connectionKey, string $key): ?string;
 
     /**
      * @param string $connectionKey
-     * @param mixed $key
-     * @param mixed $seconds
-     * @param mixed $value
+     * @param string $key
+     * @param int $seconds
+     * @param string $value
      *
-     * @return int
+     * @return bool
      */
-    public function setex(string $connectionKey, $key, $seconds, $value);
+    public function setex(string $connectionKey, string $key, int $seconds, string $value): bool;
 
     /**
      * @param string $connectionKey
-     * @param mixed $key
-     * @param mixed $value
-     * @param mixed|null $expireResolution
-     * @param mixed|null $expireTTL
-     * @param mixed|null $flag
+     * @param string $key
+     * @param string $value
+     * @param string|null $expireResolution
+     * @param int|null $expireTTL
+     * @param string|null $flag
      *
-     * @return mixed
+     * @return bool
      */
-    public function set(string $connectionKey, $key, $value, $expireResolution = null, $expireTTL = null, $flag = null);
+    public function set(string $connectionKey, string $key, string $value, ?string $expireResolution = null, ?int $expireTTL = null, ?string $flag = null): bool;
 
     /**
      * @param string $connectionKey
@@ -47,39 +47,38 @@ interface SessionRedisToRedisClientInterface
      *
      * @return int
      */
-    public function del(string $connectionKey, $keys);
+    public function del(string $connectionKey, array $keys): int;
 
     /**
      * @param string $connectionKey
-     * @param mixed $script
-     * @param mixed $numkeys
-     * @param mixed|null $keyOrArg1
-     * @param mixed|null $keyOrArgN
+     * @param string $script
+     * @param int $numKeys
+     * @param array $keysOrArgs
      *
-     * @return mixed
+     * @return bool
      */
-    public function eval(string $connectionKey, $script, $numkeys, $keyOrArg1 = null, $keyOrArgN = null);
-
-    /**
-     * @param string $connectionKey
-     *
-     * @return void
-     */
-    public function connect(string $connectionKey);
+    public function eval(string $connectionKey, string $script, int $numKeys, ...$keysOrArgs): bool;
 
     /**
      * @param string $connectionKey
      *
      * @return void
      */
-    public function disconnect(string $connectionKey);
+    public function connect(string $connectionKey): void;
+
+    /**
+     * @param string $connectionKey
+     *
+     * @return void
+     */
+    public function disconnect(string $connectionKey): void;
 
     /**
      * @param string $connectionKey
      *
      * @return bool
      */
-    public function isConnected(string $connectionKey);
+    public function isConnected(string $connectionKey): bool;
 
     /**
      * @param string $connectionKey
@@ -87,31 +86,31 @@ interface SessionRedisToRedisClientInterface
      *
      * @return array
      */
-    public function mget(string $connectionKey, $keys);
+    public function mget(string $connectionKey, array $keys): array;
 
     /**
      * @param string $connectionKey
      * @param array $dictionary
      *
-     * @return mixed
+     * @return bool
      */
-    public function mset(string $connectionKey, $dictionary);
+    public function mset(string $connectionKey, array $dictionary): bool;
 
     /**
      * @param string $connectionKey
-     * @param mixed|null $section
+     * @param string|null $section
      *
      * @return array
      */
-    public function info(string $connectionKey, $section = null);
+    public function info(string $connectionKey, ?string $section = null): array;
 
     /**
      * @param string $connectionKey
-     * @param mixed $pattern
+     * @param string $pattern
      *
      * @return array
      */
-    public function keys(string $connectionKey, $pattern);
+    public function keys(string $connectionKey, string $pattern): array;
 
     /**
      * @param string $connectionKey

@@ -12,42 +12,87 @@ namespace Spryker\Shared\SessionRedis;
  */
 interface SessionRedisConstants
 {
+    /**
+     * Specification:
+     * - Defines a ttl value for Yves session data.
+     *
+     * @api
+     */
     public const YVES_SESSION_TIME_TO_LIVE = 'SESSION:YVES_SESSION_TIME_TO_LIVE';
 
     /**
      * Specification:
-     * - Defines a custom configuration for \Predis\Client when used as Yves session storage.
+     * - Defines an array of DSN strings (describing multiple instances, sentinels) to be used for Redis replication/cluster mode.
      * - This configuration is used exclusively when set, e.g. no other storage configuration will be used for the client.
      *
      * @api
      */
-    public const YVES_SESSION_PREDIS_CLIENT_CONFIGURATION = 'SESSION:YVES_SESSION_PREDIS_CLIENT_CONFIGURATION';
+    public const YVES_SESSION_REDIS_DATA_SOURCE_NAMES = 'SESSION_REDIS:YVES_SESSION_REDIS_DATA_SOURCE_NAMES';
 
     /**
      * Specification:
-     * - Defines custom options for \Predis\Client when used as Yves session storage.
+     * - Defines custom client options for Redis when used as Yves session storage.
      *
      * @api
      */
-    public const YVES_SESSION_PREDIS_CLIENT_OPTIONS = 'SESSION:YVES_SESSION_PREDIS_CLIENT_OPTIONS';
+    public const YVES_SESSION_REDIS_CLIENT_OPTIONS = 'SESSION:YVES_SESSION_PREDIS_CLIENT_OPTIONS';
 
+    /**
+     * Specification:
+     * - Defines a protocol (tcp:// or redis://) for Redis connection when used as Yves session storage.
+     *
+     * @api
+     */
     public const YVES_SESSION_REDIS_PROTOCOL = 'SESSION:YVES_SESSION_REDIS_PROTOCOL';
+
+    /**
+     * Specification:
+     * - Defines a password for Redis connection when used as Yves session storage.
+     *
+     * @api
+     */
     public const YVES_SESSION_REDIS_PASSWORD = 'SESSION:YVES_SESSION_REDIS_PASSWORD';
+
+    /**
+     * Specification:
+     * - Defines a host for Redis connection when used as Yves session storage.
+     *
+     * @api
+     */
     public const YVES_SESSION_REDIS_HOST = 'SESSION:YVES_SESSION_REDIS_HOST';
+
+    /**
+     * Specification:
+     * - Defines a port for Redis connection when used as Yves session storage.
+     *
+     * @api
+     */
     public const YVES_SESSION_REDIS_PORT = 'SESSION:YVES_SESSION_REDIS_PORT';
+
+    /**
+     * Specification:
+     * - Defines a database for Redis connection when used as Yves session storage.
+     *
+     * @api
+     */
     public const YVES_SESSION_REDIS_DATABASE = 'SESSION:YVES_SESSION_REDIS_DATABASE';
 
+    /**
+     * Specification:
+     * - Defines a ttl value for Zed session data.
+     *
+     * @api
+     */
     public const ZED_SESSION_TIME_TO_LIVE = 'SESSION:ZED_SESSION_TIME_TO_LIVE';
-    public const ZED_SESSION_STORAGE_CONNECTION_CONFIGURATION = 'SESSION:ZED_SESSION_STORAGE_CONNECTION_CONFIGURATION';
 
     /**
      * Specification:
-     * - Defines a custom configuration for \Predis\Client when used as Zed session storage.
+     * - Defines an array of DSN strings (describing multiple instances, sentinels) to be used for Redis replication/cluster mode.
      * - This configuration is used exclusively when set, e.g. no other storage configuration will be used for the client.
      *
      * @api
      */
-    public const ZED_SESSION_PREDIS_CLIENT_CONFIGURATION = 'SESSION:ZED_SESSION_PREDIS_CLIENT_CONFIGURATION';
+    public const ZED_SESSION_REDIS_DATA_SOURCE_NAMES = 'SESSION_REDIS:ZED_SESSION_REDIS_DATA_SOURCE_NAMES';
 
     /**
      * Specification:
@@ -55,12 +100,46 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const ZED_SESSION_PREDIS_CLIENT_OPTIONS = 'SESSION:ZED_SESSION_PREDIS_CLIENT_OPTIONS';
+    public const ZED_SESSION_REDIS_CLIENT_OPTIONS = 'SESSION:ZED_SESSION_PREDIS_CLIENT_OPTIONS';
 
+    /**
+     * Specification:
+     * - Defines a protocol (tcp:// or redis://) for Redis connection when used as Zed session storage.
+     *
+     * @api
+     */
     public const ZED_SESSION_REDIS_PROTOCOL = 'SESSION:ZED_SESSION_REDIS_PROTOCOL';
+
+    /**
+     * Specification:
+     * - Defines a host for Redis connection when used as Yves session storage.
+     *
+     * @api
+     */
     public const ZED_SESSION_REDIS_HOST = 'SESSION:ZED_SESSION_REDIS_HOST';
+
+    /**
+     * Specification:
+     * - Defines a port for Redis connection when used as Yves session storage.
+     *
+     * @api
+     */
     public const ZED_SESSION_REDIS_PORT = 'SESSION:ZED_SESSION_REDIS_PORT';
+
+    /**
+     * Specification:
+     * - Defines a password for Redis connection when used as Yves session storage.
+     *
+     * @api
+     */
     public const ZED_SESSION_REDIS_PASSWORD = 'SESSION:ZED_SESSION_REDIS_PASSWORD';
+
+    /**
+     * Specification:
+     * - Defines a database for Redis connection when used as Yves session storage.
+     *
+     * @api
+     */
     public const ZED_SESSION_REDIS_DATABASE = 'SESSION:ZED_SESSION_REDIS_DATABASE';
 
     public const LOCKING_TIMEOUT_MILLISECONDS = 'SESSION:LOCKING_TIMEOUT_MILLISECONDS';

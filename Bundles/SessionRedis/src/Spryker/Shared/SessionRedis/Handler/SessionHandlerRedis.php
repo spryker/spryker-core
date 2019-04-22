@@ -7,8 +7,8 @@
 
 namespace Spryker\Shared\SessionRedis\Handler;
 
-use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
+use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 class SessionHandlerRedis implements SessionHandlerInterface
@@ -23,9 +23,9 @@ class SessionHandlerRedis implements SessionHandlerInterface
     protected $redisClient;
 
     /**
-     * @var string
+     * @var \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface
      */
-    protected $keyPrefix = 'session';
+    protected $keyBuilder;
 
     /**
      * @var string
@@ -44,12 +44,14 @@ class SessionHandlerRedis implements SessionHandlerInterface
 
     /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     * @param int $lifetime
+     * @param \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface $keyBuilder
      * @param \Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface $monitoringService
+     * @param int $lifetime
      */
-    public function __construct(SessionRedisWrapperInterface $redisClient, $lifetime, SessionRedisToMonitoringServiceInterface $monitoringService)
+    public function __construct(SessionRedisWrapperInterface $redisClient, SessionKeyBuilderInterface $keyBuilder, SessionRedisToMonitoringServiceInterface $monitoringService, $lifetime)
     {
         $this->redisClient = $redisClient;
+        $this->keyBuilder = $keyBuilder;
         $this->lifetime = $lifetime;
         $this->monitoringService = $monitoringService;
     }
@@ -60,11 +62,11 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function open($savePath, $sessionName): bool
+    public function open(string $savePath, string $sessionName): bool
     {
         $this->redisClient->connect();
 
-        return true;
+        return $this->redisClient->isConnected();
     }
 
     /**
@@ -74,15 +76,15 @@ class SessionHandlerRedis implements SessionHandlerInterface
     {
         $this->redisClient->disconnect();
 
-        return true;
+        return !$this->redisClient->isConnected();
     }
 
     /**
      * @param string $sessionId
      *
-     * @return string|null
+     * @return string
      */
-    public function read($sessionId): ?string
+    public function read(string $sessionId): string
     {
         $key = $this->buildSessionKey($sessionId);
         $startTime = microtime(true);
@@ -98,7 +100,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function write($sessionId, $sessionData): bool
+    public function write(string $sessionId, string $sessionData): bool
     {
         $key = $this->buildSessionKey($sessionId);
 
@@ -110,20 +112,20 @@ class SessionHandlerRedis implements SessionHandlerInterface
         $result = $this->redisClient->setex($key, $this->lifetime, json_encode($sessionData));
         $this->monitoringService->addCustomParameter(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
-        return $result ? true : false;
+        return $result;
     }
 
     /**
-     * @param int|string $sessionId
+     * @param string $sessionId
      *
      * @return bool
      */
-    public function destroy($sessionId): bool
+    public function destroy(string $sessionId): bool
     {
         $key = $this->buildSessionKey($sessionId);
 
         $startTime = microtime(true);
-        $this->redisClient->del($key);
+        $this->redisClient->del([$key]);
         $this->monitoringService->addCustomParameter(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
         return true;
@@ -134,7 +136,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function gc($maxLifetime): bool
+    public function gc(int $maxLifetime): bool
     {
         return true;
     }
@@ -146,6 +148,6 @@ class SessionHandlerRedis implements SessionHandlerInterface
      */
     protected function buildSessionKey(string $sessionId): string
     {
-        return sprintf('%s:%s', $this->keyPrefix, $sessionId);
+        return $this->keyBuilder->buildSessionKey($sessionId);
     }
 }

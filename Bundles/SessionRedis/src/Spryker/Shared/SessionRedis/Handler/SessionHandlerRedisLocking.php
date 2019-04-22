@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\SessionRedis\Handler;
 
-use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
@@ -68,7 +67,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function open($savePath, $sessionName): bool
+    public function open(string $savePath, string $sessionName): bool
     {
         return $this->redisClient->isConnected();
     }
@@ -90,7 +89,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return string
      */
-    public function read($sessionId): string
+    public function read(string $sessionId): string
     {
         if (!$this->locker->lock($this->keyBuilder->buildSessionKey($sessionId))) {
             throw new LockCouldNotBeAcquiredException(
@@ -102,39 +101,9 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
             );
         }
 
-        $sessionData = $this
-            ->redisClient
-            ->get($this->keyBuilder->buildSessionKey($sessionId));
+        $sessionData = $this->redisClient->get($this->keyBuilder->buildSessionKey($sessionId));
 
         return $this->normalizeSessionData($sessionData);
-    }
-
-    /**
-     * @param string $sessionData
-     *
-     * @return string
-     */
-    protected function normalizeSessionData($sessionData): string
-    {
-        if (!$sessionData) {
-            return '';
-        }
-
-        return $this->tryDecodeLegacySession($sessionData);
-    }
-
-    /**
-     * @param string $sessionData
-     *
-     * @return string
-     */
-    protected function tryDecodeLegacySession($sessionData)
-    {
-        if (substr($sessionData, 0, 1) === '"') {
-            return json_decode($sessionData, true);
-        }
-
-        return $sessionData;
     }
 
     /**
@@ -143,13 +112,9 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function write($sessionId, $data)
+    public function write(string $sessionId, string $data): bool
     {
-        $result = $this
-            ->redisClient
-            ->setex($this->keyBuilder->buildSessionKey($sessionId), $this->ttlSeconds, $data);
-
-        return ($result ? true : false);
+        return $this->redisClient->setex($this->keyBuilder->buildSessionKey($sessionId), $this->ttlSeconds, $data);
     }
 
     /**
@@ -157,7 +122,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function destroy($sessionId)
+    public function destroy(string $sessionId): bool
     {
         $this->redisClient->del([$this->keyBuilder->buildSessionKey($sessionId)]);
         $this->locker->unlockCurrent();
@@ -166,12 +131,46 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     }
 
     /**
-     * @param int|string $maxLifeTime
+     * @param int $maxLifeTime
      *
      * @return bool
      */
-    public function gc($maxLifeTime)
+    public function gc(int $maxLifeTime): bool
     {
         return true;
+    }
+
+    /**
+     * @param string|null $sessionData
+     *
+     * @return string
+     */
+    protected function normalizeSessionData(?string $sessionData = null): string
+    {
+        if (!$sessionData) {
+            return '';
+        }
+
+        $sessionData = $this->tryDecodeLegacySession($sessionData);
+
+        if ($sessionData === null) {
+            return '';
+        }
+
+        return $sessionData;
+    }
+
+    /**
+     * @param string $sessionData
+     *
+     * @return string|null
+     */
+    protected function tryDecodeLegacySession(string $sessionData): ?string
+    {
+        if (substr($sessionData, 0, 1) === '"') {
+            return json_decode($sessionData, true);
+        }
+
+        return $sessionData;
     }
 }

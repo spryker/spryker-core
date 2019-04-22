@@ -10,89 +10,88 @@ namespace Spryker\Shared\SessionRedis\Redis;
 interface SessionRedisWrapperInterface
 {
     /**
-     * @param mixed $key
+     * @param string $key
      *
-     * @return string
+     * @return string|null
      */
-    public function get($key);
+    public function get(string $key): ?string;
 
     /**
-     * @param mixed $key
-     * @param mixed $seconds
-     * @param mixed $value
+     * @param string $key
+     * @param int $seconds
+     * @param string $value
      *
-     * @return int
+     * @return bool
      */
-    public function setex($key, $seconds, $value);
+    public function setex(string $key, int $seconds, string $value): bool;
 
     /**
-     * @param mixed $key
-     * @param mixed $value
-     * @param mixed|null $expireResolution
-     * @param mixed|null $expireTTL
-     * @param mixed|null $flag
+     * @param string $key
+     * @param string $value
+     * @param string|null $expireResolution
+     * @param int|null $expireTTL
+     * @param string|null $flag
      *
-     * @return mixed
+     * @return bool
      */
-    public function set($key, $value, $expireResolution = null, $expireTTL = null, $flag = null);
+    public function set(string $key, string $value, ?string $expireResolution = null, ?int $expireTTL = null, ?string $flag = null): bool;
 
     /**
      * @param array $keys
      *
      * @return int
      */
-    public function del($keys);
+    public function del(array $keys): int;
 
     /**
-     * @param mixed $script
-     * @param mixed $numkeys
-     * @param mixed|null $keyOrArg1
-     * @param mixed|null $keyOrArgN
+     * @param string $script
+     * @param int $numKeys
+     * @param array $keysOrArgs
      *
-     * @return mixed
+     * @return bool
      */
-    public function eval($script, $numkeys, $keyOrArg1 = null, $keyOrArgN = null);
+    public function eval(string $script, int $numKeys, ...$keysOrArgs): bool;
 
     /**
      * @return void
      */
-    public function connect();
+    public function connect(): void;
 
     /**
      * @return void
      */
-    public function disconnect();
+    public function disconnect(): void;
 
     /**
      * @return bool
      */
-    public function isConnected();
+    public function isConnected(): bool;
 
     /**
      * @param array $keys
      *
      * @return array
      */
-    public function mget($keys);
+    public function mget(array $keys): array;
 
     /**
      * @param array $dictionary
      *
-     * @return mixed
+     * @return bool
      */
-    public function mset($dictionary);
+    public function mset(array $dictionary): bool;
 
     /**
-     * @param mixed|null $section
+     * @param string|null $section
      *
      * @return array
      */
-    public function info($section = null);
+    public function info(?string $section = null): array;
 
     /**
-     * @param mixed $pattern
+     * @param string $pattern
      *
      * @return array
      */
-    public function keys($pattern);
+    public function keys(string $pattern);
 }

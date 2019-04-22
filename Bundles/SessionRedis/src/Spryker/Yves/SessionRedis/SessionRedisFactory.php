@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SessionRedis;
+namespace Spryker\Yves\SessionRedis;
 
-use SessionHandlerInterface;
-use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\SessionRedis\Handler\SessionHandlerFactory;
 use Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientInterface;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
-use Spryker\Shared\SessionRedis\Handler\AbstractSessionHandlerFactory;
+use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactory;
+use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactoryInterface;
+use Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapper;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
+use Spryker\Yves\Kernel\AbstractFactory;
 
 /**
- * @method \Spryker\Client\SessionRedis\SessionRedisConfig getConfig()
+ * @method \Spryker\Yves\SessionRedis\SessionRedisConfig getConfig()
  */
 class SessionRedisFactory extends AbstractFactory
 {
     /**
-     * @return \SessionHandlerInterface
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
      */
     public function createSessionRedisHandler(): SessionHandlerInterface
     {
@@ -32,7 +32,7 @@ class SessionRedisFactory extends AbstractFactory
     }
 
     /**
-     * @return \SessionHandlerInterface
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
      */
     public function createSessionHandlerRedisLocking(): SessionHandlerInterface
     {
@@ -54,9 +54,9 @@ class SessionRedisFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\SessionRedis\Handler\AbstractSessionHandlerFactory
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerFactoryInterface
      */
-    public function createSessionHandlerFactory(): AbstractSessionHandlerFactory
+    public function createSessionHandlerFactory(): SessionHandlerFactoryInterface
     {
         return new SessionHandlerFactory(
             $this->getMonitoringService(),

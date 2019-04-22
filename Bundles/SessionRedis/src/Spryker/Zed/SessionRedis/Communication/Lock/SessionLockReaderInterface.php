@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SessionRedis\Communication\Handler\Lock;
+namespace Spryker\Zed\SessionRedis\Communication\Lock;
 
 interface SessionLockReaderInterface
 {

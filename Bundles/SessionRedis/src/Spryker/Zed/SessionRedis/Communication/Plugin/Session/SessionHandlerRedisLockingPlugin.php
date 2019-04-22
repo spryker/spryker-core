@@ -7,16 +7,13 @@
 
 namespace Spryker\Zed\SessionRedis\Communication\Plugin\Session;
 
-use SessionHandlerInterface;
-use Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerPluginInterface;
+use Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\SessionRedisConfig;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\SessionRedis\Communication\SessionRedisCommunicationFactory getFactory()
  * @method \Spryker\Zed\SessionRedis\SessionRedisConfig getConfig()
  */
-class SessionHandlerRedisLockingPlugin extends AbstractPlugin implements SessionHandlerPluginInterface
+class SessionHandlerRedisLockingPlugin extends AbstractSessionHandlerRedisPlugin
 {
     /**
      * @api
@@ -29,11 +26,9 @@ class SessionHandlerRedisLockingPlugin extends AbstractPlugin implements Session
     }
 
     /**
-     * @api
-     *
-     * @return \SessionHandlerInterface
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
      */
-    public function getSessionHandler(): SessionHandlerInterface
+    protected function getSessionHandler(): SessionHandlerInterface
     {
         return $this->getFactory()->createSessionHandlerRedisLocking();
     }

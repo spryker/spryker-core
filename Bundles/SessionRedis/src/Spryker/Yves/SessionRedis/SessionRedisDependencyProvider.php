@@ -5,27 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SessionRedis;
+namespace Spryker\Yves\SessionRedis;
 
-use Spryker\Client\Kernel\AbstractDependencyProvider;
-use Spryker\Client\Kernel\Container;
 use Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientBridge;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceBridge;
+use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Yves\Kernel\Container;
 
 /**
- * @method \Spryker\Client\SessionRedis\SessionRedisConfig getConfig()
+ * @method \Spryker\Yves\SessionRedis\SessionRedisConfig getConfig()
  */
-class SessionRedisDependencyProvider extends AbstractDependencyProvider
+class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_MONITORING = 'SERVICE_MONITORING';
     public const CLIENT_REDIS = 'CLIENT_REDIS';
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Client\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container): Container
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->addMonitoringService($container);
         $container = $this->addRedisClient($container);
@@ -34,9 +34,9 @@ class SessionRedisDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Client\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addRedisClient(Container $container): Container
     {
@@ -50,9 +50,9 @@ class SessionRedisDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Client\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
     protected function addMonitoringService(Container $container): Container
     {

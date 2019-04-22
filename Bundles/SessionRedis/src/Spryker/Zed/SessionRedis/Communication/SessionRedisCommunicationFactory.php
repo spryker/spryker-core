@@ -7,18 +7,18 @@
 
 namespace Spryker\Zed\SessionRedis\Communication;
 
-use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientInterface;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
-use Spryker\Shared\SessionRedis\Handler\AbstractSessionHandlerFactory;
+use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactory;
+use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactoryInterface;
+use Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapper;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\SessionRedis\Communication\Handler\Lock\SessionLockReader;
-use Spryker\Zed\SessionRedis\Communication\Handler\Lock\SessionLockReaderInterface;
-use Spryker\Zed\SessionRedis\Communication\Handler\Lock\SessionLockReleaser;
-use Spryker\Zed\SessionRedis\Communication\Handler\Lock\SessionLockReleaserInterface;
-use Spryker\Zed\SessionRedis\Communication\Handler\SessionHandlerFactory;
+use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReader;
+use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReaderInterface;
+use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReleaser;
+use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReleaserInterface;
 use Spryker\Zed\SessionRedis\SessionRedisConfig;
 use Spryker\Zed\SessionRedis\SessionRedisDependencyProvider;
 
@@ -28,7 +28,7 @@ use Spryker\Zed\SessionRedis\SessionRedisDependencyProvider;
 class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \SessionHandlerInterface
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
      */
     public function createSessionRedisHandler(): SessionHandlerInterface
     {
@@ -38,7 +38,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \SessionHandlerInterface
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
      */
     public function createSessionHandlerRedisLocking(): SessionHandlerInterface
     {
@@ -48,14 +48,14 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\SessionRedis\Communication\Handler\Lock\SessionLockReleaserInterface
+     * @return \Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReleaserInterface
      */
     public function createSessionLockReleaser(): SessionLockReleaserInterface
     {
         $redisClient = $this->createSessionRedisWrapper();
 
         return new SessionLockReleaser(
-            $this->createSessionHandlerFactory()->createSpinLockLocker($redisClient),
+            $this->createSessionHandlerFactory()->createSessionSpinLockLocker($redisClient),
             $this->createRedisSessionLockReader($redisClient)
         );
     }
@@ -63,7 +63,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
      *
-     * @return \Spryker\Zed\SessionRedis\Communication\Handler\Lock\SessionLockReaderInterface
+     * @return \Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReaderInterface
      */
     public function createRedisSessionLockReader(SessionRedisWrapperInterface $redisClient): SessionLockReaderInterface
     {
@@ -86,9 +86,9 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\SessionRedis\Handler\AbstractSessionHandlerFactory
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerFactoryInterface
      */
-    public function createSessionHandlerFactory(): AbstractSessionHandlerFactory
+    public function createSessionHandlerFactory(): SessionHandlerFactoryInterface
     {
         return new SessionHandlerFactory(
             $this->getMonitoringService(),

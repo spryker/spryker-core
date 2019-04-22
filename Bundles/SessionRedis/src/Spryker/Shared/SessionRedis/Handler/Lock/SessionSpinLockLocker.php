@@ -10,7 +10,7 @@ namespace Spryker\Shared\SessionRedis\Handler\Lock;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
-class SpinLockLocker implements SessionLockerInterface
+class SessionSpinLockLocker implements SessionLockerInterface
 {
     public const DEFAULT_TIMEOUT_MILLISECONDS = 10000;
     public const DEFAULT_RETRY_DELAY_MICROSECONDS = 10000;
@@ -21,7 +21,7 @@ class SpinLockLocker implements SessionLockerInterface
     public const LOG_METRIC_LOCK_WAIT_TIME = 'Redis/Session_lock_wait_time';
 
     /**
-     * @var \\Spryker\Shared\SessionRedis\Wrapper\SessionRedisWrapperInterface
+     * @var \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface
      */
     protected $redisClient;
 
@@ -62,7 +62,7 @@ class SpinLockLocker implements SessionLockerInterface
 
     /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
-     * @param \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface
+     * @param \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface $keyBuilder
      * @param int|null $timeoutMilliseconds
      * @param int|null $retryDelayMicroseconds
      * @param int|null $lockTtlMilliseconds
@@ -79,6 +79,57 @@ class SpinLockLocker implements SessionLockerInterface
         $this->timeoutMilliseconds = $this->getTimeoutMilliseconds($timeoutMilliseconds);
         $this->retryDelayMicroseconds = $retryDelayMicroseconds ?: static::DEFAULT_RETRY_DELAY_MICROSECONDS;
         $this->lockTtlMilliseconds = $this->getLockTtlMilliseconds($lockTtlMilliseconds);
+    }
+
+    /**
+     * @param string $sessionId
+     *
+     * @return bool
+     */
+    public function lock($sessionId): bool
+    {
+        $this->token = $this->generateToken();
+        $this->sessionId = $sessionId;
+
+        return $this->waitForLock();
+    }
+
+    /**
+     * @return void
+     */
+    public function unlockCurrent(): void
+    {
+        if (!$this->isLocked) {
+            return;
+        }
+
+        $this->unlock($this->sessionId, $this->token);
+
+        $this->sessionId = null;
+        $this->token = null;
+        $this->isLocked = false;
+    }
+
+    /**
+     * @param string $sessionId
+     * @param string $token
+     *
+     * @return bool
+     */
+    public function unlock($sessionId, $token): bool
+    {
+        $lockKey = $this->generateLockKey($sessionId);
+
+        $result = $this
+            ->redisClient
+            ->eval(
+                $this->getUnlockScript(),
+                1,
+                $lockKey,
+                $token
+            );
+
+        return ($result ? true : false);
     }
 
     /**
@@ -124,19 +175,6 @@ class SpinLockLocker implements SessionLockerInterface
         }
 
         return $defaultMilliseconds;
-    }
-
-    /**
-     * @param string $sessionId
-     *
-     * @return bool
-     */
-    public function lock($sessionId): bool
-    {
-        $this->token = $this->generateToken();
-        $this->sessionId = $sessionId;
-
-        return $this->waitForLock();
     }
 
     /**
@@ -189,44 +227,6 @@ class SpinLockLocker implements SessionLockerInterface
             ->set($lockKey, $this->token, 'PX', $this->lockTtlMilliseconds, 'NX');
 
         return (bool)$result;
-    }
-
-    /**
-     * @return void
-     */
-    public function unlockCurrent()
-    {
-        if (!$this->isLocked) {
-            return;
-        }
-
-        $this->unlock($this->sessionId, $this->token);
-
-        $this->sessionId = null;
-        $this->token = null;
-        $this->isLocked = false;
-    }
-
-    /**
-     * @param string $sessionId
-     * @param string $token
-     *
-     * @return bool
-     */
-    public function unlock($sessionId, $token): bool
-    {
-        $lockKey = $this->generateLockKey($sessionId);
-
-        $result = $this
-            ->redisClient
-            ->eval(
-                $this->getUnlockScript(),
-                1,
-                $lockKey,
-                $token
-            );
-
-        return ($result ? true : false);
     }
 
     /**

@@ -7,44 +7,64 @@
 
 namespace Spryker\Shared\SessionRedis\Handler;
 
-use SessionHandlerInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilder;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
-use Spryker\Shared\SessionRedis\Handler\Lock\SpinLockLocker;
+use Spryker\Shared\SessionRedis\Handler\Lock\SessionSpinLockLocker;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 use Spryker\Shared\SessionRedis\SessionRedisConstants;
 
-abstract class AbstractSessionHandlerFactory
+class SessionHandlerFactory implements SessionHandlerFactoryInterface
 {
+    /**
+     * @var \Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface
+     */
+    protected $monitoringService;
+
+    /**
+     * @var int
+     */
+    protected $sessionLifeTime;
+
+    /**
+     * @param \Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface $monitoringService
+     * @param int $sessionLifeTime
+     */
+    public function __construct(SessionRedisToMonitoringServiceInterface $monitoringService, int $sessionLifeTime)
+    {
+        $this->monitoringService = $monitoringService;
+        $this->sessionLifeTime = $sessionLifeTime;
+    }
+
     /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
      *
-     * @return \SessionHandlerInterface
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
      */
     public function createSessionRedisHandler(SessionRedisWrapperInterface $redisClient): SessionHandlerInterface
     {
         return new SessionHandlerRedis(
             $redisClient,
-            $this->getSessionLifetime(),
-            $this->getMonitoringService()
+            $this->createSessionKeyBuilder(),
+            $this->monitoringService,
+            $this->sessionLifeTime
         );
     }
 
     /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
      *
-     * @return \SessionHandlerInterface
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
      */
     public function createSessionHandlerRedisLocking(SessionRedisWrapperInterface $redisClient): SessionHandlerInterface
     {
         return new SessionHandlerRedisLocking(
             $redisClient,
-            $this->createSpinLockLocker($redisClient),
+            $this->createSessionSpinLockLocker($redisClient),
             $this->createSessionKeyBuilder(),
-            $this->getSessionLifetime()
+            $this->sessionLifeTime
         );
     }
 
@@ -53,9 +73,9 @@ abstract class AbstractSessionHandlerFactory
      *
      * @return \Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface
      */
-    public function createSpinLockLocker(SessionRedisWrapperInterface $redisClient): SessionLockerInterface
+    public function createSessionSpinLockLocker(SessionRedisWrapperInterface $redisClient): SessionLockerInterface
     {
-        return new SpinLockLocker(
+        return new SessionSpinLockLocker(
             $redisClient,
             $this->createSessionKeyBuilder(),
             Config::get(SessionRedisConstants::LOCKING_TIMEOUT_MILLISECONDS, 0),
@@ -71,14 +91,4 @@ abstract class AbstractSessionHandlerFactory
     {
         return new SessionKeyBuilder();
     }
-
-    /**
-     * @return \Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface
-     */
-    abstract protected function getMonitoringService(): SessionRedisToMonitoringServiceInterface;
-
-    /**
-     * @return int
-     */
-    abstract protected function getSessionLifetime(): int;
 }

@@ -9,11 +9,11 @@ namespace Spryker\Shared\SessionExtension\Dependency\Plugin;
 
 use SessionHandlerInterface;
 
-interface SessionHandlerPluginInterface
+interface SessionHandlerPluginInterface extends SessionHandlerInterface
 {
     /**
      * Specification:
-     *  - Gets the session handler string identifier.
+     * - Gets a session handler string identifier.
      *
      * @api
      *
@@ -23,11 +23,85 @@ interface SessionHandlerPluginInterface
 
     /**
      * Specification:
-     *  - Gets the session handler implementation.
+     * - Closes a session.
+     *
+     * @link https://php.net/manual/en/sessionhandlerinterface.close.php
      *
      * @api
      *
-     * @return \SessionHandlerInterface
+     * @return bool
      */
-    public function getSessionHandler(): SessionHandlerInterface;
+    public function close(): bool;
+
+    /**
+     * Specification:
+     * - Destroys a session.
+     *
+     * @link https://php.net/manual/en/sessionhandlerinterface.destroy.php
+     *
+     * @api
+     *
+     * @param string $sessionId
+     *
+     * @return bool
+     */
+    public function destroy($sessionId): bool;
+
+    /**
+     * Specification:
+     * - Cleanup old sessions.
+     *
+     * @link https://php.net/manual/en/sessionhandlerinterface.gc.php
+     *
+     * @api
+     *
+     * @param int $maxLifetime
+     *
+     * @return bool
+     */
+    public function gc($maxLifetime): bool;
+
+    /**
+     * Specification:
+     * - Initializes session.
+     *
+     * @link https://php.net/manual/en/sessionhandlerinterface.open.php
+     *
+     * @api
+     *
+     * @param string $savePath
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function open($savePath, $name): bool;
+
+    /**
+     * Specification:
+     * - Reads session data.
+     *
+     * @link https://php.net/manual/en/sessionhandlerinterface.read.php
+     *
+     * @api
+     *
+     * @param string $session_id The session id to read data for.
+     *
+     * @return string
+     */
+    public function read($session_id): string;
+
+    /**
+     * Specification:
+     * - Writes session data.
+     *
+     * @link https://php.net/manual/en/sessionhandlerinterface.write.php
+     *
+     * @api
+     *
+     * @param string $sessionId
+     * @param string $sessionData
+     *
+     * @return bool
+     */
+    public function write($sessionId, $sessionData): bool;
 }

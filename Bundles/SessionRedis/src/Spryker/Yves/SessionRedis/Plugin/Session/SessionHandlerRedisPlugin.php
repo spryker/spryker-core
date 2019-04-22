@@ -5,17 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SessionRedis\Plugin\Session;
+namespace Spryker\Yves\SessionRedis\Plugin\Session;
 
-use SessionHandlerInterface;
-use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerPluginInterface;
+use Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\SessionRedisConfig;
 
-/**
- * @method \Spryker\Client\SessionRedis\SessionRedisFactory getFactory()
- */
-class SessionHandlerRedisPlugin extends AbstractPlugin implements SessionHandlerPluginInterface
+class SessionHandlerRedisPlugin extends AbstractSessionHandlerRedisPlugin
 {
     /**
      * {@inheritdoc}
@@ -30,13 +25,9 @@ class SessionHandlerRedisPlugin extends AbstractPlugin implements SessionHandler
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return \SessionHandlerInterface
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
      */
-    public function getSessionHandler(): SessionHandlerInterface
+    protected function getSessionHandler(): SessionHandlerInterface
     {
         return $this->getFactory()->createSessionRedisHandler();
     }
