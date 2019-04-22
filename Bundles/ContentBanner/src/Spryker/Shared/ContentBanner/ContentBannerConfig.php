@@ -32,14 +32,14 @@ class ContentBannerConfig extends AbstractSharedConfig
     protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
 
     /**
-     * Content item banner top-title template identifier
-     */
-    protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
-
-    /**
      * Content item banner default template name
      */
     protected const WIDGET_TEMPLATE_NAME_DEFAULT = 'content_banner.template.default';
+
+    /**
+     * Content item banner top-title template identifier
+     */
+    protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 
     /**
      * Content item banner top-title template name
