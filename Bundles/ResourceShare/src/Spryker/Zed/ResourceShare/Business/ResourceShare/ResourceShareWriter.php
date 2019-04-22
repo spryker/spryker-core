@@ -137,12 +137,11 @@ class ResourceShareWriter implements ResourceShareWriterInterface
         }
 
         $resourceShareTransfer = $this->resourceShareEntityManager->createResourceShare($resourceShareTransfer);
+        $resourceShareTransfer = $this->resourceShareExpander->executeResourceDataExpanderStrategyPlugins($resourceShareTransfer);
 
-        $resourceShareResponseTransfer = (new ResourceShareResponseTransfer())
+        return (new ResourceShareResponseTransfer())
             ->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
-
-        return $this->resourceShareExpander->executeResourceDataExpanderStrategyPlugins($resourceShareResponseTransfer);
     }
 
     /**

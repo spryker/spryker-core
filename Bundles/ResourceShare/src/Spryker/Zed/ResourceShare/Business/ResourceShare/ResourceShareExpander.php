@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
-use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 
 class ResourceShareExpander implements ResourceShareExpanderInterface
 {
@@ -26,16 +26,13 @@ class ResourceShareExpander implements ResourceShareExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
-     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer
      */
     public function executeResourceDataExpanderStrategyPlugins(
-        ResourceShareResponseTransfer $resourceShareResponseTransfer
-    ): ResourceShareResponseTransfer {
-        $resourceShareResponseTransfer->requireResourceShare();
-        $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
-
+        ResourceShareTransfer $resourceShareTransfer
+    ): ResourceShareTransfer {
         foreach ($this->resourceShareResourceDataExpanderStrategyPlugins as $resourceDataExpanderStrategyPlugin) {
             if (!$resourceDataExpanderStrategyPlugin->isApplicable($resourceShareTransfer)) {
                 continue;
@@ -45,6 +42,6 @@ class ResourceShareExpander implements ResourceShareExpanderInterface
             break;
         }
 
-        return $resourceShareResponseTransfer->setResourceShare($resourceShareTransfer);
+        return $resourceShareTransfer;
     }
 }

@@ -10,7 +10,6 @@ namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 
 class ResourceShareActivator implements ResourceShareActivatorInterface
 {
@@ -73,29 +72,11 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
             return $resourceShareResponseTransfer;
         }
 
-        $resourceShareRequestTransfer->setResourceShare(
-            $this->executeResourceDataExpanderStrategyPlugins($resourceShareTransfer)
-        );
+        $resourceShareRequestTransfer->setResourceShare($resourceShareTransfer);
 
         return $this->executeResourceShareActivatorStrategyPlugins(
             $resourceShareRequestTransfer
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareTransfer
-     */
-    protected function executeResourceDataExpanderStrategyPlugins(ResourceShareTransfer $resourceShareTransfer): ResourceShareTransfer
-    {
-        $resourceShareResponseTransfer = $this->resourceShareExpander->executeResourceDataExpanderStrategyPlugins(
-            (new ResourceShareResponseTransfer())->setResourceShare($resourceShareTransfer)
-        );
-
-        return $resourceShareResponseTransfer->getIsSuccessful()
-            ? $resourceShareResponseTransfer->getResourceShare()
-            : $resourceShareTransfer;
     }
 
     /**

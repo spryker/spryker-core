@@ -78,6 +78,8 @@ class ResourceShareReader implements ResourceShareReaderInterface
             return $resourceShareResponseTransfer;
         }
 
+        $resourceShareTransfer = $this->resourceShareExpander->executeResourceDataExpanderStrategyPlugins($resourceShareTransfer);
+
         return $resourceShareResponseTransfer->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
     }

@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
-use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 
 interface ResourceShareExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
-     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     * @return \Generated\Shared\Transfer\ResourceShareTransfer
      */
     public function executeResourceDataExpanderStrategyPlugins(
-        ResourceShareResponseTransfer $resourceShareResponseTransfer
-    ): ResourceShareResponseTransfer;
+        ResourceShareTransfer $resourceShareTransfer
+    ): ResourceShareTransfer;
 }
