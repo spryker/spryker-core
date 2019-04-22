@@ -53,6 +53,8 @@ class CheckoutResponseMapper implements CheckoutResponseMapperInterface
         RestCheckoutResponseTransfer $restCheckoutResponseTransfer,
         RestCheckoutResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
     ): RestCheckoutResponseAttributesTransfer {
+        $restCheckoutResponseAttributesTransfer->fromArray($restCheckoutResponseTransfer->toArray(), true);
+
         foreach ($this->checkoutResponseMapperPlugins as $checkoutResponseMapperPlugin) {
             $restCheckoutResponseAttributesTransfer = $checkoutResponseMapperPlugin
                 ->mapRestCheckoutResponseTransferToRestCheckoutResponseAttributesTransfer(
