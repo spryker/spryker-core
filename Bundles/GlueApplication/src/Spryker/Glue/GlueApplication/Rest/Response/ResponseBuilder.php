@@ -104,7 +104,7 @@ class ResponseBuilder implements ResponseBuilderInterface
         $id = $restRequest->getResource()->getId();
         $method = $restRequest->getMetadata()->getMethod();
 
-        return count($data) === 1 && (($id && $id !== 'mine') || $method === Request::METHOD_POST);
+        return count($data) === 1 && ($id || $method === Request::METHOD_POST);
     }
 
     /**
