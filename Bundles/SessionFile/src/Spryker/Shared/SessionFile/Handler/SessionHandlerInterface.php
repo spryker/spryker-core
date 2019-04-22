@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\SessionRedis\Handler;
+namespace Spryker\Shared\SessionFile\Handler;
 
 interface SessionHandlerInterface
 {
@@ -37,7 +37,7 @@ interface SessionHandlerInterface
     public function open(string $savePath, string $name): bool;
 
     /**
-     * @param string $sessionId
+     * @param string $sessionId The session id to read data for.
      *
      * @return string
      */

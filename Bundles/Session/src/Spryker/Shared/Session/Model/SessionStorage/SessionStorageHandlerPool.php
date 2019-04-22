@@ -26,6 +26,8 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
     }
 
     /**
+     * @deprecated Will be removed with next major release.
+     *
      * @param \SessionHandlerInterface $sessionHandler
      * @param string $sessionHandlerName
      *
@@ -72,7 +74,7 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
     protected function setupSessionHandlersFromPlugins(array $sessionHandlerPlugins): void
     {
         foreach ($sessionHandlerPlugins as $sessionHandlerPlugin) {
-            $this->addHandler($sessionHandlerPlugin, $sessionHandlerPlugin->getSessionHandlerName());
+            $this->sessionHandler[$sessionHandlerPlugin->getSessionHandlerName()] = $sessionHandlerPlugin;
         }
     }
 }

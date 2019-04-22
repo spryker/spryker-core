@@ -18,7 +18,7 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const YVES_SESSION_TIME_TO_LIVE = 'SESSION:YVES_SESSION_TIME_TO_LIVE';
+    public const YVES_SESSION_TIME_TO_LIVE = 'SESSION_REDIS:YVES_SESSION_TIME_TO_LIVE';
 
     /**
      * Specification:
@@ -35,7 +35,7 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const YVES_SESSION_REDIS_CLIENT_OPTIONS = 'SESSION:YVES_SESSION_PREDIS_CLIENT_OPTIONS';
+    public const YVES_SESSION_REDIS_CLIENT_OPTIONS = 'SESSION_REDIS:YVES_SESSION_PREDIS_CLIENT_OPTIONS';
 
     /**
      * Specification:
@@ -43,7 +43,7 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const YVES_SESSION_REDIS_PROTOCOL = 'SESSION:YVES_SESSION_REDIS_PROTOCOL';
+    public const YVES_SESSION_REDIS_PROTOCOL = 'SESSION_REDIS:YVES_SESSION_REDIS_PROTOCOL';
 
     /**
      * Specification:
@@ -51,7 +51,7 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const YVES_SESSION_REDIS_PASSWORD = 'SESSION:YVES_SESSION_REDIS_PASSWORD';
+    public const YVES_SESSION_REDIS_PASSWORD = 'SESSION_REDIS:YVES_SESSION_REDIS_PASSWORD';
 
     /**
      * Specification:
@@ -59,7 +59,7 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const YVES_SESSION_REDIS_HOST = 'SESSION:YVES_SESSION_REDIS_HOST';
+    public const YVES_SESSION_REDIS_HOST = 'SESSION_REDIS:YVES_SESSION_REDIS_HOST';
 
     /**
      * Specification:
@@ -67,7 +67,7 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const YVES_SESSION_REDIS_PORT = 'SESSION:YVES_SESSION_REDIS_PORT';
+    public const YVES_SESSION_REDIS_PORT = 'SESSION_REDIS:YVES_SESSION_REDIS_PORT';
 
     /**
      * Specification:
@@ -75,7 +75,7 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const YVES_SESSION_REDIS_DATABASE = 'SESSION:YVES_SESSION_REDIS_DATABASE';
+    public const YVES_SESSION_REDIS_DATABASE = 'SESSION_REDIS:YVES_SESSION_REDIS_DATABASE';
 
     /**
      * Specification:
@@ -83,7 +83,7 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const ZED_SESSION_TIME_TO_LIVE = 'SESSION:ZED_SESSION_TIME_TO_LIVE';
+    public const ZED_SESSION_TIME_TO_LIVE = 'SESSION_REDIS:ZED_SESSION_TIME_TO_LIVE';
 
     /**
      * Specification:
@@ -100,7 +100,7 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const ZED_SESSION_REDIS_CLIENT_OPTIONS = 'SESSION:ZED_SESSION_PREDIS_CLIENT_OPTIONS';
+    public const ZED_SESSION_REDIS_CLIENT_OPTIONS = 'SESSION_REDIS:ZED_SESSION_PREDIS_CLIENT_OPTIONS';
 
     /**
      * Specification:
@@ -108,7 +108,7 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const ZED_SESSION_REDIS_PROTOCOL = 'SESSION:ZED_SESSION_REDIS_PROTOCOL';
+    public const ZED_SESSION_REDIS_PROTOCOL = 'SESSION_REDIS:ZED_SESSION_REDIS_PROTOCOL';
 
     /**
      * Specification:
@@ -116,7 +116,7 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const ZED_SESSION_REDIS_HOST = 'SESSION:ZED_SESSION_REDIS_HOST';
+    public const ZED_SESSION_REDIS_HOST = 'SESSION_REDIS:ZED_SESSION_REDIS_HOST';
 
     /**
      * Specification:
@@ -124,7 +124,7 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const ZED_SESSION_REDIS_PORT = 'SESSION:ZED_SESSION_REDIS_PORT';
+    public const ZED_SESSION_REDIS_PORT = 'SESSION_REDIS:ZED_SESSION_REDIS_PORT';
 
     /**
      * Specification:
@@ -132,7 +132,7 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const ZED_SESSION_REDIS_PASSWORD = 'SESSION:ZED_SESSION_REDIS_PASSWORD';
+    public const ZED_SESSION_REDIS_PASSWORD = 'SESSION_REDIS:ZED_SESSION_REDIS_PASSWORD';
 
     /**
      * Specification:
@@ -140,9 +140,29 @@ interface SessionRedisConstants
      *
      * @api
      */
-    public const ZED_SESSION_REDIS_DATABASE = 'SESSION:ZED_SESSION_REDIS_DATABASE';
+    public const ZED_SESSION_REDIS_DATABASE = 'SESSION_REDIS:ZED_SESSION_REDIS_DATABASE';
 
-    public const LOCKING_TIMEOUT_MILLISECONDS = 'SESSION:LOCKING_TIMEOUT_MILLISECONDS';
-    public const LOCKING_RETRY_DELAY_MICROSECONDS = 'SESSION:LOCKING_RETRY_DELAY_MICROSECONDS';
-    public const LOCKING_LOCK_TTL_MILLISECONDS = 'SESSION:LOCKING_LOCK_TTL_MILLISECONDS';
+    /**
+     * Specification:
+     * - Sets the session locking timeout in milliseconds.
+     *
+     * @api
+     */
+    public const LOCKING_TIMEOUT_MILLISECONDS = 'SESSION_REDIS:LOCKING_TIMEOUT_MILLISECONDS';
+
+    /**
+     * Specification:
+     * - Sets the delay between attempts to acquire the lock in microseconds.
+     *
+     * @api
+     */
+    public const LOCKING_RETRY_DELAY_MICROSECONDS = 'SESSION_REDIS:LOCKING_RETRY_DELAY_MICROSECONDS';
+
+    /**
+     * Specification:
+     * - Sets the time to live for a lock in milliseconds.
+     *
+     * @api
+     */
+    public const LOCKING_LOCK_TTL_MILLISECONDS = 'SESSION_REDIS:LOCKING_LOCK_TTL_MILLISECONDS';
 }
