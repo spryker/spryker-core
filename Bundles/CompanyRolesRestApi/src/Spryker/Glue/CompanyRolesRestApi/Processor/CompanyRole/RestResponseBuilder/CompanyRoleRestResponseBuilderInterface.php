@@ -15,6 +15,11 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface CompanyRoleRestResponseBuilderInterface
 {
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createEmptyCompanyRoleRestResponse(): RestResponseInterface;
+
+    /**
      * @param string $companyRoleUuid
      * @param \Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer|null $companyRoleTransfer
