@@ -65,14 +65,15 @@ class ResourceShareWriter implements ResourceShareWriterInterface
     public function generateResourceShare(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         $resourceShareRequestTransfer->requireResourceShare();
-
-        $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
 
         $existingResourceShareTransfer = $this->findResourceShare($resourceShareTransfer);
         if ($existingResourceShareTransfer) {
-            return $resourceShareResponseTransfer->setIsSuccessful(true)
-                ->setResourceShare($existingResourceShareTransfer);
+            $resourceShareResponseTransfer = $this->resourceShareValidator->validateResourceShareTransfer($existingResourceShareTransfer);
+            if ($resourceShareResponseTransfer->getIsSuccessful()) {
+                return $resourceShareResponseTransfer->setIsSuccessful(true)
+                    ->setResourceShare($existingResourceShareTransfer);
+            }
         }
 
         $resourceShareResponseTransfer = $this->resourceShareValidator->validateResourceShareTransfer($resourceShareTransfer);
