@@ -572,11 +572,11 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     {
         return [
             [7, 1, 1.25, 1000, 5600],
-            [7, 1.5, 1.25, 1000, 4000],
+            [7, 1.5, 1.25, 1000, 3733],
             [7, 1, 1.25, 100, 560],
-            [7, 1.5, 1.25, 100, 400],
+            [7, 1.5, 1.25, 100, 373],
             [7, 1, 1.25, 10, 56],
-            [7, 1.5, 1.25, 10, 40],
+            [7, 1.5, 1.25, 10, 37],
             [7, 1, 1.25, 1, 6],
             [10, 1, 5, 1, 2],
             [13, 1, 7, 1000, 1857],
@@ -675,13 +675,13 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     {
         return [
             'general rule int stock' => [true, 1, 2, 1, 1, null, 1, true],
-            'general rule float stock' => [true, 1, 2, 1.5, 1, null, 1, true],
+            'general rule float stock' => [true, 1, 2, 1, 1.5, null, 0.5, true],
             'min equals new amount int stock' => [true, 1, 7, 1, 7, null, 1, true],
-            'min equals new amount float stock' => [true, 1.5, 7, 1.5, 1, null, 1.5, true],
+            'min equals new amount float stock' => [true, 1, 8.5, 1, 8.5, null, 0.5, true],
             'max equals new amount int stock' => [true, 1, 5, 1, 5, 5,    1, true],
             'max equals new amount float stock' => [true, 1, 3, 1.5, 2, 3,    1, true],
             'interval matches new amount int stock' => [true, 1, 7, 1, 0, null, 7, true],
-            'interval matches new amount float stock' => [true, 1, 7, 1.5, 0, null, 5, true],
+            'interval matches new amount float stock' => [true, 1, 9, 1.5, 0, null, 6, true],
             'min, max, interval matches new amount int stock' => [false, 1, 5, 1, 7, 7,    7, true],
             'min, max, interval matches new amount float stock' => [false, 1.5, 5, 1.5, 7, 7,    7, true],
             'min above new amount int stock' => [false, 1, 5, 1, 8, null, 1, true],
