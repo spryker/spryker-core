@@ -50,7 +50,7 @@ interface RedisAdapterInterface
      *
      * @return bool
      */
-    public function eval(string $script, int $numKeys, ...$keysOrArgs): bool;
+    public function eval(string $script, int $numKeys, $keysOrArgs): bool;
 
     /**
      * @return void
