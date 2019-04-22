@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Controller;
 
+use Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -47,12 +48,13 @@ class CompanyBusinessUnitsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$restRequest->getResource()->getId()) {
+        if (!$restRequest->getResource()->getId()
+            || $restRequest->getResource()->getId() !== CompanyBusinessUnitsRestApiConfig::CURRENT_USER_RESOURCE_IDENTIFIER) {
             return $this->getFactory()
                 ->createCompanyBusinessUnitRestResponseBuilder()
                 ->createResourceNotImplementedError();
         }
 
-        return $this->getFactory()->createCompanyBusinessUnitReader()->getCompanyBusinessUnit($restRequest);
+        return $this->getFactory()->createCompanyBusinessUnitReader()->getCurrentUserCompanyBusinessUnit($restRequest);
     }
 }
