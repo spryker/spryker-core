@@ -26,15 +26,23 @@ class CompanyUserProvider implements CompanyUserProviderInterface
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface[]
+     */
+    protected $oauthCompanyUserIdentifierExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCompanyUserFacadeInterface $companyUserFacade
      * @param \Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface[] $oauthCompanyUserIdentifierExpanderPlugins
      */
     public function __construct(
         OauthCompanyUserToCompanyUserFacadeInterface $companyUserFacade,
-        OauthCompanyUserToUtilEncodingServiceInterface $utilEncodingService
+        OauthCompanyUserToUtilEncodingServiceInterface $utilEncodingService,
+        array $oauthCompanyUserIdentifierExpanderPlugins
     ) {
         $this->companyUserFacade = $companyUserFacade;
         $this->utilEncodingService = $utilEncodingService;
+        $this->oauthCompanyUserIdentifierExpanderPlugins = $oauthCompanyUserIdentifierExpanderPlugins;
     }
 
     /**
@@ -87,10 +95,32 @@ class CompanyUserProvider implements CompanyUserProviderInterface
             ->setIdCustomer($companyUserTransfer->getCustomer()->getIdCustomer())
             ->setIdCompanyUser($companyUserTransfer->getUuid());
 
+        $companyUserIdentifierTransfer = $this->executeExpanderPlugins($companyUserIdentifierTransfer, $companyUserTransfer);
+
         $oauthUserTransfer
             ->setUserIdentifier($this->utilEncodingService->encodeJson($companyUserIdentifierTransfer->toArray()))
             ->setIsSuccess(true);
 
         return $oauthUserTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserIdentifierTransfer $companyUserIdentifierTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserIdentifierTransfer
+     */
+    protected function executeExpanderPlugins(
+        CompanyUserIdentifierTransfer $companyUserIdentifierTransfer,
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserIdentifierTransfer {
+        foreach ($this->oauthCompanyUserIdentifierExpanderPlugins as $companyUserIdentifierExpanderPlugin) {
+            $companyUserIdentifierTransfer = $companyUserIdentifierExpanderPlugin->expandCompanyUserIdentifier(
+                $companyUserIdentifierTransfer,
+                $companyUserTransfer
+            );
+        }
+
+        return $companyUserIdentifierTransfer;
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\OauthPermission\Business;
 
+use Generated\Shared\Transfer\CompanyUserIdentifierTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
@@ -27,4 +29,20 @@ interface OauthPermissionFacadeInterface
         CustomerIdentifierTransfer $customerIdentifierTransfer,
         CustomerTransfer $customerTransfer
     ): CustomerIdentifierTransfer;
+
+    /**
+     * Specification:
+     *  - Expands the CompanyUserIdentifierTransfer with permissions collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserIdentifierTransfer $companyUserIdentifierTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserIdentifierTransfer
+     */
+    public function expandCompanyUserIdentifier(
+        CompanyUserIdentifierTransfer $companyUserIdentifierTransfer,
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserIdentifierTransfer;
 }

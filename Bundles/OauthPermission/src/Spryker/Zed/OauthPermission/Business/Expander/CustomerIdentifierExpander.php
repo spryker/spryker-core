@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\OauthPermission\Business\Expander;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToCompanyUserFacadeInterface;
 use Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToPermissionFacadeInterface;
 
 class CustomerIdentifierExpander implements CustomerIdentifierExpanderInterface
@@ -19,11 +21,20 @@ class CustomerIdentifierExpander implements CustomerIdentifierExpanderInterface
     protected $permissionFacade;
 
     /**
-     * @param \Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToPermissionFacadeInterface $permissionFacade
+     * @var \Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToCompanyUserFacadeInterface
      */
-    public function __construct(OauthPermissionToPermissionFacadeInterface $permissionFacade)
-    {
+    protected $companyUserFacade;
+
+    /**
+     * @param \Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToPermissionFacadeInterface $permissionFacade
+     * @param \Spryker\Zed\OauthPermission\Dependency\Facade\OauthPermissionToCompanyUserFacadeInterface $companyUserFacade
+     */
+    public function __construct(
+        OauthPermissionToPermissionFacadeInterface $permissionFacade,
+        OauthPermissionToCompanyUserFacadeInterface $companyUserFacade
+    ) {
         $this->permissionFacade = $permissionFacade;
+        $this->companyUserFacade = $companyUserFacade;
     }
 
     /**
@@ -40,8 +51,16 @@ class CustomerIdentifierExpander implements CustomerIdentifierExpanderInterface
             return $customerIdentifierTransfer;
         }
 
+        $companyUserTransfer = $this->companyUserFacade->findActiveCompanyUserByUuid(
+            (new CompanyUserTransfer())->setUuid($customerIdentifierTransfer->getIdCompanyUser())
+        );
+
+        if (!$companyUserTransfer) {
+            return $customerIdentifierTransfer;
+        }
+
         $customerIdentifierTransfer->setPermissions(
-            $this->permissionFacade->getPermissionsByIdentifier($customerIdentifierTransfer->getIdCompanyUser())
+            $this->permissionFacade->getPermissionsByIdentifier((string)$companyUserTransfer->getIdCompanyUser())
         );
 
         return $customerIdentifierTransfer;

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\OauthPermission\Business;
 
+use Generated\Shared\Transfer\CompanyUserIdentifierTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -33,5 +35,22 @@ class OauthPermissionFacade extends AbstractFacade implements OauthPermissionFac
         return $this->getFactory()
             ->createCustomerIdentifierExpander()
             ->expandCustomerIdentifierWithPermissions($customerIdentifierTransfer, $customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserIdentifierTransfer $companyUserIdentifierTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserIdentifierTransfer
+     */
+    public function expandCompanyUserIdentifier(CompanyUserIdentifierTransfer $companyUserIdentifierTransfer, CompanyUserTransfer $companyUserTransfer): CompanyUserIdentifierTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyUserIdentifierExpander()
+            ->expandCompanyUserIdentifier($companyUserIdentifierTransfer, $companyUserTransfer);
     }
 }

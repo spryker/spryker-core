@@ -36,7 +36,7 @@ class RestUserMapper implements RestUserMapperInterface
      */
     public function map(RestUserTransfer $restUserTransfer, RestRequestInterface $restRequest): RestUserTransfer
     {
-        $uuidCompanyUser = (string)$restUserTransfer->getUuidCompanyUser();
+        $uuidCompanyUser = (string)$restUserTransfer->getIdCompanyUser();
         if (!$uuidCompanyUser) {
             return $restUserTransfer;
         }
