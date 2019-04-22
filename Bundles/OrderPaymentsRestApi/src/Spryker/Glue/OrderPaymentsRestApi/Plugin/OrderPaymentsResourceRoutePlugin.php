@@ -27,7 +27,7 @@ class OrderPaymentsResourceRoutePlugin extends AbstractPlugin implements Resourc
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection->addPost('post', true);
+        $resourceRouteCollection->addPost('post', false);
 
         return $resourceRouteCollection;
     }

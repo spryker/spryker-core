@@ -69,7 +69,7 @@ class OrderPaymentUpdater implements OrderPaymentUpdaterInterface
         if (!$updateOrderPaymentResponseTransfer->getIsSuccessful()) {
             return $this->orderPaymentRestResponseBuilder->buildErrorRestResponse(
                 OrderPaymentsRestApiConfig::RESPONSE_CODE_ORDER_PAYMENT_IS_NOT_UPDATED,
-                Response::HTTP_INTERNAL_SERVER_ERROR,
+                Response::HTTP_UNPROCESSABLE_ENTITY,
                 OrderPaymentsRestApiConfig::RESPONSE_MESSAGE_ORDER_PAYMENT_IS_NOT_UPDATED
             );
         }
