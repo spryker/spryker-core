@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CompanyRolesRestApi\Controller;
 
-use Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -54,12 +53,6 @@ class CompanyRolesResourceController extends AbstractController
                 ->createResourceNotImplementedError();
         }
 
-        if ($restRequest->getResource()->getId() === CompanyRolesRestApiConfig::CURRENT_USER_RESOURCE_IDENTIFIER) {
-            return $this->getFactory()
-                ->createCompanyRoleReader()
-                ->getCurrentUserCompanyRoles($restRequest);
-        }
-
-        return $this->getFactory()->createCompanyRoleReader()->getCompanyRole($restRequest);
+        return $this->getFactory()->createCompanyRoleReader()->getCurrentUserCompanyRole($restRequest);
     }
 }

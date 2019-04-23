@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer;
+use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiConfig;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Dependency\Client\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressClientInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Mapper\CompanyBusinessUnitAddressMapperInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilderInterface;
@@ -54,21 +55,17 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCurrentUserCompanyBusinessUnitAddresses(RestRequestInterface $restRequest): RestResponseInterface
+    public function getCurrentUserCompanyBusinessUnitAddress(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$restRequest->getRestUser()->getIdCompany()) {
+        if (!$restRequest->getResource()->getId()) {
             return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressIdMissingError();
         }
 
-        $companyUnitAddressCollectionTransfer = $this->companyBusinessUnitAddressClient->getCompanyUnitAddressCollection(
-            (new CompanyUnitAddressCriteriaFilterTransfer())->setIdCompany($restRequest->getRestUser()->getIdCompany())
-        );
-
-        if (!$companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()->count()) {
-            return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressNotFoundError();
+        if ($this->isCurrentUserResourceIdentifier($restRequest)) {
+            return $this->getCurrentUserCompanyBusinessUnitAddresses($restRequest);
         }
 
-        return $this->createResponse($companyUnitAddressCollectionTransfer);
+        return $this->getCurrentUserCompanyBusinessUnitAddressByUuid($restRequest);
     }
 
     /**
@@ -76,15 +73,10 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCompanyBusinessUnitAddress(RestRequestInterface $restRequest): RestResponseInterface
+    protected function getCurrentUserCompanyBusinessUnitAddressByUuid(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $companyBusinessUnitAddressUuid = $restRequest->getResource()->getId();
-        if (!$companyBusinessUnitAddressUuid) {
-            return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressIdMissingError();
-        }
-
         $companyUnitAddressResponseTransfer = $this->companyBusinessUnitAddressClient->findCompanyBusinessUnitAddressByUuid(
-            (new CompanyUnitAddressTransfer())->setUuid($companyBusinessUnitAddressUuid)
+            (new CompanyUnitAddressTransfer())->setUuid($restRequest->getResource()->getId())
         );
 
         if (!$companyUnitAddressResponseTransfer->getIsSuccessful()
@@ -100,7 +92,32 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
             );
 
         return $this->companyBusinessUnitAddressRestResponseBuilder
-            ->createCompanyBusinessUnitAddressRestResponse($companyBusinessUnitAddressUuid, $restCompanyBusinessUnitAddressesAttributesTransfer);
+            ->createCompanyBusinessUnitAddressRestResponse(
+                $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer()->getUuid(),
+                $restCompanyBusinessUnitAddressesAttributesTransfer
+            );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getCurrentUserCompanyBusinessUnitAddresses(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        if (!$restRequest->getRestUser()->getIdCompany()) {
+            return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressIdMissingError();
+        }
+
+        $companyUnitAddressCollectionTransfer = $this->companyBusinessUnitAddressClient->getCompanyUnitAddressCollection(
+            (new CompanyUnitAddressCriteriaFilterTransfer())->setIdCompany($restRequest->getRestUser()->getIdCompany())
+        );
+
+        if (!$companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()->count()) {
+            return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressNotFoundError();
+        }
+
+        return $this->createResponse($companyUnitAddressCollectionTransfer);
     }
 
     /**
@@ -143,5 +160,15 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         }
 
         return $companyBusinessUnitResponse;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function isCurrentUserResourceIdentifier(RestRequestInterface $restRequest): bool
+    {
+        return $restRequest->getResource()->getId() === CompanyBusinessUnitAddressesRestApiConfig::CURRENT_USER_RESOURCE_IDENTIFIER;
     }
 }

@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ResponseBuilder implements ResponseBuilderInterface
 {
+    protected const CURRENT_USER_COLLECTION_IDENTIFIER = 'mine';
+
     /**
      * @var string
      */
@@ -104,7 +106,7 @@ class ResponseBuilder implements ResponseBuilderInterface
         $id = $restRequest->getResource()->getId();
         $method = $restRequest->getMetadata()->getMethod();
 
-        return count($data) === 1 && ($id || $method === Request::METHOD_POST);
+        return count($data) === 1 && (($id && $id !== static::CURRENT_USER_COLLECTION_IDENTIFIER) || $method === Request::METHOD_POST);
     }
 
     /**
@@ -201,13 +203,16 @@ class ResponseBuilder implements ResponseBuilderInterface
         $method = $restRequest->getMetadata()->getMethod();
         $idResource = $restRequest->getResource()->getId();
 
-        if ($method === Request::METHOD_GET && $idResource === null) {
+        if ($method === Request::METHOD_GET && ($idResource === null || $this->isCurrentUserCollectionResource($idResource))) {
             $linkParts = [];
             foreach ($restRequest->getParentResources() as $parentResource) {
                 $linkParts[] = $parentResource->getType();
                 $linkParts[] = $parentResource->getId();
             }
             $linkParts[] = $restRequest->getResource()->getType();
+            if ($this->isCurrentUserCollectionResource($idResource)) {
+                $linkParts[] = static::CURRENT_USER_COLLECTION_IDENTIFIER;
+            }
             $queryString = $restRequest->getQueryString();
             if (strlen($queryString)) {
                 $queryString = '?' . $queryString;
@@ -241,5 +246,15 @@ class ResponseBuilder implements ResponseBuilderInterface
         }
 
         return $data;
+    }
+
+    /**
+     * @param string|null $idResource
+     *
+     * @return bool
+     */
+    protected function isCurrentUserCollectionResource(?string $idResource): bool
+    {
+        return $idResource === static::CURRENT_USER_COLLECTION_IDENTIFIER;
     }
 }
