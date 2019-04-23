@@ -71,6 +71,21 @@ class CompanyUserReader implements CompanyUserReaderInterface
     }
 
     /**
+     * @param string $idResource
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getCompanyUserByResourceId(string $idResource, RestRequestInterface $restRequest): RestResponseInterface
+    {
+        if ($idResource === CompanyUsersRestApiConfig::RESOURCE_MINE) {
+            return $this->getCompanyUsersByCustomerReference($restRequest);
+        }
+
+        return $this->getCompanyUser();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

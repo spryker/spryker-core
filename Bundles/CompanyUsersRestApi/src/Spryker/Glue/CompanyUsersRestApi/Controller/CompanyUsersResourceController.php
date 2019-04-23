@@ -39,6 +39,12 @@ class CompanyUsersResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createCompanyUserReader()->getCompanyUsersByCustomerReference($restRequest);
+        $resourceId = $restRequest->getResource()->getId();
+
+        if (!$resourceId) {
+            return $this->getFactory()->getCompanyUserCollection();
+        }
+
+        return $this->getFactory()->createCompanyUserReader()->getCompanyUserByResourceId($resourceId, $restRequest);
     }
 }
