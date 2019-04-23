@@ -123,7 +123,7 @@ class ProductAbstractListContentTermForm extends AbstractType
                 if (!$event->getData()) {
                     return;
                 }
-                // sfForms needs empty values removed to correctly sort a collectionType
+                // Symfony Forms requires removing empty values from CollectionType to get correct items order
                 $ids = array_filter(array_values($event->getData()));
                 $event->setData($ids);
                 $event->getForm()->setData($ids);
