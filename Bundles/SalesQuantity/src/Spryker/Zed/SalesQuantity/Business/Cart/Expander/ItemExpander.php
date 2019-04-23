@@ -8,24 +8,22 @@
 namespace Spryker\Zed\SalesQuantity\Business\Cart\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeInterface;
+use Spryker\Zed\SalesQuantity\Persistence\SalesQuantityRepositoryInterface;
 
 class ItemExpander implements ItemExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeInterface
+     * @var \Spryker\Zed\SalesQuantity\Persistence\SalesQuantityRepositoryInterface
      */
-    protected $productFacade;
+    protected $salesQuantityRepository;
 
     /**
-     * @param \Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\SalesQuantity\Persistence\SalesQuantityRepositoryInterface $salesQuantityRepository
      */
     public function __construct(
-        SalesQuantityToProductFacadeInterface $productFacade
+        SalesQuantityRepositoryInterface $salesQuantityRepository
     ) {
-        $this->productFacade = $productFacade;
+        $this->salesQuantityRepository = $salesQuantityRepository;
     }
 
     /**
@@ -36,33 +34,10 @@ class ItemExpander implements ItemExpanderInterface
     public function expandCartChangeWithIsQuantitySplittable(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $productConcreteTransfer = $this->productFacade->getProductConcrete($itemTransfer->getSku());
-            $this->assertProductConcreteTransfer($productConcreteTransfer);
-            $this->expandItemWithProductConcrete($productConcreteTransfer, $itemTransfer);
+            $isQuantitySplittable = $this->salesQuantityRepository->isProductQuantitySplittable($itemTransfer->getSku());
+            $itemTransfer->setIsQuantitySplittable($isQuantitySplittable);
         }
 
         return $cartChangeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function expandItemWithProductConcrete(ProductConcreteTransfer $productConcreteTransfer, ItemTransfer $itemTransfer): void
-    {
-        $itemTransfer->setIsQuantitySplittable($productConcreteTransfer->getIsQuantitySplittable());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    protected function assertProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): void
-    {
-        $productConcreteTransfer
-            ->requireIsQuantitySplittable();
     }
 }

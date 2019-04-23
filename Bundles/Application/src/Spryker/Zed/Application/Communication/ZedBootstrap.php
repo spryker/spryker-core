@@ -88,20 +88,30 @@ class ZedBootstrap
         // For BC
         if ($this->isInternalRequest() && !$this->isAuthenticationEnabled()) {
             $this->registerServiceProviderForInternalRequest();
+            $this->setupApplication();
 
             return;
         }
         // For BC
         if ($this->isInternalRequest()) {
             $this->registerServiceProviderForInternalRequestWithAuthentication();
+            $this->setupApplication();
 
             return;
         }
 
         $this->registerServiceProvider();
 
-        if ($this->sprykerApplication !== null) {
-            $this->setupApplication();
+        $this->setupApplication();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupApplicationPlugins(): void
+    {
+        foreach ($this->getApplicationPlugins() as $applicationPlugin) {
+            $this->sprykerApplication->registerApplicationPlugin($applicationPlugin);
         }
     }
 
@@ -110,8 +120,8 @@ class ZedBootstrap
      */
     protected function setupApplication(): void
     {
-        foreach ($this->getApplicationPlugins() as $applicationPlugin) {
-            $this->sprykerApplication->registerApplicationPlugin($applicationPlugin);
+        if ($this->sprykerApplication !== null) {
+            $this->setupApplicationPlugins();
         }
     }
 

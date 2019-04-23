@@ -1,0 +1,12 @@
+"Drop timestamps","Zeitstempel entfernen"
+Index,Index
+"Queue Name","Name der Warteschlange"
+"Queue PID","PID der Warteschlange"
+"Queue Processes","Prozesse der Warteschlange"
+"Running Queue Processes","Warteschlangenprozesse werden ausgeführt"
+Score,Score
+"Search Key",Suchschlüssel
+"Search overview",Suchübersicht
+Server,Server
+Type,Typ
+"Worker PID",Worker-PID

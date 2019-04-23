@@ -10,8 +10,8 @@ namespace Spryker\Yves\Price\Plugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
  * @method \Spryker\Yves\Price\PriceFactory getFactory()
@@ -30,7 +30,7 @@ class PriceModeSwitcherServiceProvider extends AbstractPlugin implements Service
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) {
+            $app->extend('twig', function (Environment $twig) {
                 $twig->addFunction(
                     static::$functionName,
                     $this->getPriceModeSwitcher($twig)
@@ -51,15 +51,15 @@ class PriceModeSwitcherServiceProvider extends AbstractPlugin implements Service
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      *
-     * @return \Twig_SimpleFunction
+     * @return \Twig\TwigFunction
      */
-    protected function getPriceModeSwitcher(Twig_Environment $twig)
+    protected function getPriceModeSwitcher(Environment $twig)
     {
         $options = ['is_safe' => ['html']];
 
-        return new Twig_SimpleFunction(static::$functionName, function () use ($twig) {
+        return new TwigFunction(static::$functionName, function () use ($twig) {
             return $twig->render(
                 $this->getTemplatePath(),
                 [

@@ -388,6 +388,8 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * {@inheritdoc}
      *
      * @api

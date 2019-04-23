@@ -195,7 +195,7 @@ class CustomerAccessFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\CustomerAccess\CustomerAccessConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CustomerAccess\CustomerAccessConfig
      */
     protected function createCustomerAccessConfigMock()
     {

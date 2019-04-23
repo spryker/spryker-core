@@ -11,8 +11,8 @@ use Codeception\Test\Unit;
 use Silex\Application;
 use Spryker\Service\UtilDateTime\Model\DateTimeFormatterTwigExtension;
 use Spryker\Service\UtilDateTime\ServiceProvider\DateTimeFormatterServiceProvider;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * Auto-generated group annotations
@@ -46,7 +46,7 @@ class DateTimeFormatterServiceProviderTest extends Unit
     {
         $application = new Application();
         $application['twig'] = function () {
-            return new Twig_Environment(new Twig_Loader_Filesystem());
+            return new Environment(new FilesystemLoader());
         };
 
         return $application;

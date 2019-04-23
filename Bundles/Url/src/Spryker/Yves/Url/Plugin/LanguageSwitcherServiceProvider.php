@@ -11,8 +11,8 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
  * @method \Spryker\Yves\Url\UrlFactory getFactory()
@@ -30,7 +30,7 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) {
+            $app->extend('twig', function (Environment $twig) {
                 $twig->addFunction(
                     $this->createRenderLanguageSwitcherTwigFunction($twig)
                 );
@@ -41,15 +41,15 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      *
-     * @return \Twig_SimpleFunction
+     * @return \Twig\TwigFunction
      */
-    protected function createRenderLanguageSwitcherTwigFunction(Twig_Environment $twig)
+    protected function createRenderLanguageSwitcherTwigFunction(Environment $twig)
     {
         $options = ['is_safe' => ['html']];
 
-        return new Twig_SimpleFunction(static::FUNCTION_RENDER_LANGUAGE_SWITCHER, function (Request $request, $templatePath) use ($twig) {
+        return new TwigFunction(static::FUNCTION_RENDER_LANGUAGE_SWITCHER, function (Request $request, $templatePath) use ($twig) {
             $currentLanguage = $this->getFactory()->getStore()->getCurrentLanguage();
             $currentUrl = $request->getPathInfo();
             $currentUrlStorage = $this->getClient()->findUrl($currentUrl, $this->getLocale());

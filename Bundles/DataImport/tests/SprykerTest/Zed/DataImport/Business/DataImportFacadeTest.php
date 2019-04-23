@@ -100,7 +100,7 @@ class DataImportFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\DataImport\Business\DataImportBusinessFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Business\DataImportBusinessFactory
      */
     private function createDataImportBusinessFactoryMock()
     {
@@ -124,6 +124,6 @@ class DataImportFacadeTest extends Unit
     public function testDumpImporterDumpsAListOfAppliedImporter()
     {
         $dumpedImporter = $this->getFacade()->listImporters();
-        $this->assertInternalType('array', $dumpedImporter);
+        $this->assertIsArray($dumpedImporter);
     }
 }

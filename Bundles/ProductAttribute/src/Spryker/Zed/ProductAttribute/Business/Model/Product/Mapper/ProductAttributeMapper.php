@@ -46,7 +46,7 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKey[]|\Propel\Runtime\Collection\ObjectCollection $metaAttributeCollection
+     * @param array $metaAttributeCollection
      *
      * @return array
      */
@@ -62,7 +62,7 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKey[]|\Propel\Runtime\Collection\ObjectCollection $metaAttributeCollection
+     * @param array $metaAttributeCollection
      *
      * @return array
      */

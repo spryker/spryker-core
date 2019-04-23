@@ -22,6 +22,10 @@ use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencyUpdater;
 use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencyUpdaterInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencyValidator;
 use Spryker\Glue\ProductPricesRestApi\Processor\Currency\CurrencyValidatorInterface;
+use Spryker\Glue\ProductPricesRestApi\Processor\Expander\AbstractProductPricesRelationshipExpander;
+use Spryker\Glue\ProductPricesRestApi\Processor\Expander\AbstractProductPricesRelationshipExpanderInterface;
+use Spryker\Glue\ProductPricesRestApi\Processor\Expander\ConcreteProductPricesRelationshipExpander;
+use Spryker\Glue\ProductPricesRestApi\Processor\Expander\ConcreteProductPricesRelationshipExpanderInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapper;
 use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapperInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\PriceMode\PriceModeUpdater;
@@ -103,6 +107,22 @@ class ProductPricesRestApiFactory extends AbstractFactory
     public function createPriceModeUpdater(): PriceModeUpdaterInterface
     {
         return new PriceModeUpdater($this->getPriceClient());
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductPricesRestApi\Processor\Expander\AbstractProductPricesRelationshipExpanderInterface
+     */
+    public function createAbstractProductPricesRelationshipExpander(): AbstractProductPricesRelationshipExpanderInterface
+    {
+        return new AbstractProductPricesRelationshipExpander($this->createAbstractProductPricesReader());
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductPricesRestApi\Processor\Expander\ConcreteProductPricesRelationshipExpanderInterface
+     */
+    public function createConcreteProductPricesRelationshipExpander(): ConcreteProductPricesRelationshipExpanderInterface
+    {
+        return new ConcreteProductPricesRelationshipExpander($this->createConcreteProductPricesReader());
     }
 
     /**

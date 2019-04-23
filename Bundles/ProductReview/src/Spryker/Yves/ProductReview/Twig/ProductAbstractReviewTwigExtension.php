@@ -10,8 +10,8 @@ namespace Spryker\Yves\ProductReview\Twig;
 use Spryker\Client\ProductReview\ProductReviewClientInterface;
 use Spryker\Shared\Twig\TwigExtension;
 use Spryker\Yves\Kernel\Application;
-use Twig_Environment;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\TwigFunction;
 
 class ProductAbstractReviewTwigExtension extends TwigExtension
 {
@@ -50,35 +50,35 @@ class ProductAbstractReviewTwigExtension extends TwigExtension
     }
 
     /**
-     * @return \Twig_SimpleFunction
+     * @return \Twig\TwigFunction
      */
     protected function createSpyProductAbstractReviewTwigExtension()
     {
-        return new Twig_SimpleFunction(static::FUNCTION_NAME_PRODUCT_ABSTRACT_REVIEW, [$this, 'renderProductAbstractReview'], [
+        return new TwigFunction(static::FUNCTION_NAME_PRODUCT_ABSTRACT_REVIEW, [$this, 'renderProductAbstractReview'], [
             'is_safe' => ['html'],
             'needs_environment' => true,
         ]);
     }
 
     /**
-     * @return \Twig_SimpleFunction
+     * @return \Twig\TwigFunction
      */
     protected function createSpyProductAbstractReviewMaximumRatingTwigExtension()
     {
-        return new Twig_SimpleFunction(static::FUNCTION_NAME_PRODUCT_ABSTRACT_REVIEW_MAXIMUM_RATING, [$this, 'renderProductAbstractReviewMaximumRating'], [
+        return new TwigFunction(static::FUNCTION_NAME_PRODUCT_ABSTRACT_REVIEW_MAXIMUM_RATING, [$this, 'renderProductAbstractReviewMaximumRating'], [
             'is_safe' => ['html'],
             'needs_environment' => true,
         ]);
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      * @param int $idProductAbstract
      * @param string $template
      *
      * @return string
      */
-    public function renderProductAbstractReview(Twig_Environment $twig, $idProductAbstract, $template)
+    public function renderProductAbstractReview(Environment $twig, $idProductAbstract, $template)
     {
         $productAbstractReviewTransfer = $this->productReviewClient->findProductAbstractReviewInStorage($idProductAbstract, $this->getLocale());
 
