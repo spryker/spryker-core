@@ -37,7 +37,7 @@ class DevelopmentFacadeTest extends Unit
     {
         $moduleTransferCollection = $this->getFacade()->getModules();
 
-        $this->assertInternalType('array', $moduleTransferCollection);
+        $this->assertIsArray($moduleTransferCollection);
     }
 
     /**
@@ -64,7 +64,7 @@ class DevelopmentFacadeTest extends Unit
 
         $moduleTransferCollection = $this->getFacade()->getModules($moduleFilterTransfer);
 
-        $this->assertInternalType('array', $moduleTransferCollection);
+        $this->assertIsArray($moduleTransferCollection);
         $this->assertCount($expectedModuleCount, $moduleTransferCollection);
 
         if ($expectedModuleCount === 1) {
@@ -89,7 +89,7 @@ class DevelopmentFacadeTest extends Unit
     {
         $moduleTransferCollection = $this->getFacade()->getProjectModules();
 
-        $this->assertInternalType('array', $moduleTransferCollection);
+        $this->assertIsArray($moduleTransferCollection);
     }
 
     /**
@@ -99,7 +99,7 @@ class DevelopmentFacadeTest extends Unit
     {
         $packageTransferCollection = $this->getFacade()->getPackages();
 
-        $this->assertInternalType('array', $packageTransferCollection);
+        $this->assertIsArray($packageTransferCollection);
     }
 
     /**
@@ -107,7 +107,7 @@ class DevelopmentFacadeTest extends Unit
      */
     public function testGetModuleOverviewReturnsCollection(): void
     {
-        $this->assertInternalType('array', $this->getFacade()->getModuleOverview());
+        $this->assertIsArray($this->getFacade()->getModuleOverview());
     }
 
     /**

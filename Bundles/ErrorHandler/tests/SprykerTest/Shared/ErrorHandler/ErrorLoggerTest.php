@@ -62,7 +62,7 @@ class ErrorLoggerTest extends Unit
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Spryker\Service\Monitoring\MonitoringServiceInterface $monitoringService
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\ErrorHandler\ErrorLogger
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\ErrorHandler\ErrorLogger
      */
     protected function getErrorLoggerMock(LoggerInterface $logger, MonitoringServiceInterface $monitoringService)
     {
@@ -77,7 +77,7 @@ class ErrorLoggerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
     protected function getLoggerMock()
     {
@@ -88,7 +88,7 @@ class ErrorLoggerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Service\Monitoring\MonitoringServiceInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\Monitoring\MonitoringServiceInterface
      */
     protected function getMonitoringServiceMock()
     {

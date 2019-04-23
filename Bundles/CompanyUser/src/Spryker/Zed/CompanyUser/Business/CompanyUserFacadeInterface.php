@@ -18,6 +18,7 @@ interface CompanyUserFacadeInterface
 {
     /**
      * Specification:
+     * - Executes CompanyUserSavePreCheckPluginInterface check plugins before company user create.
      * - Creates a company user
      *
      * @api
@@ -30,6 +31,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Executes CompanyUserSavePreCheckPluginInterface check plugins before initial company user create.
      * - Creates an initial company user
      *
      * @api
@@ -42,6 +44,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Executes CompanyUserSavePreCheckPluginInterface check plugins before company user update.
      * - Updates a company user
      *
      * @api
@@ -108,7 +111,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves company user collection according provided filter.
+     * - Retrieves user companies which can filtered by company ID, user ID and/or active flag.
      * - Ignores company users with anonymised customers.
      *
      * @api
@@ -211,4 +214,63 @@ interface CompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds company user by ID.
+     * - Executes CompanyUserHydrationPluginInterface plugins if company user exists.
+     * - Returns null if company user does not exist.
+     *
+     * @api
+     *
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer;
+
+    /**
+     * Specification:
+     * - Finds active company user by uuid.
+     * - Requires uuid field to be set in CompanyUserTransfer.
+     * - Uuid is not a required field and could be missing.
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided by another module.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByUuid(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer;
+
+    /**
+     * Specification
+     *  - Retrieves active company users collection by company user ids.
+     *  - Checks activity flag in related company and company user.
+     *  - Checks whether related company is approved.
+     *  - Checks whether related customer is not anonymized.
+     *
+     * @api
+     *
+     * @param int[] $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function findActiveCompanyUsersByIds(array $companyUserIds): array;
+
+    /**
+     * Specification
+     *  - Retrieves active company user ids by company ids.
+     *  - Checks activity flag in company user.
+     *  - Checks whether related customer is not anonymized.
+     *
+     * @api
+     *
+     * @param int[] $companyIds
+     *
+     * @return int[]
+     */
+    public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array;
 }

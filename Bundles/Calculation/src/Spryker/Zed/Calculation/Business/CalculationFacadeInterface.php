@@ -22,6 +22,7 @@ interface CalculationFacadeInterface
      *  - Maps Quote to CalculableObject
      *  - Run all calculator plugins
      *  - Maps CalculableObject to Quote
+     *  - Executes `QuotePostRecalculatePluginInterface` stack of plugins.
      *  - Return the updated quote
      *
      * @api
@@ -60,11 +61,13 @@ interface CalculationFacadeInterface
     public function removeTotals(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
+     * @api
+     *
+     * @deprecated Will be removed in the next major version.
+     *
      * Specification:
      *  - Checks if the calculated totals in the quote are still valid/consistent.
      *  - If not valid then adds an error code and message to the response
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer

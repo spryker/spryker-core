@@ -35,7 +35,7 @@ class CollectorExporter
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface
+     * @var \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface|null
      */
     protected $storeFacade;
 

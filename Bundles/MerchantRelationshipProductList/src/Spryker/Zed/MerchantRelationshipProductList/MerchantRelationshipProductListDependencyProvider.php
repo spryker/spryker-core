@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantRelationshipProductList;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToProductListFacadeBridge;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductList\MerchantRelationshipProductListConfig getConfig()
@@ -17,6 +18,7 @@ use Spryker\Zed\Kernel\Container;
 class MerchantRelationshipProductListDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_PRODUCT_LIST = 'PROPEL_QUERY_PRODUCT_LIST';
+    public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -36,10 +38,39 @@ class MerchantRelationshipProductListDependencyProvider extends AbstractBundleDe
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addProductListFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addProductListPropelQuery(Container $container): Container
     {
         $container[static::PROPEL_QUERY_PRODUCT_LIST] = function (Container $container) {
             return SpyProductListQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductListFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRODUCT_LIST] = function (Container $container) {
+            return new MerchantRelationshipProductListToProductListFacadeBridge(
+                $container->getLocator()->productList()->facade()
+            );
         };
 
         return $container;

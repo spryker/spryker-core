@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Quote\Business\Model;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -16,26 +18,25 @@ use Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface;
 class QuoteReader implements QuoteReaderInterface
 {
     /**
-     * @var \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface
-     */
-    protected $quoteEntityManager;
-
-    /**
-     * @var \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
      * @var \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface
      */
     protected $quoteRepository;
 
     /**
-     * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
+     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface[]
      */
-    public function __construct(QuoteRepositoryInterface $quoteRepository)
-    {
+    protected $quoteExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
+     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface[] $quoteExpanderPlugins
+     */
+    public function __construct(
+        QuoteRepositoryInterface $quoteRepository,
+        array $quoteExpanderPlugins
+    ) {
         $this->quoteRepository = $quoteRepository;
+        $this->quoteExpanderPlugins = $quoteExpanderPlugins;
     }
 
     /**
@@ -52,6 +53,8 @@ class QuoteReader implements QuoteReaderInterface
         $quoteResponseTransfer->setIsSuccessful(false);
         $quoteTransfer = $this->quoteRepository
             ->findQuoteByCustomer($customerTransfer->getCustomerReference());
+
+        $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
 
         $quoteResponseTransfer = $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
         if ($quoteTransfer) {
@@ -79,6 +82,8 @@ class QuoteReader implements QuoteReaderInterface
                 $storeTransfer->getIdStore()
             );
 
+        $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
+
         $quoteResponseTransfer = $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
         if ($quoteTransfer) {
             $quoteResponseTransfer->setCustomer($customerTransfer);
@@ -98,6 +103,8 @@ class QuoteReader implements QuoteReaderInterface
         $quoteResponseTransfer->setIsSuccessful(false);
         $quoteTransfer = $this->quoteRepository
             ->findQuoteById($idQuote);
+
+        $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
 
         return $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
     }
@@ -133,12 +140,64 @@ class QuoteReader implements QuoteReaderInterface
             ->setIsSuccessful(false);
         $quoteTransfer = $this->quoteRepository
             ->findQuoteByUuid($quoteTransfer->getUuid());
+
         if (!$quoteTransfer) {
             return $quoteResponseTransfer;
         }
 
+        $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
+
         return $quoteResponseTransfer
             ->setQuoteTransfer($quoteTransfer)
             ->setIsSuccessful(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function getFilteredQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    {
+        $quoteCollectionTransfer = $this->quoteRepository->filterQuoteCollection($quoteCriteriaFilterTransfer);
+        $quoteCollectionTransfer = $this->executeExpandQuotePluginsForQuoteCollection($quoteCollectionTransfer);
+
+        return $quoteCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    protected function executeExpandQuotePluginsForQuoteCollection(QuoteCollectionTransfer $quoteCollectionTransfer): QuoteCollectionTransfer
+    {
+        $expandedQuotesCollection = new QuoteCollectionTransfer();
+
+        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
+            $expandedQuotesCollection->addQuote(
+                $this->executeExpandQuotePlugins($quoteTransfer)
+            );
+        }
+
+        return $expandedQuotesCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    protected function executeExpandQuotePlugins(?QuoteTransfer $quoteTransfer): ?QuoteTransfer
+    {
+        if (!$quoteTransfer) {
+            return null;
+        }
+
+        foreach ($this->quoteExpanderPlugins as $quoteExpanderPlugin) {
+            $quoteTransfer = $quoteExpanderPlugin->expand($quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 }

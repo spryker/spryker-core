@@ -109,4 +109,14 @@ class CompanyUserGuiToCompanyUserFacadeBridge implements CompanyUserGuiToCompany
     {
         return $this->companyUserFacade->countActiveCompanyUsersByIdCustomer($customerTransfer);
     }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer
+    {
+        return $this->companyUserFacade->findCompanyUserById($idCompanyUser);
+    }
 }

@@ -232,7 +232,7 @@ class DiscountPersistTest extends Unit
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|null $discountQueryContainerMock
      * @param \Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface|null $voucherEngineMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountPersist
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountPersist
      */
     protected function createDiscountPersist(
         ?DiscountQueryContainerInterface $discountQueryContainerMock = null,
@@ -268,7 +268,7 @@ class DiscountPersistTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected function createDiscountQueryContainerMock()
     {
@@ -276,7 +276,7 @@ class DiscountPersistTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriter
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriter
      */
     protected function createDiscountStoreRelationWriterMock()
     {
@@ -286,7 +286,7 @@ class DiscountPersistTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     protected function createDiscountQueryMock()
     {
@@ -294,7 +294,7 @@ class DiscountPersistTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface
      */
     protected function createVoucherEngineMock()
     {
@@ -302,7 +302,7 @@ class DiscountPersistTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Discount\Persistence\SpyDiscount
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscount
      */
     protected function createDiscountEntityMock()
     {
@@ -315,7 +315,7 @@ class DiscountPersistTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */
     protected function createVoucherPoolEntity()
     {

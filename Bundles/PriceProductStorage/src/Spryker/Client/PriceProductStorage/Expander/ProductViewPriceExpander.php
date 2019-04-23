@@ -94,6 +94,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
         );
 
         return $productViewTransfer
+            ->setCurrentProductPrice($currentProductPriceTransfer)
             ->setPrice($currentProductPriceTransfer->getPrice())
             ->setPrices($currentProductPriceTransfer->getPrices());
     }

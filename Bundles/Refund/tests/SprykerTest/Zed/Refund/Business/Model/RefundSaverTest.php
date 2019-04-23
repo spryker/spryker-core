@@ -151,12 +151,12 @@ class RefundSaverTest extends Unit
     }
 
     /**
-     * @param \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Refund\Persistence\SpyRefund $refundEntity
-     * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainerMock
-     * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface $salesFacadeMock
-     * @param \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface $calculationFacadeMock
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Refund\Persistence\SpyRefund $refundEntity
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainerMock
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface $salesFacadeMock
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface $calculationFacadeMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Refund\Business\Model\RefundSaverInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Refund\Business\Model\RefundSaverInterface
      */
     protected function getRefundSaverMock($refundEntity, $salesQueryContainerMock, $salesFacadeMock, $calculationFacadeMock)
     {
@@ -180,7 +180,7 @@ class RefundSaverTest extends Unit
     /**
      * @param int $affectedColumns
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Refund\Persistence\SpyRefund
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Refund\Persistence\SpyRefund
      */
     protected function getRefundEntity($affectedColumns)
     {
@@ -191,7 +191,7 @@ class RefundSaverTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected function getSalesQueryContainerMock()
     {
@@ -202,7 +202,7 @@ class RefundSaverTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface
      */
     protected function getSalesFacadeMock()
     {
@@ -213,7 +213,7 @@ class RefundSaverTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface
      */
     protected function getCalculationFacadeMock()
     {
@@ -224,7 +224,7 @@ class RefundSaverTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     protected function getSalesOrderItemEntityMock()
     {
@@ -236,7 +236,7 @@ class RefundSaverTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Sales\Persistence\SpySalesExpense
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesExpense
      */
     protected function getSalesExpenseEntityMock()
     {
@@ -248,7 +248,7 @@ class RefundSaverTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Propel\Runtime\Connection\ConnectionInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Propel\Runtime\Connection\ConnectionInterface
      */
     protected function getPropelConnectionMock()
     {

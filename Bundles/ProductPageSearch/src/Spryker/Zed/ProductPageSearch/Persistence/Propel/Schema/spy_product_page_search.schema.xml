@@ -25,7 +25,7 @@
         <behavior name="timestampable"/>
     </table>
 
-    <table name="spy_product_concrete_page_search">
+    <table name="spy_product_concrete_page_search" identifierQuoting="true">
         <column name="id_product_concrete_page_search" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product" type="INTEGER" required="true"/>
         <!-- 'structured_data' column contains the result from database query while 'data' column contains mapped data for the search engine -->

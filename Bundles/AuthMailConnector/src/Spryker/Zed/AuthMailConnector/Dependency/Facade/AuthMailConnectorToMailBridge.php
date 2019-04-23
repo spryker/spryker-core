@@ -29,8 +29,8 @@ class AuthMailConnectorToMailBridge implements AuthMailConnectorToMailInterface
      *
      * @return void
      */
-    public function sendMail(MailTransfer $mailTransfer)
+    public function handleMail(MailTransfer $mailTransfer)
     {
-        $this->mailFacade->sendMail($mailTransfer);
+        $this->mailFacade->handleMail($mailTransfer);
     }
 }

@@ -20,6 +20,7 @@ use Symfony\Component\HttpKernel\Client;
 class ZedBootstrap extends Framework implements DependsOnModule
 {
     public const CONFIG_KEY_SERVICE_PROVIDER = 'serviceProvider';
+    public const CONFIG_KEY_APPLICATION_PLUGINS = 'applicationPlugins';
 
     /**
      * @var \Spryker\Zed\Testify\Bootstrap\ZedBootstrap
@@ -36,6 +37,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
      */
     protected $config = [
         self::CONFIG_KEY_SERVICE_PROVIDER => [],
+        self::CONFIG_KEY_APPLICATION_PLUGINS => [],
     ];
 
     /**
@@ -87,7 +89,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
         Request::createFromGlobals();
         Request::setTrustedHosts(['localhost']);
 
-        $this->application = new TestifyBootstrap($this->config[static::CONFIG_KEY_SERVICE_PROVIDER]);
+        $this->application = new TestifyBootstrap($this->config[static::CONFIG_KEY_APPLICATION_PLUGINS], $this->config[static::CONFIG_KEY_SERVICE_PROVIDER]);
 
         if (!isset($this->application)) {
             throw new ModuleConfigException(self::class, 'Application instance was not received from bootstrap file');
@@ -103,7 +105,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|\PHPUnit_Framework_MockObject_Builder_InvocationMocker
+     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|\PHPUnit\Framework\MockObject\InvocationMocker
      */
     private function getTwigBundleConfigMock()
     {

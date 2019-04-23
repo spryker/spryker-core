@@ -89,7 +89,7 @@ class CategoryUrl implements CategoryUrlInterface
         $categoryNodeUrl = $this->build($categoryNodeTransfer, $localeTransfer);
         $urlTransfer->setUrl($categoryNodeUrl);
 
-        if ($this->urlFacade->hasUrl($urlTransfer)) {
+        if ($this->urlFacade->hasUrlCaseInsensitive($urlTransfer)) {
             return;
         }
 

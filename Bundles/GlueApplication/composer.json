@@ -8,7 +8,7 @@
     "spryker/application": "^3.13.0",
     "spryker/container": "^1.0.0",
     "spryker/documentation-generator-rest-api-extension": "^1.0.0",
-    "spryker/glue-application-extension": "^1.1.0",
+    "spryker/glue-application-extension": "^1.2.0",
     "spryker/kernel": "^3.31.0",
     "spryker/log": "^3.0.0",
     "spryker/session": "^3.0.0 || ^4.0.0",

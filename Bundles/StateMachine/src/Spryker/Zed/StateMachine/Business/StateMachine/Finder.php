@@ -75,7 +75,7 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
-     * @return array
+     * @return string[][]
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems)
     {
@@ -94,7 +94,7 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer)
     {
@@ -113,11 +113,11 @@ class Finder implements FinderInterface
         $manualEvents = $process->getManuallyExecutableEventsBySource();
 
         $stateName = $stateMachineItemTransfer->getStateName();
-        if (isset($manualEvents[$stateName])) {
-            return $manualEvents[$stateName];
+        if (!isset($manualEvents[$stateName])) {
+            return [];
         }
 
-        return [];
+        return $manualEvents[$stateName];
     }
 
     /**
@@ -208,9 +208,9 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
-     * @param array $sourceStates
+     * @param string[] $sourceStates
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][]
      */
     public function filterItemsWithOnEnterEvent(
         array $stateMachineItems,

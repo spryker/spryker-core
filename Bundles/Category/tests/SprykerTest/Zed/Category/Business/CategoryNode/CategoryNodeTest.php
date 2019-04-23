@@ -108,7 +108,7 @@ class CategoryNodeTest extends Unit
     /**
      * @param string[] $methodsToMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Category\Business\Model\CategoryToucher
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Category\Business\Model\CategoryToucher
      */
     protected function createCategoryToucherMock(array $methodsToMock)
     {
@@ -123,7 +123,7 @@ class CategoryNodeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface
      */
     protected function createTouchFacade()
     {
@@ -159,11 +159,11 @@ class CategoryNodeTest extends Unit
     /**
      * @param \Spryker\Zed\Category\Business\Model\CategoryToucher $categoryToucher
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Category\Business\CategoryBusinessFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Category\Business\CategoryBusinessFactory
      */
     protected function createCategoryBusinessFactory($categoryToucher)
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Category\Business\CategoryBusinessFactory $factoryMock */
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Category\Business\CategoryBusinessFactory $factoryMock */
         $factoryMock = $this
             ->getMockBuilder(CategoryBusinessFactory::class)
             ->setMethods(['createCategoryToucher'])
