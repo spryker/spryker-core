@@ -8,15 +8,15 @@
 namespace Spryker\Zed\Publisher\Dependency;
 
 use ArrayIterator;
-use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherEventRegistryInterface;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
+use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
 
 class PublisherEventRegistry implements PublisherEventRegistryInterface
 {
     /**
      * @var array
      */
-    protected $eventListeners = [];
+    protected $publisherPlugins = [];
 
     /**
      * @param string $eventName
@@ -33,51 +33,17 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
 
     /**
      * @param string $eventName
-     *
-     * @return bool
-     */
-    public function has($eventName)
-    {
-        return isset($this->eventListeners[$eventName]);
-    }
-
-    /**
-     * @param $eventName
      * @param PublisherPluginInterface $publisherPlugin
-     * @param bool $isHandledInQueue
-     * @param int $priority
-     * @param null $queuePoolName
      *
      * @return void
      */
-    protected function add($eventName, PublisherPluginInterface $publisherPlugin)
+    protected function add(string $eventName, PublisherPluginInterface $publisherPlugin)
     {
         if (!$this->has($eventName)) {
-            $this->eventListeners[$eventName] = [];
+            $this->publisherPlugins[$eventName] = [];
         }
 
-        $this->eventListeners[$eventName][] = $publisherPlugin;
-    }
-
-    /**
-     * @param string $eventName
-     *
-     * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
-     *
-     * @return \SplPriorityQueue|\Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface[]
-     */
-    public function get($eventName)
-    {
-        if (!isset($this->eventListeners[$eventName]) || count($this->eventListeners[$eventName]) === 0) {
-            throw new \Exception(
-                sprintf(
-                    'Could not find publisher for event "%s". You have to add it to PublisherDependencyProvider.',
-                    $eventName
-                )
-            );
-        }
-
-        return $this->eventListeners[$eventName];
+        $this->publisherPlugins[$eventName][] = $publisherPlugin;
     }
 
     /**
@@ -134,7 +100,7 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
      */
     public function offsetUnset($offset)
     {
-        unset($this->eventListeners[$offset]);
+        unset($this->publisherPlugins[$offset]);
     }
 
     /**
@@ -146,6 +112,16 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->eventListeners);
+        return new ArrayIterator($this->publisherPlugins);
+    }
+
+    /**
+     * @param string $eventName
+     *
+     * @return bool
+     */
+    protected function has($eventName)
+    {
+        return isset($this->publisherPlugins[$eventName]);
     }
 }

@@ -11,8 +11,8 @@ use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\GlossaryWritePublisherPlugin;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\GlossaryDeletePublisherPlugin;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherEventRegistryInterface;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface;
+use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()

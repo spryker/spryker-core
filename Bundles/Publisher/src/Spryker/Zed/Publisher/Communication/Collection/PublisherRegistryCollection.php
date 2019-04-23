@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Publisher\Dependency;
+namespace Spryker\Zed\Publisher\Communication\Collection;
 
 use ArrayIterator;
-use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryCollectionInterface;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface;
 
 class PublisherRegistryCollection implements PublisherRegistryCollectionInterface
@@ -20,7 +19,7 @@ class PublisherRegistryCollection implements PublisherRegistryCollectionInterfac
     protected $registryCollection = [];
 
     /**
-     * @param \Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface $publisherRegistry
+     * @param PublisherRegistryPluginInterface $publisherRegistry
      *
      * @return void
      */

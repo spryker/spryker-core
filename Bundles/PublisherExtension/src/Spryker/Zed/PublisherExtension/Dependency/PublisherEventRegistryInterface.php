@@ -5,10 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PublisherExtension\Dependency\Plugin;
+namespace Spryker\Zed\PublisherExtension\Dependency;
 
 use ArrayAccess;
 use IteratorAggregate;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 interface PublisherEventRegistryInterface extends ArrayAccess, IteratorAggregate
 {
@@ -20,24 +21,4 @@ interface PublisherEventRegistryInterface extends ArrayAccess, IteratorAggregate
      * @return $this
      */
     public function register(string $eventName, PublisherPluginInterface $publisherPlugin);
-
-    /**
-     * @deprecated
-     *
-     * @param string $eventName
-     *
-     * @return bool
-     */
-    public function has($eventName);
-
-    /**
-     * @deprecated
-     *
-     * @param string $eventName
-     *
-     * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
-     *
-     * @return \SplPriorityQueue|\Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface[]
-     */
-    public function get($eventName);
 }

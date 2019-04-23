@@ -3,8 +3,8 @@
 namespace Spryker\Zed\Publisher\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Publisher\Dependency\PublisherRegistryCollectionInterface;
 use Spryker\Zed\Publisher\PublisherDependencyProvider;
-use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryCollectionInterface;
 
 /**
  * @method \Spryker\Zed\Publisher\PublisherConfig getConfig()

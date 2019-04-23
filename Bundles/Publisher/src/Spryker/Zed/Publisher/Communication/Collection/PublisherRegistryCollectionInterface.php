@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Publisher\Dependency;
+namespace Spryker\Zed\Publisher\Communication\Collection;
 
 
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface;
@@ -15,7 +15,7 @@ interface PublisherRegistryCollectionInterface extends \ArrayAccess, \IteratorAg
     /**
      * @param PublisherRegistryPluginInterface $publisherRegistry
      *
-     * @return mixed
+     * @return void
      */
     public function add(PublisherRegistryPluginInterface $publisherRegistry);
 }

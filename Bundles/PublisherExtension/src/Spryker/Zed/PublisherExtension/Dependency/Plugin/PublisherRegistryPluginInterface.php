@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\PublisherExtension\Dependency\Plugin;
 
+use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
+
 interface PublisherRegistryPluginInterface
 {
 
