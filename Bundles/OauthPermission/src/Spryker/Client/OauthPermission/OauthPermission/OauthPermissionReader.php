@@ -29,21 +29,21 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
     /**
      * @var \Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceInterface
      */
-    protected $utilEncodeService;
+    protected $utilEncodingService;
 
     /**
      * @param \Spryker\Glue\Kernel\Application $glueApplication
      * @param \Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceInterface $oauthService
-     * @param \Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceInterface $utilEncodeService
+     * @param \Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         Application $glueApplication,
         OauthPermissionToOauthServiceInterface $oauthService,
-        OauthPermissionToUtilEncodingServiceInterface $utilEncodeService
+        OauthPermissionToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->glueApplication = $glueApplication;
         $this->oauthService = $oauthService;
-        $this->utilEncodeService = $utilEncodeService;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -64,7 +64,7 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
         $oauthAccessTokenDataTransfer = $this->oauthService->extractAccessTokenData($accessToken);
 
         $customerIdentifier = (new CustomerIdentifierTransfer())
-            ->fromArray($this->utilEncodeService->decodeJson($oauthAccessTokenDataTransfer->getOauthUserId(), true));
+            ->fromArray($this->utilEncodingService->decodeJson($oauthAccessTokenDataTransfer->getOauthUserId(), true));
         $customerPermissions = $customerIdentifier->getPermissions();
 
         if (!$customerPermissions) {

@@ -22,7 +22,7 @@ class OauthPermissionFactory extends AbstractFactory
     public function createOauthPermissionReader(): OauthPermissionReaderInterface
     {
         return new OauthPermissionReader(
-            $this->getGlueApplication()->get('request'),
+            $this->getGlueApplication(),
             $this->getOauthService(),
             $this->getUtilEncodingService()
         );

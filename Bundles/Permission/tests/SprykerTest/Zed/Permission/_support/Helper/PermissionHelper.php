@@ -49,7 +49,7 @@ class PermissionHelper extends Module
      *
      * @return void
      */
-    public function havePermissionStorage(PermissionStoragePluginInterface $permissionStoragePlugin): void
+    public function preparePermissionStorageDependency(PermissionStoragePluginInterface $permissionStoragePlugin): void
     {
         $this->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE, [$permissionStoragePlugin]);
     }

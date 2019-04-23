@@ -38,6 +38,6 @@ class PermissionBusinessTester extends Actor
      */
     public function registerPermissionStoragePlugin(): void
     {
-        $this->havePermissionStorage(new PermissionStoragePlugin());
+        $this->preparePermissionStorageDependency(new PermissionStoragePlugin());
     }
 }

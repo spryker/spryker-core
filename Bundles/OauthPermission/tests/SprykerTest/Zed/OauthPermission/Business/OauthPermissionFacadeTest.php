@@ -39,7 +39,7 @@ class OauthPermissionFacadeTest extends Unit
     public function testExpandCustomerIdentifierWillExpandCustomerDataWithCorrectPermissionsData(): void
     {
         //Assign
-        $this->tester->havePermissionStorage(new PermissionStoragePlugin());
+        $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
         $companyUserTransfer = $this->tester->haveCompanyUserWithPermissions($this->createPermissionPluginMock());
         $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
             ->setIdCompanyUser($companyUserTransfer->getUuid());
