@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\PropelOrm\Business\Generator\Command;
 
-use Propel\Generator\Command\MigrationMigrateCommand as PropelMigrationMigrateCommandAlias;
+use Propel\Generator\Command\MigrationMigrateCommand as OriginalPropelMigrationMigrateCommand;
 use Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface;
 use Spryker\Zed\PropelOrm\Business\Generator\PropelConfiguratorTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MigrationMigrateCommand extends PropelMigrationMigrateCommandAlias implements PropelConfigurableInterface
+class MigrationMigrateCommand extends OriginalPropelMigrationMigrateCommand implements PropelConfigurableInterface
 {
     use PropelConfiguratorTrait;
 

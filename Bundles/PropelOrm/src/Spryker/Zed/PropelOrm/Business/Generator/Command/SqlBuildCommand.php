@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\PropelOrm\Business\Generator\Command;
 
-use Propel\Generator\Command\SqlBuildCommand as PropelSqlBuildCommandAlias;
+use Propel\Generator\Command\SqlBuildCommand as OriginalPropelSqlBuildCommand;
 use Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface;
 use Spryker\Zed\PropelOrm\Business\Generator\PropelConfiguratorTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SqlBuildCommand extends PropelSqlBuildCommandAlias implements PropelConfigurableInterface
+class SqlBuildCommand extends OriginalPropelSqlBuildCommand implements PropelConfigurableInterface
 {
     use PropelConfiguratorTrait;
 
