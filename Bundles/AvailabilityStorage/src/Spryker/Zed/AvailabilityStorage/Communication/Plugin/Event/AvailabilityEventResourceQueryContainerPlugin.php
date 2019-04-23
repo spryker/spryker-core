@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\EventBehaviour;
+namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;

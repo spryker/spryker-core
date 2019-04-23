@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Publishing\Availability;
+namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\PublishingExtension\Dependency\PublisherEventPluginInterface;
 
 /**
  * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
@@ -18,11 +17,13 @@ use Spryker\Zed\PublishingExtension\Dependency\PublisherEventPluginInterface;
  * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityStorage\AvailabilityStorageConfig getConfig()
  */
-class AvailabilityPublisher extends AbstractPlugin implements PublisherEventPluginInterface
+class AvailabilityStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -33,7 +34,7 @@ class AvailabilityPublisher extends AbstractPlugin implements PublisherEventPlug
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $availabilityIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyAvailabilityTableMap::COL_FK_AVAILABILITY_ABSTRACT);
+        $availabilityIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         $this->getFacade()->publish($availabilityIds);
     }
