@@ -124,7 +124,7 @@ class ClassDefinition implements ClassDefinitionInterface
                 $name .= 'Transfer';
             }
 
-            $this->name = $name . 'Transfer';
+            $this->name = ucfirst($name);
 
             return $this;
         }
