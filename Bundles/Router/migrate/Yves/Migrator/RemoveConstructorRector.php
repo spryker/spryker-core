@@ -9,13 +9,12 @@ namespace Spryker\Router\Migrate\Yves\Migrator;
 
 use Nette\Utils\Strings;
 use PhpParser\Node;
-use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Stmt\ClassMethod;
 use Rector\Rector\AbstractRector;
 use Rector\RectorDefinition\CodeSample;
 use Rector\RectorDefinition\RectorDefinition;
 
-class AddControllerToAddRouteMethodNameRector extends AbstractRector
+class RemoveConstructorRector extends AbstractRector
 {
     /**
      * @return \Rector\RectorDefinition\RectorDefinition
@@ -35,7 +34,7 @@ class AddControllerToAddRouteMethodNameRector extends AbstractRector
      */
     public function getNodeTypes(): array
     {
-        return [ClassMethod::class, MethodCall::class];
+        return [ClassMethod::class];
     }
 
     /**
@@ -49,12 +48,8 @@ class AddControllerToAddRouteMethodNameRector extends AbstractRector
             return null;
         }
 
-        $methodName = (string)$node->name;
-        if (preg_match('/^add(.*?)Controller/', $methodName, $match)) {
-            $methodName = sprintf('add%sRoute', $match[1]);
-            $node->name = $methodName;
-
-            return $node;
+        if ($this->getName($node) === '__construct') {
+            $this->removeNode($node);
         }
 
         return null;

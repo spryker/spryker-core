@@ -57,42 +57,4 @@ class Router extends SymfonyRouter implements RouterInterface
 
         return $this->generator;
     }
-
-//    /**
-//     * @param string $name
-//     * @param array $parameters
-//     * @param int $referenceType
-//     *
-//     * @return string
-//     */
-//    public function generate($name, $parameters = [], $referenceType = SymfonyRouter::ABSOLUTE_PATH)
-//    {
-//        $generatedUrl = parent::generate($name, $parameters, $referenceType);
-//
-//        foreach (array_reverse($this->routerEnhancerPlugins) as $routerEnhancerPlugin) {
-//            $generatedUrl = $routerEnhancerPlugin->afterGenerate($generatedUrl, $this->getContext());
-//        }
-//
-//        return $generatedUrl;
-//    }
-//
-//    /**
-//     * @param string $pathinfo
-//     *
-//     * @return array
-//     */
-//    public function match($pathinfo)
-//    {
-//        foreach ($this->routerEnhancerPlugins as $routerEnhancerPlugin) {
-//            $pathinfo = $routerEnhancerPlugin->beforeMatch($pathinfo, $this->getContext());
-//        }
-//
-//        $parameters = parent::match($pathinfo);
-//
-//        foreach ($this->routerEnhancerPlugins as $routerEnhancerPlugin) {
-//            $parameters = $routerEnhancerPlugin->afterMatch($parameters, $this->getContext());
-//        }
-//
-//        return $parameters;
-//    }
 }

@@ -81,7 +81,7 @@ class RouterFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\RouterExtension\Dependency\Plugin\RouteProviderPluginInterface[]
+     * @return \Spryker\Shared\RouterExtension\Dependency\Plugin\RouteManipulatorPluginInterface[]
      */
     protected function getRouteManipulatorPlugins(): array
     {
@@ -97,7 +97,7 @@ class RouterFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\RouterExtension\Dependency\Plugin\RouteProviderPluginInterface[]
+     * @return \Spryker\Shared\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
      */
     protected function getRouterEnhancerPlugins(): array
     {

@@ -38,6 +38,13 @@ class ControllerResolver implements ControllerResolverInterface
             return false;
         }
 
+        if (is_string($controller)) {
+            [$controllerServiceIdentifier, $actionName] = explode(':', $controller);
+            if ($this->container->has($controllerServiceIdentifier)) {
+                return [$this->container->get($controllerServiceIdentifier), $actionName];
+            }
+        }
+
         if (!is_array($controller)) {
             return false;
         }

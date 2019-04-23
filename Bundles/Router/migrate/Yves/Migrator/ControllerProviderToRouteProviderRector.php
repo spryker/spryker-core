@@ -218,9 +218,14 @@ class ControllerProviderToRouteProviderRector extends AbstractRector
 
                 if ($this->containsAddXRouteMethod($statement)) {
                     foreach ($nestedChainMethodCalls as $nestedChainMethodCall) {
+                        $methodCallName = (string)$nestedChainMethodCall->name;
+                        if (preg_match('/^add(.*?)Controller/', $methodCallName, $match) || preg_match('/^create(.*?)Controller/', $methodCallName, $match)) {
+                            $methodCallName = sprintf('add%sRoute', $match[1]);
+                        }
+
                         $addRouteMethodCall = new MethodCall(
                             new Variable('this'),
-                            $nestedChainMethodCall->name->name,
+                            $methodCallName,
                             $this->builderFactory->args([
                                 new Variable('routeCollection'),
                             ])
@@ -491,7 +496,7 @@ class ControllerProviderToRouteProviderRector extends AbstractRector
     {
         $lastMethodCall = current($this->getNestedChainMethodCalls($expression->expr));
 
-        if ($lastMethodCall && preg_match('/add(.*?)Route/', (string)$lastMethodCall->name)) {
+        if ($lastMethodCall && preg_match('/add(.*?)(Route|Controller)/', (string)$lastMethodCall->name)) {
             return true;
         }
 

@@ -11,8 +11,13 @@ use ReflectionClass;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Silex\ServiceProviderInterface;
+use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Router\Loader\ClosureLoader;
+use Spryker\Shared\Router\Route\Route;
+use Spryker\Shared\Router\Route\RouteCollection;
+use Spryker\Shared\Router\Router;
 use Spryker\Shared\WebProfiler\DataCollector\RequestDataCollector;
 use Spryker\Shared\WebProfiler\WebProfilerConstants;
 use Symfony\Bridge\Twig\DataCollector\TwigDataCollector;
@@ -40,7 +45,6 @@ use Symfony\Component\HttpKernel\EventListener\ProfilerListener;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\Profiler\FileProfilerStorage;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Stopwatch\Stopwatch;
 use Twig\Profiler\Profile;
 
@@ -240,7 +244,49 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
      *
      * @return \Silex\ControllerCollection
      */
-    public function connect(Application $app, ?RouteCollection $routeCollection = null)
+    public function connect(Application $app)
+    {
+        $this->addRouter($app);
+
+        return $this->connectBackwardCompatible($app);
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return void
+     */
+    protected function addRouter(ContainerInterface $container)
+    {
+        $loader = new ClosureLoader();
+        $mountPrefix = $container->get('profiler.mount_prefix');
+
+        $resource = function () use ($mountPrefix) {
+            $routeCollection = new RouteCollection();
+            foreach ($this->getRouteDefinitions() as $routeDefinition) {
+                [$pathinfo, $controllerKey, $routeName] = $routeDefinition;
+
+                $route = new Route($mountPrefix . $pathinfo);
+                $route->method('GET');
+
+                $route->setDefault('_controller', $controllerKey);
+
+                $routeCollection->add($routeName, $route);
+            }
+
+            return $routeCollection;
+        };
+
+        $router = new Router($loader, $resource, []);
+        $container->get('routers')->add($router);
+    }
+
+    /**
+     * @param \Silex\Application $app
+     *
+     * @return mixed
+     */
+    protected function connectBackwardCompatible(Application $app)
     {
         $controllers = $app['controllers_factory'];
 
@@ -258,6 +304,27 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         $controllers->get('/', 'web_profiler.controller.profiler:homeAction')->bind('_profiler_home');
 
         return $controllers;
+    }
+
+    /**
+     * @return string[][]
+     */
+    protected function getRouteDefinitions(): array
+    {
+        return [
+            ['/router/{token}', 'web_profiler.controller.router:panelAction', '_profiler_router'],
+            ['/exception/{token}.css', 'web_profiler.controller.exception:cssAction', '_profiler_exception_css'],
+            ['/exception/{token}', 'web_profiler.controller.exception:showAction', '_profiler_exception'],
+            ['/search', 'web_profiler.controller.profiler:searchAction', '_profiler_search'],
+            ['/search_bar', 'web_profiler.controller.profiler:searchBarAction', '_profiler_search_bar'],
+            ['/purge', 'web_profiler.controller.profiler:purgeAction', '_profiler_purge'],
+            ['/info/{about}', 'web_profiler.controller.profiler:infoAction', '_profiler_info'],
+            ['/phpinfo', 'web_profiler.controller.profiler:phpinfoAction', '_profiler_phpinfo'],
+            ['/{token}/search/results', 'web_profiler.controller.profiler:searchResultsAction', '_profiler_search_results'],
+            ['/{token}', 'web_profiler.controller.profiler:panelAction', '_profiler'],
+            ['/wdt/{token}', 'web_profiler.controller.profiler:toolbarAction', '_wdt'],
+            ['/', 'web_profiler.controller.profiler:homeAction', '_profiler_home'],
+        ];
     }
 
     /**

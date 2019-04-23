@@ -14,23 +14,9 @@ services:
     public: true
     autowire: true
 
-  Spryker\:
-    resource: '../Migrator'
-
-  Rector\Rector\MethodBody\FluentReplaceRector:
-    $classesToDefluent:
-      '*\ControllerProvider'
-
+  Spryker\Router\Migrate\Yves\Migrator\RemoveConstructorRector: ~
   Spryker\Router\Migrate\Yves\Migrator\AddControllerToAddRouteMethodNameRector: ~
   Spryker\Router\Migrate\Yves\Migrator\ControllerProviderToRouteProviderNamespaceRector: ~
   Spryker\Router\Migrate\Yves\Migrator\ControllerProviderToRouteProviderRector: ~
-
-  Rector\Rector\MethodBody\NormalToFluentRector:
-    $fluentMethodsByType:
-      '*\ControllerProvider':
-        - 'buildRoute'
-        - 'buildGetRoute'
-        - 'buildPostRoute'
-
   Spryker\Router\Migrate\Yves\Migrator\ControllerProviderToRouteProviderClassNameRector: ~
   Spryker\Router\Migrate\Yves\Migrator\ControllerProviderToRouteProviderPluginFileRector: ~

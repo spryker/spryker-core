@@ -14,11 +14,15 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/config": "^3.0.0",
+    "spryker/container": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/container": "If you want to use the Router module.",
     "spryker/config": "If you want to use ServiceProvider plugins.",
+    "spryker/router": "If you want to use new Router module.",
     "spryker/silex": "If you want to use ServiceProvider plugins."
   },
   "autoload": {
