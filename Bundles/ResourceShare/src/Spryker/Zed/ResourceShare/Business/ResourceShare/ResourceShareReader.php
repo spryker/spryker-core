@@ -28,15 +28,23 @@ class ResourceShareReader implements ResourceShareReaderInterface
     protected $resourceShareValidator;
 
     /**
+     * @var \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[]
+     */
+    protected $resourceShareResourceDataExpanderStrategyPlugins;
+
+    /**
      * @param \Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface $resourceShareRepository
      * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface $resourceShareValidator
+     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[] $resourceShareResourceDataExpanderStrategyPlugins
      */
     public function __construct(
         ResourceShareRepositoryInterface $resourceShareRepository,
-        ResourceShareValidatorInterface $resourceShareValidator
+        ResourceShareValidatorInterface $resourceShareValidator,
+        array $resourceShareResourceDataExpanderStrategyPlugins
     ) {
         $this->resourceShareRepository = $resourceShareRepository;
         $this->resourceShareValidator = $resourceShareValidator;
+        $this->resourceShareResourceDataExpanderStrategyPlugins = $resourceShareResourceDataExpanderStrategyPlugins;
     }
 
     /**
@@ -69,7 +77,31 @@ class ResourceShareReader implements ResourceShareReaderInterface
             return $resourceShareResponseTransfer;
         }
 
-        return $resourceShareResponseTransfer->setIsSuccessful(true)
+        $resourceShareResponseTransfer->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
+
+        return $this->executeResourceDataExpanderStrategyPlugins($resourceShareResponseTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    protected function executeResourceDataExpanderStrategyPlugins(ResourceShareResponseTransfer $resourceShareResponseTransfer): ResourceShareResponseTransfer
+    {
+        $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
+        foreach ($this->resourceShareResourceDataExpanderStrategyPlugins as $resourceDataExpanderStrategyPlugin) {
+            if (!$resourceDataExpanderStrategyPlugin->isApplicable($resourceShareTransfer)) {
+                continue;
+            }
+
+            $strategyResourceShareResponseTransfer = $resourceDataExpanderStrategyPlugin->expand($resourceShareTransfer);
+            if (!$strategyResourceShareResponseTransfer->getIsSuccessful()) {
+                return $strategyResourceShareResponseTransfer;
+            }
+
+            return $resourceShareResponseTransfer->setResourceShare($strategyResourceShareResponseTransfer->getResourceShare());
+        }
     }
 }

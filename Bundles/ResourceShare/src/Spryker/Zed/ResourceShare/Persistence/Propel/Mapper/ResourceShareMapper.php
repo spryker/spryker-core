@@ -38,7 +38,7 @@ class ResourceShareMapper
             ->fromArray($resourceShareEntity->toArray(), true);
 
         $resourceShareDataTransfer = (new ResourceShareDataTransfer())
-            ->setData($this->utilEncodingService->decodeJson($resourceShareEntity->getResourceData()));
+            ->setData($this->utilEncodingService->decodeJson($resourceShareEntity->getResourceData(), true));
 
         return $resourceShareTransfer->setResourceData($resourceShareDataTransfer);
     }

@@ -18,8 +18,6 @@ interface ResourceShareClientInterface
      * - Uses resource data from provided ResourceShareRequestTransfer::ResourceShareTransfer.
      * - Sets UUID in returned transfer if generation was successful.
      * - Sets `isSuccessful=true` if generation was successful, adds error messages otherwise.
-     * - Does not create new UUID if the provided "resourceType" and "resourceData" pair exists.
-     * - Applies corresponding ResourceShareResourceDataExpanderStrategyPluginInterface strategy plugin to expand resource data.
      *
      * @api
      *
@@ -35,7 +33,6 @@ interface ResourceShareClientInterface
      * - Returns with "isSuccess=false" and error message if resource is not found by provided uuid.
      * - Returns with "isLoginRequired=true" when strategy expects logged in customer.
      * - Returns with "isSuccess=true" on success or with error messages otherwise.
-     * - Applies corresponding ResourceShareResourceDataExpanderStrategyPluginInterface strategy plugin to expand resource data.
      *
      * @api
      *
