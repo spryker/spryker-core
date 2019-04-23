@@ -5,7 +5,7 @@ const contentItemDialog = require('./content-item-editor-dialog');
 
 const ContentItemEditor = function(dropdownContentUrl) {
     this.initialization = function() {
-        this.dropDownItems = window.contentItemConfiguration.cms.dropdownItems;
+        this.dropDownItems = window.editorConfiguration.cms.dropdownItems;
         contentItemDialog.init();
     };
 
@@ -24,7 +24,7 @@ const ContentItemEditor = function(dropdownContentUrl) {
     };
 
     this.createDropdownButton = function (dropdownContentUrl) {
-        const buttonContents = window.contentItemConfiguration.cms.title + ' <i class="fa fa-caret-down" aria-hidden="true"></i>';
+        const buttonContents = window.editorConfiguration.cms.title + ' <i class="fa fa-caret-down" aria-hidden="true"></i>';
 
         return editorButtons.ContentItemDropdownButton(
             buttonContents,

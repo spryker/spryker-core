@@ -1,7 +1,7 @@
 <script>
-    window.contentItemConfiguration = window.contentItemConfiguration || {};
+    window.editorConfiguration = window.editorConfiguration || {};
 
-    window.contentItemConfiguration.cms = {
+    window.editorConfiguration.cms = {
         dropdownItems: {{ dropdownItems | json_encode | raw }},
         title: '{{ 'Insert Content' | trans }}'
     };

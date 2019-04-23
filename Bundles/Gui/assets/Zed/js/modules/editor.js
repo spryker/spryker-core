@@ -8,8 +8,8 @@
 module.exports = {
     globalConfigExist: function(configName) {
         return Boolean(configName &&
-            window.contentItemConfiguration &&
-            window.contentItemConfiguration[configName]);
+            window.editorConfiguration &&
+            window.editorConfiguration[configName]);
     },
     getConfig: function(content) {
     	content = content || '';
