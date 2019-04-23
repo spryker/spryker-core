@@ -58,8 +58,6 @@ class QuoteRequestAgentStub implements QuoteRequestAgentStubInterface
             $quoteRequestTransfer
         );
 
-        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
-
         return $quoteRequestResponseTransfer;
     }
 

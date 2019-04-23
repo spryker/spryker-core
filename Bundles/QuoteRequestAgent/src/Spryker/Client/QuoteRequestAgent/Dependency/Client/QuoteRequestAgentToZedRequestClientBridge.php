@@ -25,14 +25,6 @@ class QuoteRequestAgentToZedRequestClientBridge implements QuoteRequestAgentToZe
     }
 
     /**
-     * @return void
-     */
-    public function addFlashMessagesFromLastZedRequest()
-    {
-        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
-    }
-
-    /**
      * @param string $url
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
      * @param array|int|null $requestOptions
