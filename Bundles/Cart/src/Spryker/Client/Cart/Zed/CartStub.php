@@ -98,10 +98,10 @@ class CartStub extends ZedRequestStub implements CartStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/unlock-quote', $quoteTransfer);
+        $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/reset-quote-lock', $quoteTransfer);
 
         return $quoteResponseTransfer;
     }

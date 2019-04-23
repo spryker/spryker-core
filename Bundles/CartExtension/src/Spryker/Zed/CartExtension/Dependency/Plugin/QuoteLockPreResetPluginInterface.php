@@ -9,11 +9,11 @@ namespace Spryker\Zed\CartExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuotePreUnlockPluginInterface
+interface QuoteLockPreResetPluginInterface
 {
     /**
      * Specification:
-     * - Plugins which are called before quote unlock.
+     * - Plugins which are called before quote lock reset.
      *
      * @api
      *

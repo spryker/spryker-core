@@ -8,7 +8,7 @@
 namespace Spryker\Zed\PriceCartConnector\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CartExtension\Dependency\Plugin\QuotePreUnlockPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\QuoteLockPreResetPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\PriceCartConnector\Communication\PriceCartConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig getConfig()
  */
-class SanitizeSourcePricesQuotePreUnlockPlugin extends AbstractPlugin implements QuotePreUnlockPluginInterface
+class SanitizeSourcePricesQuoteLockPreResetPlugin extends AbstractPlugin implements QuoteLockPreResetPluginInterface
 {
     /**
      * {@inheritdoc}

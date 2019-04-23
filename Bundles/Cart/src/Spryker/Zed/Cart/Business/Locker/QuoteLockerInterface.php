@@ -17,5 +17,5 @@ interface QuoteLockerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

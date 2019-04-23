@@ -25,23 +25,23 @@ class QuoteLocker implements QuoteLockerInterface
     protected $operation;
 
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\QuotePreUnlockPluginInterface[]
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteLockPreResetPluginInterface[]
      */
-    protected $quotePreUnlockPlugins;
+    protected $quoteLockPreResetPlugins;
 
     /**
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\Cart\Business\Model\OperationInterface $operation
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\QuotePreUnlockPluginInterface[] $quotePreUnlockPlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteLockPreResetPluginInterface[] $quoteLockPreResetPlugins
      */
     public function __construct(
         CartToQuoteFacadeInterface $quoteFacade,
         OperationInterface $operation,
-        array $quotePreUnlockPlugins
+        array $quoteLockPreResetPlugins
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->operation = $operation;
-        $this->quotePreUnlockPlugins = $quotePreUnlockPlugins;
+        $this->quoteLockPreResetPlugins = $quoteLockPreResetPlugins;
     }
 
     /**
@@ -49,9 +49,9 @@ class QuoteLocker implements QuoteLockerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer = $this->executeQuotePreUnlockPlugins($quoteTransfer);
+        $quoteTransfer = $this->executeQuoteLockPreResetPlugins($quoteTransfer);
 
         $quoteTransfer = $this->quoteFacade->unlockQuote($quoteTransfer);
         $quoteTransfer = $this->operation->reloadItems($quoteTransfer);
@@ -66,10 +66,10 @@ class QuoteLocker implements QuoteLockerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function executeQuotePreUnlockPlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function executeQuoteLockPreResetPlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        foreach ($this->quotePreUnlockPlugins as $quotePreUnlockPlugin) {
-            $quoteTransfer = $quotePreUnlockPlugin->execute($quoteTransfer);
+        foreach ($this->quoteLockPreResetPlugins as $quoteLockPreResetPlugin) {
+            $quoteTransfer = $quoteLockPreResetPlugin->execute($quoteTransfer);
         }
 
         return $quoteTransfer;

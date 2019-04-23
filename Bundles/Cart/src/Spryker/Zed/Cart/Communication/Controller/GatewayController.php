@@ -72,8 +72,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlockQuoteAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function resetQuoteLockAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->unlockQuote($quoteTransfer);
+        return $this->getFacade()->resetQuoteLock($quoteTransfer);
     }
 }

@@ -79,7 +79,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return new QuoteLocker(
             $this->getQuoteFacade(),
             $this->createCartOperation(),
-            $this->getQuotePreUnlockPlugins()
+            $this->getQuoteLockPreResetPlugins()
         );
     }
 
@@ -215,10 +215,10 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuotePreUnlockPluginInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteLockPreResetPluginInterface[]
      */
-    public function getQuotePreUnlockPlugins(): array
+    public function getQuoteLockPreResetPlugins(): array
     {
-        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_QUOTE_PRE_UNLOCK);
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_QUOTE_LOCK_PRE_RESET);
     }
 }

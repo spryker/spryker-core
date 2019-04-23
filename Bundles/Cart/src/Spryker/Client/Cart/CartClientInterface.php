@@ -265,7 +265,7 @@ interface CartClientInterface
      * Specification:
      * - Makes zed request.
      * - Loads customer quote from database when storage strategy is in place.
-     * - Executes QuotePreUnlockPluginInterface plugins before unlock.
+     * - Executes QuoteLockPreResetPluginInterface plugins before unlock.
      * - Unlocks quote by setting `isLocked` transfer property to false.
      * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      * - Save updated quote to database when storage strategy is in place.
@@ -275,5 +275,5 @@ interface CartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlockQuote(): QuoteResponseTransfer;
+    public function resetQuoteLock(): QuoteResponseTransfer;
 }

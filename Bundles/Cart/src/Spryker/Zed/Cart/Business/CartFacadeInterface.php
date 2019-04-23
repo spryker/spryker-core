@@ -117,7 +117,7 @@ interface CartFacadeInterface
 
     /**
      * Specification:
-     * - Executes QuotePreUnlockPluginInterface plugins before unlock.
+     * - Executes QuoteLockPreResetPluginInterface plugins before unlock.
      * - Unlocks quote by setting `isLocked` transfer property to false.
      * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *
@@ -127,5 +127,5 @@ interface CartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

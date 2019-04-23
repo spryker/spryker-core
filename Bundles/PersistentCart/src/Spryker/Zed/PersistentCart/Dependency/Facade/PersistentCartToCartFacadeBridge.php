@@ -81,8 +81,8 @@ class PersistentCartToCartFacadeBridge implements PersistentCartToCartFacadeInte
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->cartFacade->unlockQuote($quoteTransfer);
+        return $this->cartFacade->resetQuoteLock($quoteTransfer);
     }
 }

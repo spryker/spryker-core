@@ -228,9 +228,9 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     /**
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlockQuote(): QuoteResponseTransfer
+    public function resetQuoteLock(): QuoteResponseTransfer
     {
-        return $this->quoteStorageStrategy->unlockQuote();
+        return $this->quoteStorageStrategy->resetQuoteLock();
     }
 
     /**
