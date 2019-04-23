@@ -74,4 +74,46 @@
         <property name="idUser" type="int"/>
     </transfer>
 
+    <transfer name="PriceProductScheduleImport">
+        <property name="metaData" type="PriceProductScheduleImportMetaData"/>
+        <property name="skuProductAbstract" type="string"/>
+        <property name="skuProduct" type="string"/>
+        <property name="priceTypeName" type="string"/>
+        <property name="storeName" type="string"/>
+        <property name="currencyName" type="string"/>
+        <property name="activeFrom" type="string"/>
+        <property name="activeTo" type="string"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleImportMetaData">
+        <property name="identifier" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduledListImportRequest">
+        <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
+        <property name="items" type="PriceProductScheduleImport[]" singular="item"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleListImportError">
+        <property name="priceProductScheduleImport" type="PriceProductScheduleImport"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleListError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleListImportResponseTransfer">
+        <property name="errors" type="PriceProductScheduleListImportError[]" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleListResponseTransfer">
+        <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
+        <property name="errors" type="PriceProductScheduleListError[]" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
 </transfers>

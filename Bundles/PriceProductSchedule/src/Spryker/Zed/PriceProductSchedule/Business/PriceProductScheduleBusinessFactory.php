@@ -20,9 +20,7 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductS
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriter;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
-use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleDependencyProvider;
 
