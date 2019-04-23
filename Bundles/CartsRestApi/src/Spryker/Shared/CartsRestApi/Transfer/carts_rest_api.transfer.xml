@@ -85,4 +85,8 @@
         <property name="errors" type="QuoteError[]" singular="error"/>
     </transfer>
 
+    <transfer name="RestUser">
+        <property name="naturalIdentifier" type="string"/>
+    </transfer>
+
 </transfers>
