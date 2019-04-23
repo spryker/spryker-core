@@ -15,6 +15,9 @@ interface OrderPaymentsRestApiFacadeInterface
     /**
      * Specification:
      * - Updates order payment information.
+     * - Runs OrderPaymentUpdaterPluginInterface plugin stack.
+     * - Returns UpdateOrderPaymentResponseTransfer::isSuccessful = true in case the request has been handled by appropriate plugin.
+     * - Returns UpdateOrderPaymentResponseTransfer::isSuccessful = false in case the request has not been handled.
      *
      * @api
      *

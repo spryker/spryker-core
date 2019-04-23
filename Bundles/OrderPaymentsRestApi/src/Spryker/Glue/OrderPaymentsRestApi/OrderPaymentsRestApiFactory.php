@@ -16,8 +16,6 @@ use Spryker\Glue\OrderPaymentsRestApi\Processor\RestResponseBuilder\OrderPayment
 use Spryker\Glue\OrderPaymentsRestApi\Processor\RestResponseBuilder\OrderPaymentRestResponseBuilderInterface;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- *
  * @method \Spryker\Client\OrderPaymentsRestApi\OrderPaymentsRestApiClientInterface getClient()
  * @method \Spryker\Glue\OrderPaymentsRestApi\OrderPaymentsRestApiConfig getConfig()
  */

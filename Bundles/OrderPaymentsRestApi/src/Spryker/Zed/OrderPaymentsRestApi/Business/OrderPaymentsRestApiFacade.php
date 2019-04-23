@@ -28,6 +28,8 @@ class OrderPaymentsRestApiFacade extends AbstractFacade implements OrderPayments
     public function updateOrderPayment(
         UpdateOrderPaymentRequestTransfer $updateOrderPaymentRequestTransfer
     ): UpdateOrderPaymentResponseTransfer {
-        return $this->getFactory()->createOrderPaymentUpdater()->updateOrderPayment($updateOrderPaymentRequestTransfer);
+        return $this->getFactory()
+            ->createOrderPaymentUpdater()
+            ->updateOrderPayment($updateOrderPaymentRequestTransfer);
     }
 }
