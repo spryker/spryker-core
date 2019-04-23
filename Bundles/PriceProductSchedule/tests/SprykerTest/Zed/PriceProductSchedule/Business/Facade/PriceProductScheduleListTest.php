@@ -137,19 +137,19 @@ class PriceProductScheduleListTest extends Unit
 
         if (isset($priceProductScheduleListData[PriceProductScheduleListTransfer::FK_USER])) {
             $priceProductScheduleListTransfer->setFkUser(
-                isset($priceProductScheduleListData[PriceProductScheduleListTransfer::FK_USER])
+                $priceProductScheduleListData[PriceProductScheduleListTransfer::FK_USER]
             );
         }
 
         if (isset($priceProductScheduleListData[PriceProductScheduleListTransfer::NAME])) {
             $priceProductScheduleListTransfer->setName(
-                isset($priceProductScheduleListData[PriceProductScheduleListTransfer::NAME])
+                $priceProductScheduleListData[PriceProductScheduleListTransfer::NAME]
             );
         }
 
         if (isset($priceProductScheduleListData[PriceProductScheduleListTransfer::IS_ACTIVE])) {
             $priceProductScheduleListTransfer->setIsActive(
-                isset($priceProductScheduleListData[PriceProductScheduleListTransfer::IS_ACTIVE])
+                $priceProductScheduleListData[PriceProductScheduleListTransfer::IS_ACTIVE]
             );
         }
 

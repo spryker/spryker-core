@@ -68,10 +68,10 @@ class PriceProductScheduleImportTest extends Unit
     /**
      * @return void
      */
-    public function testValidPriceProductScheduleImport(): void
+    public function testImportPriceProductSchedulesShouldImportValidSchedules(): void
     {
         // Assign
-        $count = rand(0, 100);
+        $count = 10;
         $priceProductScheduleImportTransfers = $this->prepareValidPriceProductScheduleImportData($count);
         $priceProductScheduleListTransfer = $this->tester->havePriceProductScheduleList();
         $priceProductScheduleImportRequest = (new PriceProductScheduledListImportRequestTransfer())
@@ -102,9 +102,44 @@ class PriceProductScheduleImportTest extends Unit
      *
      * @return void
      */
-    public function testNotValidPriceProductScheduleImport(array $priceProductSchedulesImportData): void
+    public function testImportPriceProductSchedulesShouldNotImportNotValidSchedules(array $priceProductSchedulesImportData): void
     {
         // Assign
+        $priceProductScheduleImportRequest = $this->havePriceProductScheduledListImportRequest();
+
+        foreach ($priceProductSchedulesImportData as $priceProductScheduleImportData) {
+            $priceProductItemTransfer = $this->tester->havePriceProductScheduleImport($priceProductScheduleImportData);
+
+            $priceProductScheduleImportRequest->addItem($priceProductItemTransfer);
+        }
+
+        // Act
+        $priceProductScheduleImportResponse = $this->priceProductScheduleFacade->importPriceProductSchedules($priceProductScheduleImportRequest);
+
+        // Assert
+        $this->assertFalse(
+            $priceProductScheduleImportResponse->getIsSuccess(),
+            'Scheduled prices should not be imported.'
+        );
+
+        $this->assertNotEmpty(
+            $priceProductScheduleImportResponse->getErrors(),
+            'Errors should be in response'
+        );
+
+        $priceProductScheduleEntitiesCount = $this->tester->getPriceProductScheduleQuery()->count();
+        $this->assertEquals(
+            0,
+            $priceProductScheduleEntitiesCount,
+            'No rows should be saved into the db'
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer
+     */
+    protected function havePriceProductScheduledListImportRequest(): PriceProductScheduledListImportRequestTransfer
+    {
         $priceProductScheduleListTransfer = $this->tester->havePriceProductScheduleList();
 
         $storeTransfer = $this->tester->haveStore([
@@ -144,41 +179,14 @@ class PriceProductScheduleImportTest extends Unit
             PriceProductScheduleTransfer::ACTIVE_FROM => new DateTime('+3 days'),
         ]);
 
-        $priceProductScheduleImportRequest = (new PriceProductScheduledListImportRequestTransfer())
+        return (new PriceProductScheduledListImportRequestTransfer())
             ->setPriceProductScheduleList($priceProductScheduleListTransfer);
-
-        foreach ($priceProductSchedulesImportData as $priceProductScheduleImportData) {
-            $priceProductItemTransfer = $this->tester->havePriceProductScheduleImport($priceProductScheduleImportData);
-
-            $priceProductScheduleImportRequest->addItem($priceProductItemTransfer);
-        }
-
-        // Act
-        $priceProductScheduleImportResponse = $this->priceProductScheduleFacade->importPriceProductSchedules($priceProductScheduleImportRequest);
-
-        // Assert
-        $this->assertFalse(
-            $priceProductScheduleImportResponse->getIsSuccess(),
-            'Scheduled prices should not be imported.'
-        );
-
-        $this->assertNotEmpty(
-            $priceProductScheduleImportResponse->getErrors(),
-            'Errors should be in response'
-        );
-
-        $priceProductScheduleEntitiesCount = $this->tester->getPriceProductScheduleQuery()->count();
-        $this->assertEquals(
-            0,
-            $priceProductScheduleEntitiesCount,
-            'No rows should be saved into the db'
-        );
     }
 
     /**
      * @param int $itemsCount
      *
-     * @return array
+     * @return \ArrayObject
      */
     protected function prepareValidPriceProductScheduleImportData(int $itemsCount): ArrayObject
     {
