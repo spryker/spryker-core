@@ -10,7 +10,7 @@ namespace Spryker\Zed\ContentProductGui\Communication\Table;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
+use Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilderInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -40,9 +40,9 @@ class ProductAbstractViewTable extends AbstractTable
     protected $productQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface
+     * @var \Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilderInterface
      */
-    protected $productAbstractTableHelper;
+    protected $productAbstractTableColumnContentBuilder;
 
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer
@@ -56,18 +56,18 @@ class ProductAbstractViewTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productQueryContainer
-     * @param \Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface $productAbstractTableHelper
+     * @param \Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilderInterface $productAbstractTableColumnContentBuilder
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string|null $identifierSuffix
      */
     public function __construct(
         SpyProductAbstractQuery $productQueryContainer,
-        ProductAbstractTableHelperInterface $productAbstractTableHelper,
+        ProductAbstractTableColumnContentBuilderInterface $productAbstractTableColumnContentBuilder,
         LocaleTransfer $localeTransfer,
         ?string $identifierSuffix
     ) {
         $this->productQueryContainer = $productQueryContainer;
-        $this->productAbstractTableHelper = $productAbstractTableHelper;
+        $this->productAbstractTableColumnContentBuilder = $productAbstractTableColumnContentBuilder;
         $this->localeTransfer = $localeTransfer;
         $this->identifierSuffix = $identifierSuffix;
     }
@@ -83,11 +83,10 @@ class ProductAbstractViewTable extends AbstractTable
         $this->defaultUrl = static::TABLE_IDENTIFIER;
         $this->tableClass = static::TABLE_CLASS;
 
-        $this->setTableIdentifier(
-            !$this->identifierSuffix ?
-                static::TABLE_IDENTIFIER :
-                sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierSuffix)
-        );
+        $identifierSuffix = !$this->identifierSuffix ?
+            static::TABLE_IDENTIFIER :
+            sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierSuffix);
+        $this->setTableIdentifier($identifierSuffix);
 
         $config->setHeader([
             static::COL_ID_PRODUCT_ABSTRACT => static::HEADER_ID_PRODUCT_ABSTRACT,
@@ -152,11 +151,11 @@ class ProductAbstractViewTable extends AbstractTable
         return [
             static::COL_ID_PRODUCT_ABSTRACT => $idProductAbstract,
             static::COL_SKU => $productAbstractEntity->getSku(),
-            static::COL_IMAGE => $this->productAbstractTableHelper->getProductPreview($productAbstractEntity),
+            static::COL_IMAGE => $this->productAbstractTableColumnContentBuilder->getProductPreview($productAbstractEntity),
             static::COL_NAME => $productAbstractEntity->getSpyProductAbstractLocalizedAttributess()->getFirst()->getName(),
-            static::COL_STORES => $this->productAbstractTableHelper->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),
-            static::COL_STATUS => $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity),
-            static::COL_SELECTED => $this->productAbstractTableHelper->getAddButtonField($productAbstractEntity),
+            static::COL_STORES => $this->productAbstractTableColumnContentBuilder->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),
+            static::COL_STATUS => $this->productAbstractTableColumnContentBuilder->getAbstractProductStatusLabel($productAbstractEntity),
+            static::COL_SELECTED => $this->productAbstractTableColumnContentBuilder->getAddButtonField($productAbstractEntity),
         ];
     }
 }

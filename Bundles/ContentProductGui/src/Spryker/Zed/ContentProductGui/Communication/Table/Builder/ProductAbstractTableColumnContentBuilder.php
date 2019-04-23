@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentProductGui\Communication\Table\Helper;
+namespace Spryker\Zed\ContentProductGui\Communication\Table\Builder;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractStore;
 use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToProductImageInterface;
 
-class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
+class ProductAbstractTableColumnContentBuilder implements ProductAbstractTableColumnContentBuilderInterface
 {
     /**
      * @var \Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToProductImageInterface
@@ -34,7 +34,7 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
     public function getProductPreview(SpyProductAbstract $productAbstractEntity): string
     {
         if ($link = $this->getProductPreviewUrl($productAbstractEntity)) {
-            return sprintf('<img src="%s">', $this->getProductPreviewUrl($productAbstractEntity));
+            return sprintf('<img src="%s">', $link);
         }
 
         return '';

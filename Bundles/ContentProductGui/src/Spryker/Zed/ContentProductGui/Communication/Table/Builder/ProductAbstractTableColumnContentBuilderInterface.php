@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentProductGui\Communication\Table\Helper;
+namespace Spryker\Zed\ContentProductGui\Communication\Table\Builder;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 
-interface ProductAbstractTableHelperInterface
+interface ProductAbstractTableColumnContentBuilderInterface
 {
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity

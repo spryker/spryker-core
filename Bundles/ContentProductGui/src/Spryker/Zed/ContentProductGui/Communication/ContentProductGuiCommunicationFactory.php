@@ -9,8 +9,8 @@ namespace Spryker\Zed\ContentProductGui\Communication;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\ContentProductGui\Communication\Form\Constraints\ContentProductAbstractListConstraint;
-use Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelper;
-use Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
+use Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilder;
+use Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilderInterface;
 use Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractSelectedTable;
 use Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractViewTable;
 use Spryker\Zed\ContentProductGui\ContentProductGuiDependencyProvider;
@@ -30,7 +30,7 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductAbstractViewTable(
             $this->getProductQueryContainer(),
-            $this->createProductAbstractTableHelper(),
+            $this->createProductAbstractTableColumnContentBuilder(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $identifierPostfix
         );
@@ -46,7 +46,7 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductAbstractSelectedTable(
             $this->getProductQueryContainer(),
-            $this->createProductAbstractTableHelper(),
+            $this->createProductAbstractTableColumnContentBuilder(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $identifierPostfix,
             $idProductAbstracts
@@ -62,11 +62,11 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface
+     * @return \Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilderInterface
      */
-    public function createProductAbstractTableHelper(): ProductAbstractTableHelperInterface
+    public function createProductAbstractTableColumnContentBuilder(): ProductAbstractTableColumnContentBuilderInterface
     {
-        return new ProductAbstractTableHelper($this->getProductImageFacade());
+        return new ProductAbstractTableColumnContentBuilder($this->getProductImageFacade());
     }
 
     /**
