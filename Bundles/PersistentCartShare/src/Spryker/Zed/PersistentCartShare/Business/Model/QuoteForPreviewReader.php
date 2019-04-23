@@ -70,7 +70,7 @@ class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
     {
         $resourceShareResponseTransfer = $this->resourceShareFacade
             ->getResourceShare(
-                $resourceShareTransfer->setResourceType(self::RESOURCE_TYPE_QUOTE)
+                $resourceShareTransfer->setResourceType(static::RESOURCE_TYPE_QUOTE)
             );
 
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
@@ -81,7 +81,7 @@ class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
                 );
         }
 
-        if ($resourceShareResponseTransfer->getResourceShare()->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
+        if ($resourceShareResponseTransfer->getResourceShare()->getResourceType() !== static::RESOURCE_TYPE_QUOTE) { //todo do we need this double check?
             return $this->createErrorResponse(static::GLOSSARY_KEY_PERSISTENT_CART_SHARE_RESOURCE_TYPE_MISMATCH);
         }
 
@@ -90,7 +90,7 @@ class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
         }
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById(
-            $this->getIdQuoteFromResourceShareResponce($resourceShareResponseTransfer)
+            $this->getIdQuoteFromResourceShareResponse($resourceShareResponseTransfer)
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -105,7 +105,7 @@ class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
      *
      * @return int
      */
-    protected function getIdQuoteFromResourceShareResponce(ResourceShareResponseTransfer $resourceShareResponseTransfer): int
+    protected function getIdQuoteFromResourceShareResponse(ResourceShareResponseTransfer $resourceShareResponseTransfer): int
     {
         $persistentCartShareResourceDataTransfer = $this->resourceDataMapper
             ->getResourceDataFromResourceShareTransfer(
@@ -135,24 +135,6 @@ class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
         }
 
         return $quoteErrorTransferCollection;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function createTypeMismatchErrorResponse(): QuoteResponseTransfer
-    {
-        $quoteErrorTransferCollection = new ArrayObject();
-        $quoteErrorTransferCollection->append(
-            (new QuoteErrorTransfer())
-                ->setMessage(
-                    static::GLOSSARY_KEY_PERSISTENT_CART_SHARE_QUOTE_ACCESS_DENIED_ERROR
-                )
-        );
-
-        return (new QuoteResponseTransfer())
-            ->setIsSuccessful(false)
-            ->setErrors($quoteErrorTransferCollection);
     }
 
     /**
