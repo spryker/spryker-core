@@ -222,6 +222,19 @@ interface CartClientInterface
 
     /**
      * Specification:
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles using quote storage strategy if quote is not locked.
+     *  - Observe quote changes after reloading.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateSpecificQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
      *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Update quote currency using quote storage strategy.

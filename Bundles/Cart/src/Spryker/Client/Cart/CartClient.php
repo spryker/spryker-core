@@ -234,6 +234,22 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateSpecificQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedStub()
+            ->validateQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
