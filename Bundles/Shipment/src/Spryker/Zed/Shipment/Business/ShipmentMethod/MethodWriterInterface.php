@@ -12,13 +12,6 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 interface MethodWriterInterface
 {
     /**
-     * @param int $idShipmentMethod
-     *
-     * @return bool
-     */
-    public function hasMethod(int $idShipmentMethod): bool;
-
-    /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return int
