@@ -1,0 +1,17 @@
+{% set dropdownItems = [] %}
+{% for editorContentType in editorContentTypes %}
+    {% set dropdownItems = dropdownItems | merge([{
+        name: editorContentType | trans,
+        contentListUrl: url('/content-gui/list-content-by-type', {type: editorContentType})
+    }]) %}
+{% endfor %}
+<script>
+    window.editorConfiguration = window.editorConfiguration || {};
+
+    window.editorConfiguration.cms = {
+        dropdownItems: {{ dropdownItems | json_encode | raw }},
+        buttonTitle: '{{ 'Content' | trans }}',
+        title: '{{ 'Insert Content' | trans }}'
+    };
+</script>
+<script src="/assets/js/spryker-zed-content-item.js"></script>

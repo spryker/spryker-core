@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ContentGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Spryker\Zed\ContentGui\Communication\ContentGuiCommunicationFactory getFactory()
@@ -16,14 +15,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ConfigurationController extends AbstractController
 {
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return array
      */
-    public function editorContentListJsonAction(): JsonResponse
+    public function assetsAction(): array
     {
-        $editorContentTypes = $this->getFactory()->getConfig()->getEditorContentTypes();
-
-        return $this->jsonResponse(
-            $this->getFactory()->createContentMapper()->mapEditorContentTypes($editorContentTypes)
-        );
+        return $this->viewResponse([
+            'editorContentTypes' => $this->getFactory()->getConfig()->getEditorContentTypes(),
+        ]);
     }
 }
