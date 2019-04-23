@@ -34,7 +34,7 @@ $(document).ready( function () {
 
             if (assignedCmsBlocks && assignedCmsBlocks[idCategoryTemplate]) {
                 $.each(assignedCmsBlocks[idCategoryTemplate], function( index, value ) {
-                    var option = $(item).find('option[value=' + value + ']');
+                    const option = $(item).find('option[value=' + value + ']');
                     $(item).append(option);
                 });
             }
