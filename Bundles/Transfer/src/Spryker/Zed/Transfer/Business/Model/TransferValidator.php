@@ -65,7 +65,7 @@ class TransferValidator implements TransferValidatorInterface
      *
      * @var bool
      */
-    private $useStrictGeneration;
+    protected $useStrictGeneration;
 
     /**
      * @param \Psr\Log\LoggerInterface $messenger
