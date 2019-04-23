@@ -84,9 +84,9 @@ interface PersistentCartClientInterface
      * Specification:
      * - Replaces active customer cart.
      * - In case of persistent strategy makes Zed request.
-     * - In case of persistent strategy the quote is also replaced in database.
-     * - In case of persistent strategy takes replacer plugin from QuoteReplacePluginInterface stack.
-     * - In case of persistent strategy uses PersistentCartQuoteReplacePlugin by default.
+     * - In case of persistent strategy replaces the quote also in Persistence.
+     * - In case of persistent strategy takes replacer plugin from QuotePersistPluginInterface stack.
+     * - In case of persistent strategy uses PersistentCartQuotePersistPlugin by default.
      *
      * @api
      *
@@ -113,7 +113,7 @@ interface PersistentCartClientInterface
      * - Sets new empty quote in session storage.
      * - In case of persistent strategy makes zed request.
      * - In case of persistent strategy retrieves a quote from Persistence using the provided customer and store information.
-     * - In case of persistent strategy merges provided quote with retrieved quote from Persistence.
+     * - In case of persistent strategy merges empty quote with retrieved quote from Persistence.
      * - In case of persistent strategy sets merged quote in session storage.
      * - In case of persistent strategy executes QuoteUpdatePluginExecutorInterface plugins.
      *

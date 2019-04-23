@@ -221,8 +221,6 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
 
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
-        sleep(20);
-
         return (new QuoteRequestResponseTransfer())
             ->setQuoteRequest($quoteRequestTransfer)
             ->setIsSuccessful(true);

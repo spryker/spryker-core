@@ -181,7 +181,7 @@ class PersistentCartFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuotePersistPluginInterface
      */
-    protected function getQuotePersistPlugin(): QuotePersistPluginInterface
+    public function getQuotePersistPlugin(): QuotePersistPluginInterface
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGIN_QUOTE_PERSIST);
     }
