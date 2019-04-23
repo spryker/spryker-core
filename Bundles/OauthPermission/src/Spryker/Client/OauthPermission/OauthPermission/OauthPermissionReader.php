@@ -32,14 +32,14 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Glue\Kernel\Application $glueApplication
      * @param \Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceInterface $oauthService
      * @param \Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Glue\Kernel\Application|null $glueApplication
      */
     public function __construct(
-        Application $glueApplication,
         OauthPermissionToOauthServiceInterface $oauthService,
-        OauthPermissionToUtilEncodingServiceInterface $utilEncodingService
+        OauthPermissionToUtilEncodingServiceInterface $utilEncodingService,
+        ?Application $glueApplication = null
     ) {
         $this->glueApplication = $glueApplication;
         $this->oauthService = $oauthService;
@@ -51,6 +51,10 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
      */
     public function getOauthCustomerPermissions(): PermissionCollectionTransfer
     {
+        if ($this->glueApplication === null) {
+            return new PermissionCollectionTransfer();
+        }
+
         /** @var \Symfony\Component\HttpFoundation\Request $request */
         $request = $this->glueApplication->get('request');
         $authorizationToken = $request->headers->get(OauthPermissionConfig::HEADER_AUTHORIZATION);
