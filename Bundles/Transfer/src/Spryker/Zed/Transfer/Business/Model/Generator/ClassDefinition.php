@@ -113,8 +113,9 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param string $name
      *
-     * @return $this
      * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidNameException
+     *
+     * @return $this
      */
     private function setName($name)
     {
