@@ -9,6 +9,7 @@ namespace Spryker\Zed\ResourceShare;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilEncodingServiceBridge;
 
 /**
  * @method \Spryker\Zed\ResourceShare\ResourceShareConfig getConfig()
@@ -16,7 +17,7 @@ use Spryker\Zed\Kernel\Container;
 class ResourceShareDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY = 'PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY';
-    public const PLUGINS_RESOURCE_SHARE_RESOURCE_DATA_EXPANDER_STRATEGY = 'PLUGINS_RESOURCE_SHARE_RESOURCE_DATA_EXPANDER_STRATEGY';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,7 +28,23 @@ class ResourceShareDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addResourceShareActivatorStrategyPlugins($container);
-        $container = $this->addResourceShareResourceDataExpanderStrategyPlugins($container);
+        $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new ResourceShareToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        };
 
         return $container;
     }
@@ -50,28 +67,6 @@ class ResourceShareDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[]
      */
     protected function getResourceShareActivatorStrategyPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addResourceShareResourceDataExpanderStrategyPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_RESOURCE_SHARE_RESOURCE_DATA_EXPANDER_STRATEGY] = function () {
-            return $this->getResourceShareResourceDataExpanderStrategyPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[]
-     */
-    protected function getResourceShareResourceDataExpanderStrategyPlugins(): array
     {
         return [];
     }

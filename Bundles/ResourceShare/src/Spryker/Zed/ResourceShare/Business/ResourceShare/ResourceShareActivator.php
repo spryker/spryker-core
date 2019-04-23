@@ -10,6 +10,7 @@ namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Spryker\Zed\ResourceShare\ResourceShareConfig;
 
 class ResourceShareActivator implements ResourceShareActivatorInterface
 {
@@ -19,11 +20,6 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
      * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface
      */
     protected $resourceShareReader;
-
-    /**
-     * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface
-     */
-    protected $resourceShareExpander;
 
     /**
      * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface
@@ -37,18 +33,15 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
 
     /**
      * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface $resourceShareReader
-     * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface $resourceShareExpander
      * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface $resourceShareValidator
      * @param array $resourceShareActivatorStrategyPlugins
      */
     public function __construct(
         ResourceShareReaderInterface $resourceShareReader,
-        ResourceShareExpanderInterface $resourceShareExpander,
         ResourceShareValidatorInterface $resourceShareValidator,
         array $resourceShareActivatorStrategyPlugins
     ) {
         $this->resourceShareReader = $resourceShareReader;
-        $this->resourceShareExpander = $resourceShareExpander;
         $this->resourceShareValidator = $resourceShareValidator;
         $this->resourceShareActivatorStrategyPlugins = $resourceShareActivatorStrategyPlugins;
     }
@@ -90,18 +83,19 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
 
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
-        $isCustomerLoggedIn = $this->isCustomerLoggedIn($resourceShareRequestTransfer);
 
         foreach ($this->resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
             if (!$resourceShareActivatorStrategyPlugin->isApplicable($resourceShareTransfer)) {
                 continue;
             }
 
-            if (!$isCustomerLoggedIn && $resourceShareActivatorStrategyPlugin->isLoginRequired()) {
+            if (!$resourceShareRequestTransfer->getCustomer() && $resourceShareActivatorStrategyPlugin->isLoginRequired()) {
                 return $resourceShareResponseTransfer->setIsSuccessful(false)
                     ->setIsLoginRequired(true)
-                    ->addErrorMessage(
-                        (new MessageTransfer())->setValue(static::GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER)
+                    ->addMessage(
+                        (new MessageTransfer())
+                            ->setType(ResourceShareConfig::ERROR_MESSAGE_TYPE)
+                            ->setValue(static::GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER)
                     );
             }
 
@@ -111,17 +105,5 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
 
         return $resourceShareResponseTransfer->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
-     *
-     * @return bool
-     */
-    protected function isCustomerLoggedIn(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
-    {
-        $customerTransfer = $resourceShareRequestTransfer->getCustomer();
-
-        return $customerTransfer && !$customerTransfer->getIsGuest();
     }
 }

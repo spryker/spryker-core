@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface;
 use Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface;
+use Spryker\Zed\ResourceShare\ResourceShareConfig;
 
 class ResourceShareWriter implements ResourceShareWriterInterface
 {
@@ -30,11 +31,6 @@ class ResourceShareWriter implements ResourceShareWriterInterface
     protected $resourceShareRepository;
 
     /**
-     * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface
-     */
-    protected $resourceShareExpander;
-
-    /**
      * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface
      */
     protected $resourceShareValidator;
@@ -42,18 +38,15 @@ class ResourceShareWriter implements ResourceShareWriterInterface
     /**
      * @param \Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface $resourceShareEntityManager
      * @param \Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface $resourceShareRepository
-     * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface $resourceShareExpander
      * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface $resourceShareValidator
      */
     public function __construct(
         ResourceShareEntityManagerInterface $resourceShareEntityManager,
         ResourceShareRepositoryInterface $resourceShareRepository,
-        ResourceShareExpanderInterface $resourceShareExpander,
         ResourceShareValidatorInterface $resourceShareValidator
     ) {
         $this->resourceShareEntityManager = $resourceShareEntityManager;
         $this->resourceShareRepository = $resourceShareRepository;
-        $this->resourceShareExpander = $resourceShareExpander;
         $this->resourceShareValidator = $resourceShareValidator;
     }
 
@@ -67,62 +60,12 @@ class ResourceShareWriter implements ResourceShareWriterInterface
         $resourceShareRequestTransfer->requireResourceShare();
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
 
-        $existingResourceShareTransfer = $this->findResourceShare($resourceShareTransfer);
-        if ($existingResourceShareTransfer) {
-            $resourceShareResponseTransfer = $this->resourceShareValidator->validateResourceShareTransfer($existingResourceShareTransfer);
-            if ($resourceShareResponseTransfer->getIsSuccessful()) {
-                return $resourceShareResponseTransfer->setIsSuccessful(true)
-                    ->setResourceShare($existingResourceShareTransfer);
-            }
-        }
-
         $resourceShareResponseTransfer = $this->resourceShareValidator->validateResourceShareTransfer($resourceShareTransfer);
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return $resourceShareResponseTransfer;
         }
 
         return $this->createResourceShare($resourceShareTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
-     */
-    protected function findResourceShare(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer
-    {
-        $existingResourceShareTransfer = null;
-        if ($resourceShareTransfer->getUuid()) {
-            $existingResourceShareTransfer = $this->resourceShareRepository->findResourceShareByUuid($resourceShareTransfer->getUuid());
-            if ($existingResourceShareTransfer) {
-                return $existingResourceShareTransfer;
-            }
-        }
-
-        if ($resourceShareTransfer->getResourceType()
-            && $this->isResourceDataPropertyModified($resourceShareTransfer)
-            && $resourceShareTransfer->getCustomerReference()
-        ) {
-            return $this->resourceShareRepository->findResourceShareByResource($resourceShareTransfer);
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     *
-     * @return bool
-     */
-    protected function isResourceDataPropertyModified(ResourceShareTransfer $resourceShareTransfer): bool
-    {
-        if ($resourceShareTransfer->isPropertyModified(ResourceShareTransfer::RESOURCE_DATA)
-            && $resourceShareTransfer->getResourceData() === null
-        ) {
-            return true;
-        }
-
-        return $resourceShareTransfer->getResourceData() !== null;
     }
 
     /**
@@ -138,7 +81,6 @@ class ResourceShareWriter implements ResourceShareWriterInterface
         }
 
         $resourceShareTransfer = $this->resourceShareEntityManager->createResourceShare($resourceShareTransfer);
-        $resourceShareTransfer = $this->resourceShareExpander->executeResourceDataExpanderStrategyPlugins($resourceShareTransfer);
 
         return (new ResourceShareResponseTransfer())
             ->setIsSuccessful(true)
@@ -156,14 +98,18 @@ class ResourceShareWriter implements ResourceShareWriterInterface
             ->setIsSuccessful(false);
 
         if (!$resourceShareTransfer->getResourceType()) {
-            return $resourceShareResponseTransfer->addErrorMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED)
+            return $resourceShareResponseTransfer->addMessage(
+                (new MessageTransfer())
+                    ->setType(ResourceShareConfig::ERROR_MESSAGE_TYPE)
+                    ->setValue(static::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED)
             );
         }
 
         if (!$resourceShareTransfer->getCustomerReference()) {
-            return $resourceShareResponseTransfer->addErrorMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED)
+            return $resourceShareResponseTransfer->addMessage(
+                (new MessageTransfer())
+                    ->setType(ResourceShareConfig::ERROR_MESSAGE_TYPE)
+                    ->setValue(static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED)
             );
         }
 

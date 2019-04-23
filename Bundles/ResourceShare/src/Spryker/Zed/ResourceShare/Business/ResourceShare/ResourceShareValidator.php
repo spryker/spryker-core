@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 
-use DateTime;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
+use Spryker\Zed\ResourceShare\ResourceShareConfig;
 
 class ResourceShareValidator implements ResourceShareValidatorInterface
 {
@@ -27,8 +27,10 @@ class ResourceShareValidator implements ResourceShareValidatorInterface
 
         if ($this->isResourceShareExpired($resourceShareTransfer)) {
             return $resourceShareResponseTransfer->setIsSuccessful(false)
-                ->addErrorMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED)
+                ->addMessage(
+                    (new MessageTransfer())
+                        ->setType(ResourceShareConfig::ERROR_MESSAGE_TYPE)
+                        ->setValue(static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED)
                 );
         }
 
@@ -47,6 +49,6 @@ class ResourceShareValidator implements ResourceShareValidatorInterface
             return false;
         }
 
-        return new DateTime() >= new DateTime($resourceShareTransfer->getExpiryDate());
+        return time() >= strtotime($resourceShareTransfer->getExpiryDate());
     }
 }

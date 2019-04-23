@@ -7,11 +7,26 @@
 
 namespace Spryker\Zed\ResourceShare\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Orm\Zed\ResourceShare\Persistence\SpyResourceShare;
+use Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilEncodingServiceInterface;
 
 class ResourceShareMapper
 {
+    /**
+     * @var \Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
+     * @param \Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilEncodingServiceInterface $utilEncodingService
+     */
+    public function __construct(ResourceShareToUtilEncodingServiceInterface $utilEncodingService)
+    {
+        $this->utilEncodingService = $utilEncodingService;
+    }
+
     /**
      * @param \Orm\Zed\ResourceShare\Persistence\SpyResourceShare $resourceShareEntity
      *
@@ -19,7 +34,13 @@ class ResourceShareMapper
      */
     public function mapResourceShareEntityToResourceShareTransfer(SpyResourceShare $resourceShareEntity): ResourceShareTransfer
     {
-        return (new ResourceShareTransfer())->fromArray($resourceShareEntity->toArray(), true);
+        $resourceShareTransfer = (new ResourceShareTransfer())
+            ->fromArray($resourceShareEntity->toArray(), true);
+
+        $resourceShareDataTransfer = (new ResourceShareDataTransfer())
+            ->setData($this->utilEncodingService->decodeJson($resourceShareEntity->getResourceData()));
+
+        return $resourceShareTransfer->setResourceData($resourceShareDataTransfer);
     }
 
     /**
@@ -31,6 +52,12 @@ class ResourceShareMapper
     {
         $resourceShareEntity = new SpyResourceShare();
         $resourceShareEntity->fromArray($resourceShareTransfer->toArray());
+
+        $resourceShareDataTransfer = $resourceShareTransfer->getResourceData();
+
+        $resourceShareEntity->setResourceData(
+            $this->utilEncodingService->encodeJson($resourceShareDataTransfer->getData())
+        );
 
         return $resourceShareEntity;
     }

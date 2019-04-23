@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface;
+use Spryker\Zed\ResourceShare\ResourceShareConfig;
 
 class ResourceShareReader implements ResourceShareReaderInterface
 {
@@ -22,27 +23,19 @@ class ResourceShareReader implements ResourceShareReaderInterface
     protected $resourceShareRepository;
 
     /**
-     * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface
-     */
-    protected $resourceShareExpander;
-
-    /**
      * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface
      */
     protected $resourceShareValidator;
 
     /**
      * @param \Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface $resourceShareRepository
-     * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface $resourceShareExpander
      * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface $resourceShareValidator
      */
     public function __construct(
         ResourceShareRepositoryInterface $resourceShareRepository,
-        ResourceShareExpanderInterface $resourceShareExpander,
         ResourceShareValidatorInterface $resourceShareValidator
     ) {
         $this->resourceShareRepository = $resourceShareRepository;
-        $this->resourceShareExpander = $resourceShareExpander;
         $this->resourceShareValidator = $resourceShareValidator;
     }
 
@@ -53,23 +46,21 @@ class ResourceShareReader implements ResourceShareReaderInterface
      */
     public function getResourceShareByUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
+        $resourceShareRequestTransfer->requireResourceShare();
+        $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
+        $resourceShareTransfer->requireUuid();
+
         $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
-
-        if (!$resourceShareRequestTransfer->getUuid()) {
-            return $resourceShareResponseTransfer->setIsSuccessful(false)
-                ->addErrorMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
-                );
-        }
-
         $resourceShareTransfer = $this->resourceShareRepository->findResourceShareByUuid(
-            $resourceShareRequestTransfer->getUuid()
+            $resourceShareTransfer->getUuid()
         );
 
         if (!$resourceShareTransfer) {
             return $resourceShareResponseTransfer->setIsSuccessful(false)
-                ->addErrorMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
+                ->addMessage(
+                    (new MessageTransfer())
+                        ->setType(ResourceShareConfig::ERROR_MESSAGE_TYPE)
+                        ->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
                 );
         }
 
@@ -77,8 +68,6 @@ class ResourceShareReader implements ResourceShareReaderInterface
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return $resourceShareResponseTransfer;
         }
-
-        $resourceShareTransfer = $this->resourceShareExpander->executeResourceDataExpanderStrategyPlugins($resourceShareTransfer);
 
         return $resourceShareResponseTransfer->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);

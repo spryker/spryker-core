@@ -8,12 +8,15 @@
         <property name="customerReference" type="string" />
         <property name="uuid" type="string" />
         <property name="resourceType" type="string" />
-        <property name="resourceData" type="string" />
+        <property name="resourceData" type="ResourceShareData" />
         <property name="expiryDate" type="string" />
     </transfer>
 
+    <transfer name="ResourceShareData">
+        <property name="data" type="array" />
+    </transfer>
+
     <transfer name="ResourceShareRequest">
-        <property name="uuid" type="string" />
         <property name="customer" type="Customer" />
         <property name="resourceShare" type="ResourceShare" />
     </transfer>
@@ -22,11 +25,12 @@
         <property name="isSuccessful" type="bool" />
         <property name="resourceShare" type="ResourceShare" />
         <property name="isLoginRequired" type="bool" />
-        <property name="errorMessages" type="Message[]" singular="errorMessage" />
+        <property name="messages" type="Message[]" singular="message" />
     </transfer>
 
     <transfer name="Message">
-        <property name="value" type="string"/>
+        <property name="type" type="string" />
+        <property name="value" type="string" />
     </transfer>
 
     <transfer name="Customer">

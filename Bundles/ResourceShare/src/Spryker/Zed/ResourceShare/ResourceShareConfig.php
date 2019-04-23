@@ -11,4 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ResourceShareConfig extends AbstractBundleConfig
 {
+    public const SUCCESS_MESSAGE_TYPE = 'SUCCESS_MESSAGE_TYPE';
+    public const ERROR_MESSAGE_TYPE = 'ERROR_MESSAGE_TYPE';
 }
