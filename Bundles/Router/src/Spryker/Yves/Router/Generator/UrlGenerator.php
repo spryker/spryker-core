@@ -41,6 +41,8 @@ class UrlGenerator extends SymfonyUrlGenerator implements RouterEnhancerAwareInt
      * @param array $parameters
      * @param int $referenceType
      *
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     *
      * @return string
      */
     public function generate($name, $parameters = [], $referenceType = SymfonyRouter::ABSOLUTE_PATH)

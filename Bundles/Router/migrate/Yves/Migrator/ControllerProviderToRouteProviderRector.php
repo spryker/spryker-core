@@ -7,7 +7,6 @@
 
 namespace Spryker\Router\Migrate\Yves\Migrator;
 
-use Exception;
 use Nette\Utils\Strings;
 use PhpParser\BuilderFactory;
 use PhpParser\Comment\Doc;
@@ -187,7 +186,7 @@ class ControllerProviderToRouteProviderRector extends AbstractRector
      *
      * @param array $statements
      *
-     * @throws \Exception
+     * @throws \Rector\Exception\ShouldNotHappenException
      *
      * @return array
      */
