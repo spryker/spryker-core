@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-abstract class AbstractPropelOriginCommand extends Console
+abstract class AbstractPropelCommandWrapper extends Console
 {
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
@@ -28,12 +28,12 @@ abstract class AbstractPropelOriginCommand extends Console
         $this->info($this->getDescription());
 
         $propelOriginalCommand = $this->getFactory()
-            ->createPropelCommandCreator()
+            ->createPropelCommandBuilder()
             ->createOriginCommand(
                 $this->getOriginCommandClassName()
             );
 
-        return $this->getFactory()->createPropelCommandRunner()->runOriginCommand(
+        return $this->getFactory()->createPropelCommandRunner()->runOriginalCommand(
             $propelOriginalCommand,
             $this->getDefinition(),
             $output

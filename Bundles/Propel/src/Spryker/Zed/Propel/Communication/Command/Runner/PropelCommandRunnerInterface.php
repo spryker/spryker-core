@@ -24,7 +24,7 @@ interface PropelCommandRunnerInterface
      *
      * @return int
      */
-    public function runOriginCommand(
+    public function runOriginalCommand(
         Command $propelOriginalCommand,
         InputDefinition $propelCommandDefinition,
         OutputInterface $output

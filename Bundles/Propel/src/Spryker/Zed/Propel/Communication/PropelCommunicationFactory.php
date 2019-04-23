@@ -12,8 +12,8 @@ use Monolog\Logger;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Propel\Communication\Command\Builder\PropelCommandBuilder;
 use Spryker\Zed\Propel\Communication\Command\Builder\PropelCommandBuilderInterface;
-use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigBuilder;
-use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigBuilderInterface;
+use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigurator;
+use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface;
 use Spryker\Zed\Propel\Communication\Command\Input\PropelCommandInputBuilder;
 use Spryker\Zed\Propel\Communication\Command\Input\PropelCommandInputBuilderInterface;
 use Spryker\Zed\Propel\Communication\Command\Runner\PropelCommandRunner;
@@ -72,7 +72,7 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Propel\Communication\Command\Builder\PropelCommandBuilderInterface
      */
-    public function createPropelCommandCreator(): PropelCommandBuilderInterface
+    public function createPropelCommandBuilder(): PropelCommandBuilderInterface
     {
         return new PropelCommandBuilder(
             $this->createPropelCommandConfigurator()
@@ -80,11 +80,11 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigBuilderInterface
+     * @return \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface
      */
-    protected function createPropelCommandConfigurator(): PropelCommandConfigBuilderInterface
+    protected function createPropelCommandConfigurator(): PropelCommandConfiguratorInterface
     {
-        return new PropelCommandConfigBuilder(
+        return new PropelCommandConfigurator(
             $this->getConfig()->getPropelConfig()
         );
     }

@@ -14,9 +14,9 @@ interface PropelCommandInputBuilderInterface
 {
     /**
      * @param \Symfony\Component\Console\Input\InputDefinition $propelCommandDefinition
-     * @param \Symfony\Component\Console\Input\InputDefinition $originPropelCommandDefinition
+     * @param \Symfony\Component\Console\Input\InputDefinition $originalPropelCommandDefinition
      *
      * @return \Symfony\Component\Console\Input\InputInterface
      */
-    public function buildInput(InputDefinition $propelCommandDefinition, InputDefinition $originPropelCommandDefinition): InputInterface;
+    public function buildInput(InputDefinition $propelCommandDefinition, InputDefinition $originalPropelCommandDefinition): InputInterface;
 }

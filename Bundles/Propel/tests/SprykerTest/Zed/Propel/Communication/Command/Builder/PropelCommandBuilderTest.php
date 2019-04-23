@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Propel\Communication\Command\Builder;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Propel\Communication\Command\Builder\PropelCommandBuilder;
-use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigBuilderInterface;
+use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface;
 use Spryker\Zed\PropelOrm\Business\Generator\Command\ModelBuildCommand;
 use Spryker\Zed\PropelOrm\Business\Generator\Command\SqlBuildCommand;
 use Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface;
@@ -39,7 +39,7 @@ class PropelCommandBuilderTest extends Unit
     protected function _before(): void
     {
         $this->propelCommandBuilder = new PropelCommandBuilder(
-            $this->getMockBuilder(PropelCommandConfigBuilderInterface::class)->getMock()
+            $this->getMockBuilder(PropelCommandConfiguratorInterface::class)->getMock()
         );
     }
 

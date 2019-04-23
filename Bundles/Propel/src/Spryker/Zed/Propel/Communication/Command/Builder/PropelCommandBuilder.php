@@ -7,36 +7,36 @@
 
 namespace Spryker\Zed\Propel\Communication\Command\Builder;
 
-use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigBuilderInterface;
+use Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface;
 use Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface;
 use Symfony\Component\Console\Command\Command;
 
 class PropelCommandBuilder implements PropelCommandBuilderInterface
 {
     /**
-     * @var \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigBuilderInterface
+     * @var \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface
      */
-    protected $commandConfigurator;
+    protected $propelCommandConfigurator;
 
     /**
-     * @param \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfigBuilderInterface $commandConfigurator
+     * @param \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface $propelCommandConfigurationBuilder
      */
-    public function __construct(PropelCommandConfigBuilderInterface $commandConfigurator)
+    public function __construct(PropelCommandConfiguratorInterface $propelCommandConfigurationBuilder)
     {
-        $this->commandConfigurator = $commandConfigurator;
+        $this->propelCommandConfigurator = $propelCommandConfigurationBuilder;
     }
 
     /**
-     * @param string $originPropelCommandClassName
+     * @param string $originalPropelCommandClassName
      *
      * @return \Symfony\Component\Console\Command\Command
      */
-    public function createOriginCommand(string $originPropelCommandClassName): Command
+    public function createOriginCommand(string $originalPropelCommandClassName): Command
     {
-        $originCommand = $this->createCommand($originPropelCommandClassName);
+        $originCommand = $this->createCommand($originalPropelCommandClassName);
 
         if ($originCommand instanceof PropelConfigurableInterface) {
-            $this->commandConfigurator->configureCommand($originCommand);
+            $this->propelCommandConfigurator->propelConfigurable($originCommand);
         }
 
         return $originCommand;

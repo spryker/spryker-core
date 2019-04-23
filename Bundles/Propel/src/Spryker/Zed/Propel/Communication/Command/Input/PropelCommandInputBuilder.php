@@ -15,20 +15,20 @@ class PropelCommandInputBuilder implements PropelCommandInputBuilderInterface
 {
     /**
      * @param \Symfony\Component\Console\Input\InputDefinition $propelCommandDefinition
-     * @param \Symfony\Component\Console\Input\InputDefinition $originPropelCommandDefinition
+     * @param \Symfony\Component\Console\Input\InputDefinition $originalPropelCommandDefinition
      *
      * @return \Symfony\Component\Console\Input\InputInterface
      */
-    public function buildInput(InputDefinition $propelCommandDefinition, InputDefinition $originPropelCommandDefinition): InputInterface
+    public function buildInput(InputDefinition $propelCommandDefinition, InputDefinition $originalPropelCommandDefinition): InputInterface
     {
-        $originPropelCommandDefinition->addArguments(
+        $originalPropelCommandDefinition->addArguments(
             $propelCommandDefinition->getArguments()
         );
 
-        $originPropelCommandDefinition->addOptions(
+        $originalPropelCommandDefinition->addOptions(
             $propelCommandDefinition->getOptions()
         );
 
-        return new ArgvInput(null, $originPropelCommandDefinition);
+        return new ArgvInput(null, $originalPropelCommandDefinition);
     }
 }

@@ -9,12 +9,12 @@ namespace Spryker\Zed\Propel\Communication\Command\Config;
 
 use Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface;
 
-interface PropelCommandConfigBuilderInterface
+interface PropelCommandConfiguratorInterface
 {
     /**
      * @param \Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface $propelCommand
      *
      * @return \Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface
      */
-    public function configureCommand(PropelConfigurableInterface $propelCommand): PropelConfigurableInterface;
+    public function propelConfigurable(PropelConfigurableInterface $propelCommand): PropelConfigurableInterface;
 }

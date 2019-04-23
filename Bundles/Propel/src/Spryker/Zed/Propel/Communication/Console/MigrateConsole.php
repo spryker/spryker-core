@@ -13,7 +13,7 @@ use Spryker\Zed\PropelOrm\Business\Generator\Command\MigrationMigrateCommand;
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class MigrateConsole extends AbstractPropelOriginCommand
+class MigrateConsole extends AbstractPropelCommandWrapper
 {
     public const COMMAND_NAME = 'propel:migrate';
 

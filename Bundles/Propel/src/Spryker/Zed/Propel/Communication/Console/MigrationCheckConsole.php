@@ -13,7 +13,7 @@ use Spryker\Zed\PropelOrm\Business\Generator\Command\MigrationStatusCommand;
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class MigrationCheckConsole extends AbstractPropelOriginCommand
+class MigrationCheckConsole extends AbstractPropelCommandWrapper
 {
     public const COMMAND_NAME = 'propel:migration:check';
     public const CODE_CHANGES = 3;

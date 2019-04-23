@@ -12,7 +12,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Not used anymore.
+ * @deprecated Not used anymore. All command should extend \Spryker\Zed\Propel\Communication\Console\AbstractPropelCommandWrapper for read propel config.
+
  *
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()

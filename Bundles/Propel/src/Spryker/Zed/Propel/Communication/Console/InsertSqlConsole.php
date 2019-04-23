@@ -13,7 +13,7 @@ use Spryker\Zed\PropelOrm\Business\Generator\Command\SqlInsertCommand;
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class InsertSqlConsole extends AbstractPropelOriginCommand
+class InsertSqlConsole extends AbstractPropelCommandWrapper
 {
     public const COMMAND_NAME = 'propel:sql:insert';
 

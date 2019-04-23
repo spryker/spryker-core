@@ -13,7 +13,7 @@ use Spryker\Zed\PropelOrm\Business\Generator\Command\ModelBuildCommand;
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class BuildModelConsole extends AbstractPropelOriginCommand
+class BuildModelConsole extends AbstractPropelCommandWrapper
 {
     public const COMMAND_NAME = 'propel:model:build';
 

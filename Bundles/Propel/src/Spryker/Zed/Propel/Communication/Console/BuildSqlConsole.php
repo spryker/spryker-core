@@ -13,7 +13,7 @@ use Spryker\Zed\PropelOrm\Business\Generator\Command\SqlBuildCommand;
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class BuildSqlConsole extends AbstractPropelOriginCommand
+class BuildSqlConsole extends AbstractPropelCommandWrapper
 {
     public const COMMAND_NAME = 'propel:sql:build';
 

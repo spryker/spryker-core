@@ -13,7 +13,7 @@ use Spryker\Zed\PropelOrm\Business\Generator\Command\MigrationDiffCommand;
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class DiffConsole extends AbstractPropelOriginCommand
+class DiffConsole extends AbstractPropelCommandWrapper
 {
     public const COMMAND_NAME = 'propel:diff';
 
