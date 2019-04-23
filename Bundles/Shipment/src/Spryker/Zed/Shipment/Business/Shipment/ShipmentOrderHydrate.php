@@ -188,6 +188,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     protected function addShipmentMethodToOrderItemsByShipment(OrderTransfer $orderTransfer, ShipmentTransfer $shipmentTransfer): OrderTransfer
     {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment($shipmentTransfer);
             $itemShipmentTransfer = $itemTransfer->getShipment();
             $shipmentMethodTransfer = $itemShipmentTransfer->getMethod();
             if ($shipmentMethodTransfer->getName() === $shipmentTransfer->getMethod()->getName()
