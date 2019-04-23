@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
@@ -16,7 +17,6 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 
 /**
  * @method \Spryker\Zed\Sales\Business\SalesBusinessFactory getFactory()
@@ -294,7 +294,7 @@ interface SalesFacadeInterface
      *
      * @param int $idSalesShipment
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
      */
-    public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesShipment): ObjectCollection;
+    public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesShipment): ArrayObject;
 }

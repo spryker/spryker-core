@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Sales\Business\Address\OrderAddressReader;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriter;
@@ -27,17 +28,18 @@ use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
-use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
-use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouper;
-use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper;
 use Spryker\Zed\Sales\Business\Order\OrderHydrator as OrderHydratorWithMultiShippingAddress;
 use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
 use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShippingAddress;
 use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
+use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouper;
+use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
+use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReader;
+use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReaderInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToShipmentServiceInterface;
@@ -384,5 +386,25 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderItemGrouper(): SalesOrderItemGrouperInterface
     {
         return new SalesOrderItemGrouper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReaderInterface
+     */
+    public function createSalesOrderItemReader(): SalesOrderItemReaderInterface
+    {
+        return new SalesOrderItemReader(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Address\OrderAddressReader
+     */
+    public function createOrderAddressReader()
+    {
+        return new OrderAddressReader(
+            $this->getRepository()
+        );
     }
 }

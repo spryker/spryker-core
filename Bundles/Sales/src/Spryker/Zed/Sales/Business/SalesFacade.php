@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
@@ -16,7 +17,6 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -347,26 +347,24 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      */
     public function findOrderAddressByIdOrderAddress(int $idSalesOrderAddress): ?AddressTransfer
     {
-        return $this
-            ->getRepository()
+        return $this->getFactory()
+            ->createOrderAddressReader()
             ->findOrderAddressByIdOrderAddress($idSalesOrderAddress);
     }
 
     /**
-     * @todo: Should be refactored to return transfer objects collection.
-     *
      * {@inheritdoc}
      *
      * @api
      *
      * @param int $idSalesShipment
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
      */
-    public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesShipment): ObjectCollection
+    public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesShipment): ArrayObject
     {
-        return $this
-            ->getRepository()
+        return $this->getFactory()
+            ->createSalesOrderItemReader()
             ->findSalesOrderItemsBySalesShipmentId($idSalesShipment);
     }
 }

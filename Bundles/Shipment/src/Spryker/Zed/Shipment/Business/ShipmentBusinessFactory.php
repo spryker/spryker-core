@@ -34,6 +34,8 @@ use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtender;
 use Spryker\Zed\Shipment\Business\ShipmentGroup\ShipmentMethodExtenderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReader;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodWriter;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodWriterInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
@@ -101,6 +103,17 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getShipmentService(),
             $this->getPlugins(),
             $this->getMethodFilterPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodWriterInterface
+     */
+    public function createMethodWriter(): MethodWriterInterface
+    {
+        return new MethodWriter(
+            $this->getQueryContainer(),
+            $this->createMethodPrice()
         );
     }
 

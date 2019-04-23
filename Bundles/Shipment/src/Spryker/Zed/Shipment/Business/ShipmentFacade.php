@@ -81,14 +81,11 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @return int
      */
-    public function createMethod(ShipmentMethodTransfer $methodTransfer)
+    public function createMethod(ShipmentMethodTransfer $methodTransfer): int
     {
-        /**
-         * @todo: Create new OrderWriter class.
-         */
-        $methodModel = $this->getFactory()->createMethodReader();
-
-        return $methodModel->create($methodTransfer);
+        return $this->getFactory()
+            ->createMethodWriter()
+            ->create($methodTransfer);
     }
 
     /**
@@ -184,11 +181,11 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @return bool
      */
-    public function hasMethod($idMethod)
+    public function hasMethod($idMethod): bool
     {
-        $methodModel = $this->getFactory()->createMethodReader();
-
-        return $methodModel->hasMethod($idMethod);
+        return $this->getFactory()
+            ->createMethodWriter()
+            ->hasMethod($idMethod);
     }
 
     /**
@@ -200,14 +197,11 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @return bool
      */
-    public function deleteMethod($idMethod)
+    public function deleteMethod($idMethod): bool
     {
-        /**
-         * @todo: Create new OrderWriter class.
-         */
-        $methodModel = $this->getFactory()->createMethodReader();
-
-        return $methodModel->deleteMethod($idMethod);
+        return $this->getFactory()
+            ->createMethodWriter()
+            ->delete($idMethod);
     }
 
     /**
@@ -221,12 +215,9 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {
-        /**
-         * @todo: Create new OrderWriter class.
-         */
-        $methodModel = $this->getFactory()->createMethodReader();
-
-        return $methodModel->updateMethod($methodTransfer);
+        return $this->getFactory()
+            ->createMethodWriter()
+            ->update($methodTransfer);
     }
 
     /**
