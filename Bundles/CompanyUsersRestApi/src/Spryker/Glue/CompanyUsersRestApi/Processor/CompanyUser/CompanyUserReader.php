@@ -78,7 +78,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
      */
     public function getCompanyUserByResourceId(string $idResource, RestRequestInterface $restRequest): RestResponseInterface
     {
-        if ($idResource === CompanyUsersRestApiConfig::RESOURCE_MINE) {
+        if ($idResource === CompanyUsersRestApiConfig::CURRENT_USER_COLLECTION_IDENTIFIER) {
             return $this->getCompanyUsersByCustomerReference($restRequest);
         }
 
