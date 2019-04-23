@@ -65,7 +65,8 @@ class PriceProductRemover implements PriceProductRemoverInterface
 
             if ($idPriceProductStore !== null) {
                 $this->priceProductStoreWriterPluginExecutor->executePriceProductStorePreDeletePlugins($idPriceProductStore);
-                $this->priceProductEntityManager->deletePriceProductStore($idPriceProductStore);
+                $this->priceProductEntityManager->deletePriceProductDefaultById($priceProductTransfer->getPriceDimension()->getIdPriceProductDefault());
+                $this->priceProductEntityManager->deletePriceProductStoreByPriceProductTransfer($priceProductTransfer);
             }
 
             $this->priceProductEntityManager->deletePriceProductById($priceProductTransfer->getIdPriceProduct());
