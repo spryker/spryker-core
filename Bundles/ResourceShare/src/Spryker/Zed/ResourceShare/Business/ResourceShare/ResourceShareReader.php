@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Zed\ResourceShare\Persistence\ResourceShareRepositoryInterface;
-use Spryker\Zed\ResourceShare\ResourceShareConfig;
 
 class ResourceShareReader implements ResourceShareReaderInterface
 {
@@ -66,9 +65,7 @@ class ResourceShareReader implements ResourceShareReaderInterface
         if (!$resourceShareTransfer) {
             return $resourceShareResponseTransfer->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())
-                        ->setType(ResourceShareConfig::ERROR_MESSAGE_TYPE)
-                        ->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
                 );
         }
 

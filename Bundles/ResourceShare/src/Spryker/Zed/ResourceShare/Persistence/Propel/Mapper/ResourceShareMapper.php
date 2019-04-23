@@ -41,10 +41,9 @@ class ResourceShareMapper
             return $resourceShareTransfer;
         }
 
-        $resourceShareDataTransfer = (new ResourceShareDataTransfer())
-            ->setData($this->utilEncodingService->decodeJson($resourceShareEntity->getResourceData(), true));
-
-        return $resourceShareTransfer->setResourceShareData($resourceShareDataTransfer);
+        return $resourceShareTransfer->setResourceShareData(
+            $this->mapResourceDataToResourceShareDataTransfer($resourceShareEntity->getResourceData())
+        );
     }
 
     /**
@@ -57,16 +56,34 @@ class ResourceShareMapper
         $resourceShareEntity = new SpyResourceShare();
         $resourceShareEntity->fromArray($resourceShareTransfer->toArray());
 
-        if (!$resourceShareTransfer->getResourceShareData() || !$resourceShareTransfer->getResourceShareData()->getData()) {
-            return $resourceShareEntity;
+        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
+        if ($resourceShareDataTransfer) {
+            $resourceShareEntity->setResourceData(
+                $this->mapResourceShareDataTransferToResourceData($resourceShareDataTransfer)
+            );
         }
 
-        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
-
-        $resourceShareEntity->setResourceData(
-            $this->utilEncodingService->encodeJson($resourceShareDataTransfer->getData())
-        );
-
         return $resourceShareEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareDataTransfer $resourceShareDataTransfer
+     *
+     * @return string|null
+     */
+    protected function mapResourceShareDataTransferToResourceData(ResourceShareDataTransfer $resourceShareDataTransfer): ?string
+    {
+        return $this->utilEncodingService->encodeJson($resourceShareDataTransfer->getData());
+    }
+
+    /**
+     * @param string $resourceData
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareDataTransfer
+     */
+    protected function mapResourceDataToResourceShareDataTransfer(string $resourceData): ResourceShareDataTransfer
+    {
+        return (new ResourceShareDataTransfer())
+            ->setData($this->utilEncodingService->decodeJson($resourceData, true));
     }
 }

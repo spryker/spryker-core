@@ -10,7 +10,6 @@ namespace Spryker\Zed\ResourceShare\Business\ResourceShare;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Spryker\Zed\ResourceShare\ResourceShareConfig;
 
 class ResourceShareActivator implements ResourceShareActivatorInterface
 {
@@ -100,9 +99,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
                 return $resourceShareResponseTransfer->setIsSuccessful(false)
                     ->setIsLoginRequired(true)
                     ->addMessage(
-                        (new MessageTransfer())
-                            ->setType(ResourceShareConfig::ERROR_MESSAGE_TYPE)
-                            ->setValue(static::GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER)
+                        (new MessageTransfer())->setValue(static::GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER)
                     );
             }
 

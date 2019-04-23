@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Orm\Zed\ResourceShare\Persistence\SpyResourceShare;
-use Spryker\Zed\ResourceShare\ResourceShareConfig;
 use Spryker\Zed\ResourceShare\ResourceShareDependencyProvider;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface;
@@ -539,12 +538,7 @@ class ResourceShareFacadeTest extends Test
     ): bool {
         $resourceShareResponseTransfer->requireMessages();
         foreach ($resourceShareResponseTransfer->getMessages() as $messageTransfer) {
-            $messageTransfer->requireType();
             $messageTransfer->requireValue();
-
-            if ($messageTransfer->getType() !== ResourceShareConfig::ERROR_MESSAGE_TYPE) {
-                continue;
-            }
 
             if ($messageTransfer->getValue() === $errorMessage) {
                 return true;
