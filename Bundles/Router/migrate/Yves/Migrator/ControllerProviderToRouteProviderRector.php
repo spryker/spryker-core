@@ -197,7 +197,7 @@ class ControllerProviderToRouteProviderRector extends AbstractRector
 
         foreach ($statements as $statement) {
             if ($statement instanceof Nop) {
-                throw new Exception(sprintf('Found "%s" statement, this is usually found when you have to many methods chained. You can fix this by manually splitting the chain into smaller parts (max 10 calls per chain)', Nop::class));
+                throw new ShouldNotHappenException(sprintf('Found "%s" statement, this is usually found when you have to many methods chained. You can fix this by manually splitting the chain into smaller parts (max 10 calls per chain)', Nop::class));
             }
 
             if ($statement instanceof Return_) {
