@@ -26,4 +26,12 @@ class ConfigurationController extends AbstractController
             $this->getFactory()->createContentMapper()->mapEditorContentTypes($editorContentTypes)
         );
     }
+
+    /**
+     * @return array
+     */
+    public function assetsAction(): array
+    {
+        return $this->viewResponse();
+    }
 }
