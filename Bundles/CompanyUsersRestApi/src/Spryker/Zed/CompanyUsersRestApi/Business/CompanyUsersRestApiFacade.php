@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CompanyUsersRestApi\Business\CompanyUsersRestApiBusinessFactory getFactory()
+ * @method \Spryker\Zed\CompanyUsersRestApi\Persistence\CompanyUsersRestApiRepositoryInterface getRepository()
  */
 class CompanyUsersRestApiFacade extends AbstractFacade implements CompanyUsersRestApiFacadeInterface
 {

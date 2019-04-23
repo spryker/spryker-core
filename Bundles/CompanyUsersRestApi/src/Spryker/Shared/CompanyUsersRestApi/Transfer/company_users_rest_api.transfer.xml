@@ -34,4 +34,12 @@
         <property name="idCompany" type="int"/>
     </transfer>
 
+    <transfer name="CompanyUserCriteriaFilter">
+        <property name="idCompany" type="int"/>
+        <property name="filter" type="Filter"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="companyUserIds" type="array"/>
+        <property name="companyBusinessUnitUuids" type="string[]"/>
+    </transfer>
+
 </transfers>
