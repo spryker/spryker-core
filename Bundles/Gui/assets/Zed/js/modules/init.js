@@ -39,10 +39,10 @@ var dataTablesSearchDelay = function() {
 $(document).ready(function() {
     // editor
     $('.html-editor').each(function() {
-        const $editor = $(this);
+        const $textarea = $(this);
 
-        if (typeof $editor.data('editor-config') === 'undefined') {
-            $editor.summernote(editorConfig.getConfig())
+        if (typeof $textarea.data('editor-config') === 'undefined') {
+            $textarea.summernote(editorConfig.getConfig())
         }
     });
 

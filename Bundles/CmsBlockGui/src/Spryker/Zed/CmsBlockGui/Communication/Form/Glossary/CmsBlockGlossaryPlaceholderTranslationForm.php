@@ -85,7 +85,7 @@ class CmsBlockGlossaryPlaceholderTranslationForm extends AbstractType
             'label' => 'Content',
             'attr' => [
                 'class' => 'html-editor',
-                'data-editor-config' => 'contentItem',
+                'data-editor-config' => 'cms',
             ],
             'required' => false,
             'constraints' => [
