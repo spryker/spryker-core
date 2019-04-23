@@ -20,12 +20,11 @@ interface CompanyUserReaderInterface
     public function getCompanyUsersByCustomerReference(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
-     * @param string $idResource
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCompanyUserByResourceId(string $idResource, RestRequestInterface $restRequest): RestResponseInterface;
+    public function getCompanyUserByResourceId(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
      * @param string $companyUserUuid
