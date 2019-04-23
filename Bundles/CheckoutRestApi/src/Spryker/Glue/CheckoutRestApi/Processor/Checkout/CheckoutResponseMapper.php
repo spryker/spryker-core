@@ -35,7 +35,7 @@ class CheckoutResponseMapper implements CheckoutResponseMapperInterface
         RestCheckoutResponseTransfer $restCheckoutResponseTransfer,
         RestCheckoutResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
     ): RestCheckoutResponseAttributesTransfer {
-        $restCheckoutResponseAttributesTransfer->setOrderReference($restCheckoutResponseTransfer->getOrderReference());
+        $restCheckoutResponseAttributesTransfer->fromArray($restCheckoutResponseTransfer->toArray(), true);
 
         return $this->executeCheckoutResponseMapperPlugins(
             $restCheckoutResponseTransfer,

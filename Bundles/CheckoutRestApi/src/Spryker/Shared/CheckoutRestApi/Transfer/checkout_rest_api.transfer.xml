@@ -96,12 +96,16 @@
 
     <transfer name="RestCheckoutResponseAttributes">
         <property name="orderReference" type="string"/>
+        <property name="redirectUrl" type="string" />
+        <property name="isExternalRedirect" type="bool" />
     </transfer>
 
     <transfer name="RestCheckoutResponse">
         <property name="isSuccess" type="bool" />
         <property name="errors" type="RestCheckoutError[]" singular="error" />
         <property name="orderReference" type="string" />
+        <property name="redirectUrl" type="string" />
+        <property name="isExternalRedirect" type="bool" />
         <property name="checkoutResponse" type="CheckoutResponse" />
     </transfer>
 
