@@ -69,6 +69,22 @@ class ClassDefinition implements ClassDefinitionInterface
     private $entityNamespace;
 
     /**
+     * BC shim to use strict generation only as feature flag to be
+     * enabled manually on project level.
+     *
+     * @var bool
+     */
+    private $useStrictGeneration;
+
+    /**
+     * @param bool $useStrictGeneration
+     */
+    public function __construct(bool $useStrictGeneration = false)
+    {
+        $this->useStrictGeneration = $useStrictGeneration;
+    }
+
+    /**
      * @param array $definition
      *
      * @return $this
@@ -98,13 +114,29 @@ class ClassDefinition implements ClassDefinitionInterface
      * @param string $name
      *
      * @return $this
+     * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidNameException
      */
     private function setName($name)
     {
-        if (strpos($name, 'Transfer') === false) {
-            $name .= 'Transfer';
+        if (!$this->useStrictGeneration) {
+            // Deprecated, removed together with this option in the next major.
+            if (strpos($name, 'Transfer') === false) {
+                $name .= 'Transfer';
+            }
+
+            $this->name = $name . 'Transfer';
+
+            return $this;
         }
-        $this->name = ucfirst($name);
+
+        if (preg_match('/Transfer$/', $name)) {
+            throw new InvalidNameException(sprintf(
+                'Transfers must not be suffixed with the word "Transfer", this will be auto-appended on generation: %s',
+                $name
+            ));
+        }
+
+        $this->name = $name . 'Transfer';
 
         return $this;
     }
@@ -255,7 +287,7 @@ class ClassDefinition implements ClassDefinitionInterface
 
             return $property;
         }
-        $property['type'] = $property['type'] . 'Transfer';
+        $property['type'] .= 'Transfer';
         $property[self::TYPE_FULLY_QUALIFIED] .= $property['type'];
 
         return $property;
@@ -345,9 +377,7 @@ class ClassDefinition implements ClassDefinitionInterface
     private function getAddVar(array $property)
     {
         if ($this->isTypedArray($property)) {
-            $type = preg_replace('/\[\]/', '', $property['type']);
-
-            return $type;
+            return preg_replace('/\[\]/', '', $property['type']);
         }
 
         if ($this->isArray($property)) {

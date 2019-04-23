@@ -238,7 +238,9 @@ class TransferBusinessFactory extends AbstractBusinessFactory
      */
     protected function createClassDefinition()
     {
-        return new ClassDefinition();
+        $useStrictGeneration = $this->getConfig()->useStrictGeneration();
+
+        return new ClassDefinition($useStrictGeneration);
     }
 
     /**
