@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2019-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,71 +10,68 @@ namespace Spryker\Zed\Publisher\Communication\Plugin\Event;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Publisher\Communication\PublisherCommunicationFactory;
-use Spryker\Zed\Publisher\Dependency\PublisherEventRegistry;
+use Spryker\Zed\Publisher\Communication\Collection\PublisherRegistryCollectionInterface;
+use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
 
 /**
- *  @method PublisherCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Publisher\Communication\PublisherCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Publisher\PublisherConfig getConfig()
  */
 class PublisherSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @return EventCollectionInterface
+     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    public function getSubscribedEvents(EventCollectionInterface $eventCollection)
+    public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
         $publisherRegistryCollection = $this->getFactory()->getPublisherRegistryCollection();
+        $publisherEventRegistries = $this->getRegisteredPublisherEventRegistries($publisherRegistryCollection);
 
-        $publisherListeners = $this->getRegisteredPublisherCollection($publisherRegistryCollection);
-
-        foreach ($publisherListeners as $publisherEventCollection) {
-            $this->extractEventListenerCollection($eventCollection, $publisherEventCollection);
+        foreach ($publisherEventRegistries as $publisherEventRegistry) {
+            $this->extractEventListenerCollection($eventCollection, $publisherEventRegistry);
         }
 
         return $eventCollection;
     }
 
     /**
-     * @param $publisherRegistryCollection
+     * @param \Spryker\Zed\Publisher\Communication\Collection\PublisherRegistryCollectionInterface $publisherRegistryCollection
      *
-     * @return array
+     * @return \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface[]
      */
-    protected function getRegisteredPublisherCollection($publisherRegistryCollection): array
+    protected function getRegisteredPublisherEventRegistries(PublisherRegistryCollectionInterface $publisherRegistryCollection): array
     {
-        $publisherListeners = [];
-        foreach ($publisherRegistryCollection as $publisherRegistry) {
-            $publisherListeners[] = $publisherRegistry->getPublisherEventRegistry(new PublisherEventRegistry());
+        $publisherPlugins = [];
+        foreach ($publisherRegistryCollection as $publisherRegistryPlugin) {
+            $publisherPlugins[] = $publisherRegistryPlugin->getPublisherEventRegistry($this->getFactory()->createPublisherEventRegistry());
         }
 
-        return $publisherListeners;
+        return $publisherPlugins;
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
-     * @param $publisherEventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface $publisherEventRegistry
      *
      * @return void
      */
-    protected function extractEventListenerCollection(EventCollectionInterface $eventCollection, $publisherEventCollection): void
+    protected function extractEventListenerCollection(EventCollectionInterface $eventCollection, PublisherEventRegistryInterface $publisherEventRegistry): void
     {
-        foreach ($publisherEventCollection as $eventName => $listeners) {
+        foreach ($publisherEventRegistry as $eventName => $listeners) {
             $this->addListenerToEventCollection($eventCollection, $listeners, $eventName);
         }
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
-     * @param $listeners
-     * @param $eventName
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface[] $listeners
+     * @param string $eventName
      *
      * @return void
      */
-    protected function addListenerToEventCollection(EventCollectionInterface $eventCollection, $listeners, $eventName): void
+    protected function addListenerToEventCollection(EventCollectionInterface $eventCollection, array $listeners, string $eventName): void
     {
         foreach ($listeners as $listener) {
             $eventCollection->addListenerQueued($eventName, $listener);

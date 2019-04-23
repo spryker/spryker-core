@@ -13,10 +13,9 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 interface PublisherEventRegistryInterface extends ArrayAccess, IteratorAggregate
 {
-
     /**
      * @param string $eventName
-     * @param PublisherPluginInterface $publisherPlugin
+     * @param \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface $publisherPlugin
      *
      * @return $this
      */

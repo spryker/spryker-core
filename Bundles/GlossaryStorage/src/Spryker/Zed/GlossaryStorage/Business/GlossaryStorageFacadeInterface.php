@@ -10,14 +10,14 @@ namespace Spryker\Zed\GlossaryStorage\Business;
 interface GlossaryStorageFacadeInterface
 {
     /**
+     * @api
+     *
      * @deprecated
      *
      * Specification:
      * - Queries all glossary keys with the given glossaryKeyIds
      * - Stores data as json encoded to storage table
      * - Sends a copy of data to queue based on module config
-     *
-     * @api
      *
      * @param array $glossaryKeyIds
      *
@@ -26,13 +26,13 @@ interface GlossaryStorageFacadeInterface
     public function publish(array $glossaryKeyIds);
 
     /**
+     * @api
+     *
      * @deprecated
      *
      * Specification:
      * - Finds and deletes glossary storage entities with the given glossaryKeyIds
      * - Sends delete message to queue based on module config
-     *
-     * @api
      *
      * @param array $glossaryKeyIds
      *

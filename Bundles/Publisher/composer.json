@@ -4,10 +4,16 @@
   "description": "Publisher module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.21.0",
+    "spryker/publisher-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/event": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/event": "*"
   },
   "autoload": {
     "psr-4": {

@@ -12,18 +12,17 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInte
 
 class PublisherRegistryCollection implements PublisherRegistryCollectionInterface
 {
-
     /**
-     * @var PublisherRegistryPluginInterface[]
+     * @var \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface[]
      */
     protected $registryCollection = [];
 
     /**
-     * @param PublisherRegistryPluginInterface $publisherRegistry
+     * @param \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface $publisherRegistry
      *
      * @return void
      */
-    public function add(PublisherRegistryPluginInterface $publisherRegistry)
+    public function add(PublisherRegistryPluginInterface $publisherRegistry): void
     {
         $this->registryCollection[] = $publisherRegistry;
     }
@@ -37,7 +36,7 @@ class PublisherRegistryCollection implements PublisherRegistryCollectionInterfac
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->registryCollection[$offset]);
     }
@@ -49,7 +48,7 @@ class PublisherRegistryCollection implements PublisherRegistryCollectionInterfac
      *
      * @param mixed $offset
      *
-     * @return array|PublisherRegistryPluginInterface
+     * @return array|\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface
      */
     public function offsetGet($offset)
     {
@@ -66,7 +65,7 @@ class PublisherRegistryCollection implements PublisherRegistryCollectionInterfac
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->registryCollection[$offset] = $value;
     }
@@ -80,7 +79,7 @@ class PublisherRegistryCollection implements PublisherRegistryCollectionInterfac
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->registryCollection[$offset]);
     }

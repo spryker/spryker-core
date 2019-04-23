@@ -5,11 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Publisher\Dependency;
+namespace Spryker\Zed\Publisher\Communication\Registry;
 
 use ArrayIterator;
+use Exception;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
+use Traversable;
 
 class PublisherEventRegistry implements PublisherEventRegistryInterface
 {
@@ -20,9 +22,9 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
 
     /**
      * @param string $eventName
-     * @param PublisherPluginInterface $publisherPlugin
+     * @param \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface $publisherPlugin
      *
-     * @return $this|PublisherEventRegistryInterface
+     * @return $this|\Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface
      */
     public function register(string $eventName, PublisherPluginInterface $publisherPlugin)
     {
@@ -33,11 +35,11 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
 
     /**
      * @param string $eventName
-     * @param PublisherPluginInterface $publisherPlugin
+     * @param \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface $publisherPlugin
      *
      * @return void
      */
-    protected function add(string $eventName, PublisherPluginInterface $publisherPlugin)
+    protected function add(string $eventName, PublisherPluginInterface $publisherPlugin): void
     {
         if (!$this->has($eventName)) {
             $this->publisherPlugins[$eventName] = [];
@@ -55,7 +57,7 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->has($offset);
     }
@@ -84,7 +86,7 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->add($value, $offset);
     }
@@ -98,7 +100,7 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->publisherPlugins[$offset]);
     }
@@ -110,7 +112,7 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
      *
      * @return \Traversable
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->publisherPlugins);
     }
@@ -120,8 +122,29 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
      *
      * @return bool
      */
-    protected function has($eventName)
+    protected function has(string $eventName): bool
     {
         return isset($this->publisherPlugins[$eventName]);
+    }
+
+    /**
+     * @param string $eventName
+     *
+     * @throws \Exception
+     *
+     * @return \SplPriorityQueue|\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface
+     */
+    protected function get(string $eventName)
+    {
+        if (!isset($this->publisherPlugins[$eventName]) || count($this->publisherPlugins[$eventName]) === 0) {
+            throw new Exception(
+                sprintf(
+                    'Could not find publisher for event "%s". You have to add it to PublisherDependencyProvider.',
+                    $eventName
+                )
+            );
+        }
+
+        return $this->publisherPlugins[$eventName];
     }
 }

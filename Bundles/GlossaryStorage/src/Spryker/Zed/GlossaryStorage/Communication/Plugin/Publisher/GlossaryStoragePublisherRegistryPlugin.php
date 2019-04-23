@@ -8,8 +8,8 @@
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher;
 
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\GlossaryWritePublisherPlugin;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\GlossaryDeletePublisherPlugin;
+use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\GlossaryWritePublisherPlugin;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface;
 use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
@@ -22,13 +22,14 @@ use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
  */
 class GlossaryStoragePublisherRegistryPlugin extends AbstractPlugin implements PublisherRegistryPluginInterface
 {
-
     /**
-     * @param PublisherEventRegistryInterface $publisherEventRegistry
+     * @api
      *
-     * @return PublisherEventRegistryInterface
+     * @param \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface $publisherEventRegistry
+     *
+     * @return \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface
      */
-    public function getPublisherEventRegistry(PublisherEventRegistryInterface $publisherEventRegistry)
+    public function getPublisherEventRegistry(PublisherEventRegistryInterface $publisherEventRegistry): PublisherEventRegistryInterface
     {
         $publisherEventRegistry->register(GlossaryEvents::GLOSSARY_KEY_PUBLISH, new GlossaryWritePublisherPlugin());
         $publisherEventRegistry->register(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_CREATE, new GlossaryWritePublisherPlugin());

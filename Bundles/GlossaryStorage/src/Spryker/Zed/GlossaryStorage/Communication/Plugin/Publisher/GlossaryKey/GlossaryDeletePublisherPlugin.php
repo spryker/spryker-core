@@ -22,10 +22,11 @@ class GlossaryDeletePublisherPlugin extends AbstractPlugin implements PublisherP
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * @api
+     *
      * @param array $eventTransfers
      * @param string $eventName
      *
-     * @throws \Propel\Runtime\Exception\PropelException
      * @return void
      */
     public function handleBulk(array $eventTransfers, $eventName)
