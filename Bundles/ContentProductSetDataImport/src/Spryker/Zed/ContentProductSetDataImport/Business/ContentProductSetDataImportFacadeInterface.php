@@ -8,8 +8,19 @@
 namespace Spryker\Zed\ContentProductSetDataImport\Business;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportTransfer;
 
 interface ContentProductSetDataImportFacadeInterface
 {
-    public function importProductSet(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null);
+    /**
+     * Specification:
+     * - Imports product set content items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importProductSetTerm(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): DataImporterReportTransfer;
 }

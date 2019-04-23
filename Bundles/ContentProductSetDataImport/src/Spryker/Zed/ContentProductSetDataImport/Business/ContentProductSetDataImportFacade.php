@@ -8,14 +8,25 @@
 namespace Spryker\Zed\ContentProductSetDataImport\Business;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ContentProductSetDataImport\Business\ContentProductSetDataImportBusinessFactory getFactory()
  */
-class ContentProductSetDataImportFacade implements ContentProductSetDataImportFacadeInterface
+class ContentProductSetDataImportFacade extends AbstractFacade implements ContentProductSetDataImportFacadeInterface
 {
-    public function importProductSet(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importProductSetTerm(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): DataImporterReportTransfer
     {
-        $this->getFactory()->getContentProductSetDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()->getContentProductSetDataImport()->import($dataImporterConfigurationTransfer);
     }
 }

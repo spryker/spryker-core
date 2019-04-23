@@ -7,11 +7,28 @@
 
 namespace Spryker\Zed\ContentProductSetDataImport\Business\Model;
 
+use Orm\Zed\Content\Persistence\Map\SpyContentLocalizedTableMap;
+use Orm\Zed\Content\Persistence\SpyContent;
+use Orm\Zed\Content\Persistence\SpyContentLocalizedQuery;
+use Orm\Zed\Content\Persistence\SpyContentQuery;
+use Spryker\Zed\Content\Dependency\ContentEvents;
+use Spryker\Zed\ContentProductSetDataImport\Business\Model\DataSet\ContentProductSetDataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-class ContentProductSetWriterStep implements DataImportStepInterface
+class ContentProductSetWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::CONTENT_TYPE_PRODUCT_SET
+     */
+    protected const CONTENT_TYPE_PRODUCT_SET = 'Product Set';
+
+    /**
+     * @uses \Spryker\Shared\ContentProductSet\ContentProductSetConfig::CONTENT_TERM_PRODUCT_SET
+     */
+    protected const CONTENT_TERM_PRODUCT_SET = 'Product Set';
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -19,6 +36,47 @@ class ContentProductSetWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet)
     {
-        // TODO: Implement execute() method.
+        $contentProductAbstractListEntity = $this->saveContentProductAbstractListEntity($dataSet);
+
+        SpyContentLocalizedQuery::create()
+            ->filterByFkContent($contentProductAbstractListEntity->getIdContent())
+            ->find()
+            ->delete();
+
+        foreach ($dataSet[ContentProductSetDataSetInterface::CONTENT_LOCALIZED_PRODUCT_SET_TERMS] as $localizedProductAbstractListTermParameters) {
+            $contentLocalizedProductAbstractListEntity = SpyContentLocalizedQuery::create()
+                ->filterByFkContent($contentProductAbstractListEntity->getIdContent())
+                ->filterByFkLocale($localizedProductAbstractListTermParameters[SpyContentLocalizedTableMap::COL_FK_LOCALE])
+                ->findOneOrCreate();
+
+            $contentLocalizedProductAbstractListEntity->fromArray($localizedProductAbstractListTermParameters, SpyContentLocalizedTableMap::TYPE_COLNAME);
+
+            $contentLocalizedProductAbstractListEntity->save();
+        }
+
+        $this->addPublishEvents(
+            ContentEvents::CONTENT_PUBLISH,
+            $contentProductAbstractListEntity->getPrimaryKey()
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return \Orm\Zed\Content\Persistence\SpyContent
+     */
+    protected function saveContentProductAbstractListEntity(DataSetInterface $dataSet): SpyContent
+    {
+        $contentProductAbstractListEntity = SpyContentQuery::create()
+            ->filterByKey($dataSet[ContentProductSetDataSetInterface::CONTENT_PRODUCT_SET_KEY])
+            ->findOneOrCreate();
+
+        $contentProductAbstractListEntity->setName($dataSet[ContentProductSetDataSetInterface::COLUMN_NAME])
+            ->setDescription($dataSet[ContentProductSetDataSetInterface::COLUMN_DESCRIPTION])
+            ->setContentTypeKey(static::CONTENT_TYPE_PRODUCT_SET)
+            ->setContentTermKey(static::CONTENT_TERM_PRODUCT_SET)
+            ->save();
+
+        return $contentProductAbstractListEntity;
     }
 }

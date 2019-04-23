@@ -12,6 +12,10 @@ use Spryker\Zed\ContentProductSetDataImport\ContentProductSetDataImportConfig;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
+/**
+ * @method \Spryker\Zed\ContentProductSetDataImport\Business\ContentProductSetDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\ContentProductSetDataImport\ContentProductSetDataImportConfig getConfig()
+ */
 class ContentProductSetDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
@@ -25,7 +29,7 @@ class ContentProductSetDataImportPlugin extends AbstractPlugin implements DataIm
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
-        return $this->getFacade()->importProductSet($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importProductSetTerm($dataImporterConfigurationTransfer);
     }
 
     /**
