@@ -42,10 +42,10 @@ class ProductAbstractListContentTermForm extends AbstractType
                 if ($localizedContentTransfer->getFkLocale() === null) {
                     return [Constraint::DEFAULT_GROUP];
                 }
-                /** @var \Generated\Shared\Transfer\ContentProductAbstractListTransfer $contentProductAbstractList */
-                $contentProductAbstractList = $form->getNormData();
+                /** @var \Generated\Shared\Transfer\ContentProductAbstractListTermTransfer $contentProductAbstractListTermTransfer */
+                $contentProductAbstractListTermTransfer = $form->getNormData();
 
-                foreach ($contentProductAbstractList->getIdProductAbstracts() as $idProductAbstract) {
+                foreach ($contentProductAbstractListTermTransfer->getIdProductAbstracts() as $idProductAbstract) {
                     if ($idProductAbstract) {
                         return [Constraint::DEFAULT_GROUP];
                     }

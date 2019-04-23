@@ -49,14 +49,14 @@ class ContentProductAbstractListConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentParameterMessageTransfer $parameterMessage
+     * @param \Generated\Shared\Transfer\ContentParameterMessageTransfer $parameterMessageTransfer
      *
      * @return void
      */
-    protected function addViolations(ContentParameterMessageTransfer $parameterMessage): void
+    protected function addViolations(ContentParameterMessageTransfer $parameterMessageTransfer): void
     {
-        foreach ($parameterMessage->getMessages() as $message) {
-            $text = strtr($message->getValue(), $message->getParameters());
+        foreach ($parameterMessageTransfer->getMessages() as $messageTransfer) {
+            $text = strtr($messageTransfer->getValue(), $messageTransfer->getParameters());
             $this->context
                 ->buildViolation($text)
                 ->atPath(ProductAbstractListContentTermForm::FIELD_ID_ABSTRACT_PRODUCTS)
