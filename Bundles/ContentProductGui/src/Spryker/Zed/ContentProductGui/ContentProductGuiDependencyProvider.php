@@ -28,10 +28,10 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        $this->provideProductImageFacade($container);
-        $this->provideProductQueryContainer($container);
-        $this->provideLocaleFacade($container);
-        $this->provideContentProductFacade($container);
+        $this->addProductImageFacade($container);
+        $this->addProductQueryContainer($container);
+        $this->addLocaleFacade($container);
+        $this->addContentProductFacade($container);
 
         return $container;
     }
@@ -41,7 +41,7 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return void
      */
-    protected function provideProductImageFacade(Container $container): void
+    protected function addProductImageFacade(Container $container): void
     {
         $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
             return new ContentProductGuiToProductImageBridge($container->getLocator()->productImage()->facade());
@@ -53,7 +53,7 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return void
      */
-    protected function provideProductQueryContainer(Container $container): void
+    protected function addProductQueryContainer(Container $container): void
     {
         $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function (Container $container) {
             return SpyProductAbstractQuery::create();
@@ -65,7 +65,7 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return void
      */
-    protected function provideLocaleFacade(Container $container): void
+    protected function addLocaleFacade(Container $container): void
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ContentProductGuiToLocaleBridge($container->getLocator()->locale()->facade());
@@ -77,7 +77,7 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return void
      */
-    protected function provideContentProductFacade(Container $container): void
+    protected function addContentProductFacade(Container $container): void
     {
         $container[static::FACADE_CONTENT_PRODUCT] = function (Container $container) {
             return new ContentProductGuiToContentProductBridge($container->getLocator()->contentProduct()->facade());

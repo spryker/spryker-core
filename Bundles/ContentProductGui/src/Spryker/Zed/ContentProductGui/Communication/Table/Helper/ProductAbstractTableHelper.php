@@ -33,10 +33,11 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
      */
     public function getProductPreview(SpyProductAbstract $productAbstractEntity): string
     {
-        return sprintf(
-            '<img src="%s">',
-            $this->getProductPreviewUrl($productAbstractEntity)
-        );
+        if ($link = $this->getProductPreviewUrl($productAbstractEntity)) {
+            return sprintf('<img src="%s">', $this->getProductPreviewUrl($productAbstractEntity));
+        }
+
+        return '';
     }
 
     /**
@@ -50,6 +51,7 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
         foreach ($productAbstractEntity->getSpyProducts() as $spyProductEntity) {
             if ($spyProductEntity->getIsActive()) {
                 $isActive = true;
+                break;
             }
         }
 
@@ -112,9 +114,7 @@ class ProductAbstractTableHelper implements ProductAbstractTableHelperInterface
 
         foreach ($productImageSetTransferCollection as $productImageSetTransfer) {
             foreach ($productImageSetTransfer->getProductImages() as $productImageTransfer) {
-                $previewUrl = $productImageTransfer->getExternalUrlSmall();
-
-                if ($previewUrl) {
+                if ($previewUrl = $productImageTransfer->getExternalUrlSmall()) {
                     return $previewUrl;
                 }
             }

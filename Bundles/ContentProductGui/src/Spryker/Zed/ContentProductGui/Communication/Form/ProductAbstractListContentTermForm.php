@@ -42,7 +42,7 @@ class ProductAbstractListContentTermForm extends AbstractType
                 if ($localizedContentTransfer->getFkLocale() === null) {
                     return [Constraint::DEFAULT_GROUP];
                 }
-                /** @var \Generated\Shared\Transfer\ContentProductAbstractListTransfer $contentProductAbstractList */
+                /** @var \Generated\Shared\Transfer\ContentProductAbstractListTermTransfer $contentProductAbstractList */
                 $contentProductAbstractList = $form->getNormData();
 
                 foreach ($contentProductAbstractList->getIdProductAbstracts() as $idProductAbstract) {
@@ -120,12 +120,13 @@ class ProductAbstractListContentTermForm extends AbstractType
         ])->get(static::FIELD_ID_ABSTRACT_PRODUCTS)->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) {
-                // Uses for sorting products
-                if ($event->getData()) {
-                    $ids = array_filter(array_values($event->getData()));
-                    $event->setData($ids);
-                    $event->getForm()->setData($ids);
+                if (!$event->getData()) {
+                    return;
                 }
+                // sfForms needs empty values removed to correctly sort a collectionType
+                $ids = array_filter(array_values($event->getData()));
+                $event->setData($ids);
+                $event->getForm()->setData($ids);
             }
         );
 

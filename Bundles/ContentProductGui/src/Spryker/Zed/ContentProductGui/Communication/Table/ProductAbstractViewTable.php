@@ -52,24 +52,24 @@ class ProductAbstractViewTable extends AbstractTable
     /**
      * @var string|null
      */
-    protected $identifierPostfix;
+    protected $identifierSuffix;
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productQueryContainer
      * @param \Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface $productAbstractTableHelper
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string|null $identifierPostfix
+     * @param string|null $identifierSuffix
      */
     public function __construct(
         SpyProductAbstractQuery $productQueryContainer,
         ProductAbstractTableHelperInterface $productAbstractTableHelper,
         LocaleTransfer $localeTransfer,
-        ?string $identifierPostfix
+        ?string $identifierSuffix
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->productAbstractTableHelper = $productAbstractTableHelper;
         $this->localeTransfer = $localeTransfer;
-        $this->identifierPostfix = $identifierPostfix;
+        $this->identifierSuffix = $identifierSuffix;
     }
 
     /**
@@ -83,7 +83,11 @@ class ProductAbstractViewTable extends AbstractTable
         $this->defaultUrl = static::TABLE_IDENTIFIER;
         $this->tableClass = static::TABLE_CLASS;
 
-        $this->setTableIdentifier(sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierPostfix));
+        $this->setTableIdentifier(
+            !$this->identifierSuffix ?
+                static::TABLE_IDENTIFIER :
+                sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierSuffix)
+        );
 
         $config->setHeader([
             static::COL_ID_PRODUCT_ABSTRACT => static::HEADER_ID_PRODUCT_ABSTRACT,

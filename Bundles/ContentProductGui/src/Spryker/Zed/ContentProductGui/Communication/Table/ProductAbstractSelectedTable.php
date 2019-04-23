@@ -52,7 +52,7 @@ class ProductAbstractSelectedTable extends AbstractTable
     /**
      * @var string|null
      */
-    protected $identifierPostfix;
+    protected $identifierSuffix;
 
     /**
      * @var array
@@ -63,20 +63,20 @@ class ProductAbstractSelectedTable extends AbstractTable
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productQueryContainer
      * @param \Spryker\Zed\ContentProductGui\Communication\Table\Helper\ProductAbstractTableHelperInterface $productAbstractTableHelper
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string|null $identifierPostfix
+     * @param string|null $identifierSuffix
      * @param array $idProductAbstracts
      */
     public function __construct(
         SpyProductAbstractQuery $productQueryContainer,
         ProductAbstractTableHelperInterface $productAbstractTableHelper,
         LocaleTransfer $localeTransfer,
-        ?string $identifierPostfix,
+        ?string $identifierSuffix,
         array $idProductAbstracts
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->productAbstractTableHelper = $productAbstractTableHelper;
         $this->localeTransfer = $localeTransfer;
-        $this->identifierPostfix = $identifierPostfix;
+        $this->identifierSuffix = $identifierSuffix;
         $this->idProductAbstracts = $idProductAbstracts;
     }
 
@@ -96,7 +96,11 @@ class ProductAbstractSelectedTable extends AbstractTable
         $this->baseUrl = static::BASE_URL;
         $this->defaultUrl = Url::generate(static::TABLE_IDENTIFIER, $parameters)->build();
         $this->tableClass = static::TABLE_CLASS;
-        $this->setTableIdentifier(sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierPostfix));
+        $this->setTableIdentifier(
+            !$this->identifierSuffix ?
+                static::TABLE_IDENTIFIER :
+                sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierSuffix)
+        );
 
         $this->disableSearch();
 
@@ -145,23 +149,25 @@ class ProductAbstractSelectedTable extends AbstractTable
     protected function prepareData(TableConfiguration $config): array
     {
         $results = [];
-        if ($this->idProductAbstracts) {
-            $idProductAbstracts = array_values($this->idProductAbstracts);
-            $query = $this->productQueryContainer
-                ->filterByIdProductAbstract_In($idProductAbstracts)
-                ->useSpyProductAbstractLocalizedAttributesQuery()
-                    ->filterByFkLocale($this->localeTransfer->getIdLocale())
-                ->endUse();
-
-            $queryResults = $this->runQuery($query, $config, true);
-
-            /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
-            foreach ($queryResults as $productAbstractEntity) {
-                $index = array_search($productAbstractEntity->getIdProductAbstract(), $idProductAbstracts);
-                $results[$index] = $this->formatRow($productAbstractEntity);
-            }
-            ksort($results);
+        if (!$this->idProductAbstracts) {
+            return $results;
         }
+
+        $idProductAbstracts = array_values($this->idProductAbstracts);
+        $query = $this->productQueryContainer
+            ->filterByIdProductAbstract_In($idProductAbstracts)
+            ->useSpyProductAbstractLocalizedAttributesQuery()
+            ->filterByFkLocale($this->localeTransfer->getIdLocale())
+            ->endUse();
+
+        $queryResults = $this->runQuery($query, $config, true);
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
+        foreach ($queryResults as $productAbstractEntity) {
+            $index = array_search($productAbstractEntity->getIdProductAbstract(), $idProductAbstracts);
+            $results[$index] = $this->formatRow($productAbstractEntity);
+        }
+        ksort($results);
 
         return $results;
     }
