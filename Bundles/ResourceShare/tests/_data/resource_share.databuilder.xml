@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ResourceShare">
+        <property name="customerReference" dataBuilderRule="unique()->sentence(4)" />
+        <property name="resourceType" dataBuilderRule="unique()->sentence(2)" />
+        <property name="expiryDate" dataBuilderRule="dateTimeBetween('now', '+1 year')->format('Y-m-d')" />
+    </transfer>
+
+</transfers>
