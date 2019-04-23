@@ -1,5 +1,5 @@
 const contentItemDialog = function() {
-    const insertContentText = window.contentItemConfiguration.title;
+    const insertContentText = window.contentItemConfiguration.cms.title;
 
     $.extend($.summernote.plugins, {
         'contentItemDialog': function (context) {

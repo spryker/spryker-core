@@ -1,7 +1,9 @@
 <script>
-    window.contentItemConfiguration = {
+    window.contentItemConfiguration = window.contentItemConfiguration || {};
+
+    window.contentItemConfiguration.cms = {
         dropdownItems: {{ dropdownItems | json_encode | raw }},
         title: '{{ 'Insert Content' | trans }}'
-    }
+    };
 </script>
 <script src="/assets/js/spryker-zed-content-item.js"></script>

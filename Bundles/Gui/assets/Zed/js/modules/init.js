@@ -36,15 +36,22 @@ var dataTablesSearchDelay = function() {
     });
 }
 
-$(document).ready(function() {
-    // editor
+const editorInit = function() {
     $('.html-editor').each(function() {
         const $textarea = $(this);
+        const $textareaConfigName = $textarea.data('editor-config');
 
-        if (typeof $textarea.data('editor-config') === 'undefined') {
-            $textarea.summernote(editorConfig.getConfig())
+        if (editorConfig.globalConfigExist($textareaConfigName)) {
+            return;
         }
+
+        $textarea.summernote(editorConfig.getConfig())
     });
+};
+
+$(document).ready(function() {
+    // editor
+    editorInit();
 
     /* Data tables custom error handling */
     dataTable.setTableErrorMode('none');
