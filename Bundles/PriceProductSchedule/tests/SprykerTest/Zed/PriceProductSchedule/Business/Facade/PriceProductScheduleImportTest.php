@@ -78,7 +78,6 @@ class PriceProductScheduleImportTest extends Unit
             ->setPriceProductScheduleList($priceProductScheduleListTransfer)
             ->setItems($priceProductScheduleImportTransfers);
 
-
         // Act
         $priceProductScheduleImportResponse = $this->priceProductScheduleFacade->importPriceProductSchedules($priceProductScheduleImportRequest);
 
@@ -139,7 +138,7 @@ class PriceProductScheduleImportTest extends Unit
                 PriceProductTransfer::PRICE_TYPE => [
                     PriceTypeTransfer::NAME => $priceTypeTransfer->getName(),
                     PriceTypeTransfer::ID_PRICE_TYPE => $priceTypeTransfer->getIdPriceType(),
-                ]
+                ],
             ],
             PriceProductScheduleTransfer::ACTIVE_TO => new DateTime('-2 days'),
             PriceProductScheduleTransfer::ACTIVE_FROM => new DateTime('+3 days'),

@@ -196,7 +196,6 @@ class PriceProductScheduleListTest extends Unit
         ];
     }
 
-
     /**
      * @return array
      */
