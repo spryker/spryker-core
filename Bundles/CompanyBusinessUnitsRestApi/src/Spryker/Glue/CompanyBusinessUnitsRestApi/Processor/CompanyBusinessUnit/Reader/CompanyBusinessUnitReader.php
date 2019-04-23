@@ -68,10 +68,10 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         }
 
         if ($this->isCurrentUserResourceIdentifier($restRequest->getResource()->getId())) {
-            return $this->getUserOwnCompanyBusinessUnit($restRequest);
+            return $this->getCurrentUserCompanyBusinessUnits($restRequest);
         }
 
-        return $this->getUserOwnCompanyBusinessUnitByUuid($restRequest);
+        return $this->getCurrentUserCompanyBusinessUnitByUuid($restRequest);
     }
 
     /**
@@ -79,8 +79,12 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getUserOwnCompanyBusinessUnit(RestRequestInterface $restRequest): RestResponseInterface
+    protected function getCurrentUserCompanyBusinessUnits(RestRequestInterface $restRequest): RestResponseInterface
     {
+        if (!$restRequest->getRestUser()->getIdCompanyBusinessUnit()) {
+            return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitIdMissingError();
+        }
+
         $companyBusinessUnitTransfer = $this->companyBusinessUnitClient->getCompanyBusinessUnitById(
             (new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($restRequest->getRestUser()->getIdCompanyBusinessUnit())
         );
@@ -97,7 +101,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getUserOwnCompanyBusinessUnitByUuid(RestRequestInterface $restRequest): RestResponseInterface
+    protected function getCurrentUserCompanyBusinessUnitByUuid(RestRequestInterface $restRequest): RestResponseInterface
     {
         $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitClient->findCompanyBusinessUnitByUuid(
             (new CompanyBusinessUnitTransfer())->setUuid($restRequest->getResource()->getId())
@@ -112,13 +116,13 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
     }
 
     /**
-     * @param string $companyIdentifier
+     * @param string $resourceIdentifier
      *
      * @return bool
      */
-    protected function isCurrentUserResourceIdentifier(string $companyIdentifier): bool
+    protected function isCurrentUserResourceIdentifier(string $resourceIdentifier): bool
     {
-        return $companyIdentifier === CompanyBusinessUnitsRestApiConfig::CURRENT_USER_COLLECTION_IDENTIFIER;
+        return $resourceIdentifier === CompanyBusinessUnitsRestApiConfig::CURRENT_USER_COLLECTION_IDENTIFIER;
     }
 
     /**

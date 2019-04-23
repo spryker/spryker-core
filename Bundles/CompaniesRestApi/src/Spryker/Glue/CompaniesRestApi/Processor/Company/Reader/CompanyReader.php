@@ -60,10 +60,10 @@ class CompanyReader implements CompanyReaderInterface
         }
 
         if ($this->isCurrentUserResourceIdentifier($restRequest->getResource()->getId())) {
-            return $this->getUserOwnCompany($restRequest);
+            return $this->getCurrentUserCompanies($restRequest);
         }
 
-        return $this->getUserOwnCompanyByUuid($restRequest);
+        return $this->getCurrentUserCompanyByUuid($restRequest);
     }
 
     /**
@@ -71,10 +71,10 @@ class CompanyReader implements CompanyReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getUserOwnCompany(RestRequestInterface $restRequest): RestResponseInterface
+    protected function getCurrentUserCompanies(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$this->isCurrentUserResourceIdentifier($restRequest->getResource()->getId())) {
-            return $this->companyRestResponseBuilder->createResourceNotImplementedError();
+        if (!$restRequest->getRestUser()->getIdCompany()) {
+            return $this->companyRestResponseBuilder->createCompanyIdMissingError();
         }
 
         $companyTransfer = $this->companyClient->getCompanyById(
@@ -93,7 +93,7 @@ class CompanyReader implements CompanyReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getUserOwnCompanyByUuid(RestRequestInterface $restRequest): RestResponseInterface
+    protected function getCurrentUserCompanyByUuid(RestRequestInterface $restRequest): RestResponseInterface
     {
         $companyResponseTransfer = $this->companyClient->findCompanyByUuid(
             (new CompanyTransfer())->setUuid($restRequest->getResource()->getId())
@@ -108,13 +108,13 @@ class CompanyReader implements CompanyReaderInterface
     }
 
     /**
-     * @param string $companyIdentifier
+     * @param string $resourceIdentifier
      *
      * @return bool
      */
-    protected function isCurrentUserResourceIdentifier(string $companyIdentifier): bool
+    protected function isCurrentUserResourceIdentifier(string $resourceIdentifier): bool
     {
-        return $companyIdentifier === CompaniesRestApiConfig::CURRENT_USER_COLLECTION_IDENTIFIER;
+        return $resourceIdentifier === CompaniesRestApiConfig::CURRENT_USER_COLLECTION_IDENTIFIER;
     }
 
     /**
