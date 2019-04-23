@@ -42,7 +42,7 @@ class CompanyUsersResourceController extends AbstractController
         $resourceId = $restRequest->getResource()->getId();
 
         if (!$resourceId) {
-            return $this->getFactory()->getCompanyUserCollection();
+            return $this->getFactory()->createCompanyUserReader()->getCompanyUserCollection($restRequest);
         }
 
         return $this->getFactory()->createCompanyUserReader()->getCompanyUserByResourceId($resourceId, $restRequest);
