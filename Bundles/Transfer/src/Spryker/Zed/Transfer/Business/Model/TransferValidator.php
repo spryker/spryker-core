@@ -60,13 +60,23 @@ class TransferValidator implements TransferValidatorInterface
     ];
 
     /**
+     * BC shim to use strict generation only as feature flag to be
+     * enabled manually on project level.
+     *
+     * @var bool
+     */
+    private $useStrictGeneration;
+
+    /**
      * @param \Psr\Log\LoggerInterface $messenger
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface $finder
+     * @param bool $useStrictGeneration
      */
-    public function __construct(LoggerInterface $messenger, FinderInterface $finder)
+    public function __construct(LoggerInterface $messenger, FinderInterface $finder, bool $useStrictGeneration = false)
     {
         $this->messenger = $messenger;
         $this->finder = $finder;
+        $this->useStrictGeneration = $useStrictGeneration;
 
         $this->typeMap = $this->simpleTypeMap;
         foreach ($this->simpleTypeWhitelist as $type) {
@@ -114,6 +124,15 @@ class TransferValidator implements TransferValidatorInterface
 
         $ok = true;
         foreach ($definition as $transfer) {
+            if ($this->useStrictGeneration && !$this->validateName($transfer['name'])) {
+                $ok = false;
+                $this->messenger->warning(sprintf(
+                    '%s.%s is an invalid transfer name',
+                    $module,
+                    $transfer['name']
+                ));
+            }
+
             foreach ($transfer['property'] as $property) {
                 $type = $property['type'];
 
@@ -227,5 +246,23 @@ class TransferValidator implements TransferValidatorInterface
         $filter = new UnderscoreToCamelCase();
 
         return (string)$filter->filter(str_replace(self::TRANSFER_SCHEMA_SUFFIX, '', $fileName));
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    protected function validateName(string $name): bool
+    {
+        if (!preg_match('/^[A-Z]/', $name)) {
+            return false;
+        }
+
+        if (preg_match('/Transfer$/', $name)) {
+            return false;
+        }
+
+        return true;
     }
 }

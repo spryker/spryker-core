@@ -276,7 +276,8 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     {
         return new TransferValidator(
             $messenger,
-            $this->createFinder()
+            $this->createFinder(),
+            $this->getConfig()->useStrictGeneration()
         );
     }
 
