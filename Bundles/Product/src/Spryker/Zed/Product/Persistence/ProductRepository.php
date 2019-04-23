@@ -204,7 +204,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     /**
      * @param string[] $skus
      *
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array
     {

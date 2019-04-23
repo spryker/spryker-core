@@ -24,7 +24,7 @@ class UtilCsvService extends AbstractService implements UtilCsvServiceInterface
      *
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return array
+     * @return string[][]
      */
     public function readUploadedFile(UploadedFile $file): array
     {

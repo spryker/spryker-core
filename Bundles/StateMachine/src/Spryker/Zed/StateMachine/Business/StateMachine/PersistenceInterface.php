@@ -24,7 +24,7 @@ interface PersistenceInterface
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param string $stateName
      *
-     * @return int
+     * @return string
      */
     public function getInitialStateIdByStateName(StateMachineItemTransfer $stateMachineItemTransfer, $stateName);
 
