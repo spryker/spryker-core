@@ -4,16 +4,9 @@ const editorButtons = require('./editorComponents/buttons');
 const contentItemDialog = require('./content-item-editor-dialog');
 
 const ContentItemEditor = function(dropdownContentUrl) {
-    this.dropDownItems = [];
-
-    this.initialization = function(dropdownItems, initSummernote) {
-        this.dropDownItems = dropdownItems;
-
+    this.initialization = function() {
+        this.dropDownItems = window.contentItemConfiguration.dropdownItems;
         contentItemDialog.init();
-
-        if (initSummernote) {
-            initSummernote();
-        }
     };
 
     this.getContentItemEditorConfig = function () {
@@ -31,8 +24,10 @@ const ContentItemEditor = function(dropdownContentUrl) {
     };
 
     this.createDropdownButton = function (dropdownContentUrl) {
+        const buttonContents = window.contentItemConfiguration.title + ' <i class="fa fa-caret-down" aria-hidden="true"></i>';
+
         return editorButtons.ContentItemDropdownButton(
-            'Add Content <i class="fa fa-caret-down" aria-hidden="true"></i>',
+            buttonContents,
             this.generateDropdownList(),
             this.dropDownClickHandler
         );
@@ -52,8 +47,10 @@ const ContentItemEditor = function(dropdownContentUrl) {
     }
 
     this.dropDownClickHandler = function (context) {
-        return context.createInvokeHandler('contentItemDialog.show', event);
+        return context.createInvokeHandler('contentItemDialog.show');
     };
+
+    this.initialization();
 }
 
 module.exports = ContentItemEditor;

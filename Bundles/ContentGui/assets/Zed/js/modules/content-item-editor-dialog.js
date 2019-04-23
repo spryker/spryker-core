@@ -1,4 +1,6 @@
 const contentItemDialog = function() {
+    const insertContentText = window.contentItemConfiguration.title;
+
     $.extend($.summernote.plugins, {
         'contentItemDialog': function (context) {
             this.context = context;
@@ -6,16 +8,24 @@ const contentItemDialog = function() {
             this.editor = context.layoutInfo.editor;
             this.options = context.options;
             this.$ui = $.summernote.ui;
+            this.loaderTemplate = '<div>' +
+                '<img src="/assets/img/cms-loader.gif" />' +
+                '</div>';
 
             this.initialize = function() {
                 const $container = this.options.dialogsInBody ? this.$body : this.editor;
-                const bodyTemplate = '<div class="content-item-body">Test body</div>';
+                const bodyTemplate = '<div class="content-item-body">' +
+                    this.loaderTemplate +
+                    '</div>';
+
                 const footerTemplate = '<div class="content-item-footer">' +
-                               '<button class="btn btn-create safe-submit add-content-item">Add</button>' +
-                               '</div>';
+                    '<button class="btn btn-create safe-submit add-content-item">' +
+                    insertContentText +
+                    '</button>' +
+                    '</div>';
 
                 this.$dialog = this.$ui.dialog({
-                    title: 'Add Content',
+                    title: insertContentText,
                     fade: this.options.dialogsFade,
                     body: bodyTemplate,
                     footer: footerTemplate
@@ -32,7 +42,6 @@ const contentItemDialog = function() {
             }
 
             this.show = function (event, button) {
-                event.preventDefault();
                 this.context.invoke('editor.saveRange');
 
                 this.$ui.showDialog(this.$dialog);
