@@ -233,7 +233,7 @@ class Builder implements BuilderInterface
         if (!file_exists($pathToXml)) {
             throw new StateMachineException(
                 sprintf(
-                    'State machine xml file not found in "%s".',
+                    'State machine XML file not found in "%s".',
                     $pathToXml
                 )
             );
