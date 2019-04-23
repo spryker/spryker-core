@@ -136,5 +136,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
 
             return $resourceShareResponseTransfer->setResourceShare($strategyResourceShareResponseTransfer->getResourceShare());
         }
+
+        return $resourceShareResponseTransfer;
     }
 }

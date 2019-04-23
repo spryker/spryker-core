@@ -8,7 +8,7 @@
         <property name="customerReference" type="string" />
         <property name="uuid" type="string" />
         <property name="resourceType" type="string" />
-        <property name="resourceData" type="ResourceShareData" />
+        <property name="resourceShareData" type="ResourceShareData" />
         <property name="expiryDate" type="string" />
     </transfer>
 
@@ -35,7 +35,6 @@
 
     <transfer name="Customer">
         <property name="customerReference" type="string" />
-        <property name="isGuest" type="bool" />
     </transfer>
 
 </transfers>

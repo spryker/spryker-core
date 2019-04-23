@@ -103,5 +103,7 @@ class ResourceShareReader implements ResourceShareReaderInterface
 
             return $resourceShareResponseTransfer->setResourceShare($strategyResourceShareResponseTransfer->getResourceShare());
         }
+
+        return $resourceShareResponseTransfer;
     }
 }

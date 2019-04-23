@@ -37,10 +37,14 @@ class ResourceShareMapper
         $resourceShareTransfer = (new ResourceShareTransfer())
             ->fromArray($resourceShareEntity->toArray(), true);
 
+        if (!$resourceShareEntity->getResourceData()) {
+            return $resourceShareTransfer;
+        }
+
         $resourceShareDataTransfer = (new ResourceShareDataTransfer())
             ->setData($this->utilEncodingService->decodeJson($resourceShareEntity->getResourceData(), true));
 
-        return $resourceShareTransfer->setResourceData($resourceShareDataTransfer);
+        return $resourceShareTransfer->setResourceShareData($resourceShareDataTransfer);
     }
 
     /**
@@ -53,7 +57,11 @@ class ResourceShareMapper
         $resourceShareEntity = new SpyResourceShare();
         $resourceShareEntity->fromArray($resourceShareTransfer->toArray());
 
-        $resourceShareDataTransfer = $resourceShareTransfer->getResourceData();
+        if (!$resourceShareTransfer->getResourceShareData() || !$resourceShareTransfer->getResourceShareData()->getData()) {
+            return $resourceShareEntity;
+        }
+
+        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
         $resourceShareEntity->setResourceData(
             $this->utilEncodingService->encodeJson($resourceShareDataTransfer->getData())
