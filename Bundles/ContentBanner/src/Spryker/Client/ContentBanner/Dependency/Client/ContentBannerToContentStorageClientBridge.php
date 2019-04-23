@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ContentBannersRestApi\Dependency\Client;
+namespace Spryker\Client\ContentBanner\Dependency\Client;
 
-use Generated\Shared\Transfer\ExecutedContentStorageTransfer;
+use Generated\Shared\Transfer\ContentTypeContextTransfer;
 
-class ContentBannersRestApiToContentStorageClientBridge implements ContentBannersRestApiToContentStorageClientInterface
+class ContentBannerToContentStorageClientBridge implements ContentBannerToContentStorageClientInterface
 {
     /**
      * @var \Spryker\Client\ContentStorage\ContentStorageClientInterface
@@ -28,10 +28,10 @@ class ContentBannersRestApiToContentStorageClientBridge implements ContentBanner
      * @param int $idContent
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ExecutedContentStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ContentTypeContextTransfer|null
      */
-    public function findContentById(int $idContent, string $localeName): ?ExecutedContentStorageTransfer
+    public function findContentTypeContext(int $idContent, string $localeName): ?ContentTypeContextTransfer
     {
-        return $this->contentStorageClient->findContentById($idContent, $localeName);
+        return $this->contentStorageClient->findContentTypeContext($idContent, $localeName);
     }
 }
