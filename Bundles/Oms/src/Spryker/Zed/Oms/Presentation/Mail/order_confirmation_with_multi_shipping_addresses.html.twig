@@ -33,38 +33,29 @@
             <tr>
                 <td><strong>{{ 'mail.order.confirmation.shipment_details' | trans }}</strong></td>
             </tr>
-            {% for shipment in mail.order.shipmentGroups %}
+            {% for shipmentGroup in mail.order.shipmentGroups %}
             <tr>
                 <td>
                     {{ 'mail.order.confirmation.shipment_number' | trans }} {{ loop.index +1 }}<br />
-                    {{ 'mail.order.confirmation.shipping_address' | trans }}<br />
-                    {{ shipment.shippingAddress.firstName }} {{ shipment.shippingAddress.lastName }}<br />
-                    {{ shipment.shippingAddress.address1 }} {{ shipment.shippingAddress.address2 }} {{ shipment.shippingAddress.address3 }}<br />
-                    {{ shipment.shippingAddress.zipCode }} {{ shipment.shippingAddress.city }}<br />
-                    {{ shipment.shippingAddress.region }}<br />
+                    {{ 'mail.order.confirmation.shipping_address' | trans }}:<br />
+                    {{ shipmentGroup.shipment.shippingAddress.firstName }} {{ shipmentGroup.shipment.shippingAddress.lastName }}<br />
+                    {{ shipmentGroup.shipment.shippingAddress.address1 }} {{ shipmentGroup.shipment.shippingAddress.address2 }} {{ shipmentGroup.shipment.shippingAddress.address3 }}<br />
+                    {{ shipmentGroup.shipment.shippingAddress.zipCode }} {{ shipmentGroup.shipment.shippingAddress.city }}<br />
+                    {{ shipmentGroup.shipment.shippingAddress.region }}<br />
 
-                    {{ 'mail.order.confirmation.shipping_method' | trans }}: {{ shipment.shipping_method }}<br />
-                    {{ 'mail.order.confirmation.delivery_date' | trans }}: {{ shipment.delivery_date }}<br />
-
-                    {{ 'mail.order.confirmation.price_including_tax' | trans }}: {{ mail.order.totals.grandTotal | money }}<br />
-                    {{ 'mail.order.confirmation.date' | trans }}: {{ mail.order.createdAt | date }}<br />
-                    {{ 'mail.order.confirmation.billing_address' | trans }}: {{ mail.order.billingAddress.firstName }} {{ mail.order.billingAddress.lastName }}<br />
-                    {{ mail.order.billingAddress.address1 }} {{ mail.order.billingAddress.address2 }} {{ mail.order.billingAddress.address3 }}<br />
-                    {{ mail.order.billingAddress.zipCode }} {{ mail.order.billingAddress.city }}<br />
-                    {{ mail.order.billingAddress.region }}
+                    {{ 'mail.order.confirmation.shipping_method' | trans }}: {{ shipmentGroup.shipment.method.name }}<br />
+                    {{ 'mail.order.confirmation.delivery_date' | trans }}: {{ shipmentGroup.shipment.requestedDeliveryDate }}
                 </td>
             </tr>
             <tr>
                 <td><strong>{{ 'mail.order.confirmation.products_in_shipment' | trans }}</strong></td>
             </tr>
             <tr>
-                <td><strong>{{ 'mail.order.confirmation.product_title' | trans }}</strong></td>
-                <td><strong>{{ 'mail.order.confirmation.quantity' | trans }}</strong></td>
+                <td><strong>{{ 'mail.order.confirmation.product_title' | trans }} x {{ 'mail.order.confirmation.quantity' | trans }} = {{ 'mail.order.confirmation.price' | trans }}</strong></td>
             </tr>
-                {% for item in mail.order.items %}
+                {% for item in shipmentGroup.items %}
                 <tr>
-                    <td>{{ item.name } ({{ item.sku }})</td>
-                    <td>{{ item.quantity }</td>
+                    <td>{{ item.name }} ({{ item.sku }}) x {{ item.quantity }} = {{ item.unitPrice | money }}</td>
                 </tr>
                 {% endfor %}
             {% endfor %}

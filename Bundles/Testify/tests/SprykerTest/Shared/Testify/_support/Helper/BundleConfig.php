@@ -32,32 +32,35 @@ class BundleConfig extends Module
 
     /**
      * @param \Spryker\Shared\Kernel\AbstractBundleConfig $bundleConfig
+     * @param string|null $className
      *
      * @return void
      */
-    public function addBundleConfigMock(AbstractBundleConfig $bundleConfig)
+    public function addBundleConfigMock(AbstractBundleConfig $bundleConfig, string $className = null)
     {
-        $this->bundleConfigMock->addBundleConfigMock($bundleConfig);
+        $this->bundleConfigMock->addBundleConfigMock($bundleConfig, $className);
     }
 
     /**
      * @param \Spryker\Shared\Kernel\AbstractBundleConfig $bundleConfig
+     * @param string|null $className
      *
      * @return bool
      */
-    public function hasBundleConfigMock(AbstractBundleConfig $bundleConfig)
+    public function hasBundleConfigMock(AbstractBundleConfig $bundleConfig, string $className = null)
     {
-        return $this->bundleConfigMock->hasBundleConfigMock($bundleConfig);
+        return $this->bundleConfigMock->hasBundleConfigMock($bundleConfig, $className);
     }
 
     /**
      * @param \Spryker\Shared\Kernel\AbstractBundleConfig $bundleConfig
+     * @param string|null $className
      *
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig
      */
-    public function getBundleConfigMock(AbstractBundleConfig $bundleConfig)
+    public function getBundleConfigMock(AbstractBundleConfig $bundleConfig, string $className = null)
     {
-        return $this->bundleConfigMock->getBundleConfigMock($bundleConfig);
+        return $this->bundleConfigMock->getBundleConfigMock($bundleConfig, $className);
     }
 
     /**

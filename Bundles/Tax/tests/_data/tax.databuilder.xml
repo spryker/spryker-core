@@ -12,5 +12,13 @@
         <property name="name" dataBuilderRule="unique()->sentence(2)" />
     </transfer>
 
+    <transfer name="Totals">
+        <property name="grandTotal" dataBuilderRule="randomNumber(5)" />
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="requestedDeliveryDate" dataBuilderRule="date('Y-m-d')" />
+    </transfer>
+
 </transfers>
 

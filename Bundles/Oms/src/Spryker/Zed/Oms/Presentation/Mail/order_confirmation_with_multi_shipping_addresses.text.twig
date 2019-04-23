@@ -1,0 +1,48 @@
+{{ 'mail.order.confirmation.salutation' | trans }} {{ mail.order.firstName }} {{ mail.order.lastName }},
+
+{{ 'mail.order.confirmation.text_line_1' | trans }}
+
+{{ 'mail.order.confirmation.text_line_2' | trans }}
+
+{{ 'mail.order.confirmation.text_line_3' | trans }}
+
+{{ 'mail.order.confirmation.footer.text_line_1' | trans }},
+{{ 'mail.order.confirmation.footer.text_line_2' | trans }}
+
+- - - - - - - - - -
+
+{{ 'mail.order.confirmation.details' | trans }}
+
+{{ 'mail.order.confirmation.order_number' | trans }}: {{ mail.order.orderReference }}
+{{ 'mail.order.confirmation.price_including_tax' | trans }}: {{ mail.order.totals.grandTotal | money }}
+{{ 'mail.order.confirmation.date' | trans }}: {{ mail.order.createdAt | date }}
+
+{{ 'mail.order.confirmation.billing_address' | trans }}: {{ mail.order.billingAddress.firstName }} {{ mail.order.billingAddress.lastName }},
+{{ mail.order.billingAddress.address1 }} {{ mail.order.billingAddress.address2 }} {{ mail.order.billingAddress.address3 }},
+{{ mail.order.billingAddress.zipCode }} {{ mail.order.billingAddress.city }},
+{{ mail.order.billingAddress.region }}
+
+{{ 'mail.order.confirmation.shipment_details' | trans }}
+
+{% for shipmentGroup in mail.order.shipmentGroups %}
+
+    {{ 'mail.order.confirmation.shipment_number' | trans }} {{ loop.index +1 }}
+
+    {{ 'mail.order.confirmation.shipping_address' | trans }}: {{ shipmentGroup.shipment.shippingAddress.firstName }} {{ shipmentGroup.shipment.shippingAddress.lastName }},
+    {{ shipmentGroup.shipment.shippingAddress.address1 }} {{ shipmentGroup.shipment.shippingAddress.address2 }} {{ shipmentGroup.shipment.shippingAddress.address3 }},
+    {{ shipmentGroup.shipment.shippingAddress.zipCode }} {{ shipmentGroup.shipment.shippingAddress.city }},
+    {{ shipmentGroup.shipment.shippingAddress.region }}
+
+    {{ 'mail.order.confirmation.shipping_method' | trans }}: {{ shipmentGroup.shipment.method.name }}
+    {{ 'mail.order.confirmation.delivery_date' | trans }}: {{ shipmentGroup.shipment.requestedDeliveryDate }}
+
+    {{ 'mail.order.confirmation.products_in_shipment' | trans }}
+
+    {% for item in shipmentGroup.items %}
+        {{ item.name }} ({{ item.sku }}) x {{ item.quantity }} = {{ item.unitPrice | money }}
+    {% endfor %}
+
+- - -
+
+{% endfor %}
+

@@ -99,7 +99,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
      */
     private function mockBundleConfigs()
     {
-        $this->bundleConfig->addBundleConfigMock($this->getTwigBundleConfigMock());
+        $this->bundleConfig->addBundleConfigMock($this->getTwigBundleConfigMock(), TwigConfig::class);
     }
 
     /**

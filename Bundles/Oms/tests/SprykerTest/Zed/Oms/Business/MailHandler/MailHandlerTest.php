@@ -14,8 +14,14 @@ use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Mail\CompanyUserInvitationMailTypePlugin;
+use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollection;
+use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollection;
+use Spryker\Zed\Mail\Communication\Plugin\MailProviderPlugin;
+use Spryker\Zed\Mail\MailConfig;
+use Spryker\Zed\Mail\MailDependencyProvider;
+use Spryker\Zed\Oms\Communication\Plugin\Mail\OrderConfirmationMailTypePlugin;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\Shipment\Communication\Plugin\OrderShipmentSavePlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
@@ -50,6 +56,21 @@ class MailHandlerTest extends Unit
                 new ShipmentOrderHydratePlugin(),
             ]
         );
+
+        $mailTypeCollection = new MailTypeCollection();
+        $mailTypeCollection->add(new OrderConfirmationMailTypePlugin());
+        $this->tester->setDependency(MailDependencyProvider::MAIL_TYPE_COLLECTION, $mailTypeCollection);
+
+        $mailProviderCollection = new MailProviderCollection();
+        $mailProviderCollection->addProvider(new MailProviderPlugin(), [
+            MailConfig::MAIL_TYPE_ALL,
+            CompanyUserInvitationMailTypePlugin::MAIL_TYPE,
+        ]);
+        $this->tester->setDependency(MailDependencyProvider::MAIL_PROVIDER_COLLECTION, $mailProviderCollection);
+
+        /**
+         * @todo Set up dry run for email sender.
+         */
     }
 
     /**
@@ -66,9 +87,6 @@ class MailHandlerTest extends Unit
         $salesOrderEntity = SpySalesOrderQuery::create()->filterByIdSalesOrder($saveOrderTransfer->getIdSalesOrder())->findOne();
 
         // Act
-        /**
-         * @todo Debug why emails are not sending.
-         */
         $this->tester->getFacade()->sendOrderConfirmationMail($salesOrderEntity);
 
         // Assert
@@ -83,7 +101,11 @@ class MailHandlerTest extends Unit
     public function sendOrderConfirmationMailShouldPrepareCorrectMailTransferDataProvider(): array
     {
         return [
-            'France 1 item, 1 address; expected: 1 order shipment with shipping address in DB' => $this->getDataWithMultipleShipmentsAndShippingAddressesAnd1ItemToFrance(),
+            'France 1 item; expected: 1 shipment in email' => $this->getDataWithMultipleShipmentsAndShippingAddressesAnd1ItemToFrance(),
+            /**
+             * @todo Uncomment when will be fixed shipment saving for multiple items.
+             */
+//            'France 1 item, Germany 1 item; expected: 2 shipments in email' => $this->getDataWithMultipleShipmentsAndShippingAddressesAnd1ItemToFranceAnd1ItemToGermany(),
         ];
     }
 
@@ -92,17 +114,10 @@ class MailHandlerTest extends Unit
      */
     protected function getDataWithMultipleShipmentsAndShippingAddressesAnd1ItemToFrance(): array
     {
-        $addressBuilder = (new AddressBuilder([AddressTransfer::ISO2_CODE => 'FR']));
-
-        $shipmentBuilder = (new ShipmentBuilder())
-            ->withShippingAddress($addressBuilder)
-            ->withMethod();
-
-        $itemBuilder = (new ItemBuilder())
-            ->withShipment($shipmentBuilder);
+        $itemBuilder1 = $this->getPreparedItemBuilder('FR');
 
         $quoteTransfer = (new QuoteBuilder())
-            ->withItem($itemBuilder)
+            ->withItem($itemBuilder1)
             ->withBillingAddress()
             ->withTotals()
             ->withCustomer()
@@ -110,5 +125,41 @@ class MailHandlerTest extends Unit
             ->build();
 
         return [$quoteTransfer];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataWithMultipleShipmentsAndShippingAddressesAnd1ItemToFranceAnd1ItemToGermany(): array
+    {
+        $itemBuilder1 = $this->getPreparedItemBuilder('FR');
+        $itemBuilder2 = $this->getPreparedItemBuilder('DE');
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem($itemBuilder1)
+            ->withAnotherItem($itemBuilder2)
+            ->withBillingAddress()
+            ->withTotals()
+            ->withCustomer()
+            ->withCurrency()
+            ->build();
+
+        return [$quoteTransfer];
+    }
+
+    /**
+     * @param string $iso2Code
+     *
+     * @return \Generated\Shared\DataBuilder\ItemBuilder
+     */
+    protected function getPreparedItemBuilder(string $iso2Code): ItemBuilder
+    {
+        $addressBuilder = (new AddressBuilder([AddressTransfer::ISO2_CODE => $iso2Code]));
+        $shipmentBuilder = (new ShipmentBuilder())
+            ->withShippingAddress($addressBuilder)
+            ->withMethod();
+
+        return (new ItemBuilder())
+            ->withShipment($shipmentBuilder);
     }
 }
