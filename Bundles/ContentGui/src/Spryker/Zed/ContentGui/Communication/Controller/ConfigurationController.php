@@ -19,10 +19,8 @@ class ConfigurationController extends AbstractController
      */
     public function assetsAction(): array
     {
-        $editorContentTypes = $this->getFactory()->getConfig()->getEditorContentTypes();
-
         return $this->viewResponse([
-            'dropdownItems' => $this->getFactory()->createContentMapper()->mapEditorContentTypes($editorContentTypes),
+            'editorContentTypes' => $this->getFactory()->getConfig()->getEditorContentTypes(),
         ]);
     }
 }

@@ -3,7 +3,7 @@ const getEditorConfig = require('./editorComponents/config');
 const editorButtons = require('./editorComponents/buttons');
 const contentItemDialog = require('./content-item-editor-dialog');
 
-const ContentItemEditor = function(dropdownContentUrl) {
+const ContentItemEditor = function() {
     this.initialization = function() {
         this.dropDownItems = window.editorConfiguration.cms.dropdownItems;
         contentItemDialog.init();
@@ -23,8 +23,8 @@ const ContentItemEditor = function(dropdownContentUrl) {
         return getEditorConfig(defaultConfig, newConfig);
     };
 
-    this.createDropdownButton = function (dropdownContentUrl) {
-        const buttonContents = window.editorConfiguration.cms.title + ' <i class="fa fa-caret-down" aria-hidden="true"></i>';
+    this.createDropdownButton = function () {
+        const buttonContents = window.editorConfiguration.cms.buttonTitle + ' <i class="fa fa-caret-down" aria-hidden="true"></i>';
 
         return editorButtons.ContentItemDropdownButton(
             buttonContents,
@@ -34,7 +34,7 @@ const ContentItemEditor = function(dropdownContentUrl) {
     };
 
     this.generateDropdownList = function () {
-        const dropdownList = this.dropDownItems.reduce(function(currentList, dropItem) {
+        return this.dropDownItems.reduce(function(currentList, dropItem) {
             const dropItemTemplate = '<li role="listitem">' +
                 '<a href="#" data-url="' + dropItem.contentListUrl + '">' +
                 dropItem.name +
@@ -42,15 +42,13 @@ const ContentItemEditor = function(dropdownContentUrl) {
 
             return currentList + dropItemTemplate;
         }, '');
-
-        return dropdownList;
-    }
+    };
 
     this.dropDownClickHandler = function (context) {
         return context.createInvokeHandler('contentItemDialog.show');
     };
 
     this.initialization();
-}
+};
 
 module.exports = ContentItemEditor;
