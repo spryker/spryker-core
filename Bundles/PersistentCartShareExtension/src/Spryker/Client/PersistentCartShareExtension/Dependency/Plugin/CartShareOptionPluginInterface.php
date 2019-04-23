@@ -18,4 +18,14 @@ interface CartShareOptionPluginInterface
      * @return string
      */
     public function getKey(): string;
+
+    /**
+     * Specification:
+     * - Returns share option group.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getGroup(): string;
 }

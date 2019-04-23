@@ -12,6 +12,7 @@ use Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptio
 class FullAccessCartShareOptionPlugin implements CartShareOptionPluginInterface
 {
     protected const KEY_FULL_ACCESS = 'FULL_ACCESS';
+    protected const GROUP_INTERNAL = 'internal';
 
     /**
      * {@inheritdoc}
@@ -24,5 +25,18 @@ class FullAccessCartShareOptionPlugin implements CartShareOptionPluginInterface
     public function getKey(): string
     {
         return static::KEY_FULL_ACCESS;
+    }
+
+    /**
+     * @inheritDoc
+     * - Returns internal share option group.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getGroup(): string
+    {
+        return static::GROUP_INTERNAL;
     }
 }
