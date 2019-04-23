@@ -169,6 +169,6 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
      */
     protected function isCurrentUserResourceIdentifier(RestRequestInterface $restRequest): bool
     {
-        return $restRequest->getResource()->getId() === CompanyBusinessUnitAddressesRestApiConfig::CURRENT_USER_RESOURCE_IDENTIFIER;
+        return $restRequest->getResource()->getId() === CompanyBusinessUnitAddressesRestApiConfig::CURRENT_USER_COLLECTION_IDENTIFIER;
     }
 }

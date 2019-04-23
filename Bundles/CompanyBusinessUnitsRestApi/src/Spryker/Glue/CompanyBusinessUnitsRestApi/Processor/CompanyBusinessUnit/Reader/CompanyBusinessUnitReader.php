@@ -118,7 +118,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
      */
     protected function isCurrentUserResourceIdentifier(string $companyIdentifier): bool
     {
-        return $companyIdentifier === CompanyBusinessUnitsRestApiConfig::CURRENT_USER_RESOURCE_IDENTIFIER;
+        return $companyIdentifier === CompanyBusinessUnitsRestApiConfig::CURRENT_USER_COLLECTION_IDENTIFIER;
     }
 
     /**

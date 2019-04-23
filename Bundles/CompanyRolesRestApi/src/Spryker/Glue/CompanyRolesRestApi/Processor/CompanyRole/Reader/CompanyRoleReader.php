@@ -147,7 +147,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
      */
     protected function isCurrentUserResourceIdentifier(RestRequestInterface $restRequest): bool
     {
-        return $restRequest->getResource()->getId() === CompanyRolesRestApiConfig::CURRENT_USER_RESOURCE_IDENTIFIER;
+        return $restRequest->getResource()->getId() === CompanyRolesRestApiConfig::CURRENT_USER_COLLECTION_IDENTIFIER;
     }
 
     /**
