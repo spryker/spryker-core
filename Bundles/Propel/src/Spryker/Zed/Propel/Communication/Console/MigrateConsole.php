@@ -31,7 +31,7 @@ class MigrateConsole extends AbstractPropelCommandWrapper
     /**
      * @return string
      */
-    public function getOriginCommandClassName(): string
+    public function getOriginalCommandClassName(): string
     {
         return MigrationMigrateCommand::class;
     }

@@ -12,9 +12,9 @@ use Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface;
 interface PropelCommandConfiguratorInterface
 {
     /**
-     * @param \Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface $propelCommand
+     * @param \Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface $propelConfigurable
      *
      * @return \Spryker\Zed\PropelOrm\Business\Generator\PropelConfigurableInterface
      */
-    public function propelConfigurable(PropelConfigurableInterface $propelCommand): PropelConfigurableInterface;
+    public function configurePropelCommand(PropelConfigurableInterface $propelConfigurable): PropelConfigurableInterface;
 }

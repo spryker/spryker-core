@@ -29,8 +29,8 @@ abstract class AbstractPropelCommandWrapper extends Console
 
         $propelOriginalCommand = $this->getFactory()
             ->createPropelCommandBuilder()
-            ->createOriginCommand(
-                $this->getOriginCommandClassName()
+            ->createOriginalCommand(
+                $this->getOriginalCommandClassName()
             );
 
         return $this->getFactory()->createPropelCommandRunner()->runOriginalCommand(
@@ -43,5 +43,5 @@ abstract class AbstractPropelCommandWrapper extends Console
     /**
      * @return string
      */
-    abstract public function getOriginCommandClassName(): string;
+    abstract public function getOriginalCommandClassName(): string;
 }

@@ -50,12 +50,12 @@ class PropelCommandBuilderTest extends Unit
      *
      * @return void
      */
-    public function testCreateOriginCommand(string $propelCommandClassName): void
+    public function testCreateOriginalCommand(string $propelCommandClassName): void
     {
-        $originCommand = $this->propelCommandBuilder->createOriginCommand($propelCommandClassName);
-        $this->assertInstanceOf($propelCommandClassName, $originCommand);
-        $this->assertInstanceOf(PropelConfigurableInterface::class, $originCommand);
-        $this->assertInstanceOf(Command::class, $originCommand);
+        $propelOriginalCommand = $this->propelCommandBuilder->createOriginalCommand($propelCommandClassName);
+        $this->assertInstanceOf($propelCommandClassName, $propelOriginalCommand);
+        $this->assertInstanceOf(PropelConfigurableInterface::class, $propelOriginalCommand);
+        $this->assertInstanceOf(Command::class, $propelOriginalCommand);
     }
 
     /**

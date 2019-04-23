@@ -19,11 +19,11 @@ class PropelCommandBuilder implements PropelCommandBuilderInterface
     protected $propelCommandConfigurator;
 
     /**
-     * @param \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface $propelCommandConfigurationBuilder
+     * @param \Spryker\Zed\Propel\Communication\Command\Config\PropelCommandConfiguratorInterface $propelCommandConfigurator
      */
-    public function __construct(PropelCommandConfiguratorInterface $propelCommandConfigurationBuilder)
+    public function __construct(PropelCommandConfiguratorInterface $propelCommandConfigurator)
     {
-        $this->propelCommandConfigurator = $propelCommandConfigurationBuilder;
+        $this->propelCommandConfigurator = $propelCommandConfigurator;
     }
 
     /**
@@ -31,15 +31,15 @@ class PropelCommandBuilder implements PropelCommandBuilderInterface
      *
      * @return \Symfony\Component\Console\Command\Command
      */
-    public function createOriginCommand(string $originalPropelCommandClassName): Command
+    public function createOriginalCommand(string $originalPropelCommandClassName): Command
     {
-        $originCommand = $this->createCommand($originalPropelCommandClassName);
+        $originalCommand = $this->createCommand($originalPropelCommandClassName);
 
-        if ($originCommand instanceof PropelConfigurableInterface) {
-            $this->propelCommandConfigurator->propelConfigurable($originCommand);
+        if ($originalCommand instanceof PropelConfigurableInterface) {
+            $this->propelCommandConfigurator->configurePropelCommand($originalCommand);
         }
 
-        return $originCommand;
+        return $originalCommand;
     }
 
     /**

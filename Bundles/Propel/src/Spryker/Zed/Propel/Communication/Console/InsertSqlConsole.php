@@ -31,7 +31,7 @@ class InsertSqlConsole extends AbstractPropelCommandWrapper
     /**
      * @return string
      */
-    public function getOriginCommandClassName(): string
+    public function getOriginalCommandClassName(): string
     {
         return SqlInsertCommand::class;
     }

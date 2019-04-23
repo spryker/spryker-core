@@ -16,5 +16,5 @@ interface PropelCommandBuilderInterface
      *
      * @return \Symfony\Component\Console\Command\Command
      */
-    public function createOriginCommand(string $originalPropelCommandClassName): Command;
+    public function createOriginalCommand(string $originalPropelCommandClassName): Command;
 }
