@@ -37,18 +37,6 @@ class MethodWriter implements MethodWriterInterface
     }
 
     /**
-     * @param int $idShipmentMethod
-     *
-     * @return bool
-     */
-    public function hasMethod(int $idShipmentMethod): bool
-    {
-        $methodQuery = $this->queryContainer->queryMethodByIdMethod($idShipmentMethod);
-
-        return $methodQuery->count() > 0;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
      * @return int
@@ -102,5 +90,17 @@ class MethodWriter implements MethodWriterInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return bool
+     */
+    protected function hasMethod(int $idShipmentMethod): bool
+    {
+        $methodQuery = $this->queryContainer->queryMethodByIdMethod($idShipmentMethod);
+
+        return $methodQuery->count() > 0;
     }
 }
