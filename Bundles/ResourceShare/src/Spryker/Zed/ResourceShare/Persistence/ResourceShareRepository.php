@@ -35,27 +35,4 @@ class ResourceShareRepository extends AbstractRepository implements ResourceShar
             ->createResourceShareMapper()
             ->mapResourceShareEntityToResourceShareTransfer($resourceShareEntity);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareTransfer|null
-     */
-    public function findResourceShareByResource(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer
-    {
-        $resourceShareEntity = $this->getFactory()
-            ->createResourceSharePropelQuery()
-            ->filterByResourceType($resourceShareTransfer->getResourceType())
-            ->filterByResourceData($resourceShareTransfer->getResourceData())
-            ->filterByCustomerReference($resourceShareTransfer->getCustomerReference())
-            ->findOne();
-
-        if (!$resourceShareEntity) {
-            return null;
-        }
-
-        return $this->getFactory()
-            ->createResourceShareMapper()
-            ->mapResourceShareEntityToResourceShareTransfer($resourceShareEntity);
-    }
 }

@@ -6,7 +6,6 @@
     <transfer name="ResourceShare">
         <property name="customerReference" dataBuilderRule="unique()->sentence(4)" />
         <property name="resourceType" dataBuilderRule="unique()->sentence(2)" />
-        <property name="resourceData" dataBuilderRule="unique()->sentence(2)" />
         <property name="expiryDate" dataBuilderRule="dateTimeBetween('now', '+1 year')->format('Y-m-d')" />
     </transfer>
 

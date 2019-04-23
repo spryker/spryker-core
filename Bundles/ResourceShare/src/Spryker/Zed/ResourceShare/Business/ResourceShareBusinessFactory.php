@@ -10,8 +10,6 @@ namespace Spryker\Zed\ResourceShare\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareActivator;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareActivatorInterface;
-use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpander;
-use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface;
 use Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidator;
@@ -34,8 +32,8 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     {
         return new ResourceShareReader(
             $this->getRepository(),
-            $this->createResourceShareExpander(),
-            $this->createResourceShareValidator()
+            $this->createResourceShareValidator(),
+            $this->getResourceShareResourceDataExpanderStrategyPlugins()
         );
     }
 
@@ -46,9 +44,9 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     {
         return new ResourceShareActivator(
             $this->createResourceShareReader(),
-            $this->createResourceShareExpander(),
             $this->createResourceShareValidator(),
-            $this->getResourceShareActivatorStrategyPlugins()
+            $this->getResourceShareActivatorStrategyPlugins(),
+            $this->getResourceShareResourceDataExpanderStrategyPlugins()
         );
     }
 
@@ -60,18 +58,7 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
         return new ResourceShareWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createResourceShareExpander(),
             $this->createResourceShareValidator()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface
-     */
-    public function createResourceShareExpander(): ResourceShareExpanderInterface
-    {
-        return new ResourceShareExpander(
-            $this->getResourceShareResourceDataExpanderStrategyPlugins()
         );
     }
 

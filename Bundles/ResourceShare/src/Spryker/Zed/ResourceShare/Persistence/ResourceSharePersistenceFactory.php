@@ -9,7 +9,9 @@ namespace Spryker\Zed\ResourceShare\Persistence;
 
 use Orm\Zed\ResourceShare\Persistence\SpyResourceShareQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilEncodingServiceInterface;
 use Spryker\Zed\ResourceShare\Persistence\Propel\Mapper\ResourceShareMapper;
+use Spryker\Zed\ResourceShare\ResourceShareDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ResourceShare\Persistence\ResourceShareEntityManagerInterface getEntityManager()
@@ -31,6 +33,16 @@ class ResourceSharePersistenceFactory extends AbstractPersistenceFactory
      */
     public function createResourceShareMapper(): ResourceShareMapper
     {
-        return new ResourceShareMapper();
+        return new ResourceShareMapper(
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ResourceShare\Dependency\Service\ResourceShareToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ResourceShareToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ResourceShareDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

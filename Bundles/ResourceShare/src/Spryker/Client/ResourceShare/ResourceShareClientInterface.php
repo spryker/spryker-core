@@ -18,7 +18,6 @@ interface ResourceShareClientInterface
      * - Uses resource data from provided ResourceShareRequestTransfer::ResourceShareTransfer.
      * - Sets UUID in returned transfer if generation was successful.
      * - Sets `isSuccessful=true` if generation was successful, adds error messages otherwise.
-     * - Does not create new UUID if the provided "resourceType" and "resourceData" pair exists.
      *
      * @api
      *

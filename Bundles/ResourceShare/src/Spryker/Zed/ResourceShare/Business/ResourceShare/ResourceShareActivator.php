@@ -21,11 +21,6 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     protected $resourceShareReader;
 
     /**
-     * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface
-     */
-    protected $resourceShareExpander;
-
-    /**
      * @var \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface
      */
     protected $resourceShareValidator;
@@ -36,21 +31,26 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     protected $resourceShareActivatorStrategyPlugins;
 
     /**
+     * @var \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[]
+     */
+    protected $resourceShareResourceDataExpanderStrategyPlugins;
+
+    /**
      * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface $resourceShareReader
-     * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareExpanderInterface $resourceShareExpander
      * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareValidatorInterface $resourceShareValidator
-     * @param array $resourceShareActivatorStrategyPlugins
+     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface[] $resourceShareActivatorStrategyPlugins
+     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface[] $resourceShareResourceDataExpanderStrategyPlugins
      */
     public function __construct(
         ResourceShareReaderInterface $resourceShareReader,
-        ResourceShareExpanderInterface $resourceShareExpander,
         ResourceShareValidatorInterface $resourceShareValidator,
-        array $resourceShareActivatorStrategyPlugins
+        array $resourceShareActivatorStrategyPlugins,
+        array $resourceShareResourceDataExpanderStrategyPlugins
     ) {
         $this->resourceShareReader = $resourceShareReader;
-        $this->resourceShareExpander = $resourceShareExpander;
         $this->resourceShareValidator = $resourceShareValidator;
         $this->resourceShareActivatorStrategyPlugins = $resourceShareActivatorStrategyPlugins;
+        $this->resourceShareResourceDataExpanderStrategyPlugins = $resourceShareResourceDataExpanderStrategyPlugins;
     }
 
     /**
@@ -88,19 +88,17 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
         $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
-
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
-        $isCustomerLoggedIn = $this->isCustomerLoggedIn($resourceShareRequestTransfer);
 
         foreach ($this->resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
             if (!$resourceShareActivatorStrategyPlugin->isApplicable($resourceShareTransfer)) {
                 continue;
             }
 
-            if (!$isCustomerLoggedIn && $resourceShareActivatorStrategyPlugin->isLoginRequired()) {
+            if (!$resourceShareRequestTransfer->getCustomer() && $resourceShareActivatorStrategyPlugin->isLoginRequired()) {
                 return $resourceShareResponseTransfer->setIsSuccessful(false)
                     ->setIsLoginRequired(true)
-                    ->addErrorMessage(
+                    ->addMessage(
                         (new MessageTransfer())->setValue(static::GLOSSARY_KEY_STRATEGY_EXPECTS_LOGGED_IN_CUSTOMER)
                     );
             }
@@ -109,19 +107,33 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
             break;
         }
 
-        return $resourceShareResponseTransfer->setIsSuccessful(true)
+        $resourceShareResponseTransfer->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
+
+        return $this->executeResourceDataExpanderStrategyPlugins($resourceShareResponseTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    protected function isCustomerLoggedIn(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
+    protected function executeResourceDataExpanderStrategyPlugins(ResourceShareResponseTransfer $resourceShareResponseTransfer): ResourceShareResponseTransfer
     {
-        $customerTransfer = $resourceShareRequestTransfer->getCustomer();
+        $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
+        foreach ($this->resourceShareResourceDataExpanderStrategyPlugins as $resourceDataExpanderStrategyPlugin) {
+            if (!$resourceDataExpanderStrategyPlugin->isApplicable($resourceShareTransfer)) {
+                continue;
+            }
 
-        return $customerTransfer && !$customerTransfer->getIsGuest();
+            $strategyResourceShareResponseTransfer = $resourceDataExpanderStrategyPlugin->expand($resourceShareTransfer);
+            if (!$strategyResourceShareResponseTransfer->getIsSuccessful()) {
+                return $strategyResourceShareResponseTransfer;
+            }
+
+            return $resourceShareResponseTransfer->setResourceShare($strategyResourceShareResponseTransfer->getResourceShare());
+        }
+
+        return $resourceShareResponseTransfer;
     }
 }
