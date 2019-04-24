@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\SharedCartsRestApi\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
+
 interface SharedCartsRestApiFacadeInterface
 {
 
-    //TODO Add methods
+    public function getSharedCartsByCartUuid(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer;
 
 }
