@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\QuoteRequestAgent\Reader;
 
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Client\QuoteRequestAgent\Dependency\Client\QuoteRequestAgentToQuoteRequestClientInterface;
 
@@ -33,12 +33,12 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
      */
     public function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer
     {
-        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($quoteRequestReference)
             ->setWithHidden(true);
 
         return $this->quoteRequestClient
-            ->getQuoteRequest($quoteRequestCriteriaTransfer)
+            ->getQuoteRequest($quoteRequestFilterTransfer)
             ->getQuoteRequest();
     }
 }

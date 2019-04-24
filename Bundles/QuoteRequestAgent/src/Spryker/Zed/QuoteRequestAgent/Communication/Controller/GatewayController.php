@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\QuoteRequestAgent\Communication\Controller;
 
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
@@ -40,33 +40,33 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function cancelQuoteRequestAction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function cancelQuoteRequestAction(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getFacade()->cancelQuoteRequest($quoteRequestCriteriaTransfer);
+        return $this->getFacade()->cancelQuoteRequest($quoteRequestFilterTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function sendQuoteRequestToCustomerAction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function sendQuoteRequestToCustomerAction(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getFacade()->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+        return $this->getFacade()->sendQuoteRequestToCustomer($quoteRequestFilterTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function reviseQuoteRequestAction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function reviseQuoteRequestAction(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getFacade()->reviseQuoteRequest($quoteRequestCriteriaTransfer);
+        return $this->getFacade()->reviseQuoteRequest($quoteRequestFilterTransfer);
     }
 
     /**

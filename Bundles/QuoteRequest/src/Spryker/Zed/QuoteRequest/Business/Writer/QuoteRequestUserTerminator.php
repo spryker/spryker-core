@@ -8,7 +8,7 @@
 namespace Spryker\Zed\QuoteRequest\Business\Writer;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
@@ -55,25 +55,25 @@ class QuoteRequestUserTerminator implements QuoteRequestUserTerminatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function cancelQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteRequestCriteriaTransfer) {
-            return $this->executeCancelQuoteRequestTransaction($quoteRequestCriteriaTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteRequestFilterTransfer) {
+            return $this->executeCancelQuoteRequestTransaction($quoteRequestFilterTransfer);
         });
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function executeCancelQuoteRequestTransaction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function executeCancelQuoteRequestTransaction(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestResponseTransfer = $this->quoteRequestReader->getQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestReader->getQuoteRequest($quoteRequestFilterTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
             return $quoteRequestResponseTransfer;

@@ -14,7 +14,7 @@ interface CheckoutPreConditionPluginInterface
 {
     /**
      * Specification:
-     * - Checks a condition before the order is saved. 
+     * - Checks a condition before the order is saved.
      * - Returns "false" and adds error to response transfer when condition failso.
      * - Returns "true" when condition passed. Can add errors to response transfer.
      * - Does not change Quote transfer.

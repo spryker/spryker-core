@@ -57,11 +57,6 @@
         <property name="message" type="string"/>
     </transfer>
 
-    <transfer name="QuoteRequestCriteria">
-        <property name="quoteRequestReference" type="string" />
-        <property name="idCompanyUser" type="int" />
-    </transfer>
-
     <transfer name="QuoteResponse">
         <property name="errors" type="QuoteError[]" singular="error"/>
     </transfer>
@@ -76,6 +71,7 @@
         <property name="excludedStatuses" type="array" />
         <property name="pagination" type="Pagination" />
         <property name="withHidden" type="bool" />
+        <property name="idCompanyUser" type="int" />
     </transfer>
 
 </transfers>

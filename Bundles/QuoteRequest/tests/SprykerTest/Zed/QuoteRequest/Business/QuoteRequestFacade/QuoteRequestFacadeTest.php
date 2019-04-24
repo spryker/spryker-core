@@ -19,7 +19,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -364,7 +363,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->cancelQuoteRequest($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->cancelQuoteRequest($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
@@ -387,7 +386,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->cancelQuoteRequest($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->cancelQuoteRequest($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -408,7 +407,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->cancelQuoteRequest($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->cancelQuoteRequest($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -661,7 +660,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->sendQuoteRequestToCompanyUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->sendQuoteRequestToCompanyUser($this->createFilterTransfer($quoteRequestTransfer));
         $storedQuoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
 
         // Assert
@@ -684,7 +683,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->sendQuoteRequestToCompanyUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->sendQuoteRequestToCompanyUser($this->createFilterTransfer($quoteRequestTransfer));
         $storedQuoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
 
         // Assert
@@ -705,7 +704,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->sendQuoteRequestToCompanyUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->sendQuoteRequestToCompanyUser($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -726,7 +725,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->sendQuoteRequestToCompanyUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->sendQuoteRequestToCompanyUser($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -754,7 +753,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->sendQuoteRequestToCompanyUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->sendQuoteRequestToCompanyUser($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -775,7 +774,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->reviseQuoteRequestForCompanyUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->reviseQuoteRequestForCompanyUser($this->createFilterTransfer($quoteRequestTransfer));
         $storedQuoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
 
         // Assert
@@ -801,7 +800,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->reviseQuoteRequestForCompanyUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->reviseQuoteRequestForCompanyUser($this->createFilterTransfer($quoteRequestTransfer));
         $storedQuoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
 
         // Assert
@@ -829,7 +828,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->reviseQuoteRequestForCompanyUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->reviseQuoteRequestForCompanyUser($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -850,7 +849,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->reviseQuoteRequestForCompanyUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->reviseQuoteRequestForCompanyUser($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -871,7 +870,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->reviseQuoteRequest($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->reviseQuoteRequest($this->createFilterTransfer($quoteRequestTransfer));
         $storedQuoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
 
         // Assert
@@ -899,7 +898,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->reviseQuoteRequest($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->reviseQuoteRequest($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -920,7 +919,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->reviseQuoteRequest($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->reviseQuoteRequest($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -949,13 +948,13 @@ class QuoteRequestFacadeTest extends Unit
             ->updateQuoteRequestForCompanyUser($quoteRequestTransfer)
             ->getQuoteRequest();
 
-        $quoteRequestCriteriaTransfer = $this->createCriteriaTransfer($quoteRequestTransfer);
-        $this->tester->getFacade()->sendQuoteRequestToCompanyUser($quoteRequestCriteriaTransfer);
+        $quoteRequestFilterTransfer = $this->createFilterTransfer($quoteRequestTransfer);
+        $this->tester->getFacade()->sendQuoteRequestToCompanyUser($quoteRequestFilterTransfer);
 
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->reviseQuoteRequest($quoteRequestCriteriaTransfer);
+            ->reviseQuoteRequest($quoteRequestFilterTransfer);
 
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
@@ -981,7 +980,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->sendQuoteRequestToUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->sendQuoteRequestToUser($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
@@ -1004,7 +1003,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->sendQuoteRequestToUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->sendQuoteRequestToUser($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -1025,7 +1024,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->sendQuoteRequestToUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->sendQuoteRequestToUser($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -1053,7 +1052,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->sendQuoteRequestToUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->sendQuoteRequestToUser($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -1074,7 +1073,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->cancelQuoteRequestForCompanyUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->cancelQuoteRequestForCompanyUser($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
@@ -1097,7 +1096,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->cancelQuoteRequestForCompanyUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->cancelQuoteRequestForCompanyUser($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -1122,7 +1121,7 @@ class QuoteRequestFacadeTest extends Unit
         // Act
         $quoteRequestResponseTransfer = $this->tester
             ->getFacade()
-            ->cancelQuoteRequestForCompanyUser($this->createCriteriaTransfer($quoteRequestTransfer));
+            ->cancelQuoteRequestForCompanyUser($this->createFilterTransfer($quoteRequestTransfer));
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -1385,11 +1384,11 @@ class QuoteRequestFacadeTest extends Unit
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInDraftStatus();
 
-        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference());
 
         // Act
-        $quoteRequestResponseTransfer = $this->tester->getFacade()->getQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->tester->getFacade()->getQuoteRequest($quoteRequestFilterTransfer);
         $storedQuoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequest();
 
         // Assert
@@ -1403,11 +1402,11 @@ class QuoteRequestFacadeTest extends Unit
     public function testFindQuoteRequestRetrievesEmptyResultByFakeReference(): void
     {
         // Arrange
-        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference(static::FAKE_QUOTE_REQUEST_REFERENCE);
 
         // Act
-        $quoteRequestResponseTransfer = $this->tester->getFacade()->getQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->tester->getFacade()->getQuoteRequest($quoteRequestFilterTransfer);
 
         // Assert
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
@@ -1419,13 +1418,13 @@ class QuoteRequestFacadeTest extends Unit
     public function testFindQuoteRequestThrowsExceptionWithEmptyQuoteRequestReference(): void
     {
         // Arrange
-        $quoteRequestCriteriaTransfer = new QuoteRequestCriteriaTransfer();
+        $quoteRequestFilterTransfer = new QuoteRequestFilterTransfer();
 
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->getQuoteRequest($quoteRequestCriteriaTransfer);
+        $this->tester->getFacade()->getQuoteRequest($quoteRequestFilterTransfer);
     }
 
     /**
@@ -1479,7 +1478,7 @@ class QuoteRequestFacadeTest extends Unit
         $quoteRequestTransfer = $this->haveQuoteRequestInInProgressStatus($validUntil, $isLatestVersionHidden);
 
         return $this->tester->getFacade()
-            ->sendQuoteRequestToCompanyUser($this->createCriteriaTransfer($quoteRequestTransfer))
+            ->sendQuoteRequestToCompanyUser($this->createFilterTransfer($quoteRequestTransfer))
             ->getQuoteRequest();
     }
 
@@ -1496,7 +1495,7 @@ class QuoteRequestFacadeTest extends Unit
         $quoteRequestTransfer = $this->haveQuoteRequestInWaitingStatus();
 
         $quoteRequestTransfer = $this->tester->getFacade()
-            ->reviseQuoteRequestForCompanyUser($this->createCriteriaTransfer($quoteRequestTransfer))
+            ->reviseQuoteRequestForCompanyUser($this->createFilterTransfer($quoteRequestTransfer))
             ->getQuoteRequest();
 
         $quoteRequestTransfer
@@ -1520,7 +1519,7 @@ class QuoteRequestFacadeTest extends Unit
         $quoteRequestTransfer = $this->haveQuoteRequestInDraftStatus();
 
         return $this->tester->getFacade()
-            ->sendQuoteRequestToUser($this->createCriteriaTransfer($quoteRequestTransfer))
+            ->sendQuoteRequestToUser($this->createFilterTransfer($quoteRequestTransfer))
             ->getQuoteRequest();
     }
 
@@ -1538,11 +1537,11 @@ class QuoteRequestFacadeTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer
+     * @return \Generated\Shared\Transfer\QuoteRequestFilterTransfer
      */
-    protected function createCriteriaTransfer(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestCriteriaTransfer
+    protected function createFilterTransfer(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestFilterTransfer
     {
-        return (new QuoteRequestCriteriaTransfer())
+        return (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
             ->setIdCompanyUser($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser());
     }

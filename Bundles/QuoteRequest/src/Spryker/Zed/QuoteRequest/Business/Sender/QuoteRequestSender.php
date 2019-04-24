@@ -8,7 +8,7 @@
 namespace Spryker\Zed\QuoteRequest\Business\Sender;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
@@ -43,14 +43,14 @@ class QuoteRequestSender implements QuoteRequestSenderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function sendQuoteRequestToUser(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function sendQuoteRequestToUser(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestCriteriaTransfer->requireIdCompanyUser();
-        $quoteRequestResponseTransfer = $this->quoteRequestReader->getQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestFilterTransfer->requireIdCompanyUser();
+        $quoteRequestResponseTransfer = $this->quoteRequestReader->getQuoteRequest($quoteRequestFilterTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
             return $quoteRequestResponseTransfer;

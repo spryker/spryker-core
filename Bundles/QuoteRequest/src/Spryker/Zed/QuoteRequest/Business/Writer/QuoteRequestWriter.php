@@ -8,7 +8,7 @@
 namespace Spryker\Zed\QuoteRequest\Business\Writer;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
@@ -108,14 +108,14 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function reviseQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function reviseQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteRequestCriteriaTransfer) {
-            return $this->executeReviseQuoteRequestTransaction($quoteRequestCriteriaTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteRequestFilterTransfer) {
+            return $this->executeReviseQuoteRequestTransaction($quoteRequestFilterTransfer);
         });
     }
 
@@ -165,11 +165,11 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->getCompanyUser()
                 ->requireIdCompanyUser();
 
-        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
             ->setIdCompanyUser($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser());
 
-        $quoteRequestResponseTransfer = $this->quoteRequestReader->getQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestReader->getQuoteRequest($quoteRequestFilterTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
             return $quoteRequestResponseTransfer;
@@ -189,14 +189,14 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    protected function executeReviseQuoteRequestTransaction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    protected function executeReviseQuoteRequestTransaction(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestCriteriaTransfer->requireIdCompanyUser();
-        $quoteRequestResponseTransfer = $this->quoteRequestReader->getQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestFilterTransfer->requireIdCompanyUser();
+        $quoteRequestResponseTransfer = $this->quoteRequestReader->getQuoteRequest($quoteRequestFilterTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
             return $quoteRequestResponseTransfer;

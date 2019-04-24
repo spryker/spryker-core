@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer;
@@ -46,20 +45,20 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function getQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function getQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
-        $quoteRequestCriteriaTransfer->requireQuoteRequestReference();
+        $quoteRequestFilterTransfer->requireQuoteRequestReference();
 
         $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
-            ->fromArray($quoteRequestCriteriaTransfer->toArray(), true);
+            ->fromArray($quoteRequestFilterTransfer->toArray(), true);
 
-        if ($quoteRequestCriteriaTransfer->getIdCompanyUser()) {
+        if ($quoteRequestFilterTransfer->getIdCompanyUser()) {
             $quoteRequestFilterTransfer->setCompanyUser(
-                (new CompanyUserTransfer())->setIdCompanyUser($quoteRequestCriteriaTransfer->getIdCompanyUser())
+                (new CompanyUserTransfer())->setIdCompanyUser($quoteRequestFilterTransfer->getIdCompanyUser())
             );
         }
 

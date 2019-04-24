@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\QuoteRequestAgent;
 
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
+use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
@@ -54,13 +54,13 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function reviseQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function reviseQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getZedStub()->reviseQuoteRequest($quoteRequestCriteriaTransfer);
+        return $this->getZedStub()->reviseQuoteRequest($quoteRequestFilterTransfer);
     }
 
     /**
@@ -68,13 +68,13 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function cancelQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function cancelQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getZedStub()->cancelQuoteRequest($quoteRequestCriteriaTransfer);
+        return $this->getZedStub()->cancelQuoteRequest($quoteRequestFilterTransfer);
     }
 
     /**
@@ -82,13 +82,13 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function sendQuoteRequestToCustomer(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function sendQuoteRequestToCustomer(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getZedStub()->sendQuoteRequestToCustomer($quoteRequestCriteriaTransfer);
+        return $this->getZedStub()->sendQuoteRequestToCustomer($quoteRequestFilterTransfer);
     }
 
     /**

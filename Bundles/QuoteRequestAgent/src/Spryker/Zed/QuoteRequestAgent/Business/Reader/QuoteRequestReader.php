@@ -8,7 +8,6 @@
 namespace Spryker\Zed\QuoteRequestAgent\Business\Reader;
 
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
-use Generated\Shared\Transfer\QuoteRequestCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
@@ -70,12 +69,12 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
             return null;
         }
 
-        $quoteRequestCriteriaTransfer = (new QuoteRequestCriteriaTransfer())
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($quoteRequestOverviewFilterTransfer->getQuoteRequestReference())
             ->setWithHidden(true);
 
         return $this->quoteRequestFacade
-            ->getQuoteRequest($quoteRequestCriteriaTransfer)
+            ->getQuoteRequest($quoteRequestFilterTransfer)
             ->getQuoteRequest();
     }
 }
