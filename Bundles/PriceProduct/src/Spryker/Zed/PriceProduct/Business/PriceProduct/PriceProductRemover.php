@@ -69,7 +69,9 @@ class PriceProductRemover implements PriceProductRemoverInterface
                 $this->priceProductEntityManager->deletePriceProductStoreByPriceProductTransfer($priceProductTransfer);
             }
 
-            $this->priceProductEntityManager->deletePriceProductById($priceProductTransfer->getIdPriceProduct());
+            if ($this->priceProductRepository->isPriceProductUsedForOtherCurrencyAndStore($priceProductTransfer) === false) {
+                $this->priceProductEntityManager->deletePriceProductById($priceProductTransfer->getIdPriceProduct());
+            }
         });
 
         $this->getLogger()->warning(sprintf('Price for product with id "%s" was deleted', $priceProductTransfer->getIdPriceProduct()));
