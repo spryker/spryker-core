@@ -290,7 +290,9 @@ class ResourceShareFacadeTest extends Test
         $resourceShareActivatorStrategyPluginMock = $this->createResourceShareActivatorStrategyPluginMock();
         $resourceShareActivatorStrategyPluginMock->method('isApplicable')->willReturn(true);
         $resourceShareActivatorStrategyPluginMock->method('isLoginRequired')->willReturn(true);
-        $resourceShareActivatorStrategyPluginMock->expects($this->once())->method('execute');
+        $resourceShareActivatorStrategyPluginMock->expects($this->once())->method('execute')->willReturn(
+            (new ResourceShareResponseTransfer())->setIsSuccessful(true)
+        );
 
         $this->registerResourceShareActivatorStrategyPlugin($resourceShareActivatorStrategyPluginMock);
 
@@ -357,7 +359,9 @@ class ResourceShareFacadeTest extends Test
         $resourceShareActivatorStrategyPluginMock = $this->createResourceShareActivatorStrategyPluginMock();
         $resourceShareActivatorStrategyPluginMock->method('isApplicable')->willReturn(true);
         $resourceShareActivatorStrategyPluginMock->method('isLoginRequired')->willReturn(false);
-        $resourceShareActivatorStrategyPluginMock->expects($this->once())->method('execute');
+        $resourceShareActivatorStrategyPluginMock->expects($this->once())->method('execute')->willReturn(
+            (new ResourceShareResponseTransfer())->setIsSuccessful(true)
+        );
 
         $this->registerResourceShareActivatorStrategyPlugin($resourceShareActivatorStrategyPluginMock);
 

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ResourceShareExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
+use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 
 interface ResourceShareActivatorStrategyPluginInterface
@@ -14,14 +16,16 @@ interface ResourceShareActivatorStrategyPluginInterface
     /**
      * Specification:
      * - Executes additional actions, based on resource data and resource type values.
+     * - Returns ResourceShareResponseTransfer with 'isSuccessful=true' and resource share details on success.
+     * - Returns ResourceShareResponseTransfer with 'isSuccessful=false' and error messages otherwise.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function execute(ResourceShareTransfer $resourceShareTransfer): void;
+    public function execute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 
     /**
      * Specification:

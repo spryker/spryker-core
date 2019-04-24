@@ -67,11 +67,6 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         }
 
         $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
-        $resourceShareResponseTransfer = $this->resourceShareValidator->validateResourceShareTransfer($resourceShareTransfer);
-        if (!$resourceShareResponseTransfer->getIsSuccessful()) {
-            return $resourceShareResponseTransfer;
-        }
-
         $resourceShareRequestTransfer->setResourceShare($resourceShareTransfer);
 
         return $this->executeResourceShareActivatorStrategyPlugins(
@@ -103,14 +98,16 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
                     );
             }
 
-            $resourceShareActivatorStrategyPlugin->execute($resourceShareTransfer);
+            $strategyResourceShareResponseTransfer = $resourceShareActivatorStrategyPlugin->execute($resourceShareRequestTransfer);
+            if (!$strategyResourceShareResponseTransfer->getIsSuccessful()) {
+                return $strategyResourceShareResponseTransfer;
+            }
+
             break;
         }
 
-        $resourceShareResponseTransfer->setIsSuccessful(true)
+        return $resourceShareResponseTransfer->setIsSuccessful(true)
             ->setResourceShare($resourceShareTransfer);
-
-        return $this->executeResourceDataExpanderStrategyPlugins($resourceShareResponseTransfer);
     }
 
     /**
