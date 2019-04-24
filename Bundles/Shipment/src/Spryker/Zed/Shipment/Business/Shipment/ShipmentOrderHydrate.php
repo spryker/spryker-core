@@ -10,7 +10,6 @@ namespace Spryker\Zed\Shipment\Business\Shipment;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
@@ -148,23 +147,6 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function hydrateMultiShipmentMethodToOrderTransfer(
-        iterable $shipmentTransfers,
-        OrderTransfer $orderTransfer
-    ): OrderTransfer {
-        foreach ($shipmentTransfers as $shipmentTransfer) {
-            $orderTransfer = $this->addShipmentMethodToOrderItemsByShipment($orderTransfer, $shipmentTransfer);
-        }
-
-        return $orderTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
@@ -180,25 +162,50 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     }
 
     /**
+     * @param iterable|\Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function hydrateMultiShipmentMethodToOrderTransfer(
+        iterable $shipmentTransfers,
+        OrderTransfer $orderTransfer
+    ): OrderTransfer {
+        $salesOrderItemIdsGroupedByShipmentIds = $this->shipmentRepository->getItemIdsGroupedByShipmentIds($orderTransfer);
+
+        foreach ($shipmentTransfers as $shipmentTransfer) {
+            if (empty($salesOrderItemIdsGroupedByShipmentIds[$shipmentTransfer->getIdSalesShipment()])) {
+                continue;
+            }
+
+            $orderTransfer = $this->addShipmentToOrderItemsByShipmentUsingOrderItemIds(
+                $orderTransfer,
+                $shipmentTransfer,
+                $salesOrderItemIdsGroupedByShipmentIds[$shipmentTransfer->getIdSalesShipment()]
+            );
+        }
+
+        return $orderTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     * @param int[] $salesOrderItemIds
      *
      * @return \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      */
-    protected function addShipmentMethodToOrderItemsByShipment(OrderTransfer $orderTransfer, ShipmentTransfer $shipmentTransfer): OrderTransfer
-    {
+    protected function addShipmentToOrderItemsByShipmentUsingOrderItemIds(
+        OrderTransfer $orderTransfer,
+        ShipmentTransfer $shipmentTransfer,
+        array $salesOrderItemIds
+    ): OrderTransfer {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->setShipment($shipmentTransfer);
-            $itemShipmentTransfer = $itemTransfer->getShipment();
-            $shipmentMethodTransfer = $itemShipmentTransfer->getMethod();
-            if ($shipmentMethodTransfer->getName() === $shipmentTransfer->getMethod()->getName()
-                && $itemShipmentTransfer->getShippingAddress()->getIdSalesOrderAddress() === $shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress()
-                && $itemShipmentTransfer->getCarrier()->getName() === $shipmentTransfer->getCarrier()->getName()
-                && $itemShipmentTransfer->getRequestedDeliveryDate() === $shipmentTransfer->getRequestedDeliveryDate()
-            ) {
-                $this->mapShipmentTransferToShipmentMethodTransfer($shipmentMethodTransfer, $shipmentTransfer);
+            if (!in_array($itemTransfer->getIdSalesOrderItem(), $salesOrderItemIds)) {
                 continue;
             }
+
+            $itemTransfer->setShipment($shipmentTransfer);
         }
 
         return $orderTransfer;

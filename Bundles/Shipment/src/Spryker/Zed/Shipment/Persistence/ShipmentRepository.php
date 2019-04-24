@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Spryker\Shared\Tax\TaxConstants;
@@ -84,6 +85,26 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return int[][]
+     */
+    public function getItemIdsGroupedByShipmentIds(OrderTransfer $orderTransfer): array
+    {
+        $salesOrderItemIdsWithShipmentIds = $this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->filterByFkSalesOrder($orderTransfer->getIdSalesOrder())
+            ->select([SpySalesOrderItemTableMap::COL_FK_SALES_SHIPMENT, SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM])
+            ->find();
+
+        if ($salesOrderItemIdsWithShipmentIds->count() === 0) {
+            return [];
+        }
+
+        return $this->groupSalesOrderItemIdsByShipmentId($salesOrderItemIdsWithShipmentIds);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
@@ -143,7 +164,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @param iterable|\Orm\Zed\Sales\Persistence\SpyShipmentMethod[]|\Propel\Runtime\Collection\ObjectCollection $salesShipmentMethods
+     * @param iterable|\Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]|\Propel\Runtime\Collection\ObjectCollection $salesShipmentMethods
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
@@ -158,5 +179,20 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
         }
 
         return $shipmentMehtodTransfers;
+    }
+
+    /**
+     * @param iterable|array $salesOrderItemIdsWithShipmentIds
+     *
+     * @return int[][]
+     */
+    protected function groupSalesOrderItemIdsByShipmentId(iterable $salesOrderItemIdsWithShipmentIds): array {
+        $groupedResult = [];
+
+        foreach ($salesOrderItemIdsWithShipment as ['shipmentId' => $shipmentId, 'orderItemId' => $orderItemId]) {
+            $groupedResult[$shipmentId] = $orderItemId;
+        }
+
+        return $groupedResult;
     }
 }

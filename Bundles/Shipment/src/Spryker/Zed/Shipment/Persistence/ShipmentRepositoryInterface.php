@@ -41,4 +41,11 @@ interface ShipmentRepositoryInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function findShipmentMethodTransfersByShipment(array $shipmentTransfers): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return int[][]
+     */
+    public function getItemIdsGroupedByShipmentIds(OrderTransfer $orderTransfer): array;
 }
