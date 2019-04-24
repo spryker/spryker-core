@@ -11,7 +11,7 @@
     "spryker/customer": "^6.0.0 || ^7.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/messenger": "^3.0.0",
-    "spryker/persistent-cart-extension": "^1.0.0",
+    "spryker/persistent-cart-extension": "^1.1.0",
     "spryker/price-extension": "^1.0.0",
     "spryker/quote": "^2.8.0",
     "spryker/store": "^1.9.0",
