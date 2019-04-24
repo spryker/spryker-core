@@ -101,7 +101,7 @@ class CategoryType extends AbstractType
                     if (!$event->getData()) {
                         return;
                     }
-                    // Symfony Forms requires resting keys from Select2ComboBoxType to get correct items order
+                    // Symfony Forms requires reset keys from Select2ComboBoxType to get correct items order
                     $ids = array_values($event->getData());
                     $event->setData($ids);
                     $event->getForm()->setData($ids);
