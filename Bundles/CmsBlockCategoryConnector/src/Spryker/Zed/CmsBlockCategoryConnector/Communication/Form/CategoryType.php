@@ -12,6 +12,8 @@ use Spryker\Zed\Gui\Communication\Form\Type\ParagraphType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -93,7 +95,18 @@ class CategoryType extends AbstractType
                     'data-assigned-cms-blocks' => $this->getFactory()->getUtilEncodingService()->encodeJson($assignedForPosition),
                     'data-supported-templates' => $this->getFactory()->getUtilEncodingService()->encodeJson(static::SUPPORTED_CATEGORY_TEMPLATE_LIST),
                 ],
-            ]);
+            ])->get(static::FIELD_CMS_BLOCKS . '_' . $idCmsBlockCategoryPosition)->addEventListener(
+                FormEvents::PRE_SUBMIT,
+                function (FormEvent $event) {
+                    if (!$event->getData()) {
+                        return;
+                    }
+                    // Symfony Forms requires resting keys from Select2ComboBoxType to get correct items order
+                    $ids = array_values($event->getData());
+                    $event->setData($ids);
+                    $event->getForm()->setData($ids);
+                }
+            );
         }
 
         return $this;
