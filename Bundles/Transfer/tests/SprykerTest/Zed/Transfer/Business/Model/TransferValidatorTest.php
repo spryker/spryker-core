@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Transfer\Business\Model;
 use Codeception\Test\Unit;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\TransferValidator;
+use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -36,11 +37,12 @@ class TransferValidatorTest extends Unit
     public function testValidate()
     {
         $sourceDirectories = [
-            __DIR__ . '/Fixtures/Shared/Test/Transfer/',
+            __DIR__ . '/../../../../../_fixtures/Shared/Test/Transfer/',
         ];
         $definitionFinder = $this->getDefinitionFinder($sourceDirectories);
         $messenger = $this->getMessengerMock();
-        $transferValidator = new TransferValidator($messenger, $definitionFinder);
+        $config = new TransferConfig();
+        $transferValidator = new TransferValidator($messenger, $definitionFinder, $config);
 
         $options = [
             'bundle' => null,

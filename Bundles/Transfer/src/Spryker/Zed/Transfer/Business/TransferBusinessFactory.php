@@ -238,9 +238,9 @@ class TransferBusinessFactory extends AbstractBusinessFactory
      */
     protected function createClassDefinition()
     {
-        $useStrictGeneration = $this->getConfig()->useStrictGeneration();
-
-        return new ClassDefinition($useStrictGeneration);
+        return new ClassDefinition(
+            $this->getConfig()
+        );
     }
 
     /**
@@ -277,7 +277,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new TransferValidator(
             $messenger,
             $this->createFinder(),
-            $this->getConfig()->useStrictGeneration()
+            $this->getConfig()
         );
     }
 

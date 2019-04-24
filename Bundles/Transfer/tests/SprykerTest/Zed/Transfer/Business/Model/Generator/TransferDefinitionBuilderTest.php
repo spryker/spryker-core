@@ -14,6 +14,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
+use Spryker\Zed\Transfer\TransferConfig;
 
 /**
  * Auto-generated group annotations
@@ -34,7 +35,7 @@ class TransferDefinitionBuilderTest extends Unit
     public function testBuildTransferDefinitionShouldReturnArrayWithClassDefinitions()
     {
         $directories = [
-            __DIR__ . '/Fixtures/Project/',
+            __DIR__ . '/../../../../../../_fixtures/Builder/',
         ];
 
         $finder = new TransferDefinitionFinder($directories);
@@ -43,7 +44,7 @@ class TransferDefinitionBuilderTest extends Unit
         $transferDefinitionBuilder = new TransferDefinitionBuilder(
             $loader,
             new TransferDefinitionMerger(),
-            new ClassDefinition()
+            new ClassDefinition(new TransferConfig())
         );
 
         $result = $transferDefinitionBuilder->getDefinitions();

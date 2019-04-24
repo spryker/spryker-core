@@ -9,6 +9,7 @@ namespace Spryker\Zed\Transfer\Business\Model;
 
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface;
+use Spryker\Zed\Transfer\TransferConfig;
 use Zend\Config\Factory;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -60,23 +61,20 @@ class TransferValidator implements TransferValidatorInterface
     ];
 
     /**
-     * BC shim to use strict generation only as feature flag to be
-     * enabled manually on project level.
-     *
-     * @var bool
+     * @var TransferConfig
      */
-    protected $useStrictGeneration;
+    protected $transferConfig;
 
     /**
      * @param \Psr\Log\LoggerInterface $messenger
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface $finder
-     * @param bool $useStrictGeneration
+     * @param TransferConfig $transferConfig
      */
-    public function __construct(LoggerInterface $messenger, FinderInterface $finder, bool $useStrictGeneration = false)
+    public function __construct(LoggerInterface $messenger, FinderInterface $finder, TransferConfig $transferConfig)
     {
         $this->messenger = $messenger;
         $this->finder = $finder;
-        $this->useStrictGeneration = $useStrictGeneration;
+        $this->transferConfig = $transferConfig;
 
         $this->typeMap = $this->simpleTypeMap;
         foreach ($this->simpleTypeWhitelist as $type) {
@@ -103,7 +101,7 @@ class TransferValidator implements TransferValidatorInterface
             $definition = $this->normalize($definition);
 
             $module = $this->getModuleFromPathName($file->getFilename());
-            $result = $result & $this->validateDefinition($module, $definition, $options);
+            $result &= $this->validateDefinition($module, $definition, $options);
         }
 
         return (bool)$result;
@@ -122,10 +120,10 @@ class TransferValidator implements TransferValidatorInterface
             $this->messenger->info(sprintf('Checking %s module', $module));
         }
 
-        $ok = true;
+        $isValid = true;
         foreach ($definition as $transfer) {
-            if ($this->useStrictGeneration && !$this->validateName($transfer['name'])) {
-                $ok = false;
+            if ($this->transferConfig->useStrictGeneration() && !$this->isValidName($transfer['name'])) {
+                $isValid = false;
                 $this->messenger->warning(sprintf(
                     '%s.%s is an invalid transfer name',
                     $module,
@@ -137,7 +135,7 @@ class TransferValidator implements TransferValidatorInterface
                 $type = $property['type'];
 
                 if (!$this->isValidArrayType($type)) {
-                    $ok = false;
+                    $isValid = false;
                     $this->messenger->warning(sprintf(
                         '%s.%s.%s: %s is an invalid array type',
                         $module,
@@ -150,7 +148,7 @@ class TransferValidator implements TransferValidatorInterface
                 }
 
                 if (!$this->isValidSimpleType($type)) {
-                    $ok = false;
+                    $isValid = false;
                     $this->messenger->warning(sprintf(
                         '%s.%s.%s: %s is an invalid simple type',
                         $module,
@@ -164,7 +162,7 @@ class TransferValidator implements TransferValidatorInterface
             }
         }
 
-        return $ok;
+        return $isValid;
     }
 
     /**
@@ -253,9 +251,9 @@ class TransferValidator implements TransferValidatorInterface
      *
      * @return bool
      */
-    protected function validateName(string $name): bool
+    protected function isValidName(string $name): bool
     {
-        if (!preg_match('/^[A-Z]/', $name)) {
+        if (!preg_match('/^[A-Z][a-zA-Z0-9]/', $name)) {
             return false;
         }
 

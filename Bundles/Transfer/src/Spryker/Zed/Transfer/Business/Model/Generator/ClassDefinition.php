@@ -10,6 +10,7 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
+use Spryker\Zed\Transfer\TransferConfig;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -69,19 +70,16 @@ class ClassDefinition implements ClassDefinitionInterface
     private $entityNamespace;
 
     /**
-     * BC shim to use strict generation only as feature flag to be
-     * enabled manually on project level.
-     *
-     * @var bool
+     * @var TransferConfig
      */
-    private $useStrictGeneration;
+    protected $transferConfig;
 
     /**
-     * @param bool $useStrictGeneration
+     * @param \Spryker\Zed\Transfer\TransferConfig $transferConfig
      */
-    public function __construct(bool $useStrictGeneration = false)
+    public function __construct(TransferConfig $transferConfig)
     {
-        $this->useStrictGeneration = $useStrictGeneration;
+        $this->transferConfig = $transferConfig;
     }
 
     /**
@@ -119,15 +117,8 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function setName($name)
     {
-        if (!$this->useStrictGeneration) {
-            // Deprecated, removed together with this option in the next major.
-            if (strpos($name, 'Transfer') === false) {
-                $name .= 'Transfer';
-            }
-
-            $this->name = ucfirst($name);
-
-            return $this;
+        if (!$this->transferConfig->useStrictGeneration()) {
+            return $this->setNameWithoutValidation($name);
         }
 
         if (preg_match('/Transfer$/', $name)) {
@@ -138,6 +129,25 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         $this->name = $name . 'Transfer';
+
+        return $this;
+    }
+
+    /**
+     * BC shim to use strict generation only as feature flag to be
+     * enabled manually on project level.
+     *
+     * @deprecated Will be removed with the next major to enforce validation then.
+     * @param string $name
+     * @return $this
+     */
+    private function setNameWithoutValidation(string $name)
+    {
+        if (strpos($name, 'Transfer') === false) {
+            $name .= 'Transfer';
+        }
+
+        $this->name = ucfirst($name);
 
         return $this;
     }
