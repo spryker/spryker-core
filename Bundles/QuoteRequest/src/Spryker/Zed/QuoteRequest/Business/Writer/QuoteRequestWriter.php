@@ -169,7 +169,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
             ->setIdCompanyUser($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser());
 
-        $quoteRequestResponseTransfer = $this->quoteRequestReader->findQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestReader->getQuoteRequest($quoteRequestCriteriaTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
             return $quoteRequestResponseTransfer;
@@ -196,7 +196,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     protected function executeReviseQuoteRequestTransaction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         $quoteRequestCriteriaTransfer->requireIdCompanyUser();
-        $quoteRequestResponseTransfer = $this->quoteRequestReader->findQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestReader->getQuoteRequest($quoteRequestCriteriaTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
             return $quoteRequestResponseTransfer;

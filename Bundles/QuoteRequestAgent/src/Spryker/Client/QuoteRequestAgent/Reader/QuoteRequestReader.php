@@ -38,7 +38,7 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
             ->setWithHidden(true);
 
         return $this->quoteRequestClient
-            ->findQuoteRequest($quoteRequestCriteriaTransfer)
+            ->getQuoteRequest($quoteRequestCriteriaTransfer)
             ->getQuoteRequest();
     }
 }

@@ -289,10 +289,10 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function getQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteRequestReader()
-            ->findQuoteRequest($quoteRequestCriteriaTransfer);
+            ->getQuoteRequest($quoteRequestCriteriaTransfer);
     }
 }

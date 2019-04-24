@@ -93,8 +93,8 @@ class QuoteRequestAgentToQuoteRequestFacadeBridge implements QuoteRequestAgentTo
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function getQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->quoteRequestFacade->findQuoteRequest($quoteRequestCriteriaTransfer);
+        return $this->quoteRequestFacade->getQuoteRequest($quoteRequestCriteriaTransfer);
     }
 }

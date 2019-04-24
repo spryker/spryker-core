@@ -96,8 +96,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function findQuoteRequestAction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function getQuoteRequestAction(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getFacade()->findQuoteRequest($quoteRequestCriteriaTransfer);
+        return $this->getFacade()->getQuoteRequest($quoteRequestCriteriaTransfer);
     }
 }

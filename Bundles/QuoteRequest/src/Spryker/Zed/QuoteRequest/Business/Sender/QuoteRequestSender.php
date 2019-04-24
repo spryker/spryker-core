@@ -50,7 +50,7 @@ class QuoteRequestSender implements QuoteRequestSenderInterface
     public function sendQuoteRequestToUser(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
         $quoteRequestCriteriaTransfer->requireIdCompanyUser();
-        $quoteRequestResponseTransfer = $this->quoteRequestReader->findQuoteRequest($quoteRequestCriteriaTransfer);
+        $quoteRequestResponseTransfer = $this->quoteRequestReader->getQuoteRequest($quoteRequestCriteriaTransfer);
 
         if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
             return $quoteRequestResponseTransfer;

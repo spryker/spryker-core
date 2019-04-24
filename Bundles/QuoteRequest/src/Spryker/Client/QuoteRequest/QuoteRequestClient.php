@@ -229,9 +229,9 @@ class QuoteRequestClient extends AbstractClient implements QuoteRequestClientInt
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
-    public function findQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
+    public function getQuoteRequest(QuoteRequestCriteriaTransfer $quoteRequestCriteriaTransfer): QuoteRequestResponseTransfer
     {
-        return $this->getZedStub()->findQuoteRequest($quoteRequestCriteriaTransfer);
+        return $this->getZedStub()->getQuoteRequest($quoteRequestCriteriaTransfer);
     }
 
     /**
