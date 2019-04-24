@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUsersRestApi\Business;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
@@ -27,4 +29,18 @@ interface CompanyUsersRestApiFacadeInterface
         CustomerIdentifierTransfer $customerIdentifierTransfer,
         CustomerTransfer $customerTransfer
     ): CustomerIdentifierTransfer;
+
+    /**
+     * Specification
+     * - Retrieves user companies which can filtered by company ID, company user ID, company business unit ID, user ID and/or active flag.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getCompanyUserCollection(
+        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+    ): CompanyUserCollectionTransfer;
 }

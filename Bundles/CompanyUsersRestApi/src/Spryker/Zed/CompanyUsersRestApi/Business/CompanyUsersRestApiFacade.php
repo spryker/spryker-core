@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUsersRestApi\Business;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -34,5 +36,22 @@ class CompanyUsersRestApiFacade extends AbstractFacade implements CompanyUsersRe
         return $this->getFactory()
             ->createCustomerIdentifierExpander()
             ->expandCustomerIdentifier($customerIdentifierTransfer, $customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getCompanyUserCollection(
+        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+    ): CompanyUserCollectionTransfer {
+        return $this->getFactory()
+            ->createCompanyUserReader()
+            ->$companyUserCriteriaFilterTransfer();
     }
 }
