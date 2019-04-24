@@ -13,13 +13,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
-use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
+use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCheckoutFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToQuoteFacadeInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class PlaceOrderProcessor implements PlaceOrderProcessorInterface
 {
@@ -104,8 +103,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->createQuoteResponseError(
                 $quoteResponseTransfer,
-                CheckoutRestApiConfig::RESPONSE_CODE_UNABLE_TO_DELETE_CART,
-                CheckoutRestApiConfig::RESPONSE_DETAILS_UNABLE_TO_DELETE_CART
+                CheckoutRestApiConfig::ERROR_IDENTIFIER_UNABLE_TO_DELETE_CART
             );
         }
 
@@ -132,8 +130,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->createQuoteResponseError(
                 $quoteResponseTransfer,
-                CheckoutRestApiConfig::RESPONSE_CODE_CHECKOUT_DATA_INVALID,
-                CheckoutRestApiConfig::RESPONSE_DETAILS_CHECKOUT_DATA_INVALID
+                CheckoutRestApiConfig::ERROR_IDENTIFIER_CHECKOUT_DATA_INVALID
             );
         }
 
@@ -189,24 +186,20 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     * @param string $responseCode
-     * @param string $responseDetail
+     * @param string $errorIdentifier
      *
      * @return \Generated\Shared\Transfer\RestCheckoutResponseTransfer
      */
     protected function createQuoteResponseError(
         QuoteResponseTransfer $quoteResponseTransfer,
-        string $responseCode,
-        string $responseDetail
+        string $errorIdentifier
     ): RestCheckoutResponseTransfer {
         if ($quoteResponseTransfer->getErrors()->count() === 0) {
             return (new RestCheckoutResponseTransfer())
                 ->setIsSuccess(false)
                 ->addError(
                     (new RestCheckoutErrorTransfer())
-                        ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                        ->setCode($responseCode)
-                        ->setDetail($responseDetail)
+                        ->setErrorIdentifier($errorIdentifier)
                 );
         }
 
@@ -215,8 +208,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
             $restCheckoutResponseTransfer->addError(
                 (new RestCheckoutErrorTransfer())
-                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setCode($responseCode)
+                    ->setErrorIdentifier($errorIdentifier)
                     ->setDetail($quoteErrorTransfer->getMessage())
             );
         }
@@ -233,9 +225,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             ->setIsSuccess(false)
             ->addError(
                 (new RestCheckoutErrorTransfer())
-                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
-                    ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_NOT_FOUND)
+                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND)
             );
     }
 
@@ -248,9 +238,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             ->setIsSuccess(false)
             ->addError(
                 (new RestCheckoutErrorTransfer())
-                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_IS_EMPTY)
-                    ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_IS_EMPTY)
+                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CART_IS_EMPTY)
             );
     }
 
@@ -266,9 +254,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
                 ->setIsSuccess(false)
                 ->addError(
                     (new RestCheckoutErrorTransfer())
-                        ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                        ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_ORDER_NOT_PLACED)
-                        ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_ORDER_NOT_PLACED)
+                        ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_ORDER_NOT_PLACED)
                 );
         }
         $restCheckoutResponseTransfer = (new RestCheckoutResponseTransfer())
@@ -276,8 +262,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
         foreach ($checkoutResponseTransfer->getErrors() as $errorTransfer) {
             $restCheckoutResponseTransfer->addError(
                 (new RestCheckoutErrorTransfer())
-                    ->setStatus($errorTransfer->getErrorCode())
-                    ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_ORDER_NOT_PLACED)
+                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_ORDER_NOT_PLACED)
                     ->setDetail($errorTransfer->getMessage())
                     ->setParameters($errorTransfer->getParameters())
             );

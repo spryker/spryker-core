@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class DataBuilderClassGenerator implements GeneratorInterface
 {
@@ -20,7 +20,7 @@ class DataBuilderClassGenerator implements GeneratorInterface
     protected $targetDirectory;
 
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     protected $twig;
 
@@ -31,8 +31,8 @@ class DataBuilderClassGenerator implements GeneratorInterface
     {
         $this->targetDirectory = $targetDirectory;
 
-        $loader = new Twig_Loader_Filesystem(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
-        $this->twig = new Twig_Environment($loader, []);
+        $loader = new FilesystemLoader(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
+        $this->twig = new Environment($loader, []);
     }
 
     /**

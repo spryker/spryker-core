@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 class ProductPackagingUnitStorageMapper implements ProductPackagingUnitStorageMapperInterface
 {
     /**
-     * @param \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[] $productAbstractPackagingStorageEntities
+     * @param \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[] $productAbstractPackagingStorageEntities
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */

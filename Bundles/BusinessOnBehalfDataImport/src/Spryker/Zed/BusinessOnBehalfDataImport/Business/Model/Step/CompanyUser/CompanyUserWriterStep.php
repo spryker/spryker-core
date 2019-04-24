@@ -9,10 +9,12 @@ namespace Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyUser
 
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\DataSet\BusinessOnBehalfCompanyUserDataSetInterface;
+use Spryker\Zed\CompanyUser\Dependency\CompanyUserEvents;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-class CompanyUserWriterStep implements DataImportStepInterface
+class CompanyUserWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
      * @uses SpyCompanyUserQuery
@@ -34,5 +36,10 @@ class CompanyUserWriterStep implements DataImportStepInterface
         }
 
         $companyUserEntity->save();
+
+        $this->addPublishEvents(
+            CompanyUserEvents::COMPANY_USER_PUBLISH,
+            $companyUserEntity->getIdCompanyUser()
+        );
     }
 }
