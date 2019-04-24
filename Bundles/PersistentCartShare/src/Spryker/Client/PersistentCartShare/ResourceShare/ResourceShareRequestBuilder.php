@@ -41,9 +41,7 @@ class ResourceShareRequestBuilder
             ->setData([
                 'id_quote' => $idQuote,
                 'share_option' => $shareOption,
-            ])
-            ->setIdQuote($idQuote)
-            ->setShareOption($shareOption);
+            ]);
 
         $resourceShareTransfer = (new ResourceShareTransfer())
             ->setResourceType(static::RESOURCE_TYPE_QUOTE)
