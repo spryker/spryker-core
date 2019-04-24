@@ -16,14 +16,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ConfigurationController extends AbstractController
 {
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return array
      */
-    public function editorContentListJsonAction(): JsonResponse
+    public function assetsAction(): array
     {
         $editorContentTypes = $this->getFactory()->createContentEditorPluginsResolver()->getContentTypes();
 
-        return $this->jsonResponse(
-            $this->getFactory()->createContentMapper()->mapEditorContentTypes($editorContentTypes)
-        );
+        return $this->viewResponse([
+            'editorContentTypes' => $editorContentTypes,
+        ]);
     }
 }

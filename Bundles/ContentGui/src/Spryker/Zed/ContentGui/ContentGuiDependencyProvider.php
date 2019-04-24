@@ -10,7 +10,6 @@ namespace Spryker\Zed\ContentGui;
 use Orm\Zed\Content\Persistence\Base\SpyContentQuery;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeBridge;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeBridge;
-use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeBridge;
 use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -26,7 +25,6 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_CONTENT = 'FACADE_CONTENT';
-    public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -43,7 +41,6 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addContentPlugins($container);
         $container = $this->addContentEditorPlugins($container);
         $container = $this->addUtilEncoding($container);
-        $container = $this->addTranslatorFacade($container);
 
         return $container;
     }
@@ -123,20 +120,6 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new ContentGuiToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addTranslatorFacade(Container $container): Container
-    {
-        $container[static::FACADE_TRANSLATOR] = function (Container $container) {
-            return new ContentGuiToTranslatorFacadeBridge($container->getLocator()->translator()->facade());
         };
 
         return $container;

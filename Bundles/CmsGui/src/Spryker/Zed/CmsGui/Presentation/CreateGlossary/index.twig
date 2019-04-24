@@ -55,6 +55,8 @@
 {% block footer_js %}
     {{ parent() }}
     <script src="/assets/js/spryker-zed-cms-gui-main.js"></script>
+    {{ render(controller('/content-gui/configuration/assets'), {'ignore_errors':true}) }}
+
 {% endblock %}
 
 
