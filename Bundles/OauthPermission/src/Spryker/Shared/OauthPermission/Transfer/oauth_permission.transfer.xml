@@ -8,6 +8,11 @@
         <property name="permissions" type="PermissionCollection"/>
     </transfer>
 
+    <transfer name="CompanyUserIdentifier">
+        <property name="idCompanyUser" type="string"/>
+        <property name="permissions" type="PermissionCollection"/>
+    </transfer>
+
     <transfer name="PermissionCollection">
         <property name="permissions" type="Permission[]" singular="permission"/>
     </transfer>
