@@ -54,6 +54,52 @@ class TransferValidatorTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testValidateWithBC()
+    {
+        $sourceDirectories = [
+            __DIR__ . '/../../../../../_fixtures/Shared/Error/Transfer/',
+        ];
+        $definitionFinder = $this->getDefinitionFinder($sourceDirectories);
+        $messenger = $this->getMessengerMock();
+        $config = new TransferConfig();
+        $transferValidator = new TransferValidator($messenger, $definitionFinder, $config);
+
+        $options = [
+            'bundle' => null,
+            'verbose' => true,
+        ];
+        $result = $transferValidator->validate($options);
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWithoutBC()
+    {
+        $sourceDirectories = [
+            __DIR__ . '/../../../../../_fixtures/Shared/Error/Transfer/',
+        ];
+        $definitionFinder = $this->getDefinitionFinder($sourceDirectories);
+        $messenger = $this->getMessengerMock();
+        $config = $this->getTransferConfigMock();
+        $config->expects($this->any())->method('useStrictGeneration')->willReturn(true);
+
+        $transferValidator = new TransferValidator($messenger, $definitionFinder, $config);
+
+        $options = [
+            'bundle' => null,
+            'verbose' => true,
+        ];
+        $result = $transferValidator->validate($options);
+
+        $this->assertFalse($result);
+    }
+
+    /**
      * @param array $sourceDirectories
      *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder
@@ -74,5 +120,13 @@ class TransferValidatorTest extends Unit
     protected function getMessengerMock()
     {
         return $this->getMockBuilder(ConsoleLogger::class)->disableOriginalConstructor()->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Transfer\TransferConfig
+     */
+    protected function getTransferConfigMock()
+    {
+        return $this->getMockBuilder(TransferConfig::class)->setMethods(['useStrictGeneration'])->getMock();
     }
 }

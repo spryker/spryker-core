@@ -61,14 +61,14 @@ class TransferValidator implements TransferValidatorInterface
     ];
 
     /**
-     * @var TransferConfig
+     * @var \Spryker\Zed\Transfer\TransferConfig
      */
     protected $transferConfig;
 
     /**
      * @param \Psr\Log\LoggerInterface $messenger
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface $finder
-     * @param TransferConfig $transferConfig
+     * @param \Spryker\Zed\Transfer\TransferConfig $transferConfig
      */
     public function __construct(LoggerInterface $messenger, FinderInterface $finder, TransferConfig $transferConfig)
     {

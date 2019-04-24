@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\Transfer\Business\Model;
 
-use Codeception\Module;
 use Codeception\Test\Unit;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
@@ -42,7 +41,34 @@ class TransferGeneratorTest extends Unit
         $sourceDirectories = [
             __DIR__ . '/../../../../../_fixtures/Shared/Test/Transfer/',
         ];
-        $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
+        $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
+        $this->assertCount(1, $transferDefinitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
+
+        $messenger = $this->getMessenger();
+        $generator = $this->getClassGenerator();
+
+        $transferGenerator = new TransferGenerator($messenger, $generator, $transferDefinitionBuilder);
+        $transferGenerator->execute();
+
+        $this->assertFileExists($this->getTargetDirectory() . 'CatFaceTransfer.php');
+        $this->assertSame(
+            file_get_contents(__DIR__ . '/../../../../../test_files/expected.transfer.php'),
+            file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php')
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExecuteWithStrictnessTransfer()
+    {
+        $sourceDirectories = [
+            __DIR__ . '/../../../../../_fixtures/Shared/Test/Transfer/',
+        ];
+        $config = $this->getTransferConfigMock();
+        $config->expects($this->any())->method('useStrictGeneration')->willReturn(true);
+
+        $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $config);
         $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
 
         $messenger = $this->getMessenger();
@@ -53,7 +79,7 @@ class TransferGeneratorTest extends Unit
 
         $this->assertFileExists($this->getTargetDirectory() . 'CatFaceTransfer.php');
         $this->assertSame(
-            file_get_contents(__DIR__ . '/../../../../../_files/expected.transfer.php'),
+            file_get_contents(__DIR__ . '/../../../../../test_files/expected.transfer.php'),
             file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php')
         );
     }
@@ -67,7 +93,7 @@ class TransferGeneratorTest extends Unit
             __DIR__ . '/../../../../../_fixtures/Project/Test/Transfer/',
             __DIR__ . '/../../../../../_fixtures/Vendor/Test2/Transfer/',
         ];
-        $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
+        $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
         $this->assertCount(2, $definitionBuilder->getDefinitions(), 'Expected to get 2 class definitions.');
 
         $messenger = $this->getMessenger();
@@ -78,7 +104,7 @@ class TransferGeneratorTest extends Unit
 
         $this->assertFileExists($this->getTargetDirectory() . 'FooBarTransfer.php');
         $this->assertSame(
-            file_get_contents(__DIR__ . '/../../../../../_files/expected.merged.transfer.php'),
+            file_get_contents(__DIR__ . '/../../../../../test_files/expected.merged.transfer.php'),
             file_get_contents($this->getTargetDirectory() . 'FooBarTransfer.php')
         );
 
@@ -93,7 +119,7 @@ class TransferGeneratorTest extends Unit
         $sourceDirectories = [
             __DIR__ . '/../../../../../_fixtures/Shared/Deprecated/Transfer/',
         ];
-        $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
+        $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
         $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
 
         $messenger = $this->getMessenger();
@@ -104,7 +130,7 @@ class TransferGeneratorTest extends Unit
 
         $this->assertFileExists($this->getTargetDirectory() . 'DeprecatedFooBarTransfer.php');
         $this->assertSame(
-            file_get_contents(__DIR__ . '/../../../../../_files/expected.deprecated.transfer.php'),
+            file_get_contents(__DIR__ . '/../../../../../test_files/expected.deprecated.transfer.php'),
             file_get_contents($this->getTargetDirectory() . 'DeprecatedFooBarTransfer.php')
         );
     }
@@ -118,7 +144,7 @@ class TransferGeneratorTest extends Unit
             __DIR__ . '/../../../../../_fixtures/Vendor/Deprecated/Transfer/',
             __DIR__ . '/../../../../../_fixtures/Project/Deprecated/Transfer/',
         ];
-        $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
+        $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
         $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
 
         $messenger = $this->getMessenger();
@@ -130,7 +156,7 @@ class TransferGeneratorTest extends Unit
         $this->assertFileExists($this->getTargetDirectory() . 'MergedDeprecatedFooBarTransfer.php');
 
         $this->assertSame(
-            file_get_contents(__DIR__ . '/../../../../../_files/expected.merged.deprecated.transfer.php'),
+            file_get_contents(__DIR__ . '/../../../../../test_files/expected.merged.deprecated.transfer.php'),
             file_get_contents($this->getTargetDirectory() . 'MergedDeprecatedFooBarTransfer.php')
         );
     }
@@ -159,17 +185,17 @@ class TransferGeneratorTest extends Unit
     protected function getClassGenerator()
     {
         $targetDirectory = $this->getTargetDirectory();
-        $generator = new ClassGenerator($targetDirectory);
 
-        return $generator;
+        return new ClassGenerator($targetDirectory);
     }
 
     /**
      * @param array $sourceDirectories
+     * @param \Spryker\Zed\Transfer\TransferConfig|null $config
      *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
-    protected function getDefinitionBuilder($sourceDirectories)
+    protected function getTransferDefinitionBuilder($sourceDirectories, ?TransferConfig $config = null)
     {
         $finder = new TransferDefinitionFinder($sourceDirectories);
         $normalizer = new DefinitionNormalizer();
@@ -177,9 +203,17 @@ class TransferGeneratorTest extends Unit
         $definitionBuilder = new TransferDefinitionBuilder(
             $loader,
             new TransferDefinitionMerger(),
-            new ClassDefinition(new TransferConfig())
+            new ClassDefinition($config ?: new TransferConfig())
         );
 
         return $definitionBuilder;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Transfer\TransferConfig
+     */
+    protected function getTransferConfigMock()
+    {
+        return $this->getMockBuilder(TransferConfig::class)->setMethods(['useStrictGeneration'])->getMock();
     }
 }

@@ -70,7 +70,7 @@ class ClassDefinition implements ClassDefinitionInterface
     private $entityNamespace;
 
     /**
-     * @var TransferConfig
+     * @var \Spryker\Zed\Transfer\TransferConfig
      */
     protected $transferConfig;
 
@@ -138,7 +138,9 @@ class ClassDefinition implements ClassDefinitionInterface
      * enabled manually on project level.
      *
      * @deprecated Will be removed with the next major to enforce validation then.
+     *
      * @param string $name
+     *
      * @return $this
      */
     private function setNameWithoutValidation(string $name)
