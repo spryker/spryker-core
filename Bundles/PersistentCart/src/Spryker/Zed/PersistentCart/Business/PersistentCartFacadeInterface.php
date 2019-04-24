@@ -270,7 +270,7 @@ interface PersistentCartFacadeInterface
     /**
      * Specification:
      * - Load quote by id.
-     * - Executes QuotePreUnlockPluginInterface plugins before unlock.
+     * - Executes QuoteLockPreResetPluginInterface plugins before unlock.
      * - Unlocks quote by setting `isLocked` transfer property to false.
      * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      * - Saves quote in database.
@@ -281,5 +281,5 @@ interface PersistentCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

@@ -53,5 +53,5 @@ interface PersistentCartToCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

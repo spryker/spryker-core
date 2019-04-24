@@ -256,10 +256,10 @@ class PersistentCartStub implements PersistentCartStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart/gateway/unlock-quote', $quoteTransfer);
+        $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart/gateway/reset-quote-lock', $quoteTransfer);
 
         return $quoteResponseTransfer;
     }

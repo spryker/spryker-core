@@ -351,7 +351,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     /**
      * Specification:
      * - Makes zed request.
-     * - Executes QuotePreUnlockPluginInterface plugins before unlock.
+     * - Executes QuoteLockPreResetPluginInterface plugins before unlock.
      * - Unlocks quote by setting `isLocked` transfer property to false.
      * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      * - Stores quote in session internally after zed request.
@@ -360,10 +360,10 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlockQuote(): QuoteResponseTransfer
+    public function resetQuoteLock(): QuoteResponseTransfer
     {
         $quoteResponseTransfer = $this->getCartZedStub()
-            ->unlockQuote($this->getQuote());
+            ->resetQuoteLock($this->getQuote());
 
         $this->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
 

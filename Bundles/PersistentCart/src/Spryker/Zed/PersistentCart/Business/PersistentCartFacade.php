@@ -255,8 +255,8 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlockQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getFactory()->createQuoteLocker()->unlock($quoteTransfer);
+        return $this->getFactory()->createQuoteLocker()->resetQuoteLock($quoteTransfer);
     }
 }

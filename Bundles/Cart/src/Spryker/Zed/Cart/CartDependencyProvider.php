@@ -33,7 +33,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CART_ADD_ITEM_STRATEGY = 'PLUGINS_CART_ADD_ITEM_STRATEGY';
     public const PLUGINS_CART_REMOVE_ITEM_STRATEGY = 'PLUGINS_CART_REMOVE_ITEM_STRATEGY';
     public const PLUGINS_POST_RELOAD_ITEMS = 'PLUGINS_POST_RELOAD_ITEMS';
-    public const PLUGINS_QUOTE_PRE_UNLOCK = 'PLUGINS_QUOTE_PRE_UNLOCK';
+    public const PLUGINS_QUOTE_LOCK_PRE_RESET = 'PLUGINS_QUOTE_LOCK_PRE_RESET';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -58,7 +58,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartRemoveItemStrategyPlugins($container);
         $container = $this->addPostReloadItemsPlugins($container);
         $container = $this->addCartBeforePreCheckNormalizerPlugins($container);
-        $container = $this->addQuotePreUnlockPlugins($container);
+        $container = $this->addQuoteLockPreResetPlugins($container);
 
         return $container;
     }
@@ -257,10 +257,10 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQuotePreUnlockPlugins(Container $container): Container
+    protected function addQuoteLockPreResetPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_PRE_UNLOCK] = function () {
-            return $this->getQuotePreUnlockPlugins();
+        $container[static::PLUGINS_QUOTE_LOCK_PRE_RESET] = function () {
+            return $this->getQuoteLockPreResetPlugins();
         };
 
         return $container;
@@ -377,9 +377,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuotePreUnlockPluginInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteLockPreResetPluginInterface[]
      */
-    protected function getQuotePreUnlockPlugins(): array
+    protected function getQuoteLockPreResetPlugins(): array
     {
         return [];
     }

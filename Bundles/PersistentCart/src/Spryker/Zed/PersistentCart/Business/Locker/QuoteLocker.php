@@ -62,10 +62,10 @@ class QuoteLocker implements QuoteLockerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
-            return $this->executeUnlockTransaction($quoteTransfer);
+            return $this->executeResetQuoteLockTransaction($quoteTransfer);
         });
     }
 
@@ -74,7 +74,7 @@ class QuoteLocker implements QuoteLockerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function executeUnlockTransaction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function executeResetQuoteLockTransaction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->requireCustomer();
 
@@ -87,7 +87,7 @@ class QuoteLocker implements QuoteLockerInterface
             return $quoteResponseTransfer;
         }
 
-        $quoteResponseTransfer = $this->cartFacade->unlockQuote($quoteResponseTransfer->getQuoteTransfer());
+        $quoteResponseTransfer = $this->cartFacade->resetQuoteLock($quoteResponseTransfer->getQuoteTransfer());
         $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
         $this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer());
 

@@ -317,8 +317,8 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function unlockQuote(): QuoteResponseTransfer
+    public function resetQuoteLock(): QuoteResponseTransfer
     {
-        return $this->getFactory()->createQuoteStorageStrategyProxy()->unlockQuote();
+        return $this->getFactory()->createQuoteStorageStrategyProxy()->resetQuoteLock();
     }
 }
