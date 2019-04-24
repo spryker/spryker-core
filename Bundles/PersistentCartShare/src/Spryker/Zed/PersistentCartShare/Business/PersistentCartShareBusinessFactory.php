@@ -9,10 +9,8 @@ namespace Spryker\Zed\PersistentCartShare\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PersistentCartShare\Business\Model\QuoteForPreviewReader;
-use Spryker\Zed\PersistentCartShare\Business\Model\ResourceDataReader;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToQuoteFacadeInterface;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeInterface;
-use Spryker\Zed\PersistentCartShare\Dependency\Service\PersistentCartShareToUtilEncodingServiceInterface;
 use Spryker\Zed\PersistentCartShare\PersistentCartShareDependencyProvider;
 
 /**
@@ -42,27 +40,8 @@ class PersistentCartShareBusinessFactory extends AbstractBusinessFactory
     public function createQuoteForPreviewReader(): QuoteForPreviewReader
     {
         return new QuoteForPreviewReader(
-            $this->createResourceDataReader(),
             $this->getResourceShareFacade(),
             $this->getQuoteFacade()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\PersistentCartShare\Business\Model\ResourceDataReader
-     */
-    public function createResourceDataReader(): ResourceDataReader
-    {
-        return new ResourceDataReader(
-            $this->getUtilEncodingService()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\PersistentCartShare\Dependency\Service\PersistentCartShareToUtilEncodingServiceInterface
-     */
-    public function getUtilEncodingService(): PersistentCartShareToUtilEncodingServiceInterface
-    {
-        return $this->getProvidedDependency(PersistentCartShareDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

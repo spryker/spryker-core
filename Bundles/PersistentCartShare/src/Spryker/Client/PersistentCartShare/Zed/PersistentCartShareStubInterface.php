@@ -8,14 +8,14 @@
 namespace Spryker\Client\PersistentCartShare\Zed;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 
 interface PersistentCartShareStubInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteForPreview(ResourceShareTransfer $resourceShareTransfer): QuoteResponseTransfer;
+    public function getQuoteForPreview(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer;
 }

@@ -44,15 +44,15 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
             return false;
         }
 
-        $resourceDataArray = $this->getFactory()
-            ->getUtilEncodingService()
-            ->decodeJson($resourceShareTransfer->getResourceData(), true);
+        $resourceShareRawData = $resourceShareTransfer
+            ->requireResourceShareData()->getResourceShareData()
+            ->requireData()->getData();
 
-        if (!isset($resourceDataArray[static::PARAM_ID_QUOTE], $resourceDataArray[static::PARAM_SHARE_OPTION])) {
+        if (!isset($resourceShareRawData[static::PARAM_ID_QUOTE], $resourceShareRawData[static::PARAM_SHARE_OPTION])) {
             return false;
         }
 
-        if ($resourceDataArray[static::PARAM_SHARE_OPTION] !== static::SHARE_OPTION_PREVIEW) {
+        if ($resourceShareRawData[static::PARAM_SHARE_OPTION] !== static::SHARE_OPTION_PREVIEW) {
             return false;
         }
 

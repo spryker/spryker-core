@@ -8,7 +8,7 @@
 namespace Spryker\Zed\PersistentCartShare\Communication\Controller;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -18,12 +18,12 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteForPreviewAction(ResourceShareTransfer $resourceShareTransfer): QuoteResponseTransfer
+    public function getQuoteForPreviewAction(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->getQuoteForPreview($resourceShareTransfer);
+        return $this->getFacade()->getQuoteForPreview($resourceShareRequestTransfer);
     }
 }

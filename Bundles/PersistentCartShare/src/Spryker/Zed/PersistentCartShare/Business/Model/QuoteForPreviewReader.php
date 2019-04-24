@@ -10,8 +10,7 @@ namespace Spryker\Zed\PersistentCartShare\Business\Model;
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToQuoteFacadeInterface;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeInterface;
 
@@ -37,60 +36,52 @@ class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
     protected $resourceShareFacade;
 
     /**
-     * @var \Spryker\Zed\PersistentCartShare\Business\Model\ResourceDataReaderInterface
-     */
-    protected $resourceDataMapper;
-
-    /**
      * @var \Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToQuoteFacadeInterface
      */
     protected $quoteFacade;
 
     /**
-     * @param \Spryker\Zed\PersistentCartShare\Business\Model\ResourceDataReaderInterface $resourceDataMapper
      * @param \Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeInterface $resourceShareFacade
      * @param \Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToQuoteFacadeInterface $quoteFacade
      */
     public function __construct(
-        ResourceDataReaderInterface $resourceDataMapper,
         PersistentCartShareToResourceShareFacadeInterface $resourceShareFacade,
         PersistentCartShareToQuoteFacadeInterface $quoteFacade
     ) {
         $this->resourceShareFacade = $resourceShareFacade;
-        $this->resourceDataMapper = $resourceDataMapper;
         $this->quoteFacade = $quoteFacade;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteForPreview(ResourceShareTransfer $resourceShareTransfer): QuoteResponseTransfer
+    public function getQuoteForPreview(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
     {
         $resourceShareResponseTransfer = $this->resourceShareFacade
-            ->getResourceShare(
-                $resourceShareTransfer->setResourceType(static::RESOURCE_TYPE_QUOTE)
-            );
+            ->getResourceShareByUuid($resourceShareRequestTransfer);
 
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return (new QuoteResponseTransfer())
                 ->setIsSuccessful(false)
                 ->setErrors(
-                    $this->convertMessagesToQuoteErrors($resourceShareResponseTransfer->getErrorMessages())
+                    $this->convertMessagesToQuoteErrors($resourceShareResponseTransfer->getMessages())
                 );
         }
 
-        if ($resourceShareResponseTransfer->getResourceShare()->getResourceType() !== static::RESOURCE_TYPE_QUOTE) { //todo do we need this double check?
+        $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
+        if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) { //todo do we need this double check?
             return $this->createErrorResponse(static::GLOSSARY_KEY_PERSISTENT_CART_SHARE_RESOURCE_TYPE_MISMATCH);
         }
 
-        if ($this->getShareOptionsFromResourceShareResponce($resourceShareResponseTransfer) !== static::RESOURCE_SHARE_OPTION_PREVIEW) {
+        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
+        if ($resourceShareDataTransfer->getShareOption() !== static::RESOURCE_SHARE_OPTION_PREVIEW) {
             return $this->createErrorResponse(static::GLOSSARY_KEY_PERSISTENT_CART_SHARE_QUOTE_ACCESS_DENIED_ERROR);
         }
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById(
-            $this->getIdQuoteFromResourceShareResponse($resourceShareResponseTransfer)
+            $resourceShareDataTransfer->requireIdQuote()->getIdQuote()
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -98,23 +89,6 @@ class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
         }
 
         return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
-     *
-     * @return int
-     */
-    protected function getIdQuoteFromResourceShareResponse(ResourceShareResponseTransfer $resourceShareResponseTransfer): int
-    {
-        $persistentCartShareResourceDataTransfer = $this->resourceDataMapper
-            ->getResourceDataFromResourceShareTransfer(
-                $resourceShareResponseTransfer->getResourceShare()
-            );
-
-        return $persistentCartShareResourceDataTransfer
-            ->requireIdQuote()
-            ->getIdQuote();
     }
 
     /**
@@ -135,40 +109,6 @@ class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
         }
 
         return $quoteErrorTransferCollection;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function createQuoteNotFoundErrorResponse(): QuoteResponseTransfer
-    {
-        $quoteErrorTransferCollection = new ArrayObject();
-        $quoteErrorTransferCollection->append(
-            (new QuoteErrorTransfer())
-                ->setMessage(
-                    static::GLOSSARY_KEY_ERROR_QUOTE_NOT_AVAILABLE
-                )
-        );
-
-        return (new QuoteResponseTransfer())
-            ->setIsSuccessful(false)
-            ->setErrors($quoteErrorTransferCollection);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareResponseTransfer $resourceShareResponseTransfer
-     *
-     * @return string|null
-     */
-    protected function getShareOptionsFromResourceShareResponce(ResourceShareResponseTransfer $resourceShareResponseTransfer): ?string
-    {
-        $persistentCartShareResourceDataTransfer = $this->resourceDataMapper
-            ->getResourceDataFromResourceShareTransfer(
-                $resourceShareResponseTransfer->getResourceShare()
-            );
-
-        return $persistentCartShareResourceDataTransfer
-            ->getShareOption();
     }
 
     /**

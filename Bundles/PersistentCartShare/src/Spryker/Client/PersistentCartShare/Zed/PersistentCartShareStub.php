@@ -8,7 +8,7 @@
 namespace Spryker\Client\PersistentCartShare\Zed;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToZedRequestClientInterface;
 
 class PersistentCartShareStub implements PersistentCartShareStubInterface
@@ -27,14 +27,14 @@ class PersistentCartShareStub implements PersistentCartShareStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteForPreview(ResourceShareTransfer $resourceShareTransfer): QuoteResponseTransfer
+    public function getQuoteForPreview(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart-share/gateway/get-quote-for-preview', $resourceShareTransfer);
+        $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart-share/gateway/get-quote-for-preview', $resourceShareRequestTransfer);
 
         return $quoteResponseTransfer;
     }

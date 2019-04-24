@@ -26,9 +26,9 @@ class PersistentCartShareClientTest extends Unit
     protected const SHARE_OPTION_FULL_ACCESS = 'FULL_ACCESS';
 
     /**
-     * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND
+     * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
      */
-    protected const RESOURCE_SHARE_READER_ERROR_RESOURCE_IS_NOT_FOUND = 'resource_share.reader.error.resource_is_not_found';
+    protected const RESOURCE_SHARE_READER_ERROR_RESOURCE_IS_NOT_FOUND = 'resource_share.reader.error.resource_is_not_found_by_provided_uuid';
 
     /**
      * @var \SprykerTest\Client\PersistentCartShare\PersistentCartShareClientTester

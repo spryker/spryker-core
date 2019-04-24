@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToQuoteFacadeBridge;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeBridge;
-use Spryker\Zed\PersistentCartShare\Dependency\Service\PersistentCartShareToUtilEncodingServiceBridge;
 
 /**
  * @method \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig getConfig()
@@ -20,8 +19,6 @@ class PersistentCartShareDependencyProvider extends AbstractBundleDependencyProv
 {
     public const FACADE_RESOURCE_SHARE = 'FACADE_RESOURCE_SHARE';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
-
-    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,7 +31,6 @@ class PersistentCartShareDependencyProvider extends AbstractBundleDependencyProv
 
         $container = $this->addResourceShareFacade($container);
         $container = $this->addQuoteFacade($container);
-        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -47,8 +43,6 @@ class PersistentCartShareDependencyProvider extends AbstractBundleDependencyProv
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-
-        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -76,20 +70,6 @@ class PersistentCartShareDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::FACADE_RESOURCE_SHARE] = function (Container $container) {
             return new PersistentCartShareToResourceShareFacadeBridge($container->getLocator()->resourceShare()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addUtilEncodingService(Container $container): Container
-    {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return new PersistentCartShareToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;
