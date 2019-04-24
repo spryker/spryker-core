@@ -27,6 +27,7 @@
 
     <transfer name="RestCompanyUserAttributes">
         <property name="isActive" type="bool" />
+        <property name="isDefault" type="bool"/>
     </transfer>
 
     <transfer name="RestUser">

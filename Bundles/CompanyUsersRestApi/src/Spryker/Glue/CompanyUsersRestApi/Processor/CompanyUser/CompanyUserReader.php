@@ -8,9 +8,12 @@
 namespace Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface;
 use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
@@ -27,6 +30,11 @@ class CompanyUserReader implements CompanyUserReaderInterface
     protected $companyUserClient;
 
     /**
+     * @var \Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface
+     */
+    protected $companyUsersRestApiClient;
+
+    /**
      * @var \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface
      */
     protected $companyUserMapper;
@@ -38,15 +46,18 @@ class CompanyUserReader implements CompanyUserReaderInterface
 
     /**
      * @param \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface $companyUserClient
+     * @param \Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface $companyUsersRestApiClient
      * @param \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface $companyUserMapper
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
         CompanyUsersRestApiToCompanyUserClientInterface $companyUserClient,
+        CompanyUsersRestApiClientInterface $companyUsersRestApiClient,
         CompanyUserMapperInterface $companyUserMapper,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
         $this->companyUserClient = $companyUserClient;
+        $this->companyUsersRestApiClient = $companyUsersRestApiClient;
         $this->companyUserMapper = $companyUserMapper;
         $this->restResourceBuilder = $restResourceBuilder;
     }
@@ -104,7 +115,14 @@ class CompanyUserReader implements CompanyUserReaderInterface
      */
     public function getCompanyUserCollection(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->restResourceBuilder->createRestResponse();
+        $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())
+            ->setIdCompany($restRequest->getRestUser()->getIdCompany())
+            ->setPagination($this->createPaginationTransfer($restRequest));
+
+        $companyUserCollectionTransfer = $this->companyUsersRestApiClient
+            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+
+        return $this->buildCompanyUserCollectionResponse($companyUserCollectionTransfer);
     }
 
     /**
@@ -144,5 +162,18 @@ class CompanyUserReader implements CompanyUserReaderInterface
             ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
+    }
+
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\PaginationTransfer
+     */
+    protected function createPaginationTransfer(RestRequestInterface $restRequest): PaginationTransfer
+    {
+        return (new PaginationTransfer())
+            ->setPage($restRequest->getPage() ? $restRequest->getPage()->getOffset() : 0)
+            ->setMaxPerPage($restRequest->getPage() ? $restRequest->getPage()->getLimit() : 5);
     }
 }

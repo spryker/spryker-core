@@ -52,6 +52,6 @@ class CompanyUsersRestApiFacade extends AbstractFacade implements CompanyUsersRe
     ): CompanyUserCollectionTransfer {
         return $this->getFactory()
             ->createCompanyUserReader()
-            ->$companyUserCriteriaFilterTransfer();
+            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
     }
 }
