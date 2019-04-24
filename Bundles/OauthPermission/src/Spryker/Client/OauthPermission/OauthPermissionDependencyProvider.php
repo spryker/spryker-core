@@ -46,6 +46,7 @@ class OauthPermissionDependencyProvider extends AbstractDependencyProvider
      */
     protected function addGlueApplication(Container $container): Container
     {
+        //TODO: Figure out how to reverse dependency.
         $container[static::APPLICATION_GLUE] = function () {
             return (new Pimple())->getApplication();
         };

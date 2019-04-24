@@ -26,6 +26,6 @@ class OauthPermissionStoragePlugin extends AbstractPlugin implements PermissionS
      */
     public function getPermissionCollection(): PermissionCollectionTransfer
     {
-        return $this->getClient()->getPermissionsFromOauthToken();
+        return $this->getClient()->getPermissionCollectionFromAuthorizationHeader();
     }
 }

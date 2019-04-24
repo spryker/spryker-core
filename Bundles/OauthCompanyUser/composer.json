@@ -29,7 +29,6 @@
       "Spryker\\": "src/Spryker/"
     }
   },
-
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

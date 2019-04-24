@@ -9,10 +9,12 @@ namespace SprykerTest\Zed\OauthPermission\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
-use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 use Spryker\Zed\OauthPermission\Business\OauthPermissionFacadeInterface;
+use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -39,7 +41,7 @@ class OauthPermissionFacadeTest extends Unit
     public function testExpandCustomerIdentifierWillExpandCustomerDataWithCorrectPermissionsData(): void
     {
         //Assign
-        $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
+        $this->tester->preparePermissionStorageDependency($this->createPermissionStoragePluginStub());
         $companyUserTransfer = $this->tester->haveCompanyUserWithPermissions($this->createPermissionPluginMock());
         $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
             ->setIdCompanyUser($companyUserTransfer->getUuid());
@@ -71,6 +73,30 @@ class OauthPermissionFacadeTest extends Unit
             ->willReturn(static::PERMISSION_PLUGIN_KEY);
 
         return $mock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface
+     */
+    protected function createPermissionStoragePluginStub(): PermissionStoragePluginInterface
+    {
+        $permissionStoragePluginStub = $this->getMockBuilder(PermissionStoragePluginInterface::class)
+            ->setMethods(['getPermissionCollection'])
+            ->getMock();
+        $permissionStoragePluginStub->method('getPermissionCollection')
+            ->willReturn($this->createPermissionCollectionTransfer());
+
+        return $permissionStoragePluginStub;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    protected function createPermissionCollectionTransfer(): PermissionCollectionTransfer
+    {
+        $permissionTransfer = (new PermissionTransfer())->setKey(static::PERMISSION_PLUGIN_KEY);
+
+        return (new PermissionCollectionTransfer())->addPermission($permissionTransfer);
     }
 
     /**

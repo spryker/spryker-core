@@ -21,7 +21,7 @@ class PermissionOauthCompanyUserIdentifierExpanderPlugin extends AbstractPlugin 
 {
     /**
      * {@inheritdoc}
-     * - Expands the CompanyUserIdentifierTransfer with permissions collection.
+     * - Expands the CompanyUserIdentifierTransfer with permissions collection if idCompanyUser is set up in CompanyUserTransfer.
      *
      * @api
      *
@@ -35,6 +35,6 @@ class PermissionOauthCompanyUserIdentifierExpanderPlugin extends AbstractPlugin 
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserIdentifierTransfer {
         return $this->getFacade()
-            ->expandCompanyUserIdentifier($companyUserIdentifierTransfer, $companyUserTransfer);
+            ->expandCompanyUserIdentifierWithPermissions($companyUserIdentifierTransfer, $companyUserTransfer);
     }
 }

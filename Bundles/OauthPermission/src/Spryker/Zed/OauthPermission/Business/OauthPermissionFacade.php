@@ -47,8 +47,10 @@ class OauthPermissionFacade extends AbstractFacade implements OauthPermissionFac
      *
      * @return \Generated\Shared\Transfer\CompanyUserIdentifierTransfer
      */
-    public function expandCompanyUserIdentifier(CompanyUserIdentifierTransfer $companyUserIdentifierTransfer, CompanyUserTransfer $companyUserTransfer): CompanyUserIdentifierTransfer
-    {
+    public function expandCompanyUserIdentifierWithPermissions(
+        CompanyUserIdentifierTransfer $companyUserIdentifierTransfer,
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserIdentifierTransfer {
         return $this->getFactory()
             ->createCompanyUserIdentifierExpander()
             ->expandCompanyUserIdentifier($companyUserIdentifierTransfer, $companyUserTransfer);

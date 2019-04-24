@@ -13,7 +13,8 @@
     "spryker/code-sniffer": "*",
     "spryker/company": "*",
     "spryker/company-role": "*",
-    "spryker/locale": "*",
+    "spryker/company-user": "*",
+    "spryker/customer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

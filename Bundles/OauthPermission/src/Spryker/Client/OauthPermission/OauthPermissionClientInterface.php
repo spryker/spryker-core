@@ -21,5 +21,5 @@ interface OauthPermissionClientInterface
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getPermissionsFromOauthToken(): PermissionCollectionTransfer;
+    public function getPermissionCollectionFromAuthorizationHeader(): PermissionCollectionTransfer;
 }

@@ -41,7 +41,7 @@ interface OauthPermissionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserIdentifierTransfer
      */
-    public function expandCompanyUserIdentifier(
+    public function expandCompanyUserIdentifierWithPermissions(
         CompanyUserIdentifierTransfer $companyUserIdentifierTransfer,
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserIdentifierTransfer;
