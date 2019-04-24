@@ -9,8 +9,14 @@ namespace Spryker\Zed\Content\Business;
 
 use Spryker\Zed\Content\Business\ContentReader\ContentReader;
 use Spryker\Zed\Content\Business\ContentReader\ContentReaderInterface;
+use Spryker\Zed\Content\Business\ContentValidator\ContentConstraintsProvider;
+use Spryker\Zed\Content\Business\ContentValidator\ContentConstraintsProviderInterface;
+use Spryker\Zed\Content\Business\ContentValidator\ContentValidator;
+use Spryker\Zed\Content\Business\ContentValidator\ContentValidatorInterface;
 use Spryker\Zed\Content\Business\ContentWriter\ContentWriter;
 use Spryker\Zed\Content\Business\ContentWriter\ContentWriterInterface;
+use Spryker\Zed\Content\ContentDependencyProvider;
+use Spryker\Zed\Content\Dependency\External\ContentToValidationAdapterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -38,5 +44,32 @@ class ContentBusinessFactory extends AbstractBusinessFactory
         return new ContentReader(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Content\Business\ContentValidator\ContentValidatorInterface
+     */
+    public function createContentValidator(): ContentValidatorInterface
+    {
+        return new ContentValidator(
+            $this->createContentConstraintsProvider(),
+            $this->getValidatorAdapter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Content\Business\ContentValidator\ContentConstraintsProviderInterface
+     */
+    public function createContentConstraintsProvider(): ContentConstraintsProviderInterface
+    {
+        return new ContentConstraintsProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\Content\Dependency\External\ContentToValidationAdapterInterface
+     */
+    public function getValidatorAdapter(): ContentToValidationAdapterInterface
+    {
+        return $this->getProvidedDependency(ContentDependencyProvider::ADAPTER_VALIDATION);
     }
 }
