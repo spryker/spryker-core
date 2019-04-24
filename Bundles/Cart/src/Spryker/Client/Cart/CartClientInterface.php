@@ -212,7 +212,7 @@ interface CartClientInterface
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Reloads quote from storage.
      *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles using quote storage strategy if quote is not locked.
-     *  - Observe quote changes after reloading.
+     *  - Adds messages about quote-related changes to Messenger.
      *
      * @api
      *
@@ -222,8 +222,8 @@ interface CartClientInterface
 
     /**
      * Specification:
-     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles using quote storage strategy if quote is not locked.
-     *  - Observe quote changes after reloading.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles if quote is not locked.
+     *  - Adds messages about quote-related changes to Messenger.
      *
      * @api
      *
@@ -239,7 +239,7 @@ interface CartClientInterface
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Update quote currency using quote storage strategy.
      *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
-     *   - Returns the unchanged QuoteTransfer and CustomerTransfer with `isSuccessful=false` when provided quote is locked.
+     *  - Returns the unchanged QuoteTransfer and CustomerTransfer with `isSuccessful=false` when provided quote is locked.
      *  - Adds error message to Messenger when quote is locked.
      *
      * @api
