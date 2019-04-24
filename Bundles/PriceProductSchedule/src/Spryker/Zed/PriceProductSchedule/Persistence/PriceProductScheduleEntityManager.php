@@ -8,9 +8,12 @@
 namespace Spryker\Zed\PriceProductSchedule\Persistence;
 
 use DateTime;
+use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\PriceProductSchedule\Persistence\Exception\PriceProductScheduleListNotFoundException;
 
 /**
  * @method \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductSchedulePersistenceFactory getFactory()
@@ -42,8 +45,9 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
-    public function savePriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer
-    {
+    public function savePriceProductSchedule(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleTransfer {
         $priceProductScheduleQuery = $this->getFactory()
             ->createPriceProductScheduleQuery();
 
@@ -53,12 +57,70 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
 
         $priceProductScheduleEntity = $this->getFactory()
             ->createPriceProductScheduleMapper()
-            ->mapPriceProductScheduleTransferToPriceProductScheduleEntity($priceProductScheduleTransfer, $priceProductScheduleEntity);
+            ->mapPriceProductScheduleTransferToPriceProductScheduleEntity($priceProductScheduleTransfer,
+                $priceProductScheduleEntity);
 
         $priceProductScheduleEntity->save();
 
         $priceProductScheduleTransfer->setIdPriceProductSchedule($priceProductScheduleEntity->getIdPriceProductSchedule());
 
         return $priceProductScheduleTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
+     */
+    public function createPriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListTransfer {
+        $priceProductScheduleListEntity = $this->getFactory()
+            ->createPriceProductScheduleListMapper()
+            ->mapPriceProductScheduleListTransferToPriceProductScheduleListEntity(
+                $priceProductScheduleListTransfer,
+                new SpyPriceProductScheduleList()
+            );
+
+        $priceProductScheduleListEntity->save();
+
+        $priceProductScheduleListTransfer->setIdPriceProductScheduleList($priceProductScheduleListEntity->getIdPriceProductScheduleList());
+
+        return $priceProductScheduleListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @throws \Spryker\Zed\PriceProductSchedule\Persistence\Exception\PriceProductScheduleListNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
+     */
+    public function updatePriceProductScheduleList(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): PriceProductScheduleListTransfer {
+        $priceProductScheduleListTransfer->requireIdPriceProductScheduleList();
+
+        $priceProductScheduleListEntity = $this->getFactory()
+            ->createPriceProductScheduleListQuery()
+            ->filterByIdPriceProductScheduleList($priceProductScheduleListTransfer->getIdPriceProductScheduleList())
+            ->findOne();
+
+        if ($priceProductScheduleListEntity === null) {
+            throw new PriceProductScheduleListNotFoundException(
+                sprintf(
+                    'Price product schedule list was not found by given id %s',
+                    $priceProductScheduleListTransfer->getIdPriceProductScheduleList())
+            );
+        }
+
+        $priceProductScheduleListEntity = $this->getFactory()
+            ->createPriceProductScheduleListMapper()
+            ->mapPriceProductScheduleListTransferToPriceProductScheduleListEntity($priceProductScheduleListTransfer,
+                $priceProductScheduleListEntity);
+
+        $priceProductScheduleListEntity->save();
+
+        return $priceProductScheduleListTransfer;
     }
 }

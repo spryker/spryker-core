@@ -22,4 +22,15 @@ interface PriceProductScheduleListMapperInterface
         SpyPriceProductScheduleList $priceProductScheduleListEntity,
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): PriceProductScheduleListTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList $priceProductScheduleListEntity
+     *
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList
+     */
+    public function mapPriceProductScheduleListTransferToPriceProductScheduleListEntity(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer,
+        SpyPriceProductScheduleList $priceProductScheduleListEntity
+    ): SpyPriceProductScheduleList;
 }

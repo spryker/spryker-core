@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Persistence;
 
+use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeInterface;
@@ -29,6 +30,14 @@ class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory
     public function createPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
     {
         return SpyPriceProductScheduleQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery
+     */
+    public function createPriceProductScheduleListQuery(): SpyPriceProductScheduleListQuery
+    {
+        return SpyPriceProductScheduleListQuery::create();
     }
 
     /**

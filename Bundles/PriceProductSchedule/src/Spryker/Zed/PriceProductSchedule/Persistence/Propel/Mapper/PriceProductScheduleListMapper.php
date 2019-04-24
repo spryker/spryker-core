@@ -25,4 +25,20 @@ class PriceProductScheduleListMapper implements PriceProductScheduleListMapperIn
         return $priceProductScheduleListTransfer
             ->fromArray($priceProductScheduleListEntity->toArray(), true);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList $priceProductScheduleListEntity
+     *
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList
+     */
+    public function mapPriceProductScheduleListTransferToPriceProductScheduleListEntity(
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer,
+        SpyPriceProductScheduleList $priceProductScheduleListEntity
+    ): SpyPriceProductScheduleList {
+        $priceProductScheduleListEntity
+            ->fromArray($priceProductScheduleListTransfer->toArray());
+
+        return $priceProductScheduleListEntity;
+    }
 }
