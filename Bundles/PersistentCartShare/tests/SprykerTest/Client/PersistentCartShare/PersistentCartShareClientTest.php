@@ -40,7 +40,7 @@ class PersistentCartShareClientTest extends Unit
      */
     public function testGetQuoteForPreviewReturnsQuoteResponseTransferByZedRequest(): void
     {
-        // Arrange;
+        // Arrange
         $resourceShareUuid = 'not-existing-uuid-or-not-a-uuid-at-all';
 
         // Act

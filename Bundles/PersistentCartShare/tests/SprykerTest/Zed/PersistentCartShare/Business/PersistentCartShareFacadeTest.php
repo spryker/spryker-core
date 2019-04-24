@@ -68,7 +68,7 @@ class PersistentCartShareFacadeTest extends Unit
      */
     public function testGetQuoteForPreviewReturnsQuoteResponseTransferWhenQuotePersistsAndSharedForPreview(): void
     {
-        // Arrange;
+        // Arrange
         $resourceShareTransfer = $this->createPreviewResourceShare();
 
         $resourceShareTransferForRequest = (new ResourceShareTransfer())
@@ -91,7 +91,7 @@ class PersistentCartShareFacadeTest extends Unit
      */
     public function testGetQuoteForPreviewReturnsErrorsWhenQuoteIsNotShared(): void
     {
-        // Arrange;
+        // Arrange
         $resourceShareTransfer = (new ResourceShareTransfer())
             ->setUuid('not-existing-uuid-or-not-a-uuid-at-all');
 
@@ -115,7 +115,7 @@ class PersistentCartShareFacadeTest extends Unit
      */
     public function testGetQuoteForPreviewReturnsErrorsWhenQuoteSharedButExpired(): void
     {
-        // Arrange;
+        // Arrange
         $resourceShareTransferForRequest = $this->createExpiredResourceShare();
 
         // Act
@@ -157,7 +157,7 @@ class PersistentCartShareFacadeTest extends Unit
      */
     public function testGetQuoteForPreviewReturnsErrorsWhenShareExistsButThereIsNoQuoteWithSuchId(): void
     {
-        // Arrange;
+        // Arrange
         $resourceShareTransferForRequest = $this->createPreviewResourceShare([], [
             static::ID_QUOTE_PARAMETER => 99999999,
         ]);
@@ -186,7 +186,7 @@ class PersistentCartShareFacadeTest extends Unit
      */
     public function testGetQuoteForPreviewReturnsErrorsWhenShareExistsButShareOptionIsNotForPreview(): void
     {
-        // Arrange;
+        // Arrange
         $resourceShareTransferForRequest = $this->createPreviewResourceShare([], [
             static::SHARE_OPTION_PARAMETER => static::SHARE_OPTION_FULL_ACCESS,
         ]);

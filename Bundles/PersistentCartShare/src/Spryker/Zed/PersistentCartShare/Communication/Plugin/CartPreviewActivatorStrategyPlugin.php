@@ -24,9 +24,11 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
     protected const PARAM_SHARE_OPTION = 'share_option';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @inheritDoc
+     * @return bool
      */
     public function isLoginRequired(): bool
     {
@@ -37,6 +39,8 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
      * {@inheritDoc}
      *
      * @api
+     *
+     * @return bool
      */
     public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
     {

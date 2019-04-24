@@ -26,7 +26,8 @@ class PersistentCartShareResourceDataExpanderStrategyPlugin extends AbstractPlug
 
     /**
      * {@inheritdoc}
-     * - Expands Persistent Cart Share Resource Data
+     * - Checks if resource type is "quote".
+     * - Checks if resource data contains share_option and id_quote parameters.
      *
      * @api
      *
@@ -48,21 +49,18 @@ class PersistentCartShareResourceDataExpanderStrategyPlugin extends AbstractPlug
             return false;
         }
 
-        if ($resourceShareRawData[static::PARAM_SHARE_OPTION] !== static::SHARE_OPTION_PREVIEW) {
-            return false;
-        }
-
         return true;
     }
 
     /**
-     * {@inheritDoc{
+     * {@inheritDoc}
+     * - Expands Resource Share Data with IdQuote and ShareOption values.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
-     * @return \Generated\Shared\Transfer\ResourceShareTransfer
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
     public function expand(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
