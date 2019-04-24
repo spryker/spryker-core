@@ -20,6 +20,7 @@ class ProductQuantityDataImportWriterStep extends PublishAwareStep implements Da
 {
     protected const DEFAULT_MAX = null;
     protected const DEFAULT_INTERVAL = 1;
+    protected const DEFAULT_MIN_QUANTITY = 1;
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -47,7 +48,7 @@ class ProductQuantityDataImportWriterStep extends PublishAwareStep implements Da
         }
 
         if ($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MIN] === "") {
-            $dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MIN] = $dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_INTERVAL];
+            $dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MIN] = static::DEFAULT_MIN_QUANTITY;
         }
 
         if ($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MAX] === "") {
