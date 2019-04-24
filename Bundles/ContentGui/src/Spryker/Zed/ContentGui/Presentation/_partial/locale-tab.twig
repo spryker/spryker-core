@@ -1,6 +1,16 @@
 {% block content %}
     {% for localizedContentForm in contentForm.localizedContents %}
         {% if localizedContentForm.vars.data.fkLocale == tab.name %}
+            {% if not localizedContentForm.parameters.vars.valid %}
+                <div class="form-group has-error">
+                    {{ form_errors(localizedContentForm.parameters) }}
+                </div>
+            {% endif %}
+            {% if not tab.name %}
+                <span>
+                    {{ 'Overwrite default by specifying a different list per specific locale' | trans }}
+                </span>
+            {% endif %}
             {{ form_row(localizedContentForm.fk_locale) }}
             {{ form_row(localizedContentForm.locale_name) }}
             <div id="localized-content-block-{{ localizedContentForm.vars.name }}">
