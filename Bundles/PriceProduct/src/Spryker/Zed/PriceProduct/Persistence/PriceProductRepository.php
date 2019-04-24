@@ -15,6 +15,7 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -317,9 +318,32 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
             ->findOne();
 
         if ($priceProductStoreEntity !== null) {
-            return $priceProductStoreEntity->getIdPriceProductStore();
+            return (int)$priceProductStoreEntity->getIdPriceProductStore();
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductUsedForOtherCurrencyAndStore(PriceProductTransfer $priceProductTransfer): bool
+    {
+        $priceProductTransfer->requireIdPriceProduct()
+            ->requireMoneyValue();
+
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+        $moneyValueTransfer->requireCurrency();
+
+        $priceProductStoreEntityQuery = $this->getFactory()
+            ->createPriceProductStoreQuery()
+            ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
+            ->filterByFkCurrency($moneyValueTransfer->getCurrency()->getIdCurrency(), Criteria::NOT_EQUAL)
+            ->_or()
+            ->filterByFkStore($moneyValueTransfer->getFkStore(), Criteria::NOT_EQUAL);
+
+        return $this->buildQueryFromCriteria($priceProductStoreEntityQuery)->exists();
     }
 }
