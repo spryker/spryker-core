@@ -22,13 +22,13 @@ class QuoteRequestWriterStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $quoteRequestEntity = $this->createQuoteRequestQuery()
-            ->filterByKey($dataSet[QuoteRequestDataSetInterface::COLUMN_QUOTE_REQUEST_KEY])
+            ->filterByQuoteRequestReference($dataSet[QuoteRequestDataSetInterface::COLUMN_QUOTE_REQUEST_REFERENCE])
             ->findOneOrCreate();
 
         $quoteRequestEntity
             ->setQuoteRequestReference($dataSet[QuoteRequestDataSetInterface::COLUMN_QUOTE_REQUEST_REFERENCE])
             ->setFkCompanyUser($dataSet[QuoteRequestDataSetInterface::ID_COMPANY_USER])
-            ->setStatus($dataSet[QuoteRequestDataSetInterface::COLUMN_STATUS])
+            ->setStatus($dataSet[QuoteRequestDataSetInterface::COLUMN_QUOTE_REQUEST_STATUS])
             ->save();
     }
 

@@ -33,8 +33,8 @@ use Spryker\Zed\QuoteRequestDataImport\QuoteRequestDataImportConfig;
  */
 class QuoteRequestVersionDataImportPluginTest extends Unit
 {
-    protected const TEST_QUOTE_REQUEST_KEY = 'test-quote-request-key';
-    protected const INCORRECT_QUOTE_REQUEST_KEY = 'incorrect-quote-request-key';
+    protected const TEST_QUOTE_REQUEST_REFERENCE = 'test-quote-request-reference';
+    protected const INCORRECT_QUOTE_REQUEST_REFERENCE = 'incorrect-quote-request-reference';
 
     /**
      * @var \SprykerTest\Zed\QuoteRequestDataImport\QuoteRequestDataImportCommunicationTester
@@ -64,7 +64,7 @@ class QuoteRequestVersionDataImportPluginTest extends Unit
             ->build();
 
         $this->tester->haveQuoteRequest([
-            QuoteRequestTransfer::KEY => static::TEST_QUOTE_REQUEST_KEY,
+            QuoteRequestTransfer::QUOTE_REQUEST_REFERENCE => static::TEST_QUOTE_REQUEST_REFERENCE,
             QuoteRequestTransfer::LATEST_VERSION => $this->tester->createQuoteRequestVersion($quoteTransfer),
             QuoteRequestTransfer::COMPANY_USER => $this->tester->createCompanyUser($customerTransfer),
         ]);
@@ -89,7 +89,7 @@ class QuoteRequestVersionDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testImportThrowsExceptionWhenQuoteRequestNotFoundByKey(): void
+    public function testImportThrowsExceptionWhenQuoteRequestNotFoundByReference(): void
     {
         // Arrange
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -103,7 +103,7 @@ class QuoteRequestVersionDataImportPluginTest extends Unit
 
         // Assert
         $this->expectException(DataImportException::class);
-        $this->expectExceptionMessage(sprintf('Could not find quote request by key "%s"', static::INCORRECT_QUOTE_REQUEST_KEY));
+        $this->expectExceptionMessage(sprintf('Could not find quote request by reference "%s"', static::INCORRECT_QUOTE_REQUEST_REFERENCE));
 
         // Act
         $quoteRequestVersionDataImportPlugin->import($dataImportConfigurationTransfer);

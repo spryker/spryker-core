@@ -11,7 +11,7 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\QuoteRequestDataImport\Business\QuoteRequestDataImportStep\CompanyUserKeyToIdCompanyUser;
-use Spryker\Zed\QuoteRequestDataImport\Business\QuoteRequestDataImportStep\QuoteRequestKeyToIdQuoteRequest;
+use Spryker\Zed\QuoteRequestDataImport\Business\QuoteRequestDataImportStep\QuoteRequestReferenceToIdQuoteRequest;
 use Spryker\Zed\QuoteRequestDataImport\Business\QuoteRequestDataImportStep\QuoteRequestVersionWriterStep;
 use Spryker\Zed\QuoteRequestDataImport\Business\QuoteRequestDataImportStep\QuoteRequestWriterStep;
 
@@ -48,7 +48,7 @@ class QuoteRequestDataImportBusinessFactory extends DataImportBusinessFactory
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
-            ->addStep($this->createQuoteRequestKeyToIdQuoteRequestStep())
+            ->addStep($this->createQuoteRequestReferenceToIdQuoteRequestStep())
             ->addStep($this->createQuoteRequestVersionWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -75,9 +75,9 @@ class QuoteRequestDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createQuoteRequestKeyToIdQuoteRequestStep(): DataImportStepInterface
+    public function createQuoteRequestReferenceToIdQuoteRequestStep(): DataImportStepInterface
     {
-        return new QuoteRequestKeyToIdQuoteRequest();
+        return new QuoteRequestReferenceToIdQuoteRequest();
     }
 
     /**

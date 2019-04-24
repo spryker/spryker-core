@@ -9,7 +9,7 @@ namespace Spryker\Zed\QuoteRequestDataImport\Business\DataSet;
 
 interface QuoteRequestVersionDataSetInterface
 {
-    public const COLUMN_QUOTE_REQUEST_KEY = 'quote_request_key';
+    public const COLUMN_QUOTE_REQUEST_REFERENCE = 'quote_request_reference';
     public const COLUMN_VERSION_REFERENCE = 'version_reference';
     public const COLUMN_VERSION = 'version';
     public const COLUMN_METADATA = 'metadata';

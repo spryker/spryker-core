@@ -14,7 +14,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\QuoteRequestDataImport\Business\DataSet\QuoteRequestVersionDataSetInterface;
 
-class QuoteRequestKeyToIdQuoteRequest implements DataImportStepInterface
+class QuoteRequestReferenceToIdQuoteRequest implements DataImportStepInterface
 {
     /**
      * @var int[]
@@ -30,21 +30,21 @@ class QuoteRequestKeyToIdQuoteRequest implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $quoteRequestKey = $dataSet[QuoteRequestVersionDataSetInterface::COLUMN_QUOTE_REQUEST_KEY];
+        $quoteRequestReference = $dataSet[QuoteRequestVersionDataSetInterface::COLUMN_QUOTE_REQUEST_REFERENCE];
 
-        if (!isset($this->idQuoteRequestCache[$quoteRequestKey])) {
+        if (!isset($this->idQuoteRequestCache[$quoteRequestReference])) {
             $idQuoteRequest = $this->createQuoteRequestQuery()
                 ->select([SpyQuoteRequestTableMap::COL_ID_QUOTE_REQUEST])
-                ->findOneByKey($quoteRequestKey);
+                ->findOneByQuoteRequestReference($quoteRequestReference);
 
             if (!$idQuoteRequest) {
-                throw new EntityNotFoundException(sprintf('Could not find quote request by key "%s"', $quoteRequestKey));
+                throw new EntityNotFoundException(sprintf('Could not find quote request by reference "%s"', $quoteRequestReference));
             }
 
-            $this->idQuoteRequestCache[$quoteRequestKey] = $idQuoteRequest;
+            $this->idQuoteRequestCache[$quoteRequestReference] = $idQuoteRequest;
         }
 
-        $dataSet[QuoteRequestVersionDataSetInterface::ID_QUOTE_REQUEST] = $this->idQuoteRequestCache[$quoteRequestKey];
+        $dataSet[QuoteRequestVersionDataSetInterface::ID_QUOTE_REQUEST] = $this->idQuoteRequestCache[$quoteRequestReference];
     }
 
     /**
