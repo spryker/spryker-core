@@ -33,7 +33,8 @@ class ProductAbstractTableColumnContentBuilder implements ProductAbstractTableCo
      */
     public function getProductPreview(SpyProductAbstract $productAbstractEntity): string
     {
-        if ($link = $this->getProductPreviewUrl($productAbstractEntity)) {
+        $link = $this->getProductPreviewUrl($productAbstractEntity);
+        if ($link) {
             return sprintf('<img src="%s">', $link);
         }
 
