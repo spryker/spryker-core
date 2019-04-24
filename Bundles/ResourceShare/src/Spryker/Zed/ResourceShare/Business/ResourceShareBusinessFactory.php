@@ -44,9 +44,7 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     {
         return new ResourceShareActivator(
             $this->createResourceShareReader(),
-            $this->createResourceShareValidator(),
-            $this->getResourceShareActivatorStrategyPlugins(),
-            $this->getResourceShareResourceDataExpanderStrategyPlugins()
+            $this->getResourceShareActivatorStrategyPlugins()
         );
     }
 
