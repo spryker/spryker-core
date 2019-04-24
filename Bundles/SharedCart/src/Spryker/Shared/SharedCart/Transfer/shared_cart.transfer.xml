@@ -74,7 +74,16 @@
     </transfer>
 
     <transfer name="CompanyUser">
-        <property name="idCompanyUser" type="int"/>
+        <property name="idCompanyUser" type="int" />
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit" />
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="idCompanyBusinessUnit" type="int" />
+    </transfer>
+
+    <transfer name="ResourceShareData">
+        <property name="idCompanyBusinessUnit" type="int" />
     </transfer>
 
 </transfers>

@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\SharedCart\Business\ResourceShare;
 
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
+use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 
-interface ResourceShareReaderInterface
+interface ResourceShareActivatorStrategyInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
@@ -19,9 +21,9 @@ interface ResourceShareReaderInterface
     public function isResourceShareActivatorStrategyApplicable(ResourceShareTransfer $resourceShareTransfer): bool;
 
     /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function applyResourceShareActivatorStrategy(ResourceShareTransfer $resourceShareTransfer): void;
+    public function applyResourceShareActivatorStrategy(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer;
 }

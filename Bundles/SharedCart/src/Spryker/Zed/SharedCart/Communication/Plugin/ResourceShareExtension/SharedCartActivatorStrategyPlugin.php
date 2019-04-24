@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SharedCart\Communication\Plugin\ResourceShareExtension;
 
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
+use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
@@ -24,13 +26,13 @@ class SharedCartActivatorStrategyPlugin extends AbstractPlugin implements Resour
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function execute(ResourceShareTransfer $resourceShareTransfer): void
+    public function execute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        $this->getFacade()->applyResourceShareActivatorStrategy($resourceShareTransfer);
+        return $this->getFacade()->applyResourceShareActivatorStrategy($resourceShareRequestTransfer);
     }
 
     /**

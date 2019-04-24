@@ -9,6 +9,7 @@ namespace Spryker\Zed\SharedCart\Communication\Plugin\ResourceShareExtension;
 
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
+use Spryker\Shared\SharedCart\SharedCartConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface;
 
@@ -19,9 +20,13 @@ use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDa
  */
 class SharedCartDataExpanderStrategyPlugin extends AbstractPlugin implements ResourceShareResourceDataExpanderStrategyPluginInterface
 {
+    protected const KEY_SHARE_OPTION = 'share_option';
+
+    protected const KEY_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
+
     /**
      * {@inheritdoc}
-     * - TODO
+     * - Expands ResourceShareTransfer::ResourceShareDataTransfer with idCompanyBusinessUnit value.
      *
      * @api
      *
@@ -31,12 +36,19 @@ class SharedCartDataExpanderStrategyPlugin extends AbstractPlugin implements Res
      */
     public function expand(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
-        // TODO: Implement expand() method.
+        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
+
+        $idCompanyBusinessUnit = $resourceShareDataTransfer->getData()[static::KEY_ID_COMPANY_BUSINESS_UNIT] ?? null;
+        $resourceShareDataTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
+
+        return (new ResourceShareResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setResourceShare($resourceShareTransfer);
     }
 
     /**
      * {@inheritdoc}
-     * - TODO
+     * - Checks if resource data contains company business unit id.
      *
      * @api
      *
@@ -46,6 +58,14 @@ class SharedCartDataExpanderStrategyPlugin extends AbstractPlugin implements Res
      */
     public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
     {
-        // TODO: Implement isApplicable() method.
+        $resourceShareTransfer->requireResourceShareData();
+        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
+
+        $shareOption = $resourceShareDataTransfer->getData()[static::KEY_SHARE_OPTION] ?? null;
+        if (!$shareOption) {
+            return false;
+        }
+
+        return in_array($shareOption, [SharedCartConfig::PERMISSION_GROUP_READ_ONLY, SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS], true);
     }
 }
