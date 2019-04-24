@@ -105,7 +105,7 @@ class MailHandlerTest extends Unit
             /**
              * @todo Uncomment when will be fixed shipment saving for multiple items.
              */
-//            'France 1 item, Germany 1 item; expected: 2 shipments in email' => $this->getDataWithMultipleShipmentsAndShippingAddressesAnd1ItemToFranceAnd1ItemToGermany(),
+            'France 1 item, Germany 1 item; expected: 2 shipments in email' => $this->getDataWithMultipleShipmentsAndShippingAddressesAnd1ItemToFranceAnd1ItemToGermany(),
         ];
     }
 

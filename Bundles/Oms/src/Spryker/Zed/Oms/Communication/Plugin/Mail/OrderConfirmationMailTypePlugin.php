@@ -78,7 +78,7 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
             return $this;
         }
 
-        $mailBuilder->setHtmlTemplate('oms/mail/order_confirmation_with_multi_shipment_address.html.twig');
+        $mailBuilder->setHtmlTemplate('oms/mail/order_confirmation_with_multi_shipping_addresses.html.twig');
 
         return $this;
     }
@@ -100,7 +100,7 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
             return $this;
         }
 
-        $mailBuilder->setTextTemplate('oms/mail/order_confirmation_with_multi_shipment_address.text.twig');
+        $mailBuilder->setTextTemplate('oms/mail/order_confirmation_with_multi_shipping_addresses.text.twig');
 
         return $this;
     }

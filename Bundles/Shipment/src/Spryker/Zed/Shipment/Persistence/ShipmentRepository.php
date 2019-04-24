@@ -189,8 +189,15 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     protected function groupSalesOrderItemIdsByShipmentId(iterable $salesOrderItemIdsWithShipmentIds): array {
         $groupedResult = [];
 
-        foreach ($salesOrderItemIdsWithShipment as ['shipmentId' => $shipmentId, 'orderItemId' => $orderItemId]) {
-            $groupedResult[$shipmentId] = $orderItemId;
+        foreach ($salesOrderItemIdsWithShipmentIds as [
+            SpySalesOrderItemTableMap::COL_FK_SALES_SHIPMENT => $shipmentId,
+            SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM => $orderItemId,
+        ]) {
+            if (!isset($groupedResult[$shipmentId])) {
+                $groupedResult[$shipmentId] = [];
+            }
+
+            $groupedResult[$shipmentId][] = $orderItemId;
         }
 
         return $groupedResult;
