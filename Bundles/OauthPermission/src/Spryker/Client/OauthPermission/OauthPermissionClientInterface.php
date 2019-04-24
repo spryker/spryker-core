@@ -13,11 +13,13 @@ interface OauthPermissionClientInterface
 {
     /**
      * Specification:
-     *  - Retrieves permission collection from authorization header.
+     *  - Retrieves permission collection from OAuth token data.
+     *  - Extracts OAuth token data from header.
+     *  - Decodes json encoded permissions.
      *
      * @api
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getOauthCustomerPermissions(): PermissionCollectionTransfer;
+    public function getPermissionsFromOauthToken(): PermissionCollectionTransfer;
 }

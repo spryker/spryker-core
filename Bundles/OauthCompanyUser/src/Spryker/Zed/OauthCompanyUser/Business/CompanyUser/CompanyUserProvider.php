@@ -114,8 +114,8 @@ class CompanyUserProvider implements CompanyUserProviderInterface
         CompanyUserIdentifierTransfer $companyUserIdentifierTransfer,
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserIdentifierTransfer {
-        foreach ($this->oauthCompanyUserIdentifierExpanderPlugins as $companyUserIdentifierExpanderPlugin) {
-            $companyUserIdentifierTransfer = $companyUserIdentifierExpanderPlugin->expandCompanyUserIdentifier(
+        foreach ($this->oauthCompanyUserIdentifierExpanderPlugins as $oauthCompanyUserIdentifierExpanderPlugin) {
+            $companyUserIdentifierTransfer = $oauthCompanyUserIdentifierExpanderPlugin->expandCompanyUserIdentifier(
                 $companyUserIdentifierTransfer,
                 $companyUserTransfer
             );

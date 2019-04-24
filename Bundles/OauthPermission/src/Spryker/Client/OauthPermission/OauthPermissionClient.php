@@ -22,10 +22,10 @@ class OauthPermissionClient extends AbstractClient implements OauthPermissionCli
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getOauthCustomerPermissions(): PermissionCollectionTransfer
+    public function getPermissionsFromOauthToken(): PermissionCollectionTransfer
     {
         return $this->getFactory()
             ->createOauthPermissionReader()
-            ->getOauthCustomerPermissions();
+            ->getPermissionsFromOauthToken();
     }
 }

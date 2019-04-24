@@ -14,5 +14,5 @@ interface OauthPermissionReaderInterface
     /**
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getOauthCustomerPermissions(): PermissionCollectionTransfer;
+    public function getPermissionsFromOauthToken(): PermissionCollectionTransfer;
 }

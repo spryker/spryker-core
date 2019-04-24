@@ -8,6 +8,7 @@
 namespace Spryker\Client\OauthPermission\OauthPermission;
 
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
+use Generated\Shared\Transfer\OauthAccessTokenDataTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceInterface;
 use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceInterface;
@@ -49,7 +50,7 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
     /**
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getOauthCustomerPermissions(): PermissionCollectionTransfer
+    public function getPermissionsFromOauthToken(): PermissionCollectionTransfer
     {
         if ($this->glueApplication === null) {
             return new PermissionCollectionTransfer();
@@ -67,15 +68,26 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
 
         $oauthAccessTokenDataTransfer = $this->oauthService->extractAccessTokenData($accessToken);
 
-        $customerIdentifier = (new CustomerIdentifierTransfer())
-            ->fromArray($this->utilEncodingService->decodeJson($oauthAccessTokenDataTransfer->getOauthUserId(), true));
-        $customerPermissions = $customerIdentifier->getPermissions();
+        $customerPermissions = $this->extractPermissionsFromOauthToken($oauthAccessTokenDataTransfer);
 
         if (!$customerPermissions) {
             return new PermissionCollectionTransfer();
         }
 
         return $customerPermissions;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthAccessTokenDataTransfer $oauthAccessTokenDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer|null
+     */
+    protected function extractPermissionsFromOauthToken(OauthAccessTokenDataTransfer $oauthAccessTokenDataTransfer): ?PermissionCollectionTransfer
+    {
+        $customerIdentifier = (new CustomerIdentifierTransfer())
+            ->fromArray($this->utilEncodingService->decodeJson($oauthAccessTokenDataTransfer->getOauthUserId(), true));
+
+        return $customerIdentifier->getPermissions();
     }
 
     /**
