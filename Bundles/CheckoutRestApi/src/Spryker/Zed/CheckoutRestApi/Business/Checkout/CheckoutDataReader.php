@@ -15,12 +15,11 @@ use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
-use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
+use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToPaymentFacadeInterface;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToShipmentFacadeInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class CheckoutDataReader implements CheckoutDataReaderInterface
 {
@@ -135,9 +134,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             ->setIsSuccess(false)
             ->addError(
                 (new RestCheckoutErrorTransfer())
-                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setDetail(CheckoutRestApiConfig::RESPONSE_DETAILS_CART_NOT_FOUND)
-                    ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
+                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND)
             );
     }
 }
