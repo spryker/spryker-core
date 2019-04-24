@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SessionRedis\Communication\Plugin\Session;
 
-use Spryker\Shared\SessionRedis\SessionRedisConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface;
 
@@ -24,7 +23,7 @@ class SessionRedisLockReleaserPlugin extends AbstractPlugin implements SessionLo
      *
      * @return bool
      */
-    public function release(string $sessionId)
+    public function release(string $sessionId): bool
     {
         return $this->getFactory()->createSessionLockReleaser()->release($sessionId);
     }
@@ -36,6 +35,6 @@ class SessionRedisLockReleaserPlugin extends AbstractPlugin implements SessionLo
      */
     public function getSessionHandlerName(): string
     {
-        return SessionRedisConfig::SESSION_HANDLER_REDIS_LOCKING_NAME;
+        return $this->getConfig()->getSessionHandlerRedisLockingName();
     }
 }

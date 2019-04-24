@@ -12,7 +12,7 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterfa
 use Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SessionRedisLocking\Handler\Lock\Redis\RedisSpinLockLocker` instead.
+ * @deprecated Use `\Spryker\Shared\SessionRedis\Handler\Lock\SessionSpinLockLocker` instead.
  */
 class RedisSpinLockLocker implements SessionLockerInterface
 {

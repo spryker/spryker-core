@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\SessionRedis\Communication;
 
+use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientInterface;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactory;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactoryInterface;
-use Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapper;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -28,7 +28,7 @@ use Spryker\Zed\SessionRedis\SessionRedisDependencyProvider;
 class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
+     * @return \SessionHandlerInterface
      */
     public function createSessionRedisHandler(): SessionHandlerInterface
     {
@@ -38,7 +38,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
+     * @return \SessionHandlerInterface
      */
     public function createSessionHandlerRedisLocking(): SessionHandlerInterface
     {

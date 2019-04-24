@@ -77,6 +77,22 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getSessionHandlerRedisName(): string
+    {
+        return $this->getSharedConfig()->getSessionHandlerRedisName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getSessionHandlerRedisLockingName(): string
+    {
+        return $this->getSharedConfig()->getSessionHandlerRedisLockingName();
+    }
+
+    /**
      * @return string[]
      */
     protected function getDataSourceNames(): array

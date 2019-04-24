@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\SessionRedis\Handler;
 
+use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
@@ -16,14 +17,14 @@ interface SessionHandlerFactoryInterface
     /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
      *
-     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
+     * @return \SessionHandlerInterface
      */
     public function createSessionRedisHandler(SessionRedisWrapperInterface $redisClient): SessionHandlerInterface;
 
     /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
      *
-     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
+     * @return \SessionHandlerInterface
      */
     public function createSessionHandlerRedisLocking(SessionRedisWrapperInterface $redisClient): SessionHandlerInterface;
 

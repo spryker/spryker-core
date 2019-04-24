@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\SessionFile\Communication;
 
+use SessionHandlerInterface;
 use Spryker\Shared\SessionFile\Dependency\Service\SessionFileToMonitoringServiceInterface;
 use Spryker\Shared\SessionFile\Handler\SessionHandlerFile;
-use Spryker\Shared\SessionFile\Handler\SessionHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SessionFile\SessionFileDependencyProvider;
 
@@ -19,7 +19,7 @@ use Spryker\Zed\SessionFile\SessionFileDependencyProvider;
 class SessionFileCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Shared\SessionFile\Handler\SessionHandlerInterface
+     * @return \SessionHandlerInterface
      */
     public function createSessionHandlerFile(): SessionHandlerInterface
     {

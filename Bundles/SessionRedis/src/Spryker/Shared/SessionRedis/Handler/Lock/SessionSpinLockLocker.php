@@ -120,7 +120,7 @@ class SessionSpinLockLocker implements SessionLockerInterface
     {
         $lockKey = $this->generateLockKey($sessionId);
 
-        $result = $this
+        return $this
             ->redisClient
             ->eval(
                 $this->getUnlockScript(),
@@ -128,8 +128,6 @@ class SessionSpinLockLocker implements SessionLockerInterface
                 $lockKey,
                 $token
             );
-
-        return ($result ? true : false);
     }
 
     /**

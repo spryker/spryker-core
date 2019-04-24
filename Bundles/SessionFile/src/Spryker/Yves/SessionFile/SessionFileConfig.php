@@ -10,6 +10,9 @@ namespace Spryker\Yves\SessionFile;
 use Spryker\Shared\SessionFile\SessionFileConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\SessionFile\SessionFileConfig getSharedConfig()
+ */
 class SessionFileConfig extends AbstractBundleConfig
 {
     public const SESSION_HANDLER_FILE = 'file';
@@ -28,5 +31,13 @@ class SessionFileConfig extends AbstractBundleConfig
     public function getSessionHandlerFileSavePath(): string
     {
         return $this->get(SessionFileConstants::YVES_SESSION_FILE_PATH, '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getSessionHandlerFileName(): string
+    {
+        return $this->getSharedConfig()->getSessionHandlerFileName();
     }
 }

@@ -60,7 +60,7 @@ class SessionHandlerRedisPluginTest extends Unit
      */
     public function testHasCorrectSessionHandlerName(): void
     {
-        $this->assertEquals(SessionRedisConfig::SESSION_HANDLER_REDIS_NAME, $this->sessionHandlerPlugin->getSessionHandlerName());
+        $this->assertEquals($this->getSharedConfig()->getSessionHandlerRedisName(), $this->sessionHandlerPlugin->getSessionHandlerName());
     }
 
     /**
@@ -148,5 +148,13 @@ class SessionHandlerRedisPluginTest extends Unit
     protected function setupSessionKeyBuilder(): void
     {
         $this->sessionKeyBuilder = new SessionKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Shared\SessionRedis\SessionRedisConfig
+     */
+    protected function getSharedConfig(): SessionRedisConfig
+    {
+        return new SessionRedisConfig();
     }
 }

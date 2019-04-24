@@ -106,7 +106,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\Session\Business\Plugin\SessionHandlerExtensionPluginInterface[]
+     * @return \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerPluginInterface[]
      */
     protected function getSessionHandlerPlugins(): array
     {

@@ -7,9 +7,9 @@
 
 namespace Spryker\Yves\SessionFile;
 
+use SessionHandlerInterface;
 use Spryker\Shared\SessionFile\Dependency\Service\SessionFileToMonitoringServiceInterface;
 use Spryker\Shared\SessionFile\Handler\SessionHandlerFile;
-use Spryker\Shared\SessionFile\Handler\SessionHandlerInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class SessionFileFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Shared\SessionFile\Handler\SessionHandlerInterface
+     * @return \SessionHandlerInterface
      */
     public function createSessionHandlerFile(): SessionHandlerInterface
     {

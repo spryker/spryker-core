@@ -7,11 +7,11 @@
 
 namespace Spryker\Yves\SessionRedis;
 
+use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientInterface;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactory;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactoryInterface;
-use Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapper;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
@@ -22,7 +22,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class SessionRedisFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
+     * @return \SessionHandlerInterface
      */
     public function createSessionRedisHandler(): SessionHandlerInterface
     {
@@ -32,7 +32,7 @@ class SessionRedisFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
+     * @return \SessionHandlerInterface
      */
     public function createSessionHandlerRedisLocking(): SessionHandlerInterface
     {

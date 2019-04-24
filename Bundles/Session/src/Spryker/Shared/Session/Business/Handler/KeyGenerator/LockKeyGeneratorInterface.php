@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Session\Business\Handler\KeyGenerator;
 
 /**
- * @deprecated Use `\Spryker\Client\SessionRedisLocking\Handler\KeyGenerator\LockKeyGeneratorInterface` instead.
+ * @deprecated Use `\Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface` instead.
  */
 interface LockKeyGeneratorInterface
 {

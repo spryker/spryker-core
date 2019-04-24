@@ -12,7 +12,7 @@ interface SessionLockReaderInterface
     /**
      * @param string $sessionId
      *
-     * @return string
+     * @return string|null
      */
-    public function getTokenForSession($sessionId);
+    public function getTokenForSession($sessionId): ?string;
 }

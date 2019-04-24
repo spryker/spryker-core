@@ -7,8 +7,7 @@
 
 namespace Spryker\Yves\SessionRedis\Plugin\Session;
 
-use Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface;
-use Spryker\Shared\SessionRedis\SessionRedisConfig;
+use SessionHandlerInterface;
 
 class SessionHandlerRedisPlugin extends AbstractSessionHandlerRedisPlugin
 {
@@ -21,11 +20,11 @@ class SessionHandlerRedisPlugin extends AbstractSessionHandlerRedisPlugin
      */
     public function getSessionHandlerName(): string
     {
-        return SessionRedisConfig::SESSION_HANDLER_REDIS_NAME;
+        return $this->getConfig()->getSessionHandlerRedisName();
     }
 
     /**
-     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
+     * @return \SessionHandlerInterface
      */
     protected function getSessionHandler(): SessionHandlerInterface
     {

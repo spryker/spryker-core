@@ -35,9 +35,9 @@ class SessionLockReader implements SessionLockReaderInterface
     /**
      * @param string $sessionId
      *
-     * @return string
+     * @return string|null
      */
-    public function getTokenForSession($sessionId)
+    public function getTokenForSession($sessionId): ?string
     {
         $lockKey = $this->keyBuilder->buildLockKey($sessionId);
         $token = $this->redisClient->get($lockKey);

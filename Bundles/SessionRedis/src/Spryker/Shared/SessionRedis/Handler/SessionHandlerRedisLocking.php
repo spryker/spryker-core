@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\SessionRedis\Handler;
 
+use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
@@ -67,7 +68,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function open(string $savePath, string $sessionName): bool
+    public function open($savePath, $sessionName): bool
     {
         return $this->redisClient->isConnected();
     }
@@ -89,7 +90,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return string
      */
-    public function read(string $sessionId): string
+    public function read($sessionId): string
     {
         if (!$this->locker->lock($this->keyBuilder->buildSessionKey($sessionId))) {
             throw new LockCouldNotBeAcquiredException(
@@ -112,7 +113,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function write(string $sessionId, string $data): bool
+    public function write($sessionId, $data): bool
     {
         return $this->redisClient->setex($this->keyBuilder->buildSessionKey($sessionId), $this->ttlSeconds, $data);
     }
@@ -122,7 +123,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function destroy(string $sessionId): bool
+    public function destroy($sessionId): bool
     {
         $this->redisClient->del([$this->keyBuilder->buildSessionKey($sessionId)]);
         $this->locker->unlockCurrent();
@@ -135,7 +136,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function gc(int $maxLifeTime): bool
+    public function gc($maxLifeTime): bool
     {
         return true;
     }

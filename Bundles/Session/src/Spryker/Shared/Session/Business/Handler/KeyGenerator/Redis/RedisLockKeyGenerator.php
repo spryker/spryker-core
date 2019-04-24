@@ -11,7 +11,7 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterfa
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInterface;
 
 /**
- * @deprecated Moved to the SessionRedis module: \Spryker\Client\SessionRedisLocking\Handler\KeyGenerator\Redis\RedisLockKeyGenerator
+ * @deprecated Use `Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilder` instead.
  */
 class RedisLockKeyGenerator implements LockKeyGeneratorInterface
 {

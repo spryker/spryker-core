@@ -14,7 +14,7 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInte
 use Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SessionRedisLocking\Handler\SessionHandlerRedisLocking` instead.
+ * @deprecated Use `\Spryker\Shared\SessionRedis\Handler\SessionHandlerRedisLocking` instead.
  */
 class SessionHandlerRedisLocking implements SessionHandlerInterface
 {

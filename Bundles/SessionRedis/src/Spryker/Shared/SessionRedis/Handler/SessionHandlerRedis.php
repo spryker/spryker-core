@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\SessionRedis\Handler;
 
+use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
@@ -62,7 +63,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function open(string $savePath, string $sessionName): bool
+    public function open($savePath, $sessionName): bool
     {
         $this->redisClient->connect();
 
@@ -84,7 +85,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return string
      */
-    public function read(string $sessionId): string
+    public function read($sessionId): string
     {
         $key = $this->buildSessionKey($sessionId);
         $startTime = microtime(true);
@@ -100,7 +101,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function write(string $sessionId, string $sessionData): bool
+    public function write($sessionId, $sessionData): bool
     {
         $key = $this->buildSessionKey($sessionId);
 
@@ -110,7 +111,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->redisClient->setex($key, $this->lifetime, json_encode($sessionData));
-        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(static::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
         return $result;
     }
@@ -120,13 +121,13 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function destroy(string $sessionId): bool
+    public function destroy($sessionId): bool
     {
         $key = $this->buildSessionKey($sessionId);
 
         $startTime = microtime(true);
         $this->redisClient->del([$key]);
-        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(static::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
         return true;
     }
@@ -136,7 +137,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function gc(int $maxLifetime): bool
+    public function gc($maxLifetime): bool
     {
         return true;
     }

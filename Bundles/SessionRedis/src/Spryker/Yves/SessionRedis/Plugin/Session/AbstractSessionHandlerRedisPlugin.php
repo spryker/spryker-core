@@ -7,12 +7,13 @@
 
 namespace Spryker\Yves\SessionRedis\Plugin\Session;
 
+use SessionHandlerInterface;
 use Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerPluginInterface;
-use Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Yves\SessionRedis\SessionRedisFactory getFactory()
+ * @method \Spryker\Yves\SessionRedis\SessionRedisConfig getConfig()()
  */
 abstract class AbstractSessionHandlerRedisPlugin extends AbstractPlugin implements SessionHandlerPluginInterface
 {
@@ -110,7 +111,7 @@ abstract class AbstractSessionHandlerRedisPlugin extends AbstractPlugin implemen
     }
 
     /**
-     * @return \Spryker\Shared\SessionRedis\Handler\SessionHandlerInterface
+     * @return \SessionHandlerInterface
      */
     abstract protected function getSessionHandler(): SessionHandlerInterface;
 }

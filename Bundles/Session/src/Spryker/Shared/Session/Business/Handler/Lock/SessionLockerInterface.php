@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Session\Business\Handler\Lock;
 
 /**
- * @deprecated Use `\Spryker\Client\SessionRedisLocking\Handler\Lock\SessionLockerInterface` instead.
+ * @deprecated Use `\Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface` instead.
  */
 interface SessionLockerInterface
 {

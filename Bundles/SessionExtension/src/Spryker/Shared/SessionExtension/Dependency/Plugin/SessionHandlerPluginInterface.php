@@ -84,11 +84,11 @@ interface SessionHandlerPluginInterface extends SessionHandlerInterface
      *
      * @api
      *
-     * @param string $session_id The session id to read data for.
+     * @param string $sessionId
      *
      * @return string
      */
-    public function read($session_id): string;
+    public function read($sessionId): string;
 
     /**
      * Specification:

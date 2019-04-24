@@ -7,13 +7,13 @@
 
 namespace Spryker\Yves\SessionFile\Plugin\Session;
 
+use SessionHandlerInterface;
 use Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerPluginInterface;
-use Spryker\Shared\SessionFile\Handler\SessionHandlerInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\SessionFile\SessionFileConfig;
 
 /**
  * @method \Spryker\Yves\SessionFile\SessionFileFactory getFactory()
+ * @method \Spryker\Yves\SessionFile\SessionFileConfig getConfig()
  */
 class SessionHandlerFilePlugin extends AbstractPlugin implements SessionHandlerPluginInterface
 {
@@ -26,7 +26,7 @@ class SessionHandlerFilePlugin extends AbstractPlugin implements SessionHandlerP
      */
     public function getSessionHandlerName(): string
     {
-        return SessionFileConfig::SESSION_HANDLER_FILE;
+        return $this->getConfig()->getSessionHandlerFileName();
     }
 
     /**
@@ -114,7 +114,7 @@ class SessionHandlerFilePlugin extends AbstractPlugin implements SessionHandlerP
     }
 
     /**
-     * @return \Spryker\Shared\SessionFile\Handler\SessionHandlerInterface
+     * @return \SessionHandlerInterface
      */
     protected function getSessionHandler(): SessionHandlerInterface
     {

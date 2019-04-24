@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\SessionFile\Communication\Plugin\Session;
 
+use SessionHandlerInterface;
 use Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerPluginInterface;
-use Spryker\Shared\SessionFile\Handler\SessionHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SessionFile\SessionFileConfig;
 
 /**
  * @method \Spryker\Zed\SessionFile\Communication\SessionFileCommunicationFactory getFactory()
@@ -27,7 +26,7 @@ class SessionHandlerFilePlugin extends AbstractPlugin implements SessionHandlerP
      */
     public function getSessionHandlerName(): string
     {
-        return SessionFileConfig::SESSION_HANDLER_FILE;
+        return $this->getConfig()->getSessionHandlerFileName();
     }
 
     /**
@@ -115,7 +114,7 @@ class SessionHandlerFilePlugin extends AbstractPlugin implements SessionHandlerP
     }
 
     /**
-     * @return \Spryker\Shared\SessionFile\Handler\SessionHandlerInterface
+     * @return \SessionHandlerInterface
      */
     protected function getSessionHandler(): SessionHandlerInterface
     {

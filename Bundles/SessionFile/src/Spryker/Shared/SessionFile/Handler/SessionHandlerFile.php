@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\SessionFile\Handler;
 
+use SessionHandlerInterface;
 use Spryker\Shared\SessionFile\Dependency\Service\SessionFileToMonitoringServiceInterface;
 
 class SessionHandlerFile implements SessionHandlerInterface
@@ -53,7 +54,7 @@ class SessionHandlerFile implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function open(string $savePath, string $sessionName): bool
+    public function open($savePath, $sessionName): bool
     {
         if (!is_dir($this->savePath)) {
             mkdir($this->savePath, 0775, true);
@@ -75,7 +76,7 @@ class SessionHandlerFile implements SessionHandlerInterface
      *
      * @return string
      */
-    public function read(string $sessionId): string
+    public function read($sessionId): string
     {
         $startTime = microtime(true);
         $key = $this->keyPrefix . $sessionId;
@@ -86,9 +87,9 @@ class SessionHandlerFile implements SessionHandlerInterface
 
         $content = file_get_contents($sessionFile);
 
-        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(static::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
-        return ($content === false) ? '' : $content;
+        return $content === false ? '' : $content;
     }
 
     /**
@@ -97,7 +98,7 @@ class SessionHandlerFile implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function write(string $sessionId, string $sessionData): bool
+    public function write($sessionId, $sessionData): bool
     {
         $key = $this->keyPrefix . $sessionId;
 
@@ -107,7 +108,7 @@ class SessionHandlerFile implements SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = file_put_contents($this->savePath . DIRECTORY_SEPARATOR . $key, $sessionData);
-        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(static::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
         return $result > 0;
     }
@@ -117,14 +118,14 @@ class SessionHandlerFile implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function destroy(string $sessionId): bool
+    public function destroy($sessionId): bool
     {
         $key = $this->keyPrefix . $sessionId;
         $file = $this->savePath . DIRECTORY_SEPARATOR . $key;
         if (file_exists($file)) {
             $startTime = microtime(true);
             unlink($file);
-            $this->monitoringService->addCustomParameter(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
+            $this->monitoringService->addCustomParameter(static::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
         }
 
         return true;
@@ -135,7 +136,7 @@ class SessionHandlerFile implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function gc(int $maxLifetime): bool
+    public function gc($maxLifetime): bool
     {
         foreach (glob($this->savePath . DIRECTORY_SEPARATOR . $this->keyPrefix . '*') as $file) {
             if (filemtime($file) + $maxLifetime < time() && file_exists($file)) {
