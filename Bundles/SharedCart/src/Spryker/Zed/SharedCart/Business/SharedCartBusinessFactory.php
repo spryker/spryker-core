@@ -27,6 +27,8 @@ use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderI
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteShareDetailsQuoteResponseExpander;
 use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReader;
 use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareReader;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareReaderInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
@@ -140,6 +142,14 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
         return new QuoteShareDetailsReader(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareReaderInterface
+     */
+    public function createResourceShareReader(): ResourceShareReaderInterface
+    {
+        return new ResourceShareReader();
     }
 
     /**

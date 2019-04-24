@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ResourceShareTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 
@@ -172,4 +173,28 @@ interface SharedCartFacadeInterface
      * @return void
      */
     public function addQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void;
+
+    /**
+     * Specification:
+     * - TODO
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return bool
+     */
+    public function isResourceShareActivatorStrategyApplicable(ResourceShareTransfer $resourceShareTransfer): bool;
+
+    /**
+     * Specification:
+     * - TODO
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return void
+     */
+    public function applyResourceShareActivatorStrategy(ResourceShareTransfer $resourceShareTransfer): void;
 }
