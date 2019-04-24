@@ -22,33 +22,33 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @param string|null $identifierPostfix
+     * @param string|null $identifierSuffix
      *
      * @return \Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractViewTable
      */
-    public function createProductAbstractViewTable(?string $identifierPostfix = null): ProductAbstractViewTable
+    public function createProductAbstractViewTable(?string $identifierSuffix = null): ProductAbstractViewTable
     {
         return new ProductAbstractViewTable(
             $this->getProductQueryContainer(),
             $this->createProductAbstractTableColumnContentBuilder(),
             $this->getLocaleFacade()->getCurrentLocale(),
-            $identifierPostfix
+            $identifierSuffix
         );
     }
 
     /**
      * @param array $idProductAbstracts
-     * @param string|null $identifierPostfix
+     * @param string|null $identifierSuffix
      *
      * @return \Spryker\Zed\ContentProductGui\Communication\Table\ProductAbstractSelectedTable
      */
-    public function createProductAbstractSelectedTable(array $idProductAbstracts, ?string $identifierPostfix = null): ProductAbstractSelectedTable
+    public function createProductAbstractSelectedTable(array $idProductAbstracts, ?string $identifierSuffix = null): ProductAbstractSelectedTable
     {
         return new ProductAbstractSelectedTable(
             $this->getProductQueryContainer(),
             $this->createProductAbstractTableColumnContentBuilder(),
             $this->getLocaleFacade()->getCurrentLocale(),
-            $identifierPostfix,
+            $identifierSuffix,
             $idProductAbstracts
         );
     }
