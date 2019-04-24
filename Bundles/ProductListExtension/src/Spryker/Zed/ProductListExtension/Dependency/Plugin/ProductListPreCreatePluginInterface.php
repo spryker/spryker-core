@@ -10,11 +10,11 @@ namespace Spryker\Zed\ProductListExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 
-interface ProductListPreSaveInterface
+interface ProductListPreCreatePluginInterface
 {
     /**
      * Specification:
-     * - Executes plugins before a product list is saved.
+     * - Executes plugins before a product list is created.
      *
      * @api
      *
@@ -22,5 +22,5 @@ interface ProductListPreSaveInterface
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function preSave(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
+    public function execute(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 }

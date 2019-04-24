@@ -29,31 +29,39 @@ class ProductListWriter implements ProductListWriterInterface
     protected $productListKeyGenerator;
 
     /**
-     * @var array|\Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface[]
+     * @var \Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface[]
      */
     protected $productListPostSavers;
 
     /**
-     * @var array|\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaveInterface[]
+     * @var \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface[]
      */
-    protected $productListPreSavePlugins;
+    protected $productListPreCreatePlugins;
+
+    /**
+     * @var \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface[]
+     */
+    protected $productListPreUpdatePlugins;
 
     /**
      * @param \Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface $productListEntityManager
      * @param \Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface $productListKeyGenerator
      * @param \Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface[] $productListPostSavers
-     * @param \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaveInterface[] $productListPreSavePlugins
+     * @param \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface[] $productListPreCreatePlugins
+     * @param \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface[] $productListPreUpdatePlugins
      */
     public function __construct(
         ProductListEntityManagerInterface $productListEntityManager,
         ProductListKeyGeneratorInterface $productListKeyGenerator,
         array $productListPostSavers = [],
-        array $productListPreSavePlugins = []
+        array $productListPreCreatePlugins = [],
+        array $productListPreUpdatePlugins = []
     ) {
         $this->productListEntityManager = $productListEntityManager;
         $this->productListKeyGenerator = $productListKeyGenerator;
         $this->productListPostSavers = $productListPostSavers;
-        $this->productListPreSavePlugins = $productListPreSavePlugins;
+        $this->productListPreCreatePlugins = $productListPreCreatePlugins;
+        $this->productListPreUpdatePlugins = $productListPreUpdatePlugins;
     }
 
     /**
@@ -133,13 +141,13 @@ class ProductListWriter implements ProductListWriterInterface
         $productListTransfer->setKey($this->productListKeyGenerator->generateProductListKey($productListTransfer->getTitle()));
         $productListResponseTransfer = (new ProductListResponseTransfer())->setProductList($productListTransfer);
 
-        $productListResponseTransfer = $this->executeProductListPreSavePlugins($productListResponseTransfer);
+        $productListResponseTransfer = $this->executeProductListPreCreatePlugins($productListResponseTransfer);
         $productListTransfer = $this->productListEntityManager->createProductList($productListResponseTransfer->getProductList());
         $productListTransfer = $this->executeProductListPostSavePlugins($productListTransfer);
 
         return $productListResponseTransfer
             ->setProductList($productListTransfer)
-            ->setIsSuccess(true);
+            ->setIsSuccessful(true);
     }
 
     /**
@@ -152,30 +160,13 @@ class ProductListWriter implements ProductListWriterInterface
     ): ProductListResponseTransfer {
         $productListResponseTransfer = (new ProductListResponseTransfer())->setProductList($productListTransfer);
 
-        $productListResponseTransfer = $this->executeProductListPreSavePlugins($productListResponseTransfer);
+        $productListResponseTransfer = $this->executeProductListPreUpdatePlugins($productListResponseTransfer);
         $productListTransfer = $this->productListEntityManager->updateProductList($productListResponseTransfer->getProductList());
         $productListTransfer = $this->executeProductListPostSavePlugins($productListTransfer);
 
         return $productListResponseTransfer
             ->setProductList($productListTransfer)
-            ->setIsSuccess(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
-     */
-    protected function executeProductListPreSavePlugins(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
-    {
-        foreach ($this->productListPreSavePlugins as $productListPreSavePlugin) {
-            $preSavePluginProductListResponseTransfer = $productListPreSavePlugin->preSave($productListResponseTransfer->getProductList());
-            $messages = array_merge($productListResponseTransfer->getMessages()->getArrayCopy(), $preSavePluginProductListResponseTransfer->getMessages()->getArrayCopy());
-            $productListResponseTransfer->setProductList($preSavePluginProductListResponseTransfer->getProductList())
-                ->setMessages(new ArrayObject($messages));
-        }
-
-        return $productListResponseTransfer;
+            ->setIsSuccessful(true);
     }
 
     /**
@@ -203,5 +194,55 @@ class ProductListWriter implements ProductListWriterInterface
         $this->productListEntityManager->deleteProductListProductRelations($productListTransfer);
         $this->productListEntityManager->deleteProductListCategoryRelations($productListTransfer);
         $this->productListEntityManager->deleteProductList($productListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    protected function executeProductListPreCreatePlugins(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
+    {
+        foreach ($this->productListPreCreatePlugins as $productListPreCreatePlugin) {
+            $resultProductListResponseTransfer = $productListPreCreatePlugin->execute($productListResponseTransfer->getProductList());
+            $productListResponseTransfer = $this->mergeProductListResponseMessages($productListResponseTransfer, $resultProductListResponseTransfer);
+            $productListResponseTransfer->setProductList($resultProductListResponseTransfer->getProductList());
+        }
+
+        return $productListResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    protected function executeProductListPreUpdatePlugins(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
+    {
+        foreach ($this->productListPreUpdatePlugins as $productListPreUpdatePlugin) {
+            $resultProductListResponseTransfer = $productListPreUpdatePlugin->execute($productListResponseTransfer->getProductList());
+            $productListResponseTransfer = $this->mergeProductListResponseMessages($productListResponseTransfer, $resultProductListResponseTransfer);
+            $productListResponseTransfer->setProductList($resultProductListResponseTransfer->getProductList());
+        }
+
+        return $productListResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $resultProductListResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    protected function mergeProductListResponseMessages(
+        ProductListResponseTransfer $productListResponseTransfer,
+        ProductListResponseTransfer $resultProductListResponseTransfer
+    ): ProductListResponseTransfer {
+        $messageTransfers = array_merge(
+            $productListResponseTransfer->getMessages()->getArrayCopy(),
+            $resultProductListResponseTransfer->getMessages()->getArrayCopy()
+        );
+        return $productListResponseTransfer
+            ->setMessages(new ArrayObject($messageTransfers));
     }
 }

@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductBundleProductListConnector\Communication\Plugin;
+namespace Spryker\Zed\ProductBundleProductListConnector\Communication\Plugin\ProductList;
 
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaveInterface;
+use Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductBundleProductListConnector\Business\ProductBundleProductListConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorConfig getConfig()
  */
-class ProductBundleProductListPreSavePlugin extends AbstractPlugin implements ProductListPreSaveInterface
+class ProductBundleProductListPreCreatePlugin extends AbstractPlugin implements ProductListPreCreatePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -29,7 +29,7 @@ class ProductBundleProductListPreSavePlugin extends AbstractPlugin implements Pr
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function preSave(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    public function execute(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
         return $this->getFacade()->expandProductListWithProductBundle($productListTransfer);
     }

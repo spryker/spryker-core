@@ -88,7 +88,7 @@ class ProductListAbstractController extends AbstractController
     protected function addMessagesFromProductListResponseTransfer(ProductListResponseTransfer $productListResponseTransfer): void
     {
         foreach ($productListResponseTransfer->getMessages() as $messageTransfer) {
-            if ($productListResponseTransfer->getIsSuccess()) {
+            if ($productListResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
 
                 continue;

@@ -40,7 +40,7 @@ interface ProductListFacadeInterface
      * - Creates a Product List entity.
      * - Creates relations to categories.
      * - Creates relations to concrete products.
-     * - Executes ProductListPreSaveInterface plugin stack before save.
+     * - Executes ProductListPreCreatePluginInterface plugin stack before save.
      * - Returns MessageTransfers in messages property to notify about changes that have been made to Product List.
      * - Returns true isSuccess property if saving was successful.
      *
@@ -59,7 +59,7 @@ interface ProductListFacadeInterface
      * - Updates fields in a Product List entity if ProductListTransfer::idProductList is set.
      * - Updates relations to categories.
      * - Updates relations to concrete products.
-     * - Executes ProductListPreSaveInterface plugin stack before save.
+     * - Executes ProductListPreUpdatePluginInterface plugin stack before save.
      * - Returns MessageTransfers in messages property to notify about changes that have been made to Product List.
      * - Returns true isSuccess property if saving was successful.
      *

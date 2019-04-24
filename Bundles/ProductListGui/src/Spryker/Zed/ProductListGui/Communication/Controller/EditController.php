@@ -41,7 +41,7 @@ class EditController extends ProductListAbstractController
 
         $this->addMessagesFromProductListResponseTransfer($productListResponseTransfer);
 
-        if ($productListResponseTransfer->getIsSuccess()) {
+        if ($productListResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS, [
                 '%s' => $productListTransfer->getTitle(),
             ]);

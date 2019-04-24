@@ -23,7 +23,8 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
 
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
 
-    public const PLUGINS_PRODUCT_LIST_PRE_SAVE = 'PLUGINS_PRODUCT_LIST_PRE_SAVE';
+    public const PLUGINS_PRODUCT_LIST_PRE_CREATE = 'PLUGINS_PRODUCT_LIST_PRE_CREATE';
+    public const PLUGINS_PRODUCT_LIST_PRE_UPDATE = 'PLUGINS_PRODUCT_LIST_PRE_UPDATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -48,7 +49,8 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addUtilTextService($container);
         $container = $this->addMessengerFacade($container);
-        $container = $this->addProductListPreSavePlugins($container);
+        $container = $this->addProductListPreCreatePlugins($container);
+        $container = $this->addProductListPreUpdatePlugins($container);
 
         return $container;
     }
@@ -100,19 +102,41 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductListPreSavePlugins(Container $container): Container
+    protected function addProductListPreCreatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_PRE_SAVE] = function (Container $container) {
-            return $this->getProductListPreSavePlugins();
+        $container[static::PLUGINS_PRODUCT_LIST_PRE_CREATE] = function (Container $container) {
+            return $this->getProductListPreCreatePlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreSaveInterface[]
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getProductListPreSavePlugins(): array
+    protected function addProductListPreUpdatePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_PRODUCT_LIST_PRE_UPDATE] = function (Container $container) {
+            return $this->getProductListPreUpdatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface[]
+     */
+    protected function getProductListPreCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface[]
+     */
+    protected function getProductListPreUpdatePlugins(): array
     {
         return [];
     }

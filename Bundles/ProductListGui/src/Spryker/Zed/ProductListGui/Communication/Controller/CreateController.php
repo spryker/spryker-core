@@ -41,7 +41,7 @@ class CreateController extends ProductListAbstractController
 
         $this->addMessagesFromProductListResponseTransfer($productListResponseTransfer);
 
-        if ($productListResponseTransfer->getIsSuccess()) {
+        if ($productListResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_PRODUCT_LIST_CREATE_SUCCESS, [
                 '%s' => $productListTransfer->getTitle(),
             ]);

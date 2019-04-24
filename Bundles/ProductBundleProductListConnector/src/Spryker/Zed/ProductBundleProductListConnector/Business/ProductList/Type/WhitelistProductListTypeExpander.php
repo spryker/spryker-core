@@ -8,11 +8,52 @@
 namespace Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
+use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface;
+use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductFacadeInterface;
 
-class WhitelistProductListTypeExpander extends AbstractProductListTypeExpander
+class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterface
 {
-    protected const MESSAGE_VALUE = 'product_bundle_sku was added to the whitelist with follow products product_for_bundle_skus.';
+    protected const MESSAGE_PRODUCT_BUNDLE_SKU_WAS_ADDED_TO_THE_WHITELIST = '%product_bundle_sku% was added to the whitelist with the following products %product_for_bundle_skus%.';
+    protected const PRODUCT_BUNDLE_SKU_PARAMETER = 'product_bundle_sku';
+    protected const PRODUCT_FOR_BUNDLE_SKUS_PARAMETER = 'product_for_bundle_skus';
+
+    /**
+     * @var \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface
+     */
+    protected $productBundleFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductFacadeInterface
+     */
+    protected $productFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface $productBundleFacade
+     * @param \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductFacadeInterface $productFacade
+     */
+    public function __construct(
+        ProductBundleProductListConnectorToProductBundleFacadeInterface $productBundleFacade,
+        ProductBundleProductListConnectorToProductFacadeInterface $productFacade
+    ) {
+        $this->productBundleFacade = $productBundleFacade;
+        $this->productFacade = $productFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function expandProductListWithProductBundle(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
+    {
+        foreach ($productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds() as $idProductConcrete) {
+            $productListResponseTransfer = $this->expandProductListByIdProductConcrete($idProductConcrete, $productListResponseTransfer);
+        }
+
+        return $productListResponseTransfer;
+    }
 
     /**
      * @param int $idProductConcrete
@@ -65,12 +106,40 @@ class WhitelistProductListTypeExpander extends AbstractProductListTypeExpander
             return $productListResponseTransfer;
         }
 
-        $messageTransfer = $this->generateMessageTransfer(static::MESSAGE_VALUE, $idProductConcreteBundle, $productForBundleIdsToAssign);
+        $messageTransfer = $this->generateMessageTransfer($idProductConcreteBundle, $productForBundleIdsToAssign);
         $productListResponseTransfer->addMessage($messageTransfer);
         $productListResponseTransfer->getProductList()
             ->getProductListProductConcreteRelation()
             ->setProductIds(array_merge($productIdsToAssign, $productForBundleIdsToAssign));
 
         return $productListResponseTransfer;
+    }
+
+    /**
+     * @param int $idProductConcreteBundle
+     * @param int[] $productForBundleIdsToAssign
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function generateMessageTransfer(int $idProductConcreteBundle, array $productForBundleIdsToAssign): MessageTransfer
+    {
+        return (new MessageTransfer())
+            ->setValue(static::MESSAGE_PRODUCT_BUNDLE_SKU_WAS_ADDED_TO_THE_WHITELIST)
+            ->setParameters([
+                static::PRODUCT_BUNDLE_SKU_PARAMETER => $this->getMessageTransferSkuParameterByIds([$idProductConcreteBundle]),
+                static::PRODUCT_FOR_BUNDLE_SKUS_PARAMETER => $this->getMessageTransferSkuParameterByIds($productForBundleIdsToAssign),
+            ]);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return string
+     */
+    protected function getMessageTransferSkuParameterByIds(array $productConcreteIds): string
+    {
+        $productConcreteSkus = $this->productFacade->getProductConcreteSkusByConcreteIds($productConcreteIds);
+
+        return implode(', ', array_keys($productConcreteSkus));
     }
 }
