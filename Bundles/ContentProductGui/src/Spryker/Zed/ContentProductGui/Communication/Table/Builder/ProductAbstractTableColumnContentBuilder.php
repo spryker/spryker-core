@@ -94,10 +94,7 @@ class ProductAbstractTableColumnContentBuilder implements ProductAbstractTableCo
         return array_reduce(
             $productAbstractStoreEntities,
             function (string $accumulator, SpyProductAbstractStore $productAbstractStoreEntity): string {
-                return $accumulator . " " . sprintf(
-                        '<span class="label label-info">%s</span>',
-                        $productAbstractStoreEntity->getSpyStore()->getName()
-                    );
+                return $accumulator . " " . sprintf('<span class="label label-info">%s</span>', $productAbstractStoreEntity->getSpyStore()->getName());
             },
             ""
         );
