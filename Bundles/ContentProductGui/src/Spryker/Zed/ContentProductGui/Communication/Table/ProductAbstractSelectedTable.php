@@ -199,22 +199,22 @@ class ProductAbstractSelectedTable extends AbstractTable
     protected function getActionButtons(SpyProductAbstract $productAbstractEntity): string
     {
         $actionButtons = [];
-
+        $idProductAbstract = $productAbstractEntity->getIdProductAbstract();
         $actionButtons[] = sprintf(
             '<button type="button" data-id="%s" class="js-delete-product-abstract btn btn-sm btn-outline btn-danger"><i class="fa fa-trash"></i> %s</button>',
-            $productAbstractEntity->getIdProductAbstract(),
+            $idProductAbstract,
             static::BUTTON_DELETE
         );
 
         $actionButtons[] = sprintf(
             '<button type="button" data-id="%s" data-direction="up" class="js-reorder-product-abstract btn btn-sm btn-outline btn-create"><i class="fa fa-arrow-up"></i> %s</button>',
-            $productAbstractEntity->getIdProductAbstract(),
+            $idProductAbstract,
             static::BUTTON_MOVE_UP
         );
 
         $actionButtons[] = sprintf(
             '<button type="button" data-id="%s" data-direction="down" class="js-reorder-product-abstract btn btn-sm btn-outline btn-create"><i class="fa fa-arrow-down"></i> %s</button>',
-            $productAbstractEntity->getIdProductAbstract(),
+            $idProductAbstract,
             static::BUTTON_MOVE_DOWN
         );
 

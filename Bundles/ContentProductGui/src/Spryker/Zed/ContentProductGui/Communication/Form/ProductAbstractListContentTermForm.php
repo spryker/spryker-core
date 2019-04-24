@@ -27,6 +27,8 @@ class ProductAbstractListContentTermForm extends AbstractType
     public const PLACEHOLDER_ID_ABSTRACT_PRODUCTS = 'id';
 
     protected const TEMPLATE_PATH = '@ContentProductGui/ProductAbstractList/product_abstract_list.twig';
+    protected const CSS_URL = '/assets/css/spryker-zed-abstract-product-add.css';
+    protected const JS_URL = '/assets/js/spryker-zed-abstract-product-add.js';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -73,6 +75,8 @@ class ProductAbstractListContentTermForm extends AbstractType
             $view->parent->vars['name']
         );
         $view->vars['attr']['template_path'] = static::TEMPLATE_PATH;
+        $view->parent->parent->parent->vars['css'][static::TEMPLATE_PATH] = static::CSS_URL;
+        $view->parent->parent->parent->vars['js'][static::TEMPLATE_PATH] = static::JS_URL;
     }
 
     /**

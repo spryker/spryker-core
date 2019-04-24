@@ -16,6 +16,15 @@
         <div class="row">
             <div class="col-xs-12">
                 {{ form_start(contentForm, {attr: {novalidate: 'novalidate'}}) }}
+                    {% if contentForm.vars.css is defined %}
+                        {% if contentForm.vars.css is iterable %}
+                            {% for cssLink in contentForm.vars.css %}
+                                <link rel="stylesheet" href="{{ cssLink }}" />
+                            {% endfor %}
+                        {% else %}
+                            <link rel="stylesheet" href="{{ contentForm.vars.css }}" />
+                        {% endif %}
+                    {% endif %}
                     <div class="row">
                         <div class="col-xs-12 col-md-12">
                             {{ form_row(contentForm.name) }}
@@ -31,6 +40,15 @@
                             {{ tabs(contentTabs, {'contentForm' : contentForm} ) }}
                         </div>
                     </div>
+                    {% if contentForm.vars.js is defined %}
+                        {% if contentForm.vars.js is iterable %}
+                            {% for jsLink in contentForm.vars.js %}
+                            <script src="{{ jsLink }}"></script>
+                            {% endfor %}
+                        {% else %}
+                            <script src="{{ contentForm.vars.js }}"></script>
+                        {% endif %}
+                    {% endif %}
                 {{ form_end(contentForm) }}
             </div>
         </div>

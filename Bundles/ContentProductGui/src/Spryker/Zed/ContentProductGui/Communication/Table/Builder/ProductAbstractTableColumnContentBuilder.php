@@ -91,15 +91,16 @@ class ProductAbstractTableColumnContentBuilder implements ProductAbstractTableCo
      */
     public function getStoreNames(array $productAbstractStoreEntities): string
     {
-        return implode(" ", array_map(
-            function (SpyProductAbstractStore $productAbstractStoreEntity) {
-                return sprintf(
-                    '<span class="label label-info">%s</span>',
-                    $productAbstractStoreEntity->getSpyStore()->getName()
-                );
+        return array_reduce(
+            $productAbstractStoreEntities,
+            function (string $accumulator, SpyProductAbstractStore $productAbstractStoreEntity): string {
+                return $accumulator . " " . sprintf(
+                        '<span class="label label-info">%s</span>',
+                        $productAbstractStoreEntity->getSpyStore()->getName()
+                    );
             },
-            $productAbstractStoreEntities
-        ));
+            ""
+        );
     }
 
     /**
