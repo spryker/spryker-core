@@ -71,7 +71,7 @@ class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
         }
 
         $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
-        if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) { //todo do we need this double check?
+        if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
             return $this->createErrorResponse(static::GLOSSARY_KEY_PERSISTENT_CART_SHARE_RESOURCE_TYPE_MISMATCH);
         }
 
