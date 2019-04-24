@@ -37,7 +37,7 @@ class ClassInfoTest extends Unit
     /**
      * @param string $storeName
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\ClassResolver\ClassInfo
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\ClassInfo
      */
     protected function getClassInfo($storeName)
     {
@@ -56,7 +56,7 @@ class ClassInfoTest extends Unit
     /**
      * @param string $storeName
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
      */
     protected function getBundleNameResolverMock($storeName)
     {

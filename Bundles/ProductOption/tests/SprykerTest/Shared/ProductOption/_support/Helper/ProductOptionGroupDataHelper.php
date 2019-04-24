@@ -32,7 +32,7 @@ class ProductOptionGroupDataHelper extends Module
     /**
      * @param array $override
      *
-     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
     public function haveProductOptionGroup(array $override = [])
     {
@@ -79,7 +79,7 @@ class ProductOptionGroupDataHelper extends Module
      * @param array $overrideGroup
      * @param array $overrideValues
      *
-     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
     public function haveProductOptionGroupWithValues(array $overrideGroup = [], array $overrideValues = [[[], [[]]]])
     {

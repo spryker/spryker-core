@@ -61,7 +61,7 @@ class FactoryResolverTest extends AbstractResolverTest
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
      */
     protected function getResolverMock(array $methods)
     {

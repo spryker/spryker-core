@@ -12,10 +12,11 @@ use Silex\ServiceProviderInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use Spryker\Zed\Gui\GuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  */
 class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -29,7 +30,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
         $this->provideFormTypeExtension($app);
 
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) {
+            $app->extend('twig', function (Environment $twig) {
 
                 $this->registerTwigFunctions($twig);
                 $this->registerTwigFilters($twig);
@@ -40,11 +41,11 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      *
      * @return void
      */
-    protected function registerTwigFunctions(Twig_Environment $twig)
+    protected function registerTwigFunctions(Environment $twig)
     {
         foreach ($this->getTwigFunctions() as $function) {
             $twig->addFunction($function);
@@ -52,11 +53,11 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      *
      * @return void
      */
-    protected function registerTwigFilters(Twig_Environment $twig)
+    protected function registerTwigFilters(Environment $twig)
     {
         foreach ($this->getTwigFilters() as $filter) {
             $twig->addFilter($filter);
@@ -64,7 +65,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
     }
 
     /**
-     * @return \Twig_SimpleFunction[]
+     * @return \Twig\TwigFunction[]
      */
     protected function getTwigFunctions()
     {
@@ -73,7 +74,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
     }
 
     /**
-     * @return \Twig_SimpleFilter[]
+     * @return \Twig\TwigFilter[]
      */
     protected function getTwigFilters()
     {

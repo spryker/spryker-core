@@ -6,7 +6,7 @@
         {% block widget_content %}
             <div class="spy-layout sparse" xmlns="http://www.w3.org/1999/html">
                 {% if dependencyProviderPluginUsages.dependencyProvider | length == 0 %}
-                    No plugins used in this Module
+                    {{ 'No plugins used in this Module' | trans }}
                 {% else %}
                     <table class="table-condensed table-hover table-striped">
                         {% for dependencProvider in dependencyProviderPluginUsages.dependencyProvider %}

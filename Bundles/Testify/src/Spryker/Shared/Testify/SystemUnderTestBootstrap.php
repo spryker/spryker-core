@@ -20,6 +20,9 @@ use Spryker\Yves\Kernel\Locator;
 use Spryker\Zed\Kernel\Locator as KernelLocator;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
+/**
+ * @deprecated Please switch to `Spryker\Zed\Testify\Bootstrap\ZedBootstrap`.
+ */
 class SystemUnderTestBootstrap
 {
     public const APPLICATION_ZED = 'Zed';

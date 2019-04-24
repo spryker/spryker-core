@@ -28,7 +28,7 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
      *
      * @param array $productSetIds
      *
-     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
     public function queryProductSetDataByIds(array $productSetIds)
     {

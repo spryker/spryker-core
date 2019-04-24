@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 class ProductAlternativeStorageMapper implements ProductAlternativeStorageMapperInterface
 {
     /**
-     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[] $productAlternativeStorageEntities
+     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[] $productAlternativeStorageEntities
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */

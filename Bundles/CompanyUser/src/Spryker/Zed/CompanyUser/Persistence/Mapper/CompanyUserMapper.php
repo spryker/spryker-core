@@ -80,16 +80,28 @@ class CompanyUserMapper implements CompanyUserMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUser $companyUser
+     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUser $companyUserEntity
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function mapCompanyUserEntityToCompanyUserTransfer(
-        SpyCompanyUser $companyUser
+        SpyCompanyUser $companyUserEntity
     ): CompanyUserTransfer {
-        return (new CompanyUserTransfer())->fromArray(
-            $companyUser->toArray(),
+        $companyUserTransfer = (new CompanyUserTransfer())->fromArray(
+            $companyUserEntity->toArray(),
             true
         );
+
+        $companyUserTransfer->setCustomer((new CustomerTransfer())->fromArray(
+            $companyUserEntity->getCustomer()->toArray(),
+            true
+        ));
+
+        $companyUserTransfer->setCompany((new CompanyTransfer())->fromArray(
+            $companyUserEntity->getCompany()->toArray(),
+            true
+        ));
+
+        return $companyUserTransfer;
     }
 }
