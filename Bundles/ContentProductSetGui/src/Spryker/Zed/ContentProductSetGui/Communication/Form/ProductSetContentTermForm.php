@@ -99,12 +99,6 @@ class ProductSetContentTermForm extends AbstractType
     {
         $builder->add(static::FIELD_ID_PRODUCT_SET, HiddenType::class, [
             'label' => false,
-            'prototype' => true,
-            'allow_add' => true,
-            'allow_delete' => true,
-            'entry_options' => [
-                'label' => false,
-            ],
         ]);
 
         return $this;
