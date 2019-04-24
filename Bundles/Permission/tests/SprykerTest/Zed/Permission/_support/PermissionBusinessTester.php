@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Permission;
 
 use Codeception\Actor;
+use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 
 /**
  * Inherited Methods
@@ -28,7 +29,15 @@ class PermissionBusinessTester extends Actor
 {
     use _generated\PermissionBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * Define custom actions here
+     */
+
+    /**
+     * @return void
+     */
+    public function registerPermissionStoragePlugin(): void
+    {
+        $this->preparePermissionStorageDependency(new PermissionStoragePlugin());
+    }
 }
