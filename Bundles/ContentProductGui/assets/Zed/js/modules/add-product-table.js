@@ -145,7 +145,7 @@ var ProductListContentItem = function(
         hiddenInputsWrapper.find('input').each(function (index, element) {
             indexes.push(element.name.match(/\d+/g).pop());
         });
-        var hiddenInputsLength = Math.max(...indexes);
+        var hiddenInputsLength = Math.max.apply(null, indexes);
 
 
         return hiddenInputTemplate.replace(/__name__/g, hiddenInputsLength + 1);
