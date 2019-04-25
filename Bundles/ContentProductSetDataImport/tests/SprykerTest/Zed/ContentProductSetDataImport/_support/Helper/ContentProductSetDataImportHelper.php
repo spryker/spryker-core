@@ -65,8 +65,8 @@ class ContentProductSetDataImportHelper extends Module
             $contentLocalizedQuery = $contentLocalizedQuery->findByFkContent($contentQuery->getFirst()->getIdContent());
         }
 
-        $this->assertTrue(($contentQuery->exists()), 'Expected at least one entry in the database spy_content table but database table is empty.');
-        $this->assertTrue(($contentLocalizedQuery->exists()), 'Expected at least one entry in the database spy_content_localized table but database table is empty.');
+        $this->assertTrue(($contentQuery->count() > 0), 'Expected at least one entry in the database spy_content table but database table is empty.');
+        $this->assertTrue(($contentLocalizedQuery->count() > 0), 'Expected at least one entry in the database spy_content_localized table but database table is empty.');
     }
 
     /**

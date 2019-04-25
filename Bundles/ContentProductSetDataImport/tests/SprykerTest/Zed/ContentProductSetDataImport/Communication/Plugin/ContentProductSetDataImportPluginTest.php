@@ -29,7 +29,7 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class ContentProductSetDataImportPluginTest extends Unit
 {
-    protected const ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY = 'Please check "product_set_key.default" in the row with key: "APL-1". The wrong product set key passed.';
+    protected const ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY = 'Please check "product_set_key.default" in the row with key: "PS-1". The wrong product set key passed.';
     protected const KEY_ID_PRODUCT_SET = 'id_product_set';
 
     /**
@@ -61,8 +61,9 @@ class ContentProductSetDataImportPluginTest extends Unit
         // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
-        $this->tester->assertDatabaseTableContainsData('APL-1');
-        $this->tester->assertDatabaseTableContainsData('APL-2');
+        $this->tester->assertDatabaseTableContainsData('PS-1');
+        $this->tester->assertDatabaseTableContainsData('PS-2');
+        $this->tester->assertDatabaseTableContainsData('PS-3');
     }
 
     /**
@@ -152,7 +153,7 @@ class ContentProductSetDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasSetId(66, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 1]));
+        $this->tester->assertContentLocalizedHasSetId(66, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 2]));
         $this->tester->assertContentLocalizedDoesNotExist(46);
     }
 

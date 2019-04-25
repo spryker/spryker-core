@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\ContentProductSetDataImport\Business\Model\Step;
 
-
 use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
-use Spryker\Zed\ContentProductSetDataImport\Business\Model\DataSet\ContentProductAbstractListDataSetInterface;
-use Spryker\Zed\ContentProductSetDataImport\Dependency\Facade\ContentProductSetDataImportToContentInterface;
 use Spryker\Zed\ContentProductSetDataImport\Business\Model\DataSet\ContentProductSetDataSetInterface;
+use Spryker\Zed\ContentProductSetDataImport\Dependency\Facade\ContentProductSetDataImportToContentInterface;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -34,6 +32,8 @@ class CheckContentDataStep implements DataImportStepInterface
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
      *
      * @return void
      */
