@@ -111,8 +111,6 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param string $name
      *
-     * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidNameException
-     *
      * @return $this
      */
     private function setName($name)
@@ -121,12 +119,7 @@ class ClassDefinition implements ClassDefinitionInterface
             return $this->setNameWithoutValidation($name);
         }
 
-        if (preg_match('/Transfer$/', $name)) {
-            throw new InvalidNameException(sprintf(
-                'Transfers must not be suffixed with the word "Transfer", this will be auto-appended on generation: %s',
-                $name
-            ));
-        }
+        $this->assertValidName($name);
 
         $this->name = $name . 'Transfer';
 
@@ -875,5 +868,22 @@ class ClassDefinition implements ClassDefinitionInterface
     public function getEntityNamespace()
     {
         return $this->entityNamespace;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidNameException
+     *
+     * @return void
+     */
+    protected function assertValidName(string $name): void
+    {
+        if (preg_match('/Transfer$/', $name)) {
+            throw new InvalidNameException(sprintf(
+                'Transfer names must not be suffixed with the word "Transfer", it will be auto-appended on generation: `%s`. Please remove the suffix.',
+                $name
+            ));
+        }
     }
 }
