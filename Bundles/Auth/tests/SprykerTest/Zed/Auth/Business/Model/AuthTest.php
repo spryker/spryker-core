@@ -66,8 +66,11 @@ class AuthTest extends Unit
      */
     public function testSessionRegenerationOnLogout()
     {
-        $this->markTestSkipped();
-        $authModel = $this->prepareSessionRegeneration($this->createFacadeUser());
+        $facadeUser = $this->createFacadeUser();
+        $facadeUser
+            ->method('getCurrentUser')
+            ->willReturn($this->createUserTransfer(static::USERNAME));
+        $authModel = $this->prepareSessionRegeneration($facadeUser);
         $authModel->logout();
     }
 
@@ -166,11 +169,15 @@ class AuthTest extends Unit
      */
     protected function createFacadeUser()
     {
-        $userFacade = $this->getMockBuilder(AuthToUserBridge::class)->setMethods(
-            ['getUserByUsername', 'hasActiveUserByUsername', 'isValidPassword', 'updateUser']
-        )->setConstructorArgs(
-            [new UserFacade()]
-        )->getMock();
+        $userFacade = $this->getMockBuilder(AuthToUserBridge::class)->setMethods([
+            'getUserByUsername',
+            'hasActiveUserByUsername',
+            'isValidPassword',
+            'updateUser',
+            'getCurrentUser',
+        ])->setConstructorArgs([
+            new UserFacade(),
+        ])->getMock();
 
         return $userFacade;
     }
