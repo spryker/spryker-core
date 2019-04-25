@@ -12,6 +12,7 @@ use Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptio
 class ReadOnlyCartShareOptionPlugin implements CartShareOptionPluginInterface
 {
     protected const KEY_READ_ONLY = 'READ_ONLY';
+    protected const GROUP_INTERNAL = 'internal';
 
     /**
      * {@inheritdoc}
@@ -24,5 +25,18 @@ class ReadOnlyCartShareOptionPlugin implements CartShareOptionPluginInterface
     public function getKey(): string
     {
         return static::KEY_READ_ONLY;
+    }
+
+    /**
+     * @inheritDoc
+     * - Returns internal share option group.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getGroup(): string
+    {
+        return static::GROUP_INTERNAL;
     }
 }

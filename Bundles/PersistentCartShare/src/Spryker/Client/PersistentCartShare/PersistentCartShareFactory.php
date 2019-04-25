@@ -10,6 +10,9 @@ namespace Spryker\Client\PersistentCartShare;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PersistentCartShare\CartShareOption\CartShareOptionReader;
 use Spryker\Client\PersistentCartShare\CartShareOption\CartShareOptionReaderInterface;
+use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface;
+use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToResourceShareClientInterface;
+use Spryker\Client\PersistentCartShare\ResourceShare\ResourceShareRequestBuilder;
 
 class PersistentCartShareFactory extends AbstractFactory
 {
@@ -29,5 +32,29 @@ class PersistentCartShareFactory extends AbstractFactory
     public function getCartShareOptionPlugins(): array
     {
         return $this->getProvidedDependency(PersistentCartShareDependencyProvider::PLUGINS_CART_SHARE_OPTION);
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToResourceShareClientInterface
+     */
+    public function getResourceShareClient(): PersistentCartShareToResourceShareClientInterface
+    {
+        return $this->getProvidedDependency(PersistentCartShareDependencyProvider::CLIENT_RESOURCE_SHARE);
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface
+     */
+    public function getCustomerClient(): PersistentCartShareToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(PersistentCartShareDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCartShare\ResourceShare\ResourceShareRequestBuilder
+     */
+    public function createResourceShareRequestBuilder(): ResourceShareRequestBuilder
+    {
+        return new ResourceShareRequestBuilder($this->getCustomerClient());
     }
 }

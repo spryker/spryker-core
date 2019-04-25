@@ -23,13 +23,13 @@ class CartShareOptionReader implements CartShareOptionReaderInterface
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function getCartShareOptions(): array
     {
         $cartShareOptions = [];
         foreach ($this->cartShareOptionPlugins as $cartShareOptionPlugin) {
-            $cartShareOptions[] = $cartShareOptionPlugin->getKey();
+            $cartShareOptions[$cartShareOptionPlugin->getGroup()][] = $cartShareOptionPlugin->getKey();
         }
 
         return $cartShareOptions;

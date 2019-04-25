@@ -41,6 +41,12 @@ class PersistentCartShareClient extends AbstractClient implements PersistentCart
      */
     public function generateCartResourceShare(int $idQuote, string $shareOption): ResourceShareResponseTransfer
     {
-        // TODO: Implement generateCartResourceShare() method.
+        $resourceShareRequestTransfer = $this->getFactory()
+            ->createResourceShareRequestBuilder()
+            ->buildResourceShareRequest($idQuote, $shareOption);
+
+        return $this->getFactory()
+            ->getResourceShareClient()
+            ->generateResourceShare($resourceShareRequestTransfer);
     }
 }
