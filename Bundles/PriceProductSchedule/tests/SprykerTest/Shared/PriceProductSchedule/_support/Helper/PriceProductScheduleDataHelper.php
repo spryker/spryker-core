@@ -123,8 +123,9 @@ class PriceProductScheduleDataHelper extends Module
      *
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule
      */
-    protected function mapPriceProductScheduleTransferToEntity(PriceProductScheduleTransfer $priceProductScheduleTransfer): SpyPriceProductSchedule
-    {
+    protected function mapPriceProductScheduleTransferToEntity(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): SpyPriceProductSchedule {
         $spyPriceProductScheduleEntity = new SpyPriceProductSchedule();
         $spyPriceProductScheduleEntity->fromArray($priceProductScheduleTransfer->modifiedToArray());
         $spyPriceProductScheduleEntity->setFkStore($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getFkStore());

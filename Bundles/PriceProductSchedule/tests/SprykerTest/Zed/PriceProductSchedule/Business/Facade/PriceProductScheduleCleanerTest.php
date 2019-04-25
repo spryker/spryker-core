@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductSchedule
@@ -47,6 +48,8 @@ class PriceProductScheduleCleanerTest extends Unit
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->tester->ensureDatabaseTableIsEmpty();
 
         $this->priceProductScheduleFacade = $this->tester->getFacade();
         $this->storeFacade = $this->tester->getLocator()->store()->facade();

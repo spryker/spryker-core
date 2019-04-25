@@ -5,16 +5,18 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/currency": "^3.5.3",
+    "spryker/currency": "^3.6.0",
     "spryker/kernel": "^3.32.0",
     "spryker/price-product": "^2.11.0",
-    "spryker/product": "^6.10.0",
+    "spryker/product": "^6.9.0",
+    "spryker/propel": "^3.8.0",
+    "spryker/propel-orm": "^1.8.0",
     "spryker/store": "^1.9.1",
+    "spryker/symfony": "^3.2.2",
     "spryker/user": "^3.7.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

@@ -12,11 +12,18 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class PriceProductScheduleConfig extends AbstractBundleConfig
 {
     /**
+     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
+     */
+    public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
+
+    /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
      */
     public const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
     public const PRICE_TYPE_ORIGINAL = 'ORIGINAL';
+
+    protected const APPLY_BATCH_SIZE = 1000;
 
     /**
      * @return array
@@ -26,5 +33,21 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
         return [
             static::PRICE_TYPE_DEFAULT => static::PRICE_TYPE_ORIGINAL,
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getApplyBatchSize(): int
+    {
+        return static::APPLY_BATCH_SIZE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceDimensionDefault(): string
+    {
+        return static::PRICE_DIMENSION_DEFAULT;
     }
 }

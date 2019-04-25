@@ -58,7 +58,8 @@
     </table>
 
     <table name="spy_price_product_schedule_list">
-        <column name="id_price_product_schedule_list" type="BIGINT" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="id_price_product_schedule_list" type="BIGINT" required="true" primaryKey="true"
+                autoIncrement="true"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <column name="is_active" type="BOOLEAN" required="false" defaultValue="false"/>
         <column name="fk_user" type="INTEGER"/>
