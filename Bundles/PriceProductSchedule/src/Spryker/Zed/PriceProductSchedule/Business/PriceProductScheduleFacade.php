@@ -94,6 +94,8 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     public function importPriceProductSchedules(
         PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
     ): PriceProductScheduleListImportResponseTransfer {
-        return new PriceProductScheduleListImportResponseTransfer();
+        return $this->getFactory()
+            ->createPriceProductScheduleListImporter()
+            ->importPriceProductSchedules($priceProductScheduledListImportRequest);
     }
 }

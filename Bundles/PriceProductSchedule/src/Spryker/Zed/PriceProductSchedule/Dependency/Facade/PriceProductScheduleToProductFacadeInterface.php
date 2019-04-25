@@ -7,17 +7,19 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Dependency\Facade;
 
-interface PriceProductScheduleToStoreFacadeInterface
+interface PriceProductScheduleToProductFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @param string $sku
+     *
+     * @return int
      */
-    public function getCurrentStore();
+    public function findProductAbstractIdBySku($sku);
 
     /**
-     * @param string $storeName
+     * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return int|null
      */
-    public function getStoreByName($storeName);
+    public function findProductConcreteIdBySku($sku);
 }

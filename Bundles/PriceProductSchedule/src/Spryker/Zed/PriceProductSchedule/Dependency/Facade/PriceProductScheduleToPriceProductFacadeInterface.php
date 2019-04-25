@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductSchedule\Dependency\Facade;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 
 interface PriceProductScheduleToPriceProductFacadeInterface
 {
@@ -32,4 +33,11 @@ interface PriceProductScheduleToPriceProductFacadeInterface
      * @return void
      */
     public function removePriceProductStore(PriceProductTransfer $priceProductTransfer): void;
+
+    /**
+     * @param string $priceTypeName
+     *
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer|null
+     */
+    public function findPriceTypeByName(string $priceTypeName): ?PriceTypeTransfer;
 }

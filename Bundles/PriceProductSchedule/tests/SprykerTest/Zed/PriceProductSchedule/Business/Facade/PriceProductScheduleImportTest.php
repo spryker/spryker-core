@@ -10,10 +10,12 @@ namespace SprykerTest\Zed\PriceProductSchedule\Business\Facade;
 use ArrayObject;
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\DataBuilder\PriceProductScheduleListBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
@@ -73,7 +75,7 @@ class PriceProductScheduleImportTest extends Unit
         // Assign
         $count = 10;
         $priceProductScheduleImportTransfers = $this->prepareValidPriceProductScheduleImportData($count);
-        $priceProductScheduleListTransfer = $this->tester->havePriceProductScheduleList();
+        $priceProductScheduleListTransfer = (new PriceProductScheduleListBuilder())->build();
         $priceProductScheduleImportRequest = (new PriceProductScheduledListImportRequestTransfer())
             ->setPriceProductScheduleList($priceProductScheduleListTransfer)
             ->setItems($priceProductScheduleImportTransfers);
@@ -102,8 +104,9 @@ class PriceProductScheduleImportTest extends Unit
      *
      * @return void
      */
-    public function testImportPriceProductSchedulesShouldNotImportNotValidSchedules(array $priceProductSchedulesImportData): void
-    {
+    public function testImportPriceProductSchedulesShouldNotImportNotValidSchedules(
+        array $priceProductSchedulesImportData
+    ): void {
         // Assign
         $priceProductScheduleImportRequest = $this->havePriceProductScheduledListImportRequest();
 
@@ -129,9 +132,9 @@ class PriceProductScheduleImportTest extends Unit
 
         $priceProductScheduleEntitiesCount = $this->tester->getPriceProductScheduleQuery()->count();
         $this->assertEquals(
-            0,
+            1,
             $priceProductScheduleEntitiesCount,
-            'No rows should be saved into the db'
+            'No rows should be saved into the db except the base one'
         );
     }
 
@@ -143,16 +146,19 @@ class PriceProductScheduleImportTest extends Unit
         $priceProductScheduleListTransfer = $this->tester->havePriceProductScheduleList();
 
         $storeTransfer = $this->tester->haveStore([
-            StoreTransfer::NAME => 'STORE_NAME',
+            StoreTransfer::NAME => 'AT',
         ]);
+
         $currencyId = $this->tester->haveCurrency([
-            CurrencyTransfer::NAME => 'CUR',
+            CurrencyTransfer::CODE => 'CUR',
         ]);
+
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
 
         $priceTypeTransfer = $this->tester->havePriceType([
             PriceTypeTransfer::NAME => 'PRICE_TYPE_NAME',
         ]);
+
         $productConcreteTransfer = $this->tester->haveProduct([
             ProductConcreteTransfer::SKU => 'SKU',
         ]);
@@ -175,12 +181,15 @@ class PriceProductScheduleImportTest extends Unit
                     PriceTypeTransfer::ID_PRICE_TYPE => $priceTypeTransfer->getIdPriceType(),
                 ],
             ],
-            PriceProductScheduleTransfer::ACTIVE_TO => new DateTime('-2 days'),
-            PriceProductScheduleTransfer::ACTIVE_FROM => new DateTime('+3 days'),
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-2 days'))->setTime(0, 0, 0, 0),
+            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('+3 days'))->setTime(0, 0, 0, 0),
         ]);
 
         return (new PriceProductScheduledListImportRequestTransfer())
-            ->setPriceProductScheduleList($priceProductScheduleListTransfer);
+            ->setPriceProductScheduleList(
+                (new PriceProductScheduleListBuilder())
+                    ->build([PriceProductScheduleListTransfer::NAME => $priceProductScheduleListTransfer->getName()])
+            );
     }
 
     /**
@@ -193,17 +202,21 @@ class PriceProductScheduleImportTest extends Unit
         $priceProductScheduleImportData = new ArrayObject();
 
         for ($i = 0; $i < $itemsCount; $i++) {
-            $storeTransfer = $this->tester->haveStore();
+            $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE', StoreTransfer::ID_STORE => 1]);
             $currencyId = $this->tester->haveCurrency();
             $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
             $priceTypeTransfer = $this->tester->havePriceType();
             $productConcreteTransfer = $this->tester->haveProduct();
 
             $priceProductScheduleImportData[] = $this->tester->havePriceProductScheduleImport([
-                PriceProductScheduleImportTransfer::CURRENCY_NAME => $currencyTransfer->getName(),
+                PriceProductScheduleImportTransfer::CURRENCY_NAME => $currencyTransfer->getCode(),
                 PriceProductScheduleImportTransfer::SKU_PRODUCT => $productConcreteTransfer->getSku(),
                 PriceProductScheduleImportTransfer::PRICE_TYPE_NAME => $priceTypeTransfer->getName(),
                 PriceProductScheduleImportTransfer::STORE_NAME => $storeTransfer->getName(),
+                PriceProductScheduleImportTransfer::GROSS_AMOUNT => 25000,
+                PriceProductScheduleImportTransfer::NET_AMOUNT => 20000,
+                PriceProductScheduleImportTransfer::ACTIVE_TO => (new DateTime('-2 days'))->setTime(0, 0, 0, 0),
+                PriceProductScheduleImportTransfer::ACTIVE_FROM => (new DateTime('+3 days'))->setTime(0, 0, 0, 0),
             ]);
         }
 
@@ -292,9 +305,10 @@ class PriceProductScheduleImportTest extends Unit
                         PriceProductScheduleImportTransfer::CURRENCY_NAME => 'CUR',
                         PriceProductScheduleImportTransfer::SKU_PRODUCT => 'SKU',
                         PriceProductScheduleImportTransfer::PRICE_TYPE_NAME => 'PRICE_TYPE_NAME',
-                        PriceProductScheduleImportTransfer::STORE_NAME => 'STORE_NAME',
-                        PriceProductScheduleImportTransfer::ACTIVE_TO => new DateTime('-2 days'),
-                        PriceProductScheduleImportTransfer::ACTIVE_FROM => new DateTime('+3 days'),
+                        PriceProductScheduleImportTransfer::STORE_NAME => 'AT',
+                        PriceProductScheduleImportTransfer::ACTIVE_TO => (new DateTime('-2 days'))->setTime(0, 0, 0, 0),
+                        PriceProductScheduleImportTransfer::ACTIVE_FROM => (new DateTime('+3 days'))->setTime(0, 0, 0,
+                            0),
                         PriceProductScheduleImportTransfer::GROSS_AMOUNT => 25000,
                         PriceProductScheduleImportTransfer::NET_AMOUNT => 20000,
                     ],
