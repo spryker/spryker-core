@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ListContentByTypeController extends AbstractController
 {
-    protected const PARAM_CONTENT_TYPE = 'type';
+    public const PARAM_CONTENT_TYPE = 'type';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

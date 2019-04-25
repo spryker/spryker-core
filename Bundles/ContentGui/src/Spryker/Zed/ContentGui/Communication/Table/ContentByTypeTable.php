@@ -9,6 +9,8 @@ namespace Spryker\Zed\ContentGui\Communication\Table;
 
 use Orm\Zed\Content\Persistence\Map\SpyContentTableMap;
 use Orm\Zed\Content\Persistence\SpyContentQuery;
+use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\ContentGui\Communication\Controller\ListContentByTypeController;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -55,7 +57,7 @@ class ContentByTypeTable extends AbstractTable
     {
         $config = $this->setHeader($config);
 
-        $config->setUrl('/table?type=' . urlencode($this->contentType));
+        $config->setUrl($this->getTableUrl());
         $config->setSortable([
             ContentTableConstants::COL_ID_CONTENT,
             ContentTableConstants::COL_NAME,
@@ -143,5 +145,13 @@ class ContentByTypeTable extends AbstractTable
         }
 
         return $key === 0;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTableUrl(): string
+    {
+        return Url::generate($this->defaultUrl, [ListContentByTypeController::PARAM_CONTENT_TYPE => $this->contentType]);
     }
 }
