@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PriceProductScheduleCleanupConsole extends Console
 {
-    public const COMMAND_NAME = 'price-product-schedule:cleanup';
+    public const COMMAND_NAME = 'price-product-schedule:clean-up';
     public const DESCRIPTION = 'Deletes scheduled prices that has been applied earlier than the days provided as argument';
     public const DAYS_RETAINED = 'days retained';
 

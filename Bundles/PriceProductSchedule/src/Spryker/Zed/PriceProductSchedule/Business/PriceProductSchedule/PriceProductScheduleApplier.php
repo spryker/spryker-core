@@ -82,7 +82,7 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
     /**
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
-    public function findPriceProductSchedulesToEnableForCurrentStore(): array
+    protected function findPriceProductSchedulesToEnableForCurrentStore(): array
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
