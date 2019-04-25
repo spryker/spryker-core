@@ -13,15 +13,10 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceInterface;
 use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceInterface;
 use Spryker\Client\OauthPermission\OauthPermissionConfig;
-use Spryker\Glue\Kernel\Application;
+use Symfony\Component\HttpFoundation\Request;
 
 class OauthPermissionReader implements OauthPermissionReaderInterface
 {
-    /**
-     * @var \Spryker\Glue\Kernel\Application
-     */
-    protected $glueApplication;
-
     /**
      * @var \Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceInterface
      */
@@ -35,14 +30,11 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
     /**
      * @param \Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceInterface $oauthService
      * @param \Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Glue\Kernel\Application|null $glueApplication
      */
     public function __construct(
         OauthPermissionToOauthServiceInterface $oauthService,
-        OauthPermissionToUtilEncodingServiceInterface $utilEncodingService,
-        ?Application $glueApplication = null
+        OauthPermissionToUtilEncodingServiceInterface $utilEncodingService
     ) {
-        $this->glueApplication = $glueApplication;
         $this->oauthService = $oauthService;
         $this->utilEncodingService = $utilEncodingService;
     }
@@ -52,12 +44,7 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
      */
     public function getPermissionsFromOauthToken(): PermissionCollectionTransfer
     {
-        if ($this->glueApplication === null) {
-            return new PermissionCollectionTransfer();
-        }
-
-        /** @var \Symfony\Component\HttpFoundation\Request $request */
-        $request = $this->glueApplication->get('request');
+        $request = Request::createFromGlobals();
         $authorizationToken = $request->headers->get(OauthPermissionConfig::HEADER_AUTHORIZATION);
 
         if (!$authorizationToken) {

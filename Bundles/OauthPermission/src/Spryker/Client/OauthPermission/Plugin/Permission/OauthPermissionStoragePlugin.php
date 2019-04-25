@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 /**
- * @method \Spryker\Client\OauthPermission\OauthPermissionClient getClient()
+ * @method \Spryker\Client\OauthPermission\OauthPermissionClientInterface getClient()
  */
 class OauthPermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
 {

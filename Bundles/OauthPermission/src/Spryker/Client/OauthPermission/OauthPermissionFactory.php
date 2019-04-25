@@ -23,17 +23,8 @@ class OauthPermissionFactory extends AbstractFactory
     {
         return new OauthPermissionReader(
             $this->getOauthService(),
-            $this->getUtilEncodingService(),
-            $this->getGlueApplication()
+            $this->getUtilEncodingService()
         );
-    }
-
-    /**
-     * @return \Spryker\Glue\Kernel\Application|null
-     */
-    public function getGlueApplication(): ?Application
-    {
-        return $this->getProvidedDependency(OauthPermissionDependencyProvider::APPLICATION_GLUE);
     }
 
     /**
