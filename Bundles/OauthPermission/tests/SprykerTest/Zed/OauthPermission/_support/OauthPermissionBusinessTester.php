@@ -10,8 +10,10 @@ namespace SprykerTest\Zed\OauthPermission;
 use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
 /**
@@ -47,7 +49,10 @@ class OauthPermissionBusinessTester extends Actor
         $permissionTransfer = $this->havePermission($permissionPlugin);
         $permissionCollectionTransfer = (new PermissionCollectionTransfer())->addPermission($permissionTransfer);
 
-        $companyTransfer = $this->haveCompany();
+        $companyTransfer = $this->haveCompany([
+            CompanyTransfer::IS_ACTIVE => true,
+            CompanyTransfer::STATUS => SpyCompanyTableMap::COL_STATUS_APPROVED,
+        ]);
         $companyRoleTransfer = $this->haveCompanyRole([
             CompanyRoleTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
             CompanyRoleTransfer::PERMISSION_COLLECTION => $permissionCollectionTransfer,
