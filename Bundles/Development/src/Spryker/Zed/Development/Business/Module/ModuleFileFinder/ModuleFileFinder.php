@@ -52,7 +52,7 @@ class ModuleFileFinder implements ModuleFileFinderInterface
         $directories = $this->getModuleDirectories($moduleTransfer);
 
         $finder = new Finder();
-        $finder->files()->in($directories)->ignoreDotFiles(false);
+        $finder->files()->in($directories)->ignoreDotFiles(false)->exclude('migrate');
 
         return $finder;
     }

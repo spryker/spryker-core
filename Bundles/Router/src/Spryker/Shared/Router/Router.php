@@ -37,6 +37,7 @@ class Router extends SymfonyRouter implements RouterInterface
     public function getMatcher()
     {
         $this->matcher = parent::getMatcher();
+
         if ($this->matcher instanceof RouterEnhancerAwareInterface) {
             $this->matcher->setRouterEnhancerPlugins($this->routerEnhancerPlugins);
         }

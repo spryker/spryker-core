@@ -1,20 +1,20 @@
 {
-  "name": "spryker/router-extension",
+  "name": "spryker/storage-router",
   "type": "library",
-  "description": "RouterExtension module",
+  "description": "StorageRouter module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "spryker/kernel": "^3.0.0",
+    "spryker/router-extension": "^1.0.0",
+    "spryker/storage-router-extension": "^1.0.0",
+    "spryker/symfony": "^3.2.2",
+    "symfony-cmf/routing": "^2.1.0",
+    "spryker/url-storage": "^1.4.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/router": "*",
-    "spryker/symfony": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/router": "You need to install this module when you want to use the RouterExtension interfaces.",
-    "spryker/symfony": "You need to install this module when you want to use the Router plugin."
   },
   "autoload": {
     "psr-4": {

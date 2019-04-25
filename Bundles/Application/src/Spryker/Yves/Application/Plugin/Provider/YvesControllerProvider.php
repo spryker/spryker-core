@@ -8,16 +8,14 @@
 namespace Spryker\Yves\Application\Plugin\Provider;
 
 use Silex\Application;
+use Silex\Controller;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
 use Spryker\Shared\Config\Config;
 use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
-use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
-use SprykerShop\Yves\ShopRouter\Route\Route as Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouteCollection;
 
 /**
  * @deprecated TODO
@@ -40,11 +38,6 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     protected $sslEnabled;
 
     /**
-     * @var \Symfony\Component\Routing\RouteCollection
-     */
-    protected $routeCollection;
-
-    /**
      * Set the sslEnabledFlag to
      * true to force ssl
      * false to force http
@@ -62,9 +55,8 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
      *
      * @return \Silex\ControllerCollection
      */
-    public function connect(Application $app, ?RouteCollection $routeCollection = null)
+    public function connect(Application $app)
     {
-        $this->routeCollection = $routeCollection;
         $this->app = $app;
         $this->controllerCollection = $app['controllers_factory'];
         $this->defineControllers($app);
@@ -106,7 +98,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
      * @param string $actionName
      * @param bool $parseJsonBody
      *
-     * @return \SprykerShop\Yves\ShopRouter\Route\Route
+     * @return \Silex\Controller
      */
     protected function createController(
         $path,
@@ -116,40 +108,13 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
         $actionName = 'index',
         $parseJsonBody = false
     ) {
-        $route = new Controller($path);
-
-//        $controller = sprintf('%s:%s:%s', $bundle, $controllerName, $actionName);
-
-        $bundleControllerAction = new BundleControllerAction($bundle, $controllerName, $actionName);
-        $controllerResolver = new ControllerResolver();
-        /** @var \Spryker\Yves\Kernel\Controller\AbstractController $controller */
-        $controller = $controllerResolver->resolve($bundleControllerAction);
-
-        $route->setDefault('_controller', [get_class($controller), $actionName . 'Action']);
-
-        if ($parseJsonBody) {
-            $this->addJsonParsing($route);
-        }
-
-        if ($this->sslEnabled === true && !$this->isSslExcluded($name)) {
-            $route->requireHttps();
-        } elseif ($this->sslEnabled === false) {
-            $route->requireHttp();
-        }
-
-        $this->routeCollection->add($name, $route);
-
-        return $route;
-
         $service = $this->getService($bundle, $controllerName, $actionName);
         $controller = $this->getController($path, $name, $service);
-
         if ($this->sslEnabled === true && !$this->isSslExcluded($name)) {
             $controller->requireHttps();
         } elseif ($this->sslEnabled === false) {
             $controller->requireHttp();
         }
-
         if ($parseJsonBody) {
             $this->addJsonParsing($controller);
         }

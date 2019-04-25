@@ -11,7 +11,8 @@ interface RouterEnhancerAwareInterface
 {
     /**
      * Specification:
-     * - Adds ability to use RouterEnhancerPlugins in your Router..
+     * - Adds ability to use RouterEnhancerPlugins in your Router.
+     * - Plugins will be added in the routers `getMatcher()` or `getGenerator()` methods.
      *
      * @api
      *

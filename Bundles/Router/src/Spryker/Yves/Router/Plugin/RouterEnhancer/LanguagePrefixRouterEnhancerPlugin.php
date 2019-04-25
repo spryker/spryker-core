@@ -15,14 +15,6 @@ use Symfony\Component\Routing\RequestContext;
 class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
 {
     /**
-     * @var array
-     */
-    protected $allowedLanguages = [
-        'de',
-        'en',
-    ];
-
-    /**
      * @var string|null
      */
     protected $currentLanguage;
@@ -40,7 +32,7 @@ class LanguagePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
         }
 
         $pathinfoFragments = explode('/', trim($pathinfo, '/'));
-        if (in_array($pathinfoFragments[0], $this->allowedLanguages)) {
+        if (in_array($pathinfoFragments[0], $this->getConfig()->getAllowedLanguages())) {
             $this->currentLanguage = array_shift($pathinfoFragments);
 
             return '/' . implode('/', $pathinfoFragments);

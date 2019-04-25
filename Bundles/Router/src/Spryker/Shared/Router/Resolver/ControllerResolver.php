@@ -30,14 +30,16 @@ class ControllerResolver implements ControllerResolverInterface
      * {@inheritdoc}
      *
      * This method looks for a '_controller' request attribute that represents
-     * the controller name (a string like ClassName::MethodName).
+     * the controller.
      */
     public function getController(Request $request)
     {
-        if (!$controller = $request->attributes->get('_controller')) {
+        $controller = $request->attributes->get('_controller');
+        if (!$controller) {
             return false;
         }
 
+        // When we have a string for the controller we assume that the controller can be found in the Container.
         if (is_string($controller)) {
             [$controllerServiceIdentifier, $actionName] = explode(':', $controller);
             if ($this->container->has($controllerServiceIdentifier)) {
@@ -50,8 +52,13 @@ class ControllerResolver implements ControllerResolverInterface
         }
 
         $instantiatedController = new $controller[0]();
-        $instantiatedController->setApplication($this->container);
-        $instantiatedController->initialize();
+        if (method_exists($instantiatedController, 'setApplication')) {
+            $instantiatedController->setApplication($this->container);
+        }
+
+        if (method_exists($instantiatedController, 'initialize')) {
+            $instantiatedController->initialize();
+        }
 
         return [$instantiatedController, $controller[1]];
     }

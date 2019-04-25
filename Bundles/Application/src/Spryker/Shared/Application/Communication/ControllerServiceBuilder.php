@@ -12,6 +12,11 @@ use Spryker\Shared\Kernel\ClassResolver\Controller\AbstractControllerResolver;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Spryker\Shared\Kernel\Communication\RouteNameResolverInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ *
+ * The `\Spryker\Shared\Router\Resolver\ControllerResolver::getController()` will inject the Container from now on.
+ */
 class ControllerServiceBuilder
 {
     /**

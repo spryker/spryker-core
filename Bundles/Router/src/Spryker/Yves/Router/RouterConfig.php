@@ -23,6 +23,7 @@ class RouterConfig extends AbstractBundleConfig
             'cache_dir' => $this->getCachePathIfCacheEnabled(),
             'generator_class' => UrlGenerator::class,
             'matcher_class' => RedirectableUrlMatcher::class,
+            'matcher_base_class' => RedirectableUrlMatcher::class,
         ];
     }
 
@@ -52,5 +53,27 @@ class RouterConfig extends AbstractBundleConfig
     public function getSslExcludedRouteNames(): array
     {
         return $this->get(RouterConstants::ROUTER_SSL_EXCLUDED_ROUTE_NAMES_YVES, []);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllowedLanguages(): array
+    {
+        return [
+            'de',
+            'en',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllowedStores(): array
+    {
+        return [
+            'DE',
+            'US',
+        ];
     }
 }

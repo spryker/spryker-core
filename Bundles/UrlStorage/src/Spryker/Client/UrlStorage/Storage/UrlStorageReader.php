@@ -48,7 +48,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
 
     /**
      * @param string $url
-     * @param string $localeName
+     * @param string|null $localeName
      *
      * @return array
      */
@@ -59,9 +59,14 @@ class UrlStorageReader implements UrlStorageReaderInterface
             return [];
         }
 
+        if ($localeName === null) {
+            $localeName = $this->getLocaleNameFromUrlDetails($urlDetails);
+        }
+
         $options = [
             'locale' => strtolower($localeName),
         ];
+
         $urlStorageResourceMapTransfer = $this->getUrlStorageResourceMapTransfer($urlDetails, $options);
         if ($urlStorageResourceMapTransfer === null) {
             return [];
@@ -76,6 +81,26 @@ class UrlStorageReader implements UrlStorageReaderInterface
         }
 
         return [];
+    }
+
+    /**
+     * @param array $urlDetails
+     *
+     * @return string|null
+     */
+    protected function getLocaleNameFromUrlDetails(array $urlDetails): ?string
+    {
+        if (!isset($urlDetails['locale_urls'])) {
+            return null;
+        }
+
+        foreach ($urlDetails['locale_urls'] as $localeUrl) {
+            if ($localeUrl['fk_locale'] === $urlDetails['fk_locale']) {
+                return $localeUrl['localeName'];
+            }
+        }
+
+        return null;
     }
 
     /**

@@ -1,20 +1,14 @@
 {
-  "name": "spryker/router-extension",
+  "name": "spryker/storage-router-extension",
   "type": "library",
-  "description": "RouterExtension module",
+  "description": "StorageRouterExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/router": "*",
-    "spryker/symfony": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/router": "You need to install this module when you want to use the RouterExtension interfaces.",
-    "spryker/symfony": "You need to install this module when you want to use the Router plugin."
   },
   "autoload": {
     "psr-4": {

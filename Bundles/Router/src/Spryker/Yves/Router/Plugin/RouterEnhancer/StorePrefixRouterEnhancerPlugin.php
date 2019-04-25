@@ -15,14 +15,6 @@ use Symfony\Component\Routing\RequestContext;
 class StorePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
 {
     /**
-     * @var array
-     */
-    protected $allowedStores = [
-        'DE',
-        'US',
-    ];
-
-    /**
      * @var string|null
      */
     protected $currentStore;
@@ -40,7 +32,7 @@ class StorePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
         }
 
         $pathinfoFragments = explode('/', trim($pathinfo, '/'));
-        if (in_array($pathinfoFragments[0], $this->allowedStores)) {
+        if (in_array($pathinfoFragments[0], $this->getConfig()->getAllowedStores())) {
             $this->currentStore = array_shift($pathinfoFragments);
 
             return '/' . implode('/', $pathinfoFragments);
