@@ -3,13 +3,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-'use strict';
-
-if (!window.ContentGui) {
-    require('../sass/main.scss');
-    require('./modules/form-clear');
-    window.ContentGui = true;
+.locale-header-info {
+    margin-bottom: 30px;
 }
 
+.clear-button-margin {
+    margin-bottom: 10px;
+}
 
-
+.overwrite-default-message {
+    font-weight: bold;
+}
