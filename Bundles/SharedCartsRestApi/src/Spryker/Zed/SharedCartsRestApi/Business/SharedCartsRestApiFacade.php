@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SharedCartsRestApiFacade extends AbstractFacade implements SharedCartsRestApiFacadeInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer

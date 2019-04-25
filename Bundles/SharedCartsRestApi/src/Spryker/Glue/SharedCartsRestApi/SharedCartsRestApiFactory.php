@@ -18,7 +18,6 @@ use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartReaderInterfa
 
 class SharedCartsRestApiFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartsResourceMapperInterface
      */

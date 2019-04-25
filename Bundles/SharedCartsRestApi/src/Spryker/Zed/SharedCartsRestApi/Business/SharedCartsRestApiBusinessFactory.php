@@ -14,13 +14,8 @@ use Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartReader;
 use Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartReaderInterface;
 use Spryker\Zed\SharedCartsRestApi\SharedCartsRestApiDependencyProvider;
 
-/**
- * @method \Spryker\Zed\SharedCartsRestApi\SharedCartsRestApiConfig getConfig()
- * @method \Spryker\Zed\SharedCartsRestApi\Persistence\SharedCartsRestApiQueryContainer getQueryContainer()
- */
 class SharedCartsRestApiBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartReaderInterface
      */

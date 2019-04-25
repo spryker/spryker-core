@@ -13,7 +13,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartReaderInterface;
 use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class SharedCartExpander implements SharedCartExpanderInterface
 {
@@ -45,38 +44,16 @@ class SharedCartExpander implements SharedCartExpanderInterface
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return void
      */
-    public function addResourceRelationshipsByCartId(array $resources, RestRequestInterface $restRequest): array
+    public function addResourceRelationshipsByCartId(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $quoteUuid = $this->findUuid($resource->getAttributes());
-            if (!$quoteUuid) {
-                continue;
-            }
-
-            $concreteProductsResource = $this->sharedCartReader->getSharedCartsByCartUuid($resource);
-            if ($concreteProductsResource) {
-                $this->addSharedCartRelationship($resource, $concreteProductsResource);
+            $restSharedCartsAttributesTransfers = $this->sharedCartReader->getSharedCartsByCartUuid($resource);
+            if ($restSharedCartsAttributesTransfers) {
+                $this->addSharedCartRelationship($resource, $restSharedCartsAttributesTransfers);
             }
         }
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $attributes
-     *
-     * @return string|null
-     */
-    protected function findUuid(?AbstractTransfer $attributes): ?string
-    {
-        if ($attributes
-            && $attributes->offsetExists(static::KEY_UUID)
-            && $attributes->offsetGet(static::KEY_UUID)
-        ) {
-            return $attributes->offsetGet(static::KEY_UUID);
-        }
-
-        return null;
     }
 
     /**
@@ -93,6 +70,12 @@ class SharedCartExpander implements SharedCartExpanderInterface
         }
     }
 
+    /**
+     * @param string $uuid
+     * @param \Generated\Shared\Transfer\RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
     protected function buildSharedCartsResource(string $uuid, RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer): RestResourceInterface
     {
         $restResource = $this->restResourceBuilder->createRestResource(

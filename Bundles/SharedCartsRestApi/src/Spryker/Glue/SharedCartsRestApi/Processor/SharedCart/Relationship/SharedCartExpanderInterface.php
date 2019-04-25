@@ -15,7 +15,7 @@ interface SharedCartExpanderInterface
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return void
      */
-    public function addResourceRelationshipsByCartId(array $resources, RestRequestInterface $restRequest): array;
+    public function addResourceRelationshipsByCartId(array $resources, RestRequestInterface $restRequest): void;
 }

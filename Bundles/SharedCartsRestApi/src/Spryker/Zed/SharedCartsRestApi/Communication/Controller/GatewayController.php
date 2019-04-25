@@ -23,6 +23,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function getSharedCartsByCartUuidAction(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer
     {
-        return $this->getFacade()->getSharedCartsByCartUuid($quoteTransfer);
+        $result = $this->getFacade()->getSharedCartsByCartUuid($quoteTransfer);
+        return $result;
     }
 }

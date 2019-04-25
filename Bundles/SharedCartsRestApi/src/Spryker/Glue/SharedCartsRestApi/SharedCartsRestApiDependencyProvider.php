@@ -10,59 +10,30 @@ namespace Spryker\Glue\SharedCartsRestApi;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
+/**
+ * @method \Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig getConfig()
+ */
 class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_QUOTE = 'FACADE_QUOTE';
-    public const FACADE_SHARED_CART = 'FACADE_SHARED_CART';
     public const CLIENT_SHARED_CARTS_REST_API = 'CLIENT_SHARED_CARTS_REST_API';
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addQuoteFacade($container);
-        $container = $this->addSharedCartFacade($container);
         $container = $this->addSharedCartsRestApiClient($container);
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Glue\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function addQuoteFacade(Container $container): Container
-    {
-        $container[static::FACADE_QUOTE] = function (Container $container) {
-            return $container->getLocator()->quote()->facade();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function addSharedCartFacade(Container $container): Container
-    {
-        $container[static::FACADE_SHARED_CART] = function (Container $container) {
-            return $container->getLocator()->sharedCart()->facade();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Glue\Kernel\Container
      */
     public function addSharedCartsRestApiClient(Container $container): Container
     {

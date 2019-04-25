@@ -18,5 +18,5 @@ interface SharedCartsRestApiToZedRequestClientInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $requestOptions = null);
+    public function call(string $url, TransferInterface $object, ?array $requestOptions = null): TransferInterface;
 }
