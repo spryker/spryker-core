@@ -9,11 +9,12 @@ namespace Spryker\Zed\CompanyUsersRestApi\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Propel\PropelFilterCriteria;
 
 /**
  * @method \Spryker\Zed\CompanyUsersRestApi\Persistence\CompanyUsersRestApiPersistenceFactory getFactory()
@@ -37,16 +38,19 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
             ->endUse();
 
         $this->applyFilters($queryCompanyUser, $criteriaFilterTransfer);
+        $companyUsersCount = $queryCompanyUser->count();
 
         $collection = $this->buildQueryFromCriteria($queryCompanyUser, $criteriaFilterTransfer->getFilter());
+
         /** @var \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[] $companyUserCollection */
-        $companyUserCollection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
+        $companyUserCollection = $this->getFilteredCollection($collection, $criteriaFilterTransfer->getFilter());
 
         $collectionTransfer = $this->getFactory()
             ->createCompanyUsersRestApiMapper()
             ->mapCompanyUserCollection($companyUserCollection);
 
-        $collectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
+        $collectionTransfer->setFilter($criteriaFilterTransfer->getFilter());
+        $collectionTransfer->setTotal($companyUsersCount);
 
         return $collectionTransfer;
     }
@@ -71,41 +75,19 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
             $queryCompanyUser->filterByIsActive($criteriaFilterTransfer->getIsActive());
         }
 
-        if ($criteriaFilterTransfer->getCompanyBusinessUnitUuids() !== null) {
+        if ($criteriaFilterTransfer->getCompanyBusinessUnitUuids()) {
             $queryCompanyUser->filterByFkCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitUuids());
         }
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
+    protected function getFilteredCollection(ModelCriteria $query, ?FilterTransfer $filterTransfer = null)
     {
-        if ($paginationTransfer) {
-            $page = $paginationTransfer
-                ->requirePage()
-                ->getPage();
-
-            $maxPerPage = $paginationTransfer
-                ->requireMaxPerPage()
-                ->getMaxPerPage();
-
-            $paginationModel = $query->paginate($page, $maxPerPage);
-
-            $paginationTransfer->setNbResults($paginationModel->getNbResults());
-            $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
-            $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
-            $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
-            $paginationTransfer->setLastPage($paginationModel->getLastPage());
-            $paginationTransfer->setNextPage($paginationModel->getNextPage());
-            $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
-
-            return $paginationModel->getResults();
-        }
-
-        return $query->find();
+        return $query->mergeWith((new PropelFilterCriteria($filterTransfer))->toCriteria())->find();
     }
 }

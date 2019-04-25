@@ -10,7 +10,7 @@ namespace Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface;
@@ -24,6 +24,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CompanyUserReader implements CompanyUserReaderInterface
 {
+    protected const DEFAULT_ITEMS_PER_PAGE = 10;
+
     /**
      * @var \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface
      */
@@ -75,8 +77,10 @@ class CompanyUserReader implements CompanyUserReaderInterface
             return $this->buildNotImplementedErrorResponse();
         }
 
-        $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
-        $companyUserCollectionTransfer = $this->companyUserClient->getActiveCompanyUsersByCustomerReference($customerTransfer);
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+        $companyUserCollectionTransfer = $this->companyUserClient
+            ->getActiveCompanyUsersByCustomerReference($customerTransfer);
 
         return $this->buildCompanyUserCollectionResponse($companyUserCollectionTransfer);
     }
@@ -117,7 +121,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
     {
         $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())
             ->setIdCompany($restRequest->getRestUser()->getIdCompany())
-            ->setPagination($this->createPaginationTransfer($restRequest));
+            ->setFilter($this->createFilterTransfer($restRequest));
 
         $companyUserCollectionTransfer = $this->companyUsersRestApiClient
             ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
@@ -130,12 +134,20 @@ class CompanyUserReader implements CompanyUserReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function buildCompanyUserCollectionResponse(CompanyUserCollectionTransfer $companyUserCollectionTransfer): RestResponseInterface
-    {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
+    protected function buildCompanyUserCollectionResponse(
+        CompanyUserCollectionTransfer $companyUserCollectionTransfer
+    ): RestResponseInterface {
+        $restResponse = $this->restResourceBuilder->createRestResponse(
+            $companyUserCollectionTransfer->getTotal(),
+            $companyUserCollectionTransfer->getFilter()->getLimit()
+        );
+
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUserTransfer) {
             $restCompanyUserAttributesTransfer = $this->companyUserMapper
-                ->mapCompanyUserTransferToRestCompanyUserAttributesTransfer($companyUserTransfer, new RestCompanyUserAttributesTransfer());
+                ->mapCompanyUserTransferToRestCompanyUserAttributesTransfer(
+                    $companyUserTransfer,
+                    new RestCompanyUserAttributesTransfer()
+                );
 
             $restResource = $this->restResourceBuilder->createRestResource(
                 CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
@@ -164,16 +176,15 @@ class CompanyUserReader implements CompanyUserReaderInterface
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
-
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
+     * @return \Generated\Shared\Transfer\FilterTransfer
      */
-    protected function createPaginationTransfer(RestRequestInterface $restRequest): PaginationTransfer
+    protected function createFilterTransfer(RestRequestInterface $restRequest): FilterTransfer
     {
-        return (new PaginationTransfer())
-            ->setPage($restRequest->getPage() ? $restRequest->getPage()->getOffset() : 0)
-            ->setMaxPerPage($restRequest->getPage() ? $restRequest->getPage()->getLimit() : 5);
+        return (new FilterTransfer())
+            ->setOffset($restRequest->getPage() ? $restRequest->getPage()->getOffset() : 0)
+            ->setLimit($restRequest->getPage() ? $restRequest->getPage()->getLimit() : static::DEFAULT_ITEMS_PER_PAGE);
     }
 }

@@ -43,4 +43,9 @@
         <property name="companyBusinessUnitUuids" type="string[]"/>
     </transfer>
 
+    <transfer name="CompanyUserCollection">
+        <property name="filter" type="Filter" />
+        <property name="total" type="int" />
+    </transfer>
+
 </transfers>
