@@ -12,7 +12,6 @@ use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServ
 use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncodingServiceInterface;
 use Spryker\Client\OauthPermission\OauthPermission\OauthPermissionReader;
 use Spryker\Client\OauthPermission\OauthPermission\OauthPermissionReaderInterface;
-use Spryker\Glue\Kernel\Application;
 
 class OauthPermissionFactory extends AbstractFactory
 {
