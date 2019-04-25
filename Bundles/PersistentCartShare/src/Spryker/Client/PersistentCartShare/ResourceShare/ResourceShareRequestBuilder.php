@@ -12,9 +12,11 @@ use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface;
 
-class ResourceShareRequestBuilder
+class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterface
 {
     protected const RESOURCE_TYPE_QUOTE = 'quote';
+    protected const ID_QUOTE_PARAMETER = 'id_quote';
+    protected const SHARE_OPTION_PARAMETER = 'share_option';
 
     /**
      * @var \Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface
@@ -39,8 +41,8 @@ class ResourceShareRequestBuilder
     {
         $resourceShareDataTransfer = (new ResourceShareDataTransfer())
             ->setData([
-                'id_quote' => $idQuote,
-                'share_option' => $shareOption,
+                static::ID_QUOTE_PARAMETER => $idQuote,
+                static::SHARE_OPTION_PARAMETER => $shareOption,
             ]);
 
         $resourceShareTransfer = (new ResourceShareTransfer())

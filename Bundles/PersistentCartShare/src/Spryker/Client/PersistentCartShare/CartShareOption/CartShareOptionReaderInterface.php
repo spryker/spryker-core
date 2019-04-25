@@ -10,7 +10,7 @@ namespace Spryker\Client\PersistentCartShare\CartShareOption;
 interface CartShareOptionReaderInterface
 {
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function getCartShareOptions(): array;
 }

@@ -13,14 +13,6 @@ use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 interface PersistentCartShareToResourceShareClientInterface
 {
     /**
-     * Specification:
-     * - Makes a Zed-Request call to generate resource share for provided customer.
-     * - Uses resource data from provided ResourceShareRequestTransfer::ResourceShareTransfer.
-     * - Sets UUID in returned transfer if generation was successful.
-     * - Sets `isSuccessful=true` if generation was successful, adds error messages otherwise.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer

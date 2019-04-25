@@ -29,7 +29,7 @@ class CartShareOptionReader implements CartShareOptionReaderInterface
     {
         $cartShareOptions = [];
         foreach ($this->cartShareOptionPlugins as $cartShareOptionPlugin) {
-            $cartShareOptions[$cartShareOptionPlugin->getGroup()][] = $cartShareOptionPlugin->getKey();
+            $cartShareOptions[$cartShareOptionPlugin->getShareOptionGroup()][] = $cartShareOptionPlugin->getKey();
         }
 
         return $cartShareOptions;

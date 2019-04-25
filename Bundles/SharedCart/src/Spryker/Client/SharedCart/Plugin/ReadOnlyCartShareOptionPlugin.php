@@ -35,7 +35,7 @@ class ReadOnlyCartShareOptionPlugin implements CartShareOptionPluginInterface
      *
      * @return string
      */
-    public function getGroup(): string
+    public function getShareOptionGroup(): string
     {
         return static::GROUP_INTERNAL;
     }

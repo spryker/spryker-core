@@ -27,5 +27,5 @@ interface CartShareOptionPluginInterface
      *
      * @return string
      */
-    public function getGroup(): string;
+    public function getShareOptionGroup(): string;
 }
