@@ -15,7 +15,7 @@ class SharedCartsRestApiClient extends AbstractClient implements SharedCartsRest
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function getSharedCartsByCartUuid($uuid): ShareDetailCollectionTransfer
+    public function getSharedCartsByCartUuid(string $uuid): ShareDetailCollectionTransfer
     {
         return $this->getFactory()->createZedStub()->getSharedCartsByCartUuid($uuid);
     }

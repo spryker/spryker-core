@@ -28,10 +28,11 @@ class SharedCartsRestApiStub implements SharedCartsRestApiStubInterface
      */
     public function getSharedCartsByCartUuid(string $uuid): ShareDetailCollectionTransfer
     {
+        $quoteTransfer = (new QuoteTransfer())->setUuid($uuid);
         /** @var \Generated\Shared\Transfer\ShareDetailCollectionTransfer $shareDetailCollectionTransfer */
         $shareDetailCollectionTransfer = $this->zedRequestClient->call(
             '/shared-carts-rest-api/gateway/get-shared-carts-by-cart-uuid',
-            (new QuoteTransfer())->setUuid($uuid)
+            $quoteTransfer
         );
 
         return $shareDetailCollectionTransfer;

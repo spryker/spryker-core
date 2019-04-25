@@ -7,17 +7,14 @@
 
 namespace Spryker\Glue\SharedCartsRestApi\Processor\SharedCart;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface SharedCartReaderInterface
 {
     /**
-     * @param array $resources
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestSharedCartsAttributesTransfer[]
      */
-    public function getSharedCartsByCartUuid(array $resources, RestRequestInterface $restRequest): RestResourceInterface;
+    public function getSharedCartsByCartUuid(RestResourceInterface $resource): array;
 }

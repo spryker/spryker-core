@@ -7,25 +7,26 @@
 
 namespace Spryker\Glue\SharedCartsRestApi;
 
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Container;
+use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Glue\Kernel\Container;
 
 class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     public const FACADE_QUOTE = 'FACADE_QUOTE';
     public const FACADE_SHARED_CART = 'FACADE_SHARED_CART';
+    public const CLIENT_SHARED_CARTS_REST_API = 'CLIENT_SHARED_CARTS_REST_API';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideDependencies(Container $container)
     {
-        $container = parent::provideBusinessLayerDependencies($container);
+        $container = parent::provideDependencies($container);
         $container = $this->addQuoteFacade($container);
         $container = $this->addSharedCartFacade($container);
+        $container = $this->addSharedCartsRestApiClient($container);
 
         return $container;
     }
@@ -53,6 +54,20 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container[static::FACADE_SHARED_CART] = function (Container $container) {
             return $container->getLocator()->sharedCart()->facade();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addSharedCartsRestApiClient(Container $container): Container
+    {
+        $container[static::CLIENT_SHARED_CARTS_REST_API] = function (Container $container) {
+            return $container->getLocator()->sharedCartsRestApi()->client();
         };
 
         return $container;

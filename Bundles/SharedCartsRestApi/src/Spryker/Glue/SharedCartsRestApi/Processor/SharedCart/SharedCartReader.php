@@ -7,77 +7,45 @@
 
 namespace Spryker\Glue\SharedCartsRestApi\Processor\SharedCart;
 
-use Generated\Shared\Transfer\RestSharedCartsAttributesTransfer;
+use Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
+use Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartsResourceMapperInterface;
 
 class SharedCartReader implements SharedCartReaderInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
-
-    /**
-     * @var \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface
+     * @var \Spryker\Client\SharedCartsRestApi\Dependency\Client\SharedCartsRestApiToZedRequestClientInterface
      */
     protected $sharedCartsRestApiClient;
 
     /**
-     * @param array $resources
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @var \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartsResourceMapperInterface
      */
-    public function getSharedCartsByCartUuid(array $resources, RestRequestInterface $restRequest): RestResourceInterface
-    {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-        $quoteUuid = $restRequest->getResource()->getId();
-//        if (!$quoteUuid) {
-//            return $restResponse->addError($this->createNavigationIdMissingError());
-//        }
+    protected $sharedCartsResourceMapper;
 
-        $shareDetailCollectionTransfer = $this->sharedCartsRestApiClient->getSharedCartsByCartUuid($restRequest);
-
-        $sharedCartAttributesTransfers = [];
-        foreach ($shareDetailCollectionTransfer->getShareDetails() as $shareDetailTransfer) {
-            $sharedCartAttributesTransfers[] = (new RestSharedCartsAttributesTransfer())
-                ->setIdCompanyUser(
-                    $shareDetailTransfer->getIdCompanyUser()
-                )
-                ->setIdCartPermissionGroup(
-                    $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
-                );
-        }
-
-
-        $this->buildSharedCartsResource($quoteUuid, $restResource);
-//        if (!$restResource) {
-//            return $restResponse->addError($this->createNavigationNotFoundError());
-//        }
-
-        return $restResponse->addResource($restResource);
-//        call the SharedCartsRestApiClient::getSharedCartsByCartUuid().
-
+    /**
+     * @param \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface $sharedCartsRestApiClient
+     * @param \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartsResourceMapperInterface $sharedCartsResourceMapper
+     */
+    public function __construct(
+        SharedCartsRestApiClientInterface $sharedCartsRestApiClient,
+        SharedCartsResourceMapperInterface $sharedCartsResourceMapper
+    ) {
+        $this->sharedCartsRestApiClient = $sharedCartsRestApiClient;
+        $this->sharedCartsResourceMapper = $sharedCartsResourceMapper;
     }
 
-    protected function buildSharedCartsResource(string $uuid, RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer): ?RestResourceInterface
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     *
+     * @return \Generated\Shared\Transfer\RestSharedCartsAttributesTransfer[]
+     */
+    public function getSharedCartsByCartUuid(RestResourceInterface $resource): array
     {
-        $restResource = $this->restResourceBuilder->createRestResource(
-            SharedCartsRestApiConfig::RESOURCE_SHARED_CARTS,
-            $uuid,
-            $restSharedCartsAttributesTransfer
+        $shareDetailCollectionTransfer = $this->sharedCartsRestApiClient->getSharedCartsByCartUuid(
+            $resource->getId()
         );
 
-//        $restResourceSelfLink = sprintf(
-//            static::SELF_LINK_TEMPLATE,
-//            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-//            $sku,
-//            ProductPricesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_PRICES
-//        );
-//        $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
-
-        return $restResource;
+        return $this->sharedCartsResourceMapper->mapSharedCartsResource($shareDetailCollectionTransfer);
     }
 }

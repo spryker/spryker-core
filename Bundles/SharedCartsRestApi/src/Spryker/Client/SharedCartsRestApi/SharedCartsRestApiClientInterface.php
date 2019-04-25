@@ -11,5 +11,5 @@ interface SharedCartsRestApiClientInterface
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function getSharedCartsByCartUuid($uuid): ShareDetailCollectionTransfer;
+    public function getSharedCartsByCartUuid(string $uuid): ShareDetailCollectionTransfer;
 }

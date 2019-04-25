@@ -7,13 +7,23 @@
 
 namespace Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship;
 
+use Generated\Shared\Transfer\RestSharedCartsAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartReaderInterface;
+use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class SharedCartExpander implements SharedCartExpanderInterface
 {
     public const KEY_UUID = 'KEY_UUID';
+
+    /**
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     */
+    protected $restResourceBuilder;
+
     /**
      * @var \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartReaderInterface
      */
@@ -21,9 +31,13 @@ class SharedCartExpander implements SharedCartExpanderInterface
 
     /**
      * @param \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartReaderInterface $sharedCartReader
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
-    public function __construct(SharedCartReaderInterface $sharedCartReader)
-    {
+    public function __construct(
+        SharedCartReaderInterface $sharedCartReader,
+        RestResourceBuilderInterface $restResourceBuilder
+    ) {
+        $this->restResourceBuilder = $restResourceBuilder;
         $this->sharedCartReader = $sharedCartReader;
     }
 
@@ -36,18 +50,16 @@ class SharedCartExpander implements SharedCartExpanderInterface
     public function addResourceRelationshipsByCartId(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
-            $skuProductConcrete = $this->findUuid($resource->getAttributes());
-            if (!$skuProductConcrete) {
+            $quoteUuid = $this->findUuid($resource->getAttributes());
+            if (!$quoteUuid) {
                 continue;
             }
 
-            $concreteProductsResource = $this->sharedCartReader->getSharedCartsByCartUuid($skuProductConcrete, $restRequest);
+            $concreteProductsResource = $this->sharedCartReader->getSharedCartsByCartUuid($resource);
             if ($concreteProductsResource) {
-                $resource->addRelationship($concreteProductsResource);
+                $this->addSharedCartRelationship($resource, $concreteProductsResource);
             }
         }
-
-        return $resources;
     }
 
     /**
@@ -65,5 +77,30 @@ class SharedCartExpander implements SharedCartExpanderInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param \Generated\Shared\Transfer\RestSharedCartsAttributesTransfer[] $restSharedCartsAttributesTransfers
+     *
+     * @return void
+     */
+    protected function addSharedCartRelationship(RestResourceInterface $resource, array $restSharedCartsAttributesTransfers): void
+    {
+        foreach ($restSharedCartsAttributesTransfers as $restSharedCartsAttributesTransfer) {
+            $restResource = $this->buildSharedCartsResource($resource->getId(), $restSharedCartsAttributesTransfer);
+            $resource->addRelationship($restResource);
+        }
+    }
+
+    protected function buildSharedCartsResource(string $uuid, RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer): RestResourceInterface
+    {
+        $restResource = $this->restResourceBuilder->createRestResource(
+            SharedCartsRestApiConfig::RESOURCE_SHARED_CARTS,
+            $uuid,
+            $restSharedCartsAttributesTransfer
+        );
+
+        return $restResource;
     }
 }

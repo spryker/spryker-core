@@ -7,21 +7,35 @@
 
 namespace Spryker\Glue\SharedCartsRestApi;
 
+use Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\SharedCartsRestApi\Dependency\Client\SharedCartsRestApiToGlossaryStorageClientInterface;
-use Spryker\Glue\SharedCartsRestApi\Dependency\Client\SharedCartsRestApiToProductStorageClientInterface;
-use Spryker\Glue\SharedCartsRestApi\Processor\AbstractProducts\AbstractProductsReader;
+use Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartsResourceMapper;
+use Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartsResourceMapperInterface;
+use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartExpander;
+use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartExpanderInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartReader;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartReaderInterface;
 
 class SharedCartsRestApiFactory extends AbstractFactory
 {
+
     /**
-     * @return \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\AbstractProductsResourceMapperInterface
+     * @return \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartsResourceMapperInterface
      */
-    public function createAbstractProductsResourceMapper(): AbstractProductsResourceMapperInterface
+    public function createSharedCartsRestMapper(): SharedCartsResourceMapperInterface
     {
-        return new AbstractProductsResourceMapper();
+        return new SharedCartsResourceMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartExpanderInterface
+     */
+    public function createSharedCartsRestExpander(): SharedCartExpanderInterface
+    {
+        return new SharedCartExpander(
+            $this->createSharedCartReader(),
+            $this->getResourceBuilder()
+        );
     }
 
     /**
@@ -30,14 +44,16 @@ class SharedCartsRestApiFactory extends AbstractFactory
     public function createSharedCartReader(): SharedCartReaderInterface
     {
         return new SharedCartReader(
+            $this->getSharedCartsRestApiClient(),
+            $this->createSharedCartsRestMapper()
         );
     }
 
     /**
-     * @return \Spryker\Glue\SharedCartsRestApi\Processor\Expander\ConcreteProductsRelationshipExpanderInterface
+     * @return \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface
      */
-    public function createConcreteProductsRelationshipExpander(): ConcreteProductsRelationshipExpanderInterface
+    public function getSharedCartsRestApiClient(): SharedCartsRestApiClientInterface
     {
-        return new ConcreteProductsRelationshipExpander($this->createConcreteProductsReader());
+        return $this->getProvidedDependency(SharedCartsRestApiDependencyProvider::CLIENT_SHARED_CARTS_REST_API);
     }
 }
