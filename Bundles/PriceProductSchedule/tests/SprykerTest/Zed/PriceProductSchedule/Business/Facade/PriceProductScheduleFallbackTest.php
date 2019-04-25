@@ -64,6 +64,8 @@ class PriceProductScheduleFallbackTest extends Unit
     {
         parent::setUp();
 
+        $this->tester->ensureDatabaseTableIsEmpty();
+
         $this->priceProductFacade = $this->tester->getLocator()->priceProduct()->facade();
         $this->storeFacade = $this->tester->getLocator()->store()->facade();
         $this->currencyFacade = $this->tester->getLocator()->currency()->facade();

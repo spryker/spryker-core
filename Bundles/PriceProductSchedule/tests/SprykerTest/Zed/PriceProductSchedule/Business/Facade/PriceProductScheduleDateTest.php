@@ -49,6 +49,8 @@ class PriceProductScheduleDateTest extends Unit
     {
         parent::setUp();
 
+        $this->tester->ensureDatabaseTableIsEmpty();
+
         $this->priceProductScheduleFacade = $this->tester->getFacade();
         $this->storeFacade = $this->tester->getLocator()->store()->facade();
     }

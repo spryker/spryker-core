@@ -45,7 +45,7 @@ class PriceProductScheduleCleanupConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $daysRetained = $this->input->getArgument(static::DAYS_RETAINED);
+        $daysRetained = (int)$this->input->getArgument(static::DAYS_RETAINED);
         $this->getFacade()->cleanAppliedScheduledPrices($daysRetained);
     }
 }

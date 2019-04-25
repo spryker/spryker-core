@@ -65,6 +65,8 @@ class PriceProductScheduleApplyTest extends Unit
     {
         parent::setUp();
 
+        $this->tester->ensureDatabaseTableIsEmpty();
+
         $this->priceProductScheduleFacade = $this->tester->getFacade();
         $this->currencyFacade = $this->tester->getLocator()->currency()->facade();
         $this->spyPriceProductScheduleQuery = $this->tester->getPriceProductScheduleQuery();
@@ -240,8 +242,7 @@ class PriceProductScheduleApplyTest extends Unit
      * @return void
      */
     public function testPriceProductScheduleForDifferentCurrenciesShouldApply(array $priceProductScheduleTestData = []
-    ): void
-    {
+    ): void {
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
 
