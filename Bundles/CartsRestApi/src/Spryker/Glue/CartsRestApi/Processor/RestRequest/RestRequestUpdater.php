@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig;
 
 class RestRequestUpdater implements RestRequestUpdaterInterface
 {
