@@ -55,6 +55,7 @@ class ContentByTypeTable extends AbstractTable
     {
         $config = $this->setHeader($config);
 
+        $config->setUrl('/table?type=' . urlencode($this->contentType));
         $config->setSortable([
             ContentTableConstants::COL_ID_CONTENT,
             ContentTableConstants::COL_NAME,
