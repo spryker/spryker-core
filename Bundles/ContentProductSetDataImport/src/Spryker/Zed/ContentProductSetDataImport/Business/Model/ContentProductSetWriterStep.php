@@ -43,15 +43,15 @@ class ContentProductSetWriterStep extends PublishAwareStep implements DataImport
             ->find()
             ->delete();
 
-        foreach ($dataSet[ContentProductSetDataSetInterface::CONTENT_LOCALIZED_PRODUCT_SET_TERMS] as $localizedProductAbstractListTermParameters) {
-            $contentLocalizedProductAbstractListEntity = SpyContentLocalizedQuery::create()
+        foreach ($dataSet[ContentProductSetDataSetInterface::CONTENT_LOCALIZED_PRODUCT_SET_TERMS] as $localizedProductSetTermParameters) {
+            $contentLocalizedProductSetEntity = SpyContentLocalizedQuery::create()
                 ->filterByFkContent($contentProductSetEntity->getIdContent())
-                ->filterByFkLocale($localizedProductAbstractListTermParameters[SpyContentLocalizedTableMap::COL_FK_LOCALE])
+                ->filterByFkLocale($localizedProductSetTermParameters[SpyContentLocalizedTableMap::COL_FK_LOCALE])
                 ->findOneOrCreate();
 
-            $contentLocalizedProductAbstractListEntity->fromArray($localizedProductAbstractListTermParameters, SpyContentLocalizedTableMap::TYPE_COLNAME);
+            $contentLocalizedProductSetEntity->fromArray($localizedProductSetTermParameters, SpyContentLocalizedTableMap::TYPE_COLNAME);
 
-            $contentLocalizedProductAbstractListEntity->save();
+            $contentLocalizedProductSetEntity->save();
         }
 
         $this->addPublishEvents(
