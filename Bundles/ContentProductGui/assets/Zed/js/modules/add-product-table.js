@@ -141,9 +141,14 @@ var ProductListContentItem = function(
     };
 
     this.replaceHiddenInputId = function(hiddenInputTemplate, hiddenInputsWrapper) {
-        var hiddenInputsLength = hiddenInputsWrapper.find('input').length;
+        var indexes = [0];
+        hiddenInputsWrapper.find('input').each(function (index, element) {
+            indexes.push(element.name.match(/\d+/g).pop());
+        });
+        var hiddenInputsLength = Math.max(...indexes);
 
-        return hiddenInputTemplate.replace(/__name__/g, hiddenInputsLength);
+
+        return hiddenInputTemplate.replace(/__name__/g, hiddenInputsLength + 1);
     }
 
     this.getCurrentAssignedTable = function(indexOfActiveTable) {

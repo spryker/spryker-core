@@ -109,9 +109,6 @@ class ProductAbstractListContentTermForm extends AbstractType
             'allow_delete' => true,
             'entry_options' => [
                 'label' => false,
-                'attr' => [
-                    'placeholder' => static::PLACEHOLDER_ID_ABSTRACT_PRODUCTS,
-                ],
             ],
             'constraints' => [
                 $this->getFactory()->createContentProductAbstractListConstraint(),
