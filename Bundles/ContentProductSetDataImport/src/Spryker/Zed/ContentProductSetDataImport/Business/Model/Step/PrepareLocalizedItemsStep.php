@@ -36,7 +36,7 @@ class PrepareLocalizedItemsStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $dataSet[AddLocalesStep::KEY_LOCALES] = array_merge($dataSet[AddLocalesStep::KEY_LOCALES], ['default' => null]);
 
@@ -50,7 +50,7 @@ class PrepareLocalizedItemsStep implements DataImportStepInterface
             }
 
             $localizedProductSetTermParameters[] = [
-                SpyContentLocalizedTableMap::COL_FK_LOCALE => $idLocale ?? $idLocale,
+                SpyContentLocalizedTableMap::COL_FK_LOCALE => $idLocale,
                 SpyContentLocalizedTableMap::COL_PARAMETERS => $this->utilEncodingService->encodeJson(
                     (new ContentProductSetTermTransfer())->setIdProductSet($dataSet[$localizedColumnId])->toArray()
                 ),

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ContentProductSetDataImport\Communication\Plugin;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\ContentProductSetDataImport\ContentProductSetDataImportConfig;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -27,7 +28,7 @@ class ContentProductSetDataImportPlugin extends AbstractPlugin implements DataIm
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
+    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFacade()->importProductSetTerm($dataImporterConfigurationTransfer);
     }
@@ -39,7 +40,7 @@ class ContentProductSetDataImportPlugin extends AbstractPlugin implements DataIm
      *
      * @return string
      */
-    public function getImportType()
+    public function getImportType(): string
     {
         return ContentProductSetDataImportConfig::IMPORT_TYPE_CONTENT_PRODUCT_SET;
     }

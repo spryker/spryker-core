@@ -26,7 +26,7 @@ class ProductSetKeyToIdStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $this->assureDefaultProductSetKeyExists($dataSet);
 
@@ -41,6 +41,25 @@ class ProductSetKeyToIdStep implements DataImportStepInterface
 
             $productSetIdLocale = ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_ID . '.' . $localeName;
             $dataSet[$productSetIdLocale] = $this->getIdProductSet($dataSet, $productSetKeyLocale);
+        }
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return void
+     */
+    protected function assureDefaultProductSetKeyExists(DataSetInterface $dataSet): void
+    {
+        if (!isset($dataSet[ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT])
+            || !$dataSet[ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT]
+        ) {
+            $parameters = [
+                static::ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductSetDataSetInterface::CONTENT_PRODUCT_SET_KEY],
+                static::ERROR_MESSAGE_PARAMETER_COLUMN => ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT,
+            ];
+
+            $this->createInvalidDataImportException(static::ERROR_MESSAGE_PRODUCT_SET_KEY_DEFAULT, $parameters);
         }
     }
 
@@ -66,25 +85,6 @@ class ProductSetKeyToIdStep implements DataImportStepInterface
         ];
 
         $this->createInvalidDataImportException(static::ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY, $parameters);
-    }
-
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
-    protected function assureDefaultProductSetKeyExists(DataSetInterface $dataSet): void
-    {
-        if (!isset($dataSet[ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT])
-            || !$dataSet[ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT]
-        ) {
-            $parameters = [
-                static::ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductSetDataSetInterface::CONTENT_PRODUCT_SET_KEY],
-                static::ERROR_MESSAGE_PARAMETER_COLUMN => ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT,
-            ];
-
-            $this->createInvalidDataImportException(static::ERROR_MESSAGE_PRODUCT_SET_KEY_DEFAULT, $parameters);
-        }
     }
 
     /**

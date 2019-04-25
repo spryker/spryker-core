@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
+use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\ContentProductSetDataImport\Communication\Plugin\ContentProductSetDataImportPlugin;
 use Spryker\Zed\ContentProductSetDataImport\ContentProductSetDataImportConfig;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
@@ -28,7 +29,6 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class ContentProductSetDataImportPluginTest extends Unit
 {
-    //protected const ERROR_MESSAGE_PRODUCT_SET_KEY_DEFAULT = '"product_set_key.default" is required. Please check the row with key: "APL-1".';
     protected const ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY = 'Please check "product_set_key.default" in the row with key: "APL-1". The wrong product set key passed.';
     protected const KEY_ID_PRODUCT_SET = 'id_product_set';
 
@@ -172,9 +172,9 @@ class ContentProductSetDataImportPluginTest extends Unit
     }
 
     /**
-     * @return \Spryker\Service\UtilEncoding\UtilEncodingService
+     * @return \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
-    protected function createUtilEncodingService()
+    protected function createUtilEncodingService(): UtilEncodingServiceInterface
     {
         return new UtilEncodingService();
     }

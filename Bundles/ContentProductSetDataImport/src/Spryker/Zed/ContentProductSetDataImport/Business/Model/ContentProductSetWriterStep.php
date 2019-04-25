@@ -34,18 +34,18 @@ class ContentProductSetWriterStep extends PublishAwareStep implements DataImport
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
-        $contentProductAbstractListEntity = $this->saveContentProductAbstractListEntity($dataSet);
+        $contentProductSetEntity = $this->saveContentProductSetEntity($dataSet);
 
         SpyContentLocalizedQuery::create()
-            ->filterByFkContent($contentProductAbstractListEntity->getIdContent())
+            ->filterByFkContent($contentProductSetEntity->getIdContent())
             ->find()
             ->delete();
 
         foreach ($dataSet[ContentProductSetDataSetInterface::CONTENT_LOCALIZED_PRODUCT_SET_TERMS] as $localizedProductAbstractListTermParameters) {
             $contentLocalizedProductAbstractListEntity = SpyContentLocalizedQuery::create()
-                ->filterByFkContent($contentProductAbstractListEntity->getIdContent())
+                ->filterByFkContent($contentProductSetEntity->getIdContent())
                 ->filterByFkLocale($localizedProductAbstractListTermParameters[SpyContentLocalizedTableMap::COL_FK_LOCALE])
                 ->findOneOrCreate();
 
@@ -56,7 +56,7 @@ class ContentProductSetWriterStep extends PublishAwareStep implements DataImport
 
         $this->addPublishEvents(
             ContentEvents::CONTENT_PUBLISH,
-            $contentProductAbstractListEntity->getPrimaryKey()
+            $contentProductSetEntity->getPrimaryKey()
         );
     }
 
@@ -65,18 +65,18 @@ class ContentProductSetWriterStep extends PublishAwareStep implements DataImport
      *
      * @return \Orm\Zed\Content\Persistence\SpyContent
      */
-    protected function saveContentProductAbstractListEntity(DataSetInterface $dataSet): SpyContent
+    protected function saveContentProductSetEntity(DataSetInterface $dataSet): SpyContent
     {
-        $contentProductAbstractListEntity = SpyContentQuery::create()
+        $contentProductSetEntity = SpyContentQuery::create()
             ->filterByKey($dataSet[ContentProductSetDataSetInterface::CONTENT_PRODUCT_SET_KEY])
             ->findOneOrCreate();
 
-        $contentProductAbstractListEntity->setName($dataSet[ContentProductSetDataSetInterface::COLUMN_NAME])
+        $contentProductSetEntity->setName($dataSet[ContentProductSetDataSetInterface::COLUMN_NAME])
             ->setDescription($dataSet[ContentProductSetDataSetInterface::COLUMN_DESCRIPTION])
             ->setContentTypeKey(static::CONTENT_TYPE_PRODUCT_SET)
             ->setContentTermKey(static::CONTENT_TERM_PRODUCT_SET)
             ->save();
 
-        return $contentProductAbstractListEntity;
+        return $contentProductSetEntity;
     }
 }

@@ -26,47 +26,47 @@ class ContentProductSetDataImportHelper extends Module
     }
 
     /**
-     * @param int $locale
-     * @param string $idSet
+     * @param int $idLocale
+     * @param string $data
      *
      * @return void
      */
-    public function assertContentLocalizedHasSetId(int $locale, string $idSet): void
+    public function assertContentLocalizedHasSetId(int $idLocale, string $data): void
     {
-        $contentLocalized = $this->getContentLocalizedQuery()->findOneByFkLocale($locale);
+        $contentLocalized = $this->getContentLocalizedQuery()->findOneByFkLocale($idLocale);
 
-        $this->assertContains($idSet, $contentLocalized->getParameters());
+        $this->assertContains($data, $contentLocalized->getParameters());
     }
 
     /**
-     * @param int $locale
+     * @param int $idLocale
      *
      * @return void
      */
-    public function assertContentLocalizedDoesNotExist(int $locale): void
+    public function assertContentLocalizedDoesNotExist(int $idLocale): void
     {
-        $contentLocalized = $this->getContentLocalizedQuery()->findOneByFkLocale($locale);
+        $contentLocalized = $this->getContentLocalizedQuery()->findOneByFkLocale($idLocale);
 
         $this->assertNull($contentLocalized);
     }
 
     /**
-     * @param string|null $keyContent
+     * @param string|null $contentKey
      *
      * @return void
      */
-    public function assertDatabaseTableContainsData(?string $keyContent = null): void
+    public function assertDatabaseTableContainsData(?string $contentKey = null): void
     {
         $contentQuery = $this->getContentQuery();
         $contentLocalizedQuery = $this->getContentLocalizedQuery();
 
-        if ($keyContent) {
-            $contentQuery = $contentQuery->findByKey($keyContent);
+        if ($contentKey) {
+            $contentQuery = $contentQuery->findByKey($contentKey);
             $contentLocalizedQuery = $contentLocalizedQuery->findByFkContent($contentQuery->getFirst()->getIdContent());
         }
 
-        $this->assertTrue(($contentQuery->count() > 0), 'Expected at least one entry in the database spy_content table but database table is empty.');
-        $this->assertTrue(($contentLocalizedQuery->count() > 0), 'Expected at least one entry in the database spy_content_localized table but database table is empty.');
+        $this->assertTrue(($contentQuery->exists()), 'Expected at least one entry in the database spy_content table but database table is empty.');
+        $this->assertTrue(($contentLocalizedQuery->exists()), 'Expected at least one entry in the database spy_content_localized table but database table is empty.');
     }
 
     /**

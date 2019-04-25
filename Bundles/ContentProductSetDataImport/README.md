@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/content-product-set-data-import.svg)](https://travis-ci.org/spryker/content-product-set-data-import)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/content-product-set-data-import/badge.svg)](https://coveralls.io/github/spryker/content-product-set-data-import)
 
-{{ADD DESCRIPTION HERE}}
+Data importer for ContentProductSet.
 
 ## Installation
 
