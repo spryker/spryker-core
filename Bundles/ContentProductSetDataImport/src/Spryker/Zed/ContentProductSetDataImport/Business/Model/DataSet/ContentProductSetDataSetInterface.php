@@ -9,7 +9,7 @@ namespace Spryker\Zed\ContentProductSetDataImport\Business\Model\DataSet;
 
 interface ContentProductSetDataSetInterface
 {
-    public const CONTENT_PRODUCT_SET_KEY = 'key';
+    public const COLUMN_KEY = 'key';
     public const COLUMN_NAME = 'name';
     public const COLUMN_DESCRIPTION = 'description';
     public const COLUMN_PRODUCT_SET_KEY = 'product_set_key';

@@ -55,7 +55,7 @@ class ProductSetKeyToIdStep implements DataImportStepInterface
             || !$dataSet[ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT]
         ) {
             $parameters = [
-                static::ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductSetDataSetInterface::CONTENT_PRODUCT_SET_KEY],
+                static::ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductSetDataSetInterface::COLUMN_KEY],
                 static::ERROR_MESSAGE_PARAMETER_COLUMN => ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT,
             ];
 
@@ -80,7 +80,7 @@ class ProductSetKeyToIdStep implements DataImportStepInterface
         }
 
         $parameters = [
-            static::ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductSetDataSetInterface::CONTENT_PRODUCT_SET_KEY],
+            static::ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductSetDataSetInterface::COLUMN_KEY],
             static::ERROR_MESSAGE_PARAMETER_COLUMN => $productSetKeyColumn,
         ];
 

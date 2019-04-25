@@ -68,7 +68,7 @@ class ContentProductSetWriterStep extends PublishAwareStep implements DataImport
     protected function saveContentProductSetEntity(DataSetInterface $dataSet): SpyContent
     {
         $contentProductSetEntity = SpyContentQuery::create()
-            ->filterByKey($dataSet[ContentProductSetDataSetInterface::CONTENT_PRODUCT_SET_KEY])
+            ->filterByKey($dataSet[ContentProductSetDataSetInterface::COLUMN_KEY])
             ->findOneOrCreate();
 
         $contentProductSetEntity->setName($dataSet[ContentProductSetDataSetInterface::COLUMN_NAME])
