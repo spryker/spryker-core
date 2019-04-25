@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Publisher\Communication\Registry;
+namespace Spryker\Zed\Publisher\Business\Registry;
 
 use ArrayIterator;
 use Exception;

@@ -29,7 +29,7 @@ class GlossaryStoragePublisherRegistryPlugin extends AbstractPlugin implements P
      *
      * @return \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface
      */
-    public function getPublisherEventRegistry(PublisherEventRegistryInterface $publisherEventRegistry): PublisherEventRegistryInterface
+    public function expandPublisherEventRegistry(PublisherEventRegistryInterface $publisherEventRegistry): PublisherEventRegistryInterface
     {
         $publisherEventRegistry->register(GlossaryEvents::GLOSSARY_KEY_PUBLISH, new GlossaryWritePublisherPlugin());
         $publisherEventRegistry->register(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_CREATE, new GlossaryWritePublisherPlugin());

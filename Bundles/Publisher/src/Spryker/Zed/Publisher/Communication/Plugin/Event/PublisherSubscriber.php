@@ -10,11 +10,9 @@ namespace Spryker\Zed\Publisher\Communication\Plugin\Event;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Publisher\Communication\Collection\PublisherRegistryCollectionInterface;
-use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
 
 /**
- * @method \Spryker\Zed\Publisher\Communication\PublisherCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Publisher\Business\PublisherFacadeInterface getFacade()()
  * @method \Spryker\Zed\Publisher\PublisherConfig getConfig()
  */
 class PublisherSubscriber extends AbstractPlugin implements EventSubscriberInterface
@@ -26,40 +24,21 @@ class PublisherSubscriber extends AbstractPlugin implements EventSubscriberInter
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $publisherRegistryCollection = $this->getFactory()->getPublisherRegistryCollection();
-        $publisherEventRegistries = $this->getRegisteredPublisherEventRegistries($publisherRegistryCollection);
-
-        foreach ($publisherEventRegistries as $publisherEventRegistry) {
-            $this->extractEventListenerCollection($eventCollection, $publisherEventRegistry);
-        }
+        $plugins = $this->getFacade()->mergePublisherPlugins();
+        $this->extractEventListenerCollection($eventCollection, $plugins);
 
         return $eventCollection;
     }
 
     /**
-     * @param \Spryker\Zed\Publisher\Communication\Collection\PublisherRegistryCollectionInterface $publisherRegistryCollection
-     *
-     * @return \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface[]
-     */
-    protected function getRegisteredPublisherEventRegistries(PublisherRegistryCollectionInterface $publisherRegistryCollection): array
-    {
-        $publisherPlugins = [];
-        foreach ($publisherRegistryCollection as $publisherRegistryPlugin) {
-            $publisherPlugins[] = $publisherRegistryPlugin->getPublisherEventRegistry($this->getFactory()->createPublisherEventRegistry());
-        }
-
-        return $publisherPlugins;
-    }
-
-    /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     * @param \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface $publisherEventRegistry
+     * @param array $publisherPlugins
      *
      * @return void
      */
-    protected function extractEventListenerCollection(EventCollectionInterface $eventCollection, PublisherEventRegistryInterface $publisherEventRegistry): void
+    protected function extractEventListenerCollection(EventCollectionInterface $eventCollection, array $publisherPlugins): void
     {
-        foreach ($publisherEventRegistry as $eventName => $listeners) {
+        foreach ($publisherPlugins as $eventName => $listeners) {
             $this->addListenerToEventCollection($eventCollection, $listeners, $eventName);
         }
     }

@@ -9,33 +9,31 @@ namespace Spryker\Zed\Publisher;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Publisher\Communication\Collection\PublisherRegistryCollection;
-use Spryker\Zed\Publisher\Communication\Collection\PublisherRegistryCollectionInterface;
 
 /**
  * @method \Spryker\Zed\Publisher\PublisherConfig getConfig()
  */
 class PublisherDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PUBLISHER_REGISTRY_COLLECTION = 'PUBLISHER_REGISTRY_COLLECTION';
+    public const PUBLISHER_REGISTRY_PLUGINS = 'PUBLISHER_REGISTRY_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container): void
+    public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::PUBLISHER_REGISTRY_COLLECTION] = function (Container $container) {
-            return $this->getPublisherRegistryCollection();
+        $container[static::PUBLISHER_REGISTRY_PLUGINS] = function (Container $container) {
+            return $this->getPublisherRegistryPlugins();
         };
     }
 
     /**
-     * @return \Spryker\Zed\Publisher\Communication\Collection\PublisherRegistryCollectionInterface
+     * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface[]
      */
-    public function getPublisherRegistryCollection(): PublisherRegistryCollectionInterface
+    public function getPublisherRegistryPlugins(): array
     {
-        return new PublisherRegistryCollection();
+        return [];
     }
 }

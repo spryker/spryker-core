@@ -18,5 +18,5 @@ interface PublisherRegistryPluginInterface
      *
      * @return \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface
      */
-    public function getPublisherEventRegistry(PublisherEventRegistryInterface $publisherEventRegistry): PublisherEventRegistryInterface;
+    public function expandPublisherEventRegistry(PublisherEventRegistryInterface $publisherEventRegistry): PublisherEventRegistryInterface;
 }
