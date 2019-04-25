@@ -34,7 +34,7 @@ class ContentBannerConfig extends AbstractSharedConfig
     /**
      * Content item banner default template name
      */
-    protected const WIDGET_TEMPLATE_NAME_DEFAULT = 'content_banner.template.default';
+    protected const WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT = 'content_banner.template.default';
 
     /**
      * Content item banner top-title template identifier
@@ -44,5 +44,5 @@ class ContentBannerConfig extends AbstractSharedConfig
     /**
      * Content item banner top-title template name
      */
-    protected const WIDGET_TEMPLATE_NAME_TOP_TITLE = 'content_banner.template.top-title';
+    protected const WIDGET_TEMPLATE_DISPLAY_NAME_TOP_TITLE = 'content_banner.template.top-title';
 }
