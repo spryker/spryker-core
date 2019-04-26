@@ -4,6 +4,13 @@
   "description": "SharedCartsRestApi module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/glue-application": "^1.9.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.29.0",
+    "spryker/quote": "^2.8.0",
+    "spryker/shared-cart": "^1.8.0",
+    "spryker/zed-request": "^3.7.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
