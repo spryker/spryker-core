@@ -16,7 +16,7 @@
         <property name="limit" type="int"/>
     </transfer>
 
-    <transfer name="FindAgentResponseTransfer">
+    <transfer name="FindAgentResponse">
         <property name="agent" type="User"/>
         <property name="isAgentFound" type="bool"/>
     </transfer>
