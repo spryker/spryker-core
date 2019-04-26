@@ -28,7 +28,7 @@ class TaxStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetTaxQuery
+     * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorageQuery
      */
     public function createTaxSetStorageQuery(): SpyTaxSetStorageQuery
     {
