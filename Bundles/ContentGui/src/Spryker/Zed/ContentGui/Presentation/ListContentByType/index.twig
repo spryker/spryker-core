@@ -4,9 +4,7 @@
         <h5 class="error template">{{ 'Please select a template' | trans }}</h5>
     </div>
     {% embed '@Gui/Partials/widget.twig' %}
-        {% block widget_title -%}
-            <h5>{{ 'Choose Content' | trans}}</h5>
-        {%- endblock %}
+        {% set widget_title = 'Choose Content' %}
         {% block widget_content %}
             {{ table | raw }}
         {% endblock %}
