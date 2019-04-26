@@ -184,4 +184,14 @@ interface PropelFacadeInterface
      * @return \Generated\Shared\Transfer\SchemaValidationTransfer
      */
     public function validateSchemaXmlFiles(): SchemaValidationTransfer;
+
+    /**
+     * Specification:
+     * - Runs raw SQL script for cleaning all tables, without dropping.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function cleanDatabase(): void;
 }

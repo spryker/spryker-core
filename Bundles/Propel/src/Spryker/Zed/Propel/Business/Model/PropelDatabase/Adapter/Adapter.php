@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter;
 
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CleanDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface;
@@ -40,24 +41,32 @@ class Adapter implements AdapterInterface
     protected $importCommand;
 
     /**
+     * @var \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CleanDatabaseInterface
+     */
+    protected $cleanDatabase;
+
+    /**
      * @param string $adapter
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface $createCommand
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface $dropCommand
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface $exportCommand
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInterface $importCommand
+     * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CleanDatabaseInterface $cleanDatabase
      */
     public function __construct(
         $adapter,
         CreateDatabaseInterface $createCommand,
         DropDatabaseInterface $dropCommand,
         ExportDatabaseInterface $exportCommand,
-        ImportDatabaseInterface $importCommand
+        ImportDatabaseInterface $importCommand,
+        CleanDatabaseInterface $cleanDatabase
     ) {
         $this->adapter = $adapter;
         $this->createCommand = $createCommand;
         $this->dropCommand = $dropCommand;
         $this->exportCommand = $exportCommand;
         $this->importCommand = $importCommand;
+        $this->cleanDatabase = $cleanDatabase;
     }
 
     /**
@@ -102,5 +111,13 @@ class Adapter implements AdapterInterface
     public function importDatabase($backupPath)
     {
         $this->importCommand->importDatabase($backupPath);
+    }
+
+    /**
+     * @return void
+     */
+    public function cleanDatabase(): void
+    {
+        $this->cleanDatabase->cleanDatabase();
     }
 }
