@@ -86,7 +86,7 @@ class TransferValidatorTest extends Unit
         $definitionFinder = $this->getDefinitionFinder($sourceDirectories);
         $messenger = $this->getMessengerMock();
         $config = $this->getTransferConfigMock();
-        $config->expects($this->any())->method('useStrictGeneration')->willReturn(true);
+        $config->expects($this->any())->method('isTransferNameValidated')->willReturn(true);
 
         $transferValidator = new TransferValidator($messenger, $definitionFinder, $config);
 
@@ -127,6 +127,6 @@ class TransferValidatorTest extends Unit
      */
     protected function getTransferConfigMock()
     {
-        return $this->getMockBuilder(TransferConfig::class)->setMethods(['useStrictGeneration'])->getMock();
+        return $this->getMockBuilder(TransferConfig::class)->setMethods(['isTransferNameValidated'])->getMock();
     }
 }

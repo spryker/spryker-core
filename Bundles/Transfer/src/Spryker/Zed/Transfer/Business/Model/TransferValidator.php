@@ -122,7 +122,7 @@ class TransferValidator implements TransferValidatorInterface
 
         $isValid = true;
         foreach ($definition as $transfer) {
-            if ($this->transferConfig->useStrictGeneration() && !$this->isValidName($transfer['name'])) {
+            if ($this->transferConfig->isTransferNameValidated() && !$this->isValidName($transfer['name'])) {
                 $isValid = false;
                 $this->messenger->warning(sprintf(
                     '%s.%s is an invalid transfer name',

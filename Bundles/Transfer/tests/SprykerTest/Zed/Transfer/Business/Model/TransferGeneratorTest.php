@@ -66,7 +66,7 @@ class TransferGeneratorTest extends Unit
             codecept_data_dir('Shared/Test/Transfer/'),
         ];
         $config = $this->getTransferConfigMock();
-        $config->expects($this->any())->method('useStrictGeneration')->willReturn(true);
+        $config->expects($this->any())->method('isTransferNameValidated')->willReturn(true);
 
         $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $config);
         $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
@@ -214,6 +214,6 @@ class TransferGeneratorTest extends Unit
      */
     protected function getTransferConfigMock()
     {
-        return $this->getMockBuilder(TransferConfig::class)->setMethods(['useStrictGeneration'])->getMock();
+        return $this->getMockBuilder(TransferConfig::class)->setMethods(['isTransferNameValidated'])->getMock();
     }
 }

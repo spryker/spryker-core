@@ -342,7 +342,7 @@ class GeneratedTransferTest extends Unit
      */
     protected function getTargetDirectory()
     {
-        return __DIR__ . '/../../_data/Generated/';
+        return codecept_data_dir('test_files/Generated/');
     }
 
     /**
@@ -361,9 +361,8 @@ class GeneratedTransferTest extends Unit
     protected function getClassGenerator()
     {
         $targetDirectory = $this->getTargetDirectory();
-        $generator = new ClassGenerator($targetDirectory);
 
-        return $generator;
+        return new ClassGenerator($targetDirectory);
     }
 
     /**

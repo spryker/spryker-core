@@ -115,7 +115,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function setName($name)
     {
-        if (!$this->transferConfig->useStrictGeneration()) {
+        if (!$this->transferConfig->isTransferNameValidated()) {
             return $this->setNameWithoutValidation($name);
         }
 

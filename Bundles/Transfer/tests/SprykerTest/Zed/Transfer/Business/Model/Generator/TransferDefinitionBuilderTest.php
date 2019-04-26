@@ -57,7 +57,7 @@ class TransferDefinitionBuilderTest extends Unit
             codecept_data_dir('Shared/Error/Transfer/'),
         ];
         $config = $this->getTransferConfigMock();
-        $config->expects($this->any())->method('useStrictGeneration')->willReturn(true);
+        $config->expects($this->any())->method('isTransferNameValidated')->willReturn(true);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Transfer name `category` does not match expected name `Category` for bundle `Test`');
@@ -91,6 +91,6 @@ class TransferDefinitionBuilderTest extends Unit
      */
     protected function getTransferConfigMock()
     {
-        return $this->getMockBuilder(TransferConfig::class)->setMethods(['useStrictGeneration'])->getMock();
+        return $this->getMockBuilder(TransferConfig::class)->setMethods(['isTransferNameValidated'])->getMock();
     }
 }
