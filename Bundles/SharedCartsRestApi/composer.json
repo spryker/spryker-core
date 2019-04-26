@@ -10,6 +10,7 @@
     "spryker/kernel": "^3.29.0",
     "spryker/quote": "^2.8.0",
     "spryker/shared-cart": "^1.8.0",
+    "spryker/uuid-behavior": "^1.0.0",
     "spryker/zed-request": "^3.7.0"
   },
   "require-dev": {
