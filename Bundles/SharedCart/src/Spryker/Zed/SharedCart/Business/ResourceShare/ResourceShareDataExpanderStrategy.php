@@ -26,7 +26,7 @@ class ResourceShareDataExpanderStrategy implements ResourceShareDataExpanderStra
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function expandResourceShareDataWithShareableCartDetails(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
+    public function applyResourceShareDataExpanderStrategy(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
         $resourceShareDataTransfer = $this->expandResourceShareData($resourceShareTransfer->getResourceShareData());
         $resourceShareResponseTransfer = $this->validateExpandedResourceShareData($resourceShareDataTransfer);

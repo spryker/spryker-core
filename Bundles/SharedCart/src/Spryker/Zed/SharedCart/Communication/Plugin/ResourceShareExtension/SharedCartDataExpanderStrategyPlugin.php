@@ -34,7 +34,7 @@ class SharedCartDataExpanderStrategyPlugin extends AbstractPlugin implements Res
      */
     public function expand(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
-        return $this->getFacade()->expandResourceShareDataWithShareableCartDetails($resourceShareTransfer);
+        return $this->getFacade()->applyResourceShareDataExpanderStrategy($resourceShareTransfer);
     }
 
     /**

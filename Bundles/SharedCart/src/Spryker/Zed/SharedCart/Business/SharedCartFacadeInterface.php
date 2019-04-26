@@ -188,7 +188,7 @@ interface SharedCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function expandResourceShareDataWithShareableCartDetails(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer;
+    public function applyResourceShareDataExpanderStrategy(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer;
 
     /**
      * Specification:
