@@ -9,6 +9,7 @@ namespace Spryker\Zed\PersistentCartShare\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PersistentCartShare\Business\Model\QuoteForPreviewReader;
+use Spryker\Zed\PersistentCartShare\Business\Model\QuoteForPreviewReaderInterface;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToQuoteFacadeInterface;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeInterface;
 use Spryker\Zed\PersistentCartShare\PersistentCartShareDependencyProvider;
@@ -35,9 +36,9 @@ class PersistentCartShareBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PersistentCartShare\Business\Model\QuoteForPreviewReader
+     * @return \Spryker\Zed\PersistentCartShare\Business\Model\QuoteForPreviewReaderInterface
      */
-    public function createQuoteForPreviewReader(): QuoteForPreviewReader
+    public function createQuoteForPreviewReader(): QuoteForPreviewReaderInterface
     {
         return new QuoteForPreviewReader(
             $this->getResourceShareFacade(),

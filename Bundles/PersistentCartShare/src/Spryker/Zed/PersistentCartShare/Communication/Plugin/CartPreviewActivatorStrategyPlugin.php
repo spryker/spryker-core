@@ -40,6 +40,8 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
      * @return bool
      */
     public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
