@@ -242,7 +242,8 @@ class PriceProductScheduleApplyTest extends Unit
      * @return void
      */
     public function testPriceProductScheduleForDifferentCurrenciesShouldApply(array $priceProductScheduleTestData = []
-    ): void {
+    ): void
+    {
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
 
