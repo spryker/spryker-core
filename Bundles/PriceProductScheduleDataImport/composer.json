@@ -20,8 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\PriceProductScheduleDataImport\\Helper\\": "tests/SprykerTest/Zed/PriceProductScheduleDataImport/_support/Helper/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
