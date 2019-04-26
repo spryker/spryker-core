@@ -14,6 +14,9 @@ use Spryker\Zed\ContentBannerGui\Communication\Form\BannerContentTermForm;
 use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
+/**
+ * @method \Spryker\Zed\ContentBannerGui\Communication\ContentBannerGuiCommunicationFactory getFactory()
+ */
 class ContentBannerFormPlugin extends AbstractPlugin implements ContentPluginInterface
 {
     /**
