@@ -24,8 +24,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CompanyUserReader implements CompanyUserReaderInterface
 {
-    protected const DEFAULT_ITEMS_PER_PAGE = 10;
-
     /**
      * @var \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface
      */
@@ -185,6 +183,6 @@ class CompanyUserReader implements CompanyUserReaderInterface
     {
         return (new FilterTransfer())
             ->setOffset($restRequest->getPage() ? $restRequest->getPage()->getOffset() : 0)
-            ->setLimit($restRequest->getPage() ? $restRequest->getPage()->getLimit() : static::DEFAULT_ITEMS_PER_PAGE);
+            ->setLimit($restRequest->getPage() ? $restRequest->getPage()->getLimit() : 0);
     }
 }

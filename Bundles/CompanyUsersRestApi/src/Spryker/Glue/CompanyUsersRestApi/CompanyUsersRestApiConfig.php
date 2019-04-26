@@ -19,4 +19,6 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED = 'Resource is not implemented.';
 
     public const CURRENT_USER_COLLECTION_IDENTIFIER = 'mine';
+
+    public const RESOURCE_CUSTOMERS = 'customers';
 }

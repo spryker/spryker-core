@@ -28,6 +28,7 @@
     <transfer name="RestCompanyUserAttributes">
         <property name="isActive" type="bool" />
         <property name="isDefault" type="bool"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="RestUser">
@@ -46,6 +47,10 @@
     <transfer name="CompanyUserCollection">
         <property name="filter" type="Filter" />
         <property name="total" type="int" />
+    </transfer>
+
+    <transfer name="CustomerCollection">
+        <property name="customer" type="Customer" />
     </transfer>
 
 </transfers>

@@ -5,23 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CompanyUsersRestApi\Zed;
+namespace Spryker\Zed\CompanyUsersRestApi\Business\Customer;
 
-use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 
-interface CompanyUsersRestApiStubInterface
+interface CustomerReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
-     */
-    public function getCompanyUserCollection(
-        CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUserCollectionTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
      *

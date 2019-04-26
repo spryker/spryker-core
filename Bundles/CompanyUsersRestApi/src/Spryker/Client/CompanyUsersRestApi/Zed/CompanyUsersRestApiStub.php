@@ -9,6 +9,7 @@ namespace Spryker\Client\CompanyUsersRestApi\Zed;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Spryker\Client\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToZedRequestClientInterface;
 
 class CompanyUsersRestApiStub implements CompanyUsersRestApiStubInterface
@@ -41,5 +42,22 @@ class CompanyUsersRestApiStub implements CompanyUsersRestApiStubInterface
         );
 
         return $companyUserCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollection(
+        CustomerCollectionTransfer $customerCollectionTransfer
+    ): CustomerCollectionTransfer {
+        /** @var \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer */
+        $customerCollectionTransfer = $this->zedRequestClient->call(
+            '/company-users-rest-api/gateway/get-customer-collection',
+            $customerCollectionTransfer
+        );
+
+        return $customerCollectionTransfer;
     }
 }
