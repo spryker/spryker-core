@@ -93,11 +93,9 @@ class QuoteMapper implements QuoteMapperInterface
     protected function encodeQuoteData(QuoteTransfer $quoteTransfer)
     {
         $allowedQuoteFields = $this->quoteConfig->getQuoteFieldsAllowedForSaving();
-        $quoteData = $quoteTransfer->modifiedToArray(true, true);
+        $filteredQuoteData = $this->filterDisallowedQuoteData($quoteTransfer, $allowedQuoteFields);
 
-        $filteredQuoteData = $this->filterDisallowedQuoteData($quoteData, $allowedQuoteFields);
-
-        return $this->encodingService->encodeJson($filteredQuoteData, JSON_OBJECT_AS_ARRAY);
+        return $this->encodingService->encodeJson($filteredQuoteData, JSON_FORCE_OBJECT);
     }
 
     /**
@@ -107,8 +105,35 @@ class QuoteMapper implements QuoteMapperInterface
      *
      * @return array
      */
-    protected function filterDisallowedQuoteData(array $quoteData, array $allowedQuoteFields, $data = [])
+    protected function filterDisallowedQuoteData($quoteData, array $allowedQuoteFields, string $groupKey = '')
     {
+        $data = [];
+
+        foreach ($allowedQuoteFields as $fieldKey => $fieldData) {
+            if (is_array($fieldData) && isset($quoteData[$fieldKey])) {
+                if ($quoteData[$fieldKey] instanceof ArrayObject) {
+                    foreach ($quoteData[$fieldKey] as $itemData) {
+                        $data[$fieldKey][] = $this->filterDisallowedQuoteData($itemData, $fieldData, $fieldKey);
+                    }
+
+                    continue;
+                }
+
+                $data[$fieldKey][] = $this->filterDisallowedQuoteData($quoteData[$fieldKey], $fieldData, $fieldKey);
+
+                continue;
+            }
+
+            if (isset($quoteData[$fieldData])) {
+                $data[$fieldData] = $quoteData[$fieldData];
+
+                continue;
+            }
+
+        }
+
+        return $data;
+
         foreach ($allowedQuoteFields as $fieldKey => $fieldData) {
             if (is_string($fieldData) && isset($quoteData[$fieldData])) {
                 $data[$fieldData] = $quoteData[$fieldData];
