@@ -10,6 +10,7 @@ namespace Spryker\Zed\PersistentCartShare\Communication\Plugin;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Shared\PersistentCartShare\PersistentCartShareConstants;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface;
 
 /**
@@ -19,10 +20,7 @@ use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDa
  */
 class PersistentCartShareResourceDataExpanderStrategyPlugin extends AbstractPlugin implements ResourceShareResourceDataExpanderStrategyPluginInterface
 {
-    protected const SHARE_OPTION_PREVIEW = 'PREVIEW';
     protected const RESOURCE_TYPE_QUOTE = 'quote';
-    protected const PARAM_ID_QUOTE = 'id_quote';
-    protected const PARAM_SHARE_OPTION = 'share_option';
 
     /**
      * {@inheritdoc}
@@ -37,7 +35,7 @@ class PersistentCartShareResourceDataExpanderStrategyPlugin extends AbstractPlug
      */
     public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
     {
-        if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
+        if ($resourceShareTransfer->getResourceType() !== PersistentCartShareConstants::RESOURCE_TYPE_QUOTE) {
             return false;
         }
 
@@ -45,7 +43,7 @@ class PersistentCartShareResourceDataExpanderStrategyPlugin extends AbstractPlug
             ->requireResourceShareData()->getResourceShareData()
             ->requireData()->getData();
 
-        if (!isset($resourceShareRawData[static::PARAM_ID_QUOTE], $resourceShareRawData[static::PARAM_SHARE_OPTION])) {
+        if (!isset($resourceShareRawData[PersistentCartShareConstants::ID_QUOTE_PARAMETER], $resourceShareRawData[PersistentCartShareConstants::PARAM_SHARE_OPTION])) {
             return false;
         }
 
@@ -68,8 +66,8 @@ class PersistentCartShareResourceDataExpanderStrategyPlugin extends AbstractPlug
             ->getResourceShareData()->getData();
 
         $resourceShareTransfer->getResourceShareData()
-            ->setIdQuote($resourceShareData[static::PARAM_ID_QUOTE])
-            ->setShareOption($resourceShareData[static::PARAM_SHARE_OPTION]);
+            ->setIdQuote($resourceShareData[PersistentCartShareConstants::ID_QUOTE_PARAMETER])
+            ->setShareOption($resourceShareData[PersistentCartShareConstants::PARAM_SHARE_OPTION]);
 
         return (new ResourceShareResponseTransfer())
             ->setIsSuccessful(true)

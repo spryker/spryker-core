@@ -12,14 +12,12 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Spryker\Shared\PersistentCartShare\PersistentCartShareConstants;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToQuoteFacadeInterface;
 use Spryker\Zed\PersistentCartShare\Dependency\Facade\PersistentCartShareToResourceShareFacadeInterface;
 
 class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
 {
-    protected const RESOURCE_TYPE_QUOTE = 'quote';
-    protected const RESOURCE_SHARE_OPTION_PREVIEW = 'PREVIEW';
-
     /**
      * @see \Spryker\Zed\PersistentCart\Business\Model\QuoteResolver::GLOSSARY_KEY_QUOTE_NOT_AVAILABLE
      */
@@ -106,9 +104,7 @@ class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
         foreach ($errorMessages as $errorMessage) {
             $quoteErrorTransferCollection->append(
                 (new QuoteErrorTransfer())
-                    ->setMessage(
-                        $errorMessage->getValue()
-                    )
+                    ->setMessage($errorMessage->getValue())
             );
         }
 
@@ -129,12 +125,12 @@ class QuoteForPreviewReader implements QuoteForPreviewReaderInterface
         }
 
         $resourceShareTransfer = $resourceShareResponseTransfer->getResourceShare();
-        if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
+        if ($resourceShareTransfer->getResourceType() !== PersistentCartShareConstants::RESOURCE_TYPE_QUOTE) {
             return $this->createQuoteResponseTransferWithError(static::GLOSSARY_KEY_PERSISTENT_CART_SHARE_INVALID_RESOURCE_ERROR);
         }
 
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
-        if ($resourceShareDataTransfer->getShareOption() !== static::RESOURCE_SHARE_OPTION_PREVIEW) {
+        if ($resourceShareDataTransfer->getShareOption() !== PersistentCartShareConstants::SHARE_OPTION_PREVIEW) {
             return $this->createQuoteResponseTransferWithError(static::GLOSSARY_KEY_PERSISTENT_CART_SHARE_INVALID_RESOURCE_ERROR);
         }
 

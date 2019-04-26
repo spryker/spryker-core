@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PersistentCartShare\Communication\Plugin;
 
 use Generated\Shared\Transfer\ResourceShareTransfer;
+use Spryker\Shared\PersistentCartShare\PersistentCartShareConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
 
@@ -18,11 +19,6 @@ use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorS
  */
 class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
 {
-    protected const SHARE_OPTION_PREVIEW = 'PREVIEW';
-    protected const RESOURCE_TYPE_QUOTE = 'quote';
-    protected const PARAM_ID_QUOTE = 'id_quote';
-    protected const PARAM_SHARE_OPTION = 'share_option';
-
     /**
      * {@inheritDoc}
      *
@@ -46,7 +42,7 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
      */
     public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
     {
-        if ($resourceShareTransfer->getResourceType() !== static::RESOURCE_TYPE_QUOTE) {
+        if ($resourceShareTransfer->getResourceType() !== PersistentCartShareConstants::RESOURCE_TYPE_QUOTE) {
             return false;
         }
 
@@ -54,11 +50,11 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
             ->requireResourceShareData()->getResourceShareData()
             ->requireData()->getData();
 
-        if (!isset($resourceShareRawData[static::PARAM_ID_QUOTE], $resourceShareRawData[static::PARAM_SHARE_OPTION])) {
+        if (!isset($resourceShareRawData[PersistentCartShareConstants::ID_QUOTE_PARAMETER], $resourceShareRawData[PersistentCartShareConstants::PARAM_SHARE_OPTION])) {
             return false;
         }
 
-        if ($resourceShareRawData[static::PARAM_SHARE_OPTION] !== static::SHARE_OPTION_PREVIEW) {
+        if ($resourceShareRawData[PersistentCartShareConstants::PARAM_SHARE_OPTION] !== PersistentCartShareConstants::SHARE_OPTION_PREVIEW) {
             return false;
         }
 

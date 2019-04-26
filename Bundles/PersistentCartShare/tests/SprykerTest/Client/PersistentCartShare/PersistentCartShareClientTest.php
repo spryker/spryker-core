@@ -21,10 +21,6 @@ use Spryker\Client\PersistentCartShare\PersistentCartShareClientInterface;
  */
 class PersistentCartShareClientTest extends Unit
 {
-    protected const RESOURCE_TYPE_QUOTE = "quote";
-    protected const SHARE_OPTION_PREVIEW = 'PREVIEW';
-    protected const SHARE_OPTION_FULL_ACCESS = 'FULL_ACCESS';
-
     /**
      * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
      */
