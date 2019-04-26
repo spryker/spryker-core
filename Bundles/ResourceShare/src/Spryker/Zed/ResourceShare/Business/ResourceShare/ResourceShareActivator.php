@@ -90,6 +90,8 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
         $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
 
+        $resourceShareResponseTransfer->setResourceShare($resourceShareTransfer);
+
         foreach ($this->resourceShareActivatorStrategyPlugins as $resourceShareActivatorStrategyPlugin) {
             if (!$resourceShareActivatorStrategyPlugin->isApplicable($resourceShareTransfer)) {
                 continue;
@@ -107,8 +109,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
             break;
         }
 
-        $resourceShareResponseTransfer->setIsSuccessful(true)
-            ->setResourceShare($resourceShareTransfer);
+        $resourceShareResponseTransfer->setIsSuccessful(true);
 
         return $this->executeResourceDataExpanderStrategyPlugins($resourceShareResponseTransfer);
     }

@@ -30,6 +30,7 @@ class PersistentCartShareClient extends AbstractClient implements PersistentCart
     {
         $resourceShareTransfer = (new ResourceShareTransfer())
             ->setUuid($resourceShareUuid);
+
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
             ->setResourceShare($resourceShareTransfer);
 

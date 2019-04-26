@@ -52,9 +52,9 @@ class PersistentCartShareFacadeTest extends Unit
     protected const PERSISTENT_CART_ERROR_QUOTE_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
 
     /**
-     * @see \Spryker\Zed\PersistentCartShare\Business\Model\QuoteForPreviewReader::GLOSSARY_KEY_PERSISTENT_CART_SHARE_QUOTE_ACCESS_DENIED_ERROR
+     * @see \Spryker\Zed\PersistentCartShare\Business\Model\QuoteForPreviewReader::GLOSSARY_KEY_PERSISTENT_CART_SHARE_INVALID_RESOURCE_ERROR
      */
-    protected const PERSISTENT_CART_SHARE_QUOTE_ACCESS_DENIED_ERROR = 'persistent_cart_share.quote.access_denied.error';
+    protected const GLOSSARY_KEY_PERSISTENT_CART_SHARE_INVALID_RESOURCE_ERROR = 'persistent_cart_share.invalid-resource.error';
     protected const SHARE_OPTION_PARAMETER = 'share_option';
     protected const ID_QUOTE_PARAMETER = 'id_quote';
 
@@ -207,7 +207,7 @@ class PersistentCartShareFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer */
         $errors = $quoteResponseTransfer->getErrors();
         $quoteErrorTransfer = reset($errors);
-        $this->assertEquals(static::PERSISTENT_CART_SHARE_QUOTE_ACCESS_DENIED_ERROR, $quoteErrorTransfer->getMessage());
+        $this->assertEquals(static::GLOSSARY_KEY_PERSISTENT_CART_SHARE_INVALID_RESOURCE_ERROR, $quoteErrorTransfer->getMessage());
     }
 
     /**

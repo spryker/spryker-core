@@ -19,14 +19,4 @@ interface PersistentCartShareToZedRequestClientInterface
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function call(string $url, TransferInterface $object, ?array $requestOptions = null): TransferInterface;
-
-    /**
-     * @return void
-     */
-    public function addFlashMessagesFromLastZedRequest(): void;
-
-    /**
-     * @return void
-     */
-    public function addResponseMessagesToMessenger(): void;
 }

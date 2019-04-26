@@ -35,20 +35,4 @@ class PersistentCartShareToZedRequestClientBridge implements PersistentCartShare
     {
         return $this->zedRequestClient->call($url, $object, $requestOptions);
     }
-
-    /**
-     * @return void
-     */
-    public function addFlashMessagesFromLastZedRequest(): void
-    {
-        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
-    }
-
-    /**
-     * @return void
-     */
-    public function addResponseMessagesToMessenger(): void
-    {
-        $this->zedRequestClient->addResponseMessagesToMessenger();
-    }
 }
