@@ -505,7 +505,7 @@ class Trigger implements TriggerInterface
         if (!isset($stateMachineHandler->getCommandPlugins()[$commandString])) {
             throw new CommandNotFoundException(
                 sprintf(
-                    'Command plugin "%s" not registered in "%s" class. Please add it to getCommandPlugins method.',
+                    'Command plugin "%s" not registered in "%s" class. Please add it to getCommandPlugins() method.',
                     $commandString,
                     get_class($stateMachineHandler)
                 )
