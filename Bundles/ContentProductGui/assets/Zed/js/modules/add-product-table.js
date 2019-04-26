@@ -13,7 +13,9 @@ var ProductListContentItem = function(
     addProductButtonSelector,
     removeProductButtonSelector,
     clearAllFieldsSelector,
-    orderButtonSelector
+    orderButtonSelector,
+    navigationTabLinkSelector,
+    tabsContentSelector
 ) {
     this.tablesWrapperSelector = tablesWrapperSelector;
     this.hiddenInputsWrapperSelector = hiddenInputsWrapperSelector;
@@ -23,13 +25,35 @@ var ProductListContentItem = function(
     this.addProductButtonSelector = addProductButtonSelector;
     this.removeProductButtonSelector = removeProductButtonSelector;
     this.orderButtonSelector = orderButtonSelector;
+    this.navigationTabLinks = $(navigationTabLinkSelector);
+    this.tabsContent = $(tabsContentSelector);
 
     this.mapEvents = function() {
         this.productsTables.on('click', this.addProductButtonSelector, this.addProductButtonHandler.bind(this));
         this.assignedTables.on('click', this.removeProductButtonSelector, this.removeProductButtonHandler.bind(this));
         this.assignedTables.on('click', this.orderButtonSelector, this.changeOrderButtonHandler.bind(this));
         this.clearAllFieldsButton.on('click', this.clearAllFieldsButtonsHandler.bind(this));
+        this.navigationTabLinks.on('click', this.resizeTableColumn.bind(this));
     };
+
+    this.resizeTableColumn = function(event) {
+        var tabId = event.target.getAttribute('href');
+        var self = this;
+        this.tabsContent.each(function(index, item) {
+            var currentTabId = item.getAttribute('id');
+            var isOpenTab = tabId.substring(1) === currentTabId;
+
+            if (isOpenTab) {
+                console.log(currentTabId);
+                $(item).show();
+                $(tabId).find(self.assignedTables).DataTable().columns.adjust().draw();
+                $(tabId).find(self.productsTables).DataTable().columns.adjust().draw();
+            } else {
+                $(item).hide();
+            }
+        });
+
+    }
 
     this.addProductButtonHandler = function(event) {
         var clickInfo = this.getClickInfo(event);
@@ -226,6 +250,8 @@ $(document).ready(function () {
         '.js-add-product-abstract',
         '.js-delete-product-abstract',
         '.clear-fields',
-        '.js-reorder-product-abstract'
+        '.js-reorder-product-abstract',
+        '.nav-tabs a',
+        '.tab-content .tab-pane'
     );
 });
