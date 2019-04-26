@@ -81,7 +81,7 @@ class ContentByTypeTable extends AbstractTable
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $header = [
-            ContentTableConstants::COL_ID_CONTENT => 'Content Item ID',
+            ContentTableConstants::COL_ID_CONTENT => 'ID',
             ContentTableConstants::COL_NAME => 'Name',
             ContentTableConstants::COL_ACTIONS => '',
         ];

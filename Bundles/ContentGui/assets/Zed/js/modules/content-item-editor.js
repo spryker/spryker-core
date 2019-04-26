@@ -24,10 +24,9 @@ const ContentItemEditor = function() {
     };
 
     this.createDropdownButton = function () {
-        const buttonContents = window.editorConfiguration.cms.buttonTitle + ' <i class="fa fa-caret-down" aria-hidden="true"></i>';
 
         return editorButtons.ContentItemDropdownButton(
-            buttonContents,
+            window.editorConfiguration.cms.buttonTitle,
             this.generateDropdownList(),
             this.dropDownClickHandler
         );

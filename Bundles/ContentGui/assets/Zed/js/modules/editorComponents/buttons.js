@@ -1,5 +1,5 @@
 const ContentItemDropdownButton = function (
-    buttonContents,
+    buttonTitle,
     dropdownList,
     dropdownCallback
 ) {
@@ -8,7 +8,7 @@ const ContentItemDropdownButton = function (
 
         var button = ui.buttonGroup([
             ui.button({
-                contents: buttonContents,
+                contents: buttonTitle + ' <i class="fa fa-caret-down" aria-hidden="true"></i>',
                 data: {
                     toggle: 'dropdown'
                 }
@@ -21,8 +21,8 @@ const ContentItemDropdownButton = function (
 
         return button.render();
     }
-}
+};
 
 module.exports = {
     ContentItemDropdownButton: ContentItemDropdownButton
-}
+};

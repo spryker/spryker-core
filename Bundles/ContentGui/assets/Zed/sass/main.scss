@@ -1,0 +1,36 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+.note-editor {
+    .template-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    label {
+        margin: 0 0 10px 5px;
+    }
+
+    .btn-create {
+        color: #ffffff !important;
+    }
+
+    .ibox-title {
+        h5 {
+            float: none;
+        }
+    }
+
+    .error {
+        display: block;
+        color: #F22 !important;
+        font-size: 14px;
+    }
+
+    .template-title {
+        font-size: 14px;
+    }
+}
