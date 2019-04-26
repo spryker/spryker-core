@@ -111,17 +111,17 @@ class PriceProductValidator implements PriceProductValidatorInterface
     }
 
     /**
-     * @param string $currencyIsocode
+     * @param string $currencyIsoCode
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessageMinPriceRestriction(string $currencyIsocode): MessageTransfer
+    protected function createMessageMinPriceRestriction(string $currencyIsoCode): MessageTransfer
     {
         return (new MessageTransfer())
             ->setValue(static::CART_PRE_CHECK_MIN_PRICE_RESTRICTION_FAILED_KEY)
             ->setParameters([
                 '%price%' => $this->config->getMinPriceRestriction(),
-                '%currencyIsocode%' => $currencyIsocode,
+                '%currencyIsoCode%' => $currencyIsoCode,
             ]);
     }
 
