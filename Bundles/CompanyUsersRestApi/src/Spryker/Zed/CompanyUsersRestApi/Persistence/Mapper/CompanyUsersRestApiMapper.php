@@ -7,24 +7,22 @@
 
 namespace Spryker\Zed\CompanyUsersRestApi\Persistence\Mapper;
 
-use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SpyCompanyUserEntityTransfer;
 
 class CompanyUsersRestApiMapper
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[] $collection
+     * @param \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[] $companyUserEntityTransferCollection
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function mapCompanyUserCollection($collection): CompanyUserCollectionTransfer
+    public function mapCompanyUserCollection(array $companyUserEntityTransferCollection): CompanyUserCollectionTransfer
     {
         $companyUserCollectionTransfer = new CompanyUserCollectionTransfer();
 
-        foreach ($collection as $companyUserEntityTransfer) {
+        foreach ($companyUserEntityTransferCollection as $companyUserEntityTransfer) {
             $companyUserCollectionTransfer
                 ->addCompanyUser($this->mapEntityTransferToCompanyUserTransfer($companyUserEntityTransfer));
         }
@@ -40,24 +38,6 @@ class CompanyUsersRestApiMapper
     public function mapEntityTransferToCompanyUserTransfer(
         SpyCompanyUserEntityTransfer $companyUserEntityTransfer
     ): CompanyUserTransfer {
-        $companyUserTransfer = (new CompanyUserTransfer())->fromArray($companyUserEntityTransfer->modifiedToArray(), true);
-
-        if ($companyUserEntityTransfer->getCustomer()) {
-            $customerTransfer = (new CustomerTransfer())->fromArray(
-                $companyUserEntityTransfer->getCustomer()->modifiedToArray(),
-                true
-            );
-            $companyUserTransfer->setCustomer($customerTransfer);
-        }
-
-        if ($companyUserEntityTransfer->getCompany()) {
-            $companyTransfer = (new CompanyTransfer())->fromArray(
-                $companyUserEntityTransfer->getCompany()->modifiedToArray(),
-                true
-            );
-            $companyUserTransfer->setCompany($companyTransfer);
-        }
-
-        return $companyUserTransfer;
+        return (new CompanyUserTransfer())->fromArray($companyUserEntityTransfer->modifiedToArray(), true);
     }
 }

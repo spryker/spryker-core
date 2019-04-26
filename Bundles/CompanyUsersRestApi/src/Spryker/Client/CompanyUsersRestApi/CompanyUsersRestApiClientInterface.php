@@ -15,7 +15,7 @@ interface CompanyUsersRestApiClientInterface
 {
     /**
      * Specification:
-     * - Retrieves company user collection according provided filter.
+     * - Retrieves company user collection according to providing filter.
      *
      * @api
      *

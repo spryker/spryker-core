@@ -30,7 +30,7 @@ class CompanyUsersRestApiClient extends AbstractClient implements CompanyUsersRe
         CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUserCollectionTransfer {
         return $this->getFactory()
-            ->createZedCompanyUsersRestApiStub()
+            ->createCompanyUsersRestApiStub()
             ->getCompanyUserCollection($criteriaFilterTransfer);
     }
 
@@ -47,7 +47,7 @@ class CompanyUsersRestApiClient extends AbstractClient implements CompanyUsersRe
         CustomerCollectionTransfer $customerCollectionTransfer
     ): CustomerCollectionTransfer {
         return $this->getFactory()
-            ->createZedCompanyUsersRestApiStub()
+            ->createCompanyUsersRestApiStub()
             ->getCustomerCollection($customerCollectionTransfer);
     }
 }

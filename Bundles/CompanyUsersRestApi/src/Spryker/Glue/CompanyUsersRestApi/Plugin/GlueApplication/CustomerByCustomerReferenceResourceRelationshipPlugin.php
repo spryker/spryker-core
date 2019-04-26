@@ -19,8 +19,7 @@ class CustomerByCustomerReferenceResourceRelationshipPlugin extends AbstractPlug
 {
     /**
      * {@inheritdoc}
-     *  - Adds category node resource as a relationship.
-     *  - Collects list of category ids from nodes of navigation resource recursively.
+     *  - Adds customer resource as a relationship.
      *
      * @api
      *

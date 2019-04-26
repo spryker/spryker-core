@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface;
 use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResource;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -26,11 +26,20 @@ class CustomerResourceExpander implements CustomerResourceExpanderInterface
     protected $companyUsersRestApiClient;
 
     /**
-     * @param \Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface $companyUsersRestApiClient
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
-    public function __construct(CompanyUsersRestApiClientInterface $companyUsersRestApiClient)
-    {
+    protected $restResourceBuilder;
+
+    /**
+     * @param \Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface $companyUsersRestApiClient
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     */
+    public function __construct(
+        CompanyUsersRestApiClientInterface $companyUsersRestApiClient,
+        RestResourceBuilderInterface $restResourceBuilder
+    ) {
         $this->companyUsersRestApiClient = $companyUsersRestApiClient;
+        $this->restResourceBuilder = $restResourceBuilder;
     }
 
     /**
@@ -97,7 +106,7 @@ class CustomerResourceExpander implements CustomerResourceExpanderInterface
     ): void {
         foreach ($customerCollectionTransfer->getCustomers() as $customerTransfer) {
             if ($this->findCustomerReference($resource->getAttributes()) === $customerTransfer->getCustomerReference()) {
-                $restResource = new RestResource(
+                $restResource = $this->restResourceBuilder->createRestResource(
                     CompanyUsersRestApiConfig::RESOURCE_CUSTOMERS,
                     $customerTransfer->getCustomerReference(),
                     $customerTransfer

@@ -41,7 +41,10 @@ class CompanyUsersRestApiFactory extends AbstractFactory
      */
     public function createCustomerResourceExpander(): CustomerResourceExpanderInterface
     {
-        return new CustomerResourceExpander($this->getClient());
+        return new CustomerResourceExpander(
+            $this->getClient(),
+            $this->getResourceBuilder()
+        );
     }
 
     /**

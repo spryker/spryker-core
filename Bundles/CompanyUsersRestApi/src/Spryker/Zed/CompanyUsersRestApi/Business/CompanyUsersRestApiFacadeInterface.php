@@ -33,7 +33,7 @@ interface CompanyUsersRestApiFacadeInterface
 
     /**
      * Specification
-     * - Retrieves user companies which can filtered by company ID, company user ID, company business unit ID, user ID and/or active flag.
+     * - Retrieves company users which can filtered by company ID, company user ID, company business unit ID, user ID and/or active flag.
      *
      * @api
      *

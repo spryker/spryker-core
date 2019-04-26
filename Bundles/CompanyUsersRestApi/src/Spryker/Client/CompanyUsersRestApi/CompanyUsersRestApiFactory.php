@@ -17,7 +17,7 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CompanyUsersRestApi\Zed\CompanyUsersRestApiStubInterface
      */
-    public function createZedCompanyUsersRestApiStub(): CompanyUsersRestApiStubInterface
+    public function createCompanyUsersRestApiStub(): CompanyUsersRestApiStubInterface
     {
         return new CompanyUsersRestApiStub($this->getZedRequestClient());
     }

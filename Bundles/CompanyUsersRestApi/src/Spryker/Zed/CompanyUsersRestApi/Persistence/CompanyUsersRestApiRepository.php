@@ -9,10 +9,8 @@ namespace Spryker\Zed\CompanyUsersRestApi\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 
@@ -37,31 +35,35 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
             ->filterByAnonymizedAt(null, Criteria::ISNULL)
             ->endUse();
 
-        $this->applyFilters($queryCompanyUser, $criteriaFilterTransfer);
+        $queryCompanyUser = $this->applyFilters($queryCompanyUser, $criteriaFilterTransfer);
         $companyUsersCount = $queryCompanyUser->count();
 
-        $collection = $this->buildQueryFromCriteria($queryCompanyUser, $criteriaFilterTransfer->getFilter());
+        $queryCompanyUser = $this->buildQueryFromCriteria($queryCompanyUser, $criteriaFilterTransfer->getFilter());
 
-        /** @var \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[] $companyUserCollection */
-        $companyUserCollection = $this->getFilteredCollection($collection, $criteriaFilterTransfer->getFilter());
+        $filterTransfer = $criteriaFilterTransfer->getFilter();
+        if ($filterTransfer) {
+            $queryCompanyUser->mergeWith(
+                (new PropelFilterCriteria($filterTransfer))->toCriteria()
+            );
+        }
 
-        $collectionTransfer = $this->getFactory()
+        $companyUserCollectionTransfer = $this->getFactory()
             ->createCompanyUsersRestApiMapper()
-            ->mapCompanyUserCollection($companyUserCollection);
+            ->mapCompanyUserCollection($queryCompanyUser->find());
 
-        $collectionTransfer->setFilter($criteriaFilterTransfer->getFilter());
-        $collectionTransfer->setTotal($companyUsersCount);
+        $companyUserCollectionTransfer->setFilter($criteriaFilterTransfer->getFilter());
+        $companyUserCollectionTransfer->setTotal($companyUsersCount);
 
-        return $collectionTransfer;
+        return $companyUserCollectionTransfer;
     }
 
     /**
      * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $queryCompanyUser
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
-     * @return void
+     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      */
-    protected function applyFilters(SpyCompanyUserQuery $queryCompanyUser, CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer): void
+    protected function applyFilters(SpyCompanyUserQuery $queryCompanyUser, CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer): SpyCompanyUserQuery
     {
         if ($criteriaFilterTransfer->getIdCompany()) {
             $queryCompanyUser->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
@@ -78,16 +80,7 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
         if ($criteriaFilterTransfer->getCompanyBusinessUnitUuids()) {
             $queryCompanyUser->filterByFkCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitUuids());
         }
-    }
 
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
-     *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
-     */
-    protected function getFilteredCollection(ModelCriteria $query, ?FilterTransfer $filterTransfer = null)
-    {
-        return $query->mergeWith((new PropelFilterCriteria($filterTransfer))->toCriteria())->find();
+        return $queryCompanyUser;
     }
 }
