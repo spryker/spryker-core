@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\PostgreSql;
 
+use PDO;
 use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
@@ -23,6 +24,10 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     public function dropDatabase()
     {
+        if (!$this->isDbExist()) {
+            return true;
+        }
+
         if ($this->useSudo()) {
             return $this->runSudoDropCommand();
         }
@@ -49,18 +54,13 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     }
 
     /**
-     * @throws \RuntimeException
-     *
      * @return void
      */
-    protected function closeOpenConnections()
+    protected function closeOpenConnections(): void
     {
-        $postgresVersion = $this->getPostgresVersion();
-        $process = $this->getProcess(sprintf('sudo pg_ctlcluster %s main restart --force', $postgresVersion));
-        $process->run();
-        if (!$process->isSuccessful()) {
-            throw new RuntimeException($process->getErrorOutput());
-        }
+        $conn = $this->createPdoConnection();
+        $conn->exec($this->getCloseOpenedConnectionsQuery());
+        $conn = null;
     }
 
     /**
@@ -190,5 +190,54 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
         }
 
         return $value;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCloseOpenedConnectionsQuery(): string
+    {
+        return sprintf('
+            SELECT pg_terminate_backend(pg_stat_activity.pid)
+                FROM pg_stat_activity
+                WHERE pg_stat_activity.datname = \'%s\'
+                    AND pid <> pg_backend_pid();
+        ', $this->getConfigValue(PropelConstants::ZED_DB_DATABASE));
+    }
+
+    /**
+     * @return \PDO
+     */
+    protected function createPdoConnection(): PDO
+    {
+        $dsn = sprintf(
+            'pgsql:host=%s;port=%s;dbname=postgres',
+            Config::get(PropelConstants::ZED_DB_HOST),
+            Config::get(PropelConstants::ZED_DB_PORT)
+        );
+
+        return new PDO(
+            $dsn,
+            $this->getConfigValue(PropelConstants::ZED_DB_USERNAME),
+            $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD)
+        );
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDbExist(): bool
+    {
+        $pdoConn = $this->createPdoConnection();
+
+        $checkDbExistsQuery = sprintf(
+            'SELECT 1 from pg_database where datname = \'%s\';',
+            $this->getConfigValue(PropelConstants::ZED_DB_DATABASE)
+        );
+        $result = $pdoConn->query($checkDbExistsQuery)->fetchAll();
+
+        $pdoConn = null;
+
+        return !empty($result);
     }
 }
