@@ -34,4 +34,14 @@ class ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeBridge
     {
         return $this->productDiscontinuedFacade->markProductAsDiscontinued($productDiscontinueRequestTransfer);
     }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return bool
+     */
+    public function isAnyProductConcreteDiscontinued(array $productConcreteIds): bool
+    {
+        return $this->productDiscontinuedFacade->isAnyProductConcreteDiscontinued($productConcreteIds);
+    }
 }
