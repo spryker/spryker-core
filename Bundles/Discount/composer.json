@@ -25,6 +25,7 @@
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
+    "spryker/oms": "*",
     "spryker/propel": "*",
     "spryker/testify": "*",
     "spryker/zed-navigation": "*"

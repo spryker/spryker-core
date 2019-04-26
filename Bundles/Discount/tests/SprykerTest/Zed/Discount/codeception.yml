@@ -37,6 +37,8 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\Sales\Helper\BusinessHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Shared\Application\Helper\ZedHelper:
                 - \SprykerTest\Shared\Testify\Helper\ZedControllerTable:
                     depends: \SprykerTest\Shared\Testify\Helper\ZedBootstrap
