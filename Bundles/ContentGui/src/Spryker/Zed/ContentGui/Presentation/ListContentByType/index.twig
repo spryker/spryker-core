@@ -3,6 +3,7 @@
         <h5 class="error item">{{ 'Please select a content item' | trans }}</h5>
         <h5 class="error template">{{ 'Please select a template' | trans }}</h5>
     </div>
+
     {% embed '@Gui/Partials/widget.twig' %}
         {% set widget_title = 'Choose Content' %}
         {% block widget_content %}
@@ -15,7 +16,7 @@
     {% if templates is not empty %}
         {% set selectedTemplateIdentifier = selectedTemplateIdentifier is defined ? selectedTemplateIdentifier : templates[0].identifier %}
 
-        <h5>{{ 'Choose Template' | trans }}</h5>
+        <h5 class="template-title">{{ 'Choose Template' | trans }}</h5>
         <ul class="template-list">
             {% for key, template in templates %}
                 {% set templateName = template.name | trans %}

@@ -14,9 +14,18 @@
         color: #ffffff !important;
     }
 
+    .ibox-title {
+        h5 {
+            float: none;
+        }
+    }
+
     .error {
         display: block;
-        float: none;
         color: #F22 !important;
+    }
+
+    .template-title {
+        font-size: 14px;
     }
 }

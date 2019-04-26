@@ -8,7 +8,6 @@ const contentItemDialog = function() {
             this.editor = context.layoutInfo.editor;
             this.options = context.options;
             this.$ui = $.summernote.ui;
-            this.isBodyTemplateAppended = false;
 
             this.initialize = function() {
                 const $container = this.options.dialogsInBody ? this.$body : this.editor;
@@ -17,6 +16,7 @@ const contentItemDialog = function() {
                     '</div>';
                 const bodyTemplate = '<div class="content-item-body">' +
                     loaderTemplate +
+                    '<div class="content-ajax"></div>' +
                     '</div>';
 
                 const footerTemplate = '<div class="content-item-footer">' +
@@ -35,6 +35,14 @@ const contentItemDialog = function() {
                 this.mapEvents();
             };
 
+            this.mapEvents = function () {
+                const self = this;
+                this.$dialog.find('.add-content-item').on('click', function (event) {
+                    event.preventDefault();
+                    self.addContent();
+                });
+            }
+
             this.clearError = function (container) {
                 const $containerParent = container.parent();
                 const $errors = $containerParent.find('.error');
@@ -48,54 +56,52 @@ const contentItemDialog = function() {
                 errorSelector.insertAfter(container);
             }
 
-            this.mapEvents = function () {
-                const self = this;
-                this.$dialog.find('.add-content-item').on('click', function (event) {
-                    event.preventDefault();
-                    const $boxTitlteContainer = self.$dialog.find('.ibox-title h5');
-                    const chooseId = self.$dialog.find('table input:checked').val();
-                    const $choseIdErrorSelector = self.$dialog.find('.content-errors .item');
-                    const chooseTemplate = self.$dialog.find('.template-list input:checked').val();
-                    const $chooseTemplateErrorSelector = self.$dialog.find('.content-errors .template');
-                    const $twigTemplate = self.$dialog.find('input[name=twigFunctionTemplate]');
-                    const isHideDialog = chooseId !== undefined && chooseTemplate !== undefined;
+            this.addContent = function () {
+                const $boxTitlteContainer = this.$dialog.find('.ibox-title h5');
+                const chooseId = this.$dialog.find('table input:checked').val();
+                const $choseIdErrorSelector = this.$dialog.find('.content-errors .item');
+                const chooseTemplate = this.$dialog.find('.template-list input:checked').val();
+                const $chooseTemplateErrorSelector = this.$dialog.find('.content-errors .template');
+                const $twigTemplate = this.$dialog.find('input[name=twigFunctionTemplate]');
+                const isHideDialog = chooseId !== undefined && chooseTemplate !== undefined;
 
-                    self.clearError($boxTitlteContainer);
+                this.clearError($boxTitlteContainer);
 
-                    if (isHideDialog) {
-                        $($twigTemplate).val("{{ content_banner(" + chooseId + ", '" + chooseTemplate + "'" + ") }}");
-                        self.context.invoke('editor.insertText',  $($twigTemplate).val());
-                        self.context.invoke('editor.restoreRange');
-                        self.$ui.hideDialog(self.$dialog);
-                        return;
-                    }
+                if (isHideDialog) {
+                    $($twigTemplate).val("{{ content_banner(" + chooseId + ", '" + chooseTemplate + "'" + ") }}");
+                    this.context.invoke('editor.insertText',  $($twigTemplate).val());
+                    this.context.invoke('editor.restoreRange');
+                    this.$ui.hideDialog(this.$dialog);
+                    return;
+                }
 
-                    if (!chooseId) {
-                        self.showError($choseIdErrorSelector, $boxTitlteContainer)
-                    }
+                if (!chooseId) {
+                    this.showError($choseIdErrorSelector, $boxTitlteContainer)
+                }
 
-                    if (!chooseTemplate) {
-                        self.showError($chooseTemplateErrorSelector, $boxTitlteContainer);
+                if (!chooseTemplate) {
+                    this.showError($chooseTemplateErrorSelector, $boxTitlteContainer);
+                }
+            }
+
+            this.getTableContent = function (url) {
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    dataType: "html",
+                    context: this,
+                    success: function(data) {
+                        const dataAjaxUrl = $(data).find('table').data('ajax');
+                        this.$dialog.find('.content-item-loader').hide();
+                        this.$dialog.find('.content-item-body .content-ajax').append(data);
+                        this.$dialog.find('table').DataTable({'ajax': dataAjaxUrl});
                     }
                 });
             }
 
-            this.getTableContent = function (url) {
-                if (!this.isBodyTemplateAppended) {
-                    $.ajax({
-                        type: 'GET',
-                        url: url,
-                        dataType: "html",
-                        context: this,
-                        success: function(data) {
-                            const dataAjaxUrl = $(data).find('table').data('ajax');
-                            this.$dialog.find('.content-item-loader').remove();
-                            this.$dialog.find('.content-item-body').append(data);
-                            this.$dialog.find('table').DataTable({'ajax': dataAjaxUrl});
-                            this.isBodyTemplateAppended = true;
-                        }
-                    });
-                }
+            this.clearContent = function () {
+                this.$dialog.find('.content-item-body .content-ajax').empty();
+                this.$dialog.find('.content-item-loader').show();
             }
 
             this.show = function (params, buttons) {
@@ -105,7 +111,8 @@ const contentItemDialog = function() {
                     alert('Not found content for Dialog')
                     return;
                 }
-
+                
+                this.clearContent();
                 this.getTableContent(url);
                 this.context.invoke('editor.saveRange');
                 this.$ui.showDialog(this.$dialog);
