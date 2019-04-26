@@ -104,20 +104,25 @@ class PriceProductValidator implements PriceProductValidatorInterface
         if ($sumPrice < $this->config->getMinPriceRestriction()) {
             return $cartPreCheckResponseTransfer
                 ->setIsSuccess(false)
-                ->addMessage($this->createMessageMinPriceRestriction());
+                ->addMessage($this->createMessageMinPriceRestriction($priceProductFilterTransfer->getCurrencyIsoCode()));
         }
 
         return $cartPreCheckResponseTransfer;
     }
 
     /**
+     * @param string $currencyIsocode
+     *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessageMinPriceRestriction(): MessageTransfer
+    protected function createMessageMinPriceRestriction(string $currencyIsocode): MessageTransfer
     {
         return (new MessageTransfer())
             ->setValue(static::CART_PRE_CHECK_MIN_PRICE_RESTRICTION_FAILED_KEY)
-            ->setParameters(['%price%' => $this->config->getMinPriceRestriction()]);
+            ->setParameters([
+                '%price%' => $this->config->getMinPriceRestriction(),
+                '%currencyIsocode%' => $currencyIsocode,
+            ]);
     }
 
     /**
