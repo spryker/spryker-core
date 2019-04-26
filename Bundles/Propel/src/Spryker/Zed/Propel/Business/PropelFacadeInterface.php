@@ -140,10 +140,12 @@ interface PropelFacadeInterface
     public function dropDatabase();
 
     /**
+     * @api
+     *
+     * @deprecated used for restoring DB after drop. Not used anymore after implementation `propel:database:clean` command.
+     *
      * Specification:
      * - Exports database backup for configured driver to `$backupPath`.
-     *
-     * @api
      *
      * @param string $backupPath
      *
@@ -152,10 +154,12 @@ interface PropelFacadeInterface
     public function exportDatabase($backupPath);
 
     /**
+     * @api
+     *
+     * @deprecated Not used anymore for avoid `sudo`. Use custom script instead.
+     *
      * Specification:
      * - Imports database backup for configured driver from `$backupPath`.
-     *
-     * @api
      *
      * @param string $backupPath
      *

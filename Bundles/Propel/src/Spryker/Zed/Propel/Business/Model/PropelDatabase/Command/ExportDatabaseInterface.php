@@ -10,6 +10,8 @@ namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Command;
 interface ExportDatabaseInterface
 {
     /**
+     * @deprecated Not used anymore for avoid `sudo`. Use custom script instead.
+     *
      * @param string $backupPath
      *
      * @return void

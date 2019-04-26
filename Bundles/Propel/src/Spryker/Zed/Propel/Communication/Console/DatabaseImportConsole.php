@@ -13,6 +13,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @deprecated Not used anymore for avoid `sudo`. Use custom script instead.
+ *
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
