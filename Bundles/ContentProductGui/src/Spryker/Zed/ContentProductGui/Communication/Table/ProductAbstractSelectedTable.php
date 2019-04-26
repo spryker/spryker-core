@@ -135,7 +135,6 @@ class ProductAbstractSelectedTable extends AbstractTable
         $tableConfiguration->setServerSide(false);
         $tableConfiguration->setPaging(false);
         $tableConfiguration->setOrdering(false);
-        $tableConfiguration->setPageLength(ContentProductGuiConfig::MAX_NUMBER_PRODUCTS_IN_PRODUCT_ABSTRACT_LIST);
 
         return $tableConfiguration;
     }
