@@ -1,0 +1,22 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+.note-editor {
+    .template-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .btn-create {
+        color: #ffffff !important;
+    }
+
+    .error {
+        display: block;
+        float: none;
+        color: #F22 !important;
+    }
+}

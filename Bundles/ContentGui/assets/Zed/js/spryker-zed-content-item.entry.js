@@ -1,3 +1,4 @@
+require('../sass/main.scss');
 const editorConfig = require('ZedGuiEditorConfiguration');
 const ContentItemEditor = require('./modules/content-item-editor');
 
