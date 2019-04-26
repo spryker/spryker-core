@@ -41,48 +41,45 @@ const contentItemDialog = function() {
                     event.preventDefault();
                     self.addContent();
                 });
-            }
+            };
 
-            this.clearError = function (container) {
-                const $containerParent = container.parent();
-                const $errors = $containerParent.find('.error');
-
-                if ($errors.length > 0) {
-                    $errors.remove();
-                }
-            }
 
             this.showError = function (errorSelector, container) {
                 errorSelector.insertAfter(container);
-            }
+            };
 
             this.addContent = function () {
-                const $boxTitlteContainer = this.$dialog.find('.ibox-title h5');
-                const chooseId = this.$dialog.find('table input:checked').val();
+                const $titleHeader = this.$dialog.find('.ibox-title h5');
+                const $templateHeader = this.$dialog.find('.template-title');
+                const chosenId = this.$dialog.find('table input:checked').val();
                 const $choseIdErrorSelector = this.$dialog.find('.content-errors .item');
-                const chooseTemplate = this.$dialog.find('.template-list input:checked').val();
+                const isTemplateListExists = this.$dialog.find('.template-list').length;
+                const chosenTemplate = this.$dialog.find('.template-list input:checked').val();
                 const $chooseTemplateErrorSelector = this.$dialog.find('.content-errors .template');
-                const $twigTemplate = this.$dialog.find('input[name=twigFunctionTemplate]');
-                const isHideDialog = chooseId !== undefined && chooseTemplate !== undefined;
+                const twigTemplate = this.$dialog.find('input[name=twigFunctionTemplate]').val();
+                const readyToInsert = chosenId !== undefined && (!isTemplateListExists || isTemplateListExists && chosenTemplate);
 
-                this.clearError($boxTitlteContainer);
-
-                if (isHideDialog) {
-                    $($twigTemplate).val("{{ content_banner(" + chooseId + ", '" + chooseTemplate + "'" + ") }}");
-                    this.context.invoke('editor.insertText',  $($twigTemplate).val());
+                if (readyToInsert) {
+                    let builtText = twigTemplate.replace(/%\w+%/g, function (param) {
+                        return {
+                            '%ID%': chosenId,
+                            '%TEMPLATE%': chosenTemplate
+                        }[param];
+                    });
+                    this.context.invoke('editor.insertText',  builtText);
                     this.context.invoke('editor.restoreRange');
                     this.$ui.hideDialog(this.$dialog);
                     return;
                 }
 
-                if (!chooseId) {
-                    this.showError($choseIdErrorSelector, $boxTitlteContainer)
+                if (!chosenId) {
+                    this.showError($choseIdErrorSelector, $titleHeader)
                 }
 
-                if (!chooseTemplate) {
-                    this.showError($chooseTemplateErrorSelector, $boxTitlteContainer);
+                if (isTemplateListExists && !chosenTemplate) {
+                    this.showError($chooseTemplateErrorSelector, $templateHeader);
                 }
-            }
+            };
 
             this.getTableContent = function (url) {
                 $.ajax({
@@ -97,18 +94,18 @@ const contentItemDialog = function() {
                         this.$dialog.find('table').DataTable({'ajax': dataAjaxUrl});
                     }
                 });
-            }
+            };
 
             this.clearContent = function () {
                 this.$dialog.find('.content-item-body .content-ajax').empty();
                 this.$dialog.find('.content-item-loader').show();
-            }
+            };
 
             this.show = function (params, buttons) {
-                const url = $(buttons).eq(0).data('url')
+                const url = $(buttons).eq(0).data('url');
 
                 if (!url) {
-                    alert('Not found content for Dialog')
+                    alert('Not found content for Dialog');
                     return;
                 }
                 

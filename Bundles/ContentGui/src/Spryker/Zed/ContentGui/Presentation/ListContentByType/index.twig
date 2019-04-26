@@ -11,7 +11,7 @@
         {% endblock %}
     {% endembed %}
 
-    <input type="hidden" name="twigFunctionTemplate" value="{{ twigFunctionTemplate }}" />
+    <input type="hidden" name="twigFunctionTemplate" value="{{ twigFunctionTemplate | default('No defined widget') }}" />
 
     {% if templates is not empty %}
         {% set selectedTemplateIdentifier = selectedTemplateIdentifier is defined ? selectedTemplateIdentifier : templates[0].identifier %}
