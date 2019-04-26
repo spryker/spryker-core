@@ -21,6 +21,10 @@ class PriceProductValidator implements PriceProductValidatorInterface
 {
     public const CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY = 'cart.pre.check.price.failed';
     public const CART_PRE_CHECK_MIN_PRICE_RESTRICTION_FAILED_KEY = 'cart.pre.check.min_price.failed';
+
+    protected const MESSAGE_GLOSSARY_KEY_PRICE = '%price%';
+    protected const MESSAGE_GLOSSARY_KEY_CURRENCY_ISO_CODE = '%currencyIsoCode%';
+
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface
      */
@@ -104,20 +108,25 @@ class PriceProductValidator implements PriceProductValidatorInterface
         if ($sumPrice < $this->config->getMinPriceRestriction()) {
             return $cartPreCheckResponseTransfer
                 ->setIsSuccess(false)
-                ->addMessage($this->createMessageMinPriceRestriction());
+                ->addMessage($this->createMessageMinPriceRestriction($priceProductFilterTransfer->getCurrencyIsoCode()));
         }
 
         return $cartPreCheckResponseTransfer;
     }
 
     /**
+     * @param string $currencyIsoCode
+     *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessageMinPriceRestriction(): MessageTransfer
+    protected function createMessageMinPriceRestriction(string $currencyIsoCode): MessageTransfer
     {
         return (new MessageTransfer())
             ->setValue(static::CART_PRE_CHECK_MIN_PRICE_RESTRICTION_FAILED_KEY)
-            ->setParameters(['%price%' => $this->config->getMinPriceRestriction()]);
+            ->setParameters([
+                static::MESSAGE_GLOSSARY_KEY_PRICE => $this->config->getMinPriceRestriction(),
+                static::MESSAGE_GLOSSARY_KEY_CURRENCY_ISO_CODE => $currencyIsoCode,
+            ]);
     }
 
     /**
