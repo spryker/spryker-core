@@ -10,8 +10,8 @@
         <column name="fk_currency" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
         <column name="fk_price_type" type="INTEGER" required="true"/>
-        <column name="fk_product" type="BIGINT" required="false"/>
-        <column name="fk_product_abstract" type="BIGINT" required="false"/>
+        <column name="fk_product" type="INTEGER" required="false"/>
+        <column name="fk_product_abstract" type="INTEGER" required="false"/>
         <column name="fk_price_product_schedule_list" type="BIGINT" required="true"/>
         <column name="net_price" type="INTEGER"/>
         <column name="gross_price" type="INTEGER"/>
