@@ -51,7 +51,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getYvesInstallerDirectoryPatterns(): array
+    public function getYvesInstallMultiPathDirectoryPatterns(): array
     {
         return [
             $this->getYvesInstallerDirectoryPattern(),
@@ -95,7 +95,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getZedInstallerDirectoryPatterns(): array
+    public function getZedInstallMultiPathDirectoryPatterns(): array
     {
         return [
             $this->getZedInstallerDirectoryPattern(),

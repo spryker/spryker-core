@@ -9,7 +9,7 @@ namespace Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder;
 
 use Symfony\Component\Finder\Finder;
 
-class InstallerPathFinder implements PathFinderInterface
+class InstallMultiPathFinder implements PathFinderInterface
 {
     protected const PACKAGE_JSON_FILE_PATTERN = 'package.json';
 
