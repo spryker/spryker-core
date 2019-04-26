@@ -20,7 +20,6 @@ class ConfigurationController extends AbstractController
     public function assetsAction(): array
     {
         $editorContentTypes = $this->getFactory()->createContentEditorPluginsResolver()->getContentTypes();
-        $editorContentTypes[] = 'Abstract Product List';
 
         return $this->viewResponse([
             'editorContentTypes' => $editorContentTypes,
