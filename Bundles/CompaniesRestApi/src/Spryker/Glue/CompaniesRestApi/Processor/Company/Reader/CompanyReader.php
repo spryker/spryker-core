@@ -9,7 +9,6 @@ namespace Spryker\Glue\CompaniesRestApi\Processor\Company\Reader;
 
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\RestCompanyAttributesTransfer;
-use Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig;
 use Spryker\Glue\CompaniesRestApi\Dependency\Client\CompaniesRestApiToCompanyClientInterface;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\RestResponseBuilder\CompanyRestResponseBuilderInterface;
@@ -18,6 +17,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyReader implements CompanyReaderInterface
 {
+    protected const CURRENT_USER_COLLECTION_IDENTIFIER = 'mine';
+
     /**
      * @var \Spryker\Glue\CompaniesRestApi\Dependency\Client\CompaniesRestApiToCompanyClientInterface
      */
@@ -114,7 +115,7 @@ class CompanyReader implements CompanyReaderInterface
      */
     protected function isCurrentUserResourceIdentifier(string $resourceIdentifier): bool
     {
-        return $resourceIdentifier === CompaniesRestApiConfig::CURRENT_USER_COLLECTION_IDENTIFIER;
+        return $resourceIdentifier === static::CURRENT_USER_COLLECTION_IDENTIFIER;
     }
 
     /**

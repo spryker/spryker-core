@@ -14,11 +14,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface CompanyBusinessUnitAddressRestResponseBuilderInterface
 {
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createEmptyCompanyBusinessUnitAddressRestResponse(): RestResponseInterface;
-
-    /**
      * @param string $companyBusinessUnitAddressUuid
      * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
      *
@@ -39,6 +34,13 @@ interface CompanyBusinessUnitAddressRestResponseBuilderInterface
         string $companyBusinessUnitAddressUuid,
         RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
     ): RestResourceInterface;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $companyBusinessUnitAddressCollection
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCompanyBusinessUnitAddressCollectionRestResponse(array $companyBusinessUnitAddressCollection): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

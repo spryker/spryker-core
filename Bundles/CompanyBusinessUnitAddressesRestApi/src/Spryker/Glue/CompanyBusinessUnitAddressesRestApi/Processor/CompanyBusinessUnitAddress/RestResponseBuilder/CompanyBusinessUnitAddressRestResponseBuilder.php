@@ -31,14 +31,6 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createEmptyCompanyBusinessUnitAddressRestResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder->createRestResponse();
-    }
-
-    /**
      * @param string $companyBusinessUnitAddressUuid
      * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
      *
@@ -69,6 +61,22 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
         );
 
         return $restResource;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $companyBusinessUnitAddressCollection
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCompanyBusinessUnitAddressCollectionRestResponse(array $companyBusinessUnitAddressCollection): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        foreach ($companyBusinessUnitAddressCollection as $companyBusinessUnitAddressResource) {
+            $restResponse->addResource($companyBusinessUnitAddressResource);
+        }
+
+        return $restResponse;
     }
 
     /**

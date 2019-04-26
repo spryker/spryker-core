@@ -32,14 +32,6 @@ class CompanyRoleRestResponseBuilder implements CompanyRoleRestResponseBuilderIn
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createEmptyCompanyRoleRestResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder->createRestResponse();
-    }
-
-    /**
      * @param string $companyRoleUuid
      * @param \Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer $restCompanyRoleAttributesTransfer
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer|null $companyRoleTransfer
@@ -86,6 +78,22 @@ class CompanyRoleRestResponseBuilder implements CompanyRoleRestResponseBuilderIn
         $restResource->setPayload($companyRoleTransfer);
 
         return $restResource;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $companyRoleResourceCollection
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCompanyRoleCollectionRestResponse(array $companyRoleResourceCollection): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        foreach ($companyRoleResourceCollection as $companyRoleResource) {
+            $restResponse->addResource($companyRoleResource);
+        }
+
+        return $restResponse;
     }
 
     /**

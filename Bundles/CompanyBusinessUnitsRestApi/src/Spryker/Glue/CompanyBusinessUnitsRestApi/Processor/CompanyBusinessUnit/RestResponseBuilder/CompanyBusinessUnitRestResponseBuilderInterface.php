@@ -15,11 +15,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface CompanyBusinessUnitRestResponseBuilderInterface
 {
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createEmptyCompanyBusinessUnitRestResponse(): RestResponseInterface;
-
-    /**
      * @param string $companyBusinessUnitUuid
      * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $companyBusinessUnitTransfer
@@ -44,6 +39,13 @@ interface CompanyBusinessUnitRestResponseBuilderInterface
         RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer,
         ?CompanyBusinessUnitTransfer $companyBusinessUnitTransfer = null
     ): RestResourceInterface;
+
+    /**
+     * @param array $companyBusinessUnitResourceCollection
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCompanyBusinessUnitCollectionRestResponse(array $companyBusinessUnitResourceCollection): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
