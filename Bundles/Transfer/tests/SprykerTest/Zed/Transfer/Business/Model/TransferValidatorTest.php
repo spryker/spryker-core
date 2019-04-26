@@ -37,7 +37,7 @@ class TransferValidatorTest extends Unit
     public function testValidate()
     {
         $sourceDirectories = [
-            __DIR__ . '/../../../../../_fixtures/Shared/Test/Transfer/',
+            codecept_data_dir('Shared/Test/Transfer/'),
         ];
         $definitionFinder = $this->getDefinitionFinder($sourceDirectories);
         $messenger = $this->getMessengerMock();
@@ -59,7 +59,7 @@ class TransferValidatorTest extends Unit
     public function testValidateWithBC()
     {
         $sourceDirectories = [
-            __DIR__ . '/../../../../../_fixtures/Shared/Error/Transfer/',
+            codecept_data_dir('Shared/Error/Transfer/'),
         ];
         $definitionFinder = $this->getDefinitionFinder($sourceDirectories);
         $messenger = $this->getMessengerMock();
@@ -81,7 +81,7 @@ class TransferValidatorTest extends Unit
     public function testValidateWithoutBC()
     {
         $sourceDirectories = [
-            __DIR__ . '/../../../../../_fixtures/Shared/Error/Transfer/',
+            codecept_data_dir('Shared/Error/Transfer/'),
         ];
         $definitionFinder = $this->getDefinitionFinder($sourceDirectories);
         $messenger = $this->getMessengerMock();

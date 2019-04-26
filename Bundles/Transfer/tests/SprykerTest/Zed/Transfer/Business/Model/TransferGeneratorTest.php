@@ -39,7 +39,7 @@ class TransferGeneratorTest extends Unit
     public function testExecuteShouldGenerateExpectedTransfer()
     {
         $sourceDirectories = [
-            __DIR__ . '/../../../../../_fixtures/Shared/Test/Transfer/',
+            codecept_data_dir('Shared/Test/Transfer/'),
         ];
         $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
         $this->assertCount(1, $transferDefinitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
@@ -52,7 +52,7 @@ class TransferGeneratorTest extends Unit
 
         $this->assertFileExists($this->getTargetDirectory() . 'CatFaceTransfer.php');
         $this->assertSame(
-            file_get_contents(__DIR__ . '/../../../../../test_files/expected.transfer.php'),
+            file_get_contents(codecept_data_dir('test_files/expected.transfer.php')),
             file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php')
         );
     }
@@ -63,7 +63,7 @@ class TransferGeneratorTest extends Unit
     public function testExecuteWithStrictnessTransfer()
     {
         $sourceDirectories = [
-            __DIR__ . '/../../../../../_fixtures/Shared/Test/Transfer/',
+            codecept_data_dir('Shared/Test/Transfer/'),
         ];
         $config = $this->getTransferConfigMock();
         $config->expects($this->any())->method('useStrictGeneration')->willReturn(true);
@@ -79,7 +79,7 @@ class TransferGeneratorTest extends Unit
 
         $this->assertFileExists($this->getTargetDirectory() . 'CatFaceTransfer.php');
         $this->assertSame(
-            file_get_contents(__DIR__ . '/../../../../../test_files/expected.transfer.php'),
+            file_get_contents(codecept_data_dir('test_files/expected.transfer.php')),
             file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php')
         );
     }
@@ -90,8 +90,8 @@ class TransferGeneratorTest extends Unit
     public function testExecuteShouldGenerateExpectedMergedTransfer()
     {
         $sourceDirectories = [
-            __DIR__ . '/../../../../../_fixtures/Project/Test/Transfer/',
-            __DIR__ . '/../../../../../_fixtures/Vendor/Test2/Transfer/',
+            codecept_data_dir('Project/Test/Transfer/'),
+            codecept_data_dir('Vendor/Test2/Transfer/'),
         ];
         $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
         $this->assertCount(2, $definitionBuilder->getDefinitions(), 'Expected to get 2 class definitions.');
@@ -104,7 +104,7 @@ class TransferGeneratorTest extends Unit
 
         $this->assertFileExists($this->getTargetDirectory() . 'FooBarTransfer.php');
         $this->assertSame(
-            file_get_contents(__DIR__ . '/../../../../../test_files/expected.merged.transfer.php'),
+            file_get_contents(codecept_data_dir('test_files/expected.merged.transfer.php')),
             file_get_contents($this->getTargetDirectory() . 'FooBarTransfer.php')
         );
 
@@ -117,7 +117,7 @@ class TransferGeneratorTest extends Unit
     public function testExecuteShouldGenerateExpectedDeprecatedTransfer()
     {
         $sourceDirectories = [
-            __DIR__ . '/../../../../../_fixtures/Shared/Deprecated/Transfer/',
+            codecept_data_dir('Shared/Deprecated/Transfer/'),
         ];
         $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
         $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
@@ -130,7 +130,7 @@ class TransferGeneratorTest extends Unit
 
         $this->assertFileExists($this->getTargetDirectory() . 'DeprecatedFooBarTransfer.php');
         $this->assertSame(
-            file_get_contents(__DIR__ . '/../../../../../test_files/expected.deprecated.transfer.php'),
+            file_get_contents(codecept_data_dir('test_files/expected.deprecated.transfer.php')),
             file_get_contents($this->getTargetDirectory() . 'DeprecatedFooBarTransfer.php')
         );
     }
@@ -141,8 +141,8 @@ class TransferGeneratorTest extends Unit
     public function testExecuteShouldGenerateExpectedMergedDeprecatedTransfer()
     {
         $sourceDirectories = [
-            __DIR__ . '/../../../../../_fixtures/Vendor/Deprecated/Transfer/',
-            __DIR__ . '/../../../../../_fixtures/Project/Deprecated/Transfer/',
+            codecept_data_dir('Vendor/Deprecated/Transfer/'),
+            codecept_data_dir('Project/Deprecated/Transfer/'),
         ];
         $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
         $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
@@ -156,7 +156,7 @@ class TransferGeneratorTest extends Unit
         $this->assertFileExists($this->getTargetDirectory() . 'MergedDeprecatedFooBarTransfer.php');
 
         $this->assertSame(
-            file_get_contents(__DIR__ . '/../../../../../test_files/expected.merged.deprecated.transfer.php'),
+            file_get_contents(codecept_data_dir('test_files/expected.merged.deprecated.transfer.php')),
             file_get_contents($this->getTargetDirectory() . 'MergedDeprecatedFooBarTransfer.php')
         );
     }

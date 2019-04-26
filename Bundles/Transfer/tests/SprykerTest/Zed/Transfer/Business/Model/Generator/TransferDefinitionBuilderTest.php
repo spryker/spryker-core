@@ -36,7 +36,7 @@ class TransferDefinitionBuilderTest extends Unit
     public function testBuildTransferDefinitionShouldReturnArrayWithClassDefinitions()
     {
         $directories = [
-            __DIR__ . '/../../../../../../_fixtures/Builder/',
+            codecept_data_dir('Builder/'),
         ];
 
         $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($directories);
@@ -54,7 +54,7 @@ class TransferDefinitionBuilderTest extends Unit
     public function testBuildTransferDefinitionWithStrictnessError()
     {
         $sourceDirectories = [
-            __DIR__ . '/../../../../../../_fixtures/Shared/Error/Transfer/',
+            codecept_data_dir('Shared/Error/Transfer/'),
         ];
         $config = $this->getTransferConfigMock();
         $config->expects($this->any())->method('useStrictGeneration')->willReturn(true);

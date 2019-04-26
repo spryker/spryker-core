@@ -391,7 +391,7 @@ class GeneratedTransferTest extends Unit
     protected function getTestTransferForTesting()
     {
         $sourceDirectories = [
-            __DIR__ . '/../../../../../_fixtures/GeneratedTest/',
+            codecept_data_dir('GeneratedTest/'),
         ];
         $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
 
