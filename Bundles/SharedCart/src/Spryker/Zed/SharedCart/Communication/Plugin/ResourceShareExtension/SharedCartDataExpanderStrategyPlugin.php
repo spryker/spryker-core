@@ -20,13 +20,11 @@ use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDa
  */
 class SharedCartDataExpanderStrategyPlugin extends AbstractPlugin implements ResourceShareResourceDataExpanderStrategyPluginInterface
 {
-    protected const KEY_SHARE_OPTION = 'share_option';
-
-    protected const KEY_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
-
     /**
      * {@inheritdoc}
-     * - Expands ResourceShareTransfer::ResourceShareDataTransfer with idCompanyBusinessUnit value.
+     * - Expands ResourceShareTransfer::ResourceShareDataTransfer with shareable cart details.
+     * - Returns ResourceShareResponseTransfer with 'isSuccessful=true' on success.
+     * - Returns ResourceShareResponseTransfer with 'isSuccessful=false' and error messages otherwise.
      *
      * @api
      *
@@ -36,19 +34,13 @@ class SharedCartDataExpanderStrategyPlugin extends AbstractPlugin implements Res
      */
     public function expand(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
-
-        $idCompanyBusinessUnit = $resourceShareDataTransfer->getData()[static::KEY_ID_COMPANY_BUSINESS_UNIT] ?? null;
-        $resourceShareDataTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
-
-        return (new ResourceShareResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setResourceShare($resourceShareTransfer);
+        return $this->getFacade()->expandResourceShareDataWithShareableCartDetails($resourceShareTransfer);
     }
 
     /**
      * {@inheritdoc}
-     * - Checks if resource data contains company business unit id.
+     * - Returns 'true', when resource type is Quote, and share option is Read-only or Full access.
+     * - Returns 'false' otherwise.
      *
      * @api
      *
@@ -61,7 +53,7 @@ class SharedCartDataExpanderStrategyPlugin extends AbstractPlugin implements Res
         $resourceShareTransfer->requireResourceShareData();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        $shareOption = $resourceShareDataTransfer->getData()[static::KEY_SHARE_OPTION] ?? null;
+        $shareOption = $resourceShareDataTransfer->getData()[SharedCartConfig::KEY_SHARE_OPTION] ?? null;
         if (!$shareOption) {
             return false;
         }

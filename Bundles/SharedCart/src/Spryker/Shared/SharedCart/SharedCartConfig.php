@@ -11,6 +11,8 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class SharedCartConfig extends AbstractBundleConfig
 {
+    public const KEY_SHARE_OPTION = 'share_option';
+
     public const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
     public const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
     public const PERMISSION_GROUP_OWNER_ACCESS = 'OWNER_ACCESS';

@@ -10,6 +10,7 @@ namespace Spryker\Zed\SharedCart\Communication\Plugin\ResourceShareExtension;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
+use Spryker\Shared\SharedCart\SharedCartConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
 
@@ -22,7 +23,8 @@ class SharedCartActivatorStrategyPlugin extends AbstractPlugin implements Resour
 {
     /**
      * {@inheritdoc}
-     * - TODO
+     * - Sets relevant permission for logged-in company user for Quote.
+     * - Sets 'idQuote' as default cart for current customer.
      *
      * @api
      *
@@ -37,7 +39,7 @@ class SharedCartActivatorStrategyPlugin extends AbstractPlugin implements Resour
 
     /**
      * {@inheritdoc}
-     * - TODO
+     * - Returns true, since the customer must be logged-in to apply activator strategy.
      *
      * @api
      *
@@ -50,7 +52,8 @@ class SharedCartActivatorStrategyPlugin extends AbstractPlugin implements Resour
 
     /**
      * {@inheritdoc}
-     * - TODO
+     * - Returns 'true', when resource type is Quote, and share option is Read-only or Full access.
+     * - Returns 'false' otherwise.
      *
      * @api
      *
@@ -60,6 +63,14 @@ class SharedCartActivatorStrategyPlugin extends AbstractPlugin implements Resour
      */
     public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
     {
-        return $this->getFacade()->isResourceShareActivatorStrategyApplicable($resourceShareTransfer);
+        $resourceShareTransfer->requireResourceShareData();
+        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
+
+        $shareOption = $resourceShareDataTransfer->getData()[SharedCartConfig::KEY_SHARE_OPTION] ?? null;
+        if (!$shareOption) {
+            return false;
+        }
+
+        return in_array($shareOption, [SharedCartConfig::PERMISSION_GROUP_READ_ONLY, SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS], true);
     }
 }

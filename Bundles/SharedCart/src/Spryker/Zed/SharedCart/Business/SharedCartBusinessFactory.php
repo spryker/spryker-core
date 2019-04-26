@@ -29,6 +29,8 @@ use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReader;
 use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface;
 use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareActivatorStrategy;
 use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareActivatorStrategyInterface;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareDataExpanderStrategy;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareDataExpanderStrategyInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
@@ -145,11 +147,20 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareDataExpanderStrategyInterface
+     */
+    public function createResourceShareDataExpanderStrategy(): ResourceShareDataExpanderStrategyInterface
+    {
+        return new ResourceShareDataExpanderStrategy();
+    }
+
+    /**
      * @return \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareActivatorStrategyInterface
      */
     public function createResourceShareActivatorStrategy(): ResourceShareActivatorStrategyInterface
     {
         return new ResourceShareActivatorStrategy(
+            $this->getRepository(),
             $this->getCustomerFacade()
         );
     }

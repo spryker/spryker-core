@@ -178,19 +178,24 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     * - TODO
+     * - Expands ResourceShareTransfer::ResourceShareDataTransfer with shareable cart details.
+     * - Returns ResourceShareResponseTransfer with 'isSuccessful=true' on success.
+     * - Returns ResourceShareResponseTransfer with 'isSuccessful=false' and error messages otherwise.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function isResourceShareActivatorStrategyApplicable(ResourceShareTransfer $resourceShareTransfer): bool;
+    public function expandResourceShareDataWithShareableCartDetails(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer;
 
     /**
      * Specification:
-     * - TODO
+     * - Sets relevant permission for logged-in company user for Quote.
+     * - Sets 'idCart' as default cart for current customer.
+     * - Returns ResourceShareResponseTransfer with 'isSuccessful=true' on success.
+     * - Returns ResourceShareResponseTransfer with 'isSuccessful=false' and error messages otherwise.
      *
      * @api
      *

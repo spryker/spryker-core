@@ -225,13 +225,13 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function isResourceShareActivatorStrategyApplicable(ResourceShareTransfer $resourceShareTransfer): bool
+    public function expandResourceShareDataWithShareableCartDetails(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
         return $this->getFactory()
-            ->createResourceShareActivatorStrategy()
-            ->isResourceShareActivatorStrategyApplicable($resourceShareTransfer);
+            ->createResourceShareDataExpanderStrategy()
+            ->expandResourceShareDataWithShareableCartDetails($resourceShareTransfer);
     }
 
     /**

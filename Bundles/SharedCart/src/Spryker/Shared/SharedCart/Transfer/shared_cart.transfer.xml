@@ -83,6 +83,9 @@
     </transfer>
 
     <transfer name="ResourceShareData">
+        <property name="shareOption" type="string" />
+        <property name="idQuote" type="int" />
+        <property name="idCompanyUser" type="int" />
         <property name="idCompanyBusinessUnit" type="int" />
     </transfer>
 
