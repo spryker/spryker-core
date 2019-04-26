@@ -334,7 +334,7 @@ class Finder implements FinderInterface
         $stateMachineItemTransfer->setIdItemState($stateMachineItemEntity->getIdStateMachineItemState());
         $stateMachineItemTransfer->setIdStateMachineProcess($stateMachineProcessEntity->getIdStateMachineProcess());
         $stateMachineItemTransfer->setStateName($stateMachineItemEntity->getName());
-        $stateMachineItemTransfer->setStateMachineName($stateMachineProcessEntity->getStateMachineProcesses());
+        $stateMachineItemTransfer->setStateMachineName($stateMachineProcessEntity->getStateMachineName());
 
         $stateMachineItemHistory = $stateMachineItemEntity->getStateHistories();
         if (count($stateMachineItemHistory) > 0) {
