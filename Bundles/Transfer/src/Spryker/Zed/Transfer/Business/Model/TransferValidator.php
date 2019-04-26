@@ -9,6 +9,7 @@ namespace Spryker\Zed\Transfer\Business\Model;
 
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface;
+use Spryker\Zed\Transfer\TransferConfig;
 use Zend\Config\Factory;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -60,13 +61,20 @@ class TransferValidator implements TransferValidatorInterface
     ];
 
     /**
+     * @var \Spryker\Zed\Transfer\TransferConfig
+     */
+    protected $transferConfig;
+
+    /**
      * @param \Psr\Log\LoggerInterface $messenger
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\FinderInterface $finder
+     * @param \Spryker\Zed\Transfer\TransferConfig $transferConfig
      */
-    public function __construct(LoggerInterface $messenger, FinderInterface $finder)
+    public function __construct(LoggerInterface $messenger, FinderInterface $finder, TransferConfig $transferConfig)
     {
         $this->messenger = $messenger;
         $this->finder = $finder;
+        $this->transferConfig = $transferConfig;
 
         $this->typeMap = $this->simpleTypeMap;
         foreach ($this->simpleTypeWhitelist as $type) {
@@ -93,7 +101,7 @@ class TransferValidator implements TransferValidatorInterface
             $definition = $this->normalize($definition);
 
             $module = $this->getModuleFromPathName($file->getFilename());
-            $result = $result & $this->validateDefinition($module, $definition, $options);
+            $result &= $this->validateDefinition($module, $definition, $options);
         }
 
         return (bool)$result;
@@ -112,13 +120,22 @@ class TransferValidator implements TransferValidatorInterface
             $this->messenger->info(sprintf('Checking %s module', $module));
         }
 
-        $ok = true;
+        $isValid = true;
         foreach ($definition as $transfer) {
+            if ($this->transferConfig->isTransferNameValidated() && !$this->isValidName($transfer['name'])) {
+                $isValid = false;
+                $this->messenger->warning(sprintf(
+                    '%s.%s is an invalid transfer name',
+                    $module,
+                    $transfer['name']
+                ));
+            }
+
             foreach ($transfer['property'] as $property) {
                 $type = $property['type'];
 
                 if (!$this->isValidArrayType($type)) {
-                    $ok = false;
+                    $isValid = false;
                     $this->messenger->warning(sprintf(
                         '%s.%s.%s: %s is an invalid array type',
                         $module,
@@ -131,7 +148,7 @@ class TransferValidator implements TransferValidatorInterface
                 }
 
                 if (!$this->isValidSimpleType($type)) {
-                    $ok = false;
+                    $isValid = false;
                     $this->messenger->warning(sprintf(
                         '%s.%s.%s: %s is an invalid simple type',
                         $module,
@@ -145,7 +162,7 @@ class TransferValidator implements TransferValidatorInterface
             }
         }
 
-        return $ok;
+        return $isValid;
     }
 
     /**
@@ -227,5 +244,23 @@ class TransferValidator implements TransferValidatorInterface
         $filter = new UnderscoreToCamelCase();
 
         return (string)$filter->filter(str_replace(self::TRANSFER_SCHEMA_SUFFIX, '', $fileName));
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    protected function isValidName(string $name): bool
+    {
+        if (!preg_match('/^[A-Z][a-zA-Z0-9]/', $name)) {
+            return false;
+        }
+
+        if (preg_match('/Transfer$/', $name)) {
+            return false;
+        }
+
+        return true;
     }
 }
