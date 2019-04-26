@@ -9,6 +9,11 @@ td {
     }
 }
 
+.js-selected-products-wrapper {
+    input {
+        display: none;
+    }
+}
 .product-abstract-selected-table {
     tbody {
         tr {

@@ -19,6 +19,9 @@ use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToLocaleInt
 use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToProductImageInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\ContentProductGui\ContentProductGuiConfig getConfig()
+ */
 class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**

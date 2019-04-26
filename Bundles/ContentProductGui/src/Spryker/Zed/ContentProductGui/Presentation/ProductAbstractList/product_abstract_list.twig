@@ -15,12 +15,12 @@
 <div
     class="id-product-abstract-fields"
     id="localized-contents-{{ form.parent.vars.name }}"
-    data-prototype="{{ form_row(form.idProductAbstracts.vars.prototype) | e }}"
+    data-prototype="{{ form_widget(form.idProductAbstracts.vars.prototype) | e }}"
     data-delete-button="{{ deleteButtonTemplate | e }}"
 >
     <div class="js-selected-products-wrapper">
         {% for idProductAbstract in form.idProductAbstracts %}
-            {{ form_row(idProductAbstract) }}
+            {{ form_widget(idProductAbstract) }}
         {% endfor %}
     </div>
     {{ form.vars.tables.productAbstractSelectedTable.render | raw }}
