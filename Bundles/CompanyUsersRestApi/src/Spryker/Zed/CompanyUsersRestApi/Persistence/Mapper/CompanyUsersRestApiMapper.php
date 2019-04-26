@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUsersRestApi\Persistence\Mapper;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -23,14 +22,12 @@ class CompanyUsersRestApiMapper
      */
     public function mapCompanyUserCollection($collection): CompanyUserCollectionTransfer
     {
-        $companyUsers = new ArrayObject();
         $companyUserCollectionTransfer = new CompanyUserCollectionTransfer();
 
         foreach ($collection as $companyUserEntityTransfer) {
-            $companyUsers->append($this->mapEntityTransferToCompanyUserTransfer($companyUserEntityTransfer));
+            $companyUserCollectionTransfer
+                ->addCompanyUser($this->mapEntityTransferToCompanyUserTransfer($companyUserEntityTransfer));
         }
-
-        $companyUserCollectionTransfer->setCompanyUsers($companyUsers);
 
         return $companyUserCollectionTransfer;
     }

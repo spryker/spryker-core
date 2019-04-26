@@ -10,6 +10,7 @@ namespace Spryker\Glue\CompanyUsersRestApi\Processor\Relationship;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface;
+use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResource;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -97,7 +98,7 @@ class CustomerResourceExpander implements CustomerResourceExpanderInterface
         foreach ($customerCollectionTransfer->getCustomers() as $customerTransfer) {
             if ($this->findCustomerReference($resource->getAttributes()) === $customerTransfer->getCustomerReference()) {
                 $restResource = new RestResource(
-                    $customerCollectionTransfer::CUSTOMERS,
+                    CompanyUsersRestApiConfig::RESOURCE_CUSTOMERS,
                     $customerTransfer->getCustomerReference(),
                     $customerTransfer
                 );

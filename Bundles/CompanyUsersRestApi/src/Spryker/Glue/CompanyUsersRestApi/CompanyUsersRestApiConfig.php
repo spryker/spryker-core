@@ -20,5 +20,8 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
 
     public const CURRENT_USER_COLLECTION_IDENTIFIER = 'mine';
 
+    /**
+     * @uses \Spryker\Glue\CustomersRestApi\CustomersRestApiConfig::RESOURCE_CUSTOMERS
+     */
     public const RESOURCE_CUSTOMERS = 'customers';
 }
