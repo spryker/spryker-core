@@ -15,14 +15,14 @@ class ProductTaxSetRelationshipExpander implements ProductTaxSetRelationshipExpa
     /**
      * @var \Spryker\Glue\ProductTaxSetsRestApi\Processor\ProductTaxSet\ProductTaxSetReaderInterface
      */
-    protected $productTaxSetsReader;
+    protected $productTaxSetReader;
 
     /**
-     * @param \Spryker\Glue\ProductTaxSetsRestApi\Processor\ProductTaxSet\ProductTaxSetReaderInterface $productTaxSetsReader
+     * @param \Spryker\Glue\ProductTaxSetsRestApi\Processor\ProductTaxSet\ProductTaxSetReaderInterface $productTaxSetReader
      */
-    public function __construct(ProductTaxSetReaderInterface $productTaxSetsReader)
+    public function __construct(ProductTaxSetReaderInterface $productTaxSetReader)
     {
-        $this->productTaxSetsReader = $productTaxSetsReader;
+        $this->productTaxSetReader = $productTaxSetReader;
     }
 
     /**
@@ -34,7 +34,7 @@ class ProductTaxSetRelationshipExpander implements ProductTaxSetRelationshipExpa
     public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
-            $productTaxSetsResource = $this->productTaxSetsReader->findAbstractProductTaxSetsByAbstractProductSku(
+            $productTaxSetsResource = $this->productTaxSetReader->findAbstractProductTaxSetsByAbstractProductSku(
                 $resource->getId(),
                 $restRequest
             );

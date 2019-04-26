@@ -76,7 +76,7 @@ class ProductTaxSetReader implements ProductTaxSetReaderInterface
 
         $restResource = $this->findAbstractProductTaxSetsByAbstractProductSku($parentResource->getId(), $restRequest);
         if (!$restResource) {
-            return $this->createTaxSetsNotFoundError();
+            return $this->createProductTaxSetNotFoundError();
         }
 
         return $restResponse->addResource($restResource);
@@ -158,7 +158,7 @@ class ProductTaxSetReader implements ProductTaxSetReaderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createTaxSetsNotFoundError(): RestResponseInterface
+    protected function createProductTaxSetNotFoundError(): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
