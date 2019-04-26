@@ -7,10 +7,9 @@
 
 namespace SprykerTest\Zed\PersistentCartShare\Business;
 
-use Codeception\Test\Unit;
+use Codeception\TestCase\Test;
 use DateTime;
 use Generated\Shared\DataBuilder\ResourceShareBuilder;
-use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
@@ -31,7 +30,7 @@ use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDa
  * @group PersistentCartShareFacadeTest
  * Add your own group annotations below this line
  */
-class PersistentCartShareFacadeTest extends Unit
+class PersistentCartShareFacadeTest extends Test
 {
     /**
      * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
@@ -98,7 +97,6 @@ class PersistentCartShareFacadeTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertNotEmpty($quoteResponseTransfer->getErrors());
         $this->assertEmpty($quoteResponseTransfer->getQuoteTransfer());
-        $this->assertContainsOnlyInstancesOf(QuoteErrorTransfer::class, $quoteResponseTransfer->getErrors());
         /** @var \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer */
         $errors = $quoteResponseTransfer->getErrors();
         $quoteErrorTransfer = reset($errors);
@@ -123,7 +121,6 @@ class PersistentCartShareFacadeTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertNotEmpty($quoteResponseTransfer->getErrors());
         $this->assertEmpty($quoteResponseTransfer->getQuoteTransfer());
-        $this->assertContainsOnlyInstancesOf(QuoteErrorTransfer::class, $quoteResponseTransfer->getErrors());
         /** @var \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer */
         $errors = $quoteResponseTransfer->getErrors();
         $quoteErrorTransfer = reset($errors);
@@ -169,7 +166,6 @@ class PersistentCartShareFacadeTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertNotEmpty($quoteResponseTransfer->getErrors());
         $this->assertEmpty($quoteResponseTransfer->getQuoteTransfer());
-        $this->assertContainsOnlyInstancesOf(QuoteErrorTransfer::class, $quoteResponseTransfer->getErrors());
         /** @var \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer */
         $errors = $quoteResponseTransfer->getErrors();
         $quoteErrorTransfer = reset($errors);
@@ -198,7 +194,6 @@ class PersistentCartShareFacadeTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertNotEmpty($quoteResponseTransfer->getErrors());
         $this->assertEmpty($quoteResponseTransfer->getQuoteTransfer());
-        $this->assertContainsOnlyInstancesOf(QuoteErrorTransfer::class, $quoteResponseTransfer->getErrors());
         /** @var \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer */
         $errors = $quoteResponseTransfer->getErrors();
         $quoteErrorTransfer = reset($errors);
@@ -222,7 +217,6 @@ class PersistentCartShareFacadeTest extends Unit
     protected function createPreviewResourceShare(array $resourceShareSeedData = [], array $resourceShareDataSeedData = []): ResourceShareTransfer
     {
         $customerTransfer = $this->tester->haveCustomer();
-        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
