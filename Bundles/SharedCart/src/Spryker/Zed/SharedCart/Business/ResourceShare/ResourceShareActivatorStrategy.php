@@ -98,6 +98,7 @@ class ResourceShareActivatorStrategy implements ResourceShareActivatorStrategyIn
 
         return $this->shareCartWithLoggedInCustomer($resourceShareTransfer, $companyUserTransfer);
     }
+
     /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer

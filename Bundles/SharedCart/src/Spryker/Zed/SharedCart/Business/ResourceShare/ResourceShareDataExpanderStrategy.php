@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SharedCart\Business\ResourceShare;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
@@ -18,6 +19,8 @@ class ResourceShareDataExpanderStrategy implements ResourceShareDataExpanderStra
     protected const KEY_ID_COMPANY_USER = 'id_company_user';
     protected const KEY_ID_QUOTE = 'id_quote';
 
+    protected const GLOSSARY_KEY_ONE_OR_MORE_REQUIRED_PROPERTIES_ARE_MISSING = 'shared_cart.resource_share.strategy.error.properties_are_missing';
+
     /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
      *
@@ -25,13 +28,37 @@ class ResourceShareDataExpanderStrategy implements ResourceShareDataExpanderStra
      */
     public function expandResourceShareDataWithShareableCartDetails(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareTransfer->setResourceShareData(
-            $this->expandResourceShareData($resourceShareTransfer->getResourceShareData())
-        );
+        $resourceShareDataTransfer = $this->expandResourceShareData($resourceShareTransfer->getResourceShareData());
+        $resourceShareResponseTransfer = $this->validateExpandedResourceShareData($resourceShareDataTransfer);
 
-        return (new ResourceShareResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setResourceShare($resourceShareTransfer);
+        if ($resourceShareResponseTransfer->getIsSuccessful()) {
+            $resourceShareResponseTransfer->setResourceShare($resourceShareTransfer);
+        }
+
+        return $resourceShareResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareDataTransfer $resourceShareDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    protected function validateExpandedResourceShareData(ResourceShareDataTransfer $resourceShareDataTransfer): ResourceShareResponseTransfer
+    {
+        $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
+
+        if ($resourceShareDataTransfer->getShareOption()
+            && $resourceShareDataTransfer->getIdQuote()
+            && $resourceShareDataTransfer->getIdCompanyUser()
+            && $resourceShareDataTransfer->getIdCompanyBusinessUnit()
+        ) {
+            return $resourceShareResponseTransfer->setIsSuccessful(true);
+        }
+
+        return $resourceShareResponseTransfer->setIsSuccessful(false)
+            ->addMessage(
+                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_ONE_OR_MORE_REQUIRED_PROPERTIES_ARE_MISSING)
+            );
     }
 
     /**
