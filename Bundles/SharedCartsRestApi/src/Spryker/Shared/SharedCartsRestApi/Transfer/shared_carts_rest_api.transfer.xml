@@ -8,4 +8,26 @@
         <property name="idCartPermissionGroup" type="int" />
     </transfer>
 
+    <transfer name="ShareDetail">
+        <property name="uuid" type="string"/>
+        <property name="idCompanyUser" type="string" />
+        <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
+    </transfer>
+
+    <transfer name="ShareDetailCollection">
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="quoteTransfer" type="Quote"/>
+    </transfer>
+
+    <transfer name="QuotePermissionGroup">
+        <property name="idQuotePermissionGroup" type="int"/>
+    </transfer>
+
 </transfers>

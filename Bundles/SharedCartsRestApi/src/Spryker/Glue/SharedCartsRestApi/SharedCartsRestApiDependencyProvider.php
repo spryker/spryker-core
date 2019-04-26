@@ -20,7 +20,7 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
     /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Glue\Kernel\Container
      */
     public function provideDependencies(Container $container): Container
     {

@@ -19,7 +19,7 @@ class SharedCartsByQuoteIdResourceRelationshipPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritdoc}
-     * - Adds shared-carts resource as relationship by UUID.
+     * - Adds shared-carts resource as relationship.
      *
      * @api
      *
