@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ContentProductSetGui;
 
 use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
+use Spryker\Zed\ContentProductSetGui\Dependency\Facade\ContentProductSetGuiToLocaleBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 

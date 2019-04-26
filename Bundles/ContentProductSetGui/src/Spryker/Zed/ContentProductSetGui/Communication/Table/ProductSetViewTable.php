@@ -8,17 +8,15 @@
 namespace Spryker\Zed\ContentProductSetGui\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetDataTableMap;
 use Orm\Zed\ProductSet\Persistence\SpyProductSet;
-use Spryker\Zed\ContentProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
+use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ProductSetViewTable extends AbstractTable
 {
-    public const TABLE_IDENTIFIER = 'product-set-selected-table';
+    public const TABLE_IDENTIFIER = 'product-set-view-table';
     public const TABLE_CLASS = 'product-set-selected-table gui-table-data';
     public const BASE_URL = '/content-product-set-gui/product-set/';
 
@@ -48,26 +46,18 @@ class ProductSetViewTable extends AbstractTable
     protected $identifierSuffix;
 
     /**
-     * @var int
-     */
-    protected $idProductSet;
-
-    /**
      * @param \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery $productSetQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string|null $identifierSuffix
-     * @param int $idProductSet
      */
     public function __construct(
         SpyProductSetQuery $productSetQueryContainer,
         LocaleTransfer $localeTransfer,
-        ?string $identifierSuffix,
-        int $idProductSet
+        ?string $identifierSuffix
     ) {
         $this->productSetQueryContainer = $productSetQueryContainer;
         $this->localeTransfer = $localeTransfer;
         $this->identifierSuffix = $identifierSuffix;
-        $this->idProductSet = $idProductSet;
     }
 
     /**
@@ -115,12 +105,10 @@ class ProductSetViewTable extends AbstractTable
     {
         $productSetList = [];
         $query = $this->productSetQueryContainer
-            ->filterByIdProductSet($this->idProductSet)
             ->useSpyProductSetDataQuery()
             ->filterByFkLocale($this->localeTransfer->getIdLocale())
             ->endUse()
-            ->withColumn(SpyProductSetDataTableMap::COL_NAME, static::COL_ALIAS_NAME)
-            ->find();
+            ->withColumn(SpyProductSetDataTableMap::COL_NAME, static::COL_ALIAS_NAME);
 
         $queryResults = $this->runQuery($query, $config, true);
 
@@ -153,7 +141,7 @@ class ProductSetViewTable extends AbstractTable
      *
      * @return string
      */
-    protected function getStatusLabel(SpyProductSet $productSetEntity)
+    protected function getStatusLabel(SpyProductSet $productSetEntity): string
     {
         if (!$productSetEntity->getIsActive()) {
             return $this->generateLabel('Inactive', 'label-danger');

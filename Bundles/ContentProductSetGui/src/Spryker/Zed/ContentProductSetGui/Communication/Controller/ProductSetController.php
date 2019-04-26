@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentProductGui\Communication\Controller;
+namespace Spryker\Zed\ContentProductSetGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,12 +23,12 @@ class ProductSetController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function productAbstractSelectedTableAction(Request $request): JsonResponse
+    public function productSetSelectedTableAction(Request $request): JsonResponse
     {
-        $idProductSet = $request->query->get(static::PARAM_ID, []);
+        $idProductSet = $request->query->get(static::PARAM_ID);
 
         return $this->jsonResponse(
-            $this->getFactory()->createProductAbstractSelectedTable($idProductSet)->fetchData()
+            $this->getFactory()->createProductSetSelectedTable($idProductSet)->fetchData()
         );
     }
 
@@ -37,10 +37,10 @@ class ProductSetController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function productAbstractViewTableAction(Request $request): JsonResponse
+    public function productSetViewTableAction(Request $request): JsonResponse
     {
         return $this->jsonResponse(
-            $this->getFactory()->createProductAbstractViewTable()->fetchData()
+            $this->getFactory()->createProductSetViewTable()->fetchData()
         );
     }
 }

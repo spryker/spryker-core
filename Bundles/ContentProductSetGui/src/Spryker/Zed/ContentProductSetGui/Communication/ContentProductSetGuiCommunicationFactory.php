@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ContentProductSetGui\Communication;
 
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
 use Spryker\Zed\ContentProductSetGui\Communication\Table\ProductSetSelectedTable;
 use Spryker\Zed\ContentProductSetGui\Communication\Table\ProductSetViewTable;
 use Spryker\Zed\ContentProductSetGui\ContentProductSetGuiDependencyProvider;
@@ -31,14 +31,14 @@ class ContentProductSetGuiCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @param int $idProductSet
+     * @param int|null $idProductSet
      * @param string|null $identifierPostfix
      *
      * @return \Spryker\Zed\ContentProductSetGui\Communication\Table\ProductSetSelectedTable
      */
-    public function createProductSetSelectedTable(int $idProductSet, ?string $identifierPostfix = null): ProductSetSelectedTable
+    public function createProductSetSelectedTable(?int $idProductSet, ?string $identifierPostfix = null): ProductSetSelectedTable
     {
-        return new ProductAbstractSelectedTable(
+        return new ProductSetSelectedTable(
             $this->getProductSetQueryContainer(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $identifierPostfix,
@@ -47,9 +47,9 @@ class ContentProductSetGuiCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
-    public function getProductSetQueryContainer(): SpyProductAbstractQuery
+    public function getProductSetQueryContainer(): SpyProductSetQuery
     {
         return $this->getProvidedDependency(ContentProductSetGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_SET);
     }

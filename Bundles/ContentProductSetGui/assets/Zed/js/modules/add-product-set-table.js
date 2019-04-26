@@ -214,13 +214,13 @@ var ProductListContentItem = function(
 
 $(document).ready(function () {
     new ProductListContentItem(
-        '.id-product-abstract-fields',
-        '.product-abstract-selected-table',
-        '.product-abstract-view-table',
+        '.id-product-set-fields',
+        '.product-set-selected-table',
+        '.product-set-view-table',
         '.js-selected-products-wrapper',
-        '.js-add-product-abstract',
-        '.js-delete-product-abstract',
+        '.js-add-product-set',
+        '.js-delete-product-set',
         '.clear-fields',
-        '.js-reorder-product-abstract'
+        '.js-reorder-product-set'
     );
 });

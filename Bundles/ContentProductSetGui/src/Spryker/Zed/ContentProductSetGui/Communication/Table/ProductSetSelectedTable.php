@@ -8,17 +8,13 @@
 namespace Spryker\Zed\ContentProductSetGui\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetDataTableMap;
 use Orm\Zed\ProductSet\Persistence\SpyProductSet;
 use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\ContentProductSetGui\Communication\Controller\ProductAbstractController;
-use Spryker\Zed\ContentProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
+use Spryker\Zed\ContentProductSetGui\Communication\Controller\ProductSetController;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductSetGui\Communication\Controller\AbstractProductSetController;
 
 class ProductSetSelectedTable extends AbstractTable
 {
@@ -52,7 +48,7 @@ class ProductSetSelectedTable extends AbstractTable
     protected $identifierSuffix;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $idProductSet;
 
@@ -60,13 +56,13 @@ class ProductSetSelectedTable extends AbstractTable
      * @param \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery $productSetQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string|null $identifierSuffix
-     * @param int $idProductSet
+     * @param int|null $idProductSet
      */
     public function __construct(
         SpyProductSetQuery $productSetQueryContainer,
         LocaleTransfer $localeTransfer,
         ?string $identifierSuffix,
-        int $idProductSet
+        ?int $idProductSet
     ) {
         $this->productSetQueryContainer = $productSetQueryContainer;
         $this->localeTransfer = $localeTransfer;
@@ -84,7 +80,7 @@ class ProductSetSelectedTable extends AbstractTable
         $parameters = [];
 
         if ($this->idProductSet) {
-            $parameters = [AbstractProductSetController::PARAM_ID => $this->idProductSet];
+            $parameters = [ProductSetController::PARAM_ID => $this->idProductSet];
         }
 
         $this->baseUrl = static::BASE_URL;
@@ -118,9 +114,9 @@ class ProductSetSelectedTable extends AbstractTable
     protected function newTableConfiguration(): TableConfiguration
     {
         $tableConfiguration = parent::newTableConfiguration();
-//        $tableConfiguration->setServerSide(false);
-//        $tableConfiguration->setPaging(false);
-//        $tableConfiguration->setOrdering(false);
+        $tableConfiguration->setServerSide(false);
+        $tableConfiguration->setPaging(false);
+        $tableConfiguration->setOrdering(false);
 
         return $tableConfiguration;
     }
@@ -141,8 +137,7 @@ class ProductSetSelectedTable extends AbstractTable
                 ->useSpyProductSetDataQuery()
                     ->filterByFkLocale($this->localeTransfer->getIdLocale())
                 ->endUse()
-                ->withColumn(SpyProductSetDataTableMap::COL_NAME, static::COL_ALIAS_NAME)
-                ->find();
+                ->withColumn(SpyProductSetDataTableMap::COL_NAME, static::COL_ALIAS_NAME);
 
             $queryResults = $this->runQuery($query, $config, true);
 
@@ -176,7 +171,7 @@ class ProductSetSelectedTable extends AbstractTable
      *
      * @return string
      */
-    protected function getStatusLabel(SpyProductSet $productSetEntity)
+    protected function getStatusLabel(SpyProductSet $productSetEntity): string
     {
         if (!$productSetEntity->getIsActive()) {
             return $this->generateLabel('Inactive', 'label-danger');

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ContentProductSetGui\Communication\Plugin\ContentGui;
 
-use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
 use Generated\Shared\Transfer\ContentProductSetTermTransfer;
 use Spryker\Shared\ContentProductSetGui\ContentProductSetGuiConfig;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
