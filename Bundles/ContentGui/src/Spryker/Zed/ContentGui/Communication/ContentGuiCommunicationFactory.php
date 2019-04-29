@@ -19,6 +19,7 @@ use Spryker\Zed\ContentGui\Communication\Tabs\ContentTabs;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface;
+use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -109,7 +110,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingInterface
      */
-    public function getUtilEncoding()
+    public function getUtilEncoding(): ContentGuiToUtilEncodingInterface
     {
         return $this->getProvidedDependency(ContentGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
