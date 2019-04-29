@@ -54,6 +54,25 @@
             <reference local="fk_price_product_schedule_list" foreign="id_price_product_schedule_list"/>
         </foreign-key>
 
+        <index name="index-spy_price_product_schedule-fk_product">
+            <index-column name="fk_product"/>
+        </index>
+        <index name="index-spy_price_product_schedule-fk_product_abstract">
+            <index-column name="fk_product_abstract"/>
+        </index>
+        <index name="index-spy_price_product_schedule-fk_currency">
+            <index-column name="fk_currency"/>
+        </index>
+        <index name="index-spy_price_product_schedule-fk_store">
+            <index-column name="fk_store"/>
+        </index>
+        <index name="index-spy_price_product_schedule-fk_price_type">
+            <index-column name="fk_price_type"/>
+        </index>
+        <index name="index-spy_price_product_schedule-fk_price_product_schedule_list">
+            <index-column name="fk_price_product_schedule_list"/>
+        </index>
+
         <id-method-parameter value="spy_price_product_schedule_pk_seq"/>
     </table>
 
@@ -73,6 +92,9 @@
 
         <id-method-parameter value="spy_price_product_schedule_list_pk_seq"/>
 
+        <index name="index-spy_price_product_schedule_list-fk_user">
+            <index-column name="fk_user"/>
+        </index>
         <index name="index-spy_price_product_schedule_list-name">
             <index-column name="name"/>
         </index>
