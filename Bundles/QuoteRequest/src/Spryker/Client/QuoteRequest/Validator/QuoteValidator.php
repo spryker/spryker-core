@@ -58,8 +58,17 @@ class QuoteValidator implements QuoteValidatorInterface
      */
     protected function canWriteQuote(QuoteTransfer $quoteTransfer): bool
     {
-        return $quoteTransfer->getCustomerReference() === $quoteTransfer->getCustomer()->getCustomerReference()
-            || $this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote());
+        // owner of cart
+        if ($quoteTransfer->getCustomerReference() === $quoteTransfer->getCustomer()->getCustomerReference()) {
+            return true;
+        }
+
+        // cart is shared with the customer
+        if ($this->can('WriteSharedCartPermissionPlugin', $quoteTransfer->getIdQuote())) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

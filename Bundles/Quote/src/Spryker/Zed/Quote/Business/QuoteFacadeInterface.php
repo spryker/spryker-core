@@ -183,7 +183,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Returns true if quote is locked.
+     * - Returns true if provided quote is locked.
      *
      * @api
      *
