@@ -137,7 +137,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->leftJoinWithProduct()
             ->leftJoinWithProductAbstract()
             ->filterByIsCurrent(false)
-            ->where(SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE . ' = CAST(SUBSTRING(' . static::ALIAS_FILTERED . '.' . static::COL_RESULT . ' from \'[0-9]+$\') as BIGINT)')
+            ->where($this->getFilterIdPriceProductScheduleExpression())
             ->find()
             ->getData();
 
@@ -223,5 +223,17 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
         }
 
         return static::EXPRESSION_CONCATENATED_RESULT_MAP[$databaseEngineName];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getFilterIdPriceProductScheduleExpression(): string
+    {
+        return sprintf(
+            'CAST(%s AS TEXT) = SUBSTRING(%s from \'[0-9]+$\')',
+            SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE,
+            static::ALIAS_FILTERED . '.' . static::COL_RESULT
+        );
     }
 }
