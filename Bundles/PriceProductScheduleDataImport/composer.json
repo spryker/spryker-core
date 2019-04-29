@@ -9,7 +9,7 @@
     "spryker/data-import": "^1.4.3",
     "spryker/kernel": "^3.9.0",
     "spryker/price-product": "^2.9.2",
-    "spryker/price-product-schedule": "^0.0.1",
+    "spryker/price-product-schedule": "^0.1.0",
     "spryker/product": "^6.9.0",
     "spryker/store": "^1.9.1"
   },
