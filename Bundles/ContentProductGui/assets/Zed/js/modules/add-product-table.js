@@ -9,7 +9,7 @@ var ProductListContentItem = function(
     tablesWrapperSelector,
     assignedTableSelector,
     productTableSelector,
-    hiddenInputsWrapperSelector,
+    integerInputsWrapperSelector,
     addProductButtonSelector,
     removeProductButtonSelector,
     clearAllFieldsSelector,
@@ -18,7 +18,7 @@ var ProductListContentItem = function(
     tabsContentSelector
 ) {
     this.tablesWrapperSelector = tablesWrapperSelector;
-    this.hiddenInputsWrapperSelector = hiddenInputsWrapperSelector;
+    this.integerInputsWrapperSelector = integerInputsWrapperSelector;
     this.assignedTables = $(assignedTableSelector);
     this.productsTables = $(productTableSelector);
     this.clearAllFieldsButton = $(clearAllFieldsSelector).removeClass(clearAllFieldsSelector.substring(1));
@@ -44,7 +44,6 @@ var ProductListContentItem = function(
             var isOpenTab = tabId.substring(1) === currentTabId;
 
             if (isOpenTab) {
-                console.log(currentTabId);
                 $(item).show();
                 $(tabId).find(self.assignedTables).DataTable().columns.adjust().draw();
                 $(tabId).find(self.productsTables).DataTable().columns.adjust().draw();
@@ -106,15 +105,15 @@ var ProductListContentItem = function(
         var tableData = tableApi.data().toArray();
         var indexOfClickedRow = tableApi.row(button.parents('tr')).index();
         var removedFromDataArray = tableData.splice(indexOfClickedRow, 1)[0];
-        var hiddenInput = this.getHiddenInputForMoving(assignedTable, productId);
+        var integerInput = this.getHiddenInputForMoving(assignedTable, productId);
 
         if (direction === 'up') {
-            hiddenInput.insertBefore(hiddenInput.prev());
+            integerInput.insertBefore(integerInput.prev());
             tableData.splice(indexOfClickedRow - 1, 0, removedFromDataArray);
         }
 
         if (direction === 'down') {
-            hiddenInput.insertAfter(hiddenInput.next());
+            integerInput.insertAfter(integerInput.next());
             tableData.splice(indexOfClickedRow + 1, 0, removedFromDataArray);
         }
 
@@ -136,43 +135,43 @@ var ProductListContentItem = function(
     };
 
     this.isProductAdded = function(productTable, productId) {
-        var hiddenInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(productTable));
-        var hiddenInput = this.getHiddenInput(hiddenInputsWrapper, productId);
+        var integerInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(productTable));
+        var integerInput = this.getHiddenInput(integerInputsWrapper, productId);
 
-        return hiddenInput.length;
+        return integerInput.length;
     }
 
     this.addHiddenInput = function(tablesWrapper, productId, indexOfActiveTable) {
-        var hiddenInputsWrapper = this.getHiddenInputsWrapper(tablesWrapper);
-        var hiddenInputTemplate = this.getHiddenInputTemplate(tablesWrapper);
-        var hiddenInput = $(this.replaceHiddenInputId(hiddenInputTemplate, hiddenInputsWrapper));
+        var integerInputsWrapper = this.getHiddenInputsWrapper(tablesWrapper);
+        var integerInputTemplate = this.getHiddenInputTemplate(tablesWrapper);
+        var integerInput = $(this.replaceIntegerInputId(integerInputTemplate, integerInputsWrapper));
 
-        hiddenInput.val(productId);
-        hiddenInputsWrapper.append(hiddenInput);
+        integerInput.attr('value', productId);
+        integerInputsWrapper.append(integerInput);
     };
 
     this.removeHiddenInput = function(assignedTable, productId) {
-        var hiddenInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(assignedTable));
-        var hiddenInput = this.getHiddenInput(hiddenInputsWrapper, productId);
+        var integerInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(assignedTable));
+        var integerInput = this.getHiddenInput(integerInputsWrapper, productId);
 
-        hiddenInput.remove();
+        integerInput.remove();
     };
 
     this.removeAllHiddenInputs = function(assignedTable) {
-        var hiddenInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(assignedTable));
+        var integerInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(assignedTable));
 
-        hiddenInputsWrapper.empty();
+        integerInputsWrapper.empty();
     };
 
-    this.replaceHiddenInputId = function(hiddenInputTemplate, hiddenInputsWrapper) {
+    this.replaceIntegerInputId = function(integerInputTemplate, integerInputsWrapper) {
         var indexes = [0];
-        hiddenInputsWrapper.find('input').each(function (index, element) {
+        integerInputsWrapper.find('input').each(function (index, element) {
             indexes.push(element.name.match(/\d+/g).pop());
         });
-        var hiddenInputsLength = Math.max.apply(null, indexes);
+        var integerInputsLength = Math.max.apply(null, indexes);
 
 
-        return hiddenInputTemplate.replace(/__name__/g, hiddenInputsLength + 1);
+        return integerInputTemplate.replace(/__name__/g, integerInputsLength + 1);
     }
 
     this.getCurrentAssignedTable = function(indexOfActiveTable) {
@@ -212,7 +211,7 @@ var ProductListContentItem = function(
     };
 
     this.getHiddenInputsWrapper = function(tablesWrapper) {
-        return tablesWrapper.find(this.hiddenInputsWrapperSelector);
+        return tablesWrapper.find(this.integerInputsWrapperSelector);
     }
 
     this.getHiddenInput = function(wrapper, productId) {
@@ -220,10 +219,10 @@ var ProductListContentItem = function(
     }
 
     this.getHiddenInputForMoving = function(assignedTable, productId) {
-        var hiddenInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(assignedTable));
-        var hiddenInput = this.getHiddenInput(hiddenInputsWrapper, productId);
+        var integerInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(assignedTable));
+        var integerInput = this.getHiddenInput(integerInputsWrapper, productId);
 
-        return hiddenInput;
+        return integerInput;
     }
 
     this.getTablesWrapper = function(productTable) {

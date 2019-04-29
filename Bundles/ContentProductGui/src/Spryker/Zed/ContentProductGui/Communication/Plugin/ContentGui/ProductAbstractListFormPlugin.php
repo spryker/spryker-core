@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ContentProductGui\Communication\ContentProductGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ContentProductGui\ContentProductGuiConfig getConfig()
  */
 class ProductAbstractListFormPlugin extends AbstractPlugin implements ContentPluginInterface
 {

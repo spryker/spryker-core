@@ -13,6 +13,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\ContentProductGui\Communication\Controller\ProductAbstractController;
 use Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilderInterface;
+use Spryker\Zed\ContentProductGui\ContentProductGuiConfig;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -159,6 +160,7 @@ class ProductAbstractSelectedTable extends AbstractTable
             ->filterByFkLocale($this->localeTransfer->getIdLocale())
             ->endUse();
 
+        $this->setLimit(ContentProductGuiConfig::MAX_NUMBER_PRODUCTS_IN_PRODUCT_ABSTRACT_LIST);
         $queryResults = $this->runQuery($query, $config, true);
 
         /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */

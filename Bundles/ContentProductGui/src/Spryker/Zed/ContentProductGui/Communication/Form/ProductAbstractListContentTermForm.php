@@ -9,7 +9,7 @@ namespace Spryker\Zed\ContentProductGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\ContentProductGui\Communication\ContentProductGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ContentProductGui\ContentProductGuiConfig getConfig()
  */
 class ProductAbstractListContentTermForm extends AbstractType
 {
@@ -102,13 +103,14 @@ class ProductAbstractListContentTermForm extends AbstractType
     protected function addIdProductAbstractsField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_ABSTRACT_PRODUCTS, CollectionType::class, [
-            'entry_type' => HiddenType::class,
+            'entry_type' => IntegerType::class,
             'label' => false,
             'prototype' => true,
             'allow_add' => true,
             'allow_delete' => true,
             'entry_options' => [
                 'label' => false,
+                'grouping' => true,
             ],
             'constraints' => [
                 $this->getFactory()->createContentProductAbstractListConstraint(),

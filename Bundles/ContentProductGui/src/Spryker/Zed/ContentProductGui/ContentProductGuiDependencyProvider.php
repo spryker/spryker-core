@@ -14,6 +14,9 @@ use Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToProductIm
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\ContentProductGui\ContentProductGuiConfig getConfig()
+ */
 class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
