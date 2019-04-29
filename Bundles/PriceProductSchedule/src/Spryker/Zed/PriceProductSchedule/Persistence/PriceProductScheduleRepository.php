@@ -35,6 +35,11 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
         PropelConfig::DB_ENGINE_MYSQL => 'CONCAT(UNIX_TIMESTAMP(now() - %s), \' \', UNIX_TIMESTAMP(%s - now()), \' \', %s, \' \', %s, \' \', %s)',
     ];
 
+    protected const EXPRESSION_FILTER_ID_PRICE_PRODUCT_SCHEDULE_MAP = [
+        PropelConfig::DB_ENGINE_PGSQL => '%s = CAST(SUBSTRING(%s from \'[0-9]+$\') AS BIGINT)',
+        PropelConfig::DB_ENGINE_MYSQL => '%s = CAST(SUBSTRING_INDEX(%s, \' \', -1) AS UNSIGNED)',
+    ];
+
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapperInterface
      */
@@ -127,7 +132,8 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
      */
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array
     {
-        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery($storeTransfer);
+        $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
+        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery($storeTransfer, $currentDatabaseEngineName);
 
         $priceProductScheduleEntities = $this->getFactory()
             ->createPriceProductScheduleQuery()
@@ -137,7 +143,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->leftJoinWithProduct()
             ->leftJoinWithProductAbstract()
             ->filterByIsCurrent(false)
-            ->where($this->getFilterIdPriceProductScheduleExpression())
+            ->where($this->getFilterIdPriceProductScheduleExpression($currentDatabaseEngineName))
             ->find()
             ->getData();
 
@@ -147,13 +153,14 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $currentDatabaseEngineName
      *
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
      */
     protected function createPriceProductScheduleConcatenatedSubQuery(
-        StoreTransfer $storeTransfer
+        StoreTransfer $storeTransfer,
+        string $currentDatabaseEngineName
     ): SpyPriceProductScheduleQuery {
-        $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
         $concatenatedResultExpression = $this->getConcatenatedResultExpressionByDbEngineName($currentDatabaseEngineName);
 
         return $this->getFactory()
@@ -162,7 +169,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->addAsColumn(
                 static::COL_PRODUCT_ID,
                 sprintf(
-                    'CONCAT(%s, \' \', %s, \' \', %s, \'_\', %s)',
+                    'CONCAT(%s, \' \', %s, \' \', COALESCE(%s, \'\'), \'_\', COALESCE(\'%s\'))',
                     SpyPriceProductScheduleTableMap::COL_FK_PRICE_TYPE,
                     SpyPriceProductScheduleTableMap::COL_FK_CURRENCY,
                     SpyPriceProductScheduleTableMap::COL_FK_PRODUCT,
@@ -190,13 +197,15 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $currentDatabaseEngineName
      *
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
      */
     protected function createPriceProductScheduleFilteredByMinResultSubQuery(
-        StoreTransfer $storeTransfer
+        StoreTransfer $storeTransfer,
+        string $currentDatabaseEngineName
     ): SpyPriceProductScheduleQuery {
-        $priceProductScheduleConcatenatedSubQuery = $this->createPriceProductScheduleConcatenatedSubQuery($storeTransfer);
+        $priceProductScheduleConcatenatedSubQuery = $this->createPriceProductScheduleConcatenatedSubQuery($storeTransfer, $currentDatabaseEngineName);
 
         return $this->getFactory()
             ->createPriceProductScheduleQuery()
@@ -226,12 +235,14 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     }
 
     /**
+     * @param string $databaseEngineName
+     *
      * @return string
      */
-    protected function getFilterIdPriceProductScheduleExpression(): string
+    protected function getFilterIdPriceProductScheduleExpression(string $databaseEngineName): string
     {
         return sprintf(
-            'CONCAT(%s, \'\') = SUBSTRING(%s from \'[0-9]+$\')',
+            static::EXPRESSION_FILTER_ID_PRICE_PRODUCT_SCHEDULE_MAP[$databaseEngineName],
             SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE,
             static::ALIAS_FILTERED . '.' . static::COL_RESULT
         );
