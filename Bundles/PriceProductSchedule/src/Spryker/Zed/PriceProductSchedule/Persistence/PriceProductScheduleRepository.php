@@ -231,7 +231,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     protected function getFilterIdPriceProductScheduleExpression(): string
     {
         return sprintf(
-            'CAST(%s AS TEXT) = SUBSTRING(%s from \'[0-9]+$\')',
+            'CONCAT(%s, \'\') = SUBSTRING(%s from \'[0-9]+$\')',
             SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE,
             static::ALIAS_FILTERED . '.' . static::COL_RESULT
         );
