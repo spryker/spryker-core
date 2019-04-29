@@ -22,6 +22,11 @@ class PublisherPluginMerger implements PublisherPluginMergerInterface
     protected $publisherEventRegistry;
 
     /**
+     * @var array
+     */
+    protected static $eventCollectionBuffer = [];
+
+    /**
      * @param \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface[] $publisherRegistryPlugins
      * @param \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface $publisherEventRegistry
      */
@@ -35,6 +40,18 @@ class PublisherPluginMerger implements PublisherPluginMergerInterface
      * @return array
      */
     public function mergePublisherPlugins(): array
+    {
+        if (!static::$eventCollectionBuffer) {
+            static::$eventCollectionBuffer = $this->extractEventCollection();
+        }
+
+        return static::$eventCollectionBuffer;
+    }
+
+    /**
+     * @return array
+     */
+    protected function extractEventCollection(): array
     {
         $eventCollection = [];
         foreach ($this->publisherRegistryPlugins as $publisherRegistryPlugin) {
