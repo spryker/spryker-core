@@ -66,8 +66,8 @@ const contentItemDialog = function() {
                             '%TEMPLATE%': chosenTemplate
                         }[param];
                     });
-                    this.context.invoke('editor.insertText',  builtText);
                     this.context.invoke('editor.restoreRange');
+                    this.context.invoke('editor.insertText',  builtText);
                     this.$ui.hideDialog(this.$dialog);
                     return;
                 }
