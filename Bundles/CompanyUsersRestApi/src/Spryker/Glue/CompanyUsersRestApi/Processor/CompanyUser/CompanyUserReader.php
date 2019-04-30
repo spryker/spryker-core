@@ -92,7 +92,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
         $companyUserCollectionTransfer = $this->companyUserClient
             ->getActiveCompanyUsersByCustomerReference($customerTransfer);
 
-        return $this->buildCompanyUserCollectionResponse($companyUserCollectionTransfer);
+        return $this->buildCompanyUserCollectionResponse($companyUserCollectionTransfer, 0);
     }
 
     /**
@@ -161,31 +161,46 @@ class CompanyUserReader implements CompanyUserReaderInterface
     public function getCompanyUserCollection(RestRequestInterface $restRequest): RestResponseInterface
     {
         $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())
-            ->setIdCompany($restRequest->getRestUser()->getIdCompany())
-            ->setFilter($this->createFilterTransfer($restRequest));
+            ->setIdCompany($restRequest->getRestUser()->getIdCompany());
+
+        if ($restRequest->hasFilters(CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS)) {
+            $filterCompanyUsers = $restRequest->getFiltersByResource(CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS);
+            foreach ($filterCompanyUsers as $filterCompanyUser) {
+                $companyUserUuid = $filterCompanyUser->getValue();
+                $companyUserStorageTransfer = $this->companyUserStorageClient
+                    ->findCompanyUserByMapping(static::MAPPING_TYPE_UUID, $companyUserUuid);
+                $companyUserTransfer = (new CompanyUserTransfer)->setIdCompanyUser($companyUserStorageTransfer->getIdCompanyUser());
+                $companyUserCriteriaFilterTransfer->addCompanyUserIds($companyUserTransfer->getIdCompanyUser());
+            }
+
+            $companyUserCollectionTransfer = $this->companyUsersRestApiClient->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+
+            return $this->buildCompanyUserCollectionResponse($companyUserCollectionTransfer, 0);
+        }
 
         $companyUserCollectionTransfer = $this->companyUsersRestApiClient
-            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer)
+            ->setFilter($this->createFilterTransfer($restRequest));
 
-        $companyUserUuids = $restRequest->getFiltersByResource(CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS);
-
-//        foreach ($companyUserUuids as $companyUserUuid) {
-//        }
-
-        return $this->buildCompanyUserCollectionResponse($companyUserCollectionTransfer);
+        return $this->buildCompanyUserCollectionResponse(
+            $companyUserCollectionTransfer,
+            $companyUserCollectionTransfer->getFilter()->getLimit()
+        );
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
+     * @param int $limit
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     protected function buildCompanyUserCollectionResponse(
-        CompanyUserCollectionTransfer $companyUserCollectionTransfer
+        CompanyUserCollectionTransfer $companyUserCollectionTransfer,
+        int $limit
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse(
             $companyUserCollectionTransfer->getTotal(),
-            $companyUserCollectionTransfer->getFilter()->getLimit()
+            $limit
         );
 
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUserTransfer) {
