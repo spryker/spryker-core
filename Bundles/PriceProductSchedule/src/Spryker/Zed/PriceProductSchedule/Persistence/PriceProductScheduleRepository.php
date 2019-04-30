@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Persistence;
 
-use DateTime;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\Map\SpyPriceProductScheduleTableMap;
@@ -72,7 +71,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->leftJoinWithProduct()
             ->leftJoinWithProductAbstract()
             ->filterByIsCurrent(true)
-            ->filterByActiveTo(['max' => new DateTime()], Criteria::LESS_EQUAL)
+            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))
             ->find()
             ->getData();
 
@@ -169,7 +168,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->addAsColumn(
                 static::COL_PRODUCT_ID,
                 sprintf(
-                    'CONCAT(%s, \' \', %s, \' \', COALESCE(%s, \'\'), \'_\', COALESCE(\'%s\'))',
+                    'CONCAT(%s, \' \', %s, \' \', COALESCE(%s, 0), \'_\', COALESCE(%s, 0))',
                     SpyPriceProductScheduleTableMap::COL_FK_PRICE_TYPE,
                     SpyPriceProductScheduleTableMap::COL_FK_CURRENCY,
                     SpyPriceProductScheduleTableMap::COL_FK_PRODUCT,
@@ -188,11 +187,11 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
                 )
             )
             ->usePriceProductScheduleListQuery()
-            ->filterByIsActive(true)
+                ->filterByIsActive(true)
             ->endUse()
             ->filterByFkStore($storeTransfer->getIdStore())
-            ->filterByActiveFrom(['max' => new DateTime()], Criteria::LESS_EQUAL)
-            ->filterByActiveTo(['min' => new DateTime()], Criteria::GREATER_EQUAL);
+            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))
+            ->where(sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO));
     }
 
     /**
