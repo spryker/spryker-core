@@ -7,6 +7,7 @@ const ContentItemDialog = function(dialogTitle) {
             this.editor = context.layoutInfo.editor;
             this.options = context.options;
             this.$ui = $.summernote.ui;
+            this.contentCache = {};
 
             this.initialize = function() {
                 const $container = this.options.dialogsInBody ? this.$body : this.editor;
@@ -81,18 +82,28 @@ const ContentItemDialog = function(dialogTitle) {
             };
 
             this.getTableContent = function (url) {
-                $.ajax({
-                    type: 'GET',
-                    url: url,
-                    dataType: "html",
-                    context: this,
-                    success: function(data) {
-                        const dataAjaxUrl = $(data).find('table').data('ajax');
-                        this.$dialog.find('.content-item-loader').hide();
-                        this.$dialog.find('.content-item-body .content-ajax').append(data);
-                        this.$dialog.find('table').DataTable({'ajax': dataAjaxUrl});
-                    }
-                });
+                const self = this;
+                if (!this.contentCache[url]) {
+                    $.ajax({
+                        type: 'GET',
+                        url: url,
+                        dataType: "html",
+                        context: this,
+                        success: function (data) {
+                            self.contentCache[url] = data;
+                            self.initContentHtml(data)
+                        }
+                    });
+                } else {
+                    this.initContentHtml(this.contentCache[url])
+                }
+            };
+
+            this.initContentHtml = function (data) {
+                const dataAjaxUrl = $(data).find('table').data('ajax');
+                this.$dialog.find('.content-item-loader').hide();
+                this.$dialog.find('.content-item-body .content-ajax').append(data);
+                this.$dialog.find('table').DataTable({'ajax': dataAjaxUrl});
             };
 
             this.clearContent = function () {
