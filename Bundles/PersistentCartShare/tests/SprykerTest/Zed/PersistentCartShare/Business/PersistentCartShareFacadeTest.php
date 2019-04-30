@@ -64,7 +64,7 @@ class PersistentCartShareFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetQuoteForPreviewReturnsQuoteResponseTransferWhenQuoteExistsAndIsSharedForPreview(): void
+    public function testGetQuoteForPreviewShouldReturnQuoteTransferWhenQuoteIsFoundAndSharedForPreview(): void
     {
         // Arrange
         $resourceShareTransfer = $this->createPreviewResourceShare();
@@ -131,7 +131,7 @@ class PersistentCartShareFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetQuoteForPreviewReturnsErrorsWhenShareExistsButThereIsNoQuoteWithSuchId(): void
+    public function testGetQuoteForPreviewShouldReturnErrorMessageWhenQuoteIdIsIncorrect(): void
     {
         // Arrange
         $resourceShareTransferForRequest = $this->createPreviewResourceShare([], [
