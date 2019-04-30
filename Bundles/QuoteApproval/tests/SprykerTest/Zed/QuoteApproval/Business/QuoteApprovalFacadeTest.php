@@ -9,11 +9,13 @@ namespace SprykerTest\Zed\QuoteApproval\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
@@ -428,11 +430,20 @@ class QuoteApprovalFacadeTest extends Unit
         $totalsTransfer->setGrandTotal($limitInCents);
 
         $companyUserTransfer = $this->haveCompanyUser();
+        $concreteProductTransfer = $this->tester->haveProduct();
 
         $quoteTransfer = $this->tester->havePersistentQuote(
             [
                 QuoteTransfer::CUSTOMER => $companyUserTransfer->getCustomer(),
                 QuoteTransfer::TOTALS => $totalsTransfer,
+                QuoteTransfer::STORE => [StoreTransfer::NAME => 'DE'],
+                QuoteTransfer::ITEMS => [
+                    [
+                        ItemTransfer::QUANTITY => 1,
+                        ItemTransfer::ID => $concreteProductTransfer->getIdProductConcrete(),
+                        ItemTransfer::SKU => $concreteProductTransfer->getSku()
+                    ],
+                ],
             ]
         );
 

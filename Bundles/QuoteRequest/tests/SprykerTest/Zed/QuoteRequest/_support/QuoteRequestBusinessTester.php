@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -64,22 +62,6 @@ class QuoteRequestBusinessTester extends Actor
         return $this->haveQuoteRequestVersion([
             QuoteRequestVersionTransfer::QUOTE => $quoteTransfer,
         ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function createQuote(CustomerTransfer $customerTransfer, ProductConcreteTransfer $productTransfer)
-    {
-        return $this->havePersistentQuote(
-            [
-                QuoteTransfer::CUSTOMER => $customerTransfer,
-                QuoteTransfer::ITEMS => [ItemTransfer::SKU => $productTransfer->getSku(), ItemTransfer::UNIT_PRICE => 1],
-            ]
-        );
     }
 
     /**
