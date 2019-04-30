@@ -28,7 +28,7 @@ class PersistentCartShareFacade extends AbstractFacade implements PersistentCart
     public function getQuoteForPreview(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createQuoteForPreviewReader()
+            ->createQuoteReader()
             ->getQuoteForPreview($resourceShareRequestTransfer);
     }
 }

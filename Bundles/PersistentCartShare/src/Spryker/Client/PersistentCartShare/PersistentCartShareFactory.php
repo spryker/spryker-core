@@ -9,6 +9,8 @@ namespace Spryker\Client\PersistentCartShare;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToZedRequestClientInterface;
+use Spryker\Client\PersistentCartShare\Quote\QuoteReader;
+use Spryker\Client\PersistentCartShare\Quote\QuoteReaderInterface;
 use Spryker\Client\PersistentCartShare\Zed\PersistentCartShareStub;
 
 /**
@@ -16,6 +18,16 @@ use Spryker\Client\PersistentCartShare\Zed\PersistentCartShareStub;
  */
 class PersistentCartShareFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\PersistentCartShare\Quote\QuoteReaderInterface
+     */
+    public function createQuoteReader(): QuoteReaderInterface
+    {
+        return new QuoteReader(
+            $this->createZedPersistentCartShareStub()
+        );
+    }
+
     /**
      * @return \Spryker\Client\PersistentCartShare\Zed\PersistentCartShareStub
      */

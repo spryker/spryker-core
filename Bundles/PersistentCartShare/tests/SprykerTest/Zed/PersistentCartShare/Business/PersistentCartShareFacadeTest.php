@@ -15,8 +15,8 @@ use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Orm\Zed\ResourceShare\Persistence\SpyResourceShare;
-use Spryker\Shared\PersistentCartShare\PersistentCartShareConstants;
 use Spryker\Zed\PersistentCartShare\Communication\Plugin\PersistentCartShareResourceDataExpanderStrategyPlugin;
+use Spryker\Zed\PersistentCartShare\PersistentCartShareConfig;
 use Spryker\Zed\ResourceShare\ResourceShareDependencyProvider;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDataExpanderStrategyPluginInterface;
 
@@ -151,7 +151,7 @@ class PersistentCartShareFacadeTest extends Test
     {
         // Arrange
         $resourceShareTransferForRequest = $this->createPreviewResourceShare([], [
-            PersistentCartShareConstants::ID_QUOTE_PARAMETER => 99999999,
+            PersistentCartShareConfig::KEY_ID_QUOTE => 99999999,
         ]);
 
         $this->registerResourceShareResourceDataExpanderStrategyPlugin(new PersistentCartShareResourceDataExpanderStrategyPlugin());
@@ -179,7 +179,7 @@ class PersistentCartShareFacadeTest extends Test
     {
         // Arrange
         $resourceShareTransferForRequest = $this->createPreviewResourceShare([], [
-            PersistentCartShareConstants::PARAM_SHARE_OPTION => PersistentCartShareConstants::SHARE_OPTION_FULL_ACCESS,
+            PersistentCartShareConfig::KEY_SHARE_OPTION => PersistentCartShareConfig::SHARE_OPTION_FULL_ACCESS,
         ]);
 
         $this->registerResourceShareResourceDataExpanderStrategyPlugin(new PersistentCartShareResourceDataExpanderStrategyPlugin());
@@ -222,8 +222,8 @@ class PersistentCartShareFacadeTest extends Test
         ]);
 
         $resourceShareDataDefaults = [
-            PersistentCartShareConstants::ID_QUOTE_PARAMETER => $quoteTransfer->getIdQuote(),
-            PersistentCartShareConstants::PARAM_SHARE_OPTION => PersistentCartShareConstants::SHARE_OPTION_PREVIEW,
+            PersistentCartShareConfig::KEY_ID_QUOTE => $quoteTransfer->getIdQuote(),
+            PersistentCartShareConfig::KEY_SHARE_OPTION => PersistentCartShareConfig::SHARE_OPTION_PREVIEW,
         ];
 
         $resourceShareDataTransfer = (new ResourceShareDataTransfer())->setData(
@@ -232,7 +232,7 @@ class PersistentCartShareFacadeTest extends Test
 
         $resourceShareDefaults = [
             ResourceShareTransfer::CUSTOMER_REFERENCE => $quoteTransfer->getCustomerReference(),
-            ResourceShareTransfer::RESOURCE_TYPE => PersistentCartShareConstants::RESOURCE_TYPE_QUOTE,
+            ResourceShareTransfer::RESOURCE_TYPE => PersistentCartShareConfig::RESOURCE_TYPE_QUOTE,
             ResourceShareTransfer::RESOURCE_SHARE_DATA => $resourceShareDataTransfer,
             ResourceShareTransfer::EXPIRY_DATE => (new DateTime('+1 day'))->format('Y-m-d'),
         ];

@@ -22,6 +22,7 @@ class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addZedRequestClient($container);
 
         return $container;
@@ -35,7 +36,9 @@ class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
     protected function addZedRequestClient(Container $container): Container
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
-            return new PersistentCartShareToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
+            return new PersistentCartShareToZedRequestClientBridge(
+                $container->getLocator()->zedRequest()->client()
+            );
         };
 
         return $container;

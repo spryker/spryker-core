@@ -8,19 +8,19 @@
 namespace Spryker\Zed\PersistentCartShare\Communication\Plugin;
 
 use Generated\Shared\Transfer\ResourceShareTransfer;
-use Spryker\Shared\PersistentCartShare\PersistentCartShareConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\PersistentCartShare\PersistentCartShareConfig;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
 
 /**
  * @method \Spryker\Zed\PersistentCartShare\Business\PersistentCartShareFacade getFacade()
- * @method \Spryker\Zed\PersistentCartShare\Communication\PersistentCartShareCommunicationFactory getFactory()
  * @method \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig getConfig()
  */
 class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     * - Returns false, as customer login is not required.
      *
      * @api
      *
@@ -32,7 +32,9 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     * - Returns 'true', when resource type is Quote, and share option is Preview.
+     * - Returns 'false' otherwise.
      *
      * @api
      *
@@ -42,19 +44,17 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
      */
     public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
     {
-        if ($resourceShareTransfer->getResourceType() !== PersistentCartShareConstants::RESOURCE_TYPE_QUOTE) {
+        if ($resourceShareTransfer->getResourceType() !== PersistentCartShareConfig::RESOURCE_TYPE_QUOTE) {
             return false;
         }
 
-        $resourceShareRawData = $resourceShareTransfer
-            ->requireResourceShareData()->getResourceShareData()
-            ->requireData()->getData();
+        $resourceShareTransfer->requireResourceShareData();
+        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
+        $resourceShareData = $resourceShareDataTransfer->getData();
 
-        if (!isset($resourceShareRawData[PersistentCartShareConstants::ID_QUOTE_PARAMETER], $resourceShareRawData[PersistentCartShareConstants::PARAM_SHARE_OPTION])) {
-            return false;
-        }
-
-        if ($resourceShareRawData[PersistentCartShareConstants::PARAM_SHARE_OPTION] !== PersistentCartShareConstants::SHARE_OPTION_PREVIEW) {
+        if (!isset($resourceShareData[PersistentCartShareConfig::KEY_ID_QUOTE], $resourceShareData[PersistentCartShareConfig::KEY_SHARE_OPTION])
+            || $resourceShareData[PersistentCartShareConfig::KEY_SHARE_OPTION] !== PersistentCartShareConfig::SHARE_OPTION_PREVIEW
+        ) {
             return false;
         }
 
@@ -62,7 +62,8 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     * - Does nothing, as no additional actions required for cart preview.
      *
      * @api
      *
@@ -70,6 +71,5 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
      */
     public function execute(ResourceShareTransfer $resourceShareTransfer): void
     {
-        //do nothing
     }
 }
