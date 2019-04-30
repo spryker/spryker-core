@@ -22,8 +22,8 @@ class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterfa
     protected const PRODUCT_LIST_TYPE_WHITELIST = 'whitelist';
 
     protected const MESSAGE_PRODUCT_BUNDLE_SKU_WAS_ADDED_TO_THE_WHITELIST = '%product_bundle_sku% was added to the whitelist with the following products %product_for_bundle_skus%.';
-    protected const PRODUCT_BUNDLE_SKU_PARAMETER = 'product_bundle_sku';
-    protected const PRODUCT_FOR_BUNDLE_SKUS_PARAMETER = 'product_for_bundle_skus';
+    protected const PRODUCT_BUNDLE_SKU_PARAMETER = '%product_bundle_sku%';
+    protected const PRODUCT_FOR_BUNDLE_SKUS_PARAMETER = '%product_for_bundle_skus%';
 
     /**
      * @var \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface
