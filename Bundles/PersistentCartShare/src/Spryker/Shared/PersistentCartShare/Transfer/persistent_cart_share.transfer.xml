@@ -29,7 +29,6 @@
 
     <transfer name="ResourceShare">
         <property name="resourceType" type="string" />
-        <property name="resourceData" type="string" />
         <property name="resourceShareData" type="ResourceShareData" />
     </transfer>
 
