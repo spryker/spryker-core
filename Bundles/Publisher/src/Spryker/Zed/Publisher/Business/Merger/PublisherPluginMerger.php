@@ -41,7 +41,7 @@ class PublisherPluginMerger implements PublisherPluginMergerInterface
      */
     public function mergePublisherPlugins(): array
     {
-        if (static::$eventCollectionBuffer !== null) {
+        if (static::$eventCollectionBuffer === null) {
             static::$eventCollectionBuffer = $this->extractEventCollection();
         }
 
