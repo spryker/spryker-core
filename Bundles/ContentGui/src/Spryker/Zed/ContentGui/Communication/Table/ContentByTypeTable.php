@@ -21,17 +21,17 @@ class ContentByTypeTable extends AbstractTable
     /**
      * @var string
      */
-    private $contentType;
+    protected $contentType;
 
     /**
      * @var \Orm\Zed\Content\Persistence\SpyContentQuery
      */
-    private $contentQuery;
+    protected $contentQuery;
 
     /**
-     * @var int
+     * @var int|null
      */
-    private $idContent;
+    protected $idContent;
 
     /**
      * @param string $contentType

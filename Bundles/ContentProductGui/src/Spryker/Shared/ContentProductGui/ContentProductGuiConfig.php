@@ -24,4 +24,48 @@ class ContentProductGuiConfig extends AbstractSharedConfig
      * Content item abstract product list
      */
     public const CONTENT_TERM_PRODUCT_ABSTRACT_LIST = 'Abstract Product List';
+
+    /**
+     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::TWIG_FUNCTION_NAME
+     */
+    protected const TWIG_FUNCTION_NAME = 'content_product_abstract_list';
+
+    /**
+     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT
+     */
+    protected const WIDGET_TEMPLATE_IDENTIFIER_DEFAULT = 'default';
+
+    /**
+     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT
+     */
+    protected const WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT = 'content_product_abstract_list.template.default';
+
+    /**
+     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
+     */
+    protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
+
+    /**
+     * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_DISPLAY_NAME_TOP_TITLE
+     */
+    protected const WIDGET_TEMPLATE_DISPLAY_NAME_TOP_TITLE = 'content_product_abstract_list.template.top-title';
+
+    /**
+     * @return array
+     */
+    public function getContentWidgetTemplates(): array
+    {
+        return [
+            static::WIDGET_TEMPLATE_IDENTIFIER_DEFAULT => static::WIDGET_TEMPLATE_DISPLAY_NAME_DEFAULT,
+            static::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE => static::WIDGET_TEMPLATE_DISPLAY_NAME_TOP_TITLE,
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwigFunctionName(): string
+    {
+        return static::TWIG_FUNCTION_NAME;
+    }
 }
