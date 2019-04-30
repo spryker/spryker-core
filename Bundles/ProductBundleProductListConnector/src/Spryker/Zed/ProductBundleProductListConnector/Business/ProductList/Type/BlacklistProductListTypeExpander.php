@@ -11,11 +11,17 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeInterface;
 use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductFacadeInterface;
 
 class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterface
 {
+    /**
+     * @uses \Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap::COL_TYPE_BLACKLIST
+     */
+    protected const PRODUCT_LIST_TYPE_BLACKLIST = 'blacklist';
+
     protected const MESSAGE_PRODUCT_BUNDLE_SKU_WAS_BLACKLISTED = '%product_bundle_sku% was blacklisted because %product_for_bundle_skus% had been blacklisted.';
     protected const PRODUCT_BUNDLE_SKU_PARAMETER = 'product_bundle_sku';
     protected const PRODUCT_FOR_BUNDLE_SKUS_PARAMETER = 'product_for_bundle_skus';
@@ -43,11 +49,21 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return bool
+     */
+    public function isApplicable(ProductListTransfer $productListTransfer): bool
+    {
+        return $productListTransfer->getType() === static::PRODUCT_LIST_TYPE_BLACKLIST;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function expandProductListWithProductBundle(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
+    public function expand(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
     {
         foreach ($productListResponseTransfer->getProductList()->getProductListProductConcreteRelation()->getProductIds() as $idProductConcrete) {
             $productListResponseTransfer = $this->expandProductListByIdProductConcrete($idProductConcrete, $productListResponseTransfer);
