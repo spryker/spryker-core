@@ -74,7 +74,7 @@ class TransferDefinitionFinder implements FinderInterface
     protected function getExistingSourceDirectories()
     {
         return array_filter($this->sourceDirectories, function ($directory) {
-            return (bool)glob($directory, GLOB_ONLYDIR);
+            return (bool)glob($directory, GLOB_ONLYDIR|GLOB_NOSORT);
         });
     }
 }
