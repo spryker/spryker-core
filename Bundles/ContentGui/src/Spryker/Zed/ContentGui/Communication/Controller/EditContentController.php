@@ -61,6 +61,7 @@ class EditContentController extends AbstractController
             'contentTabs' => $contentTabs->createView(),
             'contentForm' => $contentForm->createView(),
             'backButton' => static::URL_REDIRECT_CONTENT_LIST_PAGE,
+            'contentId' => $contentId,
             'contentName' => $this->getFactory()->createContentResolver()->getContentPlugin($termKey)->getTermKey(),
         ]);
     }
