@@ -61,7 +61,8 @@ class PersistentCartShareResourceDataExpanderStrategyPlugin extends AbstractPlug
         }
 
         $resourceShareTransfer->requireResourceShareData();
-        $resourceShareData = $resourceShareTransfer->getResourceShareData()->getData();
+        $resourceShareData = $resourceShareTransfer->getResourceShareData()
+            ->getData();
 
         if (!isset($resourceShareData[PersistentCartShareConfig::KEY_ID_QUOTE], $resourceShareData[PersistentCartShareConfig::KEY_SHARE_OPTION])) {
             return false;

@@ -8,6 +8,10 @@
         <property name="customerReference" type="string" />
     </transfer>
 
+    <transfer name="Customer">
+        <property name="customerReference" type="string" />
+    </transfer>
+
     <transfer name="QuoteResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="quoteTransfer" type="Quote"/>
