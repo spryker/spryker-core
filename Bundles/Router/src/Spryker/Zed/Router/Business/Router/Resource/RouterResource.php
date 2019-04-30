@@ -9,11 +9,11 @@ namespace Spryker\Zed\Router\Business\Router\Resource;
 
 use Exception;
 use ReflectionClass;
-use Spryker\Shared\Router\Resource\ResourceInterface;
-use Spryker\Shared\Router\Route\Route;
-use Spryker\Shared\Router\Route\RouteCollection;
 use Spryker\Zed\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Zed\Kernel\Communication\BundleControllerAction;
+use Spryker\Zed\Router\Business\Resource\ResourceInterface;
+use Spryker\Zed\Router\Business\Route\Route;
+use Spryker\Zed\Router\Business\Route\RouteCollection;
 use Spryker\Zed\Router\RouterConfig;
 use Symfony\Component\Finder\Finder;
 use Zend\Filter\FilterChain;
@@ -45,7 +45,7 @@ class RouterResource implements ResourceInterface
      *
      * @throws \Exception
      *
-     * @return \Spryker\Shared\Router\Route\RouteCollection
+     * @return \Spryker\Zed\Router\Business\Route\RouteCollection
      */
     public function __invoke(): RouteCollection
     {

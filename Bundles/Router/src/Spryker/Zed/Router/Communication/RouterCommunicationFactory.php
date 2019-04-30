@@ -12,11 +12,12 @@ use Spryker\Zed\Router\RouterDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Router\RouterConfig getConfig()
+ * @method \Spryker\Zed\Router\Business\RouterFacadeInterface getFacade()
  */
 class RouterCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Shared\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
      */
     public function getRouterPlugins(): array
     {

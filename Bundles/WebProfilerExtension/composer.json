@@ -1,23 +1,24 @@
 {
-  "name": "spryker/router-extension",
-  "type": "library",
-  "description": "RouterExtension module",
+  "name": "spryker/web-profiler-extension",
+  "description": "WebProfilerExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
     "spryker/symfony": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/symfony": "You need to install this module when you want to use the Router plugin."
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
     }
+  },
+  "suggest": {
+    "spryker/container": "If you want to use the Container module.",
+    "spryker/symfony": "If you want to use the Symfony component."
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

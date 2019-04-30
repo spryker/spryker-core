@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Router\Business;
 
-use Spryker\Shared\Router\ChainRouter;
-use Spryker\Shared\Router\Loader\ClosureLoader;
-use Spryker\Shared\Router\Loader\LoaderInterface;
-use Spryker\Shared\Router\Resource\ResourceInterface;
-use Spryker\Shared\Router\Router;
-use Spryker\Shared\Router\RouterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Router\Business\Loader\ClosureLoader;
+use Spryker\Zed\Router\Business\Loader\LoaderInterface;
+use Spryker\Zed\Router\Business\Resource\ResourceInterface;
+use Spryker\Zed\Router\Business\Router\ChainRouter;
 use Spryker\Zed\Router\Business\Router\Resource\RouterResource;
+use Spryker\Zed\Router\Business\Router\Router;
+use Spryker\Zed\Router\Business\Router\RouterInterface;
 use Spryker\Zed\Router\RouterDependencyProvider;
 
 /**
@@ -23,7 +23,7 @@ use Spryker\Zed\Router\RouterDependencyProvider;
 class RouterBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Shared\Router\ChainRouter
+     * @return \Spryker\Zed\Router\Business\Router\ChainRouter
      */
     public function createRouter()
     {
@@ -31,7 +31,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
      */
     protected function getRouterPlugins(): array
     {
@@ -39,20 +39,19 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Router\RouterInterface
+     * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
     public function createZedRouter(): RouterInterface
     {
         return new Router(
             $this->createClosureLoader(),
             $this->createResource(),
-            $this->getRouterEnhancerPlugins(),
             $this->getConfig()->getRouterConfiguration()
         );
     }
 
     /**
-     * @return \Spryker\Shared\Router\Loader\LoaderInterface
+     * @return \Spryker\Zed\Router\Business\Loader\LoaderInterface
      */
     protected function createClosureLoader(): LoaderInterface
     {
@@ -60,20 +59,12 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Router\Resource\ResourceInterface
+     * @return \Spryker\Zed\Router\Business\Resource\ResourceInterface
      */
     protected function createResource(): ResourceInterface
     {
         return new RouterResource(
             $this->getConfig()
         );
-    }
-
-    /**
-     * @return \Spryker\Shared\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
-     */
-    protected function getRouterEnhancerPlugins(): array
-    {
-        return $this->getProvidedDependency(RouterDependencyProvider::ROUTER_ENHANCER_PLUGINS);
     }
 }

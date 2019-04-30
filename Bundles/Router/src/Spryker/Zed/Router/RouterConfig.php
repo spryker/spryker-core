@@ -30,7 +30,7 @@ class RouterConfig extends AbstractBundleConfig
      */
     protected function getCachePathIfCacheEnabled(): ?string
     {
-        if ($this->get(RouterConstants::ROUTER_CACHE_ENABLED_ZED, true)) {
+        if ($this->get(RouterConstants::ROUTER_CACHE_ENABLED, true)) {
             return APPLICATION_ROOT_DIR . '/data/' . APPLICATION_STORE . '/cache/' . APPLICATION . '/routing';
         }
 
@@ -60,7 +60,7 @@ class RouterConfig extends AbstractBundleConfig
      */
     public function isSslEnabled(): bool
     {
-        return $this->get(RouterConstants::ROUTER_IS_SSL_ENABLED_ZED, true);
+        return $this->get(RouterConstants::ROUTER_IS_SSL_ENABLED, true);
     }
 
     /**
@@ -68,6 +68,6 @@ class RouterConfig extends AbstractBundleConfig
      */
     public function getSslExcludedRouteNames(): array
     {
-        return $this->get(RouterConstants::ROUTER_SSL_EXCLUDED_ROUTE_NAMES_ZED, []);
+        return $this->get(RouterConstants::ROUTER_SSL_EXCLUDED_ROUTE_NAMES, []);
     }
 }

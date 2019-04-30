@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\Router\Business;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Router\Business\Router\ChainRouter;
 use Spryker\Zed\Router\Business\Router\RouterInterface;
 
 /**
  * @method \Spryker\Zed\Router\Business\RouterBusinessFactory getFactory()
  */
-class RouterFacade extends AbstractFacade implements RouterFacadeInterface
+interface RouterFacadeInterface
 {
     /**
      * Specification:
@@ -25,10 +24,7 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
      *
      * @return \Spryker\Zed\Router\Business\Router\ChainRouter
      */
-    public function getRouter(): ChainRouter
-    {
-        return $this->getFactory()->createRouter();
-    }
+    public function getRouter(): ChainRouter;
 
     /**
      * Specification:
@@ -38,8 +34,5 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
      *
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
-    public function getZedRouter(): RouterInterface
-    {
-        return $this->getFactory()->createZedRouter();
-    }
+    public function getZedRouter(): RouterInterface;
 }

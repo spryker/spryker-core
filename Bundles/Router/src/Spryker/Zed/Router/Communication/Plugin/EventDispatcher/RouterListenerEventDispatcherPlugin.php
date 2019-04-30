@@ -11,8 +11,8 @@ use Silex\Provider\RoutingServiceProvider;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
-use Spryker\Shared\Router\ChainRouter;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Router\Business\Router\ChainRouter;
 use Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\EventListener\RouterListener;
@@ -20,6 +20,7 @@ use Symfony\Component\HttpKernel\EventListener\RouterListener;
 /**
  * @method \Spryker\Zed\Router\RouterConfig getConfig()
  * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Router\Business\RouterFacadeInterface getFacade()
  */
 class RouterListenerEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
@@ -62,7 +63,7 @@ class RouterListenerEventDispatcherPlugin extends AbstractPlugin implements Even
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Spryker\Shared\Router\ChainRouter
+     * @return \Spryker\Zed\Router\Business\Router\ChainRouter
      */
     protected function getChainRouter(ContainerInterface $container): ChainRouter
     {

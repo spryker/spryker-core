@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Router\Communication\Plugin\Router;
 
-use Spryker\Shared\RouterExtension\Dependency\Plugin\RouterPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
