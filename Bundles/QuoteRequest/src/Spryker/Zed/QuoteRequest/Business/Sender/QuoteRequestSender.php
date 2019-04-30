@@ -17,6 +17,7 @@ use Spryker\Zed\QuoteRequest\Persistence\QuoteRequestEntityManagerInterface;
 
 class QuoteRequestSender implements QuoteRequestSenderInterface
 {
+    protected const GLOSSARY_KEY_CONCURRENT_CUSTOMERS = 'quote_request.update.validation.concurrent';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS = 'quote_request.validation.error.empty_quote_items';
 
@@ -63,6 +64,10 @@ class QuoteRequestSender implements QuoteRequestSenderInterface
             return $quoteRequestResponseTransfer;
         }
 
+        if (!$this->isQuoteRequestNonConcurrent($quoteRequestTransfer)) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_CONCURRENT_CUSTOMERS);
+        }
+
         $quoteRequestTransfer->setStatus(SharedQuoteRequestConfig::STATUS_WAITING);
         $quoteRequestTransfer = $this->quoteRequestEntityManager->updateQuoteRequest($quoteRequestTransfer);
 
@@ -101,5 +106,19 @@ class QuoteRequestSender implements QuoteRequestSenderInterface
         return (new QuoteRequestResponseTransfer())
             ->setIsSuccessful(false)
             ->addMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteRequestNonConcurrent(QuoteRequestTransfer $quoteRequestTransfer): bool
+    {
+        return $this->quoteRequestEntityManager->updateQuoteRequestStatus(
+            $quoteRequestTransfer->getQuoteRequestReference(),
+            $quoteRequestTransfer->getStatus(),
+            SharedQuoteRequestConfig::STATUS_WAITING
+        );
     }
 }
