@@ -81,18 +81,12 @@ class CompanyUserReader implements CompanyUserReaderInterface
      */
     public function getCompanyUsersByCustomerReference(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $idCompanyUser = $restRequest->getResource()->getId();
-
-        if ($idCompanyUser !== null) {
-            return $this->buildNotImplementedErrorResponse();
-        }
-
         $customerTransfer = (new CustomerTransfer())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
         $companyUserCollectionTransfer = $this->companyUserClient
             ->getActiveCompanyUsersByCustomerReference($customerTransfer);
 
-        return $this->buildCompanyUserCollectionResponse($companyUserCollectionTransfer, 0);
+        return $this->buildCompanyUserCollectionResponse($companyUserCollectionTransfer);
     }
 
     /**
@@ -130,9 +124,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
             ->setIdCompanyUser($companyUserStorageTransfer->getIdCompanyUser());
         $companyUserTransfer = $this->companyUserClient->getCompanyUserById($companyUserTransfer);
 
-        if (!$companyUserTransfer
-            || $companyUserTransfer->getCompany()->getIdCompany() !== $restRequest->getRestUser()->getIdCompany()
-        ) {
+        if ($companyUserTransfer->getCompany()->getIdCompany() !== $restRequest->getRestUser()->getIdCompany()) {
             return $this->buildForbiddenErrorResponse();
         }
 
@@ -169,13 +161,13 @@ class CompanyUserReader implements CompanyUserReaderInterface
                 $companyUserUuid = $filterCompanyUser->getValue();
                 $companyUserStorageTransfer = $this->companyUserStorageClient
                     ->findCompanyUserByMapping(static::MAPPING_TYPE_UUID, $companyUserUuid);
-                $companyUserTransfer = (new CompanyUserTransfer)->setIdCompanyUser($companyUserStorageTransfer->getIdCompanyUser());
+                $companyUserTransfer = (new CompanyUserTransfer())->setIdCompanyUser($companyUserStorageTransfer->getIdCompanyUser());
                 $companyUserCriteriaFilterTransfer->addCompanyUserIds($companyUserTransfer->getIdCompanyUser());
             }
 
             $companyUserCollectionTransfer = $this->companyUsersRestApiClient->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
 
-            return $this->buildCompanyUserCollectionResponse($companyUserCollectionTransfer, 0);
+            return $this->buildCompanyUserCollectionResponse($companyUserCollectionTransfer);
         }
 
         $companyUserCollectionTransfer = $this->companyUsersRestApiClient
@@ -184,22 +176,25 @@ class CompanyUserReader implements CompanyUserReaderInterface
 
         return $this->buildCompanyUserCollectionResponse(
             $companyUserCollectionTransfer,
+            $companyUserCollectionTransfer->getTotal(),
             $companyUserCollectionTransfer->getFilter()->getLimit()
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer
+     * @param int $totalItems
      * @param int $limit
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     protected function buildCompanyUserCollectionResponse(
         CompanyUserCollectionTransfer $companyUserCollectionTransfer,
-        int $limit
+        int $totalItems = 0,
+        int $limit = 0
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse(
-            $companyUserCollectionTransfer->getTotal(),
+            $totalItems,
             $limit
         );
 
