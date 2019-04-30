@@ -309,6 +309,7 @@ class CartClientTest extends Unit
             'validateQuote',
             'addFlashMessagesFromLastZedRequest',
             'addResponseMessagesToMessenger',
+            'resetQuoteLock',
         ])->getMock();
     }
 }
