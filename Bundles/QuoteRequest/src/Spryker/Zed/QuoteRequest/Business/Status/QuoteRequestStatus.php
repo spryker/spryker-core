@@ -32,7 +32,7 @@ class QuoteRequestStatus implements QuoteRequestStatusInterface
      */
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return in_array($quoteRequestTransfer->getStatus(), $this->quoteRequestConfig->getCancelableStatuses());
+        return in_array($quoteRequestTransfer->getStatus(), $this->quoteRequestConfig->getCancelableStatuses(), true);
     }
 
     /**
@@ -42,7 +42,7 @@ class QuoteRequestStatus implements QuoteRequestStatusInterface
      */
     public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return in_array($quoteRequestTransfer->getStatus(), $this->quoteRequestConfig->getEditableStatuses());
+        return in_array($quoteRequestTransfer->getStatus(), $this->quoteRequestConfig->getEditableStatuses(), true);
     }
 
     /**
@@ -52,6 +52,6 @@ class QuoteRequestStatus implements QuoteRequestStatusInterface
      */
     public function isQuoteRequestRevisable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return in_array($quoteRequestTransfer->getStatus(), $this->quoteRequestConfig->getRevisableStatuses());
+        return in_array($quoteRequestTransfer->getStatus(), $this->quoteRequestConfig->getRevisableStatuses(), true);
     }
 }

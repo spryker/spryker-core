@@ -168,7 +168,7 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
         $companyUserIds = [];
 
         foreach ($quoteRequestCollectionTransfer->getQuoteRequests() as $quoteRequestTransfer) {
-            if (!in_array($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser(), $companyUserIds)) {
+            if (!in_array($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser(), $companyUserIds, true)) {
                 $companyUserIds[] = $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser();
             }
         }

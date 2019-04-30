@@ -33,7 +33,7 @@ class QuoteRequestAgentStatus implements QuoteRequestAgentStatusInterface
      */
     public function isQuoteRequestCancelable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return in_array($quoteRequestTransfer->getStatus(), $this->quoteRequestAgentConfig->getCancelableStatuses());
+        return in_array($quoteRequestTransfer->getStatus(), $this->quoteRequestAgentConfig->getCancelableStatuses(), true);
     }
 
     /**
@@ -43,7 +43,7 @@ class QuoteRequestAgentStatus implements QuoteRequestAgentStatusInterface
      */
     public function isQuoteRequestRevisable(QuoteRequestTransfer $quoteRequestTransfer): bool
     {
-        return in_array($quoteRequestTransfer->getStatus(), $this->quoteRequestAgentConfig->getRevisableStatuses());
+        return in_array($quoteRequestTransfer->getStatus(), $this->quoteRequestAgentConfig->getRevisableStatuses(), true);
     }
 
     /**
