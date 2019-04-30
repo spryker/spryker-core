@@ -441,7 +441,7 @@ class QuoteApprovalFacadeTest extends Unit
                     [
                         ItemTransfer::QUANTITY => 1,
                         ItemTransfer::ID => $concreteProductTransfer->getIdProductConcrete(),
-                        ItemTransfer::SKU => $concreteProductTransfer->getSku()
+                        ItemTransfer::SKU => $concreteProductTransfer->getSku(),
                     ],
                 ],
             ]
