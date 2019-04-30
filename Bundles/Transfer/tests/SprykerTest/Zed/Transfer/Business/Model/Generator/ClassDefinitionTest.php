@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Transfer\Business\Model\Generator;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
+use Spryker\Zed\Transfer\TransferConfig;
 
 /**
  * Auto-generated group annotations
@@ -32,7 +33,7 @@ class ClassDefinitionTest extends Unit
             'name' => 'name',
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
         $this->assertSame('NameTransfer', $classDefinition->getName());
     }
@@ -48,7 +49,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$property],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -98,7 +99,7 @@ class ClassDefinitionTest extends Unit
             ],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -123,7 +124,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('property1', 'array')],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -142,7 +143,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('Property1', 'array')],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -161,7 +162,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('property1', 'Type[]')],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -182,7 +183,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$property],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -201,7 +202,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('property1', 'string')],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
@@ -225,7 +226,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('property1', 'string')],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
@@ -245,7 +246,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('property1', 'Type[]')],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
@@ -267,7 +268,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('property1', 'Type[]', null, null, $bundles)],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
@@ -296,7 +297,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getProperty('property1', 'string[]', null, null, $bundles)],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -327,7 +328,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$property],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $methods = $classDefinition->getMethods();
@@ -441,7 +442,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$property],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
     }
 
@@ -482,7 +483,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getPropertyAssociative('property1', 'string[]', null, null, [], true)],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -509,7 +510,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getPropertyAssociative('property1', 'Type[]', null, null, [], true)],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -536,7 +537,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getPropertyAssociative('property1', 'Type[]', null, null, [], "1")],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
 
         $properties = $classDefinition->getProperties();
@@ -565,7 +566,7 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getPropertyAssociative('property1', 'string', null, null, [], true)],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
     }
 
@@ -581,7 +582,19 @@ class ClassDefinitionTest extends Unit
             'property' => [$this->getPropertyAssociative('properties', 'string[]', 'property', null, [], 'Yeah')],
         ];
 
-        $classDefinition = new ClassDefinition();
+        $classDefinition = $this->createClassDefinition();
         $classDefinition->setDefinition($transferDefinition);
+    }
+
+    /**
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition
+     */
+    protected function createClassDefinition(): ClassDefinition
+    {
+        $classDefinition = new ClassDefinition(
+            new TransferConfig()
+        );
+
+        return $classDefinition;
     }
 }
