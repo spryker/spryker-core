@@ -3,22 +3,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-.note-editor {
+.content-item-body {
     .template-list {
         list-style: none;
         margin: 0;
         padding: 0;
-    }
 
-    label {
-        margin: 0 0 10px 5px;
-    }
-
-    .btn-create {
-        color: #ffffff !important;
+        label {
+            margin: 0 0 10px 5px;
+        }
     }
 
     .ibox-title {
+        border-width: 0;
         h5 {
             float: none;
         }

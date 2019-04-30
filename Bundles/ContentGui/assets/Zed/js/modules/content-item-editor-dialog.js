@@ -27,7 +27,7 @@ const ContentItemDialog = function(dialogTitle) {
                     '</div>';
 
                 const footerTemplate = '<div class="content-item-footer">' +
-                    '<button class="btn btn-create add-content-item">' +
+                    '<button class="btn btn-primary note-btn note-btn-primary add-content-item">' +
                     dialogTitle +
                     '</button>' +
                     '</div>';

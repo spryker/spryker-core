@@ -33,7 +33,8 @@ const ContentItemEditor = function(options) {
             ],
             buttons: {
                 dropdownContentItem: this.createDropdownButton()
-            }
+            },
+            dialogsInBody: true
         };
 
         return editorConfig.mergeConfigs(baseConfig, contentGuiConfig);
