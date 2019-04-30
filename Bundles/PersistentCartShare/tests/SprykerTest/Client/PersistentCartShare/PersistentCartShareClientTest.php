@@ -8,6 +8,7 @@
 namespace SprykerTest\Client\PersistentCartShare;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\PersistentCartShare\PersistentCartShareClientInterface;
 
 /**
@@ -24,7 +25,8 @@ class PersistentCartShareClientTest extends Unit
      * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID
      */
     protected const GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID = 'resource_share.reader.error.resource_is_not_found_by_provided_uuid';
-    protected const NOT_EXISTING_UUID_OR_NOT_A_UUID_AT_ALL = 'not-existing-uuid-or-not-a-uuid-at-all';
+
+    protected const VALUE_NOT_EXISTING_UUID = 'VALUE_NOT_EXISTING_UUID';
 
     /**
      * @var \SprykerTest\Client\PersistentCartShare\PersistentCartShareClientTester
@@ -34,22 +36,53 @@ class PersistentCartShareClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetQuoteForPreviewReturnsQuoteResponseTransferByZedRequest(): void
+    public function testGetQuoteForPreviewShouldReturnErrorMessageWhenUuidIsIncorrect(): void
     {
-        // Arrange
-        $resourceShareUuid = static::NOT_EXISTING_UUID_OR_NOT_A_UUID_AT_ALL;
-
         // Act
-        $quoteResponseTransfer = $this->getPersistentCartShareClient()->getQuoteForPreview($resourceShareUuid);
+        $quoteResponseTransfer = $this->getPersistentCartShareClient()
+            ->getQuoteForPreview(static::VALUE_NOT_EXISTING_UUID);
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-        $this->assertNotEmpty($quoteResponseTransfer->getErrors());
-        $this->assertEmpty($quoteResponseTransfer->getQuoteTransfer());
-        /** @var \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer */
-        $errors = $quoteResponseTransfer->getErrors();
-        $quoteErrorTransfer = reset($errors);
-        $this->assertEquals(static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID, $quoteErrorTransfer->getMessage());
+        $this->assertTrue($this->hasErrorMessage(
+            $quoteResponseTransfer,
+            static::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID)
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetQuoteForPreviewShouldReturnQuoteWhenUuidIsCorrect(): void
+    {
+        // Arrange
+        $resourceShareTransfer = $this->tester->haveResourceShare();
+
+        // Act
+        $quoteResponseTransfer = $this->getPersistentCartShareClient()
+            ->getQuoteForPreview($resourceShareTransfer->getUuid());
+
+        // Assert
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+        $this->assertNotNull($quoteResponseTransfer->getQuoteTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param string $expectedErrorMessage
+     *
+     * @return bool
+     */
+    protected function hasErrorMessage(QuoteResponseTransfer $quoteResponseTransfer, string $expectedErrorMessage): bool
+    {
+        $quoteResponseTransfer->requireErrors();
+        foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
+            if ($quoteErrorTransfer->getMessage() === $expectedErrorMessage) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
