@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Container;
 class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
+
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
     /**
