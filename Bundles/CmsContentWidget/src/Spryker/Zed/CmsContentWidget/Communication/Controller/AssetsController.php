@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsContentWidget\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @method \Spryker\Zed\CmsContentWidget\Business\CmsContentWidgetFacadeInterface getFacade()
@@ -17,14 +16,15 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class AssetsController extends AbstractController
 {
     /**
-     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
-     *
      * @return array
      */
     public function indexAction(): array
     {
-        if (!$this->getFactory()->getConfig()->isEditorButtonEnabled()) {
-            throw new BadRequestHttpException();
+        $isEditorButtonEnabled = $this->getFactory()->getConfig()->isEditorButtonEnabled();
+        if (!$isEditorButtonEnabled) {
+            return $this->viewResponse([
+                'isEditorButtonEnabled' => $isEditorButtonEnabled,
+            ]);
         }
 
         $cmsContentWidgetConfiguration = $this->getFacade()
@@ -36,6 +36,7 @@ class AssetsController extends AbstractController
         }
 
         return $this->viewResponse([
+            'isEditorButtonEnabled' => $isEditorButtonEnabled,
             'cmsContentWidgetFunctions' => $cmsContentWidgetFunctions,
         ]);
     }
