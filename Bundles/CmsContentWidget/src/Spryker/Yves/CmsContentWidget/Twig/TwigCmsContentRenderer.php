@@ -7,8 +7,8 @@
 
 namespace Spryker\Yves\CmsContentWidget\Twig;
 
-use Exception;
 use Spryker\Shared\Log\LoggerTrait;
+use Throwable;
 use Twig\Environment;
 
 class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
@@ -58,7 +58,7 @@ class TwigCmsContentRenderer implements TwigCmsContentRendererInterface
     {
         try {
             return $this->twigEnvironment->createTemplate($content)->render($context);
-        } catch (Exception $exception) {
+        } catch (Throwable $exception) {
             $this->getLogger()->warning($exception->getMessage(), ['exception' => $exception]);
             return $content;
         }
