@@ -8,8 +8,8 @@
 <script>
     window.editorConfiguration = window.editorConfiguration || {};
 
-    window.editorConfiguration.cms = {
-        dropdownItems: {{ dropdownItems | json_encode | raw }},
+    window.editorConfiguration.contentGuiConfigData = {
+        dropDownItems: {{ dropdownItems | json_encode | raw }},
         buttonTitle: '{{ 'Content' | trans }}',
         title: '{{ 'Insert Content' | trans }}'
     };

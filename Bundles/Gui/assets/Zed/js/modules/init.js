@@ -39,13 +39,15 @@ var dataTablesSearchDelay = function() {
 const editorInit = function() {
     $('.html-editor').each(function() {
         const $textarea = $(this);
-        const $textareaConfigName = $textarea.data('editor-config');
+        const textareaConfigName = $textarea.data('editor-config');
 
-        if (editorConfig.globalConfigExist($textareaConfigName)) {
-            return;
+        let config = editorConfig.getGlobalConfig(textareaConfigName);
+
+        if (!config) {
+            config = editorConfig.getConfig();
         }
 
-        $textarea.summernote(editorConfig.getConfig())
+        $textarea.summernote(config);
     });
 };
 

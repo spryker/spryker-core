@@ -1,17 +1,26 @@
-const defaultEditorConfig = require('ZedGuiEditorConfiguration');
-const getEditorConfig = require('./editorComponents/config');
+const editorConfig = require('ZedGuiEditorConfiguration');
 const editorButtons = require('./editorComponents/buttons');
-const contentItemDialog = require('./content-item-editor-dialog');
+const ContentItemDialog = require('./content-item-editor-dialog');
 
-const ContentItemEditor = function() {
+const ContentItemEditor = function(options) {
+    this.dropDownItems = [];
+    this.buttonTitle = 'Insert Content';
+    this.title = 'Content';
+
+    $.extend(this, options);
+
     this.initialization = function() {
-        this.dropDownItems = window.editorConfiguration.cms.dropdownItems;
-        contentItemDialog.init();
+        new ContentItemDialog(this.title);
     };
 
-    this.getContentItemEditorConfig = function () {
-        const defaultConfig = defaultEditorConfig.getConfig();
-        const newConfig = {
+    this.getEditorConfig = function (baseConfig = '') {
+        baseConfig = editorConfig.getGlobalConfig(baseConfig);
+
+        if (!baseConfig) {
+            baseConfig = editorConfig.getConfig();
+        }
+
+        const contentGuiConfig = {
             toolbar: [
                 ['insert', ['dropdownContentItem']]
             ],
@@ -20,13 +29,13 @@ const ContentItemEditor = function() {
             }
         };
 
-        return getEditorConfig(defaultConfig, newConfig);
+        return editorConfig.mergeConfigs(baseConfig, contentGuiConfig);
     };
 
     this.createDropdownButton = function () {
 
         return editorButtons.ContentItemDropdownButton(
-            window.editorConfiguration.cms.buttonTitle,
+            this.buttonTitle,
             this.generateDropdownList(),
             this.dropDownClickHandler
         );

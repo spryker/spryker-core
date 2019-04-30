@@ -1,5 +1,4 @@
-const contentItemDialog = function() {
-    const insertContentText = window.editorConfiguration.cms.title;
+const ContentItemDialog = function(dialogTitle) {
 
     $.extend($.summernote.plugins, {
         'contentItemDialog': function (context) {
@@ -21,12 +20,12 @@ const contentItemDialog = function() {
 
                 const footerTemplate = '<div class="content-item-footer">' +
                     '<button class="btn btn-create add-content-item">' +
-                    insertContentText +
+                    dialogTitle +
                     '</button>' +
                     '</div>';
 
                 this.$dialog = this.$ui.dialog({
-                    title: insertContentText,
+                    title: dialogTitle,
                     fade: this.options.dialogsFade,
                     body: bodyTemplate,
                     footer: footerTemplate,
@@ -67,7 +66,7 @@ const contentItemDialog = function() {
                         }[param];
                     });
                     this.context.invoke('editor.restoreRange');
-                    this.context.invoke('editor.insertText',  builtText);
+                    this.context.invoke('editor.insertText', builtText);
                     this.$ui.hideDialog(this.$dialog);
                     return;
                 }
@@ -118,6 +117,4 @@ const contentItemDialog = function() {
     });
 };
 
-module.exports = {
-    init: contentItemDialog
-};
+module.exports = ContentItemDialog;

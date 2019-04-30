@@ -1,17 +1,5 @@
 require('../sass/main.scss');
-const editorConfig = require('ZedGuiEditorConfiguration');
 const ContentItemEditor = require('./modules/content-item-editor');
 
-const initContentItemEditor = function() {
-    if (!editorConfig.globalConfigExist('cms')) {
-        return;
-    }
-
-    const editor = new ContentItemEditor();
-
-    $('.html-editor[data-editor-config="cms"]').summernote(editor.getContentItemEditorConfig());
-};
-
-$(document).ready(function() {
-    initContentItemEditor();
-});
+const editor = new ContentItemEditor(window.editorConfiguration.contentGuiConfigData);
+window.editorConfiguration.cms = editor.getEditorConfig('cms');
