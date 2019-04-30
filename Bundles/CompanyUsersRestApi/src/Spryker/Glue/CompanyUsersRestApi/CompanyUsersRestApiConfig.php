@@ -18,6 +18,12 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_RESOURCE_NOT_IMPLEMENTED = '1402';
     public const RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED = 'Resource is not implemented.';
 
+    public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1403';
+    public const RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND = 'Company user not found.';
+
+    public const RESPONSE_CODE_ACCESS_FORBIDDEN = '1404';
+    public const RESPONSE_DETAIL_ACCESS_FORBIDDEN = 'Access to company user forbidden.';
+
     public const CURRENT_USER_COLLECTION_IDENTIFIER = 'mine';
 
     /**

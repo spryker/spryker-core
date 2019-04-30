@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CompanyUsersRestApi;
 
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
+use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserStorageClientInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReader;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReaderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpander;
@@ -32,7 +33,8 @@ class CompanyUsersRestApiFactory extends AbstractFactory
             $this->getCompanyUserClient(),
             $this->getClient(),
             $this->createCompanyUserMapper(),
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
+            $this->getCompanyUserStorageClient()
         );
     }
 
@@ -69,5 +71,13 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     public function getCompanyUserClient(): CompanyUsersRestApiToCompanyUserClientInterface
     {
         return $this->getProvidedDependency(CompanyUsersRestApiDependencyProvider::CLIENT_COMPANY_USER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserStorageClientInterface
+     */
+    public function getCompanyUserStorageClient(): CompanyUsersRestApiToCompanyUserStorageClientInterface
+    {
+        return $this->getProvidedDependency(CompanyUsersRestApiDependencyProvider::CLIENT_COMPANY_USER_STORAGE);
     }
 }
