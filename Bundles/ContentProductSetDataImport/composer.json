@@ -1,0 +1,33 @@
+{
+  "name": "spryker/content-product-set-data-import",
+  "description": "ContentProductSetDataImport module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/content": "^1.1.0",
+    "spryker/data-import": "^1.4.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/product-set": "^1.4.0",
+    "spryker/util-encoding": "^1.0.0 || ^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "spryker\\": "src/spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

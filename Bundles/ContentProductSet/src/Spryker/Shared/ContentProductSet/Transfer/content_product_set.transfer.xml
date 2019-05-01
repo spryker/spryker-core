@@ -9,10 +9,4 @@
     <transfer name="ContentProductSetType">
         <property name="idProductSet" type="int" />
     </transfer>
-
-    <transfer name="ContentTypeContext">
-        <property name="idContent" type="int" />
-        <property name="term" type="string" />
-        <property name="parameters" type="array" />
-    </transfer>
 </transfers>
