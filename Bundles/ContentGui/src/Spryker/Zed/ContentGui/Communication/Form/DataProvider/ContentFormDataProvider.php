@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedContentTransfer;
+use Spryker\Shared\ContentGui\ContentGuiConfig;
 use Spryker\Zed\ContentGui\Communication\Form\ContentForm;
 use Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
@@ -132,7 +133,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     protected function getAvailableLocales(): array
     {
         $defaultLocale = new LocaleTransfer();
-        $defaultLocale->setLocaleName('Default locale');
+        $defaultLocale->setLocaleName(ContentGuiConfig::DEFAULT_LOCALE_NAME);
 
         $locales = $this->localeFacade
             ->getLocaleCollection();

@@ -47,7 +47,7 @@ class EditContentController extends AbstractController
             $data = $contentForm->getData();
             $this->getFactory()
                 ->getContentFacade()
-                ->create($data);
+                ->update($data);
 
             $this->addSuccessMessage(static::MESSAGE_SUCCESS_CONTENT_CREATE);
 
