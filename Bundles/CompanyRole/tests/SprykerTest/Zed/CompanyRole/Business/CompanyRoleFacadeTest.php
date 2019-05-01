@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
+use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 
 /**
@@ -63,6 +64,7 @@ class CompanyRoleFacadeTest extends Test
         $this->tester->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION, [
             new AddCompanyUserPermissionPlugin(),
         ]);
+        $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
 
         $permissionFacade = $this->tester->getLocator()->permission()->facade();
         $permissionFacade->syncPermissionPlugins();
@@ -127,6 +129,7 @@ class CompanyRoleFacadeTest extends Test
         $companyResponseTransfer = (new CompanyResponseTransfer())
             ->setIsSuccessful(true)
             ->setCompanyTransfer($companyTransfer);
+        $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
 
         // Action
         $companyResponseTransfer = $this->getFacade()->createByCompany($companyResponseTransfer);

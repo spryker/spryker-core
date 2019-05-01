@@ -5,9 +5,9 @@
         {% if translation.localeName == localeName %}
             <td class="placeholder-title"><strong>{{ glossaryAttribute.placeholder }}:</strong></td>
             {%  if hasTemplateDiff == true %}
-                <td class="{{ prettyDiffClass }}">{{ translation.translation | trim }}</td>
+                <td class="{{ prettyDiffClass }}">{{ translation.translation | trim | raw }}</td>
             {% else %}
-                <td class="changed">{{ translation.translation | trim }}</td>
+                <td class="changed">{{ translation.translation | trim | raw }}</td>
             {% endif %}
             {% if prettyDiffClass != 'original' %}
                 <td class="original hidden"></td>
