@@ -71,54 +71,6 @@ class PriceProductScheduleDataHelper extends Module
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
-     */
-    protected function getPriceProductFacade(): PriceProductFacadeInterface
-    {
-        return $this->getLocator()->priceProduct()->facade();
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface
-     */
-    protected function getPriceProductQueryContainer(): PriceProductQueryContainerInterface
-    {
-        return $this->getLocator()->priceProduct()->queryContainer();
-    }
-
-    /**
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery
-     */
-    protected function getPriceProductScheduleListQuery(): SpyPriceProductScheduleListQuery
-    {
-        return new SpyPriceProductScheduleListQuery();
-    }
-
-    /**
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    public function getPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
-    {
-        return new SpyPriceProductScheduleQuery();
-    }
-
-    /**
-     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
-     */
-    protected function getStoreFacade(): StoreFacadeInterface
-    {
-        return $this->getLocator()->store()->facade();
-    }
-
-    /**
-     * @return \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
-     */
-    protected function getCurrencyFacade(): CurrencyFacadeInterface
-    {
-        return $this->getLocator()->currency()->facade();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule
