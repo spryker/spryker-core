@@ -14,8 +14,10 @@
     "spryker/tax": "^5.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/event": "*",
-    "spryker/propel-orm": "*"
+    "spryker/propel-orm": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "Required to listen for changes affecting product relations, minimum required version: 2.1.0",
