@@ -35,7 +35,7 @@ class CompanyUsersRestApiMapper
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function mapEntityTransferToCompanyUserTransfer(
+    protected function mapEntityTransferToCompanyUserTransfer(
         SpyCompanyUserEntityTransfer $companyUserEntityTransfer
     ): CompanyUserTransfer {
         return (new CompanyUserTransfer())->fromArray($companyUserEntityTransfer->modifiedToArray(), true);
