@@ -118,7 +118,6 @@ class DiscountDataHelper extends Module
         $seedData = array_merge($discountTransfer->toArray(false), $seedData);
         $salesDiscountEntity = new SpySalesDiscount();
         $salesDiscountEntity->fromArray($seedData);
-        //var_dump($salesDiscountEntity->toArray());die;
         $salesDiscountEntity->save();
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($salesDiscountEntity) {
