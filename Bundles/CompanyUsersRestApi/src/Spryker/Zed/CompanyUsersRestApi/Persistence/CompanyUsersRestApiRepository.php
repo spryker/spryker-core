@@ -22,11 +22,11 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
     /**
      * @module CompanyUser
      *
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function getCompanyUserCollection(CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer): CompanyUserCollectionTransfer
+    public function getCompanyUserCollection(CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer): CompanyUserCollectionTransfer
     {
         $queryCompanyUser = $this->getFactory()
             ->getCompanyUserPropelQuery()
@@ -35,12 +35,12 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
             ->filterByAnonymizedAt(null, Criteria::ISNULL)
             ->endUse();
 
-        $queryCompanyUser = $this->applyFilters($queryCompanyUser, $criteriaFilterTransfer);
+        $queryCompanyUser = $this->applyFilters($queryCompanyUser, $companyUserCriteriaFilterTransfer);
         $companyUsersCount = $queryCompanyUser->count();
 
-        $queryCompanyUser = $this->buildQueryFromCriteria($queryCompanyUser, $criteriaFilterTransfer->getFilter());
+        $queryCompanyUser = $this->buildQueryFromCriteria($queryCompanyUser, $companyUserCriteriaFilterTransfer->getFilter());
 
-        $filterTransfer = $criteriaFilterTransfer->getFilter();
+        $filterTransfer = $companyUserCriteriaFilterTransfer->getFilter();
         if ($filterTransfer) {
             $queryCompanyUser->mergeWith(
                 (new PropelFilterCriteria($filterTransfer))->toCriteria()
@@ -51,7 +51,7 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
             ->createCompanyUsersRestApiMapper()
             ->mapCompanyUserCollection($queryCompanyUser->find());
 
-        $companyUserCollectionTransfer->setFilter($criteriaFilterTransfer->getFilter());
+        $companyUserCollectionTransfer->setFilter($companyUserCriteriaFilterTransfer->getFilter());
         $companyUserCollectionTransfer->setTotal($companyUsersCount);
 
         return $companyUserCollectionTransfer;
@@ -59,26 +59,26 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
 
     /**
      * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $queryCompanyUser
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *
      * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      */
-    protected function applyFilters(SpyCompanyUserQuery $queryCompanyUser, CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer): SpyCompanyUserQuery
+    protected function applyFilters(SpyCompanyUserQuery $queryCompanyUser, CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer): SpyCompanyUserQuery
     {
-        if ($criteriaFilterTransfer->getIdCompany()) {
-            $queryCompanyUser->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
+        if ($companyUserCriteriaFilterTransfer->getIdCompany()) {
+            $queryCompanyUser->filterByFkCompany($companyUserCriteriaFilterTransfer->getIdCompany());
         }
 
-        if ($criteriaFilterTransfer->getCompanyUserIds()) {
-            $queryCompanyUser->filterByIdCompanyUser_In($criteriaFilterTransfer->getCompanyUserIds());
+        if ($companyUserCriteriaFilterTransfer->getCompanyUserIds()) {
+            $queryCompanyUser->filterByIdCompanyUser_In($companyUserCriteriaFilterTransfer->getCompanyUserIds());
         }
 
-        if ($criteriaFilterTransfer->getIsActive()) {
-            $queryCompanyUser->filterByIsActive($criteriaFilterTransfer->getIsActive());
+        if ($companyUserCriteriaFilterTransfer->getIsActive()) {
+            $queryCompanyUser->filterByIsActive($companyUserCriteriaFilterTransfer->getIsActive());
         }
 
-        if ($criteriaFilterTransfer->getCompanyBusinessUnitUuids()) {
-            $queryCompanyUser->filterByFkCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitUuids());
+        if ($companyUserCriteriaFilterTransfer->getCompanyBusinessUnitUuids()) {
+            $queryCompanyUser->filterByFkCompanyBusinessUnit_In($companyUserCriteriaFilterTransfer->getCompanyBusinessUnitUuids());
         }
 
         return $queryCompanyUser;

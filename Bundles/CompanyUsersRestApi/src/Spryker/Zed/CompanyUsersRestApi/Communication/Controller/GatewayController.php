@@ -17,13 +17,13 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function getCompanyUserCollectionAction(
-        CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
+        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): CompanyUserCollectionTransfer {
-        return $this->getFacade()->getCompanyUserCollection($criteriaFilterTransfer);
+        return $this->getFacade()->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
     }
 }

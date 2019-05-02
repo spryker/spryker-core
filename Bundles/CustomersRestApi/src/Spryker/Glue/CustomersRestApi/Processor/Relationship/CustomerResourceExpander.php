@@ -36,7 +36,7 @@ class CustomerResourceExpander implements CustomerResourceExpanderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function addResourceRelationshipsByCustomerReference(array $resources, RestRequestInterface $restRequest): array
+    public function addResourceRelationshipsByPayload(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
             $customerTransfer = $this->findCustomerTransfer($resource->getPayload());
@@ -63,10 +63,7 @@ class CustomerResourceExpander implements CustomerResourceExpanderInterface
      */
     protected function findCustomerTransfer(?AbstractTransfer $payload): ?CustomerTransfer
     {
-        if ($payload
-            && $payload->offsetExists(static::KEY_CUSTOMER)
-            && $payload->offsetGet(static::KEY_CUSTOMER)
-        ) {
+        if ($payload && $payload->offsetExists(static::KEY_CUSTOMER)) {
             return $payload->offsetGet(static::KEY_CUSTOMER);
         }
 

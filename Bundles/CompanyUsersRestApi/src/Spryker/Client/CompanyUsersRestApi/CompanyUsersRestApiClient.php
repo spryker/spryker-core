@@ -21,15 +21,15 @@ class CompanyUsersRestApiClient extends AbstractClient implements CompanyUsersRe
     *
     * @api
     *
-    * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
+    * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     *
     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
     */
     public function getCompanyUserCollection(
-        CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
+        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): CompanyUserCollectionTransfer {
         return $this->getFactory()
             ->createCompanyUsersRestApiStub()
-            ->getCompanyUserCollection($criteriaFilterTransfer);
+            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
     }
 }

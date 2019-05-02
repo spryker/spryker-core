@@ -17,5 +17,5 @@ interface CustomerResourceExpanderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function addResourceRelationshipsByCustomerReference(array $resources, RestRequestInterface $restRequest): array;
+    public function addResourceRelationshipsByPayload(array $resources, RestRequestInterface $restRequest): array;
 }

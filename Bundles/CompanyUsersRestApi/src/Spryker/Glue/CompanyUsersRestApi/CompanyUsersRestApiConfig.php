@@ -18,5 +18,8 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_RESOURCE_NOT_IMPLEMENTED = '1402';
     public const RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED = 'Resource is not implemented.';
 
+    public const RESPONSE_CODE_RESOURCE_FORBIDDEN = '1404';
+    public const RESPONSE_DETAIL_RESOURCE_FORBIDDEN = 'Resource is forbidden.';
+
     public const CURRENT_USER_COLLECTION_IDENTIFIER = 'mine';
 }

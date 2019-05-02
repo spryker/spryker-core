@@ -117,8 +117,13 @@ class CompanyUserReader implements CompanyUserReaderInterface
      */
     public function getCompanyUserCollection(RestRequestInterface $restRequest): RestResponseInterface
     {
+        $idCompany = $restRequest->getRestUser()->getIdCompany();
+        if (!$idCompany) {
+            return $this->buildForbiddenErrorResponse();
+        }
+
         $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())
-            ->setIdCompany($restRequest->getRestUser()->getIdCompany())
+            ->setIdCompany($idCompany)
             ->setFilter($this->createFilterTransfer($restRequest));
 
         $companyUserCollectionTransfer = $this->companyUsersRestApiClient
@@ -170,6 +175,19 @@ class CompanyUserReader implements CompanyUserReaderInterface
             ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
             ->setCode(CompanyUsersRestApiConfig::RESPONSE_CODE_RESOURCE_NOT_IMPLEMENTED)
             ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function buildForbiddenErrorResponse(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_FORBIDDEN)
+            ->setCode(CompanyUsersRestApiConfig::RESPONSE_CODE_RESOURCE_FORBIDDEN)
+            ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_RESOURCE_FORBIDDEN);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
