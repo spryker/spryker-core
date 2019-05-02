@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ContentGui\Communication\Resolver;
 
+use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface;
+
 class ContentEditorPluginsResolver implements ContentEditorPluginsResolverInterface
 {
     /**
@@ -29,11 +31,8 @@ class ContentEditorPluginsResolver implements ContentEditorPluginsResolverInterf
      */
     public function getTemplatesByType(string $contentType): array
     {
-        foreach ($this->contentEditorPlugins as $contentEditorPlugin) {
-            if ($contentEditorPlugin->getType() !== $contentType) {
-                continue;
-            }
-
+        $contentEditorPlugin = $this->resolvePluginByType($contentType);
+        if ($contentEditorPlugin) {
             return $contentEditorPlugin->getTemplates();
         }
 
@@ -47,11 +46,8 @@ class ContentEditorPluginsResolver implements ContentEditorPluginsResolverInterf
      */
     public function getTwigFunctionTemplateByType(string $contentType): string
     {
-        foreach ($this->contentEditorPlugins as $contentEditorPlugin) {
-            if ($contentEditorPlugin->getType() !== $contentType) {
-                continue;
-            }
-
+        $contentEditorPlugin = $this->resolvePluginByType($contentType);
+        if ($contentEditorPlugin) {
             return $contentEditorPlugin->getTwigFunctionTemplate();
         }
 
@@ -70,5 +66,23 @@ class ContentEditorPluginsResolver implements ContentEditorPluginsResolverInterf
         }
 
         return array_unique($contentTypes);
+    }
+
+    /**
+     * @param string $contentType
+     *
+     * @return \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface|null
+     */
+    protected function resolvePluginByType(string $contentType): ?ContentGuiEditorPluginInterface
+    {
+        foreach ($this->contentEditorPlugins as $contentEditorPlugin) {
+            if ($contentEditorPlugin->getType() !== $contentType) {
+                continue;
+            }
+
+            return $contentEditorPlugin;
+        }
+
+        return null;
     }
 }

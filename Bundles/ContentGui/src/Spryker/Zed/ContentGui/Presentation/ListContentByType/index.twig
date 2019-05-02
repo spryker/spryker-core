@@ -22,7 +22,7 @@
                 {% set templateName = template.name | trans %}
                 <li>
                     <label>
-                    <input id="template-{{ template.identifier }}" type="radio"
+                    <input type="radio" name="template"
                             {{ selectedTemplateIdentifier == template.identifier ? 'checked="checked"' : '' }}
                             data-template="{{ templateName }}"
                             value="{{ template.identifier }}" />
