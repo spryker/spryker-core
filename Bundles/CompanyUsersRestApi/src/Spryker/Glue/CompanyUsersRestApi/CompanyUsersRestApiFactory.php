@@ -14,8 +14,6 @@ use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpander;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpanderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapper;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
-use Spryker\Glue\CompanyUsersRestApi\Processor\Relationship\CustomerResourceExpander;
-use Spryker\Glue\CompanyUsersRestApi\Processor\Relationship\CustomerResourceExpanderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -32,17 +30,6 @@ class CompanyUsersRestApiFactory extends AbstractFactory
             $this->getCompanyUserClient(),
             $this->getClient(),
             $this->createCompanyUserMapper(),
-            $this->getResourceBuilder()
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\Relationship\CustomerResourceExpanderInterface
-     */
-    public function createCustomerResourceExpander(): CustomerResourceExpanderInterface
-    {
-        return new CustomerResourceExpander(
-            $this->getClient(),
             $this->getResourceBuilder()
         );
     }
