@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
@@ -98,10 +100,57 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
     {
         $this->priceProductScheduleDisabler->disableNotRelevantPriceProductSchedulesByPriceProductSchedule($priceProductScheduleTransfer);
 
-        $this->priceProductFacade->persistPriceProductStore($priceProductScheduleTransfer->getPriceProduct());
+        $priceProductScheduleTransfer->requirePriceProduct();
+        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
+
+        $priceProductTransfer->requireMoneyValue();
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        $priceProductTransferForUpdate = $this->getPriceProductForUpdate($priceProductTransfer);
+
+        $priceProductTransferForUpdate->getMoneyValue()
+            ->setGrossAmount($moneyValueTransfer->getGrossAmount())
+            ->setNetAmount($moneyValueTransfer->getNetAmount());
+
+        $this->priceProductFacade->persistPriceProductStore($priceProductTransferForUpdate);
 
         $priceProductScheduleTransfer->setIsCurrent(true);
 
         $this->priceProductScheduleWriter->savePriceProductSchedule($priceProductScheduleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function getPriceProductForUpdate(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+            ->setPriceDimension($priceProductTransfer->getPriceDimension())
+            ->setIdCurrency($moneyValueTransfer->getFkCurrency())
+            ->setIdStore($moneyValueTransfer->getFkStore())
+            ->setPriceType($priceProductTransfer->getPriceType()->getName());
+
+        $priceProductTransfersForUpdate = [];
+
+        if ($priceProductTransfer->getSkuProductAbstract() !== null) {
+            $priceProductTransfersForUpdate = $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction(
+                $priceProductTransfer->getIdProductAbstract(),
+                $priceProductCriteriaTransfer
+            );
+        }
+
+        if ($priceProductTransfer->getSkuProduct() !== null) {
+            $priceProductTransfersForUpdate = $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
+                $priceProductTransfer->getIdProduct(),
+                $priceProductTransfer->getIdProductAbstract(),
+                $priceProductCriteriaTransfer
+            );
+        }
+
+        return count($priceProductTransfersForUpdate) ? current($priceProductTransfersForUpdate) : $priceProductTransfer;
     }
 }

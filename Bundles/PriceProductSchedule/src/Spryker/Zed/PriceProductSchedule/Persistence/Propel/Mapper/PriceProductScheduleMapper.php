@@ -92,12 +92,14 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             return $priceProductScheduleEntity;
         }
 
-        if ($priceProductTransfer->getIdProduct() !== null) {
-            $priceProductScheduleEntity->setFkProduct($priceProductTransfer->getIdProduct());
-        }
-
         if ($priceProductTransfer->getIdProductAbstract() !== null) {
             $priceProductScheduleEntity->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
+            $priceProductScheduleEntity->setFkProduct(null);
+        }
+
+        if ($priceProductTransfer->getIdProduct() !== null) {
+            $priceProductScheduleEntity->setFkProduct($priceProductTransfer->getIdProduct());
+            $priceProductScheduleEntity->setFkProductAbstract(null);
         }
 
         return $priceProductScheduleEntity
@@ -117,8 +119,9 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
-    public function mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers(array $priceProductScheduleEntities): array
-    {
+    public function mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers(
+        array $priceProductScheduleEntities
+    ): array {
         $productPriceScheduleCollection = [];
 
         foreach ($priceProductScheduleEntities as $priceProductScheduleEntity) {
@@ -169,6 +172,8 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
             $priceProductTransfer->setIdProduct($productConcreteEntity->getIdProduct());
             $priceProductTransfer->setSkuProduct($productConcreteEntity->getSku());
+
+            $priceProductTransfer->setIdProductAbstract($productConcreteEntity->getFkProductAbstract());
         }
 
         if ($priceProductScheduleEntity->getFkProductAbstract()) {

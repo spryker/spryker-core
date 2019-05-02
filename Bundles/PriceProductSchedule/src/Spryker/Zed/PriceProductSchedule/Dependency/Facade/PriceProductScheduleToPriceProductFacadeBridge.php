@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Dependency\Facade;
 
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 
@@ -53,5 +54,40 @@ class PriceProductScheduleToPriceProductFacadeBridge implements PriceProductSche
     public function removePriceProductStore(PriceProductTransfer $priceProductTransfer): void
     {
         $this->priceProductFacade->removePriceProductStore($priceProductTransfer);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesWithoutPriceExtraction(
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array {
+        return $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction(
+            $idProductAbstract,
+            $priceProductCriteriaTransfer
+        );
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePricesWithoutPriceExtraction(
+        int $idProductConcrete,
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array {
+        return $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
+            $idProductConcrete,
+            $idProductAbstract,
+            $priceProductCriteriaTransfer
+        );
     }
 }
