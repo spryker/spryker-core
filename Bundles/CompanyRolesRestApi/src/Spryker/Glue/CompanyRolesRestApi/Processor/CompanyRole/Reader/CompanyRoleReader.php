@@ -77,7 +77,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
     protected function getCurrentUserCompanyRoles(RestRequestInterface $restRequest): RestResponseInterface
     {
         if (!$restRequest->getRestUser()->getIdCompany()) {
-            return $this->companyRoleRestResponseBuilder->createCompanyRoleIdMissingError();
+            return $this->companyRoleRestResponseBuilder->createCompanyUserNotSelectedError();
         }
 
         $companyRoleCollectionTransfer = $this->companyRoleClient->getCompanyRoleCollection(

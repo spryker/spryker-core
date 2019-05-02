@@ -118,4 +118,19 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
             ->createRestResponse()
             ->addError($restErrorMessageTransfer);
     }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCompanyUserNotSelectedError(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_FORBIDDEN)
+            ->setCode(CompanyBusinessUnitAddressesRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_SELECTED)
+            ->setDetail(CompanyBusinessUnitAddressesRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_SELECTED);
+
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($restErrorMessageTransfer);
+    }
 }

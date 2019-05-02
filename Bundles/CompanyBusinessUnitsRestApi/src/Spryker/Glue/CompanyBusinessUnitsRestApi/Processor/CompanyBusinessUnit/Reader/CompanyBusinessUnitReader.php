@@ -85,7 +85,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
     protected function getCurrentUserCompanyBusinessUnits(RestRequestInterface $restRequest): RestResponseInterface
     {
         if (!$restRequest->getRestUser()->getIdCompany()) {
-            return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitIdMissingError();
+            return $this->companyBusinessUnitRestResponseBuilder->createCompanyUserNotSelectedError();
         }
 
         $companyBusinessUnitCollection = $this->companyBusinessUnitClient->getCompanyBusinessUnitCollection(

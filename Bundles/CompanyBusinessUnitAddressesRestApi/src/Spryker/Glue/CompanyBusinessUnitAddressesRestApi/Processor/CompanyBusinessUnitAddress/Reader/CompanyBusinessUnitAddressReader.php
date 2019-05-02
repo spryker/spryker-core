@@ -77,7 +77,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
     protected function getCurrentUserCompanyBusinessUnitAddresses(RestRequestInterface $restRequest): RestResponseInterface
     {
         if (!$restRequest->getRestUser()->getIdCompany()) {
-            return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressIdMissingError();
+            return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyUserNotSelectedError();
         }
 
         $companyUnitAddressCollectionTransfer = $this->companyBusinessUnitAddressClient->getCompanyUnitAddressCollection(

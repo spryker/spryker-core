@@ -61,4 +61,9 @@ interface CompanyBusinessUnitRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createResourceNotImplementedError(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCompanyUserNotSelectedError(): RestResponseInterface;
 }
