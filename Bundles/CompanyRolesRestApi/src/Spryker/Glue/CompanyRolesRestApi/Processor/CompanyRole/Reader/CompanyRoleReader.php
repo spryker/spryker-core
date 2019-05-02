@@ -19,7 +19,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyRoleReader implements CompanyRoleReaderInterface
 {
-    protected const CURRENT_USER_COLLECTION_IDENTIFIER = 'mine';
+    protected const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
 
     /**
      * @var \Spryker\Glue\CompanyRolesRestApi\Dependency\Client\CompanyRolesRestApiToCompanyRoleClientInterface
@@ -129,7 +129,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
      */
     protected function createCompanyRoleCollectionResponse(CompanyRoleCollectionTransfer $companyRoleCollectionTransfer): RestResponseInterface
     {
-        $companyRoleResourceCollection = [];
+        $companyRoleRestResources = [];
 
         foreach ($companyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {
             $restCompanyRoleAttributesTransferCollection[] = $this->companyRoleRestResponseBuilder->createCompanyRoleRestResource(
@@ -140,7 +140,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
         }
 
         return $this->companyRoleRestResponseBuilder
-            ->createCompanyRoleCollectionRestResponse($companyRoleResourceCollection);
+            ->createCompanyRoleCollectionRestResponse($companyRoleRestResources);
     }
 
     /**
@@ -179,6 +179,6 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
      */
     protected function isCurrentUserResourceIdentifier(string $resourceIdentifier): bool
     {
-        return $resourceIdentifier === static::CURRENT_USER_COLLECTION_IDENTIFIER;
+        return $resourceIdentifier === static::COLLECTION_IDENTIFIER_CURRENT_USER;
     }
 }

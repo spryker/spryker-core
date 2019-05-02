@@ -64,16 +64,16 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $companyBusinessUnitAddressCollection
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $companyBusinessUnitAddressRestResources
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCompanyBusinessUnitAddressCollectionRestResponse(array $companyBusinessUnitAddressCollection): RestResponseInterface
+    public function createCompanyBusinessUnitAddressCollectionRestResponse(array $companyBusinessUnitAddressRestResources): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        foreach ($companyBusinessUnitAddressCollection as $companyBusinessUnitAddressResource) {
-            $restResponse->addResource($companyBusinessUnitAddressResource);
+        foreach ($companyBusinessUnitAddressRestResources as $companyBusinessUnitAddressRestResource) {
+            $restResponse->addResource($companyBusinessUnitAddressRestResource);
         }
 
         return $restResponse;

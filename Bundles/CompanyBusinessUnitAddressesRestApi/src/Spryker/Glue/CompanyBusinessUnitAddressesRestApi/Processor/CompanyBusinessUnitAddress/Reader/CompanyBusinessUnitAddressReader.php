@@ -19,7 +19,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressReaderInterface
 {
-    protected const CURRENT_USER_COLLECTION_IDENTIFIER = 'mine';
+    protected const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
 
     /**
      * @var \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Dependency\Client\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressClientInterface
@@ -128,17 +128,17 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
      */
     protected function createCompanyBusinessUnitAddressCollectionResponse(CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer): RestResponseInterface
     {
-        $companyBusinessUnitAddressCollection = [];
+        $companyBusinessUnitAddressRestResources = [];
 
         foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
-            $companyBusinessUnitAddressCollection[] = $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressRestResource(
+            $companyBusinessUnitAddressRestResources[] = $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressRestResource(
                 $companyUnitAddressTransfer->getUuid(),
                 $this->getRestCompanyBusinessUnitAddressesAttributesTransfer($companyUnitAddressTransfer)
             );
         }
 
         return $this->companyBusinessUnitAddressRestResponseBuilder
-            ->createCompanyBusinessUnitAddressCollectionRestResponse($companyBusinessUnitAddressCollection);
+            ->createCompanyBusinessUnitAddressCollectionRestResponse($companyBusinessUnitAddressRestResources);
     }
 
     /**
@@ -177,6 +177,6 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
      */
     protected function isCurrentUserResourceIdentifier(string $resourceIdentifier): bool
     {
-        return $resourceIdentifier === static::CURRENT_USER_COLLECTION_IDENTIFIER;
+        return $resourceIdentifier === static::COLLECTION_IDENTIFIER_CURRENT_USER;
     }
 }

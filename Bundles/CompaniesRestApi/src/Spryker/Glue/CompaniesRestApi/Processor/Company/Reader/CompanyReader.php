@@ -17,7 +17,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyReader implements CompanyReaderInterface
 {
-    protected const CURRENT_USER_COLLECTION_IDENTIFIER = 'mine';
+    protected const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
 
     /**
      * @var \Spryker\Glue\CompaniesRestApi\Dependency\Client\CompaniesRestApiToCompanyClientInterface
@@ -115,7 +115,7 @@ class CompanyReader implements CompanyReaderInterface
      */
     protected function isCurrentUserResourceIdentifier(string $resourceIdentifier): bool
     {
-        return $resourceIdentifier === static::CURRENT_USER_COLLECTION_IDENTIFIER;
+        return $resourceIdentifier === static::COLLECTION_IDENTIFIER_CURRENT_USER;
     }
 
     /**

@@ -41,11 +41,11 @@ interface CompanyRoleRestResponseBuilderInterface
     ): RestResourceInterface;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $companyRoleResourceCollection
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $companyRoleRestResources
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCompanyRoleCollectionRestResponse(array $companyRoleResourceCollection): RestResponseInterface;
+    public function createCompanyRoleCollectionRestResponse(array $companyRoleRestResources): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
