@@ -10,6 +10,7 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
+use Spryker\Zed\Transfer\TransferConfig;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -69,6 +70,19 @@ class ClassDefinition implements ClassDefinitionInterface
     private $entityNamespace;
 
     /**
+     * @var \Spryker\Zed\Transfer\TransferConfig
+     */
+    protected $transferConfig;
+
+    /**
+     * @param \Spryker\Zed\Transfer\TransferConfig $transferConfig
+     */
+    public function __construct(TransferConfig $transferConfig)
+    {
+        $this->transferConfig = $transferConfig;
+    }
+
+    /**
      * @param array $definition
      *
      * @return $this
@@ -101,9 +115,33 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function setName($name)
     {
+        if (!$this->transferConfig->isTransferNameValidated()) {
+            return $this->setNameWithoutValidation($name);
+        }
+
+        $this->assertValidName($name);
+
+        $this->name = $name . 'Transfer';
+
+        return $this;
+    }
+
+    /**
+     * BC shim to use strict generation only as feature flag to be
+     * enabled manually on project level.
+     *
+     * @deprecated Will be removed with the next major to enforce validation then.
+     *
+     * @param string $name
+     *
+     * @return $this
+     */
+    private function setNameWithoutValidation(string $name)
+    {
         if (strpos($name, 'Transfer') === false) {
             $name .= 'Transfer';
         }
+
         $this->name = ucfirst($name);
 
         return $this;
@@ -255,7 +293,7 @@ class ClassDefinition implements ClassDefinitionInterface
 
             return $property;
         }
-        $property['type'] = $property['type'] . 'Transfer';
+        $property['type'] .= 'Transfer';
         $property[self::TYPE_FULLY_QUALIFIED] .= $property['type'];
 
         return $property;
@@ -345,9 +383,7 @@ class ClassDefinition implements ClassDefinitionInterface
     private function getAddVar(array $property)
     {
         if ($this->isTypedArray($property)) {
-            $type = preg_replace('/\[\]/', '', $property['type']);
-
-            return $type;
+            return preg_replace('/\[\]/', '', $property['type']);
         }
 
         if ($this->isArray($property)) {
@@ -832,5 +868,22 @@ class ClassDefinition implements ClassDefinitionInterface
     public function getEntityNamespace()
     {
         return $this->entityNamespace;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidNameException
+     *
+     * @return void
+     */
+    protected function assertValidName(string $name): void
+    {
+        if (preg_match('/Transfer$/', $name)) {
+            throw new InvalidNameException(sprintf(
+                'Transfer names must not be suffixed with the word "Transfer", it will be auto-appended on generation: `%s`. Please remove the suffix.',
+                $name
+            ));
+        }
     }
 }
