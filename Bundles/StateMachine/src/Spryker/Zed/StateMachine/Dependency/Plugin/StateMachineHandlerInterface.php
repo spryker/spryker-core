@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 interface StateMachineHandlerInterface
 {
     /**
-     * List of command plugins for this state machine for all processes. Array key is identifier in SM xml file.
+     * List of command plugins for this state machine for all processes. Array key is identifier in SM XML file.
      *
      * [
      *   'Command/Plugin' => new Command(),
@@ -26,7 +26,7 @@ interface StateMachineHandlerInterface
     public function getCommandPlugins();
 
     /**
-     * List of condition plugins for this state machine for all processes. Array key is identifier in SM xml file.
+     * List of condition plugins for this state machine for all processes. Array key is identifier in SM XML file.
      *
      *  [
      *   'Condition/Plugin' => new Condition(),

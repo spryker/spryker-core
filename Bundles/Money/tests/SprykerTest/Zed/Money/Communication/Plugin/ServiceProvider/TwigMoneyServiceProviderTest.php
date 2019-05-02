@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\MoneyTransfer;
 use Silex\Application;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Money\Communication\Plugin\ServiceProvider\TwigMoneyServiceProvider;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * Auto-generated group annotations
@@ -37,7 +37,7 @@ class TwigMoneyServiceProviderTest extends Unit
         $moneyServiceProvider = new TwigMoneyServiceProvider();
         $application = new Application();
         $application['twig'] = function () {
-            return new Twig_Environment(new Twig_Loader_Filesystem());
+            return new Environment(new FilesystemLoader());
         };
 
         $moneyServiceProvider->register($application);
@@ -68,11 +68,11 @@ class TwigMoneyServiceProviderTest extends Unit
         $moneyServiceProvider = new TwigMoneyServiceProvider();
         $application = new Application();
         $application['twig'] = function () {
-            return new Twig_Environment(new Twig_Loader_Filesystem());
+            return new Environment(new FilesystemLoader());
         };
         $moneyServiceProvider->register($application);
 
-        /** @var \Twig_Environment $twig */
+        /** @var \Twig\Environment $twig */
         $twig = $application['twig'];
         $filter = $twig->getFilter('money');
 

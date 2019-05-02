@@ -124,4 +124,18 @@ class TransferConfig extends AbstractBundleConfig
             APPLICATION_SOURCE_DIR . '/Orm/Propel/' . APPLICATION_STORE . '/Schema/',
         ];
     }
+
+    /**
+     * This will enable strict validation for transfer names upon generation.
+     * The suffix "Transfer" is auto-appended and must not be inside the XML definitions.
+     *
+     * Defaults to false for BC reasons. Enable on project level if all modules in question
+     * have been upgraded to the version they are fixed in.
+     *
+     * @return bool
+     */
+    public function isTransferNameValidated(): bool
+    {
+        return false;
+    }
 }

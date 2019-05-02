@@ -9,6 +9,9 @@ namespace Spryker\Zed\Twig\Business\Model;
 
 use Zend\Filter\Word\CamelCaseToDash;
 
+/**
+ * @deprecated Use \Spryker\Zed\Twig\Communication\RouteResolver\RouteResolver instead.
+ */
 class RouteResolver
 {
     /**

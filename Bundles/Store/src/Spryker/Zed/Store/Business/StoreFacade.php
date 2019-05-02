@@ -93,7 +93,7 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getCountries()
     {

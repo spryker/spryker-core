@@ -25,7 +25,7 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
      *
      * @param array $productIds
      *
-     * @return \Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorageQuery
+     * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorageQuery
      */
     public function queryProductConcreteImageStorageByIds(array $productIds);
 

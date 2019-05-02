@@ -156,12 +156,12 @@ class Builder implements BuilderInterface
      */
     protected function recursiveMerge($fromXmlElement, $intoXmlNode, $prefix = null)
     {
+        /** @var \SimpleXMLElement[] $xmlElements */
         $xmlElements = $fromXmlElement->children();
-        if ($xmlElements === null) {
+        if (!$xmlElements) {
             return;
         }
 
-        /** @var \SimpleXMLElement $xmlElement */
         foreach ($xmlElements as $xmlElement) {
             $xmlElement = $this->prefixSubProcessElementValue($xmlElement, $prefix);
             $xmlElement = $this->prefixSubProcessElementAttributes($xmlElement, $prefix);
@@ -233,7 +233,7 @@ class Builder implements BuilderInterface
         if (!file_exists($pathToXml)) {
             throw new StateMachineException(
                 sprintf(
-                    'State machine xml file not found in "%s".',
+                    'State machine XML file not found in "%s".',
                     $pathToXml
                 )
             );

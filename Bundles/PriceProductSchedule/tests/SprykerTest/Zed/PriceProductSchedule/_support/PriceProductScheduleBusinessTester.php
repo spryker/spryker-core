@@ -22,6 +22,7 @@ use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
