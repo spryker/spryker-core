@@ -16,7 +16,7 @@ use Spryker\Shared\TaxStorage\TaxStorageConfig;
 class TaxStorageReader implements TaxStorageReaderInterface
 {
     /**
-     * @var \Spryker\Client\TaxStorage\Dependency\Service\TaxStorageToSynchronizationServiceBridge
+     * @var \Spryker\Client\TaxStorage\Dependency\Service\TaxStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
@@ -26,7 +26,7 @@ class TaxStorageReader implements TaxStorageReaderInterface
     protected $storageClient;
 
     /**
-     * @param \Spryker\Client\TaxStorage\Dependency\Service\TaxStorageToSynchronizationServiceBridge $synchronizationService
+     * @param \Spryker\Client\TaxStorage\Dependency\Service\TaxStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\TaxStorage\Dependency\Client\TaxStorageToStorageClientInterface $storageClient
      */
     public function __construct(
