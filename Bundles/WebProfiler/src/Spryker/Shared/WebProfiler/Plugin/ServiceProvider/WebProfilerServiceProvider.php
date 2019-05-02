@@ -11,7 +11,6 @@ use ReflectionClass;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Silex\ServiceProviderInterface;
-use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\WebProfiler\DataCollector\RequestDataCollector;
