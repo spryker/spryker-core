@@ -21,7 +21,7 @@ class SharedCartsRestApiClient extends AbstractClient implements SharedCartsRest
      *
      * @api
      *
-     * @param string $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */

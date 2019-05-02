@@ -14,7 +14,7 @@ use Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface;
 class SharedCartReader implements SharedCartReaderInterface
 {
     /**
-     * @var \Spryker\Client\SharedCartsRestApi\Dependency\Client\SharedCartsRestApiToZedRequestClientInterface
+     * @var \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface
      */
     protected $sharedCartsRestApiClient;
 
@@ -34,8 +34,6 @@ class SharedCartReader implements SharedCartReaderInterface
      */
     public function getSharedCartsByCartUuid(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer
     {
-        return $this->sharedCartsRestApiClient->getSharedCartsByCartUuid(
-            $quoteTransfer
-        );
+        return $this->sharedCartsRestApiClient->getSharedCartsByCartUuid($quoteTransfer);
     }
 }

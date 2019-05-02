@@ -61,9 +61,7 @@ class SharedCartExpander implements SharedCartExpanderInterface
             $quoteTransfer = (new QuoteTransfer())->setUuid($resource->getId());
 
             $shareDetailCollectionTransfer = $this->sharedCartReader->getSharedCartsByCartUuid($quoteTransfer);
-            if ($shareDetailCollectionTransfer) {
-                $this->addSharedCartRelationship($resource, $shareDetailCollectionTransfer);
-            }
+            $this->addSharedCartRelationship($resource, $shareDetailCollectionTransfer);
         }
     }
 

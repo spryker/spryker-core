@@ -15,12 +15,12 @@ use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedC
 class SharedCartReader implements SharedCartReaderInterface
 {
     /**
-     * @var \Spryker\Zed\Quote\Business\QuoteFacadeInterface
+     * @var \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToQuoteFacadeInterface
      */
     private $quoteFacade;
 
     /**
-     * @var \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface
+     * @var \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface
      */
     private $sharedCartFacade;
 

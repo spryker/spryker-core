@@ -9,6 +9,9 @@ namespace Spryker\Glue\SharedCartsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 
+/**
+ * @method \Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig getConfig()
+ */
 class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
 }
