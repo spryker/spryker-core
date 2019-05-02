@@ -21,11 +21,13 @@
             {% for key, template in templates %}
                 {% set templateName = template.name | trans %}
                 <li>
+                    <label>
                     <input id="template-{{ template.identifier }}" name="template" type="radio"
                             {{ selectedTemplateIdentifier == template.identifier ? 'checked="checked"' : '' }}
                             data-template="{{ templateName }}"
                            value="{{ template.identifier }}" />
-                    <label for="template-{{ template.identifier }}">{{ templateName }}</label>
+                            <span class="template-name-wrapper">{{ templateName }}</span>
+                    </label>
                 </li>
             {% endfor %}
         </ul>
