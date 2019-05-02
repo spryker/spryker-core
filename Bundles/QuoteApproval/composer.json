@@ -22,7 +22,8 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/company": "*",
-    "spryker/permission": "^1.0.0",
+    "spryker/permission": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/store": "*",
     "spryker/testify": "*"
