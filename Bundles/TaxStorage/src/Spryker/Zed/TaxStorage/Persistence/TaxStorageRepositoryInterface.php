@@ -26,12 +26,12 @@ interface TaxStorageRepositoryInterface
     /**
      * @param int[] $taxSetIds
      *
-     * @return \Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
+     * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
      */
     public function findTaxSetStoragesByIds(array $taxSetIds): array;
 
     /**
-     * @return \Orm\Zed\TaxStorage\Persistence\Base\SpyTaxSetStorage[]
+     * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
      */
     public function findAllTaxSetStorages(): array;
 }

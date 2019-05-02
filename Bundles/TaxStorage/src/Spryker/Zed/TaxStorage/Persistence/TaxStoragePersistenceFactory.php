@@ -20,7 +20,7 @@ use Spryker\Zed\TaxStorage\TaxStorageDependencyProvider;
 class TaxStoragePersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetTaxQuery
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
     public function getTaxSetQuery(): SpyTaxSetQuery
     {

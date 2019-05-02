@@ -27,7 +27,7 @@ class TaxStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\TaxStorage\Dependency\TaxStorageToSynchronizationServiceInterface
+     * @return \Spryker\Client\TaxStorage\Dependency\Service\TaxStorageToSynchronizationServiceInterface
      */
     public function getSynchronizationService(): TaxStorageToSynchronizationServiceInterface
     {
@@ -35,7 +35,7 @@ class TaxStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\TaxStorage\Dependency\TaxStorageToStorageClientInterface
+     * @return \Spryker\Client\TaxStorage\Dependency\Client\TaxStorageToStorageClientInterface
      */
     public function getStorageClient(): TaxStorageToStorageClientInterface
     {

@@ -40,7 +40,7 @@ class TaxStorageReader implements TaxStorageReaderInterface
     /**
      * @param int $idTaxSet
      *
-     * @return \Spryker\Client\TaxStorage\Storage\TaxSetStorageTransfer|null
+     * @return \Generated\Shared\Transfer\TaxSetStorageTransfer|null
      */
     public function findTaxSetStorage(int $idTaxSet): ?TaxSetStorageTransfer
     {
