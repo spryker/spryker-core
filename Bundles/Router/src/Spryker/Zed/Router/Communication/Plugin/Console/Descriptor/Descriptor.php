@@ -51,7 +51,7 @@ abstract class Descriptor implements DescriptorInterface
     }
 
     /**
-     * @param $content
+     * @param string $content
      * @param bool $decorated
      *
      * @return void

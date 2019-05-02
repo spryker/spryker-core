@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Router\Communication\Plugin\Console\Descriptor;
 
 use Closure;
+use InvalidArgumentException;
+use ReflectionFunction;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
@@ -100,7 +102,7 @@ class TextDescriptor extends Descriptor
     }
 
     /**
-     * @param $callable
+     * @param mixed $callable
      *
      * @throws \InvalidArgumentException
      *
@@ -125,7 +127,8 @@ class TextDescriptor extends Descriptor
             if (strpos($r->name, '{closure}') !== false) {
                 return 'Closure()';
             }
-            if ($class = $r->getClosureScopeClass()) {
+            $class = $r->getClosureScopeClass();
+            if ($class !== null) {
                 return sprintf('%s::%s()', $class->name, $r->name);
             }
 
@@ -137,16 +140,5 @@ class TextDescriptor extends Descriptor
         }
 
         throw new InvalidArgumentException('Callable is not describable.');
-    }
-
-    /**
-     * @return void
-     */
-    private function writeText(string $content, array $options = [])
-    {
-        $this->write(
-            isset($options['raw_text']) && $options['raw_text'] ? strip_tags($content) : $content,
-            isset($options['raw_output']) ? !$options['raw_output'] : true
-        );
     }
 }

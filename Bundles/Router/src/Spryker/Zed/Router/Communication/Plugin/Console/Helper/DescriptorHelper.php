@@ -14,6 +14,8 @@ class DescriptorHelper extends BaseDescriptorHelper
 {
     public function __construct()
     {
+        parent::__construct();
+
         $this
             ->register('txt', new TextDescriptor());
     }
