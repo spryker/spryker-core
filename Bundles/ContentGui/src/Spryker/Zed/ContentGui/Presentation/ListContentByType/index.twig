@@ -5,7 +5,7 @@
     </div>
 
     {% embed '@Gui/Partials/widget.twig' %}
-        {% set widget_title = 'Choose Content' %}
+        {% set widget_title = 'Select a content item' %}
         {% block widget_content %}
             {{ table | raw }}
         {% endblock %}
@@ -16,16 +16,16 @@
     {% if templates is not empty %}
         {% set selectedTemplateIdentifier = selectedTemplateIdentifier is defined ? selectedTemplateIdentifier : templates[0].identifier %}
 
-        <h5 class="template-title">{{ 'Choose Template' | trans }}</h5>
+        <h5 class="template-title">{{ 'Select a template' | trans }}</h5>
         <ul class="template-list">
             {% for key, template in templates %}
                 {% set templateName = template.name | trans %}
                 <li>
                     <label>
-                    <input id="template-{{ template.identifier }}" name="template" type="radio"
+                    <input id="template-{{ template.identifier }}" type="radio"
                             {{ selectedTemplateIdentifier == template.identifier ? 'checked="checked"' : '' }}
                             data-template="{{ templateName }}"
-                           value="{{ template.identifier }}" />
+                            value="{{ template.identifier }}" />
                             <span class="template-name-wrapper">{{ templateName }}</span>
                     </label>
                 </li>

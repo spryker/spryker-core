@@ -13,7 +13,7 @@ use Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig;
 class ContentBannerContentGuiEditorConfigurationMapper implements ContentBannerContentGuiEditorConfigurationMapperInterface
 {
     protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_ID = '%ID%';
-    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_TEMPLATE = '%TEMPLATE%';
+    protected const PARAMETER_TWIG_FUNCTION_TEMPLATE = '%TEMPLATE%';
     protected const PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT = "{{ %s(%s, '%s') }}";
 
     /**
@@ -54,7 +54,7 @@ class ContentBannerContentGuiEditorConfigurationMapper implements ContentBannerC
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT,
             $this->config->getTwigFunctionName(),
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE_ID,
-            static::PARAMETER_TWIG_FUNCTION_TEMPLATE_TEMPLATE
+            static::PARAMETER_TWIG_FUNCTION_TEMPLATE
         );
     }
 }
