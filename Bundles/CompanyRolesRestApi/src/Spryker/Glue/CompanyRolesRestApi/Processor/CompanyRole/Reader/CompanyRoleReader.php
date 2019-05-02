@@ -132,7 +132,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
         $companyRoleRestResources = [];
 
         foreach ($companyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {
-            $restCompanyRoleAttributesTransferCollection[] = $this->companyRoleRestResponseBuilder->createCompanyRoleRestResource(
+            $companyRoleRestResources[] = $this->companyRoleRestResponseBuilder->createCompanyRoleRestResource(
                 $companyRoleTransfer->getUuid(),
                 $this->getRestCompanyRoleAttributesTransfer($companyRoleTransfer),
                 $companyRoleTransfer
