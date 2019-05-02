@@ -240,6 +240,14 @@ class Builder implements BuilderInterface
         }
 
         $xmlContents = file_get_contents($pathToXml);
+        if ($xmlContents === false) {
+            throw new StateMachineException(
+                sprintf(
+                    'State machine XML file "%s" could not be read.',
+                    $pathToXml
+                )
+            );
+        }
 
         return $this->loadXml($xmlContents);
     }
@@ -443,6 +451,7 @@ class Builder implements BuilderInterface
      */
     protected function createTransitions(array $stateToProcessMap, array $processMap, array $eventMap)
     {
+        /** @var \SimpleXMLElement $xmlProcess */
         foreach ($this->rootElement as $xmlProcess) {
             if (empty($xmlProcess->transitions)) {
                 continue;
