@@ -17,6 +17,8 @@ use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapper;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Relationship\CustomerResourceExpander;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Relationship\CustomerResourceExpanderInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRestResponseBuilder;
+use Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRestResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -32,8 +34,7 @@ class CompanyUsersRestApiFactory extends AbstractFactory
         return new CompanyUserReader(
             $this->getCompanyUserClient(),
             $this->getClient(),
-            $this->createCompanyUserMapper(),
-            $this->getResourceBuilder(),
+            $this->createCompanyUserRestResponseBuilder(),
             $this->getCompanyUserStorageClient()
         );
     }
@@ -46,6 +47,17 @@ class CompanyUsersRestApiFactory extends AbstractFactory
         return new CustomerResourceExpander(
             $this->getClient(),
             $this->getResourceBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRestResponseBuilderInterface
+     */
+    public function createCompanyUserRestResponseBuilder(): CompanyUserRestResponseBuilderInterface
+    {
+        return new CompanyUserRestResponseBuilder(
+            $this->getResourceBuilder(),
+            $this->createCompanyUserMapper()
         );
     }
 
