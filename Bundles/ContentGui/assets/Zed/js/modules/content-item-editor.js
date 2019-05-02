@@ -13,11 +13,12 @@ const ContentItemEditor = function(options) {
     this.dropDownItems = [];
     this.buttonTitle = 'Insert Content';
     this.title = 'Content';
+    this.dialogContentUrl = '';
 
     $.extend(this, options);
 
     this.initialization = function() {
-        new ContentItemDialog(this.title);
+        new ContentItemDialog(this.title, this.dialogContentUrl);
     };
 
     this.getEditorConfig = function (baseConfig = '') {
@@ -52,7 +53,7 @@ const ContentItemEditor = function(options) {
     this.generateDropdownList = function () {
         return this.dropDownItems.reduce(function(currentList, dropItem) {
             const dropItemTemplate = '<li role="listitem">' +
-                '<a href="#" data-url="' + dropItem.contentListUrl + '">' +
+                '<a href="#" data-type="' + dropItem.type + '">' +
                 dropItem.name +
                 '</a>' + '</li>';
 

@@ -2,7 +2,7 @@
 {% for editorContentType in editorContentTypes %}
     {% set dropdownItems = dropdownItems | merge([{
         name: editorContentType | trans,
-        contentListUrl: url('/content-gui/list-content-by-type', {type: editorContentType})
+        type: editorContentType
     }]) %}
 {% endfor %}
 <script>
@@ -10,6 +10,7 @@
 
     window.editorConfiguration.contentGuiConfigData = {
         dropDownItems: {{ dropdownItems | json_encode | raw }},
+        dialogContentUrl: '/content-gui/list-content-by-type',
         buttonTitle: '{{ 'Content' | trans }}',
         title: '{{ 'Insert Content' | trans }}'
     };

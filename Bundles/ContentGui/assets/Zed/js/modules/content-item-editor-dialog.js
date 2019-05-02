@@ -5,7 +5,7 @@
 
 'use strict';
 
-const ContentItemDialog = function(dialogTitle) {
+const ContentItemDialog = function(dialogTitle, dialogContentUrl) {
 
     $.extend($.summernote.plugins, {
         'contentItemDialog': function (context) {
@@ -88,7 +88,7 @@ const ContentItemDialog = function(dialogTitle) {
                 }
             };
 
-            this.getTableContent = function (url) {
+            this.getDialogContent = function (url) {
                 const self = this;
                 if (!this.contentCache[url]) {
                     $.ajax({
@@ -121,16 +121,17 @@ const ContentItemDialog = function(dialogTitle) {
                 this.$dialog.find('.content-item-loader').show();
             };
 
-            this.show = function (params, buttons) {
-                const url = $(buttons).eq(0).data('url');
-
-                if (!url) {
-                    alert('Not found content for Dialog');
+            this.show = function (value, target) {
+                const dataset = target[0].dataset;
+                if (!dataset.hasOwnProperty('type')) {
                     return;
                 }
-                
+
+                let urlParams = {type: dataset.type};
+                const url = dialogContentUrl + '?' + $.param(urlParams);
+
                 this.clearContent();
-                this.getTableContent(url);
+                this.getDialogContent(url);
                 this.context.invoke('editor.saveRange');
                 this.$ui.showDialog(this.$dialog);
             }
