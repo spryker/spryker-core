@@ -11,13 +11,14 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetDataTableMap;
 use Orm\Zed\ProductSet\Persistence\SpyProductSet;
 use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
+use Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilderInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ProductSetViewTable extends AbstractTable
 {
     public const TABLE_IDENTIFIER = 'product-set-view-table';
-    public const TABLE_CLASS = 'product-set-selected-table gui-table-data';
+    public const TABLE_CLASS = 'product-set-view-table gui-table-data';
     public const BASE_URL = '/content-product-set-gui/product-set/';
 
     public const COL_ALIAS_NAME = 'name';
@@ -46,15 +47,23 @@ class ProductSetViewTable extends AbstractTable
     protected $identifierSuffix;
 
     /**
+     * @var \Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilderInterface
+     */
+    protected $productSetTableColumnContentBuilder;
+
+    /**
+     * @param \Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilderInterface $productSetTableColumnContentBuilder
      * @param \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery $productSetQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string|null $identifierSuffix
      */
     public function __construct(
+        ProductSetTableColumnContentBuilderInterface $productSetTableColumnContentBuilder,
         SpyProductSetQuery $productSetQueryContainer,
         LocaleTransfer $localeTransfer,
         ?string $identifierSuffix
     ) {
+        $this->productSetTableColumnContentBuilder = $productSetTableColumnContentBuilder;
         $this->productSetQueryContainer = $productSetQueryContainer;
         $this->localeTransfer = $localeTransfer;
         $this->identifierSuffix = $identifierSuffix;
@@ -159,11 +168,7 @@ class ProductSetViewTable extends AbstractTable
     {
         $actionButtons = [];
 
-        $actionButtons[] = sprintf(
-            '<button type="button" data-id="%s" class="js-delete-product-set btn btn-sm btn-outline btn-danger"><i class="fa fa-trash"></i> %s</button>',
-            $productSetEntity->getIdProductSet(),
-            static::BUTTON_DELETE
-        );
+        $actionButtons[] = $this->productSetTableColumnContentBuilder->getAddButtonField($productSetEntity);
 
         return implode(' ', $actionButtons);
     }

@@ -4,12 +4,12 @@
  */
 
 /* Remove selected file button */
-.id-product-abstract-fields .form-group {
+.id-product-set-fields .form-group {
   position: relative;
   padding-right: 25px;
 
 }
-.id-product-abstract-fields .remove-abstract-product-id {
+.id-product-set-fields .remove-product-set-id {
   position: absolute;
   right: 0;
   top: 10px;
@@ -22,11 +22,11 @@ td {
   }
 }
 
-.product-abstract-selected-table {
+.product-set-selected-table {
   tbody {
     tr {
       &:first-child {
-        .js-reorder-product-abstract {
+        .js-reorder-product-set {
           &[data-direction="up"] {
             display: none;
           }
@@ -34,12 +34,18 @@ td {
       }
 
       &:last-child {
-        .js-reorder-product-abstract {
+        .js-reorder-product-set {
           &[data-direction="down"] {
             display: none;
           }
         }
       }
+    }
+  }
+
+  .js-selected-product-sets-wrapper {
+    input {
+      display: none;
     }
   }
 }

@@ -13,6 +13,7 @@ use Orm\Zed\ProductSet\Persistence\SpyProductSet;
 use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\ContentProductSetGui\Communication\Controller\ProductSetController;
+use Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilderInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -29,8 +30,6 @@ class ProductSetSelectedTable extends AbstractTable
     public const COL_COUNT = '# of Products';
     public const COL_STATUS = 'Status';
     public const COL_ACTIONS = 'Actions';
-
-    public const BUTTON_DELETE = 'Delete';
 
     /**
      * @var \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
@@ -53,17 +52,25 @@ class ProductSetSelectedTable extends AbstractTable
     protected $idProductSet;
 
     /**
+     * @var \Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilderInterface
+     */
+    protected $productSetTableColumnContentBuilder;
+
+    /**
+     * @param \Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilderInterface $productSetTableColumnContentBuilder
      * @param \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery $productSetQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string|null $identifierSuffix
      * @param int|null $idProductSet
      */
     public function __construct(
+        ProductSetTableColumnContentBuilderInterface $productSetTableColumnContentBuilder,
         SpyProductSetQuery $productSetQueryContainer,
         LocaleTransfer $localeTransfer,
         ?string $identifierSuffix,
         ?int $idProductSet
     ) {
+        $this->productSetTableColumnContentBuilder = $productSetTableColumnContentBuilder;
         $this->productSetQueryContainer = $productSetQueryContainer;
         $this->localeTransfer = $localeTransfer;
         $this->identifierSuffix = $identifierSuffix;
@@ -189,12 +196,7 @@ class ProductSetSelectedTable extends AbstractTable
     {
         $actionButtons = [];
 
-        $actionButtons[] = sprintf(
-            '<button type="button" data-id="%s" class="js-delete-product-set btn btn-sm btn-outline btn-danger"><i class="fa fa-trash"></i> %s</button>',
-            $productSetEntity->getIdProductSet(),
-            static::BUTTON_DELETE
-        );
-
+        $actionButtons[] = $this->productSetTableColumnContentBuilder->getDeleteButton($productSetEntity);
         return implode(' ', $actionButtons);
     }
 }
