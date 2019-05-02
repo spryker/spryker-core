@@ -7,33 +7,36 @@
 
 namespace Spryker\Glue\SharedCartsRestApi;
 
-use Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartsResourceMapper;
-use Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartsResourceMapperInterface;
+use Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapper;
+use Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartExpander;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartExpanderInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartReader;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartReaderInterface;
 
+/**
+ * @method \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface getClient()
+ */
 class SharedCartsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartsResourceMapperInterface
+     * @return \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface
      */
-    public function createSharedCartsRestMapper(): SharedCartsResourceMapperInterface
+    public function createSharedCartMapper(): SharedCartMapperInterface
     {
-        return new SharedCartsResourceMapper();
+        return new SharedCartMapper();
     }
 
     /**
      * @return \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartExpanderInterface
      */
-    public function createSharedCartsRestExpander(): SharedCartExpanderInterface
+    public function createSharedCartExpander(): SharedCartExpanderInterface
     {
         return new SharedCartExpander(
             $this->createSharedCartReader(),
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
+            $this->createSharedCartMapper()
         );
     }
 
@@ -43,16 +46,7 @@ class SharedCartsRestApiFactory extends AbstractFactory
     public function createSharedCartReader(): SharedCartReaderInterface
     {
         return new SharedCartReader(
-            $this->getSharedCartsRestApiClient(),
-            $this->createSharedCartsRestMapper()
+            $this->getClient()
         );
-    }
-
-    /**
-     * @return \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface
-     */
-    public function getSharedCartsRestApiClient(): SharedCartsRestApiClientInterface
-    {
-        return $this->getProvidedDependency(SharedCartsRestApiDependencyProvider::CLIENT_SHARED_CARTS_REST_API);
     }
 }

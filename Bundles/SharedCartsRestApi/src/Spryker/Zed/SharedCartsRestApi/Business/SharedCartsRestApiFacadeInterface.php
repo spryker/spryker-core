@@ -14,7 +14,7 @@ interface SharedCartsRestApiFacadeInterface
 {
     /**
      * Specification:
-     * - Finds quote's id by quote's UUID,
+     * - Finds quote's id by quote's UUID.
      * - Finds share details collection of quote by quote id.
      *
      * @api

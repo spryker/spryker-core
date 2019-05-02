@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\SharedCartsRestApi\Processor\SharedCart;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartsResourceMapperInterface;
 
 class SharedCartReader implements SharedCartReaderInterface
 {
@@ -19,33 +19,23 @@ class SharedCartReader implements SharedCartReaderInterface
     protected $sharedCartsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartsResourceMapperInterface
-     */
-    protected $sharedCartsResourceMapper;
-
-    /**
      * @param \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface $sharedCartsRestApiClient
-     * @param \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartsResourceMapperInterface $sharedCartsResourceMapper
      */
     public function __construct(
-        SharedCartsRestApiClientInterface $sharedCartsRestApiClient,
-        SharedCartsResourceMapperInterface $sharedCartsResourceMapper
+        SharedCartsRestApiClientInterface $sharedCartsRestApiClient
     ) {
         $this->sharedCartsRestApiClient = $sharedCartsRestApiClient;
-        $this->sharedCartsResourceMapper = $sharedCartsResourceMapper;
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\RestSharedCartsAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function getSharedCartsByCartUuid(RestResourceInterface $resource): array
+    public function getSharedCartsByCartUuid(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer
     {
-        $shareDetailCollectionTransfer = $this->sharedCartsRestApiClient->getSharedCartsByCartUuid(
-            $resource->getId()
+        return $this->sharedCartsRestApiClient->getSharedCartsByCartUuid(
+            $quoteTransfer
         );
-
-        return $this->sharedCartsResourceMapper->mapSharedCartsResource($shareDetailCollectionTransfer);
     }
 }

@@ -9,8 +9,8 @@ namespace Spryker\Zed\SharedCartsRestApi\Business\SharedCart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
-use Spryker\Zed\Quote\Business\QuoteFacadeInterface;
-use Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface;
+use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToQuoteFacadeInterface;
+use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface;
 
 class SharedCartReader implements SharedCartReaderInterface
 {
@@ -25,11 +25,13 @@ class SharedCartReader implements SharedCartReaderInterface
     private $sharedCartFacade;
 
     /**
-     * @param \Spryker\Zed\Quote\Business\QuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface $sharedCartFacade
+     * @param \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface $sharedCartFacade
      */
-    public function __construct(QuoteFacadeInterface $quoteFacade, SharedCartFacadeInterface $sharedCartFacade)
-    {
+    public function __construct(
+        SharedCartsRestApiToQuoteFacadeInterface $quoteFacade,
+        SharedCartsRestApiToSharedCartFacadeInterface $sharedCartFacade
+    ) {
         $this->quoteFacade = $quoteFacade;
         $this->sharedCartFacade = $sharedCartFacade;
     }

@@ -17,7 +17,7 @@ class SharedCartsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\SharedCartsRestApi\Zed\SharedCartsRestApiStubInterface
      */
-    public function createZedStub(): SharedCartsRestApiStubInterface
+    public function createSharedCartsRestApiStub(): SharedCartsRestApiStubInterface
     {
         return new SharedCartsRestApiStub($this->getZedRequestClient());
     }
@@ -25,7 +25,7 @@ class SharedCartsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\SharedCartsRestApi\Dependency\Client\SharedCartsRestApiToZedRequestClientInterface
      */
-    protected function getZedRequestClient(): SharedCartsRestApiToZedRequestClientInterface
+    public function getZedRequestClient(): SharedCartsRestApiToZedRequestClientInterface
     {
         return $this->getProvidedDependency(SharedCartsRestApiDependencyProvider::CLIENT_ZED_REQUEST);
     }

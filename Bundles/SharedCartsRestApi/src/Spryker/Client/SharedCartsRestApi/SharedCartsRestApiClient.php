@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SharedCartsRestApi;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -16,14 +17,16 @@ use Spryker\Client\Kernel\AbstractClient;
 class SharedCartsRestApiClient extends AbstractClient implements SharedCartsRestApiClientInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param string $uuid
+     * @param string $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function getSharedCartsByCartUuid(string $uuid): ShareDetailCollectionTransfer
+    public function getSharedCartsByCartUuid(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer
     {
-        return $this->getFactory()->createZedStub()->getSharedCartsByCartUuid($uuid);
+        return $this->getFactory()->createSharedCartsRestApiStub()->getSharedCartsByCartUuid($quoteTransfer);
     }
 }

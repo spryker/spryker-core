@@ -15,7 +15,7 @@ use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
 /**
  * @method \Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiFactory getFactory()
  */
-class SharedCartsByQuoteIdResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class SharedCartsByCartIdResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -31,7 +31,7 @@ class SharedCartsByQuoteIdResourceRelationshipPlugin extends AbstractPlugin impl
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createSharedCartsRestExpander()
+            ->createSharedCartExpander()
             ->addResourceRelationshipsByCartId($resources, $restRequest);
     }
 

@@ -8,10 +8,10 @@
 namespace Spryker\Zed\SharedCartsRestApi\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Quote\Business\QuoteFacadeInterface;
-use Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface;
 use Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartReader;
 use Spryker\Zed\SharedCartsRestApi\Business\SharedCart\SharedCartReaderInterface;
+use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToQuoteFacadeInterface;
+use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface;
 use Spryker\Zed\SharedCartsRestApi\SharedCartsRestApiDependencyProvider;
 
 class SharedCartsRestApiBusinessFactory extends AbstractBusinessFactory
@@ -28,17 +28,17 @@ class SharedCartsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Quote\Business\QuoteFacadeInterface
+     * @return \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToQuoteFacadeInterface
      */
-    public function getQuoteFacade(): QuoteFacadeInterface
+    public function getQuoteFacade(): SharedCartsRestApiToQuoteFacadeInterface
     {
         return $this->getProvidedDependency(SharedCartsRestApiDependencyProvider::FACADE_QUOTE);
     }
 
     /**
-     * @return \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface
+     * @return \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface
      */
-    public function getSharedCartFacade(): SharedCartFacadeInterface
+    public function getSharedCartFacade(): SharedCartsRestApiToSharedCartFacadeInterface
     {
         return $this->getProvidedDependency(SharedCartsRestApiDependencyProvider::FACADE_SHARED_CART);
     }
