@@ -12,9 +12,6 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
-/**
- *
- */
 class TextDescriptor extends Descriptor
 {
     /**
