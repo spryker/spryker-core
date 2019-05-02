@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\CompanyRolesRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 
@@ -23,6 +25,17 @@ class CompanyRolesRestApiToCompanyRoleClientBridge implements CompanyRolesRestAp
     public function __construct($companyRoleClient)
     {
         $this->companyRoleClient = $companyRoleClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    public function getCompanyRoleCollection(
+        CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyRoleCollectionTransfer {
+        return $this->companyRoleClient->getCompanyRoleCollection($criteriaFilterTransfer);
     }
 
     /**

@@ -17,5 +17,5 @@ interface CompanyReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCompany(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getCurrentUserCompany(RestRequestInterface $restRequest): RestResponseInterface;
 }

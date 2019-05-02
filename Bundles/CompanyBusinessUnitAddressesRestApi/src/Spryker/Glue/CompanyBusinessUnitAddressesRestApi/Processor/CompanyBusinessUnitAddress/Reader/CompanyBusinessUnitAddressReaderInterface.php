@@ -17,5 +17,5 @@ interface CompanyBusinessUnitAddressReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCompanyBusinessUnitAddress(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getCurrentUserCompanyBusinessUnitAddress(RestRequestInterface $restRequest): RestResponseInterface;
 }

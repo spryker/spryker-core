@@ -53,6 +53,6 @@ class CompanyRolesResourceController extends AbstractController
                 ->createResourceNotImplementedError();
         }
 
-        return $this->getFactory()->createCompanyRoleReader()->getCompanyRole($restRequest);
+        return $this->getFactory()->createCompanyRoleReader()->getCurrentUserCompanyRole($restRequest);
     }
 }

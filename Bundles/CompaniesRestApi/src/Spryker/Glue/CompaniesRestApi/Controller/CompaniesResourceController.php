@@ -53,6 +53,6 @@ class CompaniesResourceController extends AbstractController
                 ->createResourceNotImplementedError();
         }
 
-        return $this->getFactory()->createCompanyReader()->getCompany($restRequest);
+        return $this->getFactory()->createCompanyReader()->getCurrentUserCompany($restRequest);
     }
 }

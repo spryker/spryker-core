@@ -53,6 +53,6 @@ class CompanyBusinessUnitsResourceController extends AbstractController
                 ->createResourceNotImplementedError();
         }
 
-        return $this->getFactory()->createCompanyBusinessUnitReader()->getCompanyBusinessUnit($restRequest);
+        return $this->getFactory()->createCompanyBusinessUnitReader()->getCurrentUserCompanyBusinessUnit($restRequest);
     }
 }

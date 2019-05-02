@@ -55,6 +55,6 @@ class CompanyBusinessUnitAddressesResourceController extends AbstractController
 
         return $this->getFactory()
             ->createCompanyBusinessUnitAddressReader()
-            ->getCompanyBusinessUnitAddress($restRequest);
+            ->getCurrentUserCompanyBusinessUnitAddress($restRequest);
     }
 }

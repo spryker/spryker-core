@@ -25,5 +25,8 @@ class CompanyRolesRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_COMPANY_ROLE_ID_IS_MISSING = '2102';
     public const RESPONSE_DETAIL_COMPANY_ROLE_ID_IS_MISSING = 'Company role id is missing.';
 
+    public const RESPONSE_CODE_COMPANY_USER_NOT_SELECTED = '2103';
+    public const RESPONSE_DETAIL_COMPANY_USER_NOT_SELECTED = 'Current company user is not set. You need to select the current company user with /company-user-access-tokens in order to access the resource collection.';
+
     public const RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED = 'Resource is not implemented.';
 }

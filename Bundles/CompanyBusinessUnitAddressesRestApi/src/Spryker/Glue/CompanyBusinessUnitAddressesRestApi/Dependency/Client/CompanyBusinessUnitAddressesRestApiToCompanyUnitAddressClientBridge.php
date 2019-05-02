@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
@@ -23,6 +25,17 @@ class CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressClientBridge implem
     public function __construct($companyBusinessUnitAddressClient)
     {
         $this->companyBusinessUnitAddressClient = $companyBusinessUnitAddressClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    public function getCompanyUnitAddressCollection(
+        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUnitAddressCollectionTransfer {
+        return $this->companyBusinessUnitAddressClient->getCompanyUnitAddressCollection($criteriaFilterTransfer);
     }
 
     /**

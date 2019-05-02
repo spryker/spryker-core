@@ -25,5 +25,8 @@ class CompanyBusinessUnitAddressesRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_COMPANY_BUSINESS_UNIT_ADDRESS_ID_IS_MISSING = '2002';
     public const RESPONSE_DETAIL_COMPANY_BUSINESS_UNIT_ADDRESS_ID_IS_MISSING = 'Company business unit address id is missing.';
 
+    public const RESPONSE_CODE_COMPANY_USER_NOT_SELECTED = '2003';
+    public const RESPONSE_DETAIL_COMPANY_USER_NOT_SELECTED = 'Current company user is not set. You need to select the current company user with /company-user-access-tokens in order to access the resource collection.';
+
     public const RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED = 'Resource is not implemented.';
 }

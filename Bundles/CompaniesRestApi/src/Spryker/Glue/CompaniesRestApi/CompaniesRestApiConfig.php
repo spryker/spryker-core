@@ -25,5 +25,8 @@ class CompaniesRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_COMPANY_ID_IS_MISSING = '1802';
     public const RESPONSE_DETAIL_COMPANY_ID_IS_MISSING = 'Company id is missing.';
 
+    public const RESPONSE_CODE_COMPANY_USER_NOT_SELECTED = '1803';
+    public const RESPONSE_DETAIL_COMPANY_USER_NOT_SELECTED = 'Current company user is not set. You need to select the current company user with /company-user-access-tokens in order to access the resource collection.';
+
     public const RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED = 'Endpoint is not implemented.';
 }

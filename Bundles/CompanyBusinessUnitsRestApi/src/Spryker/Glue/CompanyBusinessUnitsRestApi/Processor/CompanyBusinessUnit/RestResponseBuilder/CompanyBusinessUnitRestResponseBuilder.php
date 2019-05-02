@@ -81,6 +81,22 @@ class CompanyBusinessUnitRestResponseBuilder implements CompanyBusinessUnitRestR
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $companyBusinessUnitRestResources
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCompanyBusinessUnitCollectionRestResponse(array $companyBusinessUnitRestResources): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        foreach ($companyBusinessUnitRestResources as $companyBusinessUnitRestResource) {
+            $restResponse->addResource($companyBusinessUnitRestResource);
+        }
+
+        return $restResponse;
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyBusinessUnitIdMissingError(): RestResponseInterface
@@ -114,6 +130,21 @@ class CompanyBusinessUnitRestResponseBuilder implements CompanyBusinessUnitRestR
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
             ->setDetail(CompanyBusinessUnitsRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
+
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCompanyUserNotSelectedError(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_FORBIDDEN)
+            ->setCode(CompanyBusinessUnitsRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_SELECTED)
+            ->setDetail(CompanyBusinessUnitsRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_SELECTED);
 
         return $this->restResourceBuilder
             ->createRestResponse()

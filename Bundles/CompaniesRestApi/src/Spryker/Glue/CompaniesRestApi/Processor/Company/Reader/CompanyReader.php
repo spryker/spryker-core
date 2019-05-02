@@ -17,6 +17,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyReader implements CompanyReaderInterface
 {
+    protected const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
+
     /**
      * @var \Spryker\Glue\CompaniesRestApi\Dependency\Client\CompaniesRestApiToCompanyClientInterface
      */
@@ -52,31 +54,88 @@ class CompanyReader implements CompanyReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCompany(RestRequestInterface $restRequest): RestResponseInterface
+    public function getCurrentUserCompany(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $companyUuid = $restRequest->getResource()->getId();
-        if (!$companyUuid) {
+        if (!$restRequest->getResource()->getId()) {
             return $this->companyRestResponseBuilder->createCompanyIdMissingError();
         }
 
-        $companyResponseTransfer = $this->companyClient->findCompanyByUuid(
-            (new CompanyTransfer())->setUuid($companyUuid)
+        if ($this->isCurrentUserResourceIdentifier($restRequest->getResource()->getId())) {
+            return $this->getCurrentUserCompanies($restRequest);
+        }
+
+        return $this->getCurrentUserCompanyByUuid($restRequest);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getCurrentUserCompanies(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        if (!$restRequest->getRestUser()->getIdCompany()) {
+            return $this->companyRestResponseBuilder->createCompanyUserNotSelectedError();
+        }
+
+        $companyTransfer = $this->companyClient->getCompanyById(
+            (new CompanyTransfer())->setIdCompany($restRequest->getRestUser()->getIdCompany())
         );
 
-        if (!$companyResponseTransfer->getIsSuccessful()
-            || !$this->isCurrentCompanyUserAuthorizedToAccessCompanyResource($restRequest, $companyResponseTransfer->getCompanyTransfer())
-        ) {
+        if (!$companyTransfer->getUuid()) {
             return $this->companyRestResponseBuilder->createCompanyNotFoundError();
         }
 
+        return $this->createResponse($companyTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getCurrentUserCompanyByUuid(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $companyResponseTransfer = $this->companyClient->findCompanyByUuid(
+            (new CompanyTransfer())->setUuid($restRequest->getResource()->getId())
+        );
+
+        if (!$companyResponseTransfer->getIsSuccessful()
+         || !$this->isCurrentCompanyUserAuthorizedToAccessCompanyResource($restRequest, $companyResponseTransfer->getCompanyTransfer())) {
+            return $this->companyRestResponseBuilder->createCompanyNotFoundError();
+        }
+
+        return $this->createResponse($companyResponseTransfer->getCompanyTransfer());
+    }
+
+    /**
+     * @param string $resourceIdentifier
+     *
+     * @return bool
+     */
+    protected function isCurrentUserResourceIdentifier(string $resourceIdentifier): bool
+    {
+        return $resourceIdentifier === static::COLLECTION_IDENTIFIER_CURRENT_USER;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createResponse(CompanyTransfer $companyTransfer): RestResponseInterface
+    {
         $restCompanyAttributesTransfer = $this->companyMapperInterface
             ->mapCompanyTransferToRestCompanyAttributesTransfer(
-                $companyResponseTransfer->getCompanyTransfer(),
+                $companyTransfer,
                 new RestCompanyAttributesTransfer()
             );
 
         return $this->companyRestResponseBuilder
-            ->createCompanyRestResponse($companyUuid, $restCompanyAttributesTransfer);
+            ->createCompanyRestResponse(
+                $companyTransfer->getUuid(),
+                $restCompanyAttributesTransfer
+            );
     }
 
     /**

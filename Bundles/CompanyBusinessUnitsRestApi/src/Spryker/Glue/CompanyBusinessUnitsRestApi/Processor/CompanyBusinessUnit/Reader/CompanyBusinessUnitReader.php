@@ -7,7 +7,8 @@
 
 namespace Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Reader;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitsRestApi\Dependency\Client\CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientInterface;
@@ -18,6 +19,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
 {
+    protected const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
+
     /**
      * @var \Spryker\Glue\CompanyBusinessUnitsRestApi\Processor\CompanyBusinessUnit\Mapper\CompanyBusinessUnitMapperInterface
      */
@@ -61,71 +64,148 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCompanyBusinessUnit(RestRequestInterface $restRequest): RestResponseInterface
+    public function getCurrentUserCompanyBusinessUnit(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $companyBusinessUnitUuid = $restRequest->getResource()->getId();
-        if (!$companyBusinessUnitUuid) {
+        if (!$restRequest->getResource()->getId()) {
             return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitIdMissingError();
         }
 
+        if ($this->isCurrentUserResourceIdentifier($restRequest->getResource()->getId())) {
+            return $this->getCurrentUserCompanyBusinessUnits($restRequest);
+        }
+
+        return $this->getCurrentUserCompanyBusinessUnitByUuid($restRequest);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getCurrentUserCompanyBusinessUnits(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        if (!$restRequest->getRestUser()->getIdCompany()) {
+            return $this->companyBusinessUnitRestResponseBuilder->createCompanyUserNotSelectedError();
+        }
+
+        $companyBusinessUnitCollection = $this->companyBusinessUnitClient->getCompanyBusinessUnitCollection(
+            (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompany($restRequest->getRestUser()->getIdCompany())
+        );
+
+        if (!$companyBusinessUnitCollection->getCompanyBusinessUnits()->count()) {
+            return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitNotFoundError();
+        }
+
+        return $this->createCompanyBusinessUnitCollectionResponse($companyBusinessUnitCollection);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getCurrentUserCompanyBusinessUnitByUuid(RestRequestInterface $restRequest): RestResponseInterface
+    {
         $companyBusinessUnitResponseTransfer = $this->companyBusinessUnitClient->findCompanyBusinessUnitByUuid(
-            (new CompanyBusinessUnitTransfer())->setUuid($companyBusinessUnitUuid)
+            (new CompanyBusinessUnitTransfer())->setUuid($restRequest->getResource()->getId())
         );
 
         if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()
-            || !$this->isCurrentCompanyUserAuthorizedToAccessCompanyBusinessUnitResource($restRequest, $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer())
-        ) {
+            || !$this->isCurrentCompanyUserAuthorizedToAccessCompanyBusinessUnitResource($restRequest, $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer())) {
             return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitNotFoundError();
         }
 
         $restCompanyBusinessUnitAttributesTransfer = $this->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
-            $companyBusinessUnitResponseTransfer,
+            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer(),
             new RestCompanyBusinessUnitAttributesTransfer()
         );
 
-        return $this->companyBusinessUnitRestResponseBuilder
-            ->createCompanyBusinessUnitRestResponse(
-                $companyBusinessUnitUuid,
-                $restCompanyBusinessUnitAttributesTransfer,
-                $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()
-            );
+        return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitRestResponse(
+            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()->getUuid(),
+            $restCompanyBusinessUnitAttributesTransfer,
+            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()
+        );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
+     * @param string $resourceIdentifier
+     *
+     * @return bool
+     */
+    protected function isCurrentUserResourceIdentifier(string $resourceIdentifier): bool
+    {
+        return $resourceIdentifier === static::COLLECTION_IDENTIFIER_CURRENT_USER;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createCompanyBusinessUnitCollectionResponse(CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer): RestResponseInterface
+    {
+        $companyBusinessUnitRestResources = [];
+
+        foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
+            $companyBusinessUnitRestResources[] = $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitRestResource(
+                $companyBusinessUnitTransfer->getUuid(),
+                $this->getRestCompanyBusinessUnitAttributesTransfer($companyBusinessUnitTransfer),
+                $companyBusinessUnitTransfer
+            );
+        }
+
+        return $this->companyBusinessUnitRestResponseBuilder
+            ->createCompanyBusinessUnitCollectionRestResponse($companyBusinessUnitRestResources);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer
+     */
+    protected function getRestCompanyBusinessUnitAttributesTransfer(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): RestCompanyBusinessUnitAttributesTransfer
+    {
+        return $this->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
+            $companyBusinessUnitTransfer,
+            new RestCompanyBusinessUnitAttributesTransfer()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer
      */
     protected function mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
-        CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
         RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
     ): RestCompanyBusinessUnitAttributesTransfer {
         $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapperInterface
             ->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
-                $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer(),
+                $companyBusinessUnitTransfer,
                 $restCompanyBusinessUnitAttributesTransfer
             );
 
         return $this->executeCompanyBusinessUnitMapperPlugins(
-            $companyBusinessUnitResponseTransfer,
+            $companyBusinessUnitTransfer,
             $restCompanyBusinessUnitAttributesTransfer
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer
      */
     protected function executeCompanyBusinessUnitMapperPlugins(
-        CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
         RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
     ): RestCompanyBusinessUnitAttributesTransfer {
         foreach ($this->companyBusinessUnitMapperPlugins as $companyBusinessUnitMapperPlugin) {
             $restCompanyBusinessUnitAttributesTransfer = $companyBusinessUnitMapperPlugin->map(
-                $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer(),
+                $companyBusinessUnitTransfer,
                 $restCompanyBusinessUnitAttributesTransfer
             );
         }

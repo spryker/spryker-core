@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Reader;
 
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer;
 use Spryker\Glue\CompanyRolesRestApi\Dependency\Client\CompanyRolesRestApiToCompanyRoleClientInterface;
@@ -17,6 +19,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyRoleReader implements CompanyRoleReaderInterface
 {
+    protected const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
+
     /**
      * @var \Spryker\Glue\CompanyRolesRestApi\Dependency\Client\CompanyRolesRestApiToCompanyRoleClientInterface
      */
@@ -52,15 +56,50 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCompanyRole(RestRequestInterface $restRequest): RestResponseInterface
+    public function getCurrentUserCompanyRole(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $companyRoleUuid = $restRequest->getResource()->getId();
-        if (!$companyRoleUuid) {
+        if (!$restRequest->getResource()->getId()) {
             return $this->companyRoleRestResponseBuilder->createCompanyRoleIdMissingError();
         }
 
+        if ($this->isCurrentUserResourceIdentifier($restRequest->getResource()->getId())) {
+            return $this->getCurrentUserCompanyRoles($restRequest);
+        }
+
+        return $this->getCurrentUserCompanyRoleByUuid($restRequest);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getCurrentUserCompanyRoles(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        if (!$restRequest->getRestUser()->getIdCompany()) {
+            return $this->companyRoleRestResponseBuilder->createCompanyUserNotSelectedError();
+        }
+
+        $companyRoleCollectionTransfer = $this->companyRoleClient->getCompanyRoleCollection(
+            (new CompanyRoleCriteriaFilterTransfer())->setIdCompany($restRequest->getRestUser()->getIdCompany())
+        );
+
+        if (!$companyRoleCollectionTransfer->getRoles()->count()) {
+            return $this->companyRoleRestResponseBuilder->createCompanyRoleNotFoundError();
+        }
+
+        return $this->createCompanyRoleCollectionResponse($companyRoleCollectionTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getCurrentUserCompanyRoleByUuid(RestRequestInterface $restRequest): RestResponseInterface
+    {
         $companyRoleResponseTransfer = $this->companyRoleClient->findCompanyRoleByUuid(
-            (new CompanyRoleTransfer())->setUuid($companyRoleUuid)
+            (new CompanyRoleTransfer())->setUuid($restRequest->getResource()->getId())
         );
 
         if (!$companyRoleResponseTransfer->getIsSuccessful()
@@ -77,9 +116,44 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
 
         return $this->companyRoleRestResponseBuilder
             ->createCompanyRoleRestResponse(
-                $companyRoleUuid,
+                $companyRoleResponseTransfer->getCompanyRoleTransfer()->getUuid(),
                 $restCompanyRoleAttributesTransfer,
                 $companyRoleResponseTransfer->getCompanyRoleTransfer()
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createCompanyRoleCollectionResponse(CompanyRoleCollectionTransfer $companyRoleCollectionTransfer): RestResponseInterface
+    {
+        $companyRoleRestResources = [];
+
+        foreach ($companyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {
+            $restCompanyRoleAttributesTransferCollection[] = $this->companyRoleRestResponseBuilder->createCompanyRoleRestResource(
+                $companyRoleTransfer->getUuid(),
+                $this->getRestCompanyRoleAttributesTransfer($companyRoleTransfer),
+                $companyRoleTransfer
+            );
+        }
+
+        return $this->companyRoleRestResponseBuilder
+            ->createCompanyRoleCollectionRestResponse($companyRoleRestResources);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer
+     */
+    protected function getRestCompanyRoleAttributesTransfer(CompanyRoleTransfer $companyRoleTransfer): RestCompanyRoleAttributesTransfer
+    {
+        return $this->companyRoleMapperInterface
+            ->mapCompanyRoleTransferToRestCompanyRoleAttributesTransfer(
+                $companyRoleTransfer,
+                new RestCompanyRoleAttributesTransfer()
             );
     }
 
@@ -96,5 +170,15 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
         return $restRequest->getRestUser()
             && $restRequest->getRestUser()->getIdCompany()
             && $restRequest->getRestUser()->getIdCompany() === $companyRoleTransfer->getFkCompany();
+    }
+
+    /**
+     * @param string $resourceIdentifier
+     *
+     * @return bool
+     */
+    protected function isCurrentUserResourceIdentifier(string $resourceIdentifier): bool
+    {
+        return $resourceIdentifier === static::COLLECTION_IDENTIFIER_CURRENT_USER;
     }
 }
