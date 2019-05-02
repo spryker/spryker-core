@@ -187,7 +187,10 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
                 SpyQuoteRequestVersionTableMap::COL_FK_QUOTE_REQUEST,
                 SpyQuoteRequestTableMap::COL_IS_LATEST_VERSION_HIDDEN
             ))
-            ->select(SpyQuoteRequestTableMap::COL_ID_QUOTE_REQUEST)
+            ->select([
+                SpyQuoteRequestTableMap::COL_ID_QUOTE_REQUEST,
+                SpyQuoteRequestTableMap::COL_IS_LATEST_VERSION_HIDDEN,
+            ])
             ->find()
             ->toArray();
 
