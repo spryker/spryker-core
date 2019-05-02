@@ -12,15 +12,17 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 /**
  * @method \Spryker\Zed\ContentGui\Communication\ContentGuiCommunicationFactory getFactory()
  */
-class ConfigurationController extends AbstractController
+class AssetsController extends AbstractController
 {
     /**
      * @return array
      */
-    public function assetsAction(): array
+    public function indexAction(): array
     {
+        $editorContentTypes = $this->getFactory()->createContentEditorPluginsResolver()->getContentTypes();
+
         return $this->viewResponse([
-            'editorContentTypes' => $this->getFactory()->getConfig()->getEditorContentTypes(),
+            'editorContentTypes' => $editorContentTypes,
         ]);
     }
 }

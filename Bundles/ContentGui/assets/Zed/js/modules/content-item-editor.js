@@ -1,33 +1,49 @@
-const defaultEditorConfig = require('ZedGuiEditorConfiguration');
-const getEditorConfig = require('./editorComponents/config');
-const editorButtons = require('./editorComponents/buttons');
-const contentItemDialog = require('./content-item-editor-dialog');
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
-const ContentItemEditor = function() {
+'use strict';
+
+const editorConfig = require('ZedGuiEditorConfiguration');
+const editorButtons = require('./editorComponents/buttons');
+const ContentItemDialog = require('./content-item-editor-dialog');
+
+const ContentItemEditor = function(options) {
+    this.dropDownItems = [];
+    this.buttonTitle = 'Insert Content';
+    this.title = 'Content';
+
+    $.extend(this, options);
+
     this.initialization = function() {
-        this.dropDownItems = window.editorConfiguration.cms.dropdownItems;
-        contentItemDialog.init();
+        new ContentItemDialog(this.title);
     };
 
-    this.getContentItemEditorConfig = function () {
-        const defaultConfig = defaultEditorConfig.getConfig();
-        const newConfig = {
+    this.getEditorConfig = function (baseConfig = '') {
+        baseConfig = editorConfig.getGlobalConfig(baseConfig);
+
+        if (!baseConfig) {
+            baseConfig = editorConfig.getConfig();
+        }
+
+        const contentGuiConfig = {
             toolbar: [
                 ['insert', ['dropdownContentItem']]
             ],
             buttons: {
                 dropdownContentItem: this.createDropdownButton()
-            }
+            },
+            dialogsInBody: true
         };
 
-        return getEditorConfig(defaultConfig, newConfig);
+        return editorConfig.mergeConfigs(baseConfig, contentGuiConfig);
     };
 
     this.createDropdownButton = function () {
-        const buttonContents = window.editorConfiguration.cms.buttonTitle + ' <i class="fa fa-caret-down" aria-hidden="true"></i>';
 
         return editorButtons.ContentItemDropdownButton(
-            buttonContents,
+            this.buttonTitle,
             this.generateDropdownList(),
             this.dropDownClickHandler
         );

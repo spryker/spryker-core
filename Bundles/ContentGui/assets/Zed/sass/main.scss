@@ -3,6 +3,43 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+.content-item-body {
+    .template-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        label {
+            margin: 0 0 10px 5px;
+        }
+    }
+
+    .ibox-title {
+        border-width: 0;
+        h5 {
+            float: none;
+        }
+    }
+
+    .error {
+        display: block;
+        color: #F22 !important;
+        font-size: 14px;
+    }
+
+    .template-title {
+        font-size: 14px;
+    }
+
+    .ibox-title {
+        background-color: #f5f5f5;
+    }
+
+    .ibox {
+        border: 1px solid #e7eaec;
+    }
+}
+
 .locale-header-info {
     margin-bottom: 30px;
 }
@@ -13,4 +50,8 @@
 
 .overwrite-default-message {
     font-weight: bold;
+}
+
+.template-name-wrapper{
+    margin-left:5px;
 }

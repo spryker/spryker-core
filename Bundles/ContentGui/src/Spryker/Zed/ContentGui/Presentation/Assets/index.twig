@@ -8,10 +8,11 @@
 <script>
     window.editorConfiguration = window.editorConfiguration || {};
 
-    window.editorConfiguration.cms = {
-        dropdownItems: {{ dropdownItems | json_encode | raw }},
+    window.editorConfiguration.contentGuiConfigData = {
+        dropDownItems: {{ dropdownItems | json_encode | raw }},
         buttonTitle: '{{ 'Content' | trans }}',
         title: '{{ 'Insert Content' | trans }}'
     };
 </script>
 <script src="/assets/js/spryker-zed-content-item.js"></script>
+<link rel="stylesheet" href="/assets/css/spryker-zed-content-item.css" />

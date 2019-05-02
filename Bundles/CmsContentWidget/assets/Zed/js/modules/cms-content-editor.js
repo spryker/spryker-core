@@ -5,6 +5,8 @@
 
 'use strict';
 
+const editorConfig = require('ZedGuiEditorConfiguration');
+
 /**
  * @param {string} options
  *
@@ -12,62 +14,35 @@
  */
 var CmsContentEditor = function CmsContentEditor(options)
 {
-    this.contentWidgetConfigurationProviderUrl = '/cms-content-widget/usage-information/json';
-    this.editorClass = '.html-editor';
-
-    $(this.editorClass).each(function(index, element) {
-        $(element).summernote('destroy');
-    });
+    this.dropdownItems = [];
 
     $.extend(this, options);
-
-    this.initialise();
-}
+};
 
 /**
- * @return void
- */
-CmsContentEditor.prototype.initialise = function ()
-{
-    var self = this;
-    $.ajax({
-        type: 'GET',
-        url: this.contentWidgetConfigurationProviderUrl,
-        context: this,
-        success: function(jsonData) {
-            $(self.editorClass).summernote(self.getEditorConfig(jsonData));
-        }
-    });
-}
-
-/**
- * @param {string} jsonData
+ * @param {string} baseConfig
  *
  * @returns array
  */
-CmsContentEditor.prototype.getEditorConfig = function(jsonData)
+CmsContentEditor.prototype.getEditorConfig = function(baseConfig = '')
 {
-    var cmsContentWidgetDropDownItems = this.mapDataForDropdown(jsonData);
+    baseConfig = editorConfig.getGlobalConfig(baseConfig);
 
-    return {
-        height: 300,
-        maxHeight: 600,
-        focus: true,
+    if (!baseConfig) {
+        baseConfig = editorConfig.getConfig();
+    }
+
+    const cmsContentWidgetConfig = {
         toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['picture', 'link', 'video', 'table', 'hr']],
-            ['misc', ['undo', 'redo', 'codeview']],
-            ['custom', ['cmsContentWidget']]
+            ['insert', ['cmsContentWidget']]
         ],
         buttons: {
-            'cmsContentWidget' : this.createCmsContentWidgetButton(cmsContentWidgetDropDownItems)
+            cmsContentWidget : this.createCmsContentWidgetButton(this.dropdownItems)
         }
     };
-}
+
+    return editorConfig.mergeConfigs(baseConfig, cmsContentWidgetConfig);
+};
 
 /**
  * @param {array} cmsContentWidgetDropDownItems
@@ -99,23 +74,6 @@ CmsContentEditor.prototype.createCmsContentWidgetButton = function (cmsContentWi
 
         return button.render();
     }
-}
-
-/**
- * @param {string} jsonResponse
- *
- * @returns {Array}
- */
-CmsContentEditor.prototype.mapDataForDropdown = function (jsonResponse)
-{
-    var cmsContentWidgets = JSON.parse(jsonResponse);
-
-    var cmsContentWidgetDropDownItems = [];
-    cmsContentWidgets.cms_content_widget_configuration_list.forEach(function(element) {
-        cmsContentWidgetDropDownItems.push(element.function_name);
-    });
-
-    return cmsContentWidgetDropDownItems;
-}
+};
 
 module.exports = CmsContentEditor;
