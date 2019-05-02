@@ -3,23 +3,23 @@
     <cms-gui>
         <pages>
             <content-items>
-                <label>CMS Content Items</label>
-                <title>CMS Content Items</title>
+                <label>Content Items</label>
+                <title>Content Items</title>
                 <bundle>content-gui</bundle>
                 <controller>list-content</controller>
                 <action>index</action>
                 <pages>
                     <edit-page>
-                        <label>Edit CMS Content Item</label>
-                        <title>Edit CMS Content Item</title>
+                        <label>Edit Content Item</label>
+                        <title>Edit Content Item</title>
                         <bundle>content-gui</bundle>
                         <controller>edit-content</controller>
                         <action>index</action>
                         <visible>0</visible>
                     </edit-page>
                     <create-page>
-                        <label>Create CMS Content Item</label>
-                        <title>Create CMS Content Item</title>
+                        <label>Create Content Item</label>
+                        <title>Create Content Item</title>
                         <bundle>content-gui</bundle>
                         <controller>create-content</controller>
                         <action>index</action>
