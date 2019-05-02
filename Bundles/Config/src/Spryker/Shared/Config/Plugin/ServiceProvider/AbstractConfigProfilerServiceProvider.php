@@ -16,6 +16,9 @@ use Spryker\Shared\Config\Profiler\ConfigProfilerCollector;
 use Spryker\Shared\Config\Profiler\ConfigProfilerCollectorFactory;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 abstract class AbstractConfigProfilerServiceProvider implements ServiceProviderInterface
 {
     /**

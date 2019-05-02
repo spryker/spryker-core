@@ -7,15 +7,26 @@
 
 namespace Spryker\Zed\Config\Communication\Plugin\WebProfiler;
 
+use Exception;
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Config\Profiler\ConfigProfilerCollector;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 
-class WebProfilerConfigDataCollector implements WebProfilerDataCollectorPluginInterface
+/**
+ * @method \Spryker\Zed\Config\Business\ConfigFacadeInterface getFacade()
+ * @method \Spryker\Zed\Config\ConfigConfig getConfig()
+ */
+class WebProfilerConfigDataCollector extends AbstractPlugin implements WebProfilerDataCollectorPluginInterface, DataCollectorInterface
 {
     public const SPRYKER_CONFIG_PROFILER = 'spryker_config_profiler';
+
+    /**
+     * @var array|null
+     */
+    protected $data;
 
     /**
      * @return string
@@ -40,6 +51,36 @@ class WebProfilerConfigDataCollector implements WebProfilerDataCollectorPluginIn
      */
     public function getDataCollector(ContainerInterface $container): DataCollectorInterface
     {
-        return new ConfigProfilerCollector(Config::getProfileData());
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param \Exception|null $exception
+     *
+     * @return array
+     */
+    public function collect(Request $request, Response $response, ?Exception $exception = null)
+    {
+        $this->data = $this->getFacade()->getProfileData();
+
+        return $this->data;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfigs(): array
+    {
+        return $this->data;
+    }
+
+    /**
+     * @return void
+     */
+    public function reset(): void
+    {
+        $this->data = null;
     }
 }

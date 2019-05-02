@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Config\Business\ConfigProfiler;
 
+use Spryker\Shared\Config\Config;
+
 class ConfigProfiler implements ConfigProfilerInterface
 {
     /**
@@ -14,6 +16,6 @@ class ConfigProfiler implements ConfigProfilerInterface
      */
     public function getProfileData(): array
     {
-        return [];
+        return Config::getProfileData();
     }
 }
