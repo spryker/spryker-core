@@ -110,7 +110,10 @@ const ContentItemDialog = function(dialogTitle) {
                 const dataAjaxUrl = $(data).find('table').data('ajax');
                 this.$dialog.find('.content-item-loader').hide();
                 this.$dialog.find('.content-item-body .content-ajax').append(data);
-                this.$dialog.find('table').DataTable({'ajax': dataAjaxUrl});
+                this.$dialog.find('table').DataTable({
+                    'ajax': dataAjaxUrl,
+                    'lengthChange': false,
+                });
             };
 
             this.clearContent = function () {

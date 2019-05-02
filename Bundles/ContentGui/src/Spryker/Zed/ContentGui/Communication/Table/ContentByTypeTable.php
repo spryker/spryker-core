@@ -69,6 +69,7 @@ class ContentByTypeTable extends AbstractTable
             ContentTableConstants::COL_ID_CONTENT,
             ContentTableConstants::COL_NAME,
         ]);
+        $config->setStateSave(false);
 
         return $config;
     }
