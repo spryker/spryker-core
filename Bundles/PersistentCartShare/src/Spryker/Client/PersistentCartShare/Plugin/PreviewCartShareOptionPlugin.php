@@ -7,9 +7,10 @@
 
 namespace Spryker\Client\PersistentCartShare\Plugin;
 
+use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface;
 
-class PreviewCartShareOptionPlugin implements CartShareOptionPluginInterface
+class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOptionPluginInterface
 {
     protected const KEY_PREVIEW = 'PREVIEW';
     protected const GROUP_EXTERNAL = 'external';

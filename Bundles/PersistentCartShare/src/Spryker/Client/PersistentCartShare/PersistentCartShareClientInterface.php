@@ -17,7 +17,7 @@ interface PersistentCartShareClientInterface
      *
      * @api
      *
-     * @return string[]
+     * @return string[][]
      */
     public function getCartShareOptions(): array;
 

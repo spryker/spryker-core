@@ -20,7 +20,7 @@ class PersistentCartShareClient extends AbstractClient implements PersistentCart
      *
      * @api
      *
-     * @return string[]
+     * @return string[][]
      */
     public function getCartShareOptions(): array
     {

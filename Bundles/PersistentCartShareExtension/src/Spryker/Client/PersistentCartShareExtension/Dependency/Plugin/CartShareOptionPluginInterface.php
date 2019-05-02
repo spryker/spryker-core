@@ -21,7 +21,7 @@ interface CartShareOptionPluginInterface
 
     /**
      * Specification:
-     * - Returns share option group.
+     * - Returns share option group name.
      *
      * @api
      *

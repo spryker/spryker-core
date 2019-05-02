@@ -7,12 +7,13 @@
 
 namespace Spryker\Client\SharedCart\Plugin;
 
+use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface;
+use Spryker\Shared\SharedCart\SharedCartConfig as SharedSharedCartConfig;
 
-class FullAccessCartShareOptionPlugin implements CartShareOptionPluginInterface
+class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShareOptionPluginInterface
 {
     protected const KEY_FULL_ACCESS = 'FULL_ACCESS';
-    protected const GROUP_INTERNAL = 'internal';
 
     /**
      * {@inheritdoc}
@@ -28,7 +29,7 @@ class FullAccessCartShareOptionPlugin implements CartShareOptionPluginInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      * - Returns internal share option group.
      *
      * @api
@@ -37,6 +38,6 @@ class FullAccessCartShareOptionPlugin implements CartShareOptionPluginInterface
      */
     public function getShareOptionGroup(): string
     {
-        return static::GROUP_INTERNAL;
+        return SharedSharedCartConfig::SHARE_OPTION_GROUP_INTERNAL;
     }
 }
