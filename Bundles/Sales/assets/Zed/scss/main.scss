@@ -113,8 +113,17 @@ $chat-box-background-color: #f0f0f0;
     border-top: none !important;
   }
 }
-.subtotal-row, .grandTotal-row {
+
+.subtotal-row {
   background-color: #e7eaec;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.grandtotal-row {
+  background-color: #e7eaec;
+  overflow: hidden;
+  margin-bottom: 10px;
 }
 
 img.product-image {
@@ -161,4 +170,16 @@ span.discounted {
 
 a.edit_billing_address {
     margin-left: 5px;
+}
+
+.bottom-indent {
+  margin-bottom: 25px;
+}
+
+.bottom-border {
+  border-bottom: 1px solid #e7eaec;
+}
+
+.trigger-order-event {
+  margin-right: 5px;
 }
