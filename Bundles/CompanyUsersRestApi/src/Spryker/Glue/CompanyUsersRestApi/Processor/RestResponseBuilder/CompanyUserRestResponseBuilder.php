@@ -19,9 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderInterface
 {
-    protected const PATTERN_COMPANY_USER_RESOURCE_SELF_LINK = '%s/%s/%s/%s';
-    protected const KEY_REST_RESOURCE_SELF_LINK = 'self';
-
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
