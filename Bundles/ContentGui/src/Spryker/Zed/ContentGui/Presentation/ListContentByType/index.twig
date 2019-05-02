@@ -5,7 +5,7 @@
     </div>
 
     {% embed '@Gui/Partials/widget.twig' %}
-        {% set widget_title = 'Select a content item' %}
+        {% set widget_title = 'Select a content item' | trans %}
         {% block widget_content %}
             {{ table | raw }}
         {% endblock %}
