@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUsersRestApi\Processor\Relationship;
+namespace Spryker\Glue\CustomersRestApi\Processor\Relationship;
 
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface;
-use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
+use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -18,12 +18,12 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class CustomerResourceExpander implements CustomerResourceExpanderInterface
 {
-    protected const KEY_CUSTOMER_REFERENCE = 'customerReference';
+    protected const KEY_CUSTOMER = 'customer';
 
-    /**
-     * @var \Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface
-     */
-    protected $companyUsersRestApiClient;
+//    /**
+//     * @var \Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface
+//     */
+//    protected $companyUsersRestApiClient;
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -35,10 +35,10 @@ class CustomerResourceExpander implements CustomerResourceExpanderInterface
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
     public function __construct(
-        CompanyUsersRestApiClientInterface $companyUsersRestApiClient,
+      //  CompanyUsersRestApiClientInterface $companyUsersRestApiClient,
         RestResourceBuilderInterface $restResourceBuilder
     ) {
-        $this->companyUsersRestApiClient = $companyUsersRestApiClient;
+        //$this->companyUsersRestApiClient = $companyUsersRestApiClient;
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
@@ -50,28 +50,12 @@ class CustomerResourceExpander implements CustomerResourceExpanderInterface
      */
     public function addResourceRelationshipsByCustomerReference(array $resources, RestRequestInterface $restRequest): array
     {
-        $customerReferences = [];
         foreach ($resources as $resource) {
-            $customerReference = $this->findCustomerReference($resource->getAttributes());
-            if (!$customerReference) {
+            $customerTransfer = $resource->getPayload()->offsetGet(static::KEY_CUSTOMER);
+            if (!$customerTransfer) {
                 continue;
             }
-
-            $customerReferences[] = $customerReference;
-        }
-
-        $customerReferences = array_unique($customerReferences);
-
-        $customerCollectionTransfer = new CustomerCollectionTransfer();
-        foreach ($customerReferences as $customerReference) {
-            $customerCollectionTransfer->addCustomer((new CustomerTransfer())->setCustomerReference($customerReference));
-        }
-
-        $customerCollectionTransfer = $this->companyUsersRestApiClient
-            ->getCustomerCollection($customerCollectionTransfer);
-
-        foreach ($resources as $resource) {
-            $this->addRelationship($resource, $customerCollectionTransfer);
+            $this->addRelationship($resource, $customerTransfer);
         }
 
         return $resources;
@@ -85,10 +69,10 @@ class CustomerResourceExpander implements CustomerResourceExpanderInterface
     protected function findCustomerReference(?AbstractTransfer $attributes): ?string
     {
         if ($attributes
-            && $attributes->offsetExists(static::KEY_CUSTOMER_REFERENCE)
-            && $attributes->offsetGet(static::KEY_CUSTOMER_REFERENCE)
+            && $attributes->offsetExists(static::KEY_CUSTOMER)
+            && $attributes->offsetGet(static::KEY_CUSTOMER)
         ) {
-            return $attributes->offsetGet(static::KEY_CUSTOMER_REFERENCE);
+            return $attributes->offsetGet(static::KEY_CUSTOMER);
         }
 
         return null;
@@ -96,24 +80,20 @@ class CustomerResourceExpander implements CustomerResourceExpanderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */
     protected function addRelationship(
         RestResourceInterface $resource,
-        CustomerCollectionTransfer $customerCollectionTransfer
+        CustomerTransfer $customerTransfer
     ): void {
-        foreach ($customerCollectionTransfer->getCustomers() as $customerTransfer) {
-            if ($this->findCustomerReference($resource->getAttributes()) === $customerTransfer->getCustomerReference()) {
-                $restResource = $this->restResourceBuilder->createRestResource(
-                    CompanyUsersRestApiConfig::RESOURCE_CUSTOMERS,
-                    $customerTransfer->getCustomerReference(),
-                    $customerTransfer
-                );
+        $restResource = $this->restResourceBuilder->createRestResource(
+            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
+            $customerTransfer->getCustomerReference(),
+            $customerTransfer
+        );
 
-                $resource->addRelationship($restResource);
-            }
-        }
+        $resource->addRelationship($restResource);
     }
 }

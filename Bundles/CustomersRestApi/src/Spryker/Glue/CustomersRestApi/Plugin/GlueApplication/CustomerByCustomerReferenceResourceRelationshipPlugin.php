@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUsersRestApi\Plugin\GlueApplication;
+namespace Spryker\Glue\CustomersRestApi\Plugin\GlueApplication;
 
-use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
+use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiFactory getFactory()
+ * @method \Spryker\Glue\CustomersRestApi\CustomersRestApiFactory getFactory()
  */
 class CustomerByCustomerReferenceResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
@@ -44,6 +44,6 @@ class CustomerByCustomerReferenceResourceRelationshipPlugin extends AbstractPlug
      */
     public function getRelationshipResourceType(): string
     {
-        return CompanyUsersRestApiConfig::RESOURCE_CUSTOMERS;
+        return CustomersRestApiConfig::RESOURCE_CUSTOMERS;
     }
 }
