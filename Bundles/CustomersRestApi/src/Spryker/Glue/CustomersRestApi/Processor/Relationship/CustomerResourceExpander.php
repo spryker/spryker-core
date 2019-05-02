@@ -7,12 +7,9 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Relationship;
 
-use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
@@ -20,25 +17,16 @@ class CustomerResourceExpander implements CustomerResourceExpanderInterface
 {
     protected const KEY_CUSTOMER = 'customer';
 
-//    /**
-//     * @var \Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface
-//     */
-//    protected $companyUsersRestApiClient;
-
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
 
     /**
-     * @param \Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface $companyUsersRestApiClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
-    public function __construct(
-      //  CompanyUsersRestApiClientInterface $companyUsersRestApiClient,
-        RestResourceBuilderInterface $restResourceBuilder
-    ) {
-        //$this->companyUsersRestApiClient = $companyUsersRestApiClient;
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    {
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
@@ -51,49 +39,37 @@ class CustomerResourceExpander implements CustomerResourceExpanderInterface
     public function addResourceRelationshipsByCustomerReference(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
-            $customerTransfer = $resource->getPayload()->offsetGet(static::KEY_CUSTOMER);
+            $customerTransfer = $this->findCustomerTransfer($resource->getPayload());
             if (!$customerTransfer) {
                 continue;
             }
-            $this->addRelationship($resource, $customerTransfer);
+
+            $restResource = $this->restResourceBuilder->createRestResource(
+                CustomersRestApiConfig::RESOURCE_CUSTOMERS,
+                $customerTransfer->getCustomerReference(),
+                $customerTransfer
+            );
+
+            $resource->addRelationship($restResource);
         }
 
         return $resources;
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $attributes
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $payload
      *
-     * @return string|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    protected function findCustomerReference(?AbstractTransfer $attributes): ?string
+    protected function findCustomerTransfer(?AbstractTransfer $payload): ?CustomerTransfer
     {
-        if ($attributes
-            && $attributes->offsetExists(static::KEY_CUSTOMER)
-            && $attributes->offsetGet(static::KEY_CUSTOMER)
+        if ($payload
+            && $payload->offsetExists(static::KEY_CUSTOMER)
+            && $payload->offsetGet(static::KEY_CUSTOMER)
         ) {
-            return $attributes->offsetGet(static::KEY_CUSTOMER);
+            return $payload->offsetGet(static::KEY_CUSTOMER);
         }
 
         return null;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
-    protected function addRelationship(
-        RestResourceInterface $resource,
-        CustomerTransfer $customerTransfer
-    ): void {
-        $restResource = $this->restResourceBuilder->createRestResource(
-            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
-            $customerTransfer->getCustomerReference(),
-            $customerTransfer
-        );
-
-        $resource->addRelationship($restResource);
     }
 }

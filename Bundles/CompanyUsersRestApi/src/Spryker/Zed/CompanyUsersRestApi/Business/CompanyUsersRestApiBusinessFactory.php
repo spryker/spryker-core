@@ -9,12 +9,8 @@ namespace Spryker\Zed\CompanyUsersRestApi\Business;
 
 use Spryker\Zed\CompanyUsersRestApi\Business\CompanyUser\CompanyUserReader;
 use Spryker\Zed\CompanyUsersRestApi\Business\CompanyUser\CompanyUserReaderInterface;
-use Spryker\Zed\CompanyUsersRestApi\Business\Customer\CustomerReader;
-use Spryker\Zed\CompanyUsersRestApi\Business\Customer\CustomerReaderInterface;
 use Spryker\Zed\CompanyUsersRestApi\Business\Expander\CustomerIdentifierExpander;
 use Spryker\Zed\CompanyUsersRestApi\Business\Expander\CustomerIdentifierExpanderInterface;
-use Spryker\Zed\CompanyUsersRestApi\CompanyUsersRestApiDependencyProvider;
-use Spryker\Zed\CompanyUsersRestApi\Dependency\Facade\CompanyUsersRestApiToCustomerFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -37,21 +33,5 @@ class CompanyUsersRestApiBusinessFactory extends AbstractBusinessFactory
     public function createCompanyUserReader(): CompanyUserReaderInterface
     {
         return new CompanyUserReader($this->getRepository());
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUsersRestApi\Business\Customer\CustomerReaderInterface
-     */
-    public function createCustomerReader(): CustomerReaderInterface
-    {
-        return new CustomerReader($this->getCustomerFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUsersRestApi\Dependency\Facade\CompanyUsersRestApiToCustomerFacadeInterface
-     */
-    public function getCustomerFacade(): CompanyUsersRestApiToCustomerFacadeInterface
-    {
-        return $this->getProvidedDependency(CompanyUsersRestApiDependencyProvider::FACADE_CUSTOMER);
     }
 }

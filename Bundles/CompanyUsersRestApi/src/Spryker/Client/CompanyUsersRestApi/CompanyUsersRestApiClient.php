@@ -9,7 +9,6 @@ namespace Spryker\Client\CompanyUsersRestApi;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -32,22 +31,5 @@ class CompanyUsersRestApiClient extends AbstractClient implements CompanyUsersRe
         return $this->getFactory()
             ->createCompanyUsersRestApiStub()
             ->getCompanyUserCollection($criteriaFilterTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
-     */
-    public function getCustomerCollection(
-        CustomerCollectionTransfer $customerCollectionTransfer
-    ): CustomerCollectionTransfer {
-        return $this->getFactory()
-            ->createCompanyUsersRestApiStub()
-            ->getCustomerCollection($customerCollectionTransfer);
     }
 }
