@@ -47,11 +47,16 @@ class VaultReader implements VaultReaderInterface
      * @param string $dataType
      * @param string $dataKey
      *
-     * @return string
+     * @return string|null
      */
-    public function retrieve(string $dataType, string $dataKey): string
+    public function retrieve(string $dataType, string $dataKey): ?string
     {
         $vaultTransfer = $this->vaultRepository->findVaultByDataTypeAndKey($dataType, $dataKey);
+
+        if (!$vaultTransfer) {
+            return $vaultTransfer;
+        }
+
         $encryptionKey = $this->vaultConfig->getEncryptionKeyPerType($dataKey);
 
         return $this->utilEncryptionService->decrypt(

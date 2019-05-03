@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Vault\Business;
 
 use Codeception\Test\Unit;
 use Orm\Zed\Vault\Persistence\SpyVaultQuery;
+use Spryker\Shared\Vault\Exception\EncryptionKeyNotPreConfiguredForDataType;
 use Spryker\Zed\Vault\Business\VaultBusinessFactory;
 use Spryker\Zed\Vault\Business\VaultFacade;
 use Spryker\Zed\Vault\VaultConfig;
@@ -28,6 +29,7 @@ class VaultFacadeTest extends Unit
     protected const TEST_DATA_TYPE = 'TEST_DATA_TYPE';
     protected const TEST_DATA_KEY = 'TEST_DATA_KEY';
     protected const TEST_DATA = 'TEST_DATA';
+    protected const TEST_UPDATED_DATA = 'TEST_UPDATED_DATA';
     protected const TEST_ENCRYPTION_KEY = 'TEST_ENCRYPTION_KEY';
 
     /**
@@ -58,17 +60,62 @@ class VaultFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRetrieveRetrievesString(): void
+    public function testRetrieveReturnsDecryptedStringIfExist(): void
     {
         //Arrange
-        $facadeMock = $this->createVaultFacadeMock();
-        $facadeMock->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
+        $vaultFacadeMock = $this->createVaultFacadeMock();
+        $vaultFacadeMock->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
 
         //Act
-        $string = $facadeMock->retrieve(static::TEST_DATA_TYPE, static::TEST_DATA_KEY);
+        $data = $vaultFacadeMock->retrieve(static::TEST_DATA_TYPE, static::TEST_DATA_KEY);
 
         //Assert
-        $this->assertSame(static::TEST_DATA, $string);
+        $this->assertSame(static::TEST_DATA, $data);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRetrieveReturnsNullIfNothingFound(): void
+    {
+        //Act
+        $data = $this->createVaultFacadeMock()->retrieve(static::TEST_DATA_TYPE, static::TEST_DATA_KEY);
+
+        //Assert
+        $this->assertNull($data);
+    }
+
+    /**
+     * @return void
+     */
+    public function testStoreThrowsExceptionIfEncryptionKeyNotPreConfigured(): void
+    {
+        //Arrange
+        $vaultFacade = $this->tester->getFacade();
+
+        //Assert
+        $this->expectException(EncryptionKeyNotPreConfiguredForDataType::class);
+
+        //Act
+        $vaultFacade->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
+    }
+
+    /**
+     * @return void
+     */
+    public function testStoreOverwritesVaultIfExist(): void
+    {
+        //Arrange
+        $vaultFacadeMock = $this->createVaultFacadeMock();
+        $vaultFacadeMock->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
+
+        //Act
+        $vaultFacadeMock->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_UPDATED_DATA);
+
+        //Assert
+        $data = $vaultFacadeMock->retrieve(static::TEST_DATA_TYPE, static::TEST_DATA_KEY);
+
+        $this->assertSame($data, static::TEST_UPDATED_DATA);
     }
 
     /**

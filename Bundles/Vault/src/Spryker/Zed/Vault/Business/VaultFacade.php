@@ -42,9 +42,9 @@ class VaultFacade extends AbstractFacade implements VaultFacadeInterface
      * @param string $dataType
      * @param string $dataKey
      *
-     * @return string
+     * @return string|null
      */
-    public function retrieve(string $dataType, string $dataKey): string
+    public function retrieve(string $dataType, string $dataKey): ?string
     {
         return $this->getFactory()
             ->createVaultReader()

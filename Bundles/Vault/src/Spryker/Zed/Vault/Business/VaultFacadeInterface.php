@@ -31,7 +31,7 @@ interface VaultFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves decrypted data.
+     * - Retrieves decrypted data, returns null if nothing found.
      * - Throws exception if encryption key is not pre-configured for "dataType".
      *
      * Example:
@@ -42,7 +42,7 @@ interface VaultFacadeInterface
      * @param string $dataType
      * @param string $dataKey
      *
-     * @return string
+     * @return string|null
      */
-    public function retrieve(string $dataType, string $dataKey): string;
+    public function retrieve(string $dataType, string $dataKey): ?string;
 }
