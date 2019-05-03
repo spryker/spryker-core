@@ -27,8 +27,7 @@ class VaultRepository extends AbstractRepository implements VaultRepositoryInter
             ->createVaultPropelQuery()
             ->filterByDataKey($dataKey)
             ->filterByDataType($dataType)
-            ->find()
-            ->getFirst();
+            ->findOne();
 
         if ($vaultEntity === null) {
             return null;
