@@ -12,8 +12,11 @@ use Orm\Zed\Content\Persistence\SpyContentQuery;
 use Spryker\Zed\ContentGui\Communication\Form\ContentForm;
 use Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProvider;
 use Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProviderInterface;
+use Spryker\Zed\ContentGui\Communication\Resolver\ContentEditorPluginsResolver;
+use Spryker\Zed\ContentGui\Communication\Resolver\ContentEditorPluginsResolverInterface;
 use Spryker\Zed\ContentGui\Communication\Resolver\ContentResolver;
 use Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface;
+use Spryker\Zed\ContentGui\Communication\Table\ContentByTypeTable;
 use Spryker\Zed\ContentGui\Communication\Table\ContentTable;
 use Spryker\Zed\ContentGui\Communication\Tabs\ContentTabs;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
@@ -23,6 +26,9 @@ use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @method \Spryker\Zed\ContentGui\ContentGuiConfig getConfig()
+ */
 class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -62,6 +68,29 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createContentResolver(): ContentResolverInterface
     {
         return new ContentResolver($this->getContentPlugins());
+    }
+
+    /**
+     * @param string $contentType
+     * @param int|null $idContent
+     *
+     * @return \Spryker\Zed\ContentGui\Communication\Table\ContentByTypeTable
+     */
+    public function createContentByTypeTable(string $contentType, ?int $idContent = null): ContentByTypeTable
+    {
+        return new ContentByTypeTable(
+            $contentType,
+            $this->getPropelContentQuery(),
+            $idContent
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGui\Communication\Resolver\ContentEditorPluginsResolverInterface
+     */
+    public function createContentEditorPluginsResolver(): ContentEditorPluginsResolverInterface
+    {
+        return new ContentEditorPluginsResolver($this->getContentEditorPlugins());
     }
 
     /**
@@ -113,5 +142,13 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getUtilEncoding(): ContentGuiToUtilEncodingInterface
     {
         return $this->getProvidedDependency(ContentGuiDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface[]
+     */
+    public function getContentEditorPlugins(): array
+    {
+        return $this->getProvidedDependency(ContentGuiDependencyProvider::PLUGINS_CONTENT_EDITOR);
     }
 }
