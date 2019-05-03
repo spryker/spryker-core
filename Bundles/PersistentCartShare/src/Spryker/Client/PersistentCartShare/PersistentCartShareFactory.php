@@ -8,15 +8,41 @@
 namespace Spryker\Client\PersistentCartShare;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\PersistentCartShare\CartShareOption\CartShareOptionReader;
-use Spryker\Client\PersistentCartShare\CartShareOption\CartShareOptionReaderInterface;
+use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToZedRequestClientInterface;
 use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface;
 use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToResourceShareClientInterface;
+use Spryker\Client\PersistentCartShare\CartShareOption\CartShareOptionReader;
+use Spryker\Client\PersistentCartShare\CartShareOption\CartShareOptionReaderInterface;
+use Spryker\Client\PersistentCartShare\Quote\QuoteReader;
+use Spryker\Client\PersistentCartShare\Quote\QuoteReaderInterface;
 use Spryker\Client\PersistentCartShare\ResourceShare\ResourceShareRequestBuilder;
 use Spryker\Client\PersistentCartShare\ResourceShare\ResourceShareRequestBuilderInterface;
 
+use Spryker\Client\PersistentCartShare\Zed\PersistentCartShareStub;
+
+/**
+ * @method \Spryker\Client\PersistentCart\PersistentCartConfig getConfig()
+ */
 class PersistentCartShareFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\PersistentCartShare\Quote\QuoteReaderInterface
+     */
+    public function createQuoteReader(): QuoteReaderInterface
+    {
+        return new QuoteReader(
+            $this->createZedPersistentCartShareStub()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCartShare\Zed\PersistentCartShareStub
+     */
+    public function createZedPersistentCartShareStub(): PersistentCartShareStub
+    {
+        return new PersistentCartShareStub($this->getZedRequestClient());
+    }
+
     /**
      * @return \Spryker\Client\PersistentCartShare\CartShareOption\CartShareOptionReaderInterface
      */
@@ -59,5 +85,13 @@ class PersistentCartShareFactory extends AbstractFactory
     public function getCustomerClient(): PersistentCartShareToCustomerClientInterface
     {
         return $this->getProvidedDependency(PersistentCartShareDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): PersistentCartShareToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(PersistentCartShareDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }

@@ -1,5 +1,8 @@
 namespace: SprykerTest
 
+include:
+    - tests/SprykerTest/Zed/PersistentCartShare
+
 actor: Tester
 
 paths:

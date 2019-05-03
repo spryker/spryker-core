@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\PersistentCartShare;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -15,6 +16,22 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class PersistentCartShareClient extends AbstractClient implements PersistentCartShareClientInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $resourceShareUuid
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function getQuoteByResourceShareUuid(string $resourceShareUuid): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteReader()
+            ->getQuoteByResourceShareUuid($resourceShareUuid);
+    }
+
     /**
      * {@inheritdoc}
      *

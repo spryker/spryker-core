@@ -11,12 +11,15 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientBridge;
 use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToResourceShareClientBridge;
+use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToZedRequestClientBridge;
 
 class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
 {
-    public const PLUGINS_CART_SHARE_OPTION = 'PLUGINS_CART_SHARE_OPTION';
     public const CLIENT_RESOURCE_SHARE = 'CLIENT_RESOURCE_SHARE';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
+    public const PLUGINS_CART_SHARE_OPTION = 'PLUGINS_CART_SHARE_OPTION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -26,9 +29,11 @@ class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
+
         $container = $this->addCartShareOptionPlugins($container);
-        $container = $this->addResourceShareClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addResourceShareClient($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -56,6 +61,22 @@ class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new PersistentCartShareToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addZedRequestClient(Container $container): Container
+    {
+        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+            return new PersistentCartShareToZedRequestClientBridge(
+                $container->getLocator()->zedRequest()->client()
+            );
         };
 
         return $container;

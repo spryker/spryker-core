@@ -7,10 +7,26 @@
 
 namespace Spryker\Client\PersistentCartShare;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 
 interface PersistentCartShareClientInterface
 {
+    /**
+     * Specification:
+     * - Makes Zed-Request.
+     * - Retrieves a quote based on the provided UUID.
+     * - Validates if provided UUID refers to a "preview" type cart share.
+     * - Returns "isSuccess=true" on success and error message otherwise.
+     *
+     * @api
+     *
+     * @param string $resourceShareUuid
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function getQuoteByResourceShareUuid(string $resourceShareUuid): QuoteResponseTransfer;
+
     /**
      * Specification:
      * - Retrieves cart share options from CartShareOptionPluginInterface plugins.
