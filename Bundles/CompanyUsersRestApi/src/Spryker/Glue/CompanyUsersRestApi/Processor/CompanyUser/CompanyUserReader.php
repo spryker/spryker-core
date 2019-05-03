@@ -186,8 +186,8 @@ class CompanyUserReader implements CompanyUserReaderInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_FORBIDDEN)
-            ->setCode(CompanyUsersRestApiConfig::RESPONSE_CODE_RESOURCE_FORBIDDEN)
-            ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_RESOURCE_FORBIDDEN);
+            ->setCode(CompanyUsersRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_SELECTED)
+            ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_SELECTED);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }

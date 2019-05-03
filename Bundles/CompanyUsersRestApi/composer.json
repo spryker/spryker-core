@@ -20,7 +20,7 @@
     "spryker/code-sniffer": "*",
     "spryker/company": "*",
     "spryker/customer": "*",
-    "spryker/propel": "^3.0.0",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {
