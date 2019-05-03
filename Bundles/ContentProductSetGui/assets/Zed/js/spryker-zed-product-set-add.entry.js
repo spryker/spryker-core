@@ -5,8 +5,8 @@
 
 'use strict';
 
-if (!window.ProductSetsContentItem) {
+if (!window.ContentProductSetGui) {
     require('../sass/main.scss');
     require('./modules/add-product-set-table');
-    window.ProductSetsContentItem = true;
+    window.ContentProductSetGui = true;
 }
