@@ -17,9 +17,9 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return float
+     * @return int
      */
-    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): float
+    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): int
     {
         $itemTransfer
             ->requireQuantitySalesUnit()
@@ -48,13 +48,29 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
      * @param float $unitToAvailabilityConversion
      * @param int $unitPrecision
      *
-     * @return float
+     * @return int
      */
     protected function calculateNormalizedValue(
         float $availabilityValue,
         float $unitToAvailabilityConversion,
         int $unitPrecision
-    ): float {
+    ): int {
+        return (int)round(
+            $this->calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision)
+        );
+    }
+
+    /**
+     * @see ProductMeasurementSalesUnitValue::calculateNormalizedValue()
+     *
+     * @param float $availabilityValue
+     * @param float $unitToAvailabilityConversion
+     * @param int $unitPrecision
+     *
+     * @return float
+     */
+    protected function calculateFloatNormalizedValue(float $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): float
+    {
         return $availabilityValue / $unitToAvailabilityConversion * $unitPrecision;
     }
 
