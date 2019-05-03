@@ -1,5 +1,5 @@
 "Delete","Delete"
-"Select","Select"
+"Add","Add"
 "Product Set","Product Set"
 "ID","ID"
 "Name","Name"
@@ -7,3 +7,4 @@
 "Status","Status"
 "Actions","Actions"
 "Available Product Sets","Available Product Sets"
+"Clear locale","Clear locale"

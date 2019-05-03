@@ -1,5 +1,5 @@
 "Delete","Löschen"
-"Select","Auswählen"
+"Add","Hinzufügen"
 "Product Set","Produktset"
 "ID","ID"
 "Name","Name"
@@ -7,3 +7,4 @@
 "Status","Status"
 "Actions","Aktionen"
 "Available Product Sets","Verfügbare Produktgruppen"
+"Clear locale","Gebietsschema löschen"

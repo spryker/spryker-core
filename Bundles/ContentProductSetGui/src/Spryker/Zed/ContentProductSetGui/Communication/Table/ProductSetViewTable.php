@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetDataTableMap;
 use Orm\Zed\ProductSet\Persistence\SpyProductSet;
 use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
-use Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilderInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -29,12 +28,14 @@ class ProductSetViewTable extends AbstractTable
     public const COL_STATUS = 'Status';
     public const COL_ACTIONS = 'Actions';
 
-    public const BUTTON_DELETE = 'Delete';
+    public const TITLE_BUTTON_ADD = 'Add';
+    public const CLASS_BUTTON_ADD = 'btn btn-sm btn-outline btn-create js-add-product-set';
+    public const ICON_BUTTON_ADD = 'fa-plus';
 
     /**
      * @var \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
-    protected $productSetQueryContainer;
+    protected $productSetQuery;
 
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer
@@ -47,24 +48,16 @@ class ProductSetViewTable extends AbstractTable
     protected $identifierSuffix;
 
     /**
-     * @var \Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilderInterface
-     */
-    protected $productSetTableColumnContentBuilder;
-
-    /**
-     * @param \Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilderInterface $productSetTableColumnContentBuilder
-     * @param \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery $productSetQueryContainer
+     * @param \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery $productSetQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string|null $identifierSuffix
      */
     public function __construct(
-        ProductSetTableColumnContentBuilderInterface $productSetTableColumnContentBuilder,
-        SpyProductSetQuery $productSetQueryContainer,
+        SpyProductSetQuery $productSetQuery,
         LocaleTransfer $localeTransfer,
         ?string $identifierSuffix
     ) {
-        $this->productSetTableColumnContentBuilder = $productSetTableColumnContentBuilder;
-        $this->productSetQueryContainer = $productSetQueryContainer;
+        $this->productSetQuery = $productSetQuery;
         $this->localeTransfer = $localeTransfer;
         $this->identifierSuffix = $identifierSuffix;
     }
@@ -111,7 +104,7 @@ class ProductSetViewTable extends AbstractTable
     protected function prepareData(TableConfiguration $config): array
     {
         $productSetList = [];
-        $query = $this->productSetQueryContainer
+        $query = $this->productSetQuery
             ->useSpyProductSetDataQuery()
             ->filterByFkLocale($this->localeTransfer->getIdLocale())
             ->endUse()
@@ -166,7 +159,11 @@ class ProductSetViewTable extends AbstractTable
     {
         $actionButtons = [];
 
-        $actionButtons[] = $this->productSetTableColumnContentBuilder->getAddButtonField($productSetEntity);
+        $actionButtons[] = $this->generateButton('#', static::TITLE_BUTTON_ADD, [
+            'class' => static::CLASS_BUTTON_ADD,
+            'data-id' => $productSetEntity->getIdProductSet(),
+            'icon' => static::ICON_BUTTON_ADD,
+        ]);
 
         return implode(' ', $actionButtons);
     }

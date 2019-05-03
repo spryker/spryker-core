@@ -13,7 +13,6 @@ use Orm\Zed\ProductSet\Persistence\SpyProductSet;
 use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\ContentProductSetGui\Communication\Controller\ProductSetController;
-use Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilderInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -31,10 +30,14 @@ class ProductSetSelectedTable extends AbstractTable
     public const COL_STATUS = 'Status';
     public const COL_ACTIONS = 'Actions';
 
+    public const TITLE_BUTTON_DELETE = 'Delete';
+    public const CLASS_BUTTON_DELETE = 'js-delete-product-set btn btn-sm btn-outline btn-danger';
+    public const ICON_BUTTON_DELETE = 'fa-trash';
+
     /**
      * @var \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
-    protected $productSetQueryContainer;
+    protected $productSetQuery;
 
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer
@@ -52,26 +55,18 @@ class ProductSetSelectedTable extends AbstractTable
     protected $idProductSet;
 
     /**
-     * @var \Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilderInterface
-     */
-    protected $productSetTableColumnContentBuilder;
-
-    /**
-     * @param \Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilderInterface $productSetTableColumnContentBuilder
-     * @param \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery $productSetQueryContainer
+     * @param \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery $productSetQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string|null $identifierSuffix
      * @param int|null $idProductSet
      */
     public function __construct(
-        ProductSetTableColumnContentBuilderInterface $productSetTableColumnContentBuilder,
-        SpyProductSetQuery $productSetQueryContainer,
+        SpyProductSetQuery $productSetQuery,
         LocaleTransfer $localeTransfer,
         ?string $identifierSuffix,
         ?int $idProductSet
     ) {
-        $this->productSetTableColumnContentBuilder = $productSetTableColumnContentBuilder;
-        $this->productSetQueryContainer = $productSetQueryContainer;
+        $this->productSetQuery = $productSetQuery;
         $this->localeTransfer = $localeTransfer;
         $this->identifierSuffix = $identifierSuffix;
         $this->idProductSet = $idProductSet;
@@ -139,10 +134,10 @@ class ProductSetSelectedTable extends AbstractTable
     {
         $productSetList = [];
         if ($this->idProductSet) {
-            $query = $this->productSetQueryContainer
+            $query = $this->productSetQuery
                 ->filterByIdProductSet($this->idProductSet)
                 ->useSpyProductSetDataQuery()
-                    ->filterByFkLocale($this->localeTransfer->getIdLocale())
+                ->filterByFkLocale($this->localeTransfer->getIdLocale())
                 ->endUse()
                 ->withColumn(SpyProductSetDataTableMap::COL_NAME, static::COL_ALIAS_NAME);
 
@@ -196,7 +191,12 @@ class ProductSetSelectedTable extends AbstractTable
     {
         $actionButtons = [];
 
-        $actionButtons[] = $this->productSetTableColumnContentBuilder->getDeleteButton($productSetEntity);
+        $actionButtons[] = $this->generateButton('#', static::TITLE_BUTTON_DELETE, [
+            'class' => static::CLASS_BUTTON_DELETE,
+            'data-id' => $productSetEntity->getIdProductSet(),
+            'icon' => static::ICON_BUTTON_DELETE,
+        ]);
+
         return implode(' ', $actionButtons);
     }
 }

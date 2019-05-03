@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Container;
 class ContentProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
-    public const QUERY_CONTAINER_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
+    public const PROPEL_QUERY_PRODUCT_SET = 'PROPEL_QUERY_PRODUCT_SET';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,7 +37,7 @@ class ContentProductSetGuiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function provideProductQueryContainer(Container $container): void
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_SET] = function (Container $container) {
+        $container[static::PROPEL_QUERY_PRODUCT_SET] = function () {
             return SpyProductSetQuery::create();
         };
     }

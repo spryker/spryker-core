@@ -8,8 +8,6 @@
 namespace Spryker\Zed\ContentProductSetGui\Communication;
 
 use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
-use Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilder;
-use Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilderInterface;
 use Spryker\Zed\ContentProductSetGui\Communication\Table\ProductSetSelectedTable;
 use Spryker\Zed\ContentProductSetGui\Communication\Table\ProductSetViewTable;
 use Spryker\Zed\ContentProductSetGui\ContentProductSetGuiDependencyProvider;
@@ -26,8 +24,7 @@ class ContentProductSetGuiCommunicationFactory extends AbstractCommunicationFact
     public function createProductSetViewTable(?string $identifierPostfix = null): ProductSetViewTable
     {
         return new ProductSetViewTable(
-            $this->createProductSetTableColumnContentBuilder(),
-            $this->getProductSetQueryContainer(),
+            $this->getProductSetQuery(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $identifierPostfix
         );
@@ -42,8 +39,7 @@ class ContentProductSetGuiCommunicationFactory extends AbstractCommunicationFact
     public function createProductSetSelectedTable(?int $idProductSet, ?string $identifierPostfix = null): ProductSetSelectedTable
     {
         return new ProductSetSelectedTable(
-            $this->createProductSetTableColumnContentBuilder(),
-            $this->getProductSetQueryContainer(),
+            $this->getProductSetQuery(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $identifierPostfix,
             $idProductSet
@@ -51,19 +47,11 @@ class ContentProductSetGuiCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @return \Spryker\Zed\ContentProductSetGui\Communication\Table\Builder\ProductSetTableColumnContentBuilderInterface
-     */
-    public function createProductSetTableColumnContentBuilder(): ProductSetTableColumnContentBuilderInterface
-    {
-        return new ProductSetTableColumnContentBuilder();
-    }
-
-    /**
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
-    public function getProductSetQueryContainer(): SpyProductSetQuery
+    public function getProductSetQuery(): SpyProductSetQuery
     {
-        return $this->getProvidedDependency(ContentProductSetGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_SET);
+        return $this->getProvidedDependency(ContentProductSetGuiDependencyProvider::PROPEL_QUERY_PRODUCT_SET);
     }
 
     /**

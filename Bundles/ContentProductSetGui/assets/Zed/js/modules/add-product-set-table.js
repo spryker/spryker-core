@@ -5,45 +5,34 @@
 
 'use strict';
 
-var ProductSetsContentItem = function(
-    tablesWrapperSelector,
-    assignedTableSelector,
-    productSetsTableSelector,
-    integerInputsWrapperSelector,
-    addProductSetButtonSelector,
-    removeProductSetButtonSelector,
-    clearAllFieldsSelector,
-    navigationTabLinkSelector,
-    tabsContentSelector
-) {
-    this.tablesWrapperSelector = tablesWrapperSelector;
-    this.integerInputsWrapperSelector = integerInputsWrapperSelector;
-    this.assignedTables = $(assignedTableSelector);
-    this.productSetsTables = $(productSetsTableSelector);
-    this.clearAllFieldsButton = $(clearAllFieldsSelector).removeClass(clearAllFieldsSelector.substring(1));
-    this.addProductSetButtonSelector = addProductSetButtonSelector;
-    this.removeProductSetButtonSelector = removeProductSetButtonSelector;
-    this.navigationTabLinks = $(navigationTabLinkSelector);
-    this.tabsContent = $(tabsContentSelector);
+const ProductSetsContentItem = function(options)
+{
+    $.extend(this, options);
+
+    this.$assignedTables = $(this.assignedTableSelector);
+    this.$productSetsTables = $(this.productSetsTableSelector);
+    this.$clearAllFieldsButton = $(this.clearAllFieldsSelector).removeClass(this.clearAllFieldsSelector.substring(1));
+    this.$navigationTabLinks = $(this.navigationTabLinkSelector);
+    this.$tabsContent = $(this.tabsContentSelector);
 
     this.mapEvents = function() {
-        this.productSetsTables.on('click', this.addProductSetButtonSelector, this.addProductSetButtonHandler.bind(this));
-        this.assignedTables.on('click', this.removeProductSetButtonSelector, this.removeProductSetButtonHandler.bind(this));
-        this.clearAllFieldsButton.on('click', this.clearAllFieldsButtonsHandler.bind(this));
-        this.navigationTabLinks.on('click', this.resizeTableColumn.bind(this));
+        this.$productSetsTables.on('click', this.addProductSetButtonSelector, this.addProductSetButtonHandler.bind(this));
+        this.$assignedTables.on('click', this.removeProductSetButtonSelector, this.removeProductSetButtonHandler.bind(this));
+        this.$clearAllFieldsButton.on('click', this.clearAllFieldsButtonsHandler.bind(this));
+        this.$navigationTabLinks.on('click', this.resizeTableColumn.bind(this));
     };
 
     this.resizeTableColumn = function(event) {
         var tabId = event.target.getAttribute('href');
         var self = this;
-        this.tabsContent.each(function(index, item) {
+        this.$tabsContent.each(function(index, item) {
             var currentTabId = item.getAttribute('id');
             var isOpenTab = tabId.substring(1) === currentTabId;
 
             if (isOpenTab) {
                 $(item).show();
-                $(tabId).find(self.assignedTables).DataTable().columns.adjust().draw();
-                $(tabId).find(self.productsTables).DataTable().columns.adjust().draw();
+                $(tabId).find(self.$assignedTables).DataTable().columns.adjust().draw();
+                $(tabId).find(self.$productSetsTables).DataTable().columns.adjust().draw();
             } else {
                 $(item).hide();
             }
@@ -53,7 +42,7 @@ var ProductSetsContentItem = function(
 
     this.addProductSetButtonHandler = function(event) {
         var clickInfo = this.getClickInfo(event);
-        var indexOfActiveTable = this.productSetsTables.index(clickInfo.clickedTable);
+        var indexOfActiveTable = this.$productSetsTables.index(clickInfo.clickedTable);
 
         this.addProductSet(clickInfo.clickedTable, clickInfo.idProductSet, indexOfActiveTable);
     };
@@ -70,7 +59,7 @@ var ProductSetsContentItem = function(
         event.preventDefault();
 
         var button = $(event.currentTarget);
-        var indexOfclickedButton = this.clearAllFieldsButton.index(button);
+        var indexOfclickedButton = this.$clearAllFieldsButton.index(button);
         var assignedTable = this.getCurrentAssignedTable(indexOfclickedButton);
 
         this.clearHiddenInput(assignedTable);
@@ -106,7 +95,7 @@ var ProductSetsContentItem = function(
     };
 
     this.getCurrentAssignedTable = function(indexOfActiveTable) {
-        return this.assignedTables.eq(indexOfActiveTable);
+        return this.$assignedTables.eq(indexOfActiveTable);
     };
 
     this.getRowData = function(productTable, idProductSet) {
@@ -161,15 +150,15 @@ var ProductSetsContentItem = function(
 };
 
 $(document).ready(function () {
-    new ProductSetsContentItem(
-        '.id-product-set-fields',
-        '.product-set-selected-table',
-        '.product-set-view-table',
-        '.js-selected-product-sets-wrapper',
-        '.js-add-product-set',
-        '.js-delete-product-set',
-        '.clear-fields',
-        '.nav-tabs a',
-        '.tab-content .tab-pane'
-    );
+    new ProductSetsContentItem({
+        'tablesWrapperSelector': '.id-product-set-fields',
+        'assignedTableSelector': '.product-set-selected-table',
+        'productSetsTableSelector': '.product-set-view-table',
+        'integerInputsWrapperSelector': '.js-selected-product-sets-wrapper',
+        'addProductSetButtonSelector': '.js-add-product-set',
+        'removeProductSetButtonSelector': '.js-delete-product-set',
+        'clearAllFieldsSelector': '.clear-fields',
+        'navigationTabLinkSelector': '.nav-tabs a',
+        'tabsContentSelector': '.tab-content .tab-pane'
+    });
 });
