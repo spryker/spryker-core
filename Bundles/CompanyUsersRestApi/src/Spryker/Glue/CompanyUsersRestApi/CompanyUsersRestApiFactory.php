@@ -15,8 +15,6 @@ use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpander;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpanderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapper;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
-use Spryker\Glue\CompanyUsersRestApi\Processor\Relationship\CustomerResourceExpander;
-use Spryker\Glue\CompanyUsersRestApi\Processor\Relationship\CustomerResourceExpanderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRestResponseBuilder;
 use Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRestResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;

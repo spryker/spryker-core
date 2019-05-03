@@ -7,13 +7,10 @@
 
 namespace Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser;
 
-use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\RestCompanyUserAttributesTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface;
 use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
@@ -21,7 +18,6 @@ use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToComp
 use Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class CompanyUserReader implements CompanyUserReaderInterface
 {
@@ -136,7 +132,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
     {
         $idCompany = $restRequest->getRestUser()->getIdCompany();
         if (!$idCompany) {
-            return $this->buildForbiddenErrorResponse();
+            return $this->companyUserRestResponse->buildForbiddenErrorResponse();
         }
 
         $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterTransfer())
