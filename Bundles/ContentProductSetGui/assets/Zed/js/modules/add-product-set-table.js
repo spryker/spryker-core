@@ -23,11 +23,11 @@ const ContentProductSetGui = function(options)
     };
 
     this.resizeTableColumn = function(event) {
-        let tabId = event.target.getAttribute('href');
-        let self = this;
+        const tabId = event.target.getAttribute('href');
+        const self = this;
         this.$tabsContent.each(function(index, item) {
-            let currentTabId = item.getAttribute('id');
-            let isOpenTab = tabId.substring(1) === currentTabId;
+            const currentTabId = item.getAttribute('id');
+            const isOpenTab = tabId.substring(1) === currentTabId;
 
             if (isOpenTab) {
                 $(item).show();
@@ -41,15 +41,15 @@ const ContentProductSetGui = function(options)
     };
 
     this.addProductSetButtonHandler = function(event) {
-        let clickInfo = this.getClickInfo(event);
-        let indexOfActiveTable = this.$productSetsTables.index(clickInfo.clickedTable);
+        const clickInfo = this.getClickInfo(event);
+        const indexOfActiveTable = this.$productSetsTables.index(clickInfo.clickedTable);
 
         this.addProductSet(clickInfo.clickedTable, clickInfo.idProductSet, indexOfActiveTable);
     };
 
     this.removeProductSetButtonHandler = function(event) {
-        let clickInfo = this.getClickInfo(event);
-        let tableRow = clickInfo.button.parents('tr');
+        const clickInfo = this.getClickInfo(event);
+        const tableRow = clickInfo.button.parents('tr');
 
         this.clearHiddenInput(clickInfo.clickedTable);
         this.removeProduct(clickInfo.clickedTable, tableRow);
@@ -58,18 +58,18 @@ const ContentProductSetGui = function(options)
     this.clearAllFieldsButtonsHandler = function(event) {
         event.preventDefault();
 
-        let button = $(event.currentTarget);
-        let indexOfclickedButton = this.$clearAllFieldsButton.index(button);
-        let assignedTable = this.getCurrentAssignedTable(indexOfclickedButton);
+        const button = $(event.currentTarget);
+        const indexOfClickedButton = this.$clearAllFieldsButton.index(button);
+        let assignedTable = this.getCurrentAssignedTable(indexOfClickedButton);
 
         this.clearHiddenInput(assignedTable);
         assignedTable.dataTable().api().clear().draw();
     };
 
     this.addProductSet = function(productTable, idProductSet, indexOfActiveTable) {
-        let rowData = this.getRowData(productTable, idProductSet);
+        const rowData = this.getRowData(productTable, idProductSet);
         let assignedTable = this.getCurrentAssignedTable(indexOfActiveTable);
-        let tablesWrapper = this.getTablesWrapper(assignedTable);
+        const tablesWrapper = this.getTablesWrapper(assignedTable);
 
         this.setHiddenInput(tablesWrapper, idProductSet);
         assignedTable.dataTable().api().clear();
@@ -81,14 +81,14 @@ const ContentProductSetGui = function(options)
     };
 
     this.setHiddenInput = function(tablesWrapper, idProductSet) {
-        let integerInputsWrapper = this.getHiddenInputsWrapper(tablesWrapper);
+        const integerInputsWrapper = this.getHiddenInputsWrapper(tablesWrapper);
         let integerInput = this.getHiddenInput(integerInputsWrapper);
 
         integerInput.attr('value', idProductSet);
     };
 
     this.clearHiddenInput = function(assignedTable) {
-        let integerInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(assignedTable));
+        const integerInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(assignedTable));
         let integerInput = this.getHiddenInput(integerInputsWrapper);
 
         integerInput.attr('value', null);
@@ -99,7 +99,7 @@ const ContentProductSetGui = function(options)
     };
 
     this.getRowData = function(productTable, idProductSet) {
-        let tableData = productTable.dataTable().api().data().toArray();
+        const tableData = productTable.dataTable().api().data().toArray();
         let rowData = tableData.find(function(item) {
             if (item[0] === Number(idProductSet)) {
                 return item;
@@ -113,7 +113,7 @@ const ContentProductSetGui = function(options)
     };
 
     this.getDeleteButtonsTemplate = function(idProductSet) {
-        let buttons = $($(this.tablesWrapperSelector).data('delete-button'));
+        const buttons = $($(this.tablesWrapperSelector).data('delete-button'));
         let buttonsTemplate = '';
 
         buttons.each(function() {
