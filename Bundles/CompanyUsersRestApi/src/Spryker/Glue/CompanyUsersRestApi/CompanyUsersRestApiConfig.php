@@ -15,6 +15,11 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
     public const CONTROLLER_RESOURCE_COMPANY_USERS = 'company-users-resource';
     public const RESOURCE_COMPANY_USERS_GET_ACTION_NAME = 'get';
 
+    /**
+     * @uses \Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS
+     */
+    public const RESOURCE_COMPANY_BUSINESS_UNITS = 'company-business-units';
+
     public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1403';
     public const RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND = 'Company user not found.';
 

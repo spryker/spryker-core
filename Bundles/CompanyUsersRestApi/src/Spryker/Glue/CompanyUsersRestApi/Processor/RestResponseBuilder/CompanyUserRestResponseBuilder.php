@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -49,20 +50,7 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
     public function buildCompanyUserResponse(CompanyUserTransfer $companyUserTransfer): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        $restCompanyUserAttributesTransfer = $this->companyUserMapper
-            ->mapCompanyUserTransferToRestCompanyUserAttributesTransfer(
-                $companyUserTransfer,
-                new RestCompanyUserAttributesTransfer()
-            );
-
-        $restResource = $this->restResourceBuilder->createRestResource(
-            CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
-            $companyUserTransfer->getUuid(),
-            $restCompanyUserAttributesTransfer
-        );
-
-        $restResource->setPayload($companyUserTransfer);
+        $restResource = $this->buildCompanyUserResource($companyUserTransfer);
         $restResponse->addResource($restResource);
 
         return $restResponse;
@@ -86,20 +74,7 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
         );
 
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUserTransfer) {
-            $restCompanyUserAttributesTransfer = $this->companyUserMapper
-                ->mapCompanyUserTransferToRestCompanyUserAttributesTransfer(
-                    $companyUserTransfer,
-                    new RestCompanyUserAttributesTransfer()
-                );
-
-            $restResource = $this->restResourceBuilder->createRestResource(
-                CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
-                $companyUserTransfer->getUuid(),
-                $restCompanyUserAttributesTransfer
-            );
-
-            $restResource->setPayload($companyUserTransfer);
-
+            $restResource = $this->buildCompanyUserResource($companyUserTransfer);
             $restResponse->addResource($restResource);
         }
 
@@ -130,5 +105,29 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
             ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_ACCESS_FORBIDDEN);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function buildCompanyUserResource(CompanyUserTransfer $companyUserTransfer): RestResourceInterface
+    {
+        $restCompanyUserAttributesTransfer = $this->companyUserMapper
+            ->mapCompanyUserTransferToRestCompanyUserAttributesTransfer(
+                $companyUserTransfer,
+                new RestCompanyUserAttributesTransfer()
+            );
+
+        $restResource = $this->restResourceBuilder->createRestResource(
+            CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
+            $companyUserTransfer->getUuid(),
+            $restCompanyUserAttributesTransfer
+        );
+
+        $restResource->setPayload($companyUserTransfer);
+
+        return $restResource;
     }
 }
