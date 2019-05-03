@@ -8,7 +8,7 @@
 namespace Spryker\Glue\CartsRestApi\Dependency\Client;
 
 /**
- * @deprecated Will be removed in the next major.
+ * @deprecated Can be removed in minor.
  */
 class CartsRestApiToZedRequestClientBridge implements CartsRestApiToZedRequestClientInterface
 {

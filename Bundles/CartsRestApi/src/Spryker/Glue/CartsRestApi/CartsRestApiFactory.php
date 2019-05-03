@@ -300,7 +300,7 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in the next major.
+     * @deprecated Can be removed in minor.
      *
      * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface
      */
@@ -310,7 +310,7 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in the next major.
+     * @deprecated Can be removed in minor.
      *
      * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface
      */
@@ -320,7 +320,7 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed in the next major.
+     * @deprecated Can be removed in minor.
      *
      * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface
      */

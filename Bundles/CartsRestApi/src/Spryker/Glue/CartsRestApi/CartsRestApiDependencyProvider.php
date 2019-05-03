@@ -53,7 +53,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Will be removed in the next major.
+     * @deprecated Can be removed in minor.
      *
      * @param \Spryker\Glue\Kernel\Container $container
      *
@@ -69,7 +69,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Will be removed in the next major.
+     * @deprecated Can be removed in minor.
      *
      * @param \Spryker\Glue\Kernel\Container $container
      *
@@ -85,7 +85,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Will be removed in the next major.
+     * @deprecated Can be removed in minor.
      *
      * @param \Spryker\Glue\Kernel\Container $container
      *

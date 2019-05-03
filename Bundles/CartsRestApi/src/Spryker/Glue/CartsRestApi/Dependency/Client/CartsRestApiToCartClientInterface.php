@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * @deprecated Will be removed in the next major.
+ * @deprecated Can be removed in minor.
  */
 interface CartsRestApiToCartClientInterface
 {

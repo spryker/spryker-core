@@ -24,7 +24,7 @@ interface CartsRestApiFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed in the next major.
+     * @deprecated Can be removed in minor.
      *
      * @return void
      */
