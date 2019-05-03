@@ -150,6 +150,7 @@ interface CompanyRoleClientInterface
     /**
      * Specification:
      * - Finds a company role by uuid.
+     * - Makes zed request.
      * - Requires uuid field to be set in CompanyRoleTransfer taken as parameter.
      *
      * @api

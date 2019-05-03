@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer;
+use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiConfig;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Dependency\Client\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressClientInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Mapper\CompanyBusinessUnitAddressMapperInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilderInterface;
@@ -19,8 +20,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressReaderInterface
 {
-    protected const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
-
     /**
      * @var \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Dependency\Client\CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressClientInterface
      */
@@ -58,11 +57,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
      */
     public function getCurrentUserCompanyBusinessUnitAddress(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$restRequest->getResource()->getId()) {
-            return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressIdMissingError();
-        }
-
-        if ($this->isCurrentUserResourceIdentifier($restRequest->getResource()->getId())) {
+        if ($this->isResourceIdentifierCurrentUser($restRequest->getResource()->getId())) {
             return $this->getCurrentUserCompanyBusinessUnitAddresses($restRequest);
         }
 
@@ -175,8 +170,8 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
      *
      * @return bool
      */
-    protected function isCurrentUserResourceIdentifier(string $resourceIdentifier): bool
+    protected function isResourceIdentifierCurrentUser(string $resourceIdentifier): bool
     {
-        return $resourceIdentifier === static::COLLECTION_IDENTIFIER_CURRENT_USER;
+        return $resourceIdentifier === CompanyBusinessUnitAddressesRestApiConfig::COLLECTION_IDENTIFIER_CURRENT_USER;
     }
 }

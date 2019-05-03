@@ -103,6 +103,7 @@ interface CompanyBusinessUnitClientInterface
     /**
      * Specification:
      * - Finds a company business unit by uuid.
+     * - Makes zed request.
      * - Requires uuid field to be set in CompanyBusinessUnitTransfer taken as parameter.
      *
      * @api

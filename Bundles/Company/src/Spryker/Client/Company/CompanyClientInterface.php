@@ -39,6 +39,7 @@ interface CompanyClientInterface
     /**
      * Specification:
      * - Finds a company by uuid.
+     * - Makes zed request.
      * - Requires uuid field to be set in CompanyTransfer taken as parameter.
      *
      * @api

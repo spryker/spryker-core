@@ -9,6 +9,7 @@ namespace Spryker\Glue\CompaniesRestApi\Processor\Company\Reader;
 
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\RestCompanyAttributesTransfer;
+use Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig;
 use Spryker\Glue\CompaniesRestApi\Dependency\Client\CompaniesRestApiToCompanyClientInterface;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface;
 use Spryker\Glue\CompaniesRestApi\Processor\Company\RestResponseBuilder\CompanyRestResponseBuilderInterface;
@@ -17,8 +18,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyReader implements CompanyReaderInterface
 {
-    protected const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
-
     /**
      * @var \Spryker\Glue\CompaniesRestApi\Dependency\Client\CompaniesRestApiToCompanyClientInterface
      */
@@ -56,11 +55,7 @@ class CompanyReader implements CompanyReaderInterface
      */
     public function getCurrentUserCompany(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$restRequest->getResource()->getId()) {
-            return $this->companyRestResponseBuilder->createCompanyIdMissingError();
-        }
-
-        if ($this->isCurrentUserResourceIdentifier($restRequest->getResource()->getId())) {
+        if ($this->isResourceIdentifierCurrentUser($restRequest->getResource()->getId())) {
             return $this->getCurrentUserCompanies($restRequest);
         }
 
@@ -113,9 +108,9 @@ class CompanyReader implements CompanyReaderInterface
      *
      * @return bool
      */
-    protected function isCurrentUserResourceIdentifier(string $resourceIdentifier): bool
+    protected function isResourceIdentifierCurrentUser(string $resourceIdentifier): bool
     {
-        return $resourceIdentifier === static::COLLECTION_IDENTIFIER_CURRENT_USER;
+        return $resourceIdentifier === CompaniesRestApiConfig::COLLECTION_IDENTIFIER_CURRENT_USER;
     }
 
     /**

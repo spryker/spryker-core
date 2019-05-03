@@ -12,6 +12,8 @@ use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 
 class GlueApplicationConfig extends AbstractBundleConfig
 {
+    public const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
+
     /**
      * Specification:
      *  - Domain name of glue application to build API links.

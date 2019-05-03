@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\RestCompanyRoleAttributesTransfer;
+use Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiConfig;
 use Spryker\Glue\CompanyRolesRestApi\Dependency\Client\CompanyRolesRestApiToCompanyRoleClientInterface;
 use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\Mapper\CompanyRoleMapperInterface;
 use Spryker\Glue\CompanyRolesRestApi\Processor\CompanyRole\RestResponseBuilder\CompanyRoleRestResponseBuilderInterface;
@@ -19,8 +20,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyRoleReader implements CompanyRoleReaderInterface
 {
-    protected const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
-
     /**
      * @var \Spryker\Glue\CompanyRolesRestApi\Dependency\Client\CompanyRolesRestApiToCompanyRoleClientInterface
      */
@@ -58,11 +57,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
      */
     public function getCurrentUserCompanyRole(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$restRequest->getResource()->getId()) {
-            return $this->companyRoleRestResponseBuilder->createCompanyRoleIdMissingError();
-        }
-
-        if ($this->isCurrentUserResourceIdentifier($restRequest->getResource()->getId())) {
+        if ($this->isResourceIdentifierCurrentUser($restRequest->getResource()->getId())) {
             return $this->getCurrentUserCompanyRoles($restRequest);
         }
 
@@ -177,8 +172,8 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
      *
      * @return bool
      */
-    protected function isCurrentUserResourceIdentifier(string $resourceIdentifier): bool
+    protected function isResourceIdentifierCurrentUser(string $resourceIdentifier): bool
     {
-        return $resourceIdentifier === static::COLLECTION_IDENTIFIER_CURRENT_USER;
+        return $resourceIdentifier === CompanyRolesRestApiConfig::COLLECTION_IDENTIFIER_CURRENT_USER;
     }
 }

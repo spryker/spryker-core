@@ -25,7 +25,7 @@ class DefaultBillingAddressMapperPlugin implements CompanyBusinessUnitMapperPlug
      *
      * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer
      */
-    public function map(
+    public function mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
         RestCompanyBusinessUnitAttributesTransfer $companyBusinessUnitsAttributesTransfer
     ): RestCompanyBusinessUnitAttributesTransfer {
