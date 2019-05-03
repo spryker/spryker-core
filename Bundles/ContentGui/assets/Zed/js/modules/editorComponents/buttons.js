@@ -11,9 +11,9 @@ const ContentItemDropdownButton = function (
     dropdownCallback
 ) {
     return function (context) {
-        let ui = $.summernote.ui;
+        const ui = $.summernote.ui;
 
-        let button = ui.buttonGroup([
+        const button = ui.buttonGroup([
             ui.button({
                 contents: buttonTitle + ' <i class="fa fa-caret-down" aria-hidden="true"></i>',
                 data: {
