@@ -14,6 +14,11 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface CompanyUserRestResponseBuilderInterface
 {
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function buildEmptyCompanyUserResponse(): RestResponseInterface;
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -34,11 +39,6 @@ interface CompanyUserRestResponseBuilderInterface
         int $totalItems = 0,
         int $limit = 0
     ): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function buildNotFoundErrorResponse(): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

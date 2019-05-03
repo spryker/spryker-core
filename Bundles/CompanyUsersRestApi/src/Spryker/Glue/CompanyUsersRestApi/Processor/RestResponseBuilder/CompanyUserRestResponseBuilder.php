@@ -43,6 +43,14 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function buildEmptyCompanyUserResponse(): RestResponseInterface
+    {
+        return $restResponse = $this->restResourceBuilder->createRestResponse();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -79,19 +87,6 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
         }
 
         return $restResponse;
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function buildNotFoundErrorResponse(): RestResponseInterface
-    {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setCode(CompanyUsersRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND)
-            ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND);
-
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
     /**

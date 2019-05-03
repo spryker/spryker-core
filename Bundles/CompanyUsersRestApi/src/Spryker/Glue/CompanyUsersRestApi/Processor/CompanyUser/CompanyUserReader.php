@@ -103,7 +103,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
         $companyUserStorageTransfer = $this->companyUserStorageClient
             ->findCompanyUserByMapping(static::MAPPING_TYPE_UUID, $companyUserUuid);
         if (!$companyUserStorageTransfer) {
-            return $this->companyUserRestResponseBuilder->buildNotFoundErrorResponse();
+            return $this->companyUserRestResponseBuilder->buildEmptyCompanyUserResponse();
         }
 
         $companyUserTransfer = (new CompanyUserTransfer())
