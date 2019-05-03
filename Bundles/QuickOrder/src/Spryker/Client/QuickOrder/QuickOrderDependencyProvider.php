@@ -11,12 +11,14 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientBridge;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientInterface;
+use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductQuantityStorageClientBridge;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientBridge;
 
 class QuickOrderDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const CLIENT_PRODUCT_QUANTITY_STORAGE = 'CLIENT_PRODUCT_QUANTITY_STORAGE';
     public const PLUGINS_PRODUCT_CONCRETE_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_EXPANDER';
     public const PLUGINS_QUICK_ORDER_BUILD_ITEM_VALIDATOR = 'PLUGINS_QUICK_ORDER_BUILD_ITEM_VALIDATOR';
 
@@ -31,6 +33,23 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
         $container = $this->addLocaleClient($container);
         $container = $this->addProductConcreteExpanderPlugins($container);
         $container = $this->addQuickOrderValidationPlugins($container);
+        $container = $this->addProductQuantityStorageClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductQuantityStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_PRODUCT_QUANTITY_STORAGE] = function (Container $container) {
+            return new QuickOrderToProductQuantityStorageClientBridge(
+                $container->getLocator()->productQuantityStorage()->client()
+            );
+        };
 
         return $container;
     }
