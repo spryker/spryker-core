@@ -30,13 +30,13 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     protected const MESSAGE_NOT_SUPPORTED_DB_ENGINE = 'DB engine "%s" is not supported. Please extend EXPRESSION_CONCATENATED_RESULT_MAP';
 
     protected const EXPRESSION_CONCATENATED_RESULT_MAP = [
-        PropelConfig::DB_ENGINE_PGSQL => 'CONCAT(EXTRACT(epoch from now() - %s), \' \', EXTRACT(epoch from %s - now()), \' \', %s, \' \', %s, \' \', %s)',
-        PropelConfig::DB_ENGINE_MYSQL => 'CONCAT(UNIX_TIMESTAMP(now() - %s), \' \', UNIX_TIMESTAMP(%s - now()), \' \', %s, \' \', %s, \' \', %s)',
+        PropelConfig::DB_ENGINE_PGSQL => 'CAST(CONCAT(CAST(EXTRACT(epoch from now() - %s) + EXTRACT(epoch from %s - now()) + %s + %s AS INT), \'.\', %s) as FLOAT)',
+        PropelConfig::DB_ENGINE_MYSQL => 'CAST(CONCAT(CAST(UNIX_TIMESTAMP(now() - %s) + UNIX_TIMESTAMP(%s - now()) + %s + %s AS INT), \'.\', %s) as FLOAT)',
     ];
 
     protected const EXPRESSION_FILTER_ID_PRICE_PRODUCT_SCHEDULE_MAP = [
-        PropelConfig::DB_ENGINE_PGSQL => '%s = CAST(SUBSTRING(%s from \'[0-9]+$\') AS BIGINT)',
-        PropelConfig::DB_ENGINE_MYSQL => '%s = CAST(SUBSTRING_INDEX(%s, \' \', -1) AS UNSIGNED)',
+        PropelConfig::DB_ENGINE_PGSQL => '%s = CAST(SUBSTRING(CAST(%s AS TEXT) from \'[0-9]+$\') AS BIGINT)',
+        PropelConfig::DB_ENGINE_MYSQL => '%s = CAST(SUBSTRING_INDEX(CAST(%s AS TEXT), \' \', -1) AS UNSIGNED)',
     ];
 
     /**
