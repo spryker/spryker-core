@@ -44,6 +44,9 @@ class SharedCartReader implements SharedCartReaderInterface
     public function getSharedCartsByCartUuid(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer
     {
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
+        if (!$quoteResponseTransfer->getQuoteTransfer()) {
+            return new ShareDetailCollectionTransfer();
+        }
 
         return $this->sharedCartFacade->getShareDetailsByIdQuote($quoteResponseTransfer->getQuoteTransfer());
     }

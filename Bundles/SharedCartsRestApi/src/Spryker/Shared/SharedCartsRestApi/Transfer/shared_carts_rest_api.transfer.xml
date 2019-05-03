@@ -10,6 +10,7 @@
 
     <transfer name="ShareDetail">
         <property name="uuid" type="string"/>
+        <property name="companyUserUuid" type="string"/>
         <property name="idCompanyUser" type="int" />
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>

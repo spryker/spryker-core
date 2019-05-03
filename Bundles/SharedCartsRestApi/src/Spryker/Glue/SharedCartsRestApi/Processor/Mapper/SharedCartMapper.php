@@ -18,12 +18,14 @@ class SharedCartMapper implements SharedCartMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestSharedCartsAttributesTransfer
      */
-    public function mapShareDetailTransferToRestSharedCartsAttributeTransfer(ShareDetailTransfer $shareDetailTransfer, RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer): RestSharedCartsAttributesTransfer
-    {
+    public function mapShareDetailTransferToRestSharedCartsAttributesTransfer(
+        ShareDetailTransfer $shareDetailTransfer,
+        RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer
+    ): RestSharedCartsAttributesTransfer {
         return $restSharedCartsAttributesTransfer
             ->fromArray($shareDetailTransfer->toArray(), true)
             ->setIdCompanyUser(
-                $shareDetailTransfer->getUuid()
+                $shareDetailTransfer->getCompanyUserUuid()
             )
             ->setIdCartPermissionGroup(
                 $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()

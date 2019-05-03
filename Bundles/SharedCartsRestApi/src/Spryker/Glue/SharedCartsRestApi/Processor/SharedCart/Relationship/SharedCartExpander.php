@@ -32,21 +32,21 @@ class SharedCartExpander implements SharedCartExpanderInterface
     /**
      * @var \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface
      */
-    protected $sharedCartsResourceMapper;
+    protected $sharedCartMapper;
 
     /**
      * @param \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartReaderInterface $sharedCartReader
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface $sharedCartsResourceMapper
+     * @param \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface $sharedCartMapper
      */
     public function __construct(
         SharedCartReaderInterface $sharedCartReader,
         RestResourceBuilderInterface $restResourceBuilder,
-        SharedCartMapperInterface $sharedCartsResourceMapper
+        SharedCartMapperInterface $sharedCartMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->sharedCartReader = $sharedCartReader;
-        $this->sharedCartsResourceMapper = $sharedCartsResourceMapper;
+        $this->sharedCartMapper = $sharedCartMapper;
     }
 
     /**
@@ -77,14 +77,14 @@ class SharedCartExpander implements SharedCartExpanderInterface
             if (!$shareDetailTransfer->getUuid()) {
                 continue;
             }
-            $restSharedCartsAttributesTransfer = $this->sharedCartsResourceMapper->mapShareDetailTransferToRestSharedCartsAttributeTransfer(
+            $restSharedCartsAttributesTransfer = $this->sharedCartMapper->mapShareDetailTransferToRestSharedCartsAttributesTransfer(
                 $shareDetailTransfer,
                 new RestSharedCartsAttributesTransfer()
             );
 
             $resource->addRelationship(
                 $this->buildSharedCartsResource(
-                    $restSharedCartsAttributesTransfer->getIdCompanyUser(),
+                    $shareDetailTransfer->getUuid(),
                     $restSharedCartsAttributesTransfer
                 )
             );
@@ -92,16 +92,16 @@ class SharedCartExpander implements SharedCartExpanderInterface
     }
 
     /**
-     * @param string $uuid
+     * @param string $sharedCartUuid
      * @param \Generated\Shared\Transfer\RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function buildSharedCartsResource(string $uuid, RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer): RestResourceInterface
+    protected function buildSharedCartsResource(string $sharedCartUuid, RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer): RestResourceInterface
     {
         return $this->restResourceBuilder->createRestResource(
             SharedCartsRestApiConfig::RESOURCE_SHARED_CARTS,
-            $uuid,
+            $sharedCartUuid,
             $restSharedCartsAttributesTransfer
         );
     }

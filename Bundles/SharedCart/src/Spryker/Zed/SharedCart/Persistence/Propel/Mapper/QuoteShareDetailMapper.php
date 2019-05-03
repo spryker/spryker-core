@@ -42,6 +42,7 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
     {
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->fromArray($quoteCompanyUserEntity->toArray(), true)
+            ->setCompanyUserUuid($quoteCompanyUserEntity->getSpyCompanyUser()->getUuid())
             ->setIdCompanyUser($quoteCompanyUserEntity->getFkCompanyUser())
             ->setQuotePermissionGroup();
 
