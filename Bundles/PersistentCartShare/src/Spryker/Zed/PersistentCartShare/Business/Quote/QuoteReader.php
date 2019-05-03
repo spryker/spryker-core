@@ -48,7 +48,7 @@ class QuoteReader implements QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteForPreview(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
+    public function getQuoteByResourceShareUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
     {
         $resourceShareResponseTransfer = $this->resourceShareFacade->getResourceShareByUuid($resourceShareRequestTransfer);
 
@@ -61,7 +61,8 @@ class QuoteReader implements QuoteReaderInterface
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById(
-            $resourceShareDataTransfer->requireIdQuote()->getIdQuote()
+            $resourceShareDataTransfer->requireIdQuote()
+                ->getIdQuote()
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {

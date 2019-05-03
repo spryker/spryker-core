@@ -24,10 +24,10 @@ class PersistentCartShareClient extends AbstractClient implements PersistentCart
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteForPreview(string $resourceShareUuid): QuoteResponseTransfer
+    public function getQuoteByResourceShareUuid(string $resourceShareUuid): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteReader()
-            ->getQuoteForPreview($resourceShareUuid);
+            ->getQuoteByResourceShareUuid($resourceShareUuid);
     }
 }

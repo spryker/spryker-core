@@ -20,7 +20,6 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
 {
     /**
      * {@inheritdoc}
-     * - Returns false, as customer login is not required.
      *
      * @api
      *

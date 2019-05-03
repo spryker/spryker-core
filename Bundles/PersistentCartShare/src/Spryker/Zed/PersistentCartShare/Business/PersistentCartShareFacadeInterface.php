@@ -19,7 +19,8 @@ interface PersistentCartShareFacadeInterface
      * Specification:
      * - Retrieves a quote based on the provided UUID.
      * - Validates if provided UUID refers to a "preview" type cart share.
-     * - Returns "isSuccess=true" and quote transfer on success and error message otherwise.
+     * - Returns "isSuccess=true" and quote transfer on success
+     * - Returns "isSuccess=false" and error message otherwise.
      *
      * @api
      *
@@ -27,5 +28,5 @@ interface PersistentCartShareFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteForPreview(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer;
+    public function getQuoteByResourceShareUuid(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer;
 }

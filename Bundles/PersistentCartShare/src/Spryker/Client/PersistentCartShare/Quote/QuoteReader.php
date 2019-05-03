@@ -32,7 +32,7 @@ class QuoteReader implements QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteForPreview(string $resourceShareUuid): QuoteResponseTransfer
+    public function getQuoteByResourceShareUuid(string $resourceShareUuid): QuoteResponseTransfer
     {
         $resourceShareTransfer = (new ResourceShareTransfer())
             ->setUuid($resourceShareUuid);
@@ -40,6 +40,6 @@ class QuoteReader implements QuoteReaderInterface
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
             ->setResourceShare($resourceShareTransfer);
 
-        return $this->zedPersistentCartShareStub->getQuoteForPreview($resourceShareRequestTransfer);
+        return $this->zedPersistentCartShareStub->getQuoteByResourceShareUuid($resourceShareRequestTransfer);
     }
 }

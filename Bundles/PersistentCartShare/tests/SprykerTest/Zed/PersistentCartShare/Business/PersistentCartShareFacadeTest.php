@@ -76,7 +76,7 @@ class PersistentCartShareFacadeTest extends Test
 
         // Act
         $quoteResponseTransfer = $this->getFacade()
-            ->getQuoteForPreview((new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransferForRequest));
+            ->getQuoteByResourceShareUuid((new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransferForRequest));
 
         // Assert
         $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
@@ -94,7 +94,7 @@ class PersistentCartShareFacadeTest extends Test
 
         // Act
         $quoteResponseTransfer = $this->getFacade()
-            ->getQuoteForPreview(
+            ->getQuoteByResourceShareUuid(
                 (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
             );
 
@@ -116,7 +116,7 @@ class PersistentCartShareFacadeTest extends Test
 
         // Act
         $quoteResponseTransfer = $this->getFacade()
-            ->getQuoteForPreview(
+            ->getQuoteByResourceShareUuid(
                 (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransferForRequest)
             );
 
@@ -142,7 +142,7 @@ class PersistentCartShareFacadeTest extends Test
 
         // Act
         $quoteResponseTransfer = $this->getFacade()
-            ->getQuoteForPreview(
+            ->getQuoteByResourceShareUuid(
                 (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransferForRequest)
             );
 
@@ -168,7 +168,7 @@ class PersistentCartShareFacadeTest extends Test
 
         // Act
         $quoteResponseTransfer = $this->getFacade()
-            ->getQuoteForPreview(
+            ->getQuoteByResourceShareUuid(
                 (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
             );
 

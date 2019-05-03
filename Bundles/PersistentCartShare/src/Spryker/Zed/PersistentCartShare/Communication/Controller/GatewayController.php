@@ -22,8 +22,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteForPreviewAction(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
+    public function getQuoteByResourceShareUuidAction(ResourceShareRequestTransfer $resourceShareRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->getQuoteForPreview($resourceShareRequestTransfer);
+        return $this->getFacade()->getQuoteByResourceShareUuid($resourceShareRequestTransfer);
     }
 }
