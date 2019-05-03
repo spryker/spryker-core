@@ -25,7 +25,7 @@ class PersistentCartShareToCustomerClientBridge implements PersistentCartShareTo
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer()
+    public function getCustomer(): ?\Generated\Shared\Transfer\CustomerTransfer
     {
         return $this->customerClient->getCustomer();
     }
