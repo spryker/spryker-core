@@ -74,7 +74,9 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
         }
 
         if ($companyUserCriteriaFilterTransfer->getCompanyBusinessUnitUuids()) {
-            $queryCompanyUser->filterByFkCompanyBusinessUnit_In($companyUserCriteriaFilterTransfer->getCompanyBusinessUnitUuids());
+            $queryCompanyUser->useCompanyBusinessUnitQuery()
+                ->filterByUuid_In($companyUserCriteriaFilterTransfer->getCompanyBusinessUnitUuids())
+            ->endUse();
         }
 
         return $queryCompanyUser;
