@@ -10,6 +10,7 @@ namespace Spryker\Client\Oauth\ResourceServer\Repository;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
+use RuntimeException;
 
 class AccessTokenRepository implements AccessTokenRepositoryInterface
 {
@@ -20,10 +21,13 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
      * @param \League\OAuth2\Server\Entities\ScopeEntityInterface[] $scopes
      * @param mixed $userIdentifier
      *
-     * @return void
+     * @throws \RuntimeException
+     *
+     * @return \League\OAuth2\Server\Entities\AccessTokenEntityInterface
      */
     public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, $userIdentifier = null)
     {
+        throw new RuntimeException('Not implemented.');
     }
 
     /**

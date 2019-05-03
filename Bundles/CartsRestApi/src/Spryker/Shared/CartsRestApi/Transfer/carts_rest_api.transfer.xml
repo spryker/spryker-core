@@ -112,6 +112,10 @@
         <property name="errorCodes" type="string[]" singular="errorCode"/>
     </transfer>
 
+    <transfer name="RestUser">
+        <property name="naturalIdentifier" type="string"/>
+    </transfer>
+
 </transfers>
 
 

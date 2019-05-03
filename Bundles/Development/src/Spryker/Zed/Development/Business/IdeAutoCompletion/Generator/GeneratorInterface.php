@@ -12,12 +12,12 @@ interface GeneratorInterface
     /**
      * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer[] $moduleTransferCollection
      *
-     * @return string
+     * @return void
      */
-    public function generate(array $moduleTransferCollection);
+    public function generate(array $moduleTransferCollection): void;
 
     /**
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 }
