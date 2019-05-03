@@ -97,19 +97,6 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildForbiddenErrorResponse(): RestResponseInterface
-    {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_FORBIDDEN)
-            ->setCode(CompanyUsersRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_SELECTED)
-            ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_SELECTED);
-
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function buildCompanyUserNotSelectedErrorResponse(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())

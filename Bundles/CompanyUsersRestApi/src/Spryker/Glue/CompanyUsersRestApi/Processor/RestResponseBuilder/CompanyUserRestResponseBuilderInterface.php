@@ -43,10 +43,5 @@ interface CompanyUserRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildForbiddenErrorResponse(): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function buildCompanyUserNotSelectedErrorResponse(): RestResponseInterface;
 }

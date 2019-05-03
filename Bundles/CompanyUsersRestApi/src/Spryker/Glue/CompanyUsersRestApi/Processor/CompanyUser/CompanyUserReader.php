@@ -111,7 +111,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
         $companyUserTransfer = $this->companyUserClient->getCompanyUserById($companyUserTransfer);
 
         if ($companyUserTransfer->getCompany()->getIdCompany() !== $restRequest->getRestUser()->getIdCompany()) {
-            return $this->companyUserRestResponseBuilder->buildForbiddenErrorResponse();
+            return $this->companyUserRestResponseBuilder->buildCompanyUserNotSelectedErrorResponse();
         }
 
         return $this->companyUserRestResponseBuilder->buildCompanyUserResponse($companyUserTransfer);
