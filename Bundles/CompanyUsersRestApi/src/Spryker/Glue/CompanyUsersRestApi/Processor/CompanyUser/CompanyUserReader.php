@@ -209,8 +209,8 @@ class CompanyUserReader implements CompanyUserReaderInterface
         CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): CompanyUserCriteriaFilterTransfer {
         $filterCompanyBusinessUnits = $restRequest->getFiltersByResource(CompanyUsersRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS);
-        foreach ($filterCompanyBusinessUnits as $companyBusinessUnit) {
-            $companyBusinessUnitUuid = $companyBusinessUnit->getValue();
+        foreach ($filterCompanyBusinessUnits as $filterCompanyBusinessUnit) {
+            $companyBusinessUnitUuid = $filterCompanyBusinessUnit->getValue();
             $companyUserStorageTransfer = $this->companyUserStorageClient
                 ->findCompanyUserByMapping(static::MAPPING_TYPE_UUID, $companyBusinessUnitUuid);
             if ($companyUserStorageTransfer) {

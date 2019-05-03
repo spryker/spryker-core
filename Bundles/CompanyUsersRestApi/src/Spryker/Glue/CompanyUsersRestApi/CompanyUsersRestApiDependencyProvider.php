@@ -56,7 +56,9 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
     protected function addCompanyUserStorageClient(Container $container): Container
     {
         $container[static::CLIENT_COMPANY_USER_STORAGE] = function (Container $container) {
-            return new CompanyUsersRestApiToCompanyUserStorageClientBridge($container->getLocator()->companyUserStorage()->client());
+            return new CompanyUsersRestApiToCompanyUserStorageClientBridge(
+                $container->getLocator()->companyUserStorage()->client()
+            );
         };
 
         return $container;
