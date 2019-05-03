@@ -94,12 +94,10 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
         if ($priceProductTransfer->getIdProductAbstract() !== null) {
             $priceProductScheduleEntity->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
-            $priceProductScheduleEntity->setFkProduct(null);
         }
 
         if ($priceProductTransfer->getIdProduct() !== null) {
             $priceProductScheduleEntity->setFkProduct($priceProductTransfer->getIdProduct());
-            $priceProductScheduleEntity->setFkProductAbstract(null);
         }
 
         return $priceProductScheduleEntity
@@ -172,8 +170,6 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
             $priceProductTransfer->setIdProduct($productConcreteEntity->getIdProduct());
             $priceProductTransfer->setSkuProduct($productConcreteEntity->getSku());
-
-            $priceProductTransfer->setIdProductAbstract($productConcreteEntity->getFkProductAbstract());
         }
 
         if ($priceProductScheduleEntity->getFkProductAbstract()) {

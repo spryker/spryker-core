@@ -169,7 +169,7 @@ class PriceProductScheduleDateTest extends Unit
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $higherActiveFrom,
-                PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+7 days')),
+                PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 year')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => $priceProductData,
             ]
         );
@@ -192,32 +192,32 @@ class PriceProductScheduleDateTest extends Unit
     }
 
     /**
-     * @dataProvider priceProductScheduleShouldApplyForLessDurationDataProvider
+     * @dataProvider priceProductScheduleShouldToggleForLowestDurationDataProvider
      *
-     * @param \DateTime $lowestActiveFrom
-     * @param \DateTime $higherActiveFrom
+     * @param \DateTime $oldActiveFrom
+     * @param \DateTime $activeFromForApply
      *
      * @return void
      */
-    public function testPriceProductScheduleShouldApplyForLessDuration(
-        DateTime $lowestActiveFrom,
-        DateTime $higherActiveFrom
+    public function testPriceProductScheduleShouldToggleForLowestDuration(
+        DateTime $oldActiveFrom,
+        DateTime $activeFromForApply
     ): void {
         // Assign
         $priceProductData = $this->getPriceProductData();
 
-        $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
+        $activePriceProductScheduleTransfer = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => $higherActiveFrom,
-                PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+4 days')),
+                PriceProductScheduleTransfer::ACTIVE_FROM => $oldActiveFrom,
+                PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 year')),
                 PriceProductScheduleTransfer::IS_CURRENT => true,
                 PriceProductScheduleTransfer::PRICE_PRODUCT => $priceProductData,
             ]
         );
 
-        $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule(
+        $priceProductScheduleTransferForApply = $this->tester->havePriceProductSchedule(
             [
-                PriceProductScheduleTransfer::ACTIVE_FROM => $lowestActiveFrom,
+                PriceProductScheduleTransfer::ACTIVE_FROM => $activeFromForApply,
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+4 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => $priceProductData,
             ]
@@ -227,13 +227,13 @@ class PriceProductScheduleDateTest extends Unit
         $this->priceProductScheduleFacade->applyScheduledPrices();
 
         //Assert
-        $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $priceProductScheduleEntityForApply = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransferForApply->getIdPriceProductSchedule());
         $this->assertTrue(
-            $priceProductScheduleEntity->isCurrent(),
+            $priceProductScheduleEntityForApply->isCurrent(),
             'Scheduled price with less duration should have been set as current.'
         );
 
-        $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer2->getIdPriceProductSchedule());
+        $priceProductScheduleEntity2 = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($activePriceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse(
             $priceProductScheduleEntity2->isCurrent(),
             'Scheduled price with longest duration should not have been set as current.'
@@ -253,7 +253,7 @@ class PriceProductScheduleDateTest extends Unit
         DateTime $higherActiveFrom
     ): void {
         // Assign
-        $priceProductData = $this->getPriceProductData();
+        $priceProductData = $this->getAbstractPriceProductData();
 
         $priceProductScheduleTransferWithLowestDuration = $this->tester->havePriceProductSchedule(
             [
@@ -266,7 +266,7 @@ class PriceProductScheduleDateTest extends Unit
         $priceProductScheduleTransferWithHigherDuration = $this->tester->havePriceProductSchedule(
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $higherActiveFrom,
-                PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days')),
+                PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+13 days')),
                 PriceProductScheduleTransfer::PRICE_PRODUCT => $priceProductData,
             ]
         );
@@ -372,6 +372,31 @@ class PriceProductScheduleDateTest extends Unit
     /**
      * @return array
      */
+    protected function getAbstractPriceProductData(): array
+    {
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $currencyId = $this->tester->haveCurrency();
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $priceType = $this->tester->havePriceType();
+
+        return [
+            PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+            PriceProductTransfer::PRICE_TYPE => [
+                PriceTypeTransfer::NAME => $priceType->getName(),
+                PriceTypeTransfer::ID_PRICE_TYPE => $priceType->getIdPriceType(),
+            ],
+            PriceProductTransfer::MONEY_VALUE => [
+                MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
+                MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                MoneyValueTransfer::GROSS_AMOUNT => 120,
+                MoneyValueTransfer::NET_AMOUNT => 100,
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public function priceProductScheduleShouldApplyForActiveDateRangesDataProvider(): array
     {
         return [
@@ -417,13 +442,21 @@ class PriceProductScheduleDateTest extends Unit
                 (new DateTime('-5 days')),
                 (new DateTime('-10 days')),
             ],
+            'with 1 month range' => [
+                (new DateTime('-5 days')),
+                (new DateTime('-1 month')),
+            ],
+            'with 1 year range' => [
+                (new DateTime('-1 month')),
+                (new DateTime('-1 year')),
+            ],
         ];
     }
 
     /**
      * @return array
      */
-    public function priceProductScheduleShouldApplyForLessDurationDataProvider(): array
+    public function priceProductScheduleShouldToggleForLowestDurationDataProvider(): array
     {
         return [
             'with one hour range' => [
@@ -433,6 +466,14 @@ class PriceProductScheduleDateTest extends Unit
             'with 10 days range' => [
                 (new DateTime('-10 days')),
                 (new DateTime('-5 days')),
+            ],
+            'with 1 month range' => [
+                (new DateTime('-1 month')),
+                (new DateTime('-5 days')),
+            ],
+            'with 1 year range' => [
+                (new DateTime('-1 year')),
+                (new DateTime('-1 month')),
             ],
         ];
     }
@@ -450,6 +491,14 @@ class PriceProductScheduleDateTest extends Unit
             'with 10 days range' => [
                 (new DateTime('-5 days')),
                 (new DateTime('-10 days')),
+            ],
+            'with 1 month range' => [
+                (new DateTime('-5 days')),
+                (new DateTime('-1 month')),
+            ],
+            'with 1 year range' => [
+                (new DateTime('-1 month')),
+                (new DateTime('-1 year')),
             ],
         ];
     }

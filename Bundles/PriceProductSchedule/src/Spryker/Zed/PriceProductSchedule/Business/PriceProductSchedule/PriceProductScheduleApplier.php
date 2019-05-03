@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -109,41 +109,6 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function getPriceProductForPersist(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
-    {
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-
-        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-            ->setPriceDimension($priceProductTransfer->getPriceDimension())
-            ->setIdCurrency($moneyValueTransfer->getFkCurrency())
-            ->setIdStore($moneyValueTransfer->getFkStore())
-            ->setPriceType($priceProductTransfer->getPriceType()->getName());
-
-        $priceProductTransfersForUpdate = [];
-
-        if ($priceProductTransfer->getSkuProductAbstract() !== null) {
-            $priceProductTransfersForUpdate = $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction(
-                $priceProductTransfer->getIdProductAbstract(),
-                $priceProductCriteriaTransfer
-            );
-        }
-
-        if ($priceProductTransfer->getSkuProduct() !== null) {
-            $priceProductTransfersForUpdate = $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
-                $priceProductTransfer->getIdProduct(),
-                $priceProductTransfer->getIdProductAbstract(),
-                $priceProductCriteriaTransfer
-            );
-        }
-
-        return count($priceProductTransfersForUpdate) ? current($priceProductTransfersForUpdate) : $priceProductTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
@@ -164,5 +129,38 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
             ->setNetAmount($moneyValueTransfer->getNetAmount());
 
         return $priceProductTransferForPersist;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function getPriceProductForPersist(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        $priceProductTransfer
+            ->requireMoneyValue()
+            ->requirePriceType();
+
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+        $moneyValueTransfer->requireCurrency();
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setPriceTypeName($priceProductTransfer->getPriceType()->getName())
+            ->setCurrencyIsoCode($moneyValueTransfer->getCurrency()->getCode());
+
+        if ($priceProductTransfer->getSkuProductAbstract() !== null) {
+            $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProductAbstract());
+        }
+
+        if ($priceProductTransfer->getSkuProduct() !== null) {
+            $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProduct());
+        }
+
+        $priceProductTransfersForUpdate = $this->priceProductFacade->findPriceProductFor(
+            $priceProductFilterTransfer
+        );
+
+        return $priceProductTransfersForUpdate ?? $priceProductTransfer;
     }
 }
