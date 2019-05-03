@@ -14,12 +14,15 @@ use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
@@ -112,7 +115,7 @@ class ShipmentFormCreate extends AbstractType
     public function addIdShipmentMethodField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add(static::FIELD_ID_SHIPMENT_METHOD, ChoiceType::class, [
-            'label' => 'Shipment Method',
+            'label' => false,
             'placeholder' => 'Select one',
             'choices' => array_flip($options),
             'required' => true,
@@ -132,47 +135,60 @@ class ShipmentFormCreate extends AbstractType
      */
     public function addRequestedDeliveryDateField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_REQUESTED_DELIVERY_DATE, DateTimeType::class, [
-            'label' => 'Delivery Date',
-            'format' => static::VALIDITY_DATETIME_FORMAT,
+        $builder->add(static::FIELD_REQUESTED_DELIVERY_DATE, DateType::class, [
+            'label' => false,
             'required' => false,
             'widget' => 'single_text',
             'attr' => [
-                'class' => 'datepicker js-requested-datetime safe-datetime',
+                'class' => 'datepicker safe-datetime',
+            ],
+            'constraints' => [
+                $this->createRequestedDeliveryDateFieldRangeConstraint(),
             ],
         ]);
 
-        $this->addDateTimeTransformer(static::FIELD_REQUESTED_DELIVERY_DATE, $builder);
+        $builder->get(static::FIELD_REQUESTED_DELIVERY_DATE)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
 
         return $this;
     }
 
     /**
-     * @param string $fieldName
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
+     * @return \Symfony\Component\Form\CallbackTransformer
      */
-    protected function addDateTimeTransformer($fieldName, FormBuilderInterface $builder): void
+    protected function createDateTimeModelTransformer(): CallbackTransformer
     {
-        $builder
-            ->get($fieldName)
-            ->addModelTransformer(new CallbackTransformer(
-                function ($dateAsString) {
-                    if (!$dateAsString) {
-                        return null;
-                    }
-
+        return new CallbackTransformer(
+            function ($dateAsString) {
+                if ($dateAsString !== null) {
                     return new DateTime($dateAsString);
-                },
-                function ($dateAsObject) {
-                    if (!$dateAsObject) {
-                        return null;
-                    }
-
-                    return $dateAsObject->format(static::VALIDITY_DATETIME_FORMAT);
                 }
-            ));
+            },
+            function ($dateAsObject) {
+                if ($dateAsObject instanceof DateTime) {
+                    return $dateAsObject->format('Y-m-d');
+                }
+            }
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createRequestedDeliveryDateFieldRangeConstraint(): Constraint
+    {
+        return new Callback([
+            'callback' => function ($deliveryDate, ExecutionContextInterface $context) {
+                if (!$deliveryDate) {
+                    return;
+                }
+
+                $today = (new DateTime())->format('Y-m-d');
+                if ($deliveryDate < $today) {
+                    $context->addViolation('Delivery date cannot be earlier than "today".');
+                }
+            },
+        ]);
     }
 
     /**

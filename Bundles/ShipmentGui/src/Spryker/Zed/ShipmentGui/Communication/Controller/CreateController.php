@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -79,6 +80,12 @@ class CreateController extends AbstractController
         $shipmentGroupTransfer = new ShipmentGroupTransfer();
         $shipmentGroupTransfer = $this->addShipmentTransfer($shipmentGroupTransfer, $formData);
 
+        foreach ($formData[ShipmentFormCreate::FORM_SALES_ORDER_ITEMS] as $itemTransfer) {
+            if ($itemTransfer[ItemForm::FIELD_IS_UPDATED] === true) {
+                $shipmentGroupTransfer->addItem($itemTransfer);
+            }
+        }
+
         return $shipmentGroupTransfer;
     }
 
@@ -93,9 +100,9 @@ class CreateController extends AbstractController
         $shipmentTransfer = (new ShipmentTransfer())->fromArray($formData, true);
 
         $shipmentTransfer->requireShippingAddress();
-        if ($formData['id_shipping_address']) {
+        if ($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]) {
             $shipmentTransfer->getShippingAddress()
-                ->setIdSalesOrderAddress($formData['id_shipping_address']);
+                ->setIdSalesOrderAddress($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]);
         }
 
         $shipmentMethodTransfer = $this
