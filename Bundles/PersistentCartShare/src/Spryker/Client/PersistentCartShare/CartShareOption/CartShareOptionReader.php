@@ -15,7 +15,7 @@ class CartShareOptionReader implements CartShareOptionReaderInterface
     protected $cartShareOptionPlugins;
 
     /**
-     * @param array $cartShareOptionPlugins
+     * @param \Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface[] $cartShareOptionPlugins
      */
     public function __construct(array $cartShareOptionPlugins)
     {

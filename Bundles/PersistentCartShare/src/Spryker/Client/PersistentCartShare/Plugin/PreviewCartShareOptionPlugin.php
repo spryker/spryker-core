@@ -29,7 +29,7 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      * - Returns external share option group.
      *
      * @api
