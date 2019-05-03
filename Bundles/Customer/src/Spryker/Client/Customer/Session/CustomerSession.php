@@ -117,7 +117,7 @@ class CustomerSession implements CustomerSessionInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function addCustomerToSession(CustomerTransfer $customerTransfer): CustomerTransfer
+    public function setCustomerRawData(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         $this->sessionClient->set(
             self::SESSION_KEY,

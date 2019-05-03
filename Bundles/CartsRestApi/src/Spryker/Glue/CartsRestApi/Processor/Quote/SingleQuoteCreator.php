@@ -59,7 +59,7 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
 
         $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
             ->setQuote($quoteTransfer)
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
         return $this->cartsRestApiClient->createQuote($restQuoteRequestTransfer);
     }

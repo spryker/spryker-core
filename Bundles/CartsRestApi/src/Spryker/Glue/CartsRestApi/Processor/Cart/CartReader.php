@@ -58,7 +58,7 @@ class CartReader implements CartReaderInterface
     public function readByIdentifier(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
     {
         $quoteTransfer = (new QuoteTransfer())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
             ->setUuid($uuidCart);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
@@ -86,11 +86,11 @@ class CartReader implements CartReaderInterface
     public function getCustomerQuoteByUuid(string $uuidCart, RestRequestInterface $restRequest): RestResponseInterface
     {
         $quoteTransfer = (new QuoteTransfer())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
             ->setUuid($uuidCart);
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
         if ($quoteResponseTransfer->getIsSuccessful() === false
-            || $restRequest->getUser()->getNaturalIdentifier() !== $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference()) {
+            || $restRequest->getRestUser()->getNaturalIdentifier() !== $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference()) {
             return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
         }
 
@@ -173,7 +173,7 @@ class CartReader implements CartReaderInterface
     public function getCustomerQuotes(RestRequestInterface $restRequest): QuoteCollectionTransfer
     {
         $restQuoteCollectionRequestTransfer = (new RestQuoteCollectionRequestTransfer())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
         $quoteCollectionTransfer = $this->cartsRestApiClient
             ->getCustomerQuoteCollection($restQuoteCollectionRequestTransfer);

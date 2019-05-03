@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
-use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -105,22 +105,22 @@ class QuoteUpdater implements QuoteUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function assignGuestCartToRegisteredCustomer(AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer): QuoteResponseTransfer
+    public function assignGuestCartToRegisteredCustomer(AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer): QuoteResponseTransfer
     {
-        $assigningGuestQuoteRequestTransfer
+        $assignGuestQuoteRequestTransfer
             ->requireCustomer()
             ->requireAnonymousCustomerReference();
 
         $quoteCollectionResponseTransfer = $this->quoteReader->getQuoteCollectionByCustomerAndStore(
             (new RestQuoteCollectionRequestTransfer())
-                ->setCustomerReference($assigningGuestQuoteRequestTransfer->getAnonymousCustomerReference())
+                ->setCustomerReference($assignGuestQuoteRequestTransfer->getAnonymousCustomerReference())
         );
 
-        $registeredCustomer = $assigningGuestQuoteRequestTransfer->getCustomer();
+        $registeredCustomer = $assignGuestQuoteRequestTransfer->getCustomer();
         $quoteTransfer = $this->quoteMapper->createQuoteTransfer($registeredCustomer, $quoteCollectionResponseTransfer);
 
         return $this->performUpdatingQuote($quoteTransfer);

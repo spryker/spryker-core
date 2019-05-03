@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CartsRestApi;
 
-use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -20,7 +20,6 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Finds quote by uuid.
-     * - Uuid must be set in the QuoteTransfer taken as parameter.
      *
      * @api
      *
@@ -33,7 +32,6 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Finds customer quote collection.
-     * - customerReference must be set in the RestQuoteCollectionRequestTransfer taken as parameter.
      *
      * @api
      *
@@ -48,7 +46,6 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Updates customer quote.
-     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
      *
      * @api
      *
@@ -61,7 +58,6 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Creates customer quote.
-     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
      *
      * @api
      *
@@ -74,7 +70,6 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Deletes customer quote.
-     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
      *
      * @api
      *
@@ -87,7 +82,6 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Updates cart item quantity.
-     * - Quote and customerReference must be set in the RestCartItemRequestTransfer.
      *
      * @api
      *
@@ -100,7 +94,6 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Adds an item to the cart.
-     * - Quote and customerReference must be set in the RestCartItemRequestTransfer.
      *
      * @api
      *
@@ -113,7 +106,6 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Removes item from cart.
-     * - Quote and customerReference must be set in the RestCartItemRequestTransfer.
      *
      * @api
      *
@@ -126,7 +118,6 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Adds an item to the guest cart.
-     * - Quote and customerReference must be set in the RestCartItemRequestTransfer.
      *
      * @api
      *
@@ -139,13 +130,12 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Transforms a guest cart to the regular cart.
-     * - Quote and customerReference must be set in the AssigningGuestQuoteRequestTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function assignGuestCartToRegisteredCustomer(AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer): QuoteResponseTransfer;
+    public function assignGuestCartToRegisteredCustomer(AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer): QuoteResponseTransfer;
 }

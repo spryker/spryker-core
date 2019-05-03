@@ -56,7 +56,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         ?QuoteTransfer $quoteTransfer
     ): RestQuoteRequestTransfer {
         $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
         $uuidQuote = $restRequest->getResource()->getId();
 
         if (!$quoteTransfer && $uuidQuote) {
@@ -168,7 +168,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
      */
     protected function createCustomerTransfer(RestRequestInterface $restRequest): CustomerTransfer
     {
-        return (new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+        return (new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
     }
 
     /**

@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
-use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
@@ -139,15 +139,15 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
         RestRequestInterface $restRequest,
         CustomerTransfer $customerTransfer
     ): CustomerTransfer {
-        if (!$restRequest->getUser()) {
+        if (!$restRequest->getRestUser()) {
             return $customerTransfer;
         }
 
-        $assigningGuestQuoteRequestTransfer = (new AssigningGuestQuoteRequestTransfer())
-            ->setAnonymousCustomerReference($restRequest->getUser()->getNaturalIdentifier())
+        $assignGuestQuoteRequestTransfer = (new AssignGuestQuoteRequestTransfer())
+            ->setAnonymousCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
             ->setCustomer($customerTransfer);
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->assignGuestCartToRegisteredCustomer($assigningGuestQuoteRequestTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiClient->assignGuestCartToRegisteredCustomer($assignGuestQuoteRequestTransfer);
 
         return $quoteResponseTransfer->getCustomer();
     }

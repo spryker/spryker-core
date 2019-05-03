@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business;
 
-use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -180,13 +180,13 @@ interface CartsRestApiFacadeInterface
     /**
      * Specification:
      * - Transforms a guest cart to the regular cart.
-     * - Quote and customerReference must be set in the AssigningGuestQuoteRequestTransfer.
+     * - Quote and customerReference must be set in the AssignGuestQuoteRequestTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function assignGuestCartToRegisteredCustomer(AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer): QuoteResponseTransfer;
+    public function assignGuestCartToRegisteredCustomer(AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer): QuoteResponseTransfer;
 }

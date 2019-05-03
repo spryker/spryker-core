@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Communication\Controller;
 
-use Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -113,12 +113,12 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function assignGuestCartToRegisteredCustomerAction(AssigningGuestQuoteRequestTransfer $assigningGuestQuoteRequestTransfer): QuoteResponseTransfer
+    public function assignGuestCartToRegisteredCustomerAction(AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->assignGuestCartToRegisteredCustomer($assigningGuestQuoteRequestTransfer);
+        return $this->getFacade()->assignGuestCartToRegisteredCustomer($assignGuestQuoteRequestTransfer);
     }
 }

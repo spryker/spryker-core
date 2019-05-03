@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig;
 
 class RestRequestUpdater implements RestRequestUpdaterInterface
 {
@@ -35,7 +34,7 @@ class RestRequestUpdater implements RestRequestUpdaterInterface
      */
     public function updateRestRequestWithAnonymousCustomerId(RestRequestInterface $restRequest): void
     {
-        if ($restRequest->getUser()) {
+        if ($restRequest->getRestUser()) {
             return;
         }
 
@@ -47,6 +46,5 @@ class RestRequestUpdater implements RestRequestUpdaterInterface
 
         $customerReference = $this->persistentCartClient->generateGuestCartCustomerReference($anonymousCustomerUniqueId);
         $restRequest->setRestUser((new RestUserTransfer())->setNaturalIdentifier($customerReference));
-        $restRequest->setUser('', $customerReference);
     }
 }

@@ -45,6 +45,6 @@ class SetCustomerBeforeActionPlugin extends AbstractPlugin implements Controller
 
         $this->getFactory()
             ->getCustomerClient()
-            ->addCustomerToSession($customerTransfer);
+            ->setCustomerRawData($customerTransfer);
     }
 }

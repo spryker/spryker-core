@@ -30,7 +30,7 @@ class CartItemsResourceMapper implements CartItemsResourceMapperInterface
         return (new RestCartItemRequestTransfer())
             ->setCartItem($cartItem)
             ->setCartUuid($uuidQuote)
-            ->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
     }
 
     /**
