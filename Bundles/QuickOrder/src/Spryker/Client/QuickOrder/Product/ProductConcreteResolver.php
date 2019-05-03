@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuickOrderItemTransfer;
 use Generated\Shared\Transfer\QuickOrderTransfer;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientInterface;
+use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductQuantityStorageClientInterface;
 use Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface;
 
 class ProductConcreteResolver implements ProductConcreteResolverInterface
@@ -33,13 +34,23 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
     protected $localeClient;
 
     /**
+     * @var \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductQuantityStorageClientInterface
+     */
+    protected $productQuantityStorageClient;
+
+    /**
      * @param \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToLocaleClientInterface $localeClient
+     * @param \Spryker\Client\QuickOrder\Dependency\Client\QuickOrderToProductQuantityStorageClientInterface $productQuantityStorageClient
      */
-    public function __construct(QuickOrderToProductStorageClientInterface $productStorageClient, QuickOrderToLocaleClientInterface $localeClient)
-    {
+    public function __construct(
+        QuickOrderToProductStorageClientInterface $productStorageClient,
+        QuickOrderToLocaleClientInterface $localeClient,
+        QuickOrderToProductQuantityStorageClientInterface $productQuantityStorageClient
+    ) {
         $this->productStorageClient = $productStorageClient;
         $this->localeClient = $localeClient;
+        $this->productQuantityStorageClient = $productQuantityStorageClient;
     }
 
     /**
@@ -87,11 +98,39 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
         }
 
         $productConcreteTransfer = (new ProductConcreteTransfer())->fromArray($productConcreteStorageData, true);
+        $productConcreteTransfer = $this->setProductConcreteRestrictions($productConcreteTransfer);
         $localizedAttributesTransfer = (new LocalizedAttributesTransfer())->setName($productConcreteStorageData[static::NAME]);
 
         return $productConcreteTransfer
             ->setFkProductAbstract($productConcreteStorageData[static::ID_PRODUCT_ABSTRACT])
             ->addLocalizedAttributes($localizedAttributesTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function setProductConcreteRestrictions(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        $productQuantityStorageTransfer = $this->productQuantityStorageClient
+            ->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
+
+        if ($productQuantityStorageTransfer === null) {
+            $productConcreteTransfer->setMinQuantity(1);
+            $productConcreteTransfer->setQuantityInterval(1);
+
+            return $productConcreteTransfer;
+        }
+
+        $minQuantity = $productQuantityStorageTransfer->getQuantityMin() ?? 1;
+        $maxQuantity = $productQuantityStorageTransfer->getQuantityMax();
+        $quantityInterval = $productQuantityStorageTransfer->getQuantityInterval() ?? 1;
+        $productConcreteTransfer->setMinQuantity($minQuantity);
+        $productConcreteTransfer->setMaxQuantity($maxQuantity);
+        $productConcreteTransfer->setQuantityInterval($quantityInterval);
+
+        return $productConcreteTransfer;
     }
 
     /**
@@ -120,6 +159,7 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
 
         $productConcreteTransfer = (new ProductConcreteTransfer())->fromArray($productConcreteStorageData, true);
         $localizedAttributesTransfer = (new LocalizedAttributesTransfer())->setName($productConcreteStorageData[static::NAME]);
+        $productConcreteTransfer = $this->setProductConcreteRestrictions($productConcreteTransfer);
 
         return $productConcreteTransfer
             ->setFkProductAbstract($productConcreteStorageData[static::ID_PRODUCT_ABSTRACT])

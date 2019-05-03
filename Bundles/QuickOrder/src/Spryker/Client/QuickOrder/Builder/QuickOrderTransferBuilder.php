@@ -96,6 +96,10 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
                 ->setValue(static::ERROR_MESSAGE_INVALID_SKU));
         }
 
+        if ($quickOrderItemTransfer->getQuantity() === 0.0 && $productConcreteTransfer !== null) {
+            $quickOrderItemTransfer->setQuantity($productConcreteTransfer->getMinQuantity());
+        }
+
         $quickOrderItemTransfer->setProductConcrete($productConcreteTransfer);
 
         return $quickOrderItemTransfer;
