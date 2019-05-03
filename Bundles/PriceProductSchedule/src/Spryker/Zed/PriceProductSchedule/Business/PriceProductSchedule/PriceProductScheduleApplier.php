@@ -100,19 +100,8 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
     {
         $this->priceProductScheduleDisabler->disableNotRelevantPriceProductSchedulesByPriceProductSchedule($priceProductScheduleTransfer);
 
-        $priceProductScheduleTransfer->requirePriceProduct();
-        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
-
-        $priceProductTransfer->requireMoneyValue();
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-
-        $priceProductTransferForUpdate = $this->getPriceProductForUpdate($priceProductTransfer);
-
-        $priceProductTransferForUpdate->getMoneyValue()
-            ->setGrossAmount($moneyValueTransfer->getGrossAmount())
-            ->setNetAmount($moneyValueTransfer->getNetAmount());
-
-        $this->priceProductFacade->persistPriceProductStore($priceProductTransferForUpdate);
+        $priceProductTransfer = $this->preparePriceProductTransferForPersist($priceProductScheduleTransfer);
+        $this->priceProductFacade->persistPriceProductStore($priceProductTransfer);
 
         $priceProductScheduleTransfer->setIsCurrent(true);
 
@@ -124,7 +113,7 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function getPriceProductForUpdate(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    protected function getPriceProductForPersist(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
@@ -152,5 +141,28 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
         }
 
         return count($priceProductTransfersForUpdate) ? current($priceProductTransfersForUpdate) : $priceProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function preparePriceProductTransferForPersist(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductTransfer {
+        $priceProductScheduleTransfer->requirePriceProduct();
+        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
+
+        $priceProductTransfer->requireMoneyValue();
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        $priceProductTransferForPersist = $this->getPriceProductForPersist($priceProductTransfer);
+
+        $priceProductTransferForPersist->getMoneyValue()
+            ->setGrossAmount($moneyValueTransfer->getGrossAmount())
+            ->setNetAmount($moneyValueTransfer->getNetAmount());
+
+        return $priceProductTransferForPersist;
     }
 }
