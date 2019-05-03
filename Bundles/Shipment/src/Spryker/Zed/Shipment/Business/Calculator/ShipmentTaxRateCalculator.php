@@ -146,7 +146,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @return float
+     * @return string
      */
     protected function getDefaultTaxRate(): string
     {
