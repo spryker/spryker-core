@@ -21,10 +21,8 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_ACCESS_FORBIDDEN = '1404';
     public const RESPONSE_DETAIL_ACCESS_FORBIDDEN = 'Access to company user forbidden.';
 
-    public const CURRENT_USER_COLLECTION_IDENTIFIER = 'mine';
+    public const RESPONSE_CODE_COMPANY_USER_NOT_SELECTED = '1404';
+    public const RESPONSE_DETAIL_COMPANY_USER_NOT_SELECTED = 'Current company user is not set. You need to select the current company user with /company-user-access-tokens in order to access the resource collection.';
 
-    /**
-     * @uses \Spryker\Glue\CustomersRestApi\CustomersRestApiConfig::RESOURCE_CUSTOMERS
-     */
-    public const RESOURCE_CUSTOMERS = 'customers';
+    public const CURRENT_USER_COLLECTION_IDENTIFIER = 'mine';
 }

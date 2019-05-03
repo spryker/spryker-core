@@ -9,7 +9,6 @@ namespace Spryker\Client\CompanyUsersRestApi;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CustomerCollectionTransfer;
 
 interface CompanyUsersRestApiClientInterface
 {
@@ -19,25 +18,11 @@ interface CompanyUsersRestApiClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function getCompanyUserCollection(
-        CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
+        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): CompanyUserCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves customer collection.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
-     */
-    public function getCustomerCollection(
-        CustomerCollectionTransfer $customerCollectionTransfer
-    ): CustomerCollectionTransfer;
 }

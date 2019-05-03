@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUsersRestApi\Processor\Relationship;
+namespace Spryker\Glue\CustomersRestApi\Processor\Relationship;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -17,5 +17,5 @@ interface CustomerResourceExpanderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function addResourceRelationshipsByCustomerReference(array $resources, RestRequestInterface $restRequest): array;
+    public function addResourceRelationshipsByPayload(array $resources, RestRequestInterface $restRequest): array;
 }

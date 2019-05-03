@@ -39,7 +39,6 @@
     <transfer name="CompanyUserCriteriaFilter">
         <property name="idCompany" type="int"/>
         <property name="filter" type="Filter"/>
-        <property name="pagination" type="Pagination"/>
         <property name="companyUserIds" type="array"/>
         <property name="companyBusinessUnitUuids" type="string[]"/>
     </transfer>
@@ -51,6 +50,11 @@
 
     <transfer name="CustomerCollection">
         <property name="customer" type="Customer" />
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int" />
+        <property name="offset" type="int" />
     </transfer>
 
 </transfers>

@@ -40,17 +40,6 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\Relationship\CustomerResourceExpanderInterface
-     */
-    public function createCustomerResourceExpander(): CustomerResourceExpanderInterface
-    {
-        return new CustomerResourceExpander(
-            $this->getClient(),
-            $this->getResourceBuilder()
-        );
-    }
-
-    /**
      * @return \Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRestResponseBuilderInterface
      */
     public function createCompanyUserRestResponseBuilder(): CompanyUserRestResponseBuilderInterface
