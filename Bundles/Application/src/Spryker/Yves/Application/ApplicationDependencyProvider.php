@@ -9,7 +9,6 @@ namespace Spryker\Yves\Application;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin;
 
 /**
  * @method \Spryker\Yves\Application\ApplicationConfig getConfig()
@@ -49,8 +48,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getApplicationPlugins(): array
     {
-        return [
-            new RouterApplicationPlugin(),
-        ];
+        return [];
     }
 }

@@ -30,7 +30,7 @@ interface ApplicationConstants
     public const YVES_THEME = 'YVES_THEME';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ROUTER_IS_SSL_ENABLED_YVES` instead.
+     * @deprecated Use `\SprykerShop\Yves\Router\RouterEnvironmentConfigConstantsYves::IS_SSL_ENABLED` instead.
      *
      * Specification:
      * - If option set to true, the application will check if the request is secure and not excluded from https.
@@ -42,7 +42,7 @@ interface ApplicationConstants
     public const YVES_SSL_ENABLED = 'YVES_SSL_ENABLED';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ROUTER_SSL_EXCLUDED_ROUTE_NAMES_YVES` instead.
+     * @deprecated Use `\SprykerShop\Yves\Router\RouterEnvironmentConfigConstantsYves::SSL_EXCLUDED_ROUTE_NAMES` instead.
      *
      * Specification:
      * - An array of HTTPS Excluded resources when ssl is enabled.
@@ -148,7 +148,7 @@ interface ApplicationConstants
     public const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ROUTER_IS_SSL_ENABLED_ZED` instead.
+     * @deprecated Use `\Spryker\Zed\Router\RouterEnvironmentConfigConstantsZed::IS_SSL_ENABLED` instead.
      *
      * Specification:
      * - If option set to true, the application will check if the request is secure and not excluded from https.
@@ -160,7 +160,7 @@ interface ApplicationConstants
     public const ZED_SSL_ENABLED = 'ZED_SSL_ENABLED';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ROUTER_SSL_EXCLUDED_ROUTE_NAMES_ZED` instead.
+     * @deprecated Use `\Spryker\Zed\Router\RouterEnvironmentConfigConstantsZed::SSL_EXCLUDED_ROUTE_NAMES` instead.
      *
      * Specification:
      * - An array of HTTPS Excluded module/controller pairs when ssl is enabled.

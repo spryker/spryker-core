@@ -14,7 +14,6 @@
     "spryker/log": "^3.1.0",
     "spryker/monolog": "^2.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/router": "^1.1.0",
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
@@ -27,6 +26,7 @@
     "spryker/code-sniffer": "*",
     "spryker/event-dispatcher": "*",
     "spryker/propel": "*",
+    "spryker/router": "*",
     "spryker/testify": "*"
   },
   "suggest": {
