@@ -71,6 +71,9 @@ class UserRepository implements UserRepositoryInterface
             ->setGrantType($grantType)
             ->setClientName($clientEntity->getName());
 
+        // TODO: need to be solved with generic property using AbstractTransfer
+        $oauthUserTransfer->setExampleProperty($request['example_property']);
+
         $oauthUserTransfer = $this->findUser($oauthUserTransfer);
 
         if ($oauthUserTransfer && $oauthUserTransfer->getIsSuccess() && $oauthUserTransfer->getUserIdentifier()) {

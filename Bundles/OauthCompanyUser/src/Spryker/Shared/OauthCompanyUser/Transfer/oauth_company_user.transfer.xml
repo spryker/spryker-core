@@ -26,4 +26,15 @@
         <property name="idCompany" type="int"/>
     </transfer>
 
+    <transfer name="CompanyUserIdentifier">
+        <property name="exampleProperty" type="array"/>
+    </transfer>
+
+    <transfer name="OauthUser">
+        <property name="exampleProperty" type="array"/>
+    </transfer>
+
+    <transfer name="OauthRequest">
+        <property name="exampleProperty" type="array"/>
+    </transfer>
 </transfers>
