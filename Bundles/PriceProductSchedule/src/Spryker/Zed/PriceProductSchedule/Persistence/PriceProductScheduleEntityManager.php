@@ -42,9 +42,9 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
-    public function savePriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer
-    ): PriceProductScheduleTransfer
-    {
+    public function savePriceProductSchedule(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleTransfer {
         $priceProductScheduleQuery = $this->getFactory()
             ->createPriceProductScheduleQuery();
 

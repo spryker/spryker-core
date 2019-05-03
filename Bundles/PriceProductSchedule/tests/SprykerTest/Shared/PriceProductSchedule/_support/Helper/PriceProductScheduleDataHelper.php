@@ -18,12 +18,6 @@ use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList;
-use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery;
-use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
-use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
-use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
-use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
-use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 /**
