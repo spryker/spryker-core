@@ -64,7 +64,9 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
 
         foreach ($spyTaxSetStorageEntities as $spyTaxSetStorage) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($spyTaxSetStorage->getData());
+            /** @var string $data */
+            $data = $spyTaxSetStorage->getData();
+            $synchronizationDataTransfer->setData($data);
             $synchronizationDataTransfer->setKey($spyTaxSetStorage->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
