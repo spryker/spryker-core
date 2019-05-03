@@ -29,7 +29,7 @@ class GuestCartsResourceRoutePlugin extends AbstractPlugin implements ResourceRo
     {
         return $resourceRouteCollection
             ->addGet(CartsRestApiConfig::ACTION_GUEST_CARTS_GET, false)
-            ->addPatch(CartsRestApiConfig::ACTION_GUEST_CARTS_PATCH, false);
+            ->addPatch('patch', false);
     }
 
     /**

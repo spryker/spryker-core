@@ -8,9 +8,9 @@
 namespace Spryker\Glue\CartsRestApi;
 
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToSessionClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreator;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreatorInterface;
@@ -187,7 +187,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->createCartUpdater(),
             $this->createGuestCartRestResponseBuilder(),
             $this->getClient(),
-            $this->getSessionClient()
+            $this->getCustomerClient()
         );
     }
 
@@ -338,11 +338,11 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToSessionClientInterface
+     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface
      */
-    public function getSessionClient(): CartsRestApiToSessionClientInterface
+    public function getCustomerClient(): CartsRestApiToCustomerClientInterface
     {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_SESSION);
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_CUSTOMER);
     }
 
     /**

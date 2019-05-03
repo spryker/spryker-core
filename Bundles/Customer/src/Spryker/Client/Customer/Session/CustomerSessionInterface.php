@@ -41,6 +41,11 @@ interface CustomerSessionInterface
     public function setCustomerRawData(CustomerTransfer $customerTransfer): CustomerTransfer;
 
     /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function getCustomerRawData(): ?CustomerTransfer;
+
+    /**
      * @return void
      */
     public function markCustomerAsDirty();

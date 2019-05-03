@@ -146,26 +146,6 @@ class CartReader implements CartReaderInterface
     }
 
     /**
-     * @param bool $isSuccessful
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createRestQuoteResponseTransfer(
-        bool $isSuccessful,
-        ?QuoteTransfer $quoteTransfer
-    ): QuoteResponseTransfer {
-        $quoteResponseTransfer = (new QuoteResponseTransfer())
-            ->setIsSuccessful($isSuccessful);
-
-        if ($quoteTransfer) {
-            $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        }
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer

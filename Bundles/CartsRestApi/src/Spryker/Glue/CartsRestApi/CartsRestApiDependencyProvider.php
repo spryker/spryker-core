@@ -8,9 +8,9 @@
 namespace Spryker\Glue\CartsRestApi;
 
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientBridge;
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientBridge;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToSessionClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientBridge;
 use Spryker\Glue\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException;
 use Spryker\Glue\CartsRestApi\Exception\MissingQuoteCreatorPluginException;
@@ -30,7 +30,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const PLUGIN_QUOTE_COLLECTION_READER = 'PLUGIN_QUOTE_COLLECTION_READER';
     public const PLUGIN_QUOTE_CREATOR = 'PLUGIN_QUOTE_CREATOR';
-    public const CLIENT_SESSION = 'CLIENT_SESSION';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -44,7 +44,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartClient($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addQuoteClient($container);
-        $container = $this->addSessionClient($container);
+        $container = $this->addCustomerClient($container);
         $container = $this->addPersistentCartClient($container);
         $container = $this->addQuoteCollectionReaderPlugin($container);
         $container = $this->addQuoteCreatorPlugin($container);
@@ -105,10 +105,10 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addSessionClient(Container $container)
+    protected function addCustomerClient(Container $container)
     {
-        $container[static::CLIENT_SESSION] = function (Container $container) {
-            return new CartsRestApiToSessionClientBridge($container->getLocator()->session()->client());
+        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+            return new CartsRestApiToCustomerClientBridge($container->getLocator()->customer()->client());
         };
         return $container;
     }

@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToSessionClientInterface;
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -45,29 +45,29 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
     protected $cartsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToSessionClientInterface
+     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface
      */
-    protected $sessionClient;
+    protected $customerClient;
 
     /**
      * @param \Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReaderInterface $guestCartReader
      * @param \Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface $cartUpdater
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToSessionClientInterface $sessionClient
+     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface $customerClient
      */
     public function __construct(
         GuestCartReaderInterface $guestCartReader,
         CartUpdaterInterface $cartUpdater,
         GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
         CartsRestApiClientInterface $cartsRestApiClient,
-        CartsRestApiToSessionClientInterface $sessionClient
+        CartsRestApiToCustomerClientInterface $customerClient
     ) {
         $this->guestCartReader = $guestCartReader;
         $this->cartUpdater = $cartUpdater;
         $this->guestCartRestResponseBuilder = $guestCartRestResponseBuilder;
         $this->cartsRestApiClient = $cartsRestApiClient;
-        $this->sessionClient = $sessionClient;
+        $this->customerClient = $customerClient;
     }
 
     /**
@@ -91,7 +91,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
     public function updateGuestCartCustomerReferenceOnRegistration(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         /** @var \Generated\Shared\Transfer\CustomerTransfer|null $anonymousCustomerTransfer */
-        $anonymousCustomerTransfer = $this->sessionClient->get(static::CUSTOMER_DATA);
+        $anonymousCustomerTransfer = $this->customerClient->getCustomerRawData(static::CUSTOMER_DATA);
         if ($anonymousCustomerTransfer === null || !($anonymousCustomerTransfer instanceof CustomerTransfer)) {
             return $customerTransfer;
         }

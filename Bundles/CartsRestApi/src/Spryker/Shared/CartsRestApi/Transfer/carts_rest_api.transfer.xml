@@ -83,7 +83,7 @@
         <property name="customerReference" type="string" />
     </transfer>
 
-    <transfer name="AssigningGuestQuoteRequest">
+    <transfer name="AssignGuestQuoteRequest">
         <property name="anonymousCustomerReference" type="string" />
         <property name="customer" type="Customer" />
     </transfer>

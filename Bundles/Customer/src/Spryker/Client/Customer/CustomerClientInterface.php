@@ -133,6 +133,16 @@ interface CustomerClientInterface
 
     /**
      * Specification:
+     * - Returns customer information from session without executing plugins.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function getCustomerRawData(): ?CustomerTransfer;
+
+    /**
+     * Specification:
      * - Checks if customer exists in persistent storage by provided email and plain text password.
      * - Stores found customer information in session.
      *

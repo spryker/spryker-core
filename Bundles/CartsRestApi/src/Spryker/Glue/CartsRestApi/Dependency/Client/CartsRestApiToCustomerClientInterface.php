@@ -7,13 +7,16 @@
 
 namespace Spryker\Glue\CartsRestApi\Dependency\Client;
 
-interface CartsRestApiToSessionClientInterface
+use Generated\Shared\Transfer\CustomerTransfer;
+
+interface CartsRestApiToCustomerClientInterface
 {
     /**
-     * @param string $name
-     * @param mixed $default
+     * {@inheritdoc}
      *
-     * @return mixed
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function get($name, $default = null);
+    public function getCustomerRawData(): ?CustomerTransfer;
 }
