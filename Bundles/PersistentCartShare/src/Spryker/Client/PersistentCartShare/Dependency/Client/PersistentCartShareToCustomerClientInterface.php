@@ -12,5 +12,5 @@ interface PersistentCartShareToCustomerClientInterface
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer(): ?\Generated\Shared\Transfer\CustomerTransfer;
+    public function getCustomer();
 }
