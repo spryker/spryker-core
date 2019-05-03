@@ -81,8 +81,6 @@ class ProductSetViewTable extends AbstractTable
         $this->tableClass = static::TABLE_CLASS;
         $this->setTableIdentifier(sprintf('%s-%s', static::TABLE_IDENTIFIER, $this->identifierSuffix));
 
-        $this->disableSearch();
-
         $config->setHeader([
             static::COL_ID_PRODUCT_SET => static::COL_ID_PRODUCT_SET,
             static::COL_NAME => static::COL_NAME,

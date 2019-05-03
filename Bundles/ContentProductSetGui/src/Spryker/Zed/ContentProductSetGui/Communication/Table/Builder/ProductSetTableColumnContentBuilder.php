@@ -11,7 +11,8 @@ use Orm\Zed\ProductSet\Persistence\SpyProductSet;
 
 class ProductSetTableColumnContentBuilder implements ProductSetTableColumnContentBuilderInterface
 {
-    public const BUTTON_DELETE = 'Delete';
+    public const BUTTON_DELETE_LABEL = 'Delete';
+    public const BUTTON_SELECT_LABEL = 'Select';
 
     /**
      * @param \Orm\Zed\ProductSet\Persistence\SpyProductSet $productSetEntity
@@ -23,7 +24,7 @@ class ProductSetTableColumnContentBuilder implements ProductSetTableColumnConten
         return sprintf(
             '<button type="button" data-id="%s" class="js-delete-product-set btn btn-sm btn-outline btn-danger"><i class="fa fa-trash"></i> %s</button>',
             $productSetEntity->getIdProductSet(),
-            static::BUTTON_DELETE
+            static::BUTTON_DELETE_LABEL
         );
     }
 
@@ -35,8 +36,9 @@ class ProductSetTableColumnContentBuilder implements ProductSetTableColumnConten
     public function getAddButtonField(SpyProductSet $productSetEntity): string
     {
         return sprintf(
-            '<button type="button" data-id="%1$s" class="btn btn-sm btn-outline btn-create js-add-product-set"><i class="fa fa-plus"></i>Add to list</button>',
-            $productSetEntity->getIdProductSet()
+            '<button type="button" data-id="%s" class="btn btn-sm btn-outline btn-create js-add-product-set"><i class="fa fa-plus"></i> %s</button>',
+            $productSetEntity->getIdProductSet(),
+            static::BUTTON_SELECT_LABEL
         );
     }
 }

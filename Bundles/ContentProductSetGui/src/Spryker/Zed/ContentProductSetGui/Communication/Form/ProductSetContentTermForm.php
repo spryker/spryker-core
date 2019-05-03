@@ -10,6 +10,8 @@ namespace Spryker\Zed\ContentProductSetGui\Communication\Form;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -96,7 +98,18 @@ class ProductSetContentTermForm extends AbstractType
     {
         $builder->add(static::FIELD_ID_PRODUCT_SET, HiddenType::class, [
             'label' => false,
-        ]);
+        ])->get(static::FIELD_ID_PRODUCT_SET)->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) {
+                if (!$event->getData()) {
+                    return;
+                }
+
+                $id = (int)$event->getData();
+                $event->setData($id);
+                $event->getForm()->setData($id);
+            }
+        );
 
         return $this;
     }
