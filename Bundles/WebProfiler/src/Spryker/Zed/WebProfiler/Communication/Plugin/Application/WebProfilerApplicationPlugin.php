@@ -7,21 +7,13 @@
 
 namespace Spryker\Zed\WebProfiler\Communication\Plugin\Application;
 
-use ReflectionClass;
 use Spryker\Service\Container\Container;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcher;
-use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Router\Business\Loader\ClosureLoader;
-use Spryker\Zed\Router\Business\Route\Route;
-use Spryker\Zed\Router\Business\Route\RouteCollection;
-use Spryker\Zed\Router\Business\Router\ChainRouter;
-use Spryker\Zed\Router\Business\Router\Router;
-use Spryker\Zed\Router\Business\Router\RouterInterface;
 use Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
 use Symfony\Bridge\Twig\Extension\CodeExtension;
@@ -31,10 +23,16 @@ use Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController;
 use Symfony\Bundle\WebProfilerBundle\Controller\RouterController;
 use Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener;
 use Symfony\Bundle\WebProfilerBundle\Twig\WebProfilerExtension;
+use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
 use Symfony\Component\HttpKernel\EventListener\ProfilerListener;
 use Symfony\Component\HttpKernel\Profiler\FileProfilerStorage;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
+use Symfony\Component\Routing\Loader\ClosureLoader;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 use Twig\Environment;
 use Twig\Profiler\Profile;
@@ -48,6 +46,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
     public const SERVICE_STOPWATCH = 'stopwatch';
     public const SERVICE_LOGGER = 'logger';
     public const SERVICE_PROFILER = 'profiler';
+    public const SERVICE_TWIG_PROFILE = 'profile';
     public const SERVICE_TWIG = 'twig';
     public const SERVICE_REQUEST = 'request';
     public const SERVICE_REQUEST_STACK = 'request_stack';
@@ -82,21 +81,16 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
             return $profiler;
         });
 
+        $container->set(static::SERVICE_TWIG_PROFILE, function () {
+            return new Profile();
+        });
+
         $container->extend(TwigApplicationPlugin::SERVICE_TWIG, function (Environment $twig, ContainerInterface $container) {
             $twig->addExtension(new CodeExtension(null, '', $container->get(TwigApplicationPlugin::SERVICE_CHARSET)));
             $twig->addExtension(new WebProfilerExtension());
-            $twig->addExtension(new ProfilerExtension(new Profile(), $container->get(static::SERVICE_STOPWATCH)));
+            $twig->addExtension(new ProfilerExtension($container->get(static::SERVICE_TWIG_PROFILE), $container->get(static::SERVICE_STOPWATCH)));
 
             return $twig;
-        });
-
-        $container->extend('twig.loader.filesystem', function (FilesystemLoaderInterface $loader) {
-            $reflectionClass = new ReflectionClass(WebDebugToolbarListener::class);
-            $templatePaths = dirname(dirname((string)$reflectionClass->getFileName())) . '/Resources/views';
-
-            $loader->addPath($templatePaths, 'WebProfiler');
-
-            return $loader;
         });
 
         $container->extend(RouterApplicationPlugin::SERVICE_CHAIN_ROUTER, function (ChainRouter $chainRouter, ContainerInterface $container) {
@@ -111,7 +105,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Spryker\Zed\Router\Business\Router\RouterInterface
+     * @return \Symfony\Component\Routing\RouterInterface
      */
     protected function getRouter(ContainerInterface $container): RouterInterface
     {
@@ -123,8 +117,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
                 [$pathinfo, $controllerKey, $routeName] = $routeDefinition;
 
                 $route = new Route($pathinfo);
-                $route->method('GET');
-
+                $route->setMethods('GET');
                 $route->setDefault('_controller', $controllerKey);
 
                 $routeCollection->add($routeName, $route);

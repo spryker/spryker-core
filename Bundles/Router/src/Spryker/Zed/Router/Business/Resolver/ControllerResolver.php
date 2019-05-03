@@ -52,19 +52,34 @@ class ControllerResolver implements ControllerResolverInterface
         }
 
         if (is_callable($controller[0])) {
-            return [$controller[0](), $controller[1]];
+            $controllerInstance = $controller[0]();
+            $controllerInstance = $this->injectContainerAndInitialize($controllerInstance);
+
+            return [$controllerInstance, $controller[1]];
         }
 
-        $instantiatedController = new $controller[0]();
-        if (method_exists($instantiatedController, 'setApplication')) {
-            $instantiatedController->setApplication($this->container);
+        $controllerInstance = new $controller[0]();
+        $controllerInstance = $this->injectContainerAndInitialize($controllerInstance);
+
+        return [$controllerInstance, $controller[1]];
+    }
+
+    /**
+     * @param mixed $controller
+     *
+     * @return mixed
+     */
+    protected function injectContainerAndInitialize($controller)
+    {
+        if (method_exists($controller, 'setApplication')) {
+            $controller->setApplication($this->container);
         }
 
-        if (method_exists($instantiatedController, 'initialize')) {
-            $instantiatedController->initialize();
+        if (method_exists($controller, 'initialize')) {
+            $controller->initialize();
         }
 
-        return [$instantiatedController, $controller[1]];
+        return $controller;
     }
 
     /**

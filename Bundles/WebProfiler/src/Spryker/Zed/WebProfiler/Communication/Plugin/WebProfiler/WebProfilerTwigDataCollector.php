@@ -8,10 +8,10 @@
 namespace Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler;
 
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Zed\WebProfiler\Communication\Plugin\Application\WebProfilerApplicationPlugin;
 use Spryker\Zed\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
 use Symfony\Bridge\Twig\DataCollector\TwigDataCollector;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
-use Twig\Profiler\Profile;
 
 class WebProfilerTwigDataCollector implements WebProfilerDataCollectorPluginInterface
 {
@@ -38,6 +38,6 @@ class WebProfilerTwigDataCollector implements WebProfilerDataCollectorPluginInte
      */
     public function getDataCollector(ContainerInterface $container): DataCollectorInterface
     {
-        return new TwigDataCollector(new Profile());
+        return new TwigDataCollector($container->get(WebProfilerApplicationPlugin::SERVICE_TWIG_PROFILE));
     }
 }
