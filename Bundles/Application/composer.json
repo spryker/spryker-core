@@ -26,7 +26,6 @@
     "spryker/code-sniffer": "*",
     "spryker/event-dispatcher": "*",
     "spryker/propel": "*",
-    "spryker/router": "*",
     "spryker/testify": "*"
   },
   "suggest": {

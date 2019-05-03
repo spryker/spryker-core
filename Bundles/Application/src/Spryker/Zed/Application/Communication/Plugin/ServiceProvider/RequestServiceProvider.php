@@ -18,8 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * The Router Module will take care about it from now on.
  *
- * TODO: Verify it's really not needed anymore and remove usage of it if so.
- *
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()

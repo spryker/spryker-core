@@ -13,7 +13,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Twig\Business\Model\RouteResolver;
+use Spryker\Zed\Twig\Communication\RouteResolver\RouteResolver;
 use Symfony\Bridge\Twig\Extension\HttpKernelRuntime;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
@@ -132,18 +132,21 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     {
         $request = $this->app['request_stack']->getCurrentRequest();
         $controller = $request->attributes->get('_controller');
-        $route = $request->attributes->get('_template');
 
-//        if (!is_string($controller) || empty($controller)) {
-//            return null;
-//        }
+        if ($request->attributes->has('_template')) {
+            return $this->app->render('@' . $request->attributes->get('_template') . '.twig', $parameters);
+        }
 
-//        if (isset($parameters['alternativeRoute'])) {
-//            $route = (string)$parameters['alternativeRoute'];
-//        } else {
-//            $route = (new RouteResolver())
-//                ->buildRouteFromControllerServiceName($controller);
-//        }
+        if (!is_string($controller) || empty($controller)) {
+            return null;
+        }
+
+        if (isset($parameters['alternativeRoute'])) {
+            $route = (string)$parameters['alternativeRoute'];
+        } else {
+            $route = (new RouteResolver())
+                ->buildRouteFromControllerServiceName($controller);
+        }
 
         return $this->app->render('@' . $route . '.twig', $parameters);
     }

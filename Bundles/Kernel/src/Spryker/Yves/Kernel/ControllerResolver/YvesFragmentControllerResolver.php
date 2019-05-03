@@ -26,18 +26,6 @@ class YvesFragmentControllerResolver extends SilexControllerResolver
         $controller = $this->resolveController($bundleControllerAction);
 
         return [$controller, $bundleControllerAction->getAction() . 'Action'];
-
-        [$bundle, $controllerName, $actionName] = explode('/', ltrim($controller, '/'));
-
-        $bundleControllerAction = new BundleControllerAction($bundle, $controllerName, $actionName);
-        $controller = $this->resolveController($bundleControllerAction);
-
-        $serviceName = get_class($controller) . '::' . $bundleControllerAction->getAction() . 'Action';
-
-        $request = $this->getCurrentRequest();
-        $request->attributes->set('_controller', $serviceName);
-
-        return [$controller, $bundleControllerAction->getAction() . 'Action'];
     }
 
     /**

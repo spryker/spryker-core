@@ -28,8 +28,4 @@ use Codeception\Actor;
 class ConfigBusinessTester extends Actor
 {
     use _generated\ConfigBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

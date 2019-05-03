@@ -272,7 +272,6 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Monolog\\' => 'spryker/monolog',
             'Elastica\\' => 'spryker/elastica',
             'Symfony\\Component\\' => 'spryker/symfony',
-            'Symfony\Cmf\Component\Routing' => 'spryker/symfony',
             'Twig_' => 'spryker/twig',
             'Twig\\' => 'spryker/twig',
             'Zend\\' => 'spryker/zend',

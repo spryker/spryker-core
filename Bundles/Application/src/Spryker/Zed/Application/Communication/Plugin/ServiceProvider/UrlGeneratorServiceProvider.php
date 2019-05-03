@@ -12,7 +12,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `\Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin` instead.
+ * @deprecated Use `\SprykerShop\Yves\Router\Plugin\Application\RouterApplicationPlugin` instead.
  *
  * Requesting the `url_generator` from the container returned an instance of the ChainRouter. Instead of using several keys
  * pointing to the ChainRouter we only use `routers` from now on.

@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated TODO
+ * @deprecated Use `\SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin` instead.
  */
 abstract class YvesControllerProvider implements ControllerProviderInterface
 {

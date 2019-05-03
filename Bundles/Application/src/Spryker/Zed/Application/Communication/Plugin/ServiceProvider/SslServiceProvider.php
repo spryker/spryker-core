@@ -31,7 +31,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
     {
         $this->setTrustedProxies();
         $this->setTrustedHosts();
-//        $this->addProtocolCheck($app);
+        $this->addProtocolCheck($app);
     }
 
     /**
