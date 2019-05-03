@@ -24,6 +24,8 @@ class CompanyUserMapper implements CompanyUserMapperInterface
     ): RestCompanyUserAttributesTransfer {
         $restCompanyUserAttributesTransfer = $restCompanyUserAttributesTransfer
             ->fromArray($companyUserTransfer->toArray(), true);
+        $restCompanyUserAttributesTransfer
+            ->setCustomerReference($companyUserTransfer->getCustomer()->getCustomerReference());
 
         return $restCompanyUserAttributesTransfer;
     }

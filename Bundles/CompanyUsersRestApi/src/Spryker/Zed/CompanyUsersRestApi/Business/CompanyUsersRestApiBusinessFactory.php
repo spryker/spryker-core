@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\CompanyUsersRestApi\Business;
 
+use Spryker\Zed\CompanyUsersRestApi\Business\CompanyUser\CompanyUserReader;
+use Spryker\Zed\CompanyUsersRestApi\Business\CompanyUser\CompanyUserReaderInterface;
 use Spryker\Zed\CompanyUsersRestApi\Business\Expander\CustomerIdentifierExpander;
 use Spryker\Zed\CompanyUsersRestApi\Business\Expander\CustomerIdentifierExpanderInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CompanyUsersRestApi\CompanyUsersRestApiConfig getConfig()
+ * @method \Spryker\Zed\CompanyUsersRestApi\Persistence\CompanyUsersRestApiRepositoryInterface getRepository()
  */
 class CompanyUsersRestApiBusinessFactory extends AbstractBusinessFactory
 {
@@ -22,5 +25,13 @@ class CompanyUsersRestApiBusinessFactory extends AbstractBusinessFactory
     public function createCustomerIdentifierExpander(): CustomerIdentifierExpanderInterface
     {
         return new CustomerIdentifierExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUsersRestApi\Business\CompanyUser\CompanyUserReaderInterface
+     */
+    public function createCompanyUserReader(): CompanyUserReaderInterface
+    {
+        return new CompanyUserReader($this->getRepository());
     }
 }

@@ -16,6 +16,9 @@ use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapper;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
+/**
+ * @method \Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface getClient()
+ */
 class CompanyUsersRestApiFactory extends AbstractFactory
 {
     /**
@@ -25,6 +28,7 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     {
         return new CompanyUserReader(
             $this->getCompanyUserClient(),
+            $this->getClient(),
             $this->createCompanyUserMapper(),
             $this->getResourceBuilder()
         );

@@ -31,6 +31,8 @@ use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceExpander;
+use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceExpanderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Session\SessionCreator;
 use Spryker\Glue\CustomersRestApi\Processor\Session\SessionCreatorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiError;
@@ -135,6 +137,14 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->createRestApiError(),
             $this->createRestApiValidator()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceExpanderInterface
+     */
+    public function createCustomerResourceExpander(): CustomerResourceExpanderInterface
+    {
+        return new CustomerResourceExpander($this->getResourceBuilder());
     }
 
     /**
