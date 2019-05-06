@@ -78,31 +78,6 @@ class CompanyUserReader implements CompanyUserReaderInterface
     }
 
     /**
-     * @param string $companyUserUuid
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function getCompanyUser(string $companyUserUuid, RestRequestInterface $restRequest): RestResponseInterface
-    {
-        $companyUserStorageTransfer = $this->companyUserStorageClient
-            ->findCompanyUserByMapping(static::MAPPING_TYPE_UUID, $companyUserUuid);
-        if (!$companyUserStorageTransfer) {
-            return $this->companyUserRestResponseBuilder->buildEmptyCompanyUserResponse();
-        }
-
-        $companyUserTransfer = (new CompanyUserTransfer())
-            ->setIdCompanyUser($companyUserStorageTransfer->getIdCompanyUser());
-        $companyUserTransfer = $this->companyUserClient->getCompanyUserById($companyUserTransfer);
-
-        if ($companyUserTransfer->getCompany()->getIdCompany() !== $restRequest->getRestUser()->getIdCompany()) {
-            return $this->companyUserRestResponseBuilder->buildCompanyUserNotSelectedErrorResponse();
-        }
-
-        return $this->companyUserRestResponseBuilder->buildCompanyUserResponse($companyUserTransfer);
-    }
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -132,6 +107,31 @@ class CompanyUserReader implements CompanyUserReaderInterface
             $companyUserCollectionTransfer->getTotal(),
             $companyUserCollectionTransfer->getFilter()->getLimit()
         );
+    }
+
+    /**
+     * @param string $companyUserUuid
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getCompanyUser(string $companyUserUuid, RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $companyUserStorageTransfer = $this->companyUserStorageClient
+            ->findCompanyUserByMapping(static::MAPPING_TYPE_UUID, $companyUserUuid);
+        if (!$companyUserStorageTransfer) {
+            return $this->companyUserRestResponseBuilder->buildEmptyCompanyUserResponse();
+        }
+
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setIdCompanyUser($companyUserStorageTransfer->getIdCompanyUser());
+        $companyUserTransfer = $this->companyUserClient->getCompanyUserById($companyUserTransfer);
+
+        if ($companyUserTransfer->getCompany()->getIdCompany() !== $restRequest->getRestUser()->getIdCompany()) {
+            return $this->companyUserRestResponseBuilder->buildCompanyUserNotSelectedErrorResponse();
+        }
+
+        return $this->companyUserRestResponseBuilder->buildCompanyUserResponse($companyUserTransfer);
     }
 
     /**
