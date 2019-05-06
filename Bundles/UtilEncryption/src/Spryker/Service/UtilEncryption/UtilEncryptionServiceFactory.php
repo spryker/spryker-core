@@ -10,6 +10,7 @@ namespace Spryker\Service\UtilEncryption;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\UtilEncryption\Decryptor\Decryptor;
 use Spryker\Service\UtilEncryption\Decryptor\DecryptorInterface;
+use Spryker\Service\UtilEncryption\Dependency\Service\UtilEncryptionToUtilTextServiceInterface;
 use Spryker\Service\UtilEncryption\EncryptInitVector\EncryptInitVectorGenerator;
 use Spryker\Service\UtilEncryption\EncryptInitVector\EncryptInitVectorGeneratorInterface;
 use Spryker\Service\UtilEncryption\Encryptor\Encryptor;
@@ -48,8 +49,17 @@ class UtilEncryptionServiceFactory extends AbstractServiceFactory
     public function createEncryptInitVectorGenerator(): EncryptInitVectorGeneratorInterface
     {
         return new EncryptInitVectorGenerator(
+            $this->getUtilTextService(),
             $this->getConfig()
                 ->getEncryptionCipherMethod()
         );
+    }
+
+    /**
+     * @return \Spryker\Service\UtilEncryption\Dependency\Service\UtilEncryptionToUtilTextServiceInterface
+     */
+    protected function getUtilTextService(): UtilEncryptionToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(UtilEncryptionDependencyProvider::SERVICE_UTIL_TEXT);
     }
 }

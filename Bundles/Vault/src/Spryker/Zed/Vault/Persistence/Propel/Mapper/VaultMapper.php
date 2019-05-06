@@ -23,7 +23,6 @@ class VaultMapper
         SpyVault $vaultEntity
     ): SpyVault {
         $vaultEntity->fromArray($vaultTransfer->toArray());
-        $vaultEntity->setInitialVector(base64_encode($vaultTransfer->getInitialVector()));
         $vaultEntity->setCipherText(base64_encode($vaultTransfer->getCipherText()));
 
         return $vaultEntity;
@@ -40,7 +39,6 @@ class VaultMapper
         VaultTransfer $vaultTransfer
     ): VaultTransfer {
         $vaultTransfer->fromArray($vaultEntity->toArray(), true);
-        $vaultTransfer->setInitialVector(base64_decode($vaultEntity->getInitialVector()));
         $vaultTransfer->setCipherText(base64_decode($vaultEntity->getCipherText()));
 
         return $vaultTransfer;
