@@ -49,11 +49,6 @@ class SharedCartsRestApiFacadeTest extends Test
     protected $quoteCompanyUserEntityTransfer1;
 
     /**
-     * @var \Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer
-     */
-    protected $quoteCompanyUserEntityTransfer2;
-
-    /**
      * @return void
      */
     protected function setUp(): void
@@ -75,7 +70,7 @@ class SharedCartsRestApiFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetSharedCartsByCartUuid(): void
+    public function testGetSharedCartsByCartUuidShouldReturnShareData(): void
     {
         // Assign
         /** @var \Spryker\Zed\SharedCartsRestApi\Business\SharedCartsRestApiFacadeInterface $sharedCartsRestApiBusinessFacade */
@@ -98,18 +93,18 @@ class SharedCartsRestApiFacadeTest extends Test
             CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
 
-        $quoteTransfer1 = $this->tester->havePersistentQuote([
+        $quoteTransfer = $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $ownerCustomerTransfer,
         ]);
 
         $this->quoteCompanyUserEntityTransfer1 = $this->tester->haveQuoteCompanyUser(
             $this->otherCompanyUserTransfer,
-            $quoteTransfer1,
+            $quoteTransfer,
             $readOnlyPermissionGroup
         );
 
         // Act
-        $shareDetailCollectionTransfer = $sharedCartsRestApiFacade->getSharedCartsByCartUuid($quoteTransfer1);
+        $shareDetailCollectionTransfer = $sharedCartsRestApiFacade->getSharedCartsByCartUuid($quoteTransfer);
 
         // Assert
         $this->assertCount(1, $shareDetailCollectionTransfer->getShareDetails());
