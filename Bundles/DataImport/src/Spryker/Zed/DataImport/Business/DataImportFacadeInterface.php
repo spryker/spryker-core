@@ -47,4 +47,17 @@ interface DataImportFacadeInterface
      * @return void
      */
     public function publish(): void;
+
+    /**
+     * Specification:
+     * - Writes JSON encoded data of DataSetItemTransfers into a queue.
+     *
+     * @api
+     *
+     * @param string $queueName
+     * @param \Generated\Shared\Transfer\DataSetItemTransfer[] $dataSetItems
+     *
+     * @return void
+     */
+    public function writeDataSetItemsToQueue(string $queueName, array $dataSetItems): void;
 }
