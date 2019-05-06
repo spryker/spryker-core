@@ -30,6 +30,7 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
     {
         $queryCompanyUser = $this->getFactory()
             ->getCompanyUserPropelQuery()
+            ->joinWithCompanyBusinessUnit()
             ->joinWithCustomer()
                 ->useCustomerQuery()
             ->filterByAnonymizedAt(null, Criteria::ISNULL)
@@ -74,7 +75,9 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
         }
 
         if ($companyUserCriteriaFilterTransfer->getCompanyBusinessUnitUuids()) {
-            $queryCompanyUser->filterByFkCompanyBusinessUnit_In($companyUserCriteriaFilterTransfer->getCompanyBusinessUnitUuids());
+            $queryCompanyUser->useCompanyBusinessUnitQuery()
+                ->filterByUuid_In($companyUserCriteriaFilterTransfer->getCompanyBusinessUnitUuids())
+            ->endUse();
         }
 
         return $queryCompanyUser;
