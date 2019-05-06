@@ -10,8 +10,12 @@ namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Plugin\CompanyBusines
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 use Spryker\Glue\CompanyBusinessUnitsRestApiExtension\Dependency\Plugin\CompanyBusinessUnitMapperPluginInterface;
+use Spryker\Glue\Kernel\AbstractPlugin;
 
-class DefaultBillingAddressMapperPlugin implements CompanyBusinessUnitMapperPluginInterface
+/**
+ * @method \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\CompanyBusinessUnitAddressesRestApiFactory getFactory()
+ */
+class DefaultBillingAddressMapperPlugin extends AbstractPlugin implements CompanyBusinessUnitMapperPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -21,41 +25,19 @@ class DefaultBillingAddressMapperPlugin implements CompanyBusinessUnitMapperPlug
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $companyBusinessUnitsAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer
      */
     public function mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
-        RestCompanyBusinessUnitAttributesTransfer $companyBusinessUnitsAttributesTransfer
+        RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
     ): RestCompanyBusinessUnitAttributesTransfer {
-        if (!$companyBusinessUnitTransfer->getDefaultBillingAddress()
-            || !$this->hasAddressCollection($companyBusinessUnitTransfer)
-        ) {
-            return $companyBusinessUnitsAttributesTransfer;
-        }
-
-        foreach ($companyBusinessUnitTransfer->getAddressCollection()->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
-            if ($companyUnitAddressTransfer->getIdCompanyUnitAddress() !== $companyBusinessUnitTransfer->getDefaultBillingAddress()) {
-                continue;
-            }
-
-            $companyBusinessUnitsAttributesTransfer->setDefaultBillingAddress($companyUnitAddressTransfer->getUuid());
-
-            return $companyBusinessUnitsAttributesTransfer;
-        }
-
-        return $companyBusinessUnitsAttributesTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return bool
-     */
-    protected function hasAddressCollection(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool
-    {
-        return $companyBusinessUnitTransfer->getAddressCollection()
-            && $companyBusinessUnitTransfer->getAddressCollection()->getCompanyUnitAddresses()->count() > 0;
+        return $this->getFactory()
+            ->createCompanyBusinessUnitAddressMapper()
+            ->mapDefaultBillingAddressIdFromCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
+                $companyBusinessUnitTransfer,
+                $restCompanyBusinessUnitAttributesTransfer
+            );
     }
 }

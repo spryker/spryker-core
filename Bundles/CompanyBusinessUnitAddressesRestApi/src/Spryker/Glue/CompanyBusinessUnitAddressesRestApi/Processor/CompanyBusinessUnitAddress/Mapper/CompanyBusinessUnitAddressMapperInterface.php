@@ -7,8 +7,10 @@
 
 namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Mapper;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer;
+use Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer;
 
 interface CompanyBusinessUnitAddressMapperInterface
 {
@@ -22,4 +24,15 @@ interface CompanyBusinessUnitAddressMapperInterface
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         RestCompanyBusinessUnitAddressesAttributesTransfer $restCompanyBusinessUnitAddressesAttributesTransfer
     ): RestCompanyBusinessUnitAddressesAttributesTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     * @param \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCompanyBusinessUnitAttributesTransfer
+     */
+    public function mapDefaultBillingAddressIdFromCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer,
+        RestCompanyBusinessUnitAttributesTransfer $restCompanyBusinessUnitAttributesTransfer
+    ): RestCompanyBusinessUnitAttributesTransfer;
 }
