@@ -7,19 +7,21 @@
 
 namespace Spryker\Service\UtilEncryption\Encryptor;
 
+use Spryker\Service\UtilEncryption\UtilEncryptionConfig;
+
 class OpensslEncryptor implements EncryptorInterface
 {
     /**
-     * @var string
+     * @var \Spryker\Service\UtilEncryption\UtilEncryptionConfig
      */
-    protected $encryptionCipherMethod;
+    protected $utilEncryptionConfig;
 
     /**
-     * @param string $encryptionCipherMethod
+     * @param \Spryker\Service\UtilEncryption\UtilEncryptionConfig $utilEncryptionConfig
      */
-    public function __construct(string $encryptionCipherMethod)
+    public function __construct(UtilEncryptionConfig $utilEncryptionConfig)
     {
-        $this->encryptionCipherMethod = $encryptionCipherMethod;
+        $this->utilEncryptionConfig = $utilEncryptionConfig;
     }
 
     /**
@@ -31,6 +33,12 @@ class OpensslEncryptor implements EncryptorInterface
      */
     public function encrypt(string $plainText, string $initVector, string $encriptionKey): string
     {
-        return openssl_encrypt($plainText, $this->encryptionCipherMethod, $encriptionKey, 0, $initVector);
+        return openssl_encrypt(
+            $plainText,
+            $this->utilEncryptionConfig->getEncryptionCipherMethod(),
+            $encriptionKey,
+            0,
+            $initVector
+        );
     }
 }

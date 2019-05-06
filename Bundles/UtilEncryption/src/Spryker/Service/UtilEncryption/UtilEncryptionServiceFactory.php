@@ -28,7 +28,6 @@ class UtilEncryptionServiceFactory extends AbstractServiceFactory
     {
         return new OpensslEncryptor(
             $this->getConfig()
-                ->getEncryptionCipherMethod()
         );
     }
 
@@ -39,7 +38,6 @@ class UtilEncryptionServiceFactory extends AbstractServiceFactory
     {
         return new OpensslDecryptor(
             $this->getConfig()
-                ->getEncryptionCipherMethod()
         );
     }
 
@@ -51,7 +49,6 @@ class UtilEncryptionServiceFactory extends AbstractServiceFactory
         return new OpensslEncryptInitVectorGenerator(
             $this->getUtilTextService(),
             $this->getConfig()
-                ->getEncryptionCipherMethod()
         );
     }
 

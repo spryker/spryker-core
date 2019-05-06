@@ -7,19 +7,21 @@
 
 namespace Spryker\Service\UtilEncryption\Decryptor;
 
+use Spryker\Service\UtilEncryption\UtilEncryptionConfig;
+
 class OpensslDecryptor implements DecryptorInterface
 {
     /**
-     * @var string
+     * @var \Spryker\Service\UtilEncryption\UtilEncryptionConfig
      */
-    protected $encryptionCipherMethod;
+    protected $utilEncryptionConfig;
 
     /**
-     * @param string $encryptionCipherMethod
+     * @param \Spryker\Service\UtilEncryption\UtilEncryptionConfig $utilEncryptionConfig
      */
-    public function __construct(string $encryptionCipherMethod)
+    public function __construct(UtilEncryptionConfig $utilEncryptionConfig)
     {
-        $this->encryptionCipherMethod = $encryptionCipherMethod;
+        $this->utilEncryptionConfig = $utilEncryptionConfig;
     }
 
     /**
@@ -31,6 +33,12 @@ class OpensslDecryptor implements DecryptorInterface
      */
     public function decrypt(string $chiperText, string $initVector, string $encriptionKey): string
     {
-        return openssl_decrypt($chiperText, $this->encryptionCipherMethod, $encriptionKey, 0, $initVector);
+        return openssl_decrypt(
+            $chiperText,
+            $this->utilEncryptionConfig->getEncryptionCipherMethod(),
+            $encriptionKey,
+            0,
+            $initVector
+        );
     }
 }
