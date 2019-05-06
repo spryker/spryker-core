@@ -132,8 +132,8 @@ class ShipmentSaver implements ShipmentSaverInterface
     {
         $orderExpensesCollection = new ArrayObject();
 
-        foreach ($orderTransfer->getExpenses() as $expenseOrderTransfer) {
-            if ($expenseTransfer->getShipment() === $expenseOrderTransfer->getShipment()) {
+        foreach ($orderTransfer->getExpenses() as $orderExpenseTransfer) {
+            if ($expenseTransfer->getShipment() === $orderExpenseTransfer->getShipment()) {
                 continue;
             }
 

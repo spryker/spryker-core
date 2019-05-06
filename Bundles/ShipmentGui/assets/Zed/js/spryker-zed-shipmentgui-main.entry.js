@@ -20,7 +20,7 @@ $(document).ready(function() {
         var target = $('#shipment_form_create_shipping_address');
         var selectedOption = trigger.selectedIndex;
 
-        if (!!selectedOption) {
+        if (!selectedOption) {
             target.hide();
         } else {
             target.show();

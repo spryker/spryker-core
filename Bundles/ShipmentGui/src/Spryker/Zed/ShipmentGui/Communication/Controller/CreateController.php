@@ -98,7 +98,7 @@ class CreateController extends AbstractController
         $shipmentTransfer = (new ShipmentTransfer())->fromArray($formData, true);
         $shipmentTransfer->setMethod($this->createShipmentMethodTransfer($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD]));
 
-        if ((bool)$formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]) {
+        if ($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]) {
             $this->mapCustomerAddressToShippingAddress($shipmentTransfer, $formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]);
         }
 

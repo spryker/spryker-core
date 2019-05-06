@@ -409,7 +409,7 @@ class AddressForm extends AbstractType
     {
         return new Callback(['callback' => function ($value, ExecutionContextInterface $context) {
             $formData = $context->getRoot()->getData();
-            if ((bool)$formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]) {
+            if ($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]) {
                 return;
             }
 
