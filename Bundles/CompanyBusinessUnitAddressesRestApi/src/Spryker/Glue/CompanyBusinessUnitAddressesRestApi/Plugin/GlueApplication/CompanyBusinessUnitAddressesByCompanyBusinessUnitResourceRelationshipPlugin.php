@@ -32,8 +32,8 @@ class CompanyBusinessUnitAddressesByCompanyBusinessUnitResourceRelationshipPlugi
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createCompanyBusinessUnitAddressResourceRelationshipExpander()
-            ->addResourceRelationshipsByCompanyBusinessUnit($resources, $restRequest);
+            ->createCompanyBusinessUnitAddressCollectionByCompanyBusinessUnitTransferResourceRelationshipExpander()
+            ->addResourceRelationships($resources, $restRequest);
     }
 
     /**

@@ -9,7 +9,7 @@ namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusi
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CompanyBusinessUnitAddressResourceRelationshipExpanderInterface
+interface CompanyBusinessUnitAddressCollectionResourceRelationshipExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
@@ -17,5 +17,5 @@ interface CompanyBusinessUnitAddressResourceRelationshipExpanderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function addResourceRelationshipsByCompanyBusinessUnit(array $resources, RestRequestInterface $restRequest): array;
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): array;
 }

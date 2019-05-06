@@ -12,8 +12,8 @@ use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUn
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Mapper\CompanyBusinessUnitAddressMapperInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Reader\CompanyBusinessUnitAddressReader;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Reader\CompanyBusinessUnitAddressReaderInterface;
-use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressResourceRelationshipExpander;
-use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressResourceRelationshipExpanderInterface;
+use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressCollectionByCompanyBusinessUnitTransferResourceRelationshipExpander;
+use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressCollectionResourceRelationshipExpanderInterface;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilder;
 use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -21,11 +21,11 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class CompanyBusinessUnitAddressesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship\CompanyBusinessUnitAddressCollectionResourceRelationshipExpanderInterface
      */
-    public function createCompanyBusinessUnitAddressResourceRelationshipExpander(): CompanyBusinessUnitAddressResourceRelationshipExpanderInterface
+    public function createCompanyBusinessUnitAddressCollectionByCompanyBusinessUnitTransferResourceRelationshipExpander(): CompanyBusinessUnitAddressCollectionResourceRelationshipExpanderInterface
     {
-        return new CompanyBusinessUnitAddressResourceRelationshipExpander(
+        return new CompanyBusinessUnitAddressCollectionByCompanyBusinessUnitTransferResourceRelationshipExpander(
             $this->createCompanyBusinessUnitAddressRestResponseBuilder(),
             $this->createCompanyBusinessUnitAddressMapper()
         );

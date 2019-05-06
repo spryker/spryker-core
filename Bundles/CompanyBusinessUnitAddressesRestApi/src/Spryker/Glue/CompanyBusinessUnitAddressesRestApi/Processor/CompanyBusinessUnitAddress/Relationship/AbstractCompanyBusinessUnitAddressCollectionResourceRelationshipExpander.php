@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\Relationship;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\RestCompanyBusinessUnitAddressesAttributesTransfer;
@@ -16,7 +15,7 @@ use Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUn
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class CompanyBusinessUnitAddressResourceRelationshipExpander implements CompanyBusinessUnitAddressResourceRelationshipExpanderInterface
+abstract class AbstractCompanyBusinessUnitAddressCollectionResourceRelationshipExpander implements CompanyBusinessUnitAddressCollectionResourceRelationshipExpanderInterface
 {
     /**
      * @var \Spryker\Glue\CompanyBusinessUnitAddressesRestApi\Processor\CompanyBusinessUnitAddress\RestResponseBuilder\CompanyBusinessUnitAddressRestResponseBuilderInterface
@@ -46,20 +45,12 @@ class CompanyBusinessUnitAddressResourceRelationshipExpander implements CompanyB
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function addResourceRelationshipsByCompanyBusinessUnit(array $resources, RestRequestInterface $restRequest): array
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
-            /**
-             * @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $payload
-             */
-            $payload = $resource->getPayload();
+            $addressCollectionTransfer = $this->findAddressCollectionTransferInPayload($resource);
 
-            if (!$payload || !($payload instanceof CompanyBusinessUnitTransfer)) {
-                continue;
-            }
-
-            $addressCollectionTransfer = $payload->getAddressCollection();
-            if (!$this->hasAddressCollection($addressCollectionTransfer)) {
+            if (!$addressCollectionTransfer) {
                 continue;
             }
 
@@ -72,6 +63,13 @@ class CompanyBusinessUnitAddressResourceRelationshipExpander implements CompanyB
 
         return $resources;
     }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer|null
+     */
+    abstract protected function findAddressCollectionTransferInPayload(RestResourceInterface $resource): ?CompanyUnitAddressCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -91,16 +89,5 @@ class CompanyBusinessUnitAddressResourceRelationshipExpander implements CompanyB
             $companyUnitAddressTransfer->getUuid(),
             $restCompanyBusinessUnitAddressesAttributesTransfer
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer|null $addressCollectionTransfer
-     *
-     * @return bool
-     */
-    protected function hasAddressCollection(?CompanyUnitAddressCollectionTransfer $addressCollectionTransfer = null): bool
-    {
-        return $addressCollectionTransfer
-            && $addressCollectionTransfer->getCompanyUnitAddresses()->count() > 0;
     }
 }
