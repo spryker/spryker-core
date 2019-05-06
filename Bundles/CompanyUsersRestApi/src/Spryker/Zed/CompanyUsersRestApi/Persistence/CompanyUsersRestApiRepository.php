@@ -30,6 +30,7 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
     {
         $queryCompanyUser = $this->getFactory()
             ->getCompanyUserPropelQuery()
+            ->joinWithCompanyBusinessUnit()
             ->joinWithCustomer()
                 ->useCustomerQuery()
             ->filterByAnonymizedAt(null, Criteria::ISNULL)
