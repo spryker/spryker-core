@@ -8,15 +8,18 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Form\Address;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\ShipmentGui\Business\ShipmentGuiFacadeInterface getFacade()
@@ -43,6 +46,8 @@ class AddressForm extends AbstractType
     public const ADDRESS_FIELD_ISO_2_CODE = 'iso2Code';
 
     public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
+
+    public const ERROR_MESSAGE_VALUE_SHOULD_NOT_BE_BLANK = 'This value should not be blank.';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -111,10 +116,10 @@ class AddressForm extends AbstractType
     {
         $builder
             ->add(static::ADDRESS_FIELD_FIRST_NAME, TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => 'First name',
                 'constraints' => [
-                    new NotBlank(),
+                    $this->createNotBlankConstraint($builder->getOptions()),
                     new Length(['max' => 255]),
                 ],
             ]);
@@ -150,10 +155,10 @@ class AddressForm extends AbstractType
     {
         $builder
             ->add(static::ADDRESS_FIELD_LAST_NAME, TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => 'Last name',
                 'constraints' => [
-                    new NotBlank(),
+                    $this->createNotBlankConstraint($builder->getOptions()),
                     new Length(['max' => 255]),
                 ],
             ]);
@@ -170,9 +175,10 @@ class AddressForm extends AbstractType
     {
         $builder
             ->add(static::ADDRESS_FIELD_EMAIL, TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => 'Email',
                 'constraints' => [
+                    $this->createNotBlankConstraint($builder->getOptions()),
                     new Email(),
                     new Length(['max' => 255]),
                 ],
@@ -190,11 +196,11 @@ class AddressForm extends AbstractType
     {
         $builder
             ->add(static::ADDRESS_FIELD_ISO_2_CODE, CountryType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => 'Country',
                 'placeholder' => '-select-',
                 'constraints' => [
-                    new NotBlank(),
+                    $this->createNotBlankConstraint($builder->getOptions()),
                 ],
             ]);
 
@@ -210,10 +216,10 @@ class AddressForm extends AbstractType
     {
         $builder
             ->add(static::ADDRESS_FIELD_ADDRESS_1, TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => 'Address 1',
                 'constraints' => [
-                    new NotBlank(),
+                    $this->createNotBlankConstraint($builder->getOptions()),
                     new Length(['max' => 255]),
                 ],
             ]);
@@ -268,10 +274,10 @@ class AddressForm extends AbstractType
     {
         $builder
             ->add(static::ADDRESS_FIELD_CITY, TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => 'City',
                 'constraints' => [
-                    new NotBlank(),
+                    $this->createNotBlankConstraint($builder->getOptions()),
                     new Length(['max' => 255]),
                 ],
             ]);
@@ -288,10 +294,10 @@ class AddressForm extends AbstractType
     {
         $builder
             ->add(static::ADDRESS_FIELD_ZIP_CODE, TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => 'ZIP code',
                 'constraints' => [
-                    new NotBlank(),
+                    $this->createNotBlankConstraint($builder->getOptions()),
                     new Length(['max' => 15]),
                 ],
             ]);
@@ -392,5 +398,24 @@ class AddressForm extends AbstractType
             ]);
 
         return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createNotBlankConstraint(array $options): Constraint
+    {
+        return new Callback(['callback' => function ($value, ExecutionContextInterface $context) {
+            $formData = $context->getRoot()->getData();
+            if ((bool)$formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]) {
+                return;
+            }
+
+            if ($value === null) {
+                $context->addViolation(static::ERROR_MESSAGE_VALUE_SHOULD_NOT_BE_BLANK);
+            }
+        }]);
     }
 }

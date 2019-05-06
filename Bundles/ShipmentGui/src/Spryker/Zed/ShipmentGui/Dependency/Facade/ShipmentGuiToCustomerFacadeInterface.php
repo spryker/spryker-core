@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface ShipmentGuiToCustomerFacadeInterface
@@ -18,4 +19,11 @@ interface ShipmentGuiToCustomerFacadeInterface
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
     public function getAddresses(CustomerTransfer $customerTransfer): AddressesTransfer;
+
+    /**
+     * @param int $idCustomerAddress
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressById(int $idCustomerAddress): ?AddressTransfer;
 }
