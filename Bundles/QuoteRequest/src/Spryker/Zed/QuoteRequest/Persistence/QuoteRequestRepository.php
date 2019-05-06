@@ -181,15 +181,14 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
 
         $hiddenQuoteRequestIds = $hiddenQuoteRequestQuery
             ->joinSpyQuoteRequestVersion()
+            ->filterByIsLatestVersionHidden(true)
             ->groupByIdQuoteRequest()
             ->having(sprintf(
-                'COUNT(%s) = 1 AND %s = true',
-                SpyQuoteRequestVersionTableMap::COL_FK_QUOTE_REQUEST,
-                SpyQuoteRequestTableMap::COL_IS_LATEST_VERSION_HIDDEN
+                'COUNT(%s) = 1',
+                SpyQuoteRequestVersionTableMap::COL_FK_QUOTE_REQUEST
             ))
             ->select([
                 SpyQuoteRequestTableMap::COL_ID_QUOTE_REQUEST,
-                SpyQuoteRequestTableMap::COL_IS_LATEST_VERSION_HIDDEN,
             ])
             ->find()
             ->toArray();
