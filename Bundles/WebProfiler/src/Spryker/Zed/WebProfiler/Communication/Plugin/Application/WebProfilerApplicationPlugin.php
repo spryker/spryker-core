@@ -191,6 +191,10 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
      */
     public function boot(ContainerInterface $container): ContainerInterface
     {
+        if (!$this->getConfig()->isWebProfilerEnabled()) {
+            return $container;
+        }
+
         $dispatcher = $container->get(EventDispatcherApplicationPlugin::SERVICE_DISPATCHER);
 
         $dispatcher->addSubscriber(new ProfilerListener($container->get(static::SERVICE_PROFILER), $container->get(static::SERVICE_REQUEST_STACK), null, false, false));

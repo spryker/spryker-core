@@ -22,6 +22,7 @@ use Symfony\Component\Routing\RequestContextAwareInterface;
 /**
  * @method \Spryker\Zed\Router\RouterConfig getConfig()
  * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Router\Business\RouterFacadeInterface getFacade()
  */
 class RouterLocaleEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {

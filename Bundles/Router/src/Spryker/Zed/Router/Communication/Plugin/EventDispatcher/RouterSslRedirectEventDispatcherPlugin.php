@@ -21,6 +21,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  *
  * @method \Spryker\Zed\Router\RouterConfig getConfig()
  * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Router\Business\RouterFacadeInterface getFacade()
  */
 class RouterSslRedirectEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {

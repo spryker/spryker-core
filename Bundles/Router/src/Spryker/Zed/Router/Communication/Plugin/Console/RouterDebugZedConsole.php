@@ -87,7 +87,7 @@ EOF
 
     /**
      * @param string $name
-     * @param RouteCollection $routes
+     * @param \Symfony\Component\Routing\RouteCollection $routes
      *
      * @return array
      */
