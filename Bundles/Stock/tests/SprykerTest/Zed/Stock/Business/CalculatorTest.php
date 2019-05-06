@@ -64,7 +64,7 @@ class CalculatorTest extends Unit
     public function testCalculateStock(string $sku, float $expected): void
     {
         $stock = $this->stockFacade->calculateStockForProduct($sku);
-        $this->assertSame($expected, round($stock, 1));
+        $this->assertSame($expected, $stock);
     }
 
     /**

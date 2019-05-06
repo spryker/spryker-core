@@ -250,7 +250,7 @@ class ProductQuantityFacadeTest extends Unit
             'empty quote int quantity' => [true, 0, 1, 1, null, 1],
             'empty quote float quantity' => [true, 0, 1.5, 1, null, 0.5],
 
-            'general rule 0 qty' => [true, 0, 0, 1, null, 1],
+            'general rule 0 qty' => [false, 0, 0, 1, null, 1],
             'general rule negative int qty' => [false, 0, -4, 1, null, 1],
             'general rule negative float qty' => [false, 0, -4.5, 1, null, 1],
             'min above new int quantity' => [false, 5, 2, 8, null, 1],
@@ -305,7 +305,7 @@ class ProductQuantityFacadeTest extends Unit
             [true, 0.5, 1.5],
             [true, 2, 4],
             [true, 2.5, 4.5],
-            [true, 0, 0],
+            [false, 0, 0],
             [false, 0, -1],
             [false, 0, -1.5],
         ];
