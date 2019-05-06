@@ -338,7 +338,7 @@ class Trigger implements TriggerInterface
         }
         $this->eventCounter[$eventName]++;
 
-        return $this->eventCounter[$eventName] < self::MAX_EVENT_REPEATS;
+        return $this->eventCounter[$eventName] < static::MAX_EVENT_REPEATS;
     }
 
     /**
