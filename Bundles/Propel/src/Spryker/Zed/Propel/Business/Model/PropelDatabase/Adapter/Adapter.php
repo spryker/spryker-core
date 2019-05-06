@@ -43,7 +43,7 @@ class Adapter implements AdapterInterface
     /**
      * @var \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CleanDatabaseInterface
      */
-    protected $cleanDatabase;
+    protected $cleanCommand;
 
     /**
      * @param string $adapter
@@ -51,7 +51,7 @@ class Adapter implements AdapterInterface
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface $dropCommand
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface $exportCommand
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInterface $importCommand
-     * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CleanDatabaseInterface $cleanDatabase
+     * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CleanDatabaseInterface $cleanCommand
      */
     public function __construct(
         $adapter,
@@ -59,14 +59,14 @@ class Adapter implements AdapterInterface
         DropDatabaseInterface $dropCommand,
         ExportDatabaseInterface $exportCommand,
         ImportDatabaseInterface $importCommand,
-        CleanDatabaseInterface $cleanDatabase
+        CleanDatabaseInterface $cleanCommand
     ) {
         $this->adapter = $adapter;
         $this->createCommand = $createCommand;
         $this->dropCommand = $dropCommand;
         $this->exportCommand = $exportCommand;
         $this->importCommand = $importCommand;
-        $this->cleanDatabase = $cleanDatabase;
+        $this->cleanCommand = $cleanCommand;
     }
 
     /**
@@ -118,6 +118,6 @@ class Adapter implements AdapterInterface
      */
     public function cleanDatabase(): void
     {
-        $this->cleanDatabase->cleanDatabase();
+        $this->cleanCommand->cleanDatabase();
     }
 }
