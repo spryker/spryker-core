@@ -1,7 +1,7 @@
 # UtilEncryption Module
 [![Build Status](https://travis-ci.org/spryker/util-encryption.svg)](https://travis-ci.org/spryker/util-encryption)
 
-Provides encript / decript functionality.
+Provides encrypt/decrypt data functionality.
 
 ## Installation
 

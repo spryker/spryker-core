@@ -10,6 +10,7 @@ namespace Spryker\Zed\Vault\Business\Writer;
 use Generated\Shared\Transfer\VaultTransfer;
 use Spryker\Zed\Vault\Dependency\Service\VaultToUtilEncryptionServiceInterface;
 use Spryker\Zed\Vault\Persistence\VaultEntityManagerInterface;
+use Spryker\Zed\Vault\Persistence\VaultRepositoryInterface;
 use Spryker\Zed\Vault\VaultConfig;
 
 class VaultWriter implements VaultWriterInterface
@@ -30,18 +31,26 @@ class VaultWriter implements VaultWriterInterface
     protected $vaultEntityManager;
 
     /**
+     * @var \Spryker\Zed\Vault\Persistence\VaultRepositoryInterface
+     */
+    protected $vaultRepository;
+
+    /**
      * @param \Spryker\Zed\Vault\VaultConfig $vaultConfig
      * @param \Spryker\Zed\Vault\Dependency\Service\VaultToUtilEncryptionServiceInterface $utilEncryptionService
      * @param \Spryker\Zed\Vault\Persistence\VaultEntityManagerInterface $vaultEntityManager
+     * @param \Spryker\Zed\Vault\Persistence\VaultRepositoryInterface $vaultRepository
      */
     public function __construct(
         VaultConfig $vaultConfig,
         VaultToUtilEncryptionServiceInterface $utilEncryptionService,
-        VaultEntityManagerInterface $vaultEntityManager
+        VaultEntityManagerInterface $vaultEntityManager,
+        VaultRepositoryInterface $vaultRepository
     ) {
         $this->vaultConfig = $vaultConfig;
         $this->utilEncryptionService = $utilEncryptionService;
         $this->vaultEntityManager = $vaultEntityManager;
+        $this->vaultRepository = $vaultRepository;
     }
 
     /**
@@ -62,6 +71,10 @@ class VaultWriter implements VaultWriterInterface
             ->setDataKey($dataKey)
             ->setInitialVector($encryptInitVector)
             ->setDataType($dataType);
+
+        if ($this->vaultRepository->findVaultByDataTypeAndKey($vaultTransfer->getDataType(), $vaultTransfer->getDataKey())) {
+            return $this->vaultEntityManager->updateVault($vaultTransfer);
+        }
 
         return $this->vaultEntityManager->createVault($vaultTransfer);
     }

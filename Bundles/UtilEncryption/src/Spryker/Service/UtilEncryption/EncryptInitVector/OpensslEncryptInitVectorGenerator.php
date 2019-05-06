@@ -9,7 +9,7 @@ namespace Spryker\Service\UtilEncryption\EncryptInitVector;
 
 use Spryker\Service\UtilEncryption\Dependency\Service\UtilEncryptionToUtilTextServiceInterface;
 
-class EncryptInitVectorGenerator implements EncryptInitVectorGeneratorInterface
+class OpensslEncryptInitVectorGenerator implements EncryptInitVectorGeneratorInterface
 {
     /**
      * @var string

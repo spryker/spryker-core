@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\UtilEncryption\Encryptor;
 
-class Encryptor implements EncryptorInterface
+class OpensslEncryptor implements EncryptorInterface
 {
     /**
      * @var string

@@ -1,7 +1,7 @@
 # Vault Module
 [![Build Status](https://travis-ci.org/spryker/vault.svg)](https://travis-ci.org/spryker/vault)
 
-Provides functionality to store and retreive encrypted data.
+Provides functionality to store data.  
 
 ## Installation
 

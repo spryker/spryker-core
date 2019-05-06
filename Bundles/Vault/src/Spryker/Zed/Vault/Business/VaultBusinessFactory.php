@@ -42,7 +42,8 @@ class VaultBusinessFactory extends AbstractBusinessFactory
         return new VaultWriter(
             $this->getConfig(),
             $this->getUtilEncryptionService(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Vault\Persistence;
 
 use Generated\Shared\Transfer\VaultTransfer;
+use Orm\Zed\Vault\Persistence\SpyVault;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -23,16 +24,37 @@ class VaultEntityManager extends AbstractEntityManager implements VaultEntityMan
     public function createVault(VaultTransfer $vaultTransfer): bool
     {
         $vaultEntity = $this->getFactory()
+            ->createVaultMapper()
+            ->mapVaultTransferToEntity(
+                $vaultTransfer,
+                new SpyVault()
+            );
+
+        return (bool)$vaultEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\VaultTransfer $vaultTransfer
+     *
+     * @return bool
+     */
+    public function updateVault(VaultTransfer $vaultTransfer): bool
+    {
+        $vaultEntity = $this->getFactory()
             ->createVaultPropelQuery()
-            ->filterByDataKey($vaultTransfer->getDataKey())
             ->filterByDataType($vaultTransfer->getDataType())
-            ->findOneOrCreate();
+            ->filterByDataKey($vaultTransfer->getDataKey())
+            ->findOne();
+
+        if (!$vaultEntity) {
+            return false;
+        }
 
         $vaultEntity = $this->getFactory()
             ->createVaultMapper()
             ->mapVaultTransferToEntity(
                 $vaultTransfer,
-                $vaultEntity
+                new SpyVault()
             );
 
         return (bool)$vaultEntity->save();

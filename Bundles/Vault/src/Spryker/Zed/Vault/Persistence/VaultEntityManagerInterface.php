@@ -17,4 +17,11 @@ interface VaultEntityManagerInterface
      * @return bool
      */
     public function createVault(VaultTransfer $vaultTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\VaultTransfer $vaultTransfer
+     *
+     * @return bool
+     */
+    public function updateVault(VaultTransfer $vaultTransfer): bool;
 }
