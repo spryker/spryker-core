@@ -54,7 +54,7 @@ class VaultEntityManager extends AbstractEntityManager implements VaultEntityMan
             ->createVaultMapper()
             ->mapVaultTransferToEntity(
                 $vaultTransfer,
-                new SpyVault()
+                $vaultEntity
             );
 
         return (bool)$vaultEntity->save();
