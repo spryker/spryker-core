@@ -20,7 +20,6 @@ class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareO
 
     /**
      * {@inheritdoc}
-     * - Returns read-only share option key.
      *
      * @api
      *
@@ -32,8 +31,7 @@ class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareO
     }
 
     /**
-     * {@inheritDoc}
-     * - Returns internal share option group.
+     * @inheritDoc
      *
      * @api
      *

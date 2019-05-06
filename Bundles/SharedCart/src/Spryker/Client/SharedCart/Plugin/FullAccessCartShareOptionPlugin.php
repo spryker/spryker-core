@@ -17,7 +17,6 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
 
     /**
      * {@inheritdoc}
-     * - Returns full access share option key.
      *
      * @api
      *
@@ -29,8 +28,7 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
     }
 
     /**
-     * {@inheritDoc}
-     * - Returns internal share option group.
+     * @inheritDoc
      *
      * @api
      *
