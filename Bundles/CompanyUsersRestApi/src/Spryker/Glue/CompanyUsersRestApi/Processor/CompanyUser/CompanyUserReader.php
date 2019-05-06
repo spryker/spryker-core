@@ -134,7 +134,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
             ->setIdCompany($idCompany)
             ->setFilter($filterTransfer);
 
-        $companyUserCriteriaFilterTransfer = $this->applyFilterByCompanyBusinessUnits(
+        $companyUserCriteriaFilterTransfer = $this->applyCompanyBusinessUnitsResourceFilter(
             $restRequest,
             $companyUserCriteriaFilterTransfer
         );
@@ -155,7 +155,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer
      */
-    protected function applyFilterByCompanyBusinessUnits(
+    protected function applyCompanyBusinessUnitsResourceFilter(
         RestRequestInterface $restRequest,
         CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): CompanyUserCriteriaFilterTransfer {
