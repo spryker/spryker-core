@@ -126,6 +126,9 @@ class ResponseBuilder implements ResponseBuilderInterface
                 if ($resource->getId()) {
                     $link .= '/' . $resource->getId();
                 }
+
+                $link .= $this->buildQueryString($resource, $restRequest);
+
                 $resource->addLink(RestLinkInterface::LINK_SELF, $link);
             }
             $includeRelations = $currentResourceType === $resource->getType() || $this->responseRelationship->hasRelationship($resource->getType(), $restRequest);
@@ -213,10 +216,7 @@ class ResponseBuilder implements ResponseBuilderInterface
             if ($this->isCurrentUserCollectionResource($idResource)) {
                 $linkParts[] = static::COLLECTION_IDENTIFIER_CURRENT_USER;
             }
-            $queryString = $restRequest->getQueryString();
-            if (strlen($queryString)) {
-                $queryString = '?' . $queryString;
-            }
+            $queryString = $this->buildQueryString($restRequest->getResource(), $restRequest);
 
             return $this->formatLinks([
                 RestLinkInterface::LINK_SELF => implode('/', $linkParts) . $queryString,
@@ -224,6 +224,27 @@ class ResponseBuilder implements ResponseBuilderInterface
         }
 
         return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return string
+     */
+    protected function buildQueryString(RestResourceInterface $resource, RestRequestInterface $restRequest): string
+    {
+        if ($resource->getType() !== $restRequest->getResource()->getType()) {
+            return '';
+        }
+
+        $queryString = $restRequest->getQueryString();
+
+        if (mb_strlen($queryString)) {
+            $queryString = '?' . $queryString;
+        }
+
+        return $queryString;
     }
 
     /**
