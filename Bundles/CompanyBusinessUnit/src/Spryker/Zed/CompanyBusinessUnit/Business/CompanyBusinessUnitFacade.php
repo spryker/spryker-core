@@ -122,7 +122,8 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     public function getCompanyBusinessUnitCollection(
         CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        return $this->getRepository()
+        return $this->getFactory()
+            ->createCompanyBusinessUnitReader()
             ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
     }
 
