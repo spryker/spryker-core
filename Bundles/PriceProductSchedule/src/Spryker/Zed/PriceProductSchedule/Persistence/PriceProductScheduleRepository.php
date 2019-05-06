@@ -21,6 +21,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class PriceProductScheduleRepository extends AbstractRepository implements PriceProductScheduleRepositoryInterface
 {
+    protected const CONCAT_DELIMITER = '00000';
+
     protected const COL_PRODUCT_ID = 'product_id';
     protected const COL_RESULT = 'result';
 
@@ -31,12 +33,12 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
 
     protected const EXPRESSION_CONCATENATED_RESULT_MAP = [
         PropelConfig::DB_ENGINE_PGSQL => 'CAST(CONCAT(CAST(EXTRACT(epoch from now() - %s) + EXTRACT(epoch from %s - now()) + %s + %s AS INT), \'.\', %s) as DECIMAL)',
-        PropelConfig::DB_ENGINE_MYSQL => 'CAST(CONCAT(CAST(UNIX_TIMESTAMP(now() - %s) + UNIX_TIMESTAMP(%s - now()) + %s + %s AS SIGNED), \'.\', %s) as CHAR)',
+        PropelConfig::DB_ENGINE_MYSQL => 'CAST(CONCAT(CAST(UNIX_TIMESTAMP(now() - %s) + UNIX_TIMESTAMP(%s - now()) + %s + %s AS UNSIGNED), \'' . self::CONCAT_DELIMITER . '\', %s) as UNSIGNED)',
     ];
 
     protected const EXPRESSION_FILTER_ID_PRICE_PRODUCT_SCHEDULE_MAP = [
         PropelConfig::DB_ENGINE_PGSQL => '%s = CAST(SUBSTRING(CAST(%s AS TEXT) from \'[0-9]+$\') AS BIGINT)',
-        PropelConfig::DB_ENGINE_MYSQL => '%s = CAST(SUBSTRING_INDEX(CAST(%s AS CHAR), \'.\', -1) AS UNSIGNED)',
+        PropelConfig::DB_ENGINE_MYSQL => '%s = CAST(SUBSTRING_INDEX(CAST(%s AS CHAR), \'' . self::CONCAT_DELIMITER . '\', -1) AS UNSIGNED)',
     ];
 
     /**
