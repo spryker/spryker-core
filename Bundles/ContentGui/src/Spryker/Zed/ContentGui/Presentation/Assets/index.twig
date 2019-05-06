@@ -11,8 +11,9 @@
     window.editorConfiguration.contentGuiConfigData = {
         dropDownItems: {{ dropdownItems | json_encode | raw }},
         dialogContentUrl: '/content-gui/list-content-by-type',
-        buttonTitle: '{{ 'Content' | trans }}',
-        title: '{{ 'Insert a Content Item' | trans }}'
+        buttonTitle: '{{ 'Content Item' | trans }}',
+        title: '{{ 'Insert a Content Item' | trans }}',
+        insertButtonTitle: '{{ 'Insert' | trans }}'
     };
 </script>
 <script src="/assets/js/spryker-zed-content-item.js"></script>

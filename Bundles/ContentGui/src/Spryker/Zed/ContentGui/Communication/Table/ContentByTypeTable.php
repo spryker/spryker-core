@@ -82,9 +82,9 @@ class ContentByTypeTable extends AbstractTable
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $header = [
+            ContentTableConstants::COL_ACTIONS => '',
             ContentTableConstants::COL_ID_CONTENT => 'ID',
             ContentTableConstants::COL_NAME => 'Name',
-            ContentTableConstants::COL_ACTIONS => '',
         ];
 
         $config->setHeader($header);
@@ -107,9 +107,9 @@ class ContentByTypeTable extends AbstractTable
             $checked = $this->isCheckedItem($key, $contentItem[SpyContentTableMap::COL_ID_CONTENT]);
 
             $results[] = [
+                ContentTableConstants::COL_ACTIONS => $this->buildRadioButton($contentItem, $checked),
                 ContentTableConstants::COL_ID_CONTENT => $contentItem[SpyContentTableMap::COL_ID_CONTENT],
                 ContentTableConstants::COL_NAME => $contentItem[SpyContentTableMap::COL_NAME],
-                ContentTableConstants::COL_ACTIONS => $this->buildLinks($contentItem, $checked),
             ];
         }
 
@@ -122,7 +122,7 @@ class ContentByTypeTable extends AbstractTable
      *
      * @return string
      */
-    protected function buildLinks(array $contentItem, bool $checked = false): string
+    protected function buildRadioButton(array $contentItem, bool $checked = false): string
     {
         $selectedAttr = $checked ? 'checked="checked"' : '';
 
