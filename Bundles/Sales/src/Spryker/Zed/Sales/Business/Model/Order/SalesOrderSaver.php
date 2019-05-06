@@ -187,10 +187,10 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $billingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getBillingAddress());
         $salesOrderEntity->setBillingAddress($billingAddressEntity);
 
-        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
-            $addressTransfer = $shipmentGroupTransfer->getShipment()->getShippingAddress();
-            $this->saveSalesOrderAddress($addressTransfer);
-        }
+//        foreach ($quoteTransfer->getShipmentGroups() as $shipmentGroupTransfer) {
+//            $addressTransfer = $shipmentGroupTransfer->getShipment()->getShippingAddress();
+//            $this->saveSalesOrderAddress($addressTransfer);
+//        }
 
         if ($quoteTransfer->getShippingAddress() !== null && $quoteTransfer->getShippingAddress()->getFirstName() !== null) {
             $shippingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getShippingAddress());

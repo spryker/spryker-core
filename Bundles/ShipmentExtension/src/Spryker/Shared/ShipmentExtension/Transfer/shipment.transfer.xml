@@ -5,7 +5,7 @@
 
     <transfer name="ShipmentGroup">
         <property name="hash" type="string"/>
-        <property name="availableShipmentMethods" type="ShipmentMethods" singular="availableShipmentMethod" />
+        <property name="availableShipmentMethods" type="ShipmentMethods" />
     </transfer>
 
 </transfers>
