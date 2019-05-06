@@ -98,7 +98,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         );
 
         if (!$companyUnitAddressResponseTransfer->getIsSuccessful()
-            || !$this->isCurrentCompanyUserAuthorizedToAccessCompanyBusinessUnitAddressResource($restRequest, $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer())
+            || !$this->isCurrentCompanyUserInCompany($restRequest, $companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer())
         ) {
             return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressNotFoundError();
         }
@@ -156,7 +156,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
      *
      * @return bool
      */
-    protected function isCurrentCompanyUserAuthorizedToAccessCompanyBusinessUnitAddressResource(
+    protected function isCurrentCompanyUserInCompany(
         RestRequestInterface $restRequest,
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): bool {

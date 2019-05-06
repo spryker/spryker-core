@@ -96,7 +96,7 @@ class CompanyReader implements CompanyReaderInterface
         );
 
         if (!$companyResponseTransfer->getIsSuccessful()
-         || !$this->isCurrentCompanyUserAuthorizedToAccessCompanyResource($restRequest, $companyResponseTransfer->getCompanyTransfer())) {
+         || !$this->isCurrentCompanyUserInCompany($restRequest, $companyResponseTransfer->getCompanyTransfer())) {
             return $this->companyRestResponseBuilder->createCompanyNotFoundError();
         }
 
@@ -139,7 +139,7 @@ class CompanyReader implements CompanyReaderInterface
      *
      * @return bool
      */
-    protected function isCurrentCompanyUserAuthorizedToAccessCompanyResource(
+    protected function isCurrentCompanyUserInCompany(
         RestRequestInterface $restRequest,
         CompanyTransfer $companyTransfer
     ): bool {
