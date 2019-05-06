@@ -15,6 +15,7 @@ use Spryker\Zed\PriceProductStorage\Business\Storage\PriceProductAbstractStorage
 use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToStoreFacadeBridge;
 use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainer;
+use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface;
 use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
@@ -52,6 +53,15 @@ class PriceProductAbstractStorageWriterTest extends Unit
             $productAbstractTransfer->getIdProductAbstract(),
             $productAbstractTransfer2->getIdProductAbstract(),
         ]);
+
+        $this->assertCount(
+            1,
+            $this->createPriceProductStorageQueryContainer()
+                ->queryPriceAbstractStorageByPriceAbstractIds([
+                    $productAbstractTransfer->getIdProductAbstract(),
+                    $productAbstractTransfer2->getIdProductAbstract(),
+                ])->find()
+        );
     }
 
     /**
@@ -65,5 +75,13 @@ class PriceProductAbstractStorageWriterTest extends Unit
             new PriceProductStorageQueryContainer(),
             false
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface
+     */
+    protected function createPriceProductStorageQueryContainer(): PriceProductStorageQueryContainerInterface
+    {
+        return new PriceProductStorageQueryContainer();
     }
 }
