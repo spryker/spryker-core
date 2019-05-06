@@ -1,5 +1,6 @@
 {
   "name": "spryker/web-profiler-extension",
+  "type": "library",
   "description": "WebProfilerExtension module",
   "license": "proprietary",
   "require": {
@@ -11,14 +12,14 @@
     "spryker/symfony": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/container": "If you want to use the Container module.",
+    "spryker/symfony": "If you want to use the Symfony component."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
     }
-  },
-  "suggest": {
-    "spryker/container": "If you want to use the Container module.",
-    "spryker/symfony": "If you want to use the Symfony component."
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
