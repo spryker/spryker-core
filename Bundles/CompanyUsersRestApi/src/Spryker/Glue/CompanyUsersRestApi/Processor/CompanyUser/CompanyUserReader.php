@@ -66,21 +66,6 @@ class CompanyUserReader implements CompanyUserReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCompanyUsersByCustomerReference(RestRequestInterface $restRequest): RestResponseInterface
-    {
-        $customerTransfer = (new CustomerTransfer())
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
-        $companyUserCollectionTransfer = $this->companyUserClient
-            ->getActiveCompanyUsersByCustomerReference($customerTransfer);
-
-        return $this->companyUserRestResponseBuilder->buildCompanyUserCollectionResponse($companyUserCollectionTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function getCompanyUserByResourceId(RestRequestInterface $restRequest): RestResponseInterface
     {
         $idResource = $restRequest->getResource()->getId();
@@ -147,6 +132,21 @@ class CompanyUserReader implements CompanyUserReaderInterface
             $companyUserCollectionTransfer->getTotal(),
             $companyUserCollectionTransfer->getFilter()->getLimit()
         );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getCompanyUsersByCustomerReference(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+        $companyUserCollectionTransfer = $this->companyUserClient
+            ->getActiveCompanyUsersByCustomerReference($customerTransfer);
+
+        return $this->companyUserRestResponseBuilder->buildCompanyUserCollectionResponse($companyUserCollectionTransfer);
     }
 
     /**
