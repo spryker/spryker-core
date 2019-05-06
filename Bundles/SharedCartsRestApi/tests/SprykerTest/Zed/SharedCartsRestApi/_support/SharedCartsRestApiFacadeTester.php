@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\SharedCartsRestApi;
 
+use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -25,14 +26,14 @@ use Generated\Shared\Transfer\ShareDetailTransfer;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\SharedCartsRestApi\Business\SharedCartsRestApiFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
-*/
-class SharedCartsRestApiBusinessTester extends \Codeception\Actor
+ */
+class SharedCartsRestApiFacadeTester extends Actor
 {
-    use _generated\SharedCartsRestApiBusinessTesterActions;
+    use _generated\SharedCartsRestApiFacadeTestActions;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

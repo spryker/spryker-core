@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: SharedCartsRestApiFacadeTest
+        class_name: SharedCartsRestApiFacadeTester
         modules:
             enabled:
                 - Asserts

@@ -14,6 +14,9 @@ use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToQuoteFa
 use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface;
 use Spryker\Zed\SharedCartsRestApi\SharedCartsRestApiDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\SharedCartsRestApi\SharedCartsRestApiConfig getConfig()
+ */
 class SharedCartsRestApiBusinessFactory extends AbstractBusinessFactory
 {
     /**

@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToQuoteFacadeBridge;
 use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\SharedCartsRestApi\SharedCartsRestApiConfig getConfig()
+ */
 class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_QUOTE = 'FACADE_QUOTE';

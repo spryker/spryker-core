@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\SharedCartsRestApi\Business;
 
-use Codeception\Test\Unit;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -27,10 +26,10 @@ use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
  * @group SharedCartsRestApiFacadeTest
  * Add your own group annotations below this line
  */
-class SharedCartsRestApiFacadeTest extends Unit
+class SharedCartsRestApiFacadeTest extends Test
 {
     /**
-     * @var \SprykerTest\Zed\SharedCartsRestApi\SharedCartsRestApiBusinessTester
+     * @var \SprykerTest\Zed\SharedCartsRestApi\SharedCartsRestApiFacadeTester
      */
     protected $tester;
 
@@ -57,7 +56,7 @@ class SharedCartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -74,11 +73,13 @@ class SharedCartsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @test
+     * @return void
      */
     public function testGetSharedCartsByCartUuid(): void
     {
         // Assign
+        /** @var \Spryker\Zed\SharedCartsRestApi\Business\SharedCartsRestApiFacadeInterface $sharedCartsRestApiBusinessFacade */
+        $sharedCartsRestApiFacade = $this->tester->getFacade();
         $readOnlyPermissionGroup = $this->tester->haveQuotePermissionGroup('READ_ONLY', [
             ReadSharedCartPermissionPlugin::KEY,
         ]);
@@ -108,9 +109,14 @@ class SharedCartsRestApiFacadeTest extends Unit
         );
 
         // Act
-        $shareDetailCollectionTransfer = $this->tester->getFacade()->getSharedCartsByCartUuid($quoteTransfer1);
+        $shareDetailCollectionTransfer = $sharedCartsRestApiFacade->getSharedCartsByCartUuid($quoteTransfer1);
 
         // Assert
-//        $this->assertEquals($customerTransfer->getCompanyUserTransfer()->getUuid(), $expandedCustomerIdentifierTransfer->getIdCompanyUser());
+        $this->assertCount(1, $shareDetailCollectionTransfer->getShareDetails());
+        $shareDetailTransfer = $shareDetailCollectionTransfer->getShareDetails()[0];
+
+        $this->assertEquals($this->otherCompanyUserTransfer->getUuid(), $shareDetailTransfer->getCompanyUserUuid());
+        $this->assertNotNull($shareDetailTransfer->getUuid());
+        $this->assertEquals($readOnlyPermissionGroup->getIdQuotePermissionGroup(), $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
     }
 }
