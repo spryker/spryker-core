@@ -14,6 +14,7 @@ use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
 use Spryker\Shared\Config\Config;
 use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
+use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

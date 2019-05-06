@@ -24,6 +24,7 @@ use Symfony\Bundle\WebProfilerBundle\Controller\RouterController;
 use Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener;
 use Symfony\Bundle\WebProfilerBundle\Twig\WebProfilerExtension;
 use Symfony\Cmf\Component\Routing\ChainRouter;
+use Symfony\Component\HttpKernel\Debug\FileLinkFormatter;
 use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
 use Symfony\Component\HttpKernel\EventListener\ProfilerListener;
 use Symfony\Component\HttpKernel\Profiler\FileProfilerStorage;
@@ -86,7 +87,8 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
         });
 
         $container->extend(TwigApplicationPlugin::SERVICE_TWIG, function (Environment $twig, ContainerInterface $container) {
-            $twig->addExtension(new CodeExtension(null, '', $container->get(TwigApplicationPlugin::SERVICE_CHARSET)));
+            $fileLinkFormatter = new FileLinkFormatter(null);
+            $twig->addExtension(new CodeExtension($fileLinkFormatter, '', $container->get(TwigApplicationPlugin::SERVICE_CHARSET)));
             $twig->addExtension(new WebProfilerExtension());
             $twig->addExtension(new ProfilerExtension($container->get(static::SERVICE_TWIG_PROFILE), $container->get(static::SERVICE_STOPWATCH)));
 
