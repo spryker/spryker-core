@@ -2,3 +2,4 @@ parameters:
     ignoreErrors:
         - '#Call to an undefined method .+Criteria::.+\(\).#'
         - '#Method .+TouchQueryContainer::queryTouchDeleteStorageAndSearch\(\) should return Orm\\Zed\\Touch\\Persistence\\SpyTouchQuery but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria#'
+        - '#Method .+TouchQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\Criteria.#'
