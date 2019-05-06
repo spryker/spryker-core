@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\SharedCartsRestApi\Business;
 
+use Codeception\Test\Unit;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -26,7 +27,7 @@ use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
  * @group SharedCartsRestApiFacadeTest
  * Add your own group annotations below this line
  */
-class SharedCartsRestApiFacadeTest extends Test
+class SharedCartsRestApiFacadeTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\SharedCartsRestApi\SharedCartsRestApiBusinessTester
@@ -72,6 +73,9 @@ class SharedCartsRestApiFacadeTest extends Test
         $this->tester->getLocator()->permission()->facade()->syncPermissionPlugins();
     }
 
+    /**
+     * @test
+     */
     public function testGetSharedCartsByCartUuid(): void
     {
         // Assign
