@@ -78,8 +78,8 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
             }
 
             $quickOrderItemTransfer = $this->resolveProductConcrete($quickOrderItemTransfer);
-            $quickOrderItemTransfer = $this->validateQuickOrderItem($quickOrderItemTransfer);
             $quickOrderItemTransfer = $this->expandProductConcrete($quickOrderItemTransfer);
+            $quickOrderItemTransfer = $this->validateQuickOrderItem($quickOrderItemTransfer);
 
             $quickOrderItemTransfers->append($quickOrderItemTransfer);
         }
@@ -105,10 +105,6 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
                 ->setValue(static::ERROR_MESSAGE_INVALID_SKU));
         }
 
-        if ($this->isQuantityEqual($quickOrderItemTransfer->getQuantity(), 0) && $productConcreteTransfer !== null) {
-            $quickOrderItemTransfer->setQuantity($productConcreteTransfer->getMinQuantity());
-        }
-
         $quickOrderItemTransfer->setProductConcrete($productConcreteTransfer);
 
         return $quickOrderItemTransfer;
@@ -132,6 +128,10 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
      */
     protected function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
+        if ($this->isQuantityEqual($quickOrderItemTransfer->getQuantity(), 0)) {
+            $quickOrderItemTransfer->setQuantity($quickOrderItemTransfer->getProductConcrete()->getMinQuantity());
+        }
+
         $itemValidationTransfer = (new ItemValidationTransfer())->setItem(
             $this->getItemTransfer($quickOrderItemTransfer)
         );
