@@ -5,7 +5,7 @@
 
 'use strict';
 
-const ContentItemDialog = function(dialogTitle, dialogContentUrl) {
+const ContentItemDialog = function(dialogTitle, dialogContentUrl, insertButtonTitle) {
 
     $.extend($.summernote.plugins, {
         'contentItemDialog': function (context) {
@@ -28,7 +28,7 @@ const ContentItemDialog = function(dialogTitle, dialogContentUrl) {
 
                 const footerTemplate = '<div class="content-item-footer">' +
                     '<button class="btn btn-primary note-btn note-btn-primary add-content-item">' +
-                    dialogTitle +
+                    insertButtonTitle +
                     '</button>' +
                     '</div>';
 
@@ -112,7 +112,7 @@ const ContentItemDialog = function(dialogTitle, dialogContentUrl) {
                 this.$dialog.find('.content-item-body .content-ajax').append(data);
                 this.$dialog.find('table').DataTable({
                     'ajax': dataAjaxUrl,
-                    'lengthChange': false,
+                    'lengthChange': false
                 });
             };
 

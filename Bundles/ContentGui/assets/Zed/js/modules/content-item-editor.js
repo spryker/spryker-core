@@ -13,12 +13,13 @@ const ContentItemEditor = function(options) {
     this.dropDownItems = [];
     this.buttonTitle = 'Insert Content';
     this.title = 'Content';
+    this.insertButtonTitle = 'Insert';
     this.dialogContentUrl = '';
 
     $.extend(this, options);
 
     this.initialization = function() {
-        new ContentItemDialog(this.title, this.dialogContentUrl);
+        new ContentItemDialog(this.title, this.dialogContentUrl, this.insertButtonTitle);
     };
 
     this.getEditorConfig = function (baseConfig = '') {
