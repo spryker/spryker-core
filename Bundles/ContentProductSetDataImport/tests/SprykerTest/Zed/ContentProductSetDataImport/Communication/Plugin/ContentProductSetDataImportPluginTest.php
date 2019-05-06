@@ -113,8 +113,8 @@ class ContentProductSetDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasSetId(66, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 2]));
-        $this->tester->assertContentLocalizedHasSetId(46, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 2]));
+        $this->tester->assertContentLocalizedHasSetId(66, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 1]));
+        $this->tester->assertContentLocalizedHasSetId(46, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 1]));
     }
 
     /**
