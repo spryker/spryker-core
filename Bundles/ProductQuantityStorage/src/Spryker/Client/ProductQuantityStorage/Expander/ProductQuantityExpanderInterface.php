@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductQuantityStorage\Expander;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface ProductQuantityExpanderInterface
 {
@@ -24,4 +25,11 @@ interface ProductQuantityExpanderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteTransferWithQuantityRestrictions(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductViewTransferWithQuantityRestrictions(ProductViewTransfer $productViewTransfer): ProductViewTransfer;
 }

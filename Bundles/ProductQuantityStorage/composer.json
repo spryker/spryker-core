@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker-shop/shopping-list-page-extension": "^1.2.0",
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.21.0",
     "spryker/product-quantity": "^1.2.0",

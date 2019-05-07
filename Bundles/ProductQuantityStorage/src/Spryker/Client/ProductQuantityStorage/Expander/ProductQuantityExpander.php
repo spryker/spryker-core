@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductQuantityStorage\Expander;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
 
 class ProductQuantityExpander implements ProductQuantityExpanderInterface
@@ -64,5 +65,31 @@ class ProductQuantityExpander implements ProductQuantityExpanderInterface
         $productConcreteTransfer->setQuantityInterval($quantityInterval);
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductViewTransferWithQuantityRestrictions(ProductViewTransfer $productViewTransfer): ProductViewTransfer
+    {
+        $productQuantityStorageTransfer = $this->productQuantityStorageReader
+            ->findProductQuantityStorage($productViewTransfer->getIdProductConcrete());
+
+        if ($productQuantityStorageTransfer === null) {
+            $productViewTransfer->setQuantityMin(1);
+            $productViewTransfer->setQuantityInterval(1);
+
+            return $productViewTransfer;
+        }
+
+        $minQuantity = $productQuantityStorageTransfer->getQuantityMin() ?? 1;
+        $maxQuantity = $productQuantityStorageTransfer->getQuantityMax();
+        $quantityInterval = $productQuantityStorageTransfer->getQuantityInterval() ?? 1;
+
+        return $productViewTransfer->setQuantityMin($minQuantity)
+            ->setQuantityMax($maxQuantity)
+            ->setQuantityInterval($quantityInterval);
     }
 }
