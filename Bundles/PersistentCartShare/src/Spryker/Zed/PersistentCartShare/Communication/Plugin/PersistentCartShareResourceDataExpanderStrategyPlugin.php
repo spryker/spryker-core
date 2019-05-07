@@ -45,7 +45,7 @@ class PersistentCartShareResourceDataExpanderStrategyPlugin extends AbstractPlug
 
     /**
      * {@inheritdoc}
-     * - Returns true if resource type is 'quote' and resource share data contains 'share_option' and 'id_quote' values.
+     * - Returns true if resource type is 'quote' and resource share data contains 'id_quote' value, and 'share_option=preview'.
      * - Returns false otherwise.
      *
      * @api
@@ -64,7 +64,9 @@ class PersistentCartShareResourceDataExpanderStrategyPlugin extends AbstractPlug
         $resourceShareData = $resourceShareTransfer->getResourceShareData()
             ->getData();
 
-        if (!isset($resourceShareData[PersistentCartShareConfig::KEY_ID_QUOTE], $resourceShareData[PersistentCartShareConfig::KEY_SHARE_OPTION])) {
+        if (!isset($resourceShareData[PersistentCartShareConfig::KEY_ID_QUOTE], $resourceShareData[PersistentCartShareConfig::KEY_SHARE_OPTION])
+            || $resourceShareData[PersistentCartShareConfig::KEY_SHARE_OPTION] !== PersistentCartShareConfig::SHARE_OPTION_PREVIEW
+        ) {
             return false;
         }
 
