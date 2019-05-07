@@ -41,7 +41,7 @@ class ShipmentFormCreate extends AbstractType
 
     public const VALIDITY_DATETIME_FORMAT = 'yyyy-MM-dd H:mm:ss';
 
-    protected const VALIDATION_TIME_TODAY = 'today';
+    protected const VALIDATION_DATE_TODAY = 'today';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -142,8 +142,8 @@ class ShipmentFormCreate extends AbstractType
             ],
             'constraints' => [
                 new GreaterThanOrEqual([
-                    'value' => static::VALIDATION_TIME_TODAY,
-                    'message' => sprintf('Delivery date cannot be earlier than "%s".', static::VALIDATION_TIME_TODAY),
+                    'value' => static::VALIDATION_DATE_TODAY,
+                    'message' => sprintf('Delivery date cannot be earlier than "%s".', static::VALIDATION_DATE_TODAY),
                 ]),
             ],
         ]);
