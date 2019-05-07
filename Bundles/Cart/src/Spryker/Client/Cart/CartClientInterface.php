@@ -286,7 +286,7 @@ interface CartClientInterface
      *
      * @api
      *
-     * @throws \Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound if storage strategy plugin does't implements `QuotResetLockQuoteStorageStrategyPluginInterface`.
+     * @throws \Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound if storage strategy plugin does't implements `QuoteResetLockQuoteStorageStrategyPluginInterface`.
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */

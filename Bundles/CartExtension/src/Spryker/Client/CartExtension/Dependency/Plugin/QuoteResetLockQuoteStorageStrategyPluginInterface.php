@@ -9,7 +9,7 @@ namespace Spryker\Client\CartExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
-interface QuotResetLockQuoteStorageStrategyPluginInterface
+interface QuoteResetLockQuoteStorageStrategyPluginInterface
 {
     /**
      * Specification:
@@ -24,4 +24,14 @@ interface QuotResetLockQuoteStorageStrategyPluginInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function resetQuoteLock(): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Gets quote storage strategy type.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getStorageStrategy();
 }
