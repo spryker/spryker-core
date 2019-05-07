@@ -8,6 +8,7 @@
 namespace Spryker\Client\PersistentCartShare;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 
 interface PersistentCartShareClientInterface
 {
@@ -25,4 +26,29 @@ interface PersistentCartShareClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function getQuoteByResourceShareUuid(string $resourceShareUuid): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves cart share options from CartShareOptionPluginInterface plugins.
+     *
+     * @api
+     *
+     * @return string[][]
+     */
+    public function getCartShareOptions(): array;
+
+    /**
+     * Specification:
+     * - Generates share resource for the provided cart and current user and provided share option.
+     * - Sets UUID in returned transfer if generation was successful.
+     * - Sets `isSuccessful=true` if generation was successful, adds error messages otherwise.
+     *
+     * @api
+     *
+     * @param int $idQuote
+     * @param string $shareOption
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    public function generateCartResourceShare(int $idQuote, string $shareOption): ResourceShareResponseTransfer;
 }

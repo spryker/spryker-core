@@ -21,7 +21,7 @@
         <property name="resourceShare" type="ResourceShare" />
     </transfer>
 
-    <transfer name="ResourceShareResponseTransfer">
+    <transfer name="ResourceShareResponse">
         <property name="isSuccessful" type="bool" />
         <property name="resourceShare" type="ResourceShare" />
         <property name="isLoginRequired" type="bool" />
