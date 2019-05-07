@@ -18,4 +18,5 @@ class SharedCartConfig extends AbstractBundleConfig
     public const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
     public const PERMISSION_GROUP_OWNER_ACCESS = 'OWNER_ACCESS';
     public const PERMISSION_CONFIG_ID_QUOTE_COLLECTION = 'id_quote_collection';
+    public const SHARE_OPTION_GROUP_INTERNAL = 'internal';
 }

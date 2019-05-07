@@ -27,11 +27,11 @@ class PersistentCartShareToZedRequestClientBridge implements PersistentCartShare
     /**
      * @param string $url
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
-     * @param array|null $requestOptions
+     * @param array|int|null $requestOptions Deprecated: Do not use "int" anymore, please use an array for requestOptions.
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call(string $url, TransferInterface $object, ?array $requestOptions = null): TransferInterface
+    public function call($url, TransferInterface $object, $requestOptions = null)
     {
         return $this->zedRequestClient->call($url, $object, $requestOptions);
     }

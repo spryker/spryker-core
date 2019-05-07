@@ -9,11 +9,17 @@ namespace Spryker\Client\PersistentCartShare;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientBridge;
+use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToResourceShareClientBridge;
 use Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToZedRequestClientBridge;
 
 class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
 {
+    public const CLIENT_RESOURCE_SHARE = 'CLIENT_RESOURCE_SHARE';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
+    public const PLUGINS_CART_SHARE_OPTION = 'PLUGINS_CART_SHARE_OPTION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -23,7 +29,39 @@ class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
+
+        $container = $this->addCartShareOptionPlugins($container);
+        $container = $this->addCustomerClient($container);
+        $container = $this->addResourceShareClient($container);
         $container = $this->addZedRequestClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addResourceShareClient(Container $container): Container
+    {
+        $container[static::CLIENT_RESOURCE_SHARE] = function (Container $container) {
+            return new PersistentCartShareToResourceShareClientBridge($container->getLocator()->resourceShare()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCustomerClient(Container $container): Container
+    {
+        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+            return new PersistentCartShareToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
 
         return $container;
     }
@@ -42,5 +80,27 @@ class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCartShareOptionPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CART_SHARE_OPTION] = function () {
+            return $this->getCartShareOptionPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface[]
+     */
+    protected function getCartShareOptionPlugins(): array
+    {
+        return [];
     }
 }
