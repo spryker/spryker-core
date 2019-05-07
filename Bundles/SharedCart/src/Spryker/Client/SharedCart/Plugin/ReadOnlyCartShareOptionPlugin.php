@@ -31,7 +31,7 @@ class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareO
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      *
      * @api
      *
