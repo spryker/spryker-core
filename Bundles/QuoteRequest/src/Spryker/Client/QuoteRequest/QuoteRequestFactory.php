@@ -12,6 +12,7 @@ use Spryker\Client\QuoteRequest\Converter\QuoteRequestConverter;
 use Spryker\Client\QuoteRequest\Converter\QuoteRequestConverterInterface;
 use Spryker\Client\QuoteRequest\Creator\QuoteRequestCreator;
 use Spryker\Client\QuoteRequest\Creator\QuoteRequestCreatorInterface;
+use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCartClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientInterface;
@@ -35,6 +36,7 @@ class QuoteRequestFactory extends AbstractFactory
         return new QuoteRequestConverter(
             $this->getPersistentCartClient(),
             $this->getQuoteClient(),
+            $this->getCartClient(),
             $this->createQuoteRequestStatus()
         );
     }
@@ -82,6 +84,14 @@ class QuoteRequestFactory extends AbstractFactory
     public function getZedRequestClient(): QuoteRequestToZedRequestClientInterface
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCartClientInterface
+     */
+    public function getCartClient(): QuoteRequestToCartClientInterface
+    {
+        return $this->getProvidedDependency(QuoteRequestDependencyProvider::CLIENT_CART);
     }
 
     /**

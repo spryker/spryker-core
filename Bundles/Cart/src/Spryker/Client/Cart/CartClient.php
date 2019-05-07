@@ -321,4 +321,20 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         return $this->getFactory()->createQuoteStorageStrategyProxy()->resetQuoteLock();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->getQuoteClient()
+            ->lockQuote($quoteTransfer);
+    }
 }

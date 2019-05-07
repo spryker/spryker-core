@@ -9,12 +9,12 @@ namespace Spryker\Client\QuoteRequest\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteRequestToQuoteClientInterface
+interface QuoteRequestToCartClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function setQuote(QuoteTransfer $quoteTransfer);
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

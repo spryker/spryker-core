@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Client\QuoteRequest\Converter\QuoteRequestConverter;
+use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCartClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface;
 use Spryker\Client\QuoteRequest\QuoteRequestConfig;
@@ -178,6 +179,7 @@ class QuoteRequestConverterTest extends Unit
             ->setConstructorArgs([
                 $this->createQuoteRequestToPersistentCartClientInterfaceMock(),
                 $this->createQuoteRequestToQuoteClientInterfaceMock(),
+                $this->createQuoteRequestToCartClientInterfaceMock(),
                 $this->createQuoteRequestCheckerMock(),
             ])
             ->setMethods(null)
@@ -208,15 +210,25 @@ class QuoteRequestConverterTest extends Unit
      */
     protected function createQuoteRequestToQuoteClientInterfaceMock(): MockObject
     {
-        $quoteRequestToQuoteClientInterfaceMock = $this->createPartialMock(QuoteRequestToQuoteClientInterface::class, ['lockQuote', 'setQuote']);
+        $quoteRequestToQuoteClientInterfaceMock = $this->createPartialMock(QuoteRequestToQuoteClientInterface::class, ['setQuote']);
 
-        $quoteRequestToQuoteClientInterfaceMock->expects($this->any())
+        return $quoteRequestToQuoteClientInterfaceMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createQuoteRequestToCartClientInterfaceMock(): MockObject
+    {
+        $quoteRequestToCartClientInterfaceMock = $this->createPartialMock(QuoteRequestToCartClientInterface::class, ['lockQuote']);
+
+        $quoteRequestToCartClientInterfaceMock->expects($this->any())
             ->method('lockQuote')
             ->willReturnCallback(function (QuoteTransfer $quoteTransfer) {
                 return $quoteTransfer->setIsLocked(true);
             });
 
-        return $quoteRequestToQuoteClientInterfaceMock;
+        return $quoteRequestToCartClientInterfaceMock;
     }
 
     /**

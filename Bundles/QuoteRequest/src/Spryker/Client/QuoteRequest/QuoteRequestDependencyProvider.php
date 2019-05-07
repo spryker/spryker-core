@@ -9,6 +9,7 @@ namespace Spryker\Client\QuoteRequest;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCartClientBridge;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientBridge;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientBridge;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClientBridge;
@@ -21,6 +22,7 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_CART = 'CLIENT_CART';
     public const PLUGINS_QUOTE_REQUEST_CREATE_PRE_CHECK = 'PLUGINS_QUOTE_REQUEST_CREATE_PRE_CHECK';
 
     /**
@@ -34,6 +36,7 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
         $container = $this->addZedRequestClient($container);
         $container = $this->addPersistentCartClient($container);
         $container = $this->addQuoteClient($container);
+        $container = $this->addCartClient($container);
         $container = $this->addQuoteRequestQuoteCheckPlugins($container);
 
         return $container;
@@ -76,6 +79,20 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_QUOTE] = function (Container $container) {
             return new QuoteRequestToQuoteClientBridge($container->getLocator()->quote()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCartClient(Container $container): Container
+    {
+        $container[static::CLIENT_CART] = function (Container $container) {
+            return new QuoteRequestToCartClientBridge($container->getLocator()->cart()->client());
         };
 
         return $container;
