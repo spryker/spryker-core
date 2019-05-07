@@ -99,7 +99,7 @@ class RouterResource implements ResourceInterface
                 $template = sprintf(
                     '%s/%s/%s',
                     $module,
-                    $filterChain->filter($controller),
+                    $controller,
                     $filterChain->filter($action)
                 );
 
