@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProvider;
+use Spryker\Zed\CmsGui\Communication\Expander\CmsGlossaryExpander;
+use Spryker\Zed\CmsGui\Communication\Expander\CmsGlossaryExpanderInterface;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\TwigContent;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueName;
@@ -238,6 +240,14 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\CmsGui\Communication\Expander\CmsGlossaryExpanderInterface
+     */
+    public function createCmsGlossaryExpander(): CmsGlossaryExpanderInterface
+    {
+        return new CmsGlossaryExpander($this->getCmsGlossaryAfterFindPlugins(), $this->getCmsGlossaryBeforeSavePlugins());
+    }
+
+    /**
      * @return \Twig\Environment
      */
     protected function getTwigEnvironment()
@@ -315,5 +325,21 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreRelationFormTypePlugin(): FormTypeInterface
     {
         return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryAfterFindPluginInterface[]
+     */
+    public function getCmsGlossaryAfterFindPlugins(): array
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CMS_GLOSSARY_AFTER_FIND);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryBeforeSavePluginInterface[]
+     */
+    public function getCmsGlossaryBeforeSavePlugins(): array
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CMS_GLOSSARY_BEFORE_SAVE);
     }
 }

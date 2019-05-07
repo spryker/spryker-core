@@ -9,6 +9,8 @@ namespace Spryker\Zed\CmsBlockGui\Communication;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Spryker\Zed\CmsBlockGui\CmsBlockGuiDependencyProvider;
+use Spryker\Zed\CmsBlockGui\Communication\Expander\CmsBlockGlossaryExpander;
+use Spryker\Zed\CmsBlockGui\Communication\Expander\CmsBlockGlossaryExpanderInterface;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Block\CmsBlockForm;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Constraint\TwigContent;
 use Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider;
@@ -184,5 +186,29 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreRelationFormTypePlugin()
     {
         return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockGui\Communication\Expander\CmsBlockGlossaryExpanderInterface
+     */
+    public function createCmsBlockGlossaryExpander(): CmsBlockGlossaryExpanderInterface
+    {
+        return new CmsBlockGlossaryExpander($this->getCmsBlockGlossaryAfterFindPlugins(), $this->getCmsBlockGlossaryBeforeSavePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryAfterFindPluginInterface[]
+     */
+    public function getCmsBlockGlossaryAfterFindPlugins(): array
+    {
+        return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::PLUGINS_CMS_BLOCK_GLOSSARY_AFTER_FIND);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryBeforeSavePluginInterface[]
+     */
+    public function getCmsBlockGlossaryBeforeSavePlugins(): array
+    {
+        return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE);
     }
 }

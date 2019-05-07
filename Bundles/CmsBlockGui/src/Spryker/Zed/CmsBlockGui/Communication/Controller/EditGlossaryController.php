@@ -31,12 +31,16 @@ class EditGlossaryController extends AbstractCmsBlockController
             return $this->redirectResponse($redirectUrl);
         }
 
-        $glossaryTransfer = $this->getFactory()
+        $cmsBlockGlossaryTransfer = $this->getFactory()
             ->getCmsBlockFacade()
             ->findGlossary($cmsBlockTransfer->getIdCmsBlock());
 
+        $cmsBlockGlossaryTransfer = $this->getFactory()
+            ->createCmsBlockGlossaryExpander()
+            ->executeAfterFindPlugins($cmsBlockGlossaryTransfer);
+
         $placeholderTabs = $this->getFactory()
-            ->createCmsBlockPlaceholderTabs($glossaryTransfer);
+            ->createCmsBlockPlaceholderTabs($cmsBlockGlossaryTransfer);
 
         $glossaryFormDataProvider = $this->getFactory()
             ->createCmsBlockGlossaryFormDataProvider();
@@ -47,9 +51,13 @@ class EditGlossaryController extends AbstractCmsBlockController
 
         if ($glossaryForm->isSubmitted()) {
             if ($glossaryForm->isValid()) {
+                $cmsBlockGlossaryTransfer = $this->getFactory()
+                    ->createCmsBlockGlossaryExpander()
+                    ->executeBeforeSavePlugins($glossaryForm->getData());
+
                 $this->getFactory()
                     ->getCmsBlockFacade()
-                    ->saveGlossary($glossaryForm->getData());
+                    ->saveGlossary($cmsBlockGlossaryTransfer);
 
                 $this->addSuccessMessage('Placeholder translations successfully updated.');
 

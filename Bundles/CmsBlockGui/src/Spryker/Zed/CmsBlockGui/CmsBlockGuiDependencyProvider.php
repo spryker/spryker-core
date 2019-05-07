@@ -32,6 +32,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const TWIG_ENVIRONMENT = 'CMS_BLOCK_GUI:TWIG_ENVIRONMENT';
 
+    public const PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE = 'PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE';
+    public const PLUGINS_CMS_BLOCK_GLOSSARY_AFTER_FIND = 'PLUGINS_CMS_BLOCK_GLOSSARY_AFTER_FIND';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -189,5 +192,49 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
                 FormTypeInterface::class
             )
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsBlockGlossaryAfterFindPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CMS_BLOCK_GLOSSARY_AFTER_FIND] = function () {
+            return $this->getCmsBlockGlossaryAfterFindPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryAfterFindPluginInterface[]
+     */
+    protected function getCmsBlockGlossaryAfterFindPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsBlockGlossaryBeforeSavePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE] = function () {
+            return $this->getCmsBlockGlossaryBeforeSavePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryBeforeSavePluginInterface[]
+     */
+    protected function getCmsBlockGlossaryBeforeSavePlugins(): array
+    {
+        return [];
     }
 }
