@@ -67,11 +67,11 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $groupKey
+     * @param string|null $groupKey
      *
      * @return float
      */
-    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): float
+    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, ?string $groupKey): float
     {
         $bundleItemQuantity = 0.0;
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {

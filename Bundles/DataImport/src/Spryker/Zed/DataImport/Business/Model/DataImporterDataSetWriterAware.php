@@ -46,12 +46,20 @@ class DataImporterDataSetWriterAware extends DataImporter implements DataImporte
 
         $start = microtime(true);
         $dataImporterReportTransfer = $this->importByDataImporterConfiguration($dataImporterConfigurationTransfer);
-        $this->dataSetWriter->flush();
+        $this->flushDataSetWriter();
         $dataImporterReportTransfer->setImportTime(microtime(true) - $start);
 
         $this->afterImport();
 
         return $dataImporterReportTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function flushDataSetWriter(): void
+    {
+        $this->dataSetWriter->flush();
     }
 
     /**
