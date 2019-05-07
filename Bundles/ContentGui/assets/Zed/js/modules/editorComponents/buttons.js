@@ -5,15 +5,15 @@
 
 'use strict';
 
-const ContentItemDropdownButton = function (
+var ContentItemDropdownButton = function (
     buttonTitle,
     dropdownList,
     dropdownCallback
 ) {
     return function (context) {
-        const ui = $.summernote.ui;
+        var ui = $.summernote.ui;
 
-        const button = ui.buttonGroup([
+        var button = ui.buttonGroup([
             ui.button({
                 contents: buttonTitle + ' <i class="fa fa-caret-down" aria-hidden="true"></i>',
                 data: {

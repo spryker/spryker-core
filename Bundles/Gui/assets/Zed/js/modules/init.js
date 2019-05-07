@@ -36,12 +36,12 @@ var dataTablesSearchDelay = function() {
     });
 }
 
-const editorInit = function() {
+var editorInit = function() {
     $('.html-editor').each(function() {
-        const $textarea = $(this);
-        const textareaConfigName = $textarea.data('editor-config');
+        var $textarea = $(this);
+        var textareaConfigName = $textarea.data('editor-config');
 
-        let config = editorConfig.getGlobalConfig(textareaConfigName);
+        var config = editorConfig.getGlobalConfig(textareaConfigName);
 
         if (!config) {
             config = editorConfig.getConfig();

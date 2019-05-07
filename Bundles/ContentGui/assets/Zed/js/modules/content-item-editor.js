@@ -5,11 +5,11 @@
 
 'use strict';
 
-const editorConfig = require('ZedGuiEditorConfiguration');
-const editorButtons = require('./editorComponents/buttons');
-const ContentItemDialog = require('./content-item-editor-dialog');
+var editorConfig = require('ZedGuiEditorConfiguration');
+var editorButtons = require('./editorComponents/buttons');
+var ContentItemDialog = require('./content-item-editor-dialog');
 
-const ContentItemEditor = function(options) {
+var ContentItemEditor = function(options) {
     this.dropDownItems = [];
     this.buttonTitle = 'Insert Content';
     this.title = 'Content';
@@ -29,7 +29,7 @@ const ContentItemEditor = function(options) {
             baseConfig = editorConfig.getConfig();
         }
 
-        const contentGuiConfig = {
+        var contentGuiConfig = {
             toolbar: [
                 ['insert', ['dropdownContentItem']]
             ],
@@ -53,7 +53,7 @@ const ContentItemEditor = function(options) {
 
     this.generateDropdownList = function () {
         return this.dropDownItems.reduce(function(currentList, dropItem) {
-            const dropItemTemplate = '<li role="listitem">' +
+            var dropItemTemplate = '<li role="listitem">' +
                 '<a href="#" data-type="' + dropItem.type + '">' +
                 dropItem.name +
                 '</a>' + '</li>';

@@ -12,7 +12,7 @@ module.exports = {
             window.editorConfiguration[configName]) ? window.editorConfiguration[configName] : null;
     },
     mergeConfigs: function (baseConfig, newConfig) {
-        for (const property in newConfig) {
+        for (var property in newConfig) {
             switch (property) {
                 case 'toolbar':
                     updateToolbarOptions(baseConfig, newConfig);
@@ -77,16 +77,16 @@ if (!Array.prototype.findIndex) {
     };
 }
 
-const updateToolbarOptions = function (baseConfig, newConfig) {
+var updateToolbarOptions = function (baseConfig, newConfig) {
     newConfig.toolbar.forEach(function (newToolbarOption) {
-        const existingOptionIndex = baseConfig.toolbar.findIndex(function(defaultToolbarOption) {
+        var existingOptionIndex = baseConfig.toolbar.findIndex(function(defaultToolbarOption) {
             return newToolbarOption[0] === defaultToolbarOption[0];
         });
 
         if (existingOptionIndex) {
-            const newToolbarOptionsArray = newToolbarOption[1].slice(0);
-            const toolbarOptionGroup = baseConfig.toolbar[existingOptionIndex];
-            const toolbarOptionsArray = toolbarOptionGroup[1];
+            var newToolbarOptionsArray = newToolbarOption[1].slice(0);
+            var toolbarOptionGroup = baseConfig.toolbar[existingOptionIndex];
+            var toolbarOptionsArray = toolbarOptionGroup[1];
 
             toolbarOptionsArray.push(newToolbarOptionsArray);
             return;
