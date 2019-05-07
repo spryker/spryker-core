@@ -46,7 +46,7 @@ class SharedCartsRestApiFacadeTest extends Test
     /**
      * @var \Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer
      */
-    protected $quoteCompanyUserEntityTransfer1;
+    protected $quoteCompanyUserEntityTransfer;
 
     /**
      * @return void
@@ -73,7 +73,7 @@ class SharedCartsRestApiFacadeTest extends Test
     public function testGetSharedCartsByCartUuidShouldReturnShareData(): void
     {
         // Assign
-        /** @var \Spryker\Zed\SharedCartsRestApi\Business\SharedCartsRestApiFacadeInterface $sharedCartsRestApiBusinessFacade */
+        /** @var \Spryker\Zed\SharedCartsRestApi\Business\SharedCartsRestApiFacadeInterface $sharedCartsRestApiFacade */
         $sharedCartsRestApiFacade = $this->tester->getFacade();
         $readOnlyPermissionGroup = $this->tester->haveQuotePermissionGroup('READ_ONLY', [
             ReadSharedCartPermissionPlugin::KEY,
@@ -97,7 +97,7 @@ class SharedCartsRestApiFacadeTest extends Test
             QuoteTransfer::CUSTOMER => $ownerCustomerTransfer,
         ]);
 
-        $this->quoteCompanyUserEntityTransfer1 = $this->tester->haveQuoteCompanyUser(
+        $this->quoteCompanyUserEntityTransfer = $this->tester->haveQuoteCompanyUser(
             $this->otherCompanyUserTransfer,
             $quoteTransfer,
             $readOnlyPermissionGroup
