@@ -11,10 +11,13 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Orm\Zed\ProductSet\Persistence\SpyProductSet;
+use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\ContentProductSetDataImport\Communication\Plugin\ContentProductSetDataImportPlugin;
 use Spryker\Zed\ContentProductSetDataImport\ContentProductSetDataImportConfig;
+use Spryker\Zed\ContentProductSetDataImport\ContentProductSetDataImportDependencyProvider;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
@@ -102,28 +105,9 @@ class ContentProductSetDataImportPluginTest extends Unit
      */
     public function testUpdateLocale(): void
     {
+        $this->setProductSetQueryReturn(2);
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_set(update).csv'
-        );
-
-        // Act
-        $dataImporterReportTransfer = (new ContentProductSetDataImportPlugin())->import($dataImportConfigurationTransfer);
-
-        // Assert
-        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-        $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
-
-        $this->tester->assertContentLocalizedHasSetId(66, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 1]));
-        $this->tester->assertContentLocalizedHasSetId(46, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 1]));
-    }
-
-    /**
-     * @return void
-     */
-    public function testUpdateLocaleFromDefault(): void
-    {
-        $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
-            'import/content_product_set(update_locale_from_default).csv'
         );
 
         // Act
@@ -140,8 +124,30 @@ class ContentProductSetDataImportPluginTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateLocaleFromDefault(): void
+    {
+        $this->setProductSetQueryReturn(1);
+        $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
+            'import/content_product_set(update_locale_from_default).csv'
+        );
+
+        // Act
+        $dataImporterReportTransfer = (new ContentProductSetDataImportPlugin())->import($dataImportConfigurationTransfer);
+
+        // Assert
+        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
+        $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
+
+        $this->tester->assertContentLocalizedHasSetId(66, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 1]));
+        $this->tester->assertContentLocalizedHasSetId(46, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 1]));
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateLocaleToDefault(): void
     {
+        $this->setProductSetQueryReturn(3);
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_set(update_locale_to_default).csv'
         );
@@ -153,7 +159,7 @@ class ContentProductSetDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasSetId(66, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 2]));
+        $this->tester->assertContentLocalizedHasSetId(66, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 3]));
         $this->tester->assertContentLocalizedDoesNotExist(46);
     }
 
@@ -178,5 +184,22 @@ class ContentProductSetDataImportPluginTest extends Unit
     protected function createUtilEncodingService(): UtilEncodingServiceInterface
     {
         return new UtilEncodingService();
+    }
+
+    /**
+     * @param int $idProductSet
+     *
+     * @return void
+     */
+    protected function setProductSetQueryReturn(int $idProductSet): void
+    {
+        $productSetQueryMock = $this->getMockBuilder(SpyProductSetQuery::class)
+            ->setMethods(['findOneByProductSetKey'])
+            ->getMock();
+
+        $productSetQueryMock->method('findOneByProductSetKey')
+            ->willReturn((new SpyProductSet())->setIdProductSet($idProductSet));
+
+        $this->tester->setDependency(ContentProductSetDataImportDependencyProvider::PROPEL_QUERY_PRODUCT_SET, $productSetQueryMock);
     }
 }

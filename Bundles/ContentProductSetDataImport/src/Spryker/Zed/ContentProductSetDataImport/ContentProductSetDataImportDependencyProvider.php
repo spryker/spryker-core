@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentProductSetDataImport;
 
+use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
 use Spryker\Zed\ContentProductSetDataImport\Dependency\Facade\ContentProductSetDataImportToContentBridge;
 use Spryker\Zed\ContentProductSetDataImport\Dependency\Service\ContentProductSetDataImportToUtilEncodingServiceBridge;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
@@ -19,6 +20,7 @@ class ContentProductSetDataImportDependencyProvider extends DataImportDependency
 {
     public const FACADE_CONTENT = 'FACADE_CONTENT';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const PROPEL_QUERY_PRODUCT_SET = 'PROPEL_QUERY_PRODUCT_SET';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,6 +33,7 @@ class ContentProductSetDataImportDependencyProvider extends DataImportDependency
 
         $container = $this->addUtilEncodingService($container);
         $container = $this->addContentFacade($container);
+        $container = $this->addProductQueryContainer($container);
 
         return $container;
     }
@@ -60,6 +63,20 @@ class ContentProductSetDataImportDependencyProvider extends DataImportDependency
     {
         $container[static::FACADE_CONTENT] = function (Container $container) {
             return new ContentProductSetDataImportToContentBridge($container->getLocator()->content()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return Container
+     */
+    protected function addProductQueryContainer(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_PRODUCT_SET] = function () {
+            return SpyProductSetQuery::create();
         };
 
         return $container;

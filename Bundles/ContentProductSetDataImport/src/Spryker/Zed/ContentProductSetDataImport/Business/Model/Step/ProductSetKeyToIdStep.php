@@ -22,6 +22,19 @@ class ProductSetKeyToIdStep implements DataImportStepInterface
     protected const ERROR_MESSAGE_PARAMETER_KEY = '{key}';
 
     /**
+     * @var \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    protected $productSetQuery;
+
+    /**
+     * @param \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery $productSetQuery
+     */
+    public function __construct(SpyProductSetQuery $productSetQuery)
+    {
+        $this->productSetQuery = $productSetQuery;
+    }
+
+    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @return void
@@ -71,12 +84,12 @@ class ProductSetKeyToIdStep implements DataImportStepInterface
      */
     protected function getIdProductSet(DataSetInterface $dataSet, string $productSetKeyColumn): int
     {
-        $query = SpyProductSetQuery::create()
-            ->filterByProductSetKey($dataSet[$productSetKeyColumn])
-            ->findOne();
+        $productSetEntity = $this->productSetQuery
+            ->clear()
+            ->findOneByProductSetKey($dataSet[$productSetKeyColumn]);
 
-        if ($query) {
-            return $query->getIdProductSet();
+        if ($productSetEntity) {
+            return $productSetEntity->getIdProductSet();
         }
 
         $parameters = [

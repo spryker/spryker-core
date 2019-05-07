@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentProductSetDataImport\Business;
 
+use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
 use Spryker\Zed\ContentProductSetDataImport\Business\Model\ContentProductSetWriterStep;
 use Spryker\Zed\ContentProductSetDataImport\Business\Model\Step\CheckContentDataStep;
 use Spryker\Zed\ContentProductSetDataImport\Business\Model\Step\PrepareLocalizedItemsStep;
@@ -53,7 +54,7 @@ class ContentProductSetDataImportBusinessFactory extends DataImportBusinessFacto
      */
     public function createProductSetKeyToIdStep(): ProductSetKeyToIdStep
     {
-        return new ProductSetKeyToIdStep();
+        return new ProductSetKeyToIdStep($this->getProductSetQuery());
     }
 
     /**
@@ -86,5 +87,13 @@ class ContentProductSetDataImportBusinessFactory extends DataImportBusinessFacto
     public function getUtilEncodingService(): ContentProductSetDataImportToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ContentProductSetDataImportDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    public function getProductSetQuery(): SpyProductSetQuery
+    {
+        return $this->getProvidedDependency(ContentProductSetDataImportDependencyProvider::PROPEL_QUERY_PRODUCT_SET);
     }
 }
