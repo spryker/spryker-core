@@ -14,9 +14,9 @@ interface SharedCartsRestApiClientInterface
 {
     /**
      * Specification:
-     * - Makes Zed request.
      * - Finds quote's id by quote's UUID.
      * - Finds share details collection of quote by quote id.
+     * - Makes Zed request.
      *
      * @api
      *
