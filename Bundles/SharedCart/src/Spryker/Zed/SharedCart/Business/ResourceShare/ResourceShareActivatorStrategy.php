@@ -77,8 +77,6 @@ class ResourceShareActivatorStrategy implements ResourceShareActivatorStrategyIn
             return $resourceShareResponseTransfer;
         }
 
-        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
-
         $customerTransfer = $resourceShareRequestTransfer->getCustomer();
         $companyUserTransfer = $this->findCompanyUserByCustomerReference($customerTransfer);
         if (!$companyUserTransfer) {
@@ -89,6 +87,8 @@ class ResourceShareActivatorStrategy implements ResourceShareActivatorStrategyIn
         }
 
         $idCompanyBusinessUnit = $companyUserTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit();
+        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
+
         if ($resourceShareDataTransfer->getIdCompanyBusinessUnit() !== $idCompanyBusinessUnit) {
             return $resourceShareResponseTransfer->setIsSuccessful(false)
                 ->addMessage(

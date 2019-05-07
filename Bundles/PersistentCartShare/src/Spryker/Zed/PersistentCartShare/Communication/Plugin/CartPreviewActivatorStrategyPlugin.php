@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PersistentCartShare\Communication\Plugin;
 
+use Generated\Shared\Transfer\ResourceShareRequestTransfer;
+use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PersistentCartShare\PersistentCartShareConfig;
@@ -63,12 +65,18 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
     /**
      * {@inheritdoc}
      * - Does nothing, as no additional actions required for cart preview.
+     * - Returns ResourceShareResponseTransfer with 'isSuccessful=true and provided ResourceShare.
      *
      * @api
      *
-     * @return void
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function execute(ResourceShareTransfer $resourceShareTransfer): void
+    public function execute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
+        return (new ResourceShareResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
     }
 }
