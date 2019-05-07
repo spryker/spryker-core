@@ -26,7 +26,6 @@ class ResourceShareActivatorStrategy implements ResourceShareActivatorStrategyIn
     protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.cart_access_denied';
     protected const GLOSSARY_KEY_ONE_OR_MORE_REQUIRED_PROPERTIES_ARE_MISSING = 'shared_cart.resource_share.strategy.error.properties_are_missing';
     protected const GLOSSARY_KEY_UNABLE_TO_SHARE_CART = 'shared_cart.resource_share.strategy.error.unable_to_share_cart';
-    protected const GLOSSARY_KEY_CART_SHARE_ALREADY_EXISTS = 'shared_cart.share.error.already_exist';
 
     /**
      * @var \Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriterInterface
@@ -75,16 +74,16 @@ class ResourceShareActivatorStrategy implements ResourceShareActivatorStrategyIn
             return $resourceShareResponseTransfer;
         }
 
-        $customerTransfer = $resourceShareRequestTransfer->getCustomer();
-        $companyUserTransfer = $this->findCompanyUserByCustomerReference($customerTransfer);
-        if (!$companyUserTransfer) {
+        $currentCustomerTransfer = $resourceShareRequestTransfer->getCustomer();
+        $currentCompanyUserTransfer = $this->findCompanyUserByCustomerReference($currentCustomerTransfer);
+        if (!$currentCompanyUserTransfer) {
             return $resourceShareResponseTransfer->setIsSuccessful(false)
                 ->addMessage(
                     (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_ACCESS_DENIED)
                 );
         }
 
-        $idCompanyBusinessUnit = $companyUserTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit();
+        $idCompanyBusinessUnit = $currentCompanyUserTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
         if ($resourceShareDataTransfer->getIdCompanyBusinessUnit() !== $idCompanyBusinessUnit) {
@@ -94,20 +93,17 @@ class ResourceShareActivatorStrategy implements ResourceShareActivatorStrategyIn
                 );
         }
 
-        return $this->shareCartWithLoggedInCustomer($resourceShareTransfer, $companyUserTransfer);
+        return $this->shareCartWithProvidedResourceShareCompanyUser($resourceShareTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    protected function shareCartWithLoggedInCustomer(
-        ResourceShareTransfer $resourceShareTransfer,
-        CompanyUserTransfer $companyUserTransfer
-    ): ResourceShareResponseTransfer {
-        $shareCartRequestTransfer = $this->createShareCartRequestTransfer($resourceShareTransfer, $companyUserTransfer);
+    protected function shareCartWithProvidedResourceShareCompanyUser(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
+    {
+        $shareCartRequestTransfer = $this->createShareCartRequestTransfer($resourceShareTransfer);
         if (!$shareCartRequestTransfer) {
             return (new ResourceShareResponseTransfer())
                 ->setIsSuccessful(false)
@@ -117,26 +113,9 @@ class ResourceShareActivatorStrategy implements ResourceShareActivatorStrategyIn
         }
 
         $storedShareDetailTransfer = $this->findStoredShareDetailByIdQuoteAndIdCompanyUser($shareCartRequestTransfer);
-        if ($storedShareDetailTransfer) {
-            $requestShareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
-
-            $requestIdQuotePermissionGroup = $requestShareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup();
-            $storedIdQuotePermissionGroup = $storedShareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup();
-
-            if ($requestIdQuotePermissionGroup === $storedIdQuotePermissionGroup) {
-                return (new ResourceShareResponseTransfer())
-                    ->setIsSuccessful(false)
-                    ->addMessage(
-                        (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_SHARE_ALREADY_EXISTS)
-                    );
-            }
-
-            return (new ResourceShareResponseTransfer())
-                ->setIsSuccessful(true)
-                ->setResourceShare($resourceShareTransfer);
+        if (!$storedShareDetailTransfer) {
+            $this->quoteCompanyUserWriter->addQuoteCompanyUser($shareCartRequestTransfer);
         }
-
-        $this->quoteCompanyUserWriter->addQuoteCompanyUser($shareCartRequestTransfer);
 
         return (new ResourceShareResponseTransfer())
             ->setIsSuccessful(true)
@@ -144,79 +123,21 @@ class ResourceShareActivatorStrategy implements ResourceShareActivatorStrategyIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShareDetailTransfer|null
-     */
-    protected function findStoredShareDetailByIdQuoteAndIdCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): ?ShareDetailTransfer
-    {
-        $shareDetailCollectionTransfer = $this->sharedCartRepository->findShareDetailsByQuoteId($shareCartRequestTransfer->getIdQuote());
-
-        $requestShareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
-        $requestIdQuotePermissionGroup = $requestShareDetailTransfer->getQuotePermissionGroup()
-            ->getIdQuotePermissionGroup();
-
-        foreach ($shareDetailCollectionTransfer->getShareDetails() as $storedShareDetailTransfer) {
-            $storedIdQuotePermissionGroup = $storedShareDetailTransfer->getQuotePermissionGroup()
-                ->getIdQuotePermissionGroup();
-
-            if ($storedIdQuotePermissionGroup === $requestIdQuotePermissionGroup
-                && $storedShareDetailTransfer->getIdCompanyUser() === $requestShareDetailTransfer->getIdCompanyUser()
-            ) {
-                return $storedShareDetailTransfer;
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
-     */
-    protected function validateResourceShareTransfer(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
-    {
-        $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
-        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
-
-        if ($resourceShareDataTransfer->getShareOption()
-            && $resourceShareDataTransfer->getIdQuote()
-            && $resourceShareDataTransfer->getIdCompanyUser()
-            && $resourceShareDataTransfer->getIdCompanyBusinessUnit()
-        ) {
-            return $resourceShareResponseTransfer->setIsSuccessful(true)
-                ->setResourceShare($resourceShareTransfer);
-        }
-
-        return $resourceShareResponseTransfer->setIsSuccessful(false)
-            ->addMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_ONE_OR_MORE_REQUIRED_PROPERTIES_ARE_MISSING)
-            );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\ShareCartRequestTransfer|null
      */
-    protected function createShareCartRequestTransfer(
-        ResourceShareTransfer $resourceShareTransfer,
-        CompanyUserTransfer $companyUserTransfer
-    ): ?ShareCartRequestTransfer {
+    protected function createShareCartRequestTransfer(ResourceShareTransfer $resourceShareTransfer): ?ShareCartRequestTransfer
+    {
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
-        $shareDetailTransfer = $this->createShareDetailTransfer($companyUserTransfer, $resourceShareDataTransfer->getShareOption());
-        if (!$shareDetailTransfer) {
+        $companyUserTransfer = $this->companyUserFacade->findCompanyUserById($resourceShareDataTransfer->getIdCompanyUser());
+        if (!$companyUserTransfer) {
             return null;
         }
 
-        $companyUserTransfer = $this->findCompanyUserByCustomerReference(
-            (new CustomerTransfer())->setCustomerReference($resourceShareTransfer->getCustomerReference())
-        );
-
-        if (!$companyUserTransfer) {
+        $shareDetailTransfer = $this->createShareDetailTransfer($companyUserTransfer, $resourceShareDataTransfer->getShareOption());
+        if (!$shareDetailTransfer) {
             return null;
         }
 
@@ -247,6 +168,33 @@ class ResourceShareActivatorStrategy implements ResourceShareActivatorStrategyIn
         return (new ShareDetailTransfer())
             ->setIdCompanyUser($idCompanyUser)
             ->setQuotePermissionGroup($quotePermissionGroupTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailTransfer|null
+     */
+    protected function findStoredShareDetailByIdQuoteAndIdCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): ?ShareDetailTransfer
+    {
+        $shareDetailCollectionTransfer = $this->sharedCartRepository->findShareDetailsByQuoteId($shareCartRequestTransfer->getIdQuote());
+
+        $requestShareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+        $requestIdQuotePermissionGroup = $requestShareDetailTransfer->getQuotePermissionGroup()
+            ->getIdQuotePermissionGroup();
+
+        foreach ($shareDetailCollectionTransfer->getShareDetails() as $storedShareDetailTransfer) {
+            $storedIdQuotePermissionGroup = $storedShareDetailTransfer->getQuotePermissionGroup()
+                ->getIdQuotePermissionGroup();
+
+            if ($storedIdQuotePermissionGroup === $requestIdQuotePermissionGroup
+                && $storedShareDetailTransfer->getIdCompanyUser() === $requestShareDetailTransfer->getIdCompanyUser()
+            ) {
+                return $storedShareDetailTransfer;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -294,5 +242,30 @@ class ResourceShareActivatorStrategy implements ResourceShareActivatorStrategyIn
         }
 
         return $companyUserTransfers->offsetGet(0);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    protected function validateResourceShareTransfer(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
+    {
+        $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
+        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
+
+        if ($resourceShareDataTransfer->getShareOption()
+            && $resourceShareDataTransfer->getIdQuote()
+            && $resourceShareDataTransfer->getIdCompanyUser()
+            && $resourceShareDataTransfer->getIdCompanyBusinessUnit()
+        ) {
+            return $resourceShareResponseTransfer->setIsSuccessful(true)
+                ->setResourceShare($resourceShareTransfer);
+        }
+
+        return $resourceShareResponseTransfer->setIsSuccessful(false)
+            ->addMessage(
+                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_ONE_OR_MORE_REQUIRED_PROPERTIES_ARE_MISSING)
+            );
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SharedCart\Dependency\Facade;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 class SharedCartToCompanyUserFacadeBridge implements SharedCartToCompanyUserFacadeInterface
@@ -34,5 +35,15 @@ class SharedCartToCompanyUserFacadeBridge implements SharedCartToCompanyUserFaca
         CustomerTransfer $customerTransfer
     ): CompanyUserCollectionTransfer {
         return $this->companyUserFacade->getActiveCompanyUsersByCustomerReference($customerTransfer);
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer
+    {
+        return $this->companyUserFacade->findCompanyUserById($idCompanyUser);
     }
 }
