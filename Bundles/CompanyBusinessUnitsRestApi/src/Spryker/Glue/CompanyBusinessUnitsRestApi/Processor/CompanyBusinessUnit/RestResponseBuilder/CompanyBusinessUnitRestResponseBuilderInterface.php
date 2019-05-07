@@ -50,11 +50,6 @@ interface CompanyBusinessUnitRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCompanyBusinessUnitIdMissingError(): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createCompanyBusinessUnitNotFoundError(): RestResponseInterface;
 
     /**

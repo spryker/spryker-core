@@ -50,11 +50,6 @@ interface CompanyRoleRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCompanyRoleIdMissingError(): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createCompanyRoleNotFoundError(): RestResponseInterface;
 
     /**
