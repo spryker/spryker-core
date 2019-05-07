@@ -25,7 +25,7 @@ class SharedCartMapper implements SharedCartMapperInterface
         return $restSharedCartsAttributesTransfer
             ->fromArray($shareDetailTransfer->toArray(), true)
             ->setIdCompanyUser(
-                $shareDetailTransfer->getCompanyUserUuid()
+                $shareDetailTransfer->getCompanyUser()->getUuid()
             )
             ->setIdCartPermissionGroup(
                 $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
