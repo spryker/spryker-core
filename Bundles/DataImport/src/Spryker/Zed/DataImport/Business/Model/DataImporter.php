@@ -12,18 +12,21 @@ use Exception;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
+use Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\DataImport\Business\Model\DataReader\ConfigurableDataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface;
+use Spryker\Zed\DataImport\DataImportConfig;
 
 class DataImporter implements
     DataImporterBeforeImportAwareInterface,
     DataImporterInterface,
     DataImporterAfterImportAwareInterface,
-    DataSetStepBrokerAwareInterface
+    DataSetStepBrokerAwareInterface,
+    DataImporterImportGroupAwareInterface
 {
     /**
      * @var string
@@ -49,6 +52,11 @@ class DataImporter implements
      * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface[]
      */
     protected $dataSetStepBroker = [];
+
+    /**
+     * @var string
+     */
+    protected $importGroup;
 
     /**
      * @param string $importType
@@ -187,6 +195,24 @@ class DataImporter implements
     public function getImportType()
     {
         return $this->importType;
+    }
+
+    /**
+     * @param string $importGroup
+     *
+     * @return void
+     */
+    public function setImportGroup(string $importGroup): void
+    {
+        $this->importGroup = $importGroup;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImportGroup(): string
+    {
+        return $this->importGroup ?: DataImportConfig::IMPORT_GROUP_FULL;
     }
 
     /**
