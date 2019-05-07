@@ -15,9 +15,9 @@ interface ProductQuantityExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function expandConcreteProductsWithQuantityRestrictions(array $productConcreteTransfers): array;
+    public function expandProductConcreteTransfersWithQuantityRestrictions(array $productConcreteTransfers): array;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

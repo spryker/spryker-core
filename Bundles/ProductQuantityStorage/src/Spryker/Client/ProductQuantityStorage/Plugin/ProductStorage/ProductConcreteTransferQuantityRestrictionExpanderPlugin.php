@@ -14,7 +14,7 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteExpa
 /**
  * @method \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageFactory getFactory()
  */
-class ProductConcreteTransferQuantityRestrictionsExpanderPlugin extends AbstractPlugin implements ProductConcreteExpanderPluginInterface
+class ProductConcreteTransferQuantityRestrictionExpanderPlugin extends AbstractPlugin implements ProductConcreteExpanderPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

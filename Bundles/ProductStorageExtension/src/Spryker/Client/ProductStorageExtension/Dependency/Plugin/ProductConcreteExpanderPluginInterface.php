@@ -13,7 +13,7 @@ interface ProductConcreteExpanderPluginInterface
 {
     /**
      * Specification:
-     * - expands and returns ProductConcreteTransfer
+     * - expands and returns ProductConcreteTransfer. Used in ProductStorageClient::mapProductStorageDataToProductConcreteTransfer().
      *
      * @api
      *
