@@ -31,6 +31,10 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
         $queryCompanyUser = $this->getFactory()
             ->getCompanyUserPropelQuery()
             ->joinWithCompanyBusinessUnit()
+            ->leftJoinWithSpyCompanyRoleToCompanyUser()
+            ->useSpyCompanyRoleToCompanyUserQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithCompanyRole()
+            ->endUse()
             ->joinWithCustomer()
                 ->useCustomerQuery()
             ->filterByAnonymizedAt(null, Criteria::ISNULL)
@@ -62,22 +66,99 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
         SpyCompanyUserQuery $queryCompanyUser,
         CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): SpyCompanyUserQuery {
+        $queryCompanyUser = $this->applyByFkCompanyFilters($queryCompanyUser, $companyUserCriteriaFilterTransfer);
+        $queryCompanyUser = $this->applyByCompanyUserIdsIn($queryCompanyUser, $companyUserCriteriaFilterTransfer);
+        $queryCompanyUser = $this->applyByIsActive($queryCompanyUser, $companyUserCriteriaFilterTransfer);
+        $queryCompanyUser = $this->applyByCompanyBusinessUnitUuidsIn($queryCompanyUser, $companyUserCriteriaFilterTransfer);
+        $queryCompanyUser = $this->applyByCompanyRolesUuidsIn($queryCompanyUser, $companyUserCriteriaFilterTransfer);
+
+        return $queryCompanyUser;
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $queryCompanyUser
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
+     */
+    protected function applyByFkCompanyFilters(
+        SpyCompanyUserQuery $queryCompanyUser,
+        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+    ): SpyCompanyUserQuery {
         if ($companyUserCriteriaFilterTransfer->getIdCompany()) {
             $queryCompanyUser->filterByFkCompany($companyUserCriteriaFilterTransfer->getIdCompany());
         }
 
+        return $queryCompanyUser;
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $queryCompanyUser
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
+     */
+    protected function applyByCompanyUserIdsIn(
+        SpyCompanyUserQuery $queryCompanyUser,
+        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+    ): SpyCompanyUserQuery {
         if ($companyUserCriteriaFilterTransfer->getCompanyUserIds()) {
             $queryCompanyUser->filterByIdCompanyUser_In($companyUserCriteriaFilterTransfer->getCompanyUserIds());
         }
 
+        return $queryCompanyUser;
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $queryCompanyUser
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
+     */
+    protected function applyByIsActive(
+        SpyCompanyUserQuery $queryCompanyUser,
+        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+    ): SpyCompanyUserQuery {
         if ($companyUserCriteriaFilterTransfer->getIsActive()) {
             $queryCompanyUser->filterByIsActive($companyUserCriteriaFilterTransfer->getIsActive());
         }
 
+        return $queryCompanyUser;
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $queryCompanyUser
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
+     */
+    protected function applyByCompanyBusinessUnitUuidsIn(
+        SpyCompanyUserQuery $queryCompanyUser,
+        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+    ): SpyCompanyUserQuery {
         if ($companyUserCriteriaFilterTransfer->getCompanyBusinessUnitUuids()) {
             $queryCompanyUser->useCompanyBusinessUnitQuery()
                 ->filterByUuid_In($companyUserCriteriaFilterTransfer->getCompanyBusinessUnitUuids())
-            ->endUse();
+                ->endUse();
+        }
+
+        return $queryCompanyUser;
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $queryCompanyUser
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
+     */
+    protected function applyByCompanyRolesUuidsIn(
+        SpyCompanyUserQuery $queryCompanyUser,
+        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+    ): SpyCompanyUserQuery {
+        if ($companyUserCriteriaFilterTransfer->getCompanyRolesUuids()) {
+            $queryCompanyUser->useSpyCompanyRoleToCompanyUserQuery()->useCompanyRoleQuery()
+                ->filterByUuid_In($companyUserCriteriaFilterTransfer->getCompanyRolesUuids())
+                ->endUse();
         }
 
         return $queryCompanyUser;

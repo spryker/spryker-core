@@ -20,6 +20,11 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
      */
     public const RESOURCE_COMPANY_BUSINESS_UNITS = 'company-business-units';
 
+    /**
+     * @uses \Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES
+     */
+    public const RESOURCE_COMPANY_ROLES = 'company-roles';
+
     public const RESPONSE_CODE_COMPANY_USER_NOT_SELECTED = '1403';
     public const RESPONSE_DETAIL_COMPANY_USER_NOT_SELECTED = 'Current company user is not set. You need to select the current company user with /company-user-access-tokens in order to access the resource collection.';
 

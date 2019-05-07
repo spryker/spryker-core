@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\CompanyUsersRestApi\Persistence\Mapper;
 
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\SpyCompanyRoleToPermissionEntityTransfer;
+use Generated\Shared\Transfer\SpyCompanyUserEntityTransfer;
 
 class CompanyUsersRestApiMapper
 {
@@ -36,6 +40,15 @@ class CompanyUsersRestApiMapper
     protected function mapEntityTransferToCompanyUserTransfer(
         array $companyUser
     ): CompanyUserTransfer {
-        return (new CompanyUserTransfer())->fromArray($companyUser, true);
+        $companyUserTransfer = (new CompanyUserTransfer())->fromArray($companyUser, true);
+        $companyUserTransfer->setCompanyRoleCollection(new CompanyRoleCollectionTransfer());
+        foreach ($companyUser[ucfirst(SpyCompanyUserEntityTransfer::SPY_COMPANY_ROLE_TO_COMPANY_USERS)] as $companyRoleToCompanyUser) {
+            $companyRoleTransfer = (new CompanyRoleTransfer())
+                ->fromArray($companyRoleToCompanyUser[ucfirst(SpyCompanyRoleToPermissionEntityTransfer::COMPANY_ROLE)], true);
+
+            $companyUserTransfer->getCompanyRoleCollection()->addRole($companyRoleTransfer);
+        }
+
+        return $companyUserTransfer;
     }
 }

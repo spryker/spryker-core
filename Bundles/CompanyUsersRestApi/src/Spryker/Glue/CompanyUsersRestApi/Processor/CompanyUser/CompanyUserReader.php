@@ -94,10 +94,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
             ->setIdCompany($idCompany)
             ->setFilter($filterTransfer);
 
-        $companyUserCriteriaFilterTransfer = $this->applyCompanyBusinessUnitsResourceFilter(
-            $restRequest,
-            $companyUserCriteriaFilterTransfer
-        );
+        $companyUserCriteriaFilterTransfer = $this->applyFilters($restRequest, $companyUserCriteriaFilterTransfer);
 
         $companyUserCollectionTransfer = $this->companyUsersRestApiClient
             ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
@@ -155,6 +152,29 @@ class CompanyUserReader implements CompanyUserReaderInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer
      */
+    protected function applyFilters(
+        RestRequestInterface $restRequest,
+        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+    ): CompanyUserCriteriaFilterTransfer {
+        $companyUserCriteriaFilterTransfer = $this->applyCompanyBusinessUnitsResourceFilter(
+            $restRequest,
+            $companyUserCriteriaFilterTransfer
+        );
+
+        $companyUserCriteriaFilterTransfer = $this->applyCompanyRolesResourceFilter(
+            $restRequest,
+            $companyUserCriteriaFilterTransfer
+        );
+
+        return $companyUserCriteriaFilterTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer
+     */
     protected function applyCompanyBusinessUnitsResourceFilter(
         RestRequestInterface $restRequest,
         CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
@@ -164,6 +184,27 @@ class CompanyUserReader implements CompanyUserReaderInterface
             foreach ($filterCompanyBusinessUnits as $filterCompanyBusinessUnit) {
                 $companyUserCriteriaFilterTransfer
                     ->addCompanyBusinessUnitUuids($filterCompanyBusinessUnit->getValue());
+            }
+        }
+
+        return $companyUserCriteriaFilterTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer
+     */
+    protected function applyCompanyRolesResourceFilter(
+        RestRequestInterface $restRequest,
+        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+    ): CompanyUserCriteriaFilterTransfer {
+        if ($restRequest->hasFilters(CompanyUsersRestApiConfig::RESOURCE_COMPANY_ROLES)) {
+            $filterCompanyRoles = $restRequest->getFiltersByResource(CompanyUsersRestApiConfig::RESOURCE_COMPANY_ROLES);
+            foreach ($filterCompanyRoles as $filterCompanyRole) {
+                $companyUserCriteriaFilterTransfer
+                    ->addCompanyRolesUuids($filterCompanyRole->getValue());
             }
         }
 

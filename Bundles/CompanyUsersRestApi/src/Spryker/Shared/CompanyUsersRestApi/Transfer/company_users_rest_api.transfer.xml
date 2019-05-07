@@ -41,6 +41,7 @@
         <property name="filter" type="Filter"/>
         <property name="companyUserIds" type="array"/>
         <property name="companyBusinessUnitUuids" type="string[]"/>
+        <property name="companyRolesUuids" type="string[]"/>
     </transfer>
 
     <transfer name="CompanyUserCollection">
