@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Persistence\Mapper;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 
@@ -36,6 +37,15 @@ class CustomerMapper implements CustomerMapperInterface
      */
     public function mapCustomerAddressEntityToTransfer(SpyCustomerAddress $customerAddressEntity): AddressTransfer
     {
-        return (new AddressTransfer())->fromArray($customerAddressEntity->toArray(), true);
+        $addressTransfer = (new AddressTransfer())->fromArray($customerAddressEntity->toArray(), true);
+
+        $countryEntity = $customerAddressEntity->getCountry();
+        if ($countryEntity !== null) {
+            $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
+            $addressTransfer->setCountry($countryTransfer);
+            $addressTransfer->setIso2Code($countryTransfer->getIso2Code());
+        }
+
+        return $addressTransfer;
     }
 }

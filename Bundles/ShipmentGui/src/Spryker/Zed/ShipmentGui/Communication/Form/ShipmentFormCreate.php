@@ -7,17 +7,16 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form;
 
-use DateTime;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
@@ -41,6 +40,8 @@ class ShipmentFormCreate extends AbstractType
     public const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
 
     public const VALIDITY_DATETIME_FORMAT = 'yyyy-MM-dd H:mm:ss';
+
+    protected const VALIDATION_DATE_TODAY = 'today';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -112,7 +113,7 @@ class ShipmentFormCreate extends AbstractType
     public function addIdShipmentMethodField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add(static::FIELD_ID_SHIPMENT_METHOD, ChoiceType::class, [
-            'label' => 'Shipment Method',
+            'label' => false,
             'placeholder' => 'Select one',
             'choices' => array_flip($options),
             'required' => true,
@@ -132,47 +133,22 @@ class ShipmentFormCreate extends AbstractType
      */
     public function addRequestedDeliveryDateField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_REQUESTED_DELIVERY_DATE, DateTimeType::class, [
-            'label' => 'Delivery Date',
-            'format' => static::VALIDITY_DATETIME_FORMAT,
+        $builder->add(static::FIELD_REQUESTED_DELIVERY_DATE, DateType::class, [
+            'label' => false,
             'required' => false,
             'widget' => 'single_text',
             'attr' => [
-                'class' => 'datepicker js-requested-datetime safe-datetime',
+                'class' => 'datepicker safe-datetime',
+            ],
+            'constraints' => [
+                new GreaterThanOrEqual([
+                    'value' => static::VALIDATION_DATE_TODAY,
+                    'message' => sprintf('Delivery date cannot be earlier than "%s".', static::VALIDATION_DATE_TODAY),
+                ]),
             ],
         ]);
 
-        $this->addDateTimeTransformer(static::FIELD_REQUESTED_DELIVERY_DATE, $builder);
-
         return $this;
-    }
-
-    /**
-     * @param string $fieldName
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
-    protected function addDateTimeTransformer($fieldName, FormBuilderInterface $builder): void
-    {
-        $builder
-            ->get($fieldName)
-            ->addModelTransformer(new CallbackTransformer(
-                function ($dateAsString) {
-                    if (!$dateAsString) {
-                        return null;
-                    }
-
-                    return new DateTime($dateAsString);
-                },
-                function ($dateAsObject) {
-                    if (!$dateAsObject) {
-                        return null;
-                    }
-
-                    return $dateAsObject->format(static::VALIDITY_DATETIME_FORMAT);
-                }
-            ));
     }
 
     /**

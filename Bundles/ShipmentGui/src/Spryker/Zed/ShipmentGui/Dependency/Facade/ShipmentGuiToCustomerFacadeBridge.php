@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 class ShipmentGuiToCustomerFacadeBridge implements ShipmentGuiToCustomerFacadeInterface
@@ -33,5 +34,15 @@ class ShipmentGuiToCustomerFacadeBridge implements ShipmentGuiToCustomerFacadeIn
     public function getAddresses(CustomerTransfer $customerTransfer): AddressesTransfer
     {
         return $this->customerFacade->getAddresses($customerTransfer);
+    }
+
+    /**
+     * @param int $idCustomerAddress
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressById(int $idCustomerAddress): ?AddressTransfer
+    {
+        return $this->customerFacade->findCustomerAddressById($idCustomerAddress);
     }
 }

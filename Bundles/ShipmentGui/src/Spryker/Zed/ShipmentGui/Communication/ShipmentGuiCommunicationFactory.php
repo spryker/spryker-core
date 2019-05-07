@@ -13,12 +13,8 @@ use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormEditData
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormCreate;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentFormEdit;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
-use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerInterface;
-use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeBridge;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface;
-use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
-use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentInterface;
 use Spryker\Zed\ShipmentGui\ShipmentGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
