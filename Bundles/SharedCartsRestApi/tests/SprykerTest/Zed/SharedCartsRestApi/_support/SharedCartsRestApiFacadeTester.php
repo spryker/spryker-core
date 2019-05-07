@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 
@@ -40,7 +41,7 @@ class SharedCartsRestApiFacadeTester extends Actor
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function createQuote(CustomerTransfer $customerTransfer)
+    public function createQuote(CustomerTransfer $customerTransfer): QuoteTransfer
     {
         return $this->havePersistentQuote(
             [
@@ -54,7 +55,7 @@ class SharedCartsRestApiFacadeTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function createCompanyUser(CustomerTransfer $customerTransfer)
+    public function createCompanyUser(CustomerTransfer $customerTransfer): CompanyUserTransfer
     {
         $companyTransfer = $this->createCompany();
         $companyBusinessUnit = $this->createCompanyBusinessUnit($companyTransfer);
@@ -72,7 +73,7 @@ class SharedCartsRestApiFacadeTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function createCompany()
+    public function createCompany(): CompanyTransfer
     {
         return $this->haveCompany(
             [
@@ -89,7 +90,7 @@ class SharedCartsRestApiFacadeTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function createCompanyBusinessUnit($companyTransfer)
+    public function createCompanyBusinessUnit(CompanyTransfer $companyTransfer): CompanyBusinessUnitTransfer
     {
         return $this->haveCompanyBusinessUnit(
             [
@@ -107,7 +108,7 @@ class SharedCartsRestApiFacadeTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ShareDetailTransfer
      */
-    public function createShareCartDetail(int $idCompanyUser, $permissionQuoteGroup): ShareDetailTransfer
+    public function createShareCartDetail(int $idCompanyUser, QuotePermissionGroupTransfer $permissionQuoteGroup): ShareDetailTransfer
     {
         $shareDetailTransfer = new ShareDetailTransfer();
         $shareDetailTransfer->setIdCompanyUser($idCompanyUser);
