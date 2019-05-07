@@ -12,6 +12,9 @@ use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
 
+/**
+ * @deprecated Use `spryker-shop/router` instead.
+ */
 class YvesFragmentControllerResolver extends SilexControllerResolver
 {
     /**
@@ -21,9 +24,15 @@ class YvesFragmentControllerResolver extends SilexControllerResolver
      */
     protected function createController($controller)
     {
-        [$moduleName, $controllerName, $actionName] = explode(':', $controller);
-        $bundleControllerAction = new BundleControllerAction($moduleName, $controllerName, $actionName);
+        [$bundle, $controllerName, $actionName] = explode('/', ltrim($controller, '/'));
+
+        $bundleControllerAction = new BundleControllerAction($bundle, $controllerName, $actionName);
         $controller = $this->resolveController($bundleControllerAction);
+
+        $serviceName = get_class($controller) . '::' . $bundleControllerAction->getAction() . 'Action';
+
+        $request = $this->getCurrentRequest();
+        $request->attributes->set('_controller', $serviceName);
 
         return [$controller, $bundleControllerAction->getAction() . 'Action'];
     }
