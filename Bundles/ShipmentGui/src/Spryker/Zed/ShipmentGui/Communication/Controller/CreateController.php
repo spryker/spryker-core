@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -96,40 +95,31 @@ class CreateController extends AbstractController
     protected function createShipmentTransfer(array $formData): ShipmentTransfer
     {
         $shipmentTransfer = (new ShipmentTransfer())->fromArray($formData, true);
-        $shipmentTransfer->setMethod($this->createShipmentMethodTransfer($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD]));
+        $shipmentMethodTransfer = $this->getFactory()
+            ->getShipmentFacade()
+            ->findMethodById($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_METHOD]);
+        $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         if ($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]) {
-            $this->mapCustomerAddressToShippingAddress($shipmentTransfer, $formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]);
+            $shipmentTransfer = $this->mapCustomerAddressToShippingAddress($shipmentTransfer, $formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]);
         }
 
         return $shipmentTransfer;
     }
 
     /**
-     * @param int $idShipmentMethod
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
-     */
-    protected function createShipmentMethodTransfer(int $idShipmentMethod): ?ShipmentMethodTransfer
-    {
-        return $this->getFactory()
-            ->getShipmentFacade()
-            ->findMethodById($idShipmentMethod);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param int $idCustomerAddress
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
      */
-    protected function mapCustomerAddressToShippingAddress(ShipmentTransfer $shipmentTransfer, int $idCustomerAddress): void
+    protected function mapCustomerAddressToShippingAddress(ShipmentTransfer $shipmentTransfer, int $idCustomerAddress): ShipmentTransfer
     {
         $addressTransfer = $this->getFactory()
             ->getCustomerFacade()
             ->findCustomerAddressById($idCustomerAddress);
 
-        $shipmentTransfer->setShippingAddress($addressTransfer);
+        return $shipmentTransfer->setShippingAddress($addressTransfer);
     }
 
     /**
@@ -141,6 +131,7 @@ class CreateController extends AbstractController
     protected function createItemTransferList(ShipmentTransfer $shipmentTransfer, array $formData): ArrayObject
     {
         $itemTransfers = new ArrayObject();
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         foreach ($formData[ShipmentFormCreate::FORM_SALES_ORDER_ITEMS] as $itemTransfer) {
             if ($itemTransfer[ItemForm::FIELD_IS_UPDATED] === true) {
                 $itemTransfer->setShipment($shipmentTransfer);

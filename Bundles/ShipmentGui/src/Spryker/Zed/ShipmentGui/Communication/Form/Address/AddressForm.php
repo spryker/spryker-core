@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * @method \Spryker\Zed\ShipmentGui\Business\ShipmentGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ShipmentGui\ShipmentGuiConfig getConfig()
  */
@@ -119,7 +118,7 @@ class AddressForm extends AbstractType
                 'required' => false,
                 'label' => 'First name',
                 'constraints' => [
-                    $this->createNotBlankConstraint($builder->getOptions()),
+                    $this->createNotBlankConstraint(),
                     new Length(['max' => 255]),
                 ],
             ]);
@@ -158,7 +157,7 @@ class AddressForm extends AbstractType
                 'required' => false,
                 'label' => 'Last name',
                 'constraints' => [
-                    $this->createNotBlankConstraint($builder->getOptions()),
+                    $this->createNotBlankConstraint(),
                     new Length(['max' => 255]),
                 ],
             ]);
@@ -178,7 +177,7 @@ class AddressForm extends AbstractType
                 'required' => false,
                 'label' => 'Email',
                 'constraints' => [
-                    $this->createNotBlankConstraint($builder->getOptions()),
+                    $this->createNotBlankConstraint(),
                     new Email(),
                     new Length(['max' => 255]),
                 ],
@@ -200,7 +199,7 @@ class AddressForm extends AbstractType
                 'label' => 'Country',
                 'placeholder' => '-select-',
                 'constraints' => [
-                    $this->createNotBlankConstraint($builder->getOptions()),
+                    $this->createNotBlankConstraint(),
                 ],
             ]);
 
@@ -219,7 +218,7 @@ class AddressForm extends AbstractType
                 'required' => false,
                 'label' => 'Address 1',
                 'constraints' => [
-                    $this->createNotBlankConstraint($builder->getOptions()),
+                    $this->createNotBlankConstraint(),
                     new Length(['max' => 255]),
                 ],
             ]);
@@ -277,7 +276,7 @@ class AddressForm extends AbstractType
                 'required' => false,
                 'label' => 'City',
                 'constraints' => [
-                    $this->createNotBlankConstraint($builder->getOptions()),
+                    $this->createNotBlankConstraint(),
                     new Length(['max' => 255]),
                 ],
             ]);
@@ -297,7 +296,7 @@ class AddressForm extends AbstractType
                 'required' => false,
                 'label' => 'ZIP code',
                 'constraints' => [
-                    $this->createNotBlankConstraint($builder->getOptions()),
+                    $this->createNotBlankConstraint(),
                     new Length(['max' => 15]),
                 ],
             ]);
@@ -401,13 +400,12 @@ class AddressForm extends AbstractType
     }
 
     /**
-     * @param array $options
-     *
      * @return \Symfony\Component\Validator\Constraint
      */
-    protected function createNotBlankConstraint(array $options): Constraint
+    protected function createNotBlankConstraint(): Constraint
     {
-        return new Callback(['callback' => function ($value, ExecutionContextInterface $context) {
+        return new Callback([
+        'callback' => function ($value, ExecutionContextInterface $context) {
             $formData = $context->getRoot()->getData();
             if ($formData[ShipmentFormCreate::FIELD_ID_SHIPMENT_ADDRESS]) {
                 return;

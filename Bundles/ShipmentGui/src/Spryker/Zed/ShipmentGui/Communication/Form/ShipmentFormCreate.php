@@ -7,22 +7,18 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form;
 
-use DateTime;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
@@ -44,6 +40,8 @@ class ShipmentFormCreate extends AbstractType
     public const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
 
     public const VALIDITY_DATETIME_FORMAT = 'yyyy-MM-dd H:mm:ss';
+
+    protected const VALIDATION_TIME_TODAY = 'today';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -143,52 +141,14 @@ class ShipmentFormCreate extends AbstractType
                 'class' => 'datepicker safe-datetime',
             ],
             'constraints' => [
-                $this->createRequestedDeliveryDateFieldRangeConstraint(),
+                new GreaterThanOrEqual([
+                    'value' => static::VALIDATION_TIME_TODAY,
+                    'message' => sprintf('Delivery date cannot be earlier than "%s".', static::VALIDATION_TIME_TODAY),
+                ]),
             ],
         ]);
 
-        $builder->get(static::FIELD_REQUESTED_DELIVERY_DATE)
-            ->addModelTransformer($this->createDateTimeModelTransformer());
-
         return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
-    protected function createDateTimeModelTransformer(): CallbackTransformer
-    {
-        return new CallbackTransformer(
-            function ($dateAsString) {
-                if ($dateAsString !== null) {
-                    return new DateTime($dateAsString);
-                }
-            },
-            function ($dateAsObject) {
-                if ($dateAsObject instanceof DateTime) {
-                    return $dateAsObject->format('Y-m-d');
-                }
-            }
-        );
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraint
-     */
-    protected function createRequestedDeliveryDateFieldRangeConstraint(): Constraint
-    {
-        return new Callback([
-            'callback' => function ($deliveryDate, ExecutionContextInterface $context) {
-                if (!$deliveryDate) {
-                    return;
-                }
-
-                $today = (new DateTime())->format('Y-m-d');
-                if ($deliveryDate < $today) {
-                    $context->addViolation('Delivery date cannot be earlier than "today".');
-                }
-            },
-        ]);
     }
 
     /**
