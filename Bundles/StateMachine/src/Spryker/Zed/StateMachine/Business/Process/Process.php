@@ -310,7 +310,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return array
+     * @return string[][]
      */
     public function getManuallyExecutableEventsBySource()
     {
@@ -334,7 +334,7 @@ class Process implements ProcessInterface
      * @param array $eventsBySource
      * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface $event
      *
-     * @return array
+     * @return string[][]
      */
     protected function groupTransitionsBySourceName(array $transitions, array $eventsBySource, EventInterface $event)
     {
@@ -378,7 +378,7 @@ class Process implements ProcessInterface
      */
     public function hasFile()
     {
-        return isset($this->file);
+        return $this->file !== null;
     }
 
     /**

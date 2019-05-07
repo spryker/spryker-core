@@ -54,7 +54,7 @@ interface QuoteApprovalClientInterface
     /**
      * Specification:
      * - Makes zed request.
-     * - Unlocks quote.
+     * - Executes QuoteApprovalUnlockPreCheckPluginInterface plugins, unlocks quote if all registered plugins returns true.
      * - Removes cart sharing with approver.
      * - Removes quote approval request.
      *
@@ -162,7 +162,10 @@ interface QuoteApprovalClientInterface
 
     /**
      * Specification:
-     * - Sends Zed request to decline quote approval request.
+     * - Checks that Approver can approve request.
+     * - Checks that status is "Waiting".
+     * - Sets quote approval request status "Declined" if checks are true.
+     * - Executes QuoteApprovalUnlockPreCheckPluginInterface plugins, unlocks quote if all registered plugins returns true.
      *
      * @api
      *
