@@ -7,6 +7,7 @@
 
 namespace  Spryker\Client\PersistentCartShare\ResourceShare;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
@@ -17,6 +18,14 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
     protected const RESOURCE_TYPE_QUOTE = 'quote';
     protected const ID_QUOTE_PARAMETER = 'id_quote';
     protected const SHARE_OPTION_PARAMETER = 'share_option';
+
+    protected const KEY_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
+    protected const KEY_ID_COMPANY_USER = 'id_company_user';
+
+    /**
+     * @uses \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::SHARE_OPTION_PREVIEW
+     */
+    protected const SHARE_OPTION_PREVIEW = 'PREVIEW';
 
     /**
      * @var \Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface
@@ -39,20 +48,48 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
      */
     public function buildResourceShareRequest(int $idQuote, string $shareOption): ResourceShareRequestTransfer
     {
+        $customerTransfer = $this->customerClient->getCustomer();
+
         $resourceShareDataTransfer = (new ResourceShareDataTransfer())
-            ->setData([
-                static::ID_QUOTE_PARAMETER => $idQuote,
-                static::SHARE_OPTION_PARAMETER => $shareOption,
-            ]);
+            ->setData($this->getResourceShareData($idQuote, $shareOption, $customerTransfer));
 
         $resourceShareTransfer = (new ResourceShareTransfer())
             ->setResourceType(static::RESOURCE_TYPE_QUOTE)
-            ->setCustomerReference($this->customerClient->getCustomer()->getCustomerReference())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setResourceShareData($resourceShareDataTransfer);
 
         $resourceShareRequestTransfer = new ResourceShareRequestTransfer();
         $resourceShareRequestTransfer->setResourceShare($resourceShareTransfer);
 
         return $resourceShareRequestTransfer;
+    }
+
+    /**
+     * @param int $idQuote
+     * @param string $shareOption
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return array
+     */
+    protected function getResourceShareData(int $idQuote, string $shareOption, CustomerTransfer $customerTransfer): array
+    {
+        $resourceShareData = [
+            static::ID_QUOTE_PARAMETER => $idQuote,
+            static::SHARE_OPTION_PARAMETER => $shareOption,
+        ];
+
+        if ($shareOption === static::SHARE_OPTION_PREVIEW) {
+            return $resourceShareData;
+        }
+
+        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
+        if (!$companyUserTransfer) {
+            return $resourceShareData;
+        }
+
+        return $resourceShareData + [
+            static::KEY_ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
+            static::KEY_ID_COMPANY_BUSINESS_UNIT => $companyUserTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
+        ];
     }
 }

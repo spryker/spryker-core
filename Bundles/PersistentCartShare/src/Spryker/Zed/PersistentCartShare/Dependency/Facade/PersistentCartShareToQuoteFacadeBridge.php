@@ -29,7 +29,7 @@ class PersistentCartShareToQuoteFacadeBridge implements PersistentCartShareToQuo
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findQuoteById($idQuote): QuoteResponseTransfer
+    public function findQuoteById(int $idQuote): QuoteResponseTransfer
     {
         return $this->quoteFacade->findQuoteById($idQuote);
     }
