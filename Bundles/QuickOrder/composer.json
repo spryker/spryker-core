@@ -16,9 +16,6 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "suggest": {
-    "spryker/product-quantity-storage": "If you want to use ProductConcreteTransferQuantityRestrictionsExpanderPlugin."
-  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

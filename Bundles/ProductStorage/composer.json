@@ -30,7 +30,6 @@
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
-    "spryker/product-quantity-storage": "If you want to use ProductConcreteTransferQuantityRestrictionsExpanderPlugin",
     "spryker/url-storage": "If you want to use UrlStorage plugins, minimum required version: 0.2.0"
   },
   "autoload": {
