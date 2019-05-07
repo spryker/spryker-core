@@ -10,6 +10,7 @@ namespace Spryker\Client\QuoteRequest\Converter;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCartClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface;
 use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface;
 use Spryker\Client\QuoteRequest\Status\QuoteRequestStatusInterface;
@@ -30,6 +31,11 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
     protected $quoteClient;
 
     /**
+     * @var \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCartClientInterface
+     */
+    protected $cartClient;
+
+    /**
      * @var \Spryker\Client\QuoteRequest\Status\QuoteRequestStatusInterface
      */
     protected $quoteRequestStatus;
@@ -37,15 +43,18 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
     /**
      * @param \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToPersistentCartClientInterface $persistentCartClient
      * @param \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToQuoteClientInterface $quoteClient
+     * @param \Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToCartClientInterface $cartClient
      * @param \Spryker\Client\QuoteRequest\Status\QuoteRequestStatusInterface $quoteRequestStatus
      */
     public function __construct(
         QuoteRequestToPersistentCartClientInterface $persistentCartClient,
         QuoteRequestToQuoteClientInterface $quoteClient,
+        QuoteRequestToCartClientInterface $cartClient,
         QuoteRequestStatusInterface $quoteRequestStatus
     ) {
         $this->persistentCartClient = $persistentCartClient;
         $this->quoteClient = $quoteClient;
+        $this->cartClient = $cartClient;
         $this->quoteRequestStatus = $quoteRequestStatus;
     }
 
@@ -70,7 +79,7 @@ class QuoteRequestConverter implements QuoteRequestConverterInterface
         $quoteTransfer->setName($latestQuoteRequestVersionTransfer->getVersionReference());
         $quoteTransfer->setQuoteRequestVersionReference($latestQuoteRequestVersionTransfer->getVersionReference());
 
-        $quoteTransfer = $this->quoteClient->lockQuote($quoteTransfer);
+        $quoteTransfer = $this->cartClient->lockQuote($quoteTransfer);
 
         return $this->persistentCartClient->persistQuote($quoteTransfer);
     }

@@ -27,16 +27,6 @@ class QuoteRequestToQuoteClientBridge implements QuoteRequestToQuoteClientInterf
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->quoteClient->lockQuote($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return void
      */
     public function setQuote(QuoteTransfer $quoteTransfer)

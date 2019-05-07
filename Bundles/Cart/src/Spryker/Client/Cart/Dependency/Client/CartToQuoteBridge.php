@@ -67,4 +67,14 @@ class CartToQuoteBridge implements CartToQuoteInterface
     {
         return $this->quoteClient->isQuoteLocked($quoteTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->quoteClient->lockQuote($quoteTransfer);
+    }
 }
