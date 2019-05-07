@@ -99,7 +99,7 @@ class Persistence implements PersistenceInterface
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param string $stateName
      *
-     * @return mixed
+     * @return int
      */
     public function getInitialStateIdByStateName(StateMachineItemTransfer $stateMachineItemTransfer, $stateName)
     {

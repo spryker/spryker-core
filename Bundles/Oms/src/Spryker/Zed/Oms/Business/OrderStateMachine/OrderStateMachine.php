@@ -34,6 +34,9 @@ class OrderStateMachine implements OrderStateMachineInterface
     public const BY_ITEM = 'byItem';
     public const BY_ORDER = 'byOrder';
     public const MAX_EVENT_REPEATS = 10;
+    /**
+     * @deprecated Not in use anymore, will be removed in the next major.
+     */
     public const MAX_ON_ENTER = 50;
 
     use DatabaseTransactionHandlerTrait;
@@ -665,7 +668,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @throws \LogicException
      *
-     * @return array
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[][]
      */
     protected function filterItemsWithOnEnterEvent(array $orderItems, array $processes, array $sourceStateBuffer)
     {
@@ -737,7 +740,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param array $orderItemsWithOnEnterEvent
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[][] $orderItemsWithOnEnterEvent
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return void

@@ -93,7 +93,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         $searchKeys = [];
 
         foreach ($idResources as $id) {
-            $searchKeys[] = $this->generateKey($id, 'cms_block' . '_' . $optionKey);
+            $searchKeys[] = $this->generateKey((string)$id, 'cms_block' . '_' . $optionKey);
         }
 
         $blockNames = $this->storageClient->getMulti($searchKeys);

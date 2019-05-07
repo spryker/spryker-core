@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
@@ -106,6 +107,31 @@ class ProductBundleFacadeTest extends Unit
         $itemTransfer->getUnitGrossPrice();
         $this->assertSame(40, $itemTransfer->getUnitGrossPrice());
         $this->assertSame($bundleItemIdentifier, $itemTransfer->getRelatedBundleItemIdentifier());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductBundleCollectionByCriteriaFilterShouldReturnPersistedBundledProducts(): void
+    {
+        //Assign
+        $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
+        $productBundleFacade = $this->createProductBundleFacade();
+
+        foreach ($productConcreteBundleTransfer->getProductBundle()->getBundledProducts() as $bundledProduct) {
+            //Act
+            $productBundleCollection = $productBundleFacade->getProductBundleCollectionByCriteriaFilter(
+                (new ProductBundleCriteriaFilterTransfer())->setIdBundledProduct($bundledProduct->getIdProductConcrete())
+            );
+
+            /** @var \Generated\Shared\Transfer\ProductBundleTransfer $productBundleTransfer */
+            $productBundleTransfer = $productBundleCollection->getProductBundles()->offsetGet(0);
+            $bundleProduct = SpyProductBundleQuery::create()->findOneByFkBundledProduct($bundledProduct->getIdProductConcrete());
+
+            //Assert
+            $this->assertSame(1, $productBundleCollection->getProductBundles()->count());
+            $this->assertSame($bundleProduct->getFkProduct(), $productBundleTransfer->getIdProductConcreteBundle());
+        }
     }
 
     /**
@@ -555,7 +581,7 @@ class ProductBundleFacadeTest extends Unit
         }
 
         $bundledProductTransfer = new ProductForBundleTransfer();
-        $bundledProductTransfer->setQuantity(static::ID_STORE);
+        $bundledProductTransfer->setQuantity(1);
         $bundledProductTransfer->setIdProductConcrete($productConcreteTransferToAssign1->getIdProductConcrete());
         $productBundleTransfer->addBundledProduct($bundledProductTransfer);
 
