@@ -22,7 +22,6 @@ Create,Create
 "Group was updated successfully.","Group was updated successfully."
 "Interface language","Interface language"
 "List Groups","List Groups"
-"List Groups","List Groups"
 "List Roles","List of roles"
 "Missing role id!","Missing role id!"
 "Missing rule id!","Missing rule id!"
@@ -35,8 +34,8 @@ Role,Role
 "Role list","Role list"
 "Role name","Role name"
 "Role was successfully removed.","Role was successfully removed."
-Roles,Roles
 roles,Roles
+Roles,Roles
 "Root group","Root group"
 Rule,Rule
 "Rule successfully added.","Rule successfully added."
