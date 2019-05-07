@@ -43,7 +43,7 @@ class ContentProductSetDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    protected function _before()
+    protected function _before(): void
     {
         parent::_before();
         $this->tester->ensureDatabaseTableIsEmpty();

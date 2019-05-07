@@ -71,7 +71,7 @@ class ContentProductSetDataImportDependencyProvider extends DataImportDependency
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addProductQueryContainer(Container $container): Container
     {
