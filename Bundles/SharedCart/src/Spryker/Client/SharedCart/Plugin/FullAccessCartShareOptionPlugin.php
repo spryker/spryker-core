@@ -28,7 +28,7 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      *
      * @api
      *
