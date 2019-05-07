@@ -14,6 +14,8 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 class ConcreteProductsRelationshipExpander implements ConcreteProductsRelationshipExpanderInterface
 {
     protected const KEY_SKU = 'sku';
+    protected const KEY_PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
+    protected const KEY_ATTRIBUTE_MAP = 'attributeMap';
 
     /**
      * @var \Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReaderInterface
@@ -49,6 +51,44 @@ class ConcreteProductsRelationshipExpander implements ConcreteProductsRelationsh
         }
 
         return $resources;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function addResourceRelationshipsByProductConcreteIds(array $resources, RestRequestInterface $restRequest): array
+    {
+        foreach ($resources as $resource) {
+            $skuProductConcretes = $this->findProductConcreteIds($resource->getAttributes());
+            if (!$skuProductConcretes) {
+                continue;
+            }
+            foreach ($skuProductConcretes as $skuProductConcrete) {
+                $concreteProductsResource = $this->concreteProductsReader->findProductConcreteBySku($skuProductConcrete, $restRequest);
+                if ($concreteProductsResource) {
+                    $resource->addRelationship($concreteProductsResource);
+                }
+            }
+        }
+
+        return $resources;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $attributes
+     *
+     * @return array|null
+     */
+    protected function findProductConcreteIds(?AbstractTransfer $attributes): ?array
+    {
+        if ($attributes && !empty($attributes[static::KEY_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS])) {
+            return $attributes[static::KEY_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS];
+        }
+
+        return null;
     }
 
     /**
