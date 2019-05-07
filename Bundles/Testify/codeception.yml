@@ -2,6 +2,7 @@ namespace: Testify
 actor: Tester
 include:
     - tests/SprykerTest/Shared/Testify
+    - tests/SprykerTest/Zed/Testify
 paths:
     tests: tests
     log: tests/_output
@@ -16,4 +17,6 @@ settings:
     log: true
 coverage:
     enabled: true
-    whitelist: { include: ['src/*'] }
+    whitelist:
+        include:
+            - 'src/*'

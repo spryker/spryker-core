@@ -28,7 +28,7 @@ class RouterSslRedirectEventDispatcherPlugin extends AbstractPlugin implements E
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @see \Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider::SSL_SERVICE_PROVIDER_BC_FEATURE_FLAG
+     * @see \Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider::BC_FEATURE_FLAG_SSL_SERVICE_PROVIDER
      */
     public const SSL_SERVICE_PROVIDER_BC_FEATURE_FLAG = 'SSL_SERVICE_PROVIDER_BC_FEATURE_FLAG';
 

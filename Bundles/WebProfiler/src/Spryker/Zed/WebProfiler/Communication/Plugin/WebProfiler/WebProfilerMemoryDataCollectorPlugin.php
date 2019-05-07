@@ -10,33 +10,42 @@ namespace Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Zed\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
-use Symfony\Component\HttpKernel\DataCollector\RouterDataCollector;
+use Symfony\Component\HttpKernel\DataCollector\MemoryDataCollector;
 
-class WebProfilerRouterDataCollector implements WebProfilerDataCollectorPluginInterface
+class WebProfilerMemoryDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    protected const NAME = 'memory';
+    protected const TEMPLATE = '@WebProfiler/Collector/memory.html.twig';
+
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
     {
-        return 'router';
+        return static::NAME;
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTemplateName(): string
     {
-        return '@WebProfiler/Collector/router.html.twig';
+        return static::TEMPLATE;
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface
      */
     public function getDataCollector(ContainerInterface $container): DataCollectorInterface
     {
-        return new RouterDataCollector();
+        return new MemoryDataCollector();
     }
 }

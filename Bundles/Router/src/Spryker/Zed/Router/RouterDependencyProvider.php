@@ -15,14 +15,14 @@ use Spryker\Zed\Kernel\Container;
  */
 class RouterDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const ROUTER_PLUGINS = 'router-plugins';
+    public const ROUTER_PLUGINS = 'ROUTER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addRouterPlugins($container);
 

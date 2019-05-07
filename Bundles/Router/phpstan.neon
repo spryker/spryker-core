@@ -1,4 +1,3 @@
 parameters:
     ignoreErrors:
-       - "#with 'ReflectionParameter' and 'isVariadic|getType' will always evaluate to false#"
 

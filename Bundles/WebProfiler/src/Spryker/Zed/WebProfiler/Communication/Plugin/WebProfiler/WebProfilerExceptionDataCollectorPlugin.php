@@ -12,25 +12,34 @@ use Spryker\Zed\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorP
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 use Symfony\Component\HttpKernel\DataCollector\ExceptionDataCollector;
 
-class WebProfilerExceptionDataCollector implements WebProfilerDataCollectorPluginInterface
+class WebProfilerExceptionDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    protected const NAME = 'exception';
+    protected const TEMPLATE = '@WebProfiler/Collector/exception.html.twig';
+
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
     {
-        return 'exception';
+        return static::NAME;
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTemplateName(): string
     {
-        return '@WebProfiler/Collector/exception.html.twig';
+        return static::TEMPLATE;
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface

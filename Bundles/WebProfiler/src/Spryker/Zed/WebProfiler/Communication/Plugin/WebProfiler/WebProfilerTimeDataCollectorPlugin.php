@@ -8,35 +8,45 @@
 namespace Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler;
 
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Zed\WebProfiler\Communication\Plugin\Application\WebProfilerApplicationPlugin;
 use Spryker\Zed\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
-use Symfony\Component\HttpKernel\DataCollector\EventDataCollector;
+use Symfony\Component\HttpKernel\DataCollector\TimeDataCollector;
 
-class WebProfilerEventsDataCollector implements WebProfilerDataCollectorPluginInterface
+class WebProfilerTimeDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    protected const NAME = 'time';
+    protected const TEMPLATE = '@WebProfiler/Collector/time.html.twig';
+
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
     {
-        return 'events';
+        return static::NAME;
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTemplateName(): string
     {
-        return '@WebProfiler/Collector/events.html.twig';
+        return static::TEMPLATE;
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface
      */
     public function getDataCollector(ContainerInterface $container): DataCollectorInterface
     {
-        return new EventDataCollector($container->get('dispatcher'));
+        return new TimeDataCollector(null, $container->get(WebProfilerApplicationPlugin::SERVICE_STOPWATCH));
     }
 }

@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/web-profiler-extension.svg)](https://travis-ci.org/spryker/web-profiler-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/web-profiler-extension/badge.svg)](https://coveralls.io/github/spryker/web-profiler-extension)
 
-{{ADD DESCRIPTION HERE}}
+Extension module for the WebProfiler module.
 
 ## Installation
 

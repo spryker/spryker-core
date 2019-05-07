@@ -8,35 +8,45 @@
 namespace Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler;
 
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Zed\WebProfiler\Communication\Plugin\Application\WebProfilerApplicationPlugin;
 use Spryker\Zed\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
-use Symfony\Component\HttpKernel\DataCollector\ConfigDataCollector;
+use Symfony\Bridge\Twig\DataCollector\TwigDataCollector;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 
-class WebProfilerConfigDataCollector implements WebProfilerDataCollectorPluginInterface
+class WebProfilerTwigDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    protected const NAME = 'twig';
+    protected const TEMPLATE = '@WebProfiler/Collector/twig.html.twig';
+
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
     {
-        return 'config';
+        return static::NAME;
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTemplateName(): string
     {
-        return '@WebProfiler/Collector/config.html.twig';
+        return static::TEMPLATE;
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface
      */
     public function getDataCollector(ContainerInterface $container): DataCollectorInterface
     {
-        return new ConfigDataCollector();
+        return new TwigDataCollector($container->get(WebProfilerApplicationPlugin::SERVICE_TWIG_PROFILE));
     }
 }

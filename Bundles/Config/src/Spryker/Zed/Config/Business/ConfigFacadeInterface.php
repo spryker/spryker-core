@@ -10,6 +10,9 @@ namespace Spryker\Zed\Config\Business;
 interface ConfigFacadeInterface
 {
     /**
+     * Specification:
+     * - Returns a list of key/value pairs for used configurations.
+     *
      * @api
      *
      * @return array

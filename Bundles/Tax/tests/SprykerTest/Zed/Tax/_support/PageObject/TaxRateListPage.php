@@ -10,5 +10,5 @@ namespace SprykerTest\Zed\Tax\PageObject;
 class TaxRateListPage
 {
     public const URL = '/tax/rate/list';
-    public const TABLE_DATA_URL = '/tax/rate/listTable';
+    public const TABLE_DATA_URL = '/tax/rate/list-table';
 }

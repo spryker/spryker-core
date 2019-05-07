@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/router-extension.svg)](https://travis-ci.org/spryker/router-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/router-extension/badge.svg)](https://coveralls.io/github/spryker/router-extension)
 
-{{ADD DESCRIPTION HERE}}
+Extension module for the Router module.
 
 ## Installation
 

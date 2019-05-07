@@ -12,7 +12,7 @@
     "spryker/log": "^3.0.0",
     "spryker/router-extension": "^1.0.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/zend": "^3.0.0"
+    "spryker/zend": "^2.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -17,9 +17,7 @@ use Spryker\Zed\Router\Business\Router\RouterInterface;
 class RouterFacade extends AbstractFacade implements RouterFacadeInterface
 {
     /**
-     * Specification:
-     * - Returns a ChainRouter which is added to the Application.
-     * - Uses RouterExtensionPluginInterfaces to add Router to the ChainRouter.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,8 +29,7 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns Router which handles Zed routes.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -41,5 +38,17 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
     public function getZedRouter(): RouterInterface
     {
         return $this->getFactory()->createZedRouter();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Spryker\Zed\Router\Business\Router\RouterInterface
+     */
+    public function getZedFallbackRouter(): RouterInterface
+    {
+        return $this->getFactory()->createZedFallbackRouter();
     }
 }

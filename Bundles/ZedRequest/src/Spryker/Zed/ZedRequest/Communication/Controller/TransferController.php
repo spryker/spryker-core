@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ZedRequest\Communication\Controller;
 
+use ReflectionProperty;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ZedRequest\Communication\Exception\NotAllowedActionException;
 use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer;
@@ -44,6 +45,10 @@ class TransferController extends AbstractController
         $request->attributes->set('module', $repeatData['module']);
         $request->attributes->set('controller', $repeatData['controller']);
         $request->attributes->set('action', $repeatData['action']);
+
+        $reflectionProperty = new ReflectionProperty($request, 'pathInfo');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($request, sprintf('/%s/%s/%s', $repeatData['module'], $repeatData['controller'], $repeatData['action']));
 
         $request->request->replace($repeatData);
 

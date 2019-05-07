@@ -8,36 +8,45 @@
 namespace Spryker\Zed\WebProfiler\Communication\Plugin\WebProfiler;
 
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Zed\WebProfiler\Communication\Plugin\Application\WebProfilerApplicationPlugin;
+use Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin;
 use Spryker\Zed\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
-use Symfony\Bridge\Twig\DataCollector\TwigDataCollector;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
+use Symfony\Component\HttpKernel\DataCollector\EventDataCollector;
 
-class WebProfilerTwigDataCollector implements WebProfilerDataCollectorPluginInterface
+class WebProfilerEventsDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    protected const NAME = 'events';
+    protected const TEMPLATE = '@WebProfiler/Collector/events.html.twig';
+
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
     {
-        return 'twig';
+        return static::NAME;
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTemplateName(): string
     {
-        return '@WebProfiler/Collector/twig.html.twig';
+        return static::TEMPLATE;
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface
      */
     public function getDataCollector(ContainerInterface $container): DataCollectorInterface
     {
-        return new TwigDataCollector($container->get(WebProfilerApplicationPlugin::SERVICE_TWIG_PROFILE));
+        return new EventDataCollector($container->get(EventDispatcherApplicationPlugin::SERVICE_DISPATCHER));
     }
 }

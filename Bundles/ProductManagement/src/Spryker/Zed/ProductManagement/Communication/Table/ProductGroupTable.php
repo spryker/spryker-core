@@ -64,7 +64,7 @@ class ProductGroupTable extends AbstractProductTable
         $this->localeTransfer = $localeTransfer;
         $this->idProductAbstract = $idProductAbstract;
         $this->defaultUrl = sprintf(
-            'productGroupTable?%s=%d',
+            'product-group-table?%s=%d',
             ViewController::PARAM_ID_PRODUCT_ABSTRACT,
             $idProductAbstract
         );

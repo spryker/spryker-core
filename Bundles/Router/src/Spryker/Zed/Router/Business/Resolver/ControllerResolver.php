@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Router\Business\Resolver;
 
+use InvalidArgumentException;
 use Spryker\Service\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
@@ -31,6 +32,8 @@ class ControllerResolver implements ControllerResolverInterface
      *
      * This method looks for a '_controller' request attribute that represents
      * the controller.
+     *
+     * @throws \InvalidArgumentException
      */
     public function getController(Request $request)
     {
@@ -39,7 +42,6 @@ class ControllerResolver implements ControllerResolverInterface
             return false;
         }
 
-        // When we have a string for the controller we assume that the controller can be found in the Container.
         if (is_string($controller)) {
             [$controllerServiceIdentifier, $actionName] = explode(':', $controller);
             if ($this->container->has($controllerServiceIdentifier)) {
@@ -47,21 +49,31 @@ class ControllerResolver implements ControllerResolverInterface
             }
         }
 
-        if (!is_array($controller)) {
-            return false;
-        }
+        if (is_array($controller)) {
+            if (is_callable($controller[0])) {
+                $controllerInstance = $controller[0]();
+                $controllerInstance = $this->injectContainerAndInitialize($controllerInstance);
 
-        if (is_callable($controller[0])) {
-            $controllerInstance = $controller[0]();
+                return [$controllerInstance, $controller[1]];
+            }
+
+            $controllerInstance = new $controller[0]();
             $controllerInstance = $this->injectContainerAndInitialize($controllerInstance);
 
             return [$controllerInstance, $controller[1]];
         }
 
-        $controllerInstance = new $controller[0]();
-        $controllerInstance = $this->injectContainerAndInitialize($controllerInstance);
+        if (is_object($controller)) {
+            if (method_exists($controller, '__invoke')) {
+                $controller = $this->injectContainerAndInitialize($controller);
 
-        return [$controllerInstance, $controller[1]];
+                return $controller;
+            }
+
+            throw new InvalidArgumentException(sprintf('Controller "%s" for URI "%s" is not callable.', get_class($controller), $request->getPathInfo()));
+        }
+
+        return false;
     }
 
     /**

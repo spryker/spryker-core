@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
  * @method \Spryker\Zed\Config\Business\ConfigFacadeInterface getFacade()
  * @method \Spryker\Zed\Config\ConfigConfig getConfig()
  */
-class WebProfilerConfigDataCollector extends AbstractPlugin implements WebProfilerDataCollectorPluginInterface, DataCollectorInterface
+class WebProfilerConfigDataCollectorPlugin extends AbstractPlugin implements WebProfilerDataCollectorPluginInterface, DataCollectorInterface
 {
     public const SPRYKER_CONFIG_PROFILER = 'spryker_config_profiler';
 
@@ -29,6 +29,8 @@ class WebProfilerConfigDataCollector extends AbstractPlugin implements WebProfil
     protected $data;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -37,6 +39,8 @@ class WebProfilerConfigDataCollector extends AbstractPlugin implements WebProfil
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTemplateName(): string
@@ -45,6 +49,8 @@ class WebProfilerConfigDataCollector extends AbstractPlugin implements WebProfil
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface
@@ -55,6 +61,8 @@ class WebProfilerConfigDataCollector extends AbstractPlugin implements WebProfil
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\HttpFoundation\Response $response
      * @param \Exception|null $exception
@@ -69,6 +77,8 @@ class WebProfilerConfigDataCollector extends AbstractPlugin implements WebProfil
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getConfigs(): array
@@ -77,6 +87,8 @@ class WebProfilerConfigDataCollector extends AbstractPlugin implements WebProfil
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function reset(): void

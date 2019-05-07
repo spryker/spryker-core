@@ -25,7 +25,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Router\Business\Router\ChainRouter
      */
-    public function createRouter()
+    public function createRouter(): ChainRouter
     {
         return new ChainRouter($this->getRouterPlugins());
     }
@@ -47,6 +47,18 @@ class RouterBusinessFactory extends AbstractBusinessFactory
             $this->createClosureLoader(),
             $this->createResource(),
             $this->getConfig()->getRouterConfiguration()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Router\Business\Router\RouterInterface
+     */
+    public function createZedFallbackRouter(): RouterInterface
+    {
+        return new Router(
+            $this->createClosureLoader(),
+            $this->createResource(),
+            $this->getConfig()->getFallbackRouterConfiguration()
         );
     }
 

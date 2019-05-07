@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    public const SSL_SERVICE_PROVIDER_BC_FEATURE_FLAG = 'SSL_SERVICE_PROVIDER_BC_FEATURE_FLAG';
+    public const BC_FEATURE_FLAG_SSL_SERVICE_PROVIDER = 'BC_FEATURE_FLAG_SSL_SERVICE_PROVIDER';
 
     /**
      * @param \Silex\Application $app
@@ -31,7 +31,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      */
     public function register(Application $app)
     {
-        $app->set(static::SSL_SERVICE_PROVIDER_BC_FEATURE_FLAG, true);
+        $app->set(static::BC_FEATURE_FLAG_SSL_SERVICE_PROVIDER, true);
 
         $this->setTrustedProxies();
         $this->setTrustedHosts();
@@ -79,7 +79,7 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
 
         $app->before(
             function (Request $request) use ($app) {
-                if ($app->get(static::SSL_SERVICE_PROVIDER_BC_FEATURE_FLAG) === false) {
+                if ($app->get(static::BC_FEATURE_FLAG_SSL_SERVICE_PROVIDER) === false) {
                     return null;
                 }
                 if ($this->shouldBeSsl($request)) {

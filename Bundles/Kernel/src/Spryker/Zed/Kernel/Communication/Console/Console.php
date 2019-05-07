@@ -57,6 +57,11 @@ class Console extends SymfonyCommand
     private $factory;
 
     /**
+     * @var \Spryker\Zed\Kernel\Business\AbstractFacade
+     */
+    private $facade;
+
+    /**
      * @var \Spryker\Zed\Kernel\Container
      */
     private $container;

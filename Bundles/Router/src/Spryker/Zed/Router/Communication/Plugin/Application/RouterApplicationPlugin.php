@@ -10,8 +10,8 @@ namespace Spryker\Zed\Router\Communication\Plugin\Application;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Router\Business\Resolver\ArgumentResolver;
 use Spryker\Zed\Router\Business\Resolver\ControllerResolver;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 
 /**
  * @method \Spryker\Zed\Router\Business\RouterFacade getFacade()

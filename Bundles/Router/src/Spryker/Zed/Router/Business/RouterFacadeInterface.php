@@ -35,4 +35,14 @@ interface RouterFacadeInterface
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
     public function getZedRouter(): RouterInterface;
+
+    /**
+     * Specification:
+     * - Returns Router which handles Zed routes.
+     *
+     * @api
+     *
+     * @return \Spryker\Zed\Router\Business\Router\RouterInterface
+     */
+    public function getZedFallbackRouter(): RouterInterface;
 }
