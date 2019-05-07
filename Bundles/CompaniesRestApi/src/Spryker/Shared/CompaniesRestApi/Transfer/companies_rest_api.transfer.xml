@@ -18,6 +18,14 @@
         <property name="company" type="Company" />
     </transfer>
 
+    <transfer name="CompanyRole">
+        <property name="company" type="Company"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="company" type="Company"/>
+    </transfer>
+
     <transfer name="CompanyResponse">
         <property name="companyTransfer" type="Company"/>
         <property name="isSuccessful" type="bool"/>

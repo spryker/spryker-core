@@ -14,6 +14,14 @@
         <property name="comment" type="string" />
     </transfer>
 
+    <transfer name="CompanyBusinessUnit">
+        <property name="addressCollection" type="CompanyUnitAddressCollection"/>
+    </transfer>
+
+    <transfer name="CompanyUnitAddressCollection">
+        <property name="companyUnitAddresses" type="CompanyUnitAddress[]" singular="companyUnitAddress"/>
+    </transfer>
+
     <transfer name="CompanyUnitAddress">
         <property name="uuid" type="string" />
         <property name="fkCompany" type="int" />
