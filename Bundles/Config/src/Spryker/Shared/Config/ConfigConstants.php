@@ -12,5 +12,8 @@ namespace Spryker\Shared\Config;
  */
 interface ConfigConstants
 {
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const ENABLE_WEB_PROFILER = 'CONFIG:ENABLE_WEB_PROFILER';
 }

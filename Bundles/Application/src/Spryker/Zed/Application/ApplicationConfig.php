@@ -63,6 +63,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `spryker/router` instead.
+     *
      * @return bool
      */
     public function isSslEnabled()
@@ -71,6 +73,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `spryker/router` instead.
+     *
      * @return array
      */
     public function getSslExcludedResources()

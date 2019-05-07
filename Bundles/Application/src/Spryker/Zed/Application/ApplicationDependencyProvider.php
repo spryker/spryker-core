@@ -9,14 +9,19 @@ namespace Spryker\Zed\Application;
 
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\HttpFragmentServiceProvider;
+use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Spryker\Shared\ErrorHandler\Plugin\ServiceProvider\WhoopsErrorHandlerServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\HeaderServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SilexRoutingServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SubRequestServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TranslationServiceProvider;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TwigGlobalVariablesServiceProvider;
+use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -71,14 +76,20 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $providers = [
             new TwigGlobalVariablesServiceProvider(),
             new RequestServiceProvider(),
+
             new SslServiceProvider(),
-//            new ServiceControllerServiceProvider(),
-//            new RoutingServiceProvider(),
-//            new MvcRoutingServiceProvider(),
-//            new SilexRoutingServiceProvider(),
+
+            new ServiceControllerServiceProvider(),
+            new RoutingServiceProvider(),
+            new MvcRoutingServiceProvider(),
+            new SilexRoutingServiceProvider(),
+
             new ValidatorServiceProvider(),
             new FormServiceProvider(),
-//            new UrlGeneratorServiceProvider(), // requests router from container
+
+            // To be removed with next major
+            new UrlGeneratorServiceProvider(), // requests router from container
+
             new HttpFragmentServiceProvider(),
             new HeaderServiceProvider(),
             new TranslationServiceProvider(),

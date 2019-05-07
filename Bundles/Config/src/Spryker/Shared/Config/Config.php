@@ -32,11 +32,6 @@ class Config
     private static $profiler;
 
     /**
-     * @var bool
-     */
-    private static $isProfilerEnabled;
-
-    /**
      * @return \Spryker\Shared\Config\Config
      */
     public static function getInstance()
@@ -88,27 +83,11 @@ class Config
      */
     protected static function addProfileData($key, $default, $value)
     {
-        if (!static::isProfilerEnabled()) {
-            return;
-        }
-
         if (!static::$profiler) {
             static::$profiler = new Profiler();
         }
 
         static::$profiler->add($key, $default, $value);
-    }
-
-    /**
-     * @return bool
-     */
-    protected static function isProfilerEnabled()
-    {
-        if (static::$isProfilerEnabled === null) {
-            static::$isProfilerEnabled = (static::hasValue(ConfigConstants::ENABLE_WEB_PROFILER)) ? static::$config[ConfigConstants::ENABLE_WEB_PROFILER] : false;
-        }
-
-        return static::$isProfilerEnabled;
     }
 
     /**
@@ -136,6 +115,10 @@ class Config
      */
     public static function hasKey($key)
     {
+        if (static::$config === null) {
+            return false;
+        }
+
         return array_key_exists($key, static::$config);
     }
 

@@ -12,7 +12,7 @@ use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\Router\Plugin\Application\RouterApplicationPlugin` instead.
+ * @deprecated Use `\Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin` instead.
  *
  * Requesting the `url_generator` from the container returned an instance of the ChainRouter. Instead of using several keys
  * pointing to the ChainRouter we only use `routers` from now on.
@@ -32,6 +32,10 @@ class UrlGeneratorServiceProvider extends AbstractPlugin implements ServiceProvi
      */
     public function register(Application $app)
     {
+        if ($app->has('url_generator')) {
+            return;
+        }
+
         $app['url_generator'] = $app->share(function ($app) {
             $app->flush();
 
