@@ -44,7 +44,7 @@ class ProductQuantityExpander implements ProductQuantityExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function expandProductConcreteTransferWithQuantityRestrictions(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function expandProductConcreteTransferWithQuantityRestrictions(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         $productQuantityStorageTransfer = $this->productQuantityStorageReader
             ->findProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
