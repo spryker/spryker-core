@@ -58,10 +58,16 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
+     *
      * @return \Orm\Zed\Content\Persistence\SpyContent
      */
     protected function saveContentBanner(DataSetInterface $dataSet): SpyContent
     {
+        if (!trim($dataSet[ContentBannerDataSetInterface::CONTENT_BANNER_KEY])) {
+            throw new InvalidDataException('Key field can\'t be empty.');
+        }
+
         $contentBannerEntity = SpyContentQuery::create()
             ->filterByKey($dataSet[ContentBannerDataSetInterface::CONTENT_BANNER_KEY])
             ->findOneOrCreate();
