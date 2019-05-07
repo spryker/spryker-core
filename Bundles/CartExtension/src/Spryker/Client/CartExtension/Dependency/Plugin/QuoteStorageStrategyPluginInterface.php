@@ -181,18 +181,4 @@ interface QuoteStorageStrategyPluginInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer;
-
-    /**
-     * Specification:
-     * - Makes zed request.
-     * - Executes QuoteLockPreResetPluginInterface plugins before unlock.
-     * - Unlocks quote by setting `isLocked` transfer property to false.
-     * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
-     * - Stores quote in session internally after zed request.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function resetQuoteLock(): QuoteResponseTransfer;
 }

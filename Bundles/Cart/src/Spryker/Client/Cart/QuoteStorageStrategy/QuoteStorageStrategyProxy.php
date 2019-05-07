@@ -15,9 +15,11 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
+use Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
+use Spryker\Client\CartExtension\Dependency\Plugin\QuotResetLockQuoteStorageStrategyPluginInterface;
 
-class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
+class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface, QuotResetLockQuoteStorageStrategyPluginInterface
 {
     protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
 
@@ -226,10 +228,18 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     }
 
     /**
+     * @throws \Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound
+     *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function resetQuoteLock(): QuoteResponseTransfer
     {
+        if (!$this->quoteStorageStrategy instanceof QuotResetLockQuoteStorageStrategyPluginInterface) {
+            throw new QuoteStorageStrategyPluginNotFound(
+                'Quote storage strategy should implement QuotResetLockQuoteStorageStrategyPluginInterface in order to use `resetQuoteLock` functionality.'
+            );
+        }
+
         return $this->quoteStorageStrategy->resetQuoteLock();
     }
 
