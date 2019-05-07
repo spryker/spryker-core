@@ -28,7 +28,7 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      *
      * @api
      *
