@@ -79,8 +79,8 @@ class SessionHandlerFile implements SessionHandlerInterface
     public function read($sessionId)
     {
         $startTime = microtime(true);
-        $key = $this->keyPrefix . $sessionId;
-        $sessionFile = $this->savePath . DIRECTORY_SEPARATOR . $key;
+        $sessionKey = $this->getSessionKey($sessionId);
+        $sessionFile = $this->savePath . DIRECTORY_SEPARATOR . $sessionKey;
         if (!file_exists($sessionFile)) {
             return '';
         }
@@ -100,14 +100,14 @@ class SessionHandlerFile implements SessionHandlerInterface
      */
     public function write($sessionId, $sessionData)
     {
-        $key = $this->keyPrefix . $sessionId;
+        $sessionKey = $this->getSessionKey($sessionId);
 
         if (strlen($sessionData) < 1) {
             return false;
         }
 
         $startTime = microtime(true);
-        $result = file_put_contents($this->savePath . DIRECTORY_SEPARATOR . $key, $sessionData);
+        $result = file_put_contents($this->savePath . DIRECTORY_SEPARATOR . $sessionKey, $sessionData);
         $this->monitoringService->addCustomParameter(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
         return $result > 0;
@@ -120,8 +120,8 @@ class SessionHandlerFile implements SessionHandlerInterface
      */
     public function destroy($sessionId)
     {
-        $key = $this->keyPrefix . $sessionId;
-        $file = $this->savePath . DIRECTORY_SEPARATOR . $key;
+        $sessionKey = $this->getSessionKey($sessionId);
+        $file = $this->savePath . DIRECTORY_SEPARATOR . $sessionKey;
         if (file_exists($file)) {
             $startTime = microtime(true);
             unlink($file);
@@ -145,5 +145,15 @@ class SessionHandlerFile implements SessionHandlerInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param string $sessionId
+     *
+     * @return string
+     */
+    protected function getSessionKey(string $sessionId): string
+    {
+        return $this->keyPrefix . $sessionId;
     }
 }
