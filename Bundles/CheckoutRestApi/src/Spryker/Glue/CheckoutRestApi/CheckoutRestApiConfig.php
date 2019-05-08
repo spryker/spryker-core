@@ -7,8 +7,14 @@
 
 namespace Spryker\Glue\CheckoutRestApi;
 
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
+use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig as SharedCheckoutRestApiConfig;
+use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @method \Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig getSharedConfig()
+ */
 class CheckoutRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_CHECKOUT_DATA = 'checkout-data';
@@ -18,7 +24,9 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public const CONTROLLER_CHECKOUT = 'checkout-resource';
 
     public const ACTION_CHECKOUT_DATA_POST = 'post';
+    public const ACTION_CHECKOUT_DATA_GET = 'get';
     public const ACTION_CHECKOUT_POST = 'post';
+    public const ACTION_CHECKOUT_GET = 'get';
 
     public const RESPONSE_CODE_CHECKOUT_DATA_INVALID = '1101';
     public const RESPONSE_CODE_ORDER_NOT_PLACED = '1102';
@@ -44,6 +52,33 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     ];
 
     protected const PAYMENT_METHOD_REQUIRED_FIELDS = [];
+    protected const ERROR_IDENTIFIER_TO_REST_ERROR_MAPPING = [
+        SharedCheckoutRestApiConfig::ERROR_IDENTIFIER_UNABLE_TO_DELETE_CART => [
+            RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_UNABLE_TO_DELETE_CART,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+            RestErrorMessageTransfer::DETAIL => self::RESPONSE_DETAILS_UNABLE_TO_DELETE_CART,
+        ],
+        SharedCheckoutRestApiConfig::ERROR_IDENTIFIER_ORDER_NOT_PLACED => [
+            RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_ORDER_NOT_PLACED,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+            RestErrorMessageTransfer::DETAIL => self::RESPONSE_DETAILS_ORDER_NOT_PLACED,
+        ],
+        SharedCheckoutRestApiConfig::ERROR_IDENTIFIER_CART_IS_EMPTY => [
+            RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_CART_IS_EMPTY,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+            RestErrorMessageTransfer::DETAIL => self::RESPONSE_DETAILS_CART_IS_EMPTY,
+        ],
+        SharedCheckoutRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND => [
+            RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_CART_NOT_FOUND,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+            RestErrorMessageTransfer::DETAIL => self::RESPONSE_DETAILS_CART_NOT_FOUND,
+        ],
+        SharedCheckoutRestApiConfig::ERROR_IDENTIFIER_CHECKOUT_DATA_INVALID => [
+            RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_CHECKOUT_DATA_INVALID,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+            RestErrorMessageTransfer::DETAIL => self::RESPONSE_DETAILS_CHECKOUT_DATA_INVALID,
+        ],
+    ];
 
     /**
      * @param string $paymentMethodName
@@ -73,5 +108,13 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     public function getPaymentProviderMethodToStateMachineMapping(): array
     {
         return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getErrorIdentifierToRestErrorMapping(): array
+    {
+        return static::ERROR_IDENTIFIER_TO_REST_ERROR_MAPPING;
     }
 }

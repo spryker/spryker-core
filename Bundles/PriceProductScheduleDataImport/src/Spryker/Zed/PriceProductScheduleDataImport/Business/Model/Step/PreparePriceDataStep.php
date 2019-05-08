@@ -7,14 +7,19 @@
 
 namespace Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step;
 
+use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProductScheduleDataSetInterface;
 
 class PreparePriceDataStep implements DataImportStepInterface
 {
+    protected const WRONG_PRICE_EXCEPTION_MESSAGE = 'Price "%s" is wrong';
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
      *
      * @return void
      */
@@ -29,5 +34,29 @@ class PreparePriceDataStep implements DataImportStepInterface
             empty($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS])
                 ? null
                 : (int)$dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS];
+
+        if (!$this->isPriceValid($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET])) {
+            throw new InvalidDataException(sprintf(
+                static::WRONG_PRICE_EXCEPTION_MESSAGE,
+                $dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_NET]
+            ));
+        }
+
+        if (!$this->isPriceValid($dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS])) {
+            throw new InvalidDataException(sprintf(
+                static::WRONG_PRICE_EXCEPTION_MESSAGE,
+                $dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_GROSS]
+            ));
+        }
+    }
+
+    /**
+     * @param int|null $price
+     *
+     * @return bool
+     */
+    protected function isPriceValid(?int $price): bool
+    {
+        return $price === null || ($price !== null && $price > 0);
     }
 }

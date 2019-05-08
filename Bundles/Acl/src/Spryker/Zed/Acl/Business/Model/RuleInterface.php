@@ -54,7 +54,7 @@ interface RuleInterface
      * @param string $controller
      * @param string $action
      *
-     * @return \Generated\Shared\Transfer\RuleTransfer
+     * @return \Generated\Shared\Transfer\RulesTransfer
      */
     public function findByRoles(
         RolesTransfer $roles,
@@ -77,7 +77,7 @@ interface RuleInterface
     /**
      * @param int $idGroup
      *
-     * @return \Generated\Shared\Transfer\RuleTransfer
+     * @return \Generated\Shared\Transfer\RulesTransfer
      */
     public function getRulesForGroupId($idGroup);
 

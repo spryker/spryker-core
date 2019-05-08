@@ -99,7 +99,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
             $quoteTransfer = $this->guestCartReader->getCustomerQuote($restRequest)
                 ?? $this->guestCartCreator->createQuoteTransfer($restRequest);
 
-            return $this->addItemToQuote($quoteTransfer, $restCartItemsAttributesTransfer);
+            return $this->addItemToQuote($quoteTransfer, $restCartItemsAttributesTransfer, $restRequest);
         }
 
         $quoteResponseTransfer = $this->guestCartReader->getQuoteTransferByUuid($parentResource->getId(), $restRequest);
@@ -107,16 +107,17 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
             return $this->guestCartRestResponseBuilder->createGuestCartNotFoundErrorRestResponse();
         }
 
-        return $this->addItemToQuote($quoteResponseTransfer->getQuoteTransfer(), $restCartItemsAttributesTransfer);
+        return $this->addItemToQuote($quoteResponseTransfer->getQuoteTransfer(), $restCartItemsAttributesTransfer, $restRequest);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addItemToQuote(QuoteTransfer $quoteTransfer, RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): RestResponseInterface
+    protected function addItemToQuote(QuoteTransfer $quoteTransfer, RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer, RestRequestInterface $restRequest): RestResponseInterface
     {
         $this->quoteClient->setQuote($quoteTransfer);
         $quoteTransfer = $this->cartClient->addItem(
@@ -126,6 +127,10 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
         $errors = $this->zedRequestClient->getLastResponseErrorMessages();
         if (count($errors) > 0) {
             return $this->guestCartRestResponseBuilder->createGuestCartErrorRestResponseFromErrorMessageTransfer($errors);
+        }
+
+        if (!$quoteTransfer->getUuid()) {
+            $quoteTransfer = $this->guestCartReader->getCustomerQuote($restRequest);
         }
 
         return $this->guestCartRestResponseBuilder->createGuestCartRestResponse($quoteTransfer);

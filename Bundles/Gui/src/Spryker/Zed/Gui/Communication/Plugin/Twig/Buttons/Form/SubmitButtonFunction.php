@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Form;
 
 use Spryker\Shared\Twig\TwigFunction;
-use Twig_Environment;
+use Twig\Environment;
 
 class SubmitButtonFunction extends TwigFunction
 {
@@ -25,7 +25,7 @@ class SubmitButtonFunction extends TwigFunction
      */
     protected function getFunction()
     {
-        return function (Twig_Environment $twigEnvironment, $value, array $attr = []) {
+        return function (Environment $twigEnvironment, $value, array $attr = []) {
             return $twigEnvironment->render(
                 '@Gui/Form/button/submit_button.twig',
                 [

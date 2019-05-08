@@ -130,7 +130,8 @@ class CategoryTable extends AbstractTable
                 ->endUse()
             ->endUse()
             ->addOr('parent_node.id_category_node');
-        $query->having('node.is_main = ?', true)
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryQuery $query */
+        $query = $query->having('node.is_main = ?', true)
             ->withColumn('count(node.fk_category)', 'count')
             ->withColumn('attr.name', static::COL_NAME)
             ->withColumn('tpl.name', static::COL_TEMPLATE)

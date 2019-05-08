@@ -19,6 +19,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Url;
 
+/**
+ * @method \Spryker\Zed\ContentBannerGui\Communication\ContentBannerGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig getConfig()
+ */
 class BannerContentTermForm extends AbstractType
 {
     public const FIELD_TITLE = 'title';
@@ -47,7 +51,7 @@ class BannerContentTermForm extends AbstractType
                 if ($localizedContentTransfer->getFkLocale() === null) {
                     return [Constraint::DEFAULT_GROUP];
                 }
-                /** @var \Generated\Shared\Transfer\ContentBannerTransfer $contentBanner */
+                /** @var \Generated\Shared\Transfer\ContentBannerTermTransfer $contentBanner */
                 $contentBanner = $form->getNormData();
 
                 foreach ($contentBanner->toArray() as $field) {

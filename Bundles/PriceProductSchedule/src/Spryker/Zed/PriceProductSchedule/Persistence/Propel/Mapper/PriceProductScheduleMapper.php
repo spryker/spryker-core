@@ -81,15 +81,30 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         SpyPriceProductSchedule $priceProductScheduleEntity
     ): SpyPriceProductSchedule {
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
+
+        if ($priceProductTransfer === null) {
+            return $priceProductScheduleEntity;
+        }
+
         $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        if ($moneyValueTransfer === null) {
+            return $priceProductScheduleEntity;
+        }
+
+        if ($priceProductTransfer->getIdProductAbstract() !== null) {
+            $priceProductScheduleEntity->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
+        }
+
+        if ($priceProductTransfer->getIdProduct() !== null) {
+            $priceProductScheduleEntity->setFkProduct($priceProductTransfer->getIdProduct());
+        }
 
         return $priceProductScheduleEntity
             ->setFkCurrency($moneyValueTransfer->getFkCurrency())
             ->setFkStore($moneyValueTransfer->getFkStore())
             ->setFkPriceType($priceProductTransfer->getPriceType()->getIdPriceType())
-            ->setFkProduct($priceProductTransfer->getIdProduct())
-            ->setFkProductAbstract($priceProductTransfer->getIdProductAbstract())
-            ->setFkPriceProductScheduleList($priceProductScheduleTransfer->getPriceProductScheduleList()->getIdPriceProductScheduleList())
+            ->setFkPriceProductScheduleList((string)$priceProductScheduleTransfer->getPriceProductScheduleList()->getIdPriceProductScheduleList())
             ->setNetPrice($moneyValueTransfer->getNetAmount())
             ->setGrossPrice($moneyValueTransfer->getGrossAmount())
             ->setActiveFrom($priceProductScheduleTransfer->getActiveFrom())
@@ -102,8 +117,9 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
-    public function mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers(array $priceProductScheduleEntities): array
-    {
+    public function mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers(
+        array $priceProductScheduleEntities
+    ): array {
         $productPriceScheduleCollection = [];
 
         foreach ($priceProductScheduleEntities as $priceProductScheduleEntity) {

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductBundleDiscontinued;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 
 interface ProductBundleDiscontinuedWriterInterface
@@ -17,4 +18,11 @@ interface ProductBundleDiscontinuedWriterInterface
      * @return void
      */
     public function discontinueRelatedBundle(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function discontinueProductBundleByBundledProducts(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

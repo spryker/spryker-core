@@ -27,10 +27,12 @@ class PriceTypeToIdPriceTypeStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $priceProductType = $dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_TYPE];
-        if (!isset($this->idPriceProductTypeCache[$priceProductType])) {
+        $priceProductTypeName = $dataSet[PriceProductScheduleDataSetInterface::KEY_PRICE_TYPE];
+        $priceProductTypeName = $this->preparePriceProductTypeName($priceProductTypeName);
+
+        if (!isset($this->idPriceProductTypeCache[$priceProductTypeName])) {
             $priceTypeEntity = $this->createSpyPriceTypeQuery()
-                ->filterByName($priceProductType)
+                ->filterByName($priceProductTypeName)
                 ->findOneOrCreate();
 
             if ($priceTypeEntity->isNew() || $priceTypeEntity->isModified()) {
@@ -38,10 +40,10 @@ class PriceTypeToIdPriceTypeStep implements DataImportStepInterface
                 $priceTypeEntity->save();
             }
 
-            $this->idPriceProductTypeCache[$priceProductType] = $priceTypeEntity->getIdPriceType();
+            $this->idPriceProductTypeCache[$priceProductTypeName] = $priceTypeEntity->getIdPriceType();
         }
 
-        $dataSet[PriceProductScheduleDataSetInterface::FK_PRICE_TYPE] = $this->idPriceProductTypeCache[$priceProductType];
+        $dataSet[PriceProductScheduleDataSetInterface::FK_PRICE_TYPE] = $this->idPriceProductTypeCache[$priceProductTypeName];
     }
 
     /**
@@ -50,5 +52,15 @@ class PriceTypeToIdPriceTypeStep implements DataImportStepInterface
     protected function createSpyPriceTypeQuery(): SpyPriceTypeQuery
     {
         return SpyPriceTypeQuery::create();
+    }
+
+    /**
+     * @param string $priceProductTypeName
+     *
+     * @return string
+     */
+    protected function preparePriceProductTypeName(string $priceProductTypeName): string
+    {
+        return trim($priceProductTypeName);
     }
 }

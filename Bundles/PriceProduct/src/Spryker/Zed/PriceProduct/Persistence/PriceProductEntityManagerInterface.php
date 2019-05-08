@@ -44,13 +44,6 @@ interface PriceProductEntityManagerInterface
     public function deletePriceProductById(int $idPriceProduct): void;
 
     /**
-     * @param int $idPriceProductDefault
-     *
-     * @return void
-     */
-    public function deletePriceProductDefaultById(int $idPriceProductDefault): void;
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return void
