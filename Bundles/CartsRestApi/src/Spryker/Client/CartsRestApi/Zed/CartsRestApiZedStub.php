@@ -51,7 +51,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     public function getQuoteCollectionByCustomerReference(CustomerTransfer $customerTransfer): QuoteCollectionResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer */
-        $quoteCollectionResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/get-customer-quote-collection', $customerTransfer);
+        $quoteCollectionResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/get-quote-collection-by-customer-reference', $customerTransfer);
 
         return $quoteCollectionResponseTransfer;
     }
