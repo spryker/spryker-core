@@ -1,13 +1,13 @@
 # PriceProductScheduleGui Module
-[![Build Status](https://travis-ci.org/spryker/product-list-gui.svg)](https://travis-ci.org/spryker/product-list-gui)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/product-list-gui/badge.svg)](https://coveralls.io/github/spryker/product-list-gui)
+[![Build Status](https://travis-ci.org/spryker/price-product-schedule-gui.svg)](https://travis-ci.org/spryker/price-product-schedule-gui)
+[![Coverage Status](https://coveralls.io/repos/github/spryker/price-product-schedule-gui/badge.svg)](https://coveralls.io/github/spryker/price-product-schedule-gui)
 
-PriceProductScheduleGui is a user interface module to manage product lists in the Zed Administration Interface.
+PriceProductScheduleGui is a user interface module to import price product scheduled list in the Zed Administration Interface.
 
 ## Installation
 
 ```
-composer require spryker/product-list-gui
+composer require spryker/price-product-schedule-gui
 ```
 
 ## Documentation
