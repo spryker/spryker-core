@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StorageRedisConfig extends AbstractBundleConfig
 {
+    protected const RDB_DUMP_PATH = '/var/lib/redis/dump.rdb';
+
     /**
      * @return int|null
      */
@@ -27,6 +29,6 @@ class StorageRedisConfig extends AbstractBundleConfig
      */
     public function getRdbDumpPath(): string
     {
-        return '/var/lib/redis/dump.rdb';
+        return static::RDB_DUMP_PATH;
     }
 }

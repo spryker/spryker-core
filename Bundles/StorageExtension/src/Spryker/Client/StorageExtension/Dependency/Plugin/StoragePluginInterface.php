@@ -19,8 +19,6 @@ interface StoragePluginInterface
      * @param mixed $value
      * @param int|null $ttl
      *
-     * @throws \Exception
-     *
      * @return mixed
      */
     public function set($key, $value, $ttl = null);

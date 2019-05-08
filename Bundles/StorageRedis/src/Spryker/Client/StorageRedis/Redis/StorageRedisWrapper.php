@@ -194,7 +194,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
         $this->addWriteAccessStats($key);
         if (!$result) {
             throw new StorageRedisException(
-                'Could not set redisKey: "' . $key . '" with value: "' . json_encode($value) . '"'
+                sprintf('Could not set redisKey: "%s" with value: "%s"', $key, json_encode($value))
             );
         }
 
@@ -231,8 +231,11 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
 
         if (!$result) {
             throw new StorageRedisException(
-                'could not set redisKeys for items: "[' . implode(',', array_keys($items))
-                . ']" with values: "[' . implode(',', array_values($items)) . ']"'
+                sprintf(
+                    'Could not set redisKeys for items: "[%s]" with values: "[%s]"',
+                    implode(',', array_keys($items)),
+                    implode(',', array_values($items))
+                )
             );
         }
     }

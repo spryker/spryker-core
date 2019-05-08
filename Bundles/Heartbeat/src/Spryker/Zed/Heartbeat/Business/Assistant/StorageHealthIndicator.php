@@ -46,9 +46,9 @@ class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIn
     private function checkWriteToStorage()
     {
         try {
-            $this->storageClient->set(self::KEY_HEARTBEAT, 'ok');
+            $this->storageClient->set(static::KEY_HEARTBEAT, 'ok');
         } catch (Exception $e) {
-            $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_STORAGE);
+            $this->addDysfunction(static::HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_STORAGE);
             $this->addDysfunction($e->getMessage());
         }
     }
@@ -59,9 +59,9 @@ class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIn
     private function checkReadFromStorage()
     {
         try {
-            $this->storageClient->get(self::KEY_HEARTBEAT);
+            $this->storageClient->get(static::KEY_HEARTBEAT);
         } catch (Exception $e) {
-            $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_READ_FROM_STORAGE);
+            $this->addDysfunction(static::HEALTH_MESSAGE_UNABLE_TO_READ_FROM_STORAGE);
             $this->addDysfunction($e->getMessage());
         }
     }
