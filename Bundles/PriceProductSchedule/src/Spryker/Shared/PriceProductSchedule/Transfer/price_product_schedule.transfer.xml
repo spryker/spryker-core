@@ -114,12 +114,12 @@
         <property name="message" type="string"/>
     </transfer>
 
-    <transfer name="PriceProductScheduleListImportResponseTransfer">
+    <transfer name="PriceProductScheduleListImportResponse">
         <property name="errors" type="PriceProductScheduleListImportError[]" singular="error"/>
         <property name="isSuccess" type="bool"/>
     </transfer>
 
-    <transfer name="PriceProductScheduleListResponseTransfer">
+    <transfer name="PriceProductScheduleListResponse">
         <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
         <property name="errors" type="PriceProductScheduleListError[]" singular="error"/>
         <property name="isSuccess" type="bool"/>
