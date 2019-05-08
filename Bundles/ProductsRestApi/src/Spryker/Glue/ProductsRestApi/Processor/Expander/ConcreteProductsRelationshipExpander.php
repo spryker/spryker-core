@@ -62,11 +62,11 @@ class ConcreteProductsRelationshipExpander implements ConcreteProductsRelationsh
     public function addResourceRelationshipsByProductConcreteIds(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
-            $skuProductConcretes = $this->findProductConcreteIds($resource->getAttributes());
-            if (!$skuProductConcretes) {
+            $productConcreteSkus = $this->findProductConcreteSkus($resource->getAttributes());
+            if (!$productConcreteSkus) {
                 continue;
             }
-            foreach ($skuProductConcretes as $skuProductConcrete) {
+            foreach ($productConcreteSkus as $skuProductConcrete) {
                 $concreteProductsResource = $this->concreteProductsReader->findProductConcreteBySku($skuProductConcrete, $restRequest);
                 if ($concreteProductsResource) {
                     $resource->addRelationship($concreteProductsResource);
@@ -82,7 +82,7 @@ class ConcreteProductsRelationshipExpander implements ConcreteProductsRelationsh
      *
      * @return array|null
      */
-    protected function findProductConcreteIds(?AbstractTransfer $attributes): ?array
+    protected function findProductConcreteSkus(?AbstractTransfer $attributes): ?array
     {
         if ($attributes && !empty($attributes[static::KEY_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS])) {
             return $attributes[static::KEY_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS];
