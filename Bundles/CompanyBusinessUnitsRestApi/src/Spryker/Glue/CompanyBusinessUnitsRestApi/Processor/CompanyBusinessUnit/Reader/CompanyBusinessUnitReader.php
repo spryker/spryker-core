@@ -76,7 +76,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         }
 
         $companyBusinessUnitCollection = $this->companyBusinessUnitClient->getCompanyBusinessUnitCollection(
-            (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompany($restRequest->getRestUser()->getIdCompany())
+            (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())
         );
 
         if (!$companyBusinessUnitCollection->getCompanyBusinessUnits()->count()) {
