@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Spryker\Zed\CmsGui\Communication\Exception\CmsGlossaryNotFoundException;
+use Spryker\Zed\CmsGui\Communication\Expander\CmsGlossaryExpanderInterface;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 
@@ -31,11 +32,18 @@ class CmsGlossaryFormTypeDataProvider
     protected $cmsFacade;
 
     /**
-     * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
+     * @var \Spryker\Zed\CmsGui\Communication\Expander\CmsGlossaryExpanderInterface
      */
-    public function __construct(CmsGuiToCmsInterface $cmsFacade)
+    protected $cmsGlossaryExpander;
+
+    /**
+     * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
+     * @param \Spryker\Zed\CmsGui\Communication\Expander\CmsGlossaryExpanderInterface $cmsGlossaryExpander
+     */
+    public function __construct(CmsGuiToCmsInterface $cmsFacade, CmsGlossaryExpanderInterface $cmsGlossaryExpander)
     {
         $this->cmsFacade = $cmsFacade;
+        $this->cmsGlossaryExpander = $cmsGlossaryExpander;
     }
 
     /**
@@ -59,6 +67,7 @@ class CmsGlossaryFormTypeDataProvider
     public function getData($idCmsPage)
     {
         $cmsGlossaryTransfer = $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
+        $cmsGlossaryTransfer = $this->cmsGlossaryExpander->executeAfterFindPlugins($cmsGlossaryTransfer);
 
         if (!$cmsGlossaryTransfer) {
             throw new CmsGlossaryNotFoundException(

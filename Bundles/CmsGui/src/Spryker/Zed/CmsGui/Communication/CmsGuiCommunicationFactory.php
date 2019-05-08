@@ -176,7 +176,10 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsGlossaryFormTypeDataProvider()
     {
-        return new CmsGlossaryFormTypeDataProvider($this->getCmsFacade());
+        return new CmsGlossaryFormTypeDataProvider(
+            $this->getCmsFacade(),
+            $this->createCmsGlossaryExpander()
+        );
     }
 
     /**

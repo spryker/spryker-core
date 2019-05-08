@@ -42,8 +42,6 @@ class CreateGlossaryController extends AbstractController
             );
         }
 
-        $cmsGlossaryTransfer = $this->getFactory()->createCmsGlossaryExpander()->executeAfterFindPlugins($cmsGlossaryTransfer);
-
         $cmsGlossaryFormDataProvider = $this->getFactory()
             ->createCmsGlossaryFormTypeDataProvider();
 

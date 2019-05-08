@@ -9,6 +9,8 @@ namespace Spryker\Zed\ContentGui\Communication;
 
 use Generated\Shared\Transfer\ContentTransfer;
 use Orm\Zed\Content\Persistence\SpyContentQuery;
+use Spryker\Zed\ContentGui\Communication\Converter\CmsGui\CmsGlossaryConverter;
+use Spryker\Zed\ContentGui\Communication\Converter\CmsGui\CmsGlossaryConverterInterface;
 use Spryker\Zed\ContentGui\Communication\Form\ContentForm;
 use Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProvider;
 use Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProviderInterface;
@@ -59,6 +61,18 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->createContentResolver(),
             $this->getContentFacade(),
             $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGui\Communication\Converter\CmsGui\CmsGlossaryConverterInterface
+     */
+    public function createCmsGlossaryExpander(): CmsGlossaryConverterInterface
+    {
+        return new CmsGlossaryConverter(
+            $this->getContentEditorPlugins(),
+            $this->getContentFacade(),
+            $this->getConfig()
         );
     }
 

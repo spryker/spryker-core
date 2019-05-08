@@ -177,7 +177,7 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsGlossaryAfterFindPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CMS_GLOSSARY_BEFORE_SAVE] = function () {
+        $container[static::PLUGINS_CMS_GLOSSARY_AFTER_FIND] = function () {
             return $this->getCmsGlossaryAfterFindPlugins();
         };
 

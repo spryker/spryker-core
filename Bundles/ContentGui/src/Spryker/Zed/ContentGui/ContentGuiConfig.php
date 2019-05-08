@@ -11,4 +11,24 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ContentGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @return string
+     */
+    public function getContentWidgetTemplatePath(): string
+    {
+        return $this->getModuleRoot()
+            . DIRECTORY_SEPARATOR . 'Presentation/_template/_content_widget.twig';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getModuleRoot(): string
+    {
+        $moduleRoot = realpath(
+            __DIR__
+        );
+
+        return $moduleRoot . DIRECTORY_SEPARATOR;
+    }
 }
