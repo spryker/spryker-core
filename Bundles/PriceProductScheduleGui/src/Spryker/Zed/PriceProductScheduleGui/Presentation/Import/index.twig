@@ -1,0 +1,36 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Import new scheduled prices' | trans %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            <a href="#">Learn about file format on our documentation</a>
+            <br>
+            {{ form_start(importForm) }}
+
+            {{ form_row(importForm.priceProductScheduleName) }}
+            {{ form_row(importForm.fileUpload) }}
+
+            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Import' | trans }}"/>
+
+            {{ form_end(importForm) }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

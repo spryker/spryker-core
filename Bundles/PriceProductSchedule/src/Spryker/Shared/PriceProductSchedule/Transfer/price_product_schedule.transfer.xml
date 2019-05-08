@@ -18,7 +18,7 @@
         <property name="skuProduct" type="string"/>
         <property name="priceTypeName" type="string"/>
         <property name="storeName" type="string"/>
-        <property name="currencyName" type="string"/>
+        <property name="currencyCode" type="string"/>
         <property name="activeFrom" type="string"/>
         <property name="activeTo" type="string"/>
         <property name="netAmount" type="int"/>
@@ -89,7 +89,7 @@
         <property name="skuProduct" type="string"/>
         <property name="priceTypeName" type="string"/>
         <property name="storeName" type="string"/>
-        <property name="currencyName" type="string"/>
+        <property name="currencyCode" type="string"/>
         <property name="activeFrom" type="string"/>
         <property name="activeTo" type="string"/>
         <property name="netAmount" type="int"/>

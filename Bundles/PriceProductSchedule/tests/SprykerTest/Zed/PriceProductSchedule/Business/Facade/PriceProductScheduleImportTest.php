@@ -211,7 +211,7 @@ class PriceProductScheduleImportTest extends Unit
             $productConcreteTransfer = $this->tester->haveProduct();
 
             $priceProductScheduleImportData[] = $this->tester->havePriceProductScheduleImport([
-                PriceProductScheduleImportTransfer::CURRENCY_NAME => $currencyTransfer->getCode(),
+                PriceProductScheduleImportTransfer::CURRENCY_CODE => $currencyTransfer->getCode(),
                 PriceProductScheduleImportTransfer::SKU_PRODUCT => $productConcreteTransfer->getSku(),
                 PriceProductScheduleImportTransfer::PRICE_TYPE_NAME => $priceTypeTransfer->getName(),
                 PriceProductScheduleImportTransfer::STORE_NAME => $storeTransfer->getName(),
@@ -263,7 +263,7 @@ class PriceProductScheduleImportTest extends Unit
             'import price product schedule with incorrect currency name' => [
                 [
                     [
-                        PriceProductScheduleImportTransfer::CURRENCY_NAME => 'BAR',
+                        PriceProductScheduleImportTransfer::CURRENCY_CODE => 'BAR',
                     ],
                 ],
             ],
@@ -304,7 +304,7 @@ class PriceProductScheduleImportTest extends Unit
             'import price product schedule with duplicate schedule' => [
                 [
                     [
-                        PriceProductScheduleImportTransfer::CURRENCY_NAME => 'CUR',
+                        PriceProductScheduleImportTransfer::CURRENCY_CODE => 'CUR',
                         PriceProductScheduleImportTransfer::SKU_PRODUCT => 'SKU',
                         PriceProductScheduleImportTransfer::PRICE_TYPE_NAME => 'PRICE_TYPE_NAME',
                         PriceProductScheduleImportTransfer::STORE_NAME => 'AT',

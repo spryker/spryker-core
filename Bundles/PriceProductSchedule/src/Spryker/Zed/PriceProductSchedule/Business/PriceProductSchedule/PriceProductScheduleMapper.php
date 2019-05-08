@@ -19,6 +19,7 @@ use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPri
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
+use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 
 class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 {
@@ -72,9 +73,9 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
     public function mapPriceProductScheduleImportTransferToPriceProductScheduleTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
@@ -94,9 +95,9 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     protected function mapPriceProductScheduleImportTransferToPriceProductTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
@@ -110,6 +111,15 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         $priceTypeTransfer = $this->priceProductFacade->findPriceTypeByName(
             $priceProductScheduleImportTransfer->getPriceTypeName()
         );
+
+        if ($priceTypeTransfer === null) {
+            throw new PriceProductScheduleListImportException(
+                sprintf(
+                    'Price type was not found by provided sku "%s"',
+                    $priceProductScheduleImportTransfer->getPriceTypeName()
+                )
+            );
+        }
 
         $priceProductDimensionTransfer = $this->getDefaultPriceProductDimension();
 
@@ -125,6 +135,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             $productAbstractId = $this->productFacade->findProductAbstractIdBySku(
                 $priceProductScheduleImportTransfer->getSkuProductAbstract()
             );
+
             if ($productAbstractId === null) {
                 throw new PriceProductScheduleListImportException(
                     sprintf(
@@ -162,29 +173,25 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     *
      * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
      *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
     protected function mapPriceProductScheduleEntityToMoneyValueTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
         MoneyValueTransfer $moneyValueTransfer
     ): MoneyValueTransfer {
         try {
-            $currencyTransfer = $this->currencyFacade->fromIsoCode($priceProductScheduleImportTransfer->getCurrencyName());
+            $currencyTransfer = $this->currencyFacade->fromIsoCode($priceProductScheduleImportTransfer->getCurrencyCode());
         } catch (CurrencyNotFoundException $e) {
             throw new PriceProductScheduleListImportException($e);
         }
 
-        $storeTransfer = $this->storeFacade->getStoreByName($priceProductScheduleImportTransfer->getStoreName());
-
-        if ($storeTransfer === null) {
-            throw new PriceProductScheduleListImportException(
-                sprintf(
-                    'Store was not found by provided name "%s"',
-                    $priceProductScheduleImportTransfer->getStoreName()
-                )
-            );
+        try {
+            $storeTransfer = $this->storeFacade->getStoreByName($priceProductScheduleImportTransfer->getStoreName());
+        } catch (StoreNotFoundException $e) {
+            throw new PriceProductScheduleListImportException($e);
         }
 
         return $moneyValueTransfer

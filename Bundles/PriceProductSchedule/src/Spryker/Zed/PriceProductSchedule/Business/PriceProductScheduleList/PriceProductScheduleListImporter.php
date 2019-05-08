@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList;
 
+use DateTime;
+use Exception;
 use Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
@@ -73,13 +76,21 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
         );
 
         foreach ($priceProductScheduledListImportRequest->getItems() as $priceProductScheduleImportTransfer) {
-            if (is_int($priceProductScheduleImportTransfer->getGrossAmount()) === false
-                || is_int($priceProductScheduleImportTransfer->getNetAmount()) == false) {
-                $priceProductScheduledListImportResponse->setIsSuccess(false);
+            if ($this->isPricesValid($priceProductScheduleImportTransfer) == false) {
                 $priceProductScheduledListImportResponse->addError(
                     (new PriceProductScheduleListImportErrorTransfer())
                         ->setPriceProductScheduleImport($priceProductScheduleImportTransfer)
-                        ->setMessage('Gross and Net Amount must be integer')
+                        ->setMessage('Gross and Net Amount must be integer.')
+                );
+
+                continue;
+            }
+
+            if ($this->isDatesValid($priceProductScheduleImportTransfer) == false) {
+                $priceProductScheduledListImportResponse->addError(
+                    (new PriceProductScheduleListImportErrorTransfer())
+                        ->setPriceProductScheduleImport($priceProductScheduleImportTransfer)
+                        ->setMessage('Dates must be in right format and "to" date must be greater than "from".')
                 );
 
                 continue;
@@ -89,16 +100,26 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
                 $priceProductScheduleImportTransfer
             );
 
-            $priceProductScheduleTransferCount = $this->priceProductScheduleRepository->findCountPriceProductScheduleByCriteriaFilter(
-                $priceProductScheduleCriteriaFilterTransfer
-            );
+            try {
+                $priceProductScheduleTransferCount = $this->priceProductScheduleRepository->findCountPriceProductScheduleByCriteriaFilter(
+                    $priceProductScheduleCriteriaFilterTransfer
+                );
+            } catch (PropelException $exception) {
+                $priceProductScheduledListImportResponse->addError(
+                    (new PriceProductScheduleListImportErrorTransfer())
+                        ->setPriceProductScheduleImport($priceProductScheduleImportTransfer)
+                        ->setMessage('Some error happened during insert into the database. Please make sure that data is valid.')
+                );
+
+                continue;
+            }
 
             if ($priceProductScheduleTransferCount) {
                 $priceProductScheduledListImportResponse->setIsSuccess(false);
                 $priceProductScheduledListImportResponse->addError(
                     (new PriceProductScheduleListImportErrorTransfer())
                         ->setPriceProductScheduleImport($priceProductScheduleImportTransfer)
-                        ->setMessage('Scheduled price already exists')
+                        ->setMessage('Scheduled price already exists.')
                 );
 
                 continue;
@@ -145,9 +166,37 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
             ->setPriceTypeName($priceProductScheduleImportTransfer->getPriceTypeName())
             ->setGrossAmount($priceProductScheduleImportTransfer->getGrossAmount())
             ->setNetAmount($priceProductScheduleImportTransfer->getNetAmount())
-            ->setActiveTo($priceProductScheduleImportTransfer->getActiveTo())
-            ->setActiveFrom($priceProductScheduleImportTransfer->getActiveFrom())
+            ->setActiveTo(new DateTime($priceProductScheduleImportTransfer->getActiveTo()))
+            ->setActiveFrom(new DateTime($priceProductScheduleImportTransfer->getActiveFrom()))
             ->setStoreName($priceProductScheduleImportTransfer->getStoreName())
-            ->setCurrencyName($priceProductScheduleImportTransfer->getCurrencyName());
+            ->setCurrencyCode($priceProductScheduleImportTransfer->getCurrencyCode());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+     *
+     * @return bool
+     */
+    protected function isPricesValid(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
+    {
+        return is_int($priceProductScheduleImportTransfer->getGrossAmount()) !== false
+            && is_int($priceProductScheduleImportTransfer->getNetAmount()) !== false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+     *
+     * @return bool
+     */
+    protected function isDatesValid(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
+    {
+        try {
+            $activeFrom = new DateTime($priceProductScheduleImportTransfer->getActiveFrom());
+            $activeTo = new DateTime($priceProductScheduleImportTransfer->getActiveTo());
+
+            return $activeTo > $activeFrom;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }
