@@ -54,7 +54,7 @@ class ProductBundleStockWriterTest extends Unit
         $bundleQuantity = 2;
         $idRelatedProductId = 2;
         $relatedProductSku = 'sku-321';
-        $relatedProductStock = 10.0;
+        $relatedProductStock = 10;
 
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandlerMock();
         $productBundleAvailabilityHandlerMock->expects($this->once())->method('updateBundleAvailability');
@@ -77,10 +77,10 @@ class ProductBundleStockWriterTest extends Unit
         $this->assertCount(2, $stocks);
 
         $stockTransfer = $stocks[0];
-        $this->assertSame($relatedProductStock / $bundleQuantity, $stockTransfer->getQuantity());
+        $this->assertEquals($relatedProductStock / $bundleQuantity, $stockTransfer->getQuantity());
 
         $stockTransfer = $stocks[1];
-        $this->assertSame($relatedProductStock / $bundleQuantity, $stockTransfer->getQuantity());
+        $this->assertEquals($relatedProductStock / $bundleQuantity, $stockTransfer->getQuantity());
     }
 
     /**
@@ -110,10 +110,10 @@ class ProductBundleStockWriterTest extends Unit
         $this->assertCount(2, $stocks);
 
         $stockTransfer = $stocks[0];
-        $this->assertSame(0.0, $stockTransfer->getQuantity());
+        $this->assertEquals(0, $stockTransfer->getQuantity());
 
         $stockTransfer = $stocks[1];
-        $this->assertSame(0.0, $stockTransfer->getQuantity());
+        $this->assertEquals(0, $stockTransfer->getQuantity());
     }
 
     /**
