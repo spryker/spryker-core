@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList;
 
 use DateTime;
-use Exception;
 use Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
@@ -20,6 +19,7 @@ use Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleList
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface;
+use Throwable;
 
 class PriceProductScheduleListImporter implements PriceProductScheduleListImporterInterface
 {
@@ -195,7 +195,7 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
             $activeTo = new DateTime($priceProductScheduleImportTransfer->getActiveTo());
 
             return $activeTo > $activeFrom;
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return false;
         }
     }
