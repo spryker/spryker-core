@@ -89,10 +89,6 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        if (!$this->hasCustomerWritePermission($quoteUpdateRequestTransfer)) {
-            return (new QuoteResponseTransfer())->setIsSuccessful(false);
-        }
-
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $quoteUpdateRequestTransfer->getIdQuote(),
             $quoteUpdateRequestTransfer->getCustomer()
@@ -113,21 +109,48 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        if (!$this->hasCustomerWritePermission($quoteUpdateRequestTransfer)) {
-            return (new QuoteResponseTransfer())->setIsSuccessful(false);
-        }
-
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $quoteUpdateRequestTransfer->getIdQuote(),
             $quoteUpdateRequestTransfer->getCustomer()
         );
+
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->quoteResponseExpander->expand($quoteResponseTransfer);
         }
+
+        if (!$this->isQuoteOwner($quoteResponseTransfer->getQuoteTransfer()) && !$this->hasCustomerWritePermission($quoteUpdateRequestTransfer)) {
+            $quoteResponseTransfer = (new QuoteResponseTransfer())
+                ->setCustomer($quoteResponseTransfer->getCustomer())
+                ->setIsSuccessful(false);
+
+            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+        }
+
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->fromArray($quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->modifiedToArray(), true);
 
         return $this->quoteItemOperation->reloadItems($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceQuoteByCustomerAndStore(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = $this->quoteFacade->findQuoteByCustomerAndStore(
+            $quoteTransfer->getCustomer(),
+            $quoteTransfer->getStore()
+        );
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+
+        $quoteTransfer->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote());
+
+        return $this->quoteFacade->updateQuote($quoteTransfer);
     }
 
     /**
@@ -158,5 +181,17 @@ class QuoteWriter implements QuoteWriterInterface
             ->getCompanyUserTransfer();
 
         return $companyUserTransfer ? $companyUserTransfer->getIdCompanyUser() : null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteOwner(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->requireCustomer()
+                ->getCustomer()
+                ->getCustomerReference() === $quoteTransfer->getCustomerReference();
     }
 }

@@ -11,7 +11,7 @@ interface StateUpdaterInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
-     * @param array $sourceStates
+     * @param string[] $sourceStates
      *
      * @return void
      */

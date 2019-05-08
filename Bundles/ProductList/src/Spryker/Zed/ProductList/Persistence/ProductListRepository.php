@@ -15,7 +15,6 @@ use Orm\Zed\ProductList\Persistence\Map\SpyProductListCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapperInterface;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
@@ -324,17 +323,9 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->filterByIdProductList($idProductList);
         $spyProductListEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 
-        return $this->getMapper()
-            ->mapEntityTransferToProductListTransfer($spyProductListEntityTransfer, $productListTransfer);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapperInterface
-     */
-    protected function getMapper(): ProductListMapperInterface
-    {
         return $this->getFactory()
-            ->createProductListMapper();
+            ->createProductListMapper()
+            ->mapEntityTransferToProductListTransfer($spyProductListEntityTransfer, $productListTransfer);
     }
 
     /**

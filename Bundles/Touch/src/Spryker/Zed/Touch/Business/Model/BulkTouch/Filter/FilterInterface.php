@@ -15,5 +15,5 @@ interface FilterInterface
      *
      * @return array
      */
-    public function filter(array $ids, $itemType);
+    public function filter(array $ids, string $itemType): array;
 }

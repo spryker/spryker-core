@@ -31,7 +31,7 @@ abstract class AbstractIdFilter implements FilterInterface
      *
      * @return array
      */
-    protected function getIdCollection($itemType, array $itemIdChunk)
+    protected function getIdCollection(string $itemType, array $itemIdChunk)
     {
         $touchQuery = $this->touchQueryContainer->queryTouchEntriesByItemTypeAndItemIds($itemType, $itemIdChunk);
 

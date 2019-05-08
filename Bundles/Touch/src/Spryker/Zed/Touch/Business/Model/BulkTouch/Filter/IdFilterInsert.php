@@ -17,7 +17,7 @@ class IdFilterInsert extends AbstractIdFilter
      *
      * @return array
      */
-    public function filter(array $ids, $itemType)
+    public function filter(array $ids, string $itemType): array
     {
         $filteredIds = [];
         $itemIdChunks = array_chunk($ids, self::CHUNK_SIZE);

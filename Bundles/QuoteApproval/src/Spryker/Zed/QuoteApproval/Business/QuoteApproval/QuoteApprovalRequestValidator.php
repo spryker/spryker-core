@@ -34,6 +34,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     protected const GLOSSARY_KEY_QUOTE_ALREADY_WAITING_FOR_APPROVAL = 'quote_approval.create.quote_already_waiting_for_approval';
     protected const GLOSSARY_KEY_ONLY_QUOTE_OWNER_CAN_SEND_APPROVAL_REQUEST = 'quote_approval.create.only_quote_owner_can_send_request';
     protected const GLOSSARY_KEY_DO_NOT_HAVE_PERMISSION_TO_CANCEL_APPROVAL_REQUEST = 'quote_approval.cancel.do_not_have_permission';
+    protected const GLOSSARY_KEY_CANT_SEND_FOR_APPROVE_EMPTY_QUOTE = 'quote_approval.create.cant_send_for_approve_empty_quote';
     /**
      * @var \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface
      */
@@ -89,6 +90,10 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     {
         $this->assertQuoteApprovalCreateRequestValid($quoteApprovalRequestTransfer);
         $quoteTransfer = $this->getQuoteById($quoteApprovalRequestTransfer->getIdQuote());
+
+        if (!$quoteTransfer->getItems()->count()) {
+            return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_CANT_SEND_FOR_APPROVE_EMPTY_QUOTE);
+        }
 
         if (!$this->isQuoteOwner($quoteTransfer, $quoteApprovalRequestTransfer->getRequesterCompanyUserId())) {
             return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_ONLY_QUOTE_OWNER_CAN_SEND_APPROVAL_REQUEST);

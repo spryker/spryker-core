@@ -51,6 +51,8 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $sharedQuoteCollectionTransfer = $this->findSharedCustomerQuotesByStore($customerTransfer, $storeTransfer);
+
+        $this->populateSharedQuoteCollectionWithCustomer($sharedQuoteCollectionTransfer, $customerTransfer);
         $quoteResponseTransfer->setSharedCustomerQuotes($sharedQuoteCollectionTransfer);
 
         if (!$quoteResponseTransfer->getQuoteTransfer()) {
@@ -97,5 +99,18 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
         }
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $sharedQuoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function populateSharedQuoteCollectionWithCustomer(QuoteCollectionTransfer $sharedQuoteCollectionTransfer, CustomerTransfer $customerTransfer): void
+    {
+        foreach ($sharedQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
+            $quoteTransfer->setCustomer($customerTransfer);
+        }
     }
 }

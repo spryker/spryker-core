@@ -34,18 +34,26 @@ class PermissionFinder implements PermissionFinderInterface
     protected $permissionClient;
 
     /**
+     * @var \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
+     */
+    protected $permissionStoragePlugins = [];
+
+    /**
      * @param array $permissionPlugins
      * @param \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface $permissionRepository
      * @param \Spryker\Client\Permission\PermissionClientInterface $permissionClient
+     * @param \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[] $permissionStoragePlugins
      */
     public function __construct(
         array $permissionPlugins,
         PermissionRepositoryInterface $permissionRepository,
-        PermissionClientInterface $permissionClient
+        PermissionClientInterface $permissionClient,
+        array $permissionStoragePlugins
     ) {
         $this->permissionPlugins = $this->indexPermissions($permissionPlugins);
         $this->permissionRepository = $permissionRepository;
         $this->permissionClient = $permissionClient;
+        $this->permissionStoragePlugins = $permissionStoragePlugins;
     }
 
     /**
@@ -60,6 +68,25 @@ class PermissionFinder implements PermissionFinderInterface
         }
 
         return $this->permissionPlugins[$permissionKey];
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getPermissionsByIdentifier(string $identifier): PermissionCollectionTransfer
+    {
+        $permissionCollectionTransfer = new PermissionCollectionTransfer();
+
+        foreach ($this->permissionStoragePlugins as $permissionStoragePlugin) {
+            $permissionCollection = $permissionStoragePlugin->getPermissionCollection($identifier);
+            foreach ($permissionCollection->getPermissions() as $permission) {
+                $permissionCollectionTransfer->addPermission($permission);
+            }
+        }
+
+        return $permissionCollectionTransfer;
     }
 
     /**

@@ -9,9 +9,11 @@ namespace Spryker\Service\Container;
 
 use ArrayAccess;
 use SplObjectStorage;
+use Spryker\Service\Container\Exception\AliasException;
 use Spryker\Service\Container\Exception\ContainerException;
 use Spryker\Service\Container\Exception\FrozenServiceException;
 use Spryker\Service\Container\Exception\NotFoundException;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Container implements ContainerInterface, ArrayAccess
@@ -73,22 +75,27 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * @var string|null
      */
-    private $currentlyExtending;
+    protected $currentlyExtending;
 
     /**
      * @var string|null
      */
-    private $currentExtendingHash;
+    protected $currentExtendingHash;
 
     /**
      * @var array
      */
-    private $sharedServiceHashes = [];
+    protected $sharedServiceHashes = [];
 
     /**
      * @var \Symfony\Component\OptionsResolver\OptionsResolver|null
      */
-    private $configurationResolver;
+    protected $configurationResolver;
+
+    /**
+     * @var string[]
+     */
+    protected static $aliases = [];
 
     /**
      * @param array $services
@@ -157,6 +164,8 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function has($id): bool
     {
+        $id = $this->getServiceIdentifier($id);
+
         return ($this->hasService($id) || $this->hasGlobalService($id));
     }
 
@@ -187,11 +196,27 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function get($id)
     {
+        $id = $this->getServiceIdentifier($id);
+
         if ($this->hasGlobalService($id)) {
             return $this->getGlobalService($id);
         }
 
         return $this->getService($id);
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return string
+     */
+    protected function getServiceIdentifier(string $id): string
+    {
+        if (isset(static::$aliases[$id])) {
+            return static::$aliases[$id];
+        }
+
+        return $id;
     }
 
     /**
@@ -265,6 +290,8 @@ class Container implements ContainerInterface, ArrayAccess
         if ($configuration['isGlobal']) {
             $this->makeGlobal($id);
         }
+
+        $this->addAliases($id, $configuration['alias']);
     }
 
     /**
@@ -274,9 +301,16 @@ class Container implements ContainerInterface, ArrayAccess
     {
         if ($this->configurationResolver === null) {
             $this->configurationResolver = new OptionsResolver();
-            $this->configurationResolver->setDefaults([
-                'isGlobal' => false,
-            ]);
+            $this->configurationResolver
+                ->setDefaults([
+                    'isGlobal' => false,
+                    'alias' => [],
+                ])
+                ->setAllowedTypes('isGlobal', ['bool'])
+                ->setAllowedTypes('alias', ['array', 'string'])
+                ->setNormalizer('alias', function (Options $options, $value) {
+                    return (array)$value;
+                });
         }
 
         return $this->configurationResolver;
@@ -296,15 +330,50 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
+     * @param string $id
+     * @param array $aliases
+     *
+     * @return void
+     */
+    protected function addAliases(string $id, array $aliases): void
+    {
+        foreach ($aliases as $alias) {
+            $this->addAlias($id, $alias);
+        }
+    }
+
+    /**
+     * @param string $id
+     * @param string $alias
+     *
+     * @throws \Spryker\Service\Container\Exception\AliasException
+     *
+     * @return void
+     */
+    protected function addAlias(string $id, string $alias): void
+    {
+        if (isset(static::$aliases[$alias]) && static::$aliases[$alias] !== $id) {
+            throw new AliasException(sprintf(
+                'The alias "%s" is already in use for the "%s" service and can\'t be reused for the service "%s".',
+                $alias,
+                static::$aliases[$alias],
+                $id
+            ));
+        }
+
+        static::$aliases[$alias] = $id;
+    }
+
+    /**
      * Do not set the returned callable to the Container, this is done automatically.
      *
      * @param string $id
-     * @param \Closure|object|mixed $service
+     * @param \Closure $service
      *
      * @throws \Spryker\Service\Container\Exception\ContainerException
      * @throws \Spryker\Service\Container\Exception\FrozenServiceException
      *
-     * @return \Closure|object|mixed
+     * @return \Closure
      */
     public function extend(string $id, $service)
     {
@@ -358,12 +427,12 @@ class Container implements ContainerInterface, ArrayAccess
      * Do not set the returned callable to the Container, this is done automatically.
      *
      * @param string $id
-     * @param \Closure|object|mixed $service
+     * @param \Closure $service
      *
      * @throws \Spryker\Service\Container\Exception\ContainerException
      * @throws \Spryker\Service\Container\Exception\FrozenServiceException
      *
-     * @return \Closure|object|mixed
+     * @return \Closure
      */
     protected function extendGlobalService(string $id, $service)
     {
@@ -397,8 +466,33 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function remove(string $id): void
     {
+        $this->removeAliases($id);
         $this->removeService($id);
         $this->removeGlobalService($id);
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return void
+     */
+    protected function removeAliases(string $id): void
+    {
+        foreach ($this->getAliasesForService($id) as $alias) {
+            unset(static::$aliases[$alias]);
+        }
+
+        unset(static::$aliases[$id]);
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return array
+     */
+    protected function getAliasesForService(string $id): array
+    {
+        return array_keys(static::$aliases, $id);
     }
 
     /**
@@ -587,11 +681,11 @@ class Container implements ContainerInterface, ArrayAccess
      * This method (currently) exists only for BC reasons.
      *
      * @param string $id
-     * @param \Closure|object $service
+     * @param \Closure $service
      *
      * @return void
      */
-    private function extendLater(string $id, $service): void
+    protected function extendLater(string $id, $service): void
     {
         if (!isset($this->toBeExtended[$id])) {
             $this->toBeExtended[$id] = [];
@@ -602,11 +696,11 @@ class Container implements ContainerInterface, ArrayAccess
 
     /**
      * @param string $id
-     * @param \Closure|object $service
+     * @param \Closure $service
      *
      * @return void
      */
-    private function extendService(string $id, $service): void
+    protected function extendService(string $id, $service): void
     {
         if (isset($this->toBeExtended[$id])) {
             $this->currentlyExtending = $id;

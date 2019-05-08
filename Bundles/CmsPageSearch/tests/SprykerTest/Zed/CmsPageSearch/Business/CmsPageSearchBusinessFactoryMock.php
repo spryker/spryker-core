@@ -13,12 +13,12 @@ use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchInterface;
 class CmsPageSearchBusinessFactoryMock extends CmsPageSearchBusinessFactory
 {
     /**
-     * @var \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $searchFacadeMock;
 
     /**
-     * @param \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchInterface|\PHPUnit_Framework_MockObject_MockObject $searchFacadeMock
+     * @param \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchInterface|\PHPUnit\Framework\MockObject\MockObject $searchFacadeMock
      */
     public function __construct(CmsPageSearchToSearchInterface $searchFacadeMock)
     {

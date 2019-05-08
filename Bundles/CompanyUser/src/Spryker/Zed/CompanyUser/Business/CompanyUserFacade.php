@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUser\Business;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -256,5 +257,85 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
         return $this->getFactory()
             ->createCompanyUser()
             ->getActiveCompanyUsersByCustomerReference($customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer
+    {
+        return $this->getFactory()->createCompanyUser()->findCompanyUserById($idCompanyUser);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided by another module.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByUuid(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyUser()
+            ->findActiveCompanyUserByUuid($companyUserTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function findActiveCompanyUsersByIds(array $companyUserIds): array
+    {
+        return $this->getFactory()
+            ->createCompanyUser()
+            ->findActiveCompanyUsers($companyUserIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $companyIds
+     *
+     * @return int[]
+     */
+    public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array
+    {
+        return $this->getFactory()
+            ->createCompanyUser()
+            ->findActiveCompanyUserIdsByCompanyIds($companyIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaTransfer $companyUserCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getCompanyUserCollectionByCriteria(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyUser()
+            ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer);
     }
 }

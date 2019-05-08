@@ -172,7 +172,7 @@ class StoreReader implements StoreReaderInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getCountries()
     {
