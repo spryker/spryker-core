@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -178,8 +179,8 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->joinWithPriceProductScheduleList()
             ->filterByNetPrice($priceProductScheduleCriteriaFilterTransfer->getNetAmount())
             ->filterByGrossPrice($priceProductScheduleCriteriaFilterTransfer->getGrossAmount())
-            ->filterByActiveFrom($priceProductScheduleCriteriaFilterTransfer->getActiveFrom())
-            ->filterByActiveTo($priceProductScheduleCriteriaFilterTransfer->getActiveTo());
+            ->filterByActiveFrom(new DateTime($priceProductScheduleCriteriaFilterTransfer->getActiveFrom()))
+            ->filterByActiveTo(new DateTime($priceProductScheduleCriteriaFilterTransfer->getActiveTo()));
 
         if ($priceProductScheduleCriteriaFilterTransfer->getSkuProductAbstract() !== null) {
             $query

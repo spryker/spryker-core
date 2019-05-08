@@ -166,8 +166,8 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
             ->setPriceTypeName($priceProductScheduleImportTransfer->getPriceTypeName())
             ->setGrossAmount($priceProductScheduleImportTransfer->getGrossAmount())
             ->setNetAmount($priceProductScheduleImportTransfer->getNetAmount())
-            ->setActiveTo(new DateTime($priceProductScheduleImportTransfer->getActiveTo()))
-            ->setActiveFrom(new DateTime($priceProductScheduleImportTransfer->getActiveFrom()))
+            ->setActiveTo($priceProductScheduleImportTransfer->getActiveTo())
+            ->setActiveFrom($priceProductScheduleImportTransfer->getActiveFrom())
             ->setStoreName($priceProductScheduleImportTransfer->getStoreName())
             ->setCurrencyCode($priceProductScheduleImportTransfer->getCurrencyCode());
     }

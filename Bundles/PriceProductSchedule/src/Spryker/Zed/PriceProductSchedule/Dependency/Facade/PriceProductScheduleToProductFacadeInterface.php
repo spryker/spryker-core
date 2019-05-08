@@ -12,7 +12,7 @@ interface PriceProductScheduleToProductFacadeInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return int|null
      */
     public function findProductAbstractIdBySku($sku);
 
