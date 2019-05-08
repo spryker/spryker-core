@@ -19,6 +19,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Url;
 
+/**
+ * @method \Spryker\Zed\ContentBannerGui\Communication\ContentBannerGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ContentBannerGui\ContentBannerGuiConfig getConfig()
+ */
 class BannerContentTermForm extends AbstractType
 {
     public const FIELD_TITLE = 'title';
