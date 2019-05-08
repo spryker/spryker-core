@@ -27,7 +27,7 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
      */
     public function decrement($amount = 1.0)
     {
-        $this->setQuantity($this->getQuantity() - $amount);
+        $this->setQuantity((string)($this->getQuantity() - $amount));
         $this->save();
     }
 
@@ -38,7 +38,7 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
      */
     public function increment($amount = 1.0)
     {
-        $this->setQuantity($this->getQuantity() + $amount);
+        $this->setQuantity((string)($this->getQuantity() + $amount));
         $this->save();
     }
 } // Spryker\Zed\Stock\Persistence\Propel\AbstractSpyStockProduct

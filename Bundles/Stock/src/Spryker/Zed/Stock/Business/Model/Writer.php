@@ -154,7 +154,7 @@ class Writer implements WriterInterface
         $stockProductEntity
             ->setFkStock($idStock)
             ->setFkProduct($idProduct)
-            ->setQuantity($transferStockProduct->getQuantity())
+            ->setQuantity((string)$transferStockProduct->getQuantity())
             ->setIsNeverOutOfStock($transferStockProduct->getIsNeverOutOfStock())
             ->save();
 
@@ -270,7 +270,7 @@ class Writer implements WriterInterface
         $stockProductEntity->setFkProduct($idProduct)
             ->setFkStock($idStockType)
             ->setIsNeverOutOfStock($transferStockProduct->getIsNeverOutOfStock())
-            ->setQuantity($transferStockProduct->getQuantity())
+            ->setQuantity((string)$transferStockProduct->getQuantity())
             ->save();
 
         $this->insertActiveTouchRecordStockProduct($stockProductEntity);
