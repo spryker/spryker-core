@@ -50,6 +50,8 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCmsBlockViewPlugins($container);
         $container = $this->addTwigEnvironment($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
+        $container = $this->addCmsBlockGlossaryAfterFindPlugins($container);
+        $container = $this->addCmsBlockGlossaryBeforeSavePlugins($container);
 
         return $container;
     }

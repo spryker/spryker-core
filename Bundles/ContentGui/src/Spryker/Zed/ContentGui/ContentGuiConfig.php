@@ -14,21 +14,13 @@ class ContentGuiConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getContentWidgetTemplatePath(): string
+    public function getEditorContentWidgetHtml(): string
     {
-        return $this->getModuleRoot()
-            . DIRECTORY_SEPARATOR . 'Presentation/_template/_content_widget.twig';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getModuleRoot(): string
-    {
-        $moduleRoot = realpath(
-            __DIR__
-        );
-
-        return $moduleRoot . DIRECTORY_SEPARATOR;
+        return '<div contenteditable="false" class="content-item-block" data-type="%TYPE%" data-id="%ID%" data-template="%TEMPLATE%" data-twig-function="%TWIG_FUNCTION%">
+                    <p>Content Item Type: <b>%TYPE%</b></p>
+                    <p>Content Item ID#: <b>%ID%</b></p>
+                    <p>Name: <b>%NAME%</b></p>
+                    <p>Template: <b>%TEMPLATE_DISPLAY_NAME%</b></p>
+                </div>';
     }
 }

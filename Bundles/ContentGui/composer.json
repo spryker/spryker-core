@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/cms-gui-extension": "*",
+    "spryker/cms-gui-extension": "^1.0.0",
     "spryker/content": "^1.1.0",
     "spryker/content-gui-extension": "^1.1.0",
     "spryker/gui": "^3.21.0",
