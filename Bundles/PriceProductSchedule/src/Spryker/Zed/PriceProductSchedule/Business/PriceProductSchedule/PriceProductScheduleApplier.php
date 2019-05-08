@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
@@ -82,7 +84,7 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
     /**
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
-    public function findPriceProductSchedulesToEnableForCurrentStore(): array
+    protected function findPriceProductSchedulesToEnableForCurrentStore(): array
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
@@ -96,12 +98,69 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
      */
     protected function executeApplyScheduledPrices(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
     {
-        $this->priceProductFacade->persistPriceProductStore($priceProductScheduleTransfer->getPriceProduct());
-
         $this->priceProductScheduleDisabler->disableNotRelevantPriceProductSchedulesByPriceProductSchedule($priceProductScheduleTransfer);
+
+        $priceProductTransfer = $this->preparePriceProductTransferForPersist($priceProductScheduleTransfer);
+        $this->priceProductFacade->persistPriceProductStore($priceProductTransfer);
 
         $priceProductScheduleTransfer->setIsCurrent(true);
 
         $this->priceProductScheduleWriter->savePriceProductSchedule($priceProductScheduleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function preparePriceProductTransferForPersist(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductTransfer {
+        $priceProductScheduleTransfer->requirePriceProduct();
+        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
+
+        $priceProductTransfer->requireMoneyValue();
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        $priceProductTransferForPersist = $this->getPriceProductForPersist($priceProductTransfer);
+
+        $priceProductTransferForPersist->getMoneyValue()
+            ->setGrossAmount($moneyValueTransfer->getGrossAmount())
+            ->setNetAmount($moneyValueTransfer->getNetAmount());
+
+        return $priceProductTransferForPersist;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function getPriceProductForPersist(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        $priceProductTransfer
+            ->requireMoneyValue()
+            ->requirePriceType();
+
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+        $moneyValueTransfer->requireCurrency();
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setPriceTypeName($priceProductTransfer->getPriceType()->getName())
+            ->setCurrencyIsoCode($moneyValueTransfer->getCurrency()->getCode());
+
+        if ($priceProductTransfer->getSkuProductAbstract() !== null) {
+            $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProductAbstract());
+        }
+
+        if ($priceProductTransfer->getSkuProduct() !== null) {
+            $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProduct());
+        }
+
+        $priceProductTransfersForUpdate = $this->priceProductFacade->findPriceProductFor(
+            $priceProductFilterTransfer
+        );
+
+        return $priceProductTransfersForUpdate ?? $priceProductTransfer;
     }
 }

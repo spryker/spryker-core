@@ -80,7 +80,9 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
         }
 
         if ($this->customerTransfer !== null && $quoteTransfer->getShippingAddress() === null) {
-            $shippingAddressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultShippingAddress());
+            /** @var int $idCustomerAddress */
+            $idCustomerAddress = $this->customerTransfer->getDefaultShippingAddress();
+            $shippingAddressTransfer->setIdCustomerAddress($idCustomerAddress);
         }
 
         return $shippingAddressTransfer;
@@ -99,7 +101,9 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
         }
 
         if ($this->customerTransfer !== null && $quoteTransfer->getBillingAddress() === null) {
-            $billingAddressTransfer->setIdCustomerAddress($this->customerTransfer->getDefaultBillingAddress());
+            /** @var int $idCustomerAddress */
+            $idCustomerAddress = $this->customerTransfer->getDefaultBillingAddress();
+            $billingAddressTransfer->setIdCustomerAddress($idCustomerAddress);
         }
 
         return $billingAddressTransfer;

@@ -13,7 +13,7 @@ class ReclamationItemEventsFinder implements ReclamationItemEventsFinderInterfac
 {
     /**
      * @param \ArrayObject $reclamationItems
-     * @param array $eventsGroupedByItem
+     * @param string[][] $eventsGroupedByItem
      *
      * @return string[]
      */

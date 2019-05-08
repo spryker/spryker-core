@@ -35,7 +35,7 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
                 new PriceProductCriteriaTransfer()
             );
 
-        if ($priceProductStoreQuery->getAsColumns() === 0) {
+        if (!$priceProductStoreQuery->getAsColumns()) {
             return;
         }
 
@@ -100,19 +100,6 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
         $this->getFactory()
             ->createPriceProductQuery()
             ->filterByIdPriceProduct($idPriceProduct)
-            ->delete();
-    }
-
-    /**
-     * @param int $idPriceProductDefault
-     *
-     * @return void
-     */
-    public function deletePriceProductDefaultById(int $idPriceProductDefault): void
-    {
-        $this->getFactory()
-            ->createPriceProductDefaultQuery()
-            ->filterByIdPriceProductDefault($idPriceProductDefault)
             ->delete();
     }
 }

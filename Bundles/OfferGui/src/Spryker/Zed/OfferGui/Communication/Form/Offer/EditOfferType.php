@@ -434,7 +434,7 @@ class EditOfferType extends AbstractType
     /**
      * @param string $storeCurrency
      *
-     * @return array
+     * @return string[]
      */
     private function getStoreAndCurrency(string $storeCurrency)
     {

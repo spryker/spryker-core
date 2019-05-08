@@ -28,6 +28,13 @@ interface ProductDiscontinuedRepositoryInterface
     public function areAllConcreteProductsDiscontinued(array $productIds): bool;
 
     /**
+     * @param int[] $productConcreteIds
+     *
+     * @return bool
+     */
+    public function isAnyProductConcreteDiscontinued(array $productConcreteIds): bool;
+
+    /**
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
     public function findProductsToDeactivate(): ProductDiscontinuedCollectionTransfer;

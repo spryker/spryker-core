@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PriceProductScheduleCleanupConsole extends Console
 {
-    public const COMMAND_NAME = 'price-product-schedule:cleanup';
+    public const COMMAND_NAME = 'price-product-schedule:clean-up';
     public const DESCRIPTION = 'Deletes scheduled prices that has been applied earlier than the days provided as argument';
     public const DAYS_RETAINED = 'days retained';
 
@@ -41,11 +41,13 @@ class PriceProductScheduleCleanupConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return void
+     * @return int|null
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
-        $daysRetained = $this->input->getArgument(static::DAYS_RETAINED);
+        $daysRetained = (int)$this->input->getArgument(static::DAYS_RETAINED);
         $this->getFacade()->cleanAppliedScheduledPrices($daysRetained);
+
+        return static::CODE_SUCCESS;
     }
 }

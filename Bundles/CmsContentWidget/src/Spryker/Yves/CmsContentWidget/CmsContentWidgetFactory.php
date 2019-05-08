@@ -29,7 +29,7 @@ class CmsContentWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
     protected function getTwigEnvironment()
     {

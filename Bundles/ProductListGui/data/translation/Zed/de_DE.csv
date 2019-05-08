@@ -18,6 +18,7 @@ ID,ID
 Name,Name
 "Overview of Product lists","Übersicht der Produktlisten"
 "Owner Type",Inhaberart
+"Product label #%d successfully created.","Produktetikett #% d wurde erfolgreich erstellt."
 "Product List ""%s"" has been successfully created.","Produktliste ""%s"" wurde erfolgreich erstellt."
 "Product List ""%s"" has been successfully updated.","Produktliste ""%s"" wurde erfolgreich aktualisiert."
 "Product List has been successfully removed.","Produktliste wurde erfolgreich entfernt."
@@ -30,4 +31,3 @@ Selected,Ausgewählt
 SKU,SKU
 Type,Typ
 Whitelist,Whitelist
-"Product label #%d successfully created.","Produktetikett #% d wurde erfolgreich erstellt."

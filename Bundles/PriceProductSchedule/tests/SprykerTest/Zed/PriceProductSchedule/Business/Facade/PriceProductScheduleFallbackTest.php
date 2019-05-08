@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
@@ -64,6 +63,8 @@ class PriceProductScheduleFallbackTest extends Unit
     {
         parent::setUp();
 
+        $this->tester->ensureDatabaseTableIsEmpty();
+
         $this->priceProductFacade = $this->tester->getLocator()->priceProduct()->facade();
         $this->storeFacade = $this->tester->getLocator()->store()->facade();
         $this->currencyFacade = $this->tester->getLocator()->currency()->facade();
@@ -76,7 +77,7 @@ class PriceProductScheduleFallbackTest extends Unit
     {
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
-        $priceTypeTransfer1 = $this->tester->havePriceType();
+        $defaultPriceTypeTransfer = $this->tester->havePriceType();
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test']);
@@ -85,7 +86,7 @@ class PriceProductScheduleFallbackTest extends Unit
         $this->tester->havePriceProduct([
             PriceProductTransfer::ID_PRICE_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
-            PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer1,
+            PriceProductTransfer::PRICE_TYPE => $defaultPriceTypeTransfer,
             PriceProductTransfer::MONEY_VALUE => [
                 MoneyValueTransfer::NET_AMOUNT => 100,
                 MoneyValueTransfer::GROSS_AMOUNT => 100,
@@ -93,12 +94,12 @@ class PriceProductScheduleFallbackTest extends Unit
             ],
         ]);
 
-        $priceTypeTransfer2 = $this->tester->havePriceType();
+        $fallbackPriceTypeTransfer = $this->tester->havePriceType();
 
-        $productPrice2 = $this->tester->havePriceProduct([
+        $fallbackPriceProductTransfer = $this->tester->havePriceProduct([
             PriceProductTransfer::ID_PRICE_PRODUCT => $productConcreteTransfer->getFkProductAbstract(),
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
-            PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer2,
+            PriceProductTransfer::PRICE_TYPE => $fallbackPriceTypeTransfer,
             PriceProductTransfer::MONEY_VALUE => [
                 MoneyValueTransfer::NET_AMOUNT => 200,
                 MoneyValueTransfer::GROSS_AMOUNT => 200,
@@ -113,8 +114,8 @@ class PriceProductScheduleFallbackTest extends Unit
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
                 PriceProductTransfer::PRICE_TYPE => [
-                    PriceTypeTransfer::NAME => $priceTypeTransfer1->getName(),
-                    PriceTypeTransfer::ID_PRICE_TYPE => $priceTypeTransfer1->getIdPriceType(),
+                    PriceTypeTransfer::NAME => $defaultPriceTypeTransfer->getName(),
+                    PriceTypeTransfer::ID_PRICE_TYPE => $defaultPriceTypeTransfer->getIdPriceType(),
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
@@ -129,7 +130,7 @@ class PriceProductScheduleFallbackTest extends Unit
         $priceProductScheduleFacade = $this->tester->getFacade();
         $priceProductScheduleFacade->setFactory(
             (new PriceProductScheduleBusinessFactory())
-                ->setConfig($this->getConfigMock($priceTypeTransfer1->getName(), $priceTypeTransfer2->getName()))
+                ->setConfig($this->getConfigMock($defaultPriceTypeTransfer->getName(), $fallbackPriceTypeTransfer->getName()))
         );
 
         // Act
@@ -138,20 +139,20 @@ class PriceProductScheduleFallbackTest extends Unit
         // Assert
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setSku($productConcreteTransfer->getSku())
-            ->setPriceTypeName($priceTypeTransfer1->getName())
+            ->setPriceTypeName($defaultPriceTypeTransfer->getName())
             ->setCurrencyIsoCode($currencyTransfer->getCode());
 
-        $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
+        $actualPriceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
         $this->assertEquals(
-            $productPrice2->getMoneyValue()->getNetAmount(),
-            $priceProductTransfer->getMoneyValue()->getNetAmount(),
-            'Product price type should be reverted after scheduled price is over.'
+            $fallbackPriceProductTransfer->getMoneyValue()->getNetAmount(),
+            $actualPriceProductTransfer->getMoneyValue()->getNetAmount(),
+            'Net product price should have been reverted after scheduled price is over.'
         );
         $this->assertEquals(
-            $productPrice2->getMoneyValue()->getGrossAmount(),
-            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
-            'Product price type should be reverted after scheduled price is over.'
+            $fallbackPriceProductTransfer->getMoneyValue()->getGrossAmount(),
+            $actualPriceProductTransfer->getMoneyValue()->getGrossAmount(),
+            'Gross product price should have been reverted after scheduled price is over.'
         );
     }
 
@@ -211,14 +212,6 @@ class PriceProductScheduleFallbackTest extends Unit
                 ],
             ],
         ];
-    }
-
-    /**
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
-     */
-    protected function getPriceProductQuery(): SpyPriceProductQuery
-    {
-        return new SpyPriceProductQuery();
     }
 
     /**

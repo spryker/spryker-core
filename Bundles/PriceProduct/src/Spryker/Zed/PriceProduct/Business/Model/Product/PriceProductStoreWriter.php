@@ -95,6 +95,22 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     }
 
     /**
+     * @return void
+     */
+    public function deleteOrphanPriceProductStoreEntities(): void
+    {
+        $orphanPriceProductStoreEntities = $this->priceProductRepository->findOrphanPriceProductStoreEntities();
+
+        if (count($orphanPriceProductStoreEntities) === 0) {
+            return;
+        }
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductStoreEntities) {
+            $this->doDeleteOrphanPriceProductStoreEntities($orphanPriceProductStoreEntities);
+        });
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
@@ -134,22 +150,6 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         $priceProductTransfer = $this->persistPriceProductDimension($priceProductTransfer);
 
         return $priceProductTransfer;
-    }
-
-    /**
-     * @return void
-     */
-    public function deleteOrphanPriceProductStoreEntities(): void
-    {
-        $orphanPriceProductStoreEntities = $this->priceProductRepository->findOrphanPriceProductStoreEntities();
-
-        if (count($orphanPriceProductStoreEntities) === 0) {
-            return;
-        }
-
-        $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductStoreEntities) {
-            $this->doDeleteOrphanPriceProductStoreEntities($orphanPriceProductStoreEntities);
-        });
     }
 
     /**

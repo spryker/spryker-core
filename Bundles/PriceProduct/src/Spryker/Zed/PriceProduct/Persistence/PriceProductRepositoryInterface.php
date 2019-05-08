@@ -115,4 +115,11 @@ interface PriceProductRepositoryInterface
      * @return int|null
      */
     public function findIdPriceProductStoreByPriceProduct(PriceProductTransfer $priceProductTransfer): ?int;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductUsedForOtherCurrencyAndStore(PriceProductTransfer $priceProductTransfer): bool;
 }
