@@ -28,10 +28,11 @@ class ResourceShareDataExpanderStrategy implements ResourceShareDataExpanderStra
      */
     public function applyResourceShareDataExpanderStrategy(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareDataTransfer = $this->expandResourceShareData($resourceShareTransfer->getResourceShareData());
+        $resourceShareDataTransfer = $this->expandResourceShareData(clone $resourceShareTransfer->getResourceShareData());
         $resourceShareResponseTransfer = $this->validateExpandedResourceShareData($resourceShareDataTransfer);
 
         if ($resourceShareResponseTransfer->getIsSuccessful()) {
+            $resourceShareTransfer->setResourceShareData($resourceShareDataTransfer);
             $resourceShareResponseTransfer->setResourceShare($resourceShareTransfer);
         }
 
