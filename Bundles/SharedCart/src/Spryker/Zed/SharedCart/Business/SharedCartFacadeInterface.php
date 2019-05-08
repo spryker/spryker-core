@@ -31,7 +31,7 @@ interface SharedCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findPermissionsByIdCompanyUser($idCompanyUser): PermissionCollectionTransfer;
+    public function findPermissionsByIdCompanyUser(int $idCompanyUser): PermissionCollectionTransfer;
 
     /**
      * Specification:
