@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
@@ -84,27 +83,25 @@ class QuoteReader implements QuoteReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
-    public function getCustomerQuoteCollection(
-        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+    public function getQuoteCollectionByCustomerReference(
+        CustomerTransfer $customerTransfer
     ): QuoteCollectionResponseTransfer {
-        return $this->quoteCollectionReaderPlugin->getQuoteCollection($restQuoteCollectionRequestTransfer);
+        return $this->quoteCollectionReaderPlugin->getQuoteCollection($customerTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
     public function getQuoteCollectionByCustomerAndStore(
-        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+        CustomerTransfer $customerTransfer
     ): QuoteCollectionResponseTransfer {
         $quoteCollectionResponseTransfer = new QuoteCollectionResponseTransfer();
-        $customerTransfer = (new CustomerTransfer())
-            ->setCustomerReference($restQuoteCollectionRequestTransfer->getCustomerReference());
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);

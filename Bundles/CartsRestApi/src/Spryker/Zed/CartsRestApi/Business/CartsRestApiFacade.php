@@ -8,12 +8,11 @@
 namespace Spryker\Zed\CartsRestApi\Business;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -59,16 +58,15 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
-    public function getCustomerQuoteCollection(
-        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): QuoteCollectionResponseTransfer {
+    public function getQuoteCollectionByCustomerReference(CustomerTransfer $customerTransfer): QuoteCollectionResponseTransfer
+    {
         return $this->getFactory()
             ->createQuoteReader()
-            ->getCustomerQuoteCollection($restQuoteCollectionRequestTransfer);
+            ->getQuoteCollectionByCustomerReference($customerTransfer);
     }
 
     /**
@@ -76,16 +74,15 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
-    public function findQuoteByCustomerAndStore(
-        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): QuoteCollectionResponseTransfer {
+    public function findQuoteByCustomerAndStore(CustomerTransfer $customerTransfer): QuoteCollectionResponseTransfer
+    {
         return $this->getFactory()
             ->createQuoteReader()
-            ->getQuoteCollectionByCustomerAndStore($restQuoteCollectionRequestTransfer);
+            ->getQuoteCollectionByCustomerAndStore($customerTransfer);
     }
 
     /**
@@ -93,15 +90,15 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteUpdater()
-            ->updateQuote($restQuoteRequestTransfer);
+            ->updateQuote($quoteTransfer);
     }
 
     /**
@@ -109,15 +106,15 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteCreator()
-            ->createQuote($restQuoteRequestTransfer);
+            ->createQuote($quoteTransfer);
     }
 
     /**
@@ -125,15 +122,15 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createSingleQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function createSingleQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createSingleQuoteCreator()
-            ->createSingleQuote($restQuoteRequestTransfer);
+            ->createSingleQuote($quoteTransfer);
     }
 
     /**
@@ -141,15 +138,15 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createQuoteDeleter()
-            ->deleteQuote($restQuoteRequestTransfer);
+            ->deleteQuote($quoteTransfer);
     }
 
     /**

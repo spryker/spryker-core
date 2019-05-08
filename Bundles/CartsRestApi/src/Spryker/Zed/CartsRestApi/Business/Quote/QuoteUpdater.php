@@ -8,11 +8,10 @@
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
@@ -59,20 +58,16 @@ class QuoteUpdater implements QuoteUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $restQuoteRequestTransfer
-            ->requireQuote()
-            ->requireCustomerReference();
+        $quoteTransfer->requireCustomer();
 
-        $restQuoteRequestTransfer->getQuote()->requireCustomer();
-
-        if (!$restQuoteRequestTransfer->getQuoteUuid()) {
-            $quoteResponseTransfer = $this->quoteMapper->createQuoteResponseTransfer($restQuoteRequestTransfer)
+        if (!$quoteTransfer->getUuid()) {
+            $quoteResponseTransfer = (new QuoteResponseTransfer())
                 ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_CART_ID_MISSING));
 
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
@@ -80,9 +75,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
             );
         }
 
-        $quoteTransfer = $restQuoteRequestTransfer->getQuote();
-
-        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($restQuoteRequestTransfer->getQuote());
+        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
@@ -112,16 +105,16 @@ class QuoteUpdater implements QuoteUpdaterInterface
     public function assignGuestCartToRegisteredCustomer(AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer): QuoteResponseTransfer
     {
         $assignGuestQuoteRequestTransfer
-            ->requireCustomer()
+            ->requireCustomerReference()
             ->requireAnonymousCustomerReference();
 
         $quoteCollectionResponseTransfer = $this->quoteReader->getQuoteCollectionByCustomerAndStore(
-            (new RestQuoteCollectionRequestTransfer())
+            (new CustomerTransfer())
                 ->setCustomerReference($assignGuestQuoteRequestTransfer->getAnonymousCustomerReference())
         );
 
-        $registeredCustomer = $assignGuestQuoteRequestTransfer->getCustomer();
-        $quoteTransfer = $this->quoteMapper->createQuoteTransfer($registeredCustomer, $quoteCollectionResponseTransfer);
+        $registeredCustomerReference = $assignGuestQuoteRequestTransfer->getCustomerReference();
+        $quoteTransfer = $this->quoteMapper->createQuoteTransfer($registeredCustomerReference, $quoteCollectionResponseTransfer);
 
         return $this->performUpdatingQuote($quoteTransfer);
     }

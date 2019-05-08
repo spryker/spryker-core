@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 
 interface QuoteReaderInterface
 {
@@ -22,20 +22,20 @@ interface QuoteReaderInterface
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
-    public function getCustomerQuoteCollection(
-        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+    public function getQuoteCollectionByCustomerReference(
+        CustomerTransfer $customerTransfer
     ): QuoteCollectionResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
     public function getQuoteCollectionByCustomerAndStore(
-        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+        CustomerTransfer $customerTransfer
     ): QuoteCollectionResponseTransfer;
 }

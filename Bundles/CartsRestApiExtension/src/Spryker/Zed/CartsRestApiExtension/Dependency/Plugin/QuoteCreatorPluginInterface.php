@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CartsRestApiExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteCreatorPluginInterface
 {
@@ -18,9 +18,9 @@ interface QuoteCreatorPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createQuote(RestQuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer;
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

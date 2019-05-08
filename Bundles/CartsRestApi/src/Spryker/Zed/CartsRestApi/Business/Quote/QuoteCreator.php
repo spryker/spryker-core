@@ -9,7 +9,7 @@ namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
@@ -56,25 +56,23 @@ class QuoteCreator implements QuoteCreatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $restQuoteRequestTransfer
-            ->requireQuote()
-            ->requireCustomerReference();
+        $quoteTransfer->requireCustomer();
 
-        $store = $restQuoteRequestTransfer->getQuote()->getStore();
+        $store = $quoteTransfer->getStore();
         if ($store && $store->getName() !== $this->storeFacade->getCurrentStore()->getName()) {
-            $quoteResponseTransfer = $this->quoteMapper->createQuoteResponseTransfer($restQuoteRequestTransfer)
+            $quoteResponseTransfer = (new QuoteResponseTransfer())
                 ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_STORE_DATA_IS_INVALID));
 
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes($quoteResponseTransfer);
         }
 
-        $quoteResponseTransfer = $this->quoteCreatorPlugin->createQuote($restQuoteRequestTransfer);
+        $quoteResponseTransfer = $this->quoteCreatorPlugin->createQuote($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer

@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -48,17 +47,16 @@ class QuoteDeleter implements QuoteDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $restQuoteRequestTransfer
-            ->requireCustomerReference();
+        $quoteTransfer->requireCustomer();
 
-        if (!$restQuoteRequestTransfer->getQuoteUuid()) {
-            $quoteResponseTransfer = $this->quoteMapper->createQuoteResponseTransfer($restQuoteRequestTransfer)
+        if (!$quoteTransfer->getUuid()) {
+            $quoteResponseTransfer = (new QuoteResponseTransfer())
                 ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_CART_ID_MISSING));
 
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
@@ -66,19 +64,17 @@ class QuoteDeleter implements QuoteDeleterInterface
             );
         }
 
-        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($restQuoteRequestTransfer->getQuote());
+        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
             );
         }
 
-        $quoteResponseTransfer = $this->persistentCartFacade
-            ->deleteQuote($quoteResponseTransfer->getQuoteTransfer()
-                ->setCustomer(
-                    (new CustomerTransfer())
-                        ->setCustomerReference($restQuoteRequestTransfer->getCustomerReference())
-                ));
+        $quoteResponseTransfer = $this->persistentCartFacade->deleteQuote(
+            $quoteResponseTransfer->getQuoteTransfer()
+            ->setCustomer($quoteTransfer->getCustomer())
+        );
 
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(

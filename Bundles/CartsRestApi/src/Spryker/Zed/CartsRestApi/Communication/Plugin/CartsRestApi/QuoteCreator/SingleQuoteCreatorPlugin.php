@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CartsRestApi\Communication\Plugin\CartsRestApi\QuoteCreator;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -25,12 +25,12 @@ class SingleQuoteCreatorPlugin extends AbstractPlugin implements QuoteCreatorPlu
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $quoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createQuote(RestQuoteRequestTransfer $quoteRequestTransfer): QuoteResponseTransfer
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->createSingleQuote($quoteRequestTransfer);
+        return $this->getFacade()->createSingleQuote($quoteTransfer);
     }
 }

@@ -8,14 +8,14 @@
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface SingleQuoteCreatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createSingleQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
+    public function createSingleQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

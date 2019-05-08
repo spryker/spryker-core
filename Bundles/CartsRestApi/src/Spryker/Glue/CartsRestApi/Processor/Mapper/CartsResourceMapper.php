@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Generated\Shared\Transfer\RestCartsDiscountsTransfer;
 use Generated\Shared\Transfer\RestCartsTotalsTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
@@ -43,32 +42,6 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     ) {
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
         $this->restResourceBuilder = $restResourceBuilder;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestTransfer
-     */
-    public function createRestQuoteRequestTransfer(
-        RestRequestInterface $restRequest,
-        ?QuoteTransfer $quoteTransfer
-    ): RestQuoteRequestTransfer {
-        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
-        $uuidQuote = $restRequest->getResource()->getId();
-
-        if (!$quoteTransfer && $uuidQuote) {
-            $restQuoteRequestTransfer
-                ->setQuote((new QuoteTransfer())->setUuid($uuidQuote))
-                ->setQuoteUuid($uuidQuote);
-        }
-
-        $restQuoteRequestTransfer->setQuote($quoteTransfer->setUuid($uuidQuote));
-        $restQuoteRequestTransfer->setQuoteUuid($uuidQuote);
-
-        return $restQuoteRequestTransfer;
     }
 
     /**

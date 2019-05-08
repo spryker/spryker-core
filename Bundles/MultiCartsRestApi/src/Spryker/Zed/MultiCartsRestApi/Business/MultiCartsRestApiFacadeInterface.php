@@ -7,27 +7,24 @@
 
 namespace Spryker\Zed\MultiCartsRestApi\Business;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface MultiCartsRestApiFacadeInterface
 {
     /**
      * Specification:
      * - Finds customer quote collection.
-     * - customerReference must be set in the RestQuoteCollectionRequestTransfer taken as parameter.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
-    public function getCustomerQuoteCollection(
-        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): QuoteCollectionResponseTransfer;
+    public function getCustomerQuoteCollection(CustomerTransfer $customerTransfer): QuoteCollectionResponseTransfer;
 
     /**
      * Specification:
@@ -36,9 +33,9 @@ interface MultiCartsRestApiFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

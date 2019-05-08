@@ -10,13 +10,12 @@ namespace Spryker\Glue\CartsRestApi\Processor\Quote;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 
-class QuoteCreator implements QuoteCreatorInterface
+class SingleSingleQuoteCreator implements SingleQuoteCreatorInterface
 {
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface
@@ -57,10 +56,6 @@ class QuoteCreator implements QuoteCreatorInterface
                 ->setIsSuccessful(false);
         }
 
-        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
-            ->setQuote($quoteTransfer)
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
-
-        return $this->cartsRestApiClient->createQuote($restQuoteRequestTransfer);
+        return $this->cartsRestApiClient->createQuote($quoteTransfer);
     }
 }

@@ -8,12 +8,11 @@
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
@@ -79,10 +78,10 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             ->requireCartItem()
             ->requireCustomerReference();
 
-        $restQuoteCollectionRequest = (new RestQuoteCollectionRequestTransfer())
+        $customerTransfer = (new CustomerTransfer())
             ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference());
 
-        $customerCarts = $this->quoteReader->getQuoteCollectionByCustomerAndStore($restQuoteCollectionRequest);
+        $customerCarts = $this->quoteReader->getQuoteCollectionByCustomerAndStore($customerTransfer);
         if ($customerCarts->getQuoteCollection() && $customerCarts->getQuoteCollection()->getQuotes()->count()) {
             $restCartItemRequestTransfer->setCartUuid($customerCarts->getQuoteCollection()->getQuotes()[0]->getUuid());
         }
@@ -123,11 +122,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             ->setCurrency((new CurrencyTransfer())
                 ->setCode($currentStore->getDefaultCurrencyIsoCode()));
 
-        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
-            ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference())
-            ->setQuote($quoteTransfer);
-
-        $quoteResponseTransfer = $this->quoteCreator->createQuote($restQuoteRequestTransfer);
+        $quoteResponseTransfer = $this->quoteCreator->createQuote($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }

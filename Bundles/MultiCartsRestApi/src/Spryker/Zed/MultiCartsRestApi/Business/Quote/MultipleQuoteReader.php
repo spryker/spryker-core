@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\MultiCartsRestApi\Business\Quote;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Spryker\Zed\MultiCartsRestApi\Dependency\Facade\MultiCartsRestApiToMultiCartFacadeInterface;
 
 class MultipleQuoteReader implements MultipleQuoteReaderInterface
@@ -29,18 +29,17 @@ class MultipleQuoteReader implements MultipleQuoteReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
-    public function getCustomerQuoteCollection(
-        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): QuoteCollectionResponseTransfer {
-        $restQuoteCollectionRequestTransfer
+    public function getCustomerQuoteCollection(CustomerTransfer $customerTransfer): QuoteCollectionResponseTransfer
+    {
+        $customerTransfer
             ->requireCustomerReference();
 
         $quoteCollectionResponseTransfer = new QuoteCollectionResponseTransfer();
-        $quoteCollectionTransfer = $this->getCustomerQuotes($restQuoteCollectionRequestTransfer);
+        $quoteCollectionTransfer = $this->getCustomerQuotes($customerTransfer);
         if ($quoteCollectionTransfer->getQuotes()->count() === 0) {
             return $quoteCollectionResponseTransfer;
         }
@@ -49,14 +48,14 @@ class MultipleQuoteReader implements MultipleQuoteReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    protected function getCustomerQuotes(RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer): QuoteCollectionTransfer
+    protected function getCustomerQuotes(CustomerTransfer $customerTransfer): QuoteCollectionTransfer
     {
         $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
-        $quoteCriteriaFilterTransfer->setCustomerReference($restQuoteCollectionRequestTransfer->getCustomerReference());
+        $quoteCriteriaFilterTransfer->setCustomerReference($customerTransfer->getCustomerReference());
         $quoteCollectionTransfer = $this->multiCartFacade->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
 
         return $quoteCollectionTransfer;

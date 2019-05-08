@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartUpdaterInterface;
@@ -94,8 +92,8 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
             return $customerTransfer;
         }
 
-        $restQuoteCollectionResponseTransfer = $this->cartsRestApiClient->getCustomerQuoteCollection(
-            (new RestQuoteCollectionRequestTransfer())->setCustomerReference($anonymousCustomerTransfer->getCustomerReference())
+        $restQuoteCollectionResponseTransfer = $this->cartsRestApiClient->getQuoteCollectionByCustomerReference(
+            (new CustomerTransfer())->setCustomerReference($anonymousCustomerTransfer->getCustomerReference())
         );
 
         if (count($restQuoteCollectionResponseTransfer->getErrorCodes()) > 0) {
@@ -117,12 +115,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
             ->setUuid($quotes[0]->getUuid())
             ->setCustomer($customerTransfer);
 
-        $restQuoteRequestTransfer = (new RestQuoteRequestTransfer())
-            ->setCustomerReference($anonymousCustomerTransfer->getCustomerReference())
-            ->setQuote($quoteTransfer)
-            ->setQuoteUuid($quoteTransfer->getUuid());
-
-        $this->cartsRestApiClient->updateQuote($restQuoteRequestTransfer);
+        $this->cartsRestApiClient->updateQuote($quoteTransfer);
 
         return $customerTransfer;
     }
@@ -143,7 +136,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
 
         $assignGuestQuoteRequestTransfer = (new AssignGuestQuoteRequestTransfer())
             ->setAnonymousCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
-            ->setCustomer($customerTransfer);
+            ->setCustomerReference($customerTransfer->getCustomerReference());
 
         $quoteResponseTransfer = $this->cartsRestApiClient->assignGuestCartToRegisteredCustomer($assignGuestQuoteRequestTransfer);
 

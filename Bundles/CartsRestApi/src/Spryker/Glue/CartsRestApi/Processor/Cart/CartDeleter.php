@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
@@ -54,14 +55,10 @@ class CartDeleter implements CartDeleterInterface
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
         $quoteTransfer = (new QuoteTransfer())
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
+            ->setCustomer((new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier()))
             ->setUuid($restRequest->getResource()->getId());
-        $restQuoteRequestTransfer = $this->cartsResourceMapper->createRestQuoteRequestTransfer(
-            $restRequest,
-            $quoteTransfer
-        );
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote($restQuoteRequestTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote($quoteTransfer);
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
             return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
         }

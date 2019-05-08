@@ -7,17 +7,15 @@
 
 namespace Spryker\Zed\MultiCartsRestApi\Business\Quote;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 
 interface MultipleQuoteReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
-    public function getCustomerQuoteCollection(
-        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): QuoteCollectionResponseTransfer;
+    public function getCustomerQuoteCollection(CustomerTransfer $customerTransfer): QuoteCollectionResponseTransfer;
 }

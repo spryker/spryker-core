@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\MultiCartsRestApi\Business\Quote;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\MultiCartsRestApi\Dependency\Facade\MultiCartsRestApiToPersistentCartFacadeInterface;
 
 class MultipleQuoteCreator implements MultipleQuoteCreatorInterface
@@ -29,20 +28,12 @@ class MultipleQuoteCreator implements MultipleQuoteCreatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createQuote(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $restQuoteRequestTransfer
-            ->requireQuote()
-            ->requireCustomerReference();
-
-        return $this->persistentCartFacade->createQuote($restQuoteRequestTransfer->getQuote()
-            ->setCustomerReference($restQuoteRequestTransfer->getCustomerReference())
-            ->setCustomer(
-                (new CustomerTransfer())->setCustomerReference($restQuoteRequestTransfer->getCustomerReference())
-            ));
+        return $this->persistentCartFacade->createQuote($quoteTransfer);
     }
 }

@@ -7,32 +7,23 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote\Mapper;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 
 interface QuoteMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $registeredCustomer
+     * @param string $registeredCustomerReference
      * @param \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function createQuoteTransfer(
-        CustomerTransfer $registeredCustomer,
+        string $registeredCustomerReference,
         QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
     ): QuoteTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createQuoteResponseTransfer(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

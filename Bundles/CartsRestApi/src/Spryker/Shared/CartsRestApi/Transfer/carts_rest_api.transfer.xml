@@ -77,18 +77,8 @@
         <property name="customerReference" type="string"/>
     </transfer>
 
-    <transfer name="RestQuoteRequest">
-        <property name="quote" type="Quote" />
-        <property name="quoteUuid" type="string" />
-        <property name="customerReference" type="string" />
-    </transfer>
-
     <transfer name="AssignGuestQuoteRequest">
         <property name="anonymousCustomerReference" type="string" />
-        <property name="customer" type="Customer" />
-    </transfer>
-
-    <transfer name="RestQuoteCollectionRequest">
         <property name="customerReference" type="string" />
     </transfer>
 

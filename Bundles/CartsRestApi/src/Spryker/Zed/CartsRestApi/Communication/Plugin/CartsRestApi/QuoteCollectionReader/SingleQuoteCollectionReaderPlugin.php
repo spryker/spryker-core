@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CartsRestApi\Communication\Plugin\CartsRestApi\QuoteCollectionReader;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
-use Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -24,13 +24,12 @@ class SingleQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteC
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
      */
-    public function getQuoteCollection(
-        RestQuoteCollectionRequestTransfer $restQuoteCollectionRequestTransfer
-    ): QuoteCollectionResponseTransfer {
-        return $this->getFacade()->findQuoteByCustomerAndStore($restQuoteCollectionRequestTransfer);
+    public function getQuoteCollection(CustomerTransfer $customerTransfer): QuoteCollectionResponseTransfer
+    {
+        return $this->getFacade()->findQuoteByCustomerAndStore($customerTransfer);
     }
 }

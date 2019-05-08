@@ -14,43 +14,31 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
-use Generated\Shared\Transfer\RestQuoteRequestTransfer;
 use Spryker\Zed\CartsRestApi\CartsRestApiConfig;
 
 class QuoteMapper implements QuoteMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $registeredCustomer
+     * @param string $registeredCustomerReference
      * @param \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function createQuoteTransfer(
-        CustomerTransfer $registeredCustomer,
+        string $registeredCustomerReference,
         QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
     ): QuoteTransfer {
         $quoteCollection = $quoteCollectionResponseTransfer->getQuoteCollection();
 
+        $registeredCustomer = (new CustomerTransfer())->setCustomerReference($registeredCustomerReference);
         if (!$quoteCollection || $quoteCollection->getQuotes()->count() === 0) {
             return (new QuoteTransfer())->setCustomer($registeredCustomer);
         }
 
         $quoteTransfer = $quoteCollection->getQuotes()[0];
-        $quoteTransfer->setCustomerReference($registeredCustomer->getCustomerReference());
+        $quoteTransfer->setCustomerReference($registeredCustomerReference);
 
         return $quoteTransfer->setCustomer($registeredCustomer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestTransfer $restQuoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createQuoteResponseTransfer(RestQuoteRequestTransfer $restQuoteRequestTransfer): QuoteResponseTransfer
-    {
-        return (new QuoteResponseTransfer())->setCustomer(
-            (new CustomerTransfer())->setCustomerReference($restQuoteRequestTransfer->getCustomerReference())
-        );
     }
 
     /**
