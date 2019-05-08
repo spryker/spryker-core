@@ -22,8 +22,8 @@ use Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptio
  */
 class PersistentCartShareClientTest extends Unit
 {
-    protected const TEST_GROUP = 'group-test';
-    protected const KEY_TEST = 'key-test';
+    protected const SHARE_OPTION_GROUP_VALUE = 'SHARE_OPTION_GROUP_VALUE';
+    protected const KEY_VALUE = 'KEY_VALUE';
 
     /**
      * @var \SprykerTest\Client\PersistentCartShare\PersistentCartShareClientTester
@@ -42,8 +42,8 @@ class PersistentCartShareClientTest extends Unit
         $cartShareOptions = $this->getPersistentCartShareClient()->getCartShareOptions();
 
         // Assert
-        $this->assertArrayHasKey(static::TEST_GROUP, $cartShareOptions);
-        $this->assertContains(static::KEY_TEST, $cartShareOptions[static::TEST_GROUP]);
+        $this->assertArrayHasKey(static::SHARE_OPTION_GROUP_VALUE, $cartShareOptions);
+        $this->assertContains(static::KEY_VALUE, $cartShareOptions[static::SHARE_OPTION_GROUP_VALUE]);
     }
 
     /**
@@ -66,11 +66,11 @@ class PersistentCartShareClientTest extends Unit
 
         $cartShareOptionPluginMock
             ->method('getKey')
-            ->willReturn(static::KEY_TEST);
+            ->willReturn(static::KEY_VALUE);
 
         $cartShareOptionPluginMock
             ->method('getShareOptionGroup')
-            ->willReturn(static::TEST_GROUP);
+            ->willReturn(static::SHARE_OPTION_GROUP_VALUE);
 
         return $cartShareOptionPluginMock;
     }

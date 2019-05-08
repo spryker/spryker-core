@@ -22,7 +22,3 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
-                - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
-                - \SprykerTest\Zed\ResourceShare\Helper\ResourceShareDataHelper
-
