@@ -155,29 +155,6 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    protected function addConcreteProducts(RestResourceInterface $restResource, RestRequestInterface $restRequest): RestResourceInterface
-    {
-        /** @var \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer $attributes */
-        $attributes = $restResource->getAttributes();
-        $concreteProductsResourceList = $this->concreteProductsReader
-            ->findProductConcretesByProductConcreteSkus(
-                $attributes->getAttributeMap()[static::PRODUCT_CONCRETE_IDS_KEY],
-                $restRequest
-            );
-
-        foreach ($concreteProductsResourceList as $concreteProductResource) {
-            $restResource->addRelationship($concreteProductResource);
-        }
-
-        return $restResource;
-    }
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
