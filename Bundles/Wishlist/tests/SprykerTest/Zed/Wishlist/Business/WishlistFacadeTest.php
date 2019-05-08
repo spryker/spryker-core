@@ -632,9 +632,14 @@ class WishlistFacadeTest extends Unit
      *
      * @return void
      */
-    protected function createStockProduct($sku, $quantity)
+    protected function createStockProduct($sku, $quantity = null)
     {
         $stockProductTransfer = new StockProductTransfer();
+
+        if ($quantity === null) {
+            $quantity = 0;
+        }
+
         $stockProductTransfer
             ->setSku($sku)
             ->setQuantity($quantity)
