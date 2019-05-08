@@ -176,8 +176,6 @@ class StockFacadeTest extends Unit
     }
 
     /**
-     * @group skipped
-     *
      * @return void
      */
     public function testCreateStockProductShouldThrowException()
