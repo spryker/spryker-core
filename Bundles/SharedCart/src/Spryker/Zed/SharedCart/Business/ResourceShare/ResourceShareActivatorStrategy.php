@@ -83,7 +83,7 @@ class ResourceShareActivatorStrategy implements ResourceShareActivatorStrategyIn
                 );
         }
 
-        $idCompanyBusinessUnit = $currentCompanyUserTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit();
+        $idCompanyBusinessUnit = $currentCompanyUserTransfer->getFkCompanyBusinessUnit();
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
 
         if ($resourceShareDataTransfer->getIdCompanyBusinessUnit() !== $idCompanyBusinessUnit) {
