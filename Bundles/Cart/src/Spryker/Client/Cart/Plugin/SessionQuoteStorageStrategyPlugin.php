@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\Quote\QuoteConfig;
@@ -21,7 +22,7 @@ use Spryker\Shared\Quote\QuoteConfig;
  * @method \Spryker\Client\Cart\CartClientInterface getClient()
  * @method \Spryker\Client\Cart\CartFactory getFactory()
  */
-class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteStorageStrategyPluginInterface
+class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface
 {
     /**
      * @return string
@@ -344,6 +345,28 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
             $quoteResponseTransfer->setIsSuccessful(true);
             $this->getQuoteClient()->setQuote($quoteTransfer);
         }
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * Specification:
+     * - Makes zed request.
+     * - Executes QuoteLockPreResetPluginInterface plugins before unlock.
+     * - Unlocks quote by setting `isLocked` transfer property to false.
+     * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     * - Stores quote in session internally after zed request.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function resetQuoteLock(): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = $this->getCartZedStub()
+            ->resetQuoteLock($this->getQuote());
+
+        $this->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
 
         return $quoteResponseTransfer;
     }
