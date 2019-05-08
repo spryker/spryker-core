@@ -95,6 +95,17 @@ class CalculationFacadeTest extends Unit
     }
 
     /**
+     * @return array
+     */
+    public function calculatePriceShouldSetDefaultStorePriceValuesDataProvider(): array
+    {
+        return [
+            'int stock' => $this->getDataForCalculatePriceShouldSetDefaultStorePriceValues(2, 1),
+            'float stock' => $this->getDataForCalculatePriceShouldSetDefaultStorePriceValues(2.5, 1),
+        ];
+    }
+
+    /**
      * @dataProvider calculatePriceShouldSetDefaultStorePriceValuesDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -134,8 +145,6 @@ class CalculationFacadeTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return void
      */
     public function testCalculatePriceShouldSetDefaultStorePriceValuesForExpense(): void
@@ -145,7 +154,10 @@ class CalculationFacadeTest extends Unit
                 new PriceCalculatorPlugin(),
             ]
         );
-        $quoteTransfer = $this->getDataForCalculatePriceShouldSetDefaultStorePriceValues(2, 1);
+        /**
+         * @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+         */
+        $quoteTransfer = $this->getDataForCalculatePriceShouldSetDefaultStorePriceValues(2, 1)[0];
 
         $calculationFacade->recalculateQuote($quoteTransfer);
 
@@ -171,9 +183,9 @@ class CalculationFacadeTest extends Unit
      * @param int|float $productQuantity
      * @param int $expenseQuantity
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return array
      */
-    protected function getDataForCalculatePriceShouldSetDefaultStorePriceValues($productQuantity, int $expenseQuantity): QuoteTransfer
+    protected function getDataForCalculatePriceShouldSetDefaultStorePriceValues($productQuantity, int $expenseQuantity): array
     {
         $quoteTransfer = (new QuoteBuilder())->seed([
             QuoteTransfer::PRICE_MODE => CalculationPriceMode::PRICE_MODE_GROSS,
@@ -200,7 +212,7 @@ class CalculationFacadeTest extends Unit
 
         $quoteTransfer->addExpense($expenseTransfer);
 
-        return $quoteTransfer;
+        return [$quoteTransfer];
     }
 
     /**

@@ -13,7 +13,7 @@ interface SellableInterface
 {
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      *
      * @return bool
      */
@@ -28,7 +28,7 @@ interface SellableInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param float $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool

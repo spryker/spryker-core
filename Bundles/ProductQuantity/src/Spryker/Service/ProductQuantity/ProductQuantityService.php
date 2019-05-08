@@ -31,4 +31,18 @@ class ProductQuantityService extends AbstractService implements ProductQuantityS
             ->createProductQuantityRounder()
             ->getNearestQuantity($productQuantityTransfer, $quantity);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return float
+     */
+    public function getDefaultMinimumQuantity(): float
+    {
+        return $this->getFactory()
+            ->createConfigReader()
+            ->getDefaultMinimumQuantity();
+    }
 }

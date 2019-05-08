@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductStorage;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface ProductStorageClientInterface
@@ -217,4 +218,17 @@ interface ProductStorageClientInterface
      * @return array|null
      */
     public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array;
+
+    /**
+     * Specification:
+     * - maps given storage data to ProductConcreteTransfer.
+     * - executes ProductConcreteExpanderPluginInterface plugin stack.
+     *
+     * @api
+     *
+     * @param array $productStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mapProductStorageDataToProductConcreteTransfer(array $productStorageData): ProductConcreteTransfer;
 }

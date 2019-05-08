@@ -11,4 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PriceCartConnectorConfig extends AbstractBundleConfig
 {
+    protected const MIN_PRICE_RESTRICTION = 1;
+
+    /**
+     * @return int
+     */
+    public function getMinPriceRestriction(): int
+    {
+        return static::MIN_PRICE_RESTRICTION;
+    }
 }

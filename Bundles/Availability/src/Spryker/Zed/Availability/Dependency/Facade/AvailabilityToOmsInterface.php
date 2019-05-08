@@ -17,7 +17,7 @@ interface AvailabilityToOmsInterface
      *
      * @param string $sku
      *
-     * @return int
+     * @return float
      */
     public function sumReservedProductQuantitiesForSku($sku);
 

@@ -114,7 +114,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param int $stock
+     * @param float $stock
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
@@ -134,7 +134,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param int $stock
+     * @param float $stock
      *
      * @return string
      */
@@ -187,7 +187,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return float
      */
     protected function calculateStockForProduct(ItemTransfer $itemTransfer, ?StoreTransfer $storeTransfer = null)
     {

@@ -54,4 +54,16 @@ class ProductQuantityStorageToUtilQuantityServiceBridge implements ProductQuanti
     {
         return $this->utilQuantityService->subtractQuantities($firstQuantity, $secondQuantity);
     }
+
+    /**
+     * @param float $dividendQuantity
+     * @param float $divisorQuantity
+     * @param float $remainder
+     *
+     * @return bool
+     */
+    public function isQuantityModuloEqual(float $dividendQuantity, float $divisorQuantity, float $remainder): bool
+    {
+        return $this->utilQuantityService->isQuantityModuloEqual($dividendQuantity, $divisorQuantity, $remainder);
+    }
 }

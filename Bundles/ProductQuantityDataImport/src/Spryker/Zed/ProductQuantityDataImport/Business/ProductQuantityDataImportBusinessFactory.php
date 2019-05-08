@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductQuantityDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\ProductQuantityDataImport\Business\Model\ProductQuantityDataImportWriterStep;
+use Spryker\Zed\ProductQuantityDataImport\Dependency\Service\ProductQuantityDataImportToProductQuantityServiceInterface;
+use Spryker\Zed\ProductQuantityDataImport\ProductQuantityDataImportDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductQuantityDataImport\ProductQuantityDataImportConfig getConfig()
@@ -35,6 +37,14 @@ class ProductQuantityDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function createProductQuantityDataImportWriterStep(): ProductQuantityDataImportWriterStep
     {
-        return new ProductQuantityDataImportWriterStep();
+        return new ProductQuantityDataImportWriterStep($this->getProductQuantityService());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductQuantityDataImport\Dependency\Service\ProductQuantityDataImportToProductQuantityServiceInterface
+     */
+    public function getProductQuantityService(): ProductQuantityDataImportToProductQuantityServiceInterface
+    {
+        return $this->getProvidedDependency(ProductQuantityDataImportDependencyProvider::SERVICE_PRODUCT_QUANTITY);
     }
 }
