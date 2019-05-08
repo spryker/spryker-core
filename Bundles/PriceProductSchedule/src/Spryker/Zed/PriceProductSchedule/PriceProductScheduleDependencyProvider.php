@@ -26,7 +26,6 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Importer;
 
-use DateTime;
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\Map\PriceProductScheduleImportMapInterface;
@@ -58,7 +57,8 @@ class PriceProductScheduleImporter implements PriceProductScheduleImporterInterf
                 ->mapArrayToPriceProductScheduleTransfer(
                     array_combine($headers, $importItem),
                     new PriceProductScheduleImportTransfer(),
-                    PriceProductScheduleImportMapInterface::MAP);
+                    PriceProductScheduleImportMapInterface::MAP
+                );
 
             $priceProductScheduleImportTransfer->setGrossAmount((int)$priceProductScheduleImportTransfer->getGrossAmount());
             $priceProductScheduleImportTransfer->setNetAmount((int)$priceProductScheduleImportTransfer->getNetAmount());

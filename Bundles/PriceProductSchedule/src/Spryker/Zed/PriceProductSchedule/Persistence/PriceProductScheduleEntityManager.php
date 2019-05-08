@@ -112,14 +112,17 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
             throw new PriceProductScheduleListNotFoundException(
                 sprintf(
                     'Price product schedule list was not found by given id %s',
-                    $priceProductScheduleListTransfer->getIdPriceProductScheduleList())
+                    $priceProductScheduleListTransfer->getIdPriceProductScheduleList()
+                )
             );
         }
 
         $priceProductScheduleListEntity = $this->getFactory()
             ->createPriceProductScheduleListMapper()
-            ->mapPriceProductScheduleListTransferToPriceProductScheduleListEntity($priceProductScheduleListTransfer,
-                $priceProductScheduleListEntity);
+            ->mapPriceProductScheduleListTransferToPriceProductScheduleListEntity(
+                $priceProductScheduleListTransfer,
+                $priceProductScheduleListEntity
+            );
 
         $priceProductScheduleListEntity->save();
 

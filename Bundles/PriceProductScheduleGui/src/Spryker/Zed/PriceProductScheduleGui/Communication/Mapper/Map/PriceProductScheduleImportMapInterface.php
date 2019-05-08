@@ -34,5 +34,4 @@ interface PriceProductScheduleImportMapInterface
         self::KEY_INCLUDED_FROM => PriceProductScheduleImportTransfer::ACTIVE_FROM,
         self::KEY_INCLUDED_TO => PriceProductScheduleImportTransfer::ACTIVE_TO,
     ];
-
 }

@@ -74,8 +74,6 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
-     * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
-     *
      */
     public function mapPriceProductScheduleImportTransferToPriceProductScheduleTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
@@ -95,9 +93,9 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
      * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
      *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     protected function mapPriceProductScheduleImportTransferToPriceProductTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
@@ -173,10 +171,9 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
      * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer
-     *
      * @throws \Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException
      *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
     protected function mapPriceProductScheduleEntityToMoneyValueTransfer(
         PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,

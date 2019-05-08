@@ -309,8 +309,12 @@ class PriceProductScheduleImportTest extends Unit
                         PriceProductScheduleImportTransfer::PRICE_TYPE_NAME => 'PRICE_TYPE_NAME',
                         PriceProductScheduleImportTransfer::STORE_NAME => 'AT',
                         PriceProductScheduleImportTransfer::ACTIVE_TO => (new DateTime('-2 days'))->setTime(0, 0, 0, 0),
-                        PriceProductScheduleImportTransfer::ACTIVE_FROM => (new DateTime('+3 days'))->setTime(0, 0, 0,
-                            0),
+                        PriceProductScheduleImportTransfer::ACTIVE_FROM => (new DateTime('+3 days'))->setTime(
+                            0,
+                            0,
+                            0,
+                            0
+                        ),
                         PriceProductScheduleImportTransfer::GROSS_AMOUNT => 25000,
                         PriceProductScheduleImportTransfer::NET_AMOUNT => 20000,
                     ],

@@ -14,7 +14,6 @@ interface PriceProductScheduleImportMapperInterface
     /**
      * @param array $importData
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     *
      * @param array $fieldsMap
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleImportTransfer

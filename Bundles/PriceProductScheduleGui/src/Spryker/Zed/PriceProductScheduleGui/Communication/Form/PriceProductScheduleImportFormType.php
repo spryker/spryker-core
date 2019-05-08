@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +17,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
 /**
- * @method PriceProductScheduleGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
  */
 class PriceProductScheduleImportFormType extends AbstractType
 {
