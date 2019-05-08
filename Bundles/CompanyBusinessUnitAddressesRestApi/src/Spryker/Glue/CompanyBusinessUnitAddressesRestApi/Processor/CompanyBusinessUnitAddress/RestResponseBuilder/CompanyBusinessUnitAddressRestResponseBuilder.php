@@ -64,22 +64,6 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $companyBusinessUnitAddressRestResources
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createCompanyBusinessUnitAddressCollectionRestResponse(array $companyBusinessUnitAddressRestResources): RestResponseInterface
-    {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        foreach ($companyBusinessUnitAddressRestResources as $companyBusinessUnitAddressRestResource) {
-            $restResponse->addResource($companyBusinessUnitAddressRestResource);
-        }
-
-        return $restResponse;
-    }
-
-    /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyBusinessUnitAddressNotFoundError(): RestResponseInterface
@@ -100,21 +84,6 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
             ->setDetail(CompanyBusinessUnitAddressesRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
-
-        return $this->restResourceBuilder
-            ->createRestResponse()
-            ->addError($restErrorMessageTransfer);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createCompanyUserNotSelectedError(): RestResponseInterface
-    {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_FORBIDDEN)
-            ->setCode(CompanyBusinessUnitAddressesRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_SELECTED)
-            ->setDetail(CompanyBusinessUnitAddressesRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_SELECTED);
 
         return $this->restResourceBuilder
             ->createRestResponse()

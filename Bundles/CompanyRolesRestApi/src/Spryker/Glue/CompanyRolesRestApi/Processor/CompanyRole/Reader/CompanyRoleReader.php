@@ -76,7 +76,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
         }
 
         $companyRoleCollectionTransfer = $this->companyRoleClient->getCompanyRoleCollection(
-            (new CompanyRoleCriteriaFilterTransfer())->setIdCompany($restRequest->getRestUser()->getIdCompany())
+            (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())
         );
 
         if (!$companyRoleCollectionTransfer->getRoles()->count()) {
