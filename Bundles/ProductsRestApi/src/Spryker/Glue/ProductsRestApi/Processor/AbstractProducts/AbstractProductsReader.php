@@ -91,8 +91,6 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             return $this->addAbstractProductNotFoundError($response);
         }
 
-        $restResource = $this->addConcreteProducts($restResource, $restRequest);
-
         return $response->addResource($restResource);
     }
 
