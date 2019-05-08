@@ -33,12 +33,14 @@ class OpensslEncryptor implements EncryptorInterface
      */
     public function encrypt(string $plainText, string $initVector, string $encriptionKey): string
     {
-        return openssl_encrypt(
-            $plainText,
-            $this->utilEncryptionConfig->getEncryptionCipherMethod(),
-            $encriptionKey,
-            0,
-            $initVector
+        return base64_encode(
+            openssl_encrypt(
+                $plainText,
+                $this->utilEncryptionConfig->getEncryptionCipherMethod(),
+                $encriptionKey,
+                0,
+                $initVector
+            )
         );
     }
 }

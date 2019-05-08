@@ -25,6 +25,7 @@ interface UtilEncryptionServiceInterface
     /**
      * Specification:
      * - Encrypts given data.
+     * - Encodes encrypted data with base64 algorithm.
      *
      * @api
      *
@@ -38,6 +39,7 @@ interface UtilEncryptionServiceInterface
 
     /**
      * Specification:
+     * - Decodes encrypted data with base64 algorithm.
      * - Decrypts given data.
      *
      * @api

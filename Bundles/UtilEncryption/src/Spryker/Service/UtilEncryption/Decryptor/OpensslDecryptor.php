@@ -34,7 +34,7 @@ class OpensslDecryptor implements DecryptorInterface
     public function decrypt(string $chiperText, string $initVector, string $encriptionKey): string
     {
         return openssl_decrypt(
-            $chiperText,
+            base64_decode($chiperText),
             $this->utilEncryptionConfig->getEncryptionCipherMethod(),
             $encriptionKey,
             0,
