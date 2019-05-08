@@ -46,8 +46,8 @@ use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapper;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReader;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReaderInterface;
-use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreator;
-use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface;
+use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCreator;
+use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdater;
 use Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilder;
@@ -265,11 +265,11 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCreatorInterface
      */
-    public function createSingleQuoteCreator(): SingleQuoteCreatorInterface
+    public function createSingleQuoteCreator(): QuoteCreatorInterface
     {
-        return new SingleQuoteCreator(
+        return new QuoteCreator(
             $this->createCartReader(),
             $this->getClient()
         );

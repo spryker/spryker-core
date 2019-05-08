@@ -79,20 +79,7 @@ class QuoteMapper implements QuoteMapperInterface
         QuoteTransfer $quoteTransfer,
         QuoteTransfer $originalQuoteTransfer
     ): QuoteTransfer {
-        $originalQuoteTransfer->setCustomer($quoteTransfer->getCustomer());
-        if ($quoteTransfer->getName()) {
-            $originalQuoteTransfer->setName($quoteTransfer->getName());
-        }
-
-        if ($quoteTransfer->getCurrency()) {
-            $originalQuoteTransfer->setCurrency($quoteTransfer->getCurrency());
-        }
-
-        if ($quoteTransfer->getPriceMode()) {
-            $originalQuoteTransfer->setPriceMode($quoteTransfer->getPriceMode());
-        }
-
-        return $originalQuoteTransfer;
+        return $originalQuoteTransfer->fromArray($quoteTransfer->modifiedToArray(), true);
     }
 
     /**

@@ -16,7 +16,7 @@ use Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 
-class SingleQuoteCreator implements SingleQuoteCreatorInterface
+class QuoteCreator implements QuoteCreatorInterface
 {
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\Cart\CartReaderInterface
