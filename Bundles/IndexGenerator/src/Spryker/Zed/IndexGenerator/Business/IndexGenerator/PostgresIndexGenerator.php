@@ -124,7 +124,7 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
      */
     protected function isDocumentEmpty(DOMDocument $domDocument): bool
     {
-        /** @var \DOMDocument $element */
+        /** @var \DOMElement $element */
         $element = $domDocument->documentElement;
 
         return !$element->hasChildNodes();
@@ -212,7 +212,7 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
             $foreignTableName = (string)$foreignKeyTableTransfer->getTableName();
             $tableElement->setAttribute('name', $foreignTableName);
 
-            /** @var \DOMDocument $element */
+            /** @var \DOMElement $element */
             $element = $domDocument->documentElement;
             $element->appendChild($tableElement);
 
