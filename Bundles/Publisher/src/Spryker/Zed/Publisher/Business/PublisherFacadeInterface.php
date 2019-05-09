@@ -10,9 +10,12 @@ namespace Spryker\Zed\Publisher\Business;
 interface PublisherFacadeInterface
 {
     /**
+     * Specification:
+     *  - Returns all publisher plugins to one flatted array and groups them by event type
+     *
      * @api
      *
-     * @return array
+     * @return string[]
      */
-    public function mergePublisherPlugins(): array;
+    public function getPublisherPlugins(): array;
 }

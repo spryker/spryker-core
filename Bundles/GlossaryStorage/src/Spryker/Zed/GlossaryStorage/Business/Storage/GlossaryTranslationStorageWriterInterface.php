@@ -21,5 +21,5 @@ interface GlossaryTranslationStorageWriterInterface
      *
      * @return void
      */
-    public function deleteGlossaryDeleteCollection(array $glossaryKeyIds);
+    public function deleteGlossaryStorageCollection(array $glossaryKeyIds);
 }

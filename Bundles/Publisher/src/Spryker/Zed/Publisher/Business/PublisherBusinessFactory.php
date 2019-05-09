@@ -12,6 +12,7 @@ use Spryker\Zed\Publisher\Business\Merger\PublisherPluginMerger;
 use Spryker\Zed\Publisher\Business\Merger\PublisherPluginMergerInterface;
 use Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistry;
 use Spryker\Zed\Publisher\PublisherDependencyProvider;
+use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
 
 /**
  * @method \Spryker\Zed\Publisher\PublisherConfig getConfig()
@@ -38,9 +39,9 @@ class PublisherBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistry
+     * @return \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface
      */
-    public function createPublisherEventRegistry(): PublisherEventRegistry
+    public function createPublisherEventRegistry(): PublisherEventRegistryInterface
     {
         return new PublisherEventRegistry();
     }

@@ -12,6 +12,9 @@ use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
 interface PublisherRegistryPluginInterface
 {
     /**
+     * Specification:
+     * - Expands PublisherEventRegistry with new publisher plugins
+     *
      * @api
      *
      * @param \Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface $publisherEventRegistry

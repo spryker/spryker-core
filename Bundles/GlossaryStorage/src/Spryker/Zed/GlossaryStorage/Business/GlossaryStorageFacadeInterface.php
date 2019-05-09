@@ -12,7 +12,7 @@ interface GlossaryStorageFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated use `GlossaryStorageFacadeInterface::writeGlossaryStorageCollection()` instead.
      *
      * Specification:
      * - Queries all glossary keys with the given glossaryKeyIds
@@ -28,7 +28,7 @@ interface GlossaryStorageFacadeInterface
     /**
      * @api
      *
-     * @deprecated
+     * @deprecated use `GlossaryStorageFacadeInterface::deleteGlossaryStorageCollection()` instead.
      *
      * Specification:
      * - Finds and deletes glossary storage entities with the given glossaryKeyIds

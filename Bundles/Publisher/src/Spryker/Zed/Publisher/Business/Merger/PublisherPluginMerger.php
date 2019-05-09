@@ -37,21 +37,21 @@ class PublisherPluginMerger implements PublisherPluginMergerInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function mergePublisherPlugins(): array
+    public function getPublisherPlugins(): array
     {
         if (static::$eventCollectionBuffer === null) {
-            static::$eventCollectionBuffer = $this->extractEventCollection();
+            static::$eventCollectionBuffer = $this->getPublisherEventCollection();
         }
 
         return static::$eventCollectionBuffer;
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    protected function extractEventCollection(): array
+    protected function getPublisherEventCollection(): array
     {
         $eventCollection = [];
         foreach ($this->publisherRegistryPlugins as $publisherRegistryPlugin) {

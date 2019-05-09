@@ -17,12 +17,12 @@ class PublisherFacade extends AbstractFacade implements PublisherFacadeInterface
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
-    public function mergePublisherPlugins(): array
+    public function getPublisherPlugins(): array
     {
         return $this->getFactory()
             ->createPublisherPluginMerger()
-            ->mergePublisherPlugins();
+            ->getPublisherPlugins();
     }
 }

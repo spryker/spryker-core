@@ -9,15 +9,14 @@ namespace Spryker\Zed\PublisherExtension\Dependency;
 
 use ArrayAccess;
 use IteratorAggregate;
-use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 interface PublisherEventRegistryInterface extends ArrayAccess, IteratorAggregate
 {
     /**
      * @param string $eventName
-     * @param \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface $publisherPlugin
+     * @param string $publisherPluginClassName
      *
      * @return $this
      */
-    public function register(string $eventName, PublisherPluginInterface $publisherPlugin);
+    public function register(string $eventName, string $publisherPluginClassName);
 }

@@ -16,7 +16,7 @@ use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryTran
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated
+ * @deprecated use `\Spryker\Zed\GlossaryStorage\Communication\Plugin\EventBehaviour\GlossaryEventResourceQueryContainerPlugin` instead.
  *
  * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()

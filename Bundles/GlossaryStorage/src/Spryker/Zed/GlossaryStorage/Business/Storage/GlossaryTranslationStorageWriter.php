@@ -84,7 +84,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
      *
      * @return void
      */
-    public function deleteGlossaryDeleteCollection(array $glossaryKeyIds)
+    public function deleteGlossaryStorageCollection(array $glossaryKeyIds)
     {
         $spyGlossaryTranslationStorageEntities = $this->findGlossaryStorageEntitiesByGlossaryKeyIds($glossaryKeyIds);
         foreach ($spyGlossaryTranslationStorageEntities as $spyGlossaryTranslationStorageLocalizedEntities) {

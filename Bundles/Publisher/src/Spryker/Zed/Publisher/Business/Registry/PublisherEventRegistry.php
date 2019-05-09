@@ -9,7 +9,6 @@ namespace Spryker\Zed\Publisher\Business\Registry;
 
 use ArrayIterator;
 use Exception;
-use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
 use Traversable;
 
@@ -22,30 +21,30 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
 
     /**
      * @param string $eventName
-     * @param \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface $publisherPlugin
+     * @param string $publisherPluginClassName
      *
-     * @return $this|\Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface
+     * @return $this
      */
-    public function register(string $eventName, PublisherPluginInterface $publisherPlugin)
+    public function register(string $eventName, string $publisherPluginClassName)
     {
-        $this->add($eventName, $publisherPlugin);
+        $this->add($eventName, $publisherPluginClassName);
 
         return $this;
     }
 
     /**
      * @param string $eventName
-     * @param \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface $publisherPlugin
+     * @param string $publisherPluginClassName
      *
      * @return void
      */
-    protected function add(string $eventName, PublisherPluginInterface $publisherPlugin): void
+    protected function add(string $eventName, string $publisherPluginClassName): void
     {
         if (!$this->has($eventName)) {
             $this->publisherPlugins[$eventName] = [];
         }
 
-        $this->publisherPlugins[$eventName][] = $publisherPlugin;
+        $this->publisherPlugins[$eventName][] = $publisherPluginClassName;
     }
 
     /**
@@ -139,7 +138,8 @@ class PublisherEventRegistry implements PublisherEventRegistryInterface
         if (!isset($this->publisherPlugins[$eventName]) || count($this->publisherPlugins[$eventName]) === 0) {
             throw new Exception(
                 sprintf(
-                    'Could not find publisher for event "%s". You have to add it to PublisherDependencyProvider.',
+                    'Could not find publisher for event "%s". You have to add a publisher for the event "%s" to PublisherDependencyProvider::getPublisherRegistryPlugins()',
+                    $eventName,
                     $eventName
                 )
             );

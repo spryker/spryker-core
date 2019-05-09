@@ -24,36 +24,39 @@ class PublisherSubscriber extends AbstractPlugin implements EventSubscriberInter
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $plugins = $this->getFacade()->mergePublisherPlugins();
-        $this->extractEventListenerCollection($eventCollection, $plugins);
+        $plugins = $this->getFacade()->getPublisherPlugins();
 
-        return $eventCollection;
+        return $this->extractEventListenerCollection($eventCollection, $plugins);
     }
 
     /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      * @param array $publisherPlugins
      *
-     * @return void
+     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    protected function extractEventListenerCollection(EventCollectionInterface $eventCollection, array $publisherPlugins): void
+    protected function extractEventListenerCollection(EventCollectionInterface $eventCollection, array $publisherPlugins): EventCollectionInterface
     {
         foreach ($publisherPlugins as $eventName => $listeners) {
             $this->addListenerToEventCollection($eventCollection, $listeners, $eventName);
         }
+
+        return $eventCollection;
     }
 
     /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface[] $listeners
+     * @param string[] $listeners
      * @param string $eventName
      *
-     * @return void
+     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    protected function addListenerToEventCollection(EventCollectionInterface $eventCollection, array $listeners, string $eventName): void
+    protected function addListenerToEventCollection(EventCollectionInterface $eventCollection, array $listeners, string $eventName): EventCollectionInterface
     {
         foreach ($listeners as $listener) {
-            $eventCollection->addListenerQueued($eventName, $listener);
+            $eventCollection->addListenerQueued($eventName, new $listener());
         }
+
+        return $eventCollection;
     }
 }

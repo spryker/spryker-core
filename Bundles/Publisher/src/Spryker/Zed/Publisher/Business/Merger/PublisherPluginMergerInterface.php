@@ -10,7 +10,7 @@ namespace Spryker\Zed\Publisher\Business\Merger;
 interface PublisherPluginMergerInterface
 {
     /**
-     * @return array
+     * @return string[]
      */
-    public function mergePublisherPlugins(): array;
+    public function getPublisherPlugins(): array;
 }
