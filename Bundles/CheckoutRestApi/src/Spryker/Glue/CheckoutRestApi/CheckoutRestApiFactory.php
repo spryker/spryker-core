@@ -10,6 +10,8 @@ namespace Spryker\Glue\CheckoutRestApi;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessor;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessorInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapper;
+use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReader;
@@ -65,7 +67,8 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createCheckoutRequestAttributesExpander(),
             $this->createCheckoutRequestValidator(),
-            $this->createRestCheckoutErrorMapper()
+            $this->createRestCheckoutErrorMapper(),
+            $this->createCheckoutResponseMapper()
         );
     }
 
@@ -86,6 +89,16 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function createCustomerMapper(): CustomerMapperInterface
     {
         return new CustomerMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapperInterface
+     */
+    public function createCheckoutResponseMapper(): CheckoutResponseMapperInterface
+    {
+        return new CheckoutResponseMapper(
+            $this->getCheckoutResponseMapperPlugins()
+        );
     }
 
     /**
@@ -132,5 +145,13 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function getCheckoutRequestAttributesValidatorPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface[]
+     */
+    public function getCheckoutResponseMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_RESPONSE_MAPPER);
     }
 }

@@ -58,6 +58,8 @@ class SearchPreferencesCest
 
         $i->amOnPage(SearchPreferencesPage::URL_LIST);
 
+        $i->waitForElementVisible('.dataTables_scrollBody');
+
         $i->click('#syncSearchPreferences');
 
         $i->canSeeCurrentUrlEquals(SearchPreferencesPage::URL_LIST);
