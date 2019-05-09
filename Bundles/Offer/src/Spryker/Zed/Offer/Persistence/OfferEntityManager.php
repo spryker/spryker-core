@@ -18,8 +18,6 @@ class OfferEntityManager extends AbstractEntityManager implements OfferEntityMan
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @return \Generated\Shared\Transfer\OfferTransfer

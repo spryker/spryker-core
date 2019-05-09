@@ -56,8 +56,6 @@ interface MerchantRelationshipRepositoryInterface
      * - Returns all merchant relations.
      * - Hydrate owner company business unit and merchant
      *
-     * @api
-     *
      * @module CompanyBusinessUnit
      * @module Merchant
      *

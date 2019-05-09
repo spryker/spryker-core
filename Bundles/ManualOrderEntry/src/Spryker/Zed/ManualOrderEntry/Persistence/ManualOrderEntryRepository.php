@@ -17,8 +17,6 @@ use Spryker\Zed\ManualOrderEntry\Business\Exception\OrderSourceNotFoundException
 class ManualOrderEntryRepository extends AbstractRepository implements ManualOrderEntryRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param int $idOrderSource
      *
      * @throws \Spryker\Zed\ManualOrderEntry\Business\Exception\OrderSourceNotFoundException
@@ -41,8 +39,6 @@ class ManualOrderEntryRepository extends AbstractRepository implements ManualOrd
     }
 
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
     public function findAllOrderSources(): array

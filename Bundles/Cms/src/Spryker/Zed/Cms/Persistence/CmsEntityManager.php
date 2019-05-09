@@ -18,8 +18,6 @@ class CmsEntityManager extends AbstractEntityManager implements CmsEntityManager
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param array $idStores
      * @param int $idCmsPage
      *
@@ -37,8 +35,6 @@ class CmsEntityManager extends AbstractEntityManager implements CmsEntityManager
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param array $idStores
      * @param int $idCmsPage

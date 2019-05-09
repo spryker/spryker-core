@@ -15,8 +15,6 @@ interface OfferEntityManagerInterface
      * Specification:
      *  - Store new offer to db.
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
@@ -26,8 +24,6 @@ interface OfferEntityManagerInterface
     /**
      * Specification:
      *  - Update existing offer in db.
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *

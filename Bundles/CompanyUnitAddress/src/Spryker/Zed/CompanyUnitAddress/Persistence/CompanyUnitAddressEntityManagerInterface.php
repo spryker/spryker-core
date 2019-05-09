@@ -18,8 +18,6 @@ interface CompanyUnitAddressEntityManagerInterface
      * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress in the transfer
      * - Updates fields in a company unit address entity
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
@@ -29,8 +27,6 @@ interface CompanyUnitAddressEntityManagerInterface
     /**
      * Specification:
      * - Deletes the company unit address by idCompanyUnitAddress
-     *
-     * @api
      *
      * @param int $idCompanyUnitAddress
      *

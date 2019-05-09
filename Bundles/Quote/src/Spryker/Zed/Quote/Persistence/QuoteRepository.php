@@ -26,8 +26,6 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @deprecated Use findQuoteByCustomerReferenceAndIdStore() instead.
      *
      * @param string $customerReference
@@ -50,8 +48,6 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param string $customerReference
      * @param int $idStore
@@ -76,8 +72,6 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
@@ -98,8 +92,6 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *

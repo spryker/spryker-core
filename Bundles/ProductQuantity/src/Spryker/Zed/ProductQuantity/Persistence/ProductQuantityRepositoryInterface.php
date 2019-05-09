@@ -10,8 +10,6 @@ namespace Spryker\Zed\ProductQuantity\Persistence;
 interface ProductQuantityRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param string[] $productSkus
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]

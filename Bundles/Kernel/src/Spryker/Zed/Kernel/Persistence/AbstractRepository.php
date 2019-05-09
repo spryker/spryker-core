@@ -56,8 +56,6 @@ abstract class AbstractRepository
     }
 
     /**
-     * @api
-     *
      * @param \Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory $factory
      *
      * @return $this

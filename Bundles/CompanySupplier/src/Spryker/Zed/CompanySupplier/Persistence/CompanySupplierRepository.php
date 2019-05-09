@@ -23,8 +23,6 @@ class CompanySupplierRepository extends AbstractRepository implements CompanySup
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CompanyTypeCollectionTransfer
      */
     public function getCompanyTypes(): CompanyTypeCollectionTransfer
@@ -43,8 +41,6 @@ class CompanySupplierRepository extends AbstractRepository implements CompanySup
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CompanySupplierCollectionTransfer
      */
     public function getAllSuppliers(): CompanySupplierCollectionTransfer
@@ -60,8 +56,6 @@ class CompanySupplierRepository extends AbstractRepository implements CompanySup
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param int $idProduct
      *
@@ -96,8 +90,6 @@ class CompanySupplierRepository extends AbstractRepository implements CompanySup
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param int $idCompanyType
      *

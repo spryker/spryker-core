@@ -13,15 +13,11 @@ use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 interface CompanyUnitAddressLabelRepositoryInterface
 {
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
      */
     public function findCompanyUnitAddressLabels(): CompanyUnitAddressLabelCollectionTransfer;
 
     /**
-     * @api
-     *
      * @param int $idCompanyUnitAddress
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
@@ -29,8 +25,6 @@ interface CompanyUnitAddressLabelRepositoryInterface
     public function findCompanyUnitAddressLabelsByAddress(int $idCompanyUnitAddress): CompanyUnitAddressLabelCollectionTransfer;
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return int[]
@@ -38,8 +32,6 @@ interface CompanyUnitAddressLabelRepositoryInterface
     public function findCompanyUnitAddressLabelIdsByAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer): array;
 
     /**
-     * @api
-     *
      * @param int $idCompanyUnitAddress
      * @param int[] $labelIds
      *

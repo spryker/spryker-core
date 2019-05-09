@@ -17,8 +17,6 @@ interface CompanyUnitAddressRepositoryInterface
      * Specification:
      * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress in the transfer
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
@@ -30,8 +28,6 @@ interface CompanyUnitAddressRepositoryInterface
     /**
      * Specification:
      * - Returns the business units for the given company and filters.
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *

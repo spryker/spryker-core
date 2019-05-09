@@ -21,8 +21,6 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param int $idCompany
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
@@ -47,8 +45,6 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param int $idCompany
      *
@@ -89,8 +85,6 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
      */

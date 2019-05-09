@@ -19,8 +19,6 @@ class CmsRepository extends AbstractRepository implements CmsRepositoryInterface
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param int $idCmsPage
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
