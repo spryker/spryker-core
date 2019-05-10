@@ -8,18 +8,16 @@
 namespace Spryker\Zed\Heartbeat\Business;
 
 use Elastica\Client as ElasticaClient;
-use Predis\Client as PredisClient;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Session\SessionConstants;
-use Spryker\Shared\Storage\StorageConstants;
 use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
 use Spryker\Zed\Heartbeat\Business\Assistant\PropelHealthIndicator;
 use Spryker\Zed\Heartbeat\Business\Assistant\SearchHealthIndicator;
 use Spryker\Zed\Heartbeat\Business\Assistant\SessionHealthIndicator;
 use Spryker\Zed\Heartbeat\Business\Assistant\StorageHealthIndicator;
+use Spryker\Zed\Heartbeat\Dependency\Client\HeartbeatToStorageClientInterface;
+use Spryker\Zed\Heartbeat\HeartbeatDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Storage\StorageConfig;
 
 /**
  * @method \Spryker\Zed\Heartbeat\HeartbeatConfig getConfig()
@@ -96,55 +94,15 @@ class HeartbeatBusinessFactory extends AbstractBusinessFactory
     public function createStorageHealthIndicator()
     {
         return new StorageHealthIndicator(
-            $this->createPredisClient()
+            $this->getStorageClient()
         );
     }
 
     /**
-     * @return \Predis\Client
+     * @return \Spryker\Zed\Heartbeat\Dependency\Client\HeartbeatToStorageClientInterface
      */
-    protected function createPredisClient()
+    public function getStorageClient(): HeartbeatToStorageClientInterface
     {
-        $config = $this->getConnectionParameters();
-        $options = $this->getPredisClientOptions();
-
-        return new PredisClient($config, $options);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getConnectionParameters()
-    {
-        if (Config::hasKey(StorageConstants::STORAGE_PREDIS_CLIENT_CONFIGURATION)) {
-            return Config::get(StorageConstants::STORAGE_PREDIS_CLIENT_CONFIGURATION);
-        }
-
-        $config = [
-            'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(SessionConstants::ZED_SESSION_REDIS_PROTOCOL)),
-            'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT, Config::get(SessionConstants::ZED_SESSION_REDIS_PORT)),
-            'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST, Config::get(SessionConstants::ZED_SESSION_REDIS_HOST)),
-            'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, StorageConfig::DEFAULT_REDIS_DATABASE),
-        ];
-
-        if (Config::hasKey(SessionConstants::ZED_SESSION_REDIS_PASSWORD) &&
-            Config::get(SessionConstants::ZED_SESSION_REDIS_PASSWORD) !== false
-        ) {
-            $config['password'] = Config::get(SessionConstants::ZED_SESSION_REDIS_PASSWORD);
-        }
-
-        return $config;
-    }
-
-    /**
-     * @return mixed|null
-     */
-    protected function getPredisClientOptions()
-    {
-        if (Config::hasKey(StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS)) {
-            return Config::get(StorageConstants::STORAGE_PREDIS_CLIENT_OPTIONS);
-        }
-
-        return null;
+        return $this->getProvidedDependency(HeartbeatDependencyProvider::CLIENT_STORAGE);
     }
 }

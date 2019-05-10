@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Heartbeat\Business\Assistant;
 
 use Exception;
-use Predis\Client;
 use Spryker\Shared\Heartbeat\Code\AbstractHealthIndicator;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
+use Spryker\Zed\Heartbeat\Dependency\Client\HeartbeatToStorageClientInterface;
 
 class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {
@@ -19,16 +19,16 @@ class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIn
     public const KEY_HEARTBEAT = 'heartbeat';
 
     /**
-     * @var \Predis\Client
+     * @var \Spryker\Zed\Heartbeat\Dependency\Client\HeartbeatToStorageClientInterface
      */
-    protected $client;
+    protected $storageClient;
 
     /**
-     * @param \Predis\Client $client
+     * @param \Spryker\Zed\Heartbeat\Dependency\Client\HeartbeatToStorageClientInterface $storageClient
      */
-    public function __construct(Client $client)
+    public function __construct(HeartbeatToStorageClientInterface $storageClient)
     {
-        $this->client = $client;
+        $this->storageClient = $storageClient;
     }
 
     /**
@@ -46,9 +46,9 @@ class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIn
     private function checkWriteToStorage()
     {
         try {
-            $this->client->set(self::KEY_HEARTBEAT, 'ok');
+            $this->storageClient->set(static::KEY_HEARTBEAT, 'ok');
         } catch (Exception $e) {
-            $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_STORAGE);
+            $this->addDysfunction(static::HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_STORAGE);
             $this->addDysfunction($e->getMessage());
         }
     }
@@ -59,9 +59,9 @@ class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIn
     private function checkReadFromStorage()
     {
         try {
-            $this->client->get(self::KEY_HEARTBEAT);
+            $this->storageClient->get(static::KEY_HEARTBEAT);
         } catch (Exception $e) {
-            $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_READ_FROM_STORAGE);
+            $this->addDysfunction(static::HEALTH_MESSAGE_UNABLE_TO_READ_FROM_STORAGE);
             $this->addDysfunction($e->getMessage());
         }
     }
