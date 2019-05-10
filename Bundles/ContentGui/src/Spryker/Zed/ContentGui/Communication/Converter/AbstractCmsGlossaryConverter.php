@@ -195,7 +195,7 @@ abstract class AbstractCmsGlossaryConverter
         string $templateIdentifier,
         string $twigFunction,
         string $templateDisplayName
-    ) {
+    ): string {
         return strtr($this->config->getEditorContentWidgetTemplate(), [
             static::PARAMETER_ID => $contentItem->getIdContent(),
             static::PARAMETER_TYPE => $this->translatorFacade->trans($contentItem->getContentTypeKey()),

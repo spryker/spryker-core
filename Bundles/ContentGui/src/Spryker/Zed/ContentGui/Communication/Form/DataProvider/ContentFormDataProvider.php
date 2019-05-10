@@ -50,12 +50,16 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
      * @param string $termKey
      * @param int|null $contentId
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer
+     * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
-    public function getData(string $termKey, ?int $contentId = null): ContentTransfer
+    public function getData(string $termKey, ?int $contentId = null): ?ContentTransfer
     {
         if ($contentId !== null) {
             $contentTransfer = $this->contentFacade->findContentById($contentId);
+
+            if (!$contentTransfer) {
+                return $contentTransfer;
+            }
 
             return $this->setAvailableLocales($contentTransfer);
         }

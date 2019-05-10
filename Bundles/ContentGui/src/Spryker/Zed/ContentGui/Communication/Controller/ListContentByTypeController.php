@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
 class ListContentByTypeController extends AbstractController
 {
     public const PARAM_CONTENT_TYPE = 'type';
+    public const PARAM_CONTENT_ID = 'idContent';
+    public const PARAM_CONTENT_TEMPLATE = 'template';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -26,7 +28,9 @@ class ListContentByTypeController extends AbstractController
     public function indexAction(Request $request): array
     {
         $contentType = $request->query->get(static::PARAM_CONTENT_TYPE);
-        $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType);
+        $idContent = $request->query->get(static::PARAM_CONTENT_ID);
+        $selectedTemplateIdentifier = $request->query->get(static::PARAM_CONTENT_TEMPLATE);
+        $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType, $idContent);
         $contentTypeTemplates = $this->getFactory()->createContentEditorPluginsResolver()->getTemplatesByType($contentType);
         $twigFunctionTemplate = $this->getFactory()->createContentEditorPluginsResolver()->getTwigFunctionTemplateByType($contentType);
 
@@ -34,6 +38,7 @@ class ListContentByTypeController extends AbstractController
             'table' => $contentByTypeTable->render(),
             'templates' => $contentTypeTemplates,
             'twigFunctionTemplate' => $twigFunctionTemplate,
+            'selectedTemplateIdentifier' => $selectedTemplateIdentifier,
         ];
 
         return $this->viewResponse($data);
@@ -47,7 +52,8 @@ class ListContentByTypeController extends AbstractController
     public function tableAction(Request $request): JsonResponse
     {
         $contentType = $request->query->get(static::PARAM_CONTENT_TYPE);
-        $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType);
+        $idContent = $request->query->get(static::PARAM_CONTENT_ID);
+        $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType, $idContent);
 
         return $this->jsonResponse($contentByTypeTable->fetchData());
     }
