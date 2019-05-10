@@ -47,17 +47,17 @@ class ResourceShareDataExpanderStrategy implements ResourceShareDataExpanderStra
      */
     protected function validateExpandedResourceShareData(ResourceShareDataTransfer $resourceShareDataTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareResponseTransfer = new ResourceShareResponseTransfer();
-
         if ($resourceShareDataTransfer->getShareOption()
             && $resourceShareDataTransfer->getIdQuote()
             && $resourceShareDataTransfer->getIdCompanyUser()
             && $resourceShareDataTransfer->getIdCompanyBusinessUnit()
         ) {
-            return $resourceShareResponseTransfer->setIsSuccessful(true);
+            return (new ResourceShareResponseTransfer())
+                ->setIsSuccessful(true);
         }
 
-        return $resourceShareResponseTransfer->setIsSuccessful(false)
+        return (new ResourceShareResponseTransfer())
+            ->setIsSuccessful(false)
             ->addMessage(
                 (new MessageTransfer())->setValue(static::GLOSSARY_KEY_ONE_OR_MORE_REQUIRED_PROPERTIES_ARE_MISSING)
             );
