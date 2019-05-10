@@ -130,7 +130,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
         $this->exportPostgresPassword();
 
         $process = $this->getProcess($command);
-        $process->run(null, $this->getPropelEnvVariables());
+        $process->run(null, $this->getEnvironmentVariables());
 
         if (!$process->isSuccessful()) {
             throw new RuntimeException($process->getErrorOutput());
@@ -244,7 +244,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     /**
      * @return array
      */
-    protected function getPropelEnvVariables(): array
+    protected function getEnvironmentVariables(): array
     {
         return [
             'PGPASSWORD' => $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD),
