@@ -68,7 +68,11 @@ class CheckTimeoutConsole extends Console
             return null;
         }
 
-        $this->getFacade()->checkTimeouts($isValidArgument === null ? $optionStateMachineName : $argumentStateMachineName);
+        $affected = $this->getFacade()->checkTimeouts($isValidArgument === null ? $optionStateMachineName : $argumentStateMachineName);
+
+        if ($output->isVerbose()) {
+            $output->writeln('Affected: ' . $affected);
+        }
     }
 
     /**
