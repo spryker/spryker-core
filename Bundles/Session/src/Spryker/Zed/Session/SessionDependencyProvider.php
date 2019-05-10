@@ -18,6 +18,8 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SESSION_CLIENT = 'SESSION_CLIENT';
     public const MONITORING_SERVICE = 'monitoring service';
+    public const PLUGINS_HANDLER_SESSION = 'PLUGINS_HANDLER_SESSION';
+    public const PLUGINS_SESSION_LOCK_RELEASER = 'PLUGINS_SESSION_LOCK_RELEASER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,6 +30,7 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addSessionClient($container);
         $container = $this->addMonitoringService($container);
+        $container = $this->addSessionHandlerPlugins($container);
 
         return $container;
     }
@@ -41,6 +44,7 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addSessionClient($container);
         $container = $this->addMonitoringService($container);
+        $container = $this->addSessionLockReleaserPlugins($container);
 
         return $container;
     }
@@ -75,5 +79,49 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSessionHandlerPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_HANDLER_SESSION] = function (Container $container) {
+            return $this->getSessionHandlerPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerPluginInterface[]
+     */
+    protected function getSessionHandlerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSessionLockReleaserPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_SESSION_LOCK_RELEASER] = function (Container $container) {
+            return $this->getSessionLockReleaserPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface[]
+     */
+    protected function getSessionLockReleaserPlugins(): array
+    {
+        return [];
     }
 }
