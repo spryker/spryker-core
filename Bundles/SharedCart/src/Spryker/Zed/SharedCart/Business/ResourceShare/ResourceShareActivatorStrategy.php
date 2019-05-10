@@ -237,10 +237,6 @@ class ResourceShareActivatorStrategy implements ResourceShareActivatorStrategyIn
         $companyUserCollectionTransfer = $this->companyUserFacade->getActiveCompanyUsersByCustomerReference($customerTransfer);
         $companyUserTransfers = $companyUserCollectionTransfer->getCompanyUsers();
 
-        if ($companyUserTransfers->count() === 0) {
-            return null;
-        }
-
         return $companyUserTransfers->offsetGet(0);
     }
 

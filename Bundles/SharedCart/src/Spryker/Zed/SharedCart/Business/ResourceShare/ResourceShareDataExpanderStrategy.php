@@ -70,62 +70,12 @@ class ResourceShareDataExpanderStrategy implements ResourceShareDataExpanderStra
      */
     protected function expandResourceShareData(ResourceShareDataTransfer $resourceShareDataTransfer): ResourceShareDataTransfer
     {
-        $resourceShareDataTransfer = $this->expandResourceShareDataWithShareOption($resourceShareDataTransfer);
-        $resourceShareDataTransfer = $this->expandResourceShareDataWithIdQuote($resourceShareDataTransfer);
-        $resourceShareDataTransfer = $this->expandResourceShareDataWithIdCompanyUser($resourceShareDataTransfer);
-        $resourceShareDataTransfer = $this->expandResourceShareDataWithIdCompanyBusinessUnit($resourceShareDataTransfer);
+        $resourceShareData = $resourceShareDataTransfer->getData();
 
-        return $resourceShareDataTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareDataTransfer $resourceShareDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareDataTransfer
-     */
-    protected function expandResourceShareDataWithShareOption(ResourceShareDataTransfer $resourceShareDataTransfer): ResourceShareDataTransfer
-    {
-        $shareOption = $resourceShareDataTransfer->getData()[SharedCartConfig::KEY_SHARE_OPTION] ?? null;
-        $resourceShareDataTransfer->setShareOption($shareOption);
-
-        return $resourceShareDataTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareDataTransfer $resourceShareDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareDataTransfer
-     */
-    protected function expandResourceShareDataWithIdQuote(ResourceShareDataTransfer $resourceShareDataTransfer): ResourceShareDataTransfer
-    {
-        $idQuote = $resourceShareDataTransfer->getData()[static::KEY_ID_QUOTE] ?? null;
-        $resourceShareDataTransfer->setIdQuote($idQuote);
-
-        return $resourceShareDataTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareDataTransfer $resourceShareDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareDataTransfer
-     */
-    protected function expandResourceShareDataWithIdCompanyUser(ResourceShareDataTransfer $resourceShareDataTransfer): ResourceShareDataTransfer
-    {
-        $idCompanyUser = $resourceShareDataTransfer->getData()[static::KEY_ID_COMPANY_USER] ?? null;
-        $resourceShareDataTransfer->setIdCompanyUser($idCompanyUser);
-
-        return $resourceShareDataTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceShareDataTransfer $resourceShareDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareDataTransfer
-     */
-    protected function expandResourceShareDataWithIdCompanyBusinessUnit(ResourceShareDataTransfer $resourceShareDataTransfer): ResourceShareDataTransfer
-    {
-        $idCompanyBusinessUnit = $resourceShareDataTransfer->getData()[static::KEY_ID_COMPANY_BUSINESS_UNIT] ?? null;
-        $resourceShareDataTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
+        $resourceShareDataTransfer->setShareOption($resourceShareData[SharedCartConfig::KEY_SHARE_OPTION] ?? null)
+            ->setIdQuote($resourceShareData[static::KEY_ID_QUOTE] ?? null)
+            ->setIdCompanyUser($resourceShareData[static::KEY_ID_COMPANY_USER] ?? null)
+            ->setIdCompanyBusinessUnit($resourceShareData[static::KEY_ID_COMPANY_BUSINESS_UNIT] ?? null);
 
         return $resourceShareDataTransfer;
     }
