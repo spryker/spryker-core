@@ -37,21 +37,29 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
     protected $companyUserStorageExpanderPlugins;
 
     /**
+     * @var bool
+     */
+    protected $isSendingToQueue;
+
+    /**
      * @param \Spryker\Zed\CompanyUserStorage\Dependency\Facade\CompanyUserStorageToCompanyUserFacadeInterface $companyUserFacade
      * @param \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface $companyUserStorageRepository
      * @param \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageEntityManagerInterface $companyUserStorageEntityManager
      * @param \Spryker\Zed\CompanyUserStorageExtension\Dependency\Plugin\CompanyUserStorageExpanderPluginInterface[] $companyUserStorageExpanderPlugins
+     * @param bool $isSendingToQueue
      */
     public function __construct(
         CompanyUserStorageToCompanyUserFacadeInterface $companyUserFacade,
         CompanyUserStorageRepositoryInterface $companyUserStorageRepository,
         CompanyUserStorageEntityManagerInterface $companyUserStorageEntityManager,
-        array $companyUserStorageExpanderPlugins
+        array $companyUserStorageExpanderPlugins,
+        bool $isSendingToQueue
     ) {
         $this->companyUserFacade = $companyUserFacade;
         $this->companyUserStorageRepository = $companyUserStorageRepository;
         $this->companyUserStorageEntityManager = $companyUserStorageEntityManager;
         $this->companyUserStorageExpanderPlugins = $companyUserStorageExpanderPlugins;
+        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
@@ -103,6 +111,7 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
         foreach ($activeCompanyUserTransfers as $companyUserTransfer) {
             $idCompanyUser = $companyUserTransfer->getIdCompanyUser();
             $companyUserStorageEntity = $indexedCompanyUserStorageEntities[$idCompanyUser] ?? new SpyCompanyUserStorage();
+            $companyUserStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
 
             $this->storeDataSet($companyUserTransfer, $companyUserStorageEntity);
         }
