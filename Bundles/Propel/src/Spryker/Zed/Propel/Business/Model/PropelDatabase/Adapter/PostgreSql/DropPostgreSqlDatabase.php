@@ -228,15 +228,15 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     protected function isDatabaseExists(): bool
     {
-        $pdoConn = $this->createPdoConnection();
+        $pdoConnection = $this->createPdoConnection();
 
         $checkDbExistsQuery = sprintf(
             'SELECT 1 from pg_database where datname = \'%s\';',
             $this->getConfigValue(PropelConstants::ZED_DB_DATABASE)
         );
-        $result = $pdoConn->query($checkDbExistsQuery)->fetchAll();
+        $result = $pdoConnection->query($checkDbExistsQuery)->fetchAll();
 
-        $pdoConn = null;
+        $pdoConnection = null;
 
         return !empty($result);
     }
