@@ -35,22 +35,19 @@ class PersistentCartShareClientTest extends Unit
     public function testGetCartShareOptionsShouldReturnCorrectStructure(): void
     {
         // Arrange
-        $this->registerCartShareOptionPlugin($this->createShareOptionPluginMock());
+        $this->tester->setDependency(
+            PersistentCartShareDependencyProvider::PLUGINS_CART_SHARE_OPTION,
+            [
+                $this->createShareOptionPluginMock(),
+            ]
+        );
 
         // Act
-        $cartShareOptions = $this->getPersistentCartShareClient()->getCartShareOptions();
+        $cartShareOptions = $this->tester->getPersistentCartShareClient()->getCartShareOptions();
 
         // Assert
         $this->assertArrayHasKey(static::VALUE_SHARE_OPTION_GROUP, $cartShareOptions);
         $this->assertContains(static::VALUE_KEY, $cartShareOptions[static::VALUE_SHARE_OPTION_GROUP]);
-    }
-
-    /**
-     * @return \Spryker\Client\PersistentCartShare\PersistentCartShareClientInterface
-     */
-    protected function getPersistentCartShareClient()
-    {
-        return $this->tester->getLocator()->persistentCartShare()->client();
     }
 
     /**
@@ -71,20 +68,5 @@ class PersistentCartShareClientTest extends Unit
             ->willReturn(static::VALUE_SHARE_OPTION_GROUP);
 
         return $cartShareOptionPluginMock;
-    }
-
-    /**
-     * @param \Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface $cartShareOptionPlugin
-     *
-     * @return void
-     */
-    protected function registerCartShareOptionPlugin(CartShareOptionPluginInterface $cartShareOptionPlugin): void
-    {
-        $this->tester->setDependency(
-            PersistentCartShareDependencyProvider::PLUGINS_CART_SHARE_OPTION,
-            [
-                $cartShareOptionPlugin,
-            ]
-        );
     }
 }

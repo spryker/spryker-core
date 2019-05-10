@@ -28,7 +28,11 @@ class PersistentCartShareClientTester extends Actor
 {
     use _generated\PersistentCartShareClientTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return \Spryker\Client\PersistentCartShare\PersistentCartShareClientInterface
+     */
+    public function getPersistentCartShareClient()
+    {
+        return $this->getLocator()->persistentCartShare()->client();
+    }
 }
