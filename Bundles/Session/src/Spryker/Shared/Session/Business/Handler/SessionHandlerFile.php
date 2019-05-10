@@ -79,7 +79,7 @@ class SessionHandlerFile implements SessionHandlerInterface
     public function read($sessionId)
     {
         $startTime = microtime(true);
-        $sessionKey = $this->getSessionKey($sessionId);
+        $sessionKey = $this->buildSessionKey($sessionId);
         $sessionFile = $this->savePath . DIRECTORY_SEPARATOR . $sessionKey;
         if (!file_exists($sessionFile)) {
             return '';
@@ -100,7 +100,7 @@ class SessionHandlerFile implements SessionHandlerInterface
      */
     public function write($sessionId, $sessionData)
     {
-        $sessionKey = $this->getSessionKey($sessionId);
+        $sessionKey = $this->buildSessionKey($sessionId);
 
         if (strlen($sessionData) < 1) {
             return false;
@@ -120,7 +120,7 @@ class SessionHandlerFile implements SessionHandlerInterface
      */
     public function destroy($sessionId)
     {
-        $sessionKey = $this->getSessionKey($sessionId);
+        $sessionKey = $this->buildSessionKey($sessionId);
         $file = $this->savePath . DIRECTORY_SEPARATOR . $sessionKey;
         if (file_exists($file)) {
             $startTime = microtime(true);
@@ -152,7 +152,7 @@ class SessionHandlerFile implements SessionHandlerInterface
      *
      * @return string
      */
-    protected function getSessionKey(string $sessionId): string
+    protected function buildSessionKey(string $sessionId): string
     {
         return $this->keyPrefix . $sessionId;
     }

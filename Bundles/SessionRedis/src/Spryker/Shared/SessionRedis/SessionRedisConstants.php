@@ -96,7 +96,7 @@ interface SessionRedisConstants
 
     /**
      * Specification:
-     * - Defines custom options for \Predis\Client when used as Zed session storage.
+     * - Defines custom options for `\Predis\Client` when used as Zed session storage.
      *
      * @api
      */

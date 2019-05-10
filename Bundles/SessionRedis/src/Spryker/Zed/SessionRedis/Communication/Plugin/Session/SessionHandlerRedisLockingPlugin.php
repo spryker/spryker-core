@@ -12,6 +12,8 @@ use SessionHandlerInterface;
 class SessionHandlerRedisLockingPlugin extends AbstractSessionHandlerRedisPlugin
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
