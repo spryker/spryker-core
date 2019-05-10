@@ -142,7 +142,7 @@ interface PropelFacadeInterface
     /**
      * @api
      *
-     * @deprecated used for restoring DB after drop. Not used anymore after implementation `propel:database:clean` command.
+     * @deprecated Will be removed with next major release.
      *
      * Specification:
      * - Exports database backup for configured driver to `$backupPath`.
@@ -156,7 +156,7 @@ interface PropelFacadeInterface
     /**
      * @api
      *
-     * @deprecated Not used anymore for avoid `sudo`. Use custom script instead.
+     * @deprecated Will be removed with next major release.
      *
      * Specification:
      * - Imports database backup for configured driver from `$backupPath`.

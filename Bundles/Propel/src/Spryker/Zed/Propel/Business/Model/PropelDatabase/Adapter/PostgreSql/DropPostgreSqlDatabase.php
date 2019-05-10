@@ -24,9 +24,11 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     public function dropDatabase()
     {
-        if (!$this->isDbExist()) {
+        if (!$this->isDatabaseExists()) {
             return true;
         }
+
+        $this->closeOpenConnections();
 
         if ($this->useSudo()) {
             return $this->runSudoDropCommand();
@@ -40,8 +42,6 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     protected function runSudoDropCommand()
     {
-        $this->closeOpenConnections();
-
         return $this->runProcess($this->getSudoDropCommand());
     }
 
@@ -58,9 +58,9 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     protected function closeOpenConnections(): void
     {
-        $conn = $this->createPdoConnection();
-        $conn->exec($this->getCloseOpenedConnectionsQuery());
-        $conn = null;
+        $pdoConnection = $this->createPdoConnection();
+        $pdoConnection->exec($this->getCloseOpenedConnectionsQuery());
+        $pdoConnection = null;
     }
 
     /**
@@ -212,8 +212,8 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     {
         $dsn = sprintf(
             'pgsql:host=%s;port=%s;dbname=postgres',
-            Config::get(PropelConstants::ZED_DB_HOST),
-            Config::get(PropelConstants::ZED_DB_PORT)
+            $this->getConfigValue(PropelConstants::ZED_DB_HOST),
+            $this->getConfigValue(PropelConstants::ZED_DB_PORT)
         );
 
         return new PDO(
@@ -226,7 +226,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     /**
      * @return bool
      */
-    protected function isDbExist(): bool
+    protected function isDatabaseExists(): bool
     {
         $pdoConn = $this->createPdoConnection();
 
