@@ -9,8 +9,10 @@ namespace Spryker\Zed\ContentGui\Communication;
 
 use Generated\Shared\Transfer\ContentTransfer;
 use Orm\Zed\Content\Persistence\SpyContentQuery;
-use Spryker\Zed\ContentGui\Communication\Converter\CmsGui\CmsGlossaryConverter;
-use Spryker\Zed\ContentGui\Communication\Converter\CmsGui\CmsGlossaryConverterInterface;
+use Spryker\Zed\ContentGui\Communication\Converter\CmsBlockGui\CmsBlockGuiGlossaryConverter;
+use Spryker\Zed\ContentGui\Communication\Converter\CmsBlockGui\CmsBlockGuiGlossaryConverterInterface;
+use Spryker\Zed\ContentGui\Communication\Converter\CmsGui\CmsGuiGlossaryConverter;
+use Spryker\Zed\ContentGui\Communication\Converter\CmsGui\CmsGuiGlossaryConverterInterface;
 use Spryker\Zed\ContentGui\Communication\Form\ContentForm;
 use Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProvider;
 use Spryker\Zed\ContentGui\Communication\Form\DataProvider\ContentFormDataProviderInterface;
@@ -24,6 +26,7 @@ use Spryker\Zed\ContentGui\Communication\Tabs\ContentTabs;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface;
+use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
@@ -65,14 +68,28 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentGui\Communication\Converter\CmsGui\CmsGlossaryConverterInterface
+     * @return \Spryker\Zed\ContentGui\Communication\Converter\CmsGui\CmsGuiGlossaryConverterInterface
      */
-    public function createCmsGlossaryExpander(): CmsGlossaryConverterInterface
+    public function createCmsGuiGlossaryConverter(): CmsGuiGlossaryConverterInterface
     {
-        return new CmsGlossaryConverter(
+        return new CmsGuiGlossaryConverter(
             $this->getContentEditorPlugins(),
             $this->getContentFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getTranslatorFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGui\Communication\Converter\CmsBlockGui\CmsBlockGuiGlossaryConverterInterface
+     */
+    public function createCmsBlockGuiGlossaryConverter(): CmsBlockGuiGlossaryConverterInterface
+    {
+        return new CmsBlockGuiGlossaryConverter(
+            $this->getContentEditorPlugins(),
+            $this->getContentFacade(),
+            $this->getConfig(),
+            $this->getTranslatorFacade()
         );
     }
 
@@ -164,5 +181,13 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getContentEditorPlugins(): array
     {
         return $this->getProvidedDependency(ContentGuiDependencyProvider::PLUGINS_CONTENT_EDITOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface
+     */
+    public function getTranslatorFacade(): ContentGuiToTranslatorFacadeInterface
+    {
+        return $this->getProvidedDependency(ContentGuiDependencyProvider::FACADE_TRANSLATOR);
     }
 }

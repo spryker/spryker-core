@@ -29,7 +29,7 @@ class HtmlToTwigFunctionCmsGlossaryBeforeSavePlugin extends AbstractPlugin imple
     public function execute(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
         return $this->getFactory()
-            ->createCmsGlossaryExpander()
-            ->convertHtmlToTwig($cmsGlossaryTransfer);
+            ->createCmsGuiGlossaryConverter()
+            ->convertHtmlToTwigFunction($cmsGlossaryTransfer);
     }
 }

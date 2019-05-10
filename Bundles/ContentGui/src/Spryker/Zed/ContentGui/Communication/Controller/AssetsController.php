@@ -20,9 +20,11 @@ class AssetsController extends AbstractController
     public function indexAction(): array
     {
         $editorContentTypes = $this->getFactory()->createContentEditorPluginsResolver()->getContentTypes();
+        $editorContentWidgetTemplate = $this->getFactory()->getConfig()->getEditorContentWidgetTemplate();
 
         return $this->viewResponse([
             'editorContentTypes' => $editorContentTypes,
+            'editorContentWidgetTemplate' => $editorContentWidgetTemplate,
         ]);
     }
 }

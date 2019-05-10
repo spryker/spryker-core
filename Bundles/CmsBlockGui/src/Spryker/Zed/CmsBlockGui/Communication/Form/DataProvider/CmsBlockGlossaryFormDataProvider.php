@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
+use Spryker\Zed\CmsBlockGui\Communication\Expander\CmsBlockGlossaryExpanderInterface;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryForm;
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface;
 
@@ -20,11 +21,18 @@ class CmsBlockGlossaryFormDataProvider
     protected $cmsBlockFacade;
 
     /**
-     * @param \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface $cmsBlockFacade
+     * @var \Spryker\Zed\CmsBlockGui\Communication\Expander\CmsBlockGlossaryExpanderInterface
      */
-    public function __construct(CmsBlockGuiToCmsBlockInterface $cmsBlockFacade)
+    protected $cmsGlossaryExpander;
+
+    /**
+     * @param \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface $cmsBlockFacade
+     * @param \Spryker\Zed\CmsBlockGui\Communication\Expander\CmsBlockGlossaryExpanderInterface $cmsGlossaryExpander
+     */
+    public function __construct(CmsBlockGuiToCmsBlockInterface $cmsBlockFacade, CmsBlockGlossaryExpanderInterface $cmsGlossaryExpander)
     {
         $this->cmsBlockFacade = $cmsBlockFacade;
+        $this->cmsGlossaryExpander = $cmsGlossaryExpander;
     }
 
     /**
@@ -45,6 +53,9 @@ class CmsBlockGlossaryFormDataProvider
      */
     public function getData($idCmsBlock)
     {
-        return $this->cmsBlockFacade->findGlossary($idCmsBlock);
+        $cmsBlockGlossaryTransfer = $this->cmsBlockFacade->findGlossary($idCmsBlock);
+        $cmsBlockGlossaryTransfer = $this->cmsGlossaryExpander->executeAfterFindPlugins($cmsBlockGlossaryTransfer);
+
+        return $cmsBlockGlossaryTransfer;
     }
 }

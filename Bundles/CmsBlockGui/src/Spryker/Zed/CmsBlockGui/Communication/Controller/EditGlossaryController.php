@@ -35,10 +35,6 @@ class EditGlossaryController extends AbstractCmsBlockController
             ->getCmsBlockFacade()
             ->findGlossary($cmsBlockTransfer->getIdCmsBlock());
 
-        $cmsBlockGlossaryTransfer = $this->getFactory()
-            ->createCmsBlockGlossaryExpander()
-            ->executeAfterFindPlugins($cmsBlockGlossaryTransfer);
-
         $placeholderTabs = $this->getFactory()
             ->createCmsBlockPlaceholderTabs($cmsBlockGlossaryTransfer);
 

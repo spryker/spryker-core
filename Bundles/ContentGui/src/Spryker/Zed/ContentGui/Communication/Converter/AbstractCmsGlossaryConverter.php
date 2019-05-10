@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentGui\Communication\Converter\CmsGui;
+namespace Spryker\Zed\ContentGui\Communication\Converter;
 
 use DOMDocument;
-use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
 use Spryker\Zed\ContentGui\ContentGuiConfig;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
+use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
 
-class CmsGlossaryConverter implements CmsGlossaryConverterInterface
+abstract class AbstractCmsGlossaryConverter
 {
     protected const PARAMETER_ID = '%ID%';
     protected const PARAMETER_TYPE = '%TYPE%';
@@ -41,101 +41,61 @@ class CmsGlossaryConverter implements CmsGlossaryConverterInterface
     protected $config;
 
     /**
+     * @var \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface
+     */
+    protected $translatorFacade;
+
+    /**
      * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface[] $contentEditorPlugins
      * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface $contentFacade
      * @param \Spryker\Zed\ContentGui\ContentGuiConfig $config
+     * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface $translatorFacade
      */
     public function __construct(
         array $contentEditorPlugins,
         ContentGuiToContentFacadeInterface $contentFacade,
-        ContentGuiConfig $config
+        ContentGuiConfig $config,
+        ContentGuiToTranslatorFacadeInterface $translatorFacade
     ) {
         $this->contentEditorPlugins = $contentEditorPlugins;
         $this->contentFacade = $contentFacade;
         $this->config = $config;
+        $this->translatorFacade = $translatorFacade;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
-     */
-    public function convertTwigToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
-    {
-        $cmsGlossaryAttributesTransfers = $cmsGlossaryTransfer->getGlossaryAttributes();
-
-        foreach ($cmsGlossaryAttributesTransfers as $cmsGlossaryAttributesTransferKey => $cmsGlossaryAttributesTransfer) {
-            $cmsPlaceholderTranslationTransfers = $cmsGlossaryAttributesTransfer->getTranslations();
-
-            foreach ($cmsPlaceholderTranslationTransfers as $cmsPlaceholderTranslationTransferKey => $cmsPlaceholderTranslationTransfer) {
-                $cmsPlaceholderTranslation = $cmsPlaceholderTranslationTransfer->getTranslation();
-                $cmsPlaceholderTranslation = $this->convertTwigToHtmlTranslation($cmsPlaceholderTranslation);
-                $cmsPlaceholderTranslationTransfers[$cmsPlaceholderTranslationTransferKey]->setTranslation($cmsPlaceholderTranslation);
-            }
-
-            $cmsGlossaryAttributesTransfers[$cmsGlossaryAttributesTransferKey]->setTranslations($cmsPlaceholderTranslationTransfers);
-        }
-
-        return $cmsGlossaryTransfer->setGlossaryAttributes($cmsGlossaryAttributesTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
-     */
-    public function convertHtmlToTwig(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
-    {
-        $cmsGlossaryAttributesTransfers = $cmsGlossaryTransfer->getGlossaryAttributes();
-
-        foreach ($cmsGlossaryAttributesTransfers as $cmsGlossaryAttributesTransferKey => $cmsGlossaryAttributesTransfer) {
-            $cmsPlaceholderTranslationTransfers = $cmsGlossaryAttributesTransfer->getTranslations();
-
-            foreach ($cmsPlaceholderTranslationTransfers as $cmsPlaceholderTranslationTransferKey => $cmsPlaceholderTranslationTransfer) {
-                $cmsPlaceholderTranslation = $cmsPlaceholderTranslationTransfer->getTranslation();
-                $cmsPlaceholderTranslation = $this->convertHtmlToTwigTranslation($cmsPlaceholderTranslation);
-                $cmsPlaceholderTranslationTransfers[$cmsPlaceholderTranslationTransferKey]->setTranslation($cmsPlaceholderTranslation);
-            }
-
-            $cmsGlossaryAttributesTransfers[$cmsGlossaryAttributesTransferKey]->setTranslations($cmsPlaceholderTranslationTransfers);
-        }
-
-        return $cmsGlossaryTransfer->setGlossaryAttributes($cmsGlossaryAttributesTransfers);
-    }
-
-    /**
-     * @param string $cmsPlaceholderTranslation
+     * @param string $translation
      *
      * @return string
      */
-    protected function convertTwigToHtmlTranslation(string $cmsPlaceholderTranslation): string
+    protected function convertTwigFunctionToHtmlInTranslation(string $translation): string
     {
         foreach ($this->contentEditorPlugins as $contentEditorPlugin) {
             $twigFunctions = $this->getTwigFunctions(
-                $cmsPlaceholderTranslation,
+                $translation,
                 $contentEditorPlugin->getTwigFunctionTemplate()
             );
 
-            $cmsPlaceholderTranslation = $this->replaceTwigFunctionsToHtml(
-                $cmsPlaceholderTranslation,
+            $translation = $this->replaceTwigFunctionsToHtml(
+                $translation,
                 $twigFunctions,
                 $contentEditorPlugin->getTemplates()
             );
         }
 
-        return $cmsPlaceholderTranslation;
+        return $translation;
     }
 
     /**
-     * @param string $cmsPlaceholderTranslation
+     * @param string $translation
      * @param string $twigFunctionTemplate
      *
      * @return array
      */
-    protected function getTwigFunctions(string $cmsPlaceholderTranslation, string $twigFunctionTemplate): array
+    protected function getTwigFunctions(string $translation, string $twigFunctionTemplate): array
     {
         $twigFunctionTemplatePattern = $this->createTwigFunctionTemplatePattern($twigFunctionTemplate);
-        preg_match($twigFunctionTemplatePattern, $cmsPlaceholderTranslation, $twigFunctions);
+        preg_match($twigFunctionTemplatePattern, $translation, $twigFunctions);
 
         return $twigFunctions;
     }
@@ -156,13 +116,13 @@ class CmsGlossaryConverter implements CmsGlossaryConverterInterface
     }
 
     /**
-     * @param string $cmsPlaceholderTranslation
+     * @param string $translation
      * @param array $twigFunctions
      * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
      *
      * @return string
      */
-    protected function replaceTwigFunctionsToHtml(string $cmsPlaceholderTranslation, array $twigFunctions, array $contentWidgetTemplateTransfers): string
+    protected function replaceTwigFunctionsToHtml(string $translation, array $twigFunctions, array $contentWidgetTemplateTransfers): string
     {
         foreach ($twigFunctions as $twigFunction) {
             $idContentItem = $this->getIdContentItem($twigFunction);
@@ -171,20 +131,20 @@ class CmsGlossaryConverter implements CmsGlossaryConverterInterface
             $contentItem = $this->contentFacade->findContentById($idContentItem);
             $editorContentWidget = $this->getEditorContentWidget($contentItem, $templateIdentifier, $twigFunction, $templateDisplayName);
 
-            $cmsPlaceholderTranslation = str_replace($twigFunction, $editorContentWidget, $cmsPlaceholderTranslation);
+            $translation = str_replace($twigFunction, $editorContentWidget, $translation);
         }
 
-        return $cmsPlaceholderTranslation;
+        return $translation;
     }
 
     /**
-     * @param string $twigFunctionInTranslation
+     * @param string $twigFunction
      *
      * @return string
      */
-    protected function getTemplateIdentifier(string $twigFunctionInTranslation): string
+    protected function getTemplateIdentifier(string $twigFunction): string
     {
-        preg_match('/\'' . static::PATTERN_STRING_REGEXP . '\'/', $twigFunctionInTranslation, $templateIdentifier);
+        preg_match('/\'' . static::PATTERN_STRING_REGEXP . '\'/', $twigFunction, $templateIdentifier);
 
         return str_replace('\'', '', $templateIdentifier[0]);
     }
@@ -236,25 +196,25 @@ class CmsGlossaryConverter implements CmsGlossaryConverterInterface
         string $twigFunction,
         string $templateDisplayName
     ) {
-        return strtr($this->config->getEditorContentWidgetHtml(), [
-            static::PARAMETER_TYPE => $contentItem->getContentTypeKey(),
+        return strtr($this->config->getEditorContentWidgetTemplate(), [
             static::PARAMETER_ID => $contentItem->getIdContent(),
+            static::PARAMETER_TYPE => $this->translatorFacade->trans($contentItem->getContentTypeKey()),
             static::PARAMETER_TEMPLATE => $templateIdentifier,
             static::PARAMETER_TWIG_FUNCTION => $twigFunction,
             static::PARAMETER_NAME => $contentItem->getName(),
-            static::PARAMETER_TEMPLATE_DISPLAY_NAME => $templateDisplayName,
+            static::PARAMETER_TEMPLATE_DISPLAY_NAME => $this->translatorFacade->trans($templateDisplayName),
         ]);
     }
 
     /**
-     * @param string $cmsPlaceholderTranslation
+     * @param string $translation
      *
      * @return string
      */
-    protected function convertHtmlToTwigTranslation(string $cmsPlaceholderTranslation): string
+    protected function convertHtmlToTwigFunctionInTranslation(string $translation): string
     {
         $dom = new DOMDocument();
-        $dom->loadHTML($cmsPlaceholderTranslation, LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $dom->loadHTML($translation, LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
         $replacements = $this->getDomReplacements($dom);
 
@@ -263,10 +223,10 @@ class CmsGlossaryConverter implements CmsGlossaryConverterInterface
             $div->parentNode->replaceChild($twigFunction, $div);
         }
 
-        $cmsPlaceholderTranslation = $dom->saveHTML();
+        $translation = $dom->saveHTML();
         unset($dom);
 
-        return $cmsPlaceholderTranslation;
+        return $translation;
     }
 
     /**

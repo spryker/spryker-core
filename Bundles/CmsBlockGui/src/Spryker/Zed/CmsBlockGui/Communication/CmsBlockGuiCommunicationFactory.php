@@ -124,7 +124,8 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsBlockGlossaryFormDataProvider()
     {
         return new CmsBlockGlossaryFormDataProvider(
-            $this->getCmsBlockFacade()
+            $this->getCmsBlockFacade(),
+            $this->createCmsBlockGlossaryExpander()
         );
     }
 

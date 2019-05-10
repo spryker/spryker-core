@@ -14,7 +14,7 @@ class ContentGuiConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getEditorContentWidgetHtml(): string
+    public function getEditorContentWidgetTemplate(): string
     {
         return '<div contenteditable="false" class="content-item-block" data-type="%TYPE%" data-id="%ID%" data-template="%TEMPLATE%" data-twig-function="%TWIG_FUNCTION%">
                     <p>Content Item Type: <b>%TYPE%</b></p>

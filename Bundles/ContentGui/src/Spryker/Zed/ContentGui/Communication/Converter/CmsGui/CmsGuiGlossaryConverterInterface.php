@@ -9,19 +9,19 @@ namespace Spryker\Zed\ContentGui\Communication\Converter\CmsGui;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 
-interface CmsGlossaryConverterInterface
+interface CmsGuiGlossaryConverterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertTwigToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
+    public function convertTwigFunctionToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertHtmlToTwig(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
+    public function convertHtmlToTwigFunction(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
 }
