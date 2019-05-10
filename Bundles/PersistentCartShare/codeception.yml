@@ -1,6 +1,7 @@
 namespace: SprykerTest
 
 include:
+    - tests/SprykerTest/Client/PersistentCartShare
     - tests/SprykerTest/Zed/PersistentCartShare
 
 actor: Tester
