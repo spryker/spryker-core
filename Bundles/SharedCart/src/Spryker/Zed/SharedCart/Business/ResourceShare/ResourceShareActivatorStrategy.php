@@ -65,8 +65,8 @@ class ResourceShareActivatorStrategy implements ResourceShareActivatorStrategyIn
     public function applyResourceShareActivatorStrategy(
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
-        $resourceShareRequestTransfer->requireCustomer();
-        $resourceShareRequestTransfer->requireResourceShare();
+        $resourceShareRequestTransfer->requireCustomer()
+            ->requireResourceShare();
 
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $resourceShareResponseTransfer = $this->validateResourceShareTransfer($resourceShareTransfer);
