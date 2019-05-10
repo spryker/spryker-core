@@ -5,7 +5,7 @@
 
 'use strict';
 
-const ContentProductSetGui = function(options)
+var ContentProductSetGui = function(options)
 {
     $.extend(this, options);
 
@@ -23,11 +23,11 @@ const ContentProductSetGui = function(options)
     };
 
     this.resizeTableColumn = function(event) {
-        const tabId = event.target.getAttribute('href');
-        const self = this;
+        var tabId = event.target.getAttribute('href');
+        var self = this;
         this.$tabsContent.each(function(index, item) {
-            const currentTabId = item.getAttribute('id');
-            const isOpenTab = tabId.substring(1) === currentTabId;
+            var currentTabId = item.getAttribute('id');
+            var isOpenTab = tabId.substring(1) === currentTabId;
 
             if (isOpenTab) {
                 $(item).show();
@@ -41,15 +41,15 @@ const ContentProductSetGui = function(options)
     };
 
     this.addProductSetButtonHandler = function(event) {
-        const clickInfo = this.getClickInfo(event);
-        const indexOfActiveTable = this.$productSetsTables.index(clickInfo.clickedTable);
+        var clickInfo = this.getClickInfo(event);
+        var indexOfActiveTable = this.$productSetsTables.index(clickInfo.clickedTable);
 
         this.addProductSet(clickInfo.clickedTable, clickInfo.idProductSet, indexOfActiveTable);
     };
 
     this.removeProductSetButtonHandler = function(event) {
-        const clickInfo = this.getClickInfo(event);
-        const tableRow = clickInfo.button.parents('tr');
+        var clickInfo = this.getClickInfo(event);
+        var tableRow = clickInfo.button.parents('tr');
 
         this.clearHiddenInput(clickInfo.clickedTable);
         this.removeProduct(clickInfo.clickedTable, tableRow);
@@ -58,18 +58,18 @@ const ContentProductSetGui = function(options)
     this.clearAllFieldsButtonsHandler = function(event) {
         event.preventDefault();
 
-        const button = $(event.currentTarget);
-        const indexOfClickedButton = this.$clearAllFieldsButton.index(button);
-        let assignedTable = this.getCurrentAssignedTable(indexOfClickedButton);
+        var button = $(event.currentTarget);
+        var indexOfClickedButton = this.$clearAllFieldsButton.index(button);
+        var assignedTable = this.getCurrentAssignedTable(indexOfClickedButton);
 
         this.clearHiddenInput(assignedTable);
         assignedTable.dataTable().api().clear().draw();
     };
 
     this.addProductSet = function(productTable, idProductSet, indexOfActiveTable) {
-        const rowData = this.getRowData(productTable, idProductSet);
-        let assignedTable = this.getCurrentAssignedTable(indexOfActiveTable);
-        const tablesWrapper = this.getTablesWrapper(assignedTable);
+        var rowData = this.getRowData(productTable, idProductSet);
+        var assignedTable = this.getCurrentAssignedTable(indexOfActiveTable);
+        var tablesWrapper = this.getTablesWrapper(assignedTable);
 
         this.setHiddenInput(tablesWrapper, idProductSet);
         assignedTable.dataTable().api().clear();
@@ -81,15 +81,15 @@ const ContentProductSetGui = function(options)
     };
 
     this.setHiddenInput = function(tablesWrapper, idProductSet) {
-        const integerInputsWrapper = this.getHiddenInputsWrapper(tablesWrapper);
-        let integerInput = this.getHiddenInput(integerInputsWrapper);
+        var integerInputsWrapper = this.getHiddenInputsWrapper(tablesWrapper);
+        var integerInput = this.getHiddenInput(integerInputsWrapper);
 
         integerInput.attr('value', idProductSet);
     };
 
     this.clearHiddenInput = function(assignedTable) {
-        const integerInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(assignedTable));
-        let integerInput = this.getHiddenInput(integerInputsWrapper);
+        var integerInputsWrapper = this.getHiddenInputsWrapper(this.getTablesWrapper(assignedTable));
+        var integerInput = this.getHiddenInput(integerInputsWrapper);
 
         integerInput.attr('value', null);
     };
@@ -99,25 +99,25 @@ const ContentProductSetGui = function(options)
     };
 
     this.getRowData = function(productTable, idProductSet) {
-        const tableData = productTable.dataTable().api().data().toArray();
-        let rowData = tableData.find(function(item) {
+        var tableData = productTable.dataTable().api().data().toArray();
+        var rowData = tableData.find(function(item) {
             if (item[0] === Number(idProductSet)) {
                 return item;
             }
         });
 
         rowData.splice(-1,1);
-        rowData.push(this.getDeleteButtonsTemplate(idProductSet));
+        rowData.push(this.getDevareButtonsTemplate(idProductSet));
 
         return rowData;
     };
 
-    this.getDeleteButtonsTemplate = function(idProductSet) {
-        const buttons = $($(this.tablesWrapperSelector).data('delete-button'));
-        let buttonsTemplate = '';
+    this.getDevareButtonsTemplate = function(idProductSet) {
+        var buttons = $($(this.tablesWrapperSelector).data('devare-button'));
+        var buttonsTemplate = '';
 
         buttons.each(function() {
-            let button = $(this);
+            var button = $(this);
             if (button.is('button')) {
                 buttonsTemplate += button.attr('data-id', idProductSet)[0].outerHTML + ' ';
             }
@@ -156,7 +156,7 @@ $(document).ready(function () {
         'productSetsTableSelector': '.product-set-view-table',
         'integerInputsWrapperSelector': '.js-selected-product-sets-wrapper',
         'addProductSetButtonSelector': '.js-add-product-set',
-        'removeProductSetButtonSelector': '.js-delete-product-set',
+        'removeProductSetButtonSelector': '.js-devare-product-set',
         'clearAllFieldsSelector': '.clear-fields',
         'navigationTabLinkSelector': '.nav-tabs a',
         'tabsContentSelector': '.tab-content .tab-pane'

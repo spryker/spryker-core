@@ -24,8 +24,8 @@ class ContentProductSetGuiDependencyProvider extends AbstractBundleDependencyPro
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        $this->provideProductQueryContainer($container);
-        $this->provideLocaleFacade($container);
+        $this->addProductQueryContainer($container);
+        $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -35,7 +35,7 @@ class ContentProductSetGuiDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return void
      */
-    protected function provideProductQueryContainer(Container $container): void
+    protected function addProductQueryContainer(Container $container): void
     {
         $container[static::PROPEL_QUERY_PRODUCT_SET] = function () {
             return SpyProductSetQuery::create();
@@ -47,7 +47,7 @@ class ContentProductSetGuiDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return void
      */
-    protected function provideLocaleFacade(Container $container): void
+    protected function addLocaleFacade(Container $container): void
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ContentProductSetGuiToLocaleBridge($container->getLocator()->locale()->facade());

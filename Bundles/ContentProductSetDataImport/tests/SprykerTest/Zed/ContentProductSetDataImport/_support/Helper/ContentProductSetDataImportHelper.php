@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\ContentProductSetDataImport\Helper;
 use Codeception\Module;
 use Orm\Zed\Content\Persistence\SpyContentLocalizedQuery;
 use Orm\Zed\Content\Persistence\SpyContentQuery;
+use Spryker\Service\UtilEncoding\UtilEncodingService;
+use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 
 class ContentProductSetDataImportHelper extends Module
 {
@@ -27,15 +29,15 @@ class ContentProductSetDataImportHelper extends Module
 
     /**
      * @param int $idLocale
-     * @param string $data
+     * @param array $data
      *
      * @return void
      */
-    public function assertContentLocalizedHasSetId(int $idLocale, string $data): void
+    public function assertContentLocalizedHasSetId(int $idLocale, array $data): void
     {
         $contentLocalized = $this->getContentLocalizedQuery()->findOneByFkLocale($idLocale);
 
-        $this->assertContains($data, $contentLocalized->getParameters());
+        $this->assertContains($this->createUtilEncodingService()->encodeJson($data), $contentLocalized->getParameters());
     }
 
     /**
@@ -83,5 +85,13 @@ class ContentProductSetDataImportHelper extends Module
     protected function getContentLocalizedQuery(): SpyContentLocalizedQuery
     {
         return SpyContentLocalizedQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
+     */
+    protected function createUtilEncodingService(): UtilEncodingServiceInterface
+    {
+        return new UtilEncodingService();
     }
 }

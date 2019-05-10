@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Orm\Zed\ProductSet\Persistence\SpyProductSet;
 use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
-use Spryker\Service\UtilEncoding\UtilEncodingService;
-use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\ContentProductSetDataImport\Communication\Plugin\ContentProductSetDataImportPlugin;
 use Spryker\Zed\ContentProductSetDataImport\ContentProductSetDataImportConfig;
 use Spryker\Zed\ContentProductSetDataImport\ContentProductSetDataImportDependencyProvider;
@@ -54,6 +52,7 @@ class ContentProductSetDataImportPluginTest extends Unit
      */
     public function testImportProductSetData(): void
     {
+        // Arrange
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_set.csv'
         );
@@ -72,8 +71,9 @@ class ContentProductSetDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testImportProductSetDataWrongKey(): void
+    public function testImportProductSetDataWithWrongProductSetKeyFails(): void
     {
+        // Arrange
         $this->expectExceptionObject(new DataImportException(static::ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY));
 
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
@@ -105,6 +105,7 @@ class ContentProductSetDataImportPluginTest extends Unit
      */
     public function testUpdateLocale(): void
     {
+        // Arrange
         $this->setProductSetQueryReturn(2);
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_set(update).csv'
@@ -117,8 +118,8 @@ class ContentProductSetDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasSetId(66, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 2]));
-        $this->tester->assertContentLocalizedHasSetId(46, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 2]));
+        $this->tester->assertContentLocalizedHasSetId(66, [static::KEY_ID_PRODUCT_SET => 2]);
+        $this->tester->assertContentLocalizedHasSetId(46, [static::KEY_ID_PRODUCT_SET => 2]);
     }
 
     /**
@@ -126,6 +127,7 @@ class ContentProductSetDataImportPluginTest extends Unit
      */
     public function testUpdateLocaleFromDefault(): void
     {
+        // Arrange
         $this->setProductSetQueryReturn(1);
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_set(update_locale_from_default).csv'
@@ -138,8 +140,8 @@ class ContentProductSetDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasSetId(66, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 1]));
-        $this->tester->assertContentLocalizedHasSetId(46, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 1]));
+        $this->tester->assertContentLocalizedHasSetId(66, [static::KEY_ID_PRODUCT_SET => 1]);
+        $this->tester->assertContentLocalizedHasSetId(46, [static::KEY_ID_PRODUCT_SET => 1]);
     }
 
     /**
@@ -147,6 +149,7 @@ class ContentProductSetDataImportPluginTest extends Unit
      */
     public function testUpdateLocaleToDefault(): void
     {
+        // Arrange
         $this->setProductSetQueryReturn(3);
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_set(update_locale_to_default).csv'
@@ -159,7 +162,7 @@ class ContentProductSetDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasSetId(66, $this->createUtilEncodingService()->encodeJson([static::KEY_ID_PRODUCT_SET => 3]));
+        $this->tester->assertContentLocalizedHasSetId(66, [static::KEY_ID_PRODUCT_SET => 3]);
         $this->tester->assertContentLocalizedDoesNotExist(46);
     }
 
@@ -170,20 +173,13 @@ class ContentProductSetDataImportPluginTest extends Unit
      */
     protected function createConfigurationTransfer(string $importFilePath): DataImporterConfigurationTransfer
     {
+        // Arrange
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . $importFilePath);
 
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
 
         return $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
-    }
-
-    /**
-     * @return \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
-     */
-    protected function createUtilEncodingService(): UtilEncodingServiceInterface
-    {
-        return new UtilEncodingService();
     }
 
     /**
