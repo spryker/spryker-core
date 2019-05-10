@@ -33,7 +33,8 @@ class ResourceShareDataExpanderStrategy implements ResourceShareDataExpanderStra
 
         if ($resourceShareResponseTransfer->getIsSuccessful()) {
             $resourceShareTransfer->setResourceShareData($resourceShareDataTransfer);
-            $resourceShareResponseTransfer->setResourceShare($resourceShareTransfer);
+
+            return $resourceShareResponseTransfer->setResourceShare($resourceShareTransfer);
         }
 
         return $resourceShareResponseTransfer;
