@@ -23,12 +23,12 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      * @api
      *
      * @param string $key
-     * @param mixed $value
+     * @param string $value
      * @param int|null $ttl
      *
      * @return void
      */
-    public function set($key, $value, $ttl = null)
+    public function set(string $key, string $value, $ttl = null): void
     {
         $this->getClient()->set($key, $value, $ttl);
     }
@@ -42,7 +42,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      *
      * @return void
      */
-    public function setMulti(array $items)
+    public function setMulti(array $items): void
     {
         $this->getClient()->setMulti($items);
     }
@@ -54,11 +54,11 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      *
      * @param string $key
      *
-     * @return void
+     * @return int
      */
-    public function delete($key)
+    public function delete(string $key): int
     {
-        $this->getClient()->delete($key);
+        return $this->getClient()->delete($key);
     }
 
     /**
@@ -70,7 +70,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      *
      * @return void
      */
-    public function deleteMulti(array $keys)
+    public function deleteMulti(array $keys): void
     {
         $this->getClient()->deleteMulti($keys);
     }
@@ -82,7 +82,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      *
      * @return int
      */
-    public function deleteAll()
+    public function deleteAll(): int
     {
         return $this->getClient()->deleteAll();
     }
@@ -96,7 +96,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      *
      * @return mixed
      */
-    public function get($key)
+    public function get(string $key)
     {
         return $this->getClient()->get($key);
     }
@@ -148,7 +148,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      *
      * @return array
      */
-    public function getKeys($pattern): array
+    public function getKeys(string $pattern): array
     {
         return $this->getClient()->getKeys($pattern);
     }
@@ -160,7 +160,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      *
      * @return void
      */
-    public function resetAccessStats()
+    public function resetAccessStats(): void
     {
         $this->getClient()->resetAccessStats();
     }
@@ -184,7 +184,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      *
      * @return int
      */
-    public function getCountItems()
+    public function getCountItems(): int
     {
         return $this->getClient()->getCountItems();
     }
@@ -198,7 +198,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      *
      * @return void
      */
-    public function setDebug($debug)
+    public function setDebug(bool $debug): void
     {
         $this->getClient()->setDebug($debug);
     }

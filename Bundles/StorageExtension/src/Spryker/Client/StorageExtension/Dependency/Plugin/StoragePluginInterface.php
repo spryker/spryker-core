@@ -16,12 +16,12 @@ interface StoragePluginInterface
      * @api
      *
      * @param string $key
-     * @param mixed $value
+     * @param string $value
      * @param int|null $ttl
      *
-     * @return mixed
+     * @return void
      */
-    public function set($key, $value, $ttl = null);
+    public function set(string $key, string $value, $ttl = null): void;
 
     /**
      * Specification:
@@ -34,7 +34,7 @@ interface StoragePluginInterface
      *
      * @return void
      */
-    public function setMulti(array $items);
+    public function setMulti(array $items): void;
 
     /**
      * Specification:
@@ -44,9 +44,9 @@ interface StoragePluginInterface
      *
      * @param string $key
      *
-     * @return mixed
+     * @return int
      */
-    public function delete($key);
+    public function delete(string $key): int;
 
     /**
      * Specification:
@@ -59,7 +59,7 @@ interface StoragePluginInterface
      *
      * @return void
      */
-    public function deleteMulti(array $keys);
+    public function deleteMulti(array $keys): void;
 
     /**
      * Specification:
@@ -69,7 +69,7 @@ interface StoragePluginInterface
      *
      * @return int
      */
-    public function deleteAll();
+    public function deleteAll(): int;
 
     /**
      * Specification:
@@ -81,7 +81,7 @@ interface StoragePluginInterface
      *
      * @return mixed
      */
-    public function get($key);
+    public function get(string $key);
 
     /**
      * Specification:
@@ -103,7 +103,7 @@ interface StoragePluginInterface
      *
      * @return array
      */
-    public function getStats();
+    public function getStats(): array;
 
     /**
      * Specification:
@@ -113,7 +113,7 @@ interface StoragePluginInterface
      *
      * @return array
      */
-    public function getAllKeys();
+    public function getAllKeys(): array;
 
     /**
      * Specification:
@@ -125,7 +125,7 @@ interface StoragePluginInterface
      *
      * @return array
      */
-    public function getKeys($pattern);
+    public function getKeys(string $pattern): array;
 
     /**
      * Specification:
@@ -135,7 +135,7 @@ interface StoragePluginInterface
      *
      * @return void
      */
-    public function resetAccessStats();
+    public function resetAccessStats(): void;
 
     /**
      * Specification:
@@ -145,7 +145,7 @@ interface StoragePluginInterface
      *
      * @return array
      */
-    public function getAccessStats();
+    public function getAccessStats(): array;
 
     /**
      * Specification:
@@ -155,7 +155,7 @@ interface StoragePluginInterface
      *
      * @return int
      */
-    public function getCountItems();
+    public function getCountItems(): int;
 
     /**
      * Specification:
@@ -167,5 +167,5 @@ interface StoragePluginInterface
      *
      * @return void
      */
-    public function setDebug($debug);
+    public function setDebug(bool $debug): void;
 }
