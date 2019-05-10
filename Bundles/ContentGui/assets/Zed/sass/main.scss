@@ -56,3 +56,22 @@
 .template-name-wrapper{
     margin-left:5px;
 }
+
+.content-item-editor {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #2f4050;
+    border-radius: 8px;
+    background-color: rgba(68, 122, 173, 0.54);
+
+    * {
+        color: #fff !important;
+        letter-spacing: 1px;
+    }
+
+    p {
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

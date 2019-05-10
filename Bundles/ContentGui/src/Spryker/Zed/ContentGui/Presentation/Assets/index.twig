@@ -14,8 +14,23 @@
         buttonTitle: '{{ 'Content Item' | trans }}',
         title: '{{ 'Insert a Content Item' | trans }}',
         insertButtonTitle: '{{ 'Insert' | trans }}',
-        editorContentWidgetTemplate: {{ editorContentWidgetTemplate | raw }}
+        editorContentWidgetTemplate: '{{ editorContentWidgetTemplate | raw }}',
+        popoverButtonsContent: {
+            editWidget: {
+                icon: '<i class="fa fa-pencil" aria-hidden="true"></i>',
+                title: 'Edit Widget'
+            },
+            editContentItem: {
+                icon: '<i class="fa fa-pencil" aria-hidden="true"></i>',
+                title: 'Edit Content Item',
+            },
+            removeContentItem: {
+                icon: '<i class="fa fa-trash-o" aria-hidden="true"></i>',
+                title: ''
+            }
+        }
     };
 </script>
+
 <script src="/assets/js/spryker-zed-content-item.js"></script>
 <link rel="stylesheet" href="/assets/css/spryker-zed-content-item.css" />

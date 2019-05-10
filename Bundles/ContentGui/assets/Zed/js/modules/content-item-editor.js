@@ -8,6 +8,7 @@
 var editorConfig = require('ZedGuiEditorConfiguration');
 var editorButtons = require('./editorComponents/buttons');
 var ContentItemDialog = require('./content-item-editor-dialog');
+var ContentItemPopover = require('./content-item-editor-popover');
 
 var ContentItemEditor = function(options) {
     this.dropDownItems = [];
@@ -15,11 +16,19 @@ var ContentItemEditor = function(options) {
     this.title = 'Content';
     this.insertButtonTitle = 'Insert';
     this.dialogContentUrl = '';
+    this.popoverButtonsContent = {};
+    this.editorContentWidgetTemplate = '';
 
     $.extend(this, options);
 
     this.initialization = function() {
-        new ContentItemDialog(this.title, this.dialogContentUrl, this.insertButtonTitle);
+        new ContentItemDialog(
+            this.title,
+            this.dialogContentUrl,
+            this.insertButtonTitle,
+            this.editorContentWidgetTemplate
+        );
+        new ContentItemPopover();
     };
 
     this.getEditorConfig = function (baseConfig = '') {
@@ -34,7 +43,13 @@ var ContentItemEditor = function(options) {
                 ['insert', ['dropdownContentItem']]
             ],
             buttons: {
-                dropdownContentItem: this.createDropdownButton()
+                dropdownContentItem: this.createDropdownButton(),
+                editWidget: this.createEditWidgetButton(),
+                editContentItem: this.createEditContentItemButton(),
+                removeContentItem: this.createRemoveContentItemButton()
+            },
+            popover: {
+                'editContentItem': ['editWidget', 'editContentItem', 'removeContentItem']
             },
             dialogsInBody: true
         };
@@ -43,13 +58,39 @@ var ContentItemEditor = function(options) {
     };
 
     this.createDropdownButton = function () {
-
         return editorButtons.ContentItemDropdownButton(
             this.buttonTitle,
             this.generateDropdownList(),
             this.dropDownClickHandler
         );
     };
+
+    this.createEditWidgetButton = function () {
+        return editorButtons.PopoverButton(
+            this.popoverButtonsContent.editWidget,
+            function () {
+                alert('Edit Widget');
+            }
+        );
+    }
+
+    this.createEditContentItemButton = function () {
+        return editorButtons.PopoverButton(
+            this.popoverButtonsContent.editContentItem,
+            function () {
+                alert('Edit Content Item');
+            }
+        );
+    }
+
+    this.createRemoveContentItemButton = function () {
+        return editorButtons.PopoverButton(
+            this.popoverButtonsContent.removeContentItem,
+            function () {
+                alert('remove Content Item');
+            }
+        );
+    }
 
     this.generateDropdownList = function () {
         return this.dropDownItems.reduce(function(currentList, dropItem) {

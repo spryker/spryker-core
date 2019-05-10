@@ -7,6 +7,5 @@
 
 require('../sass/main.scss');
 var ContentItemEditor = require('./modules/content-item-editor');
-
 var editor = new ContentItemEditor(window.editorConfiguration.contentGuiConfigData);
 window.editorConfiguration.cms = editor.getEditorConfig('cms');

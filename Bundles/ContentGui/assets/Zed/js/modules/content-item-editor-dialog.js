@@ -5,8 +5,12 @@
 
 'use strict';
 
-var ContentItemDialog = function(dialogTitle, dialogContentUrl, insertButtonTitle) {
-
+var ContentItemDialog = function(
+    dialogTitle,
+    dialogContentUrl,
+    insertButtonTitle,
+    templateForInsert
+) {
     $.extend($.summernote.plugins, {
         'contentItemDialog': function (context) {
             this.context = context;
@@ -72,9 +76,18 @@ var ContentItemDialog = function(dialogTitle, dialogContentUrl, insertButtonTitl
                             '%ID%': chosenId,
                             '%TEMPLATE%': chosenTemplate
                         }[param];
+                    })
+                    var builtTemplate = templateForInsert.replace(/%\w+%/g, function (param) {
+                        return {
+                            '%TYPE%': chosenId,
+                            '%ID%': chosenId,
+                            '%NAME%': chosenId,
+                            '%TEMPLATE_DISPLAY_NAME%': chosenTemplate,
+                            '%TWIG_FUNCTION%': builtText,
+                        }[param];
                     });
                     this.context.invoke('editor.restoreRange');
-                    this.context.invoke('editor.insertText', builtText);
+                    this.context.invoke('pasteHTML', builtTemplate);
                     this.$ui.hideDialog(this.$dialog);
                     return;
                 }
