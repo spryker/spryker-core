@@ -23,18 +23,54 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const CONTROLLER_GUEST_CARTS = 'guest-carts-resource';
     public const CONTROLLER_GUEST_CART_ITEMS = 'guest-cart-items-resource';
 
+    /**
+     * @deprecated Can be removed in minor
+     */
     public const ACTION_CARTS_GET = 'get';
+
+    /**
+     * @deprecated Can be removed in minor
+     */
     public const ACTION_CARTS_POST = 'post';
+
+    /**
+     * @deprecated Can be removed in minor
+     */
     public const ACTION_CARTS_DELETE = 'delete';
 
+    /**
+     * @deprecated Can be removed in minor
+     */
     public const ACTION_CART_ITEMS_POST = 'post';
+
+    /**
+     * @deprecated Can be removed in minor
+     */
     public const ACTION_CART_ITEMS_PATCH = 'patch';
+
+    /**
+     * @deprecated Can be removed in minor
+     */
     public const ACTION_CART_ITEMS_DELETE = 'delete';
 
+    /**
+     * @deprecated Can be removed in minor
+     */
     public const ACTION_GUEST_CARTS_GET = 'get';
 
+    /**
+     * @deprecated Can be removed in minor
+     */
     public const ACTION_GUEST_CART_ITEMS_POST = 'post';
+
+    /**
+     * @deprecated Can be removed in minor
+     */
     public const ACTION_GUEST_CART_ITEMS_PATCH = 'patch';
+
+    /**
+     * @deprecated Can be removed in minor
+     */
     public const ACTION_GUEST_CART_ITEMS_DELETE = 'delete';
 
     /**
