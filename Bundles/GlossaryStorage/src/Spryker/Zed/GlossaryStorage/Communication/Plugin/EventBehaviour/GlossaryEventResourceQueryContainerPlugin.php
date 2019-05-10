@@ -9,7 +9,7 @@ namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\EventBehaviour;
 
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Shared\GlossaryStorage\GlossaryStorageConstants;
+use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -31,7 +31,7 @@ class GlossaryEventResourceQueryContainerPlugin extends AbstractPlugin implement
      */
     public function getResourceName(): string
     {
-        return GlossaryStorageConstants::RESOURCE_NAME;
+        return GlossaryStorageConfig::RESOURCE_NAME;
     }
 
     /**

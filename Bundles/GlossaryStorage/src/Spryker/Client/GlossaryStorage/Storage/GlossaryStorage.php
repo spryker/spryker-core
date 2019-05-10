@@ -12,7 +12,7 @@ use Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageCli
 use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchronizationServiceInterface;
 use Spryker\Client\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Client\Kernel\Locator;
-use Spryker\Shared\GlossaryStorage\GlossaryStorageConstants;
+use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig as SharedGlossaryStorageConfig;
 
 class GlossaryStorage implements GlossaryStorageInterface
 {
@@ -102,7 +102,7 @@ class GlossaryStorage implements GlossaryStorageInterface
         $synchronizationDataTransfer->setReference($keyName);
         $synchronizationDataTransfer->setLocale($localeName);
 
-        return $this->synchronizationService->getStorageKeyBuilder(GlossaryStorageConstants::RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
+        return $this->synchronizationService->getStorageKeyBuilder(SharedGlossaryStorageConfig::RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
     }
 
     /**
