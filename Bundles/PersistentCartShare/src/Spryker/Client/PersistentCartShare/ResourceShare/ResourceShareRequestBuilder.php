@@ -19,8 +19,8 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
     protected const ID_QUOTE_PARAMETER = 'id_quote';
     protected const SHARE_OPTION_PARAMETER = 'share_option';
 
-    protected const KEY_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
-    protected const KEY_ID_COMPANY_USER = 'id_company_user';
+    protected const KEY_OWNER_ID_COMPANY_BUSINESS_UNIT = 'owner_id_company_business_unit';
+    protected const KEY_OWNER_ID_COMPANY_USER = 'owner_id_company_user';
 
     /**
      * @uses \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::SHARE_OPTION_PREVIEW
@@ -88,8 +88,8 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
         }
 
         return $resourceShareData + [
-            static::KEY_ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
-            static::KEY_ID_COMPANY_BUSINESS_UNIT => $companyUserTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
+            static::KEY_OWNER_ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
+            static::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT => $companyUserTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
         ];
     }
 }

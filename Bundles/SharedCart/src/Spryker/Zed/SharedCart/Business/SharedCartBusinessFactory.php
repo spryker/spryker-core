@@ -31,7 +31,6 @@ use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareActivatorStrategy
 use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareActivatorStrategyInterface;
 use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareDataExpanderStrategy;
 use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareDataExpanderStrategyInterface;
-use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCompanyUserFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
@@ -162,8 +161,7 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     {
         return new ResourceShareActivatorStrategy(
             $this->createQuoteCompanyUserWriter(),
-            $this->getRepository(),
-            $this->getCompanyUserFacade()
+            $this->getRepository()
         );
     }
 
@@ -209,13 +207,5 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): SharedCartToStoreFacadeInterface
     {
         return $this->getProvidedDependency(SharedCartDependencyProvider::FACADE_STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCompanyUserFacadeInterface
-     */
-    public function getCompanyUserFacade(): SharedCartToCompanyUserFacadeInterface
-    {
-        return $this->getProvidedDependency(SharedCartDependencyProvider::FACADE_COMPANY_USER);
     }
 }

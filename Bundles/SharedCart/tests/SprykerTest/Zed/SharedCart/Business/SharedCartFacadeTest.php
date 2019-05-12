@@ -60,14 +60,25 @@ class SharedCartFacadeTest extends Test
      */
     public const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
 
+    /**
+     * @uses \Spryker\Client\PersistentCartShare\ResourceShare\ResourceShareRequestBuilder::ID_QUOTE_PARAMETER
+     */
     protected const KEY_ID_QUOTE = 'id_quote';
-    protected const KEY_ID_COMPANY_USER = 'id_company_user';
-    protected const KEY_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
+
+    /**
+     * @uses \Spryker\Client\PersistentCartShare\ResourceShare\ResourceShareRequestBuilder::KEY_OWNER_ID_COMPANY_USER
+     */
+    protected const KEY_OWNER_ID_COMPANY_USER = 'owner_id_company_user';
+
+    /**
+     * @uses \Spryker\Client\PersistentCartShare\ResourceShare\ResourceShareRequestBuilder::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT
+     */
+    protected const KEY_OWNER_ID_COMPANY_BUSINESS_UNIT = 'owner_id_company_business_unit';
 
     protected const VALUE_SHARE_OPTION = 'VALUE_SHARE_OPTION';
     protected const VALUE_ID_QUOTE = 1;
-    protected const VALUE_ID_COMPANY_USER = 1;
-    protected const VALUE_ID_COMPANY_BUSINESS_UNIT = 1;
+    protected const VALUE_OWNER_ID_COMPANY_USER = 1;
+    protected const VALUE_OWNER_ID_COMPANY_BUSINESS_UNIT = 1;
 
     protected const VALUE_CUSTOMER_REFERENCE = 'VALUE_CUSTOMER_REFERENCE';
     protected const VALUE_NOT_EXISTING_ID_COMPANY_USER = 0;
@@ -164,8 +175,8 @@ class SharedCartFacadeTest extends Test
         $secondCompanyUserTransfer = $this->createCompanyUserTransfer();
 
         $resourceShareTransfer = $this->createResourceShareTransfer([
-            static::KEY_ID_COMPANY_USER => $secondCompanyUserTransfer->getIdCompanyUser(),
-            static::KEY_ID_COMPANY_BUSINESS_UNIT => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
+            static::KEY_OWNER_ID_COMPANY_USER => $secondCompanyUserTransfer->getIdCompanyUser(),
+            static::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
         ]);
 
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
@@ -191,12 +202,12 @@ class SharedCartFacadeTest extends Test
         // Arrange
         $firstCompanyUserTransfer = $this->createCompanyUserTransfer();
         $secondCompanyUserTransfer = $this->createCompanyUserTransfer([
-            static::KEY_ID_COMPANY_USER => static::VALUE_NOT_EXISTING_ID_COMPANY_USER,
+            static::KEY_OWNER_ID_COMPANY_USER => static::VALUE_NOT_EXISTING_ID_COMPANY_USER,
         ]);
 
         $resourceShareTransfer = $this->createResourceShareTransfer([
-            static::KEY_ID_COMPANY_USER => $secondCompanyUserTransfer->getIdCompanyUser(),
-            static::KEY_ID_COMPANY_BUSINESS_UNIT => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
+            static::KEY_OWNER_ID_COMPANY_USER => $secondCompanyUserTransfer->getIdCompanyUser(),
+            static::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
         ]);
 
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
@@ -226,8 +237,8 @@ class SharedCartFacadeTest extends Test
         ]);
 
         $resourceShareTransfer = $this->createResourceShareTransfer([
-            static::KEY_ID_COMPANY_USER => $secondCompanyUserTransfer->getIdCompanyUser(),
-            static::KEY_ID_COMPANY_BUSINESS_UNIT => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
+            static::KEY_OWNER_ID_COMPANY_USER => $secondCompanyUserTransfer->getIdCompanyUser(),
+            static::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
         ]);
 
         $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
@@ -259,8 +270,8 @@ class SharedCartFacadeTest extends Test
 
         $resourceShareTransfer = $this->createResourceShareTransfer([
             static::KEY_SHARE_OPTION => static::PERMISSION_GROUP_READ_ONLY,
-            static::KEY_ID_COMPANY_USER => $secondCompanyUserTransfer->getIdCompanyUser(),
-            static::KEY_ID_COMPANY_BUSINESS_UNIT => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
+            static::KEY_OWNER_ID_COMPANY_USER => $secondCompanyUserTransfer->getIdCompanyUser(),
+            static::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
         ]);
 
         $resourceShareResponseTransfer = $this->getFacade()->applyResourceShareDataExpanderStrategy($resourceShareTransfer);
@@ -287,14 +298,14 @@ class SharedCartFacadeTest extends Test
         // Arrange
         $firstCompanyUserTransfer = $this->createCompanyUserTransfer();
         $secondCompanyUserTransfer = $this->createCompanyUserTransfer([
-            CompanyUserTransfer::FK_COMPANY => $firstCompanyUserTransfer->getFkCompany(),
-            CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $firstCompanyUserTransfer->getFkCompanyBusinessUnit(),
+            CompanyUserTransfer::FK_COMPANY => $firstCompanyUserTransfer->getCompany()->getIdCompany(),
+            CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $firstCompanyUserTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
         ]);
 
         $resourceShareTransfer = $this->createResourceShareTransfer([
             static::KEY_SHARE_OPTION => static::PERMISSION_GROUP_FULL_ACCESS,
-            static::KEY_ID_COMPANY_USER => $secondCompanyUserTransfer->getIdCompanyUser(),
-            static::KEY_ID_COMPANY_BUSINESS_UNIT => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
+            static::KEY_OWNER_ID_COMPANY_USER => $secondCompanyUserTransfer->getIdCompanyUser(),
+            static::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT => $secondCompanyUserTransfer->getFkCompanyBusinessUnit(),
         ]);
 
         $resourceShareResponseTransfer = $this->getFacade()->applyResourceShareDataExpanderStrategy($resourceShareTransfer);
@@ -328,8 +339,8 @@ class SharedCartFacadeTest extends Test
         // Assert
         $this->assertTrue($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertEquals($resourceShareDataTransfer->getIdQuote(), static::VALUE_ID_QUOTE);
-        $this->assertEquals($resourceShareDataTransfer->getIdCompanyUser(), static::VALUE_ID_COMPANY_USER);
-        $this->assertEquals($resourceShareDataTransfer->getIdCompanyBusinessUnit(), static::VALUE_ID_COMPANY_BUSINESS_UNIT);
+        $this->assertEquals($resourceShareDataTransfer->getOwnerIdCompanyUser(), static::VALUE_OWNER_ID_COMPANY_USER);
+        $this->assertEquals($resourceShareDataTransfer->getOwnerIdCompanyBusinessUnit(), static::VALUE_OWNER_ID_COMPANY_BUSINESS_UNIT);
     }
 
     /**
@@ -349,8 +360,8 @@ class SharedCartFacadeTest extends Test
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->assertNull($resourceShareDataTransfer->getIdQuote());
-        $this->assertNull($resourceShareDataTransfer->getIdCompanyUser());
-        $this->assertNull($resourceShareDataTransfer->getIdCompanyBusinessUnit());
+        $this->assertNull($resourceShareDataTransfer->getOwnerIdCompanyUser());
+        $this->assertNull($resourceShareDataTransfer->getOwnerIdCompanyBusinessUnit());
         $this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
             static::GLOSSARY_KEY_ONE_OR_MORE_REQUIRED_PROPERTIES_ARE_MISSING
@@ -369,8 +380,8 @@ class SharedCartFacadeTest extends Test
             ResourceShareTransfer::RESOURCE_SHARE_DATA => (new ResourceShareDataTransfer())->setData($resourceShareDataSeed + [
                 static::KEY_SHARE_OPTION => static::VALUE_SHARE_OPTION,
                 static::KEY_ID_QUOTE => static::VALUE_ID_QUOTE,
-                static::KEY_ID_COMPANY_USER => static::VALUE_ID_COMPANY_USER,
-                static::KEY_ID_COMPANY_BUSINESS_UNIT => static::VALUE_ID_COMPANY_BUSINESS_UNIT,
+                static::KEY_OWNER_ID_COMPANY_USER => static::VALUE_OWNER_ID_COMPANY_USER,
+                static::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT => static::VALUE_OWNER_ID_COMPANY_BUSINESS_UNIT,
             ]),
         ]);
     }
@@ -390,11 +401,17 @@ class SharedCartFacadeTest extends Test
             CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
 
-        return $this->tester->haveCompanyUser($seed + [
+        $companyUserTransfer = $this->tester->haveCompanyUser($seed + [
             CompanyUserTransfer::CUSTOMER => $customerTransfer,
             CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
             CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
         ]);
+
+        $companyUserTransfer->getCustomer()
+            ->setCompanyUserTransfer($companyUserTransfer);
+
+        return $companyUserTransfer->setCompany($companyTransfer)
+            ->setCompanyBusinessUnit($companyBusinessUnitTransfer);
     }
 
     /**

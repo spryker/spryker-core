@@ -15,9 +15,9 @@ use Spryker\Shared\SharedCart\SharedCartConfig;
 
 class ResourceShareDataExpanderStrategy implements ResourceShareDataExpanderStrategyInterface
 {
-    protected const KEY_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
-    protected const KEY_ID_COMPANY_USER = 'id_company_user';
     protected const KEY_ID_QUOTE = 'id_quote';
+    protected const KEY_OWNER_ID_COMPANY_USER = 'owner_id_company_user';
+    protected const KEY_OWNER_ID_COMPANY_BUSINESS_UNIT = 'owner_id_company_business_unit';
 
     protected const GLOSSARY_KEY_ONE_OR_MORE_REQUIRED_PROPERTIES_ARE_MISSING = 'shared_cart.resource_share.strategy.error.properties_are_missing';
 
@@ -49,8 +49,8 @@ class ResourceShareDataExpanderStrategy implements ResourceShareDataExpanderStra
     {
         if ($resourceShareDataTransfer->getShareOption()
             && $resourceShareDataTransfer->getIdQuote()
-            && $resourceShareDataTransfer->getIdCompanyUser()
-            && $resourceShareDataTransfer->getIdCompanyBusinessUnit()
+            && $resourceShareDataTransfer->getOwnerIdCompanyUser()
+            && $resourceShareDataTransfer->getOwnerIdCompanyBusinessUnit()
         ) {
             return (new ResourceShareResponseTransfer())
                 ->setIsSuccessful(true);
@@ -74,8 +74,8 @@ class ResourceShareDataExpanderStrategy implements ResourceShareDataExpanderStra
 
         $resourceShareDataTransfer->setShareOption($resourceShareData[SharedCartConfig::KEY_SHARE_OPTION] ?? null)
             ->setIdQuote($resourceShareData[static::KEY_ID_QUOTE] ?? null)
-            ->setIdCompanyUser($resourceShareData[static::KEY_ID_COMPANY_USER] ?? null)
-            ->setIdCompanyBusinessUnit($resourceShareData[static::KEY_ID_COMPANY_BUSINESS_UNIT] ?? null);
+            ->setOwnerIdCompanyUser($resourceShareData[static::KEY_OWNER_ID_COMPANY_USER] ?? null)
+            ->setOwnerIdCompanyBusinessUnit($resourceShareData[static::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT] ?? null);
 
         return $resourceShareDataTransfer;
     }
