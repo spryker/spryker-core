@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Persistence;
 
+use Generated\Shared\Transfer\CategoryImageSetTransfer;
+use Generated\Shared\Transfer\CategoryImageStorageItemTransfer;
 use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -35,11 +37,11 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
     /**
      * @param array $categoryIds
      *
-     * @return \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
      */
     public function getCategoryImageSetsByFkCategoryIn(array $categoryIds): array
     {
-        $categoryImageSetsQuery = $this->getFactory()
+        $categoryImageSetEntities = $this->getFactory()
             ->getCategoryImageSetQuery()
             ->innerJoinWithSpyLocale()
             ->innerJoinWithSpyCategoryImageSetToCategoryImage()
@@ -47,23 +49,44 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
                 ->innerJoinWithSpyCategoryImage()
                 ->orderBySortOrder()
             ->endUse()
-            ->filterByFkCategory_In($categoryIds);
+            ->filterByFkCategory_In($categoryIds)
+            ->find();
 
-        return $this->buildQueryFromCriteria($categoryImageSetsQuery)->find();
+        $categoryImageSetTransfers = [];
+
+        foreach ($categoryImageSetEntities as $categoryImageSetEntity) {
+            $categoryImageSetTransfers[] = $this->getFactory()
+                ->createCategoryImageStorageMapper()
+                ->mapCategoryImageSetEntityToCategoryImageSetTransfer($categoryImageSetEntity, new CategoryImageSetTransfer());
+        }
+
+        return $categoryImageSetTransfers;
     }
 
     /**
      * @param array $categoryIds
      *
-     * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryImageStorageItemTransfer[]
      */
     public function getCategoryImageStorageByFkCategoryIn(array $categoryIds): array
     {
-        $categoryImageStorageQuery = $this->getFactory()
+        $categoryImageStorageEntities = $this->getFactory()
             ->createSpyCategoryImageStorageQuery()
-            ->filterByFkCategory_In($categoryIds);
+            ->filterByFkCategory_In($categoryIds)
+            ->find();
 
-        return $this->buildQueryFromCriteria($categoryImageStorageQuery)->find();
+        $categoryImageStorageItemTransfers = [];
+
+        foreach ($categoryImageStorageEntities as $categoryImageStorageEntity) {
+            $categoryImageStorageItemTransfers[] = $this->getFactory()
+                ->createCategoryImageStorageMapper()
+                ->mapCategoryImageStorageEntityToCategoryImageStorageItemTransfer(
+                    $categoryImageStorageEntity,
+                    new CategoryImageStorageItemTransfer()
+                );
+        }
+
+        return $categoryImageStorageItemTransfers;
     }
 
     /**

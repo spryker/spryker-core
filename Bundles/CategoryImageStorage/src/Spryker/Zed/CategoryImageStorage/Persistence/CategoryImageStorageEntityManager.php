@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Persistence;
 
-use Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer;
+use Generated\Shared\Transfer\CategoryImageStorageItemTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -16,21 +16,39 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CategoryImageStorageEntityManager extends AbstractEntityManager implements CategoryImageStorageEntityManagerInterface
 {
     /**
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\CategoryImageStorageItemTransfer $categoryImageStorageItemTransfer
+     *
+     * @return void
      */
-    public function saveCategoryImageStorage(SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer)
-    {
-        $this->save($categoryImageStorageEntityTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function deleteCategoryImageStorage(string $idCategoryImageStorageEntityTransfer)
+    public function saveCategoryImageStorage(CategoryImageStorageItemTransfer $categoryImageStorageItemTransfer)
     {
         $categoryImageStorageEntity = $this->getFactory()
             ->createSpyCategoryImageStorageQuery()
-            ->filterByIdCategoryImageStorage($idCategoryImageStorageEntityTransfer)
+            ->filterByIdCategoryImageStorage(
+                $categoryImageStorageItemTransfer->getIdCategoryImageStorage()
+            )
+            ->findOneOrCreate();
+
+        $categoryImageStorageEntity = $this->getFactory()
+            ->createCategoryImageStorageMapper()
+            ->mapCategoryImageStorageItemTransferToCategoryImageStorageEntity(
+                $categoryImageStorageItemTransfer,
+                $categoryImageStorageEntity
+            );
+
+        $categoryImageStorageEntity->save();
+    }
+
+    /**
+     * @param int $idCategoryImageStorage
+     *
+     * @return void
+     */
+    public function deleteCategoryImageStorage(int $idCategoryImageStorage)
+    {
+        $categoryImageStorageEntity = $this->getFactory()
+            ->createSpyCategoryImageStorageQuery()
+            ->filterByIdCategoryImageStorage($idCategoryImageStorage)
             ->findOne();
 
         $categoryImageStorageEntity->delete();
