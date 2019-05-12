@@ -27,10 +27,10 @@ use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderI
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteShareDetailsQuoteResponseExpander;
 use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReader;
 use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface;
-use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareActivatorStrategy;
-use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareActivatorStrategyInterface;
-use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareDataExpanderStrategy;
-use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareDataExpanderStrategyInterface;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidActivatorStrategy;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidActivatorStrategyInterface;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidDataExpanderStrategy;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidDataExpanderStrategyInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
@@ -147,19 +147,19 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareDataExpanderStrategyInterface
+     * @return \Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidDataExpanderStrategyInterface
      */
-    public function createResourceShareDataExpanderStrategy(): ResourceShareDataExpanderStrategyInterface
+    public function createShareCartByUuidDataExpanderStrategy(): ShareCartByUuidDataExpanderStrategyInterface
     {
-        return new ResourceShareDataExpanderStrategy();
+        return new ShareCartByUuidDataExpanderStrategy();
     }
 
     /**
-     * @return \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareActivatorStrategyInterface
+     * @return \Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidActivatorStrategyInterface
      */
-    public function createResourceShareActivatorStrategy(): ResourceShareActivatorStrategyInterface
+    public function createShareCartByUuidActivatorStrategy(): ShareCartByUuidActivatorStrategyInterface
     {
-        return new ResourceShareActivatorStrategy(
+        return new ShareCartByUuidActivatorStrategy(
             $this->createQuoteCompanyUserWriter(),
             $this->getRepository()
         );

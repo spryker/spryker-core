@@ -227,10 +227,10 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function applyResourceShareDataExpanderStrategy(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
+    public function applyShareCartByUuidDataExpanderStrategy(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
         return $this->getFactory()
-            ->createResourceShareDataExpanderStrategy()
+            ->createShareCartByUuidDataExpanderStrategy()
             ->applyResourceShareDataExpanderStrategy($resourceShareTransfer);
     }
 
@@ -243,10 +243,10 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function applyResourceShareActivatorStrategy(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    public function applyShareCartByUuidActivatorStrategy(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
         return $this->getFactory()
-            ->createResourceShareActivatorStrategy()
+            ->createShareCartByUuidActivatorStrategy()
             ->applyResourceShareActivatorStrategy($resourceShareRequestTransfer);
     }
 }

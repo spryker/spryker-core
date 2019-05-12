@@ -19,7 +19,7 @@ use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriterInterface;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
-class ResourceShareActivatorStrategy implements ResourceShareActivatorStrategyInterface
+class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrategyInterface
 {
     protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.cart_access_denied';
     protected const GLOSSARY_KEY_ONE_OR_MORE_REQUIRED_PROPERTIES_ARE_MISSING = 'shared_cart.resource_share.strategy.error.properties_are_missing';

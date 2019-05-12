@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Shared\SharedCart\SharedCartConfig;
 
-class ResourceShareDataExpanderStrategy implements ResourceShareDataExpanderStrategyInterface
+class ShareCartByUuidDataExpanderStrategy implements ShareCartByUuidDataExpanderStrategyInterface
 {
     protected const KEY_ID_QUOTE = 'id_quote';
     protected const KEY_OWNER_ID_COMPANY_USER = 'owner_id_company_user';

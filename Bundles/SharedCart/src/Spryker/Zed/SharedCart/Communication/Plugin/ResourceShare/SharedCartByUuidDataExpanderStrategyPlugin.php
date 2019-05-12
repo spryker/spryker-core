@@ -18,7 +18,7 @@ use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareResourceDa
  * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
  */
-class SharedCartDataExpanderStrategyPlugin extends AbstractPlugin implements ResourceShareResourceDataExpanderStrategyPluginInterface
+class SharedCartByUuidDataExpanderStrategyPlugin extends AbstractPlugin implements ResourceShareResourceDataExpanderStrategyPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -34,7 +34,7 @@ class SharedCartDataExpanderStrategyPlugin extends AbstractPlugin implements Res
      */
     public function expand(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer
     {
-        return $this->getFacade()->applyResourceShareDataExpanderStrategy($resourceShareTransfer);
+        return $this->getFacade()->applyShareCartByUuidDataExpanderStrategy($resourceShareTransfer);
     }
 
     /**
