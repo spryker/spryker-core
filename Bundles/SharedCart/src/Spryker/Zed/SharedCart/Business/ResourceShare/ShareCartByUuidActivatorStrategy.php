@@ -52,7 +52,7 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    public function applyResourceShareActivatorStrategy(
+    public function applyShareCartByUuidActivatorStrategy(
         ResourceShareRequestTransfer $resourceShareRequestTransfer
     ): ResourceShareResponseTransfer {
         $resourceShareRequestTransfer->requireCustomer()
@@ -121,7 +121,10 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
         $resourceShareDataTransfer = $resourceShareRequestTransfer->getResourceShare()
             ->getResourceShareData();
 
-        $idCompanyUser = $resourceShareDataTransfer->getOwnerIdCompanyUser();
+        $idCompanyUser = $resourceShareRequestTransfer->getCustomer()
+            ->getCompanyUserTransfer()
+            ->getIdCompanyUser();
+
         $shareDetailTransfer = $this->createShareDetailTransfer($idCompanyUser, $resourceShareDataTransfer->getShareOption());
         if (!$shareDetailTransfer) {
             return null;
