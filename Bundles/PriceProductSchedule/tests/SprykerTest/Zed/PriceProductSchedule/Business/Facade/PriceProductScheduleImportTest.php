@@ -35,6 +35,8 @@ use Generated\Shared\Transfer\StoreTransfer;
  */
 class PriceProductScheduleImportTest extends Unit
 {
+    protected const FORMAT_DATE = 'Y/m/d';
+
     /**
      * @var \SprykerTest\Zed\PriceProductSchedule\PriceProductScheduleBusinessTester
      */
@@ -183,8 +185,12 @@ class PriceProductScheduleImportTest extends Unit
                     PriceTypeTransfer::ID_PRICE_TYPE => $priceTypeTransfer->getIdPriceType(),
                 ],
             ],
-            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('-2 days'))->setTime(0, 0, 0, 0),
-            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('+3 days'))->setTime(0, 0, 0, 0),
+            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-2 days'))
+                ->setTime(0, 0, 0, 0)
+                ->format(static::FORMAT_DATE),
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+3 days'))
+                ->setTime(0, 0, 0, 0)
+                ->format(static::FORMAT_DATE),
         ]);
 
         return (new PriceProductScheduledListImportRequestTransfer())
@@ -217,8 +223,12 @@ class PriceProductScheduleImportTest extends Unit
                 PriceProductScheduleImportTransfer::STORE_NAME => $storeTransfer->getName(),
                 PriceProductScheduleImportTransfer::GROSS_AMOUNT => 25000,
                 PriceProductScheduleImportTransfer::NET_AMOUNT => 20000,
-                PriceProductScheduleImportTransfer::ACTIVE_TO => (new DateTime('-2 days'))->setTime(0, 0, 0, 0),
-                PriceProductScheduleImportTransfer::ACTIVE_FROM => (new DateTime('+3 days'))->setTime(0, 0, 0, 0),
+                PriceProductScheduleImportTransfer::ACTIVE_FROM => (new DateTime('-2 days'))
+                    ->setTime(0, 0, 0, 0)
+                    ->format(static::FORMAT_DATE),
+                PriceProductScheduleImportTransfer::ACTIVE_TO => (new DateTime('+3 days'))
+                    ->setTime(0, 0, 0, 0)
+                    ->format(static::FORMAT_DATE),
             ]);
         }
 
@@ -308,13 +318,12 @@ class PriceProductScheduleImportTest extends Unit
                         PriceProductScheduleImportTransfer::SKU_PRODUCT => 'SKU',
                         PriceProductScheduleImportTransfer::PRICE_TYPE_NAME => 'PRICE_TYPE_NAME',
                         PriceProductScheduleImportTransfer::STORE_NAME => 'AT',
-                        PriceProductScheduleImportTransfer::ACTIVE_TO => (new DateTime('-2 days'))->setTime(0, 0, 0, 0),
-                        PriceProductScheduleImportTransfer::ACTIVE_FROM => (new DateTime('+3 days'))->setTime(
-                            0,
-                            0,
-                            0,
-                            0
-                        ),
+                        PriceProductScheduleImportTransfer::ACTIVE_FROM => (new DateTime('-2 days'))
+                            ->setTime(0, 0, 0, 0)
+                            ->format(static::FORMAT_DATE),
+                        PriceProductScheduleImportTransfer::ACTIVE_TO => (new DateTime('+3 days'))
+                            ->setTime(0, 0, 0, 0)
+                            ->format(static::FORMAT_DATE),
                         PriceProductScheduleImportTransfer::GROSS_AMOUNT => 25000,
                         PriceProductScheduleImportTransfer::NET_AMOUNT => 20000,
                     ],
