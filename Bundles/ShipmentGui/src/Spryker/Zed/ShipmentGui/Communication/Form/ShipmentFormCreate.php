@@ -10,13 +10,14 @@ namespace Spryker\Zed\ShipmentGui\Communication\Form;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemForm;
+use Spryker\Zed\ShipmentGui\Communication\Form\Validator\Constraints\GreaterThanOrEqualDate;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
@@ -39,9 +40,10 @@ class ShipmentFormCreate extends AbstractType
     public const OPTION_SHIPMENT_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
 
-    public const VALIDITY_DATETIME_FORMAT = 'yyyy-MM-dd H:mm:ss';
-
     protected const VALIDATION_DATE_TODAY = 'today';
+    protected const FIELD_REQUESTED_DELIVERY_DATE_FORMAT = 'yyyy-MM-dd'; // Format accepted by IntlDate
+    protected const VALIDATION_VALID_DATE_TIME_FORMAT = 'Y-m-d'; // Format accepted by date().
+    protected const VALIDATION_INVALID_DATE_TIME_MESSAGE = 'validation.invalid_date';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -50,6 +52,8 @@ class ShipmentFormCreate extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setRequired(static::OPTION_SHIPMENT_ADDRESS_CHOICES);
         $resolver->setRequired(static::OPTION_SHIPMENT_METHOD_CHOICES);
         $resolver->setRequired(static::FIELD_SHIPMENT_SELECTED_ITEMS);
@@ -137,14 +141,14 @@ class ShipmentFormCreate extends AbstractType
             'label' => false,
             'required' => false,
             'widget' => 'single_text',
+            'input' => 'string',
+            'format' => static::FIELD_REQUESTED_DELIVERY_DATE_FORMAT,
             'attr' => [
                 'class' => 'datepicker safe-datetime',
             ],
             'constraints' => [
-                new GreaterThanOrEqual([
-                    'value' => static::VALIDATION_DATE_TODAY,
-                    'message' => sprintf('Delivery date cannot be earlier than "%s".', static::VALIDATION_DATE_TODAY),
-                ]),
+                $this->createDateTimeConstraint(),
+                $this->createDateTimeGreaterThanOrEqualConstraint(static::VALIDATION_DATE_TODAY),
             ],
         ]);
 
@@ -176,12 +180,33 @@ class ShipmentFormCreate extends AbstractType
     protected function addOrderItemsForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add(static::FORM_SALES_ORDER_ITEMS, CollectionType::class, [
-                'entry_type' => ItemForm::class,
-                'entry_options' => [
-                    'label' => false,
-                    static::FIELD_SHIPMENT_SELECTED_ITEMS => $builder->getOption(static::FIELD_SHIPMENT_SELECTED_ITEMS),
-                ],
+            'entry_type' => ItemForm::class,
+            'entry_options' => [
+                'label' => false,
+                static::FIELD_SHIPMENT_SELECTED_ITEMS => $builder->getOption(static::FIELD_SHIPMENT_SELECTED_ITEMS),
+            ],
         ]);
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\DateTime
+     */
+    protected function createDateTimeConstraint(): DateTime
+    {
+        return new DateTime([
+            'format' => static::VALIDATION_VALID_DATE_TIME_FORMAT,
+            'message' => sprintf(static::VALIDATION_INVALID_DATE_TIME_MESSAGE, static::VALIDATION_VALID_DATE_TIME_FORMAT),
+        ]);
+    }
+
+    /**
+     * @param string $minDate
+     *
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\Validator\Constraints\GreaterThanOrEqualDate
+     */
+    protected function createDateTimeGreaterThanOrEqualConstraint(string $minDate): GreaterThanOrEqualDate
+    {
+        return new GreaterThanOrEqualDate($minDate);
     }
 }
