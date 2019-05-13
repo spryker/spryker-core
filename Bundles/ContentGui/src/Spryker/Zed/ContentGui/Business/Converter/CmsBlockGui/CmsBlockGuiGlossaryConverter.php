@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentGui\Communication\Converter\CmsBlockGui;
+namespace Spryker\Zed\ContentGui\Business\Converter\CmsBlockGui;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
-use Spryker\Zed\ContentGui\Communication\Converter\AbstractCmsGlossaryConverter;
+use Spryker\Zed\ContentGui\Business\Converter\AbstractCmsGlossaryConverter;
 
 class CmsBlockGuiGlossaryConverter extends AbstractCmsGlossaryConverter implements CmsBlockGuiGlossaryConverterInterface
 {

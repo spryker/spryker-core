@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ContentGui\Communication\Converter;
+namespace Spryker\Zed\ContentGui\Business\Converter;
 
 use DOMDocument;
 use Generated\Shared\Transfer\ContentTransfer;

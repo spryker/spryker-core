@@ -43,6 +43,21 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addContentPlugins($container);
         $container = $this->addContentEditorPlugins($container);
         $container = $this->addUtilEncoding($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addContentFacade($container);
+        $container = $this->addContentEditorPlugins($container);
         $container = $this->addTranslatorFacade($container);
 
         return $container;
