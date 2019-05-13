@@ -107,13 +107,13 @@ var ContentProductSetGui = function(options)
         });
 
         rowData.splice(-1,1);
-        rowData.push(this.getDevareButtonsTemplate(idProductSet));
+        rowData.push(this.getDeleteButtonsTemplate(idProductSet));
 
         return rowData;
     };
 
-    this.getDevareButtonsTemplate = function(idProductSet) {
-        var buttons = $($(this.tablesWrapperSelector).data('devare-button'));
+    this.getDeleteButtonsTemplate = function(idProductSet) {
+        var buttons = $($(this.tablesWrapperSelector).data('delete-button'));
         var buttonsTemplate = '';
 
         buttons.each(function() {
@@ -156,7 +156,7 @@ $(document).ready(function () {
         'productSetsTableSelector': '.product-set-view-table',
         'integerInputsWrapperSelector': '.js-selected-product-sets-wrapper',
         'addProductSetButtonSelector': '.js-add-product-set',
-        'removeProductSetButtonSelector': '.js-devare-product-set',
+        'removeProductSetButtonSelector': '.js-delete-product-set',
         'clearAllFieldsSelector': '.clear-fields',
         'navigationTabLinkSelector': '.nav-tabs a',
         'tabsContentSelector': '.tab-content .tab-pane'
