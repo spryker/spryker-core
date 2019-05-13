@@ -115,7 +115,7 @@ class ContentFacadeTest extends Test
     /**
      * @return void
      */
-    public function testValidateFailsOnVeryLongDescription()
+    public function testValidateFailsOnVeryLongDescription(): void
     {
         $contentTransfer = $this->tester->haveContent();
         $contentTransfer->setName(static::NAME);
