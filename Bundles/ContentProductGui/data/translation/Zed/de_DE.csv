@@ -1,13 +1,13 @@
-"Abstract Product List", "Abstract Product List"
-"Add more products", "Add more products"
-"Name","Name"
-"SKU","SKU"
-"ID","ID"
-"Image","Image"
-"Stores","Stores"
-"Status","Status"
-"Selected","Selected"
-"Actions","Actions"
-"Delete","Delete"
-"Move Up","Move Up"
+"Abstract Product List","Abstract Product List"
+Actions,Actions
+"Add more products","Add more products"
+Delete,Delete
+ID,ID
+Image,Image
 "Move Down","Move Down"
+"Move Up","Move Up"
+Name,Name
+Selected,Selected
+SKU,SKU
+Status,Status
+Stores,Stores

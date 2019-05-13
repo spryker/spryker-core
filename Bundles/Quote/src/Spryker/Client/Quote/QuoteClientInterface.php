@@ -79,4 +79,19 @@ interface QuoteClientInterface
      * @return bool
      */
     public function isQuoteEditable(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     *  - Locks quote by setting `isLocked` transfer property to true.
+     *  - Low level Quote locking (use CartClientInterface for features).
+     *
+     * @see CartClientInterface::lockQuote()
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function lockQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

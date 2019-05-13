@@ -9,6 +9,9 @@ namespace Spryker\Zed\ContentProductGui;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\ContentProductGui\ContentProductGuiConfig getSharedConfig()
+ */
 class ContentProductGuiConfig extends AbstractBundleConfig
 {
     /**
@@ -17,4 +20,20 @@ class ContentProductGuiConfig extends AbstractBundleConfig
      * Should be more than in max count of list abstract products
      */
     public const MAX_NUMBER_PRODUCTS_IN_PRODUCT_ABSTRACT_LIST = 30;
+
+    /**
+     * @return array
+     */
+    public function getContentWidgetTemplates(): array
+    {
+        return $this->getSharedConfig()->getContentWidgetTemplates();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTwigFunctionName(): string
+    {
+        return $this->getSharedConfig()->getTwigFunctionName();
+    }
 }

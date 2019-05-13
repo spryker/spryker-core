@@ -16,6 +16,7 @@ interface QuoteApprovalFacadeInterface
 {
     /**
      * Specification:
+     * - Returns unsuccessful response with corresponding message if target quote has no items.
      * - Share cart to approver with read only access.
      * - Removes all existing cart sharing.
      * - Locks quote.
@@ -31,9 +32,9 @@ interface QuoteApprovalFacadeInterface
 
     /**
      * Specification:
-     * - Unlocks quote.
+     * - Executes QuoteApprovalUnlockPreCheckPluginInterface plugins, unlocks quote if all registered plugins returns true.
      * - Removes all existing cart sharing.
-     * - Remove quote approval.
+     * - Removes quote approval.
      *
      * @api
      *
@@ -86,7 +87,7 @@ interface QuoteApprovalFacadeInterface
      * - Checks that Approver can approve request.
      * - Checks that status is "Waiting".
      * - Sets quote approval request status "Declined" if checks are true.
-     * - Unlocks quote.
+     * - Executes QuoteApprovalUnlockPreCheckPluginInterface plugins, unlocks quote if all registered plugins returns true.
      *
      * @api
      *
@@ -107,4 +108,17 @@ interface QuoteApprovalFacadeInterface
      * @return void
      */
     public function removeApprovalsByIdQuote(int $idQuote): void;
+
+    /**
+     * Specification:
+     * - Removes all approvals for quote from Persistence.
+     * - Adjusts data related to quote approval in quote accordingly.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function sanitizeQuoteApproval(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }
