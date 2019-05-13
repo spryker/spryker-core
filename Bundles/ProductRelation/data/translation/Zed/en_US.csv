@@ -3,7 +3,6 @@
 Activate,Activate
 "Add Product Relations","Add Product Relations"
 "Assign related products","Assign related products"
-"Assign related products","Assign related products"
 "Create relation","Create relation"
 Deactivate,Deactivate
 Edit,Edit
@@ -15,7 +14,6 @@ Edit,Edit
 "Please select product from the list below","Please select product from the list below"
 "Product relation successfully created","Product relation successfully created"
 "Product relation successfully modified","Product relation successfully modified"
-"Product relation with id ""%d"" not found.","Product relation with id ""%d"" not found."
 "Product relation with id ""%d"" not found.","Product relation with id ""%d"" not found."
 "Related products","Related products"
 related-products,"Related products"
