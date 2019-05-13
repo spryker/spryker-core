@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\TaxStorage\Persistence;
 
-use Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage;
-
 interface TaxStorageEntityManagerInterface
 {
     /**
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $taxSetStorageTransfers
+     * @param \Generated\Shared\Transfer\TaxSetStorageTransfer[] $taxSetStorageTransfers
      *
      * @return void
      */

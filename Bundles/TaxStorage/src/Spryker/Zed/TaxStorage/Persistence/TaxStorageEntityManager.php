@@ -40,21 +40,6 @@ class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorag
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TaxSetStorageTransfer[] $taxSetStorageTransfers
-     *
-     * @return int[]
-     */
-    protected function getIdFromTransfers(array $taxSetStorageTransfers): array
-    {
-        $ids = [];
-        foreach ($taxSetStorageTransfers as $taxSetStorageTransfer) {
-            $ids[] = $taxSetStorageTransfer->getIdTaxSet();
-        }
-
-        return $ids;
-    }
-
-    /**
      * @param int[] $taxSetIds
      *
      * @return void
@@ -67,5 +52,20 @@ class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorag
         foreach ($spyTaxSetStorages as $spyTaxSetStorage) {
             $spyTaxSetStorage->delete();
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TaxSetStorageTransfer[] $taxSetStorageTransfers
+     *
+     * @return int[]
+     */
+    protected function getIdFromTransfers(array $taxSetStorageTransfers): array
+    {
+        $ids = [];
+        foreach ($taxSetStorageTransfers as $taxSetStorageTransfer) {
+            $ids[] = $taxSetStorageTransfer->getIdTaxSet();
+        }
+
+        return $ids;
     }
 }

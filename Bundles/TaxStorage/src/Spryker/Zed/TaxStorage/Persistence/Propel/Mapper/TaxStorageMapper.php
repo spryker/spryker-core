@@ -16,7 +16,6 @@ use Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage;
 
 class TaxStorageMapper
 {
-
     /**
      * @param \Orm\Zed\Tax\Persistence\Base\SpyTaxSet[] $spyTaxSets
      *
@@ -68,9 +67,6 @@ class TaxStorageMapper
      */
     protected function mapSpyTaxSetToTaxSetStorageTransfer(SpyTaxSet $spyTaxSet, TaxSetStorageTransfer $taxSetStorageTransfer): TaxSetStorageTransfer
     {
-//        $spyTaxSetStorage->setFkTaxSet($spyTaxSet->getIdTaxSet());
-//        $spyTaxSetStorage->setData($this->createTaxSetStorageTransfer($spyTaxSet)->toArray());
-
         $taxSetStorageTransfer->fromArray($spyTaxSet->toArray(), true);
         $taxSetStorageTransfer->setTaxRates(
             $this->mapSpyTaxRatesToTaxRateTransfers($spyTaxSet->getSpyTaxRates()->getArrayCopy())
@@ -106,8 +102,7 @@ class TaxStorageMapper
     protected function mapSpyTaxRateToTaxRateStorageTransfer(
         SpyTaxRate $spyTaxRate,
         TaxRateStorageTransfer $taxRateStorageTransfer
-    ): TaxRateStorageTransfer
-    {
+    ): TaxRateStorageTransfer {
         $taxRateStorageTransfer->fromArray($spyTaxRate->toArray(), true);
         if ($spyTaxRate->getCountry() !== null) {
             $taxRateStorageTransfer->setCountry($spyTaxRate->getCountry()->getIso2Code());

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\TaxProductStorage\Persistence;
 
 use Generated\Shared\Transfer\TaxProductStorageTransfer;
-use Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage;
 
 interface TaxProductStorageEntityManagerInterface
 {
@@ -19,9 +18,10 @@ interface TaxProductStorageEntityManagerInterface
      */
     public function deleteTaxProductStorageByProductAbstractIds(array $productAbstractIds): void;
 
-
     /**
      * @param \Generated\Shared\Transfer\TaxProductStorageTransfer $taxProductStorageTransfer
+     *
+     * @return void
      */
     public function updateTaxProductStorage(TaxProductStorageTransfer $taxProductStorageTransfer): void;
 }

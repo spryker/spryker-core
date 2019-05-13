@@ -8,8 +8,6 @@
 namespace Spryker\Zed\TaxStorage\Persistence;
 
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -54,16 +52,15 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
         $spyTaxSets = $this->getFactory()
             ->getTaxSetQuery()
             ->filterByIdTaxSet_In($taxSetIds)
-            ->find();
+            ->find()
+            ->getArrayCopy();
 
-        if($spyTaxSets->isEmpty()){
+        if (count($spyTaxSets) === 0) {
             return [];
         }
 
         return $taxStorageMapper->mapSpyTaxSetsToTaxSetStorageTransfers($spyTaxSets);
     }
-
-
 
     /**
      * @param int[] $taxSetIds

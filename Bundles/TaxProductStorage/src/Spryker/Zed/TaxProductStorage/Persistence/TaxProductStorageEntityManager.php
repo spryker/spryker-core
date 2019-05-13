@@ -8,7 +8,6 @@
 namespace Spryker\Zed\TaxProductStorage\Persistence;
 
 use Generated\Shared\Transfer\TaxProductStorageTransfer;
-use Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -33,7 +32,7 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
     /**
      * @param \Generated\Shared\Transfer\TaxProductStorageTransfer $taxProductStorageTransfer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @return void
      */
     public function updateTaxProductStorage(TaxProductStorageTransfer $taxProductStorageTransfer): void
     {
