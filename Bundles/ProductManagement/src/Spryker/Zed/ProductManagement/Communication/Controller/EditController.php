@@ -95,7 +95,7 @@ class EditController extends AddController
             ->getFactory()
             ->createVariantTable($idProductAbstract, $type);
 
-        return $this->viewResponse([
+        $viewData = [
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
@@ -108,7 +108,15 @@ class EditController extends AddController
             'idProductAbstract' => $idProductAbstract,
             'priceDimension' => $request->get(static::PARAM_PRICE_DIMENSION, []),
             'productFormEditTabs' => $this->getFactory()->createProductFormEditTabs()->createView(),
-        ]);
+        ];
+
+        $viewExpanderPlugins = $this->getFactory()
+            ->getAbstractProductEditViewExpanderPlugins();
+        foreach ($viewExpanderPlugins as $viewExpanderPlugin) {
+            $viewData = $viewExpanderPlugin->expand($viewData);
+        }
+
+        return $this->viewResponse($viewData);
     }
 
     /**
