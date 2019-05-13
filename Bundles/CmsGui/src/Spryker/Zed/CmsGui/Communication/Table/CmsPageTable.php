@@ -412,7 +412,7 @@ class CmsPageTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return array
+     * @return string[]
      */
     protected function extractUrls(array $item)
     {

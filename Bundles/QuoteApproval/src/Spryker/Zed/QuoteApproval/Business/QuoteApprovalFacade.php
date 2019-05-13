@@ -123,4 +123,20 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
     {
         $this->getEntityManager()->removeApprovalsByIdQuote($idQuote);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function sanitizeQuoteApproval(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteApprovalSanitizer()
+            ->sanitizeQuoteApproval($quoteTransfer);
+    }
 }
