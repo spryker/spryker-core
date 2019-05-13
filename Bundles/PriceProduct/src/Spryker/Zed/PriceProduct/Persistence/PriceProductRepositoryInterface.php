@@ -122,4 +122,11 @@ interface PriceProductRepositoryInterface
      * @return bool
      */
     public function isPriceProductUsedForOtherCurrencyAndStore(PriceProductTransfer $priceProductTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findPriceProductStoresByPriceProduct(PriceProductTransfer $priceProductTransfer): ObjectCollection;
 }

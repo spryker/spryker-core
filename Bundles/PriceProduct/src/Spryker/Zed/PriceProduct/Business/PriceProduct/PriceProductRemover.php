@@ -61,11 +61,13 @@ class PriceProductRemover implements PriceProductRemoverInterface
             ->requirePriceDimension();
 
         $this->getTransactionHandler()->handleTransaction(function () use ($priceProductTransfer): void {
-            $idPriceProductStore = $this->priceProductRepository->findIdPriceProductStoreByPriceProduct($priceProductTransfer);
+            $priceProductStores = $this->priceProductRepository->findPriceProductStoresByPriceProduct($priceProductTransfer);
 
-            if ($idPriceProductStore !== null) {
-                $this->priceProductStoreWriterPluginExecutor->executePriceProductStorePreDeletePlugins($idPriceProductStore);
-                $this->priceProductEntityManager->deletePriceProductStoreByPriceProductTransfer($priceProductTransfer);
+            foreach ($priceProductStores as $priceProductStore) {
+                $this->priceProductStoreWriterPluginExecutor
+                    ->executePriceProductStorePreDeletePlugins($priceProductStore->getIdPriceProductStore());
+                $this->priceProductEntityManager
+                    ->deletePriceProductStore($priceProductStore->getIdPriceProductStore());
             }
 
             if ($this->priceProductRepository->isPriceProductUsedForOtherCurrencyAndStore($priceProductTransfer) === false) {
