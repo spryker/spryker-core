@@ -20,8 +20,8 @@ use Spryker\Service\UtilEncryption\UtilEncryptionServiceInterface;
  */
 class UtilEncryptionServiceTest extends Unit
 {
-    protected const ENCTYPTION_KEY = 'ENCTYPTION_KEY';
-    protected const ENCTYPTION_PLAIN_TEXT = 'ENCTYPTION_PLAIN_TEXT';
+    protected const ENCRYPTION_KEY = 'ENCRYPTION_KEY';
+    protected const ENCRYPTION_PLAIN_TEXT = 'ENCRYPTION_PLAIN_TEXT';
 
     /**
      * @var \SprykerTest\Service\UtilEncryption\UtilEncryptionServiceTester
@@ -50,14 +50,14 @@ class UtilEncryptionServiceTest extends Unit
 
         //Act
         $encryptedString = $this->getUtilEncryptionService()->encrypt(
-            static::ENCTYPTION_PLAIN_TEXT,
+            static::ENCRYPTION_PLAIN_TEXT,
             $encryptInitVector,
-            static::ENCTYPTION_KEY
+            static::ENCRYPTION_KEY
         );
 
         //Assert
         $this->assertNotEmpty($encryptedString);
-        $this->assertNotEquals($encryptedString, static::ENCTYPTION_PLAIN_TEXT);
+        $this->assertNotEquals($encryptedString, static::ENCRYPTION_PLAIN_TEXT);
     }
 
     /**
@@ -68,17 +68,17 @@ class UtilEncryptionServiceTest extends Unit
         //Arrange
         $encryptInitVector = $this->getUtilEncryptionService()->generateEncryptInitVector();
         $encryptedString = $this->getUtilEncryptionService()->encrypt(
-            static::ENCTYPTION_PLAIN_TEXT,
+            static::ENCRYPTION_PLAIN_TEXT,
             $encryptInitVector,
-            static::ENCTYPTION_KEY
+            static::ENCRYPTION_KEY
         );
 
         //Act
-        $decryptedString = $this->getUtilEncryptionService()->decrypt($encryptedString, $encryptInitVector, static::ENCTYPTION_KEY);
+        $decryptedString = $this->getUtilEncryptionService()->decrypt($encryptedString, $encryptInitVector, static::ENCRYPTION_KEY);
 
         //Assert
         $this->assertNotEmpty($decryptedString);
-        $this->assertEquals($decryptedString, static::ENCTYPTION_PLAIN_TEXT);
+        $this->assertEquals($decryptedString, static::ENCRYPTION_PLAIN_TEXT);
     }
 
     /**

@@ -55,7 +55,7 @@ class UtilEncryptionServiceFactory extends AbstractServiceFactory
     /**
      * @return \Spryker\Service\UtilEncryption\Dependency\Service\UtilEncryptionToUtilTextServiceInterface
      */
-    protected function getUtilTextService(): UtilEncryptionToUtilTextServiceInterface
+    public function getUtilTextService(): UtilEncryptionToUtilTextServiceInterface
     {
         return $this->getProvidedDependency(UtilEncryptionDependencyProvider::SERVICE_UTIL_TEXT);
     }

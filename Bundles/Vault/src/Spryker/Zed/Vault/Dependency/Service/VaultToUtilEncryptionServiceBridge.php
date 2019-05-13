@@ -33,24 +33,24 @@ class VaultToUtilEncryptionServiceBridge implements VaultToUtilEncryptionService
     /**
      * @param string $chiperText
      * @param string $initVector
-     * @param string $encriptionKey
+     * @param string $encryptionKey
      *
      * @return string
      */
-    public function decrypt(string $chiperText, string $initVector, string $encriptionKey): string
+    public function decrypt(string $chiperText, string $initVector, string $encryptionKey): string
     {
-        return $this->utilEncryptionService->decrypt($chiperText, $initVector, $encriptionKey);
+        return $this->utilEncryptionService->decrypt($chiperText, $initVector, $encryptionKey);
     }
 
     /**
      * @param string $plainText
      * @param string $initVector
-     * @param string $encriptionKey
+     * @param string $encryptionKey
      *
      * @return string
      */
-    public function encrypt(string $plainText, string $initVector, string $encriptionKey): string
+    public function encrypt(string $plainText, string $initVector, string $encryptionKey): string
     {
-        return $this->utilEncryptionService->encrypt($plainText, $initVector, $encriptionKey);
+        return $this->utilEncryptionService->encrypt($plainText, $initVector, $encryptionKey);
     }
 }

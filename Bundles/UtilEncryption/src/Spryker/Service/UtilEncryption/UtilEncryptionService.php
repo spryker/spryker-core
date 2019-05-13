@@ -35,15 +35,15 @@ class UtilEncryptionService extends AbstractService implements UtilEncryptionSer
      *
      * @param string $plainText
      * @param string $initVector
-     * @param string $encriptionKey
+     * @param string $encryptionKey
      *
      * @return string
      */
-    public function encrypt(string $plainText, string $initVector, string $encriptionKey): string
+    public function encrypt(string $plainText, string $initVector, string $encryptionKey): string
     {
         return $this->getFactory()
             ->createEncryptor()
-            ->encrypt($plainText, $initVector, $encriptionKey);
+            ->encrypt($plainText, $initVector, $encryptionKey);
     }
 
     /**
@@ -53,14 +53,14 @@ class UtilEncryptionService extends AbstractService implements UtilEncryptionSer
      *
      * @param string $chiperText
      * @param string $initVector
-     * @param string $encriptionKey
+     * @param string $encryptionKey
      *
      * @return string
      */
-    public function decrypt(string $chiperText, string $initVector, string $encriptionKey): string
+    public function decrypt(string $chiperText, string $initVector, string $encryptionKey): string
     {
         return $this->getFactory()
             ->createDecryptor()
-            ->decrypt($chiperText, $initVector, $encriptionKey);
+            ->decrypt($chiperText, $initVector, $encryptionKey);
     }
 }

@@ -14,7 +14,7 @@ interface VaultConstants
 {
     /**
      * Specification:
-     * - Mapping vault data type to ecryption key.
+     * - Mapping vault data type to encryption key.
      *
      * Example:
      * [
@@ -24,5 +24,5 @@ interface VaultConstants
      *
      * @api
      */
-    public const ENCRYPTION_KEYS_PER_TYPE = 'ENCRYPTION_KEYS_PER_TYPE';
+    public const ENCRYPTION_KEYS_PER_TYPE = 'VAULT:ENCRYPTION_KEYS_PER_TYPE';
 }

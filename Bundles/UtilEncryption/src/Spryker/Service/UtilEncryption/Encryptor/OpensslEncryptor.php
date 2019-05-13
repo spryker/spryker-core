@@ -27,17 +27,17 @@ class OpensslEncryptor implements EncryptorInterface
     /**
      * @param string $plainText
      * @param string $initVector
-     * @param string $encriptionKey
+     * @param string $encryptionKey
      *
      * @return string
      */
-    public function encrypt(string $plainText, string $initVector, string $encriptionKey): string
+    public function encrypt(string $plainText, string $initVector, string $encryptionKey): string
     {
         return base64_encode(
             openssl_encrypt(
                 $plainText,
                 $this->utilEncryptionConfig->getEncryptionCipherMethod(),
-                $encriptionKey,
+                $encryptionKey,
                 0,
                 $initVector
             )

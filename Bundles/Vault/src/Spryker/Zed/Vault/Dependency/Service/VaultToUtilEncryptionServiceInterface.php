@@ -17,18 +17,18 @@ interface VaultToUtilEncryptionServiceInterface
     /**
      * @param string $chiperText
      * @param string $initVector
-     * @param string $encriptionKey
+     * @param string $encryptionKey
      *
      * @return string
      */
-    public function decrypt(string $chiperText, string $initVector, string $encriptionKey): string;
+    public function decrypt(string $chiperText, string $initVector, string $encryptionKey): string;
 
     /**
      * @param string $plainText
      * @param string $initVector
-     * @param string $encriptionKey
+     * @param string $encryptionKey
      *
      * @return string
      */
-    public function encrypt(string $plainText, string $initVector, string $encriptionKey): string;
+    public function encrypt(string $plainText, string $initVector, string $encryptionKey): string;
 }
