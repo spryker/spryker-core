@@ -193,8 +193,6 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
         return $moneyValueTransfer
             ->fromArray($priceProductScheduleImportTransfer->toArray(), true)
-            ->setNetAmount($priceProductScheduleImportTransfer->getNetAmount())
-            ->setGrossAmount($priceProductScheduleImportTransfer->getGrossAmount())
             ->setCurrency($currencyTransfer)
             ->setFkCurrency($currencyTransfer->getIdCurrency())
             ->setFkStore($storeTransfer->getIdStore());
