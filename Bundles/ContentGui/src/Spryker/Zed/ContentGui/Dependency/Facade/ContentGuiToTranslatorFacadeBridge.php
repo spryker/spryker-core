@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ContentGui\Dependency\Facade;
 
-use Spryker\Zed\Translator\Business\TranslatorFacadeInterface;
-
 class ContentGuiToTranslatorFacadeBridge implements ContentGuiToTranslatorFacadeInterface
 {
     /**
