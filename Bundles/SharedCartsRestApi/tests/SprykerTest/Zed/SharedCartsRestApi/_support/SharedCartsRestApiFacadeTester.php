@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 
 /**
@@ -34,21 +33,7 @@ use Generated\Shared\Transfer\ShareDetailTransfer;
  */
 class SharedCartsRestApiFacadeTester extends Actor
 {
-    use _generated\SharedCartsRestApiFacadeTestActions;
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function createQuote(CustomerTransfer $customerTransfer): QuoteTransfer
-    {
-        return $this->havePersistentQuote(
-            [
-                QuoteTransfer::CUSTOMER => $customerTransfer,
-            ]
-        );
-    }
+    use _generated\SharedCartsRestApiFacadeTesterActions;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
