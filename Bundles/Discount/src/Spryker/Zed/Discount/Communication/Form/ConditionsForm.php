@@ -90,7 +90,6 @@ class ConditionsForm extends AbstractType
             ],
             'attr' => [
                 'min' => DiscountConfig::DEFAULT_MINIMUM_ITEM_AMOUNT,
-                'data' => DiscountConfig::DEFAULT_MINIMUM_ITEM_AMOUNT,
             ],
             'required' => true,
         ]);
