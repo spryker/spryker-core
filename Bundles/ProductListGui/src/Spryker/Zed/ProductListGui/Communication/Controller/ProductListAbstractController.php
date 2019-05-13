@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductListAggregateFormTransfer;
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
+use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListProductConcreteRelationFormType;
@@ -51,7 +52,7 @@ class ProductListAbstractController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer|null
      */
-    protected function handleProductListAggregateForm(
+    protected function findProductListTransfer(
         Request $request,
         FormInterface $aggregateForm
     ): ?ProductListTransfer {
@@ -76,7 +77,24 @@ class ProductListAbstractController extends AbstractController
             )
         );
 
-        return $this->storeProductList($productListTransfer);
+        return $productListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     *
+     * @return void
+     */
+    protected function addMessagesFromProductListResponseTransfer(ProductListResponseTransfer $productListResponseTransfer): void
+    {
+        foreach ($productListResponseTransfer->getMessages() as $messageTransfer) {
+            if ($productListResponseTransfer->getIsSuccessful()) {
+                $this->addSuccessMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
+
+                continue;
+            }
+            $this->addErrorMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
+        }
     }
 
     /**
@@ -103,18 +121,6 @@ class ProductListAbstractController extends AbstractController
             ->importFromCsvFile($productsCsvFile, $productListProductConcreteRelationTransfer);
 
         return $productListProductConcreteRelationTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductListTransfer
-     */
-    protected function storeProductList(ProductListTransfer $productListTransfer): ProductListTransfer
-    {
-        return $this->getFactory()
-            ->getProductListFacade()
-            ->saveProductList($productListTransfer);
     }
 
     /**

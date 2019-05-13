@@ -15,9 +15,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\ContentGui\Communication\ContentGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ContentGui\ContentGuiConfig getConfig()
  */
 class LocalizedContentForm extends AbstractType
 {
@@ -103,7 +106,11 @@ class LocalizedContentForm extends AbstractType
             static::FIELD_PARAMETERS,
             $contentPlugin->getForm(),
             [
-                'label' => false,
+                'error_bubbling' => false,
+                'constraints' => [
+                    new Required(),
+                    new NotBlank(),
+                ],
             ]
         );
 

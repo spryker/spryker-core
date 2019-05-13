@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CompanyUser;
 
+use Spryker\Client\CompanyUser\Dependency\Client\CompanyUserToCustomerClientInterface;
 use Spryker\Client\CompanyUser\Zed\CompanyUserStub;
 use Spryker\Client\CompanyUser\Zed\CompanyUserStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -19,5 +20,13 @@ class CompanyUserFactory extends AbstractFactory
     public function createZedCompanyUserStub(): CompanyUserStubInterface
     {
         return new CompanyUserStub($this->getProvidedDependency(CompanyUserDependencyProvider::CLIENT_ZED_REQUEST));
+    }
+
+    /**
+     * @return \Spryker\Client\CompanyUser\Dependency\Client\CompanyUserToCustomerClientInterface
+     */
+    public function getCustomerClient(): CompanyUserToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(CompanyUserDependencyProvider::CLIENT_CUSTOMER);
     }
 }

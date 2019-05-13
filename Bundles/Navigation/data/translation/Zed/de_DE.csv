@@ -13,7 +13,6 @@ Navigation,Navigation
 "Navigation element %d was deactivated successfully.","Navigationselement %d wurde erfolgreich deaktiviert."
 "Navigation element %d was deleted successfully.","Navigationselement %d wurde erfolgreich gelöscht."
 "Navigation element %d was not found.","Navigationselement %d wurde nicht gefunden."
-"Navigation element %d was not found.","Navigationselement %d wurde nicht gefunden."
 "Navigation element %d was updated successfully.","Navigationselement %d wurde erfolgreich aktualisiert."
 "Navigation element details","Details des Navigationselements"
 "Navigation node ""%s"" was created successfully.","Navigationsknoten ""%s"" wurde erfolgreich erstellt."
