@@ -95,6 +95,7 @@
 
     <transfer name="QuoteError">
         <property name="message" type="string"/>
+        <property name="errorIdentifier" type="string"/>
     </transfer>
 
     <transfer name="QuoteResponse">
