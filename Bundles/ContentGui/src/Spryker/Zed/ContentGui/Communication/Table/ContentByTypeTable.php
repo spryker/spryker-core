@@ -166,6 +166,12 @@ class ContentByTypeTable extends AbstractTable
      */
     protected function getTableUrl(): string
     {
-        return Url::generate($this->defaultUrl, [ListContentByTypeController::PARAM_CONTENT_TYPE => $this->contentType]);
+        $params = [ListContentByTypeController::PARAM_CONTENT_TYPE => $this->contentType];
+
+        if ($this->idContent) {
+            $params[ListContentByTypeController::PARAM_CONTENT_ID] = $this->idContent;
+        }
+
+        return Url::generate($this->defaultUrl, $params);
     }
 }
