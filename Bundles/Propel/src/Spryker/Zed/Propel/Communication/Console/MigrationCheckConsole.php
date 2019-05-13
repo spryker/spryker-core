@@ -24,8 +24,7 @@ class MigrationCheckConsole extends Console
     public const COMMAND_NAME = 'propel:migration:check';
     public const CODE_CHANGES = 3;
 
-    public const MESSAGE_MIGRATION_NEEDS_TO_BE_EXECUTED = 'migration needs to be executed';
-    public const MESSAGE_MIGRATIONS_NEED_TO_BE_EXECUTED = 'migrations need to be executed';
+    public const MESSAGE_MIGRATION_PATTERN = '(migrations?\sneeds?\sto\sbe\sexecuted)';
 
     /**
      * @return void
@@ -82,11 +81,6 @@ class MigrationCheckConsole extends Console
      */
     protected function checkIfMigrationRunNeeded(string $processOutput): bool
     {
-        if (strpos($processOutput, static::MESSAGE_MIGRATION_NEEDS_TO_BE_EXECUTED) !== false ||
-            strpos($processOutput, static::MESSAGE_MIGRATIONS_NEED_TO_BE_EXECUTED) !== false) {
-            return true;
-        }
-
-        return false;
+        return (bool)preg_match(static::MESSAGE_MIGRATION_PATTERN, $processOutput);
     }
 }
