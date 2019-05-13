@@ -9,6 +9,6 @@ namespace Spryker\Shared\Vault\Exception;
 
 use Exception;
 
-class EncryptionKeyNotPreConfiguredForDataType extends Exception
+class EncryptionKeyNotPreConfigured extends Exception
 {
 }

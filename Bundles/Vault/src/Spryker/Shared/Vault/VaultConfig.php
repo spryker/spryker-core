@@ -8,27 +8,23 @@
 namespace Spryker\Shared\Vault;
 
 use Spryker\Shared\Kernel\AbstractSharedConfig;
-use Spryker\Shared\Vault\Exception\EncryptionKeyNotPreConfiguredForDataType;
+use Spryker\Shared\Vault\Exception\EncryptionKeyNotPreConfigured;
 
 class VaultConfig extends AbstractSharedConfig
 {
     /**
-     * @param string $dataType
-     *
-     * @throws \Spryker\Shared\Vault\Exception\EncryptionKeyNotPreConfiguredForDataType
+     * @throws \Spryker\Shared\Vault\Exception\EncryptionKeyNotPreConfigured
      *
      * @return string
      */
-    public function getEncriptinoKeyPerType(string $dataType): string
+    public function getEncryptionKey(): string
     {
-        $encryptionKeysPerType = $this->get(VaultConstants::ENCRYPTION_KEYS_PER_TYPE, []);
+        $encryptionKey = $this->get(VaultConstants::ENCRYPTION_KEY, false);
 
-        if (isset($encryptionKeysPerType[$dataType])) {
-            return $encryptionKeysPerType[$dataType];
+        if ($encryptionKey) {
+            return $encryptionKey;
         }
 
-        throw new EncryptionKeyNotPreConfiguredForDataType(
-            sprintf("Encryption key is not pre-configured for \"%s\" data type, please update ENCRYPTION_KEYS_PER_TYPE env variable.", $dataType)
-        );
+        throw new EncryptionKeyNotPreConfigured("Encryption key is not pre-configured, please update VAULT:ENCRYPTION_KEY env variable.");
     }
 }

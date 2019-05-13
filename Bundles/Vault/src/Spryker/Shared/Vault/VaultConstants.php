@@ -14,15 +14,9 @@ interface VaultConstants
 {
     /**
      * Specification:
-     * - Mapping vault data type to encryption key.
-     *
-     * Example:
-     * [
-     *     "cart-secret" => "k3*kdjaooiencvh",
-     *     "product-abstract-secret" => "kr45rdfgdfg445hhsdf",
-     * ]
+     * - Provides encryption key for vault data.
      *
      * @api
      */
-    public const ENCRYPTION_KEYS_PER_TYPE = 'VAULT:ENCRYPTION_KEYS_PER_TYPE';
+    public const ENCRYPTION_KEY = 'VAULT:ENCRYPTION_KEY';
 }

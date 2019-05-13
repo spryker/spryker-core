@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Vault\Business;
 
 use Codeception\Test\Unit;
 use Orm\Zed\Vault\Persistence\SpyVaultQuery;
-use Spryker\Shared\Vault\Exception\EncryptionKeyNotPreConfiguredForDataType;
+use Spryker\Shared\Vault\Exception\EncryptionKeyNotPreConfigured;
 use Spryker\Zed\Vault\Business\VaultBusinessFactory;
 use Spryker\Zed\Vault\Business\VaultFacade;
 use Spryker\Zed\Vault\VaultConfig;
@@ -94,7 +94,7 @@ class VaultFacadeTest extends Unit
         $vaultFacade = $this->tester->getFacade();
 
         //Assert
-        $this->expectException(EncryptionKeyNotPreConfiguredForDataType::class);
+        $this->expectException(EncryptionKeyNotPreConfigured::class);
 
         //Act
         $vaultFacade->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
@@ -124,10 +124,10 @@ class VaultFacadeTest extends Unit
     protected function createVaultFacadeMock()
     {
         $vaultConfigMock = $this->getMockBuilder(VaultConfig::class)
-            ->setMethods(['getEncryptionKeyPerType'])
+            ->setMethods(['getEncryptionKey'])
             ->getMock();
 
-        $vaultConfigMock->method('getEncryptionKeyPerType')
+        $vaultConfigMock->method('getEncryptionKey')
             ->willReturn(static::TEST_ENCRYPTION_KEY);
 
         $vaultBusinessFactoryMock = $this->getMockBuilder(VaultBusinessFactory::class)

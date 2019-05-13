@@ -57,12 +57,10 @@ class VaultReader implements VaultReaderInterface
             return $vaultTransfer;
         }
 
-        $encryptionKey = $this->vaultConfig->getEncryptionKeyPerType($dataKey);
-
         return $this->utilEncryptionService->decrypt(
             $vaultTransfer->getCipherText(),
             $vaultTransfer->getInitialVector(),
-            $encryptionKey
+            $this->vaultConfig->getEncryptionKey()
         );
     }
 }

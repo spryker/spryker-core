@@ -15,12 +15,10 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class VaultConfig extends AbstractBundleConfig
 {
     /**
-     * @param string $dataType
-     *
      * @return string
      */
-    public function getEncryptionKeyPerType(string $dataType): string
+    public function getEncryptionKey(): string
     {
-        return $this->getSharedConfig()->getEncriptinoKeyPerType($dataType);
+        return $this->getSharedConfig()->getEncryptionKey();
     }
 }
