@@ -86,10 +86,11 @@ class ConditionsForm extends AbstractType
             'label' => $label,
             'constraints' => [
                 new NotBlank(),
-                new GreaterThanOrEqual(DiscountConfig::DEFAULT_MINIMUM_ITEM_AMOUNT),
+                new GreaterThanOrEqual(0),
             ],
             'attr' => [
                 'min' => DiscountConfig::DEFAULT_MINIMUM_ITEM_AMOUNT,
+                'data' => DiscountConfig::DEFAULT_MINIMUM_ITEM_AMOUNT,
             ],
             'required' => true,
         ]);
