@@ -39,9 +39,7 @@ class OauthCompanyUserFacade extends AbstractFacade implements OauthCompanyUserF
 
         $request = (new OauthRequestTransfer())
             ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())
-            ->setGrantType(CompanyUserAccessTokenGrantType::COMPANY_USER_ACCESS_TOKEN_GRANT_TYPE)
-            ->setClientId('frontend')    // This should be automatically filled by OAuth module
-            ->setClientSecret('abc123'); // This should be automatically filled by OAuth module
+            ->setGrantType(CompanyUserAccessTokenGrantType::COMPANY_USER_ACCESS_TOKEN_GRANT_TYPE);
 
         // TODO: need to be solved with generic property using AbstractTransfer
         $request->setExampleProperty($customerTransfer->getExampleProperty());

@@ -61,6 +61,8 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @return string
      */
     public function getCustomerOauthClientSecret(): string
@@ -72,6 +74,8 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @return string
      */

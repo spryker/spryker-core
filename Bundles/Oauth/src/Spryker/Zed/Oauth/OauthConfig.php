@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth;
 
+use Spryker\Shared\Oauth\OauthConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
@@ -55,5 +56,25 @@ class OauthConfig extends AbstractBundleConfig
     public function getAccessTokenTTL(): string
     {
         return $this->getSharedConfig()->getAccessTokenTTL();
+    }
+
+    /**
+     * The client secret used to authenticate Oauth client requests, to create use "password_hash('your password', PASSWORD_BCRYPT)".
+     *
+     * @return string
+     */
+    public function getClientSecret(): string
+    {
+        return $this->get(OauthConstants::OAUTH_CLIENT_SECRET);
+    }
+
+    /**
+     * The client id as is store in spy_oauth_client database table
+     *
+     * @return string
+     */
+    public function getClientId(): string
+    {
+        return $this->get(OauthConstants::OAUTH_CLIENT_IDENTIFIER);
     }
 }

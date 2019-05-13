@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\OauthResponseTransfer;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantBuilderInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeConfigurationLoaderInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeExecutorInterface;
+use Spryker\Zed\Oauth\OauthConfig;
 
 class AccessTokenRequestExecutor implements AccessTokenRequestExecutorInterface
 {
@@ -32,18 +33,26 @@ class AccessTokenRequestExecutor implements AccessTokenRequestExecutorInterface
     protected $grantTypeExecutor;
 
     /**
+     * @var \Spryker\Zed\Oauth\OauthConfig
+     */
+    protected $oauthConfig;
+
+    /**
      * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeConfigurationLoaderInterface $grantTypeConfigurationLoader
      * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantBuilderInterface $grantTypeBuilder
      * @param \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeExecutorInterface $grantTypeExecutor
+     * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
      */
     public function __construct(
         GrantTypeConfigurationLoaderInterface $grantTypeConfigurationLoader,
         GrantBuilderInterface $grantTypeBuilder,
-        GrantTypeExecutorInterface $grantTypeExecutor
+        GrantTypeExecutorInterface $grantTypeExecutor,
+        OauthConfig $oauthConfig
     ) {
         $this->grantTypeConfigurationLoader = $grantTypeConfigurationLoader;
         $this->grantTypeBuilder = $grantTypeBuilder;
         $this->grantTypeExecutor = $grantTypeExecutor;
+        $this->oauthConfig = $oauthConfig;
     }
 
     /**
@@ -61,8 +70,25 @@ class AccessTokenRequestExecutor implements AccessTokenRequestExecutorInterface
         }
 
         $grant = $this->grantTypeBuilder->buildGrant($oauthGrantTypeConfigurationTransfer);
+        $oauthRequestTransfer = $this->expandOauthRequestTransfer($oauthRequestTransfer);
 
         return $this->grantTypeExecutor->processAccessTokenRequest($oauthRequestTransfer, $grant);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthRequestTransfer
+     */
+    protected function expandOauthRequestTransfer(OauthRequestTransfer $oauthRequestTransfer): OauthRequestTransfer
+    {
+        if (!$oauthRequestTransfer->getClientId() && !$oauthRequestTransfer->getClientSecret()) {
+            $oauthRequestTransfer
+                ->setClientId($this->oauthConfig->getClientId())
+                ->setClientSecret($this->oauthConfig->getClientSecret());
+        }
+
+        return $oauthRequestTransfer;
     }
 
     /**

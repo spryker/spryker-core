@@ -29,4 +29,20 @@ interface OauthConstants
      *  - Encryption key used to encrypt data when build tokens
      */
     public const ENCRYPTION_KEY = 'ENCRYPTION_KEY';
+
+    /**
+     * Specification:
+     *  - The identifier of OAUTH client to use when requesting for access tokens.
+     *
+     * @api
+     */
+    public const OAUTH_CLIENT_IDENTIFIER = 'OAUTH_CLIENT_IDENTIFIER';
+
+    /**
+     * Specification:
+     *  - The secret of OAUTH client to use when requesting for access tokens.
+     *
+     * @api
+     */
+    public const OAUTH_CLIENT_SECRET = 'OAUTH_CLIENT_SECRET';
 }

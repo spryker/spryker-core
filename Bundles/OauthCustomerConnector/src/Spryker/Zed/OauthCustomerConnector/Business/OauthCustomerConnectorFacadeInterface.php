@@ -57,6 +57,8 @@ interface OauthCustomerConnectorFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @return string
      */
     public function getCustomerOauthClientSecret(): string;
@@ -66,6 +68,8 @@ interface OauthCustomerConnectorFacadeInterface
      *  - Reads customer client identifier.
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @return string
      */

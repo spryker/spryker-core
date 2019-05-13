@@ -82,7 +82,8 @@ class OauthBusinessFactory extends AbstractBusinessFactory
         return new AccessTokenRequestExecutor(
             $this->createGrantTypeConfigurationLoader(),
             $this->createGrantTypeBuilder(),
-            $this->createGrantTypeExecutor()
+            $this->createGrantTypeExecutor(),
+            $this->getConfig()
         );
     }
 
