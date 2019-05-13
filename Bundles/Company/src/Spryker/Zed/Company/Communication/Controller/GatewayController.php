@@ -35,4 +35,14 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->getCompanyById($companyTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    public function findCompanyByUuidAction(CompanyTransfer $companyTransfer): CompanyResponseTransfer
+    {
+        return $this->getFacade()->findCompanyByUuid($companyTransfer);
+    }
 }

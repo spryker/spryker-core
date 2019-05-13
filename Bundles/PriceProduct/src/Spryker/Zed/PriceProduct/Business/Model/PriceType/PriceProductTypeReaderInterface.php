@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model\PriceType;
 
+use Generated\Shared\Transfer\PriceTypeTransfer;
+
 interface PriceProductTypeReaderInterface
 {
     /**
@@ -36,4 +38,11 @@ interface PriceProductTypeReaderInterface
      * @return bool
      */
     public function hasPriceType($priceTypeName);
+
+    /**
+     * @param string $priceTypeName
+     *
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer|null
+     */
+    public function findPriceTypeByName(string $priceTypeName): ?PriceTypeTransfer;
 }

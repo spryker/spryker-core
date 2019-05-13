@@ -106,6 +106,16 @@ interface CompanyUserClientInterface
 
     /**
      * Specification:
+     * - Returns company user information from session for current customer if exists.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findCompanyUser(): ?CompanyUserTransfer;
+
+    /**
+     * Specification:
      * - Retrieves active company users collection by customer reference.
      * - Checks activity flag in a related company and company user.
      *
