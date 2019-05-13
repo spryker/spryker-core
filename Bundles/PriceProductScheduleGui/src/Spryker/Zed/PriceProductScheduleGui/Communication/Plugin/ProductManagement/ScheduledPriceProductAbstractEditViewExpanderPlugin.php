@@ -18,6 +18,8 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractEdit
 class ScheduledPriceProductAbstractEditViewExpanderPlugin extends AbstractPlugin implements ProductAbstractEditViewExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $viewData

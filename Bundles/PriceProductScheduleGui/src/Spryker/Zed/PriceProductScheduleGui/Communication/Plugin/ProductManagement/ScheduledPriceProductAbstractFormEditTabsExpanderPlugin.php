@@ -17,6 +17,8 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractEdit
 class ScheduledPriceProductAbstractFormEditTabsExpanderPlugin extends AbstractPlugin implements ProductAbstractEditFormTabsExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
