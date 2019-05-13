@@ -42,7 +42,6 @@ class ShipmentFormCreate extends AbstractType
 
     protected const VALIDATION_DATE_TODAY = 'today';
     protected const FIELD_REQUESTED_DELIVERY_DATE_FORMAT = 'yyyy-MM-dd'; // Format accepted by IntlDate
-    protected const VALIDATION_VALID_DATE_TIME_FORMAT = 'Y-m-d'; // Format accepted by date().
     protected const VALIDATION_INVALID_DATE_TIME_MESSAGE = 'validation.invalid_date';
 
     /**
@@ -195,8 +194,8 @@ class ShipmentFormCreate extends AbstractType
     protected function createDateTimeConstraint(): DateTime
     {
         return new DateTime([
-            'format' => static::VALIDATION_VALID_DATE_TIME_FORMAT,
-            'message' => sprintf(static::VALIDATION_INVALID_DATE_TIME_MESSAGE, static::VALIDATION_VALID_DATE_TIME_FORMAT),
+            'format' => GreaterThanOrEqualDate::VALIDATION_VALID_DATE_TIME_FORMAT,
+            'message' => sprintf(static::VALIDATION_INVALID_DATE_TIME_MESSAGE, GreaterThanOrEqualDate::VALIDATION_VALID_DATE_TIME_FORMAT),
         ]);
     }
 

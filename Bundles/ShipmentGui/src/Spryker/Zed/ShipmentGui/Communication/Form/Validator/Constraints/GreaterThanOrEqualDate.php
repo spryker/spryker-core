@@ -11,10 +11,12 @@ use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 class GreaterThanOrEqualDate extends GreaterThanOrEqual
 {
+    public const VALIDATION_VALID_DATE_TIME_FORMAT = 'Y-m-d'; // Format accepted by date().
+
     /**
      * Date time format acceptable by date().
      *
      * @var string
      */
-    public $format;
+    public $format = self::VALIDATION_VALID_DATE_TIME_FORMAT;
 }

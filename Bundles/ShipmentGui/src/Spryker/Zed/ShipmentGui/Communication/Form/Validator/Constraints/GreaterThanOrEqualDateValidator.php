@@ -17,11 +17,16 @@ use Symfony\Component\Validator\Constraints\GreaterThanOrEqualValidator;
 class GreaterThanOrEqualDateValidator extends GreaterThanOrEqualValidator
 {
     /**
-     * {@inheritdoc}
+     * Checks if the passed value is valid.
+     *
+     * @param mixed $value The value that should be validated
+     * @param \Spryker\Zed\ShipmentGui\Communication\Form\Validator\Constraints\GreaterThanOrEqualDate $constraint The constraint for the validation
+     *
+     * @return void
      */
     public function validate($value, Constraint $constraint)
     {
-        $valueAsDateTime = new DateTime($value);
+        $valueAsDateTime = DateTime::createFromFormat($constraint->format, $value);
 
         parent::validate($valueAsDateTime, $constraint);
     }
