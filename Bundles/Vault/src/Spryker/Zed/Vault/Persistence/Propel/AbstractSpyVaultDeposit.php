@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Vault\Persistence\Propel;
 
-use Orm\Zed\Vault\Persistence\Base\SpyVaultQuery as BaseSpyVaultQuery;
+use Orm\Zed\Vault\Persistence\Base\SpyVaultDeposit as BaseSpyVaultDeposit;
 
-abstract class AbstractSpyVaultQuery extends BaseSpyVaultQuery
+abstract class AbstractSpyVaultDeposit extends BaseSpyVaultDeposit
 {
 }

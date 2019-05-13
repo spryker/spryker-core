@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Vault\Persistence;
 
-use Generated\Shared\Transfer\VaultTransfer;
+use Generated\Shared\Transfer\VaultDepositTransfer;
 
 interface VaultRepositoryInterface
 {
@@ -15,7 +15,7 @@ interface VaultRepositoryInterface
      * @param string $dataType
      * @param string $dataKey
      *
-     * @return \Generated\Shared\Transfer\VaultTransfer|null
+     * @return \Generated\Shared\Transfer\VaultDepositTransfer|null
      */
-    public function findVaultByDataTypeAndKey(string $dataType, string $dataKey): ?VaultTransfer;
+    public function findVaultDepositByDataTypeAndKey(string $dataType, string $dataKey): ?VaultDepositTransfer;
 }

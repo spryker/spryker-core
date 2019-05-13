@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Vault\Business;
 
 use Codeception\Test\Unit;
-use Orm\Zed\Vault\Persistence\SpyVaultQuery;
+use Orm\Zed\Vault\Persistence\SpyVaultDepositQuery;
 use Spryker\Shared\Vault\Exception\EncryptionKeyNotPreConfigured;
 use Spryker\Zed\Vault\Business\VaultBusinessFactory;
 use Spryker\Zed\Vault\Business\VaultFacade;
@@ -48,7 +48,7 @@ class VaultFacadeTest extends Unit
         //Assert
         $this->assertSame(true, $isSuccessful);
 
-        $vaultsCount = SpyVaultQuery::create()
+        $vaultsCount = SpyVaultDepositQuery::create()
             ->filterByDataType(static::TEST_DATA_TYPE)
             ->filterByDataKey(static::TEST_DATA_KEY)
             ->find()

@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Vault\Persistence;
 
-use Orm\Zed\Vault\Persistence\SpyVaultQuery;
+use Orm\Zed\Vault\Persistence\SpyVaultDepositQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Vault\Persistence\Propel\Mapper\VaultMapper;
+use Spryker\Zed\Vault\Persistence\Propel\Mapper\VaultDepositMapper;
 
 /**
  * @method \Spryker\Zed\Vault\Persistence\VaultEntityManagerInterface getEntityManager()
@@ -19,18 +19,18 @@ use Spryker\Zed\Vault\Persistence\Propel\Mapper\VaultMapper;
 class VaultPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\Vault\Persistence\SpyVaultQuery
+     * @return \Orm\Zed\Vault\Persistence\SpyVaultDepositQuery
      */
-    public function createVaultPropelQuery(): SpyVaultQuery
+    public function createVaultDepositPropelQuery(): SpyVaultDepositQuery
     {
-        return SpyVaultQuery::create();
+        return SpyVaultDepositQuery::create();
     }
 
     /**
-     * @return \Spryker\Zed\Vault\Persistence\Propel\Mapper\VaultMapper
+     * @return \Spryker\Zed\Vault\Persistence\Propel\Mapper\VaultDepositMapper
      */
-    public function createVaultMapper(): VaultMapper
+    public function createVaultDepositMapper(): VaultDepositMapper
     {
-        return new VaultMapper();
+        return new VaultDepositMapper();
     }
 }

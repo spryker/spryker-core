@@ -7,21 +7,21 @@
 
 namespace Spryker\Zed\Vault\Persistence;
 
-use Generated\Shared\Transfer\VaultTransfer;
+use Generated\Shared\Transfer\VaultDepositTransfer;
 
 interface VaultEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\VaultTransfer $vaultTransfer
+     * @param \Generated\Shared\Transfer\VaultDepositTransfer $vaultDepositTransfer
      *
      * @return bool
      */
-    public function createVault(VaultTransfer $vaultTransfer): bool;
+    public function createVaultDeposit(VaultDepositTransfer $vaultDepositTransfer): bool;
 
     /**
-     * @param \Generated\Shared\Transfer\VaultTransfer $vaultTransfer
+     * @param \Generated\Shared\Transfer\VaultDepositTransfer $vaultDepositTransfer
      *
      * @return bool
      */
-    public function updateVault(VaultTransfer $vaultTransfer): bool;
+    public function updateVaultDeposit(VaultDepositTransfer $vaultDepositTransfer): bool;
 }

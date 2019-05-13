@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Vault\Business\Writer;
 
-use Generated\Shared\Transfer\VaultTransfer;
+use Generated\Shared\Transfer\VaultDepositTransfer;
 use Spryker\Zed\Vault\Dependency\Service\VaultToUtilEncryptionServiceInterface;
 use Spryker\Zed\Vault\Persistence\VaultEntityManagerInterface;
 use Spryker\Zed\Vault\Persistence\VaultRepositoryInterface;
@@ -69,16 +69,16 @@ class VaultWriter implements VaultWriterInterface
             $this->vaultConfig->getEncryptionKey()
         );
 
-        $vaultTransfer = (new VaultTransfer())
+        $vaultDepositTransfer = (new VaultDepositTransfer())
             ->setCipherText($encryptedString)
             ->setDataKey($dataKey)
             ->setInitialVector($encryptInitVector)
             ->setDataType($dataType);
 
-        if ($this->vaultRepository->findVaultByDataTypeAndKey($vaultTransfer->getDataType(), $vaultTransfer->getDataKey())) {
-            return $this->vaultEntityManager->updateVault($vaultTransfer);
+        if ($this->vaultRepository->findVaultDepositByDataTypeAndKey($vaultDepositTransfer->getDataType(), $vaultDepositTransfer->getDataKey())) {
+            return $this->vaultEntityManager->updateVaultDeposit($vaultDepositTransfer);
         }
 
-        return $this->vaultEntityManager->createVault($vaultTransfer);
+        return $this->vaultEntityManager->createVaultDeposit($vaultDepositTransfer);
     }
 }

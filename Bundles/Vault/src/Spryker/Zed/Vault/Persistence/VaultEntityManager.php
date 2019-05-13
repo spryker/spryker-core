@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Vault\Persistence;
 
-use Generated\Shared\Transfer\VaultTransfer;
-use Orm\Zed\Vault\Persistence\SpyVault;
+use Generated\Shared\Transfer\VaultDepositTransfer;
+use Orm\Zed\Vault\Persistence\SpyVaultDeposit;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -17,46 +17,46 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class VaultEntityManager extends AbstractEntityManager implements VaultEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\VaultTransfer $vaultTransfer
+     * @param \Generated\Shared\Transfer\VaultDepositTransfer $vaultDepositTransfer
      *
      * @return bool
      */
-    public function createVault(VaultTransfer $vaultTransfer): bool
+    public function createVaultDeposit(VaultDepositTransfer $vaultDepositTransfer): bool
     {
-        $vaultEntity = $this->getFactory()
-            ->createVaultMapper()
-            ->mapVaultTransferToEntity(
-                $vaultTransfer,
-                new SpyVault()
+        $vaultDepositEntity = $this->getFactory()
+            ->createVaultDepositMapper()
+            ->mapVaultDepositTransferToEntity(
+                $vaultDepositTransfer,
+                new SpyVaultDeposit()
             );
 
-        return (bool)$vaultEntity->save();
+        return (bool)$vaultDepositEntity->save();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\VaultTransfer $vaultTransfer
+     * @param \Generated\Shared\Transfer\VaultDepositTransfer $vaultDepositTransfer
      *
      * @return bool
      */
-    public function updateVault(VaultTransfer $vaultTransfer): bool
+    public function updateVaultDeposit(VaultDepositTransfer $vaultDepositTransfer): bool
     {
-        $vaultEntity = $this->getFactory()
-            ->createVaultPropelQuery()
-            ->filterByDataType($vaultTransfer->getDataType())
-            ->filterByDataKey($vaultTransfer->getDataKey())
+        $vaultDepositEntity = $this->getFactory()
+            ->createVaultDepositPropelQuery()
+            ->filterByDataType($vaultDepositTransfer->getDataType())
+            ->filterByDataKey($vaultDepositTransfer->getDataKey())
             ->findOne();
 
-        if (!$vaultEntity) {
+        if (!$vaultDepositEntity) {
             return false;
         }
 
-        $vaultEntity = $this->getFactory()
-            ->createVaultMapper()
-            ->mapVaultTransferToEntity(
-                $vaultTransfer,
-                $vaultEntity
+        $vaultDepositEntity = $this->getFactory()
+            ->createVaultDepositMapper()
+            ->mapVaultDepositTransferToEntity(
+                $vaultDepositTransfer,
+                $vaultDepositEntity
             );
 
-        return (bool)$vaultEntity->save();
+        return (bool)$vaultDepositEntity->save();
     }
 }

@@ -51,15 +51,15 @@ class VaultReader implements VaultReaderInterface
      */
     public function retrieve(string $dataType, string $dataKey): ?string
     {
-        $vaultTransfer = $this->vaultRepository->findVaultByDataTypeAndKey($dataType, $dataKey);
+        $vaultDepositTransfer = $this->vaultRepository->findVaultDepositByDataTypeAndKey($dataType, $dataKey);
 
-        if (!$vaultTransfer) {
-            return $vaultTransfer;
+        if (!$vaultDepositTransfer) {
+            return $vaultDepositTransfer;
         }
 
         return $this->utilEncryptionService->decrypt(
-            $vaultTransfer->getCipherText(),
-            $vaultTransfer->getInitialVector(),
+            $vaultDepositTransfer->getCipherText(),
+            $vaultDepositTransfer->getInitialVector(),
             $this->vaultConfig->getEncryptionKey()
         );
     }

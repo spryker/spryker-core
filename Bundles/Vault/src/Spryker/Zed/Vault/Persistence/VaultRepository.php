@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Vault\Persistence;
 
-use Generated\Shared\Transfer\VaultTransfer;
+use Generated\Shared\Transfer\VaultDepositTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -19,24 +19,24 @@ class VaultRepository extends AbstractRepository implements VaultRepositoryInter
      * @param string $dataType
      * @param string $dataKey
      *
-     * @return \Generated\Shared\Transfer\VaultTransfer|null
+     * @return \Generated\Shared\Transfer\VaultDepositTransfer|null
      */
-    public function findVaultByDataTypeAndKey(string $dataType, string $dataKey): ?VaultTransfer
+    public function findVaultDepositByDataTypeAndKey(string $dataType, string $dataKey): ?VaultDepositTransfer
     {
-        $vaultEntity = $this->getFactory()
-            ->createVaultPropelQuery()
+        $vaultDepositEntity = $this->getFactory()
+            ->createVaultDepositPropelQuery()
             ->filterByDataKey($dataKey)
             ->filterByDataType($dataType)
             ->findOne();
 
-        if ($vaultEntity === null) {
+        if ($vaultDepositEntity === null) {
             return null;
         }
 
-        $vaultTransfer = $this->getFactory()
-            ->createVaultMapper()
-            ->mapVaultEntityToTransfer($vaultEntity, new VaultTransfer());
+        $vaultDepositTransfer = $this->getFactory()
+            ->createVaultDepositMapper()
+            ->mapVaultEntityToTransfer($vaultDepositEntity, new VaultDepositTransfer());
 
-        return $vaultTransfer;
+        return $vaultDepositTransfer;
     }
 }
