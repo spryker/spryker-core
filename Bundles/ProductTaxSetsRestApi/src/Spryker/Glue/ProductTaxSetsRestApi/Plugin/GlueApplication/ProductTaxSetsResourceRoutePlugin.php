@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductTaxSetsRestApi\Plugin;
+namespace Spryker\Glue\ProductTaxSetsRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
@@ -58,7 +58,7 @@ class ProductTaxSetsResourceRoutePlugin extends AbstractPlugin implements Resour
      */
     public function getController(): string
     {
-        return ProductTaxSetsRestApiConfig::CONTROLLER_RESOURCE_PRODUCT_TAX_SETS;
+        return 'product-tax-sets-resource';
     }
 
     /**

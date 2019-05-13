@@ -24,7 +24,7 @@ class TaxProductStorageClient extends AbstractClient implements TaxProductStorag
      *
      * @return \Generated\Shared\Transfer\TaxProductStorageTransfer|null
      */
-    public function findTaxProductStorage(string $productAbstractSku): ?TaxProductStorageTransfer
+    public function findTaxProductStorageByProductAbstractSku(string $productAbstractSku): ?TaxProductStorageTransfer
     {
         return $this->getFactory()
             ->createTaxProductStorageReader()

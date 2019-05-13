@@ -103,7 +103,7 @@ class TaxProductSynchronizationDataPlugin extends AbstractPlugin implements Sync
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getConfig()
-            ->getTaxProductSyncronizationPoolName();
+            ->getTaxProductSynchronizationPoolName();
     }
 
     /**
@@ -114,7 +114,7 @@ class TaxProductSynchronizationDataPlugin extends AbstractPlugin implements Sync
     protected function findTaxProductStorageEntities(array $ids): array
     {
         if (count($ids)) {
-            return $this->getRepository()->findTaxProductStorageEntities($ids);
+            return $this->getRepository()->findTaxProductStorageEntitiesByProductAbstractIdsIndexedByKeyColumn($ids);
         }
 
         return $this->getRepository()->findAllTaxProductStorageEntities();

@@ -16,22 +16,56 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorageEntityManagerInterface
 {
     /**
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $spyTaxSetStorage
+     * @param \Generated\Shared\Transfer\TaxSetStorageTransfer[] $taxSetStorageTransfers
      *
      * @return void
      */
-    public function saveTaxSetStorage(SpyTaxSetStorage $spyTaxSetStorage): void
+    public function saveTaxSetStorage(array $taxSetStorageTransfers): void
     {
-        $spyTaxSetStorage->save();
+        $taxStorageRepository = $this->getFactory()->getRepository();
+        $taxStorageConfig = $this->getFactory()->getConfig();
+
+        $taxSetStorageTransfersToUpdate = $taxStorageRepository->findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet(
+            $this->getIdFromTransfers($taxSetStorageTransfers)
+        );
+
+        foreach ($taxSetStorageTransfers as $taxSetStorageTransfer) {
+            $spyTaxSetStorage = $taxSetStorageTransfersToUpdate[$taxSetStorageTransfer->getIdTaxSet()] ?? (new SpyTaxSetStorage())
+                    ->setFkTaxSet($taxSetStorageTransfer->getIdTaxSet());
+            $spyTaxSetStorage->setData($taxSetStorageTransfer);
+            $spyTaxSetStorage->setIsSendingToQueue($taxStorageConfig->isSendingToQueue());
+
+            $spyTaxSetStorage->save();
+        }
     }
 
     /**
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $spyTaxSetStorage
+     * @param \Generated\Shared\Transfer\TaxSetStorageTransfer[] $taxSetStorageTransfers
+     *
+     * @return int[]
+     */
+    protected function getIdFromTransfers(array $taxSetStorageTransfers): array
+    {
+        $ids = [];
+        foreach ($taxSetStorageTransfers as $taxSetStorageTransfer) {
+            $ids[] = $taxSetStorageTransfer->getIdTaxSet();
+        }
+
+        return $ids;
+    }
+
+    /**
+     * @param int[] $taxSetIds
      *
      * @return void
      */
-    public function deleteTaxSetStorage(SpyTaxSetStorage $spyTaxSetStorage): void
+    public function deleteTaxSetStoragesByIds(array $taxSetIds): void
     {
-        $spyTaxSetStorage->delete();
+        $taxStorageRepository = $this->getFactory()->getRepository();
+        $spyTaxSetStorages = $taxStorageRepository->findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet($taxSetIds);
+
+        foreach ($spyTaxSetStorages as $spyTaxSetStorage) {
+            $spyTaxSetStorage->delete();
+        }
     }
 }

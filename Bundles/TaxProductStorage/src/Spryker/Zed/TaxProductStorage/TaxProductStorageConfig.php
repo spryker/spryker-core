@@ -12,9 +12,17 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class TaxProductStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @return bool
+     */
+    public function isSendingToQueue(): bool
+    {
+        return true;
+    }
+
+    /**
      * @return string|null
      */
-    public function getTaxProductSyncronizationPoolName(): ?string
+    public function getTaxProductSynchronizationPoolName(): ?string
     {
         return null;
     }

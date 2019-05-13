@@ -34,10 +34,11 @@ class ProductTaxSetRelationshipExpander implements ProductTaxSetRelationshipExpa
     public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
-            $productTaxSetsResource = $this->productTaxSetReader->findAbstractProductTaxSetsByAbstractProductSku(
+            $productTaxSetsResource = $this->productTaxSetReader->findProductAbstractTaxSetsByProductAbstractSku(
                 $resource->getId(),
                 $restRequest
             );
+
             if ($productTaxSetsResource) {
                 $resource->addRelationship($productTaxSetsResource);
             }

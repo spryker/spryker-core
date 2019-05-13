@@ -8,6 +8,8 @@
 namespace Spryker\Zed\TaxStorage\Persistence;
 
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -20,7 +22,7 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
      *
      * @param int[] $taxRateIds
      *
-     * @return array
+     * @return int[]
      */
     public function findTaxSetIdsByTaxRateIds(array $taxRateIds): array
     {
@@ -44,25 +46,31 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
      *
      * @param int[] $taxSetIds
      *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSet[]
+     * @return \Generated\Shared\Transfer\TaxSetStorageTransfer[]
      */
     public function findTaxSetsByIds(array $taxSetIds): array
     {
+        $taxStorageMapper = $this->getFactory()->createTaxStorageMapper();
         $spyTaxSets = $this->getFactory()
             ->getTaxSetQuery()
             ->filterByIdTaxSet_In($taxSetIds)
-            ->find()
-            ->getArrayCopy();
+            ->find();
 
-        return $spyTaxSets;
+        if($spyTaxSets->isEmpty()){
+            return [];
+        }
+
+        return $taxStorageMapper->mapSpyTaxSetsToTaxSetStorageTransfers($spyTaxSets);
     }
+
+
 
     /**
      * @param int[] $taxSetIds
      *
      * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
      */
-    public function findTaxSetStoragesByIds(array $taxSetIds): array
+    public function findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet(array $taxSetIds): array
     {
         $spyTaxSetStorage = $this->getFactory()
             ->createTaxSetStorageQuery()

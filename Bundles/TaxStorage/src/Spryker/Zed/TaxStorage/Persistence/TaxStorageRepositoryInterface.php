@@ -19,7 +19,7 @@ interface TaxStorageRepositoryInterface
     /**
      * @param int[] $taxSetIds
      *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSet[]
+     * @return \Generated\Shared\Transfer\TaxSetStorageTransfer[]
      */
     public function findTaxSetsByIds(array $taxSetIds): array;
 
@@ -28,7 +28,7 @@ interface TaxStorageRepositoryInterface
      *
      * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
      */
-    public function findTaxSetStoragesByIds(array $taxSetIds): array;
+    public function findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet(array $taxSetIds): array;
 
     /**
      * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]

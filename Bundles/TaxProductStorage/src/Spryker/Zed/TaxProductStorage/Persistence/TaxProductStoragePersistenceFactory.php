@@ -10,6 +10,7 @@ namespace Spryker\Zed\TaxProductStorage\Persistence;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\TaxProductStorage\Persistence\Propel\Mapper\TaxProductStorageMapper;
 use Spryker\Zed\TaxProductStorage\TaxProductStorageDependencyProvider;
 
 /**
@@ -33,5 +34,13 @@ class TaxProductStoragePersistenceFactory extends AbstractPersistenceFactory
     public function getProductAbstractQuery(): SpyProductAbstractQuery
     {
         return $this->getProvidedDependency(TaxProductStorageDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxProductStorage\Persistence\Propel\Mapper\TaxProductStorageMapper
+     */
+    public function createTaxProductStorageMapper(): TaxProductStorageMapper
+    {
+        return new TaxProductStorageMapper();
     }
 }

@@ -50,18 +50,7 @@ class TaxStorageReader implements TaxStorageReaderInterface
             return null;
         }
 
-        return $this->mapStorageDataToTaxSetStorageTransfer($taxSetStorageData);
-    }
-
-    /**
-     * @param array $taxSetStorageData
-     *
-     * @return \Generated\Shared\Transfer\TaxSetStorageTransfer
-     */
-    protected function mapStorageDataToTaxSetStorageTransfer(array $taxSetStorageData): TaxSetStorageTransfer
-    {
-        return (new TaxSetStorageTransfer())
-            ->fromArray($taxSetStorageData, true);
+        return (new TaxSetStorageTransfer())->fromArray($taxSetStorageData, true);
     }
 
     /**

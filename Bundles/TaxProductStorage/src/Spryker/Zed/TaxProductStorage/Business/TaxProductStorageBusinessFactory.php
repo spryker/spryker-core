@@ -26,8 +26,7 @@ class TaxProductStorageBusinessFactory extends AbstractBusinessFactory
     public function createTaxProductStoragePublisher(): TaxProductStoragePublisherInterface
     {
         return new TaxProductStoragePublisher(
-            $this->getRepository(),
-            $this->getEntityManager()
+            $this->getRepository()
         );
     }
 

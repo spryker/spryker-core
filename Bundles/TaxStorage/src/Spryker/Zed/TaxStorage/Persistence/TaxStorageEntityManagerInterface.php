@@ -12,16 +12,16 @@ use Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage;
 interface TaxStorageEntityManagerInterface
 {
     /**
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $spyTaxSetStorage
+     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $taxSetStorageTransfers
      *
      * @return void
      */
-    public function saveTaxSetStorage(SpyTaxSetStorage $spyTaxSetStorage): void;
+    public function saveTaxSetStorage(array $taxSetStorageTransfers): void;
 
     /**
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $spyTaxSetStorage
+     * @param int[] $taxSetIds
      *
      * @return void
      */
-    public function deleteTaxSetStorage(SpyTaxSetStorage $spyTaxSetStorage): void;
+    public function deleteTaxSetStoragesByIds(array $taxSetIds): void;
 }

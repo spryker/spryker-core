@@ -7,24 +7,16 @@
 
 namespace Spryker\Zed\TaxProductStorage\Persistence;
 
+use Generated\Shared\Transfer\TaxProductStorageTransfer;
 use Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
  * @method \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStoragePersistenceFactory getFactory()
+ * @method \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageRepositoryInterface getRepository()
  */
 class TaxProductStorageEntityManager extends AbstractEntityManager implements TaxProductStorageEntityManagerInterface
 {
-    /**
-     * @param \Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage $taxProductStorage
-     *
-     * @return void
-     */
-    public function saveTaxProductStorage(SpyTaxProductStorage $taxProductStorage): void
-    {
-        $taxProductStorage->save();
-    }
-
     /**
      * @param int[] $productAbstractIds
      *
@@ -36,5 +28,24 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
             ->createTaxProductStorageQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TaxProductStorageTransfer $taxProductStorageTransfer
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    public function updateTaxProductStorage(TaxProductStorageTransfer $taxProductStorageTransfer): void
+    {
+        $spyTaxProductStorage = $this->getRepository()
+            ->findOrCreateTaxProductStorageByProductAbstractId(
+                $taxProductStorageTransfer->getIdProductAbstract()
+            );
+
+        $spyTaxProductStorage
+            ->setFkProductAbstract($taxProductStorageTransfer->getIdProductAbstract())
+            ->setSku($taxProductStorageTransfer->getSku())
+            ->setData($taxProductStorageTransfer->toArray())
+            ->save();
     }
 }

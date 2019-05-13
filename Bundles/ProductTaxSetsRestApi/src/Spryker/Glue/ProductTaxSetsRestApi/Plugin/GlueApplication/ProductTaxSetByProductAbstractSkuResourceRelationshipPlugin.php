@@ -15,7 +15,7 @@ use Spryker\Glue\ProductTaxSetsRestApi\ProductTaxSetsRestApiConfig;
 /**
  * @method \Spryker\Glue\ProductTaxSetsRestApi\ProductTaxSetsRestApiFactory getFactory()
  */
-class ProductTaxSetRelationshipByProductAbstractSkuPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ProductTaxSetByProductAbstractSkuResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritdoc}

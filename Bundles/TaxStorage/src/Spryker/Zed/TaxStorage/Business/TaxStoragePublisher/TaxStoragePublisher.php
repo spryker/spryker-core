@@ -56,12 +56,9 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
      */
     public function publishByTaxSetIds(array $taxSetIds): void
     {
-        $spyTaxSets = $this->taxStorageRepository
-            ->findTaxSetsByIds($taxSetIds);
-        $spyTaxSetStorage = $this->taxStorageRepository
-            ->findTaxSetStoragesByIds($taxSetIds);
-
-        $this->storeDataSet($spyTaxSets, $spyTaxSetStorage);
+        $this->taxStorageEntityManager->saveTaxSetStorage(
+            $this->taxStorageRepository->findTaxSetsByIds($taxSetIds)
+        );
     }
 
     /**
@@ -71,105 +68,8 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
      */
     public function publishByTaxRateIds(array $taxRateIds): void
     {
-        $taxSetIds = $this->taxStorageRepository
-            ->findTaxSetIdsByTaxRateIds($taxRateIds);
-
-        $this->publishByTaxSetIds($taxSetIds);
-    }
-
-    /**
-     * @param \Orm\Zed\Tax\Persistence\SpyTaxSet[] $spyTaxSets
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[] $spyTaxSetStorages
-     *
-     * @return void
-     */
-    protected function storeDataSet(array $spyTaxSets, array $spyTaxSetStorages): void
-    {
-        foreach ($spyTaxSets as $spyTaxSet) {
-            $spyTaxSetStorage = $spyTaxSetStorages[$spyTaxSet->getIdTaxSet()] ?? (new SpyTaxSetStorage())
-                    ->setFkTaxSet($spyTaxSet->getIdTaxSet());
-            $this->createDataSet($spyTaxSet, $spyTaxSetStorage);
-        }
-    }
-
-    /**
-     * @param \Orm\Zed\Tax\Persistence\SpyTaxSet $spyTaxSet
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $spyTaxSetStorage
-     *
-     * @return void
-     */
-    protected function createDataSet(SpyTaxSet $spyTaxSet, SpyTaxSetStorage $spyTaxSetStorage): void
-    {
-        $spyTaxSetStorage = $this->mapSpyTaxSetToTaxSetStorage($spyTaxSet, $spyTaxSetStorage);
-        $spyTaxSetStorage->setIsSendingToQueue(
-            $this->taxStorageConfig->isSendingToQueue()
+        $this->publishByTaxSetIds(
+            $this->taxStorageRepository->findTaxSetIdsByTaxRateIds($taxRateIds)
         );
-
-        $this->taxStorageEntityManager->saveTaxSetStorage($spyTaxSetStorage);
-    }
-
-    /**
-     * @param \Orm\Zed\Tax\Persistence\Base\SpyTaxSet $spyTaxSet
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage $spyTaxSetStorage
-     *
-     * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage
-     */
-    protected function mapSpyTaxSetToTaxSetStorage(SpyTaxSet $spyTaxSet, SpyTaxSetStorage $spyTaxSetStorage): SpyTaxSetStorage
-    {
-        $spyTaxSetStorage->setData($this->createTaxSetStorageTransfer($spyTaxSet)->toArray());
-
-        return $spyTaxSetStorage;
-    }
-
-    /**
-     * @param \Orm\Zed\Tax\Persistence\Base\SpyTaxSet $spyTaxSet
-     *
-     * @return \Generated\Shared\Transfer\TaxSetStorageTransfer
-     */
-    protected function createTaxSetStorageTransfer(SpyTaxSet $spyTaxSet): TaxSetStorageTransfer
-    {
-        $taxSetStorageTransfer = new TaxSetStorageTransfer();
-        $taxSetStorageTransfer->fromArray($spyTaxSet->toArray(), true);
-        $taxSetStorageTransfer->setTaxRates(
-            $this->mapSpyTaxRatesToTaxRateTransfers($spyTaxSet->getSpyTaxRates()->getArrayCopy())
-        );
-
-        return $taxSetStorageTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Tax\Persistence\SpyTaxRate[] $spyTaxRates
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\TaxRateStorageTransfer[]
-     */
-    protected function mapSpyTaxRatesToTaxRateTransfers(array $spyTaxRates): ArrayObject
-    {
-        $taxRateTransfers = new ArrayObject();
-
-        foreach ($spyTaxRates as $spyTaxRate) {
-            $taxRateTransfers->append(
-                $this->mapSpyTaxRateToTaxRateStorageTransfer($spyTaxRate, new TaxRateStorageTransfer())
-            );
-        }
-
-        return $taxRateTransfers;
-    }
-
-    /**
-     * @param \Orm\Zed\Tax\Persistence\SpyTaxRate $spyTaxRate
-     * @param \Generated\Shared\Transfer\TaxRateStorageTransfer $taxRateStorageTransfer
-     *
-     * @return \Generated\Shared\Transfer\TaxRateStorageTransfer
-     */
-    protected function mapSpyTaxRateToTaxRateStorageTransfer(
-        SpyTaxRate $spyTaxRate,
-        TaxRateStorageTransfer $taxRateStorageTransfer
-    ): TaxRateStorageTransfer {
-        $taxRateStorageTransfer->fromArray($spyTaxRate->toArray(), true);
-        if ($spyTaxRate->getCountry() !== null) {
-            $taxRateStorageTransfer->setCountry($spyTaxRate->getCountry()->getIso2Code());
-        }
-
-        return $taxRateStorageTransfer;
     }
 }

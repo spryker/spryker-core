@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\TaxProductStorage\Persistence;
 
+use Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage;
+
 interface TaxProductStorageRepositoryInterface
 {
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
+     * @return \Generated\Shared\Transfer\TaxProductStorageTransfer[]
      */
-    public function findProductAbstractEntitiesByProductAbstractIds(array $productAbstractIds): array;
+    public function getTaxProductTransferFromProductAbstractByIds(array $productAbstractIds): array;
 
     /**
      * @param int[] $productAbstractIds
@@ -22,7 +24,14 @@ interface TaxProductStorageRepositoryInterface
      *
      * @return \Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage[]
      */
-    public function findTaxProductStorageEntities(array $productAbstractIds, ?string $keyColumn = null): array;
+    public function findTaxProductStorageEntitiesByProductAbstractIdsIndexedByKeyColumn(array $productAbstractIds, ?string $keyColumn = null): array;
+
+    /**
+     * @param int $productAbstractId
+     *
+     * @return \Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage
+     */
+    public function findOrCreateTaxProductStorageByProductAbstractId(int $productAbstractId): SpyTaxProductStorage;
 
     /**
      * @return \Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage[]

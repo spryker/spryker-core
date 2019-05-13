@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\TaxProductStorage\Persistence;
 
+use Generated\Shared\Transfer\TaxProductStorageTransfer;
+use Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -19,19 +21,32 @@ class TaxProductStorageRepository extends AbstractRepository implements TaxProdu
      *
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
+     * @return \Generated\Shared\Transfer\TaxProductStorageTransfer[]
      */
-    public function findProductAbstractEntitiesByProductAbstractIds(array $productAbstractIds): array
+    public function getTaxProductTransferFromProductAbstractByIds(array $productAbstractIds): array
     {
         if (count($productAbstractIds) === 0) {
             return [];
         }
+        $taxProductStorageMapper = $this->getFactory()->createTaxProductStorageMapper();
+        $spyProductAbstracts = $this->getFactory()
+            ->getProductAbstractQuery()
+            ->filterByIdProductAbstract_In($productAbstractIds)
+            ->find();
 
-        $query = $this->getFactory()
-           ->getProductAbstractQuery()
-           ->filterByIdProductAbstract_In($productAbstractIds);
+        if ($spyProductAbstracts->isEmpty()) {
+            return [];
+        }
 
-        return $query->find()->getArrayCopy();
+        $taxProductStorageTransfers = [];
+        foreach ($spyProductAbstracts as $spyProductAbstract) {
+            $taxProductStorageTransfers[] = $taxProductStorageMapper->mapSpyProductAbstractToTaxProductStorageTransfer(
+                $spyProductAbstract,
+                new TaxProductStorageTransfer()
+            );
+        }
+
+        return $taxProductStorageTransfers;
     }
 
     /**
@@ -40,7 +55,7 @@ class TaxProductStorageRepository extends AbstractRepository implements TaxProdu
      *
      * @return \Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage[]
      */
-    public function findTaxProductStorageEntities(array $productAbstractIds, ?string $keyColumn = null): array
+    public function findTaxProductStorageEntitiesByProductAbstractIdsIndexedByKeyColumn(array $productAbstractIds, ?string $keyColumn = null): array
     {
         if (count($productAbstractIds) === 0) {
             return [];
@@ -52,6 +67,19 @@ class TaxProductStorageRepository extends AbstractRepository implements TaxProdu
 
         return $query->find()
             ->getArrayCopy($keyColumn);
+    }
+
+    /**
+     * @param int $productAbstractId
+     *
+     * @return \Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage
+     */
+    public function findOrCreateTaxProductStorageByProductAbstractId(int $productAbstractId): SpyTaxProductStorage
+    {
+        return $this->getFactory()
+            ->createTaxProductStorageQuery()
+            ->filterByFkProductAbstract($productAbstractId)
+            ->findOneOrCreate();
     }
 
     /**

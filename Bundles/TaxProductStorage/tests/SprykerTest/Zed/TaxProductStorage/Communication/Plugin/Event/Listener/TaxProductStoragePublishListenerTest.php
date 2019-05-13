@@ -83,7 +83,7 @@ class TaxProductStoragePublishListenerTest extends Unit
             ProductEvents::PRODUCT_ABSTRACT_PUBLISH
         );
         $taxProductStorageEntities = $this->taxProductStorageRepository
-            ->findTaxProductStorageEntities(
+            ->findTaxProductStorageEntitiesByProductAbstractIdsIndexedByKeyColumn(
                 [$this->productAbstractTransfer->getIdProductAbstract()]
             );
 
@@ -100,7 +100,7 @@ class TaxProductStoragePublishListenerTest extends Unit
         parent::tearDown();
 
         $taxProductStorageEntities = $this->taxProductStorageRepository
-            ->findTaxProductStorageEntities([
+            ->findTaxProductStorageEntitiesByProductAbstractIdsIndexedByKeyColumn([
                 $this->productAbstractTransfer->getIdProductAbstract(),
             ]);
 
