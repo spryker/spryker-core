@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 use Spryker\Zed\Permission\Business\PermissionFacadeInterface;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
+use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -30,6 +31,16 @@ class PermissionHelper extends Module
         $this->syncPermission($permissionPlugin);
 
         return $this->getPermissionFacade()->findPermissionByKey($permissionPlugin->getKey());
+    }
+
+    /**
+     * @param \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface $permissionStoragePlugin
+     *
+     * @return void
+     */
+    public function preparePermissionStorageDependency(PermissionStoragePluginInterface $permissionStoragePlugin): void
+    {
+        $this->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE, [$permissionStoragePlugin]);
     }
 
     /**
