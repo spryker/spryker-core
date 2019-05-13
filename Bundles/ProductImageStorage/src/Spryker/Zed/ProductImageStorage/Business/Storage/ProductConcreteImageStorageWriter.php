@@ -79,12 +79,35 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      */
     public function unpublish(array $productIds)
     {
+        $imageSets = [];
+        $productConcreteLocalizedEntities = [];
+
+        $productConcreteImageSetsBulk = $this->generateProductConcreteImageSets($productIds);
         $spyProductConcreteImageStorageEntities = $this->findProductConcreteImageStorageEntitiesByProductConcreteIds($productIds);
-        foreach ($spyProductConcreteImageStorageEntities as $spyProductConcreteImageStorageLocalizedEntities) {
-            foreach ($spyProductConcreteImageStorageLocalizedEntities as $spyProductConcreteImageStorageLocalizedEntity) {
-                $spyProductConcreteImageStorageLocalizedEntity->delete();
+
+        foreach ($this->findProductConcreteLocalizedEntities($productIds) as $productConcreteLocalizedEntity) {
+            $idProduct = $productConcreteLocalizedEntity->getFkProduct();
+            $idProductAttributes = $productConcreteLocalizedEntity->getIdProductAttributes();
+            $localeName = $productConcreteLocalizedEntity->getLocale()->getLocaleName();
+
+            if (isset($productConcreteImageSetsBulk[$idProduct][$idProductAttributes])
+                && $productConcreteImageSetsBulk[$idProduct][$idProductAttributes]->count()
+            ) {
+                $imageSets[$idProduct][$idProductAttributes] = $productConcreteImageSetsBulk[$idProduct][$idProductAttributes];
+                $productConcreteLocalizedEntities[] = $productConcreteLocalizedEntity;
+
+                continue;
             }
+
+            if (!isset($spyProductConcreteImageStorageEntities[$idProduct][$localeName])) {
+                continue;
+            }
+
+            $spyProductConcreteImageStorageEntities[$idProduct][$localeName]->delete();
+            unset($spyProductConcreteImageStorageEntities[$idProduct][$localeName]);
         }
+
+        $this->storeData($productConcreteLocalizedEntities, $spyProductConcreteImageStorageEntities, $imageSets);
     }
 
     /**
