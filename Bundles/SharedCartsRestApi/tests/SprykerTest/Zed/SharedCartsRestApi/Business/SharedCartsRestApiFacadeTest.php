@@ -110,8 +110,7 @@ class SharedCartsRestApiFacadeTest extends Test
         $this->assertCount(1, $shareDetailCollectionTransfer->getShareDetails());
         $shareDetailTransfer = $shareDetailCollectionTransfer->getShareDetails()[0];
 
-        $this->assertEquals($this->otherCompanyUserTransfer->getUuid(), $shareDetailTransfer->getCompanyUserUuid());
-        $this->assertNotNull($shareDetailTransfer->getUuid());
+        $this->assertEquals($this->otherCompanyUserTransfer->getIdCompanyUser(), $shareDetailTransfer->getIdCompanyUser());
         $this->assertEquals($readOnlyPermissionGroup->getIdQuotePermissionGroup(), $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
     }
 }
