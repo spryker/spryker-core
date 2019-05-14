@@ -459,6 +459,10 @@ class ProductImageStorageListenerTest extends Unit
             (new EventEntityTransfer())->setId($this->productConcreteTransfer->getIdProductConcrete()),
         ];
 
+        SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
+            $this->productImageSetTransfer->getIdProductImageSet()
+        )->delete();
+
         // Act
         $productImageConcreteStorageUnpublishListener->handleBulk($eventTransfers, ProductImageEvents::PRODUCT_IMAGE_PRODUCT_CONCRETE_PUBLISH);
 
@@ -529,6 +533,10 @@ class ProductImageStorageListenerTest extends Unit
             $eventTransfers[] = (new EventEntityTransfer())->setId($productImageTransfer->getIdProductImage());
         }
 
+        SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
+            $this->productImageSetTransfer->getIdProductImageSet()
+        )->delete();
+
         // Act
         $productConcreteImageStorageUnpublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_DELETE);
 
@@ -597,6 +605,10 @@ class ProductImageStorageListenerTest extends Unit
                 SpyProductImageSetTableMap::COL_FK_PRODUCT => $this->productConcreteTransfer->getIdProductConcrete(),
             ]),
         ];
+
+        SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
+            $this->productImageSetTransfer->getIdProductImageSet()
+        )->delete();
 
         // Act
         $productConcreteImageSetStorageListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE);
@@ -675,6 +687,10 @@ class ProductImageStorageListenerTest extends Unit
         if ($productImageSetToProductImage) {
             $eventTransfers[] = (new EventEntityTransfer())->setId($productImageSetToProductImage->getIdProductImageSetToProductImage());
         }
+
+        SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
+            $this->productImageSetTransfer->getIdProductImageSet()
+        )->delete();
 
         // Act
         $productConcreteImageSetProductImageStorageUnpublishListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE);
