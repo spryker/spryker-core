@@ -25,19 +25,19 @@ class ErrorHandlerEnvironmentTest extends Unit
      */
     public function testInitializeShouldSetErrorHandler()
     {
-        $this->markTestSkipped();
+        //$this->markTestSkipped();
         $errorHandlerEnvironment = new ErrorHandlerEnvironment();
         $errorHandlerEnvironment->initialize();
 
-        $this->setHandlersToDefault();
+        $this->resetHandlersToDefault();
     }
 
     /**
      * @return void
      */
-    protected function setHandlersToDefault(): void
+    protected function resetHandlersToDefault(): void
     {
-        set_error_handler(null);
-        set_exception_handler(null);
+        restore_error_handler();
+        restore_exception_handler();
     }
 }
