@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientInterface;
 
-class CodeAdder implements CodeAdderInterface
+class CodeClearer implements CodeClearerInterface
 {
     /**
      * @var \Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientInterface
@@ -45,11 +45,10 @@ class CodeAdder implements CodeAdderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function add(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    public function clearAllCodes(QuoteTransfer $quoteTransfer): CartCodeOperationResultTransfer
     {
         $lockedCartCodeOperationResultTransfer = $this->quoteOperationChecker->checkLockedQuoteResponse($quoteTransfer);
         if ($lockedCartCodeOperationResultTransfer) {
@@ -57,30 +56,13 @@ class CodeAdder implements CodeAdderInterface
         }
 
         foreach ($this->cartCodeHandlerPlugins as $cartCodeHandlerPlugin) {
-            $quoteTransfer = $cartCodeHandlerPlugin->addCandidate($quoteTransfer, $code);
+            $cartCodeHandlerPlugin->clearAllCodes($quoteTransfer);
         }
 
         $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
 
-        return $this->processRecalculationResults($quoteTransfer, $code);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
-     */
-    protected function processRecalculationResults(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
-    {
         $cartCodeOperationResultTransfer = new CartCodeOperationResultTransfer();
         $cartCodeOperationResultTransfer->setQuote($quoteTransfer);
-
-        foreach ($this->cartCodeHandlerPlugins as $cartCodeHandlerPlugin) {
-            $cartCodeCalculationMessageTransfer = $cartCodeHandlerPlugin->getCartCodeOperationResult($quoteTransfer, $code);
-
-            $cartCodeOperationResultTransfer->addMessage($cartCodeCalculationMessageTransfer);
-        }
 
         return $cartCodeOperationResultTransfer;
     }

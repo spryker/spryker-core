@@ -1,32 +1,27 @@
 <?php
 
 /**
- * Copyright © 2019-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\CartCode\Operation;
 
+use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientInterface;
-use Spryker\Client\CartCode\Dependency\Client\CartCodeToCartClientInterface;
-use Spryker\Client\CartCode\Dependency\Client\CartCodeToQuoteClientInterface;
 
-class CodeRemover
+class CodeRemover implements CodeRemoverInterface
 {
-    /**
-     * @var \Spryker\Client\CartCode\Dependency\Client\CartCodeToCartClientInterface
-     */
-    protected $cartClient;
-
     /**
      * @var \Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientInterface
      */
     protected $calculationClient;
 
     /**
-     * @var \Spryker\Client\CartCode\Dependency\Client\CartCodeToQuoteClientInterface
+     * @var \Spryker\Client\CartCode\Operation\QuoteOperationCheckerInterface
      */
-    protected $quoteClient;
+    protected $quoteOperationChecker;
 
     /**
      * @var \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodeHandlerPluginInterface[]
@@ -34,31 +29,32 @@ class CodeRemover
     protected $cartCodeHandlerPlugins;
 
     /**
-     * @param \Spryker\Client\CartCode\Dependency\Client\CartCodeToCartClientInterface $cartClient
-     * @param \Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientInterface $cartCodeToCalculation
-     * @param \Spryker\Client\CartCode\Dependency\Client\CartCodeToQuoteClientInterface $quoteClient
+     * @param \Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientInterface $calculationClient
+     * @param \Spryker\Client\CartCode\Operation\QuoteOperationCheckerInterface $quoteOperationChecker
      * @param \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodeHandlerPluginInterface[] $cartCodeHandlerPlugins
      */
     public function __construct(
-        CartCodeToCartClientInterface $cartClient,
-        CartCodeToCalculationClientInterface $cartCodeToCalculation,
-        CartCodeToQuoteClientInterface $quoteClient,
+        CartCodeToCalculationClientInterface $calculationClient,
+        QuoteOperationCheckerInterface $quoteOperationChecker,
         array $cartCodeHandlerPlugins = []
     ) {
-        $this->cartClient = $cartClient;
-        $this->calculationClient = $cartCodeToCalculation;
+        $this->calculationClient = $calculationClient;
+        $this->quoteOperationChecker = $quoteOperationChecker;
         $this->cartCodeHandlerPlugins = $cartCodeHandlerPlugins;
-        $this->quoteClient = $quoteClient;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function remove($code)
+    public function remove(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
-        $quoteTransfer = $this->cartClient->getQuote();
+        $lockedCartCodeOperationResultTransfer = $this->quoteOperationChecker->checkLockedQuoteResponse($quoteTransfer);
+        if ($lockedCartCodeOperationResultTransfer) {
+            return $lockedCartCodeOperationResultTransfer;
+        }
 
         foreach ($this->cartCodeHandlerPlugins as $cartCodeHandlerPlugin) {
             $cartCodeHandlerPlugin->removeCode($quoteTransfer, $code);
@@ -66,7 +62,15 @@ class CodeRemover
 
         $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
 
-//        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
-        $this->quoteClient->setQuote($quoteTransfer);
+        $cartCodeOperationResultTransfer = new CartCodeOperationResultTransfer();
+        $cartCodeOperationResultTransfer->setQuote($quoteTransfer);
+
+        foreach ($this->cartCodeHandlerPlugins as $cartCodeHandlerPlugin) {
+            $cartCodeOperationMessageTransfer = $cartCodeHandlerPlugin->getCartCodeOperationResult($quoteTransfer, $code);
+
+            $cartCodeOperationResultTransfer->addMessage($cartCodeOperationMessageTransfer);
+        }
+
+        return $cartCodeOperationResultTransfer;
     }
 }

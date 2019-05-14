@@ -54,9 +54,27 @@ class GiftCardConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use getGiftCardPaymentMethodBlacklist() instead.
+     *
      * @return array
      */
     public function getGiftCardMethodBlacklist()
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getGiftCardPaymentMethodBlacklist()
+    {
+        return $this->getGiftCardMethodBlacklist();
+    }
+
+    /**
+     * @return array
+     */
+    public function getGiftCardOnlyShipmentMethods(): array
     {
         return [];
     }

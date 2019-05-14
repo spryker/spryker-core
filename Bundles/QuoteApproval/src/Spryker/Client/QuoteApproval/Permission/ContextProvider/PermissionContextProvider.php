@@ -33,6 +33,10 @@ class PermissionContextProvider implements PermissionContextProviderInterface
      */
     protected function getQuoteSum(QuoteTransfer $quoteTransfer): int
     {
+        if (!$quoteTransfer->getTotals()) {
+            return 0;
+        }
+
         return $quoteTransfer->getTotals()->getGrandTotal() - $this->getShipmentPriceForQuote($quoteTransfer);
     }
 

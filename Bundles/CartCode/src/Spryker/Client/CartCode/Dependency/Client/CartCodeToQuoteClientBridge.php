@@ -27,10 +27,10 @@ class CartCodeToQuoteClientBridge implements CartCodeToQuoteClientInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return bool
      */
-    public function setQuote(QuoteTransfer $quoteTransfer)
+    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
     {
-        $this->quoteClient->setQuote($quoteTransfer);
+        return $this->quoteClient->isQuoteLocked($quoteTransfer);
     }
 }

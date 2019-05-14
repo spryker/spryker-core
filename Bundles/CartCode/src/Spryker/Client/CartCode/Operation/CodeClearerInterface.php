@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CartCode\Dependency\Client;
+namespace Spryker\Client\CartCode\Operation;
 
+use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CartCodeToQuoteClientInterface
+interface CodeClearerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
+    public function clearAllCodes(QuoteTransfer $quoteTransfer): CartCodeOperationResultTransfer;
 }

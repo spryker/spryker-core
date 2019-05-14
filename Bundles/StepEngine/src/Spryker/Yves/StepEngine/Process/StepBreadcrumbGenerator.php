@@ -26,9 +26,12 @@ class StepBreadcrumbGenerator implements StepBreadcrumbGeneratorInterface
     {
         $stepBreadcrumbTransfer = new StepBreadcrumbsTransfer();
 
+        $isPreviousStepEnabled = true;
         foreach ($this->getStepsWithBreadcrumb($stepCollection, $dataTransfer) as $stepWithBreadcrumb) {
             $stepBreadcrumbItemTransfer = $this->createStepBreadcrumbItem($stepWithBreadcrumb);
-            $stepBreadcrumbItemTransfer->setIsEnabled($this->isEnabled($stepWithBreadcrumb, $dataTransfer));
+
+            $isPreviousStepEnabled = $isPreviousStepEnabled && $this->isEnabled($stepWithBreadcrumb, $dataTransfer);
+            $stepBreadcrumbItemTransfer->setIsEnabled($isPreviousStepEnabled);
             $stepBreadcrumbItemTransfer->setIsActive($this->isActive($stepWithBreadcrumb, $currentStep));
 
             $stepBreadcrumbTransfer->addBreadcrumb($stepBreadcrumbItemTransfer);

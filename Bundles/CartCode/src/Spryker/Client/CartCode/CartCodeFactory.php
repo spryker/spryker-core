@@ -8,43 +8,61 @@
 namespace Spryker\Client\CartCode;
 
 use Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientInterface;
-use Spryker\Client\CartCode\Dependency\Client\CartCodeToCartClientInterface;
 use Spryker\Client\CartCode\Dependency\Client\CartCodeToQuoteClientInterface;
 use Spryker\Client\CartCode\Operation\CodeAdder;
-use Spryker\Client\CartCode\Operation\CodeCleaner;
+use Spryker\Client\CartCode\Operation\CodeAdderInterface;
+use Spryker\Client\CartCode\Operation\CodeClearer;
+use Spryker\Client\CartCode\Operation\CodeClearerInterface;
 use Spryker\Client\CartCode\Operation\CodeRemover;
+use Spryker\Client\CartCode\Operation\CodeRemoverInterface;
+use Spryker\Client\CartCode\Operation\QuoteOperationChecker;
+use Spryker\Client\CartCode\Operation\QuoteOperationCheckerInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CartCodeFactory extends AbstractFactory
 {
-    public function createCodeAdder()
+    /**
+     * @return \Spryker\Client\CartCode\Operation\CodeAdderInterface
+     */
+    public function createCodeAdder(): CodeAdderInterface
     {
         return new CodeAdder(
-            $this->getCartClient(),
             $this->getCalculationClient(),
-            $this->getQuoteClient(),
+            $this->createQuoteOperationChecker(),
             $this->getCartCodeHandlerPlugins()
         );
     }
 
-    public function createCodeRemover()
+    /**
+     * @return \Spryker\Client\CartCode\Operation\CodeRemoverInterface
+     */
+    public function createCodeRemover(): CodeRemoverInterface
     {
         return new CodeRemover(
-            $this->getCartClient(),
             $this->getCalculationClient(),
-            $this->getQuoteClient(),
+            $this->createQuoteOperationChecker(),
             $this->getCartCodeHandlerPlugins()
         );
     }
 
-    public function createCodeCleaner()
+    /**
+     * @return \Spryker\Client\CartCode\Operation\CodeClearerInterface
+     */
+    public function createCodeClearer(): CodeClearerInterface
     {
-        return new CodeCleaner(
-            $this->getCartClient(),
+        return new CodeClearer(
             $this->getCalculationClient(),
-            $this->getQuoteClient(),
+            $this->createQuoteOperationChecker(),
             $this->getCartCodeHandlerPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\CartCode\Operation\QuoteOperationCheckerInterface
+     */
+    public function createQuoteOperationChecker(): QuoteOperationCheckerInterface
+    {
+        return new QuoteOperationChecker($this->getQuoteClient());
     }
 
     /**
@@ -53,14 +71,6 @@ class CartCodeFactory extends AbstractFactory
     public function getCalculationClient(): CartCodeToCalculationClientInterface
     {
         return $this->getProvidedDependency(CartCodeDependencyProvider::CLIENT_CALCULATION);
-    }
-
-    /**
-     * @return \Spryker\Client\CartCode\Dependency\Client\CartCodeToCartClientInterface
-     */
-    public function getCartClient(): CartCodeToCartClientInterface
-    {
-        return $this->getProvidedDependency(CartCodeDependencyProvider::CLIENT_CART);
     }
 
     /**

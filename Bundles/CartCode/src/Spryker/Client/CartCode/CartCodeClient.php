@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\CartCode;
 
+use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -14,19 +16,47 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CartCodeClient extends AbstractClient implements CartCodeClientInterface
 {
-
-    public function addCode(string $code)
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function addCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
-        $this->getFactory()->createCodeAdder()->add($code);
+        return $this->getFactory()->createCodeAdder()->add($quoteTransfer, $code);
     }
 
-    public function removeCode(string $code)
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function removeCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
-        $this->getFactory()->createCodeRemover()->remove($code);
+        return $this->getFactory()->createCodeRemover()->remove($quoteTransfer, $code);
     }
 
-    public function clearCodes()
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function clearAllCodes(QuoteTransfer $quoteTransfer): CartCodeOperationResultTransfer
     {
-        $this->getFactory()->createCodeCleaner()->clear();
+        return $this->getFactory()->createCodeClearer()->clearAllCodes($quoteTransfer);
     }
 }

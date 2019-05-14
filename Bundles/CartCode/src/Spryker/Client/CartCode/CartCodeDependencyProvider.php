@@ -8,7 +8,6 @@
 namespace Spryker\Client\CartCode;
 
 use Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientBridge;
-use Spryker\Client\CartCode\Dependency\Client\CartCodeToCartClientBridge;
 use Spryker\Client\CartCode\Dependency\Client\CartCodeToQuoteClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
@@ -16,7 +15,6 @@ use Spryker\Client\Kernel\Container;
 class CartCodeDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_CALCULATION = 'CLIENT_CALCULATION';
-    public const CLIENT_CART = 'CLIENT_CART';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const PLUGIN_CART_CODE_HANDLER_COLLECTION = 'PLUGIN_CART_CODE_HANDLER_COLLECTION';
 
@@ -28,7 +26,6 @@ class CartCodeDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addCalculationClient($container);
-        $container = $this->addCartClient($container);
         $container = $this->addQuoteClient($container);
         $container = $this->addCartCodeHandlerPluginCollection($container);
 
@@ -44,20 +41,6 @@ class CartCodeDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_CALCULATION] = function (Container $container) {
             return new CartCodeToCalculationClientBridge($container->getLocator()->calculation()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addCartClient(Container $container): Container
-    {
-        $container[static::CLIENT_CART] = function (Container $container) {
-            return new CartCodeToCartClientBridge($container->getLocator()->cart()->client());
         };
 
         return $container;
