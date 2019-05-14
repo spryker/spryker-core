@@ -713,7 +713,7 @@ class UrlFacadeTest extends Unit
      */
     public function testDeleteUrlRedirectShouldRemoveEntityFromDatabaseAlongWithUrlEntity()
     {
-        self::markTestSkipped();
+        //self::markTestSkipped();
 
         $localeTransfer = $this->localeFacade->createLocale('ab_CD');
         $urlRedirectEntity = new SpyUrlRedirect();
