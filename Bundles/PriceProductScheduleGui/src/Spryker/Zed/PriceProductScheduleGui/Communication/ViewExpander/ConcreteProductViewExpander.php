@@ -56,7 +56,7 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
         }
 
         $viewData['priceTypeTabs'] = $priceTypeTabsViewTransfer;
-        $viewData['tablesByType'] = $tablesByPriceType;
+        $viewData['tablesByPriceType'] = $tablesByPriceType;
 
         return $viewData;
     }

@@ -56,7 +56,7 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
         }
 
         $viewData['priceTypeTabs'] = $priceTypeTabsViewTransfer;
-        $viewData['tablesByType'] = $tablesByPriceType;
+        $viewData['tablesByPriceType'] = $tablesByPriceType;
 
         return $viewData;
     }
