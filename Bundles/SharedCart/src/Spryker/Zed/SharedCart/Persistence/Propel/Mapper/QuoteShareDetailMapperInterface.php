@@ -15,18 +15,17 @@ use Propel\Runtime\Collection\ObjectCollection;
 interface QuoteShareDetailMapperInterface
 {
     /**
+     * @param \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser $quoteCompanyUserEntity
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailTransfer
+     */
+    public function mapQuoteCompanyUserToShareDetailTransfer(SpyQuoteCompanyUser $quoteCompanyUserEntity): ShareDetailTransfer;
+
+    /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser[] $quoteCompanyUserEntities
      * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $quotePermissionGroupTransfers
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
     public function mapShareDetailCollection(ObjectCollection $quoteCompanyUserEntities, array $quotePermissionGroupTransfers): ShareDetailCollectionTransfer;
-
-    /**
-     * @param \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser $quoteCompanyUserEntity
-     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $indexedQuotePermissionGroupTransfers
-     *
-     * @return \Generated\Shared\Transfer\ShareDetailTransfer
-     */
-    public function mapQuoteCompanyUserEntityToShareDetailTransfer(SpyQuoteCompanyUser $quoteCompanyUserEntity, array $indexedQuotePermissionGroupTransfers): ShareDetailTransfer;
 }

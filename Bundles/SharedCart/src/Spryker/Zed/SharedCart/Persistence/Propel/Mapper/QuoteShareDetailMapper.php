@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SharedCart\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser;
@@ -14,6 +15,20 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
 {
+    /**
+     * @param \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser $quoteCompanyUserEntity
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailTransfer
+     */
+    public function mapQuoteCompanyUserToShareDetailTransfer(SpyQuoteCompanyUser $quoteCompanyUserEntity): ShareDetailTransfer
+    {
+        return (new ShareDetailTransfer())
+            ->fromArray($quoteCompanyUserEntity->toArray(), true)
+            ->setQuotePermissionGroup(
+                (new QuotePermissionGroupTransfer())->setIdQuotePermissionGroup($quoteCompanyUserEntity->getFkQuotePermissionGroup())
+            );
+    }
+
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser[] $quoteCompanyUserEntities
      * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $quotePermissionGroupTransfers
@@ -25,7 +40,7 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
         $shareDetailCollectionTransfer = new ShareDetailCollectionTransfer();
         $indexedQuotePermissionGroupTransfers = $this->indexQuotePermissionGroupById($quotePermissionGroupTransfers);
         foreach ($quoteCompanyUserEntities as $quoteCompanyUserEntity) {
-            $shareDetailTransfer = $this->mapQuoteCompanyUserEntityToShareDetailTransfer($quoteCompanyUserEntity, $indexedQuotePermissionGroupTransfers);
+            $shareDetailTransfer = $this->mapShareDetailTransfer($quoteCompanyUserEntity, $indexedQuotePermissionGroupTransfers);
             $shareDetailCollectionTransfer->addShareDetail($shareDetailTransfer);
         }
 
@@ -38,7 +53,7 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShareDetailTransfer
      */
-    public function mapQuoteCompanyUserEntityToShareDetailTransfer(SpyQuoteCompanyUser $quoteCompanyUserEntity, array $indexedQuotePermissionGroupTransfers): ShareDetailTransfer
+    protected function mapShareDetailTransfer(SpyQuoteCompanyUser $quoteCompanyUserEntity, array $indexedQuotePermissionGroupTransfers): ShareDetailTransfer
     {
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setIdQuoteCompanyUser($quoteCompanyUserEntity->getIdQuoteCompanyUser())

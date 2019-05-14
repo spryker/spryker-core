@@ -154,7 +154,8 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
         return new ShareCartByUuidActivatorStrategy(
             $this->createQuoteCompanyUserWriter(),
             $this->createShareCartRequestBuilder(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getEntityManager()
         );
     }
 

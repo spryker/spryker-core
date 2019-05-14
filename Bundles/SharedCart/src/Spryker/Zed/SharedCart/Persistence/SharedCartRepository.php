@@ -350,6 +350,6 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
 
         return $this->getFactory()
             ->createQuoteShareDetailMapper()
-            ->mapQuoteCompanyUserEntityToShareDetailTransfer($quoteCompanyUserEntity, $this->findQuotePermissionGroupList(new QuotePermissionGroupCriteriaFilterTransfer()));
+            ->mapQuoteCompanyUserToShareDetailTransfer($quoteCompanyUserEntity);
     }
 }

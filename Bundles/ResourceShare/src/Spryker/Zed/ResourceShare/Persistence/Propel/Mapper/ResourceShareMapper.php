@@ -86,7 +86,7 @@ class ResourceShareMapper
         $decodedResourceData = $this->utilEncodingService->decodeJson($resourceData, true);
 
         return (new ResourceShareDataTransfer())
-            ->fromArray($decodedResourceData)
+            ->fromArray($decodedResourceData, true)
             ->setData($decodedResourceData);
     }
 }
