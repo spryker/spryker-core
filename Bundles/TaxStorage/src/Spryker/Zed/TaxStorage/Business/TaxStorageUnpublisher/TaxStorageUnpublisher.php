@@ -31,6 +31,6 @@ class TaxStorageUnpublisher implements TaxStorageUnpublisherInterface
      */
     public function unpublishByTaxSetIds(array $taxSetIds): void
     {
-       $this->taxStorageEntityManager->deleteTaxSetStoragesByIds($taxSetIds);
+        $this->taxStorageEntityManager->deleteTaxSetStoragesByIds($taxSetIds);
     }
 }
