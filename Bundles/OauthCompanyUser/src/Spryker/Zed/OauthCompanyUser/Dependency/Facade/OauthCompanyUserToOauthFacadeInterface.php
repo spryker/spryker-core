@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\OauthCompanyUser\Dependency\Facade;
 
+use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
+use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
+use Generated\Shared\Transfer\OauthRequestTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 
 interface OauthCompanyUserToOauthFacadeInterface
@@ -24,4 +28,18 @@ interface OauthCompanyUserToOauthFacadeInterface
      * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
      */
     public function getScopesByIdentifiers(array $customerScopes): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
+     */
+    public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
+     */
+    public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer;
 }

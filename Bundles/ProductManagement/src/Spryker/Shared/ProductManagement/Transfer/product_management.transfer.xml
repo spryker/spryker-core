@@ -21,8 +21,4 @@
         <property name="priceData" type="string" />
     </transfer>
 
-    <transfer name="Customer">
-        <property name="exampleProperty" type="array" />
-    </transfer>
-
 </transfers>

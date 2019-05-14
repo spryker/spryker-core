@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\OauthCompanyUser;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 interface OauthCompanyUserClientInterface
 {
     /**
@@ -28,4 +30,18 @@ interface OauthCompanyUserClientInterface
      * @return string
      */
     public function getClientId(): string;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Retrieves customer from access token.
+     * - Executes CustomerExpanderPlugin stack.
+     *
+     * @api
+     *
+     * @param string $accessToken
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function getCustomerByAccessToken(string $accessToken): CustomerTransfer;
 }

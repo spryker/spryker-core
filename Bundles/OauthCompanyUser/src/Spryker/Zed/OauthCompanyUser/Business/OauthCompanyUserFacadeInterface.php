@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OauthCompanyUser\Business;
 
+use Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\OauthScopeRequestTransfer;
@@ -16,15 +17,29 @@ interface OauthCompanyUserFacadeInterface
 {
     /**
      * Specification:
-     * -
+     * - Executes CustomerOauthRequestMapperPlugin stack.
+     * - Returns new access token when user provider return valid user.
      *
      * @api
      *
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return OauthResponseTransfer
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
     public function createCompanyUserAccessToken(CustomerTransfer $customerTransfer): OauthResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves customer from access token.
+     * - Executes CustomerExpanderPlugin stack.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function getCustomerByAccessToken(CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer): CustomerTransfer;
 
     /**
      * Specification:

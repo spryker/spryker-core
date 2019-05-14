@@ -9,12 +9,12 @@ namespace Spryker\Zed\OauthCompanyUser\Communication\Plugin\Oauth;
 
 use Generated\Shared\Transfer\CompanyUserIdentifierTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
-use Spryker\Zed\CompanyUser\Business\CompanyUserFacade;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\OauthCompanyUser\Business\League\Grant\CompanyUserAccessTokenGrantType;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface;
 
 /**
+ * @method \Spryker\Zed\OauthCompanyUser\Communication\OauthCompanyUserCommunicationFactory getFactory()
  * @method \Spryker\Zed\OauthCompanyUser\Business\OauthCompanyUserFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig getConfig()
  */
@@ -35,16 +35,7 @@ class CompanyUserAccessTokenOauthUserProviderPlugin extends AbstractPlugin imple
             return false;
         }
 
-        // TODO: i believe that the clientId is irrelevant for UserProvider, the grant type seems to be more strict
-        if (!$oauthUserTransfer->getClientId()) {
-            return false;
-        }
-
-        if ($oauthUserTransfer->getClientId() === $this->getConfig()->getClientId()) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
@@ -64,23 +55,18 @@ class CompanyUserAccessTokenOauthUserProviderPlugin extends AbstractPlugin imple
             return $oauthUserTransfer;
         }
 
-        $companyUserFacade = new CompanyUserFacade();
-        $companyUserTransfer = $companyUserFacade->getCompanyUserById($oauthUserTransfer->getIdCompanyUser());
-
-        if ($companyUserTransfer === null) {
-            return $oauthUserTransfer;
-        }
+        $companyUserTransfer = $this->getFactory()
+            ->getCompanyUserFacade()
+            ->getCompanyUserById((int)$oauthUserTransfer->getIdCompanyUser());
 
         $companyUserIdentifierTransfer = (new CompanyUserIdentifierTransfer())
+            ->fromArray($oauthUserTransfer->toArray(), true)
             ->setIdCustomer($companyUserTransfer->getCustomer()->getIdCustomer())
-            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
-
-        // TODO: Need to have a plugin stack
-        $companyUserIdentifierTransfer->setExampleProperty($oauthUserTransfer->getExampleProperty());
+            ->setIdCompanyUser((string)$companyUserTransfer->getIdCompanyUser());
 
         $oauthUserTransfer
             ->setUserIdentifier(json_encode($companyUserIdentifierTransfer->toArray()))
-        ->setIsSuccess(true);
+            ->setIsSuccess(true);
 
         return $oauthUserTransfer;
     }

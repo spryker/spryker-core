@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
@@ -31,24 +32,15 @@ class IndexController extends AbstractController
         $oAuthCompanyUserFacade = new OauthCompanyUserFacade();
 
         $token = $oAuthCompanyUserFacade->createCompanyUserAccessToken(
-            (new CustomerTransfer())
-                ->setExampleProperty(['custom_value' => '1', 'other' => 2])
-                ->setCompanyUserTransfer(
-                    (new CompanyUserTransfer())
-                        ->setIdCompanyUser(1)
-                )
+            (new CustomerTransfer())->setCompanyUserTransfer((new CompanyUserTransfer())->setIdCompanyUser(1))
         );
 
-        $token = $token->getAccessToken();
+        $companyUserAccessTokenRequestTransfer = (new CompanyUserAccessTokenRequestTransfer())
+            ->setAccessToken($token->getAccessToken());
 
-        $oAuthFacade = new OauthFacade();
-        $validated = $oAuthFacade->validateAccessToken(
-            (new OauthAccessTokenValidationRequestTransfer())
-                ->setAccessToken($token)
-                ->setType('Bearer') // This also feels like that should be automatically added by OAuth or through a constant.
-        );
+        $customerTransfer = $oAuthCompanyUserFacade->getCustomerByAccessToken($companyUserAccessTokenRequestTransfer);
 
-        dd(json_decode($validated->getOauthUserId()));
+        dd($customerTransfer);
 
         $productTable = $this
             ->getFactory()

@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\OauthCompanyUser\Business;
 
+use Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\OauthScopeRequestTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Oauth\Business\OauthFacade;
-use Spryker\Zed\OauthCompanyUser\Business\League\Grant\CompanyUserAccessTokenGrantType;
 
 /**
  * @method \Spryker\Zed\OauthCompanyUser\Business\OauthCompanyUserBusinessFactory getFactory()
@@ -22,6 +20,8 @@ use Spryker\Zed\OauthCompanyUser\Business\League\Grant\CompanyUserAccessTokenGra
 class OauthCompanyUserFacade extends AbstractFacade implements OauthCompanyUserFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -30,23 +30,25 @@ class OauthCompanyUserFacade extends AbstractFacade implements OauthCompanyUserF
      */
     public function createCompanyUserAccessToken(CustomerTransfer $customerTransfer): OauthResponseTransfer
     {
-        $customerTransfer
-            ->requireCompanyUserTransfer()
-            ->getCompanyUserTransfer()
-                ->requireIdCompanyUser();
+        return $this->getFactory()
+            ->createCompanyUserAccessTokenCreator()
+            ->createAccessToken($customerTransfer);
+    }
 
-        $oauthFacade = new OauthFacade();
-
-        $request = (new OauthRequestTransfer())
-            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())
-            ->setGrantType(CompanyUserAccessTokenGrantType::COMPANY_USER_ACCESS_TOKEN_GRANT_TYPE);
-
-        // TODO: need to be solved with generic property using AbstractTransfer
-        $request->setExampleProperty($customerTransfer->getExampleProperty());
-
-        $token = $oauthFacade->processAccessTokenRequest($request);
-
-        return $token;
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function getCustomerByAccessToken(CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer): CustomerTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyUserAccessTokenReader()
+            ->getCustomerByAccessToken($companyUserAccessTokenRequestTransfer);
     }
 
     /**
