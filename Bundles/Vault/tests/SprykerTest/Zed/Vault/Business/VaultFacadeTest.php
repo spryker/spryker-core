@@ -48,13 +48,13 @@ class VaultFacadeTest extends Unit
         //Assert
         $this->assertSame(true, $isSuccessful);
 
-        $vaultsCount = SpyVaultDepositQuery::create()
+        $vaultDepositsCount = SpyVaultDepositQuery::create()
             ->filterByDataType(static::TEST_DATA_TYPE)
             ->filterByDataKey(static::TEST_DATA_KEY)
             ->find()
             ->count();
 
-        $this->assertSame(1, $vaultsCount);
+        $this->assertSame(1, $vaultDepositsCount);
     }
 
     /**
@@ -103,7 +103,7 @@ class VaultFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testStoreOverwritesVaultIfExist(): void
+    public function testStoreOverwritesVaultDepositIfExist(): void
     {
         //Arrange
         $vaultFacadeMock = $this->createVaultFacadeMock();

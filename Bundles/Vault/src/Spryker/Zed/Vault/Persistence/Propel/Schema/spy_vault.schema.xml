@@ -16,6 +16,11 @@
 
         <id-method-parameter value="id_vault_deposit_pk_seq"/>
 
+        <unique name="spy_quote-unique-data_type-data_key">
+            <unique-column name="data_type"/>
+            <unique-column name="data_key"/>
+        </unique>
+
         <index name="spy_quote-data_type-data_key">
             <index-column name="data_type"/>
             <index-column name="data_key"/>
