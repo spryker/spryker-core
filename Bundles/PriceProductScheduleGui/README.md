@@ -1,7 +1,7 @@
 # PriceProductScheduleGui Module
 [![Build Status](https://travis-ci.org/spryker/price-product-schedule-gui.svg)](https://travis-ci.org/spryker/price-product-schedule-gui)
 
-{{ADD DESCRIPTION HERE}}
+UI for records in table spy_price_product_schedule.
 
 ## Installation
 
