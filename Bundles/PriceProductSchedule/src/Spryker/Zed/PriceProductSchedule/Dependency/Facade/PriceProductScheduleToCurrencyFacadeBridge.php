@@ -31,5 +31,4 @@ class PriceProductScheduleToCurrencyFacadeBridge implements PriceProductSchedule
     {
         return $this->currencyFacade->fromIsoCode($isoCode);
     }
-
 }

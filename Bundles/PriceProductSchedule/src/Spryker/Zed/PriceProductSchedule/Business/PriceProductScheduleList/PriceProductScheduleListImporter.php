@@ -7,19 +7,15 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList;
 
-use DateTime;
-use Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleImportTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\PriceProductSchedule\Business\Exception\PriceProductScheduleListImportException;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleValidatorInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
-use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface;
-use Throwable;
 
 class PriceProductScheduleListImporter implements PriceProductScheduleListImporterInterface
 {
@@ -29,9 +25,9 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
     protected $priceProductScheduleEntityManager;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleValidatorInterface
      */
-    protected $priceProductScheduleRepository;
+    protected $priceProductScheduleValidator;
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreatorInterface
@@ -45,18 +41,18 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
 
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager
-     * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface $priceProductScheduleRepository
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleValidatorInterface $priceProductScheduleValidator
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreatorInterface $priceProductScheduleListCreator
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface $priceProductScheduleMapper
      */
     public function __construct(
         PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager,
-        PriceProductScheduleRepositoryInterface $priceProductScheduleRepository,
+        PriceProductScheduleValidatorInterface $priceProductScheduleValidator,
         PriceProductScheduleListCreatorInterface $priceProductScheduleListCreator,
         PriceProductScheduleMapperInterface $priceProductScheduleMapper
     ) {
         $this->priceProductScheduleEntityManager = $priceProductScheduleEntityManager;
-        $this->priceProductScheduleRepository = $priceProductScheduleRepository;
+        $this->priceProductScheduleValidator = $priceProductScheduleValidator;
         $this->priceProductScheduleListCreator = $priceProductScheduleListCreator;
         $this->priceProductScheduleMapper = $priceProductScheduleMapper;
     }
@@ -76,56 +72,16 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
         );
 
         foreach ($priceProductScheduledListImportRequest->getItems() as $priceProductScheduleImportTransfer) {
-            if ($this->isPricesValid($priceProductScheduleImportTransfer) === false) {
-                $priceProductScheduledListImportResponse
-                    ->addError(
-                        (new PriceProductScheduleListImportErrorTransfer())
-                            ->setPriceProductScheduleImport($priceProductScheduleImportTransfer)
-                            ->setMessage('Gross and Net Amount must be integer.')
-                    );
-
-                continue;
-            }
-
-            if ($this->isDatesValid($priceProductScheduleImportTransfer) === false) {
-                $priceProductScheduledListImportResponse->addError(
-                    (new PriceProductScheduleListImportErrorTransfer())
-                        ->setPriceProductScheduleImport($priceProductScheduleImportTransfer)
-                        ->setMessage('Dates must be in right format and "to" date must be greater than "from".')
-                );
-
-                continue;
-            }
-
-            $priceProductScheduleCriteriaFilterTransfer = $this->preparePriceProductScheduleByCriteriaFilter(
-                $priceProductScheduleImportTransfer
-            );
-
             try {
-                $priceProductScheduleTransferCount = $this->priceProductScheduleRepository->findCountPriceProductScheduleByCriteriaFilter(
-                    $priceProductScheduleCriteriaFilterTransfer
+                $priceProductScheduledListImportResponse = $this->priceProductScheduleValidator->validatePriceProductScheduleImportTransfer(
+                    $priceProductScheduleImportTransfer,
+                    $priceProductScheduledListImportResponse
                 );
 
-                if ($priceProductScheduleTransferCount) {
-                    $priceProductScheduledListImportResponse->addError(
-                        (new PriceProductScheduleListImportErrorTransfer())
-                            ->setPriceProductScheduleImport($priceProductScheduleImportTransfer)
-                            ->setMessage('Scheduled price already exists.')
-                    );
-
+                if ($priceProductScheduledListImportResponse->getErrors()->count() > 0) {
                     continue;
                 }
-            } catch (PropelException $exception) {
-                $priceProductScheduledListImportResponse->addError(
-                    (new PriceProductScheduleListImportErrorTransfer())
-                        ->setPriceProductScheduleImport($priceProductScheduleImportTransfer)
-                        ->setMessage('Some error happened during insert into the database. Please make sure that data is valid.')
-                );
 
-                continue;
-            }
-
-            try {
                 $priceProductScheduleTransfer = $this->priceProductScheduleMapper
                     ->mapPriceProductScheduleImportTransferToPriceProductScheduleTransfer(
                         $priceProductScheduleImportTransfer,
@@ -141,12 +97,11 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
                 $priceProductScheduledListImportResponse->setIsSuccess(true);
             } catch (PriceProductScheduleListImportException $e) {
                 $priceProductScheduledListImportResponse->addError(
-                    (new PriceProductScheduleListImportErrorTransfer())
-                        ->setPriceProductScheduleImport($priceProductScheduleImportTransfer)
-                        ->setMessage($e->getMessage())
+                    $this->createPriceProductScheduleListImportErrorTransfer(
+                        $priceProductScheduleImportTransfer,
+                        $e->getMessage()
+                    )
                 );
-
-                continue;
             }
         }
 
@@ -155,41 +110,16 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
+     * @param string $errorMessage
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleCriteriaFilterTransfer
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer
      */
-    protected function preparePriceProductScheduleByCriteriaFilter(
-        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-    ): PriceProductScheduleCriteriaFilterTransfer {
-        return (new PriceProductScheduleCriteriaFilterTransfer())
-            ->fromArray($priceProductScheduleImportTransfer->toArray(), true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     *
-     * @return bool
-     */
-    protected function isPricesValid(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
-    {
-        return is_int($priceProductScheduleImportTransfer->getGrossAmount()) !== false
-            && is_int($priceProductScheduleImportTransfer->getNetAmount()) !== false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer
-     *
-     * @return bool
-     */
-    protected function isDatesValid(PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer): bool
-    {
-        try {
-            $activeFrom = new DateTime($priceProductScheduleImportTransfer->getActiveFrom());
-            $activeTo = new DateTime($priceProductScheduleImportTransfer->getActiveTo());
-
-            return $activeTo > $activeFrom;
-        } catch (Throwable $e) {
-            return false;
-        }
+    protected function createPriceProductScheduleListImportErrorTransfer(
+        PriceProductScheduleImportTransfer $priceProductScheduleImportTransfer,
+        string $errorMessage
+    ): PriceProductScheduleListImportErrorTransfer {
+        return (new PriceProductScheduleListImportErrorTransfer())
+            ->setPriceProductScheduleImport($priceProductScheduleImportTransfer)
+            ->setMessage($errorMessage);
     }
 }

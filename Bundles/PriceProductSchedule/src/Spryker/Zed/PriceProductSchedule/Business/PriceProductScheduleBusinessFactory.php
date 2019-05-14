@@ -20,6 +20,8 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductS
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapper;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleValidator;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleValidatorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriter;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreator;
@@ -138,9 +140,19 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductScheduleListImporter(
             $this->getEntityManager(),
-            $this->getRepository(),
+            $this->createPriceProductScheduleValidator(),
             $this->createPriceProductScheduleListCreator(),
             $this->createPriceProductScheduleMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleValidatorInterface
+     */
+    public function createPriceProductScheduleValidator(): PriceProductScheduleValidatorInterface
+    {
+        return new PriceProductScheduleValidator(
+            $this->getRepository()
         );
     }
 
