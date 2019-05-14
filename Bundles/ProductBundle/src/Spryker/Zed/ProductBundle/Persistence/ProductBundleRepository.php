@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductBundle\Persistence;
 
+use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -32,5 +34,27 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
         return $this->getFactory()
             ->createProductBundleMapper()
             ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities->getArrayCopy());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
+     */
+    public function getProductBundleCollectionByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): ProductBundleCollectionTransfer
+    {
+        $productBundleQuery = $this->getFactory()
+            ->createProductBundleQuery()
+            ->joinWithSpyProductRelatedByFkProduct();
+
+        if ($productBundleCriteriaFilterTransfer->getIdBundledProduct()) {
+            $productBundleQuery->filterByFkBundledProduct($productBundleCriteriaFilterTransfer->getIdBundledProduct());
+        }
+
+        $productBundleEntities = $productBundleQuery->find();
+
+        return $this->getFactory()
+            ->createProductBundleMapper()
+            ->mapProductBundleEntitiesToProductBundleCollectionTransfer($productBundleEntities->getArrayCopy(), new ProductBundleCollectionTransfer());
     }
 }
