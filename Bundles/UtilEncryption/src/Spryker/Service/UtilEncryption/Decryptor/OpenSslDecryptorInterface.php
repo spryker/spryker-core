@@ -7,14 +7,15 @@
 
 namespace Spryker\Service\UtilEncryption\Decryptor;
 
-interface DecryptorInterface
+interface OpenSslDecryptorInterface
 {
     /**
      * @param string $chiperText
      * @param string $initVector
      * @param string $encryptionKey
+     * @param string|null $encryptionMethod
      *
      * @return string
      */
-    public function decrypt(string $chiperText, string $initVector, string $encryptionKey): string;
+    public function decryptOpenSsl(string $chiperText, string $initVector, string $encryptionKey, ?string $encryptionMethod = null): string;
 }

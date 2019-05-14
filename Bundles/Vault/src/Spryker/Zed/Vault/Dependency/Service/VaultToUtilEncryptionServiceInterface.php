@@ -10,25 +10,29 @@ namespace Spryker\Zed\Vault\Dependency\Service;
 interface VaultToUtilEncryptionServiceInterface
 {
     /**
+     * @param string|null $encryptionMethod
+     *
      * @return string
      */
-    public function generateEncryptInitVector(): string;
+    public function generateOpenSslEncryptInitVector(?string $encryptionMethod = null): string;
 
     /**
      * @param string $chiperText
      * @param string $initVector
      * @param string $encryptionKey
+     * @param string|null $encryptionMethod
      *
      * @return string
      */
-    public function decrypt(string $chiperText, string $initVector, string $encryptionKey): string;
+    public function decryptOpenSsl(string $chiperText, string $initVector, string $encryptionKey, ?string $encryptionMethod = null): string;
 
     /**
      * @param string $plainText
      * @param string $initVector
      * @param string $encryptionKey
+     * @param string|null $encryptionMethod
      *
      * @return string
      */
-    public function encrypt(string $plainText, string $initVector, string $encryptionKey): string;
+    public function encryptOpenSsl(string $plainText, string $initVector, string $encryptionKey, ?string $encryptionMethod = null): string;
 }

@@ -7,14 +7,15 @@
 
 namespace Spryker\Service\UtilEncryption\Encryptor;
 
-interface EncryptorInterface
+interface OpenSslEncryptorInterface
 {
     /**
      * @param string $plainText
      * @param string $initVector
      * @param string $encryptionKey
+     * @param string|null $encryptionMethod
      *
      * @return string
      */
-    public function encrypt(string $plainText, string $initVector, string $encryptionKey): string;
+    public function encryptOpenSsl(string $plainText, string $initVector, string $encryptionKey, ?string $encryptionMethod = null): string;
 }

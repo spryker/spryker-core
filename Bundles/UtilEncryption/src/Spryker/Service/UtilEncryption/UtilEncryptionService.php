@@ -19,13 +19,15 @@ class UtilEncryptionService extends AbstractService implements UtilEncryptionSer
      *
      * @api
      *
+     * @param string|null $encryptionMethod
+     *
      * @return string
      */
-    public function generateEncryptInitVector(): string
+    public function generateOpenSslEncryptInitVector(?string $encryptionMethod = null): string
     {
         return $this->getFactory()
-            ->createEncryptInitVectorGenerator()
-            ->generateEncryptInitVector();
+            ->createOpenSslEncryptInitVectorGenerator()
+            ->generateOpenSslEncryptInitVector($encryptionMethod);
     }
 
     /**
@@ -36,14 +38,15 @@ class UtilEncryptionService extends AbstractService implements UtilEncryptionSer
      * @param string $plainText
      * @param string $initVector
      * @param string $encryptionKey
+     * @param string|null $encryptionMethod
      *
      * @return string
      */
-    public function encrypt(string $plainText, string $initVector, string $encryptionKey): string
+    public function encryptOpenSsl(string $plainText, string $initVector, string $encryptionKey, ?string $encryptionMethod = null): string
     {
         return $this->getFactory()
-            ->createEncryptor()
-            ->encrypt($plainText, $initVector, $encryptionKey);
+            ->createOpenSslEncryptor()
+            ->encryptOpenSsl($plainText, $initVector, $encryptionKey, $encryptionMethod);
     }
 
     /**
@@ -54,13 +57,14 @@ class UtilEncryptionService extends AbstractService implements UtilEncryptionSer
      * @param string $chiperText
      * @param string $initVector
      * @param string $encryptionKey
+     * @param string|null $encryptionMethod
      *
      * @return string
      */
-    public function decrypt(string $chiperText, string $initVector, string $encryptionKey): string
+    public function decryptOpenSsl(string $chiperText, string $initVector, string $encryptionKey, ?string $encryptionMethod = null): string
     {
         return $this->getFactory()
-            ->createDecryptor()
-            ->decrypt($chiperText, $initVector, $encryptionKey);
+            ->createOpenSslDecryptor()
+            ->decryptOpenSsl($chiperText, $initVector, $encryptionKey, $encryptionMethod);
     }
 }

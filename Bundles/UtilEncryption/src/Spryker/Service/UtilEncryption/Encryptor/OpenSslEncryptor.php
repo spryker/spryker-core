@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilEncryption\Decryptor;
+namespace Spryker\Service\UtilEncryption\Encryptor;
 
 use Spryker\Service\UtilEncryption\UtilEncryptionConfig;
 
-class OpensslDecryptor implements DecryptorInterface
+class OpenSslEncryptor implements OpenSslEncryptorInterface
 {
     /**
      * @var \Spryker\Service\UtilEncryption\UtilEncryptionConfig
@@ -25,20 +25,23 @@ class OpensslDecryptor implements DecryptorInterface
     }
 
     /**
-     * @param string $chiperText
+     * @param string $plainText
      * @param string $initVector
      * @param string $encryptionKey
+     * @param string|null $encryptionMethod
      *
      * @return string
      */
-    public function decrypt(string $chiperText, string $initVector, string $encryptionKey): string
+    public function encryptOpenSsl(string $plainText, string $initVector, string $encryptionKey, ?string $encryptionMethod = null): string
     {
-        return openssl_decrypt(
-            base64_decode($chiperText),
-            $this->utilEncryptionConfig->getEncryptionCipherMethod(),
-            $encryptionKey,
-            0,
-            $initVector
+        return base64_encode(
+            openssl_encrypt(
+                $plainText,
+                $encryptionMethod ?? $this->utilEncryptionConfig->getDefaultOpenSslEncryptionCipherMethod(),
+                $encryptionKey,
+                0,
+                $initVector
+            )
         );
     }
 }

@@ -14,17 +14,19 @@ interface UtilEncryptionServiceInterface
 {
     /**
      * Specification:
-     * - Generates a random vector with human-readable characters.
+     * - Generates a random vector with human-readable characters for provided OpenSsl encryption method.
      *
      * @api
      *
+     * @param string|null $encryptionMethod
+     *
      * @return string
      */
-    public function generateEncryptInitVector(): string;
+    public function generateOpenSslEncryptInitVector(?string $encryptionMethod = null): string;
 
     /**
      * Specification:
-     * - Encrypts given data.
+     * - Encrypts given data using OpenSsl.
      * - Encodes encrypted data with base64 algorithm.
      *
      * @api
@@ -32,23 +34,25 @@ interface UtilEncryptionServiceInterface
      * @param string $plainText
      * @param string $initVector
      * @param string $encryptionKey
+     * @param string|null $encryptionMethod
      *
      * @return string
      */
-    public function encrypt(string $plainText, string $initVector, string $encryptionKey): string;
+    public function encryptOpenSsl(string $plainText, string $initVector, string $encryptionKey, ?string $encryptionMethod = null): string;
 
     /**
      * Specification:
      * - Decodes encrypted data with base64 algorithm.
-     * - Decrypts given data.
+     * - Decrypts given data using OpenSsl.
      *
      * @api
      *
      * @param string $chiperText
      * @param string $initVector
      * @param string $encryptionKey
+     * @param string|null $encryptionMethod
      *
      * @return string
      */
-    public function decrypt(string $chiperText, string $initVector, string $encryptionKey): string;
+    public function decryptOpenSsl(string $chiperText, string $initVector, string $encryptionKey, ?string $encryptionMethod = null): string;
 }

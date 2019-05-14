@@ -8,13 +8,13 @@
 namespace Spryker\Service\UtilEncryption;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
-use Spryker\Service\UtilEncryption\Decryptor\DecryptorInterface;
-use Spryker\Service\UtilEncryption\Decryptor\OpensslDecryptor;
+use Spryker\Service\UtilEncryption\Decryptor\OpenSslDecryptor;
+use Spryker\Service\UtilEncryption\Decryptor\OpenSslDecryptorInterface;
 use Spryker\Service\UtilEncryption\Dependency\Service\UtilEncryptionToUtilTextServiceInterface;
-use Spryker\Service\UtilEncryption\EncryptInitVector\EncryptInitVectorGeneratorInterface;
-use Spryker\Service\UtilEncryption\EncryptInitVector\OpensslEncryptInitVectorGenerator;
-use Spryker\Service\UtilEncryption\Encryptor\EncryptorInterface;
-use Spryker\Service\UtilEncryption\Encryptor\OpensslEncryptor;
+use Spryker\Service\UtilEncryption\EncryptInitVector\OpenSslEncryptInitVectorGenerator;
+use Spryker\Service\UtilEncryption\EncryptInitVector\OpenSslEncryptInitVectorGeneratorInterface;
+use Spryker\Service\UtilEncryption\Encryptor\OpenSslEncryptor;
+use Spryker\Service\UtilEncryption\Encryptor\OpenSslEncryptorInterface;
 
 /**
  * @method \Spryker\Service\UtilEncryption\UtilEncryptionConfig getConfig()
@@ -22,31 +22,31 @@ use Spryker\Service\UtilEncryption\Encryptor\OpensslEncryptor;
 class UtilEncryptionServiceFactory extends AbstractServiceFactory
 {
     /**
-     * @return \Spryker\Service\UtilEncryption\Encryptor\EncryptorInterface
+     * @return \Spryker\Service\UtilEncryption\Encryptor\OpenSslEncryptorInterface
      */
-    public function createEncryptor(): EncryptorInterface
+    public function createOpenSslEncryptor(): OpenSslEncryptorInterface
     {
-        return new OpensslEncryptor(
+        return new OpenSslEncryptor(
             $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Service\UtilEncryption\Decryptor\DecryptorInterface
+     * @return \Spryker\Service\UtilEncryption\Decryptor\OpenSslDecryptorInterface
      */
-    public function createDecryptor(): DecryptorInterface
+    public function createOpenSslDecryptor(): OpenSslDecryptorInterface
     {
-        return new OpensslDecryptor(
+        return new OpenSslDecryptor(
             $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Service\UtilEncryption\EncryptInitVector\EncryptInitVectorGeneratorInterface
+     * @return \Spryker\Service\UtilEncryption\EncryptInitVector\OpenSslEncryptInitVectorGeneratorInterface
      */
-    public function createEncryptInitVectorGenerator(): EncryptInitVectorGeneratorInterface
+    public function createOpenSslEncryptInitVectorGenerator(): OpenSslEncryptInitVectorGeneratorInterface
     {
-        return new OpensslEncryptInitVectorGenerator(
+        return new OpenSslEncryptInitVectorGenerator(
             $this->getUtilTextService(),
             $this->getConfig()
         );

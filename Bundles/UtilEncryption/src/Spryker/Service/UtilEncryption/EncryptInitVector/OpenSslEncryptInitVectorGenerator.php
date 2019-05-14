@@ -10,7 +10,7 @@ namespace Spryker\Service\UtilEncryption\EncryptInitVector;
 use Spryker\Service\UtilEncryption\Dependency\Service\UtilEncryptionToUtilTextServiceInterface;
 use Spryker\Service\UtilEncryption\UtilEncryptionConfig;
 
-class OpensslEncryptInitVectorGenerator implements EncryptInitVectorGeneratorInterface
+class OpenSslEncryptInitVectorGenerator implements OpenSslEncryptInitVectorGeneratorInterface
 {
     /**
      * @var \Spryker\Service\UtilEncryption\Dependency\Service\UtilEncryptionToUtilTextServiceInterface
@@ -33,12 +33,14 @@ class OpensslEncryptInitVectorGenerator implements EncryptInitVectorGeneratorInt
     }
 
     /**
+     * @param string|null $encryptionMethod
+     *
      * @return string
      */
-    public function generateEncryptInitVector(): string
+    public function generateOpenSslEncryptInitVector(?string $encryptionMethod = null): string
     {
         return $this->utilTextService->generateRandomString(
-            openssl_cipher_iv_length($this->utilEncryptionConfig->getEncryptionCipherMethod())
+            openssl_cipher_iv_length($encryptionMethod ?? $this->utilEncryptionConfig->getDefaultOpenSslEncryptionCipherMethod())
         );
     }
 }

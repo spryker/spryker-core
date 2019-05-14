@@ -62,8 +62,8 @@ class VaultWriter implements VaultWriterInterface
      */
     public function store(string $dataType, string $dataKey, string $data): bool
     {
-        $encryptInitVector = $this->utilEncryptionService->generateEncryptInitVector();
-        $encryptedString = $this->utilEncryptionService->encrypt(
+        $encryptInitVector = $this->utilEncryptionService->generateOpenSslEncryptInitVector();
+        $encryptedString = $this->utilEncryptionService->encryptOpenSsl(
             $data,
             $encryptInitVector,
             $this->vaultConfig->getEncryptionKey()

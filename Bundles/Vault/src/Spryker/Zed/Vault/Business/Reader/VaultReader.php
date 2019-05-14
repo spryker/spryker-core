@@ -57,7 +57,7 @@ class VaultReader implements VaultReaderInterface
             return $vaultDepositTransfer;
         }
 
-        return $this->utilEncryptionService->decrypt(
+        return $this->utilEncryptionService->decryptOpenSsl(
             $vaultDepositTransfer->getCipherText(),
             $vaultDepositTransfer->getInitialVector(),
             $this->vaultConfig->getEncryptionKey()

@@ -23,34 +23,38 @@ class VaultToUtilEncryptionServiceBridge implements VaultToUtilEncryptionService
     }
 
     /**
+     * @param string|null $encryptionMethod
+     *
      * @return string
      */
-    public function generateEncryptInitVector(): string
+    public function generateOpenSslEncryptInitVector(?string $encryptionMethod = null): string
     {
-        return $this->utilEncryptionService->generateEncryptInitVector();
+        return $this->utilEncryptionService->generateOpenSslEncryptInitVector($encryptionMethod);
     }
 
     /**
      * @param string $chiperText
      * @param string $initVector
      * @param string $encryptionKey
+     * @param string|null $encryptionMethod
      *
      * @return string
      */
-    public function decrypt(string $chiperText, string $initVector, string $encryptionKey): string
+    public function decryptOpenSsl(string $chiperText, string $initVector, string $encryptionKey, ?string $encryptionMethod = null): string
     {
-        return $this->utilEncryptionService->decrypt($chiperText, $initVector, $encryptionKey);
+        return $this->utilEncryptionService->decryptOpenSsl($chiperText, $initVector, $encryptionKey, $encryptionMethod);
     }
 
     /**
      * @param string $plainText
      * @param string $initVector
      * @param string $encryptionKey
+     * @param string|null $encryptionMethod
      *
      * @return string
      */
-    public function encrypt(string $plainText, string $initVector, string $encryptionKey): string
+    public function encryptOpenSsl(string $plainText, string $initVector, string $encryptionKey, ?string $encryptionMethod = null): string
     {
-        return $this->utilEncryptionService->encrypt($plainText, $initVector, $encryptionKey);
+        return $this->utilEncryptionService->encryptOpenSsl($plainText, $initVector, $encryptionKey, $encryptionMethod);
     }
 }

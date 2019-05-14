@@ -7,10 +7,12 @@
 
 namespace Spryker\Service\UtilEncryption\EncryptInitVector;
 
-interface EncryptInitVectorGeneratorInterface
+interface OpenSslEncryptInitVectorGeneratorInterface
 {
     /**
+     * @param string|null $encryptionMethod
+     *
      * @return string
      */
-    public function generateEncryptInitVector(): string;
+    public function generateOpenSslEncryptInitVector(?string $encryptionMethod = null): string;
 }

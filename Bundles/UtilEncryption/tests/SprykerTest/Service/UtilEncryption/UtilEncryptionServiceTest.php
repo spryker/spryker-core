@@ -20,8 +20,8 @@ use Spryker\Service\UtilEncryption\UtilEncryptionServiceInterface;
  */
 class UtilEncryptionServiceTest extends Unit
 {
-    protected const ENCRYPTION_KEY = 'ENCRYPTION_KEY';
-    protected const ENCRYPTION_PLAIN_TEXT = 'ENCRYPTION_PLAIN_TEXT';
+    protected const OPEN_SSL_ENCRYPTION_KEY = 'OPEN_SSL_ENCRYPTION_KEY';
+    protected const OPEN_SSL_ENCRYPTION_PLAIN_TEXT = 'OPEN_SSL_ENCRYPTION_PLAIN_TEXT';
 
     /**
      * @var \SprykerTest\Service\UtilEncryption\UtilEncryptionServiceTester
@@ -31,10 +31,10 @@ class UtilEncryptionServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateEncryptInitVectorGeneratesSuccessfull(): void
+    public function testGenerateOpenSslEncryptInitVectorSuccessfull(): void
     {
         //Act
-        $initVector = $this->getUtilEncryptionService()->generateEncryptInitVector();
+        $initVector = $this->getUtilEncryptionService()->generateOpenSslEncryptInitVector();
 
         //Assert
         $this->assertNotEmpty($initVector);
@@ -43,42 +43,42 @@ class UtilEncryptionServiceTest extends Unit
     /**
      * @return void
      */
-    public function testEncryptEncryptsStringCorrectly(): void
+    public function testOpenSslEncryptEncryptsStringCorrectly(): void
     {
         //Arrange
-        $encryptInitVector = $this->getUtilEncryptionService()->generateEncryptInitVector();
+        $encryptInitVector = $this->getUtilEncryptionService()->generateOpenSslEncryptInitVector();
 
         //Act
-        $encryptedString = $this->getUtilEncryptionService()->encrypt(
-            static::ENCRYPTION_PLAIN_TEXT,
+        $encryptedString = $this->getUtilEncryptionService()->encryptOpenSsl(
+            static::OPEN_SSL_ENCRYPTION_PLAIN_TEXT,
             $encryptInitVector,
-            static::ENCRYPTION_KEY
+            static::OPEN_SSL_ENCRYPTION_KEY
         );
 
         //Assert
         $this->assertNotEmpty($encryptedString);
-        $this->assertNotEquals($encryptedString, static::ENCRYPTION_PLAIN_TEXT);
+        $this->assertNotEquals($encryptedString, static::OPEN_SSL_ENCRYPTION_PLAIN_TEXT);
     }
 
     /**
      * @return void
      */
-    public function testDecryptDecryptsStringCorrectly(): void
+    public function testOpenSslDecryptDecryptsStringCorrectly(): void
     {
         //Arrange
-        $encryptInitVector = $this->getUtilEncryptionService()->generateEncryptInitVector();
-        $encryptedString = $this->getUtilEncryptionService()->encrypt(
-            static::ENCRYPTION_PLAIN_TEXT,
+        $encryptInitVector = $this->getUtilEncryptionService()->generateOpenSslEncryptInitVector();
+        $encryptedString = $this->getUtilEncryptionService()->encryptOpenSsl(
+            static::OPEN_SSL_ENCRYPTION_PLAIN_TEXT,
             $encryptInitVector,
-            static::ENCRYPTION_KEY
+            static::OPEN_SSL_ENCRYPTION_KEY
         );
 
         //Act
-        $decryptedString = $this->getUtilEncryptionService()->decrypt($encryptedString, $encryptInitVector, static::ENCRYPTION_KEY);
+        $decryptedString = $this->getUtilEncryptionService()->decryptOpenSsl($encryptedString, $encryptInitVector, static::OPEN_SSL_ENCRYPTION_KEY);
 
         //Assert
         $this->assertNotEmpty($decryptedString);
-        $this->assertEquals($decryptedString, static::ENCRYPTION_PLAIN_TEXT);
+        $this->assertEquals($decryptedString, static::OPEN_SSL_ENCRYPTION_PLAIN_TEXT);
     }
 
     /**
