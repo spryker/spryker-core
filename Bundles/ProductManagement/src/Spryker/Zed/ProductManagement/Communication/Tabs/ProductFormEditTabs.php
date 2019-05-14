@@ -13,6 +13,19 @@ use Generated\Shared\Transfer\TabsViewTransfer;
 class ProductFormEditTabs extends ProductFormAddTabs
 {
     /**
+     * @var array|\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormEditTabsExpanderPluginInterface[]
+     */
+    protected $productAbstractFormEditTabsExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormEditTabsExpanderPluginInterface[] $productAbstractFormEditTabsExpanderPlugins
+     */
+    public function __construct(array $productAbstractFormEditTabsExpanderPlugins = [])
+    {
+        $this->productAbstractFormEditTabsExpanderPlugins = $productAbstractFormEditTabsExpanderPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
      * @return $this
@@ -28,5 +41,31 @@ class ProductFormEditTabs extends ProductFormAddTabs
         $tabsViewTransfer->addTab($tabItemTransfer);
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\TabsViewTransfer
+     */
+    protected function build(TabsViewTransfer $tabsViewTransfer)
+    {
+        $tabsViewTransfer = parent::build($tabsViewTransfer);
+
+        return $this->executeExpanderPlugins($tabsViewTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\TabsViewTransfer
+     */
+    protected function executeExpanderPlugins(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
+    {
+        foreach ($this->productAbstractFormEditTabsExpanderPlugins as $productAbstractFormEditTabsExpanderPlugin) {
+            $tabsViewTransfer = $productAbstractFormEditTabsExpanderPlugin->expand($tabsViewTransfer);
+        }
+
+        return $tabsViewTransfer;
     }
 }

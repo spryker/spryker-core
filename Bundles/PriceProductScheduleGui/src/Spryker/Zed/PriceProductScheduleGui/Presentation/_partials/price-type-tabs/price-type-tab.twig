@@ -1,0 +1,5 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: tab.name } %}
+    {% block widget_content %}
+        {{ tablesByPriceType[tab.name] | raw }}
+    {% endblock %}
+{% endembed %}

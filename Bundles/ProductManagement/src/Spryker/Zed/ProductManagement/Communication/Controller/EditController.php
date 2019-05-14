@@ -95,7 +95,7 @@ class EditController extends AddController
             ->getFactory()
             ->createVariantTable($idProductAbstract, $type);
 
-        return $this->viewResponse([
+        $viewData = [
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
@@ -108,7 +108,27 @@ class EditController extends AddController
             'idProductAbstract' => $idProductAbstract,
             'priceDimension' => $request->get(static::PARAM_PRICE_DIMENSION, []),
             'productFormEditTabs' => $this->getFactory()->createProductFormEditTabs()->createView(),
-        ]);
+        ];
+
+        $viewData = $this->expandEditAbstractProductViewData($viewData);
+
+        return $this->viewResponse($viewData);
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    protected function expandEditAbstractProductViewData(array $viewData): array
+    {
+        $viewExpanderPlugins = $this->getFactory()
+            ->getAbstractProductEditViewExpanderPlugins();
+        foreach ($viewExpanderPlugins as $viewExpanderPlugin) {
+            $viewData = $viewExpanderPlugin->expand($viewData);
+        }
+
+        return $viewData;
     }
 
     /**
@@ -189,7 +209,7 @@ class EditController extends AddController
             }
         }
 
-        return $this->viewResponse([
+        $viewData = [
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productTransfer->toArray(),
@@ -201,7 +221,28 @@ class EditController extends AddController
             'productConcreteFormEditTabs' => $this->getFactory()->createProductConcreteFormEditTabs()->createView(),
             'bundledProductTable' => $bundledProductTable->render(),
             'type' => $type,
-        ]);
+        ];
+
+        $viewData = $this->expandEditVariantViewData($viewData);
+
+        return $this->viewResponse($viewData);
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    protected function expandEditVariantViewData(array $viewData): array
+    {
+        $viewExpanderPlugins = $this->getFactory()
+            ->getProductConcreteEditViewExpanderPlugins();
+
+        foreach ($viewExpanderPlugins as $viewExpanderPlugin) {
+            $viewData = $viewExpanderPlugin->expand($viewData);
+        }
+
+        return $viewData;
     }
 
     /**

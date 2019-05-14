@@ -461,7 +461,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductFormEditTabs()
     {
-        return new ProductFormEditTabs();
+        return new ProductFormEditTabs($this->getProductAbstractFormEditTabsExpanderPlugins());
     }
 
     /**
@@ -589,6 +589,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormEditTabsExpanderPluginInterface[]
+     */
+    public function getProductAbstractFormEditTabsExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_FORM_EDIT_TABS_EXPANDER);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface[]
      */
     public function getProductAbstractFormExpanderPlugins(): array
@@ -629,5 +637,21 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductCategoryFacade(): ProductManagementToProductCategoryInterface
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT_CATEGORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractEditViewExpanderPluginInterface[]
+     */
+    public function getAbstractProductEditViewExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_EDIT_VIEW_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditViewExpanderPluginInterface[]
+     */
+    public function getProductConcreteEditViewExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER);
     }
 }
