@@ -19,7 +19,7 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
     public const SESSION_CLIENT = 'SESSION_CLIENT';
     public const MONITORING_SERVICE = 'monitoring service';
     public const PLUGINS_HANDLER_SESSION = 'PLUGINS_HANDLER_SESSION';
-    public const PLUGINS_YVES_SESSION_LOCK_RELEASER = 'PLUGINS_SESSION_LOCK_RELEASER';
+    public const PLUGINS_YVES_SESSION_LOCK_RELEASER = 'PLUGINS_YVES_SESSION_LOCK_RELEASER';
     public const PLUGINS_ZED_SESSION_LOCK_RELEASER = 'PLUGINS_ZED_SESSION_LOCK_RELEASER';
 
     /**
