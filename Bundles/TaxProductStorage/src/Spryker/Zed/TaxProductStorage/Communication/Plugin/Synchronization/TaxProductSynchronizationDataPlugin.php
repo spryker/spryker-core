@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\TaxProductStorage\Communication\Plugin\Synchronization;
 
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\TaxProductStorage\TaxProductStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
@@ -55,18 +54,11 @@ class TaxProductSynchronizationDataPlugin extends AbstractPlugin implements Sync
      */
     public function getData(array $ids = []): array
     {
-        $synchronizationDataTransfers = [];
-        $taxProductStorageEntities = $this->findTaxProductStorageEntities($ids);
-
-        foreach ($taxProductStorageEntities as $taxProductStorageEntity) {
-            /** @var string $data */
-            $data = $taxProductStorageEntity->getData();
-            $synchronizationDataTransfers[] = (new SynchronizationDataTransfer())
-                ->setData($data)
-                ->setKey($taxProductStorageEntity->getKey());
+        if (count($ids)) {
+            return $this->getRepository()->getSynchronizationDataTransfersFromTaxProductStoragesByProductAbstractIds($ids);
         }
 
-        return $synchronizationDataTransfers;
+        return $this->getRepository()->getAllSynchronizationDataTransfersFromTaxProductStorages();
     }
 
     /**
@@ -104,19 +96,5 @@ class TaxProductSynchronizationDataPlugin extends AbstractPlugin implements Sync
     {
         return $this->getConfig()
             ->getTaxProductSynchronizationPoolName();
-    }
-
-    /**
-     * @param int[] $ids
-     *
-     * @return \Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage[]
-     */
-    protected function findTaxProductStorageEntities(array $ids): array
-    {
-        if (count($ids)) {
-            return $this->getRepository()->findTaxProductStorageEntitiesByProductAbstractIdsIndexedByKeyColumn($ids);
-        }
-
-        return $this->getRepository()->findAllTaxProductStorageEntities();
     }
 }

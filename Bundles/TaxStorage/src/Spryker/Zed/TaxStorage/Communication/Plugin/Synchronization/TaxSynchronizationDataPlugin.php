@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\TaxStorage\Communication\Plugin\Synchronization;
 
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\TaxStorage\TaxStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
@@ -55,23 +54,11 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      */
     public function getData(array $ids = []): array
     {
-        $synchronizationDataTransfers = [];
-        $spyTaxSetStorageEntities = $this->getRepository()->findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet($ids);
-
-        if (count($ids) === 0) {
-            $spyTaxSetStorageEntities = $this->getRepository()->findAllTaxSetStorages();
+        if (count($ids)) {
+            return $this->getRepository()->getSynchronizationDataTransfersFromTaxSetStoragesByIdTaxSets($ids);
         }
 
-        foreach ($spyTaxSetStorageEntities as $spyTaxSetStorage) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            /** @var string $data */
-            $data = $spyTaxSetStorage->getData();
-            $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($spyTaxSetStorage->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
-        }
-
-        return $synchronizationDataTransfers;
+        return $this->getRepository()->getAllSynchronizationDataTransfersFromTaxSetStorages();
     }
 
     /**

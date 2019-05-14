@@ -8,6 +8,7 @@
 namespace Spryker\Zed\TaxStorage\Persistence\Propel\Mapper;
 
 use ArrayObject;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\TaxRateStorageTransfer;
 use Generated\Shared\Transfer\TaxSetStorageTransfer;
 use Orm\Zed\Tax\Persistence\Base\SpyTaxSet;
@@ -44,6 +45,27 @@ class TaxStorageMapper
         }
 
         return $taxSetStorageTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[] $spyTaxSetStorages
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function mapSpyTaxSetStoragesToSynchronizationDataTransfer(array $spyTaxSetStorages): array
+    {
+        $synchronizationDataTransfers = [];
+
+        foreach ($spyTaxSetStorages as $spyTaxSetStorage) {
+            $synchronizationDataTransfer = new SynchronizationDataTransfer();
+            /** @var string $data */
+            $data = $spyTaxSetStorage->getData();
+            $synchronizationDataTransfer->setData($data);
+            $synchronizationDataTransfer->setKey($spyTaxSetStorage->getKey());
+            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
+        }
+
+        return $synchronizationDataTransfers;
     }
 
     /**

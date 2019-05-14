@@ -48,7 +48,6 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
      */
     public function findTaxSetsByIds(array $taxSetIds): array
     {
-        $taxStorageMapper = $this->getFactory()->createTaxStorageMapper();
         $spyTaxSets = $this->getFactory()
             ->getTaxSetQuery()
             ->filterByIdTaxSet_In($taxSetIds)
@@ -59,35 +58,45 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
             return [];
         }
 
-        return $taxStorageMapper->mapSpyTaxSetsToTaxSetStorageTransfers($spyTaxSets);
+        return $this->getFactory()
+            ->createTaxStorageMapper()
+            ->mapSpyTaxSetsToTaxSetStorageTransfers($spyTaxSets);
     }
 
     /**
      * @param int[] $taxSetIds
      *
-     * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet(array $taxSetIds): array
+    public function getSynchronizationDataTransfersFromTaxSetStoragesByIdTaxSets(array $taxSetIds): array
     {
         $spyTaxSetStorage = $this->getFactory()
             ->createTaxSetStorageQuery()
             ->filterByFkTaxSet_In($taxSetIds)
             ->find()
-            ->toKeyIndex('FkTaxSet');
+            ->getArrayCopy();
 
-        return $spyTaxSetStorage;
+        if (count($spyTaxSetStorage) === 0) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createTaxStorageMapper()
+            ->mapSpyTaxSetStoragesToSynchronizationDataTransfer($spyTaxSetStorage);
     }
 
     /**
-     * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findAllTaxSetStorages(): array
+    public function getAllSynchronizationDataTransfersFromTaxSetStorages(): array
     {
         $spyTaxSetStorage = $this->getFactory()
             ->createTaxSetStorageQuery()
             ->find()
             ->getArrayCopy();
 
-        return $spyTaxSetStorage;
+        return $this->getFactory()
+            ->createTaxStorageMapper()
+            ->mapSpyTaxSetStoragesToSynchronizationDataTransfer($spyTaxSetStorage);
     }
 }

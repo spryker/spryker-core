@@ -7,12 +7,11 @@
 
 namespace Spryker\Zed\TaxProductStorage\Persistence;
 
-use Generated\Shared\Transfer\TaxProductStorageTransfer;
+use Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
  * @method \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStoragePersistenceFactory getFactory()
- * @method \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageRepositoryInterface getRepository()
  */
 class TaxProductStorageEntityManager extends AbstractEntityManager implements TaxProductStorageEntityManagerInterface
 {
@@ -30,21 +29,52 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TaxProductStorageTransfer $taxProductStorageTransfer
+     * @param \Generated\Shared\Transfer\TaxProductStorageTransfer[] $taxProductStorageTransfers
      *
      * @return void
      */
-    public function updateTaxProductStorage(TaxProductStorageTransfer $taxProductStorageTransfer): void
+    public function updateTaxProductStorages(array $taxProductStorageTransfers): void
     {
-        $spyTaxProductStorage = $this->getRepository()
-            ->findOrCreateTaxProductStorageByProductAbstractId(
-                $taxProductStorageTransfer->getIdProductAbstract()
-            );
+        $spyTaxProductStorages = $this->findSpyTaxProductStoragesByProductAbstractIdsIndexedByProductAbstractIds(
+            $this->getIdFromTransfers($taxProductStorageTransfers)
+        );
 
-        $spyTaxProductStorage
-            ->setFkProductAbstract($taxProductStorageTransfer->getIdProductAbstract())
-            ->setSku($taxProductStorageTransfer->getSku())
-            ->setData($taxProductStorageTransfer->toArray())
-            ->save();
+        foreach ($taxProductStorageTransfers as $taxProductStorageTransfer) {
+            $spyTaxProductStorage = $spyTaxProductStorages[$taxProductStorageTransfer->getIdProductAbstract()] ?? (new SpyTaxProductStorage())
+                    ->setFkProductAbstract($taxProductStorageTransfer->getIdProductAbstract());
+            $spyTaxProductStorage
+                ->setSku($taxProductStorageTransfer->getSku())
+                ->setData($taxProductStorageTransfer->toArray())
+                ->save();
+        }
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage[]
+     */
+    protected function findSpyTaxProductStoragesByProductAbstractIdsIndexedByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->createTaxProductStorageQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->find()
+            ->getArrayCopy('idProductAbstract');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TaxProductStorageTransfer[] $taxProductStorageTransfers
+     *
+     * @return int[]
+     */
+    protected function getIdFromTransfers(array $taxProductStorageTransfers): array
+    {
+        $ids = [];
+        foreach ($taxProductStorageTransfers as $taxProductStorageTransfer) {
+            $ids[] = $taxProductStorageTransfer->getIdProductAbstract();
+        }
+
+        return $ids;
     }
 }

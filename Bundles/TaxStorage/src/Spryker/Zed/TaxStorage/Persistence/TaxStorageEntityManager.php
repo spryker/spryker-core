@@ -22,17 +22,16 @@ class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorag
      */
     public function saveTaxSetStorage(array $taxSetStorageTransfers): void
     {
-        $taxStorageRepository = $this->getFactory()->getRepository();
         $taxStorageConfig = $this->getFactory()->getConfig();
 
-        $taxSetStorageTransfersToUpdate = $taxStorageRepository->findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet(
+        $taxSetStorageTransfersToUpdate = $this->findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet(
             $this->getIdFromTransfers($taxSetStorageTransfers)
         );
 
         foreach ($taxSetStorageTransfers as $taxSetStorageTransfer) {
             $spyTaxSetStorage = $taxSetStorageTransfersToUpdate[$taxSetStorageTransfer->getIdTaxSet()] ?? (new SpyTaxSetStorage())
                     ->setFkTaxSet($taxSetStorageTransfer->getIdTaxSet());
-            $spyTaxSetStorage->setData($taxSetStorageTransfer);
+            $spyTaxSetStorage->setData($taxSetStorageTransfer->toArray());
             $spyTaxSetStorage->setIsSendingToQueue($taxStorageConfig->isSendingToQueue());
 
             $spyTaxSetStorage->save();
@@ -46,12 +45,27 @@ class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorag
      */
     public function deleteTaxSetStoragesByIds(array $taxSetIds): void
     {
-        $taxStorageRepository = $this->getFactory()->getRepository();
-        $spyTaxSetStorages = $taxStorageRepository->findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet($taxSetIds);
+        $spyTaxSetStorages = $this->findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet($taxSetIds);
 
         foreach ($spyTaxSetStorages as $spyTaxSetStorage) {
             $spyTaxSetStorage->delete();
         }
+    }
+
+    /**
+     * @param int[] $taxSetIds
+     *
+     * @return \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[]
+     */
+    public function findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet(array $taxSetIds): array
+    {
+        $spyTaxSetStorage = $this->getFactory()
+            ->createTaxSetStorageQuery()
+            ->filterByFkTaxSet_In($taxSetIds)
+            ->find()
+            ->toKeyIndex('FkTaxSet');
+
+        return $spyTaxSetStorage;
     }
 
     /**

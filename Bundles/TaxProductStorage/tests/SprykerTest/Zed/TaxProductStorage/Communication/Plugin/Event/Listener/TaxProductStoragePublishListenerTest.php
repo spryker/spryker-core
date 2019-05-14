@@ -82,30 +82,14 @@ class TaxProductStoragePublishListenerTest extends Unit
             $eventTransfers,
             ProductEvents::PRODUCT_ABSTRACT_PUBLISH
         );
-        $taxProductStorageEntities = $this->taxProductStorageRepository
-            ->findTaxProductStorageEntitiesByProductAbstractIdsIndexedByKeyColumn(
+        $synchronizationDataTransfers = $this->taxProductStorageRepository
+            ->getSynchronizationDataTransfersFromTaxProductStoragesByProductAbstractIds(
                 [$this->productAbstractTransfer->getIdProductAbstract()]
             );
 
         // Assert
-        $this->assertCount(1, $taxProductStorageEntities);
-        $this->assertEquals($this->productAbstractTransfer->getSku(), $taxProductStorageEntities[0]->getSku());
-    }
-
-    /**
-     * @return void
-     */
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        $taxProductStorageEntities = $this->taxProductStorageRepository
-            ->findTaxProductStorageEntitiesByProductAbstractIdsIndexedByKeyColumn([
-                $this->productAbstractTransfer->getIdProductAbstract(),
-            ]);
-
-        foreach ($taxProductStorageEntities as $taxProductStorageEntity) {
-            $taxProductStorageEntity->delete();
-        }
+        $this->assertCount(1, $synchronizationDataTransfers);
+        $synchronizationDataTransfersDataArray = json_decode($synchronizationDataTransfers[0]->getData());
+        $this->assertEquals($this->productAbstractTransfer->getSku(), $synchronizationDataTransfersDataArray['sku']);
     }
 }
