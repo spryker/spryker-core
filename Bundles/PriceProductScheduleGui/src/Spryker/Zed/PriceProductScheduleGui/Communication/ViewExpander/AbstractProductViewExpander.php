@@ -39,21 +39,23 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
     {
         $priceTypeTransfers = $this->priceProductFacade
             ->getPriceTypeValues();
-        $priceTypeTabs = new TabsViewTransfer();
+        $priceTypeTabsViewTransfer = new TabsViewTransfer();
         $tablesByType = [];
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
-            $priceTypeTab = $this->createPriceTypeTab($priceTypeTransfer);
-            $priceTypeTabs->addTab($priceTypeTab);
+            $priceTypeTabItemTransfer = $this->createPriceTypeTab($priceTypeTransfer);
+            $priceTypeTabsViewTransfer->addTab($priceTypeTabItemTransfer);
             $tablesByType[$priceTypeTransfer->getName()] = $this->createTableByType(
                 $viewData,
                 $priceTypeTransfer
-            );
+            )->render();
         }
 
-        $priceTypeTabs->setActiveTabName($priceTypeTabs->getTabs()[0]->getName());
+        if ($priceTypeTabsViewTransfer->getTabs()->count() > 0) {
+            $priceTypeTabsViewTransfer->setActiveTabName($priceTypeTabsViewTransfer->getTabs()[0]->getName());
+        }
 
-        $viewData['priceTypeTabs'] = $priceTypeTabs;
+        $viewData['priceTypeTabs'] = $priceTypeTabsViewTransfer;
         $viewData['tablesByType'] = $tablesByType;
 
         return $viewData;
@@ -77,15 +79,13 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
      * @param array $viewData
      * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
      *
-     * @return string
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleAbstractTable
      */
-    protected function createTableByType(array $viewData, PriceTypeTransfer $priceTypeTransfer): string
+    protected function createTableByType(array $viewData, PriceTypeTransfer $priceTypeTransfer): PriceProductScheduleAbstractTable
     {
-        return (
-            new PriceProductScheduleAbstractTable(
-                $viewData['idProductAbstract'],
-                $priceTypeTransfer->getIdPriceType()
-            )
-        )->render();
+        return new PriceProductScheduleAbstractTable(
+            $viewData['idProductAbstract'],
+            $priceTypeTransfer->getIdPriceType()
+        );
     }
 }

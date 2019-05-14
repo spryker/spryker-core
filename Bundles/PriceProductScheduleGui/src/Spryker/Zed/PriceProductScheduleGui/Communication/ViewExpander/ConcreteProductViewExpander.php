@@ -39,21 +39,21 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
     {
         $priceTypeTransfers = $this->priceProductFacade
             ->getPriceTypeValues();
-        $priceTypeTabs = new TabsViewTransfer();
+        $priceTypeTabsViewTransfer = new TabsViewTransfer();
         $tablesByType = [];
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
-            $priceTypeTab = $this->createPriceTypeTab($priceTypeTransfer);
-            $priceTypeTabs->addTab($priceTypeTab);
+            $priceTypeTabItemTranser = $this->createPriceTypeTab($priceTypeTransfer);
+            $priceTypeTabsViewTransfer->addTab($priceTypeTabItemTranser);
             $tablesByType[$priceTypeTransfer->getName()] = $this->createTableByType(
                 $viewData,
                 $priceTypeTransfer
             );
         }
 
-        $priceTypeTabs->setActiveTabName($priceTypeTabs->getTabs()[0]->getName());
+        $priceTypeTabsViewTransfer->setActiveTabName($priceTypeTabsViewTransfer->getTabs()[0]->getName());
 
-        $viewData['priceTypeTabs'] = $priceTypeTabs;
+        $viewData['priceTypeTabs'] = $priceTypeTabsViewTransfer;
         $viewData['tablesByType'] = $tablesByType;
 
         return $viewData;
