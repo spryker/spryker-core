@@ -31,7 +31,6 @@ class NotEmptyValidator extends ConstraintValidator
 
         if (empty($value) && $value != '0') {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ value }}', $this->formatValue($value))
                 ->setCode(NotEmpty::IS_EMPTY_ERROR)
                 ->addViolation();
         }
