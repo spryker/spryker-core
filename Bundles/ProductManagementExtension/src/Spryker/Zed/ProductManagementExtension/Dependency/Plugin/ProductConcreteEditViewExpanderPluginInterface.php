@@ -11,7 +11,7 @@ interface ProductConcreteEditViewExpanderPluginInterface
 {
     /**
      * Specification:
-     * - expands view data for edit product concrete.
+     * - Expands view data for edit product concrete.
      *
      * @api
      *

@@ -13,7 +13,7 @@ interface ProductAbstractEditFormTabsExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands form tabs for ProductFormEdit
+     * - Expands form tabs for ProductFormEdit.
      *
      * @api
      *

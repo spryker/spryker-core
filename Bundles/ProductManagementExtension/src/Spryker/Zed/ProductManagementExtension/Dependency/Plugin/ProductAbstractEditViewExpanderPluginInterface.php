@@ -11,7 +11,7 @@ interface ProductAbstractEditViewExpanderPluginInterface
 {
     /**
      * Specification:
-     * - expands view data for edit product abstract page.
+     * - Expands view data for edit product abstract page.
      *
      * @api
      *
