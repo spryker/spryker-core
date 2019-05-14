@@ -29,8 +29,8 @@ use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReader;
 use Spryker\Zed\SharedCart\Business\QuoteShareDetails\QuoteShareDetailsReaderInterface;
 use Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidActivatorStrategy;
 use Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidActivatorStrategyInterface;
-use Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidDataExpanderStrategy;
-use Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidDataExpanderStrategyInterface;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartRequestBuilder;
+use Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartRequestBuilderInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
@@ -147,20 +147,23 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidDataExpanderStrategyInterface
-     */
-    public function createShareCartByUuidDataExpanderStrategy(): ShareCartByUuidDataExpanderStrategyInterface
-    {
-        return new ShareCartByUuidDataExpanderStrategy();
-    }
-
-    /**
      * @return \Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidActivatorStrategyInterface
      */
     public function createShareCartByUuidActivatorStrategy(): ShareCartByUuidActivatorStrategyInterface
     {
         return new ShareCartByUuidActivatorStrategy(
             $this->createQuoteCompanyUserWriter(),
+            $this->createShareCartRequestBuilder(),
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartRequestBuilderInterface
+     */
+    public function createShareCartRequestBuilder(): ShareCartRequestBuilderInterface
+    {
+        return new ShareCartRequestBuilder(
             $this->getRepository()
         );
     }

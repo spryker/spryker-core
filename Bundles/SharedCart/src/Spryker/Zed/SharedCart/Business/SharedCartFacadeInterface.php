@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 
@@ -175,20 +174,6 @@ interface SharedCartFacadeInterface
      * @return void
      */
     public function addQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void;
-
-    /**
-     * Specification:
-     * - Expands ResourceShareTransfer::ResourceShareDataTransfer with shareable cart details.
-     * - Returns ResourceShareResponseTransfer with 'isSuccessful=true' on success.
-     * - Returns ResourceShareResponseTransfer with 'isSuccessful=false' and error messages otherwise.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
-     */
-    public function applyShareCartByUuidDataExpanderStrategy(ResourceShareTransfer $resourceShareTransfer): ResourceShareResponseTransfer;
 
     /**
      * Specification:

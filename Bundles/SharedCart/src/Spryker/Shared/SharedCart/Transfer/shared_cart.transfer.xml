@@ -86,7 +86,6 @@
         <property name="data" type="array"/>
         <property name="shareOption" type="string" />
         <property name="idQuote" type="int" />
-        <property name="ownerIdCompanyUser" type="int" />
         <property name="ownerIdCompanyBusinessUnit" type="int" />
     </transfer>
 

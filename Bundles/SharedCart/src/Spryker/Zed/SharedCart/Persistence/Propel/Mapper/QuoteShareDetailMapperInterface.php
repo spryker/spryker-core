@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SharedCart\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
+use Generated\Shared\Transfer\ShareDetailTransfer;
+use Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser;
 use Propel\Runtime\Collection\ObjectCollection;
 
 interface QuoteShareDetailMapperInterface
@@ -19,4 +21,12 @@ interface QuoteShareDetailMapperInterface
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
     public function mapShareDetailCollection(ObjectCollection $quoteCompanyUserEntities, array $quotePermissionGroupTransfers): ShareDetailCollectionTransfer;
+
+    /**
+     * @param \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser $quoteCompanyUserEntity
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $indexedQuotePermissionGroupTransfers
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailTransfer
+     */
+    public function mapQuoteCompanyUserEntityToShareDetailTransfer(SpyQuoteCompanyUser $quoteCompanyUserEntity, array $indexedQuotePermissionGroupTransfers): ShareDetailTransfer;
 }

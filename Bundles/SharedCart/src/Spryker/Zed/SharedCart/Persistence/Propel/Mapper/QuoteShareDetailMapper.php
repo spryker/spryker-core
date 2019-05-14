@@ -25,7 +25,7 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
         $shareDetailCollectionTransfer = new ShareDetailCollectionTransfer();
         $indexedQuotePermissionGroupTransfers = $this->indexQuotePermissionGroupById($quotePermissionGroupTransfers);
         foreach ($quoteCompanyUserEntities as $quoteCompanyUserEntity) {
-            $shareDetailTransfer = $this->mapShareDetailTransfer($quoteCompanyUserEntity, $indexedQuotePermissionGroupTransfers);
+            $shareDetailTransfer = $this->mapQuoteCompanyUserEntityToShareDetailTransfer($quoteCompanyUserEntity, $indexedQuotePermissionGroupTransfers);
             $shareDetailCollectionTransfer->addShareDetail($shareDetailTransfer);
         }
 
@@ -38,7 +38,7 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShareDetailTransfer
      */
-    protected function mapShareDetailTransfer(SpyQuoteCompanyUser $quoteCompanyUserEntity, array $indexedQuotePermissionGroupTransfers): ShareDetailTransfer
+    public function mapQuoteCompanyUserEntityToShareDetailTransfer(SpyQuoteCompanyUser $quoteCompanyUserEntity, array $indexedQuotePermissionGroupTransfers): ShareDetailTransfer
     {
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setIdQuoteCompanyUser($quoteCompanyUserEntity->getIdQuoteCompanyUser())

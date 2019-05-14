@@ -7,15 +7,10 @@
 
 namespace Spryker\Zed\SharedCart\Business\ResourceShare;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
-use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Generated\Shared\Transfer\ResourceShareTransfer;
-use Generated\Shared\Transfer\ShareCartRequestTransfer;
-use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriterInterface;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
@@ -31,19 +26,27 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
     protected $quoteCompanyUserWriter;
 
     /**
+     * @var \Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartRequestBuilderInterface
+     */
+    protected $shareCartRequestBuilder;
+
+    /**
      * @var \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface
      */
     protected $sharedCartRepository;
 
     /**
      * @param \Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriterInterface $quoteCompanyUserWriter
+     * @param \Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartRequestBuilderInterface $shareCartRequestBuilder
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface $sharedCartRepository
      */
     public function __construct(
         QuoteCompanyUserWriterInterface $quoteCompanyUserWriter,
+        ShareCartRequestBuilderInterface $shareCartRequestBuilder,
         SharedCartRepositoryInterface $sharedCartRepository
     ) {
         $this->quoteCompanyUserWriter = $quoteCompanyUserWriter;
+        $this->shareCartRequestBuilder = $shareCartRequestBuilder;
         $this->sharedCartRepository = $sharedCartRepository;
     }
 
@@ -58,31 +61,16 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
         $resourceShareRequestTransfer->requireCustomer()
             ->requireResourceShare();
 
-        $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
-        $resourceShareResponseTransfer = $this->validateResourceShareTransfer($resourceShareTransfer);
+        $resourceShareResponseTransfer = $this->validateResourceShareTransfer($resourceShareRequestTransfer->getResourceShare());
         if (!$resourceShareResponseTransfer->getIsSuccessful()) {
             return $resourceShareResponseTransfer;
         }
 
-        $customerTransfer = $resourceShareRequestTransfer->getCustomer();
-        $idCompanyBusinessUnit = $this->findIdCompanyBusinessUnit($customerTransfer);
-        if (!$idCompanyBusinessUnit) {
-            return $resourceShareResponseTransfer->setIsSuccessful(false)
-                ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_ACCESS_DENIED)
-                );
+        if (!$this->isLoggedInCustomerAllowedToShareCart($resourceShareRequestTransfer)) {
+            return $this->createErrorMessageResponse(static::GLOSSARY_KEY_CART_ACCESS_DENIED);
         }
 
-        $resourceShareTransfer->requireResourceShareData();
-        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
-        if ($resourceShareDataTransfer->getOwnerIdCompanyBusinessUnit() !== $idCompanyBusinessUnit) {
-            return $resourceShareResponseTransfer->setIsSuccessful(false)
-                ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_ACCESS_DENIED)
-                );
-        }
-
-        return $this->shareCartWithProvidedResourceShareCompanyUser($resourceShareRequestTransfer);
+        return $this->shareCartWithLoggedInCompanyUser($resourceShareRequestTransfer);
     }
 
     /**
@@ -90,18 +78,14 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    protected function shareCartWithProvidedResourceShareCompanyUser(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
+    protected function shareCartWithLoggedInCompanyUser(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        $shareCartRequestTransfer = $this->createShareCartRequestTransfer($resourceShareRequestTransfer);
+        $shareCartRequestTransfer = $this->shareCartRequestBuilder->buildShareCartRequestTransfer($resourceShareRequestTransfer);
         if (!$shareCartRequestTransfer) {
-            return (new ResourceShareResponseTransfer())
-                ->setIsSuccessful(false)
-                ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART)
-                );
+            return $this->createErrorMessageResponse(static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART);
         }
 
-        $storedShareDetailTransfer = $this->findStoredShareDetailByIdQuoteAndIdCompanyUser($shareCartRequestTransfer);
+        $storedShareDetailTransfer = $this->sharedCartRepository->findShareDetailByIdQuoteAndIdCompanyUser($shareCartRequestTransfer);
         if (!$storedShareDetailTransfer) {
             $this->quoteCompanyUserWriter->addQuoteCompanyUser($shareCartRequestTransfer);
         }
@@ -114,118 +98,29 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
     /**
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ShareCartRequestTransfer|null
+     * @return bool
      */
-    protected function createShareCartRequestTransfer(ResourceShareRequestTransfer $resourceShareRequestTransfer): ?ShareCartRequestTransfer
+    protected function isLoggedInCustomerAllowedToShareCart(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
-        $resourceShareDataTransfer = $resourceShareRequestTransfer->getResourceShare()
-            ->getResourceShareData();
-
-        $idCompanyUser = $resourceShareRequestTransfer->getCustomer()
-            ->getCompanyUserTransfer()
-            ->getIdCompanyUser();
-
-        $shareDetailTransfer = $this->createShareDetailTransfer($idCompanyUser, $resourceShareDataTransfer->getShareOption());
-        if (!$shareDetailTransfer) {
-            return null;
-        }
-
-        return (new ShareCartRequestTransfer())
-            ->setIdQuote($resourceShareDataTransfer->getIdQuote())
-            ->setIdCompanyUser($idCompanyUser)
-            ->addShareDetail($shareDetailTransfer);
-    }
-
-    /**
-     * @param int $idCompanyUser
-     * @param string $shareOption
-     *
-     * @return \Generated\Shared\Transfer\ShareDetailTransfer|null
-     */
-    protected function createShareDetailTransfer(int $idCompanyUser, string $shareOption): ?ShareDetailTransfer
-    {
-        $quotePermissionGroupTransfer = $this->findResolvedQuotePermissionGroup($shareOption);
-        if (!$quotePermissionGroupTransfer) {
-            return null;
-        }
-
-        return (new ShareDetailTransfer())
-            ->setIdCompanyUser($idCompanyUser)
-            ->setQuotePermissionGroup($quotePermissionGroupTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return int|null
-     */
-    protected function findIdCompanyBusinessUnit(CustomerTransfer $customerTransfer): ?int
-    {
+        $customerTransfer = $resourceShareRequestTransfer->getCustomer();
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
         if (!$companyUserTransfer) {
-            return null;
+            return false;
         }
 
         $companyBusinessUnitTransfer = $companyUserTransfer->getCompanyBusinessUnit();
-
-        return $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShareDetailTransfer|null
-     */
-    protected function findStoredShareDetailByIdQuoteAndIdCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): ?ShareDetailTransfer
-    {
-        $shareDetailCollectionTransfer = $this->sharedCartRepository->findShareDetailsByQuoteId($shareCartRequestTransfer->getIdQuote());
-
-        $requestShareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
-        $requestIdQuotePermissionGroup = $requestShareDetailTransfer->getQuotePermissionGroup()
-            ->getIdQuotePermissionGroup();
-
-        foreach ($shareDetailCollectionTransfer->getShareDetails() as $storedShareDetailTransfer) {
-            $storedIdQuotePermissionGroup = $storedShareDetailTransfer->getQuotePermissionGroup()
-                ->getIdQuotePermissionGroup();
-
-            if ($storedIdQuotePermissionGroup === $requestIdQuotePermissionGroup
-                && $storedShareDetailTransfer->getIdCompanyUser() === $requestShareDetailTransfer->getIdCompanyUser()
-            ) {
-                return $storedShareDetailTransfer;
-            }
+        $idCompanyBusinessUnit = $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
+        if (!$idCompanyBusinessUnit) {
+            return false;
         }
 
-        return null;
-    }
-
-    /**
-     * @param string $shareOption
-     *
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer|null
-     */
-    protected function findResolvedQuotePermissionGroup(
-        string $shareOption
-    ): ?QuotePermissionGroupTransfer {
-        $indexedQuotePermissionGroups = $this->getIndexedQuotePermissionGroups();
-
-        return $indexedQuotePermissionGroups[$shareOption] ?? null;
-    }
-
-    /**
-     * @return array [name => QuotePermissionGroupTransfer]
-     */
-    protected function getIndexedQuotePermissionGroups(): array
-    {
-        $quotePermissionGroups = $this->sharedCartRepository->findQuotePermissionGroupList(
-            new QuotePermissionGroupCriteriaFilterTransfer()
-        );
-
-        $indexedQuotePermissionGroups = [];
-        foreach ($quotePermissionGroups as $quotePermissionGroupTransfer) {
-            $indexedQuotePermissionGroups[$quotePermissionGroupTransfer->getName()] = $quotePermissionGroupTransfer;
+        $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
+        $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
+        if ($resourceShareDataTransfer->getOwnerIdCompanyBusinessUnit() !== $idCompanyBusinessUnit) {
+            return false;
         }
 
-        return $indexedQuotePermissionGroups;
+        return true;
     }
 
     /**
@@ -240,16 +135,26 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
 
         if ($resourceShareDataTransfer->getShareOption()
             && $resourceShareDataTransfer->getIdQuote()
-            && $resourceShareDataTransfer->getOwnerIdCompanyUser()
             && $resourceShareDataTransfer->getOwnerIdCompanyBusinessUnit()
         ) {
             return $resourceShareResponseTransfer->setIsSuccessful(true)
                 ->setResourceShare($resourceShareTransfer);
         }
 
-        return $resourceShareResponseTransfer->setIsSuccessful(false)
+        return $this->createErrorMessageResponse(static::GLOSSARY_KEY_ONE_OR_MORE_REQUIRED_PROPERTIES_ARE_MISSING);
+    }
+
+    /**
+     * @param string $errorMessage
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
+     */
+    protected function createErrorMessageResponse(string $errorMessage): ResourceShareResponseTransfer
+    {
+        return (new ResourceShareResponseTransfer())
+            ->setIsSuccessful(false)
             ->addMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_ONE_OR_MORE_REQUIRED_PROPERTIES_ARE_MISSING)
+                (new MessageTransfer())->setValue($errorMessage)
             );
     }
 }
