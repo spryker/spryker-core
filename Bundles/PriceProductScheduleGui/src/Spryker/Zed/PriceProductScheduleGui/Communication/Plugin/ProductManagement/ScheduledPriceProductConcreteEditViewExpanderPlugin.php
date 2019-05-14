@@ -17,8 +17,6 @@ class ScheduledPriceProductConcreteEditViewExpanderPlugin extends AbstractPlugin
 {
     /**
      * {@inheritdoc}
-     *
-     * Specification:
      * - Expands view data of edit product concrete page with scheduled price data.
      *
      * @api
