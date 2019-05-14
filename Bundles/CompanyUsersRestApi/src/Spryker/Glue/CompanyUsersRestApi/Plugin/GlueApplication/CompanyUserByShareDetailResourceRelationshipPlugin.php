@@ -19,6 +19,9 @@ class CompanyUserByShareDetailResourceRelationshipPlugin extends AbstractPlugin 
 {
     /**
      * {@inheritdoc}
+     * - Adds company-users resource as a relationship.
+     * - Requires ShareDetailTransfer to be provided in resource's payload.
+     * - Uses ShareDetailTransfer::companyUser from the resource's payload.
      *
      * @api
      *

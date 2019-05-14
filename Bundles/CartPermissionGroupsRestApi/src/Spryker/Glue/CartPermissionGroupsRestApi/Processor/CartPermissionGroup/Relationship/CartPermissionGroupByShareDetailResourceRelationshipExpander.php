@@ -24,9 +24,7 @@ class CartPermissionGroupByShareDetailResourceRelationshipExpander extends Abstr
          * @var \Generated\Shared\Transfer\ShareDetailTransfer|null $payload
          */
         $payload = $resource->getPayload();
-        if (!$payload
-            || !($payload instanceof ShareDetailTransfer)
-            || !$payload->getQuotePermissionGroup()) {
+        if (!$payload || !($payload instanceof ShareDetailTransfer)) {
             return null;
         }
 
