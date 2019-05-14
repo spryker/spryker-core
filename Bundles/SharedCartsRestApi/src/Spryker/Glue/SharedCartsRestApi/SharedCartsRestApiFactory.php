@@ -8,12 +8,12 @@
 namespace Spryker\Glue\SharedCartsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapper;
-use Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface;
+use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapper;
+use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapperInterface;
+use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Reader\SharedCartReader;
+use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Reader\SharedCartReaderInterface;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartExpander;
 use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Relationship\SharedCartExpanderInterface;
-use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartReader;
-use Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartReaderInterface;
 
 /**
  * @method \Spryker\Client\SharedCartsRestApi\SharedCartsRestApiClientInterface getClient()
@@ -27,13 +27,13 @@ class SharedCartsRestApiFactory extends AbstractFactory
     {
         return new SharedCartExpander(
             $this->createSharedCartReader(),
-            $this->getResourceBuilder(),
-            $this->createSharedCartMapper()
+            $this->createSharedCartMapper(),
+            $this->getResourceBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Glue\SharedCartsRestApi\Processor\Mapper\SharedCartMapperInterface
+     * @return \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Mapper\SharedCartMapperInterface
      */
     public function createSharedCartMapper(): SharedCartMapperInterface
     {
@@ -41,7 +41,7 @@ class SharedCartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\SharedCartReaderInterface
+     * @return \Spryker\Glue\SharedCartsRestApi\Processor\SharedCart\Reader\SharedCartReaderInterface
      */
     public function createSharedCartReader(): SharedCartReaderInterface
     {

@@ -78,6 +78,29 @@ class CartPermissionGroupResponseBuilder implements CartPermissionGroupResponseB
     }
 
     /**
+     * @param string $cartPermissionGroupUuid
+     * @param \Generated\Shared\Transfer\RestCartPermissionGroupsAttributesTransfer $restCartPermissionGroupsAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer|null $quotePermissionGroupTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function createCartPermissionGroupsRestResource(
+        string $cartPermissionGroupUuid,
+        RestCartPermissionGroupsAttributesTransfer $restCartPermissionGroupsAttributesTransfer,
+        ?QuotePermissionGroupTransfer $quotePermissionGroupTransfer = null
+    ): RestResourceInterface {
+        $cartPermissionGroupRestResource = $this->restResourceBuilder->createRestResource(
+            CartPermissionGroupsRestApiConfig::RESOURCE_CART_PERMISSION_GROUPS,
+            $cartPermissionGroupUuid,
+            $restCartPermissionGroupsAttributesTransfer
+        );
+
+        $cartPermissionGroupRestResource->setPayload($quotePermissionGroupTransfer);
+
+        return $cartPermissionGroupRestResource;
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCartPermissionGroupNotFoundErrorResponse(): RestResponseInterface
