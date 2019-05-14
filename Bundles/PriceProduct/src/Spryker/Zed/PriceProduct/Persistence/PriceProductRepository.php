@@ -350,20 +350,21 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
      */
-    public function findPriceProductStoresByPriceProduct(PriceProductTransfer $priceProductTransfer): ObjectCollection
+    public function findPriceProductStoresByPriceProduct(PriceProductTransfer $priceProductTransfer): array
     {
         $priceProductTransfer->requireMoneyValue();
 
         $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
         $moneyValueTransfer->requireCurrency();
 
-        return $this->getFactory()
+        $priceProductStoreEntityQuery = $this->getFactory()
             ->createPriceProductStoreQuery()
             ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
             ->filterByFkCurrency($moneyValueTransfer->getCurrency()->getIdCurrency())
-            ->filterByFkStore($moneyValueTransfer->getFkStore())
-            ->find();
+            ->filterByFkStore($moneyValueTransfer->getFkStore());
+
+        return $this->buildQueryFromCriteria($priceProductStoreEntityQuery)->find();
     }
 }

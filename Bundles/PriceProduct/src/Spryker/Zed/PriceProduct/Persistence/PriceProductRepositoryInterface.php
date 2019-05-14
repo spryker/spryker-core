@@ -126,7 +126,7 @@ interface PriceProductRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
      */
-    public function findPriceProductStoresByPriceProduct(PriceProductTransfer $priceProductTransfer): ObjectCollection;
+    public function findPriceProductStoresByPriceProduct(PriceProductTransfer $priceProductTransfer): array;
 }
