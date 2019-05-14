@@ -19,6 +19,8 @@ class PriceProductScheduleAbstractTable extends AbstractTable
     protected const COL_STORE = 'fk_store';
     protected const COL_NET_PRICE = 'net_price';
     protected const COL_GROSS_PRICE = 'gross_price';
+    protected const COL_ACTIVE_FROM = 'active_from';
+    protected const COL_ACTIVE_TO = 'active_to';
     protected const COL_ACTIONS = 'actions';
 
     /**
@@ -58,6 +60,8 @@ class PriceProductScheduleAbstractTable extends AbstractTable
             static::COL_STORE => 'Store',
             static::COL_NET_PRICE => 'Net price',
             static::COL_GROSS_PRICE => 'Gross price',
+            static::COL_ACTIVE_FROM => 'Active from',
+            static::COL_ACTIVE_TO => 'Active to',
             static::COL_ACTIONS => 'Actions',
         ]);
 
@@ -71,6 +75,8 @@ class PriceProductScheduleAbstractTable extends AbstractTable
             static::COL_STORE,
             static::COL_NET_PRICE,
             static::COL_GROSS_PRICE,
+            static::COL_ACTIVE_FROM,
+            static::COL_ACTIVE_TO,
         ]);
 
         $config->setRawColumns([
@@ -125,6 +131,8 @@ class PriceProductScheduleAbstractTable extends AbstractTable
             static::COL_GROSS_PRICE => $priceProductScheduleEntity->getGrossPrice(),
             static::COL_STORE => $priceProductScheduleEntity->getStore()->getName(),
             static::COL_CURRENCY => $priceProductScheduleEntity->getCurrency()->getCode(),
+            static::COL_ACTIVE_FROM => $priceProductScheduleEntity->getActiveFrom()->format('Y-m-d H:i:s'),
+            static::COL_ACTIVE_TO => $priceProductScheduleEntity->getActiveTo()->format('Y-m-d H:i:s'),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($priceProductScheduleEntity)),
         ];
     }
