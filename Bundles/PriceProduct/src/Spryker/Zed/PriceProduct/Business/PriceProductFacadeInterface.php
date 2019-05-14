@@ -507,7 +507,7 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Removes price product.
-     * - Calls price product store predelete plugins.
+     * - Calls price product store before delete plugins.
      * - Removes price product store.
      * - Adds log message about removing price product.
      *
@@ -521,7 +521,8 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
-     * - Removes price product default for price product stores by price product.
+     * - Reads price product stores filtered by currency, store and price product.
+     * - Removes price product default for founded price product stores.
      *
      * @api
      *
