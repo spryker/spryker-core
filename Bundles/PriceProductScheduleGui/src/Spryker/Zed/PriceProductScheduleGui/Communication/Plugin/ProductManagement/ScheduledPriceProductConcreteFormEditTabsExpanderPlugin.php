@@ -19,6 +19,9 @@ class ScheduledPriceProductConcreteFormEditTabsExpanderPlugin extends AbstractPl
     /**
      * {@inheritdoc}
      *
+     * Specification:
+     * - Expands tabs for product concrete edit page with tab Scheduled Prices.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer

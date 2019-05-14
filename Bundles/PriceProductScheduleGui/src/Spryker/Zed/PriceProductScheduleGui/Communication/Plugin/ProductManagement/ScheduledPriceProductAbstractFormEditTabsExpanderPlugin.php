@@ -19,6 +19,9 @@ class ScheduledPriceProductAbstractFormEditTabsExpanderPlugin extends AbstractPl
     /**
      * {@inheritdoc}
      *
+     * Specification:
+     * - Expands tabs for edit product abstract with Scheduled Prices tab.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer

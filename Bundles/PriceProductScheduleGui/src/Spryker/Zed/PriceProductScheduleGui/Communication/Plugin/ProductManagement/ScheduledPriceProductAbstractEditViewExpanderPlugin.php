@@ -18,6 +18,9 @@ class ScheduledPriceProductAbstractEditViewExpanderPlugin extends AbstractPlugin
     /**
      * {@inheritdoc}
      *
+     * Specification:
+     * - Expands view data for edit abstract product with scheduled price data.
+     *
      * @api
      *
      * @param array $viewData

@@ -40,12 +40,12 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
         $priceTypeTransfers = $this->priceProductFacade
             ->getPriceTypeValues();
         $priceTypeTabsViewTransfer = new TabsViewTransfer();
-        $tablesByType = [];
+        $tablesByPriceType = [];
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
             $priceTypeTabItemTransfer = $this->createPriceTypeTab($priceTypeTransfer);
             $priceTypeTabsViewTransfer->addTab($priceTypeTabItemTransfer);
-            $tablesByType[$priceTypeTransfer->getName()] = $this->createTableByType(
+            $tablesByPriceType[$priceTypeTransfer->getName()] = $this->createTableByPriceType(
                 $viewData,
                 $priceTypeTransfer
             )->render();
@@ -56,7 +56,7 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
         }
 
         $viewData['priceTypeTabs'] = $priceTypeTabsViewTransfer;
-        $viewData['tablesByType'] = $tablesByType;
+        $viewData['tablesByType'] = $tablesByPriceType;
 
         return $viewData;
     }
@@ -81,7 +81,7 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
      *
      * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleAbstractTable
      */
-    protected function createTableByType(array $viewData, PriceTypeTransfer $priceTypeTransfer): PriceProductScheduleAbstractTable
+    protected function createTableByPriceType(array $viewData, PriceTypeTransfer $priceTypeTransfer): PriceProductScheduleAbstractTable
     {
         return new PriceProductScheduleAbstractTable(
             $viewData['idProductAbstract'],
