@@ -21,7 +21,7 @@ class TaxProductStorageRepository extends AbstractRepository implements TaxProdu
      *
      * @return \Generated\Shared\Transfer\TaxProductStorageTransfer[]
      */
-    public function getTaxProductTransferFromProductAbstractByIds(array $productAbstractIds): array
+    public function getTaxProductTransfersFromProductAbstractsByIds(array $productAbstractIds): array
     {
         if (count($productAbstractIds) === 0) {
             return [];

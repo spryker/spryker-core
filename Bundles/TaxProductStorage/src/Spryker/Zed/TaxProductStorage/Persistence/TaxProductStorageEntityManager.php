@@ -20,7 +20,7 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
      *
      * @return void
      */
-    public function deleteTaxProductStorageByProductAbstractIds(array $productAbstractIds): void
+    public function deleteTaxProductStoragesByProductAbstractIds(array $productAbstractIds): void
     {
         $this->getFactory()
             ->createTaxProductStorageQuery()
@@ -36,7 +36,7 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
     public function updateTaxProductStorages(array $taxProductStorageTransfers): void
     {
         $spyTaxProductStorages = $this->findSpyTaxProductStoragesByProductAbstractIdsIndexedByProductAbstractIds(
-            $this->getIdFromTransfers($taxProductStorageTransfers)
+            $this->getIdsFromTransfers($taxProductStorageTransfers)
         );
 
         foreach ($taxProductStorageTransfers as $taxProductStorageTransfer) {
@@ -68,7 +68,7 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
      *
      * @return int[]
      */
-    protected function getIdFromTransfers(array $taxProductStorageTransfers): array
+    protected function getIdsFromTransfers(array $taxProductStorageTransfers): array
     {
         $ids = [];
         foreach ($taxProductStorageTransfers as $taxProductStorageTransfer) {

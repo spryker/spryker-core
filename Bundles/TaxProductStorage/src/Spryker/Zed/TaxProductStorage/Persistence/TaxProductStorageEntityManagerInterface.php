@@ -14,7 +14,7 @@ interface TaxProductStorageEntityManagerInterface
      *
      * @return void
      */
-    public function deleteTaxProductStorageByProductAbstractIds(array $productAbstractIds): void;
+    public function deleteTaxProductStoragesByProductAbstractIds(array $productAbstractIds): void;
 
     /**
      * @param \Generated\Shared\Transfer\TaxProductStorageTransfer[] $taxProductStorageTransfers

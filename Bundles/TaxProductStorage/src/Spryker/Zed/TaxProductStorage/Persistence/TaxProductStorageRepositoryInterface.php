@@ -14,7 +14,7 @@ interface TaxProductStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\TaxProductStorageTransfer[]
      */
-    public function getTaxProductTransferFromProductAbstractByIds(array $productAbstractIds): array;
+    public function getTaxProductTransfersFromProductAbstractsByIds(array $productAbstractIds): array;
 
     /**
      * @param int[] $productAbstractIds

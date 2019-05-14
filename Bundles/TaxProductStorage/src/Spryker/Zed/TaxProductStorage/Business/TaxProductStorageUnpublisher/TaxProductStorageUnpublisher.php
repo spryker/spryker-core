@@ -31,6 +31,6 @@ class TaxProductStorageUnpublisher implements TaxProductStorageUnpublisherInterf
      */
     public function unpublish(array $productAbstractIds): void
     {
-        $this->taxProductStorageEntityManager->deleteTaxProductStorageByProductAbstractIds($productAbstractIds);
+        $this->taxProductStorageEntityManager->deleteTaxProductStoragesByProductAbstractIds($productAbstractIds);
     }
 }

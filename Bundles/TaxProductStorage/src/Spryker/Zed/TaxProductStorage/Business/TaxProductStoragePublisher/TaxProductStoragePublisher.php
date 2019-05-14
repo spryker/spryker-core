@@ -42,7 +42,7 @@ class TaxProductStoragePublisher implements TaxProductStoragePublisherInterface
     public function publish(array $productAbstractIds): void
     {
         $spyTaxProductStorages = $this->taxProductStorageRepository
-            ->getTaxProductTransferFromProductAbstractByIds($productAbstractIds);
+            ->getTaxProductTransfersFromProductAbstractsByIds($productAbstractIds);
 
         $this->taxProductStorageEntityManager->updateTaxProductStorages($spyTaxProductStorages);
     }
