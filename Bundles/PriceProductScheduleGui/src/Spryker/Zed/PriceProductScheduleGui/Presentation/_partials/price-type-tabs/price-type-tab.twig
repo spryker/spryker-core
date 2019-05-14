@@ -1,6 +1,5 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: tab.name } %}
     {% block widget_content %}
         {{ tablesByType[tab.name] | raw }}
-        {#{{ defaultPriceTable | raw }}#}
     {% endblock %}
 {% endembed %}

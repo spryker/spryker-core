@@ -11,14 +11,14 @@ use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
+class PriceProductScheduleConcreteTable extends AbstractScheduledPriceTable
 {
-    protected const TABLE_IDENTIFIER = 'price-product-schedule-abstract:';
+    protected const TABLE_IDENTIFIER = 'price-product-schedule-concrete:';
 
     /**
      * @var int
      */
-    protected $fkProductAbstract;
+    protected $fkProduct;
 
     /**
      * @var int
@@ -26,16 +26,16 @@ class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
     protected $fkPriceType;
 
     /**
-     * @param int $fkProductAbstract
+     * @param int $fkProduct
      * @param int $fkPriceType
      */
-    public function __construct(int $fkProductAbstract, int $fkPriceType)
+    public function __construct(int $fkProduct, int $fkPriceType)
     {
-        $this->fkProductAbstract = $fkProductAbstract;
+        $this->fkProduct = $fkProduct;
         $this->fkPriceType = $fkPriceType;
         $this->baseUrl = '/';
-        $this->defaultUrl = Url::generate('price-product-schedule-gui/index/table', [
-            'id-product-abstract' => $fkProductAbstract,
+        $this->defaultUrl = Url::generate('price-product-schedule-gui/index/concrete-table', [
+            'id-product-concrete' => $fkProduct,
             'id-price-type' => $fkPriceType,
         ])->build();
     }
@@ -48,7 +48,7 @@ class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config = parent::configure($config);
-        $this->setTableIdentifier(static::TABLE_IDENTIFIER . $this->fkProductAbstract . ':' . $this->fkPriceType);
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER . $this->fkProduct . ':' . $this->fkPriceType);
 
         return $config;
     }
@@ -61,7 +61,7 @@ class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
         return (new SpyPriceProductScheduleQuery())
             ->leftJoinWithCurrency()
             ->leftJoinWithStore()
-            ->filterByFkProductAbstract($this->fkProductAbstract)
+            ->filterByFkProduct($this->fkProduct)
             ->filterByFkPriceType($this->fkPriceType);
     }
 }

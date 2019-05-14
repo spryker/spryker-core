@@ -9,12 +9,12 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator;
 
 use Generated\Shared\Transfer\TabsViewTransfer;
 
-interface TabCreatorInterface
+interface ConcreteProductTabCreatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
      * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
-    public function createScheduledPriceTab(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer;
+    public function createScheduledPriceTabForProductConcrete(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer;
 }

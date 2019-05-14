@@ -54,7 +54,9 @@
             'idProductAbstract': idProductAbstract,
             'bundledProductTable' : bundledProductTable,
             'currentProduct' : currentProduct,
-            'priceDimension': priceDimension
+            'priceDimension': priceDimension,
+            'priceTypeTabs': priceTypeTabs | default(null),
+            'tablesByType': tablesByType | default([]),
         }) }}
 
     {{ form_end(form) }}

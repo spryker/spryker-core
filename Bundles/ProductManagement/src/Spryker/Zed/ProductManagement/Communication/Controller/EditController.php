@@ -197,7 +197,7 @@ class EditController extends AddController
             }
         }
 
-        return $this->viewResponse([
+        $viewData = [
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productTransfer->toArray(),
@@ -209,7 +209,16 @@ class EditController extends AddController
             'productConcreteFormEditTabs' => $this->getFactory()->createProductConcreteFormEditTabs()->createView(),
             'bundledProductTable' => $bundledProductTable->render(),
             'type' => $type,
-        ]);
+        ];
+
+        $viewExpanderPlugins = $this->getFactory()
+            ->getProductConcreteEditViewExpanderPlugins();
+
+        foreach ($viewExpanderPlugins as $viewExpanderPlugin) {
+            $viewData = $viewExpanderPlugin->expand($viewData);
+        }
+
+        return $this->viewResponse($viewData);
     }
 
     /**

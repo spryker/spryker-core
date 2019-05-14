@@ -9,11 +9,13 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander;
 
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleAbstractTable;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleConcreteTable;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface;
 
-class AbstractProductViewExpander implements AbstractProductViewExpanderInterface
+class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterface
 {
+    protected const PRICE_TYPE_TEMPLATE = '@PriceProductScheduleGui/_partials/price-type-tabs/price-type-tab.twig';
+
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface
      */
@@ -32,7 +34,7 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
      *
      * @return array
      */
-    public function expandAbstractProductEditViewData(array $viewData): array
+    public function expandProductConcreteEditViewData(array $viewData): array
     {
         $priceTypeTransfers = $this->priceProductFacade
             ->getPriceTypeValues();
@@ -43,9 +45,15 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
             $priceTypeTab = new TabItemTransfer();
             $priceTypeTab->setName($priceTypeTransfer->getName())
                 ->setTitle($priceTypeTransfer->getName())
-                ->setTemplate('@PriceProductScheduleGui/_partials/price-type-tabs/price-type-tab.twig');
+                ->setTemplate(static::PRICE_TYPE_TEMPLATE);
             $priceTypeTabs->addTab($priceTypeTab);
-            $tablesByType[$priceTypeTransfer->getName()] = (new PriceProductScheduleAbstractTable($viewData['idProductAbstract'], $priceTypeTransfer->getIdPriceType()))->render();
+
+            $tablesByType[$priceTypeTransfer->getName()] = (
+                new PriceProductScheduleConcreteTable(
+                    $viewData['idProduct'],
+                    $priceTypeTransfer->getIdPriceType()
+                )
+            )->render();
         }
 
         $priceTypeTabs->setActiveTabName($priceTypeTabs->getTabs()[0]->getName());

@@ -73,6 +73,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_FORM_EXPANDER';
     public const PLUGINS_PRODUCT_ABSTRACT_FORM_EDIT_TABS_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EDIT_TABS_EXPANDER';
     public const PLUGINS_PRODUCT_ABSTRACT_EDIT_VIEW_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_EDIT_VIEW_EXPANDER';
+    public const PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -230,6 +231,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductConcreteFormExpanderPlugins($container);
         $container = $this->addProductAbstractFormEditTabsExpanderPlugins($container);
         $container = $this->addProductAbstractEditViewExpanderPlugins($container);
+        $container = $this->addProductConcreteEditViewExpanderPlugins($container);
 
         return $container;
     }
@@ -533,6 +535,28 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractEditViewExpanderPluginInterface[]
      */
     protected function getProductAbstractEditViewExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductConcreteEditViewExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER] = function () {
+            return $this->getProductConcreteEditViewExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditViewExpanderPluginInterface[]
+     */
+    protected function getProductConcreteEditViewExpanderPlugins(): array
     {
         return [];
     }
