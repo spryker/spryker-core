@@ -589,7 +589,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractEditFormTabsExpanderPluginInterface[]
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormEditTabsExpanderPluginInterface[]
      */
     public function getProductAbstractFormEditTabsExpanderPlugins(): array
     {

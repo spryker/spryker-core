@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductManagementExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\TabsViewTransfer;
 
-interface ProductAbstractEditFormTabsExpanderPluginInterface
+interface ProductAbstractFormEditTabsExpanderPluginInterface
 {
     /**
      * Specification:

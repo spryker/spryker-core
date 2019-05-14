@@ -9,12 +9,12 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Plugin\ProductManage
 
 use Generated\Shared\Transfer\TabsViewTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractEditFormTabsExpanderPluginInterface;
+use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormEditTabsExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
  */
-class ScheduledPriceProductAbstractFormEditTabsExpanderPlugin extends AbstractPlugin implements ProductAbstractEditFormTabsExpanderPluginInterface
+class ScheduledPriceProductAbstractFormEditTabsExpanderPlugin extends AbstractPlugin implements ProductAbstractFormEditTabsExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
