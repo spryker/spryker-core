@@ -54,7 +54,9 @@ class CreateGlossaryController extends AbstractController
 
         if ($glossaryForm->isSubmitted()) {
             if ($glossaryForm->isValid()) {
-                $cmsGlossaryTransfer = $this->getFactory()->createCmsGlossaryExpander()->executeBeforeSavePlugins($glossaryForm->getData());
+                $cmsGlossaryTransfer = $this->getFactory()
+                    ->createCmsGlossaryUpdater()
+                    ->executeBeforeSavePlugins($glossaryForm->getData());
 
                 $this->getFactory()
                     ->getCmsFacade()

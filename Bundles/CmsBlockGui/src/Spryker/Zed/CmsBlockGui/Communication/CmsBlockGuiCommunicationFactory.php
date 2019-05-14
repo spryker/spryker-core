@@ -9,8 +9,6 @@ namespace Spryker\Zed\CmsBlockGui\Communication;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Spryker\Zed\CmsBlockGui\CmsBlockGuiDependencyProvider;
-use Spryker\Zed\CmsBlockGui\Communication\Expander\CmsBlockGlossaryExpander;
-use Spryker\Zed\CmsBlockGui\Communication\Expander\CmsBlockGlossaryExpanderInterface;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Block\CmsBlockForm;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Constraint\TwigContent;
 use Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider;
@@ -20,6 +18,8 @@ use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlacehol
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderTranslationForm;
 use Spryker\Zed\CmsBlockGui\Communication\Table\CmsBlockTable;
 use Spryker\Zed\CmsBlockGui\Communication\Tabs\CmsBlockGlossaryTabs;
+use Spryker\Zed\CmsBlockGui\Communication\Updater\CmsBlockGlossaryUpdater;
+use Spryker\Zed\CmsBlockGui\Communication\Updater\CmsBlockGlossaryUpdaterInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -125,7 +125,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CmsBlockGlossaryFormDataProvider(
             $this->getCmsBlockFacade(),
-            $this->createCmsBlockGlossaryExpander()
+            $this->createCmsBlockGlossaryUpdater()
         );
     }
 
@@ -190,11 +190,14 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockGui\Communication\Expander\CmsBlockGlossaryExpanderInterface
+     * @return \Spryker\Zed\CmsBlockGui\Communication\Updater\CmsBlockGlossaryUpdaterInterface
      */
-    public function createCmsBlockGlossaryExpander(): CmsBlockGlossaryExpanderInterface
+    public function createCmsBlockGlossaryUpdater(): CmsBlockGlossaryUpdaterInterface
     {
-        return new CmsBlockGlossaryExpander($this->getCmsBlockGlossaryAfterFindPlugins(), $this->getCmsBlockGlossaryBeforeSavePlugins());
+        return new CmsBlockGlossaryUpdater(
+            $this->getCmsBlockGlossaryAfterFindPlugins(),
+            $this->getCmsBlockGlossaryBeforeSavePlugins()
+        );
     }
 
     /**

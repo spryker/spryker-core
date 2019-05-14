@@ -10,8 +10,8 @@ namespace Spryker\Zed\CmsGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Spryker\Zed\CmsGui\Communication\Exception\CmsGlossaryNotFoundException;
-use Spryker\Zed\CmsGui\Communication\Expander\CmsGlossaryExpanderInterface;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
+use Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdaterInterface;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 
 class CmsGlossaryFormTypeDataProvider
@@ -32,18 +32,18 @@ class CmsGlossaryFormTypeDataProvider
     protected $cmsFacade;
 
     /**
-     * @var \Spryker\Zed\CmsGui\Communication\Expander\CmsGlossaryExpanderInterface
+     * @var \Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdaterInterface
      */
-    protected $cmsGlossaryExpander;
+    protected $cmsGlossaryUpdater;
 
     /**
      * @param \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface $cmsFacade
-     * @param \Spryker\Zed\CmsGui\Communication\Expander\CmsGlossaryExpanderInterface $cmsGlossaryExpander
+     * @param \Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdaterInterface $cmsGlossaryUpdater
      */
-    public function __construct(CmsGuiToCmsInterface $cmsFacade, CmsGlossaryExpanderInterface $cmsGlossaryExpander)
+    public function __construct(CmsGuiToCmsInterface $cmsFacade, CmsGlossaryUpdaterInterface $cmsGlossaryUpdater)
     {
         $this->cmsFacade = $cmsFacade;
-        $this->cmsGlossaryExpander = $cmsGlossaryExpander;
+        $this->cmsGlossaryUpdater = $cmsGlossaryUpdater;
     }
 
     /**
@@ -67,7 +67,6 @@ class CmsGlossaryFormTypeDataProvider
     public function getData($idCmsPage)
     {
         $cmsGlossaryTransfer = $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
-        $cmsGlossaryTransfer = $this->cmsGlossaryExpander->executeAfterFindPlugins($cmsGlossaryTransfer);
 
         if (!$cmsGlossaryTransfer) {
             throw new CmsGlossaryNotFoundException(
@@ -77,6 +76,8 @@ class CmsGlossaryFormTypeDataProvider
                 )
             );
         }
+
+        $cmsGlossaryTransfer = $this->cmsGlossaryUpdater->executeAfterFindPlugins($cmsGlossaryTransfer);
 
         return $cmsGlossaryTransfer;
     }

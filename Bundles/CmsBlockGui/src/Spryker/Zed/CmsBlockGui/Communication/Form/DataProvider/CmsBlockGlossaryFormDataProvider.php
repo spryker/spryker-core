@@ -9,8 +9,8 @@ namespace Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
-use Spryker\Zed\CmsBlockGui\Communication\Expander\CmsBlockGlossaryExpanderInterface;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryForm;
+use Spryker\Zed\CmsBlockGui\Communication\Updater\CmsBlockGlossaryUpdaterInterface;
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface;
 
 class CmsBlockGlossaryFormDataProvider
@@ -21,18 +21,18 @@ class CmsBlockGlossaryFormDataProvider
     protected $cmsBlockFacade;
 
     /**
-     * @var \Spryker\Zed\CmsBlockGui\Communication\Expander\CmsBlockGlossaryExpanderInterface
+     * @var \Spryker\Zed\CmsBlockGui\Communication\Updater\CmsBlockGlossaryUpdaterInterface
      */
-    protected $cmsGlossaryExpander;
+    protected $cmsGlossaryUpdater;
 
     /**
      * @param \Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockInterface $cmsBlockFacade
-     * @param \Spryker\Zed\CmsBlockGui\Communication\Expander\CmsBlockGlossaryExpanderInterface $cmsGlossaryExpander
+     * @param \Spryker\Zed\CmsBlockGui\Communication\Updater\CmsBlockGlossaryUpdaterInterface $cmsGlossaryUpdater
      */
-    public function __construct(CmsBlockGuiToCmsBlockInterface $cmsBlockFacade, CmsBlockGlossaryExpanderInterface $cmsGlossaryExpander)
+    public function __construct(CmsBlockGuiToCmsBlockInterface $cmsBlockFacade, CmsBlockGlossaryUpdaterInterface $cmsGlossaryUpdater)
     {
         $this->cmsBlockFacade = $cmsBlockFacade;
-        $this->cmsGlossaryExpander = $cmsGlossaryExpander;
+        $this->cmsGlossaryUpdater = $cmsGlossaryUpdater;
     }
 
     /**
@@ -54,7 +54,7 @@ class CmsBlockGlossaryFormDataProvider
     public function getData($idCmsBlock)
     {
         $cmsBlockGlossaryTransfer = $this->cmsBlockFacade->findGlossary($idCmsBlock);
-        $cmsBlockGlossaryTransfer = $this->cmsGlossaryExpander->executeAfterFindPlugins($cmsBlockGlossaryTransfer);
+        $cmsBlockGlossaryTransfer = $this->cmsGlossaryUpdater->executeAfterFindPlugins($cmsBlockGlossaryTransfer);
 
         return $cmsBlockGlossaryTransfer;
     }

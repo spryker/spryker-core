@@ -13,7 +13,7 @@ interface CmsGlossaryAfterFindPluginInterface
 {
     /**
      * Specification:
-     * - Expands CmsGlossaryTransfer after finding.
+     * - Modifies/expands CmsGlossaryTransfer after glossary was found.
      *
      * @api
      *

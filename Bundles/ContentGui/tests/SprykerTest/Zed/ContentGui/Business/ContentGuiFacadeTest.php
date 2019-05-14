@@ -64,29 +64,29 @@ class ContentGuiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testConvertOneCmsGlossaryTwigFunctionToHtml(): void
+    public function testConvertOneCmsGlossaryShortCodeToHtml(): void
     {
-        $inputString = $this->tester->getOneTwigFunctionInString($this->bannerContentTransfer);
+        $inputString = $this->tester->getOneShortCodeInString($this->bannerContentTransfer);
         $expectedResult = $this->tester->getOneHtmlWidgetInString($this->bannerContentTransfer);
-        $this->runConvertCmsGlossaryTwigFunctionToHtml($inputString, $expectedResult);
+        $this->runConvertCmsGlossaryShortCodeToHtml($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertTwoSameCmsGlossaryTwigFunctionsToHtml(): void
+    public function testConvertTwoSameCmsGlossaryShortCodesToHtml(): void
     {
-        $inputString = $this->tester->getTwoSameTwigFunctionsInString($this->bannerContentTransfer);
+        $inputString = $this->tester->getTwoSameShortCodesInString($this->bannerContentTransfer);
         $expectedResult = $this->tester->getTwoSameHtmlWidgetsInString($this->bannerContentTransfer);
-        $this->runConvertCmsGlossaryTwigFunctionToHtml($inputString, $expectedResult);
+        $this->runConvertCmsGlossaryShortCodeToHtml($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertTwoDifferentCmsGlossaryTwigFunctionsToHtml(): void
+    public function testConvertTwoDifferentCmsGlossaryShortCodesToHtml(): void
     {
-        $inputString = $this->tester->getTwoDifferentTwigFunctionInString(
+        $inputString = $this->tester->getTwoDifferentShortCodeInString(
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
         );
@@ -94,91 +94,91 @@ class ContentGuiFacadeTest extends Unit
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
         );
-        $this->runConvertCmsGlossaryTwigFunctionToHtml($inputString, $expectedResult);
+        $this->runConvertCmsGlossaryShortCodeToHtml($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertCmsGlossaryTwigFunctionToHtmlWithoutElements(): void
+    public function testConvertCmsGlossaryShortCodeToHtmlWithoutElements(): void
     {
-        $inputString = $this->tester->getStringWithoutTwigFunctionsAndWidgets();
-        $expectedResult = $this->tester->getStringWithoutTwigFunctionsAndWidgets();
-        $this->runConvertCmsGlossaryTwigFunctionToHtml($inputString, $expectedResult);
+        $inputString = $this->tester->getStringWithoutShortCodesAndWidgets();
+        $expectedResult = $this->tester->getStringWithoutShortCodesAndWidgets();
+        $this->runConvertCmsGlossaryShortCodeToHtml($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertOneCmsGlossaryHtmlToTwigFunction(): void
+    public function testConvertOneCmsGlossaryHtmlToShortCode(): void
     {
         $inputString = $this->tester->getOneHtmlWidgetInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getOneTwigFunctionInString($this->bannerContentTransfer);
-        $this->runConvertCmsGlossaryHtmlToTwigFunction($inputString, $expectedResult);
+        $expectedResult = $this->tester->getOneShortCodeInString($this->bannerContentTransfer);
+        $this->runConvertCmsGlossaryHtmlToShortCode($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertTwoSameCmsGlossaryHtmlToTwigFunction(): void
+    public function testConvertTwoSameCmsGlossaryHtmlToShortCode(): void
     {
         $inputString = $this->tester->getTwoSameHtmlWidgetsInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getTwoSameTwigFunctionsInString($this->bannerContentTransfer);
-        $this->runConvertCmsGlossaryHtmlToTwigFunction($inputString, $expectedResult);
+        $expectedResult = $this->tester->getTwoSameShortCodesInString($this->bannerContentTransfer);
+        $this->runConvertCmsGlossaryHtmlToShortCode($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertTwoDifferentCmsGlossaryHtmlToTwigFunction(): void
+    public function testConvertTwoDifferentCmsGlossaryHtmlToShortCode(): void
     {
         $inputString = $this->tester->getTwoDifferentHtmlWidgetsInString(
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
         );
-        $expectedResult = $this->tester->getTwoDifferentTwigFunctionInString(
+        $expectedResult = $this->tester->getTwoDifferentShortCodeInString(
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
         );
-        $this->runConvertCmsGlossaryHtmlToTwigFunction($inputString, $expectedResult);
+        $this->runConvertCmsGlossaryHtmlToShortCode($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertCmsGlossaryHtmlToTwigFunctionWithoutElements(): void
+    public function testConvertCmsGlossaryHtmlToShortCodeWithoutElements(): void
     {
-        $inputString = $this->tester->getStringWithoutTwigFunctionsAndWidgets();
-        $expectedResult = $this->tester->getStringWithoutTwigFunctionsAndWidgets();
-        $this->runConvertCmsGlossaryHtmlToTwigFunction($inputString, $expectedResult);
+        $inputString = $this->tester->getStringWithoutShortCodesAndWidgets();
+        $expectedResult = $this->tester->getStringWithoutShortCodesAndWidgets();
+        $this->runConvertCmsGlossaryHtmlToShortCode($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertOneCmsBlockGlossaryTwigFunctionToHtml(): void
+    public function testConvertOneCmsBlockGlossaryShortCodeToHtml(): void
     {
-        $inputString = $this->tester->getOneTwigFunctionInString($this->bannerContentTransfer);
+        $inputString = $this->tester->getOneShortCodeInString($this->bannerContentTransfer);
         $expectedResult = $this->tester->getOneHtmlWidgetInString($this->bannerContentTransfer);
-        $this->runConvertCmsBlockGlossaryTwigFunctionToHtml($inputString, $expectedResult);
+        $this->runConvertCmsBlockGlossaryShortCodeToHtml($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertTwoSameCmsBlockGlossaryTwigFunctionsToHtml(): void
+    public function testConvertTwoSameCmsBlockGlossaryShortCodesToHtml(): void
     {
-        $inputString = $this->tester->getTwoSameTwigFunctionsInString($this->bannerContentTransfer);
+        $inputString = $this->tester->getTwoSameShortCodesInString($this->bannerContentTransfer);
         $expectedResult = $this->tester->getTwoSameHtmlWidgetsInString($this->bannerContentTransfer);
-        $this->runConvertCmsBlockGlossaryTwigFunctionToHtml($inputString, $expectedResult);
+        $this->runConvertCmsBlockGlossaryShortCodeToHtml($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertTwoDifferentCmsBlockGlossaryTwigFunctionsToHtml(): void
+    public function testConvertTwoDifferentCmsBlockGlossaryShortCodesToHtml(): void
     {
-        $inputString = $this->tester->getTwoDifferentTwigFunctionInString(
+        $inputString = $this->tester->getTwoDifferentShortCodeInString(
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
         );
@@ -186,63 +186,63 @@ class ContentGuiFacadeTest extends Unit
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
         );
-        $this->runConvertCmsBlockGlossaryTwigFunctionToHtml($inputString, $expectedResult);
+        $this->runConvertCmsBlockGlossaryShortCodeToHtml($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertCmsBlockGlossaryTwigFunctionToHtmlWithoutElements(): void
+    public function testConvertCmsBlockGlossaryShortCodeToHtmlWithoutElements(): void
     {
-        $inputString = $this->tester->getStringWithoutTwigFunctionsAndWidgets();
-        $expectedResult = $this->tester->getStringWithoutTwigFunctionsAndWidgets();
-        $this->runConvertCmsBlockGlossaryTwigFunctionToHtml($inputString, $expectedResult);
+        $inputString = $this->tester->getStringWithoutShortCodesAndWidgets();
+        $expectedResult = $this->tester->getStringWithoutShortCodesAndWidgets();
+        $this->runConvertCmsBlockGlossaryShortCodeToHtml($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertOneCmsBlockGlossaryHtmlToTwigFunction(): void
+    public function testConvertOneCmsBlockGlossaryHtmlToShortCode(): void
     {
         $inputString = $this->tester->getOneHtmlWidgetInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getOneTwigFunctionInString($this->bannerContentTransfer);
-        $this->runConvertCmsBlockGlossaryHtmlToTwigFunction($inputString, $expectedResult);
+        $expectedResult = $this->tester->getOneShortCodeInString($this->bannerContentTransfer);
+        $this->runConvertCmsBlockGlossaryHtmlToShortCode($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertTwoSameCmsBlockGlossaryHtmlToTwigFunctions(): void
+    public function testConvertTwoSameCmsBlockGlossaryHtmlToShortCodes(): void
     {
         $inputString = $this->tester->getTwoSameHtmlWidgetsInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getTwoSameTwigFunctionsInString($this->bannerContentTransfer);
-        $this->runConvertCmsBlockGlossaryHtmlToTwigFunction($inputString, $expectedResult);
+        $expectedResult = $this->tester->getTwoSameShortCodesInString($this->bannerContentTransfer);
+        $this->runConvertCmsBlockGlossaryHtmlToShortCode($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertTwoDifferentCmsBlockGlossaryHtmlToTwigFunctions(): void
+    public function testConvertTwoDifferentCmsBlockGlossaryHtmlToShortCodes(): void
     {
         $inputString = $this->tester->getTwoDifferentHtmlWidgetsInString(
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
         );
-        $expectedResult = $this->tester->getTwoDifferentTwigFunctionInString(
+        $expectedResult = $this->tester->getTwoDifferentShortCodeInString(
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
         );
-        $this->runConvertCmsBlockGlossaryHtmlToTwigFunction($inputString, $expectedResult);
+        $this->runConvertCmsBlockGlossaryHtmlToShortCode($inputString, $expectedResult);
     }
 
     /**
      * @return void
      */
-    public function testConvertCmsBlockGlossaryHtmlToTwigFunctionWithoutElements(): void
+    public function testConvertCmsBlockGlossaryHtmlToShortCodeWithoutElements(): void
     {
-        $inputString = $this->tester->getStringWithoutTwigFunctionsAndWidgets();
-        $expectedResult = $this->tester->getStringWithoutTwigFunctionsAndWidgets();
-        $this->runConvertCmsBlockGlossaryHtmlToTwigFunction($inputString, $expectedResult);
+        $inputString = $this->tester->getStringWithoutShortCodesAndWidgets();
+        $expectedResult = $this->tester->getStringWithoutShortCodesAndWidgets();
+        $this->runConvertCmsBlockGlossaryHtmlToShortCode($inputString, $expectedResult);
     }
 
     /**
@@ -251,11 +251,11 @@ class ContentGuiFacadeTest extends Unit
      *
      * @return void
      */
-    protected function runConvertCmsGlossaryTwigFunctionToHtml(string $inputString, string $expectedResult): void
+    protected function runConvertCmsGlossaryShortCodeToHtml(string $inputString, string $expectedResult): void
     {
         $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($inputString);
         $contentGuiFacade = $this->getFacade();
-        $cmsGlossaryTransfer = $contentGuiFacade->convertCmsGlossaryTwigFunctionToHtml($cmsGlossaryTransfer);
+        $cmsGlossaryTransfer = $contentGuiFacade->convertCmsGlossaryShortCodeToHtml($cmsGlossaryTransfer);
         $this->checkCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
     }
 
@@ -265,11 +265,11 @@ class ContentGuiFacadeTest extends Unit
      *
      * @return void
      */
-    protected function runConvertCmsGlossaryHtmlToTwigFunction(string $inputString, string $expectedResult): void
+    protected function runConvertCmsGlossaryHtmlToShortCode(string $inputString, string $expectedResult): void
     {
         $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($inputString);
         $contentGuiFacade = $this->getFacade();
-        $cmsGlossaryTransfer = $contentGuiFacade->convertCmsGlossaryHtmlToTwigFunction($cmsGlossaryTransfer);
+        $cmsGlossaryTransfer = $contentGuiFacade->convertCmsGlossaryHtmlToShortCode($cmsGlossaryTransfer);
         $this->checkCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
     }
 
@@ -315,11 +315,11 @@ class ContentGuiFacadeTest extends Unit
      *
      * @return void
      */
-    protected function runConvertCmsBlockGlossaryTwigFunctionToHtml(string $inputString, string $expectedResult): void
+    protected function runConvertCmsBlockGlossaryShortCodeToHtml(string $inputString, string $expectedResult): void
     {
         $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($inputString);
         $contentGuiFacade = $this->getFacade();
-        $cmsBlockGlossaryTransfer = $contentGuiFacade->convertCmsBlockGlossaryTwigFunctionToHtml($cmsBlockGlossaryTransfer);
+        $cmsBlockGlossaryTransfer = $contentGuiFacade->convertCmsBlockGlossaryShortCodeToHtml($cmsBlockGlossaryTransfer);
         $this->checkCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
     }
 
@@ -329,11 +329,11 @@ class ContentGuiFacadeTest extends Unit
      *
      * @return void
      */
-    protected function runConvertCmsBlockGlossaryHtmlToTwigFunction(string $inputString, string $expectedResult): void
+    protected function runConvertCmsBlockGlossaryHtmlToShortCode(string $inputString, string $expectedResult): void
     {
         $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($inputString);
         $contentGuiFacade = $this->getFacade();
-        $cmsBlockGlossaryTransfer = $contentGuiFacade->convertCmsBlockGlossaryHtmlToTwigFunction($cmsBlockGlossaryTransfer);
+        $cmsBlockGlossaryTransfer = $contentGuiFacade->convertCmsBlockGlossaryHtmlToShortCode($cmsBlockGlossaryTransfer);
         $this->checkCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
     }
 

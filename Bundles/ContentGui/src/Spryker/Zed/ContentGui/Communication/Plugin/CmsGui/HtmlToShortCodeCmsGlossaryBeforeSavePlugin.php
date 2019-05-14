@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ContentGui\Communication\Plugin\CmsGui;
 
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
-use Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryAfterFindPluginInterface;
+use Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryBeforeSavePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ContentGui\Communication\ContentGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ContentGui\ContentGuiConfig getConfig()
  */
-class TwigFunctionToHtmlCmsGlossaryAfterFindPlugin extends AbstractPlugin implements CmsGlossaryAfterFindPluginInterface
+class HtmlToShortCodeCmsGlossaryBeforeSavePlugin extends AbstractPlugin implements CmsGlossaryBeforeSavePluginInterface
 {
     /**
      * {@inheritDoc}
@@ -29,6 +29,6 @@ class TwigFunctionToHtmlCmsGlossaryAfterFindPlugin extends AbstractPlugin implem
      */
     public function execute(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
-        return $this->getFacade()->convertCmsGlossaryTwigFunctionToHtml($cmsGlossaryTransfer);
+        return $this->getFacade()->convertCmsGlossaryHtmlToShortCode($cmsGlossaryTransfer);
     }
 }

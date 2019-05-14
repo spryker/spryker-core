@@ -33,18 +33,18 @@ class EditContentController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idContent = $this->castId($request->query->get(static::PARAM_ID_CONTENT));
+        $contentId = $this->castId($request->query->get(static::PARAM_ID_CONTENT));
         $dataProvider = $this->getFactory()->createContentFormDataProvider();
-        $contentTransfer = $dataProvider->getData('', $idContent);
+        $contentTransfer = $dataProvider->getData('', $contentId);
 
         if (!$contentTransfer) {
-            throw new NotFoundHttpException(sprintf(static::MESSAGE_ERROR_CONTENT_EDIT, $idContent));
+            throw new NotFoundHttpException(sprintf(static::MESSAGE_ERROR_CONTENT_EDIT, $contentId));
         }
 
         $contentForm = $this->getFactory()
             ->getContentForm(
                 $contentTransfer,
-                $dataProvider->getOptions('', $idContent)
+                $dataProvider->getOptions('', $contentId)
             )
             ->handleRequest($request);
 
@@ -67,7 +67,7 @@ class EditContentController extends AbstractController
             'contentTabs' => $contentTabs->createView(),
             'contentForm' => $contentForm->createView(),
             'backButton' => static::URL_REDIRECT_CONTENT_LIST_PAGE,
-            'idContent' => $idContent,
+            'contentId' => $contentId,
             'contentName' => $contentTransfer->getContentTermKey(),
         ]);
     }

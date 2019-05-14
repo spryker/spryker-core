@@ -11,6 +11,9 @@ use Spryker\Zed\ContentGui\Business\Converter\CmsBlockGui\CmsBlockGuiGlossaryCon
 use Spryker\Zed\ContentGui\Business\Converter\CmsBlockGui\CmsBlockGuiGlossaryConverterInterface;
 use Spryker\Zed\ContentGui\Business\Converter\CmsGui\CmsGuiGlossaryConverter;
 use Spryker\Zed\ContentGui\Business\Converter\CmsGui\CmsGuiGlossaryConverterInterface;
+use Spryker\Zed\ContentGui\Business\Converter\ContentGuiConverterInterface;
+use Spryker\Zed\ContentGui\Business\Converter\HtmlToShortCodeConverter;
+use Spryker\Zed\ContentGui\Business\Converter\ShortCodeToHtmlConverter;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
@@ -27,10 +30,8 @@ class ContentGuiBusinessFactory extends AbstractBusinessFactory
     public function createCmsGuiGlossaryConverter(): CmsGuiGlossaryConverterInterface
     {
         return new CmsGuiGlossaryConverter(
-            $this->getContentEditorPlugins(),
-            $this->getContentFacade(),
-            $this->getConfig(),
-            $this->getTranslatorFacade()
+            $this->createHtmlToShortCodeConverter(),
+            $this->createShortCodeToHtmlConverter()
         );
     }
 
@@ -40,10 +41,29 @@ class ContentGuiBusinessFactory extends AbstractBusinessFactory
     public function createCmsBlockGuiGlossaryConverter(): CmsBlockGuiGlossaryConverterInterface
     {
         return new CmsBlockGuiGlossaryConverter(
-            $this->getContentEditorPlugins(),
+            $this->createHtmlToShortCodeConverter(),
+            $this->createShortCodeToHtmlConverter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGui\Business\Converter\ContentGuiConverterInterface
+     */
+    public function createHtmlToShortCodeConverter(): ContentGuiConverterInterface
+    {
+        return new HtmlToShortCodeConverter();
+    }
+
+    /**
+     * @return \Spryker\Zed\ContentGui\Business\Converter\ContentGuiConverterInterface
+     */
+    public function createShortCodeToHtmlConverter(): ContentGuiConverterInterface
+    {
+        return new ShortCodeToHtmlConverter(
             $this->getContentFacade(),
             $this->getConfig(),
-            $this->getTranslatorFacade()
+            $this->getTranslatorFacade(),
+            $this->getContentEditorPlugins()
         );
     }
 

@@ -13,7 +13,7 @@ interface CmsBlockGlossaryAfterFindPluginInterface
 {
     /**
      * Specification:
-     * - Expands CmsBlockGlossaryTransfer after finding.
+     * - Modifies/expands CmsBlockGlossaryTransfer after glossary was found.
      *
      * @api
      *

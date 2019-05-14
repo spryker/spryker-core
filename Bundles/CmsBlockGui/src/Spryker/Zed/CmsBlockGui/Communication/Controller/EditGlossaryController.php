@@ -48,7 +48,7 @@ class EditGlossaryController extends AbstractCmsBlockController
         if ($glossaryForm->isSubmitted()) {
             if ($glossaryForm->isValid()) {
                 $cmsBlockGlossaryTransfer = $this->getFactory()
-                    ->createCmsBlockGlossaryExpander()
+                    ->createCmsBlockGlossaryUpdater()
                     ->executeBeforeSavePlugins($glossaryForm->getData());
 
                 $this->getFactory()

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentGui\Business\Converter\CmsGui;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Spryker\Zed\ContentGui\Business\Converter\AbstractCmsGlossaryConverter;
 
@@ -17,23 +18,9 @@ class CmsGuiGlossaryConverter extends AbstractCmsGlossaryConverter implements Cm
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertTwigFunctionToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
+    public function convertShortCodeToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
-        $cmsGlossaryAttributesTransfers = $cmsGlossaryTransfer->getGlossaryAttributes();
-
-        foreach ($cmsGlossaryAttributesTransfers as $cmsGlossaryAttributesTransferKey => $cmsGlossaryAttributesTransfer) {
-            $cmsPlaceholderTranslationTransfers = $cmsGlossaryAttributesTransfer->getTranslations();
-
-            foreach ($cmsPlaceholderTranslationTransfers as $cmsPlaceholderTranslationTransferKey => $cmsPlaceholderTranslationTransfer) {
-                $cmsPlaceholderTranslation = $cmsPlaceholderTranslationTransfer->getTranslation();
-                $cmsPlaceholderTranslation = $this->convertTwigFunctionToHtmlInTranslation($cmsPlaceholderTranslation);
-                $cmsPlaceholderTranslationTransfers[$cmsPlaceholderTranslationTransferKey]->setTranslation($cmsPlaceholderTranslation);
-            }
-
-            $cmsGlossaryAttributesTransfers[$cmsGlossaryAttributesTransferKey]->setTranslations($cmsPlaceholderTranslationTransfers);
-        }
-
-        return $cmsGlossaryTransfer->setGlossaryAttributes($cmsGlossaryAttributesTransfers);
+        return $this->execute($cmsGlossaryTransfer, 'convertTranslationShortCodeToHtml');
     }
 
     /**
@@ -41,22 +28,44 @@ class CmsGuiGlossaryConverter extends AbstractCmsGlossaryConverter implements Cm
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertHtmlToTwigFunction(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
+    public function convertHtmlToShortCode(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
+    {
+        return $this->execute($cmsGlossaryTransfer, 'convertTranslationHtmlToShortCode');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
+     * @param string $methodName
+     *
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     */
+    protected function execute(CmsGlossaryTransfer $cmsGlossaryTransfer, string $methodName): CmsGlossaryTransfer
     {
         $cmsGlossaryAttributesTransfers = $cmsGlossaryTransfer->getGlossaryAttributes();
 
-        foreach ($cmsGlossaryAttributesTransfers as $cmsGlossaryAttributesTransferKey => $cmsGlossaryAttributesTransfer) {
+        foreach ($cmsGlossaryAttributesTransfers as $cmsGlossaryAttributesTransfer) {
             $cmsPlaceholderTranslationTransfers = $cmsGlossaryAttributesTransfer->getTranslations();
-
-            foreach ($cmsPlaceholderTranslationTransfers as $cmsPlaceholderTranslationTransferKey => $cmsPlaceholderTranslationTransfer) {
-                $cmsPlaceholderTranslation = $cmsPlaceholderTranslationTransfer->getTranslation();
-                $cmsPlaceholderTranslation = $this->convertHtmlToTwigFunctionInTranslation($cmsPlaceholderTranslation);
-                $cmsPlaceholderTranslationTransfers[$cmsPlaceholderTranslationTransferKey]->setTranslation($cmsPlaceholderTranslation);
-            }
-
-            $cmsGlossaryAttributesTransfers[$cmsGlossaryAttributesTransferKey]->setTranslations($cmsPlaceholderTranslationTransfers);
+            $cmsPlaceholderTranslationTransfers = $this->convertTranslations($cmsPlaceholderTranslationTransfers, $methodName);
+            $cmsGlossaryAttributesTransfer->setTranslations($cmsPlaceholderTranslationTransfers);
         }
 
         return $cmsGlossaryTransfer->setGlossaryAttributes($cmsGlossaryAttributesTransfers);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer[] $cmsPlaceholderTranslationTransfers
+     * @param string $methodName
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer[]
+     */
+    protected function convertTranslations(ArrayObject $cmsPlaceholderTranslationTransfers, string $methodName): ArrayObject
+    {
+        foreach ($cmsPlaceholderTranslationTransfers as $cmsPlaceholderTranslationTransfer) {
+            $cmsPlaceholderTranslation = $cmsPlaceholderTranslationTransfer->getTranslation();
+            $cmsPlaceholderTranslation = $this->{$methodName}($cmsPlaceholderTranslation);
+            $cmsPlaceholderTranslationTransfer->setTranslation($cmsPlaceholderTranslation);
+        }
+
+        return $cmsPlaceholderTranslationTransfers;
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentGui\Business\Converter\CmsBlockGui;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Spryker\Zed\ContentGui\Business\Converter\AbstractCmsGlossaryConverter;
 
@@ -17,23 +18,9 @@ class CmsBlockGuiGlossaryConverter extends AbstractCmsGlossaryConverter implemen
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function convertTwigFunctionToHtml(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
+    public function convertShortCodeToHtml(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
     {
-        $cmsBlockGlossaryPlaceholderTransfers = $cmsBlockGlossaryTransfer->getGlossaryPlaceholders();
-
-        foreach ($cmsBlockGlossaryPlaceholderTransfers as $cmsBlockGlossaryPlaceholderTransferKey => $cmsBlockGlossaryPlaceholderTransfer) {
-            $cmsBlockGlossaryPlaceholderTranslationTransfers = $cmsBlockGlossaryPlaceholderTransfer->getTranslations();
-
-            foreach ($cmsBlockGlossaryPlaceholderTranslationTransfers as $cmsBlockGlossaryPlaceholderTranslationTransferKey => $cmsBlockGlossaryPlaceholderTranslationTransfer) {
-                $cmsBlockGlossaryPlaceholderTranslation = $cmsBlockGlossaryPlaceholderTranslationTransfer->getTranslation();
-                $cmsBlockGlossaryPlaceholderTranslation = $this->convertTwigFunctionToHtmlInTranslation($cmsBlockGlossaryPlaceholderTranslation);
-                $cmsBlockGlossaryPlaceholderTranslationTransfers[$cmsBlockGlossaryPlaceholderTranslationTransferKey]->setTranslation($cmsBlockGlossaryPlaceholderTranslation);
-            }
-
-            $cmsBlockGlossaryPlaceholderTransfers[$cmsBlockGlossaryPlaceholderTransferKey]->setTranslations($cmsBlockGlossaryPlaceholderTranslationTransfers);
-        }
-
-        return $cmsBlockGlossaryTransfer->setGlossaryPlaceholders($cmsBlockGlossaryPlaceholderTransfers);
+        return $this->execute($cmsBlockGlossaryTransfer, 'convertTranslationShortCodeToHtml');
     }
 
     /**
@@ -41,22 +28,44 @@ class CmsBlockGuiGlossaryConverter extends AbstractCmsGlossaryConverter implemen
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function convertHtmlToTwigFunction(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
+    public function convertHtmlToShortCode(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
+    {
+        return $this->execute($cmsBlockGlossaryTransfer, 'convertTranslationHtmlToShortCode');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
+     * @param string $methodName
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
+     */
+    protected function execute(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer, string $methodName): CmsBlockGlossaryTransfer
     {
         $cmsBlockGlossaryPlaceholderTransfers = $cmsBlockGlossaryTransfer->getGlossaryPlaceholders();
 
-        foreach ($cmsBlockGlossaryPlaceholderTransfers as $cmsBlockGlossaryPlaceholderTransferKey => $cmsBlockGlossaryPlaceholderTransfer) {
+        foreach ($cmsBlockGlossaryPlaceholderTransfers as $cmsBlockGlossaryPlaceholderTransfer) {
             $cmsBlockGlossaryPlaceholderTranslationTransfers = $cmsBlockGlossaryPlaceholderTransfer->getTranslations();
-
-            foreach ($cmsBlockGlossaryPlaceholderTranslationTransfers as $cmsBlockGlossaryPlaceholderTranslationTransferKey => $cmsBlockGlossaryPlaceholderTranslationTransfer) {
-                $cmsBlockGlossaryPlaceholderTranslation = $cmsBlockGlossaryPlaceholderTranslationTransfer->getTranslation();
-                $cmsBlockGlossaryPlaceholderTranslation = $this->convertHtmlToTwigFunctionInTranslation($cmsBlockGlossaryPlaceholderTranslation);
-                $cmsBlockGlossaryPlaceholderTranslationTransfers[$cmsBlockGlossaryPlaceholderTranslationTransferKey]->setTranslation($cmsBlockGlossaryPlaceholderTranslation);
-            }
-
-            $cmsBlockGlossaryPlaceholderTransfers[$cmsBlockGlossaryPlaceholderTransferKey]->setTranslations($cmsBlockGlossaryPlaceholderTranslationTransfers);
+            $cmsBlockGlossaryPlaceholderTranslationTransfers = $this->convertTranslations($cmsBlockGlossaryPlaceholderTranslationTransfers, $methodName);
+            $cmsBlockGlossaryPlaceholderTransfer->setTranslations($cmsBlockGlossaryPlaceholderTranslationTransfers);
         }
 
         return $cmsBlockGlossaryTransfer->setGlossaryPlaceholders($cmsBlockGlossaryPlaceholderTransfers);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer[] $cmsBlockGlossaryPlaceholderTranslationTransfers
+     * @param string $methodName
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer[]
+     */
+    protected function convertTranslations(ArrayObject $cmsBlockGlossaryPlaceholderTranslationTransfers, string $methodName): ArrayObject
+    {
+        foreach ($cmsBlockGlossaryPlaceholderTranslationTransfers as $cmsBlockGlossaryPlaceholderTranslationTransfer) {
+            $cmsBlockGlossaryPlaceholderTranslation = $cmsBlockGlossaryPlaceholderTranslationTransfer->getTranslation();
+            $cmsBlockGlossaryPlaceholderTranslation = $this->{$methodName}($cmsBlockGlossaryPlaceholderTranslation);
+            $cmsBlockGlossaryPlaceholderTranslationTransfer->setTranslation($cmsBlockGlossaryPlaceholderTranslation);
+        }
+
+        return $cmsBlockGlossaryPlaceholderTranslationTransfers;
     }
 }

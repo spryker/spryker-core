@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockGui\Communication\Expander;
+namespace Spryker\Zed\CmsBlockGui\Communication\Updater;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 
-interface CmsBlockGlossaryExpanderInterface
+interface CmsBlockGlossaryUpdaterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer

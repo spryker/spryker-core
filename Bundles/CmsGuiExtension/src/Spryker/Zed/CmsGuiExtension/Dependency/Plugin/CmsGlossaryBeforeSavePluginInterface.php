@@ -13,7 +13,7 @@ interface CmsGlossaryBeforeSavePluginInterface
 {
     /**
      * Specification:
-     * - Expands CmsGlossaryTransfer before saving.
+     * - Modifies/expands CmsGlossaryTransfer before glossary will be saved.
      *
      * @api
      *

@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProvider;
-use Spryker\Zed\CmsGui\Communication\Expander\CmsGlossaryExpander;
-use Spryker\Zed\CmsGui\Communication\Expander\CmsGlossaryExpanderInterface;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\TwigContent;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueName;
@@ -27,6 +25,8 @@ use Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapper;
 use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
 use Spryker\Zed\CmsGui\Communication\Tabs\GlossaryTabs;
 use Spryker\Zed\CmsGui\Communication\Tabs\PageTabs;
+use Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdater;
+use Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdaterInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Symfony\Component\Form\FormInterface;
@@ -174,11 +174,11 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider
      */
-    public function createCmsGlossaryFormTypeDataProvider()
+    public function createCmsGlossaryFormTypeDataProvider(): CmsGlossaryFormTypeDataProvider
     {
         return new CmsGlossaryFormTypeDataProvider(
             $this->getCmsFacade(),
-            $this->createCmsGlossaryExpander()
+            $this->createCmsGlossaryUpdater()
         );
     }
 
@@ -243,11 +243,11 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsGui\Communication\Expander\CmsGlossaryExpanderInterface
+     * @return \Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdaterInterface
      */
-    public function createCmsGlossaryExpander(): CmsGlossaryExpanderInterface
+    public function createCmsGlossaryUpdater(): CmsGlossaryUpdaterInterface
     {
-        return new CmsGlossaryExpander($this->getCmsGlossaryAfterFindPlugins(), $this->getCmsGlossaryBeforeSavePlugins());
+        return new CmsGlossaryUpdater($this->getCmsGlossaryAfterFindPlugins(), $this->getCmsGlossaryBeforeSavePlugins());
     }
 
     /**

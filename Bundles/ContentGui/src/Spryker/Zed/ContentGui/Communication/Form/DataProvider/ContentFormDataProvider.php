@@ -58,7 +58,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
             $contentTransfer = $this->contentFacade->findContentById($contentId);
 
             if (!$contentTransfer) {
-                return $contentTransfer;
+                return null;
             }
 
             return $this->setAvailableLocales($contentTransfer);

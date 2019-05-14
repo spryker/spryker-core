@@ -15,7 +15,7 @@ interface ContentGuiFacadeInterface
     /**
      * Specification:
      * - Converts html widgets to twig functions.
-     * - Reutrns CmsGlossaryTransfer with translations.
+     * - Returns CmsGlossaryTransfer with translations.
      *
      * @api
      *
@@ -23,12 +23,12 @@ interface ContentGuiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertCmsGlossaryHtmlToTwigFunction(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
+    public function convertCmsGlossaryHtmlToShortCode(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
 
     /**
      * Specification:
      * - Converts html widgets to twig functions.
-     * - Reutrns CmsBlockGlossaryTransfer with translations.
+     * - Returns CmsBlockGlossaryTransfer with translations.
      *
      * @api
      *
@@ -36,12 +36,12 @@ interface ContentGuiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function convertCmsBlockGlossaryHtmlToTwigFunction(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer;
+    public function convertCmsBlockGlossaryHtmlToShortCode(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer;
 
     /**
      * Specification:
      * - Converts twig functions to html widgets.
-     * - Reutrns CmsGlossaryTransfer with translations.
+     * - Returns CmsGlossaryTransfer with translations.
      *
      * @api
      *
@@ -49,12 +49,12 @@ interface ContentGuiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function convertCmsGlossaryTwigFunctionToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
+    public function convertCmsGlossaryShortCodeToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
 
     /**
      * Specification:
      * - Converts twig functions to html widgets.
-     * - Reutrns CmsBlockGlossaryTransfer with translations.
+     * - Returns CmsBlockGlossaryTransfer with translations.
      *
      * @api
      *
@@ -62,5 +62,5 @@ interface ContentGuiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function convertCmsBlockGlossaryTwigFunctionToHtml(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer;
+    public function convertCmsBlockGlossaryShortCodeToHtml(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer;
 }

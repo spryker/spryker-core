@@ -31,12 +31,6 @@ class ContentGuiBusinessTester extends Actor
 {
     use _generated\ContentGuiBusinessTesterActions;
 
-    protected const PARAMETER_ID = '%ID%';
-    protected const PARAMETER_TYPE = '%TYPE%';
-    protected const PARAMETER_TEMPLATE = '%TEMPLATE%';
-    protected const PARAMETER_TWIG_FUNCTION = '%TWIG_FUNCTION%';
-    protected const PARAMETER_NAME = '%NAME%';
-    protected const PARAMETER_TEMPLATE_DISPLAY_NAME = '%TEMPLATE_DISPLAY_NAME%';
     protected const TEMPLATE_IDENTIFIER_DEFAULT = 'default';
     protected const TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
     protected const TEMPLATE_DISPLAY_NAME_DEFAULT = 'Default';
@@ -90,9 +84,9 @@ class ContentGuiBusinessTester extends Actor
      *
      * @return string
      */
-    public function getOneTwigFunctionInString(ContentTransfer $bannerContentTransfer): string
+    public function getOneShortCodeInString(ContentTransfer $bannerContentTransfer): string
     {
-        return '<p>' . $this->createTwigFunction($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT) . '</p>';
+        return '<p>' . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT) . '</p>';
     }
 
     /**
@@ -100,10 +94,10 @@ class ContentGuiBusinessTester extends Actor
      *
      * @return string
      */
-    public function getTwoSameTwigFunctionsInString(ContentTransfer $bannerContentTransfer): string
+    public function getTwoSameShortCodesInString(ContentTransfer $bannerContentTransfer): string
     {
-        return '<p>' . $this->createTwigFunction($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
-            . '<p></p>' . $this->createTwigFunction($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT) . '</p>';
+        return '<p>' . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
+            . '<p></p>' . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT) . '</p>';
     }
 
     /**
@@ -112,16 +106,16 @@ class ContentGuiBusinessTester extends Actor
      *
      * @return string
      */
-    public function getTwoDifferentTwigFunctionInString(ContentTransfer $bannerContentTransfer, ContentTransfer $abstractProductListContentTransfer): string
+    public function getTwoDifferentShortCodeInString(ContentTransfer $bannerContentTransfer, ContentTransfer $abstractProductListContentTransfer): string
     {
-        return '<p>' . $this->createTwigFunction($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
-            . '<p></p>' . $this->createTwigFunction($abstractProductListContentTransfer, static::TEMPLATE_IDENTIFIER_TOP_TITLE) . '</p>';
+        return '<p>' . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
+            . '<p></p>' . $this->createShortCode($abstractProductListContentTransfer, static::TEMPLATE_IDENTIFIER_TOP_TITLE) . '</p>';
     }
 
     /**
      * @return string
      */
-    public function getStringWithoutTwigFunctionsAndWidgets(): string
+    public function getStringWithoutShortCodesAndWidgets(): string
     {
         return '<p></p>';
     }
@@ -177,12 +171,12 @@ class ContentGuiBusinessTester extends Actor
         }
 
         return strtr($editorContentWidgetTemplate, [
-            static::PARAMETER_ID => $contentTransfer->getIdContent(),
-            static::PARAMETER_TYPE => $contentTransfer->getContentTypeKey(),
-            static::PARAMETER_NAME => $contentTransfer->getName(),
-            static::PARAMETER_TWIG_FUNCTION => $this->createTwigFunction($contentTransfer, $templateIdentifier),
-            static::PARAMETER_TEMPLATE => $templateIdentifier,
-            static::PARAMETER_TEMPLATE_DISPLAY_NAME => $templateDisplayName,
+            ContentGuiConfig::PARAMETER_ID => $contentTransfer->getIdContent(),
+            ContentGuiConfig::PARAMETER_TYPE => $contentTransfer->getContentTypeKey(),
+            ContentGuiConfig::PARAMETER_NAME => $contentTransfer->getName(),
+            ContentGuiConfig::PARAMETER_SHORT_CODE => $this->createShortCode($contentTransfer, $templateIdentifier),
+            ContentGuiConfig::PARAMETER_TEMPLATE => $templateIdentifier,
+            ContentGuiConfig::PARAMETER_TEMPLATE_DISPLAY_NAME => $templateDisplayName,
         ]);
     }
 
@@ -192,7 +186,7 @@ class ContentGuiBusinessTester extends Actor
      *
      * @return string
      */
-    protected function createTwigFunction(ContentTransfer $contentTransfer, string $templateIdentifier): string
+    protected function createShortCode(ContentTransfer $contentTransfer, string $templateIdentifier): string
     {
         $twigFunctionTemplate = static::TWIG_FUNCTION_TEMPLATE_BANNER;
 
