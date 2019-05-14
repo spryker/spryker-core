@@ -17,12 +17,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class SessionRedisConfig extends AbstractBundleConfig
 {
-    public const SESSION_REDIS_CONNECTION_KEY = 'SESSION_ZED';
+    public const ZED_SESSION_REDIS_CONNECTION_KEY = 'SESSION_ZED';
+    public const YVES_SESSION_REDIS_CONNECTION_KEY = 'SESSION_YVES';
 
     /**
      * @return int
      */
-    public function getSessionLifeTime(): int
+    public function getZedSessionLifeTime(): int
     {
         return $this->get(SessionRedisConstants::ZED_SESSION_TIME_TO_LIVE);
     }
@@ -54,26 +55,51 @@ class SessionRedisConfig extends AbstractBundleConfig
     /**
      * @return \Generated\Shared\Transfer\RedisConfigurationTransfer
      */
-    public function getRedisConnectionConfiguration(): RedisConfigurationTransfer
+    public function getZedRedisConnectionConfiguration(): RedisConfigurationTransfer
     {
         return (new RedisConfigurationTransfer())
             ->setDataSourceNames(
-                $this->getDataSourceNames()
+                $this->getZedDataSourceNames()
             )
             ->setConnectionCredentials(
-                $this->getConnectionCredentials()
+                $this->getZedConnectionCredentials()
             )
             ->setClientOptions(
-                $this->getConnectionOptions()
+                $this->getZedConnectionOptions()
+            );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RedisConfigurationTransfer
+     */
+    public function getYvesRedisConnectionConfiguration(): RedisConfigurationTransfer
+    {
+        return (new RedisConfigurationTransfer())
+            ->setDataSourceNames(
+                $this->getYvesDataSourceNames()
+            )
+            ->setConnectionCredentials(
+                $this->getYvesConnectionCredentials()
+            )
+            ->setClientOptions(
+                $this->getYvesConnectionOptions()
             );
     }
 
     /**
      * @return string
      */
-    public function getRedisConnectionKey(): string
+    public function getZedRedisConnectionKey(): string
     {
-        return static::SESSION_REDIS_CONNECTION_KEY;
+        return static::ZED_SESSION_REDIS_CONNECTION_KEY;
+    }
+
+    /**
+     * @return string
+     */
+    public function getYvesRedisConnectionKey(): string
+    {
+        return static::YVES_SESSION_REDIS_CONNECTION_KEY;
     }
 
     /**
@@ -95,7 +121,7 @@ class SessionRedisConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    protected function getDataSourceNames(): array
+    protected function getZedDataSourceNames(): array
     {
         return $this->get(SessionRedisConstants::ZED_SESSION_REDIS_DATA_SOURCE_NAMES, []);
     }
@@ -103,7 +129,7 @@ class SessionRedisConfig extends AbstractBundleConfig
     /**
      * @return \Generated\Shared\Transfer\RedisCredentialsTransfer
      */
-    protected function getConnectionCredentials(): RedisCredentialsTransfer
+    protected function getZedConnectionCredentials(): RedisCredentialsTransfer
     {
         return (new RedisCredentialsTransfer())
             ->setProtocol($this->get(SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL))
@@ -116,8 +142,37 @@ class SessionRedisConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    protected function getConnectionOptions(): array
+    protected function getZedConnectionOptions(): array
     {
         return $this->get(SessionRedisConstants::ZED_SESSION_REDIS_CLIENT_OPTIONS, []);
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getYvesDataSourceNames(): array
+    {
+        return $this->get(SessionRedisConstants::YVES_SESSION_REDIS_DATA_SOURCE_NAMES, []);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RedisCredentialsTransfer
+     */
+    protected function getYvesConnectionCredentials(): RedisCredentialsTransfer
+    {
+        return (new RedisCredentialsTransfer())
+            ->setProtocol($this->get(SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL))
+            ->setHost($this->get(SessionRedisConstants::YVES_SESSION_REDIS_HOST))
+            ->setPort($this->get(SessionRedisConstants::YVES_SESSION_REDIS_PORT))
+            ->setDatabase($this->get(SessionRedisConstants::YVES_SESSION_REDIS_DATABASE))
+            ->setPassword($this->get(SessionRedisConstants::YVES_SESSION_REDIS_PASSWORD, false));
+    }
+
+    /**
+     * @return array
+     */
+    protected function getYvesConnectionOptions(): array
+    {
+        return $this->get(SessionRedisConstants::YVES_SESSION_REDIS_CLIENT_OPTIONS, []);
     }
 }

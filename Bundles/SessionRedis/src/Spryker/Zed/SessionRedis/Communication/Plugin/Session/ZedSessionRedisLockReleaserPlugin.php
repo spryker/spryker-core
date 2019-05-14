@@ -14,7 +14,7 @@ use Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInte
  * @method \Spryker\Zed\SessionRedis\Communication\SessionRedisCommunicationFactory getFactory()
  * @method \Spryker\Zed\SessionRedis\SessionRedisConfig getConfig()
  */
-class SessionRedisLockReleaserPlugin extends AbstractPlugin implements SessionLockReleaserPluginInterface
+class ZedSessionRedisLockReleaserPlugin extends AbstractPlugin implements SessionLockReleaserPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -27,7 +27,7 @@ class SessionRedisLockReleaserPlugin extends AbstractPlugin implements SessionLo
      */
     public function release(string $sessionId): bool
     {
-        return $this->getFactory()->createSessionLockReleaser()->release($sessionId);
+        return $this->getFactory()->createZedSessionLockReleaser()->release($sessionId);
     }
 
     /**

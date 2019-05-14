@@ -118,7 +118,7 @@ class SessionHandlerRedisPluginTest extends Unit
      */
     protected function setupRedisClient(): void
     {
-        $this->redisClient = (new SessionRedisCommunicationFactory())->createSessionRedisWrapper();
+        $this->redisClient = (new SessionRedisCommunicationFactory())->createZedSessionRedisWrapper();
     }
 
     /**

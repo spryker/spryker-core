@@ -92,7 +92,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      */
     public function read($sessionId): string
     {
-        if (!$this->locker->lock($this->keyBuilder->buildSessionKey($sessionId))) {
+        if (!$this->locker->lock($sessionId)) {
             throw new LockCouldNotBeAcquiredException(
                 sprintf(
                     '%s could not acquire access to the session %s',

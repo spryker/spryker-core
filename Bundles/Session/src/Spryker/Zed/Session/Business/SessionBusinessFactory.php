@@ -23,7 +23,7 @@ use Spryker\Zed\Session\SessionDependencyProvider;
 class SessionBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface
+     * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface|\Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface
      */
     public function createYvesSessionLockReleaser()
     {
@@ -37,7 +37,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     protected function createYvesSessionLockReleaserPool()
     {
         $sessionLockReleaserPool = new SessionLockReleaserPool(
-            $this->getSessionLockReleaserPlugins()
+            $this->getYvesSessionLockReleaserPlugins()
         );
         $sessionLockReleaserPool->addLockReleaser(
             $this->createRedisSessionLockReleaser(
@@ -51,7 +51,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface
+     * @return \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface|\Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface
      */
     public function createZedSessionLockReleaser()
     {
@@ -65,7 +65,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     protected function createZedSessionLockReleaserPool()
     {
         $sessionLockReleaserPool = new SessionLockReleaserPool(
-            $this->getSessionLockReleaserPlugins()
+            $this->getZedSessionLockReleaserPlugins()
         );
         $sessionLockReleaserPool->addLockReleaser(
             $this->createRedisSessionLockReleaser(
@@ -140,9 +140,17 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface[]
      */
-    public function getSessionLockReleaserPlugins(): array
+    public function getYvesSessionLockReleaserPlugins(): array
     {
-        return $this->getProvidedDependency(SessionDependencyProvider::PLUGINS_SESSION_LOCK_RELEASER);
+        return $this->getProvidedDependency(SessionDependencyProvider::PLUGINS_YVES_SESSION_LOCK_RELEASER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface[]
+     */
+    public function getZedSessionLockReleaserPlugins(): array
+    {
+        return $this->getProvidedDependency(SessionDependencyProvider::PLUGINS_ZED_SESSION_LOCK_RELEASER);
     }
 
     /**
