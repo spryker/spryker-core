@@ -16,9 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
-    protected const REQUEST_KEY_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-    protected const REQUEST_KEY_ID_PRODUCT_CONCRETE = 'id-product-concrete';
-    protected const REQUEST_KEY_ID_PRICE_TYPE = 'id-price-type';
+    public const REQUEST_KEY_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    public const REQUEST_KEY_ID_PRODUCT_CONCRETE = 'id-product-concrete';
+    public const REQUEST_KEY_ID_PRICE_TYPE = 'id-price-type';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

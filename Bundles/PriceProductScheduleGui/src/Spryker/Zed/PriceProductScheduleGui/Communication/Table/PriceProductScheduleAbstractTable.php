@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Table;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Controller\IndexController;
 
 class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
 {
@@ -35,8 +36,8 @@ class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
         $this->fkPriceType = $fkPriceType;
         $this->baseUrl = '/';
         $this->defaultUrl = Url::generate('price-product-schedule-gui/index/table', [
-            'id-product-abstract' => $fkProductAbstract,
-            'id-price-type' => $fkPriceType,
+            IndexController::REQUEST_KEY_ID_PRODUCT_ABSTRACT => $fkProductAbstract,
+            IndexController::REQUEST_KEY_ID_PRICE_TYPE => $fkPriceType,
         ])->build();
     }
 

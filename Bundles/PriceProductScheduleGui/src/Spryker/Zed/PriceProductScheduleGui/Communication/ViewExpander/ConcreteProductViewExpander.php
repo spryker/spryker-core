@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander;
 
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleConcreteTable;
@@ -42,18 +43,12 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
         $tablesByType = [];
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
-            $priceTypeTab = new TabItemTransfer();
-            $priceTypeTab->setName($priceTypeTransfer->getName())
-                ->setTitle($priceTypeTransfer->getName())
-                ->setTemplate(static::PRICE_TYPE_TEMPLATE);
+            $priceTypeTab = $this->createPriceTypeTab($priceTypeTransfer);
             $priceTypeTabs->addTab($priceTypeTab);
-
-            $tablesByType[$priceTypeTransfer->getName()] = (
-                new PriceProductScheduleConcreteTable(
-                    $viewData['idProduct'],
-                    $priceTypeTransfer->getIdPriceType()
-                )
-            )->render();
+            $tablesByType[$priceTypeTransfer->getName()] = $this->createTableByType(
+                $viewData,
+                $priceTypeTransfer
+            );
         }
 
         $priceTypeTabs->setActiveTabName($priceTypeTabs->getTabs()[0]->getName());
@@ -62,5 +57,35 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
         $viewData['tablesByType'] = $tablesByType;
 
         return $viewData;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\TabItemTransfer
+     */
+    protected function createPriceTypeTab(PriceTypeTransfer $priceTypeTransfer): TabItemTransfer
+    {
+        $tabItemTransfer = new TabItemTransfer();
+
+        return $tabItemTransfer->setName($priceTypeTransfer->getName())
+            ->setTitle($priceTypeTransfer->getName())
+            ->setTemplate(static::PRICE_TYPE_TEMPLATE);
+    }
+
+    /**
+     * @param array $viewData
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
+     *
+     * @return string
+     */
+    protected function createTableByType(array $viewData, PriceTypeTransfer $priceTypeTransfer): string
+    {
+        return (
+            new PriceProductScheduleConcreteTable(
+                $viewData['idProduct'],
+                $priceTypeTransfer->getIdPriceType()
+            )
+        )->render();
     }
 }

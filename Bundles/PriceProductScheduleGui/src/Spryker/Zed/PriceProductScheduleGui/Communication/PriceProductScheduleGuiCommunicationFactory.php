@@ -14,7 +14,7 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\ConcreteProduct
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\ConcreteProductTabCreatorInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleAbstractTable;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleConcreteTable;
-use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\AbstractAbstractProductViewExpander;
+use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\AbstractProductViewExpander;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\AbstractProductViewExpanderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProductViewExpander;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProductViewExpanderInterface;
@@ -44,7 +44,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
      */
     public function createAbstractProductViewExpander(): AbstractProductViewExpanderInterface
     {
-        return new AbstractAbstractProductViewExpander($this->getPriceProductFacade());
+        return new AbstractProductViewExpander($this->getPriceProductFacade());
     }
 
     /**
