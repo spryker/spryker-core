@@ -37,7 +37,7 @@ class OpenSslEncryptor implements OpenSslEncryptorInterface
         return base64_encode(
             openssl_encrypt(
                 $plainText,
-                $encryptionMethod ?? $this->utilEncryptionConfig->getDefaultOpenSslEncryptionCipherMethod(),
+                $encryptionMethod ?? $this->utilEncryptionConfig->getDefaultOpenSslEncryptionMethod(),
                 $encryptionKey,
                 0,
                 $initVector

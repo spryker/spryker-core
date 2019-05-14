@@ -16,7 +16,7 @@ class UtilEncryptionConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getDefaultOpenSslEncryptionCipherMethod(): string
+    public function getDefaultOpenSslEncryptionMethod(): string
     {
         return static::OPEN_SSL_ENCRYPTION_CIPHER_METHOD;
     }

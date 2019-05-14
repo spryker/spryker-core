@@ -36,7 +36,7 @@ class OpenSslDecryptor implements OpenSslDecryptorInterface
     {
         return openssl_decrypt(
             base64_decode($chiperText),
-            $encryptionMethod ?? $this->utilEncryptionConfig->getDefaultOpenSslEncryptionCipherMethod(),
+            $encryptionMethod ?? $this->utilEncryptionConfig->getDefaultOpenSslEncryptionMethod(),
             $encryptionKey,
             0,
             $initVector
