@@ -8,10 +8,10 @@
 namespace SprykerTest\Zed\Publisher\Business;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\Publisher\Business\PublisherFacadeInterface;
-use Spryker\Zed\Publisher\PublisherDependencyProvider;
+use Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistry;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface;
 use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
+use SprykerTest\Zed\Publisher\Business\Merger\MockPluginMerger;
 
 /**
  * Auto-generated group annotations
@@ -37,7 +37,7 @@ class PublisherFacadeTest extends Unit
     {
         $this->setPublisherRegistryPlugins();
 
-        $publisherPlugins = $this->getFacade()
+        $publisherPlugins = $this->tester->getFacade()
             ->getPublisherPlugins();
 
         $this->assertSame($this->getMergedPublisherPlugins(), $publisherPlugins);
@@ -74,6 +74,17 @@ class PublisherFacadeTest extends Unit
      */
     protected function setPublisherRegistryPlugins(): void
     {
+        $this->tester->mockFactoryMethod('createPublisherPluginMerger', new MockPluginMerger(
+            $this->getPublisherRegistryPlugins(),
+            $this->createPublisherEventRegistry()
+        ));
+    }
+
+    /**
+     * @return array
+     */
+    protected function getPublisherRegistryPlugins(): array
+    {
         $publisherRegistryPluginMockOne = $this->createMock(PublisherRegistryPluginInterface::class);
         $publisherRegistryPluginMockOne->method('expandPublisherEventRegistry')
             ->willReturnCallback(function (PublisherEventRegistryInterface $publisherEventRegistry) {
@@ -86,23 +97,18 @@ class PublisherFacadeTest extends Unit
                 return $this->expandPublisherEventRegistryTwo($publisherEventRegistry);
             });
 
-        $this->tester->setDependency(PublisherDependencyProvider::PUBLISHER_REGISTRY_PLUGINS, [
+        return [
             $publisherRegistryPluginMockOne,
             $publisherRegistryPluginMockTwo,
-        ]);
+        ];
     }
 
     /**
-     * @return \Spryker\Zed\Publisher\Business\PublisherFacadeInterface
+     * @return \Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistry
      */
-    protected function getFacade(): PublisherFacadeInterface
+    protected function createPublisherEventRegistry(): PublisherEventRegistry
     {
-        /**
-         * @var \Spryker\Zed\Publisher\Business\PublisherFacadeInterface $facade
-         */
-        $facade = $this->tester->getFacade();
-
-        return $facade;
+        return new PublisherEventRegistry();
     }
 
     /**

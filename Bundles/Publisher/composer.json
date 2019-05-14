@@ -4,6 +4,7 @@
   "description": "Publisher module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/kernel": "^3.21.0",
     "spryker/publisher-extension": "^1.0.0"
   },
