@@ -10,7 +10,6 @@ namespace Spryker\Zed\Discount\Communication\Form;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
-use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -87,9 +86,6 @@ class ConditionsForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new GreaterThanOrEqual(0),
-            ],
-            'attr' => [
-                'min' => DiscountConfig::DEFAULT_MINIMUM_ITEM_AMOUNT,
             ],
             'required' => true,
         ]);
