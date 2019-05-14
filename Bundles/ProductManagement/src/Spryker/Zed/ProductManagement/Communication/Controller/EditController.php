@@ -110,13 +110,25 @@ class EditController extends AddController
             'productFormEditTabs' => $this->getFactory()->createProductFormEditTabs()->createView(),
         ];
 
+        $viewData = $this->expandEditAbstractProductViewData($viewData);
+
+        return $this->viewResponse($viewData);
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    protected function expandEditAbstractProductViewData(array $viewData): array
+    {
         $viewExpanderPlugins = $this->getFactory()
             ->getAbstractProductEditViewExpanderPlugins();
         foreach ($viewExpanderPlugins as $viewExpanderPlugin) {
             $viewData = $viewExpanderPlugin->expand($viewData);
         }
 
-        return $this->viewResponse($viewData);
+        return $viewData;
     }
 
     /**
@@ -211,6 +223,18 @@ class EditController extends AddController
             'type' => $type,
         ];
 
+        $viewData = $this->expandEditVariantViewData($viewData);
+
+        return $this->viewResponse($viewData);
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    protected function expandEditVariantViewData(array $viewData): array
+    {
         $viewExpanderPlugins = $this->getFactory()
             ->getProductConcreteEditViewExpanderPlugins();
 
@@ -218,7 +242,7 @@ class EditController extends AddController
             $viewData = $viewExpanderPlugin->expand($viewData);
         }
 
-        return $this->viewResponse($viewData);
+        return $viewData;
     }
 
     /**
