@@ -83,7 +83,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
         $productConcreteLocalizedEntities = [];
 
         $productConcreteImageSetsBulk = $this->generateProductConcreteImageSets($productIds);
-        $spyProductConcreteImageStorageEntities = $this->findProductConcreteImageStorageEntitiesByProductConcreteIds($productIds);
+        $productConcreteImageStorageEntities = $this->findProductConcreteImageStorageEntitiesByProductConcreteIds($productIds);
 
         foreach ($this->findProductConcreteLocalizedEntities($productIds) as $productConcreteLocalizedEntity) {
             $idProduct = $productConcreteLocalizedEntity->getFkProduct();
@@ -99,15 +99,15 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
                 continue;
             }
 
-            if (!isset($spyProductConcreteImageStorageEntities[$idProduct][$localeName])) {
+            if (!isset($productConcreteImageStorageEntities[$idProduct][$localeName])) {
                 continue;
             }
 
-            $spyProductConcreteImageStorageEntities[$idProduct][$localeName]->delete();
-            unset($spyProductConcreteImageStorageEntities[$idProduct][$localeName]);
+            $productConcreteImageStorageEntities[$idProduct][$localeName]->delete();
+            unset($productConcreteImageStorageEntities[$idProduct][$localeName]);
         }
 
-        $this->storeData($productConcreteLocalizedEntities, $spyProductConcreteImageStorageEntities, $imageSets);
+        $this->storeData($productConcreteLocalizedEntities, $productConcreteImageStorageEntities, $imageSets);
     }
 
     /**
