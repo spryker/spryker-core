@@ -13,7 +13,7 @@ namespace Spryker\Shared\GlossaryStorage;
 class GlossaryStorageConstants
 {
     /**
-     * @deprecated use `\Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::SYNC_STORAGE_QUEUE` instead
+     * @deprecated Use `\Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::SYNC_STORAGE_QUEUE` instead
      *
      * Specification:
      * - Queue name as used for processing translation messages
@@ -23,7 +23,7 @@ class GlossaryStorageConstants
     public const SYNC_STORAGE_QUEUE = 'sync.storage.translation';
 
     /**
-     * @deprecated use `\Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::SYNC_STORAGE_ERROR_QUEUE` instead
+     * @deprecated Use `\Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::SYNC_STORAGE_ERROR_QUEUE` instead
      *
      * Specification:
      * - Queue name as used for processing translation messages
@@ -33,7 +33,7 @@ class GlossaryStorageConstants
     public const SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.translation.error';
 
     /**
-     * @deprecated use `\Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::RESOURCE_NAME` instead
+     * @deprecated Use `\Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::RESOURCE_NAME` instead
      *
      * Specification:
      * - Resource name, this will use for key generating

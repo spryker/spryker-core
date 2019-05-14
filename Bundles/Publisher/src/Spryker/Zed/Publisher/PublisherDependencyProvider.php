@@ -24,9 +24,9 @@ class PublisherDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container[static::PUBLISHER_REGISTRY_PLUGINS] = function (Container $container) {
+        $container->set(static::PUBLISHER_REGISTRY_PLUGINS, function (Container $container) {
             return $this->getPublisherRegistryPlugins();
-        };
+        });
 
         return $container;
     }

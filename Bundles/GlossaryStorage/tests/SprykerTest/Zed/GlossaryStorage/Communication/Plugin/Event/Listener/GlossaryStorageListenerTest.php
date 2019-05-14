@@ -18,10 +18,9 @@ use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\GlossaryStorage\Business\GlossaryStorageBusinessFactory;
 use Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacade;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyStorageListener;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyStoragePublishListener;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryKeyStorageUnpublishListener;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryTranslationStorageListener;
+use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\GlossaryDeletePublisherPlugin;
+use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey\GlossaryWritePublisherPlugin;
+use Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryTranslation\GlossaryWritePublisherPlugin as GlossaryTranslationWritePublisherPlugin;
 use SprykerTest\Zed\GlossaryStorage\GlossaryStorageConfigMock;
 
 /**
@@ -63,21 +62,21 @@ class GlossaryStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testGlossaryKeyStorageListenerStoreData(): void
+    public function testGlossaryWriterPublisherPluginSavesData(): void
     {
         // Prepare
         $this->cleanUpGlossaryStorage(static::ID_GLOSSARY);
         $beforeCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
 
-        $glossaryKeyStorageListener = new GlossaryKeyStorageListener();
-        $glossaryKeyStorageListener->setFacade($this->getGlossaryStorageFacade());
+        $glossaryWritePublisherPlugin = new GlossaryWritePublisherPlugin();
+        $glossaryWritePublisherPlugin->setFacade($this->getGlossaryStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(static::ID_GLOSSARY),
         ];
 
         // Action
-        $glossaryKeyStorageListener->handleBulk($eventTransfers, GlossaryEvents::GLOSSARY_KEY_PUBLISH);
+        $glossaryWritePublisherPlugin->handleBulk($eventTransfers, GlossaryEvents::GLOSSARY_KEY_PUBLISH);
 
         // Assert
         $this->assertGlossaryStorage(static::ID_GLOSSARY, $beforeCount);
@@ -86,41 +85,18 @@ class GlossaryStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testGlossaryKeyStoragePublishListener(): void
+    public function testGlossaryDeletePublisherPluginDeletesData(): void
     {
         // Prepare
-        $this->cleanUpGlossaryStorage(static::ID_GLOSSARY);
-        $beforeCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
-
-        $glossaryKeyStoragePublishListener = new GlossaryKeyStoragePublishListener();
-        $glossaryKeyStoragePublishListener->setFacade($this->getGlossaryStorageFacade());
+        $glossaryDeletePublisherPlugin = new GlossaryDeletePublisherPlugin();
+        $glossaryDeletePublisherPlugin->setFacade($this->getGlossaryStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(static::ID_GLOSSARY),
         ];
 
         // Action
-        $glossaryKeyStoragePublishListener->handleBulk($eventTransfers, GlossaryEvents::GLOSSARY_KEY_PUBLISH);
-
-        // Assert
-        $this->assertGlossaryStorage(static::ID_GLOSSARY, $beforeCount);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGlossaryKeyStorageUnpublishListener(): void
-    {
-        // Prepare
-        $glossaryKeyStorageUnpublishListener = new GlossaryKeyStorageUnpublishListener();
-        $glossaryKeyStorageUnpublishListener->setFacade($this->getGlossaryStorageFacade());
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setId(static::ID_GLOSSARY),
-        ];
-
-        // Action
-        $glossaryKeyStorageUnpublishListener->handleBulk($eventTransfers, GlossaryEvents::GLOSSARY_KEY_UNPUBLISH);
+        $glossaryDeletePublisherPlugin->handleBulk($eventTransfers, GlossaryEvents::GLOSSARY_KEY_UNPUBLISH);
 
         // Assert
         $this->assertSame(0, SpyGlossaryStorageQuery::create()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count());
@@ -129,14 +105,14 @@ class GlossaryStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testGlossaryTranslationStorageListenerStoreData(): void
+    public function testGlossaryTranslationWritePublisherPluginSavesData(): void
     {
         // Prepare
         $this->cleanUpGlossaryStorage(static::ID_GLOSSARY);
         $beforeCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey(static::ID_GLOSSARY)->count();
 
-        $glossaryTranslationStorageListener = new GlossaryTranslationStorageListener();
-        $glossaryTranslationStorageListener->setFacade($this->getGlossaryStorageFacade());
+        $glossaryTranslationWritePublisherPlugin = new GlossaryTranslationWritePublisherPlugin();
+        $glossaryTranslationWritePublisherPlugin->setFacade($this->getGlossaryStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -145,7 +121,7 @@ class GlossaryStorageListenerTest extends Unit
         ];
 
         // Action
-        $glossaryTranslationStorageListener->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE);
+        $glossaryTranslationWritePublisherPlugin->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE);
 
         // Assert
         $this->assertGlossaryStorage(static::ID_GLOSSARY, $beforeCount);
@@ -157,8 +133,8 @@ class GlossaryStorageListenerTest extends Unit
     public function testGlossaryTranslationStorageListenerDeletesDataForInactiveTranslations(): void
     {
         // Prepare
-        $glossaryTranslationStorageListener = new GlossaryTranslationStorageListener();
-        $glossaryTranslationStorageListener->setFacade($this->getGlossaryStorageFacade());
+        $glossaryTranslationWritePublisherPlugin = new GlossaryTranslationWritePublisherPlugin();
+        $glossaryTranslationWritePublisherPlugin->setFacade($this->getGlossaryStorageFacade());
         $idGlossaryKey = $this->tester->haveTranslation([
             KeyTranslationTransfer::GLOSSARY_KEY => 'test-key',
             KeyTranslationTransfer::LOCALES => [
@@ -173,7 +149,7 @@ class GlossaryStorageListenerTest extends Unit
             ]),
         ];
 
-        $glossaryTranslationStorageListener->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE);
+        $glossaryTranslationWritePublisherPlugin->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE);
 
         $beforeCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
 
@@ -184,7 +160,7 @@ class GlossaryStorageListenerTest extends Unit
             ->setIsActive(false)
             ->save();
 
-        $glossaryTranslationStorageListener->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE);
+        $glossaryTranslationWritePublisherPlugin->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE);
 
         // Assert
         $glossaryStorageCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
@@ -197,8 +173,8 @@ class GlossaryStorageListenerTest extends Unit
     public function testGlossaryTranslationStorageListenerDeletesDataForEmptyTranslations(): void
     {
         // Prepare
-        $glossaryTranslationStorageListener = new GlossaryTranslationStorageListener();
-        $glossaryTranslationStorageListener->setFacade($this->getGlossaryStorageFacade());
+        $glossaryTranslationWritePublisherPlugin = new GlossaryTranslationWritePublisherPlugin();
+        $glossaryTranslationWritePublisherPlugin->setFacade($this->getGlossaryStorageFacade());
         $idGlossaryKey = $this->tester->haveTranslation([
             KeyTranslationTransfer::GLOSSARY_KEY => 'test-key',
             KeyTranslationTransfer::LOCALES => [
@@ -213,7 +189,7 @@ class GlossaryStorageListenerTest extends Unit
             ]),
         ];
 
-        $glossaryTranslationStorageListener->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE);
+        $glossaryTranslationWritePublisherPlugin->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE);
 
         $beforeCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
 
@@ -226,7 +202,7 @@ class GlossaryStorageListenerTest extends Unit
             ],
         ]);
 
-        $glossaryTranslationStorageListener->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE);
+        $glossaryTranslationWritePublisherPlugin->handleBulk($eventTransfers, GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE);
 
         // Assert
         $glossaryStorageCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
