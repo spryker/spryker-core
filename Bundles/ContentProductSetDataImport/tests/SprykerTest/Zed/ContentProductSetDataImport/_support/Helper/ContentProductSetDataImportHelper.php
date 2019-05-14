@@ -16,6 +16,11 @@ use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 class ContentProductSetDataImportHelper extends Module
 {
     /**
+     * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @return void
      */
     public function ensureDatabaseTableIsEmpty(): void
@@ -92,6 +97,10 @@ class ContentProductSetDataImportHelper extends Module
      */
     protected function createUtilEncodingService(): UtilEncodingServiceInterface
     {
-        return new UtilEncodingService();
+        if (empty($this->utilEncodingService)) {
+            $this->utilEncodingService = new UtilEncodingService();
+        }
+
+        return $this->utilEncodingService;
     }
 }
