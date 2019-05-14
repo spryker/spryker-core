@@ -43,15 +43,17 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
         $tablesByType = [];
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
-            $priceTypeTabItemTranser = $this->createPriceTypeTab($priceTypeTransfer);
-            $priceTypeTabsViewTransfer->addTab($priceTypeTabItemTranser);
+            $priceTypeTabItemTransfer = $this->createPriceTypeTab($priceTypeTransfer);
+            $priceTypeTabsViewTransfer->addTab($priceTypeTabItemTransfer);
             $tablesByType[$priceTypeTransfer->getName()] = $this->createTableByType(
                 $viewData,
                 $priceTypeTransfer
-            );
+            )->render();
         }
 
-        $priceTypeTabsViewTransfer->setActiveTabName($priceTypeTabsViewTransfer->getTabs()[0]->getName());
+        if ($priceTypeTabsViewTransfer->getTabs()->count() > 0) {
+            $priceTypeTabsViewTransfer->setActiveTabName($priceTypeTabsViewTransfer->getTabs()[0]->getName());
+        }
 
         $viewData['priceTypeTabs'] = $priceTypeTabsViewTransfer;
         $viewData['tablesByType'] = $tablesByType;
@@ -77,15 +79,15 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
      * @param array $viewData
      * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
      *
-     * @return string
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleConcreteTable
      */
-    protected function createTableByType(array $viewData, PriceTypeTransfer $priceTypeTransfer): string
+    protected function createTableByType(array $viewData, PriceTypeTransfer $priceTypeTransfer): PriceProductScheduleConcreteTable
     {
         return (
             new PriceProductScheduleConcreteTable(
                 $viewData['idProduct'],
                 $priceTypeTransfer->getIdPriceType()
             )
-        )->render();
+        );
     }
 }
