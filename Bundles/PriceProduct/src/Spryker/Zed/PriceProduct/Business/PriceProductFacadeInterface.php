@@ -507,7 +507,7 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Removes price product.
-     * - Removes price product default.
+     * - Calls price product store predelete plugins.
      * - Removes price product store.
      * - Adds log message about removing price product.
      *
@@ -518,4 +518,16 @@ interface PriceProductFacadeInterface
      * @return void
      */
     public function removePriceProductStore(PriceProductTransfer $priceProductTransfer): void;
+
+    /**
+     * Specification:
+     * - Removes price product default for price product stores by price product.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    public function removePriceProductDefaultForPriceProduct(PriceProductTransfer $priceProductTransfer): void;
 }

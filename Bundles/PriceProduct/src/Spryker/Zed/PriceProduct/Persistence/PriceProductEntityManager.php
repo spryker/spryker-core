@@ -102,4 +102,17 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
             ->filterByIdPriceProduct($idPriceProduct)
             ->delete();
     }
+
+    /**
+     * @param int $idPriceProductStoreId
+     *
+     * @return void
+     */
+    public function deletePriceProductDefaultsByPriceProductStoreId(int $idPriceProductStoreId): void
+    {
+        $this->getFactory()
+            ->createPriceProductDefaultQuery()
+            ->filterByFkPriceProductStore($idPriceProductStoreId)
+            ->delete();
+    }
 }

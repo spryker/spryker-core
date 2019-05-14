@@ -32,7 +32,7 @@ interface PriceProductScheduleToPriceProductFacadeInterface
      *
      * @return void
      */
-    public function removePriceProductStore(PriceProductTransfer $priceProductTransfer): void;
+    public function removePriceProductDefaultForPriceProduct(PriceProductTransfer $priceProductTransfer): void;
 
     /**
      * @param int $idProductAbstract
