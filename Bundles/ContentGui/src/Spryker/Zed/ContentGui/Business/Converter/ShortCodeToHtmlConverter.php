@@ -113,7 +113,7 @@ class ShortCodeToHtmlConverter implements ContentGuiConverterInterface
 
     /**
      * @param string $string
-     * @param array $shortCodes
+     * @param string[] $shortCodes
      * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
      *
      * @return string
@@ -122,6 +122,11 @@ class ShortCodeToHtmlConverter implements ContentGuiConverterInterface
     {
         foreach ($shortCodes as $shortCode) {
             $editorContentWidget = $this->getEditorContentWidgetByShortCode($shortCode, $contentWidgetTemplateTransfers);
+
+            if (!$editorContentWidget) {
+                continue;
+            }
+
             $string = str_replace($shortCode, $editorContentWidget, $string);
         }
 
@@ -203,7 +208,7 @@ class ShortCodeToHtmlConverter implements ContentGuiConverterInterface
 
     /**
      * @param string $templateIdentifier
-     * @param array $contentWidgetTemplateTransfers
+     * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
      *
      * @return string
      */
