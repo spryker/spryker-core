@@ -51,9 +51,9 @@ interface PriceProductEntityManagerInterface
     public function deletePriceProductStoreByPriceProductTransfer(PriceProductTransfer $priceProductTransfer): void;
 
     /**
-     * @param int $idPriceProductStoreId
+     * @param int $idPriceProductStore
      *
      * @return void
      */
-    public function deletePriceProductDefaultsByPriceProductStoreId(int $idPriceProductStoreId): void;
+    public function deletePriceProductDefaultsByPriceProductStoreId(int $idPriceProductStore): void;
 }
