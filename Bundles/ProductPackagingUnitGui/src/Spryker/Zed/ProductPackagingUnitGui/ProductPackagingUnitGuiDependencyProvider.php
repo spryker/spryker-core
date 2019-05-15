@@ -39,6 +39,7 @@ class ProductPackagingUnitGuiDependencyProvider extends AbstractBundleDependency
 
         $container = $this->addProductPackagingUnitTypePropelQuery($container);
         $container = $this->addSalesOrderItemPropelQuery($container);
+
         return $container;
     }
 

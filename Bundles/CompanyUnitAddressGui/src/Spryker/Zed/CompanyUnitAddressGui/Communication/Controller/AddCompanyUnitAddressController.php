@@ -36,6 +36,7 @@ class AddCompanyUnitAddressController extends AbstractController
 
         if ($companyUnitAddressForm->isSubmitted()) {
             $this->createCompanyUnitAddress($companyUnitAddressForm);
+
             return $this->redirectResponse($redirectUrl);
         }
 

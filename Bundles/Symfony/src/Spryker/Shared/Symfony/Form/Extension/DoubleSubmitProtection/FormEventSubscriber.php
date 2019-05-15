@@ -128,6 +128,7 @@ class FormEventSubscriber implements EventSubscriberInterface
     public function setErrorMessage($errorMessage)
     {
         $this->errorMessage = $errorMessage;
+
         return $this;
     }
 
@@ -147,6 +148,7 @@ class FormEventSubscriber implements EventSubscriberInterface
     public function setFieldName($fieldName)
     {
         $this->fieldName = $fieldName;
+
         return $this;
     }
 
@@ -166,6 +168,7 @@ class FormEventSubscriber implements EventSubscriberInterface
     public function setTranslationOptions($translationOptions)
     {
         $this->translationOptions = $translationOptions;
+
         return $this;
     }
 
