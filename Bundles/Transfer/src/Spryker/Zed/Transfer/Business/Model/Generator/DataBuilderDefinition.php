@@ -66,9 +66,12 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
                 if (isset($property['singular']) && !isset($this->dependencies[$property['singular']])) {
                     $property['name'] = $property['singular'];
                 }
-                $property['ucfirstName'] = ucfirst($property['name']);
+
+                $uppercaseName = ucfirst($property['name']);
+                $property['ucfirstName'] = $uppercaseName;
                 $property['type'] = str_replace('[]', '', $property['type']); // remove array marker
-                $this->dependencies[$property['name']] = $property;
+                $this->dependencies[$uppercaseName] = $property;
+
                 continue;
             }
 
