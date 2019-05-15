@@ -513,7 +513,7 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
-     * @deprecated Please try to avoid removing price product store.
+     * @deprecated Please try to avoid removing price product store. Use removePriceProductDefaultForPriceProduct.
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *

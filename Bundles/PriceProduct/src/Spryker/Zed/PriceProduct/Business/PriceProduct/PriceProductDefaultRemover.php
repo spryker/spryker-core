@@ -52,12 +52,23 @@ class PriceProductDefaultRemover implements PriceProductDefaultRemoverInterface
             ->requirePriceDimension();
 
         $this->getTransactionHandler()->handleTransaction(function () use ($priceProductTransfer): void {
-            $priceProductStores = $this->priceProductRepository->findPriceProductStoresByPriceProduct($priceProductTransfer);
-
-            foreach ($priceProductStores as $priceProductStore) {
-                $this->priceProductEntityManager
-                    ->deletePriceProductDefaultsByPriceProductStoreId($priceProductStore->getIdPriceProductStore());
-            }
+            $this->executeRemovePriceProductDefaultsForPriceProductTransaction($priceProductTransfer);
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    protected function executeRemovePriceProductDefaultsForPriceProductTransaction(
+        PriceProductTransfer $priceProductTransfer
+    ): void {
+        $priceProductStores = $this->priceProductRepository->findPriceProductStoresByPriceProduct($priceProductTransfer);
+
+        foreach ($priceProductStores as $priceProductStore) {
+            $this->priceProductEntityManager
+                ->deletePriceProductDefaultsByPriceProductStoreId($priceProductStore->getIdPriceProductStore());
+        }
     }
 }
