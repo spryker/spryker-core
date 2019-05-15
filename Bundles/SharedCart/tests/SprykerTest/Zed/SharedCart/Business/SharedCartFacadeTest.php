@@ -11,7 +11,6 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
@@ -116,27 +115,6 @@ class SharedCartFacadeTest extends Test
 
         // Act
         $this->getFacade()->applyShareCartByUuidActivatorStrategy($resourceShareRequestTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testApplyShareCartByUuidActivatorStrategyShouldReturnErrorMessageWhenCustomerIsNotFoundByCustomerReference(): void
-    {
-        // Arrange
-        $resourceShareRequestTransfer = (new ResourceShareRequestTransfer())
-            ->setCustomer((new CustomerTransfer())->setCustomerReference(static::VALUE_CUSTOMER_REFERENCE))
-            ->setResourceShare($this->createResourceShareTransfer());
-
-        // Act
-        $resourceShareResponseTransfer = $this->getFacade()->applyShareCartByUuidActivatorStrategy($resourceShareRequestTransfer);
-
-        // Assert
-        $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
-        $this->hasResourceShareResponseTransferErrorMessage(
-            $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_CART_ACCESS_DENIED
-        );
     }
 
     /**
