@@ -10,7 +10,6 @@ namespace Spryker\Zed\SharedCart\Persistence;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
-use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
@@ -18,6 +17,7 @@ use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
 use Orm\Zed\SharedCart\Persistence\Map\SpyQuoteCompanyUserTableMap;
+use Orm\Zed\SharedCart\Persistence\Map\SpyQuotePermissionGroupTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Shared\SharedCart\SharedCartConfig;
@@ -332,16 +332,31 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     * @param string $name
+     *
+     * @return int|null
+     */
+    public function findIdQuotePermissionGroupByName(string $name): ?int
+    {
+        return $this->getFactory()
+            ->createQuotePermissionGroupQuery()
+            ->filterByName($name)
+            ->select(SpyQuotePermissionGroupTableMap::COL_ID_QUOTE_PERMISSION_GROUP)
+            ->findOne();
+    }
+
+    /**
+     * @param int $idQuote
+     * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\ShareDetailTransfer|null
      */
-    public function findShareDetailByIdQuoteAndIdCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): ?ShareDetailTransfer
+    public function findShareDetailByIdQuoteAndIdCompanyUser(int $idQuote, int $idCompanyUser): ?ShareDetailTransfer
     {
         $quoteCompanyUserEntity = $this->getFactory()
             ->createQuoteCompanyUserQuery()
-            ->filterByFkCompanyUser($shareCartRequestTransfer->getIdCompanyUser())
-            ->filterByFkQuote($shareCartRequestTransfer->getIdQuote())
+            ->filterByFkCompanyUser($idQuote)
+            ->filterByFkQuote($idCompanyUser)
             ->findOne();
 
         if (!$quoteCompanyUserEntity) {
