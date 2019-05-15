@@ -21,7 +21,7 @@ class ShortCodeToHtmlCmsBlockGlossaryAfterFindPlugin extends AbstractPlugin impl
     /**
      * {@inheritDoc}
      * - Executes after finding CmsBlockGlossaryTransfer data in the database.
-     * - Converts short-codes to content editor html widgets in CmsBlockGlossaryPlaceholderTranslationTransfer translations.
+     * - Converts twig short-codes to content item html editor widgets in CmsBlockGlossaryPlaceholderTranslationTransfer translations.
      *
      * @api
      *

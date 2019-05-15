@@ -197,13 +197,13 @@ class ShortCodeToHtmlConverter implements ContentGuiConverterInterface
      */
     protected function extractTemplateIdentifier(string $twigFunction): ?string
     {
-        preg_match('/\'' . static::PATTERN_REGEXP_STRING . '\'/', $twigFunction, $templateIdentifier);
+        preg_match("/'" . static::PATTERN_REGEXP_STRING . "'/", $twigFunction, $templateIdentifier);
 
         if (!$templateIdentifier) {
             return null;
         }
 
-        return str_replace('\'', '', $templateIdentifier[0]);
+        return trim($templateIdentifier[0], "'");
     }
 
     /**
