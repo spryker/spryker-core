@@ -8,8 +8,11 @@
 namespace Spryker\Zed\SharedCart\Business\ResourceShare;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
+use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Shared\SharedCart\SharedCartConfig;
 use Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriterInterface;
 use Spryker\Zed\SharedCart\Persistence\SharedCartEntityManagerInterface;
@@ -26,11 +29,6 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
     protected $quoteCompanyUserWriter;
 
     /**
-     * @var \Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartRequestBuilderInterface
-     */
-    protected $shareCartRequestBuilder;
-
-    /**
      * @var \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface
      */
     protected $sharedCartRepository;
@@ -42,18 +40,15 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
 
     /**
      * @param \Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriterInterface $quoteCompanyUserWriter
-     * @param \Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartRequestBuilderInterface $shareCartRequestBuilder
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface $sharedCartRepository
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartEntityManagerInterface $sharedCartEntityManager
      */
     public function __construct(
         QuoteCompanyUserWriterInterface $quoteCompanyUserWriter,
-        ShareCartRequestBuilderInterface $shareCartRequestBuilder,
         SharedCartRepositoryInterface $sharedCartRepository,
         SharedCartEntityManagerInterface $sharedCartEntityManager
     ) {
         $this->quoteCompanyUserWriter = $quoteCompanyUserWriter;
-        $this->shareCartRequestBuilder = $shareCartRequestBuilder;
         $this->sharedCartRepository = $sharedCartRepository;
         $this->sharedCartEntityManager = $sharedCartEntityManager;
     }
@@ -83,7 +78,7 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
      */
     protected function shareCartWithLoggedInCompanyUser(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        $shareCartRequestTransfer = $this->shareCartRequestBuilder->buildShareCartRequestTransfer($resourceShareRequestTransfer);
+        $shareCartRequestTransfer = $this->buildShareCartRequestTransfer($resourceShareRequestTransfer);
         if (!$shareCartRequestTransfer) {
             return $this->createErrorMessageResponse(static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART);
         }
@@ -138,6 +133,52 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareCartRequestTransfer|null
+     */
+    public function buildShareCartRequestTransfer(ResourceShareRequestTransfer $resourceShareRequestTransfer): ?ShareCartRequestTransfer
+    {
+        $resourceShareDataTransfer = $resourceShareRequestTransfer->getResourceShare()
+            ->getResourceShareData();
+
+        $idCompanyUser = $resourceShareRequestTransfer->getCustomer()
+            ->getCompanyUserTransfer()
+            ->getIdCompanyUser();
+
+        $shareDetailTransfer = $this->createShareDetailTransfer($idCompanyUser, $resourceShareDataTransfer->getShareOption());
+        if (!$shareDetailTransfer) {
+            return null;
+        }
+
+        return (new ShareCartRequestTransfer())
+            ->setIdQuote($resourceShareDataTransfer->getIdQuote())
+            ->setIdCompanyUser($idCompanyUser)
+            ->addShareDetail($shareDetailTransfer);
+    }
+
+    /**
+     * @param int $idCompanyUser
+     * @param string $shareOption
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailTransfer|null
+     */
+    protected function createShareDetailTransfer(int $idCompanyUser, string $shareOption): ?ShareDetailTransfer
+    {
+        $quotePermissionGroups = $this->sharedCartRepository->findQuotePermissionGroupList(
+            (new QuotePermissionGroupCriteriaFilterTransfer())->setName($shareOption)
+        );
+
+        if (!count($quotePermissionGroups)) {
+            return null;
+        }
+
+        return (new ShareDetailTransfer())
+            ->setIdCompanyUser($idCompanyUser)
+            ->setQuotePermissionGroup(reset($quotePermissionGroups));
     }
 
     /**
