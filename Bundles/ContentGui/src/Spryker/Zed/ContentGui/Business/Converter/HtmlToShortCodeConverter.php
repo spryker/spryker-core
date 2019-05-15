@@ -10,24 +10,24 @@ namespace Spryker\Zed\ContentGui\Business\Converter;
 use DOMDocument;
 use DOMXPath;
 
-class HtmlToShortCodeConverter implements ContentGuiConverterInterface
+class HtmlToShortCodeConverter implements HtmlConverterInterface
 {
     protected const ATTRIBUTE_DATA_SHORT_CODE = 'data-short-code';
 
     /**
-     * @param string $string
+     * @param string $html
      *
      * @return string
      */
-    public function convert(string $string): string
+    public function replaceWidget(string $html): string
     {
         $dom = new DOMDocument();
-        $dom->loadHTML($string, LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $dom->loadHTML($html, LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
         $replacements = $this->getDomReplacements($dom);
 
         if (!$replacements) {
-            return $string;
+            return $html;
         }
 
         foreach ($replacements as $replacement) {
@@ -35,9 +35,9 @@ class HtmlToShortCodeConverter implements ContentGuiConverterInterface
             $widget->parentNode->replaceChild($shortCode, $widget);
         }
 
-        $string = $dom->saveHTML();
+        $html = $dom->saveHTML();
 
-        return $string;
+        return $html;
     }
 
     /**

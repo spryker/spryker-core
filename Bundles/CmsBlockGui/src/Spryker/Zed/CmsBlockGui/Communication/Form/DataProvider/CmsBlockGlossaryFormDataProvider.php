@@ -54,7 +54,7 @@ class CmsBlockGlossaryFormDataProvider
     public function getData($idCmsBlock)
     {
         $cmsBlockGlossaryTransfer = $this->cmsBlockFacade->findGlossary($idCmsBlock);
-        $cmsBlockGlossaryTransfer = $this->cmsGlossaryUpdater->executeAfterFindPlugins($cmsBlockGlossaryTransfer);
+        $cmsBlockGlossaryTransfer = $this->cmsGlossaryUpdater->updateAfterFind($cmsBlockGlossaryTransfer);
 
         return $cmsBlockGlossaryTransfer;
     }

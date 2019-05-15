@@ -11,8 +11,9 @@ use Spryker\Zed\ContentGui\Business\Converter\CmsBlockGui\CmsBlockGuiGlossaryCon
 use Spryker\Zed\ContentGui\Business\Converter\CmsBlockGui\CmsBlockGuiGlossaryConverterInterface;
 use Spryker\Zed\ContentGui\Business\Converter\CmsGui\CmsGuiGlossaryConverter;
 use Spryker\Zed\ContentGui\Business\Converter\CmsGui\CmsGuiGlossaryConverterInterface;
-use Spryker\Zed\ContentGui\Business\Converter\ContentGuiConverterInterface;
+use Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface;
 use Spryker\Zed\ContentGui\Business\Converter\HtmlToShortCodeConverter;
+use Spryker\Zed\ContentGui\Business\Converter\ShortCodeConverterInterface;
 use Spryker\Zed\ContentGui\Business\Converter\ShortCodeToHtmlConverter;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
@@ -47,17 +48,17 @@ class ContentGuiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ContentGui\Business\Converter\ContentGuiConverterInterface
+     * @return \Spryker\Zed\ContentGui\Business\Converter\HtmlConverterInterface
      */
-    public function createHtmlToShortCodeConverter(): ContentGuiConverterInterface
+    public function createHtmlToShortCodeConverter(): HtmlConverterInterface
     {
         return new HtmlToShortCodeConverter();
     }
 
     /**
-     * @return \Spryker\Zed\ContentGui\Business\Converter\ContentGuiConverterInterface
+     * @return \Spryker\Zed\ContentGui\Business\Converter\ShortCodeConverterInterface
      */
-    public function createShortCodeToHtmlConverter(): ContentGuiConverterInterface
+    public function createShortCodeToHtmlConverter(): ShortCodeConverterInterface
     {
         return new ShortCodeToHtmlConverter(
             $this->getContentFacade(),

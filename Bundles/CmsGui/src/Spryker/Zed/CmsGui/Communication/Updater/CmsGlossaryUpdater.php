@@ -36,7 +36,7 @@ class CmsGlossaryUpdater implements CmsGlossaryUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function executeAfterFindPlugins(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
+    public function updateAfterFind(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
         foreach ($this->cmsGlossaryAfterFindPlugins as $cmsGlossaryAfterFindPlugin) {
             $cmsGlossaryTransfer = $cmsGlossaryAfterFindPlugin->execute($cmsGlossaryTransfer);
@@ -50,7 +50,7 @@ class CmsGlossaryUpdater implements CmsGlossaryUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function executeBeforeSavePlugins(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
+    public function updateBeforeSave(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
         foreach ($this->cmsGlossaryBeforeSavePlugins as $cmsGlossaryBeforeSavePlugin) {
             $cmsGlossaryTransfer = $cmsGlossaryBeforeSavePlugin->execute($cmsGlossaryTransfer);

@@ -77,7 +77,7 @@ class CmsGlossaryFormTypeDataProvider
             );
         }
 
-        $cmsGlossaryTransfer = $this->cmsGlossaryUpdater->executeAfterFindPlugins($cmsGlossaryTransfer);
+        $cmsGlossaryTransfer = $this->cmsGlossaryUpdater->updateAfterFind($cmsGlossaryTransfer);
 
         return $cmsGlossaryTransfer;
     }
