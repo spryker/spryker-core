@@ -22,7 +22,7 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     protected const COL_ACTIVE_FROM = 'active_from';
     protected const COL_ACTIVE_TO = 'active_to';
     protected const COL_ACTIONS = 'actions';
-    protected const DATE_FORMAT = 'Y-m-d H:i:s';
+    protected const DATE_FORMAT = 'Y-m-deH:i:s';
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
