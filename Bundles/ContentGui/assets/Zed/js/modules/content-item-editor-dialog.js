@@ -139,7 +139,7 @@ var ContentItemDialog = function(
                         '%ID%': chosenId,
                         '%NAME%': chosenName,
                         '%TEMPLATE_DISPLAY_NAME%': chosenTemplate,
-                        '%TEMPLATE%': chosenTemplate,
+                        '%TEMPLATE%': chosenTemplateKey,
                         '%SHORT_CODE%': builtText,
                     }[param];
                 });
@@ -174,12 +174,6 @@ var ContentItemDialog = function(
                     'ajax': dataAjaxUrl,
                     'lengthChange': false
                 });
-
-                if (this.$clickedNodeInEditor && this.$clickedNodeInEditor.hasAttribute('data-template')) {
-                    this.$dialog
-                        .find('input[value=' + $(this.$clickedNodeInEditor).data('template') + ']')
-                        .attr('checked', true);
-                }
             };
 
             this.clearContent = function () {
