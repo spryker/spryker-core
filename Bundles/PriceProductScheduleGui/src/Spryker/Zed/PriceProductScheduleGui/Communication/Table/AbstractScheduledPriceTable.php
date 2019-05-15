@@ -142,7 +142,7 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     {
         $currencyTransfer = (new CurrencyTransfer())->fromArray($priceProductScheduleEntity->getCurrency()->toArray(), true);
         $moneyTransfer = new MoneyTransfer();
-        $moneyTransfer->setAmount($amount);
+        $moneyTransfer->setAmount((string)$amount);
         $moneyTransfer->setCurrency($currencyTransfer);
 
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
