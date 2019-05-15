@@ -12,9 +12,7 @@ use Orm\Zed\Vault\Persistence\SpyVaultDepositQuery;
 use Spryker\Shared\Vault\Exception\EncryptionKeyNotPreConfigured;
 use Spryker\Shared\Vault\VaultConfig as VaultSharedConfig;
 use Spryker\Shared\Vault\VaultConstants;
-use Spryker\Zed\Vault\Business\VaultBusinessFactory;
 use Spryker\Zed\Vault\Business\VaultFacade;
-use Spryker\Zed\Vault\VaultConfig;
 
 /**
  * Auto-generated group annotations
@@ -44,8 +42,13 @@ class VaultFacadeTest extends Unit
      */
     public function testStoreStoresString(): void
     {
+        //Arrange
+        $vaultFacade = $this->tester->getVaultFacadeWithSharedConfig(
+            $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY)
+        );
+
         //Act
-        $isSuccessful = $this->createVaultFacadeMock(static::TEST_ENCRYPTION_KEY)->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
+        $isSuccessful = $vaultFacade->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
 
         //Assert
         $this->assertSame(true, $isSuccessful);
@@ -65,11 +68,13 @@ class VaultFacadeTest extends Unit
     public function testRetrieveReturnsDecryptedStringIfExist(): void
     {
         //Arrange
-        $vaultFacadeMock = $this->createVaultFacadeMock(static::TEST_ENCRYPTION_KEY);
-        $vaultFacadeMock->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
+        $vaultFacade = $this->tester->getVaultFacadeWithSharedConfig(
+            $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY)
+        );
+        $vaultFacade->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
 
         //Act
-        $data = $vaultFacadeMock->retrieve(static::TEST_DATA_TYPE, static::TEST_DATA_KEY);
+        $data = $vaultFacade->retrieve(static::TEST_DATA_TYPE, static::TEST_DATA_KEY);
 
         //Assert
         $this->assertSame(static::TEST_DATA, $data);
@@ -80,8 +85,13 @@ class VaultFacadeTest extends Unit
      */
     public function testRetrieveReturnsNullIfNothingFound(): void
     {
+        //Arrange
+        $vaultFacade = $this->tester->getVaultFacadeWithSharedConfig(
+            $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY)
+        );
+
         //Act
-        $data = $this->createVaultFacadeMock(static::TEST_ENCRYPTION_KEY)->retrieve(static::TEST_DATA_TYPE, static::TEST_DATA_KEY);
+        $data = $vaultFacade->retrieve(static::TEST_DATA_TYPE, static::TEST_DATA_KEY);
 
         //Assert
         $this->assertNull($data);
@@ -93,7 +103,9 @@ class VaultFacadeTest extends Unit
     public function testStoreThrowsExceptionIfEncryptionKeyNotPreConfigured(): void
     {
         //Arrange
-        $vaultFacade = $this->createVaultFacadeMock(null);
+        $vaultFacade = $this->tester->getVaultFacadeWithSharedConfig(
+            $this->createVaultSharedConfigMock(null)
+        );
 
         //Assert
         $this->expectException(EncryptionKeyNotPreConfigured::class);
@@ -108,65 +120,18 @@ class VaultFacadeTest extends Unit
     public function testStoreOverwritesVaultDepositIfExist(): void
     {
         //Arrange
-        $vaultFacadeMock = $this->createVaultFacadeMock(static::TEST_ENCRYPTION_KEY);
-        $vaultFacadeMock->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
+        $vaultFacade = $this->tester->getVaultFacadeWithSharedConfig(
+            $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY)
+        );
+        $vaultFacade->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
 
         //Act
-        $vaultFacadeMock->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_UPDATED_DATA);
+        $vaultFacade->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_UPDATED_DATA);
 
         //Assert
-        $data = $vaultFacadeMock->retrieve(static::TEST_DATA_TYPE, static::TEST_DATA_KEY);
+        $data = $vaultFacade->retrieve(static::TEST_DATA_TYPE, static::TEST_DATA_KEY);
 
         $this->assertSame($data, static::TEST_UPDATED_DATA);
-    }
-
-    /**
-     * @param string|null $encryptionKey
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Vault\Business\VaultFacadeInterface
-     */
-    protected function createVaultFacadeMock(?string $encryptionKey)
-    {
-        $vaultFacadeMock = $this->getMockBuilder(VaultFacade::class)
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
-
-        $vaultFacadeMock->setFactory($this->createVaultBusinessFactoryMock($encryptionKey));
-
-        return $vaultFacadeMock;
-    }
-
-    /**
-     * @param string|null $encryptionKey
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Vault\Business\VaultBusinessFactory
-     */
-    protected function createVaultBusinessFactoryMock(?string $encryptionKey)
-    {
-        $vaultBusinessFactoryMock = $this->getMockBuilder(VaultBusinessFactory::class)
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
-
-        $vaultBusinessFactoryMock->setConfig($this->createVaultConfigMock($encryptionKey));
-
-        return $vaultBusinessFactoryMock;
-    }
-
-    /**
-     * @param string|null $encryptionKey
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Vault\VaultConfig
-     */
-    protected function createVaultConfigMock(?string $encryptionKey)
-    {
-        $vaultConfigMock = $this->getMockBuilder(VaultConfig::class)
-            ->setMethods(['getSharedConfig'])
-            ->getMock();
-
-        $vaultConfigMock->method('getSharedConfig')
-            ->willReturn($this->createVaultSharedConfigMock($encryptionKey));
-
-        return $vaultConfigMock;
     }
 
     /**
