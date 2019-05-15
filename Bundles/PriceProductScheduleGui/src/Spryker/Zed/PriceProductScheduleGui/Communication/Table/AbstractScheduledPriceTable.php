@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Table;
 
+use DateTime;
+use DateTimeZone;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 
 abstract class AbstractScheduledPriceTable extends AbstractTable
 {
@@ -22,7 +25,20 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     protected const COL_ACTIVE_FROM = 'active_from';
     protected const COL_ACTIVE_TO = 'active_to';
     protected const COL_ACTIONS = 'actions';
-    protected const DATE_FORMAT = 'Y-m-deH:i:s';
+    protected const DATE_FORMAT = 'Y-m-d e H:i:s';
+
+    /**
+     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(PriceProductScheduleGuiToStoreFacadeInterface $storeFacade)
+    {
+        $this->storeFacade = $storeFacade;
+    }
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
@@ -98,10 +114,24 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
             static::COL_GROSS_PRICE => $priceProductScheduleEntity->getGrossPrice(),
             static::COL_STORE => $priceProductScheduleEntity->getStore()->getName(),
             static::COL_CURRENCY => $priceProductScheduleEntity->getCurrency()->getCode(),
-            static::COL_ACTIVE_FROM => $priceProductScheduleEntity->getActiveFrom()->format(static::DATE_FORMAT),
-            static::COL_ACTIVE_TO => $priceProductScheduleEntity->getActiveTo()->format(static::DATE_FORMAT),
+            static::COL_ACTIVE_FROM => $this->prepareDateTime($priceProductScheduleEntity->getActiveFrom(), $priceProductScheduleEntity)->format(static::DATE_FORMAT),
+            static::COL_ACTIVE_TO => $this->prepareDateTime($priceProductScheduleEntity->getActiveTo(), $priceProductScheduleEntity)->format(static::DATE_FORMAT),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($priceProductScheduleEntity)),
         ];
+    }
+
+    /**
+     * @param \DateTime $dateTime
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
+     *
+     * @return \DateTime
+     */
+    protected function prepareDateTime(DateTime $dateTime, SpyPriceProductSchedule $priceProductScheduleEntity): DateTime
+    {
+        $storeTransfer = $this->storeFacade->getStoreById($priceProductScheduleEntity->getFkStore());
+        $timeZone = new DateTimeZone($storeTransfer->getTimezone());
+
+        return $dateTime->setTimezone($timeZone);
     }
 
     /**
