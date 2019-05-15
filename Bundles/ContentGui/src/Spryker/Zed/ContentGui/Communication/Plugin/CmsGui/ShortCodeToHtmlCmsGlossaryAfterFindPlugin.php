@@ -20,6 +20,8 @@ class ShortCodeToHtmlCmsGlossaryAfterFindPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritDoc}
+     * - Executes after finding CmsGlossaryTransfer data in the database.
+     * - Converts twig short-codes to content item html editor widgets in CmsPlaceholderTranslationTransfer translations.
      *
      * @api
      *

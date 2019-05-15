@@ -102,18 +102,18 @@ class ShortCodeToHtmlConverter implements ContentGuiConverterInterface
             ContentGuiConfig::PARAMETER_TEMPLATE => static::PATTERN_REGEXP_STRING,
         ]);
 
-        preg_match($shortCodeRegExpPattern, $string, $shortCodes);
+        preg_match_all($shortCodeRegExpPattern, $string, $shortCodes);
 
-        if (!$shortCodes) {
+        if (!$shortCodes[0]) {
             return null;
         }
 
-        return $shortCodes;
+        return $shortCodes[0];
     }
 
     /**
      * @param string $string
-     * @param array $shortCodes
+     * @param string[] $shortCodes
      * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
      *
      * @return string
@@ -122,6 +122,11 @@ class ShortCodeToHtmlConverter implements ContentGuiConverterInterface
     {
         foreach ($shortCodes as $shortCode) {
             $editorContentWidget = $this->getEditorContentWidgetByShortCode($shortCode, $contentWidgetTemplateTransfers);
+
+            if (!$editorContentWidget) {
+                continue;
+            }
+
             $string = str_replace($shortCode, $editorContentWidget, $string);
         }
 
@@ -192,31 +197,33 @@ class ShortCodeToHtmlConverter implements ContentGuiConverterInterface
      */
     protected function extractTemplateIdentifier(string $twigFunction): ?string
     {
-        preg_match('/\'' . static::PATTERN_REGEXP_STRING . '\'/', $twigFunction, $templateIdentifier);
+        preg_match("/'" . static::PATTERN_REGEXP_STRING . "'/", $twigFunction, $templateIdentifier);
 
         if (!$templateIdentifier) {
             return null;
         }
 
-        return str_replace('\'', '', $templateIdentifier[0]);
+        return trim($templateIdentifier[0], "'");
     }
 
     /**
      * @param string $templateIdentifier
-     * @param array $contentWidgetTemplateTransfers
+     * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
      *
      * @return string
      */
     protected function getTemplateDisplayNameByIdentifier(string $templateIdentifier, array $contentWidgetTemplateTransfers): string
     {
-        $templateName = $templateIdentifier;
-
         foreach ($contentWidgetTemplateTransfers as $contentWidgetTemplateTransfer) {
             if ($contentWidgetTemplateTransfer->getIdentifier() === $templateIdentifier) {
+                if (!$contentWidgetTemplateTransfer->getName()) {
+                    return '';
+                }
+
                 return $this->translatorFacade->trans($contentWidgetTemplateTransfer->getName());
             }
         }
 
-        return $templateName;
+        return '';
     }
 }

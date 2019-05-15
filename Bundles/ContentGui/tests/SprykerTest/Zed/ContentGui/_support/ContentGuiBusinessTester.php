@@ -200,7 +200,7 @@ class ContentGuiBusinessTester extends Actor
     /**
      * @return \Spryker\Zed\ContentGui\ContentGuiConfig
      */
-    protected function getConfig()
+    protected function getConfig(): ContentGuiConfig
     {
         return new ContentGuiConfig();
     }

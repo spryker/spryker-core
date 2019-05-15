@@ -20,6 +20,8 @@ class HtmlToShortCodeCmsGlossaryBeforeSavePlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritDoc}
+     * - Executes before saving CmsGlossaryTransfer data to the database.
+     * - Converts content item html editor widgets to twig short-codes in CmsPlaceholderTranslationTransfer translations.
      *
      * @api
      *

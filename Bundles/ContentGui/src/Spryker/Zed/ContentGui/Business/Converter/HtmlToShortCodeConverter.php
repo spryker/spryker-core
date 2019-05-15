@@ -31,8 +31,8 @@ class HtmlToShortCodeConverter implements ContentGuiConverterInterface
         }
 
         foreach ($replacements as $replacement) {
-            [$shortCode, $div] = $replacement;
-            $div->parentNode->replaceChild($shortCode, $div);
+            [$shortCode, $widget] = $replacement;
+            $widget->parentNode->replaceChild($shortCode, $widget);
         }
 
         $string = $dom->saveHTML();
@@ -49,12 +49,12 @@ class HtmlToShortCodeConverter implements ContentGuiConverterInterface
     {
         $replacements = [];
         $xpath = new DOMXPath($dom);
-        $nodes = $xpath->query('//*[@' . static::ATTRIBUTE_DATA_SHORT_CODE . ']');
+        $widgets = $xpath->query('//*[@' . static::ATTRIBUTE_DATA_SHORT_CODE . ']');
 
-        foreach ($nodes as $node) {
-            $shortCodeElement = $dom->createDocumentFragment();
-            $shortCodeElement->appendXML($node->getAttribute(static::ATTRIBUTE_DATA_SHORT_CODE));
-            $replacements[] = [$shortCodeElement, $node];
+        foreach ($widgets as $widget) {
+            $shortCode = $dom->createDocumentFragment();
+            $shortCode->appendXML($widget->getAttribute(static::ATTRIBUTE_DATA_SHORT_CODE));
+            $replacements[] = [$shortCode, $widget];
         }
 
         return $replacements;
