@@ -17,14 +17,14 @@ interface VaultToUtilEncryptionServiceInterface
     public function generateOpenSslEncryptInitVector(?string $encryptionMethod = null): string;
 
     /**
-     * @param string $chiperText
+     * @param string $cipherText
      * @param string $initVector
      * @param string $encryptionKey
      * @param string|null $encryptionMethod
      *
      * @return string
      */
-    public function decryptOpenSsl(string $chiperText, string $initVector, string $encryptionKey, ?string $encryptionMethod = null): string;
+    public function decryptOpenSsl(string $cipherText, string $initVector, string $encryptionKey, ?string $encryptionMethod = null): string;
 
     /**
      * @param string $plainText
