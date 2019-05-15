@@ -235,7 +235,7 @@ class StorageRedisWrapperTest extends Unit
 
     /**
      * @expectedException \Spryker\Client\StorageRedis\Exception\StorageRedisException
-     * @expectedExceptionMessage could not set redisKey: "kv:plainTextKey" with value: ""plain text data""
+     * @expectedExceptionMessage Could not set redisKey: "kv:plainTextKey" with value: ""plain text data""
      *
      * @return void
      */
@@ -269,7 +269,7 @@ class StorageRedisWrapperTest extends Unit
 
     /**
      * @expectedException \Spryker\Client\StorageRedis\Exception\StorageRedisException
-     * @expectedExceptionMessage could not set redisKey: "kv:plainTextKey" with value: ""plain text data""
+     * @expectedExceptionMessage Could not set redisKey: "kv:plainTextKey" with value: ""plain text data""
      *
      * @return void
      */
@@ -282,7 +282,7 @@ class StorageRedisWrapperTest extends Unit
 
     /**
      * @expectedException \Spryker\Client\StorageRedis\Exception\StorageRedisException
-     * @expectedExceptionMessage could not set redisKey: "kv:plainTextKey" with value: ""plain text data""
+     * @expectedExceptionMessage Could not set redisKey: "kv:plainTextKey" with value: ""plain text data""
      *
      * @return void
      */
