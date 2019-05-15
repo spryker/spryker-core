@@ -37,12 +37,16 @@ var PopoverButton = function (buttonContent, buttonCallback) {
         var button = ui.button({
             contents: buttonContent.icon + ' ' + buttonContent.title,
             tooltip: buttonContent.title,
-            click: buttonCallback
+            data: {
+                type: '%TYPE%',
+                id: '%ID%'
+            },
+            click: buttonCallback(context)
         });
 
         return button.render();
     }
-}
+};
 
 module.exports = {
     ContentItemDropdownButton: ContentItemDropdownButton,

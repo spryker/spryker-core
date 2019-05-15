@@ -11,6 +11,7 @@ var ContentItemDialog = require('./content-item-editor-dialog');
 var ContentItemPopover = require('./content-item-editor-popover');
 
 var ContentItemEditor = function(options) {
+    var self = this;
     this.dropDownItems = [];
     this.buttonTitle = 'Insert Content';
     this.title = 'Content';
@@ -25,6 +26,7 @@ var ContentItemEditor = function(options) {
         new ContentItemDialog(
             this.title,
             this.dialogContentUrl,
+            this.editDialogContentUrl,
             this.insertButtonTitle,
             this.editorContentWidgetTemplate
         );
@@ -61,36 +63,53 @@ var ContentItemEditor = function(options) {
         return editorButtons.ContentItemDropdownButton(
             this.buttonTitle,
             this.generateDropdownList(),
-            this.dropDownClickHandler
+            this.showDialogHandler
         );
     };
 
     this.createEditWidgetButton = function () {
         return editorButtons.PopoverButton(
             this.popoverButtonsContent.editWidget,
-            function () {
-                alert('Edit Widget');
-            }
+            this.showDialogHandler
         );
-    }
+    };
 
     this.createEditContentItemButton = function () {
         return editorButtons.PopoverButton(
             this.popoverButtonsContent.editContentItem,
-            function () {
-                alert('Edit Content Item');
-            }
+            this.editContentItemHandler
         );
-    }
+    };
 
     this.createRemoveContentItemButton = function () {
         return editorButtons.PopoverButton(
             this.popoverButtonsContent.removeContentItem,
-            function () {
-                alert('remove Content Item');
-            }
+            this.removeContentItemHandler
         );
-    }
+    };
+
+    this.showDialogHandler = function (context) {
+        return context.createInvokeHandler('contentItemDialog.show');
+    };
+
+    this.editContentItemHandler = function () {
+        return function(event) {
+            var contentItemId = event.currentTarget.dataset.id;
+            var originLink = window.location.origin;
+
+            window.open(originLink + self.contentItemUrl + '?id-content=' + contentItemId, '_blank');
+        }
+    };
+
+    this.removeContentItemHandler = function (context) {
+        return function () {
+            var $clickedNode = context.invoke('contentItemPopover.getClickedNode');
+            var $clickedNodeRange = $.summernote.range.createFromNode($clickedNode);
+
+            $clickedNodeRange.deleteContents();
+            context.invoke('contentItemPopover.hidePopover');
+        }
+    };
 
     this.generateDropdownList = function () {
         return this.dropDownItems.reduce(function(currentList, dropItem) {
@@ -101,10 +120,6 @@ var ContentItemEditor = function(options) {
 
             return currentList + dropItemTemplate;
         }, '');
-    };
-
-    this.dropDownClickHandler = function (context) {
-        return context.createInvokeHandler('contentItemDialog.show');
     };
 
     this.initialization();

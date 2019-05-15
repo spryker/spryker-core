@@ -11,6 +11,7 @@
     window.editorConfiguration.contentGuiConfigData = {
         dropDownItems: {{ dropdownItems | json_encode | raw }},
         dialogContentUrl: '/content-gui/list-content-by-type',
+        contentItemUrl: '/content-gui/edit-content',
         buttonTitle: '{{ 'Content Item' | trans }}',
         title: '{{ 'Insert a Content Item' | trans }}',
         insertButtonTitle: '{{ 'Insert' | trans }}',
@@ -18,11 +19,11 @@
         popoverButtonsContent: {
             editWidget: {
                 icon: '<i class="fa fa-pencil" aria-hidden="true"></i>',
-                title: 'Edit Widget'
+                title: '{{ 'Edit Widget' | trans }}'
             },
             editContentItem: {
                 icon: '<i class="fa fa-pencil" aria-hidden="true"></i>',
-                title: 'Edit Content Item',
+                title: '{{ 'Edit Content Item' | trans }}'
             },
             removeContentItem: {
                 icon: '<i class="fa fa-trash-o" aria-hidden="true"></i>',
