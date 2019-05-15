@@ -50,6 +50,7 @@ class CmsPageMapper implements CmsPageMapperInterface
         foreach ($cmsPageEntity->getSpyUrls() as $urlEntity) {
             $urlLocaleMap[$urlEntity->getFkLocale()] = $urlEntity->getUrl();
         }
+
         return $urlLocaleMap;
     }
 

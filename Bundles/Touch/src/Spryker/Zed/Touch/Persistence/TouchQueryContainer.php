@@ -193,6 +193,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query = $this->getFactory()->createTouchSearchQuery();
         if (is_array($touchIds)) {
             $query->filterByFkTouch($touchIds, Criteria::IN);
+
             return $query;
         }
 
@@ -213,6 +214,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query = $this->getFactory()->createTouchStorageQuery();
         if (is_array($touchIds)) {
             $query->filterByFkTouch($touchIds, Criteria::IN);
+
             return $query;
         }
 
@@ -240,5 +242,53 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
             ->filterByItemId($itemIds, Criteria::IN);
 
         return $query;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $itemType
+     * @param string $itemEvent
+     * @param array $itemIds
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    public function queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent(string $itemType, string $itemEvent, array $itemIds): SpyTouchQuery
+    {
+        $query = $this->queryTouchEntriesByItemTypeAndItemIds($itemType, $itemIds)
+            ->condition('itemEventFilterCondition', SpyTouchTableMap::COL_ITEM_EVENT . ' = ?', $itemEvent)
+            ->condition('isUniqueTouchItemCondition', $this->getTouchCounterSubQuery())
+            ->combine(['itemEventFilterCondition', 'isUniqueTouchItemCondition'], Criteria::LOGICAL_OR);
+
+        return $query;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $touchIds
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    public function queryTouchEntriesByTouchIds(array $touchIds): SpyTouchQuery
+    {
+        $query = $this->getFactory()->createTouchQuery()
+            ->filterByIdTouch_In($touchIds);
+
+        return $query;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTouchCounterSubQuery(): string
+    {
+        $subQuery = '(SELECT COUNT(*) FROM spy_touch as alias WHERE alias.item_id = spy_touch.item_id AND alias.item_type = spy_touch.item_type) = 1';
+
+        return $subQuery;
     }
 }

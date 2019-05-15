@@ -50,4 +50,16 @@ interface PriceCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function filterItemsWithoutPrice(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Sets unit source prices as null in quote items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function sanitizeSourcePrices(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

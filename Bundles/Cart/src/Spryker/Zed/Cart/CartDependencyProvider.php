@@ -33,6 +33,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CART_ADD_ITEM_STRATEGY = 'PLUGINS_CART_ADD_ITEM_STRATEGY';
     public const PLUGINS_CART_REMOVE_ITEM_STRATEGY = 'PLUGINS_CART_REMOVE_ITEM_STRATEGY';
     public const PLUGINS_POST_RELOAD_ITEMS = 'PLUGINS_POST_RELOAD_ITEMS';
+    public const PLUGINS_QUOTE_LOCK_PRE_RESET = 'PLUGINS_QUOTE_LOCK_PRE_RESET';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -57,6 +58,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartRemoveItemStrategyPlugins($container);
         $container = $this->addPostReloadItemsPlugins($container);
         $container = $this->addCartBeforePreCheckNormalizerPlugins($container);
+        $container = $this->addQuoteLockPreResetPlugins($container);
 
         return $container;
     }
@@ -71,6 +73,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_CALCULATION] = function (Container $container) {
             return new CartToCalculationBridge($container->getLocator()->calculation()->facade());
         };
+
         return $container;
     }
 
@@ -84,6 +87,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_QUOTE] = function (Container $container) {
             return new CartToQuoteFacadeBridge($container->getLocator()->quote()->facade());
         };
+
         return $container;
     }
 
@@ -97,6 +101,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_MESSENGER] = function (Container $container) {
             return new CartToMessengerBridge($container->getLocator()->messenger()->facade());
         };
+
         return $container;
     }
 
@@ -110,6 +115,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CART_EXPANDER_PLUGINS] = function (Container $container) {
             return $this->getExpanderPlugins($container);
         };
+
         return $container;
     }
 
@@ -123,6 +129,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CART_POST_SAVE_PLUGINS] = function (Container $container) {
             return $this->getPostSavePlugins($container);
         };
+
         return $container;
     }
 
@@ -150,6 +157,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CART_PRE_CHECK_PLUGINS] = function (Container $container) {
             return $this->getCartPreCheckPlugins($container);
         };
+
         return $container;
     }
 
@@ -177,6 +185,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CART_PRE_RELOAD_PLUGINS] = function (Container $container) {
             return $this->getPreReloadPlugins($container);
         };
+
         return $container;
     }
 
@@ -245,6 +254,20 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PLUGINS_POST_RELOAD_ITEMS] = function (Container $container): array {
             return $this->getPostReloadItemsPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteLockPreResetPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_LOCK_PRE_RESET] = function () {
+            return $this->getQuoteLockPreResetPlugins();
         };
 
         return $container;
@@ -356,6 +379,14 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface[]
      */
     protected function getPostReloadItemsPlugins(Container $container): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteLockPreResetPluginInterface[]
+     */
+    protected function getQuoteLockPreResetPlugins(): array
     {
         return [];
     }

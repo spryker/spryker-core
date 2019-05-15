@@ -146,6 +146,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
 
         if ($resourceRoutePlugin instanceof ResourceWithParentPluginInterface) {
             $parentResourceType = $resourceRoutePlugin->getParentResourceType();
+
             return $this->isParentResourceMatching($resources, $parentResourceType);
         }
 
@@ -169,6 +170,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
                 return true;
             }
         }
+
         return false;
     }
 
@@ -246,6 +248,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
                 $newestVersionPlugin = $resourcePlugin;
             }
         }
+
         return $newestVersionPlugin;
     }
 
@@ -275,6 +278,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
 
             $resourcePlugins[] = $resourceRoutePlugin;
         }
+
         return $resourcePlugins;
     }
 }

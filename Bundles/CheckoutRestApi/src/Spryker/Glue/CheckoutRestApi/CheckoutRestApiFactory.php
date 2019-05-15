@@ -10,12 +10,16 @@ namespace Spryker\Glue\CheckoutRestApi;
 use Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessor;
 use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutProcessorInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapper;
+use Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReader;
 use Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataReaderInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapper;
 use Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface;
+use Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapper;
+use Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpander;
 use Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidator;
@@ -40,7 +44,8 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createCheckoutDataMapper(),
             $this->createCheckoutRequestAttributesExpander(),
-            $this->createCheckoutRequestValidator()
+            $this->createCheckoutRequestValidator(),
+            $this->createRestCheckoutErrorMapper()
         );
     }
 
@@ -60,9 +65,10 @@ class CheckoutRestApiFactory extends AbstractFactory
         return new CheckoutProcessor(
             $this->getClient(),
             $this->getResourceBuilder(),
-            $this->getGlossaryStorageClient(),
             $this->createCheckoutRequestAttributesExpander(),
-            $this->createCheckoutRequestValidator()
+            $this->createCheckoutRequestValidator(),
+            $this->createRestCheckoutErrorMapper(),
+            $this->createCheckoutResponseMapper()
         );
     }
 
@@ -86,6 +92,16 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\Checkout\CheckoutResponseMapperInterface
+     */
+    public function createCheckoutResponseMapper(): CheckoutResponseMapperInterface
+    {
+        return new CheckoutResponseMapper(
+            $this->getCheckoutResponseMapperPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface
      */
     public function createCheckoutRequestValidator(): CheckoutRequestValidatorInterface
@@ -105,6 +121,17 @@ class CheckoutRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapperInterface
+     */
+    public function createRestCheckoutErrorMapper(): RestCheckoutErrorMapperInterface
+    {
+        return new RestCheckoutErrorMapper(
+            $this->getConfig(),
+            $this->getGlossaryStorageClient()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\CheckoutRestApi\Dependency\Client\CheckoutRestApiToGlossaryStorageClientInterface
      */
     public function getGlossaryStorageClient(): CheckoutRestApiToGlossaryStorageClientInterface
@@ -118,5 +145,13 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function getCheckoutRequestAttributesValidatorPlugins(): array
     {
         return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface[]
+     */
+    public function getCheckoutResponseMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(CheckoutRestApiDependencyProvider::PLUGINS_CHECKOUT_RESPONSE_MAPPER);
     }
 }
