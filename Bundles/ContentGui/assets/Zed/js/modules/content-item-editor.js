@@ -108,6 +108,7 @@ var ContentItemEditor = function(options) {
 
             $clickedNodeRange.deleteContents();
             context.invoke('contentItemPopover.hidePopover');
+            context.invoke('pasteHTML', ' ');
         }
     };
 

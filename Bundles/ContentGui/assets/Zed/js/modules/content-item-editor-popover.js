@@ -11,7 +11,7 @@ var ContentItemEditorPopover = function () {
                 'summernote.keyup summernote.mouseup summernote.change summernote.scroll': function(event) {
                     this.showPopover(event);
                 }.bind(this),
-                'summernote.disable summernote.dialog.shown': function() {
+                'summernote.disable summernote.dialog.shown summernote.codeview.toggled': function() {
                     this.hidePopover();
                 }.bind(this)
             };
