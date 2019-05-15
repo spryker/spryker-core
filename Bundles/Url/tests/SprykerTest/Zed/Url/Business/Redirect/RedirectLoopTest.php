@@ -50,8 +50,6 @@ class RedirectLoopTest extends Unit
      */
     public function testCreatingCyclicRedirectsThrowsException()
     {
-        //self::markTestSkipped();
-
         $localeTransfer = $this->prepareTestData();
 
         $sourceUrlTransfer = new UrlTransfer();
