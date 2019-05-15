@@ -5,25 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MultiCartsRestApiExtension\Dependency\Plugin;
+namespace Spryker\Zed\SharedCartsRestApi\Business\QuoteCollectionExpander;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 
-interface QuoteCollectionResponseExpanderPluginInterface
+interface QuoteCollectionExpanderInterface
 {
     /**
-     * Specification:
-     * - Adds data to quote collection response transfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function expandQuoteCollectionResponse(
+    public function expandQuoteCollectionWithCustomerSharedQuoteCollection(
         CustomerTransfer $customerTransfer,
         QuoteCollectionTransfer $quoteCollectionTransfer
     ): QuoteCollectionTransfer;
