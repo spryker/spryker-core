@@ -62,6 +62,9 @@ class CmsBlockGuiGlossaryConverter extends AbstractCmsGlossaryConverter implemen
     {
         foreach ($cmsBlockGlossaryPlaceholderTranslationTransfers as $cmsBlockGlossaryPlaceholderTranslationTransfer) {
             $cmsBlockGlossaryPlaceholderTranslation = $cmsBlockGlossaryPlaceholderTranslationTransfer->getTranslation();
+            if (!$cmsBlockGlossaryPlaceholderTranslation) {
+                continue;
+            }
             $cmsBlockGlossaryPlaceholderTranslation = $this->{$methodName}($cmsBlockGlossaryPlaceholderTranslation);
             $cmsBlockGlossaryPlaceholderTranslationTransfer->setTranslation($cmsBlockGlossaryPlaceholderTranslation);
         }

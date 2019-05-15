@@ -79,12 +79,14 @@ var ContentItemEditorPopover = function () {
             this.updatePopoverButtons = function (clickedContentItemEditor) {
                 var itemType = clickedContentItemEditor.dataset.type;
                 var itemId = clickedContentItemEditor.dataset.id;
+                var itemTemplate = clickedContentItemEditor.dataset.template;
                 var $popoverButtons = this.$contentItemPopover.find('button');
 
                 $popoverButtons.each(function () {
                     var button = $(this);
                     button.attr('data-type', itemType);
                     button.attr('data-id', itemId);
+                    button.attr('data-template', itemTemplate);
                 });
             };
 

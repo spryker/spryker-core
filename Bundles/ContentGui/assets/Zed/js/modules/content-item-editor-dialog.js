@@ -89,7 +89,6 @@ var ContentItemDialog = function(
 
                     this.removeItemFromEditor();
                     this.addItemInEditor(elementForInsert);
-                    this.context.invoke('editor.restoreRange');
                     this.$ui.hideDialog(this.$dialog);
                 }
 
@@ -103,6 +102,7 @@ var ContentItemDialog = function(
             };
 
             this.addItemInEditor = function (elementForInsert) {
+                this.context.invoke('editor.restoreRange');
                 this.context.invoke('pasteHTML', elementForInsert);
             };
 
@@ -206,8 +206,13 @@ var ContentItemDialog = function(
                     urlParams.idContent = dataset.id;
                 }
 
+                if (dataset.hasOwnProperty('template')) {
+                    urlParams.template = dataset.template;
+                }
+
                 var url = dialogContentUrl + '?' + $.param(urlParams);
 
+                this.context.invoke('editor.saveRange');
                 this.clearContent();
                 this.getDialogContent(url);
                 this.$ui.showDialog(this.$dialog);
