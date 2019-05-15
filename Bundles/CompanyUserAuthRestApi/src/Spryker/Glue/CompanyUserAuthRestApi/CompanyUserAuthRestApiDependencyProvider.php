@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CompanyUserAuthRestApi;
 
 use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthClientBridge;
-use Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client\CompanyUserAuthRestApiToOauthCompanyUserClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -18,7 +17,6 @@ use Spryker\Glue\Kernel\Container;
 class CompanyUserAuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_OAUTH = 'CLIENT_OAUTH';
-    public const CLIENT_OAUTH_COMPANY_USER = 'CLIENT_OAUTH_COMPANY_USER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -30,7 +28,6 @@ class CompanyUserAuthRestApiDependencyProvider extends AbstractBundleDependencyP
         $container = parent::provideDependencies($container);
 
         $container = $this->addOauthClient($container);
-        $container = $this->addOauthCompanyUserClient($container);
 
         return $container;
     }
@@ -44,20 +41,6 @@ class CompanyUserAuthRestApiDependencyProvider extends AbstractBundleDependencyP
     {
         $container[static::CLIENT_OAUTH] = function (Container $container) {
             return new CompanyUserAuthRestApiToOauthClientBridge($container->getLocator()->oauth()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addOauthCompanyUserClient(Container $container): Container
-    {
-        $container[static::CLIENT_OAUTH_COMPANY_USER] = function (Container $container) {
-            return new CompanyUserAuthRestApiToOauthCompanyUserClientBridge($container->getLocator()->oauthCompanyUser()->client());
         };
 
         return $container;

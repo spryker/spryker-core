@@ -34,6 +34,8 @@ class AuthRestApiConfig extends AbstractBundleConfig
     public const HEADER_AUTHORIZATION = 'authorization';
 
     /**
+     * @deprecated Will be removed in the next major.
+     *
      * @return string
      */
     public function getClientSecret(): string
@@ -42,6 +44,8 @@ class AuthRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed in the next major.
+     *
      * @return string
      */
     public function getClientId(): string

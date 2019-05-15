@@ -59,9 +59,7 @@ class RefreshTokensReader implements RefreshTokensReaderInterface
         $oauthRequestTransfer->fromArray($restRefreshTokenAttributesTransfer->toArray(), true);
 
         $oauthRequestTransfer
-            ->setGrantType(AuthRestApiConfig::CLIENT_GRANT_REFRESH_TOKEN)
-            ->setClientId($this->authRestApiConfig->getClientId())
-            ->setClientSecret($this->authRestApiConfig->getClientSecret());
+            ->setGrantType(AuthRestApiConfig::CLIENT_GRANT_REFRESH_TOKEN);
 
         $oauthResponseTransfer = $this->oauthClient->processAccessTokenRequest($oauthRequestTransfer);
 

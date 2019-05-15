@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\OauthCompanyUser\Plugin\AuthRestApi;
+namespace Spryker\Glue\CompanyUsersRestApi\Plugin\AuthRestApi;
 
 use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserMapperPluginInterface;
@@ -13,7 +13,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\OauthCompanyUser\OauthCompanyUserFactory getFactory()
+ * @method \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiFactory getFactory()
  */
 class CompanyUserRestUserMapperPlugin extends AbstractPlugin implements RestUserMapperPluginInterface
 {

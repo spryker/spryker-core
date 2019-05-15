@@ -106,4 +106,24 @@ interface OauthFacadeInterface
      * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
      */
     public function getScopesByIdentifiers(array $customerScopes): array;
+
+    /**
+     * Specification:
+     *  - Reads customer client identifier.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getOauthClientIdentifier(): string;
+
+    /**
+     * Specification:
+     *  - Reads customer client secret.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getOauthClientSecret(): string;
 }

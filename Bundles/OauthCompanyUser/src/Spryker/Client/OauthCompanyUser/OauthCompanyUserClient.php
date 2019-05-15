@@ -20,34 +20,6 @@ class OauthCompanyUserClient extends AbstractClient implements OauthCompanyUserC
      *
      * @api
      *
-     * @return string
-     */
-    public function getClientSecret(): string
-    {
-        return $this->getFactory()
-            ->getModuleConfig()
-            ->getClientSecret();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getClientId(): string
-    {
-        return $this->getFactory()
-            ->getModuleConfig()
-            ->getClientId();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $accessToken
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer

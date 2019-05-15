@@ -5,25 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\OauthCompanyUser\Processor\RestUser;
+namespace Spryker\Glue\CompanyUsersRestApi\Processor\RestUser;
 
 use Generated\Shared\Transfer\RestUserTransfer;
+use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserStorageClientInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\OauthCompanyUser\Dependency\Client\OauthCompanyUserToCompanyUserStorageClientInterface;
 
 class RestUserMapper implements RestUserMapperInterface
 {
     protected const MAPPING_TYPE_UUID = 'uuid';
 
     /**
-     * @var \Spryker\Glue\OauthCompanyUser\Dependency\Client\OauthCompanyUserToCompanyUserStorageClientInterface
+     * @var \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserStorageClientInterface
      */
     protected $companyUserStorageClient;
 
     /**
-     * @param \Spryker\Glue\OauthCompanyUser\Dependency\Client\OauthCompanyUserToCompanyUserStorageClientInterface $companyUserStorageClient
+     * @param \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserStorageClientInterface $companyUserStorageClient
      */
-    public function __construct(OauthCompanyUserToCompanyUserStorageClientInterface $companyUserStorageClient)
+    public function __construct(CompanyUsersRestApiToCompanyUserStorageClientInterface $companyUserStorageClient)
     {
         $this->companyUserStorageClient = $companyUserStorageClient;
     }

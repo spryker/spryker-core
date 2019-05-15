@@ -34,15 +34,7 @@ class CompanyUserOauthUserProviderPlugin extends AbstractPlugin implements Oauth
             return false;
         }
 
-        if (!$oauthUserTransfer->getClientId()) {
-            return false;
-        }
-
-        if ($oauthUserTransfer->getClientId() === $this->getConfig()->getClientId()) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
