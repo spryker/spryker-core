@@ -63,16 +63,6 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
             ->requireCustomerReference()
             ->requireQuantity();
 
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        if (!$restCartItemsAttributesTransfer->getSku()) {
-            $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER));
-
-            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
-        }
-
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
             $this->quoteItemMapper->mapRestCartItemsAttributesTransferToQuoteTransfer($restCartItemsAttributesTransfer)
         );

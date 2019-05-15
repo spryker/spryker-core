@@ -59,30 +59,14 @@ class QuoteItemAdder implements QuoteItemAdderInterface
     public function add(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
         $restCartItemsAttributesTransfer
-            ->requireCustomerReference();
-
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        if (!$restCartItemsAttributesTransfer->getQuoteUuid()) {
-            $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_CART_ID_MISSING));
-
-            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
-        }
-
-        if (!$restCartItemsAttributesTransfer->getSku()) {
-            $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_ITEM_VALIDATION));
-
-            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
-        }
+            ->requireCustomerReference()
+            ->requireSku()
+            ->requireQuoteUuid();
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
             $this->quoteItemMapper->mapRestCartItemsAttributesTransferToQuoteTransfer($restCartItemsAttributesTransfer)
         );
+
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }

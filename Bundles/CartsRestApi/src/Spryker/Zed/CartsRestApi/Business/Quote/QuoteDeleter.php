@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
-use ArrayObject;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -58,7 +57,7 @@ class QuoteDeleter implements QuoteDeleterInterface
         $quoteTransfer->requireUuid();
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
-        if ($quoteResponseTransfer->getIsSuccessful() === false) {
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
@@ -67,30 +66,11 @@ class QuoteDeleter implements QuoteDeleterInterface
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $this->setQuoteErrorTransfersToQuoteResponse($quoteResponseTransfer);
+            $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_DELETING_CART));
         }
 
         return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function setQuoteErrorTransfersToQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
-    {
-        /** @var  \Generated\Shared\Transfer\ErrorMessageTransfer[] $errorMessageTransfers */
-        $errorMessageTransfers = $quoteResponseTransfer->getErrors();
-
-        $quoteErrorTransfers = new ArrayObject();
-        foreach ($errorMessageTransfers as $errorMessageTransfer) {
-            $quoteErrorTransfers[] = $this->quoteMapper->mapErrorMessageTransferToQuoteErrorTransfer(
-                $errorMessageTransfer,
-                new QuoteErrorTransfer()
-            );
-        }
-
-        return $quoteResponseTransfer->setErrors($quoteErrorTransfers);
     }
 }

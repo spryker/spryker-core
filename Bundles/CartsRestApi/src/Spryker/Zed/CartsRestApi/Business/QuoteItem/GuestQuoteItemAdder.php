@@ -77,6 +77,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     {
         $restCartItemsAttributesTransfer
             ->requireSku()
+            ->requireQuoteUuid()
             ->requireCustomerReference();
 
         if (!$restCartItemsAttributesTransfer->getQuoteUuid()) {

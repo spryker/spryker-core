@@ -59,17 +59,8 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
     public function remove(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
         $restCartItemsAttributesTransfer
-            ->requireCustomerReference();
-
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        if (!$restCartItemsAttributesTransfer->getSku()) {
-            $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER));
-
-            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
-        }
+            ->requireCustomerReference()
+            ->requireSku();
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
             $this->quoteItemMapper->mapRestCartItemsAttributesTransferToQuoteTransfer($restCartItemsAttributesTransfer)
