@@ -11,11 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeBridge;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeBridge;
 
 class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,6 +28,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
     {
         $container = $this->addPriceProductFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addTranslatorFacade($container);
 
         return $container;
     }
@@ -56,6 +59,22 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
         $container[static::FACADE_STORE] = function (Container $container) {
             return new PriceProductScheduleGuiToStoreFacadeBridge(
                 $container->getLocator()->store()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslatorFacade(Container $container): Container
+    {
+        $container[static::FACADE_TRANSLATOR] = function (Container $container) {
+            return new PriceProductScheduleGuiToTranslatorFacadeBridge(
+                $container->getLocator()->translator()->facade()
             );
         };
 

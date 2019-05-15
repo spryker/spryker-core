@@ -20,6 +20,7 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProdu
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProductViewExpanderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiDependencyProvider;
 
 class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -45,7 +46,11 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
      */
     public function createAbstractProductViewExpander(): AbstractProductViewExpanderInterface
     {
-        return new AbstractProductViewExpander($this->getPriceProductFacade(), $this->getStoreFacade());
+        return new AbstractProductViewExpander(
+            $this->getPriceProductFacade(),
+            $this->getStoreFacade(),
+            $this->getTranslatorFacade()
+        );
     }
 
     /**
@@ -53,7 +58,11 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
      */
     public function createConcreteProductViewExpander(): ConcreteProductViewExpanderInterface
     {
-        return new ConcreteProductViewExpander($this->getPriceProductFacade(), $this->getStoreFacade());
+        return new ConcreteProductViewExpander(
+            $this->getPriceProductFacade(),
+            $this->getStoreFacade(),
+            $this->getTranslatorFacade()
+        );
     }
 
     /**
@@ -92,5 +101,13 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function getStoreFacade(): PriceProductScheduleGuiToStoreFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface
+     */
+    public function getTranslatorFacade(): PriceProductScheduleGuiToTranslatorFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::FACADE_TRANSLATOR);
     }
 }
