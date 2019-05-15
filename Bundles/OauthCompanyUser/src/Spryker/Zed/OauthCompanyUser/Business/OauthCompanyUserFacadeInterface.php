@@ -8,6 +8,7 @@
 namespace Spryker\Zed\OauthCompanyUser\Business;
 
 use Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\OauthScopeRequestTransfer;
@@ -37,9 +38,9 @@ interface OauthCompanyUserFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function getCustomerByAccessToken(CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer): CustomerTransfer;
+    public function getCustomerByAccessToken(CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer): CustomerResponseTransfer;
 
     /**
      * Specification:

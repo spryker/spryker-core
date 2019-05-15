@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\OauthCompanyUser;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 
 interface OauthCompanyUserClientInterface
 {
@@ -21,7 +21,7 @@ interface OauthCompanyUserClientInterface
      *
      * @param string $accessToken
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function getCustomerByAccessToken(string $accessToken): CustomerTransfer;
+    public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer;
 }

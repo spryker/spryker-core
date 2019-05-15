@@ -10,6 +10,7 @@ namespace Spryker\Zed\OauthCompanyUser\Business\Reader;
 use Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserIdentifierTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCustomerFacadeInterface;
@@ -61,9 +62,9 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
     /**
      * @param \Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function getCustomerByAccessToken(CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer): CustomerTransfer
+    public function getCustomerByAccessToken(CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer): CustomerResponseTransfer
     {
         $companyUserAccessTokenRequestTransfer->requireAccessToken();
 
@@ -73,13 +74,22 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
                 ->setType(static::TOKEN_TYPE)
         );
 
+        if (!$oauthAccessTokenValidationResponseTransfer->getIsValid()) {
+            return (new CustomerResponseTransfer())
+                ->setIsSuccess(false)
+                ->setHasCustomer(false);
+        }
+
         $decodedPayload = $this->utilEncodingService->decodeJson($oauthAccessTokenValidationResponseTransfer->getOauthUserId(), true);
-        $companyUserIdentifierTransfer = (new CompanyUserIdentifierTransfer())->fromArray($decodedPayload);
+        $companyUserIdentifierTransfer = (new CompanyUserIdentifierTransfer())->fromArray($decodedPayload, true);
 
         $customerTransfer = $this->getCustomerByCompanyUserIdentifier($companyUserIdentifierTransfer);
         $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $companyUserIdentifierTransfer);
 
-        return $customerTransfer;
+        return (new CustomerResponseTransfer())
+            ->setCustomerTransfer($customerTransfer)
+            ->setIsSuccess(true)
+            ->setHasCustomer(true);
     }
 
     /**

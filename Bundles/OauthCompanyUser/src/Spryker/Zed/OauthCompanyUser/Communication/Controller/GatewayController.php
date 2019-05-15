@@ -8,7 +8,7 @@
 namespace Spryker\Zed\OauthCompanyUser\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -19,9 +19,9 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function getCustomerByAccessTokenAction(CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer): CustomerTransfer
+    public function getCustomerByAccessTokenAction(CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer): CustomerResponseTransfer
     {
         return $this->getFacade()->getCustomerByAccessToken($companyUserAccessTokenRequestTransfer);
     }

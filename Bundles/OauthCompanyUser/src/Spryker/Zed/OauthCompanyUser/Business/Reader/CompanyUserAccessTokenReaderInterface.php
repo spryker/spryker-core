@@ -8,14 +8,14 @@
 namespace Spryker\Zed\OauthCompanyUser\Business\Reader;
 
 use Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 
 interface CompanyUserAccessTokenReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function getCustomerByAccessToken(CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer): CustomerTransfer;
+    public function getCustomerByAccessToken(CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer): CustomerResponseTransfer;
 }

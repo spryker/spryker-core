@@ -8,7 +8,7 @@
 namespace Spryker\Client\OauthCompanyUser\Zed;
 
 use Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Client\OauthCompanyUser\Dependency\Client\OauthCompanyUserToZedRequestClientInterface;
 
 class OauthCompanyUserStub implements OauthCompanyUserStubInterface
@@ -29,16 +29,16 @@ class OauthCompanyUserStub implements OauthCompanyUserStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function getCustomerByAccessToken(CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer): CustomerTransfer
+    public function getCustomerByAccessToken(CompanyUserAccessTokenRequestTransfer $companyUserAccessTokenRequestTransfer): CustomerResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
-        $customerTransfer = $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
+        $customerResponseTransfer = $this->zedRequestClient->call(
             '/oauth-company-user/gateway/get-customer-by-access-token',
             $companyUserAccessTokenRequestTransfer
         );
 
-        return $customerTransfer;
+        return $customerResponseTransfer;
     }
 }

@@ -7,13 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
-use Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Oauth\Business\OauthFacade;
-use Spryker\Zed\OauthCompanyUser\Business\OauthCompanyUserFacade;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
@@ -29,19 +23,6 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $oAuthCompanyUserFacade = new OauthCompanyUserFacade();
-
-        $token = $oAuthCompanyUserFacade->createCompanyUserAccessToken(
-            (new CustomerTransfer())->setCompanyUserTransfer((new CompanyUserTransfer())->setIdCompanyUser(1))
-        );
-
-        $companyUserAccessTokenRequestTransfer = (new CompanyUserAccessTokenRequestTransfer())
-            ->setAccessToken($token->getAccessToken());
-
-        $customerTransfer = $oAuthCompanyUserFacade->getCustomerByAccessToken($companyUserAccessTokenRequestTransfer);
-
-        dd($customerTransfer);
-
         $productTable = $this
             ->getFactory()
             ->createProductTable();

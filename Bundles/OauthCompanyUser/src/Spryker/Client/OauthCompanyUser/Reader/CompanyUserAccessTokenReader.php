@@ -8,7 +8,7 @@
 namespace Spryker\Client\OauthCompanyUser\Reader;
 
 use Generated\Shared\Transfer\CompanyUserAccessTokenRequestTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Client\OauthCompanyUser\Zed\OauthCompanyUserStubInterface;
 
 class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterface
@@ -29,9 +29,9 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
     /**
      * @param string $accessToken
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function getCustomerByAccessToken(string $accessToken): CustomerTransfer
+    public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer
     {
         $companyUserAccessTokenRequestTransfer = (new CompanyUserAccessTokenRequestTransfer())
             ->setAccessToken($accessToken);
