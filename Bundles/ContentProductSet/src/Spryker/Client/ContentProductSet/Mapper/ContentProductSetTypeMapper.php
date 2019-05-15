@@ -25,7 +25,7 @@ class ContentProductSetTypeMapper implements ContentProductSetTypeMapperInterfac
 
     /**
      * @param \Spryker\Client\ContentProductSet\Dependency\Client\ContentProductSetToContentStorageClientInterface $contentStorageClient
-     * @param array $contentProductSetTermExecutors
+     * @param \Spryker\Client\ContentProductSet\Executor\ContentProductSetTermExecutorInterface[] $contentProductSetTermExecutors
      */
     public function __construct(ContentProductSetToContentStorageClientInterface $contentStorageClient, array $contentProductSetTermExecutors)
     {
