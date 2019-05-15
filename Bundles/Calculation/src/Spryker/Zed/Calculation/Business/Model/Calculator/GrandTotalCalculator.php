@@ -56,6 +56,7 @@ class GrandTotalCalculator implements CalculatorInterface
         foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
             $grandTotal += $itemTransfer->getSumPriceToPayAggregation() - $itemTransfer->getCanceledAmount();
         }
+
         return $grandTotal;
     }
 
@@ -70,6 +71,7 @@ class GrandTotalCalculator implements CalculatorInterface
         foreach ($calculableObjectTransfer->getExpenses() as $expenseTransfer) {
             $grandTotal += $expenseTransfer->getSumPriceToPayAggregation() - $expenseTransfer->getCanceledAmount();
         }
+
         return $grandTotal;
     }
 

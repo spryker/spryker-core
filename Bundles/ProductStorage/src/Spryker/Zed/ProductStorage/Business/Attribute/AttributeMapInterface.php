@@ -15,7 +15,7 @@ interface AttributeMapInterface
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\AttributeMapStorageTransfer
      */
     public function generateAttributeMap($idProductAbstract, $idLocale);
 

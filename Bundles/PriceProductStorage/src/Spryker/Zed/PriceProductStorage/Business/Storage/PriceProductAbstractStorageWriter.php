@@ -255,6 +255,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
                 $priceProductTransferCollection
             );
         }
+
         return $priceGroupsCollection;
     }
 

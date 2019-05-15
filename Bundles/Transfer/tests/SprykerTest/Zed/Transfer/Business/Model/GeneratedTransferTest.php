@@ -20,6 +20,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use Spryker\Zed\Transfer\Business\Model\TransferGenerator;
+use Spryker\Zed\Transfer\TransferConfig;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -341,7 +342,7 @@ class GeneratedTransferTest extends Unit
      */
     protected function getTargetDirectory()
     {
-        return __DIR__ . '/../../_data/Generated/';
+        return codecept_data_dir('test_files/Generated/');
     }
 
     /**
@@ -360,9 +361,8 @@ class GeneratedTransferTest extends Unit
     protected function getClassGenerator()
     {
         $targetDirectory = $this->getTargetDirectory();
-        $generator = new ClassGenerator($targetDirectory);
 
-        return $generator;
+        return new ClassGenerator($targetDirectory);
     }
 
     /**
@@ -378,7 +378,7 @@ class GeneratedTransferTest extends Unit
         $definitionBuilder = new TransferDefinitionBuilder(
             $loader,
             new TransferDefinitionMerger(),
-            new ClassDefinition()
+            new ClassDefinition(new TransferConfig())
         );
 
         return $definitionBuilder;
@@ -390,7 +390,7 @@ class GeneratedTransferTest extends Unit
     protected function getTestTransferForTesting()
     {
         $sourceDirectories = [
-            __DIR__ . '/Fixtures/GeneratedTest/',
+            codecept_data_dir('GeneratedTest/'),
         ];
         $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
 

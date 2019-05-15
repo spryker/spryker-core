@@ -95,6 +95,7 @@ class CustomerController extends AbstractController
     {
         if (count($errorMessageTransfers) === 0) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_CREATE);
+
             return;
         }
 

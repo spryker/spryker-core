@@ -44,13 +44,14 @@ class UriParser implements UriParserInterface
 
             $index += 2;
         }
+
         return $resources;
     }
 
     /**
      * @param string $path
      *
-     * @return array
+     * @return string[]
      */
     protected function splitPath($path): array
     {

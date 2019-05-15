@@ -192,6 +192,7 @@ class ItemType extends AbstractType
         if (!empty($options['validation_group'])) {
             $validationGroup = $options['validation_group'];
         }
+
         return $validationGroup;
     }
 
@@ -207,6 +208,7 @@ class ItemType extends AbstractType
         $data = $event->getData();
 
         if ($data instanceof ItemTransfer) {
+            /** @var int $moneyFloat */
             $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data->getUnitGrossPrice());
             $data->setUnitGrossPrice($moneyFloat);
 

@@ -58,7 +58,7 @@ class IdFilterUpdateTest extends Unit
             ->method('getIdCollection')
             ->willReturn($ids);
 
-        $result = $this->idFilterUpdate->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
+        $result = $this->idFilterUpdate->filter($ids, 'foo');
         $this->assertSame($ids, $result);
     }
 
@@ -75,7 +75,7 @@ class IdFilterUpdateTest extends Unit
             ->method('getIdCollection')
             ->willReturn(range(1, IdFilterUpdate::CHUNK_SIZE));
 
-        $result = $this->idFilterUpdate->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
+        $result = $this->idFilterUpdate->filter($ids, 'foo');
         $this->assertCount($countAboveChunkSize, $result);
     }
 
@@ -91,7 +91,7 @@ class IdFilterUpdateTest extends Unit
             ->method('getIdCollection')
             ->willReturn([]);
 
-        $result = $this->idFilterUpdate->filter($ids, 'foo', static::ITEM_EVENT_ACTIVE);
+        $result = $this->idFilterUpdate->filter($ids, 'foo');
         $this->assertSame([], $result);
     }
 }
