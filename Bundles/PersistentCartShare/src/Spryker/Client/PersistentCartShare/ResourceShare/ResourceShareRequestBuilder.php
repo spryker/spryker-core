@@ -94,6 +94,7 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
             return $resourceShareDataTransfer;
         }
 
-        return $resourceShareDataTransfer->setOwnerIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit());
+        return $resourceShareDataTransfer->setOwnerIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+            ->setOwnerIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit());
     }
 }

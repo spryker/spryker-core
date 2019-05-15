@@ -50,6 +50,12 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
         $resourceShareRequestTransfer->requireCustomer()
             ->requireResourceShare();
 
+        if ($this->isProvidedCompanyUserResourceShareOwner($resourceShareRequestTransfer)) {
+            return (new ResourceShareResponseTransfer())
+                ->setIsSuccessful(true)
+                ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
+        }
+
         if (!$this->isProvidedCompanyUserAllowedToShareCart($resourceShareRequestTransfer)) {
             return (new ResourceShareResponseTransfer())
                 ->setIsSuccessful(false)
@@ -89,11 +95,26 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
      *
      * @return bool
      */
+    protected function isProvidedCompanyUserResourceShareOwner(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
+    {
+        $ownerIdCompanyUser = $resourceShareRequestTransfer->getResourceShare()
+            ->getResourceShareData()
+            ->getOwnerIdCompanyUser();
+
+        $customerTransfer = $resourceShareRequestTransfer->getCustomer();
+        $customerTransfer->requireCompanyUserTransfer();
+
+        return $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser() === $ownerIdCompanyUser;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     *
+     * @return bool
+     */
     protected function isProvidedCompanyUserAllowedToShareCart(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
         $customerTransfer = $resourceShareRequestTransfer->getCustomer();
-
-        $customerTransfer->requireCompanyUserTransfer();
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
 
         $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
