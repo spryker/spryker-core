@@ -10,10 +10,12 @@ namespace Spryker\Zed\PriceProductScheduleGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeBridge;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeBridge;
 
 class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,6 +25,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addPriceProductFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -37,6 +40,22 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
         $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
             return new PriceProductScheduleGuiToPriceProductFacadeBridge(
                 $container->getLocator()->priceProduct()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new PriceProductScheduleGuiToStoreFacadeBridge(
+                $container->getLocator()->store()->facade()
             );
         };
 
