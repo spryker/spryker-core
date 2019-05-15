@@ -284,8 +284,7 @@ class SharedCartFacadeTest extends Test
         ];
 
         $resourceShareDataTransfer = (new ResourceShareDataTransfer())
-            ->fromArray($resourceShareData, true)
-            ->setData($resourceShareData);
+            ->fromArray($resourceShareData, true);
 
         return $this->tester->haveResourceShare($resourceShareSeed + [
             ResourceShareTransfer::RESOURCE_SHARE_DATA => $resourceShareDataTransfer,
