@@ -7,13 +7,11 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote\Mapper;
 
-use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ErrorMessageTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
-use Spryker\Zed\CartsRestApi\CartsRestApiConfig;
 
 class QuoteMapper implements QuoteMapperInterface
 {
@@ -47,23 +45,15 @@ class QuoteMapper implements QuoteMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $originalQuoteResponseTransfer
+     * @param \Generated\Shared\Transfer\ErrorMessageTransfer $errorMessageTransfer
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteErrorTransfer
      */
-    public function mapQuoteResponseErrorsToRestCodes(
-        QuoteResponseTransfer $originalQuoteResponseTransfer
-    ): QuoteResponseTransfer {
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-
-        foreach ($originalQuoteResponseTransfer->getErrors() as $error) {
-            $errorIdentifier = isset(CartsRestApiConfig::RESPONSE_ERROR_MAP[$error[MessageTransfer::VALUE]])
-                ? CartsRestApiConfig::RESPONSE_ERROR_MAP[$error[MessageTransfer::VALUE]]
-                : CartsRestApiConfig::RESPONSE_ERROR_MAP[$error->getMessage()];
-
-            $quoteResponseTransfer->addError((new QuoteErrorTransfer())->setErrorIdentifier($errorIdentifier));
-        }
-
-        return $quoteResponseTransfer;
+    public function mapErrorMessageTransferToQuoteErrorTransfer(
+        ErrorMessageTransfer $errorMessageTransfer,
+        QuoteErrorTransfer $quoteErrorTransfer
+    ): QuoteErrorTransfer {
+        return (new QuoteErrorTransfer())->setMessage($errorMessageTransfer->getValue());
     }
 }

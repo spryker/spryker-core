@@ -18,6 +18,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_MISSING = 'ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_MISSING';
     public const ERROR_IDENTIFIER_CURRENCY_DATA_IS_INCORRECT = 'ERROR_IDENTIFIER_CURRENCY_DATA_IS_INCORRECT';
     public const ERROR_IDENTIFIER_CURRENCY_DATA_IS_MISSING = 'ERROR_IDENTIFIER_CURRENCY_DATA_IS_MISSING';
+    public const ERROR_IDENTIFIER_CART_CANT_BE_UPDATED = 'ERROR_IDENTIFIER_CART_CANT_BE_UPDATED';
 
     public const RESPONSE_CODE_CART_NOT_FOUND = '101';
     public const RESPONSE_CODE_ITEM_VALIDATION = '102';
@@ -56,6 +57,4 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_STORE_DATA_IS_MISSING = 'Store data is missing.';
     public const EXCEPTION_MESSAGE_PERMISSION_FAILED = 'Permission failed.';
     public const EXCEPTION_MESSAGE_STORE_DATA_IS_INVALID = 'Store data is invalid.';
-
-    public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 }

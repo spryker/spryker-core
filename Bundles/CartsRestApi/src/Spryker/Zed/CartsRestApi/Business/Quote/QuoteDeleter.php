@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -54,33 +55,42 @@ class QuoteDeleter implements QuoteDeleterInterface
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->requireCustomer();
-
-        if (!$quoteTransfer->getUuid()) {
-            $quoteResponseTransfer = (new QuoteResponseTransfer())
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_CART_ID_MISSING));
-
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
-        }
+        $quoteTransfer->requireUuid();
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
+            return $quoteResponseTransfer;
         }
 
         $quoteResponseTransfer = $this->persistentCartFacade->deleteQuote(
             $quoteResponseTransfer->getQuoteTransfer()->setCustomer($quoteTransfer->getCustomer())
         );
 
-        if ($quoteResponseTransfer->getIsSuccessful() === false) {
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            $this->setQuoteErrorTransfersToQuoteResponse($quoteResponseTransfer);
         }
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function setQuoteErrorTransfersToQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
+    {
+        /** @var  \Generated\Shared\Transfer\ErrorMessageTransfer[] $errorMessageTransfers */
+        $errorMessageTransfers = $quoteResponseTransfer->getErrors();
+
+        $quoteErrorTransfers = new ArrayObject();
+        foreach ($errorMessageTransfers as $errorMessageTransfer) {
+            $quoteErrorTransfers[] = $this->quoteMapper->mapErrorMessageTransferToQuoteErrorTransfer(
+                $errorMessageTransfer,
+                new QuoteErrorTransfer()
+            );
+        }
+
+        return $quoteResponseTransfer->setErrors($quoteErrorTransfers);
     }
 }

@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote\Mapper;
 
-use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\ErrorMessageTransfer;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 
@@ -34,11 +35,13 @@ interface QuoteMapperInterface
     ): QuoteTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param \Generated\Shared\Transfer\ErrorMessageTransfer $errorMessageTransfer
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteErrorTransfer
      */
-    public function mapQuoteResponseErrorsToRestCodes(
-        QuoteResponseTransfer $quoteResponseTransfer
-    ): QuoteResponseTransfer;
+    public function mapErrorMessageTransferToQuoteErrorTransfer(
+        ErrorMessageTransfer $errorMessageTransfer,
+        QuoteErrorTransfer $quoteErrorTransfer
+    ): QuoteErrorTransfer;
 }

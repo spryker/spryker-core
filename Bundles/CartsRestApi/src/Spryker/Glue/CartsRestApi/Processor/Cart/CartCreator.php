@@ -64,11 +64,10 @@ class CartCreator implements CartCreatorInterface
         );
 
         $quoteTransfer->setCompanyUserId($restUser->getIdCompany());
-
         $quoteResponseTransfer = $this->cartsRestApiClient->createQuote($quoteTransfer);
 
         if ($quoteResponseTransfer->getErrors()->count() > 0) {
-            return $this->cartRestResponseBuilder->createFailedCreateCartErrorResponse($quoteResponseTransfer->getErrors());
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(

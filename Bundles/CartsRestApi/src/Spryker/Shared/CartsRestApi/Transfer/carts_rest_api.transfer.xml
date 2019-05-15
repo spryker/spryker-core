@@ -93,7 +93,6 @@
 
     <transfer name="QuoteResponse">
         <property name="errors" type="QuoteError[]" singular="error"/>
-        <property name="errorCodes" type="string[]" singular="errorCode"/>
     </transfer>
 
     <transfer name="RestUser">

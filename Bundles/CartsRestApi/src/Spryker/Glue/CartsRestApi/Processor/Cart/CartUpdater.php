@@ -68,8 +68,8 @@ class CartUpdater implements CartUpdaterInterface
 
         $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($quoteTransfer->setUuid($restRequest->getResource()->getId()));
 
-        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
-            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
+        if ($quoteResponseTransfer->getErrors()->count() > 0) {
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(

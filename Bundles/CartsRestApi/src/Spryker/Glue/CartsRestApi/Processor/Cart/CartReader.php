@@ -92,7 +92,7 @@ class CartReader implements CartReaderInterface
 
         if ($quoteResponseTransfer->getIsSuccessful() === false
             || $restRequest->getRestUser()->getNaturalIdentifier() !== $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference()) {
-            return $this->cartRestResponseBuilder->createFailedCreateCartErrorResponse($quoteResponseTransfer->getErrors());
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         $cartResource = $this->cartsResourceMapper->mapCartsResource(

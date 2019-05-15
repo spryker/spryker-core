@@ -26,16 +26,9 @@ interface CartRestResponseBuilderInterface
     public function createRestResponse(): RestResponseInterface;
 
     /**
-     * @param string[] $errorCodes
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function buildErrorRestResponseBasedOnErrorCodes(array $errorCodes): RestResponseInterface;
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteErrorTransfer[]|\ArrayObject $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedCreateCartErrorResponse(ArrayObject $errors): RestResponseInterface;
+    public function createFailedErrorResponse(ArrayObject $errors): RestResponseInterface;
 }
