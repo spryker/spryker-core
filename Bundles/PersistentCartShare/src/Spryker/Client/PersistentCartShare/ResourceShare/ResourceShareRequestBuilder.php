@@ -98,7 +98,7 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
         }
 
         return $resourceShareData + [
-            static::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT => $companyUserTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
+            static::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT => $companyUserTransfer->getFkCompanyBusinessUnit(),
         ];
     }
 }
