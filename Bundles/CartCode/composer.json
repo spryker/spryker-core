@@ -4,8 +4,10 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/calculation": "^4.0.0",
+    "spryker/cart-code-extension": "^1.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/cart-code-extension": "^1.0.0"
+    "spryker/quote": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
