@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToStoreFacadeInterface;
@@ -18,6 +19,8 @@ use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContaine
 
 class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWriterInterface
 {
+    use LoggerTrait;
+
     /**
      * @var \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface
      */
@@ -227,6 +230,11 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
         }
 
         foreach ($productAbstractIds as $idProductAbstract) {
+            if (!isset($priceGroups[$idProductAbstract])) {
+                $this->getLogger()->warning(sprintf('Product abstract `%s` has no default price', $idProductAbstract));
+                continue;
+            }
+
             $priceGroupsCollection[$idProductAbstract] = $this->getProductAbstractPriceStoreGroups($priceGroups[$idProductAbstract], $idProductAbstract);
         }
 
