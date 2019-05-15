@@ -15,8 +15,8 @@ use Generated\Shared\Transfer\CmsGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
 use Spryker\Zed\ContentGui\ContentGuiDependencyProvider;
-use SprykerTest\Zed\ContentGui\Plugin\ContentBannerContentGuiEditorPlugin;
-use SprykerTest\Zed\ContentGui\Plugin\ContentProductContentGuiEditorPlugin;
+use SprykerTest\Zed\ContentGui\Plugin\ContentBannerContentGuiEditorPluginMock;
+use SprykerTest\Zed\ContentGui\Plugin\ContentProductContentGuiEditorPluginMock;
 
 /**
  * Auto-generated group annotations
@@ -56,8 +56,8 @@ class ContentGuiFacadeTest extends Unit
         $this->abstractProductListContentTransfer = $this->tester->createAbstractProductListContentItem();
 
         $this->tester->setDependency(ContentGuiDependencyProvider::PLUGINS_CONTENT_EDITOR, [
-            new ContentBannerContentGuiEditorPlugin(),
-            new ContentProductContentGuiEditorPlugin(),
+            new ContentBannerContentGuiEditorPluginMock(),
+            new ContentProductContentGuiEditorPluginMock(),
         ]);
     }
 
@@ -66,9 +66,15 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertOneCmsGlossaryShortCodeToHtml(): void
     {
+        // Arrange
         $inputString = $this->tester->getOneShortCodeInString($this->bannerContentTransfer);
         $expectedResult = $this->tester->getOneHtmlWidgetInString($this->bannerContentTransfer);
-        $this->runConvertCmsGlossaryShortCodeToHtml($inputString, $expectedResult);
+
+        // Act
+        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryShortCodeToHtml($inputString);
+
+        // Assert
+        $this->checkCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -76,9 +82,15 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertTwoSameCmsGlossaryShortCodesToHtml(): void
     {
+        // Arrange
         $inputString = $this->tester->getTwoSameShortCodesInString($this->bannerContentTransfer);
         $expectedResult = $this->tester->getTwoSameHtmlWidgetsInString($this->bannerContentTransfer);
-        $this->runConvertCmsGlossaryShortCodeToHtml($inputString, $expectedResult);
+
+        // Act
+        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryShortCodeToHtml($inputString);
+
+        // Assert
+        $this->checkCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -86,6 +98,7 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertTwoDifferentCmsGlossaryShortCodesToHtml(): void
     {
+        // Arrange
         $inputString = $this->tester->getTwoDifferentShortCodeInString(
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
@@ -94,7 +107,12 @@ class ContentGuiFacadeTest extends Unit
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
         );
-        $this->runConvertCmsGlossaryShortCodeToHtml($inputString, $expectedResult);
+
+        // Act
+        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryShortCodeToHtml($inputString);
+
+        // Assert
+        $this->checkCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -102,9 +120,15 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertCmsGlossaryShortCodeToHtmlWithoutElements(): void
     {
+        // Arrange
         $inputString = $this->tester->getStringWithoutShortCodesAndWidgets();
         $expectedResult = $this->tester->getStringWithoutShortCodesAndWidgets();
-        $this->runConvertCmsGlossaryShortCodeToHtml($inputString, $expectedResult);
+
+        // Act
+        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryShortCodeToHtml($inputString);
+
+        // Assert
+        $this->checkCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -112,9 +136,15 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertOneCmsGlossaryHtmlToShortCode(): void
     {
+        // Arrange
         $inputString = $this->tester->getOneHtmlWidgetInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getOneShortCodeInString($this->bannerContentTransfer);
-        $this->runConvertCmsGlossaryHtmlToShortCode($inputString, $expectedResult);
+        $expectedResult = $this->tester->getOneShortCodeInString($this->bannerContentTransfer, true);
+
+        // Act
+        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryHtmlToShortCode($inputString);
+
+        // Assert
+        $this->checkCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -122,9 +152,15 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertTwoSameCmsGlossaryHtmlToShortCode(): void
     {
+        // Arrange
         $inputString = $this->tester->getTwoSameHtmlWidgetsInString($this->bannerContentTransfer);
-        $expectedResult = $this->tester->getTwoSameShortCodesInString($this->bannerContentTransfer);
-        $this->runConvertCmsGlossaryHtmlToShortCode($inputString, $expectedResult);
+        $expectedResult = $this->tester->getTwoSameShortCodesInString($this->bannerContentTransfer, true);
+
+        // Act
+        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryHtmlToShortCode($inputString);
+
+        // Assert
+        $this->checkCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -132,15 +168,22 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertTwoDifferentCmsGlossaryHtmlToShortCode(): void
     {
+        // Arrange
         $inputString = $this->tester->getTwoDifferentHtmlWidgetsInString(
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
         );
         $expectedResult = $this->tester->getTwoDifferentShortCodeInString(
             $this->bannerContentTransfer,
-            $this->abstractProductListContentTransfer
+            $this->abstractProductListContentTransfer,
+            true
         );
-        $this->runConvertCmsGlossaryHtmlToShortCode($inputString, $expectedResult);
+
+        // Act
+        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryHtmlToShortCode($inputString);
+
+        // Assert
+        $this->checkCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -148,9 +191,15 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertCmsGlossaryHtmlToShortCodeWithoutElements(): void
     {
+        // Arrange
         $inputString = $this->tester->getStringWithoutShortCodesAndWidgets();
         $expectedResult = $this->tester->getStringWithoutShortCodesAndWidgets();
-        $this->runConvertCmsGlossaryHtmlToShortCode($inputString, $expectedResult);
+
+        // Act
+        $cmsGlossaryTransfer = $this->runConvertCmsGlossaryHtmlToShortCode($inputString);
+
+        // Assert
+        $this->checkCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -158,9 +207,15 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertOneCmsBlockGlossaryShortCodeToHtml(): void
     {
+        // Arrange
         $inputString = $this->tester->getOneShortCodeInString($this->bannerContentTransfer);
         $expectedResult = $this->tester->getOneHtmlWidgetInString($this->bannerContentTransfer);
-        $this->runConvertCmsBlockGlossaryShortCodeToHtml($inputString, $expectedResult);
+
+        // Act
+        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryShortCodeToHtml($inputString);
+
+        // Assert
+        $this->checkCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -168,9 +223,15 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertTwoSameCmsBlockGlossaryShortCodesToHtml(): void
     {
+        // Arrange
         $inputString = $this->tester->getTwoSameShortCodesInString($this->bannerContentTransfer);
         $expectedResult = $this->tester->getTwoSameHtmlWidgetsInString($this->bannerContentTransfer);
-        $this->runConvertCmsBlockGlossaryShortCodeToHtml($inputString, $expectedResult);
+
+        // Act
+        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryShortCodeToHtml($inputString);
+
+        // Assert
+        $this->checkCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -178,6 +239,7 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertTwoDifferentCmsBlockGlossaryShortCodesToHtml(): void
     {
+        // Arrange
         $inputString = $this->tester->getTwoDifferentShortCodeInString(
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
@@ -186,7 +248,12 @@ class ContentGuiFacadeTest extends Unit
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
         );
-        $this->runConvertCmsBlockGlossaryShortCodeToHtml($inputString, $expectedResult);
+
+        // Act
+        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryShortCodeToHtml($inputString);
+
+        // Assert
+        $this->checkCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -194,9 +261,15 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertCmsBlockGlossaryShortCodeToHtmlWithoutElements(): void
     {
+        // Arrange
         $inputString = $this->tester->getStringWithoutShortCodesAndWidgets();
         $expectedResult = $this->tester->getStringWithoutShortCodesAndWidgets();
-        $this->runConvertCmsBlockGlossaryShortCodeToHtml($inputString, $expectedResult);
+
+        // Act
+        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryShortCodeToHtml($inputString);
+
+        // Assert
+        $this->checkCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -204,9 +277,15 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertOneCmsBlockGlossaryHtmlToShortCode(): void
     {
+        // Arrange
         $inputString = $this->tester->getOneHtmlWidgetInString($this->bannerContentTransfer);
         $expectedResult = $this->tester->getOneShortCodeInString($this->bannerContentTransfer);
-        $this->runConvertCmsBlockGlossaryHtmlToShortCode($inputString, $expectedResult);
+
+        // Act
+        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryHtmlToShortCode($inputString);
+
+        // Assert
+        $this->checkCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -214,9 +293,15 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertTwoSameCmsBlockGlossaryHtmlToShortCodes(): void
     {
+        // Arrange
         $inputString = $this->tester->getTwoSameHtmlWidgetsInString($this->bannerContentTransfer);
         $expectedResult = $this->tester->getTwoSameShortCodesInString($this->bannerContentTransfer);
-        $this->runConvertCmsBlockGlossaryHtmlToShortCode($inputString, $expectedResult);
+
+        // Act
+        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryHtmlToShortCode($inputString);
+
+        // Assert
+        $this->checkCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -224,6 +309,7 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertTwoDifferentCmsBlockGlossaryHtmlToShortCodes(): void
     {
+        // Arrange
         $inputString = $this->tester->getTwoDifferentHtmlWidgetsInString(
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
@@ -232,7 +318,12 @@ class ContentGuiFacadeTest extends Unit
             $this->bannerContentTransfer,
             $this->abstractProductListContentTransfer
         );
-        $this->runConvertCmsBlockGlossaryHtmlToShortCode($inputString, $expectedResult);
+
+        // Act
+        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryHtmlToShortCode($inputString);
+
+        // Assert
+        $this->checkCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
     }
 
     /**
@@ -240,37 +331,41 @@ class ContentGuiFacadeTest extends Unit
      */
     public function testConvertCmsBlockGlossaryHtmlToShortCodeWithoutElements(): void
     {
+        // Arrange
         $inputString = $this->tester->getStringWithoutShortCodesAndWidgets();
         $expectedResult = $this->tester->getStringWithoutShortCodesAndWidgets();
-        $this->runConvertCmsBlockGlossaryHtmlToShortCode($inputString, $expectedResult);
+
+        // Act
+        $cmsBlockGlossaryTransfer = $this->runConvertCmsBlockGlossaryHtmlToShortCode($inputString);
+
+        // Assert
+        $this->checkCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
     }
 
     /**
      * @param string $inputString
-     * @param string $expectedResult
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    protected function runConvertCmsGlossaryShortCodeToHtml(string $inputString, string $expectedResult): void
+    protected function runConvertCmsGlossaryShortCodeToHtml(string $inputString): CmsGlossaryTransfer
     {
         $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($inputString);
-        $contentGuiFacade = $this->getFacade();
-        $cmsGlossaryTransfer = $contentGuiFacade->convertCmsGlossaryShortCodeToHtml($cmsGlossaryTransfer);
-        $this->checkCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
+        $contentGuiFacade = $this->tester->getFacade();
+
+        return $contentGuiFacade->convertCmsGlossaryShortCodeToHtml($cmsGlossaryTransfer);
     }
 
     /**
      * @param string $inputString
-     * @param string $expectedResult
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    protected function runConvertCmsGlossaryHtmlToShortCode(string $inputString, string $expectedResult): void
+    protected function runConvertCmsGlossaryHtmlToShortCode(string $inputString): CmsGlossaryTransfer
     {
         $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($inputString);
-        $contentGuiFacade = $this->getFacade();
-        $cmsGlossaryTransfer = $contentGuiFacade->convertCmsGlossaryHtmlToShortCode($cmsGlossaryTransfer);
-        $this->checkCmsGlossaryResult($cmsGlossaryTransfer, $expectedResult);
+        $contentGuiFacade = $this->tester->getFacade();
+
+        return $contentGuiFacade->convertCmsGlossaryHtmlToShortCode($cmsGlossaryTransfer);
     }
 
     /**
@@ -298,11 +393,12 @@ class ContentGuiFacadeTest extends Unit
      */
     protected function checkCmsGlossaryResult(CmsGlossaryTransfer $cmsGlossaryTransfer, string $expectedResult): void
     {
+        // Assert
         $this->assertInstanceOf(CmsGlossaryTransfer::class, $cmsGlossaryTransfer);
 
         foreach ($cmsGlossaryTransfer->getGlossaryAttributes() as $cmsGlossaryAttributesTransfer) {
             foreach ($cmsGlossaryAttributesTransfer->getTranslations() as $cmsPlaceholderTranslationTransfer) {
-                $translation = str_replace("\n", '', $cmsPlaceholderTranslationTransfer->getTranslation());
+                $translation = $cmsPlaceholderTranslationTransfer->getTranslation();
                 $this->assertIsString($translation);
                 $this->assertEquals($expectedResult, $translation);
             }
@@ -311,30 +407,28 @@ class ContentGuiFacadeTest extends Unit
 
     /**
      * @param string $inputString
-     * @param string $expectedResult
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    protected function runConvertCmsBlockGlossaryShortCodeToHtml(string $inputString, string $expectedResult): void
+    protected function runConvertCmsBlockGlossaryShortCodeToHtml(string $inputString): CmsBlockGlossaryTransfer
     {
         $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($inputString);
-        $contentGuiFacade = $this->getFacade();
-        $cmsBlockGlossaryTransfer = $contentGuiFacade->convertCmsBlockGlossaryShortCodeToHtml($cmsBlockGlossaryTransfer);
-        $this->checkCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
+        $contentGuiFacade = $this->tester->getFacade();
+
+        return $contentGuiFacade->convertCmsBlockGlossaryShortCodeToHtml($cmsBlockGlossaryTransfer);
     }
 
     /**
      * @param string $inputString
-     * @param string $expectedResult
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    protected function runConvertCmsBlockGlossaryHtmlToShortCode(string $inputString, string $expectedResult): void
+    protected function runConvertCmsBlockGlossaryHtmlToShortCode(string $inputString): CmsBlockGlossaryTransfer
     {
         $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($inputString);
-        $contentGuiFacade = $this->getFacade();
-        $cmsBlockGlossaryTransfer = $contentGuiFacade->convertCmsBlockGlossaryHtmlToShortCode($cmsBlockGlossaryTransfer);
-        $this->checkCmsBlockGlossaryResult($cmsBlockGlossaryTransfer, $expectedResult);
+        $contentGuiFacade = $this->tester->getFacade();
+
+        return $contentGuiFacade->convertCmsBlockGlossaryHtmlToShortCode($cmsBlockGlossaryTransfer);
     }
 
     /**
@@ -371,13 +465,5 @@ class ContentGuiFacadeTest extends Unit
                 $this->assertEquals($expectedResult, $translation);
             }
         }
-    }
-
-    /**
-     * @return \Spryker\Zed\ContentGui\Business\ContentGuiFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    protected function getFacade()
-    {
-        return $this->tester->getFacade();
     }
 }

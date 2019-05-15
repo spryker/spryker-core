@@ -16,12 +16,12 @@ interface CmsGlossaryUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function executeAfterFindPlugins(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
+    public function updateAfterFind(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function executeBeforeSavePlugins(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
+    public function updateBeforeSave(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
 }

@@ -81,7 +81,13 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     public function getOptions(string $termKey, ?int $contentId = null): array
     {
         if ($contentId !== null) {
-            $termKey = $this->contentFacade->findContentById($contentId)->getContentTermKey();
+            $contentTransfer = $this->contentFacade->findContentById($contentId);
+
+            if (!$contentTransfer) {
+                return [];
+            }
+
+            $termKey = $contentTransfer->getContentTermKey();
         }
 
         $contentPlugin = $this->contentResolver->getContentPlugin($termKey);

@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\ContentGui\Plugin;
 use Generated\Shared\Transfer\ContentWidgetTemplateTransfer;
 use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface;
 
-class ContentProductContentGuiEditorPlugin implements ContentGuiEditorPluginInterface
+class ContentProductContentGuiEditorPluginMock implements ContentGuiEditorPluginInterface
 {
     protected const TEMPLATES = [
         'default' => 'Default',

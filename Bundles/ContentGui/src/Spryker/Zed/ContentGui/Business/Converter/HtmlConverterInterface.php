@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ContentGui\Business\Converter;
 
-interface ContentGuiConverterInterface
+interface HtmlConverterInterface
 {
     /**
-     * @param string $string
+     * @param string $html
      *
      * @return string
      */
-    public function convert(string $string): string;
+    public function replaceWidget(string $html): string;
 }

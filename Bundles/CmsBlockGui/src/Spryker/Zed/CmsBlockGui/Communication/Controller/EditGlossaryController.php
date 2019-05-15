@@ -50,7 +50,7 @@ class EditGlossaryController extends AbstractCmsBlockController
                 $cmsBlockGlossaryTransfer = $glossaryForm->getData();
                 $cmsBlockGlossaryTransfer = $this->getFactory()
                     ->createCmsBlockGlossaryUpdater()
-                    ->executeBeforeSavePlugins($cmsBlockGlossaryTransfer);
+                    ->updateBeforeSave($cmsBlockGlossaryTransfer);
 
                 $this->getFactory()
                     ->getCmsBlockFacade()

@@ -13,7 +13,7 @@ use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface;
 use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface;
 
-class ShortCodeToHtmlConverter implements ContentGuiConverterInterface
+class ShortCodeToHtmlConverter implements ShortCodeConverterInterface
 {
     protected const PATTERN_REGEXP_NUMERIC = '\d+';
     protected const PATTERN_REGEXP_STRING = '[\w+\-]+';
@@ -57,52 +57,52 @@ class ShortCodeToHtmlConverter implements ContentGuiConverterInterface
     }
 
     /**
-     * @param string $string
+     * @param string $html
      *
      * @return string
      */
-    public function convert(string $string): string
+    public function replaceShortCode(string $html): string
     {
         foreach ($this->contentEditorPlugins as $contentEditorPlugin) {
-            $string = $this->convertShortCodesToHtml($string, $contentEditorPlugin);
+            $html = $this->convertShortCodesToHtml($html, $contentEditorPlugin);
         }
 
-        return $string;
+        return $html;
     }
 
     /**
-     * @param string $string
+     * @param string $html
      * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface $contentEditorPlugin
      *
      * @return string
      */
-    protected function convertShortCodesToHtml(string $string, ContentGuiEditorPluginInterface $contentEditorPlugin): string
+    protected function convertShortCodesToHtml(string $html, ContentGuiEditorPluginInterface $contentEditorPlugin): string
     {
-        $shortCodes = $this->extractShortCodes($string, $contentEditorPlugin->getTwigFunctionTemplate());
+        $shortCodes = $this->extractShortCodes($html, $contentEditorPlugin->getTwigFunctionTemplate());
 
         if (!$shortCodes) {
-            return $string;
+            return $html;
         }
 
-        return $this->replaceShortCodes($string, $shortCodes, $contentEditorPlugin->getTemplates());
+        return $this->replaceShortCodes($html, $shortCodes, $contentEditorPlugin->getTemplates());
     }
 
     /**
-     * @param string $string
+     * @param string $html
      * @param string $twigFunctionTemplate
      *
      * @return array|null
      */
-    protected function extractShortCodes(string $string, string $twigFunctionTemplate): ?array
+    protected function extractShortCodes(string $html, string $twigFunctionTemplate): ?array
     {
         $shortCodeRegExpPattern = strtr('/' . $twigFunctionTemplate . '/', [
             '(' => '\(',
             ')' => '\)',
-            ContentGuiConfig::PARAMETER_ID => static::PATTERN_REGEXP_NUMERIC,
-            ContentGuiConfig::PARAMETER_TEMPLATE => static::PATTERN_REGEXP_STRING,
+            $this->contentGuiConfig->getParameterId() => static::PATTERN_REGEXP_NUMERIC,
+            $this->contentGuiConfig->getParameterTemplate() => static::PATTERN_REGEXP_STRING,
         ]);
 
-        preg_match_all($shortCodeRegExpPattern, $string, $shortCodes);
+        preg_match_all($shortCodeRegExpPattern, $html, $shortCodes);
 
         if (!$shortCodes[0]) {
             return null;
@@ -112,25 +112,27 @@ class ShortCodeToHtmlConverter implements ContentGuiConverterInterface
     }
 
     /**
-     * @param string $string
+     * @param string $html
      * @param string[] $shortCodes
      * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
      *
      * @return string
      */
-    protected function replaceShortCodes(string $string, array $shortCodes, array $contentWidgetTemplateTransfers): string
+    protected function replaceShortCodes(string $html, array $shortCodes, array $contentWidgetTemplateTransfers): string
     {
+        $shortCodeReplacements = [];
+
         foreach ($shortCodes as $shortCode) {
             $editorContentWidget = $this->getEditorContentWidgetByShortCode($shortCode, $contentWidgetTemplateTransfers);
 
-            if (!$editorContentWidget) {
+            if (!$editorContentWidget || isset($shortCodeReplacements[$shortCode])) {
                 continue;
             }
 
-            $string = str_replace($shortCode, $editorContentWidget, $string);
+            $shortCodeReplacements[$shortCode] = $editorContentWidget;
         }
 
-        return $string;
+        return strtr($html, $shortCodeReplacements);
     }
 
     /**
@@ -155,12 +157,12 @@ class ShortCodeToHtmlConverter implements ContentGuiConverterInterface
         }
 
         return strtr($this->contentGuiConfig->getEditorContentWidgetTemplate(), [
-            ContentGuiConfig::PARAMETER_ID => $contentTransfer->getIdContent(),
-            ContentGuiConfig::PARAMETER_TYPE => $contentTransfer->getContentTypeKey(),
-            ContentGuiConfig::PARAMETER_TEMPLATE => $templateIdentifier,
-            ContentGuiConfig::PARAMETER_SHORT_CODE => $shortCode,
-            ContentGuiConfig::PARAMETER_NAME => $contentTransfer->getName(),
-            ContentGuiConfig::PARAMETER_TEMPLATE_DISPLAY_NAME => $templateDisplayName,
+            $this->contentGuiConfig->getParameterId() => $contentTransfer->getIdContent(),
+            $this->contentGuiConfig->getParameterType() => $contentTransfer->getContentTypeKey(),
+            $this->contentGuiConfig->getParameterName() => $contentTransfer->getName(),
+            $this->contentGuiConfig->getParameterShortCode() => $shortCode,
+            $this->contentGuiConfig->getParameterTemplate() => $templateIdentifier,
+            $this->contentGuiConfig->getParameterTemplateDisplayName() => $templateDisplayName,
         ]);
     }
 
@@ -216,10 +218,6 @@ class ShortCodeToHtmlConverter implements ContentGuiConverterInterface
     {
         foreach ($contentWidgetTemplateTransfers as $contentWidgetTemplateTransfer) {
             if ($contentWidgetTemplateTransfer->getIdentifier() === $templateIdentifier) {
-                if (!$contentWidgetTemplateTransfer->getName()) {
-                    return '';
-                }
-
                 return $this->translatorFacade->trans($contentWidgetTemplateTransfer->getName());
             }
         }

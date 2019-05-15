@@ -11,12 +11,12 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ContentGuiConfig extends AbstractBundleConfig
 {
-    public const PARAMETER_ID = '%ID%';
-    public const PARAMETER_TYPE = '%TYPE%';
-    public const PARAMETER_TEMPLATE = '%TEMPLATE%';
-    public const PARAMETER_SHORT_CODE = '%SHORT_CODE%';
-    public const PARAMETER_NAME = '%NAME%';
-    public const PARAMETER_TEMPLATE_DISPLAY_NAME = '%TEMPLATE_DISPLAY_NAME%';
+    protected const PARAMETER_ID = '%ID%';
+    protected const PARAMETER_TYPE = '%TYPE%';
+    protected const PARAMETER_TEMPLATE = '%TEMPLATE%';
+    protected const PARAMETER_SHORT_CODE = '%SHORT_CODE%';
+    protected const PARAMETER_NAME = '%NAME%';
+    protected const PARAMETER_TEMPLATE_DISPLAY_NAME = '%TEMPLATE_DISPLAY_NAME%';
 
     /**
      * @return string
@@ -31,5 +31,53 @@ class ContentGuiConfig extends AbstractBundleConfig
                         . '<p>Name: <b>' . static::PARAMETER_NAME . '</b></p>'
                         . '<p>Template: <b>' . static::PARAMETER_TEMPLATE_DISPLAY_NAME . '</b></p>'
                 . '</div>';
+    }
+
+    /**
+     * @return string
+     */
+    public function getParameterId(): string
+    {
+        return static::PARAMETER_ID;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParameterType(): string
+    {
+        return static::PARAMETER_TYPE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParameterTemplate(): string
+    {
+        return static::PARAMETER_TEMPLATE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParameterShortCode(): string
+    {
+        return static::PARAMETER_SHORT_CODE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParameterName(): string
+    {
+        return static::PARAMETER_NAME;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParameterTemplateDisplayName(): string
+    {
+        return static::PARAMETER_TEMPLATE_DISPLAY_NAME;
     }
 }

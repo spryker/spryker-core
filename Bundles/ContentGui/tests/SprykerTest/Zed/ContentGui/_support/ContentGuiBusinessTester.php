@@ -81,35 +81,44 @@ class ContentGuiBusinessTester extends Actor
 
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer $bannerContentTransfer
+     * @param bool $addLineBreak
      *
      * @return string
      */
-    public function getOneShortCodeInString(ContentTransfer $bannerContentTransfer): string
+    public function getOneShortCodeInString(ContentTransfer $bannerContentTransfer, bool $addLineBreak = false): string
     {
-        return '<p>' . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT) . '</p>';
+        return '<p>' . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT) . '</p>'
+            . ($addLineBreak ? "\n" : '');
     }
 
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer $bannerContentTransfer
+     * @param bool $addLineBreak
      *
      * @return string
      */
-    public function getTwoSameShortCodesInString(ContentTransfer $bannerContentTransfer): string
+    public function getTwoSameShortCodesInString(ContentTransfer $bannerContentTransfer, bool $addLineBreak = false): string
     {
         return '<p>' . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
-            . '<p></p>' . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT) . '</p>';
+            . '<p></p>' . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT) . '</p>'
+            . ($addLineBreak ? "\n" : '');
     }
 
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer $bannerContentTransfer
      * @param \Generated\Shared\Transfer\ContentTransfer $abstractProductListContentTransfer
+     * @param bool $addLineBreak
      *
      * @return string
      */
-    public function getTwoDifferentShortCodeInString(ContentTransfer $bannerContentTransfer, ContentTransfer $abstractProductListContentTransfer): string
-    {
+    public function getTwoDifferentShortCodeInString(
+        ContentTransfer $bannerContentTransfer,
+        ContentTransfer $abstractProductListContentTransfer,
+        bool $addLineBreak = false
+    ): string {
         return '<p>' . $this->createShortCode($bannerContentTransfer, static::TEMPLATE_IDENTIFIER_DEFAULT)
-            . '<p></p>' . $this->createShortCode($abstractProductListContentTransfer, static::TEMPLATE_IDENTIFIER_TOP_TITLE) . '</p>';
+            . '<p></p>' . $this->createShortCode($abstractProductListContentTransfer, static::TEMPLATE_IDENTIFIER_TOP_TITLE) . '</p>'
+            . ($addLineBreak ? "\n" : '');
     }
 
     /**
@@ -171,12 +180,12 @@ class ContentGuiBusinessTester extends Actor
         }
 
         return strtr($editorContentWidgetTemplate, [
-            ContentGuiConfig::PARAMETER_ID => $contentTransfer->getIdContent(),
-            ContentGuiConfig::PARAMETER_TYPE => $contentTransfer->getContentTypeKey(),
-            ContentGuiConfig::PARAMETER_NAME => $contentTransfer->getName(),
-            ContentGuiConfig::PARAMETER_SHORT_CODE => $this->createShortCode($contentTransfer, $templateIdentifier),
-            ContentGuiConfig::PARAMETER_TEMPLATE => $templateIdentifier,
-            ContentGuiConfig::PARAMETER_TEMPLATE_DISPLAY_NAME => $templateDisplayName,
+            $this->getConfig()->getParameterId() => $contentTransfer->getIdContent(),
+            $this->getConfig()->getParameterType() => $contentTransfer->getContentTypeKey(),
+            $this->getConfig()->getParameterName() => $contentTransfer->getName(),
+            $this->getConfig()->getParameterShortCode() => $this->createShortCode($contentTransfer, $templateIdentifier),
+            $this->getConfig()->getParameterTemplate() => $templateIdentifier,
+            $this->getConfig()->getParameterTemplateDisplayName() => $templateDisplayName,
         ]);
     }
 
