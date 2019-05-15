@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleConcreteTable;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 
 class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterface
 {
@@ -24,11 +25,20 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
     protected $priceProductFacade;
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade
+     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface
      */
-    public function __construct(PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade)
-    {
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(
+        PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade,
+        PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
+    ) {
         $this->priceProductFacade = $priceProductFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -87,7 +97,8 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
         return (
             new PriceProductScheduleConcreteTable(
                 $viewData['idProduct'],
-                $priceTypeTransfer->getIdPriceType()
+                $priceTypeTransfer->getIdPriceType(),
+                $this->storeFacade
             )
         );
     }
