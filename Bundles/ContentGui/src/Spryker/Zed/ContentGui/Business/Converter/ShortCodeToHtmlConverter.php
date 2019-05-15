@@ -102,13 +102,13 @@ class ShortCodeToHtmlConverter implements ContentGuiConverterInterface
             ContentGuiConfig::PARAMETER_TEMPLATE => static::PATTERN_REGEXP_STRING,
         ]);
 
-        preg_match($shortCodeRegExpPattern, $string, $shortCodes);
+        preg_match_all($shortCodeRegExpPattern, $string, $shortCodes);
 
-        if (!$shortCodes) {
+        if (!$shortCodes[0]) {
             return null;
         }
 
-        return $shortCodes;
+        return $shortCodes[0];
     }
 
     /**
@@ -214,14 +214,16 @@ class ShortCodeToHtmlConverter implements ContentGuiConverterInterface
      */
     protected function getTemplateDisplayNameByIdentifier(string $templateIdentifier, array $contentWidgetTemplateTransfers): string
     {
-        $templateName = $templateIdentifier;
-
         foreach ($contentWidgetTemplateTransfers as $contentWidgetTemplateTransfer) {
             if ($contentWidgetTemplateTransfer->getIdentifier() === $templateIdentifier) {
+                if (!$contentWidgetTemplateTransfer->getName()) {
+                    return '';
+                }
+
                 return $this->translatorFacade->trans($contentWidgetTemplateTransfer->getName());
             }
         }
 
-        return $templateName;
+        return '';
     }
 }
