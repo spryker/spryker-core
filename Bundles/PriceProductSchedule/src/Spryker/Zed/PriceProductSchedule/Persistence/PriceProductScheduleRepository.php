@@ -33,7 +33,7 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
 
     protected const EXPRESSION_CONCATENATED_RESULT_MAP = [
         PropelConfig::DB_ENGINE_PGSQL => 'CAST(CONCAT(CONCAT(CAST(EXTRACT(epoch from now() - %s) + EXTRACT(epoch from %s - now()) AS INT), \'0\'), %s + %s, \'.\', %s) as DECIMAL)',
-        PropelConfig::DB_ENGINE_MYSQL => 'CAST(CONCAT(CONCAT(CAST(EXTRACT(epoch from now() - %s) + EXTRACT(epoch from %s - now()) AS UNSIGNED), \'0\'), %s + %s, \'' . self::CONCAT_DELIMITER . '\', %s) as UNSIGNED)',
+        PropelConfig::DB_ENGINE_MYSQL => 'CAST(CONCAT(CONCAT(CAST((now() - %s) + (%s - now()) AS UNSIGNED), \'0\'), %s + %s, \'' . self::CONCAT_DELIMITER . '\', %s) as UNSIGNED)',
     ];
 
     protected const EXPRESSION_FILTER_ID_PRICE_PRODUCT_SCHEDULE_MAP = [
