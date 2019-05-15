@@ -18,6 +18,7 @@ use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 class BusinessHelper extends Module
 {
     protected const BUSINESS_FACTORY_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory';
+    protected const BUSINESS_FACADE_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sFacade';
 
     /**
      * @var array
@@ -25,7 +26,7 @@ class BusinessHelper extends Module
     protected $dependencies = [];
 
     /**
-     * @var \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|null
+     * @var \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|object|null
      */
     protected $factoryStub;
 
@@ -50,12 +51,20 @@ class BusinessHelper extends Module
      */
     protected function createFacade(): AbstractFacade
     {
+        $className = $this->getFacadeClassName();
+
+        return new $className();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getFacadeClassName(): string
+    {
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        $moduleName = lcfirst($namespaceParts[2]);
-
-        return $this->getLocator()->$moduleName()->facade();
+        return sprintf(static::BUSINESS_FACADE_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
     }
 
     /**
@@ -81,7 +90,7 @@ class BusinessHelper extends Module
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|object
      */
     public function getFactory()
     {
@@ -118,7 +127,7 @@ class BusinessHelper extends Module
     /**
      * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|object $businessFactory
      *
-     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|object
      */
     protected function injectConfig($businessFactory)
     {
@@ -130,7 +139,7 @@ class BusinessHelper extends Module
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
+     * @return \Spryker\Zed\Kernel\AbstractBundleConfig|\Spryker\Shared\Kernel\AbstractBundleConfig
      */
     protected function getConfig()
     {
@@ -142,7 +151,10 @@ class BusinessHelper extends Module
      */
     protected function getConfigHelper(): ConfigHelper
     {
-        return $this->getModule('\\' . ConfigHelper::class);
+        /** @var \SprykerTest\Shared\Testify\Helper\ConfigHelper $configHelper */
+        $configHelper = $this->getModule('\\' . ConfigHelper::class);
+
+        return $configHelper;
     }
 
     /**
