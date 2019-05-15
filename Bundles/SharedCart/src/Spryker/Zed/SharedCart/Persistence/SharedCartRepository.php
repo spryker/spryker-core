@@ -355,8 +355,8 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     {
         $quoteCompanyUserEntity = $this->getFactory()
             ->createQuoteCompanyUserQuery()
-            ->filterByFkCompanyUser($idQuote)
-            ->filterByFkQuote($idCompanyUser)
+            ->filterByFkQuote($idQuote)
+            ->filterByFkCompanyUser($idCompanyUser)
             ->findOne();
 
         if (!$quoteCompanyUserEntity) {
