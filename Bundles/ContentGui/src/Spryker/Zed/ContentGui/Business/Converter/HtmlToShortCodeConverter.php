@@ -52,9 +52,9 @@ class HtmlToShortCodeConverter implements ContentGuiConverterInterface
         $widgets = $xpath->query('//*[@' . static::ATTRIBUTE_DATA_SHORT_CODE . ']');
 
         foreach ($widgets as $widget) {
-            $shortCodeElement = $dom->createDocumentFragment();
-            $shortCodeElement->appendXML($widget->getAttribute(static::ATTRIBUTE_DATA_SHORT_CODE));
-            $replacements[] = [$shortCodeElement, $widget];
+            $shortCode = $dom->createDocumentFragment();
+            $shortCode->appendXML($widget->getAttribute(static::ATTRIBUTE_DATA_SHORT_CODE));
+            $replacements[] = [$shortCode, $widget];
         }
 
         return $replacements;
