@@ -81,7 +81,7 @@ class SharedCartExpander implements SharedCartExpanderInterface
                 continue;
             }
 
-            $cartSharedCartRestResource = $this->cartSharedCartRestResource($shareDetailTransfer);
+            $cartSharedCartRestResource = $this->createSharedCartRestResource($shareDetailTransfer);
 
             $resource->addRelationship($cartSharedCartRestResource);
         }
@@ -92,7 +92,7 @@ class SharedCartExpander implements SharedCartExpanderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function cartSharedCartRestResource(ShareDetailTransfer $shareDetailTransfer): RestResourceInterface
+    protected function createSharedCartRestResource(ShareDetailTransfer $shareDetailTransfer): RestResourceInterface
     {
         $restSharedCartsAttributesTransfer = $this->sharedCartMapper->mapShareDetailTransferToRestSharedCartsAttributesTransfer(
             $shareDetailTransfer,
