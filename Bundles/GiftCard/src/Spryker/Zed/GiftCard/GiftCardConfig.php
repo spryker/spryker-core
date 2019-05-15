@@ -66,7 +66,7 @@ class GiftCardConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getGiftCardPaymentMethodBlacklist()
+    public function getGiftCardPaymentMethodBlacklist(): array
     {
         return $this->getGiftCardMethodBlacklist();
     }

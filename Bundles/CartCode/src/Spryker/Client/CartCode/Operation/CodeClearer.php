@@ -55,12 +55,33 @@ class CodeClearer implements CodeClearerInterface
             return $lockedCartCodeOperationResultTransfer;
         }
 
-        foreach ($this->cartCodeHandlerPlugins as $cartCodeHandlerPlugin) {
-            $cartCodeHandlerPlugin->clearAllCodes($quoteTransfer);
-        }
-
+        $quoteTransfer = $this->executePlugins($quoteTransfer);
         $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
 
+        return $this->createResponse($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executePlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($this->cartCodeHandlerPlugins as $cartCodeHandlerPlugin) {
+            $quoteTransfer = $cartCodeHandlerPlugin->clearAllCodes($quoteTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    protected function createResponse(QuoteTransfer $quoteTransfer): CartCodeOperationResultTransfer
+    {
         $cartCodeOperationResultTransfer = new CartCodeOperationResultTransfer();
         $cartCodeOperationResultTransfer->setQuote($quoteTransfer);
 

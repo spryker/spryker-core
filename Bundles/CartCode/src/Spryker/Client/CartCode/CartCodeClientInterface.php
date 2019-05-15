@@ -14,7 +14,6 @@ interface CartCodeClientInterface
 {
     /**
      * Specification:
-     *
      * - Executes CartCodeHandlerPluginInterface::addCandidate() methods of the used plugins, which can extend the QuoteTransfer
      * with any relevant data, activated by the $code string.
      * - No change will be done and the result will contain an error message when the selected cart is locked for changes.
@@ -34,7 +33,6 @@ interface CartCodeClientInterface
 
     /**
      * Specification:
-     *
      * - Executes CartCodeHandlerPluginInterface::removeCode() methods of the used plugins, which can clean up the QuoteTransfer
      * by any irrelevant data, previously activated by the $code string.
      * - No change will be done and the result will contain an error message when the selected cart is locked for changes.
@@ -54,7 +52,6 @@ interface CartCodeClientInterface
 
     /**
      * Specification:
-     *
      * - Executes CartCodeHandlerPluginInterface::clearAllCodes() methods of the used plugins, which can clear all relevant codes
      * and their data from the QuoteTransfer, previously activated by the a given plugin.
      * - No change will be done and the result will contain an error message when the selected cart is locked for changes.

@@ -23,7 +23,7 @@ class CartCodeDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addCalculationClient($container);
         $container = $this->addQuoteClient($container);
@@ -75,9 +75,9 @@ class CartCodeDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return array
+     * @return \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodeHandlerPluginInterface[]
      */
-    protected function getCartCodeHandlerPluginCollection()
+    protected function getCartCodeHandlerPluginCollection(): array
     {
         return [];
     }

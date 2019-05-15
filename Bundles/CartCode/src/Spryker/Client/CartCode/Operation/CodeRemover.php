@@ -56,12 +56,35 @@ class CodeRemover implements CodeRemoverInterface
             return $lockedCartCodeOperationResultTransfer;
         }
 
-        foreach ($this->cartCodeHandlerPlugins as $cartCodeHandlerPlugin) {
-            $cartCodeHandlerPlugin->removeCode($quoteTransfer, $code);
-        }
-
+        $quoteTransfer = $this->executePlugins($quoteTransfer, $code);
         $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
 
+        return $this->processRecalculationResults($quoteTransfer, $code);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executePlugins(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    {
+        foreach ($this->cartCodeHandlerPlugins as $cartCodeHandlerPlugin) {
+            $quoteTransfer = $cartCodeHandlerPlugin->removeCode($quoteTransfer, $code);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    protected function processRecalculationResults(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    {
         $cartCodeOperationResultTransfer = new CartCodeOperationResultTransfer();
         $cartCodeOperationResultTransfer->setQuote($quoteTransfer);
 

@@ -56,13 +56,25 @@ class CodeAdder implements CodeAdderInterface
             return $lockedCartCodeOperationResultTransfer;
         }
 
+        $quoteTransfer = $this->executePlugins($quoteTransfer, $code);
+        $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
+
+        return $this->processRecalculationResults($quoteTransfer, $code);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executePlugins(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    {
         foreach ($this->cartCodeHandlerPlugins as $cartCodeHandlerPlugin) {
             $quoteTransfer = $cartCodeHandlerPlugin->addCandidate($quoteTransfer, $code);
         }
 
-        $quoteTransfer = $this->calculationClient->recalculate($quoteTransfer);
-
-        return $this->processRecalculationResults($quoteTransfer, $code);
+        return $quoteTransfer;
     }
 
     /**
