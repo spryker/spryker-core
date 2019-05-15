@@ -358,6 +358,7 @@ class Writer implements WriterInterface
         }
 
         $this->deleteMissingProductImageSetInProductAbstract($productAbstractTransfer);
+
         return $productAbstractTransfer;
     }
 
@@ -399,6 +400,7 @@ class Writer implements WriterInterface
         }
 
         $this->deleteMissingProductImageSetInProductConcrete($productConcreteTransfer);
+
         return $productConcreteTransfer;
     }
 }

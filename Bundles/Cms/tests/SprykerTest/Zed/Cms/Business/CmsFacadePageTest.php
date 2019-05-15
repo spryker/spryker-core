@@ -540,6 +540,7 @@ class CmsFacadePageTest extends Unit
                 ],
             ],
         ];
+
         return $fixtures;
     }
 

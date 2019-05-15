@@ -85,6 +85,7 @@ class CreateController extends AbstractController
 
                 if ($offerResponseTransfer->getIsSuccessful()) {
                     $this->addSuccessMessage(static::MESSAGE_OFFER_CREATE_SUCCESS);
+
                     return $this->getSuccessfulRedirect($offerResponseTransfer);
                 }
             }
@@ -206,6 +207,7 @@ class CreateController extends AbstractController
         if (!$data) {
             return $offerTransfer;
         }
+
         return (new OfferTransfer())->fromArray(
             $data
         );

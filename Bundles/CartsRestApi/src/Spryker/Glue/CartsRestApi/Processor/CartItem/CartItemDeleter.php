@@ -105,6 +105,7 @@ class CartItemDeleter implements CartItemDeleterInterface
             $restCartItemsAttributesRequestTransfer->toArray(),
             true
         );
+
         return $itemTransfer;
     }
 
