@@ -12,7 +12,6 @@ use Orm\Zed\Vault\Persistence\SpyVaultDepositQuery;
 use Spryker\Shared\Vault\Exception\EncryptionKeyNotPreConfigured;
 use Spryker\Shared\Vault\VaultConfig as VaultSharedConfig;
 use Spryker\Shared\Vault\VaultConstants;
-use Spryker\Zed\Vault\Business\VaultFacade;
 
 /**
  * Auto-generated group annotations
