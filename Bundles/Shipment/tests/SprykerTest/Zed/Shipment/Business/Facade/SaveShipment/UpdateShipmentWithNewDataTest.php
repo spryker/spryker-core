@@ -21,6 +21,8 @@ use Spryker\Shared\Price\PriceConfig;
 
 /**
  * Auto-generated group annotations
+ * @group Shipment
+ * @group tests
  * @group SprykerTest
  * @group Zed
  * @group Shipment
@@ -121,7 +123,8 @@ class UpdateShipmentWithNewDataTest extends Test
         $this->assertNotEquals(
             $oldIdShipmentMethod,
             $shipmentGroupResponseTransfer->getShipmentGroup()->getShipment()->getMethod()->getIdShipmentMethod(),
-            'New shipment method should have been assigned to shipment.');
+            'New shipment method should have been assigned to shipment.'
+        );
     }
 
     /**

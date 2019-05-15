@@ -38,7 +38,6 @@ class SalesDataHelper extends Module
         array $override = [],
         $stateMachineProcessName = null,
         array $saveOrderStack = []
-
     ) {
         $this->saveOrderStack = $saveOrderStack;
         $quoteTransfer = $this->createQuoteTransfer($override);
