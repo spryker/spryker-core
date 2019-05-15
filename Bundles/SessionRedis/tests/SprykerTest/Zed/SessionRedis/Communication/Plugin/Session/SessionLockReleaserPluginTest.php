@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\SessionRedis\Communication\Plugin\Session;
 use Codeception\Test\Unit;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
 use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReaderInterface;
-use Spryker\Zed\SessionRedis\Communication\Plugin\Session\SessionRedisLockReleaserPlugin;
+use Spryker\Zed\SessionRedis\Communication\Plugin\Session\ZedSessionRedisLockReleaserPlugin;
 use Spryker\Zed\SessionRedis\Communication\SessionRedisCommunicationFactory;
 
 /**
@@ -34,7 +34,7 @@ class SessionLockReleaserPluginTest extends Unit
         $sessionId = 'session_id';
         $locker = $this->getSpinLockLocker();
         $lockReader = $this->getSessionLockReader();
-        $lockReleaserPlugin = new SessionRedisLockReleaserPlugin();
+        $lockReleaserPlugin = new ZedSessionRedisLockReleaserPlugin();
 
         $locker->lock($sessionId);
         $this->assertNotEmpty($lockReader->getTokenForSession($sessionId));
@@ -51,7 +51,7 @@ class SessionLockReleaserPluginTest extends Unit
         return $this->getFactory()
             ->createSessionHandlerFactory()
             ->createSessionSpinLockLocker(
-                $this->getFactory()->createSessionRedisWrapper()
+                $this->getFactory()->createZedSessionRedisWrapper()
             );
     }
 
@@ -61,7 +61,7 @@ class SessionLockReleaserPluginTest extends Unit
     protected function getSessionLockReader(): SessionLockReaderInterface
     {
         return $this->getFactory()->createRedisSessionLockReader(
-            $this->getFactory()->createSessionRedisWrapper()
+            $this->getFactory()->createZedSessionRedisWrapper()
         );
     }
 

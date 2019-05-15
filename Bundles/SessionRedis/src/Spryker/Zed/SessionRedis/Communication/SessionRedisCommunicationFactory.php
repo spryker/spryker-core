@@ -19,7 +19,6 @@ use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReader;
 use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReaderInterface;
 use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReleaser;
 use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReleaserInterface;
-use Spryker\Zed\SessionRedis\SessionRedisConfig;
 use Spryker\Zed\SessionRedis\SessionRedisDependencyProvider;
 
 /**
@@ -33,7 +32,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     public function createSessionRedisHandler(): SessionHandlerInterface
     {
         return $this->createSessionHandlerFactory()->createSessionRedisHandler(
-            $this->createSessionRedisWrapper()
+            $this->createZedSessionRedisWrapper()
         );
     }
 
@@ -43,16 +42,29 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     public function createSessionHandlerRedisLocking(): SessionHandlerInterface
     {
         return $this->createSessionHandlerFactory()->createSessionHandlerRedisLocking(
-            $this->createSessionRedisWrapper()
+            $this->createZedSessionRedisWrapper()
         );
     }
 
     /**
      * @return \Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReleaserInterface
      */
-    public function createSessionLockReleaser(): SessionLockReleaserInterface
+    public function createZedSessionLockReleaser(): SessionLockReleaserInterface
     {
-        $redisClient = $this->createSessionRedisWrapper();
+        $redisClient = $this->createZedSessionRedisWrapper();
+
+        return new SessionLockReleaser(
+            $this->createSessionHandlerFactory()->createSessionSpinLockLocker($redisClient),
+            $this->createRedisSessionLockReader($redisClient)
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReleaserInterface
+     */
+    public function createYvesSessionLockReleaser(): SessionLockReleaserInterface
+    {
+        $redisClient = $this->createYvesSessionRedisWrapper();
 
         return new SessionLockReleaser(
             $this->createSessionHandlerFactory()->createSessionSpinLockLocker($redisClient),
@@ -76,12 +88,24 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface
      */
-    public function createSessionRedisWrapper(): SessionRedisWrapperInterface
+    public function createZedSessionRedisWrapper(): SessionRedisWrapperInterface
     {
         return new SessionRedisWrapper(
             $this->getRedisClient(),
-            SessionRedisConfig::SESSION_REDIS_CONNECTION_KEY,
-            $this->getConfig()->getRedisConnectionConfiguration()
+            $this->getConfig()->getZedRedisConnectionKey(),
+            $this->getConfig()->getZedRedisConnectionConfiguration()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface
+     */
+    public function createYvesSessionRedisWrapper(): SessionRedisWrapperInterface
+    {
+        return new SessionRedisWrapper(
+            $this->getRedisClient(),
+            $this->getConfig()->getYvesRedisConnectionKey(),
+            $this->getConfig()->getYvesRedisConnectionConfiguration()
         );
     }
 
@@ -92,7 +116,7 @@ class SessionRedisCommunicationFactory extends AbstractCommunicationFactory
     {
         return new SessionHandlerFactory(
             $this->getMonitoringService(),
-            $this->getConfig()->getSessionLifeTime()
+            $this->getConfig()->getZedSessionLifeTime()
         );
     }
 
