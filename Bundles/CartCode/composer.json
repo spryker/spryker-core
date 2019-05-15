@@ -1,5 +1,6 @@
 {
   "name": "spryker/cart-code",
+  "type": "library",
   "description": "CartCode module",
   "license": "proprietary",
   "require": {
