@@ -8,12 +8,12 @@
 namespace Spryker\Zed\CartsRestApi;
 
 use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
+use Spryker\Zed\CartsRestApi\Communication\Plugin\CartsRestApi\QuoteCollectionReader\QuoteCollectionReaderPlugin;
+use Spryker\Zed\CartsRestApi\Communication\Plugin\CartsRestApi\QuoteCreator\QuoteCreatorPlugin;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeBridge;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeBridge;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeBridge;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeBridge;
-use Spryker\Zed\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException;
-use Spryker\Zed\CartsRestApi\Exception\MissingQuoteCreatorPluginException;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -148,18 +148,11 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @throws \Spryker\Zed\CartsRestApi\Exception\MissingQuoteCollectionReaderPluginException
-     *
      * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
      */
     protected function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
     {
-        throw new MissingQuoteCollectionReaderPluginException(sprintf(
-            'Missing instance of %s! You need to configure QuoteCollectionReaderPlugin ' .
-            'in your own CartsRestApiDependencyProvider::getQuoteCollectionReaderPlugin() ' .
-            'to be able to read quote collection.',
-            QuoteCollectionReaderPluginInterface::class
-        ));
+        return new QuoteCollectionReaderPlugin();
     }
 
     /**
@@ -177,17 +170,10 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @throws \Spryker\Zed\CartsRestApi\Exception\MissingQuoteCreatorPluginException
-     *
      * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
      */
     protected function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
     {
-        throw new MissingQuoteCreatorPluginException(sprintf(
-            'Missing instance of %s! You need to configure QuoteCreatorPluginInterface ' .
-            'in your own CartsRestApiDependencyProvider::getQuoteCreatorPlugin() ' .
-            'to be able to create quote.',
-            QuoteCreatorPluginInterface::class
-        ));
+        return new QuoteCreatorPlugin();
     }
 }

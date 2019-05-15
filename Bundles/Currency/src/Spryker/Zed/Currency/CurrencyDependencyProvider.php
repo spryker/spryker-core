@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Currency;
 
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
-use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreBridge;
+use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Symfony\Component\Intl\Intl;
@@ -61,7 +61,7 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStoreFacade(Container $container)
     {
         $container[static::FACADE_STORE] = function (Container $container) {
-            return new CurrencyToStoreBridge($container->getLocator()->store()->facade());
+            return new CurrencyToStoreFacadeFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;

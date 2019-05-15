@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote\Mapper;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
@@ -18,29 +18,6 @@ use Spryker\Zed\CartsRestApi\CartsRestApiConfig;
 
 class QuoteMapper implements QuoteMapperInterface
 {
-    /**
-     * @param string $registeredCustomerReference
-     * @param \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function createQuoteTransfer(
-        string $registeredCustomerReference,
-        QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
-    ): QuoteTransfer {
-        $quoteCollection = $quoteCollectionResponseTransfer->getQuoteCollection();
-
-        $registeredCustomer = (new CustomerTransfer())->setCustomerReference($registeredCustomerReference);
-        if (!$quoteCollection || $quoteCollection->getQuotes()->count() === 0) {
-            return (new QuoteTransfer())->setCustomer($registeredCustomer);
-        }
-
-        $quoteTransfer = $quoteCollection->getQuotes()[0];
-        $quoteTransfer->setCustomerReference($registeredCustomerReference);
-
-        return $quoteTransfer->setCustomer($registeredCustomer);
-    }
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -89,21 +66,22 @@ class QuoteMapper implements QuoteMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $originalQuoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function mapQuoteResponseErrorsToRestCodes(
-        QuoteResponseTransfer $quoteResponseTransfer
+        QuoteResponseTransfer $originalQuoteResponseTransfer
     ): QuoteResponseTransfer {
-        $errorCodes = [];
-        foreach ($quoteResponseTransfer->getErrors() as $error) {
-            $errorCodes[] = isset($error[MessageTransfer::VALUE])
-                ? CartsRestApiConfig::RESPONSE_ERROR_MAP[$error[MessageTransfer::VALUE]]
-                : $error->getMessage();
-        }
+        $quoteResponseTransfer = new QuoteResponseTransfer();
 
-        $quoteResponseTransfer->setErrorCodes($errorCodes);
+        foreach ($originalQuoteResponseTransfer->getErrors() as $error) {
+            $errorIdentifier = isset(CartsRestApiConfig::RESPONSE_ERROR_MAP[$error[MessageTransfer::VALUE]])
+                ? CartsRestApiConfig::RESPONSE_ERROR_MAP[$error[MessageTransfer::VALUE]]
+                : CartsRestApiConfig::RESPONSE_ERROR_MAP[$error->getMessage()];
+
+            $quoteResponseTransfer->addError((new QuoteErrorTransfer())->setErrorIdentifier($errorIdentifier));
+        }
 
         return $quoteResponseTransfer;
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
@@ -56,7 +57,15 @@ class CartUpdater implements CartUpdaterInterface
         RestRequestInterface $restRequest,
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
-        $quoteTransfer = $this->cartsResourceMapper->mapRestCartsAttributesTransferToQuoteTransfer($restCartsAttributesTransfer, $restRequest);
+        $restUser = $restRequest->getRestUser();
+        $quoteTransfer = $this->cartsResourceMapper->mapRestCartsAttributesTransferToQuoteTransfer(
+            $restCartsAttributesTransfer,
+            new QuoteTransfer()
+        );
+        $quoteTransfer
+            ->setCompanyUserId($restUser->getIdCompany())
+            ->setCustomerReference($restUser->getNaturalIdentifier());
+
         $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($quoteTransfer->setUuid($restRequest->getResource()->getId()));
 
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {

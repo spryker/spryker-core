@@ -15,17 +15,6 @@ use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 interface QuoteMapperInterface
 {
     /**
-     * @param string $registeredCustomerReference
-     * @param \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function createQuoteTransfer(
-        string $registeredCustomerReference,
-        QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer
-    ): QuoteTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteUpdateRequestTransfer

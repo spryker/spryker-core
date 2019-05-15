@@ -8,8 +8,8 @@
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -71,47 +71,41 @@ class QuoteReader implements QuoteReaderInterface
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_CART_NOT_FOUND));
-
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
+            $quoteResponseTransfer->addError((new QuoteErrorTransfer())->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND));
         }
 
         return $quoteResponseTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollectionByCustomerReference(
-        CustomerTransfer $customerTransfer
-    ): QuoteCollectionResponseTransfer {
-        return $this->quoteCollectionReaderPlugin->getQuoteCollection($customerTransfer);
+    public function getQuoteCollectionByQuoteCriteriaFilter(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    {
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $quoteCriteriaFilterTransfer->setIdStore($storeTransfer->getIdStore());
+
+        return $this->quoteCollectionReaderPlugin->getQuoteCollection($quoteCriteriaFilterTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollectionByCustomerAndStore(
-        CustomerTransfer $customerTransfer
-    ): QuoteCollectionResponseTransfer {
-        $quoteCollectionResponseTransfer = new QuoteCollectionResponseTransfer();
+    public function getQuoteByQuoteCriteriaFilter(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    {
         $storeTransfer = $this->storeFacade->getCurrentStore();
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($quoteCriteriaFilterTransfer->getCustomerReference());
+        $quoteCollectionTransfer = new QuoteCollectionTransfer();
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByCustomerAndStore($customerTransfer, $storeTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->quoteMapper->mapQuoteResponseErrorsToRestQuoteCollectionResponseErrors(
-                $quoteResponseTransfer
-            );
+            return $quoteCollectionTransfer;
         }
 
-        return $quoteCollectionResponseTransfer
-            ->setQuoteCollection((new QuoteCollectionTransfer())->addQuote($quoteResponseTransfer->getQuoteTransfer()));
+        return $quoteCollectionTransfer->addQuote($quoteResponseTransfer->getQuoteTransfer());
     }
 }

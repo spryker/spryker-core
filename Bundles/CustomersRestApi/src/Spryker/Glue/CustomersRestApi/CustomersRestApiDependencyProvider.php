@@ -109,7 +109,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @deprecated use getCustomerPostCreatePlugins()
+     * @deprecated Can be removed in minor
      *
      * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[]
      */

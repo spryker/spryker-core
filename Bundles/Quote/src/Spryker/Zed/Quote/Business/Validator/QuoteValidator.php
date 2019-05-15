@@ -17,6 +17,7 @@ use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 class QuoteValidator implements QuoteValidatorInterface
 {
     protected const ERROR_MESSAGE_STORE_DATA_IS_MISSING = 'quote.validation.error.store_is_missing';
+    protected const ERROR_MESSAGE_STORE_NOT_FOUND = 'Store not found.';
 
     /**
      * @var \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface
@@ -69,10 +70,9 @@ class QuoteValidator implements QuoteValidatorInterface
             return $this->addValidationError($quoteValidationResponseTransfer, static::ERROR_MESSAGE_STORE_DATA_IS_MISSING);
         }
 
-        try {
-            $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
-        } catch (StoreNotFoundException $exception) {
-            return $this->addValidationError($quoteValidationResponseTransfer, $exception->getMessage());
+        $storeTransfer = $this->storeFacade->findStoreByName($storeTransfer->getName());
+        if (!$storeTransfer) {
+            return $this->addValidationError($quoteValidationResponseTransfer, static::ERROR_MESSAGE_STORE_NOT_FOUND);
         }
 
         return $quoteValidationResponseTransfer;

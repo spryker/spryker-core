@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 
+use ArrayObject;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -71,5 +73,42 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
         }
 
         return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer[]|\ArrayObject $errors
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createFailedCreateCartErrorResponse(ArrayObject $errors): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        foreach ($errors as $quoteErrorTransfer) {
+            $restResponse->addError(
+                $this->mapQuoteErrorTransferToRestErrorMessageTransfer(
+                    $quoteErrorTransfer,
+                    new RestErrorMessageTransfer()
+                )
+            );
+        }
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer $quoteErrorTransfer
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function mapQuoteErrorTransferToRestErrorMessageTransfer(
+        QuoteErrorTransfer $quoteErrorTransfer,
+        RestErrorMessageTransfer $restErrorMessageTransfer
+    ): RestErrorMessageTransfer {
+        $errorIdentifierMapping = CartsRestApiConfig::ERROR_IDENTIFIER_TO_REST_ERROR_MAPPING[$quoteErrorTransfer->getErrorIdentifier()];
+        $restErrorMessageTransfer->fromArray($errorIdentifierMapping, true);
+
+        return $restErrorMessageTransfer;
     }
 }

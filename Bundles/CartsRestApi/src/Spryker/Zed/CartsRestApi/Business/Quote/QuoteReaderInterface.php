@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -22,20 +22,16 @@ interface QuoteReaderInterface
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollectionByCustomerReference(
-        CustomerTransfer $customerTransfer
-    ): QuoteCollectionResponseTransfer;
+    public function getQuoteCollectionByQuoteCriteriaFilter(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollectionByCustomerAndStore(
-        CustomerTransfer $customerTransfer
-    ): QuoteCollectionResponseTransfer;
+    public function getQuoteByQuoteCriteriaFilter(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
 }

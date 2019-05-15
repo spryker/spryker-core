@@ -71,7 +71,7 @@ class CurrencyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreInterface
+     * @return \Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface
      */
     protected function getStoreFacade()
     {

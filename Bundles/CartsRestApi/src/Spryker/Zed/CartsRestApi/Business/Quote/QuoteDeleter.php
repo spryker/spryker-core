@@ -72,8 +72,7 @@ class QuoteDeleter implements QuoteDeleterInterface
         }
 
         $quoteResponseTransfer = $this->persistentCartFacade->deleteQuote(
-            $quoteResponseTransfer->getQuoteTransfer()
-            ->setCustomer($quoteTransfer->getCustomer())
+            $quoteResponseTransfer->getQuoteTransfer()->setCustomer($quoteTransfer->getCustomer())
         );
 
         if ($quoteResponseTransfer->getIsSuccessful() === false) {

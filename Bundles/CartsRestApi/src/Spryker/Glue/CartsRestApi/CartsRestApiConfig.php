@@ -189,6 +189,24 @@ class CartsRestApiConfig extends AbstractBundleConfig
         ],
     ];
 
+    public const ERROR_IDENTIFIER_TO_REST_ERROR_MAPPING = [
+        CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND => [
+            RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_CART_NOT_FOUND,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+            RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND,
+        ],
+        CartsRestApiSharedConfig::ERROR_IDENTIFIER_STORE_DATA_IS_INVALID => [
+            RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_STORE_DATA_IS_INVALID,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+            RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_STORE_DATA_IS_INVALID,
+        ],
+        CartsRestApiSharedConfig::ERROR_IDENTIFIER_CURRENCY_DATA_IS_INCORRECT => [
+            RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_CURRENCY_DATA_IS_INCORRECT,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+            RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_CURRENCY_DATA_IS_INCORRECT,
+        ],
+    ];
+
     protected const GUEST_CART_RESOURCES = [
         CartsRestApiConfig::RESOURCE_GUEST_CARTS,
         CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,

@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
-use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
@@ -57,13 +57,13 @@ class CartItemDeleter implements CartItemDeleterInterface
         $uuidQuote = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
 
-        $restCartItemRequestTransfer = $this->cartItemsResourceMapper->createRestCartItemRequestTransfer(
-            (new ItemTransfer())->setSku($itemIdentifier),
+        $restCartItemsAttributesTransfer = $this->createRestCartItemsAttributesTransfer(
+            $itemIdentifier,
             $restRequest,
             $uuidQuote
         );
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->deleteItem($restCartItemRequestTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiClient->deleteItem($restCartItemsAttributesTransfer);
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
             return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
         }
@@ -84,5 +84,23 @@ class CartItemDeleter implements CartItemDeleterInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param string $itemIdentifier
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string|null $uuidQuote
+     *
+     * @return \Generated\Shared\Transfer\RestCartItemsAttributesTransfer
+     */
+    protected function createRestCartItemsAttributesTransfer(
+        string $itemIdentifier,
+        RestRequestInterface $restRequest,
+        ?string $uuidQuote
+    ): RestCartItemsAttributesTransfer {
+        return (new RestCartItemsAttributesTransfer())
+            ->setSku($itemIdentifier)
+            ->setQuoteUuid($uuidQuote)
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\GuestCart;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
@@ -92,20 +93,15 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
             return $customerTransfer;
         }
 
-        $restQuoteCollectionResponseTransfer = $this->cartsRestApiClient->getQuoteCollectionByCustomerReference(
-            (new CustomerTransfer())->setCustomerReference($anonymousCustomerTransfer->getCustomerReference())
+        $restQuoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollectionByQuoteCriteriaFilter(
+            (new QuoteCriteriaFilterTransfer())->setCustomerReference($anonymousCustomerTransfer->getCustomerReference())
         );
 
-        if (count($restQuoteCollectionResponseTransfer->getErrorCodes()) > 0) {
+        if (!$restQuoteCollectionTransfer->getQuotes()->count()) {
             return $customerTransfer;
         }
 
-        $quoteCollection = $restQuoteCollectionResponseTransfer->getQuoteCollection();
-        if ($quoteCollection === null) {
-            return $customerTransfer;
-        }
-
-        $quotes = $quoteCollection->getQuotes();
+        $quotes = $restQuoteCollectionTransfer->getQuotes();
         if ($quotes->count() !== 1) {
             return $customerTransfer;
         }
@@ -138,8 +134,8 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
             ->setAnonymousCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
             ->setCustomerReference($customerTransfer->getCustomerReference());
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->assignGuestCartToRegisteredCustomer($assignGuestQuoteRequestTransfer);
+        $this->cartsRestApiClient->assignGuestCartToRegisteredCustomer($assignGuestQuoteRequestTransfer);
 
-        return $quoteResponseTransfer->getCustomer();
+        return $customerTransfer;
     }
 }

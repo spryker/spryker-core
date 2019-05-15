@@ -7,60 +7,25 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
-use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestCartItemRequestTransfer;
+use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Zed\CartsRestApi\CartsRestApiConfig;
 
 class QuoteItemMapper implements QuoteItemMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
-     */
-    public function createPersistentCartChangeTransfer(
-        QuoteTransfer $quoteTransfer,
-        RestCartItemRequestTransfer $restCartItemRequestTransfer
-    ): PersistentCartChangeTransfer {
-        return (new PersistentCartChangeTransfer())
-            ->setIdQuote($quoteTransfer->getIdQuote())
-            ->addItem($restCartItemRequestTransfer->getCartItem())
-            ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemRequestTransfer->getCustomerReference()));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer
-     */
-    public function createPersistentCartChangeQuantityTransfer(
-        QuoteTransfer $quoteTransfer,
-        RestCartItemRequestTransfer $restCartItemRequestTransfer
-    ): PersistentCartChangeQuantityTransfer {
-        return (new PersistentCartChangeQuantityTransfer())
-            ->setIdQuote($quoteTransfer->getIdQuote())
-            ->setItem($restCartItemRequestTransfer->getCartItem())
-            ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemRequestTransfer->getCustomerReference()));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function mapRestCartItemRequestTransferToQuoteTransfer(
-        RestCartItemRequestTransfer $restCartItemRequestTransfer
+    public function mapRestCartItemsAttributesTransferToQuoteTransfer(
+        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): QuoteTransfer {
         return (new QuoteTransfer())
-            ->setUuid($restCartItemRequestTransfer->getCartUuid())
-            ->setCustomerReference($restCartItemRequestTransfer->getCustomerReference());
+            ->setUuid($restCartItemsAttributesTransfer->getQuoteUuid())
+            ->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference());
     }
 
     /**

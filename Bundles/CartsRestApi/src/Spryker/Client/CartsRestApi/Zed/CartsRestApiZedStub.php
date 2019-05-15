@@ -8,11 +8,11 @@
 namespace Spryker\Client\CartsRestApi\Zed;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestCartItemRequestTransfer;
+use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
 
 class CartsRestApiZedStub implements CartsRestApiZedStubInterface
@@ -44,16 +44,17 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollectionByCustomerReference(CustomerTransfer $customerTransfer): QuoteCollectionResponseTransfer
+    public function getQuoteCollectionByQuoteCriteriaFilter(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        /** @var \Generated\Shared\Transfer\QuoteCollectionResponseTransfer $quoteCollectionResponseTransfer */
-        $quoteCollectionResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/get-quote-collection-by-customer-reference', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer */
+        $quoteCollectionTransfer = $this->zedRequestClient
+            ->call('/carts-rest-api/gateway/get-quote-collection-by-quote-criteria-filter', $quoteCriteriaFilterTransfer);
 
-        return $quoteCollectionResponseTransfer;
+        return $quoteCollectionTransfer;
     }
 
     /**
@@ -96,53 +97,53 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function updateItem(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/update-item', $restCartItemRequestTransfer);
+        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/update-item', $restCartItemsAttributesTransfer);
 
         return $quoteResponseTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function addItem(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/add-item', $restCartItemRequestTransfer);
+        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/add-item', $restCartItemsAttributesTransfer);
 
         return $quoteResponseTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function deleteItem(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/delete-item', $restCartItemRequestTransfer);
+        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/delete-item', $restCartItemsAttributesTransfer);
 
         return $quoteResponseTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addItemToGuestCart(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function addItemToGuestCart(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/add-item-to-guest-cart', $restCartItemRequestTransfer);
+        $quoteResponseTransfer = $this->zedRequestClient->call('/carts-rest-api/gateway/add-item-to-guest-cart', $restCartItemsAttributesTransfer);
 
         return $quoteResponseTransfer;
     }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -70,17 +69,10 @@ class CartItemUpdater implements CartItemUpdaterInterface
         $uuidQuote = $this->findCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
 
-        $itemTransfer = (new ItemTransfer())
-            ->setSku($itemIdentifier)
-            ->setQuantity($restCartItemsAttributesTransfer->getQuantity());
-
-        $restCartItemRequestTransfer = $this->cartItemsResourceMapper->createRestCartItemRequestTransfer(
-            $itemTransfer,
-            $restRequest,
-            $uuidQuote
-        );
-
-        $quoteResponseTransfer = $this->cartsRestApiClient->updateItem($restCartItemRequestTransfer);
+        $restCartItemsAttributesTransfer->setQuoteUuid($uuidQuote);
+        $restCartItemsAttributesTransfer->setSku($itemIdentifier);
+        $restCartItemsAttributesTransfer->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+        $quoteResponseTransfer = $this->cartsRestApiClient->updateItem($restCartItemsAttributesTransfer);
 
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
             return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());

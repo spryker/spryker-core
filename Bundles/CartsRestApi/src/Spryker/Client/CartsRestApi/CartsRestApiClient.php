@@ -8,11 +8,11 @@
 namespace Spryker\Client\CartsRestApi;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteCollectionResponseTransfer;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestCartItemRequestTransfer;
+use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -41,15 +41,15 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollectionByCustomerReference(CustomerTransfer $customerTransfer): QuoteCollectionResponseTransfer
+    public function getQuoteCollectionByQuoteCriteriaFilter(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
         return $this->getFactory()
             ->createCartsRestApiZedStub()
-            ->getQuoteCollectionByCustomerReference($customerTransfer);
+            ->getQuoteCollectionByQuoteCriteriaFilter($quoteCriteriaFilterTransfer);
     }
 
     /**
@@ -105,15 +105,15 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function updateItem(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createCartsRestApiZedStub()
-            ->updateItem($restCartItemRequestTransfer);
+            ->updateItem($restCartItemsAttributesTransfer);
     }
 
     /**
@@ -121,15 +121,15 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function addItem(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createCartsRestApiZedStub()
-            ->addItem($restCartItemRequestTransfer);
+            ->addItem($restCartItemsAttributesTransfer);
     }
 
     /**
@@ -137,15 +137,15 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteItem(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function deleteItem(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createCartsRestApiZedStub()
-            ->deleteItem($restCartItemRequestTransfer);
+            ->deleteItem($restCartItemsAttributesTransfer);
     }
 
     /**
@@ -153,15 +153,15 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addItemToGuestCart(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function addItemToGuestCart(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createCartsRestApiZedStub()
-            ->addItemToGuestCart($restCartItemRequestTransfer);
+            ->addItemToGuestCart($restCartItemsAttributesTransfer);
     }
 
     /**

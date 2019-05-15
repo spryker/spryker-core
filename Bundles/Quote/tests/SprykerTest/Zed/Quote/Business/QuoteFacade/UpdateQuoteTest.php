@@ -79,7 +79,19 @@ class UpdateQuoteTest extends Unit
         $quoteTransfer->setStore(null);
 
         // Act
-        $this->validateStoreInQuote($quoteTransfer, static::ERROR_MESSAGE_STORE_DATA_IS_MISSING);
+        /** @var \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade */
+        $quoteFacade = $this->tester->getFacade();
+        $quoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+
+        if (static::ERROR_MESSAGE_STORE_DATA_IS_MISSING) {
+            $errors = array_map(function ($errorMessageTransfer) {
+                return $errorMessageTransfer->getValue();
+            }, (array)$quoteResponseTransfer->getErrors());
+
+            $this->assertContains(static::ERROR_MESSAGE_STORE_DATA_IS_MISSING, $errors);
+        }
     }
 
     /**
@@ -99,7 +111,19 @@ class UpdateQuoteTest extends Unit
             ->setStore($storeTransfer);
 
         // Act
-        $this->validateStoreInQuote($quoteTransfer, static::ERROR_MESSAGE_STORE_DATA_IS_MISSING);
+        /** @var \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade */
+        $quoteFacade = $this->tester->getFacade();
+        $quoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+
+        if (static::ERROR_MESSAGE_STORE_DATA_IS_MISSING) {
+            $errors = array_map(function ($errorMessageTransfer) {
+                return $errorMessageTransfer->getValue();
+            }, (array)$quoteResponseTransfer->getErrors());
+
+            $this->assertContains(static::ERROR_MESSAGE_STORE_DATA_IS_MISSING, $errors);
+        }
     }
 
     /**
@@ -119,30 +143,11 @@ class UpdateQuoteTest extends Unit
         $quoteTransfer
             ->setStore($storeTransfer);
 
-        $this->validateStoreInQuote($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $errorMessage
-     *
-     * @return void
-     */
-    protected function validateStoreInQuote(QuoteTransfer $quoteTransfer, string $errorMessage = ''): void
-    {
         // Act
         /** @var \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade */
         $quoteFacade = $this->tester->getFacade();
         $quoteResponseTransfer = $quoteFacade->updateQuote($quoteTransfer);
 
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-
-        if ($errorMessage) {
-            $errors = array_map(function ($errorMessageTransfer) {
-                return $errorMessageTransfer->getValue();
-            }, (array)$quoteResponseTransfer->getErrors());
-
-            $this->assertContains($errorMessage, $errors);
-        }
     }
 }

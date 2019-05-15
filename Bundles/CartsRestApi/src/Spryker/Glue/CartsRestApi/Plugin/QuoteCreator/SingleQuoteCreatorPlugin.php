@@ -14,6 +14,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Can be removed in minor.
+ *
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
 class SingleQuoteCreatorPlugin extends AbstractPlugin implements QuoteCreatorPluginInterface

@@ -131,6 +131,7 @@ class CustomerWriter implements CustomerWriterInterface
         }
 
         $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
+
         $customerTransfer = $this->executeCustomerPostRegisterPlugins($customerTransfer);
         $customerTransfer = $this->executeCustomerPostCreatePlugins($restRequest, $customerTransfer);
 

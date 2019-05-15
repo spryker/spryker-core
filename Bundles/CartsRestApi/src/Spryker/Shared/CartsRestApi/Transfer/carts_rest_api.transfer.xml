@@ -18,6 +18,8 @@
         <property name="abstractSku" type="string" />
         <property name="amount" type="int" />
         <property name="calculations" type="RestCartItemCalculations" />
+        <property name="quoteUuid" type="string" />
+        <property name="customerReference" type="string" />
     </transfer>
 
     <transfer name="RestCartVouchersAttributes">
@@ -71,6 +73,8 @@
 
     <transfer name="Quote">
         <property name="uuid" type="string" />
+        <property name="customerReference" type="string" />
+        <property name="companyUserId" type="int" />
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
@@ -85,12 +89,6 @@
     <transfer name="QuoteCollectionResponse">
         <property name="quoteCollection" type="QuoteCollection" />
         <property name="errorCodes" type="string[]" singular="errorCode" />
-    </transfer>
-
-    <transfer name="RestCartItemRequest">
-        <property name="cartItem" type="Item" />
-        <property name="cartUuid" type="string" />
-        <property name="customerReference" type="string" />
     </transfer>
 
     <transfer name="QuoteError">

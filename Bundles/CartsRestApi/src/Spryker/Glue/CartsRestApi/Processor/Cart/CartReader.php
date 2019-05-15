@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\Cart;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
@@ -89,9 +89,10 @@ class CartReader implements CartReaderInterface
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
             ->setUuid($uuidCart);
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
+
         if ($quoteResponseTransfer->getIsSuccessful() === false
             || $restRequest->getRestUser()->getNaturalIdentifier() !== $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference()) {
-            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
+            return $this->cartRestResponseBuilder->createFailedCreateCartErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         $cartResource = $this->cartsResourceMapper->mapCartsResource(
@@ -152,16 +153,12 @@ class CartReader implements CartReaderInterface
      */
     public function getCustomerQuotes(RestRequestInterface $restRequest): QuoteCollectionTransfer
     {
-        $quoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollectionByCustomerReference(
-            (new CustomerTransfer())
+        $quoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollectionByQuoteCriteriaFilter(
+            (new QuoteCriteriaFilterTransfer())
                 ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
         );
 
-        if (!$quoteCollectionTransfer->getQuoteCollection()) {
-            return new QuoteCollectionTransfer();
-        }
-
-        return $quoteCollectionTransfer->getQuoteCollection();
+        return $quoteCollectionTransfer;
     }
 
     /**

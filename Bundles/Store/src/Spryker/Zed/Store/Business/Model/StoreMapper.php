@@ -41,6 +41,18 @@ class StoreMapper implements StoreMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function mapStoreTransfer(StoreTransfer $storeTransfer): StoreTransfer
+    {
+        $storeName = $storeTransfer->getName();
+
+        return $this->sharedStoreReader->getStoreByName($storeName);
+    }
+
+    /**
      * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

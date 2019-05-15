@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\RestCartItemRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
@@ -48,31 +52,39 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemRequestTransfer $restCartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function remove(RestCartItemRequestTransfer $restCartItemRequestTransfer): QuoteResponseTransfer
+    public function remove(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
-        $restCartItemRequestTransfer
-            ->requireCartUuid()
-            ->requireCustomerReference()
-            ->requireCartItem();
+        $restCartItemsAttributesTransfer
+            ->requireCustomerReference();
+
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+        if (!$restCartItemsAttributesTransfer->getSku()) {
+            $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER));
+
+            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
+                $quoteResponseTransfer
+            );
+        }
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
-            $this->quoteItemMapper->mapRestCartItemRequestTransferToQuoteTransfer($restCartItemRequestTransfer)
+            $this->quoteItemMapper->mapRestCartItemsAttributesTransferToQuoteTransfer($restCartItemsAttributesTransfer)
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
-        $ifRequestedItemPresentInQuote = $this->checkIfRequestedItemPresentInQuote(
-            $restCartItemRequestTransfer->getCartItem()->getSku(),
+        $ifRequestedItemIsInQuote = $this->checkIfRequestedItemPresentInQuote(
+            $restCartItemsAttributesTransfer->getSku(),
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->getArrayCopy()
         );
 
-        if (!$ifRequestedItemPresentInQuote) {
+        if (!$ifRequestedItemIsInQuote) {
             $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_ITEM_NOT_FOUND));
 
@@ -81,19 +93,10 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
             );
         }
 
-        $persistentCartChangeTransfer = $this->quoteItemMapper->createPersistentCartChangeTransfer(
+        $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restCartItemRequestTransfer
+            $restCartItemsAttributesTransfer
         );
-
-        if (!$restCartItemRequestTransfer->getCartItem()->getSku()) {
-            $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER));
-
-            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
-        }
 
         $quoteResponseTransfer = $this->persistentCartFacade->remove($persistentCartChangeTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -124,5 +127,23 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
+     */
+    public function createPersistentCartChangeTransfer(
+        QuoteTransfer $quoteTransfer,
+        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+    ): PersistentCartChangeTransfer {
+        return (new PersistentCartChangeTransfer())
+            ->setIdQuote($quoteTransfer->getIdQuote())
+            ->addItem((new ItemTransfer())
+                ->setSku($restCartItemsAttributesTransfer->getSku())
+                ->setQuantity($restCartItemsAttributesTransfer->getQuantity()))
+            ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference()));
     }
 }

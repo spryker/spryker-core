@@ -107,8 +107,18 @@ class PersistQuoteTest extends Unit
     {
         $quoteTransfer = new QuoteTransfer();
 
-        //Act
-        $this->validateStoreInQuote($quoteTransfer, static::ERROR_MESSAGE_STORE_DATA_IS_MISSING);
+        // Act
+        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+
+        if (static::ERROR_MESSAGE_STORE_DATA_IS_MISSING) {
+            $errors = array_map(function ($errorMessageTransfer) {
+                return $errorMessageTransfer->getValue();
+            }, (array)$quoteResponseTransfer->getErrors());
+
+            $this->assertContains(static::ERROR_MESSAGE_STORE_DATA_IS_MISSING, $errors);
+        }
     }
 
     /**
@@ -122,8 +132,18 @@ class PersistQuoteTest extends Unit
         $quoteTransfer
             ->setStore($storeTransfer);
 
-        //Act
-        $this->validateStoreInQuote($quoteTransfer, static::ERROR_MESSAGE_STORE_DATA_IS_MISSING);
+        // Act
+        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
+
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+
+        if (static::ERROR_MESSAGE_STORE_DATA_IS_MISSING) {
+            $errors = array_map(function ($errorMessageTransfer) {
+                return $errorMessageTransfer->getValue();
+            }, (array)$quoteResponseTransfer->getErrors());
+
+            $this->assertContains(static::ERROR_MESSAGE_STORE_DATA_IS_MISSING, $errors);
+        }
     }
 
     /**
@@ -138,8 +158,10 @@ class PersistQuoteTest extends Unit
         $quoteTransfer
             ->setStore($storeTransfer);
 
-        //Act
-        $this->validateStoreInQuote($quoteTransfer);
+        // Act
+        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+
     }
 
     /**
@@ -198,27 +220,5 @@ class PersistQuoteTest extends Unit
             ->setPriceMode('foo');
 
         return [$quoteTransfer, $expectedQuoteTransfer];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $errorMessage
-     *
-     * @return void
-     */
-    protected function validateStoreInQuote(QuoteTransfer $quoteTransfer, string $errorMessage = ''): void
-    {
-        // Act
-        $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
-
-        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-
-        if ($errorMessage) {
-            $errors = array_map(function ($errorMessageTransfer) {
-                return $errorMessageTransfer->getValue();
-            }, (array)$quoteResponseTransfer->getErrors());
-
-            $this->assertContains($errorMessage, $errors);
-        }
     }
 }

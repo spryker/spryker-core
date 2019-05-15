@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -44,8 +45,12 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
      */
     public function createSingleQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteCollectionTransfer = $this->quoteReader->getQuoteCollectionByCustomerReference($quoteTransfer->getCustomer());
-        if ($quoteCollectionTransfer->getQuoteCollection()->getQuotes()->count()) {
+        $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
+            ->setCustomerReference($quoteTransfer->getCustomerReference())
+            ->setIdStore($quoteTransfer->getStore()->getIdStore());
+
+        $quoteCollectionTransfer = $this->quoteReader->getQuoteCollectionByQuoteCriteriaFilter($quoteCriteriaFilterTransfer);
+        if ($quoteCollectionTransfer->getQuotes()->count()) {
             $quoteErrorTransfer = (new QuoteErrorTransfer())
                 ->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART);
 
@@ -54,6 +59,6 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
                 ->setIsSuccessful(false);
         }
 
-        return $this->persistentCartFacade->createQuote($quoteCollectionTransfer->getQuoteCollection()->getQuotes()[0]);
+        return $this->persistentCartFacade->createQuote($quoteCollectionTransfer->getQuotes()[0]);
     }
 }
