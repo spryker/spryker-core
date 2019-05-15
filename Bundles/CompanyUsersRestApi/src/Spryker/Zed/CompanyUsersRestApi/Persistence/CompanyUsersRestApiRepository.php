@@ -87,7 +87,7 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
         SpyCompanyUserQuery $queryCompanyUser,
         CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): SpyCompanyUserQuery {
-        $queryCompanyUser = $this->applyByFkCompanyFilters($queryCompanyUser, $companyUserCriteriaFilterTransfer);
+        $queryCompanyUser = $this->applyByFkCompany($queryCompanyUser, $companyUserCriteriaFilterTransfer);
         $queryCompanyUser = $this->applyByCompanyUserIdsIn($queryCompanyUser, $companyUserCriteriaFilterTransfer);
         $queryCompanyUser = $this->applyByIsActive($queryCompanyUser, $companyUserCriteriaFilterTransfer);
         $queryCompanyUser = $this->applyByCompanyBusinessUnitUuidsIn($queryCompanyUser, $companyUserCriteriaFilterTransfer);
@@ -102,7 +102,7 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
      *
      * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      */
-    protected function applyByFkCompanyFilters(
+    protected function applyByFkCompany(
         SpyCompanyUserQuery $queryCompanyUser,
         CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): SpyCompanyUserQuery {
