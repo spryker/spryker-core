@@ -13,7 +13,4 @@ class PersistentCartShareConfig extends AbstractBundleConfig
 {
     public const RESOURCE_TYPE_QUOTE = 'quote';
     public const SHARE_OPTION_PREVIEW = 'PREVIEW';
-
-    public const KEY_ID_QUOTE = 'id_quote';
-    public const KEY_SHARE_OPTION = 'share_option';
 }

@@ -135,7 +135,7 @@ class PersistentCartShareFacadeTest extends Test
     {
         // Arrange
         $resourceShareTransferForRequest = $this->createPreviewResourceShare([], [
-            PersistentCartShareConfig::KEY_ID_QUOTE => static::VALUE_NOT_EXISTING_ID_QUOTE,
+            ResourceShareDataTransfer::ID_QUOTE => static::VALUE_NOT_EXISTING_ID_QUOTE,
         ]);
 
         // Act
@@ -159,7 +159,7 @@ class PersistentCartShareFacadeTest extends Test
     {
         // Arrange
         $resourceShareTransfer = $this->createPreviewResourceShare([], [
-            PersistentCartShareConfig::KEY_SHARE_OPTION => static::SHARE_OPTION_FULL_ACCESS,
+            ResourceShareDataTransfer::SHARE_OPTION => static::SHARE_OPTION_FULL_ACCESS,
         ]);
 
         // Act
@@ -189,14 +189,10 @@ class PersistentCartShareFacadeTest extends Test
             QuoteTransfer::CUSTOMER => $customerTransfer,
         ]);
 
-        $resourceShareDataDefaults = [
-            PersistentCartShareConfig::KEY_ID_QUOTE => $quoteTransfer->getIdQuote(),
-            PersistentCartShareConfig::KEY_SHARE_OPTION => PersistentCartShareConfig::SHARE_OPTION_PREVIEW,
-        ];
-
-        $resourceShareDataTransfer = (new ResourceShareDataTransfer())->setData(
-            array_merge($resourceShareDataDefaults, $resourceShareDataSeedData)
-        );
+        $resourceShareDataTransfer = (new ResourceShareDataTransfer())
+            ->setIdQuote($quoteTransfer->getIdQuote())
+            ->setShareOption(PersistentCartShareConfig::SHARE_OPTION_PREVIEW)
+            ->fromArray($resourceShareDataSeedData);
 
         $resourceShareDefaults = [
             ResourceShareTransfer::CUSTOMER_REFERENCE => $quoteTransfer->getCustomerReference(),

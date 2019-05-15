@@ -59,9 +59,7 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
     public function buildResourceShareRequest(int $idQuote, string $shareOption): ResourceShareRequestTransfer
     {
         $customerTransfer = $this->customerClient->getCustomer();
-
-        $resourceShareDataTransfer = (new ResourceShareDataTransfer())
-            ->setData($this->getResourceShareData($idQuote, $shareOption, $customerTransfer));
+        $resourceShareDataTransfer = $this->getResourceShareDataTransfer($idQuote, $shareOption, $customerTransfer);
 
         $resourceShareTransfer = (new ResourceShareTransfer())
             ->setResourceType(static::RESOURCE_TYPE_QUOTE)
@@ -79,26 +77,23 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
      * @param string $shareOption
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ResourceShareDataTransfer
      */
-    protected function getResourceShareData(int $idQuote, string $shareOption, CustomerTransfer $customerTransfer): array
+    protected function getResourceShareDataTransfer(int $idQuote, string $shareOption, CustomerTransfer $customerTransfer): ResourceShareDataTransfer
     {
-        $resourceShareData = [
-            static::KEY_ID_QUOTE => $idQuote,
-            static::KEY_SHARE_OPTION => $shareOption,
-        ];
+        $resourceShareDataTransfer = (new ResourceShareDataTransfer())
+            ->setIdQuote($idQuote)
+            ->setShareOption($shareOption);
 
         if ($shareOption === static::SHARE_OPTION_PREVIEW) {
-            return $resourceShareData;
+            return $resourceShareDataTransfer;
         }
 
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
         if (!$companyUserTransfer) {
-            return $resourceShareData;
+            return $resourceShareDataTransfer;
         }
 
-        return $resourceShareData + [
-            static::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT => $companyUserTransfer->getFkCompanyBusinessUnit(),
-        ];
+        return $resourceShareDataTransfer->setOwnerIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit());
     }
 }
