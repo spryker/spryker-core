@@ -21,9 +21,9 @@ $(document).ready(function() {
         var selectedOption = trigger.selectedIndex;
 
         if (!selectedOption) {
-            target.hide();
-        } else {
             target.show();
+        } else {
+            target.hide();
         }
     }
 
