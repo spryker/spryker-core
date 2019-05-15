@@ -18,6 +18,7 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\AbstractProdu
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\AbstractProductViewExpanderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProductViewExpander;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProductViewExpanderInterface;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface;
@@ -49,7 +50,8 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return new AbstractProductViewExpander(
             $this->getPriceProductFacade(),
             $this->getStoreFacade(),
-            $this->getTranslatorFacade()
+            $this->getTranslatorFacade(),
+            $this->getMoneyFacade()
         );
     }
 
@@ -61,7 +63,8 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return new ConcreteProductViewExpander(
             $this->getPriceProductFacade(),
             $this->getStoreFacade(),
-            $this->getTranslatorFacade()
+            $this->getTranslatorFacade(),
+            $this->getMoneyFacade()
         );
     }
 
@@ -73,7 +76,12 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
      */
     public function createPriceProductScheduleAbstractTable(int $idProductAbstract, int $idPriceType): PriceProductScheduleAbstractTable
     {
-        return new PriceProductScheduleAbstractTable($idProductAbstract, $idPriceType, $this->getStoreFacade());
+        return new PriceProductScheduleAbstractTable(
+            $idProductAbstract,
+            $idPriceType,
+            $this->getStoreFacade(),
+            $this->getMoneyFacade()
+        );
     }
 
     /**
@@ -84,7 +92,12 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
      */
     public function createPriceProductScheduleConcreteTable(int $idProductConcrete, int $idPriceType): PriceProductScheduleConcreteTable
     {
-        return new PriceProductScheduleConcreteTable($idProductConcrete, $idPriceType, $this->getStoreFacade());
+        return new PriceProductScheduleConcreteTable(
+            $idProductConcrete,
+            $idPriceType,
+            $this->getStoreFacade(),
+            $this->getMoneyFacade()
+        );
     }
 
     /**
@@ -109,5 +122,13 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function getTranslatorFacade(): PriceProductScheduleGuiToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface
+     */
+    public function getMoneyFacade(): PriceProductScheduleGuiToMoneyFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::FACADE_MONEY);
     }
 }

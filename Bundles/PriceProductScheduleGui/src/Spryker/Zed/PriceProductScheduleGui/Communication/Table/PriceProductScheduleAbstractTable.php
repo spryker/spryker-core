@@ -11,6 +11,7 @@ use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Controller\IndexController;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 
 class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
@@ -31,13 +32,15 @@ class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
      * @param int $fkProductAbstract
      * @param int $fkPriceType
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface $moneyFacade
      */
     public function __construct(
         int $fkProductAbstract,
         int $fkPriceType,
-        PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
+        PriceProductScheduleGuiToStoreFacadeInterface $storeFacade,
+        PriceProductScheduleGuiToMoneyFacadeInterface $moneyFacade
     ) {
-        parent::__construct($storeFacade);
+        parent::__construct($storeFacade, $moneyFacade);
         $this->fkProductAbstract = $fkProductAbstract;
         $this->fkPriceType = $fkPriceType;
         $this->baseUrl = '/';

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleConcreteTable;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface;
@@ -36,18 +37,26 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
     protected $translatorFacade;
 
     /**
+     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface $moneyFacade
      */
     public function __construct(
         PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade,
         PriceProductScheduleGuiToStoreFacadeInterface $storeFacade,
-        PriceProductScheduleGuiToTranslatorFacadeInterface $translatorFacade
+        PriceProductScheduleGuiToTranslatorFacadeInterface $translatorFacade,
+        PriceProductScheduleGuiToMoneyFacadeInterface $moneyFacade
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->storeFacade = $storeFacade;
         $this->translatorFacade = $translatorFacade;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -117,7 +126,8 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
             new PriceProductScheduleConcreteTable(
                 $viewData['idProduct'],
                 $priceTypeTransfer->getIdPriceType(),
-                $this->storeFacade
+                $this->storeFacade,
+                $this->moneyFacade
             )
         );
     }
