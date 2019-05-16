@@ -12,7 +12,6 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollect
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Spryker\Glue\ProductTaxSetsRestApi\ProductTaxSetsRestApiConfig;
 
 /**
@@ -82,6 +81,6 @@ class ProductTaxSetsResourceRoutePlugin extends AbstractPlugin implements Resour
      */
     public function getParentResourceType(): string
     {
-        return ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS;
+        return ProductTaxSetsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS;
     }
 }

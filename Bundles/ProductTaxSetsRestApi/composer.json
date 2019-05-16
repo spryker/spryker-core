@@ -15,11 +15,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/products-rest-api": "^2.0.0",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/products-rest-api": "If you want to expand product resources with tax sets relationships.",
     "spryker/uuid": "If you want to generate UUIDs for existing entities."
   },
   "autoload": {
