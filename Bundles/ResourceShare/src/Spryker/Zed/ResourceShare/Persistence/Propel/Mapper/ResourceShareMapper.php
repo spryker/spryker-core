@@ -74,7 +74,7 @@ class ResourceShareMapper
     protected function mapResourceShareDataTransferToResourceData(ResourceShareDataTransfer $resourceShareDataTransfer): ?string
     {
         return $this->utilEncodingService->encodeJson(
-            $resourceShareDataTransfer->toArray()
+            $resourceShareDataTransfer->modifiedToArray()
         );
     }
 
