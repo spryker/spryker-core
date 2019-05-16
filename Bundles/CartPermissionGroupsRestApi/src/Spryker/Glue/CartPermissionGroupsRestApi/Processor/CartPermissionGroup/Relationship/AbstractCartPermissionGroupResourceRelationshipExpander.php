@@ -81,7 +81,7 @@ abstract class AbstractCartPermissionGroupResourceRelationshipExpander implement
                 new RestCartPermissionGroupsAttributesTransfer()
             );
 
-        return $this->cartPermissionGroupResponseBuilder->createCartPermissionGroupsRestResource(
+        return $this->cartPermissionGroupResponseBuilder->createCartPermissionGroupsResource(
             (string)$quotePermissionGroupTransfer->getIdQuotePermissionGroup(),
             $restCartPermissionGroupsAttributesTransfer,
             $quotePermissionGroupTransfer

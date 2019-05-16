@@ -41,7 +41,7 @@ interface CartPermissionGroupResponseBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createCartPermissionGroupsRestResource(
+    public function createCartPermissionGroupsResource(
         string $cartPermissionGroupUuid,
         RestCartPermissionGroupsAttributesTransfer $restCartPermissionGroupsAttributesTransfer,
         ?QuotePermissionGroupTransfer $quotePermissionGroupTransfer = null
