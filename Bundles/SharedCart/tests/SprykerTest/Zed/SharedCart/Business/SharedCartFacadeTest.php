@@ -32,7 +32,7 @@ class SharedCartFacadeTest extends Test
     /**
      * @uses \Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidActivatorStrategy::GLOSSARY_KEY_CART_ACCESS_DENIED
      */
-    protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.cart_access_denied';
+    protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.error.cart_access_denied';
 
     /**
      * @uses \Spryker\Zed\SharedCart\Business\ResourceShare\ShareCartByUuidActivatorStrategy::GLOSSARY_KEY_UNABLE_TO_SHARE_CART

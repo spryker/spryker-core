@@ -15,7 +15,7 @@ use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
 class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrategyInterface
 {
-    protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.cart_access_denied';
+    protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.error.cart_access_denied';
 
     /**
      * @var \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface
@@ -49,6 +49,14 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
     ): ResourceShareResponseTransfer {
         $resourceShareRequestTransfer->requireCustomer()
             ->requireResourceShare();
+
+        if (!$resourceShareRequestTransfer->getCustomer()->getCompanyUserTransfer()) {
+            return (new ResourceShareResponseTransfer())
+                ->setIsSuccessful(false)
+                ->addMessage(
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_ACCESS_DENIED)
+                );
+        }
 
         if ($this->isProvidedCompanyUserResourceShareOwner($resourceShareRequestTransfer)) {
             return (new ResourceShareResponseTransfer())
@@ -102,7 +110,6 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
             ->getOwnerIdCompanyUser();
 
         $customerTransfer = $resourceShareRequestTransfer->getCustomer();
-        $customerTransfer->requireCompanyUserTransfer();
 
         return $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser() === $ownerIdCompanyUser;
     }
