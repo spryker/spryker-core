@@ -9,7 +9,6 @@ namespace Spryker\Zed\ResourceShareExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 
 interface ResourceShareActivatorStrategyPluginInterface
 {
@@ -39,13 +38,13 @@ interface ResourceShareActivatorStrategyPluginInterface
 
     /**
      * Specification:
-     * - Checks if strategy plugin is applicable, based on resource data and resource type values.
+     * - Checks if strategy plugin is applicable, based on resource data and provided customer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return bool
      */
-    public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool;
+    public function isApplicable(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool;
 }

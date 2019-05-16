@@ -50,14 +50,6 @@ class ShareCartByUuidActivatorStrategy implements ShareCartByUuidActivatorStrate
         $resourceShareRequestTransfer->requireCustomer()
             ->requireResourceShare();
 
-        if (!$resourceShareRequestTransfer->getCustomer()->getCompanyUserTransfer()) {
-            return (new ResourceShareResponseTransfer())
-                ->setIsSuccessful(false)
-                ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_ACCESS_DENIED)
-                );
-        }
-
         if ($this->isProvidedCompanyUserResourceShareOwner($resourceShareRequestTransfer)) {
             return (new ResourceShareResponseTransfer())
                 ->setIsSuccessful(true)

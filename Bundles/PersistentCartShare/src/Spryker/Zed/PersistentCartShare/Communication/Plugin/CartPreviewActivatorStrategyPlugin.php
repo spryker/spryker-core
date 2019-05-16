@@ -9,7 +9,6 @@ namespace Spryker\Zed\PersistentCartShare\Communication\Plugin;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PersistentCartShare\PersistentCartShareConfig;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
@@ -39,12 +38,13 @@ class CartPreviewActivatorStrategyPlugin extends AbstractPlugin implements Resou
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return bool
      */
-    public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
+    public function isApplicable(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
+        $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         if ($resourceShareTransfer->getResourceType() !== PersistentCartShareConfig::RESOURCE_TYPE_QUOTE) {
             return false;
         }

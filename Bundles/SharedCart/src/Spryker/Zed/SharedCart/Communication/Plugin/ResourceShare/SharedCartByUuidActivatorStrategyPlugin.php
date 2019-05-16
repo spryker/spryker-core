@@ -9,7 +9,6 @@ namespace Spryker\Zed\SharedCart\Communication\Plugin\ResourceShare;
 
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
-use Generated\Shared\Transfer\ResourceShareTransfer;
 use Spryker\Shared\SharedCart\SharedCartConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareActivatorStrategyPluginInterface;
@@ -54,17 +53,23 @@ class SharedCartByUuidActivatorStrategyPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritdoc}
-     * - Returns 'true', when resource type is Quote, and share option is Read-only or Full access.
+     * - Returns 'true', when resource type is Quote, share option is Read-only or Full access and provided customer is company user.
      * - Returns 'false' otherwise.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ResourceShareTransfer $resourceShareTransfer
+     * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return bool
      */
-    public function isApplicable(ResourceShareTransfer $resourceShareTransfer): bool
+    public function isApplicable(ResourceShareRequestTransfer $resourceShareRequestTransfer): bool
     {
+        $customerTransfer = $resourceShareRequestTransfer->getCustomer();
+        if (!$customerTransfer->getCompanyUserTransfer()) {
+            return false;
+        }
+
+        $resourceShareTransfer = $resourceShareRequestTransfer->getResourceShare();
         $resourceShareTransfer->requireResourceType();
         if ($resourceShareTransfer->getResourceType() !== SharedCartConfig::QUOTE_RESOURCE_TYPE) {
             return false;
