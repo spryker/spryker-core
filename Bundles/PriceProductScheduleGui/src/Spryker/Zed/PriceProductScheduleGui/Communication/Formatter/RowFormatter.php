@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Formatter;
 
 use DateTime;
 use DateTimeZone;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\CurrencyMapperInterface;
@@ -57,7 +58,8 @@ class RowFormatter implements RowFormatterInterface
      */
     public function formatMoney(int $amount, SpyPriceProductSchedule $priceProductScheduleEntity): string
     {
-        $currencyTransfer = $this->currencyMapper->mapCurrencyEntityToTransfer($priceProductScheduleEntity->getCurrency());
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer = $this->currencyMapper->mapCurrencyEntityToTransfer($priceProductScheduleEntity->getCurrency(), $currencyTransfer);
         $moneyTransfer = new MoneyTransfer();
         $moneyTransfer->setAmount((string)$amount);
         $moneyTransfer->setCurrency($currencyTransfer);
