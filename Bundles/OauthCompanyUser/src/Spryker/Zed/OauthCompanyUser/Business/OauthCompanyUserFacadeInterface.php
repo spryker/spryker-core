@@ -19,7 +19,7 @@ interface OauthCompanyUserFacadeInterface
     /**
      * Specification:
      * - Executes CustomerOauthRequestMapperPlugin stack.
-     * - Returns new access token when user provider return valid user.
+     * - Process token request.
      *
      * @api
      *
@@ -31,7 +31,9 @@ interface OauthCompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves customer from access token.
+     * - Validates access token.
+     * - Retrieves payload data from token.
+     * - Loads customer by id.
      * - Executes CustomerExpanderPlugin stack.
      *
      * @api

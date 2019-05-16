@@ -16,8 +16,6 @@ use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeInterface;
 
-// TODO: ONLY validateUser() and public constant is important in this file
-
 class CompanyUserAccessTokenGrantType extends AbstractGrant implements GrantTypeInterface
 {
     public const COMPANY_USER_ACCESS_TOKEN_GRANT_TYPE = 'CompanyUserAccessToken';

@@ -14,7 +14,7 @@ interface OauthCompanyUserClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Retrieves customer from access token.
+     * - Retrieves customer by access token.
      * - Executes CustomerExpanderPlugin stack.
      *
      * @api

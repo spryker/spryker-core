@@ -8,6 +8,7 @@
 namespace Spryker\Zed\OauthCompanyUser\Communication\Plugin\Oauth;
 
 use Generated\Shared\Transfer\CompanyUserIdentifierTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\OauthCompanyUser\Business\League\Grant\CompanyUserAccessTokenGrantType;
@@ -55,9 +56,7 @@ class CompanyUserAccessTokenOauthUserProviderPlugin extends AbstractPlugin imple
             return $oauthUserTransfer;
         }
 
-        $companyUserTransfer = $this->getFactory()
-            ->getCompanyUserFacade()
-            ->getCompanyUserById((int)$oauthUserTransfer->getIdCompanyUser());
+        $companyUserTransfer = $this->findActiveCompanyUser((int)$oauthUserTransfer->getIdCompanyUser());
 
         $companyUserIdentifierTransfer = (new CompanyUserIdentifierTransfer())
             ->fromArray($oauthUserTransfer->toArray(), true)
@@ -69,5 +68,19 @@ class CompanyUserAccessTokenOauthUserProviderPlugin extends AbstractPlugin imple
             ->setIsSuccess(true);
 
         return $oauthUserTransfer;
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    protected function findActiveCompanyUser(int $idCompanyUser): ?CompanyUserTransfer
+    {
+        $activeCompanyUsersTransfer = $this->getFactory()
+            ->getCompanyUserFacade()
+            ->findActiveCompanyUsersByIds([$idCompanyUser]);
+
+        return array_shift($activeCompanyUsersTransfer);
     }
 }
