@@ -13,16 +13,16 @@ use Spryker\Shared\Session\Exception\SessionHandlerNotFoundInSessionHandlerPoolE
 class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
 {
     /**
-     * @var \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerPluginInterface[]|\SessionHandlerInterface[]
+     * @var \SessionHandlerInterface[]
      */
     protected $sessionHandler = [];
 
     /**
-     * @param \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerPluginInterface[] $sessionHandlerPlugins
+     * @param \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface[] $sessionHandlerProviderPlugins
      */
-    public function __construct(array $sessionHandlerPlugins = [])
+    public function __construct(array $sessionHandlerProviderPlugins = [])
     {
-        $this->setupSessionHandlersFromPlugins($sessionHandlerPlugins);
+        $this->setupSessionHandlersFromPlugins($sessionHandlerProviderPlugins);
     }
 
     /**
@@ -67,14 +67,14 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
     }
 
     /**
-     * @param \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerPluginInterface[] $sessionHandlerPlugins
+     * @param \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface[] $sessionHandlerProviderPlugins
      *
      * @return void
      */
-    protected function setupSessionHandlersFromPlugins(array $sessionHandlerPlugins): void
+    protected function setupSessionHandlersFromPlugins(array $sessionHandlerProviderPlugins): void
     {
-        foreach ($sessionHandlerPlugins as $sessionHandlerPlugin) {
-            $this->sessionHandler[$sessionHandlerPlugin->getSessionHandlerName()] = $sessionHandlerPlugin;
+        foreach ($sessionHandlerProviderPlugins as $sessionHandlerProviderPlugin) {
+            $this->sessionHandler[$sessionHandlerProviderPlugin->getSessionHandlerName()] = $sessionHandlerProviderPlugin->getSessionHandler();
         }
     }
 }
