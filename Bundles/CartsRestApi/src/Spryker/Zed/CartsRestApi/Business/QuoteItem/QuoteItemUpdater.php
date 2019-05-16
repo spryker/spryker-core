@@ -60,6 +60,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
     {
         $restCartItemsAttributesTransfer
             ->requireQuoteUuid()
+            ->requireSku()
             ->requireCustomerReference()
             ->requireQuantity();
 

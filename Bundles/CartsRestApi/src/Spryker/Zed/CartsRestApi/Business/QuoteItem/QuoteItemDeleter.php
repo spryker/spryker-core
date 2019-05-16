@@ -59,6 +59,7 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
     public function remove(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
     {
         $restCartItemsAttributesTransfer
+            ->requireQuoteUuid()
             ->requireCustomerReference()
             ->requireSku();
 

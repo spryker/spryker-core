@@ -79,7 +79,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @deprecated use addCustomerPostCreatePlugins()
+     * @deprecated Can be removed in minor.
      *
      * @param \Spryker\Glue\Kernel\Container $container
      *

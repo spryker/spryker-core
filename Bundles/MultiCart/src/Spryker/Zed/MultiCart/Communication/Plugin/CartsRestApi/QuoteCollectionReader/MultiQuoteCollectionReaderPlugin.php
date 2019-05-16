@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\MultiCart\Business\MultiCartFacadeInterface getFacade()
  * @method \Spryker\Zed\MultiCart\MultiCartConfig getConfig()
+ * @method \Spryker\Zed\MultiCart\Communication\MultiCartCommunicationFactory getFactory()
  */
 class MultiQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
 {
