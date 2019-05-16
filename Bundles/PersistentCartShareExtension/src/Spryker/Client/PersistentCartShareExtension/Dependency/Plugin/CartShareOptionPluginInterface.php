@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\PersistentCartShareExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 interface CartShareOptionPluginInterface
 {
     /**
@@ -28,4 +30,16 @@ interface CartShareOptionPluginInterface
      * @return string
      */
     public function getShareOptionGroup(): string;
+
+    /**
+     * Specification:
+     * - Checks if share option is allowed for customer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function isAllowedForCustomer(CustomerTransfer $customerTransfer): bool;
 }

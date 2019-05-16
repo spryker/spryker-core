@@ -48,7 +48,8 @@ class PersistentCartShareFactory extends AbstractFactory
     public function createCartShareOptionReader(): CartShareOptionReaderInterface
     {
         return new CartShareOptionReader(
-            $this->getCartShareOptionPlugins()
+            $this->getCartShareOptionPlugins(),
+            $this->getCustomerClient()
         );
     }
 
