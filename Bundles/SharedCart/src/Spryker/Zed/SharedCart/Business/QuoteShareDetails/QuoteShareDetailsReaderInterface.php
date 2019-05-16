@@ -9,6 +9,7 @@ namespace Spryker\Zed\SharedCart\Business\QuoteShareDetails;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
+use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
 
 interface QuoteShareDetailsReaderInterface
 {
@@ -18,4 +19,11 @@ interface QuoteShareDetailsReaderInterface
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
     public function getShareDetailsByIdQuote(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
+     */
+    public function findShareDetailsCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer;
 }

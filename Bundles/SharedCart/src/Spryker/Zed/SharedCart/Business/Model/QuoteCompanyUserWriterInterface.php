@@ -32,4 +32,18 @@ interface QuoteCompanyUserWriterInterface
      * @return void
      */
     public function addQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return void
+     */
+    public function updateQuoteCompanyUserPermissionGroup(ShareCartRequestTransfer $shareCartRequestTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return void
+     */
+    public function deleteQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void;
 }

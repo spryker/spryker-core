@@ -9,6 +9,7 @@ namespace Spryker\Zed\SharedCart\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
@@ -16,6 +17,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
+use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
 
 interface SharedCartFacadeInterface
 {
@@ -187,4 +189,61 @@ interface SharedCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
      */
     public function findQuotePermissionGroupById(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): QuotePermissionGroupResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Returns the share details collection by provided criteria.
+     *  - Collection is filtered by quote id and/or by company user id.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
+     */
+    public function findShareDetailsCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer;
+
+    /**
+     * Specification:
+     *  - Finds quote company user by uuid.
+     *  - Requires uuid field to be set in QuoteCompanyUserTransfer.
+     *  - Uuid is not a required field and could be missing.
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\QuoteCompanyUserTransfer $quoteCompanyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCompanyUserTransfer|null
+     */
+    public function findQuoteCompanyUserByUuid(QuoteCompanyUserTransfer $quoteCompanyUserTransfer): ?QuoteCompanyUserTransfer;
+
+    /**
+     * Specification:
+     *  - Updates permission group for shared cart.
+     *  - Requires ShareDetailTransfer to be set in ShareCartRequestTransfer.
+     *  - Requires idQuoteCompanyUser and PermissionGroupTransfer to be set in ShareDetailTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return void
+     */
+    public function updateQuoteCompanyUserPermissionGroup(ShareCartRequestTransfer $shareCartRequestTransfer): void;
+
+    /**
+     * Specification:
+     *  - Removes sharing of the quote.
+     *  - Requires ShareDetailTransfer to be set in ShareCartRequestTransfer.
+     *  - Requires idQuoteCompanyUser and PermissionGroupTransfer to be set in ShareDetailTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return void
+     */
+    public function deleteQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void;
 }

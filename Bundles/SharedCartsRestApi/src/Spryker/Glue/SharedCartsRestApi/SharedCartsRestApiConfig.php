@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Glue\SharedCartsRestApi;
+
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\Kernel\AbstractBundleConfig;
+use Spryker\Shared\SharedCartsRestApi\SharedCartsRestApiConfig as SharedSharedCartsRestApiConfig;
+use Symfony\Component\HttpFoundation\Response;
+
+class SharedCartsRestApiConfig extends AbstractBundleConfig
+{
+    public const RESOURCE_SHARED_CARTS = 'shared-carts';
+    /**
+     * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_CARTS
+     */
+    public const RESOURCE_CARTS = 'carts';
+
+    public const CONTROLLER_SHARED_CARTS = 'shared-carts-resource';
+
+    /**
+     * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND
+     */
+    public const RESPONSE_CODE_CART_NOT_FOUND = '101';
+    /**
+     * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING
+     */
+    public const RESPONSE_CODE_CART_ID_MISSING = '104';
+    public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1404';
+    public const RESPONSE_CODE_SHARING_CART_FORBIDDEN = '2701';
+    public const RESPONSE_CODE_FAILED_TO_SHARE_CART = '2702';
+    public const RESPONSE_CODE_CAN_ONLY_SHARE_CART_WITH_COMPANY_USERS_FROM_SAME_COMPANY = '2703';
+    public const RESPONSE_CODE_SHARE_CART_ID_MISSING = '2704';
+
+    /**
+     * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND
+     */
+    public const EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND = 'Cart with given uuid not found.';
+    /**
+     * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
+     */
+    public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
+    public const RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND = 'Company user not found';
+    public const RESPONSE_DETAIL_SHARING_CART_FORBIDDEN = 'Action is forbidden.';
+    public const RESPONSE_DETAIL_FAILED_TO_SHARE_CART = 'Failed to share a cart.';
+    public const RESPONSE_DETAIL_CAN_ONLY_SHARE_CART_WITH_COMPANY_USERS_FROM_SAME_COMPANY = 'Cart can be shared only with company users from same company';
+    public const RESPONSE_DETAIL_SHARE_CART_ID_MISSING = 'Shared cart id is missing';
+
+    /**
+     * @return array
+     */
+    public function getErrorIdentifierToRestErrorMapping(): array
+    {
+        return [
+            SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_QUOTE_NOT_FOUND => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CART_NOT_FOUND,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
+                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND,
+            ],
+            SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_ACTION_FORBIDDEN => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SHARING_CART_FORBIDDEN,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_FORBIDDEN,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHARING_CART_FORBIDDEN,
+            ],
+            SharedSharedCartsRestApiConfig::ERROR_IDENTIFIER_FAILED_TO_SHARE_CART => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_FAILED_TO_SHARE_CART,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_FAILED_TO_SHARE_CART,
+            ],
+        ];
+    }
+}

@@ -170,4 +170,24 @@ class SharedCartEntityManager extends AbstractEntityManager implements SharedCar
                 ucfirst(SpyQuoteCompanyUserEntityTransfer::FK_QUOTE_PERMISSION_GROUP) => $quotePermissionGroupTransfer->getIdQuotePermissionGroup(),
             ]);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     *
+     * @return void
+     */
+    public function updateQuoteCompanyUserQuotePermissionGroup(ShareDetailTransfer $shareDetailTransfer): void
+    {
+        $quoteCompanyUser = $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByIdQuoteCompanyUser($shareDetailTransfer->getIdQuoteCompanyUser())
+            ->findOne();
+
+        if (!$quoteCompanyUser) {
+            return;
+        }
+
+        $quoteCompanyUser->setFkQuotePermissionGroup($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup());
+        $quoteCompanyUser->save();
+    }
 }
