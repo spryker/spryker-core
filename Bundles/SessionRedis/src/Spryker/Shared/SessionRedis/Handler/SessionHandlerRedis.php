@@ -90,9 +90,14 @@ class SessionHandlerRedis implements SessionHandlerInterface
         $key = $this->buildSessionKey($sessionId);
         $startTime = microtime(true);
         $result = $this->redisClient->get($key);
+        $decodedResult = null;
         $this->monitoringService->addCustomParameter(static::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
-        return $result ? json_decode($result, true) : '';
+        if ($result) {
+            $decodedResult = json_decode($result, true);
+        }
+
+        return $decodedResult ?? '';
     }
 
     /**

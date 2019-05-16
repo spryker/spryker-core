@@ -28,7 +28,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      *
      * @return void
      */
-    public function set(string $key, string $value, $ttl = null): void
+    public function set(string $key, string $value, ?int $ttl = null): void
     {
         $this->getClient()->set($key, $value, $ttl);
     }

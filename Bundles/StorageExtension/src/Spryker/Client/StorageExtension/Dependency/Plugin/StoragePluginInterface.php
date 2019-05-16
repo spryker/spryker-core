@@ -21,7 +21,7 @@ interface StoragePluginInterface
      *
      * @return void
      */
-    public function set(string $key, string $value, $ttl = null): void;
+    public function set(string $key, string $value, ?int $ttl = null): void;
 
     /**
      * Specification:
@@ -93,7 +93,7 @@ interface StoragePluginInterface
      *
      * @return array
      */
-    public function getMulti(array $keys);
+    public function getMulti(array $keys): array;
 
     /**
      * Specification:

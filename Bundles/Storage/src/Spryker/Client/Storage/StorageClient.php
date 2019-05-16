@@ -54,7 +54,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @api
      *
-     * @return \Spryker\Client\Storage\Redis\ServiceInterface $service
+     * @return \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface $service
      */
     public function getService()
     {
