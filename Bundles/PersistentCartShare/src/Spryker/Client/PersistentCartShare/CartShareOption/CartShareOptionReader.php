@@ -39,7 +39,7 @@ class CartShareOptionReader implements CartShareOptionReaderInterface
         $customerTransfer = $this->customerClient->getCustomer();
         $cartShareOptions = [];
         foreach ($this->cartShareOptionPlugins as $cartShareOptionPlugin) {
-            if (!$cartShareOptionPlugin->isAllowedForCustomer($customerTransfer)) {
+            if (!$cartShareOptionPlugin->isApplicable($customerTransfer)) {
                 continue;
             }
             $cartShareOptions[$cartShareOptionPlugin->getShareOptionGroup()][] = $cartShareOptionPlugin->getKey();

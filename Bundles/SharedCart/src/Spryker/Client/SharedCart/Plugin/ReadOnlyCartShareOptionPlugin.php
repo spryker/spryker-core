@@ -40,7 +40,7 @@ class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareO
      *
      * @return bool
      */
-    public function isAllowedForCustomer(CustomerTransfer $customerTransfer): bool
+    public function isApplicable(CustomerTransfer $customerTransfer): bool
     {
         return $customerTransfer->getCompanyUserTransfer() && $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser();
     }

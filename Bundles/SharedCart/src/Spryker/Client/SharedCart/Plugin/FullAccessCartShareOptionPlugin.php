@@ -37,7 +37,7 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
      *
      * @return bool
      */
-    public function isAllowedForCustomer(CustomerTransfer $customerTransfer): bool
+    public function isApplicable(CustomerTransfer $customerTransfer): bool
     {
         return $customerTransfer->getCompanyUserTransfer() && $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser();
     }
