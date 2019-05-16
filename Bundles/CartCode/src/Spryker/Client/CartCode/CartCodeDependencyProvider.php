@@ -16,7 +16,7 @@ class CartCodeDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_CALCULATION = 'CLIENT_CALCULATION';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
-    public const PLUGIN_CART_CODE_HANDLER_COLLECTION = 'PLUGIN_CART_CODE_HANDLER_COLLECTION';
+    public const PLUGIN_CART_CODE_COLLECTION = 'PLUGIN_CART_CODE_COLLECTION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -27,7 +27,7 @@ class CartCodeDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addCalculationClient($container);
         $container = $this->addQuoteClient($container);
-        $container = $this->addCartCodeHandlerPluginCollection($container);
+        $container = $this->addCartCodePluginCollection($container);
 
         return $container;
     }
@@ -65,19 +65,19 @@ class CartCodeDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCartCodeHandlerPluginCollection(Container $container): Container
+    protected function addCartCodePluginCollection(Container $container): Container
     {
-        $container[static::PLUGIN_CART_CODE_HANDLER_COLLECTION] = function () {
-            return $this->getCartCodeHandlerPluginCollection();
+        $container[static::PLUGIN_CART_CODE_COLLECTION] = function () {
+            return $this->getCartCodePluginCollection();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodeHandlerPluginInterface[]
+     * @return \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
      */
-    protected function getCartCodeHandlerPluginCollection(): array
+    protected function getCartCodePluginCollection(): array
     {
         return [];
     }

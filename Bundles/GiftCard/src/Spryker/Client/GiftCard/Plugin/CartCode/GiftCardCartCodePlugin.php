@@ -9,13 +9,13 @@ namespace Spryker\Client\GiftCard\Plugin\CartCode;
 
 use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodeHandlerPluginInterface;
+use Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Client\GiftCard\GiftCardFactory getFactory()
  */
-class GiftCardCartCodeHandlerPlugin extends AbstractPlugin implements CartCodeHandlerPluginInterface
+class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInterface
 {
     public const CART_GIFT_CARD_APPLY_SUCCESSFUL = 'cart.giftcard.apply.successful';
     public const CART_GIFT_CARD_APPLY_FAILED = 'cart.giftcard.apply.failed';
@@ -34,7 +34,7 @@ class GiftCardCartCodeHandlerPlugin extends AbstractPlugin implements CartCodeHa
     public function addCandidate(QuoteTransfer $quoteTransfer, $code): QuoteTransfer
     {
         return $this->getFactory()
-            ->createGiftCardCartCodeHandler()
+            ->createGiftCardCartCode()
             ->addCandidate($quoteTransfer, $code);
     }
 
@@ -52,7 +52,7 @@ class GiftCardCartCodeHandlerPlugin extends AbstractPlugin implements CartCodeHa
     public function removeCode(QuoteTransfer $quoteTransfer, $code): QuoteTransfer
     {
         return $this->getFactory()
-            ->createGiftCardCartCodeHandler()
+            ->createGiftCardCartCode()
             ->removeCode($quoteTransfer, $code);
     }
 
@@ -72,7 +72,7 @@ class GiftCardCartCodeHandlerPlugin extends AbstractPlugin implements CartCodeHa
     public function getCartCodeOperationResult(QuoteTransfer $quoteTransfer, $code): CartCodeOperationMessageTransfer
     {
         return $this->getFactory()
-            ->createGiftCardCartCodeHandler()
+            ->createGiftCardCartCode()
             ->getCartCodeOperationResult($quoteTransfer, $code);
     }
 
@@ -89,7 +89,7 @@ class GiftCardCartCodeHandlerPlugin extends AbstractPlugin implements CartCodeHa
     public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
-            ->createGiftCardCartCodeHandler()
+            ->createGiftCardCartCode()
             ->clearAllCodes($quoteTransfer);
     }
 }

@@ -29,7 +29,7 @@ class CartCodeFactory extends AbstractFactory
         return new CodeAdder(
             $this->getCalculationClient(),
             $this->createQuoteOperationChecker(),
-            $this->getCartCodeHandlerPlugins()
+            $this->getCartCodePlugins()
         );
     }
 
@@ -41,7 +41,7 @@ class CartCodeFactory extends AbstractFactory
         return new CodeRemover(
             $this->getCalculationClient(),
             $this->createQuoteOperationChecker(),
-            $this->getCartCodeHandlerPlugins()
+            $this->getCartCodePlugins()
         );
     }
 
@@ -53,7 +53,7 @@ class CartCodeFactory extends AbstractFactory
         return new CodeClearer(
             $this->getCalculationClient(),
             $this->createQuoteOperationChecker(),
-            $this->getCartCodeHandlerPlugins()
+            $this->getCartCodePlugins()
         );
     }
 
@@ -82,10 +82,10 @@ class CartCodeFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodeHandlerPluginInterface[]
+     * @return \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
      */
-    public function getCartCodeHandlerPlugins(): array
+    public function getCartCodePlugins(): array
     {
-        return $this->getProvidedDependency(CartCodeDependencyProvider::PLUGIN_CART_CODE_HANDLER_COLLECTION);
+        return $this->getProvidedDependency(CartCodeDependencyProvider::PLUGIN_CART_CODE_COLLECTION);
     }
 }

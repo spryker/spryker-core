@@ -26,9 +26,9 @@ class CartCodeClient extends AbstractClient implements CartCodeClientInterface
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function addCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
-        return $this->getFactory()->createCodeAdder()->add($quoteTransfer, $code);
+        return $this->getFactory()->createCodeAdder()->addCandidate($quoteTransfer, $code);
     }
 
     /**

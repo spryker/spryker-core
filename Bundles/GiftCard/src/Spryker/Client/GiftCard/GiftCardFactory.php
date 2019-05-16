@@ -7,17 +7,17 @@
 
 namespace Spryker\Client\GiftCard;
 
-use Spryker\Client\GiftCard\CartCodeHandler\GiftCardCartCodeHandler;
-use Spryker\Client\GiftCard\CartCodeHandler\GiftCardCartCodeHandlerInterface;
+use Spryker\Client\GiftCard\CartCode\GiftCardCartCode;
+use Spryker\Client\GiftCard\CartCode\GiftCardCartCodeInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class GiftCardFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\GiftCard\CartCodeHandler\GiftCardCartCodeHandlerInterface
+     * @return \Spryker\Client\GiftCard\CartCode\GiftCardCartCodeInterface
      */
-    public function createGiftCardCartCodeHandler(): GiftCardCartCodeHandlerInterface
+    public function createGiftCardCartCode(): GiftCardCartCodeInterface
     {
-        return new GiftCardCartCodeHandler();
+        return new GiftCardCartCode();
     }
 }

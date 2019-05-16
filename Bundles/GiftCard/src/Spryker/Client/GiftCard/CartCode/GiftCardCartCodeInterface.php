@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\GiftCard\CartCodeHandler;
+namespace Spryker\Client\GiftCard\CartCode;
 
 use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface GiftCardCartCodeHandlerInterface
+interface GiftCardCartCodeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

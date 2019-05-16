@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\GiftCard\CartCodeHandler;
+namespace Spryker\Client\GiftCard\CartCode;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class GiftCardCartCodeHandler implements GiftCardCartCodeHandlerInterface
+class GiftCardCartCode implements GiftCardCartCodeInterface
 {
     public const CART_GIFT_CARD_APPLY_SUCCESSFUL = 'cart.giftcard.apply.successful';
     public const CART_GIFT_CARD_APPLY_FAILED = 'cart.giftcard.apply.failed';

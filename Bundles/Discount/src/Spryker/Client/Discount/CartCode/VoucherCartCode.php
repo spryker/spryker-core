@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Discount\CartCodeHandler;
+namespace Spryker\Client\Discount\CartCode;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class VoucherCartCodeHandler implements VoucherCartCodeHandlerInterface
+class VoucherCartCode implements VoucherCartCodeInterface
 {
     protected const GLOSSARY_KEY_VOUCHER_NON_APPLICABLE = 'cart.voucher.apply.non_applicable';
     protected const GLOSSARY_KEY_VOUCHER_APPLY_SUCCESSFUL = 'cart.voucher.apply.successful';

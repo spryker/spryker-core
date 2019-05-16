@@ -7,17 +7,17 @@
 
 namespace Spryker\Client\Discount;
 
-use Spryker\Client\Discount\CartCodeHandler\VoucherCartCodeHandler;
-use Spryker\Client\Discount\CartCodeHandler\VoucherCartCodeHandlerInterface;
+use Spryker\Client\Discount\CartCode\VoucherCartCode;
+use Spryker\Client\Discount\CartCode\VoucherCartCodeInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class DiscountFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\Discount\CartCodeHandler\VoucherCartCodeHandlerInterface
+     * @return \Spryker\Client\Discount\CartCode\VoucherCartCodeInterface
      */
-    public function createVoucherCartCodeHandler(): VoucherCartCodeHandlerInterface
+    public function createVoucherCartCode(): VoucherCartCodeInterface
     {
-        return new VoucherCartCodeHandler();
+        return new VoucherCartCode();
     }
 }

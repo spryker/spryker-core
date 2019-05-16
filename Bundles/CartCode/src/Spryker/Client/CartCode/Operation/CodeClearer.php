@@ -24,23 +24,23 @@ class CodeClearer implements CodeClearerInterface
     protected $quoteOperationChecker;
 
     /**
-     * @var \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodeHandlerPluginInterface[]
+     * @var \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
      */
-    protected $cartCodeHandlerPlugins;
+    protected $cartCodePlugins;
 
     /**
      * @param \Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientInterface $calculationClient
      * @param \Spryker\Client\CartCode\Operation\QuoteOperationCheckerInterface $quoteOperationChecker
-     * @param \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodeHandlerPluginInterface[] $cartCodeHandlerPlugins
+     * @param \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $cartCodePlugins
      */
     public function __construct(
         CartCodeToCalculationClientInterface $calculationClient,
         QuoteOperationCheckerInterface $quoteOperationChecker,
-        array $cartCodeHandlerPlugins = []
+        array $cartCodePlugins = []
     ) {
         $this->calculationClient = $calculationClient;
         $this->quoteOperationChecker = $quoteOperationChecker;
-        $this->cartCodeHandlerPlugins = $cartCodeHandlerPlugins;
+        $this->cartCodePlugins = $cartCodePlugins;
     }
 
     /**
@@ -68,8 +68,8 @@ class CodeClearer implements CodeClearerInterface
      */
     protected function executePlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        foreach ($this->cartCodeHandlerPlugins as $cartCodeHandlerPlugin) {
-            $quoteTransfer = $cartCodeHandlerPlugin->clearAllCodes($quoteTransfer);
+        foreach ($this->cartCodePlugins as $cartCodePlugin) {
+            $quoteTransfer = $cartCodePlugin->clearAllCodes($quoteTransfer);
         }
 
         return $quoteTransfer;

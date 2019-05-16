@@ -24,23 +24,23 @@ class CodeAdder implements CodeAdderInterface
     protected $quoteOperationChecker;
 
     /**
-     * @var \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodeHandlerPluginInterface[]
+     * @var \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
      */
-    protected $cartCodeHandlerPlugins;
+    protected $cartCodePlugins;
 
     /**
      * @param \Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientInterface $calculationClient
      * @param \Spryker\Client\CartCode\Operation\QuoteOperationCheckerInterface $quoteOperationChecker
-     * @param \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodeHandlerPluginInterface[] $cartCodeHandlerPlugins
+     * @param \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $cartCodePlugins
      */
     public function __construct(
         CartCodeToCalculationClientInterface $calculationClient,
         QuoteOperationCheckerInterface $quoteOperationChecker,
-        array $cartCodeHandlerPlugins = []
+        array $cartCodePlugins = []
     ) {
         $this->calculationClient = $calculationClient;
         $this->quoteOperationChecker = $quoteOperationChecker;
-        $this->cartCodeHandlerPlugins = $cartCodeHandlerPlugins;
+        $this->cartCodePlugins = $cartCodePlugins;
     }
 
     /**
@@ -49,7 +49,7 @@ class CodeAdder implements CodeAdderInterface
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function add(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
         $lockedCartCodeOperationResultTransfer = $this->quoteOperationChecker->checkLockedQuoteResponse($quoteTransfer);
         if ($lockedCartCodeOperationResultTransfer) {
@@ -70,8 +70,8 @@ class CodeAdder implements CodeAdderInterface
      */
     protected function executePlugins(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
     {
-        foreach ($this->cartCodeHandlerPlugins as $cartCodeHandlerPlugin) {
-            $quoteTransfer = $cartCodeHandlerPlugin->addCandidate($quoteTransfer, $code);
+        foreach ($this->cartCodePlugins as $cartCodePlugin) {
+            $quoteTransfer = $cartCodePlugin->addCandidate($quoteTransfer, $code);
         }
 
         return $quoteTransfer;
@@ -88,8 +88,8 @@ class CodeAdder implements CodeAdderInterface
         $cartCodeOperationResultTransfer = new CartCodeOperationResultTransfer();
         $cartCodeOperationResultTransfer->setQuote($quoteTransfer);
 
-        foreach ($this->cartCodeHandlerPlugins as $cartCodeHandlerPlugin) {
-            $cartCodeCalculationMessageTransfer = $cartCodeHandlerPlugin->getCartCodeOperationResult($quoteTransfer, $code);
+        foreach ($this->cartCodePlugins as $cartCodePlugin) {
+            $cartCodeCalculationMessageTransfer = $cartCodePlugin->getCartCodeOperationResult($quoteTransfer, $code);
 
             $cartCodeOperationResultTransfer->addMessage($cartCodeCalculationMessageTransfer);
         }

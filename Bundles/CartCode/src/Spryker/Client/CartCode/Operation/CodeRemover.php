@@ -24,23 +24,23 @@ class CodeRemover implements CodeRemoverInterface
     protected $quoteOperationChecker;
 
     /**
-     * @var \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodeHandlerPluginInterface[]
+     * @var \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
      */
-    protected $cartCodeHandlerPlugins;
+    protected $cartCodePlugins;
 
     /**
      * @param \Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientInterface $calculationClient
      * @param \Spryker\Client\CartCode\Operation\QuoteOperationCheckerInterface $quoteOperationChecker
-     * @param \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodeHandlerPluginInterface[] $cartCodeHandlerPlugins
+     * @param \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $cartCodePlugins
      */
     public function __construct(
         CartCodeToCalculationClientInterface $calculationClient,
         QuoteOperationCheckerInterface $quoteOperationChecker,
-        array $cartCodeHandlerPlugins = []
+        array $cartCodePlugins = []
     ) {
         $this->calculationClient = $calculationClient;
         $this->quoteOperationChecker = $quoteOperationChecker;
-        $this->cartCodeHandlerPlugins = $cartCodeHandlerPlugins;
+        $this->cartCodePlugins = $cartCodePlugins;
     }
 
     /**
@@ -70,8 +70,8 @@ class CodeRemover implements CodeRemoverInterface
      */
     protected function executePlugins(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
     {
-        foreach ($this->cartCodeHandlerPlugins as $cartCodeHandlerPlugin) {
-            $quoteTransfer = $cartCodeHandlerPlugin->removeCode($quoteTransfer, $code);
+        foreach ($this->cartCodePlugins as $cartCodePlugin) {
+            $quoteTransfer = $cartCodePlugin->removeCode($quoteTransfer, $code);
         }
 
         return $quoteTransfer;
@@ -88,8 +88,8 @@ class CodeRemover implements CodeRemoverInterface
         $cartCodeOperationResultTransfer = new CartCodeOperationResultTransfer();
         $cartCodeOperationResultTransfer->setQuote($quoteTransfer);
 
-        foreach ($this->cartCodeHandlerPlugins as $cartCodeHandlerPlugin) {
-            $cartCodeOperationMessageTransfer = $cartCodeHandlerPlugin->getCartCodeOperationResult($quoteTransfer, $code);
+        foreach ($this->cartCodePlugins as $cartCodePlugin) {
+            $cartCodeOperationMessageTransfer = $cartCodePlugin->getCartCodeOperationResult($quoteTransfer, $code);
 
             $cartCodeOperationResultTransfer->addMessage($cartCodeOperationMessageTransfer);
         }

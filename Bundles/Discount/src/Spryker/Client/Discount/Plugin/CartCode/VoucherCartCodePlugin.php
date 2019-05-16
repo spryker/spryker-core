@@ -9,13 +9,13 @@ namespace Spryker\Client\Discount\Plugin\CartCode;
 
 use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodeHandlerPluginInterface;
+use Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Client\Discount\DiscountFactory getFactory()
  */
-class VoucherCartCodeHandlerPlugin extends AbstractPlugin implements CartCodeHandlerPluginInterface
+class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -31,7 +31,7 @@ class VoucherCartCodeHandlerPlugin extends AbstractPlugin implements CartCodeHan
     public function addCandidate(QuoteTransfer $quoteTransfer, $code): QuoteTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCodeHandler()
+            ->createVoucherCartCode()
             ->addCandidate($quoteTransfer, $code);
     }
 
@@ -49,7 +49,7 @@ class VoucherCartCodeHandlerPlugin extends AbstractPlugin implements CartCodeHan
     public function removeCode(QuoteTransfer $quoteTransfer, $code): QuoteTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCodeHandler()
+            ->createVoucherCartCode()
             ->removeCode($quoteTransfer, $code);
     }
 
@@ -69,7 +69,7 @@ class VoucherCartCodeHandlerPlugin extends AbstractPlugin implements CartCodeHan
     public function getCartCodeOperationResult(QuoteTransfer $quoteTransfer, $code): CartCodeOperationMessageTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCodeHandler()
+            ->createVoucherCartCode()
             ->getCartCodeOperationResult($quoteTransfer, $code);
     }
 
@@ -86,7 +86,7 @@ class VoucherCartCodeHandlerPlugin extends AbstractPlugin implements CartCodeHan
     public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCodeHandler()
+            ->createVoucherCartCode()
             ->clearAllCodes($quoteTransfer);
     }
 }

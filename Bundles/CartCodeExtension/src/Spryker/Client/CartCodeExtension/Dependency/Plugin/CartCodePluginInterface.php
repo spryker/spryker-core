@@ -10,7 +10,7 @@ namespace Spryker\Client\CartCodeExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CartCodeHandlerPluginInterface
+interface CartCodePluginInterface
 {
     /**
      * Specification:
