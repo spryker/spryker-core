@@ -60,13 +60,14 @@ class CartUpdater implements CartUpdaterInterface
         $restUser = $restRequest->getRestUser();
         $quoteTransfer = $this->cartsResourceMapper->mapRestCartsAttributesTransferToQuoteTransfer(
             $restCartsAttributesTransfer,
-            new QuoteTransfer()
+            (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier())
         );
-        $quoteTransfer
-            ->setCompanyUserId($restUser->getIdCompany())
-            ->setCustomerReference($restUser->getNaturalIdentifier());
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($quoteTransfer->setUuid($restRequest->getResource()->getId()));
+        $quoteTransfer
+            ->setUuid($restRequest->getResource()->getId())
+            ->setCompanyUserId($restUser->getIdCompany());
+
+        $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($quoteTransfer);
 
         if ($quoteResponseTransfer->getErrors()->count() > 0) {
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
