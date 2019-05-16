@@ -26,6 +26,8 @@ use Spryker\Zed\ContentGui\ContentGuiConfig;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
+ *
+ * @method \Spryker\Zed\ContentGui\Business\ContentGuiFacade getFacade()
  */
 class ContentGuiBusinessTester extends Actor
 {
