@@ -114,10 +114,10 @@ class DiscountDataHelper extends Module
      */
     public function haveSalesDiscount(array $seedData = []): SpySalesDiscount
     {
-        $discountTransfer = (new DiscountBuilder())->build();
-        $seedData = array_merge($discountTransfer->toArray(false), $seedData);
+        $discountTransfer = (new DiscountBuilder($seedData))->build();
+        $data = array_merge($discountTransfer->toArray(false), $seedData);
         $salesDiscountEntity = new SpySalesDiscount();
-        $salesDiscountEntity->fromArray($seedData);
+        $salesDiscountEntity->fromArray($data);
         $salesDiscountEntity->save();
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($salesDiscountEntity) {

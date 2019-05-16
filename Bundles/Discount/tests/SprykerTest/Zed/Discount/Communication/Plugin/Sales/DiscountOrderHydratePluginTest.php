@@ -8,10 +8,9 @@
 namespace SprykerTest\Zed\Discount\Communication\Plugin\Sales;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesDiscountTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Spryker\Zed\Discount\Communication\Plugin\Sales\DiscountOrderHydratePlugin;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
@@ -32,7 +31,10 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 class DiscountOrderHydratePluginTest extends Unit
 {
     protected const DISCOUNT_AMOUNT = 50;
+    protected const FIELD_NAME_AMOUNT = 'amount';
+
     protected const DISCOUNT_NAME = 'Discount order saver tester';
+    protected const FIELD_NAME_NAME = 'name';
 
     /**
      * @var \SprykerTest\Zed\Discount\DiscountCommunicationTester
@@ -45,17 +47,9 @@ class DiscountOrderHydratePluginTest extends Unit
     public function testOrderHydratedWithDiscount(): void
     {
         //Arrange
-        $salesOrderEntity = $this->tester->haveSalesOrderEntity();
-        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
-        $orderItemEntity = $salesOrderEntity->getItems()[0];
         $discountOrderHydratePlugin = $this->createDiscountOrderHydratePlugin();
-        $seedData = $this->getSeedDataForSalesDiscount($salesOrderEntity, $orderItemEntity, static::DISCOUNT_AMOUNT, static::DISCOUNT_NAME);
-        $this->tester->haveSalesDiscount($seedData);
-        $salesFacade = $this->createSalesFacade();
-        $orderListTransfer = new OrderListTransfer();
-        $orderListTransfer = $salesFacade->getCustomerOrders($orderListTransfer, $salesOrderEntity->getFkCustomer());
-
-        $orderTransfer = $orderListTransfer->getOrders()[0];
+        $orderTransfer = $this->createOrder();
+        $this->createDiscount($orderTransfer);
 
         //Act
         $orderTransfer = $discountOrderHydratePlugin->hydrate($orderTransfer);
@@ -65,21 +59,30 @@ class DiscountOrderHydratePluginTest extends Unit
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
-     * @param int $amount
-     * @param string $name
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
      *
      * @return array
      */
-    protected function getSeedDataForSalesDiscount(SpySalesOrder $salesOrderEntity, SpySalesOrderItem $salesOrderItemEntity, int $amount, string $name): array
+    protected function getSeedDataForSalesDiscount(int $idSalesOrder, int $idSalesOrderItem): array
     {
         return [
-            SpySalesDiscountTableMap::translateFieldName(SpySalesDiscountTableMap::COL_FK_SALES_ORDER, SpySalesDiscountTableMap::TYPE_COLNAME, SpySalesDiscountTableMap::TYPE_FIELDNAME) => $salesOrderEntity->getIdSalesOrder(),
-            SpySalesDiscountTableMap::translateFieldName(SpySalesDiscountTableMap::COL_FK_SALES_ORDER_ITEM, SpySalesDiscountTableMap::TYPE_COLNAME, SpySalesDiscountTableMap::TYPE_FIELDNAME) => $salesOrderItemEntity->getIdSalesOrderItem(),
-            SpySalesDiscountTableMap::translateFieldName(SpySalesDiscountTableMap::COL_AMOUNT, SpySalesDiscountTableMap::TYPE_COLNAME, SpySalesDiscountTableMap::TYPE_FIELDNAME) => $amount,
-            SpySalesDiscountTableMap::translateFieldName(SpySalesDiscountTableMap::COL_NAME, SpySalesDiscountTableMap::TYPE_COLNAME, SpySalesDiscountTableMap::TYPE_FIELDNAME) => $name,
+            $this->getDiscountPhpFieldName(SpySalesDiscountTableMap::COL_FK_SALES_ORDER) => $idSalesOrder,
+            $this->getDiscountPhpFieldName(SpySalesDiscountTableMap::COL_FK_SALES_ORDER_ITEM) => $idSalesOrderItem,
+            static::FIELD_NAME_AMOUNT => static::DISCOUNT_AMOUNT,
+            static::FIELD_NAME_NAME => static::DISCOUNT_NAME,
         ];
+    }
+
+    /**
+     * @param string $fieldName
+     *
+     * @return string
+     */
+    protected function getDiscountPhpFieldName(string $fieldName): string
+    {
+
+        return SpySalesDiscountTableMap::translateFieldName($fieldName, SpySalesDiscountTableMap::TYPE_COLNAME, SpySalesDiscountTableMap::TYPE_FIELDNAME);
     }
 
     /**
@@ -96,5 +99,34 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function createSalesFacade(): SalesFacadeInterface
     {
         return new SalesFacade();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function createOrder(): OrderTransfer
+    {
+        $salesFacade = $this->createSalesFacade();
+
+        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
+        $saveOrderTransfer = $this->tester->haveOrder(['unitPrice' => 1000], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $orderTransfer = $salesFacade->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount
+     */
+    protected function createDiscount(OrderTransfer $orderTransfer): SpySalesDiscount
+    {
+        $orderTransfer->requireItems();
+        $orderItem = $orderTransfer->getItems()[0];
+        $seedData = $this->getSeedDataForSalesDiscount($orderTransfer->getIdSalesOrder(), $orderItem->getIdSalesOrderItem());
+        $spySalesDiscountEntity = $this->tester->haveSalesDiscount($seedData);
+
+        return $spySalesDiscountEntity;
     }
 }
