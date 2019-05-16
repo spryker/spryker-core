@@ -37,7 +37,7 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
      *
      * @return bool
      */
-    public function isApplicable(?CustomerTransfer $customerTransfer = null): bool
+    public function isApplicable(?CustomerTransfer $customerTransfer): bool
     {
         return true;
     }

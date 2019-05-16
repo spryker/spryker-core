@@ -41,5 +41,5 @@ interface CartShareOptionPluginInterface
      *
      * @return bool
      */
-    public function isApplicable(?CustomerTransfer $customerTransfer = null): bool;
+    public function isApplicable(?CustomerTransfer $customerTransfer): bool;
 }

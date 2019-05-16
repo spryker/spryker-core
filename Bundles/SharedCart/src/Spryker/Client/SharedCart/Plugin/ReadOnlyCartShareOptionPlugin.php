@@ -17,8 +17,6 @@ use Spryker\Shared\SharedCart\SharedCartConfig as SharedSharedCartConfig;
  */
 class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareOptionPluginInterface
 {
-    protected const KEY_READ_ONLY = 'READ_ONLY';
-
     /**
      * {@inheritdoc}
      *
@@ -28,7 +26,7 @@ class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareO
      */
     public function getKey(): string
     {
-        return static::KEY_READ_ONLY;
+        return SharedSharedCartConfig::PERMISSION_GROUP_READ_ONLY;
     }
 
     /**
@@ -40,8 +38,12 @@ class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareO
      *
      * @return bool
      */
-    public function isApplicable(?CustomerTransfer $customerTransfer = null): bool
+    public function isApplicable(?CustomerTransfer $customerTransfer): bool
     {
+        if (!$customerTransfer) {
+            return false;
+        }
+
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
 
         return $companyUserTransfer && $companyUserTransfer->getIdCompanyUser();

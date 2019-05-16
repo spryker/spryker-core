@@ -14,8 +14,6 @@ use Spryker\Shared\SharedCart\SharedCartConfig as SharedSharedCartConfig;
 
 class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShareOptionPluginInterface
 {
-    protected const KEY_FULL_ACCESS = 'FULL_ACCESS';
-
     /**
      * {@inheritdoc}
      *
@@ -25,7 +23,7 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
      */
     public function getKey(): string
     {
-        return static::KEY_FULL_ACCESS;
+        return SharedSharedCartConfig::PERMISSION_GROUP_FULL_ACCESS;
     }
 
     /**
@@ -37,8 +35,12 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
      *
      * @return bool
      */
-    public function isApplicable(?CustomerTransfer $customerTransfer = null): bool
+    public function isApplicable(?CustomerTransfer $customerTransfer): bool
     {
+        if (!$customerTransfer) {
+            return false;
+        }
+
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
 
         return $companyUserTransfer && $companyUserTransfer->getIdCompanyUser();
