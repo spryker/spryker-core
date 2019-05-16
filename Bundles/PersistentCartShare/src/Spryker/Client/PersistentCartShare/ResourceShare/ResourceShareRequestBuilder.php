@@ -47,7 +47,7 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
     public function buildResourceShareRequest(int $idQuote, string $shareOption): ResourceShareRequestTransfer
     {
         $customerTransfer = $this->customerClient->getCustomer();
-        $resourceShareDataTransfer = $this->getResourceShareDataTransfer($idQuote, $shareOption, $customerTransfer);
+        $resourceShareDataTransfer = $this->createResolvedByShareOptionResourceShareDataTransfer($idQuote, $shareOption, $customerTransfer);
 
         $resourceShareTransfer = (new ResourceShareTransfer())
             ->setResourceType(static::RESOURCE_TYPE_QUOTE)
@@ -67,22 +67,43 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
      *
      * @return \Generated\Shared\Transfer\ResourceShareDataTransfer
      */
-    protected function getResourceShareDataTransfer(int $idQuote, string $shareOption, CustomerTransfer $customerTransfer): ResourceShareDataTransfer
+    protected function createResolvedByShareOptionResourceShareDataTransfer(int $idQuote, string $shareOption, CustomerTransfer $customerTransfer): ResourceShareDataTransfer
     {
-        $resourceShareDataTransfer = (new ResourceShareDataTransfer())
-            ->setIdQuote($idQuote)
-            ->setShareOption($shareOption);
-
         if ($shareOption === static::SHARE_OPTION_PREVIEW) {
-            return $resourceShareDataTransfer;
+            return $this->createCartPreviewResourceShareDataTransfer($idQuote);
         }
 
+        return $this->createCartShareResourceShareDataTransfer($idQuote, $shareOption, $customerTransfer);
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareDataTransfer
+     */
+    protected function createCartPreviewResourceShareDataTransfer(int $idQuote): ResourceShareDataTransfer
+    {
+        return (new ResourceShareDataTransfer())
+            ->setIdQuote($idQuote)
+            ->setShareOption(static::SHARE_OPTION_PREVIEW);
+    }
+
+    /**
+     * @param int $idQuote
+     * @param string $shareOption
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResourceShareDataTransfer
+     */
+    protected function createCartShareResourceShareDataTransfer(int $idQuote, string $shareOption, CustomerTransfer $customerTransfer): ResourceShareDataTransfer
+    {
+        $customerTransfer->requireCompanyUserTransfer();
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
-        if (!$companyUserTransfer) {
-            return $resourceShareDataTransfer;
-        }
 
-        return $resourceShareDataTransfer->setOwnerIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+        return (new ResourceShareDataTransfer())
+            ->setIdQuote($idQuote)
+            ->setShareOption($shareOption)
+            ->setOwnerIdCompanyUser($companyUserTransfer->getIdCompanyUser())
             ->setOwnerIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit());
     }
 }
