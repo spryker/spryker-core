@@ -120,7 +120,7 @@ class DiscountOrderHydratePluginTest extends Unit
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount
      */
-    protected function createDiscount(OrderTransfer $orderTransfer): SpySalesDiscount
+    protected function createDiscountForOrder(OrderTransfer $orderTransfer): SpySalesDiscount
     {
         $orderTransfer->requireItems();
         $orderItem = $orderTransfer->getItems()[0];
