@@ -9,6 +9,7 @@ namespace Spryker\Zed\OauthCompanyUser\Business\League\Grant;
 
 use DateInterval;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
+use League\OAuth2\Server\Entities\UserEntityInterface;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\Grant\AbstractGrant;
 use League\OAuth2\Server\RequestEvent;
@@ -68,7 +69,7 @@ class CompanyUserAccessTokenGrantType extends AbstractGrant implements GrantType
      *
      * @return \League\OAuth2\Server\Entities\UserEntityInterface
      */
-    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $clientEntity)
+    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $clientEntity): UserEntityInterface
     {
         $idCompanyUser = $this->getRequestParameter(static::ID_COMPANY_USER, $request);
         if ($idCompanyUser === null) {
@@ -88,7 +89,7 @@ class CompanyUserAccessTokenGrantType extends AbstractGrant implements GrantType
     /**
      * @return string
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return static::COMPANY_USER_ACCESS_TOKEN_GRANT_TYPE;
     }
