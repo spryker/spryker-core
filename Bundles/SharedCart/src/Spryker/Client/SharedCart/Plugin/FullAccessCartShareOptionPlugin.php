@@ -39,7 +39,9 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
      */
     public function isApplicable(?CustomerTransfer $customerTransfer = null): bool
     {
-        return $customerTransfer->getCompanyUserTransfer() && $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser();
+        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
+
+        return $companyUserTransfer && $companyUserTransfer->getIdCompanyUser();
     }
 
     /**
