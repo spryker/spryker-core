@@ -11,8 +11,7 @@ use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Controller\IndexController;
-use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface;
-use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface;
 
 class PriceProductScheduleConcreteTable extends AbstractScheduledPriceTable
 {
@@ -31,16 +30,14 @@ class PriceProductScheduleConcreteTable extends AbstractScheduledPriceTable
     /**
      * @param int $fkProduct
      * @param int $fkPriceType
-     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface $moneyFacade
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface $rowFormatter
      */
     public function __construct(
         int $fkProduct,
         int $fkPriceType,
-        PriceProductScheduleGuiToStoreFacadeInterface $storeFacade,
-        PriceProductScheduleGuiToMoneyFacadeInterface $moneyFacade
+        RowFormatterInterface $rowFormatter
     ) {
-        parent::__construct($storeFacade, $moneyFacade);
+        parent::__construct($rowFormatter);
         $this->fkProduct = $fkProduct;
         $this->fkPriceType = $fkPriceType;
         $this->baseUrl = '/';
