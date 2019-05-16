@@ -77,7 +77,6 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     {
         $restCartItemsAttributesTransfer
             ->requireSku()
-            ->requireQuoteUuid()
             ->requireCustomerReference();
 
         if (!$restCartItemsAttributesTransfer->getQuoteUuid()) {
@@ -146,8 +145,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())
-                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_ADDING_CART_ITEM)
-                );
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_ADDING_CART_ITEM));
         }
 
         return $quoteResponseTransfer;

@@ -75,8 +75,7 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
             $this->setQuoteErrorTransfersToQuoteResponse($quoteResponseTransfer);
             $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())
-                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATING_CART)
-                );
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATING_CART));
         }
 
         return $quoteResponseTransfer;
@@ -89,7 +88,7 @@ class SingleQuoteCreator implements SingleQuoteCreatorInterface
      */
     protected function setQuoteErrorTransfersToQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        /** @var  \Generated\Shared\Transfer\ErrorMessageTransfer[] $errorMessageTransfers */
+        /** @var \Generated\Shared\Transfer\ErrorMessageTransfer[] $errorMessageTransfers */
         $errorMessageTransfers = $quoteResponseTransfer->getErrors();
 
         $quoteErrorTransfers = new ArrayObject();

@@ -62,11 +62,8 @@ class CartReader implements CartReaderInterface
             ->setUuid($uuidCart);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
-
-        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
-            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes(
-                $quoteResponseTransfer->getErrorCodes()
-            );
+        if ($quoteResponseTransfer->getErrors()->count() > 0) {
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         $cartResource = $this->cartsResourceMapper->mapCartsResource(

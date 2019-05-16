@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -36,16 +37,24 @@ class GuestCartCreator implements GuestCartCreatorInterface
     protected $guestCartRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
+     */
+    protected $cartRestResponseBuilder;
+
+    /**
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      */
     public function __construct(
         GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
+        CartRestResponseBuilderInterface $cartRestResponseBuilder,
         CartsResourceMapperInterface $cartsResourceMapper,
         CartsRestApiClientInterface $cartsRestApiClient
     ) {
         $this->guestCartRestResponseBuilder = $guestCartRestResponseBuilder;
+        $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->cartsResourceMapper = $cartsResourceMapper;
         $this->cartsRestApiClient = $cartsRestApiClient;
     }
@@ -63,8 +72,8 @@ class GuestCartCreator implements GuestCartCreatorInterface
 
         $quoteResponseTransfer = $this->cartsRestApiClient->createQuote($quoteTransfer);
 
-        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
-            return $this->guestCartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
+        if ($quoteResponseTransfer->getErrors()->count() > 0) {
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         return $this->guestCartRestResponseBuilder->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer());

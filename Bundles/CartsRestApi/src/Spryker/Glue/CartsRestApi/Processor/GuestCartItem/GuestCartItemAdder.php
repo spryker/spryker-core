@@ -10,6 +10,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\GuestCartItem;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -32,18 +33,26 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
     protected $guestCartRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
+     */
+    protected $cartRestResponseBuilder;
+
+    /**
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
+     * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,
         CartItemsResourceMapperInterface $cartItemsResourceMapper,
-        GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
+        GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
+        CartRestResponseBuilderInterface $cartRestResponseBuilder
     ) {
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
         $this->guestCartRestResponseBuilder = $guestCartRestResponseBuilder;
+        $this->cartRestResponseBuilder = $cartRestResponseBuilder;
     }
 
     /**

@@ -150,8 +150,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
         ) {
             return $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())
-                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_CANT_BE_UPDATED)
-            );
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_CANT_BE_UPDATED));
         }
 
         return $quoteResponseTransfer;
@@ -181,7 +180,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
      */
     protected function setQuoteErrorTransfersToQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        /** @var  \Generated\Shared\Transfer\ErrorMessageTransfer[] $errorMessageTransfers */
+        /** @var \Generated\Shared\Transfer\ErrorMessageTransfer[] $errorMessageTransfers */
         $errorMessageTransfers = $quoteResponseTransfer->getErrors();
 
         $quoteErrorTransfers = new ArrayObject();

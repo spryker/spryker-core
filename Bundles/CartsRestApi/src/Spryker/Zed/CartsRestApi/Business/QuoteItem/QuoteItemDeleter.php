@@ -78,8 +78,7 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
         if (!$ifRequestedItemIsInQuote) {
             return $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())
-                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_NOT_FOUND)
-                );
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_NOT_FOUND));
         }
 
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer(
@@ -91,8 +90,7 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())
-                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_DELETING_CART_ITEM)
-                );
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_DELETING_CART_ITEM));
         }
 
         return $quoteResponseTransfer;

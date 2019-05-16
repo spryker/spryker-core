@@ -153,7 +153,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
             RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
             RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_FAILED_UPDATING_CART_ITEM,
         ],
-        CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_DELETING_CART => [
+        CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_DELETING_CART_ITEM => [
             RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_FAILED_DELETING_CART_ITEM,
             RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
             RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM,

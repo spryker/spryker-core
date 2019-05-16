@@ -79,8 +79,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
         if (!$ifRequestedItemIsInQuote) {
             return $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())
-                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_NOT_FOUND)
-                );
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_NOT_FOUND));
         }
 
         $persistentCartChangeQuantityTransfer = $this->createPersistentCartChangeQuantityTransfer(
@@ -93,8 +92,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())
-                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_UPDATING_CART_ITEM)
-                );
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_UPDATING_CART_ITEM));
         }
 
         return $quoteResponseTransfer;

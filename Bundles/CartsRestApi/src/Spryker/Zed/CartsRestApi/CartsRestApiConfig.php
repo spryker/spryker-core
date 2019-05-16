@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CartsRestApi;
 
-use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CartsRestApiConfig extends AbstractBundleConfig
