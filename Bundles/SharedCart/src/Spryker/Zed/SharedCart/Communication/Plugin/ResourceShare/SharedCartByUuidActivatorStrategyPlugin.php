@@ -23,8 +23,10 @@ class SharedCartByUuidActivatorStrategyPlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritdoc}
-     * - Sets relevant permission for logged-in company user for Quote.
-     * - Sets 'idQuote' as default cart for current customer.
+     * - Creates cart share for provided Quote and provided company user within the same business unit.
+     * - Updates permission to Full-access, if resource was shared with higher permission.
+     * - Returns 'isSuccessful=true' with ResourceShareTransfer if cart was shared successfully.
+     * - Returns 'isSuccessful=false' with error messages otherwise.
      *
      * @api
      *
