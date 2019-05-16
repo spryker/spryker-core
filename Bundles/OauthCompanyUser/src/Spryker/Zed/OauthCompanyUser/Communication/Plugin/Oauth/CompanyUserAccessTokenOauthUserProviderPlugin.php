@@ -58,6 +58,10 @@ class CompanyUserAccessTokenOauthUserProviderPlugin extends AbstractPlugin imple
 
         $companyUserTransfer = $this->findActiveCompanyUser((int)$oauthUserTransfer->getIdCompanyUser());
 
+        if (!$companyUserTransfer) {
+            return $oauthUserTransfer;
+        }
+
         $companyUserIdentifierTransfer = (new CompanyUserIdentifierTransfer())
             ->fromArray($oauthUserTransfer->toArray(), true)
             ->setIdCustomer($companyUserTransfer->getCustomer()->getIdCustomer())
