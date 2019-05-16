@@ -186,7 +186,8 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      *
      * @return int[][]
      */
-    protected function groupSalesOrderItemIdsByShipmentId(iterable $salesOrderItemIdsWithShipmentIds): array {
+    protected function groupSalesOrderItemIdsByShipmentId(iterable $salesOrderItemIdsWithShipmentIds): array
+    {
         $groupedResult = [];
 
         foreach ($salesOrderItemIdsWithShipmentIds as [

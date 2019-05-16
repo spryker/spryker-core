@@ -24,6 +24,8 @@ use Spryker\Shared\Price\PriceConfig;
 
 /**
  * Auto-generated group annotations
+ * @group Shipment
+ * @group tests
  * @group SprykerTest
  * @group Zed
  * @group Shipment

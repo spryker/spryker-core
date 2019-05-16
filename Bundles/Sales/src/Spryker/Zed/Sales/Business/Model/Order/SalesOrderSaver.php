@@ -187,7 +187,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $billingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getBillingAddress());
         $salesOrderEntity->setBillingAddress($billingAddressEntity);
 
-        if ($quoteTransfer->getShippingAddress() !== null) {
+        if ($quoteTransfer->getShippingAddress() !== null && $quoteTransfer->getShippingAddress()->getFirstName() !== null) {
             $shippingAddressEntity = $this->saveSalesOrderAddress($quoteTransfer->getShippingAddress());
             $salesOrderEntity->setShippingAddress($shippingAddressEntity);
         }

@@ -262,7 +262,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         $shipmentEntity = $this->mapShipmentMethodTransferToShipmentEntity($shipmentTransfer->getMethod(), $shipmentEntity);
         $shipmentEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $shipmentEntity->setFkSalesExpense($idSalesExpense);
-        $shipmentEntity->setFkSalesOrderAddress($shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress());
+        $shipmentEntity->setFkSalesOrderAddress($salesOrderEntity->getShippingAddress()->getIdSalesOrderAddress());
 
         return $shipmentEntity;
     }

@@ -64,6 +64,9 @@ class ItemsGrouper implements ItemsGrouperInterface
     protected function assertRequiredShipment(ItemTransfer $itemTransfer): void
     {
         $itemTransfer->requireShipment();
+        /**
+         * @todo Remove this two checks.
+         */
         $itemTransfer->getShipment()->requireMethod();
         $itemTransfer->getShipment()->requireShippingAddress();
     }
