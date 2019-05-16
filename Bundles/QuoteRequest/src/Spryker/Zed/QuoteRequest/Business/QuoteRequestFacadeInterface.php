@@ -132,7 +132,7 @@ interface QuoteRequestFacadeInterface
      * Specification:
      * - Finds a "Request for Quote" by QuoteRequestTransfer::idQuoteRequest in the transfer.
      * - Expects "Request for Quote" status to be "draft", "in-progress".
-     * - Updates valid_until, is_hidden fields in RfQ entity.
+     * - Updates valid_until, is_latest_version_visible fields in RfQ entity.
      * - Updates metadata in latest version.
      * - Updates quote in latest version.
      *
@@ -178,7 +178,7 @@ interface QuoteRequestFacadeInterface
      * - Expects quote request reference to be provided.
      * - Retrieves "Request for Quote" entity filtered by reference.
      * - Expects "Request for Quote" status to be "draft", "in-progress".
-     * - Updates field is_latest_version_hidden to false.
+     * - Updates field is_latest_version_visible to true.
      * - Changes status to "ready".
      *
      * @api
