@@ -8,15 +8,12 @@
 namespace Spryker\Glue\CompanyUsersRestApi;
 
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface;
-use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserStorageClientInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReader;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReaderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpander;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpanderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapper;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
-use Spryker\Glue\CompanyUsersRestApi\Processor\RestUser\RestUserMapper;
-use Spryker\Glue\CompanyUsersRestApi\Processor\RestUser\RestUserMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CompanyUsersRestApiFactory extends AbstractFactory
@@ -47,22 +44,6 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     public function createCustomerExpander(): CustomerExpanderInterface
     {
         return new CustomerExpander();
-    }
-
-    /**
-     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\RestUser\RestUserMapperInterface
-     */
-    public function createRestUserMapper(): RestUserMapperInterface
-    {
-        return new RestUserMapper($this->getCompanyUserStorageClient());
-    }
-
-    /**
-     * @return \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserStorageClientInterface
-     */
-    public function getCompanyUserStorageClient(): CompanyUsersRestApiToCompanyUserStorageClientInterface
-    {
-        return $this->getProvidedDependency(CompanyUsersRestApiDependencyProvider::CLIENT_COMPANY_USER_STORAGE);
     }
 
     /**

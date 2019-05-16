@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUsersRestApi\Dependency\Client;
+namespace Spryker\Glue\CompanyUserAuthRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\CompanyUserStorageTransfer;
 
-class CompanyUsersRestApiToCompanyUserStorageClientBridge implements CompanyUsersRestApiToCompanyUserStorageClientInterface
+class CompanyUserAuthRestApiToCompanyUserStorageClientBridge implements CompanyUserAuthRestApiToCompanyUserStorageClientInterface
 {
     /**
      * @var \Spryker\Client\CompanyUserStorage\CompanyUserStorageClientInterface

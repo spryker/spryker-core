@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompanyUsersRestApi\Processor\RestUser;
+namespace Spryker\Glue\CompanyUserAuthRestApi\Processor\RestUser;
 
 use Generated\Shared\Transfer\RestUserTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;

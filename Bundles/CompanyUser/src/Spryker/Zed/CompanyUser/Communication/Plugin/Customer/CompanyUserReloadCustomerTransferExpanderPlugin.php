@@ -29,16 +29,6 @@ class CompanyUserReloadCustomerTransferExpanderPlugin extends AbstractPlugin imp
      */
     public function expandTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        return $this->reloadCompanyUserTransfer($customerTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function reloadCompanyUserTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
-    {
         if (!$customerTransfer->getCompanyUserTransfer() || !$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()) {
             return $customerTransfer;
         }
