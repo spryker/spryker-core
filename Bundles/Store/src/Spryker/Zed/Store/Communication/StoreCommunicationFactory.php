@@ -15,6 +15,7 @@ use Spryker\Zed\Store\Communication\Form\Transformer\IdStoresDataTransformer;
  * @method \Spryker\Zed\Store\StoreConfig getConfig()
  * @method \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Store\Business\StoreFacadeInterface getFacade()
+ * @method \Spryker\Zed\Store\Persistence\StoreRepositoryInterface getRepository()
  */
 class StoreCommunicationFactory extends AbstractCommunicationFactory
 {

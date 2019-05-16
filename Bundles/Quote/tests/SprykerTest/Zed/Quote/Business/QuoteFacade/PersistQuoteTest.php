@@ -161,7 +161,6 @@ class PersistQuoteTest extends Unit
         // Act
         $quoteResponseTransfer = $this->quoteFacade->createQuote($quoteTransfer);
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-
     }
 
     /**
