@@ -68,7 +68,8 @@ class QuoteDeleter implements QuoteDeleterInterface
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $quoteResponseTransfer
                 ->addError((new QuoteErrorTransfer())
-                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_DELETING_CART));
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_DELETING_CART)
+                );
         }
 
         return $quoteResponseTransfer;

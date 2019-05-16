@@ -88,6 +88,9 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY = '109';
     public const RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART = '110';
     public const RESPONSE_CODE_CART_CANT_BE_UPDATED = '111';
+    public const RESPONSE_CODE_STORE_DATA_IS_INVALID = '112';
+    public const RESPONSE_CODE_FAILED_ADDING_CART_ITEM = '113';
+    public const RESPONSE_CODE_FAILED_UPDATING_CART_ITEM = '114';
 
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
     public const EXCEPTION_MESSAGE_ITEM_VALIDATION = 'Product sku is missing.';
@@ -103,6 +106,9 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY = 'Anonymous customer unique id is empty.';
     public const EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART = 'Customer already has a cart.';
     public const EXCEPTION_MESSAGE_PRICE_MODE_CANT_BE_CHANGED = 'Can’t switch price mode when there are items in the cart.';
+    public const EXCEPTION_MESSAGE_STORE_DATA_IS_INVALID = 'Store data is invalid.';
+    public const EXCEPTION_MESSAGE_FAILED_ADDING_CART_ITEM = 'Cart item could not be added.';
+    public const EXCEPTION_MESSAGE_FAILED_UPDATING_CART_ITEM = 'Cart item could not be updated.';
 
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 
@@ -137,6 +143,16 @@ class CartsRestApiConfig extends AbstractBundleConfig
             RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
             RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_FAILED_DELETING_CART,
         ],
+        CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_ADDING_CART_ITEM => [
+            RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_FAILED_ADDING_CART_ITEM,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+            RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_FAILED_ADDING_CART_ITEM,
+        ],
+        CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_UPDATING_CART_ITEM => [
+            RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_FAILED_UPDATING_CART_ITEM,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+            RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_FAILED_UPDATING_CART_ITEM,
+        ],
         CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_DELETING_CART => [
             RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_FAILED_DELETING_CART_ITEM,
             RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
@@ -151,6 +167,11 @@ class CartsRestApiConfig extends AbstractBundleConfig
             RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART,
             RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
             RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART,
+        ],
+        CartsRestApiSharedConfig::ERROR_IDENTIFIER_STORE_DATA_IS_INVALID => [
+            RestErrorMessageTransfer::CODE => self::RESPONSE_CODE_STORE_DATA_IS_INVALID,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+            RestErrorMessageTransfer::DETAIL => self::EXCEPTION_MESSAGE_STORE_DATA_IS_INVALID,
         ],
     ];
 

@@ -77,12 +77,10 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
         );
 
         if (!$ifRequestedItemIsInQuote) {
-            $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_ITEM_NOT_FOUND));
-
-            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
+            return $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_NOT_FOUND)
+                );
         }
 
         $persistentCartChangeQuantityTransfer = $this->createPersistentCartChangeQuantityTransfer(
@@ -93,9 +91,10 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
         $quoteResponseTransfer = $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
+            return $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_UPDATING_CART_ITEM)
+                );
         }
 
         return $quoteResponseTransfer;

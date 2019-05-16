@@ -86,12 +86,9 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 
         $quoteResponseTransfer = new QuoteResponseTransfer();
         if (!$restCartItemsAttributesTransfer->getSku()) {
-            $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_ITEM_VALIDATION));
-
-            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
+            return $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_VALIDATION));
         }
 
         $customerQuoteCollection = $this->quoteReader->getQuoteByQuoteCriteriaFilter(
@@ -147,9 +144,10 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             ->add($restCartItemsAttributesTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
+            $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_ADDING_CART_ITEM)
+                );
         }
 
         return $quoteResponseTransfer;

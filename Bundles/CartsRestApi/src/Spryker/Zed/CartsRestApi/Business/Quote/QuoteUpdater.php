@@ -149,7 +149,9 @@ class QuoteUpdater implements QuoteUpdaterInterface
             && ($quoteTransfer->getPriceMode() && $quoteTransfer->getPriceMode() !== $originalQuoteTransfer->getPriceMode())
         ) {
             return $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_CART_CANT_BE_UPDATED));
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_CANT_BE_UPDATED)
+            );
         }
 
         return $quoteResponseTransfer;

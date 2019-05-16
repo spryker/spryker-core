@@ -89,7 +89,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new SingleQuoteCreator(
             $this->createQuoteReader(),
-            $this->getPersistentCartFacade()
+            $this->getPersistentCartFacade(),
+            $this->createQuoteMapper()
         );
     }
 

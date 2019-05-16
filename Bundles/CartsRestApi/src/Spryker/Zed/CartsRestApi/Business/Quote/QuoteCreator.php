@@ -67,16 +67,18 @@ class QuoteCreator implements QuoteCreatorInterface
 
         $store = $quoteTransfer->getStore();
         if ($store && $store->getName() !== $this->storeFacade->getCurrentStore()->getName()) {
-            $quoteResponseTransfer = (new QuoteResponseTransfer())
+            return (new QuoteResponseTransfer())
                 ->addError((new QuoteErrorTransfer())
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_STORE_DATA_IS_INVALID));
-
-            return $quoteResponseTransfer;
         }
 
         $quoteResponseTransfer = $this->quoteCreatorPlugin->createQuote($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $this->setQuoteErrorTransfersToQuoteResponse($quoteResponseTransfer);
+            $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATING_CART)
+                );
         }
 
         return $quoteResponseTransfer;

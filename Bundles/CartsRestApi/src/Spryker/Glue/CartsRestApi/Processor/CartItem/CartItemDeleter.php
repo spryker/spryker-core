@@ -64,8 +64,8 @@ class CartItemDeleter implements CartItemDeleterInterface
         );
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteItem($restCartItemsAttributesTransfer);
-        if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
-            return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());
+        if ($quoteResponseTransfer->getErrors()->count() > 0) {
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         return $this->cartRestResponseBuilder->createRestResponse();

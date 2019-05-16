@@ -76,12 +76,10 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
         );
 
         if (!$ifRequestedItemIsInQuote) {
-            $quoteResponseTransfer
-                ->addError((new QuoteErrorTransfer())->setMessage(CartsRestApiSharedConfig::RESPONSE_CODE_ITEM_NOT_FOUND));
-
-            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
+            return $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_NOT_FOUND)
+                );
         }
 
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer(
@@ -91,9 +89,10 @@ class QuoteItemDeleter implements QuoteItemDeleterInterface
 
         $quoteResponseTransfer = $this->persistentCartFacade->remove($persistentCartChangeTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->quoteItemMapper->mapQuoteResponseErrorsToRestCodes(
-                $quoteResponseTransfer
-            );
+            return $quoteResponseTransfer
+                ->addError((new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_DELETING_CART_ITEM)
+                );
         }
 
         return $quoteResponseTransfer;
