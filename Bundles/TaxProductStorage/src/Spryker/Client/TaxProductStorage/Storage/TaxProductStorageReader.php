@@ -42,7 +42,7 @@ class TaxProductStorageReader implements TaxProductStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\TaxProductStorageTransfer|null
      */
-    public function findTaxProductStorage(string $productAbstractSku): ?TaxProductStorageTransfer
+    public function findTaxProductStorageByProductAbstractSku(string $productAbstractSku): ?TaxProductStorageTransfer
     {
         $storageKey = $this->generateKey($productAbstractSku);
         $taxProductStorageData = $this->storageClient->get($storageKey);

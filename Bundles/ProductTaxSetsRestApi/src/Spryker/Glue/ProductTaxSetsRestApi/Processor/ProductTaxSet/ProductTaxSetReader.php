@@ -92,12 +92,12 @@ class ProductTaxSetReader implements ProductTaxSetReaderInterface
         string $productAbstractSku,
         RestRequestInterface $restRequest
     ): ?RestResourceInterface {
-        $taxProductStorageTransfer = $this->taxProductStorageClient->findTaxProductStorage($productAbstractSku);
+        $taxProductStorageTransfer = $this->taxProductStorageClient->findTaxProductStorageByProductAbstractSku($productAbstractSku);
         if (!$taxProductStorageTransfer) {
             return null;
         }
 
-        $taxStorageTransfer = $this->taxStorageClient->findTaxSetCollectionStorage($taxProductStorageTransfer->getIdTaxSet());
+        $taxStorageTransfer = $this->taxStorageClient->findTaxSetStorageByIdTaxSet($taxProductStorageTransfer->getIdTaxSet());
         if (!$taxStorageTransfer) {
             return null;
         }

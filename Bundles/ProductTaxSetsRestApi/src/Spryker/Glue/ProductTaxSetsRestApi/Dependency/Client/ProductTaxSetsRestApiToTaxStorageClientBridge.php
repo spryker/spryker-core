@@ -29,8 +29,8 @@ class ProductTaxSetsRestApiToTaxStorageClientBridge implements ProductTaxSetsRes
      *
      * @return \Generated\Shared\Transfer\TaxSetStorageTransfer|null
      */
-    public function findTaxSetCollectionStorage(int $idTaxSet): ?TaxSetStorageTransfer
+    public function findTaxSetStorageByIdTaxSet(int $idTaxSet): ?TaxSetStorageTransfer
     {
-        return $this->taxStorageClient->findTaxSetStorageById($idTaxSet);
+        return $this->taxStorageClient->findTaxSetStorageByIdTaxSet($idTaxSet);
     }
 }

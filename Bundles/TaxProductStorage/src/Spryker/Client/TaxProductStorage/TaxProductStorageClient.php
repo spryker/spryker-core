@@ -28,6 +28,6 @@ class TaxProductStorageClient extends AbstractClient implements TaxProductStorag
     {
         return $this->getFactory()
             ->createTaxProductStorageReader()
-            ->findTaxProductStorage($productAbstractSku);
+            ->findTaxProductStorageByProductAbstractSku($productAbstractSku);
     }
 }

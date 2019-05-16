@@ -16,5 +16,5 @@ interface TaxStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\TaxSetStorageTransfer|null
      */
-    public function findTaxSetStorage(int $idTaxSet): ?TaxSetStorageTransfer;
+    public function findTaxSetStorageByIdTaxSet(int $idTaxSet): ?TaxSetStorageTransfer;
 }

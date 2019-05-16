@@ -29,7 +29,7 @@ class ProductTaxSetsRestApiToTaxProductStorageClientBridge implements ProductTax
      *
      * @return \Generated\Shared\Transfer\TaxProductStorageTransfer|null
      */
-    public function findTaxProductStorage(string $productAbstractSku): ?TaxProductStorageTransfer
+    public function findTaxProductStorageByProductAbstractSku(string $productAbstractSku): ?TaxProductStorageTransfer
     {
         return $this->taxProductStorageClient->findTaxProductStorageByProductAbstractSku($productAbstractSku);
     }

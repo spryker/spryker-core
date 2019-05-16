@@ -42,7 +42,7 @@ class TaxStorageReader implements TaxStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\TaxSetStorageTransfer|null
      */
-    public function findTaxSetStorage(int $idTaxSet): ?TaxSetStorageTransfer
+    public function findTaxSetStorageByIdTaxSet(int $idTaxSet): ?TaxSetStorageTransfer
     {
         $key = $this->generateKey($idTaxSet);
         $taxSetStorageData = $this->storageClient->get($key);
