@@ -8,9 +8,8 @@
 var ContentItemDialog = function(
     dialogTitle,
     dialogContentUrl,
-    redirectUrl,
     insertButtonTitle,
-    templateForInsert
+    widgetHtmlTemplate
 ) {
     $.extend($.summernote.plugins, {
         'contentItemDialog': function (context) {
@@ -71,7 +70,7 @@ var ContentItemDialog = function(
                 var $choseIdErrorSelector = this.$dialog.find('.content-errors .item');
                 var isTemplateListExists = this.$dialog.find('.template-list').length;
                 var chosenTemplate = this.$dialog.find('.template-list input:checked').data('template');
-                var chosenTemplateKey = this.$dialog.find('.template-list input:checked').val();
+                var chosenTemplateIdentifier = this.$dialog.find('.template-list input:checked').val();
                 var $chooseTemplateErrorSelector = this.$dialog.find('.content-errors .template');
                 var twigTemplate = this.$dialog.find('input[name=twigFunctionTemplate]').val();
                 var readyToInsert = chosenId !== undefined && (!isTemplateListExists || isTemplateListExists && chosenTemplate);
@@ -83,8 +82,8 @@ var ContentItemDialog = function(
                         chosenType,
                         chosenName,
                         chosenTemplate,
-                        chosenTemplateKey,
-                        templateForInsert
+                        chosenTemplateIdentifier,
+                        widgetHtmlTemplate
                     );
 
                     this.removeItemFromEditor();
@@ -119,27 +118,27 @@ var ContentItemDialog = function(
 
             this.getNewDomElement = function (
                 twigTemplate,
-                chosenId,
-                chosenType,
-                chosenName,
-                chosenTemplate,
-                chosenTemplateKey,
-                templateForInsert
+                id,
+                type,
+                contentName,
+                templateName,
+                templateIdentifier,
+                widgetHtmlTemplate
             ) {
                 var builtText = twigTemplate.replace(/%\w+%/g, function (param) {
                     return {
-                        '%ID%': chosenId,
-                        '%TEMPLATE%': chosenTemplateKey
+                        '%ID%': id,
+                        '%TEMPLATE%': templateIdentifier
                     }[param];
                 });
 
-                var builtTemplate = templateForInsert.replace(/%\w+%/g, function (param) {
+                var builtTemplate = widgetHtmlTemplate.replace(/%\w+%/g, function (param) {
                     return {
-                        '%TYPE%': chosenType,
-                        '%ID%': chosenId,
-                        '%NAME%': chosenName,
-                        '%TEMPLATE_DISPLAY_NAME%': chosenTemplate,
-                        '%TEMPLATE%': chosenTemplateKey,
+                        '%TYPE%': type,
+                        '%ID%': id,
+                        '%NAME%': contentName,
+                        '%TEMPLATE_DISPLAY_NAME%': templateName,
+                        '%TEMPLATE%': templateIdentifier,
                         '%SHORT_CODE%': builtText,
                     }[param];
                 });

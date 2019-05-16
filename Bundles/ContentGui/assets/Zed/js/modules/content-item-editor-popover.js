@@ -26,7 +26,7 @@ var ContentItemEditorPopover = function () {
                 this.context.invoke('buttons.build', $content, this.context.options.popover.editContentItem);
             };
 
-            this.showPopover = function (event) {
+            this.showPopover = function () {
                 this.hidePopover();
 
                 this.$clickedNode = $(this.context.invoke('editor.createRange').sc).parents('.js-content-item-editor');

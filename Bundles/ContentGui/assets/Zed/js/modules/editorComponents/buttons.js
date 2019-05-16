@@ -37,10 +37,6 @@ var PopoverButton = function (buttonContent, buttonCallback) {
         var button = ui.button({
             contents: buttonContent.icon + ' ' + buttonContent.title,
             tooltip: buttonContent.title,
-            data: {
-                type: '%TYPE%',
-                id: '%ID%'
-            },
             click: buttonCallback(context)
         });
 

@@ -17,7 +17,7 @@ var ContentItemEditor = function(options) {
     this.title = 'Content';
     this.insertButtonTitle = 'Insert';
     this.dialogContentUrl = '';
-    this.popoverButtonsContent = {};
+    this.popoverButtons = {};
     this.editorContentWidgetTemplate = '';
 
     $.extend(this, options);
@@ -26,7 +26,6 @@ var ContentItemEditor = function(options) {
         new ContentItemDialog(
             this.title,
             this.dialogContentUrl,
-            this.editDialogContentUrl,
             this.insertButtonTitle,
             this.editorContentWidgetTemplate
         );
@@ -69,21 +68,21 @@ var ContentItemEditor = function(options) {
 
     this.createEditWidgetButton = function () {
         return editorButtons.PopoverButton(
-            this.popoverButtonsContent.editWidget,
+            this.popoverButtons.editWidget,
             this.showDialogHandler
         );
     };
 
     this.createEditContentItemButton = function () {
         return editorButtons.PopoverButton(
-            this.popoverButtonsContent.editContentItem,
+            this.popoverButtons.editContentItem,
             this.editContentItemHandler
         );
     };
 
     this.createRemoveContentItemButton = function () {
         return editorButtons.PopoverButton(
-            this.popoverButtonsContent.removeContentItem,
+            this.popoverButtons.removeContentItem,
             this.removeContentItemHandler
         );
     };
