@@ -95,31 +95,24 @@ class QuoteMapper implements QuoteMapperInterface
         $allowedQuoteFields = $this->quoteConfig->getQuoteFieldsAllowedForSaving();
         $filteredQuoteData = $this->filterDisallowedQuoteData($quoteTransfer, $allowedQuoteFields);
 
-        return $this->encodingService->encodeJson($filteredQuoteData, JSON_FORCE_OBJECT);
+        return $this->encodingService->encodeJson($filteredQuoteData, JSON_OBJECT_AS_ARRAY);
     }
 
     /**
      * @param array $quoteData
      * @param array $allowedQuoteFields
-     * @param array $data
      *
      * @return array
      */
-    protected function filterDisallowedQuoteData($quoteData, array $allowedQuoteFields, string $groupKey = '')
+    protected function filterDisallowedQuoteData($quoteData, array $allowedQuoteFields)
     {
         $data = [];
 
         foreach ($allowedQuoteFields as $fieldKey => $fieldData) {
             if (is_array($fieldData) && isset($quoteData[$fieldKey])) {
-                if ($quoteData[$fieldKey] instanceof ArrayObject) {
-                    foreach ($quoteData[$fieldKey] as $itemData) {
-                        $data[$fieldKey][] = $this->filterDisallowedQuoteData($itemData, $fieldData, $fieldKey);
-                    }
-
-                    continue;
+                foreach ($quoteData[$fieldKey] as $itemData) {
+                    $data[$fieldKey][] = $this->filterDisallowedQuoteData($itemData, $fieldData);
                 }
-
-                $data[$fieldKey][] = $this->filterDisallowedQuoteData($quoteData[$fieldKey], $fieldData, $fieldKey);
 
                 continue;
             }
@@ -129,7 +122,6 @@ class QuoteMapper implements QuoteMapperInterface
 
                 continue;
             }
-
         }
 
         return $data;

@@ -52,12 +52,12 @@ class FilterDisallowedQuoteDataTest extends Unit
         $filterDisallowedQuoteDataMethod = $mapperReflection->getMethod('filterDisallowedQuoteData');
         $filterDisallowedQuoteDataMethod->setAccessible(true);
 
-        $quoteData = $filterDisallowedQuoteDataMethod->invokeArgs($mapper, [
+        $filteredDisallowedQuoteData = $filterDisallowedQuoteDataMethod->invokeArgs($mapper, [
             $quoteData,
             $allowedQuoteFields
         ]);
 
-        $this->assertEquals($expectedQuoteData, $quoteData);
+        $this->assertEquals($expectedQuoteData, $filteredDisallowedQuoteData);
     }
 
     /**
