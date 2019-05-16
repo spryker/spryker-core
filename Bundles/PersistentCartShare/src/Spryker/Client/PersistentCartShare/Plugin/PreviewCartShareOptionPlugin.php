@@ -33,11 +33,11 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
      * @return bool
      */
-    public function isApplicable(CustomerTransfer $customerTransfer): bool
+    public function isApplicable(?CustomerTransfer $customerTransfer = null): bool
     {
         return true;
     }
