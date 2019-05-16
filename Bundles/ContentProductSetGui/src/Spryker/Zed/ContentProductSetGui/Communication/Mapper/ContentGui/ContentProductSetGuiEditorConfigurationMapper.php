@@ -19,14 +19,14 @@ class ContentProductSetGuiEditorConfigurationMapper implements ContentProductSet
     /**
      * @var \Spryker\Zed\ContentProductSetGui\ContentProductSetGuiConfig
      */
-    protected $config;
+    protected $contentProductSetGuiConfig;
 
     /**
-     * @param \Spryker\Zed\ContentProductSetGui\ContentProductSetGuiConfig $config
+     * @param \Spryker\Zed\ContentProductSetGui\ContentProductSetGuiConfig $contentProductSetGuiConfig
      */
-    public function __construct(ContentProductSetGuiConfig $config)
+    public function __construct(ContentProductSetGuiConfig $contentProductSetGuiConfig)
     {
-        $this->config = $config;
+        $this->contentProductSetGuiConfig = $contentProductSetGuiConfig;
     }
 
     /**
@@ -36,7 +36,7 @@ class ContentProductSetGuiEditorConfigurationMapper implements ContentProductSet
     {
         $templates = [];
 
-        foreach ($this->config->getContentWidgetTemplates() as $templateIdentifier => $templateName) {
+        foreach ($this->contentProductSetGuiConfig->getContentWidgetTemplates() as $templateIdentifier => $templateName) {
             $templates[] = (new ContentWidgetTemplateTransfer())
                 ->setIdentifier($templateIdentifier)
                 ->setName($templateName);
@@ -52,7 +52,7 @@ class ContentProductSetGuiEditorConfigurationMapper implements ContentProductSet
     {
         return sprintf(
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE_FORMAT,
-            $this->config->getTwigFunctionName(),
+            $this->contentProductSetGuiConfig->getTwigFunctionName(),
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE_ID,
             static::PARAMETER_TWIG_FUNCTION_TEMPLATE
         );
