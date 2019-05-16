@@ -36,12 +36,13 @@ class CmsBlockProductConnectorRepository extends AbstractRepository implements C
             ->endUse()
             ->find();
 
+        $factory = $this->getFactory();
+
         /**
          * @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
          */
         foreach ($productAbstractEntities as $productAbstractEntity) {
-            $productAbstractTransfers[] = $this->getFactory()
-                ->createCmsBlockProductConnectorMapper()
+            $productAbstractTransfers[] = $factory->createCmsBlockProductConnectorMapper()
                 ->mapProductAbstractEntityToProductAbstractTransfer($productAbstractEntity, new ProductAbstractTransfer());
         }
 

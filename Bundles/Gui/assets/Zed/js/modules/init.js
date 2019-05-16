@@ -89,10 +89,11 @@ $(document).ready(function() {
     $('.dropdown-toggle').dropdown();
 
     $('.spryker-form-select2combobox').each(function(index, element) {
+        var select2InitOptions = {};
+
         if ($(element).data('autocomplete-url')) {
             var autocompleteUrl = $(element).data('autocomplete-url');
-
-            $(element).select2({
+            select2InitOptions = {
                 ajax: {
                     url: autocompleteUrl,
                     dataType: 'json',
@@ -100,11 +101,11 @@ $(document).ready(function() {
                     cache: true,
                 },
                 minimumInputLength: 3
-            });
-        } else {
-            $(element).select2();
+            };
         }
-    })
+
+        $(element).select2(select2InitOptions);
+    });
 
     /* Init tabs */
     $('.tabs-container').each(function(index, item){

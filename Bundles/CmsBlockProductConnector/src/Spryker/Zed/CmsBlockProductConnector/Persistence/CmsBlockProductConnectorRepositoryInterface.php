@@ -20,7 +20,7 @@ interface CmsBlockProductConnectorRepositoryInterface
     /**
      * @param int $idCmsBlock
      *
-     * @return array
+     * @return int[]
      */
     public function getAssignedProductAbstractIds(int $idCmsBlock): array;
 }

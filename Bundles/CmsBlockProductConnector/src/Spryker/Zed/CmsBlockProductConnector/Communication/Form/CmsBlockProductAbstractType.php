@@ -87,9 +87,9 @@ class CmsBlockProductAbstractType extends AbstractType
      */
     protected function getProductSearchPreSubmitCallback(): callable
     {
-        return function (FormEvent $e) {
-            $data = $e->getData();
-            $form = $e->getForm();
+        return function (FormEvent $formEvent) {
+            $data = $formEvent->getData();
+            $form = $formEvent->getForm();
 
             if (empty($data[static::FIELD_ID_PRODUCT_ABSTRACTS])) {
                 return;
