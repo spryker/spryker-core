@@ -125,7 +125,7 @@ var ContentItemDialog = function(
                 templateIdentifier,
                 widgetHtmlTemplate
             ) {
-                var builtText = twigTemplate.replace(/%\w+%/g, function (param) {
+                var shortCode = twigTemplate.replace(/%\w+%/g, function (param) {
                     return {
                         '%ID%': id,
                         '%TEMPLATE%': templateIdentifier
@@ -139,7 +139,7 @@ var ContentItemDialog = function(
                         '%NAME%': contentName,
                         '%TEMPLATE_DISPLAY_NAME%': templateName,
                         '%TEMPLATE%': templateIdentifier,
-                        '%SHORT_CODE%': builtText,
+                        '%SHORT_CODE%': shortCode,
                     }[param];
                 });
 
