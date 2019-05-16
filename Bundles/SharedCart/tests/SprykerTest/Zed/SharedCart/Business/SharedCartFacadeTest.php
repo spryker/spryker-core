@@ -40,11 +40,6 @@ class SharedCartFacadeTest extends Test
     protected const GLOSSARY_KEY_UNABLE_TO_SHARE_CART = 'shared_cart.resource_share.strategy.error.unable_to_share_cart';
 
     /**
-     * @uses \Spryker\Shared\SharedCart\SharedCartConfig::KEY_SHARE_OPTION
-     */
-    protected const KEY_SHARE_OPTION = 'share_option';
-
-    /**
      * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_READ_ONLY
      */
     public const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
@@ -54,19 +49,9 @@ class SharedCartFacadeTest extends Test
      */
     public const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
 
-    /**
-     * @uses \Spryker\Client\PersistentCartShare\ResourceShare\ResourceShareRequestBuilder::KEY_ID_QUOTE
-     */
+    protected const KEY_SHARE_OPTION = 'share_option';
     protected const KEY_ID_QUOTE = 'id_quote';
-
-    /**
-     * @uses \Spryker\Client\PersistentCartShare\ResourceShare\ResourceShareRequestBuilder::KEY_OWNER_ID_COMPANY_USER
-     */
     protected const KEY_OWNER_ID_COMPANY_USER = 'owner_id_company_user';
-
-    /**
-     * @uses \Spryker\Client\PersistentCartShare\ResourceShare\ResourceShareRequestBuilder::KEY_OWNER_ID_COMPANY_BUSINESS_UNIT
-     */
     protected const KEY_OWNER_ID_COMPANY_BUSINESS_UNIT = 'owner_id_company_business_unit';
 
     protected const VALUE_SHARE_OPTION = 'VALUE_SHARE_OPTION';

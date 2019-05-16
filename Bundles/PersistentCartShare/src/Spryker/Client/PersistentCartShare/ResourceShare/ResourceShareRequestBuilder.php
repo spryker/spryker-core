@@ -21,21 +21,9 @@ class ResourceShareRequestBuilder implements ResourceShareRequestBuilderInterfac
     protected const RESOURCE_TYPE_QUOTE = 'quote';
 
     /**
-     * @uses \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::KEY_ID_QUOTE
-     */
-    protected const KEY_ID_QUOTE = 'id_quote';
-
-    /**
-     * @uses \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::KEY_SHARE_OPTION
-     */
-    protected const KEY_SHARE_OPTION = 'share_option';
-
-    /**
      * @uses \Spryker\Zed\PersistentCartShare\PersistentCartShareConfig::SHARE_OPTION_PREVIEW
      */
     protected const SHARE_OPTION_PREVIEW = 'PREVIEW';
-
-    protected const KEY_OWNER_ID_COMPANY_BUSINESS_UNIT = 'owner_id_company_business_unit';
 
     /**
      * @var \Spryker\Client\PersistentCartShare\Dependency\Client\PersistentCartShareToCustomerClientInterface
