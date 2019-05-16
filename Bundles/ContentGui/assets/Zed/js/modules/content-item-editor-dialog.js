@@ -192,6 +192,8 @@ var ContentItemDialog = function(
 
                 if (this.$clickedNodeInEditor) {
                     this.$replaceRange = this.$range.createFromNode(this.$clickedNodeInEditor);
+                } else {
+                    this.context.invoke('editor.saveRange');
                 }
 
                 var urlParams = {type: dataset.type};
@@ -206,7 +208,6 @@ var ContentItemDialog = function(
 
                 var url = dialogContentUrl + '?' + $.param(urlParams);
 
-                this.context.invoke('editor.saveRange');
                 this.clearContent();
                 this.getDialogContent(url);
                 this.$ui.showDialog(this.$dialog);
