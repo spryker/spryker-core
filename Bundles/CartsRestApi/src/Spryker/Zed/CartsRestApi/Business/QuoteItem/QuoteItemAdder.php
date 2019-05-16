@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
+use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -33,18 +34,26 @@ class QuoteItemAdder implements QuoteItemAdderInterface
     protected $quoteItemMapper;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker
+     */
+    protected $quotePermissionChecker;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
+     * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker $quotePermissionChecker
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         QuoteReaderInterface $quoteReader,
-        QuoteItemMapperInterface $quoteItemMapper
+        QuoteItemMapperInterface $quoteItemMapper,
+        QuotePermissionChecker $quotePermissionChecker
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->quoteReader = $quoteReader;
         $this->quoteItemMapper = $quoteItemMapper;
+        $this->quotePermissionChecker = $quotePermissionChecker;
     }
 
     /**
@@ -61,6 +70,15 @@ class QuoteItemAdder implements QuoteItemAdderInterface
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
             $this->quoteItemMapper->mapRestCartItemRequestTransferToQuoteTransfer($restCartItemRequestTransfer)
         );
+
+        $quoteResponseTransfer->getQuoteTransfer()
+            ->setCustomer($restCartItemRequestTransfer->getCustomer());
+
+        if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteResponseTransfer->getQuoteTransfer())) {
+            return $quoteResponseTransfer
+                ->addErrorCode(CartsRestApiSharedConfig::RESPONSE_CODE_UNAUTHORIZED_ACTION);
+        }
+
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }

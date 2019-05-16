@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -39,21 +40,29 @@ class CartItemAdder implements CartItemAdderInterface
     protected $cartsResourceMapper;
 
     /**
+     * @var array|\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface[]
+     */
+    protected $quoteCustomerExpanderPlugins;
+
+    /**
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface[] $quoteCustomerExpanderPlugins
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
         CartItemsResourceMapperInterface $cartItemsResourceMapper,
-        CartsResourceMapperInterface $cartsResourceMapper
+        CartsResourceMapperInterface $cartsResourceMapper,
+        array $quoteCustomerExpanderPlugins
     ) {
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
         $this->cartsResourceMapper = $cartsResourceMapper;
+        $this->quoteCustomerExpanderPlugins = $quoteCustomerExpanderPlugins;
     }
 
     /**
@@ -72,6 +81,12 @@ class CartItemAdder implements CartItemAdderInterface
             $restRequest,
             $this->findCartIdentifier($restRequest)
         );
+
+        foreach ($this->quoteCustomerExpanderPlugins as $quoteCustomerExpanderPlugin) {
+            $restCartItemRequestTransfer->setCustomer(
+                $quoteCustomerExpanderPlugin->expand($restCartItemRequestTransfer->getCustomer(), $restRequest)
+            );
+        }
 
         $quoteResponseTransfer = $this->cartsRestApiClient->addItem($restCartItemRequestTransfer);
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {

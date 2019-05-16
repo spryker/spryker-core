@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -33,18 +34,26 @@ class CartItemDeleter implements CartItemDeleterInterface
     protected $cartItemsResourceMapper;
 
     /**
+     * @var array|\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface[]
+     */
+    protected $quoteCustomerExpanderPlugins;
+
+    /**
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface[] $quoteCustomerExpanderPlugins
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
-        CartItemsResourceMapperInterface $cartItemsResourceMapper
+        CartItemsResourceMapperInterface $cartItemsResourceMapper,
+        array $quoteCustomerExpanderPlugins
     ) {
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
+        $this->quoteCustomerExpanderPlugins = $quoteCustomerExpanderPlugins;
     }
 
     /**
@@ -62,6 +71,12 @@ class CartItemDeleter implements CartItemDeleterInterface
             $restRequest,
             $uuidQuote
         );
+
+        foreach ($this->quoteCustomerExpanderPlugins as $quoteCustomerExpanderPlugin) {
+            $restCartItemRequestTransfer->setCustomer(
+                $quoteCustomerExpanderPlugin->expand($restCartItemRequestTransfer->getCustomer(), $restRequest)
+            );
+        }
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteItem($restCartItemRequestTransfer);
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {

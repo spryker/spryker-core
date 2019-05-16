@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestCartItemCalculationsTransfer;
 use Generated\Shared\Transfer\RestCartItemRequestTransfer;
@@ -30,6 +31,7 @@ class CartItemsResourceMapper implements CartItemsResourceMapperInterface
         return (new RestCartItemRequestTransfer())
             ->setCartItem($cartItem)
             ->setCartUuid($uuidQuote)
+            ->setCustomer(new CustomerTransfer())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
     }
 

@@ -32,18 +32,26 @@ class CartUpdater implements CartUpdaterInterface
     protected $cartRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface[]
+     */
+    protected $quoteCustomerExpanderPlugins;
+
+    /**
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface[] $quoteCustomerExpanderPlugins
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,
         CartsResourceMapperInterface $cartsResourceMapper,
-        CartRestResponseBuilderInterface $cartRestResponseBuilder
+        CartRestResponseBuilderInterface $cartRestResponseBuilder,
+        array $quoteCustomerExpanderPlugins
     ) {
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->cartsResourceMapper = $cartsResourceMapper;
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
+        $this->quoteCustomerExpanderPlugins = $quoteCustomerExpanderPlugins;
     }
 
     /**
@@ -57,7 +65,15 @@ class CartUpdater implements CartUpdaterInterface
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
         $quoteTransfer = $this->cartsResourceMapper->mapRestCartsAttributesTransferToQuoteTransfer($restCartsAttributesTransfer, $restRequest);
-        $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($quoteTransfer->setUuid($restRequest->getResource()->getId()));
+        $quoteTransfer->setUuid($restRequest->getResource()->getId());
+
+        foreach ($this->quoteCustomerExpanderPlugins as $quoteCustomerExpanderPlugin) {
+            $quoteTransfer->setCustomer(
+                $quoteCustomerExpanderPlugin->expand($quoteTransfer->getCustomer(), $restRequest)
+            );
+        }
+
+        $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($quoteTransfer);
 
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {
             return $this->cartRestResponseBuilder->buildErrorRestResponseBasedOnErrorCodes($quoteResponseTransfer->getErrorCodes());

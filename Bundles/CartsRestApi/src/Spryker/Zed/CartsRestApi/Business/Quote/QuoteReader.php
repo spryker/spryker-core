@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
+use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
@@ -42,21 +43,29 @@ class QuoteReader implements QuoteReaderInterface
     protected $quoteMapper;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker
+     */
+    protected $quotePermissionChecker;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
+     * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker $quotePermissionChecker
      */
     public function __construct(
         CartsRestApiToQuoteFacadeInterface $quoteFacade,
         CartsRestApiToStoreFacadeInterface $storeFacade,
         QuoteCollectionReaderPluginInterface $quoteCollectionReaderPlugin,
-        QuoteMapperInterface $quoteMapper
+        QuoteMapperInterface $quoteMapper,
+        QuotePermissionChecker $quotePermissionChecker
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->storeFacade = $storeFacade;
         $this->quoteCollectionReaderPlugin = $quoteCollectionReaderPlugin;
         $this->quoteMapper = $quoteMapper;
+        $this->quotePermissionChecker = $quotePermissionChecker;
     }
 
     /**
@@ -69,6 +78,13 @@ class QuoteReader implements QuoteReaderInterface
         $quoteTransfer->requireUuid();
 
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
+        $quoteTransfer->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote());
+
+        if(!$this->quotePermissionChecker->checkQuoteReadPermission($quoteTransfer)){
+            return $quoteResponseTransfer
+                ->setIsSuccessful(false)
+                ->addErrorCode(CartsRestApiSharedConfig::RESPONSE_CODE_UNAUTHORIZED_ACTION);
+        }
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $quoteResponseTransfer

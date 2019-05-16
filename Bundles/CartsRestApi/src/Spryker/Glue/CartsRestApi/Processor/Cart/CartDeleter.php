@@ -33,18 +33,26 @@ class CartDeleter implements CartDeleterInterface
     protected $cartsResourceMapper;
 
     /**
+     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface[]
+     */
+    protected $quoteCustomerExpanderPlugins;
+
+    /**
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface[] $quoteCustomerExpanderPlugins
      */
     public function __construct(
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
         CartsRestApiClientInterface $cartsRestApiClient,
-        CartsResourceMapperInterface $cartsResourceMapper
+        CartsResourceMapperInterface $cartsResourceMapper,
+        array $quoteCustomerExpanderPlugins
     ) {
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->cartsResourceMapper = $cartsResourceMapper;
+        $this->quoteCustomerExpanderPlugins = $quoteCustomerExpanderPlugins;
     }
 
     /**
@@ -57,6 +65,12 @@ class CartDeleter implements CartDeleterInterface
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomer((new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier()))
             ->setUuid($restRequest->getResource()->getId());
+
+        foreach ($this->quoteCustomerExpanderPlugins as $quoteCustomerExpanderPlugin) {
+            $quoteTransfer->setCustomer(
+                $quoteCustomerExpanderPlugin->expand($quoteTransfer->getCustomer(), $restRequest)
+            );
+        }
 
         $quoteResponseTransfer = $this->cartsRestApiClient->deleteQuote($quoteTransfer);
         if (count($quoteResponseTransfer->getErrorCodes()) > 0) {

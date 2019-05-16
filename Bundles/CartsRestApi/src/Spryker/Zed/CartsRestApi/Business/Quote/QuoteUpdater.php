@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
+use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker;
 use Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -40,21 +41,30 @@ class QuoteUpdater implements QuoteUpdaterInterface
     protected $quoteMapper;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker
+     */
+    protected $quotePermissionChecker;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\Mapper\QuoteMapperInterface $quoteMapper
+     * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionChecker $quotePermissionChecker
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         CartsRestApiToCartFacadeInterface $cartFacade,
         QuoteReaderInterface $quoteReader,
-        QuoteMapperInterface $quoteMapper
+        QuoteMapperInterface $quoteMapper,
+        QuotePermissionChecker $quotePermissionChecker
+
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->cartFacade = $cartFacade;
         $this->quoteReader = $quoteReader;
         $this->quoteMapper = $quoteMapper;
+        $this->quotePermissionChecker = $quotePermissionChecker;
     }
 
     /**
@@ -80,6 +90,13 @@ class QuoteUpdater implements QuoteUpdaterInterface
             return $this->quoteMapper->mapQuoteResponseErrorsToRestCodes(
                 $quoteResponseTransfer
             );
+        }
+
+        $quoteTransfer->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote());
+
+        if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteTransfer)) {
+            return $quoteResponseTransfer
+                ->addErrorCode(CartsRestApiSharedConfig::RESPONSE_CODE_UNAUTHORIZED_ACTION);
         }
 
         $originalQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();

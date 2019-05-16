@@ -74,7 +74,8 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartReader(
             $this->createCartRestResponseBuilder(),
             $this->createCartsResourceMapper(),
-            $this->getClient()
+            $this->getClient(),
+            $this->getQuoteCustomerExpanderPlugins()
         );
     }
 
@@ -98,7 +99,8 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartDeleter(
             $this->createCartRestResponseBuilder(),
             $this->getClient(),
-            $this->createCartsResourceMapper()
+            $this->createCartsResourceMapper(),
+            $this->getQuoteCustomerExpanderPlugins()
         );
     }
 
@@ -110,7 +112,8 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartUpdater(
             $this->getClient(),
             $this->createCartsResourceMapper(),
-            $this->createCartRestResponseBuilder()
+            $this->createCartRestResponseBuilder(),
+            $this->getQuoteCustomerExpanderPlugins()
         );
     }
 
@@ -359,5 +362,13 @@ class CartsRestApiFactory extends AbstractFactory
     public function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_CREATOR);
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface[]
+     */
+    public function getQuoteCustomerExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_CUSTOMER_EXPANDER);
     }
 }

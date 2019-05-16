@@ -31,6 +31,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_QUOTE_COLLECTION_READER = 'PLUGIN_QUOTE_COLLECTION_READER';
     public const PLUGIN_QUOTE_CREATOR = 'PLUGIN_QUOTE_CREATOR';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const PLUGINS_QUOTE_CUSTOMER_EXPANDER = 'PLUGINS_QUOTE_CUSTOMER_EXPANDER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -48,6 +49,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPersistentCartClient($container);
         $container = $this->addQuoteCollectionReaderPlugin($container);
         $container = $this->addQuoteCreatorPlugin($container);
+        $container = $this->addQuoteCustomerExpanderPlugins($container);
 
         return $container;
     }
@@ -183,5 +185,27 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
             'to be able to create quote.',
             QuoteCreatorPluginInterface::class
         ));
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addQuoteCustomerExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_CUSTOMER_EXPANDER] = function () {
+            return $this->getQuoteCustomerExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCustomerExpanderPluginInterface[]
+     */
+    protected function getQuoteCustomerExpanderPlugins(): array
+    {
+        return [];
     }
 }

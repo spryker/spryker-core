@@ -91,6 +91,7 @@
         <property name="cartItem" type="Item" />
         <property name="cartUuid" type="string" />
         <property name="customerReference" type="string" />
+        <property name="customer" type="Customer" />
     </transfer>
 
     <transfer name="QuoteError">
