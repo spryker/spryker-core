@@ -26,8 +26,8 @@ module.exports = {
                     }
                     break;
                 case 'popover':
-                    var defaultPopoveroptions = $.summernote.options.popover;
-                    var extendedOptions = $.extend(defaultPopoveroptions, newConfig.popover);
+                    var defaultPopoverOptions = $.summernote.options.popover;
+                    var extendedOptions = $.extend(defaultPopoverOptions, newConfig.popover);
 
                     baseConfig.popover = extendedOptions;
                     break;
