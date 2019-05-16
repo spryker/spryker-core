@@ -25,7 +25,7 @@ class PersistentCartShareClientTest extends Unit
 {
     protected const VALUE_SHARE_OPTION_GROUP = 'VALUE_SHARE_OPTION_GROUP';
     protected const VALUE_KEY = 'VALUE_KEY';
-    protected const VALUE_IS_ALLOWED_FOR_CUSTOMER = true;
+    protected const VALUE_IS_APPLICABLE = true;
 
     /**
      * @var \SprykerTest\Client\PersistentCartShare\PersistentCartShareClientTester
@@ -63,7 +63,7 @@ class PersistentCartShareClientTest extends Unit
     protected function createShareOptionPluginMock()
     {
         $cartShareOptionPluginMock = $this->getMockBuilder(CartShareOptionPluginInterface::class)
-            ->setMethods(['getKey', 'getShareOptionGroup', 'isAllowedForCustomer'])
+            ->setMethods(['getKey', 'getShareOptionGroup', 'isApplicable'])
             ->getMock();
 
         $cartShareOptionPluginMock
@@ -75,8 +75,8 @@ class PersistentCartShareClientTest extends Unit
             ->willReturn(static::VALUE_SHARE_OPTION_GROUP);
 
         $cartShareOptionPluginMock
-            ->method('isAllowedForCustomer')
-            ->willReturn(static::VALUE_IS_ALLOWED_FOR_CUSTOMER);
+            ->method('isApplicable')
+            ->willReturn(static::VALUE_IS_APPLICABLE);
 
         return $cartShareOptionPluginMock;
     }
