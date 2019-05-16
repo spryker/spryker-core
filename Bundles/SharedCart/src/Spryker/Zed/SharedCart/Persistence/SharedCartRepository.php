@@ -17,7 +17,6 @@ use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
 use Orm\Zed\SharedCart\Persistence\Map\SpyQuoteCompanyUserTableMap;
-use Orm\Zed\SharedCart\Persistence\Map\SpyQuotePermissionGroupTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Shared\SharedCart\SharedCartConfig;
@@ -329,20 +328,6 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
         return $this->getFactory()
             ->createQuoteShareDetailMapper()
             ->mapShareDetailCollection($quoteCompanyUserEntities, $this->findQuotePermissionGroupList(new QuotePermissionGroupCriteriaFilterTransfer()));
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return int|null
-     */
-    public function findIdQuotePermissionGroupByName(string $name): ?int
-    {
-        return $this->getFactory()
-            ->createQuotePermissionGroupQuery()
-            ->filterByName($name)
-            ->select(SpyQuotePermissionGroupTableMap::COL_ID_QUOTE_PERMISSION_GROUP)
-            ->findOne();
     }
 
     /**

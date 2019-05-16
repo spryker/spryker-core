@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SharedCart\Business\ResourceShare;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
@@ -59,14 +60,23 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
      */
     public function createCartShareForProvidedCompanyUser(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        $shareCartRequestTransfer = $this->buildShareCartRequestTransfer($resourceShareRequestTransfer);
-        if (!$shareCartRequestTransfer) {
+        $shareOption = $resourceShareRequestTransfer->getResourceShare()
+            ->getResourceShareData()
+            ->getShareOption();
+
+        $quotePermissionGroupTransfer = $this->findQuotePermissionGroupByName($shareOption);
+        if (!$quotePermissionGroupTransfer) {
             return (new ResourceShareResponseTransfer())
                 ->setIsSuccessful(false)
                 ->addMessage(
                     (new MessageTransfer())->setValue(static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART)
                 );
         }
+
+        $shareCartRequestTransfer = $this->buildShareCartRequestTransfer(
+            $resourceShareRequestTransfer,
+            $quotePermissionGroupTransfer
+        );
 
         $this->quoteCompanyUserWriter->addQuoteCompanyUser($shareCartRequestTransfer);
 
@@ -95,9 +105,11 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
                 ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
         }
 
-        $fullAccessIdQuotePermissionGroup = $this->sharedCartRepository->findIdQuotePermissionGroupByName($resourceShareOptionName);
-        if ($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup() !== $fullAccessIdQuotePermissionGroup) {
-            $this->updateShareDetailQuotePermissionGroup($shareDetailTransfer, $fullAccessIdQuotePermissionGroup);
+        $fullAccessQuotePermissionGroupTransfer = $this->findQuotePermissionGroupByName($resourceShareOptionName);
+        if ($shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup() !== $fullAccessQuotePermissionGroupTransfer->getIdQuotePermissionGroup()) {
+            $shareDetailTransfer->setQuotePermissionGroup($fullAccessQuotePermissionGroupTransfer);
+
+            $this->sharedCartEntityManager->updateCompanyUserQuotePermissionGroup($shareDetailTransfer);
         }
 
         return (new ResourceShareResponseTransfer())
@@ -106,35 +118,21 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
-     * @param int $idQuotePermissionGroup
-     *
-     * @return void
-     */
-    protected function updateShareDetailQuotePermissionGroup(ShareDetailTransfer $shareDetailTransfer, int $idQuotePermissionGroup): void
-    {
-        $shareDetailTransfer->getQuotePermissionGroup()->setIdQuotePermissionGroup($idQuotePermissionGroup);
-
-        $this->sharedCartEntityManager->updateCompanyUserQuotePermissionGroup($shareDetailTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
      *
-     * @return \Generated\Shared\Transfer\ShareCartRequestTransfer|null
+     * @return \Generated\Shared\Transfer\ShareCartRequestTransfer
      */
-    protected function buildShareCartRequestTransfer(ResourceShareRequestTransfer $resourceShareRequestTransfer): ?ShareCartRequestTransfer
-    {
+    protected function buildShareCartRequestTransfer(
+        ResourceShareRequestTransfer $resourceShareRequestTransfer,
+        QuotePermissionGroupTransfer $quotePermissionGroupTransfer
+    ): ShareCartRequestTransfer {
         $resourceShareDataTransfer = $resourceShareRequestTransfer->getResourceShare()
             ->getResourceShareData();
 
         $idCompanyUser = $resourceShareRequestTransfer->getCustomer()
             ->getCompanyUserTransfer()
             ->getIdCompanyUser();
-
-        $quotePermissionGroupTransfer = $this->findQuotePermissionGroupByName(
-            $resourceShareDataTransfer->getShareOption()
-        );
 
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setIdCompanyUser($idCompanyUser)
@@ -149,13 +147,18 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
     /**
      * @param string $name
      *
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer|null
      */
-    protected function findQuotePermissionGroupByName(string $name): QuotePermissionGroupTransfer
+    protected function findQuotePermissionGroupByName(string $name): ?QuotePermissionGroupTransfer
     {
-        $idQuotePermissionGroup = $this->sharedCartRepository->findIdQuotePermissionGroupByName($name);
+        $quotePermissionGroups = $this->sharedCartRepository->findQuotePermissionGroupList(
+            (new QuotePermissionGroupCriteriaFilterTransfer())->setName($name)
+        );
 
-        return (new QuotePermissionGroupTransfer())
-            ->setIdQuotePermissionGroup($idQuotePermissionGroup);
+        if (!count($quotePermissionGroups)) {
+            return null;
+        }
+
+        return reset($quotePermissionGroups);
     }
 }

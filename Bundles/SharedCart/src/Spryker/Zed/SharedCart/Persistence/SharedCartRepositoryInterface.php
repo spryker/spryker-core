@@ -87,13 +87,6 @@ interface SharedCartRepositoryInterface
     public function findShareDetailsByQuoteId(int $idQuote): ShareDetailCollectionTransfer;
 
     /**
-     * @param string $name
-     *
-     * @return int|null
-     */
-    public function findIdQuotePermissionGroupByName(string $name): ?int;
-
-    /**
      * @param int $idQuote
      * @param int $idCompanyUser
      *
