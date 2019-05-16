@@ -10,9 +10,9 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleConcreteTable;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface;
-use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface;
 
 class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterface
@@ -26,28 +26,28 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
     protected $priceProductFacade;
 
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface
      */
     protected $translatorFacade;
 
     /**
+     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface
+     */
+    protected $rowFormatter;
+
+    /**
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade
-     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface $rowFormatter
      */
     public function __construct(
         PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade,
-        PriceProductScheduleGuiToStoreFacadeInterface $storeFacade,
-        PriceProductScheduleGuiToTranslatorFacadeInterface $translatorFacade
+        PriceProductScheduleGuiToTranslatorFacadeInterface $translatorFacade,
+        RowFormatterInterface $rowFormatter
     ) {
         $this->priceProductFacade = $priceProductFacade;
-        $this->storeFacade = $storeFacade;
         $this->translatorFacade = $translatorFacade;
+        $this->rowFormatter = $rowFormatter;
     }
 
     /**
@@ -117,7 +117,7 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
             new PriceProductScheduleConcreteTable(
                 $viewData['idProduct'],
                 $priceTypeTransfer->getIdPriceType(),
-                $this->storeFacade
+                $this->rowFormatter
             )
         );
     }

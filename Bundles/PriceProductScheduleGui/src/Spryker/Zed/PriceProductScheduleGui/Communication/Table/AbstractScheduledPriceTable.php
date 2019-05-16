@@ -8,13 +8,12 @@
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Table;
 
 use DateTime;
-use DateTimeZone;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface;
 
 abstract class AbstractScheduledPriceTable extends AbstractTable
 {
@@ -25,19 +24,19 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     protected const COL_ACTIVE_FROM = 'active_from';
     protected const COL_ACTIVE_TO = 'active_to';
     protected const COL_ACTIONS = 'actions';
-    protected const DATE_FORMAT = 'Y-m-d e H:i:s';
 
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface
+     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface
      */
-    protected $storeFacade;
+    protected $rowFormatter;
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface $rowFormatter
      */
-    public function __construct(PriceProductScheduleGuiToStoreFacadeInterface $storeFacade)
-    {
-        $this->storeFacade = $storeFacade;
+    public function __construct(
+        RowFormatterInterface $rowFormatter
+    ) {
+        $this->rowFormatter = $rowFormatter;
     }
 
     /**
@@ -110,28 +109,36 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     protected function generateItem(SpyPriceProductSchedule $priceProductScheduleEntity): array
     {
         return [
-            static::COL_NET_PRICE => $priceProductScheduleEntity->getNetPrice(),
-            static::COL_GROSS_PRICE => $priceProductScheduleEntity->getGrossPrice(),
+            static::COL_NET_PRICE => $this->formatMoney($priceProductScheduleEntity->getNetPrice(), $priceProductScheduleEntity),
+            static::COL_GROSS_PRICE => $this->formatMoney($priceProductScheduleEntity->getGrossPrice(), $priceProductScheduleEntity),
             static::COL_STORE => $priceProductScheduleEntity->getStore()->getName(),
             static::COL_CURRENCY => $priceProductScheduleEntity->getCurrency()->getCode(),
-            static::COL_ACTIVE_FROM => $this->prepareDateTime($priceProductScheduleEntity->getActiveFrom(), $priceProductScheduleEntity)->format(static::DATE_FORMAT),
-            static::COL_ACTIVE_TO => $this->prepareDateTime($priceProductScheduleEntity->getActiveTo(), $priceProductScheduleEntity)->format(static::DATE_FORMAT),
+            static::COL_ACTIVE_FROM => $this->formatDateTime($priceProductScheduleEntity->getActiveFrom(), $priceProductScheduleEntity->getFkStore()),
+            static::COL_ACTIVE_TO => $this->formatDateTime($priceProductScheduleEntity->getActiveTo(), $priceProductScheduleEntity->getFkStore()),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($priceProductScheduleEntity)),
         ];
     }
 
     /**
      * @param \DateTime $dateTime
+     * @param int $fkStore
+     *
+     * @return string
+     */
+    protected function formatDateTime(DateTime $dateTime, int $fkStore): string
+    {
+        return $this->rowFormatter->formatDateTime($dateTime, $fkStore);
+    }
+
+    /**
+     * @param int $amount
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
      *
-     * @return \DateTime
+     * @return string
      */
-    protected function prepareDateTime(DateTime $dateTime, SpyPriceProductSchedule $priceProductScheduleEntity): DateTime
+    protected function formatMoney(int $amount, SpyPriceProductSchedule $priceProductScheduleEntity): string
     {
-        $storeTransfer = $this->storeFacade->getStoreById($priceProductScheduleEntity->getFkStore());
-        $timeZone = new DateTimeZone($storeTransfer->getTimezone());
-
-        return $dateTime->setTimezone($timeZone);
+        return $this->rowFormatter->formatMoney($amount, $priceProductScheduleEntity);
     }
 
     /**
