@@ -70,7 +70,7 @@ class TaxProductStoragePublishListenerTest extends Unit
     /**
      * @return void
      */
-    public function testHandleBulkProductAlternativeStorageEntityCanBePublished(): void
+    public function testHandleBulkTaxProductStorageEntityCanBePublished(): void
     {
         // Arrange
         $eventTransfers = [

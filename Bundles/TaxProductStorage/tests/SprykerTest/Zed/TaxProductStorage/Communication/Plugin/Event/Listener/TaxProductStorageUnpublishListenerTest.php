@@ -72,7 +72,7 @@ class TaxProductStorageUnpublishListenerTest extends Unit
     /**
      * @return void
      */
-    public function testHandleBulkProductAlternativeStorageEntityCanBeUnpublished(): void
+    public function testHandleBulkTaxProductStorageEntityCanBeUnpublished(): void
     {
         // Arrange
         $eventTransfers = [
