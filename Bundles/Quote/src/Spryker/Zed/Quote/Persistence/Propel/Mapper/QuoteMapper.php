@@ -93,7 +93,10 @@ class QuoteMapper implements QuoteMapperInterface
     protected function encodeQuoteData(QuoteTransfer $quoteTransfer)
     {
         $allowedQuoteFields = $this->quoteConfig->getQuoteFieldsAllowedForSaving();
-        $filteredQuoteData = $this->filterDisallowedQuoteData($quoteTransfer, $allowedQuoteFields);
+        $filteredQuoteData = $this->filterDisallowedQuoteData(
+            $quoteTransfer->modifiedToArray(true, true),
+            $allowedQuoteFields
+        );
 
         return $this->encodingService->encodeJson($filteredQuoteData, JSON_OBJECT_AS_ARRAY);
     }
@@ -104,27 +107,9 @@ class QuoteMapper implements QuoteMapperInterface
      *
      * @return array
      */
-    protected function filterDisallowedQuoteData($quoteData, array $allowedQuoteFields)
+    protected function filterDisallowedQuoteData(array $quoteData, array $allowedQuoteFields)
     {
         $data = [];
-
-        foreach ($allowedQuoteFields as $fieldKey => $fieldData) {
-            if (is_array($fieldData) && isset($quoteData[$fieldKey])) {
-                foreach ($quoteData[$fieldKey] as $itemData) {
-                    $data[$fieldKey][] = $this->filterDisallowedQuoteData($itemData, $fieldData);
-                }
-
-                continue;
-            }
-
-            if (isset($quoteData[$fieldData])) {
-                $data[$fieldData] = $quoteData[$fieldData];
-
-                continue;
-            }
-        }
-
-        return $data;
 
         foreach ($allowedQuoteFields as $fieldKey => $fieldData) {
             if (is_string($fieldData) && isset($quoteData[$fieldData])) {
@@ -134,13 +119,11 @@ class QuoteMapper implements QuoteMapperInterface
             }
 
             if (is_array($fieldData) && isset($quoteData[$fieldKey])) {
-                foreach ($fieldData as $fieldName) {
-                    foreach ($quoteData[$fieldKey] as $key => $value) {
-                        if (isset($value[$fieldName])) {
-                            $data[$fieldKey][$key][$fieldName] = $value[$fieldName];
-                        }
-                    }
+                foreach ($quoteData[$fieldKey] as $itemData) {
+                    $data[$fieldKey][] = $this->filterDisallowedQuoteData($itemData, $fieldData);
                 }
+
+                continue;
             }
         }
 
