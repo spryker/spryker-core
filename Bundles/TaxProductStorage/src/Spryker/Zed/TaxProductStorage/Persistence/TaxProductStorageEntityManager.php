@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class TaxProductStorageEntityManager extends AbstractEntityManager implements TaxProductStorageEntityManagerInterface
 {
+    protected const COL_FK_PRODUCT_ABSTRACT = 'FkProductAbstract';
+
     /**
      * @param int[] $productAbstractIds
      *
@@ -22,10 +24,11 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
      */
     public function deleteTaxProductStoragesByProductAbstractIds(array $productAbstractIds): void
     {
-        $this->getFactory()
-            ->createTaxProductStorageQuery()
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->delete();
+        $spyTaxProductStorages = $this->findSpyTaxProductStoragesByProductAbstractIdsIndexedByProductAbstractIds($productAbstractIds);
+
+        foreach ($spyTaxProductStorages as $spyTaxProductStorage) {
+            $spyTaxProductStorage->delete();
+        }
     }
 
     /**
@@ -60,7 +63,7 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
             ->createTaxProductStorageQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->find()
-            ->getArrayCopy('idProductAbstract');
+            ->toKeyIndex(static::COL_FK_PRODUCT_ABSTRACT);
     }
 
     /**

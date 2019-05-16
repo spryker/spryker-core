@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorageEntityManagerInterface
 {
+    protected const COL_FK_TAX_SET = 'FkTaxSet';
+
     /**
      * @param \Generated\Shared\Transfer\TaxSetStorageTransfer[] $taxSetStorageTransfers
      *
@@ -63,7 +65,7 @@ class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorag
             ->createTaxSetStorageQuery()
             ->filterByFkTaxSet_In($taxSetIds)
             ->find()
-            ->toKeyIndex('FkTaxSet');
+            ->toKeyIndex(static::COL_FK_TAX_SET);
 
         return $spyTaxSetStorage;
     }
