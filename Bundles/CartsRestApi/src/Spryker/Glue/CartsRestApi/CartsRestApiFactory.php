@@ -126,7 +126,8 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
             $this->createCartItemsResourceMapper(),
-            $this->createCartsResourceMapper()
+            $this->createCartsResourceMapper(),
+            $this->getQuoteCustomerExpanderPlugins()
         );
     }
 
@@ -138,7 +139,8 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartItemDeleter(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->createCartItemsResourceMapper()
+            $this->createCartItemsResourceMapper(),
+            $this->getQuoteCustomerExpanderPlugins()
         );
     }
 
@@ -151,7 +153,8 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
             $this->createCartsResourceMapper(),
-            $this->createCartItemsResourceMapper()
+            $this->createCartItemsResourceMapper(),
+            $this->getQuoteCustomerExpanderPlugins()
         );
     }
 
@@ -215,7 +218,8 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
             $this->createCartsResourceMapper(),
-            $this->createCartItemsResourceMapper()
+            $this->createCartItemsResourceMapper(),
+            $this->getQuoteCustomerExpanderPlugins()
         );
     }
 
@@ -227,7 +231,8 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartItemDeleter(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->createCartItemsResourceMapper()
+            $this->createCartItemsResourceMapper(),
+            $this->getQuoteCustomerExpanderPlugins()
         );
     }
 

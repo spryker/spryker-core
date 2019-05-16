@@ -7,18 +7,21 @@
 
 namespace Spryker\Glue\CartsRestApiExtension\Dependency\Plugin;
 
-
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface QuoteCustomerExpanderPluginInterface
 {
     /**
+     * Specification:
+     * - Expands customer transfer with additional data.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function expand(CustomerTransfer $customerTransfer, RestRequestInterface $restRequest): CustomerTransfer;
-
 }

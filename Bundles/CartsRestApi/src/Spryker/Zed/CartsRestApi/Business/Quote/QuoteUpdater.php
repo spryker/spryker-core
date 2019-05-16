@@ -58,7 +58,6 @@ class QuoteUpdater implements QuoteUpdaterInterface
         QuoteReaderInterface $quoteReader,
         QuoteMapperInterface $quoteMapper,
         QuotePermissionChecker $quotePermissionChecker
-
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->cartFacade = $cartFacade;

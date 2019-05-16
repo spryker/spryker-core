@@ -80,7 +80,7 @@ class QuoteReader implements QuoteReaderInterface
         $quoteResponseTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
         $quoteTransfer->setIdQuote($quoteResponseTransfer->getQuoteTransfer()->getIdQuote());
 
-        if(!$this->quotePermissionChecker->checkQuoteReadPermission($quoteTransfer)){
+        if (!$this->quotePermissionChecker->checkQuoteReadPermission($quoteTransfer)) {
             return $quoteResponseTransfer
                 ->setIsSuccessful(false)
                 ->addErrorCode(CartsRestApiSharedConfig::RESPONSE_CODE_UNAUTHORIZED_ACTION);
