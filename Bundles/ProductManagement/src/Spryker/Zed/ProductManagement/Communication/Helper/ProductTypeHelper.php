@@ -37,6 +37,7 @@ class ProductTypeHelper implements ProductTypeHelperInterface
         $productAbstractTransfer->requireSku();
 
         $productAbstractEntity = $this->getProductAbstractEntity($productAbstractTransfer->getSku());
+
         return $this->isProductBundleByProductAbstractEntity($productAbstractEntity);
     }
 
@@ -66,6 +67,7 @@ class ProductTypeHelper implements ProductTypeHelperInterface
         $productAbstractTransfer->requireSku();
 
         $productAbstractEntity = $this->getProductAbstractEntity($productAbstractTransfer->getSku());
+
         return $this->isGiftCardByProductAbstractEntity($productAbstractEntity);
     }
 

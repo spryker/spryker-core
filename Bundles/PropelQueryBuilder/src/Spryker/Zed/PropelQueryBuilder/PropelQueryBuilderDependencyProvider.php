@@ -43,6 +43,7 @@ class PropelQueryBuilderDependencyProvider extends AbstractBundleDependencyProvi
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new PropelQueryBuilderToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };
+
         return $container;
     }
 }

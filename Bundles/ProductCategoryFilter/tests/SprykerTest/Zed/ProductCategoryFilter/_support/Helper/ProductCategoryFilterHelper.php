@@ -47,6 +47,7 @@ class ProductCategoryFilterHelper extends Module
         $productCategoryFilter = (new ProductCategoryFilterBuilder(array_merge($filterData, $override)))->build();
 
         $productCategoryFacade = $this->getLocator()->productCategoryFilter()->facade();
+
         return $productCategoryFacade->createProductCategoryFilter($productCategoryFilter);
     }
 

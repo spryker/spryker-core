@@ -49,6 +49,7 @@ class CheckoutGrandTotalPreCondition implements CheckoutGrandTotalPreConditionIn
                 ->setMessage('Checkout grand total changed.');
 
             $checkoutResponseTransfer->addError($error);
+
             return false;
         }
 
