@@ -62,10 +62,12 @@ class EditController extends AbstractController
 
             if ($glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer)) {
                 $this->addSuccessMessage(static::MESSAGE_UPDATE_SUCCESS, ['%d' => $idGlossaryKey]);
+
                 return $this->redirectResponse('/glossary');
             }
 
             $this->addErrorMessage(static::MESSAGE_UPDATE_ERROR);
+
             return $this->redirectResponse('/glossary');
         }
 

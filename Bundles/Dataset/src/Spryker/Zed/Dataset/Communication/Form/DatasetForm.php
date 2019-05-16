@@ -158,6 +158,7 @@ class DatasetForm extends AbstractType
                 static::OPTION_AVAILABLE_LOCALES => $options[static::OPTION_AVAILABLE_LOCALES],
             ],
         ]);
+
         return $this;
     }
 

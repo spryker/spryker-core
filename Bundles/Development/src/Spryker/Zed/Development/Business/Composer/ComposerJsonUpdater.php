@@ -151,6 +151,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
             if ($keyA === $keyB) {
                 return 0;
             }
+
             return $keyA > $keyB;
         };
 

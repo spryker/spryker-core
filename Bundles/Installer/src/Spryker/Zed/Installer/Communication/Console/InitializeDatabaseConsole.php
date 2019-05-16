@@ -72,6 +72,7 @@ class InitializeDatabaseConsole extends Console
     protected function getPluginNameFromClass($className)
     {
         $pattern = '#^.+?\\\.+?\\\(.+?)\\\.+$#i';
+
         return preg_replace($pattern, '${1}', $className);
     }
 }
