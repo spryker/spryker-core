@@ -33,7 +33,7 @@ interface CartShareOptionPluginInterface
 
     /**
      * Specification:
-     * - Checks if share option is applicable for the current customer.
+     * - Checks if share option is applicable for the provided customer.
      *
      * @api
      *

@@ -86,10 +86,8 @@ class PersistentCartShareClientTest extends Unit
      */
     protected function createCustomerClientMock()
     {
-        $customerTransfer = new CustomerTransfer();
-
         $customerClientMock = $this->getMockBuilder(PersistentCartShareToCustomerClientInterface::class)->getMock();
-        $customerClientMock->method('getCustomer')->willReturn($customerTransfer);
+        $customerClientMock->method('getCustomer')->willReturn(new CustomerTransfer());
 
         return $customerClientMock;
     }
