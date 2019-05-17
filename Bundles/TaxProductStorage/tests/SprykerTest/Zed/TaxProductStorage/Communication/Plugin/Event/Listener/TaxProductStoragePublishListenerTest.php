@@ -89,7 +89,7 @@ class TaxProductStoragePublishListenerTest extends Unit
 
         // Assert
         $this->assertCount(1, $synchronizationDataTransfers);
-        $synchronizationDataTransfersDataArray = json_decode($synchronizationDataTransfers[0]->getData());
+        $synchronizationDataTransfersDataArray = json_decode($synchronizationDataTransfers[0]->getData(), true);
         $this->assertEquals($this->productAbstractTransfer->getSku(), $synchronizationDataTransfersDataArray['sku']);
     }
 }

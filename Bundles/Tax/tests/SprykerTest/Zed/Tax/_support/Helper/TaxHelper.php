@@ -74,7 +74,7 @@ class TaxHelper extends Module
     public function haveTaxSetWithTaxRates(): TaxSetTransfer
     {
         $taxSetTransfer = $this->haveTaxSet();
-        $taxRateTransfer = $this->haveTaxRate();
+        $taxRateTransfer = $this->haveTaxRate(['fkTaxSet' => $taxSetTransfer->getIdTaxSet()]);
 
         $taxSetTransfer->addTaxRate($taxRateTransfer);
 
