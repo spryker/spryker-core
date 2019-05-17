@@ -119,10 +119,10 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     {
         $addressData = $addressTransfer->toArray(true, true);
 
-        foreach ($this->customerConfig->getAddressExcludedFields() as $addressExcludedField) {
+        foreach ($this->customerConfig->getAddressKeyGenerationExcludedFields() as $addressExcludedField) {
             unset($addressData[$addressExcludedField]);
         }
 
-        return implode($addressData);
+        return implode('', $addressData);
     }
 }

@@ -84,7 +84,7 @@ class CustomerConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getAddressExcludedFields(): array
+    public function getAddressKeyGenerationExcludedFields(): array
     {
         return [
             AddressTransfer::IS_DEFAULT_BILLING,
