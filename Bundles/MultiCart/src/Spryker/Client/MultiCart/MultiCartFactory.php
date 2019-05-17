@@ -25,6 +25,8 @@ use Spryker\Client\MultiCart\Dependency\Client\MultiCartToZedRequestClientInterf
 use Spryker\Client\MultiCart\Dependency\Service\MultiCartToUtilDateTimeServiceInterface;
 use Spryker\Client\MultiCart\QuoteStorageSynchronizer\CustomerLoginQuoteSync;
 use Spryker\Client\MultiCart\QuoteStorageSynchronizer\CustomerLoginQuoteSyncInterface;
+use Spryker\Client\MultiCart\ResourceShare\SwitchDefaultCartResourceShareActivatorStrategy;
+use Spryker\Client\MultiCart\ResourceShare\SwitchDefaultCartResourceShareActivatorStrategyInterface;
 use Spryker\Client\MultiCart\Storage\MultiCartStorage;
 use Spryker\Client\MultiCart\Storage\MultiCartStorageInterface;
 use Spryker\Client\MultiCart\Zed\MultiCartZedStub;
@@ -105,6 +107,17 @@ class MultiCartFactory extends AbstractFactory
     {
         return new CartReader(
             $this->createMultiCartZedStub()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\MultiCart\ResourceShare\SwitchDefaultCartResourceShareActivatorStrategyInterface
+     */
+    public function createSwitchDefaultCartResourceShareActivatorStrategy(): SwitchDefaultCartResourceShareActivatorStrategyInterface
+    {
+        return new SwitchDefaultCartResourceShareActivatorStrategy(
+            $this->createCartReader(),
+            $this->createCartUpdater()
         );
     }
 

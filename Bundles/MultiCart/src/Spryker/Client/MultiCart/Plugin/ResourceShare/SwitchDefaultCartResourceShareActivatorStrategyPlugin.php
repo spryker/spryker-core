@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\MultiCart\Plugin\ResourceShare;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -16,10 +15,8 @@ use Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareActivat
 /**
  * @method \Spryker\Client\MultiCart\MultiCartClientInterface getClient()
  */
-class MultiCartResourceShareActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
+class SwitchDefaultCartResourceShareActivatorStrategyPlugin extends AbstractPlugin implements ResourceShareActivatorStrategyPluginInterface
 {
-    protected const GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.resource_is_not_available';
-
     /**
      * @uses \Spryker\Shared\SharedCart\SharedCartConfig::QUOTE_RESOURCE_TYPE
      */
@@ -37,7 +34,9 @@ class MultiCartResourceShareActivatorStrategyPlugin extends AbstractPlugin imple
 
     /**
      * {@inheritdoc}
-     * - Switches default cart, based on idQuote from resource share data.
+     * - Switches default cart for provided Quote and company user.
+     * - Returns 'isSuccessful=true' with ResourceShareTransfer if cart was switched successfully.
+     * - Returns 'isSuccessful=false' with error messages otherwise.
      *
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
@@ -47,36 +46,7 @@ class MultiCartResourceShareActivatorStrategyPlugin extends AbstractPlugin imple
      */
     public function execute(ResourceShareRequestTransfer $resourceShareRequestTransfer): ResourceShareResponseTransfer
     {
-        $resourceShareDataTransfer = $resourceShareRequestTransfer->getResourceShare()
-            ->getResourceShareData();
-
-        $resourceShareDataTransfer->requireIdQuote();
-        $quoteTransfer = $this->getClient()->findQuoteById($resourceShareDataTransfer->getIdQuote());
-        if (!$quoteTransfer) {
-            return (new ResourceShareResponseTransfer())
-                ->setIsSuccessful(false)
-                ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_IS_NOT_AVAILABLE)
-                );
-        }
-
-        $quoteResponseTransfer = $this->getClient()->setDefaultQuote($quoteTransfer);
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $resourceShareResponseTransfer = (new ResourceShareResponseTransfer())
-                ->setIsSuccessful(false);
-
-            foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
-                $resourceShareResponseTransfer->addMessage(
-                    (new MessageTransfer())->setValue($quoteErrorTransfer->getMessage())
-                );
-            }
-
-            return $resourceShareResponseTransfer;
-        }
-
-        return (new ResourceShareResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setResourceShare($resourceShareRequestTransfer->getResourceShare());
+        return $this->getClient()->applySwitchDefaultCartResourceShareActivatorStrategy($resourceShareRequestTransfer);
     }
 
     /**
