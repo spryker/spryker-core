@@ -7,11 +7,8 @@
 
 namespace Spryker\Glue\CartsRestApi;
 
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreator;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\Cart\CartDeleter;
@@ -46,16 +43,14 @@ use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapper;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReader;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreator;
 use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreatorInterface;
-use Spryker\Glue\CartsRestApi\Processor\Quote\SingleSingleQuoteCreator;
 use Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdater;
 use Spryker\Glue\CartsRestApi\Processor\RestRequest\RestRequestUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilder;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilder;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
-use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
-use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -271,7 +266,7 @@ class CartsRestApiFactory extends AbstractFactory
      */
     public function createSingleQuoteCreator(): SingleQuoteCreatorInterface
     {
-        return new SingleSingleQuoteCreator(
+        return new SingleQuoteCreator(
             $this->createCartReader(),
             $this->getClient()
         );
@@ -302,36 +297,6 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Can be removed in minor.
-     *
-     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface
-     */
-    public function getZedRequestClient(): CartsRestApiToZedRequestClientInterface
-    {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_ZED_REQUEST);
-    }
-
-    /**
-     * @deprecated Can be removed in minor.
-     *
-     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface
-     */
-    public function getQuoteClient(): CartsRestApiToQuoteClientInterface
-    {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_QUOTE);
-    }
-
-    /**
-     * @deprecated Can be removed in minor.
-     *
-     * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface
-     */
-    public function getCartClient(): CartsRestApiToCartClientInterface
-    {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_CART);
-    }
-
-    /**
      * @return \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface
      */
     public function getPersistentCartClient(): CartsRestApiToPersistentCartClientInterface
@@ -345,21 +310,5 @@ class CartsRestApiFactory extends AbstractFactory
     public function getCustomerClient(): CartsRestApiToCustomerClientInterface
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::CLIENT_CUSTOMER);
-    }
-
-    /**
-     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
-     */
-    public function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
-    {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_COLLECTION_READER);
-    }
-
-    /**
-     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
-     */
-    public function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
-    {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGIN_QUOTE_CREATOR);
     }
 }

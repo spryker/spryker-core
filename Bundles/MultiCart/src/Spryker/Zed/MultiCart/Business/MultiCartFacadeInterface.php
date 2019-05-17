@@ -95,7 +95,7 @@ interface MultiCartFacadeInterface
     /**
      * Specification:
      * - Creates customer quote.
-     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
+     * - Quote and CustomerReference must be set in the QuoteTransfer.
      *
      * @api
      *

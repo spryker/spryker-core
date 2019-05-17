@@ -28,7 +28,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @api
      *
-     * @deprecated Can be removed in minor.
+     * @deprecated Will be removed in the next major.
      *
      * @return void
      */

@@ -25,52 +25,52 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const CONTROLLER_GUEST_CART_ITEMS = 'guest-cart-items-resource';
 
     /**
-     * @deprecated Can be removed in minor
+     * @deprecated Will be removed in the next major.
      */
     public const ACTION_CARTS_GET = 'get';
 
     /**
-     * @deprecated Can be removed in minor
+     * @deprecated Will be removed in the next major.
      */
     public const ACTION_CARTS_POST = 'post';
 
     /**
-     * @deprecated Can be removed in minor
+     * @deprecated Will be removed in the next major.
      */
     public const ACTION_CARTS_DELETE = 'delete';
 
     /**
-     * @deprecated Can be removed in minor
+     * @deprecated Will be removed in the next major.
      */
     public const ACTION_CART_ITEMS_POST = 'post';
 
     /**
-     * @deprecated Can be removed in minor
+     * @deprecated Will be removed in the next major.
      */
     public const ACTION_CART_ITEMS_PATCH = 'patch';
 
     /**
-     * @deprecated Can be removed in minor
+     * @deprecated Will be removed in the next major.
      */
     public const ACTION_CART_ITEMS_DELETE = 'delete';
 
     /**
-     * @deprecated Can be removed in minor
+     * @deprecated Will be removed in the next major.
      */
     public const ACTION_GUEST_CARTS_GET = 'get';
 
     /**
-     * @deprecated Can be removed in minor
+     * @deprecated Will be removed in the next major.
      */
     public const ACTION_GUEST_CART_ITEMS_POST = 'post';
 
     /**
-     * @deprecated Can be removed in minor
+     * @deprecated Will be removed in the next major.
      */
     public const ACTION_GUEST_CART_ITEMS_PATCH = 'patch';
 
     /**
-     * @deprecated Can be removed in minor
+     * @deprecated Will be removed in the next major.
      */
     public const ACTION_GUEST_CART_ITEMS_DELETE = 'delete';
 
@@ -82,7 +82,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_FAILED_DELETING_CART_ITEM = '106';
     public const RESPONSE_CODE_FAILED_CREATING_CART = '107';
     /**
-     * @deprecated Can be removed in minor.
+     * @deprecated Will be removed in the next major.
      */
     public const RESPONSE_CODE_MISSING_REQUIRED_PARAMETER = '108';
     public const RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY = '109';
@@ -100,7 +100,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_FAILED_DELETING_CART = 'Cart could not be deleted.';
     public const EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM = 'Cart item could not be deleted.';
     /**
-     * @deprecated Can be removed in minor.
+     * @deprecated Will be removed in the next major.
      */
     public const EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER = 'Cart uuid or item group key is not specified.';
     public const EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY = 'Anonymous customer unique id is empty.';

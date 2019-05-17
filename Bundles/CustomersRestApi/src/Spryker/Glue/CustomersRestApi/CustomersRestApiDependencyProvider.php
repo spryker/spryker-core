@@ -24,7 +24,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**
-     * @deprecated Can be removed in minor.
+     * @deprecated Will be removed in the next major.
      */
     public const PLUGINS_CUSTOMER_POST_REGISTER = 'PLUGINS_CUSTOMER_POST_REGISTER';
 
@@ -41,7 +41,6 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = $this->addCustomerClient($container);
         $container = $this->addSessionClient($container);
-        $container = $this->addCustomerPostRegisterPlugins($container);
         $container = $this->addCustomerPostCreatePlugins($container);
         $container = $this->addCustomerExpanderPlugins($container);
 
@@ -79,22 +78,6 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @deprecated Can be removed in minor.
-     *
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addCustomerPostRegisterPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_CUSTOMER_POST_REGISTER] = function () {
-            return $this->getCustomerPostRegisterPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -106,16 +89,6 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
         };
 
         return $container;
-    }
-
-    /**
-     * @deprecated Can be removed in minor
-     *
-     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[]
-     */
-    protected function getCustomerPostRegisterPlugins(): array
-    {
-        return [];
     }
 
     /**

@@ -32,6 +32,7 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Finds customer quote collection.
+     * - CustomerReference must be set in the QuoteCriteriaFilterTransfer taken as parameter.
      *
      * @api
      *
@@ -44,6 +45,7 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Updates customer quote.
+     * - Uuid and CustomerReference must be set in the QuoteTransfer.
      *
      * @api
      *
@@ -68,6 +70,7 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Deletes customer quote.
+     * - Quote and customerReference must be set in the RestQuoteRequestTransfer.
      *
      * @api
      *
@@ -80,7 +83,7 @@ interface CartsRestApiClientInterface
     /**
      * Specification:
      * - Updates cart item quantity.
-     * - Quote and customerReference must be set in the RestCartItemsAttributesTransfer.
+     * - Quote and customerReference must be set in the RestCartItemRequestTransfer.
      *
      * @api
      *

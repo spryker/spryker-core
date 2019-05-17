@@ -14,7 +14,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @deprecated Can be removed in minor.
+ * @deprecated Will be removed in the ntext major.
  *
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
