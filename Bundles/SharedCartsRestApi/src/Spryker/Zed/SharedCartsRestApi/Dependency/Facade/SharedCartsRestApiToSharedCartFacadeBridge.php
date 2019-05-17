@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SharedCartsRestApi\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
 
 class SharedCartsRestApiToSharedCartFacadeBridge implements SharedCartsRestApiToSharedCartFacadeInterface
@@ -23,6 +25,16 @@ class SharedCartsRestApiToSharedCartFacadeBridge implements SharedCartsRestApiTo
     public function __construct($sharedCartFacade)
     {
         $this->sharedCartFacade = $sharedCartFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
+     */
+    public function getShareDetailsByIdQuote(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer
+    {
+        return $this->sharedCartFacade->getShareDetailsByIdQuote($quoteTransfer);
     }
 
     /**

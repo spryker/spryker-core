@@ -10,11 +10,11 @@ namespace Spryker\Zed\MultiCartsRestApiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 
-interface QuoteCollectionResponseExpanderPluginInterface
+interface QuoteCollectionExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Adds data to quote collection response transfer.
+     * - Expands quote collection transfer with additional data.
      *
      * @api
      *
@@ -23,7 +23,7 @@ interface QuoteCollectionResponseExpanderPluginInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function expandQuoteCollectionResponse(
+    public function expandQuoteCollection(
         CustomerTransfer $customerTransfer,
         QuoteCollectionTransfer $quoteCollectionTransfer
     ): QuoteCollectionTransfer;

@@ -9,11 +9,9 @@ namespace Spryker\Zed\SharedCartsRestApi\Business\QuoteCollectionExpander;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer;
 use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface;
-use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToStoreFacadeInterface;
 
-class QuoteCollectionExpander implements QuoteCollectionExpanderInterface
+class ShareDetailQuoteCollectionExpander implements ShareDetailQuoteCollectionExpanderInterface
 {
     /**
      * @var \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface
@@ -21,20 +19,12 @@ class QuoteCollectionExpander implements QuoteCollectionExpanderInterface
     protected $sharedCartFacade;
 
     /**
-     * @var \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
      * @param \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface $sharedCartFacade
-     * @param \Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToStoreFacadeInterface $storeFacade
      */
     public function __construct(
-        SharedCartsRestApiToSharedCartFacadeInterface $sharedCartFacade,
-        SharedCartsRestApiToStoreFacadeInterface $storeFacade
+        SharedCartsRestApiToSharedCartFacadeInterface $sharedCartFacade
     ) {
         $this->sharedCartFacade = $sharedCartFacade;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -43,17 +33,22 @@ class QuoteCollectionExpander implements QuoteCollectionExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function expandQuoteCollectionWithCustomerSharedQuoteCollection(
+    public function expandQuoteCollectionWithCustomerShareDetail(
         CustomerTransfer $customerTransfer,
         QuoteCollectionTransfer $quoteCollectionTransfer
     ): QuoteCollectionTransfer {
-        $sharedQuoteCriteriaFilterTransfer = (new SharedQuoteCriteriaFilterTransfer())
-            ->setIdCompanyUser($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser())
-            ->setIdStore($this->storeFacade->getCurrentStore()->getIdStore());
+        if (!$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()) {
+            return $quoteCollectionTransfer;
+        }
 
-        $sharedQuoteCollectionTransfer = $this->sharedCartFacade->getCustomerSharedQuoteCollection($sharedQuoteCriteriaFilterTransfer);
-        foreach ($sharedQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            $quoteCollectionTransfer->addQuote($quoteTransfer);
+        foreach ($quoteCollectionTransfer->getQuotes() as $quoteIndex => $quoteTransfer) {
+            $shareDetailCollectionTransfer = $this->sharedCartFacade->getShareDetailsByIdQuote($quoteTransfer);
+
+            foreach ($shareDetailCollectionTransfer->getShareDetails() as $shareDetailTransfer) {
+                if ($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser() === $shareDetailTransfer->getIdCompanyUser()) {
+                    $quoteCollectionTransfer->offsetSet($quoteIndex, $quoteTransfer->addShareDetail($shareDetailTransfer));
+                }
+            }
         }
 
         return $quoteCollectionTransfer;

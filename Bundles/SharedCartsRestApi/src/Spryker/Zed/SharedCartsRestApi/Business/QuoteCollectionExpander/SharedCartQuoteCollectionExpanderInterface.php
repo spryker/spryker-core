@@ -10,7 +10,7 @@ namespace Spryker\Zed\SharedCartsRestApi\Business\QuoteCollectionExpander;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 
-interface QuoteCollectionExpanderInterface
+interface SharedCartQuoteCollectionExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

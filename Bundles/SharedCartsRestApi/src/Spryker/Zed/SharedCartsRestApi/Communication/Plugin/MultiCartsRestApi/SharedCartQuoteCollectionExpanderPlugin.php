@@ -10,14 +10,14 @@ namespace Spryker\Zed\SharedCartsRestApi\Communication\Plugin\MultiCartsRestApi;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MultiCartsRestApiExtension\Dependency\Plugin\QuoteCollectionResponseExpanderPluginInterface;
+use Spryker\Zed\MultiCartsRestApiExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\SharedCartsRestApi\SharedCartsRestApiConfig getConfig()
  * @method \Spryker\Zed\SharedCartsRestApi\Business\SharedCartsRestApiFacade getFacade()
  * @method \Spryker\Zed\SharedCartsRestApi\Communication\SharedCartsRestApiCommunicationFactory getFactory()
  */
-class SharedCartQuoteCollectionResponseExpanderPlugin extends AbstractPlugin implements QuoteCollectionResponseExpanderPluginInterface
+class SharedCartQuoteCollectionExpanderPlugin extends AbstractPlugin implements QuoteCollectionExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class SharedCartQuoteCollectionResponseExpanderPlugin extends AbstractPlugin imp
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function expandQuoteCollectionResponse(
+    public function expandQuoteCollection(
         CustomerTransfer $customerTransfer,
         QuoteCollectionTransfer $quoteCollectionTransfer
     ): QuoteCollectionTransfer {
         return $this->getFactory()
-            ->createQuoteCollectionExpander()
+            ->createSharedCartQuoteCollectionExpander()
             ->expandQuoteCollectionWithCustomerSharedQuoteCollection($customerTransfer, $quoteCollectionTransfer);
     }
 }

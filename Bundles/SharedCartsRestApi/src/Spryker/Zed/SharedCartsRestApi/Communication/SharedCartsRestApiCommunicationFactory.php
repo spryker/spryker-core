@@ -8,8 +8,10 @@
 namespace Spryker\Zed\SharedCartsRestApi\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\SharedCartsRestApi\Business\QuoteCollectionExpander\QuoteCollectionExpander;
-use Spryker\Zed\SharedCartsRestApi\Business\QuoteCollectionExpander\QuoteCollectionExpanderInterface;
+use Spryker\Zed\SharedCartsRestApi\Business\QuoteCollectionExpander\SharedCartQuoteCollectionExpander;
+use Spryker\Zed\SharedCartsRestApi\Business\QuoteCollectionExpander\SharedCartQuoteCollectionExpanderInterface;
+use Spryker\Zed\SharedCartsRestApi\Business\QuoteCollectionExpander\ShareDetailQuoteCollectionExpander;
+use Spryker\Zed\SharedCartsRestApi\Business\QuoteCollectionExpander\ShareDetailQuoteCollectionExpanderInterface;
 use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedCartFacadeInterface;
 use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToStoreFacadeInterface;
 use Spryker\Zed\SharedCartsRestApi\SharedCartsRestApiDependencyProvider;
@@ -21,13 +23,23 @@ use Spryker\Zed\SharedCartsRestApi\SharedCartsRestApiDependencyProvider;
 class SharedCartsRestApiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\SharedCartsRestApi\Business\QuoteCollectionExpander\QuoteCollectionExpanderInterface
+     * @return \Spryker\Zed\SharedCartsRestApi\Business\QuoteCollectionExpander\SharedCartQuoteCollectionExpanderInterface
      */
-    public function createQuoteCollectionExpander(): QuoteCollectionExpanderInterface
+    public function createSharedCartQuoteCollectionExpander(): SharedCartQuoteCollectionExpanderInterface
     {
-        return new QuoteCollectionExpander(
+        return new SharedCartQuoteCollectionExpander(
             $this->getSharedCartFacade(),
             $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCartsRestApi\Business\QuoteCollectionExpander\ShareDetailQuoteCollectionExpanderInterface
+     */
+    public function createShareDetailQuoteCollectionExpander(): ShareDetailQuoteCollectionExpanderInterface
+    {
+        return new ShareDetailQuoteCollectionExpander(
+            $this->getSharedCartFacade()
         );
     }
 
