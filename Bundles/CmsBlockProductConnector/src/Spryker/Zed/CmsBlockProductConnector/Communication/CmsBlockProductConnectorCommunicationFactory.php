@@ -10,8 +10,8 @@ namespace Spryker\Zed\CmsBlockProductConnector\Communication;
 use Spryker\Zed\CmsBlockProductConnector\CmsBlockProductConnectorDependencyProvider;
 use Spryker\Zed\CmsBlockProductConnector\Communication\DataProvider\CmsBlockProductDataProvider;
 use Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType;
-use Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductCollectionFormatter;
-use Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductCollectionFormatterInterface;
+use Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductLabelFormatter;
+use Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductLabelFormatterInterface;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToProductFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -39,8 +39,16 @@ class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunication
         return new CmsBlockProductDataProvider(
             $this->getLocaleFacade(),
             $this->getRepository(),
-            $this->createProductCollectionFormatter()
+            $this->createProductLabelFormatter()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductLabelFormatterInterface
+     */
+    public function createProductLabelFormatter(): ProductLabelFormatterInterface
+    {
+        return new ProductLabelFormatter();
     }
 
     /**
@@ -65,13 +73,5 @@ class CmsBlockProductConnectorCommunicationFactory extends AbstractCommunication
     public function getProductFacade(): CmsBlockProductConnectorToProductFacadeInterface
     {
         return $this->getProvidedDependency(CmsBlockProductConnectorDependencyProvider::FACADE_PRODUCT);
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductCollectionFormatterInterface
-     */
-    public function createProductCollectionFormatter(): ProductCollectionFormatterInterface
-    {
-        return new ProductCollectionFormatter();
     }
 }

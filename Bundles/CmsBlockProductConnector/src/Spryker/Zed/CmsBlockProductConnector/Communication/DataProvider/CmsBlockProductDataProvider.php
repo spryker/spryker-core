@@ -9,7 +9,7 @@ namespace Spryker\Zed\CmsBlockProductConnector\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType;
-use Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductCollectionFormatterInterface;
+use Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductLabelFormatterInterface;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleInterface;
 use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRepositoryInterface;
 
@@ -28,23 +28,23 @@ class CmsBlockProductDataProvider
     protected $cmsBlockProductConnectorRepository;
 
     /**
-     * @var \Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductCollectionFormatterInterface
+     * @var \Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductLabelFormatterInterface
      */
-    protected $productCollectionFormatter;
+    protected $productLabelFormatter;
 
     /**
      * @param \Spryker\Zed\CmsBlockProductConnector\Dependency\Facade\CmsBlockProductConnectorToLocaleInterface $localeFacade
      * @param \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRepositoryInterface $repository
-     * @param \Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductCollectionFormatterInterface $productCollectionFormatter
+     * @param \Spryker\Zed\CmsBlockProductConnector\Communication\Formatter\ProductLabelFormatterInterface $productLabelFormatter
      */
     public function __construct(
         CmsBlockProductConnectorToLocaleInterface $localeFacade,
         CmsBlockProductConnectorRepositoryInterface $repository,
-        ProductCollectionFormatterInterface $productCollectionFormatter
+        ProductLabelFormatterInterface $productLabelFormatter
     ) {
         $this->localeFacade = $localeFacade;
         $this->cmsBlockProductConnectorRepository = $repository;
-        $this->productCollectionFormatter = $productCollectionFormatter;
+        $this->productLabelFormatter = $productLabelFormatter;
     }
 
     /**
@@ -82,7 +82,7 @@ class CmsBlockProductDataProvider
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return array
+     * @return string[]
      */
     protected function getAssignedProductAbstracts(CmsBlockTransfer $cmsBlockTransfer): array
     {
@@ -100,6 +100,26 @@ class CmsBlockProductDataProvider
             $cmsBlockTransfer->getIdCmsBlock()
         );
 
-        return $this->productCollectionFormatter->formatTransfers($productAbstractTransfers);
+        return $this->transformProductAbstractTransfersToSelectFieldData($productAbstractTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
+     *
+     * @return string[]
+     */
+    protected function transformProductAbstractTransfersToSelectFieldData(array $productAbstractTransfers): array
+    {
+        $selectFieldData = [];
+
+        foreach ($productAbstractTransfers as $productAbstractTransfer) {
+            $label = $this->productLabelFormatter->format(
+                $productAbstractTransfer->getName(),
+                $productAbstractTransfer->getSku()
+            );
+            $selectFieldData[$label] = $productAbstractTransfer->getSku();
+        }
+
+        return $selectFieldData;
     }
 }
