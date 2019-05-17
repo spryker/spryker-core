@@ -752,7 +752,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         );
 
         //Assert
-        $this->assertSame($itemTransfer->getAmount(), $salesOrderItemEntity->getAmount());
+        $this->assertSame($itemTransfer->getAmount(), (float)$salesOrderItemEntity->getAmount());
         $this->assertSame($itemTransfer->getAmountLeadProduct()->getProduct()->getSku(), $salesOrderItemEntity->getAmountSku());
     }
 
