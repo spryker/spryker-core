@@ -5,42 +5,44 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Quote\Business\QuoteFacade;
+namespace SprykerTest\Zed\Quote\Persistence\Propel\Mapper;
 
+use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ProductImageBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Quote\Persistence\SpyQuote;
+use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceInterface;
 use Spryker\Zed\Quote\Persistence\Propel\Mapper\QuoteMapper;
 use Spryker\Zed\Quote\QuoteConfig;
-use ArrayObject;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
  * @group Quote
- * @group Business
- * @group QuoteFacade
- * @group FilterDisallowedQuoteDataTest
+ * @group Persistence
+ * @group Propel
+ * @group QuoteMapperTest
  * Add your own group annotations below this line
  */
-class FilterDisallowedQuoteDataTest extends Unit
+class QuoteMapperTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\Quote\QuoteBusinessTester
-     */
-    protected $tester;
-
-    /**
-     * @dataProvider quoteDataDataProvider
+     * @dataProvider mapTransferToEntityProvider
      *
+     * @param QuoteTransfer $quoteTransfer
+     * @param SpyQuote $quote
+     * @param array $expectedQuoteData
      * @return void
      */
-    public function testFilterDisallowedQuoteData(array $allowedQuoteFields, array $quoteData, array $expectedQuoteData)
+    public function testMapTransferToEntity(QuoteTransfer $quoteTransfer, SpyQuote $quote, array $expectedQuoteData)
     {
         $utilEncodingServiceMock = $this->getMockBuilder(QuoteToUtilEncodingServiceInterface::class)
             ->getMock();
@@ -48,34 +50,43 @@ class FilterDisallowedQuoteDataTest extends Unit
             ->getMock();
 
         $mapper = new QuoteMapper($utilEncodingServiceMock, $quoteConfigMock);
-        $mapperReflection = new \ReflectionClass(get_class($mapper));
-        $filterDisallowedQuoteDataMethod = $mapperReflection->getMethod('filterDisallowedQuoteData');
-        $filterDisallowedQuoteDataMethod->setAccessible(true);
+        $updatedQuote = $mapper->mapTransferToEntity(
+            $quoteTransfer,
+            $quote
+        );
 
-        $filteredDisallowedQuoteData = $filterDisallowedQuoteDataMethod->invokeArgs($mapper, [
-            $quoteData,
-            $allowedQuoteFields
-        ]);
+        $this->assertEquals($expectedQuoteData, $updatedQuote->toArray());
+    }
 
-        $this->assertEquals($expectedQuoteData, $filteredDisallowedQuoteData);
+    protected function createQuoteEntity()
+    {
+        return (SpyQuoteQuery::create())->findOneOrCreate();
     }
 
     /**
      * @return array
      */
-    public function quoteDataDataProvider(): array
+    public function mapTransferToEntityProvider(): array
     {
         return [
-            $this->getDataForQuoteDataDataProvider(),
+            $this->getDataForMapTransferToEntityProvider(),
         ];
     }
 
     /**
      * @return array
      */
-    protected function getDataForQuoteDataDataProvider(): array
+    protected function getDataForMapTransferToEntityProvider(): array
     {
-        $quote = (new QuoteBuilder([
+        $expectedQuoteDefaultProductImageTransfer = (new ProductImageBuilder([
+            ProductImageTransfer::ID_PRODUCT_IMAGE => 27,
+            ProductImageTransfer::SORT_ORDER => 0,
+            ProductImageTransfer::EXTERNAL_URL_SMALL => "//images.icecat.biz/img\/norm/low/7822599-Sony.jpg",
+            ProductImageTransfer::EXTERNAL_URL_LARGE => "//images.icecat.biz/img\/norm/medium/7822599-Sony.jpg",
+        ]))
+            ->build();
+
+        $quoteTransfer = (new QuoteBuilder([
             QuoteTransfer::PRICE_MODE => 'GROSS_MODE',
         ]))
             ->withItem([
@@ -88,6 +99,9 @@ class FilterDisallowedQuoteDataTest extends Unit
                 ItemTransfer::SUM_PRICE => 4900,
                 ItemTransfer::UNIT_GROSS_PRICE => 4900,
                 ItemTransfer::SUM_GROSS_PRICE => 4900,
+                ItemTransfer::IMAGES => [
+                    $expectedQuoteDefaultProductImageTransfer->toArray(),
+                ],
             ])
             ->withTotals([
                 TotalsTransfer::SUBTOTAL => 4900,
@@ -98,7 +112,6 @@ class FilterDisallowedQuoteDataTest extends Unit
                     'amount' => 782,
                 ],
                 TotalsTransfer::GRAND_TOTAL => 4900,
-                TotalsTransfer::NET_TOTAL => 4118,
                 TotalsTransfer::NET_TOTAL => 4118,
                 TotalsTransfer::PRICE_TO_PAY => 4900,
                 TotalsTransfer::REFUND_TOTAL => 4900,
@@ -111,37 +124,6 @@ class FilterDisallowedQuoteDataTest extends Unit
                 CurrencyTransfer::FRACTION_DIGITS => 2,
             ])
             ->build();
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->fromArray($quote->toArray());
-
-        $quoteData = $quoteTransfer->modifiedToArray(true, true);
-
-        $allowedQuoteFields = [
-            'items' =>
-                [
-                    'id',
-                    'sku',
-                    'quantity',
-                    'idProductAbstract',
-                    'images',
-                    'name',
-                    'unitPrice',
-                    'sumPrice',
-                    'unitGrossPrice',
-                    'sumGrossPrice',
-                    'isOrdered',
-                ],
-            'totals',
-            'currency',
-            'priceMode',
-            'bundleItems',
-            'cartNote',
-            'expenses',
-            'voucherDiscounts',
-            'cartRuleDiscounts',
-            'promotionItems',
-            'isLocked',
-        ];
 
         $expectedQuoteData = [
             'items' => [
@@ -150,7 +132,14 @@ class FilterDisallowedQuoteDataTest extends Unit
                     'sku' => '027_26976107',
                     'quantity' => 1,
                     'idProductAbstract' => 27,
-                    'images' => new ArrayObject(),
+                    'images' => [
+                        [
+                            'externalUrlSmall' => '//images.icecat.biz/img\\/norm/low/7822599-Sony.jpg',
+                            'idProductImage' => 27,
+                            'sortOrder' => 0,
+                            'externalUrlLarge' => '//images.icecat.biz/img\\/norm/medium/7822599-Sony.jpg',
+                        ],
+                    ],
                     'name' => 'Sony Cyber-shot DSC-WX500',
                     'unitPrice' => 4900,
                     'sumPrice' => 4900,
@@ -189,9 +178,11 @@ class FilterDisallowedQuoteDataTest extends Unit
             'cartRuleDiscounts' => new ArrayObject(),
         ];
 
+        $quote = $this->createQuoteEntity();
+
         return [
-            $allowedQuoteFields,
-            $quoteData,
+            $quoteTransfer,
+            $quote,
             $expectedQuoteData,
         ];
     }
