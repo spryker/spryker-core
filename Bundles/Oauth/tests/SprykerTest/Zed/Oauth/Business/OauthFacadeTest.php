@@ -312,6 +312,7 @@ class OauthFacadeTest extends Unit
             ->setClientSecret('abc123')
             ->setUsername('spencor.hopkin@spryker.com')
             ->setPassword('change123');
+
         return $oauthRequestTransfer;
     }
 }

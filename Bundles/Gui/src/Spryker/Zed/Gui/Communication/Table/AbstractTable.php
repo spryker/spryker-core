@@ -539,6 +539,7 @@ abstract class AbstractTable
     public function setLimit($limit)
     {
         $this->limit = (int)$limit;
+
         return $this;
     }
 

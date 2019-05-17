@@ -267,6 +267,7 @@ class CmsPageSaver implements CmsPageSaverInterface
         foreach ($cmsPageEntity->getSpyUrls() as $urlEntity) {
             $cmsPageUrlList[$urlEntity->getFkLocale()] = $urlEntity;
         }
+
         return $cmsPageUrlList;
     }
 
@@ -281,6 +282,7 @@ class CmsPageSaver implements CmsPageSaverInterface
         foreach ($cmsPageEntity->getSpyCmsPageLocalizedAttributess() as $cmsPageLocalizedAttributesEntity) {
             $cmsPageLocalizedAttributesList[$cmsPageLocalizedAttributesEntity->getIdCmsPageLocalizedAttributes()] = $cmsPageLocalizedAttributesEntity;
         }
+
         return $cmsPageLocalizedAttributesList;
     }
 

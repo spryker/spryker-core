@@ -45,6 +45,7 @@ var ContentProductSetGui = function(options)
         var indexOfActiveTable = this.$productSetsTables.index(clickInfo.clickedTable);
 
         this.addProductSet(clickInfo.clickedTable, clickInfo.idProductSet, indexOfActiveTable);
+        event.preventDefault();
     };
 
     this.removeProductSetButtonHandler = function(event) {
@@ -52,7 +53,7 @@ var ContentProductSetGui = function(options)
         var tableRow = clickInfo.button.parents('tr');
 
         this.clearHiddenInput(clickInfo.clickedTable);
-        this.removeProduct(clickInfo.clickedTable, tableRow);
+        this.removeProductSet(clickInfo.clickedTable, tableRow);
     };
 
     this.clearAllFieldsButtonsHandler = function(event) {
@@ -66,8 +67,8 @@ var ContentProductSetGui = function(options)
         assignedTable.dataTable().api().clear().draw();
     };
 
-    this.addProductSet = function(productTable, idProductSet, indexOfActiveTable) {
-        var rowData = this.getRowData(productTable, idProductSet);
+    this.addProductSet = function(productSetTable, idProductSet, indexOfActiveTable) {
+        var rowData = this.getRowData(productSetTable, idProductSet);
         var assignedTable = this.getCurrentAssignedTable(indexOfActiveTable);
         var tablesWrapper = this.getTablesWrapper(assignedTable);
 
@@ -76,7 +77,7 @@ var ContentProductSetGui = function(options)
         assignedTable.dataTable().api().row.add(rowData).draw();
     };
 
-    this.removeProduct = function(assignedTable, tableRow) {
+    this.removeProductSet = function(assignedTable, tableRow) {
         assignedTable.dataTable().api().row(tableRow).remove().draw();
     };
 
@@ -98,8 +99,8 @@ var ContentProductSetGui = function(options)
         return this.$assignedTables.eq(indexOfActiveTable);
     };
 
-    this.getRowData = function(productTable, idProductSet) {
-        var tableData = productTable.dataTable().api().data().toArray();
+    this.getRowData = function(productSetTable, idProductSet) {
+        var tableData = productSetTable.dataTable().api().data().toArray();
         var rowData = tableData.find(function(item) {
             if (item[0] === Number(idProductSet)) {
                 return item;

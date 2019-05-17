@@ -100,6 +100,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new AvailabilityToProductBridge($container->getLocator()->product()->facade());
         };
+
         return $container;
     }
 
@@ -113,6 +114,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_TOUCH] = function (Container $container) {
             return new AvailabilityToTouchBridge($container->getLocator()->touch()->facade());
         };
+
         return $container;
     }
 
@@ -126,6 +128,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_STOCK] = function (Container $container) {
             return new AvailabilityToStockBridge($container->getLocator()->stock()->facade());
         };
+
         return $container;
     }
 
@@ -139,6 +142,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_OMS] = function (Container $container) {
             return new AvailabilityToOmsBridge($container->getLocator()->oms()->facade());
         };
+
         return $container;
     }
 
@@ -152,6 +156,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return new AvailabilityToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
         };
+
         return $container;
     }
 }

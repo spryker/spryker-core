@@ -94,6 +94,7 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
         if (!isset($productRelationCollection[$this->getAcceptedType()])) {
             return null;
         }
+
         return $productRelationCollection[$this->getAcceptedType()];
     }
 
