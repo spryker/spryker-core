@@ -8,7 +8,6 @@
 namespace Spryker\Client\Discount\CartCode;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -17,6 +16,9 @@ class VoucherCartCode implements VoucherCartCodeInterface
 {
     protected const GLOSSARY_KEY_VOUCHER_NON_APPLICABLE = 'cart.voucher.apply.non_applicable';
     protected const GLOSSARY_KEY_VOUCHER_APPLY_SUCCESSFUL = 'cart.voucher.apply.successful';
+
+    protected const MESSAGE_TYPE_SUCCESS = 'success';
+    protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -62,36 +64,6 @@ class VoucherCartCode implements VoucherCartCodeInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return \Generated\Shared\Transfer\CartCodeOperationMessageTransfer
-     */
-    public function getCartCodeOperationResult(QuoteTransfer $quoteTransfer, $code): CartCodeOperationMessageTransfer
-    {
-        $cartCodeCalculationResultTransfer = new CartCodeOperationMessageTransfer();
-        $cartCodeCalculationResultTransfer->setIsSuccess(false);
-
-        $voucherApplySuccessMessageTransfer = $this->getVoucherApplySuccessMessage($quoteTransfer, $code);
-        if ($voucherApplySuccessMessageTransfer) {
-            $cartCodeCalculationResultTransfer
-                ->setIsSuccess(true)
-                ->setMessage($voucherApplySuccessMessageTransfer);
-
-            return $cartCodeCalculationResultTransfer;
-        }
-
-        $nonApplicableErrorMessageTransfer = $this->getNonApplicableErrorMessage($quoteTransfer, $code);
-        if ($nonApplicableErrorMessageTransfer) {
-            $cartCodeCalculationResultTransfer->setMessage($nonApplicableErrorMessageTransfer);
-
-            return $cartCodeCalculationResultTransfer;
-        }
-
-        return $cartCodeCalculationResultTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -101,6 +73,27 @@ class VoucherCartCode implements VoucherCartCodeInterface
         $quoteTransfer->setUsedNotAppliedVoucherCodes([]);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     */
+    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, $code): ?MessageTransfer
+    {
+        $voucherApplySuccessMessageTransfer = $this->getVoucherApplySuccessMessage($quoteTransfer, $code);
+        if ($voucherApplySuccessMessageTransfer) {
+            return $voucherApplySuccessMessageTransfer;
+        }
+
+        $nonApplicableErrorMessageTransfer = $this->getNonApplicableErrorMessage($quoteTransfer, $code);
+        if ($nonApplicableErrorMessageTransfer) {
+            return $nonApplicableErrorMessageTransfer;
+        }
+
+        return null;
     }
 
     /**
@@ -128,14 +121,14 @@ class VoucherCartCode implements VoucherCartCodeInterface
      */
     protected function getVoucherApplySuccessMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
-        $messageTransfer = new MessageTransfer();
-
         if ($this->isVoucherFromPromotionDiscount($quoteTransfer, $code)) {
-            return $messageTransfer;
+            return null;
         }
 
         if ($this->isVoucherCodeApplied($quoteTransfer, $code)) {
+            $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue(static::GLOSSARY_KEY_VOUCHER_APPLY_SUCCESSFUL);
+            $messageTransfer->setType(static::MESSAGE_TYPE_SUCCESS);
 
             return $messageTransfer;
         }
@@ -208,6 +201,7 @@ class VoucherCartCode implements VoucherCartCodeInterface
         if ($this->isVoucherCodeApplyFailed($quoteTransfer, $code)) {
             $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue(static::GLOSSARY_KEY_VOUCHER_NON_APPLICABLE);
+            $messageTransfer->setType(static::MESSAGE_TYPE_ERROR);
 
             return $messageTransfer;
         }

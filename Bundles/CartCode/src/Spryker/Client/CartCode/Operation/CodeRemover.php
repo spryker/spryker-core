@@ -89,9 +89,11 @@ class CodeRemover implements CodeRemoverInterface
         $cartCodeOperationResultTransfer->setQuote($quoteTransfer);
 
         foreach ($this->cartCodePlugins as $cartCodePlugin) {
-            $cartCodeOperationMessageTransfer = $cartCodePlugin->getCartCodeOperationResult($quoteTransfer, $code);
+            $messageTransfer = $cartCodePlugin->getOperationResponseMessage($quoteTransfer, $code);
 
-            $cartCodeOperationResultTransfer->addMessage($cartCodeOperationMessageTransfer);
+            if ($messageTransfer) {
+                $cartCodeOperationResultTransfer->addMessage($messageTransfer);
+            }
         }
 
         return $cartCodeOperationResultTransfer;

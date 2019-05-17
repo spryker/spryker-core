@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\CartCode\Operation;
 
-use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -15,6 +14,8 @@ use Spryker\Client\CartCode\Dependency\Client\CartCodeToQuoteClientInterface;
 
 class QuoteOperationChecker implements QuoteOperationCheckerInterface
 {
+    protected const MESSAGE_TYPE_ERROR = 'error';
+
     /**
      * @var \Spryker\Client\CartCode\Dependency\Client\CartCodeToQuoteClientInterface
      */
@@ -41,17 +42,14 @@ class QuoteOperationChecker implements QuoteOperationCheckerInterface
             return null;
         }
 
-        $cartCodeCalculationMessageTransfer = new CartCodeOperationMessageTransfer();
-        $cartCodeCalculationMessageTransfer->setIsSuccess(false);
-
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED);
-        $cartCodeCalculationMessageTransfer->setMessage($messageTransfer);
+        $messageTransfer->setType(self::MESSAGE_TYPE_ERROR);
 
         $cartCodeOperationResultTransfer = new CartCodeOperationResultTransfer();
         $cartCodeOperationResultTransfer
             ->setQuote($quoteTransfer)
-            ->addMessage($cartCodeCalculationMessageTransfer);
+            ->addMessage($messageTransfer);
 
         return $cartCodeOperationResultTransfer;
     }

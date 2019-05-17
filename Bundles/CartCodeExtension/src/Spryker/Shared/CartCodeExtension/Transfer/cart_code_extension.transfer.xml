@@ -5,12 +5,7 @@
 
     <transfer name="CartCodeOperationResult">
         <property name="quote" type="Quote" />
-        <property name="messages" type="CartCodeOperationMessage[]" singular="message" />
-    </transfer>
-
-    <transfer name="CartCodeOperationMessage">
-        <property name="isSuccess" type="bool" />
-        <property name="message" type="Message" />
+        <property name="messages" type="Message[]" singular="message" />
     </transfer>
 
 </transfers>

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Discount\CartCode;
 
-use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface VoucherCartCodeInterface
@@ -30,16 +30,16 @@ interface VoucherCartCodeInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return \Generated\Shared\Transfer\CartCodeOperationMessageTransfer
-     */
-    public function getCartCodeOperationResult(QuoteTransfer $quoteTransfer, $code): CartCodeOperationMessageTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     */
+    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, $code): ?MessageTransfer;
 }

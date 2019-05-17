@@ -8,7 +8,6 @@
 namespace Spryker\Client\GiftCard\CartCode;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -17,6 +16,9 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
 {
     public const CART_GIFT_CARD_APPLY_SUCCESSFUL = 'cart.giftcard.apply.successful';
     public const CART_GIFT_CARD_APPLY_FAILED = 'cart.giftcard.apply.failed';
+
+    protected const MESSAGE_TYPE_SUCCESS = 'success';
+    protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -56,30 +58,21 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationMessageTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getCartCodeOperationResult(QuoteTransfer $quoteTransfer, $code): CartCodeOperationMessageTransfer
+    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, $code): ?MessageTransfer
     {
-        $cartCodeCalculationResultTransfer = new CartCodeOperationMessageTransfer();
-        $cartCodeCalculationResultTransfer->setIsSuccess(false);
-
         $giftCardApplySuccessMessageTransfer = $this->getGiftCardApplySuccessMessage($quoteTransfer, $code);
         if ($giftCardApplySuccessMessageTransfer) {
-            $cartCodeCalculationResultTransfer
-                ->setIsSuccess(true)
-                ->setMessage($giftCardApplySuccessMessageTransfer);
-
-            return $cartCodeCalculationResultTransfer;
+            return $giftCardApplySuccessMessageTransfer;
         }
 
         $giftCardApplyFailedMessageTransfer = $this->getGiftCardApplyFailedMessage($quoteTransfer, $code);
         if ($giftCardApplyFailedMessageTransfer) {
-            $cartCodeCalculationResultTransfer->setMessage($giftCardApplyFailedMessageTransfer);
-
-            return $cartCodeCalculationResultTransfer;
+            return $giftCardApplyFailedMessageTransfer;
         }
 
-        return $cartCodeCalculationResultTransfer;
+        return null;
     }
 
     /**
@@ -165,7 +158,9 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
             }
 
             $messageTransfer = new MessageTransfer();
-            $messageTransfer->setValue(static::CART_GIFT_CARD_APPLY_SUCCESSFUL);
+            $messageTransfer
+                ->setValue(static::CART_GIFT_CARD_APPLY_SUCCESSFUL)
+                ->setType(static::MESSAGE_TYPE_SUCCESS);
 
             return $messageTransfer;
         }
@@ -188,6 +183,7 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
 
             $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue(static::CART_GIFT_CARD_APPLY_FAILED);
+            $messageTransfer->setType(static::MESSAGE_TYPE_ERROR);
 
             return $messageTransfer;
         }

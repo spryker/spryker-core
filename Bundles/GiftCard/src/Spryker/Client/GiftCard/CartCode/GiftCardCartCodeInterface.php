@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\GiftCard\CartCode;
 
-use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface GiftCardCartCodeInterface
@@ -32,9 +32,9 @@ interface GiftCardCartCodeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationMessageTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getCartCodeOperationResult(QuoteTransfer $quoteTransfer, $code): CartCodeOperationMessageTransfer;
+    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, $code): ?MessageTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

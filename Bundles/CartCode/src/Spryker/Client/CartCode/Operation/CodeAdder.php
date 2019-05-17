@@ -89,9 +89,11 @@ class CodeAdder implements CodeAdderInterface
         $cartCodeOperationResultTransfer->setQuote($quoteTransfer);
 
         foreach ($this->cartCodePlugins as $cartCodePlugin) {
-            $cartCodeCalculationMessageTransfer = $cartCodePlugin->getCartCodeOperationResult($quoteTransfer, $code);
+            $messageTransfer = $cartCodePlugin->getOperationResponseMessage($quoteTransfer, $code);
 
-            $cartCodeOperationResultTransfer->addMessage($cartCodeCalculationMessageTransfer);
+            if ($messageTransfer) {
+                $cartCodeOperationResultTransfer->addMessage($messageTransfer);
+            }
         }
 
         return $cartCodeOperationResultTransfer;

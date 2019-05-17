@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\GiftCard\Plugin\CartCode;
 
-use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -17,9 +17,6 @@ use Spryker\Client\Kernel\AbstractPlugin;
  */
 class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInterface
 {
-    public const CART_GIFT_CARD_APPLY_SUCCESSFUL = 'cart.giftcard.apply.successful';
-    public const CART_GIFT_CARD_APPLY_FAILED = 'cart.giftcard.apply.failed';
-
     /**
      * {@inheritdoc}
      * - Sets gift card to the quote if the code hasn't been added already.
@@ -67,13 +64,13 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationMessageTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getCartCodeOperationResult(QuoteTransfer $quoteTransfer, $code): CartCodeOperationMessageTransfer
+    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, $code): ?MessageTransfer
     {
         return $this->getFactory()
             ->createGiftCardCartCode()
-            ->getCartCodeOperationResult($quoteTransfer, $code);
+            ->getOperationResponseMessage($quoteTransfer, $code);
     }
 
     /**

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CartCodeExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartCodePluginInterface
@@ -55,15 +55,16 @@ interface CartCodePluginInterface
 
     /**
      * Specification:
-     * - Executed after any cart code operations on a recalculated QuoteTransfer.
-     * - Checks QuoteTransfer and provides a success or an error message when necessary.
+     * - Executed after every cart code operations (add candidate, remove code, clear all codes).
+     * - Runs only on a recalculated QuoteTransfer.
+     * - Checks QuoteTransfer and provides a success or an error message.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationMessageTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getCartCodeOperationResult(QuoteTransfer $quoteTransfer, $code): CartCodeOperationMessageTransfer;
+    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, $code): ?MessageTransfer;
 }

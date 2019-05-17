@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Discount\Plugin\CartCode;
 
-use Generated\Shared\Transfer\CartCodeOperationMessageTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -64,13 +64,13 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationMessageTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getCartCodeOperationResult(QuoteTransfer $quoteTransfer, $code): CartCodeOperationMessageTransfer
+    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, $code): ?MessageTransfer
     {
         return $this->getFactory()
             ->createVoucherCartCode()
-            ->getCartCodeOperationResult($quoteTransfer, $code);
+            ->getOperationResponseMessage($quoteTransfer, $code);
     }
 
     /**
