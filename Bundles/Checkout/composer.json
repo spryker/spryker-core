@@ -20,7 +20,6 @@
     "spryker/availability": "*",
     "spryker/country": "*",
     "spryker/customer": "*",
-    "spryker/locale": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/sales": "*",
