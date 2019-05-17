@@ -145,6 +145,7 @@ class CsvMeta implements CsvMetaInterface
         if ($this->columnsOffset === null) {
             $this->columnsOffset = strlen($this->getColumnsAsString() . $this->lineSeparator);
         }
+
         return $this->columnsOffset;
     }
 }

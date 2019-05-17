@@ -296,6 +296,7 @@ class AttributeMap implements AttributeMapInterface
                 $uniqueAttributes[$key] = true;
             }
         }
+
         return $uniqueAttributes;
     }
 
