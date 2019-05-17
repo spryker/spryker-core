@@ -134,8 +134,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
             $module = $this->getModuleNameFromFile($splFileInfo);
             $uniqueColumnNames = $this->getUniqueColumnNames($splFileInfo);
             $requiredColumnNames = $this->getRequiredColumnNames($splFileInfo);
-            $uniqueFieldToModuleNameMap = $this->
-                ($uniqueFieldToModuleNameMap, $requiredColumnNames, $uniqueColumnNames, $module);
+            $uniqueFieldToModuleNameMap = $this->addUniqueColumnNames($uniqueFieldToModuleNameMap, $requiredColumnNames, $uniqueColumnNames, $module);
         }
 
         return $uniqueFieldToModuleNameMap;
