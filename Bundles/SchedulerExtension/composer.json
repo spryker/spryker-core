@@ -1,5 +1,6 @@
 {
   "name": "spryker/scheduler-extension",
+  "type": "library",
   "description": "SchedulerExtension module",
   "license": "proprietary",
   "require": {
